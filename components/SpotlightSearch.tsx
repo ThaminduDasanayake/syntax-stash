@@ -1,6 +1,7 @@
 "use client";
 
 import { Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 type Props = {
   value: string;
@@ -12,28 +13,27 @@ export default function SpotlightSearch({ value, onChange }: Props) {
     <div className="relative w-full max-w-2xl mx-auto">
       <div className="relative flex items-center">
         <Search
-          className="absolute left-4 text-zinc-500 pointer-events-none"
+          className="absolute left-4 text-zinc-500 pointer-events-none z-10"
           size={18}
         />
-        <input
+        <Input
           type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder="Search tools and resources..."
           className="
-            w-full
+            w-full h-auto
             bg-zinc-900/60
-            border border-zinc-800/80
+            border-zinc-800/80
             rounded-2xl
             pl-12 pr-4 py-4
             text-white text-base
             placeholder:text-zinc-600
-            outline-none
             backdrop-blur-sm
             transition-all duration-300
-            focus:border-white/10
-            focus:shadow-[0_0_30px_rgba(249,115,22,0.12)]
-            focus:bg-zinc-900/80
+            focus-visible:border-white/10
+            focus-visible:ring-0
+            focus-visible:shadow-[0_0_30px_rgba(249,115,22,0.12)]
           "
         />
       </div>

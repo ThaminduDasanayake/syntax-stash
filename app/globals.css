@@ -24,7 +24,7 @@ body {
   background-image:
     linear-gradient(rgba(249, 115, 22, 0.08) 1px, transparent 1px),
     linear-gradient(90deg, rgba(249, 115, 22, 0.08) 1px, transparent 1px);
-  background-size: 60px 60px;
+  background-size: 80px 80px;
   pointer-events: none;
   z-index: 0;
 }
@@ -34,9 +34,9 @@ body {
   position: fixed;
   inset: 0;
   background: radial-gradient(
-    ellipse 80% 50% at 50% 0%,
-    rgba(249, 115, 22, 0.15) 0%,
-    transparent 70%
+    circle at 50% 0%,
+    rgba(249, 115, 22, 0.25) 0%,
+    transparent 60%
   );
   pointer-events: none;
   z-index: 0;
@@ -159,7 +159,7 @@ body {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-black text-white;
   }
   html {
     @apply font-sans;
