@@ -1,0 +1,82 @@
+"use client";
+
+import { useRef, useState, DragEvent, ChangeEvent } from "react";
+import { UploadCloud } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+type Props = {
+  onFileDrop: (file: File) => void;
+  accept: string;
+  label: string;
+};
+
+export default function FileDropzone({ onFileDrop, accept, label }: Props) {
+  const [isDragging, setIsDragging] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  function handleDragOver(e: DragEvent<HTMLDivElement>) {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  }
+
+  function handleDragEnter(e: DragEvent<HTMLDivElement>) {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  }
+
+  function handleDragLeave(e: DragEvent<HTMLDivElement>) {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  }
+
+  function handleDrop(e: DragEvent<HTMLDivElement>) {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) onFileDrop(file);
+  }
+
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (file) onFileDrop(file);
+    // Reset so the same file can be re-selected
+    e.target.value = "";
+  }
+
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      onDragOver={handleDragOver}
+      onDragEnter={handleDragEnter}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+      onClick={() => inputRef.current?.click()}
+      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") inputRef.current?.click(); }}
+      className={cn(
+        "border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-all duration-200",
+        isDragging
+          ? "border-orange-500 bg-orange-500/10"
+          : "border-zinc-800 bg-zinc-950/50 hover:border-zinc-700"
+      )}
+    >
+      <input
+        ref={inputRef}
+        type="file"
+        accept={accept}
+        onChange={handleChange}
+        className="hidden"
+      />
+      <UploadCloud
+        size={40}
+        className={cn("mx-auto mb-4 transition-colors", isDragging ? "text-orange-400" : "text-zinc-500")}
+      />
+      <p className="text-zinc-300">{label}</p>
+      <p className="text-zinc-600 text-xs mt-2">Drag and drop or click to browse</p>
+    </div>
+  );
+}

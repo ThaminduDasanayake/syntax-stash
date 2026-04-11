@@ -12,77 +12,489 @@ export const categories = [
   "Learning",
   "APIs & Data",
   "Utilities",
+  "Open Source",
 ];
 
 export const tools: Tool[] = [
+  // --- INTERNAL UTILITIES ---
   {
-    title: "Tailwind CSS",
-    url: "https://tailwindcss.com",
-    description:
-      "A utility-first CSS framework for rapidly building modern websites without ever leaving your HTML.",
-    category: "UI & Styling",
-  },
-  {
-    title: "shadcn/ui",
-    url: "https://ui.shadcn.com",
-    description:
-      "Beautifully designed components built with Radix UI and Tailwind CSS. Copy and paste into your apps.",
-    category: "UI & Styling",
-  },
-  {
-    title: "Hugging Face",
-    url: "https://huggingface.co",
-    description:
-      "The AI community's hub for sharing models, datasets, and applications. Thousands of pretrained models.",
-    category: "Machine Learning",
-  },
-  {
-    title: "Replicate",
-    url: "https://replicate.com",
-    description:
-      "Run AI models in the cloud with a simple API. No infrastructure required.",
-    category: "Machine Learning",
-  },
-  {
-    title: "The Odin Project",
-    url: "https://www.theodinproject.com",
-    description:
-      "A free, open-source curriculum for learning web development from scratch to employable.",
-    category: "Learning",
-  },
-  {
-    title: "roadmap.sh",
-    url: "https://roadmap.sh",
-    description:
-      "Community-driven roadmaps, articles, and guides for developers to navigate their career paths.",
-    category: "Learning",
-  },
-  {
-    title: "Public APIs",
-    url: "https://publicapis.dev",
-    description:
-      "A collective list of free APIs for use in software and web development. Searchable and categorized.",
-    category: "APIs & Data",
-  },
-  {
-    title: "JSONPlaceholder",
-    url: "https://jsonplaceholder.typicode.com",
-    description:
-      "Free fake and reliable API for testing and prototyping. No registration required.",
-    category: "APIs & Data",
-  },
-  {
-    title: "Regex101",
-    url: "https://regex101.com",
-    description:
-      "Build, test, and debug regular expressions interactively with real-time explanation and match highlighting.",
+    title: "AI Prompt Enhancer",
+    url: "/tools/prompt-enhancer",
+    description: "Dynamic templates to generate high-quality AI prompts.",
     category: "Utilities",
   },
   {
-    title: "Excalidraw",
-    url: "https://excalidraw.com",
+    title: "Omni-Image Converter",
+    url: "/tools/image-converter",
+    description: "Convert images locally between WebP, PNG, and JPEG formats.",
+    category: "Utilities",
+  },
+  {
+    title: "Universal Document Extractor",
+    url: "/tools/document-extractor",
     description:
-      "Virtual whiteboard for sketching hand-drawn like diagrams. Great for quick architecture drawings.",
+      "Extract clean text/markdown from PDF, DOCX, CSV, and TXT files.",
+    category: "Utilities",
+  },
+
+  // --- UI & STYLING ---
+  {
+    title: "Picular",
+    url: "https://picular.co/",
+    description: "The color search engine for designers.",
+    category: "UI & Styling",
+  },
+  {
+    title: "Ark UI",
+    url: "https://ark-ui.com/",
+    description: "A headless, accessible UI component library.",
+    category: "UI & Styling",
+  },
+  {
+    title: "CSS Loaders",
+    url: "https://cssloaders.github.io/",
+    description: "A collection of pure CSS loading animations.",
+    category: "UI & Styling",
+  },
+  {
+    title: "Mage UI",
+    url: "https://www.mageui.live/",
+    description: "Modern UI components and blocks.",
+    category: "UI & Styling",
+  },
+  {
+    title: "ThemeCN",
+    url: "https://themecn.dev/",
+    description: "Tailwind CSS components and templates.",
+    category: "UI & Styling",
+  },
+  {
+    title: "Gradienty",
+    url: "https://gradienty.codes/",
+    description: "A vast collection of beautiful gradients.",
+    category: "UI & Styling",
+  },
+  {
+    title: "Colorize",
+    url: "https://colorize.design/",
+    description: "AI-powered color palette generator.",
+    category: "UI & Styling",
+  },
+  {
+    title: "Apache ECharts",
+    url: "https://echarts.apache.org/en/index.html",
+    description: "A powerful, interactive charting and visualization library.",
+    category: "UI & Styling",
+  },
+  {
+    title: "React Haiku",
+    url: "https://www.reacthaiku.dev/",
+    description: "A collection of React hooks and utilities.",
+    category: "UI & Styling",
+  },
+  {
+    title: "Smooth UI",
+    url: "https://www.smoothui.dev/",
+    description: "UI component library for React.",
+    category: "UI & Styling",
+  },
+  {
+    title: "Spectrum UI",
+    url: "https://ui.spectrumhq.in/",
+    description: "Design system and components.",
+    category: "UI & Styling",
+  },
+  {
+    title: "Smooothy",
+    url: "https://smooothy.vercel.app/",
+    description: "Smooth animations and UI components.",
+    category: "UI & Styling",
+  },
+  {
+    title: "UV Canvas",
+    url: "https://uvcanvas.com/",
+    description: "React components for beautiful canvas gradients.",
+    category: "UI & Styling",
+  },
+  {
+    title: "CSS Grid Generator",
+    url: "https://cssgridgenerator.io/",
+    description: "Visual tool to generate CSS grid layouts.",
+    category: "UI & Styling",
+  },
+  {
+    title: "WebGradients",
+    url: "https://webgradients.com/",
+    description: "A free collection of 180 linear gradients.",
+    category: "UI & Styling",
+  },
+  {
+    title: "unDraw",
+    url: "https://undraw.co/",
+    description: "Open-source illustrations for any idea you can imagine.",
+    category: "UI & Styling",
+  },
+  {
+    title: "Intent UI",
+    url: "https://intentui.com/",
+    description: "UI components and design resources.",
+    category: "UI & Styling",
+  },
+  {
+    title: "Palette Maker",
+    url: "https://palettemaker.com/",
+    description: "Create and test color palettes on real designs.",
+    category: "UI & Styling",
+  },
+  {
+    title: "Park UI",
+    url: "https://park-ui.com/",
+    description: "UI components built with Ark UI and Panda CSS.",
+    category: "UI & Styling",
+  },
+  {
+    title: "React Bits",
+    url: "https://www.reactbits.dev/",
+    description: "React patterns, snippets, and components.",
+    category: "UI & Styling",
+  },
+  {
+    title: "Magic UI",
+    url: "https://magicui.design/",
+    description: "Beautiful UI components for React and Next.js.",
+    category: "UI & Styling",
+  },
+  {
+    title: "Hypercolor",
+    url: "https://hypercolor.dev/",
+    description: "Tailwind CSS gradient generator.",
+    category: "UI & Styling",
+  },
+  {
+    title: "Cult UI",
+    url: "https://www.cult-ui.com/",
+    description: "Premium UI components for modern web apps.",
+    category: "UI & Styling",
+  },
+
+  // --- LEARNING & RESOURCES ---
+  {
+    title: "Codecademy",
+    url: "https://www.codecademy.com/",
+    description: "Interactive coding tutorials and courses.",
+    category: "Learning",
+  },
+  {
+    title: "NeuralNine",
+    url: "https://www.youtube.com/@NeuralNine",
+    description: "Python, Machine Learning, and Computer Science tutorials.",
+    category: "Learning",
+  },
+  {
+    title: "Code with Mosh",
+    url: "https://codewithmosh.com/p/learning-paths",
+    description: "Clear, concise programming courses by Mosh Hamedani.",
+    category: "Learning",
+  },
+  {
+    title: "MindLuster",
+    url: "https://www.mindluster.com/",
+    description: "Free online courses with certificates.",
+    category: "Learning",
+  },
+  {
+    title: "Mosh React Courses",
+    url: "https://hacksnation.com/d/18974-download-codewithmosh-all-react-courses",
+    description: "React course resources.",
+    category: "Learning",
+  },
+  {
+    title: "Coddy",
+    url: "https://coddy.tech/",
+    description: "Gamified coding challenges and courses.",
+    category: "Learning",
+  },
+  {
+    title: "Codédex",
+    url: "https://www.codedex.io/",
+    description: "Learn to code in a fantasy RPG environment.",
+    category: "Learning",
+  },
+  {
+    title: "Roadmap.sh",
+    url: "https://roadmap.sh/",
+    description: "Step-by-step developer roadmaps and guides.",
+    category: "Learning",
+  },
+  {
+    title: "DeepWiki",
+    url: "https://deepwiki.com/",
+    description: "Deep tech and software engineering wiki.",
+    category: "Learning",
+  },
+  {
+    title: "QuickRef",
+    url: "https://quickref.me/index.html",
+    description: "Cheat sheets for programming languages and tools.",
+    category: "Learning",
+  },
+  {
+    title: "Dev Quizzes",
+    url: "https://quizzes.madza.dev/",
+    description: "Test your programming knowledge.",
+    category: "Learning",
+  },
+  {
+    title: "Web Skills",
+    url: "https://andreasbm.github.io/web-skills/",
+    description:
+      "A visual overview of useful skills to learn as a web developer.",
+    category: "Learning",
+  },
+  {
+    title: "Learn Anything",
+    url: "https://learn-anything.xyz/",
+    description: "Organize knowledge and discover resources.",
+    category: "Learning",
+  },
+  {
+    title: "Bilibili Tutorial",
+    url: "https://www.bilibili.com/video/BV1Ph4y1V7jF/?p=4",
+    description: "Video tutorial resource.",
+    category: "Learning",
+  },
+  {
+    title: "YouTube ML Video",
+    url: "https://www.youtube.com/watch?v=fOUng7fMQ1Y",
+    description: "Machine learning/programming tutorial.",
+    category: "Learning",
+  },
+
+  // --- MACHINE LEARNING & AI ---
+  {
+    title: "Stanford Sentiment Dataset",
+    url: "https://ai.stanford.edu/~amaas/data/sentiment/",
+    description: "Large Movie Review Dataset for sentiment analysis.",
+    category: "Machine Learning",
+  },
+  {
+    title: "YOLOv8 Object Tracking",
+    url: "https://github.com/MuhammadMoinFaisal/YOLOv8-DeepSORT-Object-Tracking",
+    description: "Object tracking using YOLOv8 and DeepSORT.",
+    category: "Machine Learning",
+  },
+  {
+    title: "Ultralytics YOLO",
+    url: "https://github.com/ultralytics/ultralytics/blob/main/README.md",
+    description: "State-of-the-art YOLOv8 object detection.",
+    category: "Machine Learning",
+  },
+  {
+    title: "OpenML",
+    url: "https://www.openml.org/",
+    description: "Machine learning dataset and model repository.",
+    category: "Machine Learning",
+  },
+  {
+    title: "Google Dataset Search",
+    url: "https://datasetsearch.research.google.com/",
+    description: "Search engine for datasets across the web.",
+    category: "Machine Learning",
+  },
+
+  // --- APIS & DATA ---
+  {
+    title: "Public APIs",
+    url: "https://github.com/public-apis/public-apis",
+    description:
+      "A collective list of free APIs for use in software and web development.",
+    category: "APIs & Data",
+  },
+  {
+    title: "Free Public APIs",
+    url: "https://www.freepublicapis.com/",
+    description: "Curated list of free APIs.",
+    category: "APIs & Data",
+  },
+  {
+    title: "PublicAPIs.dev",
+    url: "https://publicapis.dev/",
+    description: "Directory of public APIs for developers.",
+    category: "APIs & Data",
+  },
+  {
+    title: "Apify",
+    url: "https://apify.com/?fpr=i6ouv&gad_campaignid=22544677876&gbraid=0AAAAADGdQwxm_XhH9hQNusnyQy48tjNqd",
+    description: "Web scraping and data extraction platform.",
+    category: "APIs & Data",
+  },
+  {
+    title: "MCP Servers",
+    url: "https://github.com/modelcontextprotocol/servers",
+    description: "Model Context Protocol servers for AI integrations.",
+    category: "APIs & Data",
+  },
+
+  // --- OPEN SOURCE & GITHUB ---
+  {
+    title: "App Ideas",
+    url: "https://github.com/florinpop17/app-ideas",
+    description:
+      "A Collection of application ideas to improve your coding skills.",
+    category: "Open Source",
+  },
+  {
+    title: "Simple ML Examples",
+    url: "https://github.com/chribsen/simple-machine-learning-examples/tree/master",
+    description: "Basic implementations of ML algorithms.",
+    category: "Open Source",
+  },
+  {
+    title: "33 JS Concepts",
+    url: "https://github.com/leonardomso/33-js-concepts",
+    description: "33 Concepts Every JavaScript Developer Should Know.",
+    category: "Open Source",
+  },
+  {
+    title: "JavaScript Questions",
+    url: "https://github.com/lydiahallie/javascript-questions",
+    description: "A long list of (advanced) JavaScript questions.",
+    category: "Open Source",
+  },
+  {
+    title: "You Don't Know JS",
+    url: "https://github.com/getify/You-Dont-Know-JS",
+    description:
+      "Book series diving deep into the core mechanisms of JavaScript.",
+    category: "Open Source",
+  },
+  {
+    title: "Airbnb JS Guide",
+    url: "https://github.com/airbnb/javascript",
+    description: "A mostly reasonable approach to JavaScript.",
+    category: "Open Source",
+  },
+  {
+    title: "Awesome JavaScript",
+    url: "https://github.com/sorrycc/awesome-javascript",
+    description:
+      "A collection of awesome browser-side JS libraries and resources.",
+    category: "Open Source",
+  },
+  {
+    title: "Build Your Own X",
+    url: "https://github.com/codecrafters-io/build-your-own-x",
+    description: "Recreate popular technologies from scratch.",
+    category: "Open Source",
+  },
+  {
+    title: "Project Based Learning",
+    url: "https://github.com/practical-tutorials/project-based-learning",
+    description: "Learn to code by building projects.",
+    category: "Open Source",
+  },
+  {
+    title: "Awesome LeetCode",
+    url: "https://github.com/ashishps1/awesome-leetcode-resources",
+    description: "Resources for mastering LeetCode and DSA.",
+    category: "Open Source",
+  },
+  {
+    title: "Awesome Lists",
+    url: "https://github.com/sindresorhus/awesome",
+    description: "Awesome lists about all kinds of interesting topics.",
+    category: "Open Source",
+  },
+  {
+    title: "Idealist",
+    url: "https://github.com/yoheinakajima/idealist",
+    description: "Open source projects and ideas.",
+    category: "Open Source",
+  },
+  {
+    title: "Thamindu's GitHub",
+    url: "https://github.com/ThaminduDasanayake",
+    description: "My personal GitHub profile.",
+    category: "Open Source",
+  },
+  {
+    title: "CeraFlaw Website",
+    url: "https://github.com/SithumRaigamage/CeraFlaw-Website",
+    description: "Frontend repository for the CeraFlaw project.",
+    category: "Open Source",
+  },
+  {
+    title: "CeraFlaw Models",
+    url: "https://github.com/SithumRaigamage/CeraFlaw",
+    description: "Core repository for the CeraFlaw project.",
+    category: "Open Source",
+  },
+
+  // --- UTILITIES & TOOLS ---
+  {
+    title: "CSV Vis Tool",
+    url: "https://csvistool.com/",
+    description: "Tool for visualizing CSV data.",
+    category: "Utilities",
+  },
+  {
+    title: "DhiWise",
+    url: "https://www.dhiwise.com/",
+    description: "Programming automation platform for React and Flutter.",
+    category: "Utilities",
+  },
+  {
+    title: "GitDocify",
+    url: "https://gitdocify.com/readme/Coding-Challenge-Generator#top",
+    description: "Generate beautiful READMEs and documentation.",
+    category: "Utilities",
+  },
+  {
+    title: "Frimousse",
+    url: "https://frimousse.liveblocks.io/",
+    description: "Collaborative canvas and design tool.",
+    category: "Utilities",
+  },
+  {
+    title: "VisGL Google Maps",
+    url: "https://visgl.github.io/react-google-maps/",
+    description: "React components for Google Maps.",
+    category: "Utilities",
+  },
+  {
+    title: "Omatsuri",
+    url: "https://omatsuri.app/",
+    description: "Open source browser tools for everyday use.",
+    category: "Utilities",
+  },
+  {
+    title: "Database.build",
+    url: "https://database.build/",
+    description: "Visual database schema builder.",
+    category: "Utilities",
+  },
+  {
+    title: "TinyWow",
+    url: "https://tinywow.com/",
+    description: "Free tools to solve your file problems.",
+    category: "Utilities",
+  },
+  {
+    title: "Game Hub",
+    url: "https://game-hub-vert-three.vercel.app/",
+    description: "React project deployment.",
+    category: "Utilities",
+  },
+  {
+    title: "Liam Bx",
+    url: "https://liambx.com/",
+    description: "Personal portfolio/tools site.",
+    category: "Utilities",
+  },
+  {
+    title: "Code with Mosh Downloads",
+    url: "https://hacksnation.com/d/278-download-code-with-mosh-all-courses",
+    description: "Download resources for courses.",
     category: "Utilities",
   },
 ];
