@@ -1,33 +1,30 @@
+import { Sparkles, ImageIcon, FileText, Regex, Palette, KeyRound } from "lucide-react";
+
 export type Tool = {
   title: string;
   url: string;
   description: string;
   category: string;
+  icon?: any;
 };
 
-export const categories = [
-  "All",
-  "UI & Styling",
-  "Machine Learning",
-  "Learning",
-  "APIs & Data",
-  "Utilities",
-  "Open Source",
-];
-
-export const tools: Tool[] = [
+// ─── Internal Tools ──────────────────────────────────────────────────────────
+// These are the functional utilities built into syntax-stash.
+export const internalTools: Tool[] = [
   // --- INTERNAL UTILITIES ---
   {
     title: "AI Prompt Enhancer",
     url: "/tools/prompt-enhancer",
     description: "Dynamic templates to generate high-quality AI prompts.",
     category: "Utilities",
+    icon: Sparkles,
   },
   {
     title: "Omni-Image Converter",
     url: "/tools/image-converter",
     description: "Convert images locally between WebP, PNG, and JPEG formats.",
     category: "Utilities",
+    icon: ImageIcon,
   },
   {
     title: "Universal Document Extractor",
@@ -35,8 +32,33 @@ export const tools: Tool[] = [
     description:
       "Extract clean text/markdown from PDF, DOCX, CSV, and TXT files.",
     category: "Utilities",
+    icon: FileText,
   },
 
+  // --- PLACEHOLDERS (coming soon) ---
+  {
+    title: "Regex Tester",
+    url: "/tools/regex",
+    description: "Test and debug regular expressions with real-time match highlighting.",
+    category: "Utilities",
+  },
+  {
+    title: "Color Space Converter",
+    url: "/tools/color",
+    description: "Convert colors between HEX, RGB, HSL, OKLCH, and more.",
+    category: "Utilities",
+  },
+  {
+    title: "JWT Decoder",
+    url: "/tools/jwt",
+    description: "Decode and inspect JSON Web Tokens locally in your browser.",
+    category: "Utilities",
+  },
+];
+
+// ─── Resource Links ───────────────────────────────────────────────────────────
+// All external bookmarks — curated developer resources and references.
+export const resourceLinks: Tool[] = [
   // --- UI & STYLING ---
   {
     title: "Picular",
@@ -497,4 +519,23 @@ export const tools: Tool[] = [
     description: "Download resources for courses.",
     category: "Utilities",
   },
+];
+
+// ─── Derived ─────────────────────────────────────────────────────────────────
+export const resourceCategories: string[] = [
+  ...new Set(resourceLinks.map((t) => t.category)),
+].sort();
+
+// Backward-compat alias — anything still importing `tools` keeps working.
+export const tools: Tool[] = [...internalTools, ...resourceLinks];
+
+// Legacy categories list (kept for any existing consumers)
+export const categories = [
+  "All",
+  "UI & Styling",
+  "Machine Learning",
+  "Learning",
+  "APIs & Data",
+  "Utilities",
+  "Open Source",
 ];

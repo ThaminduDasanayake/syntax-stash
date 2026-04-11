@@ -13,7 +13,7 @@ export default function SpotlightSearch({ value, onChange }: Props) {
     <div className="relative w-full max-w-2xl mx-auto">
       <div className="relative flex items-center">
         <Search
-          className="absolute left-4 text-zinc-500 pointer-events-none z-10"
+          className="absolute left-4 text-muted-foreground pointer-events-none z-10"
           size={18}
         />
         <Input
@@ -23,17 +23,17 @@ export default function SpotlightSearch({ value, onChange }: Props) {
           placeholder="Search tools and resources..."
           className="
             w-full h-auto
-            bg-zinc-900/60
-            border-zinc-800/80
+            bg-background/80
+            border-border
             rounded-2xl
             pl-12 pr-4 py-4
-            text-white text-base
-            placeholder:text-zinc-600
+            text-foreground text-base
+            placeholder:text-muted-foreground
             backdrop-blur-sm
             transition-all duration-300
-            focus-visible:border-white/10
-            focus-visible:ring-0
-            focus-visible:shadow-[0_0_30px_rgba(249,115,22,0.12)]
+            focus-visible:border-primary/50
+            focus-visible:ring-1 focus-visible:ring-primary/50
+            focus-visible:shadow-[0_0_30px_var(--color-primary)] focus-visible:shadow-primary/10
           "
         />
       </div>

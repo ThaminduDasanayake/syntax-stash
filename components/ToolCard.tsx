@@ -1,6 +1,12 @@
 import Link from "next/link";
 import { ExternalLink, Sparkles } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import type { Tool } from "@/lib/data";
 
@@ -21,12 +27,12 @@ function CardBody({ tool }: Props) {
   const hostname = isInternal ? null : getHostname(tool.url);
 
   return (
-    <Card className="bg-[#0C0C0C] border border-white/5 ring-0 py-4">
-      <CardHeader>
+    <Card className="bg-card text-card-foreground border-border ring-0 py-4 h-full w-full flex flex-col transition-colors">
+      <CardHeader className="flex-none">
         <div className="flex flex-row items-center gap-3">
           {isInternal ? (
-            <div className="w-8 h-8 rounded-md bg-orange-500/10 border border-orange-500/20 flex items-center justify-center shrink-0">
-              <Sparkles size={14} className="text-orange-400" />
+            <div className="w-8 h-8 rounded-md bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
+              <Sparkles size={14} className="text-primary" />
             </div>
           ) : (
             <img
@@ -39,21 +45,24 @@ function CardBody({ tool }: Props) {
           )}
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2">
-              <CardTitle className="text-white font-semibold">
+              <CardTitle className="text-foreground font-semibold">
                 {tool.title}
               </CardTitle>
               {isInternal ? null : (
-                <ExternalLink size={14} className="text-zinc-600 shrink-0 mt-0.5" />
+                <ExternalLink
+                  size={14}
+                  className="text-muted-foreground shrink-0 mt-0.5"
+                />
               )}
             </div>
           </div>
         </div>
-        <CardDescription className="text-zinc-500 leading-relaxed">
+        <CardDescription className="text-muted-foreground leading-relaxed mt-2 text-sm line-clamp-2">
           {tool.description}
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <Badge className="bg-orange-500/10 text-orange-400/80 text-[11px] lowercase tracking-wide border-none hover:bg-orange-500/10">
+      <CardContent className="mt-auto pt-4 flex-none">
+        <Badge className="bg-primary/10 text-primary hover:bg-primary/20 text-[11px] lowercase tracking-wide border-none px-2 py-0.5">
           {tool.category}
         </Badge>
       </CardContent>
@@ -63,7 +72,8 @@ function CardBody({ tool }: Props) {
 
 export default function ToolCard({ tool }: Props) {
   const isInternal = tool.url.startsWith("/");
-  const className = "block transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_30px_rgba(249,115,22,0.1)]";
+  const className =
+    "block w-full h-full transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_30px_var(--color-primary)] hover:shadow-primary/10";
 
   if (isInternal) {
     return (
@@ -74,7 +84,12 @@ export default function ToolCard({ tool }: Props) {
   }
 
   return (
-    <a href={tool.url} target="_blank" rel="noopener noreferrer" className={className}>
+    <a
+      href={tool.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={className}
+    >
       <CardBody tool={tool} />
     </a>
   );

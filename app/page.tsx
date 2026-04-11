@@ -1,49 +1,35 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import SpotlightSearch from "@/components/SpotlightSearch";
-import FilterPills from "@/components/FilterPills";
-import ToolGrid from "@/components/ToolGrid";
-import { tools, categories } from "@/lib/data";
+import { tools } from "@/lib/data";
+import ToolCard from "@/components/ToolCard";
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState("All");
-
-  const filtered = useMemo(() => {
-    const q = searchQuery.toLowerCase();
-    return tools.filter((tool) => {
-      const matchesSearch =
-        !q ||
-        tool.title.toLowerCase().includes(q) ||
-        tool.description.toLowerCase().includes(q);
-      const matchesCategory =
-        activeCategory === "All" || tool.category === activeCategory;
-      return matchesSearch && matchesCategory;
-    });
-  }, [searchQuery, activeCategory]);
-
   return (
-    <div className="hacker-grid min-h-screen">
-      <div className="relative z-10 max-w-5xl mx-auto px-4 py-24 md:py-32 flex flex-col gap-10">
-        <div className="text-center mb-8">
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-white mb-4">
-            syntax<span className="text-orange-500">-</span>stash
-          </h1>
-          <p className="text-zinc-400 text-base md:text-lg">
-            Your curated stash of developer tools and resources
-          </p>
-        </div>
+    <div className="h-full flex flex-col p-6 w-full max-w-7xl mx-auto overflow-y-auto">
+      <div className="w-full bg-card border border-border rounded-xl p-8 mb-8 text-center flex flex-col items-center justify-center space-y-4">
+        <h1 className="text-4xl font-semibold tracking-tight text-foreground">
+          syntax<span className="text-primary">-</span>stash
+        </h1>
+        <p className="text-sm text-muted-foreground font-mono">
+          A curated command center for modern web development.
+        </p>
+        <p className="text-xs text-muted-foreground font-mono mt-4">
+          Built with Next.js · handmade, no tracking.
+        </p>
+      </div>
 
-        <SpotlightSearch value={searchQuery} onChange={setSearchQuery} />
-
-        <FilterPills
-          categories={categories}
-          active={activeCategory}
-          onSelect={setActiveCategory}
-        />
-
-        <ToolGrid tools={filtered} />
+      <div className="w-full">
+        {tools.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full">
+            {tools.map((tool) => (
+              <ToolCard key={tool.url} tool={tool} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center text-muted-foreground text-sm mt-10">
+            No tools found.
+          </div>
+        )}
       </div>
     </div>
   );

@@ -48,7 +48,7 @@ export default function DocumentExtractorPage() {
   }
 
   return (
-    <div className="hacker-grid min-h-screen">
+    <div className="min-h-screen">
       <div className="relative z-10 max-w-6xl mx-auto px-4 py-16 md:py-24">
         <Link
           href="/"
