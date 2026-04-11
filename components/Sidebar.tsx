@@ -1,6 +1,10 @@
 import SidebarNav from "@/components/SidebarNav";
 
-export default function Sidebar() {
-  return <SidebarNav />;
-}
+type SidebarProps = {
+  isOpen: boolean;
+  onClose: () => void;
+};
 
+export default function Sidebar({ isOpen, onClose }: SidebarProps) {
+  return <SidebarNav isOpen={isOpen} onClose={onClose} />;
+}

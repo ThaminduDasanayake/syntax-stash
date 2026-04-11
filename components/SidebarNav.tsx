@@ -9,11 +9,17 @@ import {
   ChevronRight,
   Home,
   Box,
+  X,
 } from "lucide-react";
 import { cn, slugify } from "@/lib/utils";
 import { internalTools, resourceCategories } from "@/lib/data";
 
-export default function SidebarNav() {
+type SidebarNavProps = {
+  isOpen: boolean;
+  onClose: () => void;
+};
+
+export default function SidebarNav({ isOpen, onClose }: SidebarNavProps) {
   const pathname = usePathname();
 
   /** Active state for internal tool links */
@@ -38,18 +44,39 @@ export default function SidebarNav() {
   };
 
   return (
-    <aside className="w-60 h-screen flex flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground shrink-0">
+    <aside
+      className={cn(
+        "w-60 h-full flex flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground shrink-0 z-50",
+        // Mobile: fixed overlay that slides in/out
+        "fixed inset-y-0 left-0 transition-transform duration-300 ease-in-out",
+        // Desktop: static, always visible, no translate
+        "md:static md:translate-x-0 md:transition-none",
+        // Mobile open/closed state
+        isOpen ? "translate-x-0" : "-translate-x-full"
+      )}
+    >
       {/* ── Branding ──────────────────────────────────────────────── */}
-      <div className="p-4 border-b border-sidebar-border">
-        <Link
-          href="/"
-          className="block font-mono text-base font-semibold tracking-tight text-sidebar-foreground"
+      <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
+        <div>
+          <Link
+            href="/"
+            className="block font-mono text-base font-semibold tracking-tight text-sidebar-foreground"
+            onClick={onClose}
+          >
+            syntax<span className="text-primary">-</span>stash
+          </Link>
+          <p className="text-[11px] text-muted-foreground mt-0.5">
+            Developer swiss army knife
+          </p>
+        </div>
+        {/* Close button — mobile only */}
+        <button
+          onClick={onClose}
+          className="md:hidden p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+          aria-label="Close sidebar"
         >
-          syntax<span className="text-primary">-</span>stash
-        </Link>
-        <p className="text-[11px] text-muted-foreground mt-0.5">
-          Developer swiss army knife
-        </p>
+          <X size={16} />
+        </button>
       </div>
 
       {/* ── Navigation ────────────────────────────────────────────── */}
@@ -58,7 +85,7 @@ export default function SidebarNav() {
         <section>
           <ul className="space-y-0.5 mb-6">
             <li>
-              <Link href="/" className={toolLinkClass("/")}>
+              <Link href="/" className={toolLinkClass("/")} onClick={onClose}>
                 <Home size={16} className="shrink-0 text-foreground/80 w-4 h-4 mr-2" />
                 <span className="truncate">Home</span>
               </Link>
@@ -79,7 +106,7 @@ export default function SidebarNav() {
               const Icon = tool.icon || Box;
               return (
                 <li key={tool.url}>
-                  <Link href={tool.url} className={toolLinkClass(tool.url)}>
+                  <Link href={tool.url} className={toolLinkClass(tool.url)} onClick={onClose}>
                     <Icon className="shrink-0 text-primary w-4 h-4 mr-2" />
                     <span className="truncate">{tool.title}</span>
                   </Link>
@@ -103,7 +130,7 @@ export default function SidebarNav() {
           <ul className="space-y-0.5">
             {resourceCategories.map((cat) => (
               <li key={cat}>
-                <Link href={categorySlug(cat)} className={catLinkClass(cat)}>
+                <Link href={categorySlug(cat)} className={catLinkClass(cat)} onClick={onClose}>
                   <span className="truncate">{cat}</span>
                   <ChevronRight
                     size={12}

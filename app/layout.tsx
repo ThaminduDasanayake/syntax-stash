@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import { Geist_Mono, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import Sidebar from "@/components/Sidebar";
 import { ThemeProvider } from "@/components/theme-provider";
-import AppShell from "@/components/AppShell";
+import AppLayout from "@/components/AppLayout";
 
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-sans" });
 const jetbrainsMono = JetBrains_Mono({
@@ -35,10 +34,7 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          <Sidebar />
-          <main className="flex-1 overflow-hidden flex flex-col">
-            <AppShell>{children}</AppShell>
-          </main>
+          <AppLayout>{children}</AppLayout>
         </ThemeProvider>
       </body>
     </html>
