@@ -11,6 +11,7 @@ import {
   KeyRound,
   LayoutGrid,
   Palette,
+  PenTool,
   QrCode,
   Regex,
   ShieldHalf,
@@ -142,6 +143,13 @@ export const internalTools: Tool[] = [
     description: "Minify and clean bloated SVG files.",
     category: "Images & Assets",
     icon: FileImage,
+  },
+  {
+    title: "SVG Path Viewer",
+    url: "/tools/svg-path",
+    description: "Preview and edit SVG 'd' paths with real-time visualization.",
+    category: "Images & Assets",
+    icon: PenTool,
   },
   {
     title: "Base64 Image Decoder",
