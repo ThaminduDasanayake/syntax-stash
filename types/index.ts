@@ -1,6 +1,6 @@
 // Data Models
 import { LucideIcon } from "lucide-react";
-import { ElementType, ReactNode } from "react";
+import { ReactNode } from "react";
 
 export interface CodeFile {
   filename: string;
@@ -47,7 +47,7 @@ export type OptimizeResponse = OptimizeResult | OptimizeError;
 // Component Props
 export interface ToolLayoutProps {
   children: ReactNode;
-  icon: ElementType;
+  icon: LucideIcon;
   title: string;
   highlight?: string;
   description: string;
