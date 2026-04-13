@@ -7,10 +7,7 @@ export async function POST(request: Request) {
     const { prompt } = await request.json();
 
     if (!prompt || typeof prompt !== "string") {
-      return NextResponse.json(
-        { error: "A prompt string is required." },
-        { status: 400 },
-      );
+      return NextResponse.json({ error: "A prompt string is required." }, { status: 400 });
     }
 
     const { text } = await generateText({
@@ -25,9 +22,6 @@ export async function POST(request: Request) {
   } catch (error) {
     // This stops the frontend from crashing by returning a proper JSON error
     console.error("Gemini API Error:", error);
-    return NextResponse.json(
-      { error: "Failed to enhance prompt with AI." },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Failed to enhance prompt with AI." }, { status: 500 });
   }
 }

@@ -1,0 +1,6 @@
+{
+  "title": "NLP Pipeline Search Space",
+  "description": "A hyperparameter search space dictionary for Bayesian Optimization, covering vectorizers, scalers, and dimensionality reduction.",
+  "languages": ["Python"],
+  "files": ["search_space.py"]
+}

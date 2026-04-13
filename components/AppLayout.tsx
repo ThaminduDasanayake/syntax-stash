@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import Sidebar from "@/components/Sidebar";
-import AppShell from "@/components/AppShell";
+import { ReactNode, useState } from "react";
 
-export default function AppLayout({ children }: { children: React.ReactNode }) {
+import AppShell from "@/components/AppShell";
+import Sidebar from "@/components/Sidebar";
+
+export default function AppLayout({ children }: { children: ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -17,10 +18,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         />
       )}
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      <main className="flex-1 overflow-hidden flex flex-col min-w-0">
-        <AppShell onMenuOpen={() => setSidebarOpen(true)}>
-          {children}
-        </AppShell>
+      <main className="relative z-10 flex min-w-0 flex-1 flex-col overflow-hidden">
+        <AppShell onMenuOpenAction={() => setSidebarOpen(true)}>{children}</AppShell>
       </main>
     </>
   );

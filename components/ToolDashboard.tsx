@@ -1,17 +1,13 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import SpotlightSearch from "@/components/SpotlightSearch";
+import { useMemo, useState } from "react";
+
 import FilterPills from "@/components/FilterPills";
+import SpotlightSearch from "@/components/SpotlightSearch";
 import ToolGrid from "@/components/ToolGrid";
-import type { Tool } from "@/lib/data";
+import { ToolDashboardProps } from "@/types";
 
-type Props = {
-  tools: Tool[];
-  categories: string[];
-};
-
-export default function ToolDashboard({ tools, categories }: Props) {
+export default function ToolDashboard({ tools, categories }: ToolDashboardProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
 
@@ -19,22 +15,19 @@ export default function ToolDashboard({ tools, categories }: Props) {
     const q = searchQuery.toLowerCase();
     return tools.filter((tool) => {
       const matchesSearch =
-        !q ||
-        tool.title.toLowerCase().includes(q) ||
-        tool.description.toLowerCase().includes(q);
-      const matchesCategory =
-        activeCategory === "All" || tool.category === activeCategory;
+        !q || tool.title.toLowerCase().includes(q) || tool.description.toLowerCase().includes(q);
+      const matchesCategory = activeCategory === "All" || tool.category === activeCategory;
       return matchesSearch && matchesCategory;
     });
   }, [searchQuery, activeCategory, tools]);
 
   return (
     <>
-      <SpotlightSearch value={searchQuery} onChange={setSearchQuery} />
+      <SpotlightSearch value={searchQuery} onChangeAction={setSearchQuery} />
       <FilterPills
         categories={categories}
         active={activeCategory}
-        onSelect={setActiveCategory}
+        onSelectAction={setActiveCategory}
       />
       <ToolGrid tools={filtered} />
     </>

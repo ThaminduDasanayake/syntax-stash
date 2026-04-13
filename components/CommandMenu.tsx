@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { BookMarked, Wrench } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Wrench, BookMarked } from "lucide-react";
+import { useEffect } from "react";
+
 import {
   CommandDialog,
   CommandEmpty,
@@ -13,14 +14,14 @@ import {
   CommandSeparator,
 } from "@/components/ui/command";
 import { internalTools, resourceLinks } from "@/lib/data";
-import type { Tool } from "@/lib/data";
+import { Tool } from "@/types";
 
 type Props = {
   open: boolean;
-  setOpen: (open: boolean) => void;
+  setOpenAction: (open: boolean) => void;
 };
 
-export default function CommandMenu({ open, setOpen }: Props) {
+export default function CommandMenu({ open, setOpenAction }: Props) {
   const router = useRouter();
 
   // Register ⌘K / Ctrl+K
@@ -28,15 +29,15 @@ export default function CommandMenu({ open, setOpen }: Props) {
     const handler = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
-        setOpen(true);
+        setOpenAction(true);
       }
     };
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
-  }, [setOpen]);
+  }, [setOpenAction]);
 
   function handleSelect(tool: Tool) {
-    setOpen(false);
+    setOpenAction(false);
     if (tool.url.startsWith("/")) {
       router.push(tool.url);
     } else {
@@ -45,7 +46,7 @@ export default function CommandMenu({ open, setOpen }: Props) {
   }
 
   return (
-    <CommandDialog open={open} onOpenChange={setOpen}>
+    <CommandDialog open={open} onOpenChange={setOpenAction}>
       <CommandInput placeholder="Search tools and resources..." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
@@ -61,7 +62,7 @@ export default function CommandMenu({ open, setOpen }: Props) {
               <Wrench size={14} className="text-primary shrink-0" />
               <div className="flex flex-col">
                 <span className="font-medium">{tool.title}</span>
-                <span className="text-xs text-muted-foreground">{tool.description}</span>
+                <span className="text-muted-foreground text-xs">{tool.description}</span>
               </div>
             </CommandItem>
           ))}
@@ -80,7 +81,9 @@ export default function CommandMenu({ open, setOpen }: Props) {
               <BookMarked size={14} className="text-muted-foreground shrink-0" />
               <div className="flex flex-col">
                 <span className="font-medium">{tool.title}</span>
-                <span className="text-xs text-muted-foreground">{tool.category} · {tool.description}</span>
+                <span className="text-muted-foreground text-xs">
+                  {tool.category} · {tool.description}
+                </span>
               </div>
             </CommandItem>
           ))}

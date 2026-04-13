@@ -6,5 +6,5 @@ type SidebarProps = {
 };
 
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
-  return <SidebarNav isOpen={isOpen} onClose={onClose} />;
+  return <SidebarNav isOpen={isOpen} onCloseAction={onClose} />;
 }

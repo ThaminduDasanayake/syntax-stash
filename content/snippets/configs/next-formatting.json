@@ -1,0 +1,11 @@
+{
+  "title": "Next.js Lint & Format Bundle",
+  "description": "The ultimate flat config for Next.js 15+. Includes simple-import-sort, Prettier integration, and Tailwind class sorting.",
+  "languages": ["JavaScript"],
+  "setup": "npm install -D prettier eslint-config-prettier prettier-plugin-tailwindcss eslint-plugin-simple-import-sort",
+  "instructions": [
+    "Add to package.json scripts: \"format\": \"prettier --write .\"",
+    "Add to package.json scripts: \"format:check\": \"prettier --check .\""
+  ],
+  "files": ["eslint.config.mjs", "prettier.config.mjs"]
+}

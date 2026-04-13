@@ -1,0 +1,6 @@
+{
+  "title": "Python CLI Boilerplate",
+  "description": "A clean starting point for a Python script using argparse, proper error handling, and the standard __main__ execution block.",
+  "languages": ["Python"],
+  "files": ["python-cli.py"]
+}

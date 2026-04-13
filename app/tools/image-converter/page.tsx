@@ -1,8 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
 import { ArrowLeft, Download } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
+import FileDropzone from "@/components/FileDropzone";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
@@ -12,7 +15,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import FileDropzone from "@/components/FileDropzone";
 
 type Format = "image/webp" | "image/jpeg" | "image/png";
 const EXT_MAP: Record<Format, string> = {
@@ -64,7 +66,7 @@ export default function ImageConverterPage() {
     setError(null);
 
     try {
-      const img = new Image();
+      const img = new window.Image();
       img.src = previewUrl;
       await new Promise<void>((resolve, reject) => {
         img.onload = () => resolve();
@@ -75,7 +77,12 @@ export default function ImageConverterPage() {
       canvas.width = img.naturalWidth;
       canvas.height = img.naturalHeight;
       const ctx = canvas.getContext("2d");
-      if (!ctx) throw new Error("Canvas context unavailable.");
+
+      if (!ctx) {
+        setError("Canvas context unavailable.");
+        setIsConverting(false);
+        return;
+      }
 
       // Fill white background before drawing for JPEG (no alpha channel)
       if (format === "image/jpeg") {
@@ -112,51 +119,51 @@ export default function ImageConverterPage() {
 
   return (
     <div className="min-h-screen">
-      <div className="relative z-10 max-w-6xl mx-auto px-4 py-16 md:py-24">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 py-16 md:py-24">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-zinc-400 hover:text-white transition-colors mb-12 text-sm"
+          className="mb-12 inline-flex items-center gap-2 text-sm text-zinc-400 transition-colors hover:text-white"
         >
           <ArrowLeft size={16} />
           Back to stash
         </Link>
 
         <div className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tighter text-white mb-3">
+          <h1 className="mb-3 text-4xl font-bold tracking-tighter text-white md:text-5xl">
             Omni-Image <span className="text-orange-500">Converter</span>
           </h1>
-          <p className="text-zinc-400 text-base md:text-lg">
+          <p className="text-base text-zinc-400 md:text-lg">
             Convert images locally between WebP, JPEG, and PNG — never uploaded to a server.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
           {/* Left — Dropzone or Preview */}
           <div className="space-y-4">
             <Label className="text-zinc-300">Image</Label>
             {!file ? (
               <FileDropzone
-                onFileDrop={handleFileDrop}
+                onFileDropAction={handleFileDrop}
                 accept="image/*"
                 label="Drop an image here"
               />
             ) : (
               <div className="space-y-3">
-                <img
+                <Image
                   src={previewUrl!}
                   alt="Preview"
-                  className="rounded-xl max-h-96 w-auto border border-white/10 object-contain"
+                  className="max-h-96 w-auto rounded-xl border border-white/10 object-contain"
                 />
                 <Button
                   variant="ghost"
                   onClick={handleReplace}
-                  className="text-zinc-500 hover:text-zinc-300 text-xs px-0"
+                  className="px-0 text-xs text-zinc-500 hover:text-zinc-300"
                 >
                   Replace image
                 </Button>
               </div>
             )}
-            {error && <p className="text-red-400 text-sm">{error}</p>}
+            {error && <p className="text-sm text-red-400">{error}</p>}
           </div>
 
           {/* Right — Format & Convert */}
@@ -164,17 +171,26 @@ export default function ImageConverterPage() {
             <div className="space-y-2">
               <Label className="text-zinc-300">Target Format</Label>
               <Select value={format} onValueChange={handleFormatChange}>
-                <SelectTrigger className="w-full h-10 bg-[#0C0C0C] border-white/10 text-white">
+                <SelectTrigger className="h-10 w-full border-white/10 bg-[#0C0C0C] text-white">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-[#0C0C0C] border-white/10">
-                  <SelectItem value="image/webp" className="text-zinc-300 focus:bg-white/5 focus:text-white">
+                <SelectContent className="border-white/10 bg-[#0C0C0C]">
+                  <SelectItem
+                    value="image/webp"
+                    className="text-zinc-300 focus:bg-white/5 focus:text-white"
+                  >
                     WebP
                   </SelectItem>
-                  <SelectItem value="image/jpeg" className="text-zinc-300 focus:bg-white/5 focus:text-white">
+                  <SelectItem
+                    value="image/jpeg"
+                    className="text-zinc-300 focus:bg-white/5 focus:text-white"
+                  >
                     JPEG
                   </SelectItem>
-                  <SelectItem value="image/png" className="text-zinc-300 focus:bg-white/5 focus:text-white">
+                  <SelectItem
+                    value="image/png"
+                    className="text-zinc-300 focus:bg-white/5 focus:text-white"
+                  >
                     PNG
                   </SelectItem>
                 </SelectContent>
@@ -184,7 +200,7 @@ export default function ImageConverterPage() {
             <Button
               onClick={handleConvert}
               disabled={!file || isConverting}
-              className="rounded-full px-6 py-2 border border-orange-500/30 bg-orange-500/10 text-orange-400 font-semibold hover:bg-orange-500/20 transition-all duration-200 disabled:opacity-50"
+              className="rounded-full border border-orange-500/30 bg-orange-500/10 px-6 py-2 font-semibold text-orange-400 transition-all duration-200 hover:bg-orange-500/20 disabled:opacity-50"
             >
               <Download size={16} className="mr-2" />
               {isConverting ? "Converting..." : "Convert & Download"}

@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { ArrowLeft, Check, Copy, Sparkles } from "lucide-react";
 import Link from "next/link";
-import { ArrowLeft, Copy, Check, Sparkles } from "lucide-react";
+import { useMemo,useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { promptTemplates } from "@/lib/prompt-templates";
 
 export default function PromptEnhancerPage() {
@@ -71,17 +72,17 @@ export default function PromptEnhancerPage() {
 
   return (
     <div className="min-h-screen">
-      <div className="relative z-10 max-w-6xl mx-auto px-4 py-16 md:py-24">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 py-16 md:py-24">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-12 text-sm"
+          className="text-muted-foreground hover:text-foreground mb-12 inline-flex items-center gap-2 text-sm transition-colors"
         >
           <ArrowLeft size={16} />
           Back to stash
         </Link>
 
         <div className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tighter text-foreground mb-3">
+          <h1 className="text-foreground mb-3 text-4xl font-bold tracking-tighter md:text-5xl">
             Prompt <span className="text-primary">Enhancer</span>
           </h1>
           <p className="text-muted-foreground text-base md:text-lg">
@@ -89,18 +90,22 @@ export default function PromptEnhancerPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
           {/* Left Column — Selection & Inputs */}
           <div className="space-y-6">
             <div className="space-y-2">
               <Label className="text-foreground">Template</Label>
               <Select value={selectedId} onValueChange={handleTemplateChange}>
-                <SelectTrigger className="w-full h-10 bg-background border-border text-foreground">
+                <SelectTrigger className="bg-background border-border text-foreground h-10 w-full">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border text-foreground">
                   {promptTemplates.map((t) => (
-                    <SelectItem key={t.id} value={t.id} className="text-muted-foreground focus:bg-accent focus:text-foreground">
+                    <SelectItem
+                      key={t.id}
+                      value={t.id}
+                      className="text-muted-foreground focus:bg-accent focus:text-foreground"
+                    >
                       {t.title}
                     </SelectItem>
                   ))}
@@ -118,14 +123,14 @@ export default function PromptEnhancerPage() {
                     onChange={(e) => handleVarChange(v, e.target.value)}
                     placeholder={`Enter ${v.toLowerCase()}...`}
                     rows={6}
-                    className="bg-background border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-primary/30"
+                    className="bg-background border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-primary/30 focus-visible:ring-1"
                   />
                 ) : (
                   <Input
                     value={values[v] || ""}
                     onChange={(e) => handleVarChange(v, e.target.value)}
                     placeholder={`Enter ${v.toLowerCase()}...`}
-                    className="h-10 bg-background border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-primary/30"
+                    className="bg-background border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-primary/30 h-10 focus-visible:ring-1"
                   />
                 )}
               </div>
@@ -139,14 +144,14 @@ export default function PromptEnhancerPage() {
               readOnly
               value={displayOutput}
               rows={14}
-              className="bg-background border-border text-foreground font-mono text-sm leading-relaxed resize-none focus-visible:ring-1 focus-visible:ring-primary/30"
+              className="bg-background border-border text-foreground focus-visible:ring-primary/30 resize-none font-mono text-sm leading-relaxed focus-visible:ring-1"
             />
             <div className="flex gap-3">
               <Button
                 variant="outline"
                 onClick={handleEnhance}
                 disabled={isEnhancing}
-                className="rounded-full px-6 py-2 border-primary/30 bg-primary/10 text-primary font-semibold hover:bg-primary/20 transition-all duration-200 disabled:opacity-50"
+                className="border-primary/30 bg-primary/10 text-primary hover:bg-primary/20 rounded-full px-6 py-2 font-semibold transition-all duration-200 disabled:opacity-50"
               >
                 <Sparkles size={16} className="mr-2" />
                 {isEnhancing ? "Enhancing..." : "Enhance with AI"}
@@ -154,7 +159,7 @@ export default function PromptEnhancerPage() {
               <Button
                 onClick={handleCopy}
                 disabled={isEnhancing}
-                className="rounded-full px-6 py-2 bg-foreground text-background font-semibold hover:bg-foreground/90 transition-all duration-200 disabled:opacity-50"
+                className="bg-foreground text-background hover:bg-foreground/90 rounded-full px-6 py-2 font-semibold transition-all duration-200 disabled:opacity-50"
               >
                 {copied ? (
                   <>

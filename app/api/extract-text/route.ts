@@ -31,19 +31,11 @@ export async function POST(request: Request) {
       const { value: html } = await mammoth.convertToHtml({ buffer });
       const TurndownService = (await import("turndown")).default;
       text = new TurndownService().turndown(html);
-    } else if (
-      type === "text/plain" ||
-      type === "text/csv" ||
-      ext === "txt" ||
-      ext === "csv"
-    ) {
+    } else if (type === "text/plain" || type === "text/csv" || ext === "txt" || ext === "csv") {
       // MIME type for .txt/.csv is often empty or application/octet-stream in browsers
       text = buffer.toString("utf-8");
     } else {
-      return NextResponse.json(
-        { error: `Unsupported file type: ${type || ext}` },
-        { status: 400 },
-      );
+      return NextResponse.json({ error: `Unsupported file type: ${type || ext}` }, { status: 400 });
     }
 
     return NextResponse.json({ text });

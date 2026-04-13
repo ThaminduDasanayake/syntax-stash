@@ -1,14 +1,10 @@
-import Link from "next/link";
 import { ExternalLink, Sparkles } from "lucide-react";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
+import Image from "next/image";
+import Link from "next/link";
+
 import { Badge } from "@/components/ui/badge";
-import type { Tool } from "@/lib/data";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tool } from "@/types";
 
 type Props = {
   tool: Tool;
@@ -27,42 +23,37 @@ function CardBody({ tool }: Props) {
   const hostname = isInternal ? null : getHostname(tool.url);
 
   return (
-    <Card className="bg-card text-card-foreground border-border ring-0 py-4 h-full w-full flex flex-col transition-colors">
+    <Card className="bg-card text-card-foreground border-border flex h-full w-full flex-col py-4 ring-0 transition-colors">
       <CardHeader className="flex-none">
         <div className="flex flex-row items-center gap-3">
           {isInternal ? (
-            <div className="w-8 h-8 rounded-md bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
+            <div className="bg-primary/10 border-primary/20 flex h-8 w-8 shrink-0 items-center justify-center rounded-md border">
               <Sparkles size={14} className="text-primary" />
             </div>
           ) : (
-            <img
+            <Image
               src={`https://www.google.com/s2/favicons?domain=${hostname}&sz=128`}
               alt={`${tool.title} logo`}
               width={32}
               height={32}
-              className="w-8 h-8 rounded-md bg-white/10 border border-white/10 p-1 shrink-0"
+              className="h-8 w-8 shrink-0 rounded-md border border-white/10 bg-white/10 p-1"
             />
           )}
-          <div className="flex-1 min-w-0">
+          <div className="min-w-0 flex-1">
             <div className="flex items-start justify-between gap-2">
-              <CardTitle className="text-foreground font-semibold">
-                {tool.title}
-              </CardTitle>
+              <CardTitle className="text-foreground font-semibold">{tool.title}</CardTitle>
               {isInternal ? null : (
-                <ExternalLink
-                  size={14}
-                  className="text-muted-foreground shrink-0 mt-0.5"
-                />
+                <ExternalLink size={14} className="text-muted-foreground mt-0.5 shrink-0" />
               )}
             </div>
           </div>
         </div>
-        <CardDescription className="text-muted-foreground leading-relaxed mt-2 text-sm line-clamp-2">
+        <CardDescription className="text-muted-foreground mt-2 line-clamp-2 text-sm leading-relaxed">
           {tool.description}
         </CardDescription>
       </CardHeader>
-      <CardContent className="mt-auto pt-4 flex-none">
-        <Badge className="bg-primary/10 text-primary hover:bg-primary/20 text-[11px] lowercase tracking-wide border-none px-2 py-0.5">
+      <CardContent className="mt-auto flex-none pt-4">
+        <Badge className="bg-primary/10 text-primary hover:bg-primary/20 border-none px-2 py-0.5 text-[11px] tracking-wide lowercase">
           {tool.category}
         </Badge>
       </CardContent>
@@ -84,12 +75,7 @@ export default function ToolCard({ tool }: Props) {
   }
 
   return (
-    <a
-      href={tool.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={className}
-    >
+    <a href={tool.url} target="_blank" rel="noopener noreferrer" className={className}>
       <CardBody tool={tool} />
     </a>
   );

@@ -1,9 +1,12 @@
+import "./globals.css";
+
 import type { Metadata } from "next";
 import { Geist_Mono, JetBrains_Mono } from "next/font/google";
-import "./globals.css";
-import { cn } from "@/lib/utils";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ReactNode } from "react";
+
 import AppLayout from "@/components/AppLayout";
+import { ThemeProvider } from "@/components/theme-provider";
+import { cn } from "@/lib/utils";
 
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-sans" });
 const jetbrainsMono = JetBrains_Mono({
@@ -19,7 +22,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html
@@ -27,7 +30,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={cn(geistMono.variable, jetbrainsMono.variable)}
     >
-      <body className="flex h-screen overflow-hidden bg-background text-foreground antialiased">
+      <body className="bg-background text-foreground hacker-grid flex h-screen overflow-hidden antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

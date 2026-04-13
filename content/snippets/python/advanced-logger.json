@@ -1,0 +1,6 @@
+{
+  "title": "Advanced Rotating Logger",
+  "description": "A production-ready Python logging setup that outputs to the console and safely writes to a rotating log file to prevent disk overflow.",
+  "languages": ["Python"],
+  "files": ["advanced-logger.py"]
+}

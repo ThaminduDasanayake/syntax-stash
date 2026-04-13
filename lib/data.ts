@@ -1,12 +1,21 @@
-import { Sparkles, ImageIcon, FileText, Regex, Palette, KeyRound } from "lucide-react";
+import {
+  Braces,
+  Clock,
+  CodeXml,
+  Database,
+  FileImage,
+  FileText,
+  Fingerprint,
+  ImageIcon,
+  KeyRound,
+  Palette,
+  QrCode,
+  Regex,
+  ShieldHalf,
+  Sparkles,
+} from "lucide-react";
 
-export type Tool = {
-  title: string;
-  url: string;
-  description: string;
-  category: string;
-  icon?: any;
-};
+import { Tool } from "@/types";
 
 // ─── Internal Tools ──────────────────────────────────────────────────────────
 // These are the functional utilities built into syntax-stash.
@@ -29,34 +38,105 @@ export const internalTools: Tool[] = [
   {
     title: "Universal Document Extractor",
     url: "/tools/document-extractor",
-    description:
-      "Extract clean text/markdown from PDF, DOCX, CSV, and TXT files.",
+    description: "Extract clean text/markdown from PDF, DOCX, CSV, and TXT files.",
     category: "Utilities",
     icon: FileText,
   },
 
-  // --- PLACEHOLDERS (coming soon) ---
   {
     title: "Regex Tester",
     url: "/tools/regex",
     description: "Test and debug regular expressions with real-time match highlighting.",
     category: "Utilities",
+    icon: Regex,
   },
   {
     title: "Color Space Converter",
     url: "/tools/color",
     description: "Convert colors between HEX, RGB, HSL, OKLCH, and more.",
     category: "Utilities",
+    icon: Palette,
   },
   {
     title: "JWT Decoder",
     url: "/tools/jwt",
     description: "Decode and inspect JSON Web Tokens locally in your browser.",
     category: "Utilities",
+    icon: KeyRound,
+  },
+  {
+    title: "JSON Transformer",
+    url: "/tools/json",
+    description: "Format, minify, and generate TypeScript interfaces from JSON.",
+    category: "Utilities",
+    icon: Braces,
+  },
+  {
+    title: "Encoder / Decoder",
+    url: "/tools/encoder",
+    description: "Convert strings between Base64, URL, and Hex encoding.",
+    category: "Utilities",
+    icon: ShieldHalf,
+  },
+  {
+    title: "Text Analyzer",
+    url: "/tools/analyzer",
+    description: "Analyze text for word counts, bytes, and estimated LLM tokens.",
+    category: "Utilities",
+    icon: FileText,
+  },
+  {
+    title: "Cron Translator",
+    url: "/tools/cron",
+    description: "Convert cron expressions to human-readable text and upcoming dates.",
+    category: "Utilities",
+    icon: Clock,
+  },
+  {
+    title: "Hash Generator",
+    url: "/tools/hash",
+    description: "Generate secure cryptographic hashes locally.",
+    category: "Utilities",
+    icon: Fingerprint,
+  },
+  {
+    title: "Mock Data Generator",
+    url: "/tools/mock-data",
+    description: "Generate structured dummy JSON data for testing.",
+    category: "Utilities",
+    icon: Database,
+  },
+  {
+    title: "Tailwind Shades",
+    url: "/tools/tailwind-shades",
+    description: "Generate a full 50–950 Tailwind color scale from a single hex.",
+    category: "UI & Styling",
+    icon: Palette,
+  },
+  {
+    title: "SVG Optimizer",
+    url: "/tools/svg-optimizer",
+    description: "Minify and clean bloated SVG files.",
+    category: "Images & Assets",
+    icon: FileImage,
+  },
+  {
+    title: "QR Generator",
+    url: "/tools/qr-generator",
+    description: "Generate downloadable QR codes instantly.",
+    category: "Other Tools",
+    icon: QrCode,
+  },
+  {
+    title: "Code Stash",
+    url: "/tools/code-stash",
+    description: "A curated library of developer snippets and configurations.",
+    category: "Utilities",
+    icon: CodeXml,
   },
 ];
 
-// ─── Resource Links ───────────────────────────────────────────────────────────
+// Resource Links
 // All external bookmarks — curated developer resources and references.
 export const resourceLinks: Tool[] = [
   // --- UI & STYLING ---
@@ -269,8 +349,7 @@ export const resourceLinks: Tool[] = [
   {
     title: "Web Skills",
     url: "https://andreasbm.github.io/web-skills/",
-    description:
-      "A visual overview of useful skills to learn as a web developer.",
+    description: "A visual overview of useful skills to learn as a web developer.",
     category: "Learning",
   },
   {
@@ -328,8 +407,7 @@ export const resourceLinks: Tool[] = [
   {
     title: "Public APIs",
     url: "https://github.com/public-apis/public-apis",
-    description:
-      "A collective list of free APIs for use in software and web development.",
+    description: "A collective list of free APIs for use in software and web development.",
     category: "APIs & Data",
   },
   {
@@ -361,8 +439,7 @@ export const resourceLinks: Tool[] = [
   {
     title: "App Ideas",
     url: "https://github.com/florinpop17/app-ideas",
-    description:
-      "A Collection of application ideas to improve your coding skills.",
+    description: "A Collection of application ideas to improve your coding skills.",
     category: "Open Source",
   },
   {
@@ -386,8 +463,7 @@ export const resourceLinks: Tool[] = [
   {
     title: "You Don't Know JS",
     url: "https://github.com/getify/You-Dont-Know-JS",
-    description:
-      "Book series diving deep into the core mechanisms of JavaScript.",
+    description: "Book series diving deep into the core mechanisms of JavaScript.",
     category: "Open Source",
   },
   {
@@ -399,8 +475,7 @@ export const resourceLinks: Tool[] = [
   {
     title: "Awesome JavaScript",
     url: "https://github.com/sorrycc/awesome-javascript",
-    description:
-      "A collection of awesome browser-side JS libraries and resources.",
+    description: "A collection of awesome browser-side JS libraries and resources.",
     category: "Open Source",
   },
   {

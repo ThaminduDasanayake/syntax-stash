@@ -1,0 +1,6 @@
+{
+  "title": "Next.js Multi-stage Dockerfile",
+  "description": "A production-ready Docker container setup that minimizes build size and isolates the runner environment.",
+  "languages": ["Dockerfile"],
+  "files": ["Dockerfile"]
+}

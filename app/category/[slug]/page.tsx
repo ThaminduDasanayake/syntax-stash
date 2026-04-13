@@ -1,8 +1,9 @@
-import { notFound } from "next/navigation";
 import { ExternalLink } from "lucide-react";
-import { resourceLinks, resourceCategories } from "@/lib/data";
-import { slugify } from "@/lib/utils";
+import { notFound } from "next/navigation";
+
 import ToolCard from "@/components/ToolCard";
+import { resourceCategories,resourceLinks } from "@/lib/data";
+import { slugify } from "@/lib/utils";
 
 // Tell Next.js which slugs are valid at build time
 export function generateStaticParams() {
@@ -19,26 +20,24 @@ export default async function CategoryPage(props: PageProps<"/category/[slug]">)
   const links = resourceLinks.filter((t) => t.category === category);
 
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="mx-auto max-w-6xl">
       {/* Page header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground">
-          {category}
-        </h1>
-        <p className="text-sm text-muted-foreground mt-1">
+        <h1 className="text-foreground text-2xl font-semibold tracking-tight">{category}</h1>
+        <p className="text-muted-foreground mt-1 text-sm">
           {links.length} curated resource{links.length !== 1 ? "s" : ""}
         </p>
       </div>
 
       {/* Resource grid */}
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full">
+      <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {links.map((tool) => (
           <ToolCard key={tool.url} tool={tool} />
         ))}
       </div>
 
       {/* Footer note */}
-      <p className="mt-10 flex items-center gap-1.5 text-xs text-muted-foreground">
+      <p className="text-muted-foreground mt-10 flex items-center gap-1.5 text-xs">
         <ExternalLink size={12} />
         All links open in a new tab.
       </p>

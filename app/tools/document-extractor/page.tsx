@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { ArrowLeft, Check, Copy } from "lucide-react";
 import Link from "next/link";
-import { ArrowLeft, Copy, Check } from "lucide-react";
+import { useState } from "react";
+
+import FileDropzone from "@/components/FileDropzone";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import FileDropzone from "@/components/FileDropzone";
 
 export default function DocumentExtractorPage() {
   const [fileName, setFileName] = useState<string | null>(null);
@@ -49,43 +50,41 @@ export default function DocumentExtractorPage() {
 
   return (
     <div className="min-h-screen">
-      <div className="relative z-10 max-w-6xl mx-auto px-4 py-16 md:py-24">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 py-16 md:py-24">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-zinc-400 hover:text-white transition-colors mb-12 text-sm"
+          className="mb-12 inline-flex items-center gap-2 text-sm text-zinc-400 transition-colors hover:text-white"
         >
           <ArrowLeft size={16} />
           Back to stash
         </Link>
 
         <div className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tighter text-white mb-3">
+          <h1 className="mb-3 text-4xl font-bold tracking-tighter text-white md:text-5xl">
             Universal Document <span className="text-orange-500">Extractor</span>
           </h1>
-          <p className="text-zinc-400 text-base md:text-lg">
+          <p className="text-base text-zinc-400 md:text-lg">
             Extract clean text from PDF, DOCX, TXT, and CSV files for AI prompting.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
           {/* Left — Dropzone & Status */}
           <div className="space-y-4">
             <Label className="text-zinc-300">File</Label>
             <FileDropzone
-              onFileDrop={handleFileDrop}
+              onFileDropAction={handleFileDrop}
               accept=".pdf,.docx,.txt,.csv"
               label="Drop a PDF, DOCX, TXT, or CSV file"
             />
             <div className="space-y-1">
               {fileName && (
-                <p className="text-zinc-400 text-xs">
+                <p className="text-xs text-zinc-400">
                   {fileName}
-                  {isLoading && (
-                    <span className="text-orange-400 ml-2">Extracting...</span>
-                  )}
+                  {isLoading && <span className="ml-2 text-orange-400">Extracting...</span>}
                 </p>
               )}
-              {error && <p className="text-red-400 text-sm">{error}</p>}
+              {error && <p className="text-sm text-red-400">{error}</p>}
             </div>
           </div>
 
@@ -97,12 +96,12 @@ export default function DocumentExtractorPage() {
               value={text}
               rows={18}
               placeholder="Extracted text will appear here..."
-              className="bg-[#0C0C0C] border-white/10 text-zinc-200 font-mono text-sm leading-relaxed resize-none focus-visible:ring-0 focus-visible:border-white/10 placeholder:text-zinc-700"
+              className="resize-none border-white/10 bg-[#0C0C0C] font-mono text-sm leading-relaxed text-zinc-200 placeholder:text-zinc-700 focus-visible:border-white/10 focus-visible:ring-0"
             />
             <Button
               onClick={handleCopy}
               disabled={!text || isLoading}
-              className="rounded-full px-6 py-2 bg-white text-zinc-950 font-semibold hover:bg-zinc-200 transition-all duration-200 disabled:opacity-50"
+              className="rounded-full bg-white px-6 py-2 font-semibold text-zinc-950 transition-all duration-200 hover:bg-zinc-200 disabled:opacity-50"
             >
               {copied ? (
                 <>

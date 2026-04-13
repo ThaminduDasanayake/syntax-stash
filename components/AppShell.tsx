@@ -1,25 +1,26 @@
 "use client";
 
-import { useState } from "react";
-import Header from "@/components/Header";
+import { ReactNode, useState } from "react";
+
 import CommandMenu from "@/components/CommandMenu";
+import Header from "@/components/Header";
 
 type AppShellProps = {
-  children: React.ReactNode;
-  onMenuOpen: () => void;
+  children: ReactNode;
+  onMenuOpenAction: () => void;
 };
 
-export default function AppShell({ children, onMenuOpen }: AppShellProps) {
+export default function AppShell({ children, onMenuOpenAction }: AppShellProps) {
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <Header onSearchOpen={() => setOpen(true)} onMenuOpen={onMenuOpen} />
+      <Header onSearchOpenAction={() => setOpen(true)} onMenuOpenAction={onMenuOpenAction} />
       {/* Scrollbar fix: keep padding on inner div, not on the scroll container */}
       <div className="flex-1 overflow-y-auto">
         <div className="p-8">{children}</div>
       </div>
-      <CommandMenu open={open} setOpen={setOpen} />
+      <CommandMenu open={open} setOpenAction={setOpen} />
     </>
   );
 }

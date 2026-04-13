@@ -1,0 +1,6 @@
+{
+  "title": "ThreeJS Interactive Cube",
+  "description": "A basic boilerplate for a rotating 3D cube in React Three Fiber.",
+  "languages": ["TypeScript"],
+  "files": ["cube.tsx"]
+}
