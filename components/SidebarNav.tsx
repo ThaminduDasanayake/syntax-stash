@@ -6,11 +6,7 @@ import { usePathname } from "next/navigation";
 
 import { internalTools, resourceCategories } from "@/lib/data";
 import { cn, slugify } from "@/lib/utils";
-
-type SidebarNavProps = {
-  isOpen: boolean;
-  onCloseAction: () => void;
-};
+import { SidebarNavProps } from "@/types";
 
 export default function SidebarNav({ isOpen, onCloseAction }: SidebarNavProps) {
   const pathname = usePathname();

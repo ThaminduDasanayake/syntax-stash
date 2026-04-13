@@ -3,13 +3,9 @@
 import { Search } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
+import { SpotlightSearchProps } from "@/types";
 
-type Props = {
-  onChangeAction: (value: string) => void;
-  value: string;
-};
-
-export default function SpotlightSearch({ value, onChangeAction }: Props) {
+export default function SpotlightSearch({ value, onChangeAction }: SpotlightSearchProps) {
   return (
     <div className="relative mx-auto w-full max-w-2xl">
       <div className="relative flex items-center">

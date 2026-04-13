@@ -4,11 +4,9 @@ import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tool } from "@/types";
+import { Tool, ToolCardProps } from "@/types";
 
-type Props = {
-  tool: Tool;
-};
+type Props = ToolCardProps;
 
 function getHostname(url: string): string {
   try {

@@ -13,6 +13,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
+import { HeaderProps } from "@/types";
 
 /** Convert a URL segment to a human-readable label.
  *  e.g. "prompt-enhancer" → "Prompt Enhancer"
@@ -27,11 +28,6 @@ function segmentToLabel(segment: string): string {
 const sectionLabels: Record<string, string> = {
   tools: "Tools",
   category: "Resources",
-};
-
-type HeaderProps = {
-  onMenuOpenAction: () => void;
-  onSearchOpenAction: () => void;
 };
 
 export default function Header({ onSearchOpenAction, onMenuOpenAction }: HeaderProps) {

@@ -1,14 +1,10 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 
 import CommandMenu from "@/components/CommandMenu";
 import Header from "@/components/Header";
-
-type AppShellProps = {
-  children: ReactNode;
-  onMenuOpenAction: () => void;
-};
+import { AppShellProps } from "@/types";
 
 export default function AppShell({ children, onMenuOpenAction }: AppShellProps) {
   const [open, setOpen] = useState(false);

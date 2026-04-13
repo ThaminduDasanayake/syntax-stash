@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { JsonResult } from "@/types";
 
 type Mode = "format" | "minify" | "typescript";
 
@@ -44,15 +45,13 @@ function generateInterface(parsed: unknown): string {
   return `type GeneratedType = ${body};`;
 }
 
-type Result = { ok: true; output: string } | { ok: false; error: string };
-
 export default function JsonTransformerPage() {
   const [input, setInput] = useState(
     '{\n  "name": "syntax-stash",\n  "version": 1,\n  "features": ["fast", "local", "focused"]\n}',
   );
   const [mode, setMode] = useState<Mode>("format");
 
-  const result = useMemo<Result>(() => {
+  const result = useMemo<JsonResult>(() => {
     const trimmed = input.trim();
     if (!trimmed) return { ok: true, output: "" };
 

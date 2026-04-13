@@ -8,10 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { HashAlgo } from "@/types";
 
-type Algo = { id: string; name: string; subtleName: string };
-
-const ALGOS: Algo[] = [
+const ALGOS: HashAlgo[] = [
   { id: "sha1", name: "SHA-1", subtleName: "SHA-1" },
   { id: "sha256", name: "SHA-256", subtleName: "SHA-256" },
   { id: "sha384", name: "SHA-384", subtleName: "SHA-384" },
