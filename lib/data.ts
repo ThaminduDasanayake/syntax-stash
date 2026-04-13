@@ -6,6 +6,7 @@ import {
   FileImage,
   FileText,
   Fingerprint,
+  Image,
   ImageIcon,
   KeyRound,
   Palette,
@@ -133,6 +134,13 @@ export const internalTools: Tool[] = [
     description: "Minify and clean bloated SVG files.",
     category: "Images & Assets",
     icon: FileImage,
+  },
+  {
+    title: "Base64 Image Decoder",
+    url: "/tools/base64-image",
+    description: "Decode and preview base64-encoded images locally.",
+    category: "Images & Assets",
+    icon: Image,
   },
   {
     title: "QR Generator",
