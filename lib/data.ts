@@ -100,6 +100,13 @@ export const internalTools: Tool[] = [
     icon: Clock,
   },
   {
+    title: "Unix Timestamp Converter",
+    url: "/tools/timestamp",
+    description: "Convert Unix epoch timestamps to human-readable dates.",
+    category: "Utilities",
+    icon: Clock,
+  },
+  {
     title: "Hash Generator",
     url: "/tools/hash",
     description: "Generate secure cryptographic hashes locally.",
