@@ -1,10 +1,4 @@
-export type PromptTemplate = {
-  id: string;
-  title: string;
-  description: string;
-  template: string;
-  variables: string[];
-};
+import { PromptTemplate } from "@/types";
 
 export const promptTemplates: PromptTemplate[] = [
   {

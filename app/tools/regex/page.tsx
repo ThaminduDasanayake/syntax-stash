@@ -8,10 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-
-type Match = { value: string; index: number; groups: string[] };
-
-type Result = { ok: true; matches: Match[] } | { ok: false; error: string };
+import { RegexResult } from "@/types";
 
 export default function RegexTesterPage() {
   const [pattern, setPattern] = useState("[a-z]+");
@@ -20,7 +17,7 @@ export default function RegexTesterPage() {
     "Hello world 123\nThe quick brown fox jumps over the lazy dog.",
   );
 
-  const result = useMemo<Result>(() => {
+  const result = useMemo<RegexResult>(() => {
     if (!pattern) return { ok: true, matches: [] };
 
     try {

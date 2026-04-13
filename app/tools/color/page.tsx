@@ -7,8 +7,7 @@ import { useState } from "react";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
-type Field = "hex" | "rgb" | "hsl" | "oklch";
+import { ColorField } from "@/types";
 
 function formatRgb(c: chroma.Color) {
   const [r, g, b] = c.rgb();
@@ -27,7 +26,7 @@ function formatOklch(c: chroma.Color) {
   return `oklch(${l.toFixed(3)} ${chr.toFixed(3)} ${hh})`;
 }
 
-function parseColor(field: Field, value: string): chroma.Color {
+function parseColor(field: ColorField, value: string): chroma.Color {
   if (field === "oklch") {
     const m = value.trim().match(/^oklch\s*\(\s*([\d.]+%?)\s+([\d.]+)\s+(-?[\d.]+)\s*\)$/i);
     if (!m) throw new Error("Invalid OKLCH format");
@@ -49,7 +48,7 @@ export default function ColorConverterPage() {
   const [preview, setPreview] = useState(initial.hex());
   const [error, setError] = useState<string | null>(null);
 
-  function handleChange(field: Field, value: string) {
+  function handleChange(field: ColorField, value: string) {
     if (field === "hex") setHex(value);
     if (field === "rgb") setRgb(value);
     if (field === "hsl") setHsl(value);

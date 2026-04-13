@@ -15,8 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-
-type SchemaId = "users" | "products" | "posts";
+import { SchemaId } from "@/types";
 
 // ─── Random data pools ──────────────────────────────────────────────────────
 const FIRST_NAMES = [

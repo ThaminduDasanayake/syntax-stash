@@ -14,14 +14,9 @@ import {
   CommandSeparator,
 } from "@/components/ui/command";
 import { internalTools, resourceLinks } from "@/lib/data";
-import { Tool } from "@/types";
+import { Tool, CommandMenuProps } from "@/types";
 
-type Props = {
-  open: boolean;
-  setOpenAction: (open: boolean) => void;
-};
-
-export default function CommandMenu({ open, setOpenAction }: Props) {
+export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
   const router = useRouter();
 
   // Register ⌘K / Ctrl+K

@@ -7,16 +7,9 @@ import { useMemo, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { AnalyzerMetrics, AnalyzerStat } from "@/types";
 
-type Metrics = {
-  chars: number;
-  words: number;
-  sentences: number;
-  bytes: number;
-  tokens: number;
-};
-
-function analyze(text: string): Metrics {
+function analyze(text: string): AnalyzerMetrics {
   const chars = text.length;
   const trimmed = text.trim();
   const words = trimmed ? trimmed.split(/\s+/).filter(Boolean).length : 0;
@@ -26,8 +19,6 @@ function analyze(text: string): Metrics {
   return { chars, words, sentences, bytes, tokens };
 }
 
-type Stat = { label: string; value: number; hint?: string };
-
 export default function AnalyzerPage() {
   const [text, setText] = useState(
     "Syntax Stash is a curated command center for modern web development. Fast, focused, and entirely local.",
@@ -35,7 +26,7 @@ export default function AnalyzerPage() {
 
   const metrics = useMemo(() => analyze(text), [text]);
 
-  const stats: Stat[] = [
+  const stats: AnalyzerStat[] = [
     { label: "Characters", value: metrics.chars },
     { label: "Words", value: metrics.words },
     { label: "Sentences", value: metrics.sentences },

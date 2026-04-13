@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { EncoderAction } from "@/types";
 
 function encodeBase64(s: string): string {
   const bytes = new TextEncoder().encode(s);
@@ -42,13 +43,7 @@ function hexToString(s: string): string {
   return new TextDecoder().decode(bytes);
 }
 
-type Action = {
-  id: string;
-  label: string;
-  run: (input: string) => string;
-};
-
-const ACTIONS: Action[] = [
+const ACTIONS: EncoderAction[] = [
   { id: "b64-enc", label: "Encode Base64", run: encodeBase64 },
   { id: "b64-dec", label: "Decode Base64", run: decodeBase64 },
   { id: "url-enc", label: "URL Encode", run: encodeURIComponent },
@@ -63,7 +58,7 @@ export default function EncoderPage() {
   const [error, setError] = useState<string | null>(null);
   const [lastAction, setLastAction] = useState<string | null>(null);
 
-  function handleRun(action: Action) {
+  function handleRun(action: EncoderAction) {
     try {
       setOutput(action.run(input));
       setError(null);

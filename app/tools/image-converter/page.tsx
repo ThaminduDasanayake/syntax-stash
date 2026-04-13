@@ -15,9 +15,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ImageFormat } from "@/types";
 
-type Format = "image/webp" | "image/jpeg" | "image/png";
-const EXT_MAP: Record<Format, string> = {
+const EXT_MAP: Record<ImageFormat, string> = {
   "image/webp": "webp",
   "image/jpeg": "jpg",
   "image/png": "png",
@@ -26,7 +26,7 @@ const EXT_MAP: Record<Format, string> = {
 export default function ImageConverterPage() {
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [format, setFormat] = useState<Format>("image/webp");
+  const [format, setFormat] = useState<ImageFormat>("image/webp");
   const [isConverting, setIsConverting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -57,7 +57,7 @@ export default function ImageConverterPage() {
 
   function handleFormatChange(v: string | null) {
     if (!v) return;
-    setFormat(v as Format);
+    setFormat(v as ImageFormat);
   }
 
   async function handleConvert() {

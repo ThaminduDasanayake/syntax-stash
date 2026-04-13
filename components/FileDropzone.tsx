@@ -4,14 +4,9 @@ import { UploadCloud } from "lucide-react";
 import { ChangeEvent, DragEvent, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
+import { FileDropzoneProps } from "@/types";
 
-type Props = {
-  onFileDropAction: (file: File) => void;
-  accept: string;
-  label: string;
-};
-
-export default function FileDropzone({ onFileDropAction, accept, label }: Props) {
+export default function FileDropzone({ onFileDropAction, accept, label }: FileDropzoneProps) {
   const [isDragging, setIsDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 

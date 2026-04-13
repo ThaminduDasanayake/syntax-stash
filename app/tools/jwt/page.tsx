@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { JwtDecoded } from "@/types";
 
 function base64UrlDecode(input: string): string {
   let b64 = input.replace(/-/g, "+").replace(/_/g, "/");
@@ -15,14 +16,10 @@ function base64UrlDecode(input: string): string {
   return new TextDecoder().decode(bytes);
 }
 
-type Decoded =
-  | { ok: true; header: string; payload: string; signature: string }
-  | { ok: false; error: string };
-
 export default function JwtDecoderPage() {
   const [token, setToken] = useState("");
 
-  const decoded = useMemo<Decoded>(() => {
+  const decoded = useMemo<JwtDecoded>(() => {
     const trimmed = token.trim();
     if (!trimmed) return { ok: true, header: "", payload: "", signature: "" };
 

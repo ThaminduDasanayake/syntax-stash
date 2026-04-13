@@ -1,14 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { FilterPillsProps } from "@/types";
 
-type Props = {
-  categories: string[];
-  active: string;
-  onSelectAction: (category: string) => void;
-};
-
-export default function FilterPills({ categories, active, onSelectAction }: Props) {
+export default function FilterPills({ categories, active, onSelectAction }: FilterPillsProps) {
   return (
     <div className="flex flex-wrap justify-center gap-2">
       {categories.map((cat) => (

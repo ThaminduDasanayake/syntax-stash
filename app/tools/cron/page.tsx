@@ -9,8 +9,7 @@ import { useMemo, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
-type Parsed = { ok: true; human: string; dates: Date[] } | { ok: false; error: string };
+import { CronParsed } from "@/types";
 
 function formatDate(d: Date): string {
   return d.toLocaleString(undefined, {
@@ -26,7 +25,7 @@ function formatDate(d: Date): string {
 export default function CronTranslatorPage() {
   const [expression, setExpression] = useState("* * * * *");
 
-  const parsed = useMemo<Parsed>(() => {
+  const parsed = useMemo<CronParsed>(() => {
     const expr = expression.trim();
     if (!expr) {
       return { ok: false, error: "Enter a cron expression" };
