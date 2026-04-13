@@ -9,6 +9,7 @@ import {
   Image,
   ImageIcon,
   KeyRound,
+  LayoutGrid,
   Palette,
   QrCode,
   Regex,
@@ -127,6 +128,13 @@ export const internalTools: Tool[] = [
     description: "Generate a full 50–950 Tailwind color scale from a single hex.",
     category: "UI & Styling",
     icon: Palette,
+  },
+  {
+    title: "Layout Visualizer",
+    url: "/tools/layout-visualizer",
+    description: "Explore Tailwind Flex and Grid layout properties interactively.",
+    category: "UI & Styling",
+    icon: LayoutGrid,
   },
   {
     title: "SVG Optimizer",
