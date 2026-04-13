@@ -9,6 +9,7 @@ import {
   Image,
   ImageIcon,
   KeyRound,
+  Layers,
   LayoutGrid,
   Palette,
   PenTool,
@@ -136,6 +137,13 @@ export const internalTools: Tool[] = [
     description: "Explore Tailwind Flex and Grid layout properties interactively.",
     category: "UI & Styling",
     icon: LayoutGrid,
+  },
+  {
+    title: "Glassmorphism Generator",
+    url: "/tools/glassmorphism",
+    description: "Generate beautiful glassmorphism UI elements with backdrop blur.",
+    category: "UI & Styling",
+    icon: Layers,
   },
   {
     title: "SVG Optimizer",
