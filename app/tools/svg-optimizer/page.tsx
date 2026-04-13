@@ -7,8 +7,9 @@ import { useEffect, useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { OptimizeResponse } from "@/types";
 
-import { type OptimizeResponse, optimizeSvg } from "./actions";
+import { optimizeSvg } from "./actions";
 
 const PLACEHOLDER = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
   <!-- Example bloated SVG -->
