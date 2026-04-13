@@ -72,6 +72,13 @@ export const internalTools: Tool[] = [
     icon: Braces,
   },
   {
+    title: "JSON to TS",
+    url: "/tools/json-to-ts",
+    description: "Convert JSON objects into TypeScript interfaces with full type inference.",
+    category: "Utilities",
+    icon: Braces,
+  },
+  {
     title: "Encoder / Decoder",
     url: "/tools/encoder",
     description: "Convert strings between Base64, URL, and Hex encoding.",
