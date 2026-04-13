@@ -57,7 +57,7 @@ export default function ImageConverterPage() {
 
   function handleFormatChange(v: string | null) {
     if (!v) return;
-    setFormat(v as Format);
+    setFormat(v as ImageFormat);
   }
 
   async function handleConvert() {
