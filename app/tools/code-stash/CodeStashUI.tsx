@@ -1,6 +1,5 @@
 "use client";
 
-import Fuse from "fuse.js";
 import { ArrowLeft, Check, CodeXml, Copy, Search } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
@@ -8,6 +7,7 @@ import { useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useFuzzySearch } from "@/hooks/use-fuzzy-search";
 import { LANG_COLORS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { Snippet } from "@/types";
@@ -27,14 +27,7 @@ export default function CodeStashUI({ initialSnippets }: { initialSnippets: Snip
   );
 
   // 1. Setup Fuse.js for fuzzy searching
-  const fuse = useMemo(
-    () =>
-      new Fuse(initialSnippets, {
-        keys: ["title", "description", "languages"],
-        threshold: 0.3,
-      }),
-    [initialSnippets],
-  );
+  const fuse = useFuzzySearch(initialSnippets, ["title", "description", "languages"]);
 
   // 2. Filter logic combining Fuse and Category tabs
   const filteredSnippets = useMemo(() => {
