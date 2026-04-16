@@ -14,7 +14,7 @@ import {
   CommandSeparator,
 } from "@/components/ui/command";
 import { internalTools, resourceLinks } from "@/lib/data";
-import { Tool, CommandMenuProps } from "@/types";
+import { CommandMenuProps, Tool } from "@/types";
 
 export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
   const router = useRouter();

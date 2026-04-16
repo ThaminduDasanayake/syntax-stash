@@ -7,7 +7,7 @@ import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
 function getBlurClass(blur: number): string {
   if (blur <= 5) return "backdrop-blur-sm";
@@ -53,7 +53,6 @@ export default function GlassmorphismPage() {
   const [blur, setBlur] = useState(20);
   const [opacity, setOpacity] = useState(20);
   const [borderOpacity, setBorderOpacity] = useState(50);
-  const [copiedCode, setCopiedCode] = useState(false);
 
   const cssCode = `.glass-card {
   backdrop-filter: blur(${blur}px);
@@ -69,11 +68,7 @@ export default function GlassmorphismPage() {
     border: `1px solid rgba(255, 255, 255, ${(borderOpacity / 100).toFixed(2)})`,
   };
 
-  function handleCopyCode() {
-    navigator.clipboard.writeText(cssCode);
-    setCopiedCode(true);
-    setTimeout(() => setCopiedCode(false), 2000);
-  }
+  const { copied, copy } = useCopyToClipboard();
 
   return (
     <ToolLayout
@@ -178,12 +173,12 @@ export default function GlassmorphismPage() {
         <div className="space-y-2">
           <p className="text-foreground text-xs font-medium">Tailwind Classes</p>
           <div className="bg-background border-border space-y-3 rounded-lg border p-4">
-            <pre className="text-primary font-mono text-xs break-words whitespace-pre-wrap">
+            <pre className="text-primary font-mono text-xs wrap-break-word whitespace-pre-wrap">
               {tailwindClasses}
             </pre>
             <div className="bg-muted/50 space-y-1 rounded p-3">
               <p className="text-foreground text-xs font-semibold">HTML Example:</p>
-              <pre className="text-muted-foreground font-mono text-xs break-words whitespace-pre-wrap">
+              <pre className="text-muted-foreground font-mono text-xs wrap-break-word whitespace-pre-wrap">
                 {`<div class="${tailwindClasses} rounded-2xl shadow-2xl p-8">
   Your content here
 </div>`}
@@ -193,8 +188,8 @@ export default function GlassmorphismPage() {
         </div>
 
         {/* Copy Button */}
-        <Button onClick={handleCopyCode} variant="outline" className="gap-2">
-          {copiedCode ? (
+        <Button onClick={() => copy(cssCode)} variant="outline" className="gap-2">
+          {copied ? (
             <>
               <Check size={14} />
               <span>CSS Copied</span>

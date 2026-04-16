@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { codeToHtml } from "shiki";
 
-import { Snippet } from "@/types";
+import { Snippet } from "@/app/tools/code-stash/types";
 
 const VAULT_PATH = path.join(process.cwd(), "content/snippets");
 

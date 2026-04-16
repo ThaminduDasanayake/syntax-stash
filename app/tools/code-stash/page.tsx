@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 
-import { getAllSnippets } from "@/lib/snippets";
+import { getAllSnippets } from "@/app/tools/code-stash/snippets";
 
-import CodeStashUI from "./CodeStashUI";
+import CodeStashUi from "./code-stash-ui";
 
 export const metadata: Metadata = {
   title: "Code Stash | syntax-stash",
@@ -11,5 +11,5 @@ export const metadata: Metadata = {
 
 export default async function CodeStashPage() {
   const snippets = await getAllSnippets();
-  return <CodeStashUI initialSnippets={snippets} />;
+  return <CodeStashUi initialSnippets={snippets} />;
 }

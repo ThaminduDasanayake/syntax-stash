@@ -3,6 +3,7 @@
 import { Check, Copy, LayoutGrid } from "lucide-react";
 import { useState } from "react";
 
+import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -13,20 +14,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ToolLayout } from "@/components/layout/ToolLayout";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { cn } from "@/lib/utils";
-
-const COLORS = [
-  "bg-rose-500",
-  "bg-blue-500",
-  "bg-emerald-500",
-  "bg-amber-500",
-  "bg-purple-500",
-];
 
 type DisplayType = "flex" | "grid";
 type FlexDirection = "row" | "col";
-type JustifyContent = "start" | "center" | "end" | "between";
+type JustifyContent = "start" | "center" | "end" | "space-between";
 type AlignItems = "start" | "center" | "end" | "stretch";
 type GapSize = "2" | "4" | "8";
 
@@ -44,7 +37,7 @@ function getJustifyContentClass(justify: JustifyContent): string {
   if (justify === "start") return "justify-start";
   if (justify === "center") return "justify-center";
   if (justify === "end") return "justify-end";
-  if (justify === "between") return "justify-between";
+  if (justify === "space-between") return "justify-between";
   return "";
 }
 
@@ -69,7 +62,6 @@ export default function LayoutVisualizerPage() {
   const [justifyContent, setJustifyContent] = useState<JustifyContent>("start");
   const [alignItems, setAlignItems] = useState<AlignItems>("center");
   const [gap, setGap] = useState<GapSize>("4");
-  const [copiedCode, setCopiedCode] = useState(false);
 
   const containerClasses = cn(
     getDisplayClass(display),
@@ -79,13 +71,10 @@ export default function LayoutVisualizerPage() {
     getGapClass(gap),
   );
 
-  const tailwindClassString = `${getDisplayClass(display)} ${getFlexDirectionClass(flexDirection)} ${getJustifyContentClass(justifyContent)} ${getAlignItemsClass(alignItems)} ${getGapClass(gap)}`.trim();
+  const tailwindClassString =
+    `${getDisplayClass(display)} ${getFlexDirectionClass(flexDirection)} ${getJustifyContentClass(justifyContent)} ${getAlignItemsClass(alignItems)} ${getGapClass(gap)}`.trim();
 
-  function handleCopyCode() {
-    navigator.clipboard.writeText(tailwindClassString);
-    setCopiedCode(true);
-    setTimeout(() => setCopiedCode(false), 2000);
-  }
+  const { copied, copy } = useCopyToClipboard();
 
   return (
     <ToolLayout
@@ -93,7 +82,6 @@ export default function LayoutVisualizerPage() {
       title="Layout Visualizer"
       highlight="CSS"
       description="Interactively explore Tailwind Flex and Grid layout properties and see the code in real-time."
-      maxWidth="max-w-7xl"
     >
       <div className="space-y-8">
         {/* Controls and Preview Grid */}
@@ -102,77 +90,76 @@ export default function LayoutVisualizerPage() {
           <div className="space-y-6 lg:col-span-1">
             {/* Display */}
             <div className="space-y-2">
-              <Label className="text-foreground text-sm font-semibold">
-                Display
-              </Label>
+              <Label className="text-foreground text-sm font-semibold">Display</Label>
               <Select value={display} onValueChange={(value) => setDisplay(value as DisplayType)}>
                 <SelectTrigger className="bg-background border-border text-foreground focus:ring-primary/30">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="flex">Flex</SelectItem>
-                  <SelectItem value="grid">Grid</SelectItem>
+                  <SelectItem value="flex">flex</SelectItem>
+                  <SelectItem value="grid">grid</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             {/* Flex Direction */}
             <div className="space-y-2">
-              <Label className="text-foreground text-sm font-semibold">
-                Direction
-              </Label>
-              <Select value={flexDirection} onValueChange={(value) => setFlexDirection(value as FlexDirection)}>
+              <Label className="text-foreground text-sm font-semibold">Direction</Label>
+              <Select
+                value={flexDirection}
+                onValueChange={(value) => setFlexDirection(value as FlexDirection)}
+              >
                 <SelectTrigger className="bg-background border-border text-foreground focus:ring-primary/30">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="row">Row</SelectItem>
-                  <SelectItem value="col">Column</SelectItem>
+                  <SelectItem value="row">row</SelectItem>
+                  <SelectItem value="col">column</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             {/* Justify Content */}
             <div className="space-y-2">
-              <Label className="text-foreground text-sm font-semibold">
-                Justify Content
-              </Label>
-              <Select value={justifyContent} onValueChange={(value) => setJustifyContent(value as JustifyContent)}>
+              <Label className="text-foreground text-sm font-semibold">Justify Content</Label>
+              <Select
+                value={justifyContent}
+                onValueChange={(value) => setJustifyContent(value as JustifyContent)}
+              >
                 <SelectTrigger className="bg-background border-border text-foreground focus:ring-primary/30">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="start">Start</SelectItem>
-                  <SelectItem value="center">Center</SelectItem>
-                  <SelectItem value="end">End</SelectItem>
-                  <SelectItem value="between">Space Between</SelectItem>
+                  <SelectItem value="start">start</SelectItem>
+                  <SelectItem value="center">center</SelectItem>
+                  <SelectItem value="end">end</SelectItem>
+                  <SelectItem value="space-between">space-between</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             {/* Align Items */}
             <div className="space-y-2">
-              <Label className="text-foreground text-sm font-semibold">
-                Align Items
-              </Label>
-              <Select value={alignItems} onValueChange={(value) => setAlignItems(value as AlignItems)}>
+              <Label className="text-foreground text-sm font-semibold">Align Items</Label>
+              <Select
+                value={alignItems}
+                onValueChange={(value) => setAlignItems(value as AlignItems)}
+              >
                 <SelectTrigger className="bg-background border-border text-foreground focus:ring-primary/30">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="start">Start</SelectItem>
-                  <SelectItem value="center">Center</SelectItem>
-                  <SelectItem value="end">End</SelectItem>
-                  <SelectItem value="stretch">Stretch</SelectItem>
+                  <SelectItem value="start">start</SelectItem>
+                  <SelectItem value="center">center</SelectItem>
+                  <SelectItem value="end">end</SelectItem>
+                  <SelectItem value="stretch">stretch</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             {/* Gap */}
             <div className="space-y-2">
-              <Label className="text-foreground text-sm font-semibold">
-                Gap
-              </Label>
+              <Label className="text-foreground text-sm font-semibold">Gap</Label>
               <Select value={gap} onValueChange={(value) => setGap(value as GapSize)}>
                 <SelectTrigger className="bg-background border-border text-foreground focus:ring-primary/30">
                   <SelectValue />
@@ -188,19 +175,16 @@ export default function LayoutVisualizerPage() {
 
           {/* Right Column: Preview */}
           <div className="space-y-3 lg:col-span-2">
-            <Label className="text-foreground text-sm font-semibold">
-              Preview
-            </Label>
-            <Card className="bg-background border-2 border-dashed border-border">
+            <Label className="text-foreground text-sm font-semibold">Preview</Label>
+            <Card className="bg-background border-border border-2 border-dashed">
               <CardContent className="p-6">
-                <div className={cn("w-full min-h-[400px] rounded-lg", containerClasses)}>
+                <div className={cn("min-h-100 w-full rounded-lg", containerClasses)}>
                   {Array.from({ length: 5 }).map((_, index) => (
                     <div
                       key={index}
-                      className={cn(
-                        "flex items-center justify-center rounded-lg text-white font-bold text-2xl w-20 h-20 shrink-0 transition-all",
-                        COLORS[index],
-                      )}
+                      className={
+                        "text-background bg-secondary flex h-20 w-20 shrink-0 items-center justify-center rounded-lg text-2xl font-bold transition-all"
+                      }
                     >
                       {index + 1}
                     </div>
@@ -213,21 +197,19 @@ export default function LayoutVisualizerPage() {
 
         {/* Code Block */}
         <div className="space-y-3">
-          <Label className="text-foreground text-sm font-semibold">
-            Tailwind Classes
-          </Label>
-          <div className="bg-background border-border rounded-lg border p-4 space-y-3">
-            <pre className="font-mono text-sm text-primary overflow-x-auto whitespace-pre-wrap break-words leading-relaxed">
+          <Label className="text-foreground text-sm font-semibold">Tailwind Classes</Label>
+          <div className="bg-background border-border space-y-3 rounded-lg border p-4">
+            <pre className="text-primary overflow-x-auto font-mono text-sm leading-relaxed wrap-break-word whitespace-pre-wrap">
               {tailwindClassString || "(select properties to generate classes)"}
             </pre>
             <Button
-              onClick={handleCopyCode}
+              onClick={() => copy(tailwindClassString)}
               variant="outline"
               size="sm"
               className="gap-2"
               disabled={!tailwindClassString}
             >
-              {copiedCode ? (
+              {copied ? (
                 <>
                   <Check size={14} />
                   <span>Copied</span>
@@ -243,29 +225,35 @@ export default function LayoutVisualizerPage() {
         </div>
 
         {/* Reference Section */}
-        <div className="bg-muted/30 rounded-lg border border-border p-4 space-y-3">
+        <div className="bg-muted/30 border-border space-y-3 rounded-lg border p-4">
           <h4 className="text-foreground text-sm font-semibold">Tailwind Layout Reference</h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-muted-foreground">
+          <div className="text-muted-foreground grid grid-cols-1 gap-4 text-xs md:grid-cols-2">
             <div className="space-y-2">
               <p>
-                <span className="text-foreground font-semibold">Flex vs Grid:</span> Flex arranges items in a line, Grid arranges items in rows and columns.
+                <span className="text-foreground font-semibold">Flex vs Grid:</span> Flex arranges
+                items in a line, Grid arranges items in rows and columns.
               </p>
               <p>
-                <span className="text-foreground font-semibold">Direction:</span> Controls how flex items flow (horizontal or vertical).
+                <span className="text-foreground font-semibold">Direction:</span> Controls how flex
+                items flow (horizontal or vertical).
               </p>
               <p>
-                <span className="text-foreground font-semibold">Justify:</span> Aligns items along the main axis (direction of flex flow).
+                <span className="text-foreground font-semibold">Justify:</span> Aligns items along
+                the main axis (direction of flex flow).
               </p>
             </div>
             <div className="space-y-2">
               <p>
-                <span className="text-foreground font-semibold">Align:</span> Aligns items along the cross axis (perpendicular to flex direction).
+                <span className="text-foreground font-semibold">Align:</span> Aligns items along the
+                cross axis (perpendicular to flex direction).
               </p>
               <p>
-                <span className="text-foreground font-semibold">Gap:</span> Creates space between items without using margin.
+                <span className="text-foreground font-semibold">Gap:</span> Creates space between
+                items without using margin.
               </p>
               <p>
-                <span className="text-foreground font-semibold">Copy the classes</span> to use them in your Tailwind projects.
+                <span className="text-foreground font-semibold">Copy the classes</span> to use them
+                in your Tailwind projects.
               </p>
             </div>
           </div>

@@ -1,8 +1,7 @@
-import { ExternalLink } from "lucide-react";
 import { notFound } from "next/navigation";
 
 import ToolCard from "@/components/ToolCard";
-import { resourceCategories,resourceLinks } from "@/lib/data";
+import { resourceCategories, resourceLinks } from "@/lib/data";
 import { slugify } from "@/lib/utils";
 
 // Tell Next.js which slugs are valid at build time
@@ -35,12 +34,6 @@ export default async function CategoryPage(props: PageProps<"/category/[slug]">)
           <ToolCard key={tool.url} tool={tool} />
         ))}
       </div>
-
-      {/* Footer note */}
-      <p className="text-muted-foreground mt-10 flex items-center gap-1.5 text-xs">
-        <ExternalLink size={12} />
-        All links open in a new tab.
-      </p>
     </div>
   );
 }

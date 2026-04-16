@@ -1,10 +1,8 @@
-"use client";
-
 import { BookMarked } from "lucide-react";
 import Link from "next/link";
 
 import ToolCard from "@/components/ToolCard";
-import { Card, CardDescription,CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { internalTools, resourceCategories } from "@/lib/data";
 import { slugify } from "@/lib/utils";
 

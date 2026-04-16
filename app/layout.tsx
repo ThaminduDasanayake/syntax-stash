@@ -4,8 +4,9 @@ import type { Metadata } from "next";
 import { Geist_Mono, JetBrains_Mono } from "next/font/google";
 import { ReactNode } from "react";
 
-import AppLayout from "@/components/AppLayout";
+import AppLayout from "@/components/app-layout";
 import { ThemeProvider } from "@/components/theme-provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-sans" });
@@ -37,7 +38,9 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          <AppLayout>{children}</AppLayout>
+          <TooltipProvider>
+            <AppLayout>{children}</AppLayout>
+          </TooltipProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -3,10 +3,10 @@
 import { AlertTriangle, KeyRound } from "lucide-react";
 import { useMemo, useState } from "react";
 
+import { JwtDecoded } from "@/app/tools/jwt-decoder/types";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { JwtDecoded } from "@/types";
 
 function base64UrlDecode(input: string): string {
   let b64 = input.replace(/-/g, "+").replace(/_/g, "/");
@@ -47,7 +47,6 @@ export default function JwtDecoderPage() {
       title="JWT"
       highlight="Decoder"
       description="Decode and inspect JSON Web Tokens locally. Nothing leaves your browser."
-      maxWidth="max-w-6xl"
     >
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Left — token input */}
@@ -58,7 +57,7 @@ export default function JwtDecoderPage() {
             onChange={(e) => setToken(e.target.value)}
             placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
             rows={18}
-            className="bg-background border-border text-foreground focus-visible:ring-primary/30 resize-none font-mono text-sm leading-relaxed break-all focus-visible:ring-1"
+            className="text-foreground focus-visible:ring-primary/30 resize-none font-mono text-sm leading-relaxed break-all focus-visible:ring-1"
           />
           {!decoded.ok && (
             <div className="border-destructive/30 bg-destructive/10 text-destructive flex items-start gap-3 rounded-lg border p-4 text-sm">
@@ -76,7 +75,7 @@ export default function JwtDecoderPage() {
               readOnly
               value={decoded.ok ? decoded.header : ""}
               rows={6}
-              className="bg-background border-border text-foreground focus-visible:ring-primary/30 resize-none font-mono text-sm leading-relaxed focus-visible:ring-1"
+              className="text-foreground focus-visible:ring-primary/30 resize-none font-mono text-sm leading-relaxed focus-visible:ring-1"
             />
           </div>
           <div className="space-y-2">
@@ -85,13 +84,13 @@ export default function JwtDecoderPage() {
               readOnly
               value={decoded.ok ? decoded.payload : ""}
               rows={10}
-              className="bg-background border-border text-foreground focus-visible:ring-primary/30 resize-none font-mono text-sm leading-relaxed focus-visible:ring-1"
+              className="text-foreground focus-visible:ring-primary/30 resize-none font-mono text-sm leading-relaxed focus-visible:ring-1"
             />
           </div>
           {decoded.ok && decoded.signature && (
             <div className="space-y-2">
               <Label className="text-foreground">Signature</Label>
-              <p className="border-border bg-background text-muted-foreground rounded-lg border px-3 py-2 font-mono text-xs break-all">
+              <p className="bg-background text-muted-foreground rounded-lg border px-3 py-2 font-mono text-xs break-all">
                 {decoded.signature}
               </p>
             </div>

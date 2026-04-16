@@ -1,27 +1,48 @@
 import {
+  BookOpen,
   Braces,
+  CalendarClock,
   Clock,
   CodeXml,
+  Container,
   Database,
+  Eye,
+  FileDiff,
   FileImage,
   FileText,
   Fingerprint,
+  Frame,
+  GitBranch,
+  Globe,
+  Globe2,
+  Grid3X3,
+  Hash,
   Image,
   ImageIcon,
   KeyRound,
   Layers,
   LayoutGrid,
+  Lock,
+  Network,
   Palette,
   PenTool,
+  Play,
   QrCode,
+  Ratio,
   Regex,
+  Scan,
+  ShieldCheck,
   ShieldHalf,
   Sparkles,
+  Square,
+  Table,
+  Terminal,
+  Wind,
 } from "lucide-react";
 
 import { Tool } from "@/types";
 
-// ─── Internal Tools ──────────────────────────────────────────────────────────
+// Internal Tools
 // These are the functional utilities built into syntax-stash.
 export const internalTools: Tool[] = [
   // --- INTERNAL UTILITIES ---
@@ -49,29 +70,29 @@ export const internalTools: Tool[] = [
 
   {
     title: "Regex Tester",
-    url: "/tools/regex",
+    url: "/tools/regex-tester",
     description: "Test and debug regular expressions with real-time match highlighting.",
     category: "Utilities",
     icon: Regex,
   },
   {
     title: "Color Space Converter",
-    url: "/tools/color",
+    url: "/tools/color-converter",
     description: "Convert colors between HEX, RGB, HSL, OKLCH, and more.",
     category: "Utilities",
     icon: Palette,
   },
   {
     title: "JWT Decoder",
-    url: "/tools/jwt",
+    url: "/tools/jwt-decoder",
     description: "Decode and inspect JSON Web Tokens locally in your browser.",
     category: "Utilities",
     icon: KeyRound,
   },
   {
-    title: "JSON Transformer",
-    url: "/tools/json",
-    description: "Format, minify, and generate TypeScript interfaces from JSON.",
+    title: "JSON Formatter",
+    url: "/tools/json-formatter",
+    description: "Format, minify, and validate JSON payloads instantly.",
     category: "Utilities",
     icon: Braces,
   },
@@ -84,42 +105,42 @@ export const internalTools: Tool[] = [
   },
   {
     title: "Encoder / Decoder",
-    url: "/tools/encoder",
+    url: "/tools/encoder-decoder",
     description: "Convert strings between Base64, URL, and Hex encoding.",
     category: "Utilities",
     icon: ShieldHalf,
   },
   {
     title: "Text Analyzer",
-    url: "/tools/analyzer",
+    url: "/tools/text-analyzer",
     description: "Analyze text for word counts, bytes, and estimated LLM tokens.",
     category: "Utilities",
     icon: FileText,
   },
   {
     title: "Cron Translator",
-    url: "/tools/cron",
+    url: "/tools/cron-translator",
     description: "Convert cron expressions to human-readable text and upcoming dates.",
     category: "Utilities",
     icon: Clock,
   },
   {
     title: "Unix Timestamp Converter",
-    url: "/tools/timestamp",
+    url: "/tools/timestamp-converter",
     description: "Convert Unix epoch timestamps to human-readable dates.",
     category: "Utilities",
     icon: Clock,
   },
   {
     title: "Hash Generator",
-    url: "/tools/hash",
+    url: "/tools/hash-generator",
     description: "Generate secure cryptographic hashes locally.",
     category: "Utilities",
     icon: Fingerprint,
   },
   {
     title: "Mock Data Generator",
-    url: "/tools/mock-data",
+    url: "/tools/mock-data-generator",
     description: "Generate structured dummy JSON data for testing.",
     category: "Utilities",
     icon: Database,
@@ -140,7 +161,7 @@ export const internalTools: Tool[] = [
   },
   {
     title: "Glassmorphism Generator",
-    url: "/tools/glassmorphism",
+    url: "/tools/glassmorphism-generator",
     description: "Generate beautiful glassmorphism UI elements with backdrop blur.",
     category: "UI & Styling",
     icon: Layers,
@@ -161,7 +182,7 @@ export const internalTools: Tool[] = [
   },
   {
     title: "Base64 Image Decoder",
-    url: "/tools/base64-image",
+    url: "/tools/base64-image-decoder",
     description: "Decode and preview base64-encoded images locally.",
     category: "Images & Assets",
     icon: Image,
@@ -179,6 +200,171 @@ export const internalTools: Tool[] = [
     description: "A curated library of developer snippets and configurations.",
     category: "Utilities",
     icon: CodeXml,
+  },
+  {
+    title: "WCAG Contrast Checker",
+    url: "/tools/contrast-checker",
+    description: "Check foreground/background contrast ratios against WCAG AA and AAA standards.",
+    category: "UI & Styling",
+    icon: Eye,
+  },
+  {
+    title: "Placeholder Generator",
+    url: "/tools/placeholder-generator",
+    description:
+      "Generate custom placeholder images with the Canvas API, entirely in your browser.",
+    category: "Images & Assets",
+    icon: Frame,
+  },
+  {
+    title: "Open Graph Previewer",
+    url: "/tools/og-preview",
+    description: "Preview how your link card will appear when shared on Twitter/X and LinkedIn.",
+    category: "Utilities",
+    icon: Globe,
+  },
+  {
+    title: "Subnet / CIDR Calculator",
+    url: "/tools/subnet-calculator",
+    description:
+      "Calculate network address, broadcast, subnet mask, and host ranges from CIDR notation.",
+    category: "Utilities",
+    icon: Network,
+  },
+  {
+    title: "MongoDB ObjectId Decoder",
+    url: "/tools/mongo-decoder",
+    description:
+      "Decode a MongoDB ObjectId into its timestamp, machine ID, process ID, and counter.",
+    category: "Utilities",
+    icon: Hash,
+  },
+  {
+    title: "SQL Formatter",
+    url: "/tools/sql-formatter",
+    description: "Prettify raw SQL queries with proper indentation and capitalized keywords.",
+    category: "Utilities",
+    icon: Table,
+  },
+  {
+    title: "CSS Aspect-Ratio Calculator",
+    url: "/tools/aspect-ratio",
+    description:
+      "Calculate CSS aspect-ratio, Tailwind utility, and legacy padding-bottom values for any dimensions.",
+    category: "UI & Styling",
+    icon: Ratio,
+  },
+  {
+    title: "HTTP Security Header Analyzer",
+    url: "/tools/header-analyzer",
+    description:
+      "Grade your HTTP response headers against OWASP best practices and generate a Next.js config.",
+    category: "Utilities",
+    icon: ShieldCheck,
+  },
+  {
+    title: "chmod Calculator",
+    url: "/tools/chmod-calculator",
+    description:
+      "Calculate Unix file permissions with a click-to-toggle grid, synced across octal and symbolic formats.",
+    category: "Utilities",
+    icon: Lock,
+  },
+  {
+    title: "Crontab Schedule Visualizer",
+    url: "/tools/cron-visualizer",
+    description:
+      "See exactly when your cron jobs fire with a timeline and table of the next 20 executions.",
+    category: "Utilities",
+    icon: CalendarClock,
+  },
+  {
+    title: ".env File Diff & Merge",
+    url: "/tools/env-diff",
+    description:
+      "Semantically compare two .env files to find missing keys, extra keys, and value mismatches.",
+    category: "Utilities",
+    icon: FileDiff,
+  },
+  {
+    title: "ASCII Diagram Editor",
+    url: "/tools/ascii-diagram",
+    description:
+      "Draw boxes and add text on a character grid. Outputs clean ASCII art using Unicode box-drawing characters.",
+    category: "Other Tools",
+    icon: Grid3X3,
+  },
+  {
+    title: "Universal Decoder",
+    url: "/tools/universal-decoder",
+    description:
+      "Paste any mystery string — JWT, Unix timestamp, UUID, MongoDB ObjectId, or Snowflake ID — and decode it instantly.",
+    category: "Utilities",
+    icon: Scan,
+  },
+  {
+    title: "Tailwind CSS Cheatsheet",
+    url: "/tools/tailwind-cheatsheet",
+    description:
+      "A searchable, filterable reference of the most-used Tailwind utility classes. Click any class to copy it.",
+    category: "UI & Styling",
+    icon: Wind,
+  },
+  {
+    title: "CSS Animation Builder",
+    url: "/tools/animation-builder",
+    description:
+      "Build CSS @keyframes animations visually with live preview and generated CSS output.",
+    category: "UI & Styling",
+    icon: Play,
+  },
+  {
+    title: "curl Command Builder",
+    url: "/tools/curl-builder",
+    description:
+      "Build curl commands from a form, or paste a curl command to parse it into structured fields.",
+    category: "Utilities",
+    icon: Terminal,
+  },
+  {
+    title: "Git Command Cheatsheet",
+    url: "/tools/git-cheatsheet",
+    description:
+      "A searchable reference of ~70 git commands, organised by intent with danger-level indicators.",
+    category: "Utilities",
+    icon: GitBranch,
+  },
+  {
+    title: "Regex Pattern Library",
+    url: "/tools/regex-library",
+    description:
+      "A curated library of 30+ production-ready regex patterns with match examples and one-click copy.",
+    category: "Utilities",
+    icon: BookOpen,
+  },
+  {
+    title: "Docker Compose Builder",
+    url: "/tools/docker-compose",
+    description:
+      "Add services from templates, configure ports, environment variables, and volumes to generate a docker-compose.yml.",
+    category: "Utilities",
+    icon: Container,
+  },
+  {
+    title: "HTTP Status Reference",
+    url: "/tools/http-status",
+    description:
+      "Every standard HTTP status code with descriptions, use cases, and category colour-coding.",
+    category: "Utilities",
+    icon: Globe2,
+  },
+  {
+    title: "Border Radius Previewer",
+    url: "/tools/border-radius",
+    description:
+      "Visually configure CSS border-radius with per-corner sliders, presets, and live shape preview.",
+    category: "UI & Styling",
+    icon: Square,
   },
 ];
 

@@ -3,12 +3,12 @@
 import { AlertTriangle, Regex } from "lucide-react";
 import { useMemo, useState } from "react";
 
+import { RegexResult } from "@/app/tools/regex-tester/types";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { RegexResult } from "@/types";
 
 export default function RegexTesterPage() {
   const [pattern, setPattern] = useState("[a-z]+");
@@ -61,7 +61,6 @@ export default function RegexTesterPage() {
       title="Regex"
       highlight="Tester"
       description="Test JavaScript regular expressions with live match highlighting."
-      maxWidth="max-w-7xl"
     >
       <div className="space-y-6">
         {/* Pattern + flags row */}

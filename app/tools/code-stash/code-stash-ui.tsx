@@ -1,22 +1,22 @@
 "use client";
 
-import { Check, CodeXml, Copy, Search } from "lucide-react";
+import { CodeXml, Search } from "lucide-react";
 import { useMemo, useState } from "react";
 
+import CodeCopyButton from "@/app/tools/code-stash/components/code-copy-button";
+import FilenameCopyButton from "@/app/tools/code-stash/components/filename-copy-button";
+import SetupCopyButton from "@/app/tools/code-stash/components/setup-copy-button";
+import { LANG_COLORS } from "@/app/tools/code-stash/constants";
+import { Snippet } from "@/app/tools/code-stash/types";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { useFuzzySearch } from "@/hooks/use-fuzzy-search";
-import { LANG_COLORS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { Snippet } from "@/types";
 
-export default function CodeStashUI({ initialSnippets }: { initialSnippets: Snippet[] }) {
+export default function CodeStashUi({ initialSnippets }: { initialSnippets: Snippet[] }) {
   const [activeId, setActiveId] = useState(initialSnippets[0]?.id);
-  // const [copiedFile, setCopiedFile] = useState<string | null>(null);
-  // const [setupCopied, setSetupCopied] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("All");
 
@@ -39,26 +39,6 @@ export default function CodeStashUI({ initialSnippets }: { initialSnippets: Snip
   }, [searchQuery, activeFilter, fuse, initialSnippets]);
 
   const activeSnippet = initialSnippets.find((s) => s.id === activeId);
-
-  // async function handleCopyCode(code: string, filename: string) {
-  //   await navigator.clipboard.writeText(code);
-  //   setCopiedFile(filename);
-  //   setTimeout(() => setCopiedFile(null), 2000);
-  // }
-  //
-  // async function handleCopyFilename(filename: string) {
-  //   await navigator.clipboard.writeText(filename);
-  //   setCopiedFile(`name-${filename}`);
-  //   setTimeout(() => setCopiedFile(null), 2000);
-  // }
-  //
-  // // Removed the duplicate! This is the correct setup copy logic.
-  // async function handleCopySetup() {
-  //   if (!activeSnippet?.setup) return;
-  //   await navigator.clipboard.writeText(activeSnippet.setup);
-  //   setSetupCopied(true);
-  //   setTimeout(() => setSetupCopied(false), 2000);
-  // }
 
   return (
     <ToolLayout
@@ -197,14 +177,7 @@ export default function CodeStashUI({ initialSnippets }: { initialSnippets: Snip
                     <span className="text-muted-foreground/50 mr-3 select-none">$</span>
                     {activeSnippet.setup}
                   </code>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-muted-foreground hover:text-foreground"
-                    onClick={handleCopySetup}
-                  >
-                    {setupCopied ? <Check className="text-emerald-400" /> : <Copy />}
-                  </Button>
+                  <SetupCopyButton text={activeSnippet.setup} />
                 </div>
               )}
 
@@ -223,42 +196,11 @@ export default function CodeStashUI({ initialSnippets }: { initialSnippets: Snip
                           <span className="h-3 w-3 rounded-full bg-green-500/60" />
                         </div>
 
-                        {/* Hoverable Filename Button */}
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleCopyFilename(file.filename)}
-                          className="group text-muted-foreground hover:text-foreground gap-2 text-xs"
-                          title="Copy filename"
-                        >
-                          <span>{file.filename}</span>
-                          {copiedFile === `name-${file.filename}` ? (
-                            <Check className="text-emerald-400" />
-                          ) : (
-                            <Copy className="transition-opacity group-hover:opacity-100" />
-                          )}
-                        </Button>
+                        <FilenameCopyButton filename={file.filename} />
                       </div>
 
                       {/* Copy Code Button */}
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-muted-foreground hover:text-foreground"
-                        onClick={() => handleCopyCode(file.code, file.filename)}
-                      >
-                        {copiedFile === file.filename ? (
-                          <>
-                            <Check className="mr-1.5 text-emerald-400" />
-                            <span className="text-xs text-emerald-400">Copied</span>
-                          </>
-                        ) : (
-                          <>
-                            <Copy className="mr-1.5" />
-                            <span className="text-xs">Copy</span>
-                          </>
-                        )}
-                      </Button>
+                      <CodeCopyButton code={file.code} />
                     </div>
 
                     <div

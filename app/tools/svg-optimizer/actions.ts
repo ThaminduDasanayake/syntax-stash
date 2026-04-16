@@ -1,7 +1,8 @@
 "use server";
 
 import { optimize } from "svgo";
-import { OptimizeResponse } from "@/types";
+
+import { OptimizeResponse } from "@/app/tools/svg-optimizer/types";
 
 export async function optimizeSvg(input: string): Promise<OptimizeResponse> {
   try {

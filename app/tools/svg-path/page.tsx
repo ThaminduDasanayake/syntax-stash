@@ -3,11 +3,11 @@
 import { PenTool } from "lucide-react";
 import { useState } from "react";
 
+import { ToolLayout } from "@/components/layout/tool-layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ToolLayout } from "@/components/layout/ToolLayout";
 
 export default function SvgPathViewerPage() {
   const [pathData, setPathData] = useState(
@@ -27,34 +27,30 @@ export default function SvgPathViewerPage() {
       title="SVG Path Viewer"
       highlight="Editor"
       description="Preview and edit raw SVG 'd' paths with real-time visualization and customizable styling."
-      maxWidth="max-w-7xl"
     >
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Left Column: Controls */}
         <div className="space-y-6">
           {/* SVG Path Input */}
           <div className="space-y-2">
-            <Label className="text-foreground text-sm font-semibold">
-              SVG Path (d attribute)
-            </Label>
+            <Label className="text-foreground text-sm font-semibold">SVG Path (d attribute)</Label>
             <Textarea
               value={pathData}
               onChange={(e) => setPathData(e.target.value)}
-              placeholder={'M10 10 H 90 V 90 H 10 Z\n\nExample path data...'}
+              placeholder={"M10 10 H 90 V 90 H 10 Z\n\nExample path data..."}
               rows={12}
               className="bg-background border-border text-foreground focus-visible:ring-primary/30 resize-none font-mono text-xs leading-relaxed focus-visible:ring-1"
             />
             <p className="text-muted-foreground text-xs">
-              Paste the content from the SVG's d attribute. Supports all SVG path commands (M, L, H, V, C, S, Q, T, A, Z, etc.)
+              Paste the content from the SVG's d attribute. Supports all SVG path commands (M, L, H,
+              V, C, S, Q, T, A, Z, etc.)
             </p>
           </div>
 
           {/* ViewBox Controls */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label className="text-foreground text-sm font-medium">
-                ViewBox Width
-              </Label>
+              <Label className="text-foreground text-sm font-medium">ViewBox Width</Label>
               <Input
                 type="number"
                 value={viewBoxWidth}
@@ -63,9 +59,7 @@ export default function SvgPathViewerPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-foreground text-sm font-medium">
-                ViewBox Height
-              </Label>
+              <Label className="text-foreground text-sm font-medium">ViewBox Height</Label>
               <Input
                 type="number"
                 value={viewBoxHeight}
@@ -78,15 +72,13 @@ export default function SvgPathViewerPage() {
           {/* Color Controls */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label className="text-foreground text-sm font-medium">
-                Fill Color
-              </Label>
+              <Label className="text-foreground text-sm font-medium">Fill Color</Label>
               <div className="flex gap-2">
                 <input
                   type="color"
                   value={fillColor}
                   onChange={(e) => setFillColor(e.target.value)}
-                  className="h-9 w-20 rounded border border-border cursor-pointer"
+                  className="border-border h-9 w-20 cursor-pointer rounded border"
                 />
                 <Input
                   type="text"
@@ -99,15 +91,13 @@ export default function SvgPathViewerPage() {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-foreground text-sm font-medium">
-                Stroke Color
-              </Label>
+              <Label className="text-foreground text-sm font-medium">Stroke Color</Label>
               <div className="flex gap-2">
                 <input
                   type="color"
                   value={strokeColor === "none" ? "#000000" : strokeColor}
                   onChange={(e) => setStrokeColor(e.target.value)}
-                  className="h-9 w-20 rounded border border-border cursor-pointer"
+                  className="border-border h-9 w-20 cursor-pointer rounded border"
                 />
                 <Input
                   type="text"
@@ -122,9 +112,7 @@ export default function SvgPathViewerPage() {
 
           {/* Stroke Width */}
           <div className="space-y-2">
-            <Label className="text-foreground text-sm font-medium">
-              Stroke Width
-            </Label>
+            <Label className="text-foreground text-sm font-medium">Stroke Width</Label>
             <Input
               type="number"
               value={strokeWidth}
@@ -138,12 +126,10 @@ export default function SvgPathViewerPage() {
 
         {/* Right Column: Preview */}
         <div className="space-y-3">
-          <Label className="text-foreground text-sm font-semibold">
-            Preview
-          </Label>
+          <Label className="text-foreground text-sm font-semibold">Preview</Label>
           <Card className="bg-background overflow-hidden">
             <CardContent
-              className="p-0 flex items-center justify-center min-h-[500px]"
+              className="flex min-h-125 items-center justify-center p-0"
               style={{
                 backgroundImage:
                   "linear-gradient(0deg, transparent 24%, rgba(200, 200, 200, 0.05) 25%, rgba(200, 200, 200, 0.05) 26%, transparent 27%, transparent 74%, rgba(200, 200, 200, 0.05) 75%, rgba(200, 200, 200, 0.05) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(200, 200, 200, 0.05) 25%, rgba(200, 200, 200, 0.05) 26%, transparent 27%, transparent 74%, rgba(200, 200, 200, 0.05) 75%, rgba(200, 200, 200, 0.05) 76%, transparent 77%, transparent)",
@@ -173,11 +159,9 @@ export default function SvgPathViewerPage() {
 
           {/* SVG Code Export */}
           <div className="space-y-2">
-            <Label className="text-foreground text-sm font-medium">
-              SVG Code
-            </Label>
-            <div className="bg-background border-border text-foreground text-xs font-mono rounded border p-3 overflow-x-auto max-h-32">
-              <pre className="whitespace-pre-wrap break-words">{`<svg viewBox="${viewBoxValue}" xmlns="http://www.w3.org/2000/svg">
+            <Label className="text-foreground text-sm font-medium">SVG Code</Label>
+            <div className="bg-background border-border text-foreground max-h-32 overflow-x-auto rounded border p-3 font-mono text-xs">
+              <pre className="wrap-break-word whitespace-pre-wrap">{`<svg viewBox="${viewBoxValue}" xmlns="http://www.w3.org/2000/svg">
   <path d="${pathData}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="${strokeWidth}" />
 </svg>`}</pre>
             </div>
@@ -186,31 +170,55 @@ export default function SvgPathViewerPage() {
       </div>
 
       {/* Reference Section */}
-      <div className="bg-muted/30 rounded-lg border border-border p-4 space-y-3 mt-8">
+      <div className="bg-muted/30 border-border mt-8 space-y-3 rounded-lg border p-4">
         <h4 className="text-foreground text-sm font-semibold">SVG Path Commands Reference</h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs text-muted-foreground font-mono">
+        <div className="text-muted-foreground grid grid-cols-1 gap-4 font-mono text-xs md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-1">
-            <p><span className="text-foreground font-semibold">M/m</span> Move to</p>
-            <p><span className="text-foreground font-semibold">L/l</span> Line to</p>
-            <p><span className="text-foreground font-semibold">H/h</span> Horizontal line</p>
-            <p><span className="text-foreground font-semibold">V/v</span> Vertical line</p>
+            <p>
+              <span className="text-foreground font-semibold">M/m</span> Move to
+            </p>
+            <p>
+              <span className="text-foreground font-semibold">L/l</span> Line to
+            </p>
+            <p>
+              <span className="text-foreground font-semibold">H/h</span> Horizontal line
+            </p>
+            <p>
+              <span className="text-foreground font-semibold">V/v</span> Vertical line
+            </p>
           </div>
           <div className="space-y-1">
-            <p><span className="text-foreground font-semibold">C/c</span> Cubic Bézier</p>
-            <p><span className="text-foreground font-semibold">S/s</span> Smooth cubic</p>
-            <p><span className="text-foreground font-semibold">Q/q</span> Quadratic Bézier</p>
-            <p><span className="text-foreground font-semibold">T/t</span> Smooth quadratic</p>
+            <p>
+              <span className="text-foreground font-semibold">C/c</span> Cubic Bézier
+            </p>
+            <p>
+              <span className="text-foreground font-semibold">S/s</span> Smooth cubic
+            </p>
+            <p>
+              <span className="text-foreground font-semibold">Q/q</span> Quadratic Bézier
+            </p>
+            <p>
+              <span className="text-foreground font-semibold">T/t</span> Smooth quadratic
+            </p>
           </div>
           <div className="space-y-1">
-            <p><span className="text-foreground font-semibold">A/a</span> Elliptical arc</p>
-            <p><span className="text-foreground font-semibold">Z/z</span> Close path</p>
+            <p>
+              <span className="text-foreground font-semibold">A/a</span> Elliptical arc
+            </p>
+            <p>
+              <span className="text-foreground font-semibold">Z/z</span> Close path
+            </p>
             <p>Uppercase = absolute</p>
             <p>Lowercase = relative</p>
           </div>
           <div className="space-y-1">
-            <p>Example: <span className="text-primary">M10 10</span></p>
+            <p>
+              Example: <span className="text-primary">M10 10</span>
+            </p>
             <p>Move to 10,10</p>
-            <p><span className="text-primary">L20 20</span></p>
+            <p>
+              <span className="text-primary">L20 20</span>
+            </p>
             <p>Line to 20,20</p>
           </div>
         </div>

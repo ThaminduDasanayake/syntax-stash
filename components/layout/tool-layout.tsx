@@ -10,16 +10,16 @@ export function ToolLayout({
   highlight,
   description,
   backHref = "/",
-  backText = "Back to stash",
+  backText = "Back",
   maxWidth = "max-w-7xl",
 }: ToolLayoutProps) {
   return (
     <div className="min-h-screen">
-      <div className={`relative z-10 mx-auto ${maxWidth} px-4 py-16 md:py-24`}>
+      <div className={`relative z-10 mx-auto ${maxWidth} px-4 py-8 md:py-12`}>
         {/* Back link */}
         <Link
           href={backHref}
-          className="text-muted-foreground hover:text-foreground mb-12 inline-flex items-center gap-2 text-sm transition-colors"
+          className="text-muted-foreground hover:text-foreground mb-8 inline-flex items-center gap-2 text-sm transition-colors"
         >
           <ArrowLeft size={16} />
           {backText}
@@ -31,7 +31,7 @@ export function ToolLayout({
             <Icon className="text-primary" size={36} />
             {title} {highlight && <span className="text-primary">{highlight}</span>}
           </h1>
-          <p className="text-muted-foreground text-base md:text-lg">{description}</p>
+          <p className="text-foreground text-base md:text-lg">{description}</p>
         </div>
 
         {/* Tool Content */}

@@ -1,14 +1,14 @@
 "use client";
 
-import { ArrowLeft, FileText, Trash2 } from "lucide-react";
-import Link from "next/link";
+import { FileText, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
 
+import { AnalyzerMetrics, AnalyzerStat } from "@/app/tools/text-analyzer/types";
+import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { AnalyzerMetrics, AnalyzerStat } from "@/types";
 
 function analyze(text: string): AnalyzerMetrics {
   const chars = text.length;
@@ -80,102 +80,87 @@ export default function AnalyzerPage() {
   ];
 
   return (
-    <div className="min-h-screen">
-      <div className="relative z-10 mx-auto max-w-6xl px-4 py-16 md:py-24">
-        <Link
-          href="/"
-          className="text-muted-foreground hover:text-foreground mb-12 inline-flex items-center gap-2 text-sm transition-colors"
-        >
-          <ArrowLeft size={16} />
-          Back to stash
-        </Link>
-
-        <div className="mb-12">
-          <h1 className="text-foreground mb-3 flex items-center gap-3 text-4xl font-bold tracking-tighter md:text-5xl">
-            <FileText className="text-primary" size={36} />
-            Text <span className="text-primary">Analyzer</span>
-          </h1>
-          <p className="text-muted-foreground text-base md:text-lg">
-            Count characters, words, bytes, and estimate LLM tokens for any block of text.
-          </p>
+    <ToolLayout
+      icon={FileText}
+      title="Text"
+      highlight="Analyzer"
+      description="Count characters, words, bytes, and estimate LLM tokens for any block of text."
+    >
+      <div className="space-y-8">
+        {/* Input */}
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <Label className="text-foreground">Input Text</Label>
+            {text && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setText("")}
+                className="text-muted-foreground hover:text-foreground h-8 gap-2"
+              >
+                <Trash2 size={14} />
+                <span className="text-xs">Clear</span>
+              </Button>
+            )}
+          </div>
+          <Textarea
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Type or paste text to analyze..."
+            rows={12}
+            className="bg-background border-border text-foreground focus-visible:ring-primary/30 resize-none font-mono text-sm leading-relaxed focus-visible:ring-1"
+          />
         </div>
 
-        <div className="space-y-8">
-          {/* Input */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label className="text-foreground">Input Text</Label>
-              {text && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setText("")}
-                  className="text-muted-foreground hover:text-foreground h-8 gap-2"
-                >
-                  <Trash2 size={14} />
-                  <span className="text-xs">Clear</span>
-                </Button>
-              )}
-            </div>
-            <Textarea
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              placeholder="Type or paste text to analyze..."
-              rows={12}
-              className="bg-background border-border text-foreground focus-visible:ring-primary/30 resize-none font-mono text-sm leading-relaxed focus-visible:ring-1"
-            />
-          </div>
+        {/* Metric cards */}
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
+          {stats.map((s) => (
+            <Card key={s.label} className="bg-background">
+              <CardContent>
+                <p className="text-muted-foreground mb-2 text-[10px] font-semibold tracking-wider uppercase">
+                  {s.label}
+                </p>
+                <p className="text-primary font-mono text-3xl tabular-nums">
+                  {s.value.toLocaleString()}
+                </p>
+                {s.hint && (
+                  <p className="text-muted-foreground mt-1 font-mono text-[10px]">{s.hint}</p>
+                )}
+              </CardContent>
+            </Card>
+          ))}
+        </div>
 
-          {/* Metric cards */}
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
-            {stats.map((s) => (
-              <Card key={s.label} className="bg-background">
-                <CardContent>
-                  <p className="text-muted-foreground mb-2 text-[10px] font-semibold tracking-wider uppercase">
-                    {s.label}
-                  </p>
-                  <p className="text-primary font-mono text-3xl tabular-nums">
-                    {s.value.toLocaleString()}
-                  </p>
-                  {s.hint && (
-                    <p className="text-muted-foreground mt-1 font-mono text-[10px]">{s.hint}</p>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          {/* Additional metrics */}
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-            <Card className="bg-background">
-              <CardContent>
-                <p className="text-muted-foreground mb-2 text-[10px] font-semibold tracking-wider uppercase">
-                  Paragraphs
-                </p>
-                <p className="text-primary font-mono text-3xl tabular-nums">{paragraphs}</p>
-              </CardContent>
-            </Card>
-            <Card className="bg-background">
-              <CardContent>
-                <p className="text-muted-foreground mb-2 text-[10px] font-semibold tracking-wider uppercase">
-                  Reading Time
-                </p>
-                <p className="text-primary font-mono text-2xl tabular-nums">{readingTime}</p>
-                <p className="text-muted-foreground mt-1 font-mono text-[10px]">@200 WPM</p>
-              </CardContent>
-            </Card>
-            <Card className="bg-background">
-              <CardContent>
-                <p className="text-muted-foreground mb-2 text-[10px] font-semibold tracking-wider uppercase">
-                  Speaking Time
-                </p>
-                <p className="text-primary font-mono text-2xl tabular-nums">{speakingTime}</p>
-                <p className="text-muted-foreground mt-1 font-mono text-[10px]">@130 WPM</p>
-              </CardContent>
-            </Card>
-          </div>
+        {/* Additional metrics */}
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+          <Card className="bg-background">
+            <CardContent>
+              <p className="text-muted-foreground mb-2 text-[10px] font-semibold tracking-wider uppercase">
+                Paragraphs
+              </p>
+              <p className="text-primary font-mono text-3xl tabular-nums">{paragraphs}</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-background">
+            <CardContent>
+              <p className="text-muted-foreground mb-2 text-[10px] font-semibold tracking-wider uppercase">
+                Reading Time
+              </p>
+              <p className="text-primary font-mono text-2xl tabular-nums">{readingTime}</p>
+              <p className="text-muted-foreground mt-1 font-mono text-[10px]">@200 WPM</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-background">
+            <CardContent>
+              <p className="text-muted-foreground mb-2 text-[10px] font-semibold tracking-wider uppercase">
+                Speaking Time
+              </p>
+              <p className="text-primary font-mono text-2xl tabular-nums">{speakingTime}</p>
+              <p className="text-muted-foreground mt-1 font-mono text-[10px]">@130 WPM</p>
+            </CardContent>
+          </Card>
         </div>
       </div>
-    </div>
+    </ToolLayout>
   );
 }

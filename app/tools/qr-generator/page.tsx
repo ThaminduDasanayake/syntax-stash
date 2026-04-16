@@ -1,18 +1,19 @@
 "use client";
 
 import { Download, QrCode } from "lucide-react";
+import Image from "next/image";
 import QRCode from "qrcode";
 import { useEffect, useState } from "react";
 
-import { ToolLayout } from "@/components/layout/ToolLayout";
+import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-export default function QrGeneratorPage() {
-  const [text, setText] = useState("https://syntax-stash.dev");
+const QRGeneratorPage = () => {
+  const [text, setText] = useState("");
   const [fg, setFg] = useState("#000000");
   const [bg, setBg] = useState("#ffffff");
   const [dataUrl, setDataUrl] = useState<string | null>(null);
@@ -66,7 +67,6 @@ export default function QrGeneratorPage() {
       title="QR"
       highlight="Generator"
       description="Generate downloadable QR codes instantly — works entirely in your browser."
-      maxWidth="max-w-6xl"
     >
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Left — inputs */}
@@ -127,8 +127,15 @@ export default function QrGeneratorPage() {
           <Card className="flex min-h-80 items-center justify-center">
             <CardContent className="flex flex-col items-center gap-4 p-6">
               {dataUrl ? (
-                <div className="rounded-xl bg-white p-4 shadow-sm">
-                  <img src={dataUrl} alt="Generated QR code" className="block h-56 w-56" />
+                <div className="bg-white shadow-sm">
+                  <Image
+                    src={dataUrl}
+                    alt="Generated QR code"
+                    width={224}
+                    height={224}
+                    className="block h-56 w-56"
+                    unoptimized
+                  />
                 </div>
               ) : (
                 <div className="border-border flex h-56 w-56 items-center justify-center rounded-xl border border-dashed">
@@ -147,4 +154,5 @@ export default function QrGeneratorPage() {
       </div>
     </ToolLayout>
   );
-}
+};
+export default QRGeneratorPage;

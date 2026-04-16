@@ -90,7 +90,6 @@ export default function TimestampPage() {
       title="Unix Timestamp"
       highlight="Converter"
       description="Convert Unix epoch timestamps to human-readable local and UTC dates."
-      maxWidth="max-w-7xl"
     >
       <div className="space-y-8">
         {/* Input Section */}

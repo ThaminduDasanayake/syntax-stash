@@ -1,12 +1,10 @@
-import { ExternalLink, Sparkles } from "lucide-react";
+import { Box, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tool, ToolCardProps } from "@/types";
-
-type Props = ToolCardProps;
+import { ToolCardProps } from "@/types";
 
 function getHostname(url: string): string {
   try {
@@ -16,9 +14,10 @@ function getHostname(url: string): string {
   }
 }
 
-function CardBody({ tool }: Props) {
+function CardBody({ tool }: ToolCardProps) {
   const isInternal = tool.url.startsWith("/");
   const hostname = isInternal ? null : getHostname(tool.url);
+  const Icon = tool.icon || Box;
 
   return (
     <Card className="bg-card text-card-foreground border-border flex h-full w-full flex-col py-4 ring-0 transition-colors">
@@ -26,7 +25,7 @@ function CardBody({ tool }: Props) {
         <div className="flex flex-row items-center gap-3">
           {isInternal ? (
             <div className="bg-primary/10 border-primary/20 flex h-8 w-8 shrink-0 items-center justify-center rounded-md border">
-              <Sparkles size={14} className="text-primary" />
+              <Icon size={14} className="text-primary" />
             </div>
           ) : (
             <Image
@@ -34,7 +33,7 @@ function CardBody({ tool }: Props) {
               alt={`${tool.title} logo`}
               width={32}
               height={32}
-              className="h-8 w-8 shrink-0 rounded-md border border-white/10 bg-white/10 p-1"
+              className="bg-accent h-8 w-8 shrink-0 rounded-md border p-1"
             />
           )}
           <div className="min-w-0 flex-1">
@@ -59,7 +58,7 @@ function CardBody({ tool }: Props) {
   );
 }
 
-export default function ToolCard({ tool }: Props) {
+export default function ToolCard({ tool }: ToolCardProps) {
   const isInternal = tool.url.startsWith("/");
   const className =
     "block w-full h-full transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_30px_var(--color-primary)] hover:shadow-primary/10";

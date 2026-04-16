@@ -3,18 +3,19 @@ import { Check, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
-const SetupCopyButton = ({ text }: { text: string }) => {
+const FilenameCopyButton = ({ filename }: { filename: string }) => {
   const { copied, copy } = useCopyToClipboard();
 
   return (
     <Button
       variant="ghost"
       size="sm"
-      className="text-muted-foreground hover:text-foreground"
-      onClick={() => copy(text)}
+      className="text-muted-foreground hover:text-foreground gap-2 text-xs"
+      onClick={() => copy(filename)}
     >
-      {copied ? <Check size={16} className="text-emerald-400" /> : <Copy size={16} />}
+      <span>{filename}</span>
+      {copied ? <Check className="text-emerald-400" /> : <Copy />}
     </Button>
   );
 };
-export default SetupCopyButton;
+export default FilenameCopyButton;

@@ -4,8 +4,10 @@
   "languages": ["JavaScript"],
   "setup": "npm install -D prettier eslint-config-prettier prettier-plugin-tailwindcss eslint-plugin-simple-import-sort",
   "instructions": [
-    "Add to package.json scripts: \"format\": \"prettier --write .\"",
-    "Add to package.json scripts: \"format:check\": \"prettier --check .\""
+    {
+      "text": "Add to package.json scripts:",
+      "code": ["\"format\": \"prettier --write .\"", "\"format:check\": \"prettier --check .\""]
+    }
   ],
   "files": ["eslint.config.mjs", "prettier.config.mjs"]
 }

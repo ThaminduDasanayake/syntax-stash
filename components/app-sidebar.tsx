@@ -1,147 +1,175 @@
 "use client";
 
-import { BookMarked, Box, ChevronRight, Home, Wrench, X } from "lucide-react";
+import { BookMarked, Box, ChevronRight, Home, Wrench } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+} from "@/components/ui/sidebar";
 import { internalTools, resourceCategories } from "@/lib/data";
-import { cn, slugify } from "@/lib/utils";
-import { SidebarProps } from "@/types";
+import { slugify } from "@/lib/utils";
 
-const Sidebar = ({ isOpen, onCloseAction }: SidebarProps) => {
+const AppSidebar = () => {
   const pathname = usePathname();
+  const router = useRouter();
+  const { setOpenMobile } = useSidebar();
 
-  /** Active state for internal tool links */
-  const toolLinkClass = (url: string) =>
-    cn(
-      "flex items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors",
-      pathname === url
-        ? "text-primary bg-primary/10 font-medium"
-        : "text-muted-foreground hover:text-foreground hover:bg-accent",
-    );
-
-  /** Active state for resource category links */
-  const categorySlug = (cat: string) => `/category/${slugify(cat)}`;
-
-  const catLinkClass = (cat: string) => {
-    const href = categorySlug(cat);
-    return cn(
-      "group flex items-center justify-between rounded-md px-2 py-1.5 text-sm transition-colors",
-      pathname === href
-        ? "text-primary bg-primary/10 font-medium"
-        : "text-muted-foreground hover:text-foreground hover:bg-accent",
-    );
+  // Closes the sidebar on mobile and navigates
+  const handleNav = (path: string) => {
+    router.push(path);
+    setOpenMobile(false);
   };
 
+  const categorySlug = (cat: string) => `/category/${slugify(cat)}`;
+
   return (
-    <aside
-      className={cn(
-        "border-sidebar-border bg-sidebar text-sidebar-foreground relative z-50 flex h-full w-60 shrink-0 flex-col border-r",
-        // Mobile: fixed overlay that slides in/out
-        "fixed inset-y-0 left-0 transition-transform duration-300 ease-in-out",
-        // Desktop: static, always visible, no translate
-        "md:static md:translate-x-0 md:transition-none",
-        // Mobile open/closed state
-        isOpen ? "translate-x-0" : "-translate-x-full",
-      )}
-    >
+    <Sidebar>
       {/* Branding */}
-      <div className="border-sidebar-border flex items-center justify-between border-b p-4">
+      <SidebarHeader className="border-sidebar-border border-b p-4">
         <div>
           <Link
             href="/"
-            className="text-sidebar-foreground block font-mono text-base font-semibold tracking-tight"
-            onClick={onCloseAction}
+            onClick={() => setOpenMobile(false)}
+            className="text-sidebar-foreground block text-left font-mono text-base font-semibold tracking-tight"
           >
             syntax<span className="text-primary">-</span>stash
           </Link>
           <p className="text-muted-foreground mt-0.5 text-[11px]">Developer swiss army knife</p>
         </div>
-        {/* Close button — mobile only */}
-        <button
-          onClick={onCloseAction}
-          className="text-muted-foreground hover:text-foreground hover:bg-accent rounded-md p-1 transition-colors md:hidden"
-          aria-label="Close sidebar"
-        >
-          <X size={16} />
-        </button>
-      </div>
+      </SidebarHeader>
 
       {/* Navigation */}
-      <nav className="flex-1 space-y-6 overflow-y-auto px-2 py-4">
+      <SidebarContent className="space-y-6 px-2 py-4">
         {/* Section 0: Home */}
-        <section>
-          <ul className="mb-6 space-y-0.5">
-            <li>
-              <Link href="/" className={toolLinkClass("/")} onClick={onCloseAction}>
-                <Home size={16} className="text-foreground/80 mr-2 h-4 w-4 shrink-0" />
-                <span className="truncate">Home</span>
-              </Link>
-            </li>
-          </ul>
-        </section>
+        <SidebarGroup className="p-0">
+          <SidebarMenu>
+            <SidebarMenuItem>
+              {/* Removed asChild, added onClick router push */}
+              <SidebarMenuButton
+                isActive={pathname === "/"}
+                className="h-9 cursor-pointer"
+                onClick={() => handleNav("/")}
+              >
+                <Home className="text-foreground/80" />
+                <span>Home</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroup>
 
         {/* Section 1: Inbuilt Tools */}
-        <section>
-          <div className="mb-2 flex items-center gap-1.5 px-2">
-            <Wrench size={11} className="text-primary" />
-            <h3 className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
-              Inbuilt Tools
-            </h3>
-          </div>
-          <ul className="space-y-0.5">
-            {internalTools.map((tool) => {
-              const Icon = tool.icon || Box;
-              return (
-                <li key={tool.url}>
-                  <Link href={tool.url} className={toolLinkClass(tool.url)} onClick={onCloseAction}>
-                    <Icon className="text-primary mr-2 h-4 w-4 shrink-0" />
-                    <span className="truncate">{tool.title}</span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </section>
+        {/*<SidebarGroup className="p-0">*/}
+        {/*  <SidebarGroupLabel className="text-muted-foreground mb-2 flex h-auto items-center gap-1.5 px-2 text-[10px] font-semibold tracking-wider uppercase">*/}
+        {/*    <Wrench size={11} className="text-primary" />*/}
+        {/*    Inbuilt Tools*/}
+        {/*  </SidebarGroupLabel>*/}
+        {/*  <SidebarMenu>*/}
+        {/*    {internalTools.map((tool) => {*/}
+        {/*      const Icon = tool.icon || Box;*/}
+        {/*      return (*/}
+        {/*        <SidebarMenuItem key={tool.url}>*/}
+        {/*          <SidebarMenuButton*/}
+        {/*            isActive={pathname === tool.url}*/}
+        {/*            className="h-9 cursor-pointer"*/}
+        {/*            onClick={() => handleNav(tool.url)}*/}
+        {/*          >*/}
+        {/*            <Icon className="text-primary" />*/}
+        {/*            <span>{tool.title}</span>*/}
+        {/*          </SidebarMenuButton>*/}
+        {/*        </SidebarMenuItem>*/}
+        {/*      );*/}
+        {/*    })}*/}
+        {/*  </SidebarMenu>*/}
+        {/*</SidebarGroup>*/}
+        {Object.entries(
+          internalTools.reduce(
+            (acc, tool) => {
+              // Group tools by their category
+              if (!acc[tool.category]) {
+                acc[tool.category] = [];
+              }
+              acc[tool.category].push(tool);
+              return acc;
+            },
+            {} as Record<string, typeof internalTools>,
+          ),
+        ).map(([category, tools]) => (
+          <SidebarGroup key={category} className="p-0 pb-4">
+            <SidebarGroupLabel className="text-muted-foreground mb-2 flex h-auto items-center gap-1.5 px-2 text-[10px] font-semibold tracking-wider uppercase">
+              {category}
+            </SidebarGroupLabel>
+            <SidebarMenu>
+              {tools.map((tool) => {
+                const Icon = tool.icon || Box;
+                return (
+                  <SidebarMenuItem key={tool.url}>
+                    <SidebarMenuButton
+                      isActive={pathname === tool.url}
+                      className="h-9 cursor-pointer"
+                      onClick={() => handleNav(tool.url)}
+                    >
+                      <Icon className="text-primary" />
+                      <span>{tool.title}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
+            </SidebarMenu>
+          </SidebarGroup>
+        ))}
 
         {/* Divider */}
-        <div className="border-sidebar-border border-t" />
+        <div className="border-sidebar-border mx-4 border-t" />
 
         {/* Section 2: Resource Stash */}
-        <section>
-          <div className="mb-2 flex items-center gap-1.5 px-2">
+        <SidebarGroup className="p-0">
+          <SidebarGroupLabel className="text-muted-foreground mb-2 flex h-auto items-center gap-1.5 px-2 text-[10px] font-semibold tracking-wider uppercase">
             <BookMarked size={11} className="text-secondary" />
-            <h3 className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
-              Resource Stash
-            </h3>
-          </div>
-          <ul className="space-y-0.5">
-            {resourceCategories.map((cat) => (
-              <li key={cat}>
-                <Link
-                  href={categorySlug(cat)}
-                  className={catLinkClass(cat)}
-                  onClick={onCloseAction}
-                >
-                  <span className="truncate">{cat}</span>
-                  <ChevronRight
-                    size={12}
-                    className="shrink-0 opacity-0 transition-opacity group-hover:opacity-60"
-                  />
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </section>
-      </nav>
+            Resource Stash
+          </SidebarGroupLabel>
+          <SidebarMenu>
+            {resourceCategories.map((cat) => {
+              const href = categorySlug(cat);
+              return (
+                <SidebarMenuItem key={cat}>
+                  <SidebarMenuButton
+                    isActive={pathname === href}
+                    className="group flex h-9 cursor-pointer justify-between"
+                    onClick={() => handleNav(href)}
+                  >
+                    <div className="flex w-full items-center justify-between">
+                      <span className="truncate">{cat}</span>
+                      <ChevronRight
+                        size={12}
+                        className="shrink-0 opacity-0 transition-opacity group-hover:opacity-60"
+                      />
+                    </div>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              );
+            })}
+          </SidebarMenu>
+        </SidebarGroup>
+      </SidebarContent>
 
-      {/* Footer */}
-      <div className="border-sidebar-border border-t p-3">
+      {/* ── Footer ────────────────────────────────────────────────── */}
+      <SidebarFooter className="border-sidebar-border border-t p-3">
         <p className="text-muted-foreground text-center font-mono text-[10px]">
           syntax-stash · handmade
         </p>
-      </div>
-    </aside>
+      </SidebarFooter>
+    </Sidebar>
   );
 };
-export default Sidebar;
+
+export default AppSidebar;

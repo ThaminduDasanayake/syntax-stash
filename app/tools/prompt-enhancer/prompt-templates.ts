@@ -1,31 +1,52 @@
-import { PromptTemplate } from "@/types";
+import { PromptTemplate } from "@/app/tools/prompt-enhancer/types";
 
 export const promptTemplates: PromptTemplate[] = [
   {
     id: "code-refactor",
     title: "Code Refactor",
-    description:
-      "Refactor code in any language with a specific goal in mind, following best practices.",
-    template:
-      "Act as an expert [Language] developer. Refactor the following code to achieve [Goal]. Ensure the code is modular, well-commented, and follows best practices. Here is the code: \n\n[Code]",
-    variables: ["Language", "Goal", "Code"],
+    description: "Best practices for refactoring",
+    starter:
+      "Act as an expert software engineer. Refactor the following code to make it more modular, maintainable, and performant. Adhere to the language's standard conventions and best practices.\n\nTech Stack:\n\n\nCode:\n",
+    category: "coding",
   },
   {
-    id: "explain-ml-concept",
-    title: "Explain ML Concept",
-    description:
-      "Break down a machine learning concept with analogies tailored to any audience level.",
-    template:
-      "Explain the machine learning concept of [Concept] to someone with a [Audience Level] understanding of mathematics. Provide a real-world analogy and a simple use case.",
-    variables: ["Concept", "Audience Level"],
+    id: "explain-concept",
+    title: "Explain Concept",
+    description: "Feynman technique explanation",
+    starter:
+      "Explain the concept of [insert topic] as if I am a junior developer. Use a real-world analogy, provide a short code example if applicable, and list common pitfalls.",
+    category: "analysis",
   },
   {
-    id: "react-nextjs-component",
-    title: "React/Next.js Component Generator",
-    description:
-      "Generate a modern, functional Next.js component with Tailwind CSS and TypeScript.",
-    template:
-      "Write a modern, functional Next.js React component named [Component Name]. It must use Tailwind CSS and TypeScript. Requirements: [Requirements].",
-    variables: ["Component Name", "Requirements"],
+    id: "api-design",
+    title: "REST API Design",
+    description: "Generate API specs",
+    starter:
+      "Design a RESTful API for a [insert application type]. Define the endpoints, HTTP methods, status codes, and provide a JSON schema for the request/response bodies.\n\nTech Stack / Framework:\n",
+    category: "coding",
+  },
+  {
+    id: "code-review",
+    title: "Code Review",
+    description: "Thorough code review prompt",
+    starter:
+      "Act as a senior engineer conducting a code review. Analyze the following code for bugs, performance issues, security vulnerabilities, and readability. Provide actionable suggestions with corrected code snippets.\n\nTech Stack / Rules:\n\n\nCode:\n",
+    category: "coding",
+  },
+  {
+    id: "technical-writing",
+    title: "Technical Docs",
+    description: "Generate documentation",
+    starter:
+      "Write clear, concise technical documentation for the following feature. Include an overview, usage examples, parameter descriptions, and edge cases to watch for.\n\nFeature Context:\n\n\nFeature / Code:\n",
+    category: "writing",
+  },
+  {
+    id: "debug-assistant",
+    title: "Debug Assistant",
+    description: "Systematic debugging prompt",
+    starter:
+      "I am encountering the following error. Act as a debugging expert. Identify the root cause, explain why it happens, and provide a step-by-step fix with corrected code.\n\nEnvironment / Tech Stack:\n\n\nError Message:\n\n\nCode Context:\n",
+    category: "analysis",
   },
 ];

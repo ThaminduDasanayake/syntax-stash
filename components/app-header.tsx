@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -12,7 +12,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import { HeaderProps } from "@/types";
 
 /** Convert a URL segment to a human-readable label.
@@ -30,25 +30,16 @@ const sectionLabels: Record<string, string> = {
   category: "Resources",
 };
 
-export default function Header({ onSearchOpenAction, onMenuOpenAction }: HeaderProps) {
+export default function AppHeader({ onSearchOpenAction }: HeaderProps) {
+  // onMenuOpenAction
   const pathname = usePathname();
 
   const parts = pathname.split("/").filter(Boolean);
 
   return (
     <header className="border-border bg-background/80 sticky top-0 z-30 grid h-12 shrink-0 grid-cols-[1fr_auto_1fr] items-center gap-2 border-b px-4 backdrop-blur-sm">
-      {/* Left: hamburger (mobile) + breadcrumbs */}
       <div className="flex min-w-0 items-center gap-2">
-        {/* Hamburger — mobile only */}
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={onMenuOpenAction}
-          className="text-muted-foreground h-8 w-8 shrink-0 md:hidden"
-          aria-label="Open sidebar"
-        >
-          <Menu size={18} />
-        </Button>
+        <SidebarTrigger className="text-muted-foreground hover:bg-muted -ml-2" />
 
         <Breadcrumb className="hidden min-w-0 sm:flex">
           <BreadcrumbList className="flex-nowrap">

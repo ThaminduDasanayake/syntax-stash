@@ -1,11 +1,12 @@
 "use client";
 
-import { ArrowLeft, Download } from "lucide-react";
+import { Download, ImageIcon } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
-import FileDropzone from "@/components/FileDropzone";
+import { ImageFormat } from "@/app/tools/image-converter/types";
+import FileDropzone from "@/components/file-dropzone";
+import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
@@ -15,7 +16,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ImageFormat } from "@/types";
 
 const EXT_MAP: Record<ImageFormat, string> = {
   "image/webp": "webp",
@@ -48,7 +48,7 @@ export default function ImageConverterPage() {
     setPreviewUrl(URL.createObjectURL(f));
   }
 
-  function handleReplace() {
+  function handleClear() {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
     setFile(null);
     setPreviewUrl(null);
@@ -118,96 +118,71 @@ export default function ImageConverterPage() {
   }
 
   return (
-    <div className="min-h-screen">
-      <div className="relative z-10 mx-auto max-w-6xl px-4 py-16 md:py-24">
-        <Link
-          href="/"
-          className="mb-12 inline-flex items-center gap-2 text-sm text-zinc-400 transition-colors hover:text-white"
-        >
-          <ArrowLeft size={16} />
-          Back to stash
-        </Link>
-
-        <div className="mb-12">
-          <h1 className="mb-3 text-4xl font-bold tracking-tighter text-white md:text-5xl">
-            Omni-Image <span className="text-orange-500">Converter</span>
-          </h1>
-          <p className="text-base text-zinc-400 md:text-lg">
-            Convert images locally between WebP, JPEG, and PNG — never uploaded to a server.
-          </p>
+    <ToolLayout
+      icon={ImageIcon}
+      title="Omni-Image"
+      highlight="Converter"
+      description="Convert images locally between WebP, JPEG and PNG without uploading to a server."
+    >
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+        {/* Left — Dropzone or Preview */}
+        <div className="space-y-4">
+          <Label className="text-foreground">Image</Label>
+          {!file ? (
+            <FileDropzone
+              onFileDropAction={handleFileDrop}
+              accept="image/*"
+              label="Drop an image here"
+            />
+          ) : (
+            <div className="space-y-3">
+              {previewUrl && (
+                <Image
+                  src={previewUrl}
+                  alt="Preview"
+                  width={400}
+                  height={400}
+                  className="border-border max-h-96 w-auto rounded-xl border object-contain"
+                />
+              )}
+              <Button
+                variant="ghost"
+                onClick={handleClear}
+                className="hover:text-foreground text-muted-foreground px-0 text-xs"
+              >
+                Clear image
+              </Button>
+            </div>
+          )}
+          {error && <p className="text-destructive text-sm">{error}</p>}
         </div>
 
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-          {/* Left — Dropzone or Preview */}
-          <div className="space-y-4">
-            <Label className="text-zinc-300">Image</Label>
-            {!file ? (
-              <FileDropzone
-                onFileDropAction={handleFileDrop}
-                accept="image/*"
-                label="Drop an image here"
-              />
-            ) : (
-              <div className="space-y-3">
-                <Image
-                  src={previewUrl!}
-                  alt="Preview"
-                  className="max-h-96 w-auto rounded-xl border border-white/10 object-contain"
-                />
-                <Button
-                  variant="ghost"
-                  onClick={handleReplace}
-                  className="px-0 text-xs text-zinc-500 hover:text-zinc-300"
-                >
-                  Replace image
-                </Button>
-              </div>
-            )}
-            {error && <p className="text-sm text-red-400">{error}</p>}
+        {/* Right — Format & Convert */}
+        <div className="space-y-6">
+          <div className="space-y-2">
+            <Label className="text-foreground">Target Format</Label>
+            <Select value={format} onValueChange={handleFormatChange}>
+              <SelectTrigger className="border-foreground/30 w-full">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="image/webp">WebP</SelectItem>
+                <SelectItem value="image/jpeg">JPEG</SelectItem>
+                <SelectItem value="image/png">PNG</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
-          {/* Right — Format & Convert */}
-          <div className="space-y-6">
-            <div className="space-y-2">
-              <Label className="text-zinc-300">Target Format</Label>
-              <Select value={format} onValueChange={handleFormatChange}>
-                <SelectTrigger className="h-10 w-full border-white/10 bg-[#0C0C0C] text-white">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="border-white/10 bg-[#0C0C0C]">
-                  <SelectItem
-                    value="image/webp"
-                    className="text-zinc-300 focus:bg-white/5 focus:text-white"
-                  >
-                    WebP
-                  </SelectItem>
-                  <SelectItem
-                    value="image/jpeg"
-                    className="text-zinc-300 focus:bg-white/5 focus:text-white"
-                  >
-                    JPEG
-                  </SelectItem>
-                  <SelectItem
-                    value="image/png"
-                    className="text-zinc-300 focus:bg-white/5 focus:text-white"
-                  >
-                    PNG
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <Button
-              onClick={handleConvert}
-              disabled={!file || isConverting}
-              className="rounded-full border border-orange-500/30 bg-orange-500/10 px-6 py-2 font-semibold text-orange-400 transition-all duration-200 hover:bg-orange-500/20 disabled:opacity-50"
-            >
-              <Download size={16} className="mr-2" />
-              {isConverting ? "Converting..." : "Convert & Download"}
-            </Button>
-          </div>
+          <Button
+            onClick={handleConvert}
+            disabled={!file || isConverting}
+            className="border-primary/30 bg-primary/10 hover:bg-primary/20 text-primary rounded-full border px-6 py-2 font-semibold transition-all duration-200 disabled:opacity-50"
+          >
+            <Download size={16} className="mr-2" />
+            {isConverting ? "Converting..." : "Convert & Download"}
+          </Button>
         </div>
       </div>
-    </div>
+    </ToolLayout>
   );
 }

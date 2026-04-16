@@ -1,16 +1,18 @@
 "use client";
 
 import chroma from "chroma-js";
-import { ArrowLeft, Palette } from "lucide-react";
-import Link from "next/link";
+import { Palette } from "lucide-react";
 import { useMemo, useState } from "react";
 
+import ExportBlock from "@/app/tools/tailwind-shades/export-block";
+import ShadeButton from "@/app/tools/tailwind-shades/shade-button";
+import { ToolLayout } from "@/components/layout/tool-layout";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const SHADES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 
-function generateShades(hex: string): { shade: number; hex: string }[] {
+function generateShades(hex: string): { shade: number; hex: string; oklch: string }[] {
   const base = chroma(hex);
   return SHADES.map((shade) => {
     let color: chroma.Color;
@@ -23,21 +25,17 @@ function generateShades(hex: string): { shade: number; hex: string }[] {
     } else {
       color = base;
     }
-    return { shade, hex: color.hex() };
+
+    const [l, c, h] = color.oklch();
+    const formattedOklch = `oklch(${l.toFixed(3)} ${c.toFixed(3)} ${(h || 0).toFixed(1)})`;
+
+    return { shade, hex: color.hex(), oklch: formattedOklch };
   });
 }
 
-function isLight(hex: string): boolean {
-  try {
-    return chroma(hex).luminance() > 0.5;
-  } catch {
-    return false;
-  }
-}
-
 export default function TailwindShadesPage() {
-  const [baseColor, setBaseColor] = useState("#f97316");
-  const [copiedShade, setCopiedShade] = useState<number | null>(null);
+  const [baseColor, setBaseColor] = useState("#01d06f");
+  const [colorName, setColorName] = useState("primary");
 
   const shades = useMemo(() => {
     try {
@@ -47,88 +45,81 @@ export default function TailwindShadesPage() {
     }
   }, [baseColor]);
 
-  function handleCopy(shade: number, hex: string) {
-    navigator.clipboard.writeText(hex).then(() => {
-      setCopiedShade(shade);
-      setTimeout(() => setCopiedShade(null), 2000);
-    });
-  }
+  const cssVariables = useMemo(() => {
+    if (!shades.length) return "";
+    const vars = shades.map((s) => `  --${colorName}-${s.shade}: ${s.hex};`).join("\n");
+    return `:root {\n${vars}\n}`;
+  }, [shades, colorName]);
 
-  const inputClass =
-    "h-10 bg-background border-border text-foreground font-mono placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-primary/30";
+  const cssVariablesOklch = useMemo(() => {
+    if (!shades.length) return "";
+    const vars = shades.map((s) => `  --${colorName}-${s.shade}: ${s.oklch};`).join("\n");
+    return `:root {\n${vars}\n}`;
+  }, [shades, colorName]);
+
+  const tailwindConfig = useMemo(() => {
+    if (!shades.length) return "";
+    const vars = shades.map((s) => `    ${s.shade}: '${s.hex}',`).join("\n");
+    return `  ${colorName}: {\n${vars}\n  },`;
+  }, [shades, colorName]);
 
   return (
-    <div className="min-h-screen">
-      <div className="relative z-10 mx-auto max-w-6xl px-4 py-16 md:py-24">
-        <Link
-          href="/"
-          className="text-muted-foreground hover:text-foreground mb-12 inline-flex items-center gap-2 text-sm transition-colors"
-        >
-          <ArrowLeft size={16} />
-          Back to stash
-        </Link>
+    <ToolLayout
+      icon={Palette}
+      title="Tailwind"
+      highlight="Shades"
+      description="Generate a full 50–950 Tailwind color scale from a single hex value."
+    >
+      <div className="mb-8 grid max-w-lg grid-cols-1 gap-10 sm:grid-cols-2">
+        <div className="space-y-2">
+          <Label>Base Color</Label>
+          <div className="flex gap-2">
+            {/* The visual color swatch */}
+            <input
+              type="color"
+              value={baseColor}
+              onChange={(e) => setBaseColor(e.target.value)}
+              className="h-9 cursor-pointer"
+            />
 
-        <div className="mb-10">
-          <h1 className="text-foreground mb-3 flex items-center gap-3 text-4xl font-bold tracking-tighter md:text-5xl">
-            <Palette className="text-primary" size={36} />
-            Tailwind <span className="text-primary">Shades</span>
-          </h1>
-          <p className="text-muted-foreground text-base md:text-lg">
-            Generate a full 50–950 Tailwind color scale from a single hex value.
-          </p>
-        </div>
-
-        <div className="mb-8 max-w-xs space-y-2">
-          <Label className="text-foreground">Base Color (Hex)</Label>
-          <Input
-            value={baseColor}
-            onChange={(e) => setBaseColor(e.target.value)}
-            placeholder="#f97316"
-            className={inputClass}
-          />
+            <Input
+              value={baseColor}
+              onChange={(e) => setBaseColor(e.target.value)}
+              placeholder="hsl(24.6, 95%, 53.1%)"
+              className="pl-10"
+            />
+          </div>
           {shades.length === 0 && baseColor.trim() && (
             <p className="text-destructive font-mono text-sm">Invalid hex value</p>
           )}
         </div>
 
-        {shades.length > 0 && (
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-            {shades.map(({ shade, hex }) => {
-              // const textColor = isLight(hex) ? "#000000" : "#ffffff";
-              const isBase = shade === 500;
-              const isCopied = copiedShade === shade;
-              return (
-                <button
-                  key={shade}
-                  onClick={() => handleCopy(shade, hex)}
-                  className={`overflow-hidden rounded-xl border text-left transition-all hover:scale-105 active:scale-95 ${
-                    isBase
-                      ? "ring-primary ring-offset-background border-primary ring-2 ring-offset-2"
-                      : "border-border hover:border-foreground/30"
-                  }`}
-                >
-                  <div className="h-20 w-full" style={{ backgroundColor: hex }} />
-                  <div className="bg-card p-2">
-                    <p className="text-foreground font-mono text-[11px] font-semibold">
-                      {shade}
-                      {isBase && <span className="text-primary ml-1 text-[9px]">base</span>}
-                    </p>
-                    <p className="text-muted-foreground truncate font-mono text-[10px]">
-                      {isCopied ? "Copied!" : hex}
-                    </p>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        )}
-
-        {shades.length > 0 && (
-          <p className="text-muted-foreground mt-6 font-mono text-xs">
-            Click any swatch to copy the hex value to clipboard.
-          </p>
-        )}
+        <div className="space-y-2">
+          <Label className="text-foreground">Color Name</Label>
+          <Input
+            value={colorName}
+            onChange={(e) => setColorName(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ""))}
+            placeholder="primary"
+          />
+        </div>
       </div>
-    </div>
+
+      {shades.length > 0 && (
+        <div className="mb-12 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+          {shades.map(({ shade, hex }) => {
+            return <ShadeButton key={shade} shade={shade} hex={hex} />;
+          })}
+        </div>
+      )}
+
+      {shades.length > 0 && (
+        <div className="space-y-6">
+          <h3 className="text-foreground text-lg font-semibold tracking-tight">Export Code</h3>
+          <ExportBlock title="CSS Variables" code={cssVariables} />
+          <ExportBlock title="CSS Variables (OKLCH)" code={cssVariablesOklch} />
+          <ExportBlock title="Tailwind Config" code={tailwindConfig} />
+        </div>
+      )}
+    </ToolLayout>
   );
 }

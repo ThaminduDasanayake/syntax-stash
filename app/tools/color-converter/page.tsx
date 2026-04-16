@@ -1,13 +1,13 @@
 "use client";
 
 import chroma from "chroma-js";
-import { ArrowLeft, Palette } from "lucide-react";
-import Link from "next/link";
+import { Palette } from "lucide-react";
 import { useState } from "react";
 
+import { ColorField } from "@/app/tools/color-converter/types";
+import { ToolLayout } from "@/components/layout/tool-layout";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ColorField } from "@/types";
 
 function formatRgb(c: chroma.Color) {
   const [r, g, b] = c.rgb();
@@ -71,79 +71,64 @@ export default function ColorConverterPage() {
     "h-10 bg-background border-border text-foreground font-mono placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-primary/30";
 
   return (
-    <div className="min-h-screen">
-      <div className="relative z-10 mx-auto max-w-6xl px-4 py-16 md:py-24">
-        <Link
-          href="/"
-          className="text-muted-foreground hover:text-foreground mb-12 inline-flex items-center gap-2 text-sm transition-colors"
-        >
-          <ArrowLeft size={16} />
-          Back to stash
-        </Link>
-
-        <div className="mb-12">
-          <h1 className="text-foreground mb-3 flex items-center gap-3 text-4xl font-bold tracking-tighter md:text-5xl">
-            <Palette className="text-primary" size={36} />
-            Color <span className="text-primary">Converter</span>
-          </h1>
-          <p className="text-muted-foreground text-base md:text-lg">
-            Convert colors between HEX, RGB, HSL, and OKLCH in real time.
-          </p>
+    <ToolLayout
+      icon={Palette}
+      title="Color"
+      highlight="Converter"
+      description="Convert colors between HEX, RGB, HSL, and OKLCH in real time."
+    >
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+        {/* Left — inputs */}
+        <div className="space-y-6">
+          <div className="space-y-2">
+            <Label className="text-foreground">HEX</Label>
+            <Input
+              value={hex}
+              onChange={(e) => handleChange("hex", e.target.value)}
+              placeholder="#f97316"
+              className={inputClass}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label className="text-foreground">RGB</Label>
+            <Input
+              value={rgb}
+              onChange={(e) => handleChange("rgb", e.target.value)}
+              placeholder="rgb(249, 115, 22)"
+              className={inputClass}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label className="text-foreground">HSL</Label>
+            <Input
+              value={hsl}
+              onChange={(e) => handleChange("hsl", e.target.value)}
+              placeholder="hsl(25, 95%, 53%)"
+              className={inputClass}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label className="text-foreground">OKLCH</Label>
+            <Input
+              value={oklch}
+              onChange={(e) => handleChange("oklch", e.target.value)}
+              placeholder="oklch(0.671 0.137 48.5)"
+              className={inputClass}
+            />
+          </div>
+          {error && <p className="text-destructive font-mono text-sm">{error}</p>}
         </div>
 
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-          {/* Left — inputs */}
-          <div className="space-y-6">
-            <div className="space-y-2">
-              <Label className="text-foreground">HEX</Label>
-              <Input
-                value={hex}
-                onChange={(e) => handleChange("hex", e.target.value)}
-                placeholder="#f97316"
-                className={inputClass}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label className="text-foreground">RGB</Label>
-              <Input
-                value={rgb}
-                onChange={(e) => handleChange("rgb", e.target.value)}
-                placeholder="rgb(249, 115, 22)"
-                className={inputClass}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label className="text-foreground">HSL</Label>
-              <Input
-                value={hsl}
-                onChange={(e) => handleChange("hsl", e.target.value)}
-                placeholder="hsl(25, 95%, 53%)"
-                className={inputClass}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label className="text-foreground">OKLCH</Label>
-              <Input
-                value={oklch}
-                onChange={(e) => handleChange("oklch", e.target.value)}
-                placeholder="oklch(0.671 0.137 48.5)"
-                className={inputClass}
-              />
-            </div>
-            {error && <p className="text-destructive font-mono text-sm">{error}</p>}
-          </div>
-
-          {/* Right — live preview */}
-          <div className="flex flex-col gap-4">
-            <Label className="text-foreground">Preview</Label>
-            <div
-              className="border-border h-full min-h-[300px] rounded-xl border shadow-lg transition-colors duration-150"
-              style={{ backgroundColor: preview }}
-            />
-            <p className="text-muted-foreground text-center font-mono text-xs">{preview}</p>
-          </div>
+        {/* Right — live preview */}
+        <div className="flex flex-col gap-4">
+          <Label className="text-foreground">Preview</Label>
+          <div
+            className="border-border h-full min-h-[300px] rounded-xl border shadow-lg transition-colors duration-150"
+            style={{ backgroundColor: preview }}
+          />
+          <p className="text-muted-foreground text-center font-mono text-xs">{preview}</p>
         </div>
       </div>
-    </div>
+    </ToolLayout>
   );
 }

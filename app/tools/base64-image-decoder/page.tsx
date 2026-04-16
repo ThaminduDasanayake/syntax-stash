@@ -96,7 +96,7 @@ export default function Base64ImagePage() {
         <div className="space-y-4">
           <label className="text-foreground text-sm font-medium">Preview</label>
           <Card className="bg-background overflow-hidden">
-            <CardContent className="flex min-h-[400px] items-center justify-center p-4">
+            <CardContent className="flex min-h-100 items-center justify-center p-4">
               {base64Input.trim() === "" ? (
                 <p className="text-muted-foreground text-center text-sm">
                   Paste a Base64 string to preview the image here
@@ -106,7 +106,7 @@ export default function Base64ImagePage() {
                 <img
                   src={imageDataUri}
                   alt="Decoded Base64 Image"
-                  className="max-h-[500px] max-w-full rounded-lg object-contain"
+                  className="max-h-125 max-w-full rounded-lg object-contain"
                 />
               ) : (
                 <div className="space-y-2 text-center">

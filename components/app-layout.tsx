@@ -2,36 +2,24 @@
 
 import { ReactNode, useState } from "react";
 
+import AppHeader from "@/components/app-header";
+import AppSidebar from "@/components/app-sidebar";
 import CommandMenu from "@/components/CommandMenu";
-import Header from "@/components/Header";
-import Sidebar from "@/components/Sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 export default function AppLayout({ children }: { children: ReactNode }) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [commandMenuOpen, setCommandMenuOpen] = useState(false);
 
   return (
-    <>
-      {/* Mobile overlay backdrop */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 z-40 bg-black/50 md:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-      <Sidebar isOpen={sidebarOpen} onCloseAction={() => setSidebarOpen(false)} />
-
+    <SidebarProvider>
+      <AppSidebar />
       <main className="relative z-10 flex min-w-0 flex-1 flex-col overflow-hidden">
-        <Header
-          onSearchOpenAction={() => setCommandMenuOpen(true)}
-          onMenuOpenAction={() => setSidebarOpen(true)}
-        />
+        <AppHeader onSearchOpenAction={() => setCommandMenuOpen(true)} />
         <div className="flex-1 overflow-y-auto">
           <div className="p-8">{children}</div>
         </div>
-
         <CommandMenu open={commandMenuOpen} setOpenAction={setCommandMenuOpen} />
       </main>
-    </>
+    </SidebarProvider>
   );
 }

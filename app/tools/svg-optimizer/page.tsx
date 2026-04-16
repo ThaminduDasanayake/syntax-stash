@@ -1,13 +1,13 @@
 "use client";
 
-import { ArrowLeft, Check, Copy, FileImage } from "lucide-react";
-import Link from "next/link";
+import { Check, Copy, FileImage } from "lucide-react";
 import { useEffect, useState, useTransition } from "react";
 
+import { OptimizeResponse } from "@/app/tools/svg-optimizer/types";
+import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { OptimizeResponse } from "@/types";
 
 import { optimizeSvg } from "./actions";
 
@@ -59,86 +59,69 @@ export default function SvgOptimizerPage() {
       : null;
 
   return (
-    <div className="min-h-screen">
-      <div className="relative z-10 mx-auto max-w-6xl px-4 py-16 md:py-24">
-        <Link
-          href="/"
-          className="text-muted-foreground hover:text-foreground mb-12 inline-flex items-center gap-2 text-sm transition-colors"
-        >
-          <ArrowLeft size={16} />
-          Back to stash
-        </Link>
-
-        <div className="mb-10">
-          <h1 className="text-foreground mb-3 flex items-center gap-3 text-4xl font-bold tracking-tighter md:text-5xl">
-            <FileImage className="text-primary" size={36} />
-            SVG <span className="text-primary">Optimizer</span>
-          </h1>
-          <p className="text-muted-foreground text-base md:text-lg">
-            Minify and clean bloated SVG markup using SVGO with multipass optimization.
-          </p>
+    <ToolLayout
+      icon={FileImage}
+      title="SVG"
+      highlight="Optimizer"
+      description="Minify and clean bloated SVG markup using SVGO with multipass optimization."
+    >
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+        {/* Left — input */}
+        <div className="space-y-2">
+          <Label className="text-foreground">Input SVG</Label>
+          <Textarea
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder={PLACEHOLDER}
+            className={textareaClass}
+          />
         </div>
 
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-          {/* Left — input */}
-          <div className="space-y-2">
-            <Label className="text-foreground">Input SVG</Label>
-            <Textarea
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder={PLACEHOLDER}
-              className={textareaClass}
-            />
-          </div>
-
-          {/* Right — output */}
-          <div className="space-y-2">
-            <div className="flex min-h-6 items-center justify-between">
-              <Label className="text-foreground">
-                Optimized SVG
-                {isPending && (
-                  <span className="text-muted-foreground ml-2 font-mono text-[10px] normal-case">
-                    optimizing…
-                  </span>
-                )}
-              </Label>
-              {hasResult && savedPct !== null && (
-                <span className="text-muted-foreground font-mono text-xs">
-                  {(result.originalSize / 1024).toFixed(2)} KB →{" "}
-                  {(result.optimizedSize / 1024).toFixed(2)} KB{" "}
-                  <span className="text-primary font-semibold">({savedPct}% saved)</span>
+        {/* Right — output */}
+        <div className="space-y-2">
+          <div className="flex min-h-6 items-center justify-between">
+            <Label className="text-foreground">
+              Optimized SVG
+              {isPending && (
+                <span className="text-muted-foreground ml-2 font-mono text-[10px] normal-case">
+                  optimizing…
                 </span>
               )}
-            </div>
-
-            {result && "error" in result ? (
-              <div className="border-destructive/50 bg-destructive/10 flex h-72 items-center justify-center rounded-md border">
-                <p className="text-destructive px-4 text-center font-mono text-sm">
-                  {result.error}
-                </p>
-              </div>
-            ) : (
-              <Textarea
-                value={hasResult ? result.svg : ""}
-                readOnly
-                placeholder="Optimized SVG will appear here..."
-                className={textareaClass}
-              />
+            </Label>
+            {hasResult && savedPct !== null && (
+              <span className="text-muted-foreground font-mono text-xs">
+                {(result.originalSize / 1024).toFixed(2)} KB →{" "}
+                {(result.optimizedSize / 1024).toFixed(2)} KB{" "}
+                <span className="text-primary font-semibold">({savedPct}% saved)</span>
+              </span>
             )}
-
-            <Button
-              onClick={handleCopy}
-              disabled={!hasResult}
-              variant="outline"
-              size="sm"
-              className="gap-2"
-            >
-              {copied ? <Check size={14} /> : <Copy size={14} />}
-              {copied ? "Copied!" : "Copy SVG"}
-            </Button>
           </div>
+
+          {result && "error" in result ? (
+            <div className="border-destructive/50 bg-destructive/10 flex h-72 items-center justify-center rounded-md border">
+              <p className="text-destructive px-4 text-center font-mono text-sm">{result.error}</p>
+            </div>
+          ) : (
+            <Textarea
+              value={hasResult ? result.svg : ""}
+              readOnly
+              placeholder="Optimized SVG will appear here..."
+              className={textareaClass}
+            />
+          )}
+
+          <Button
+            onClick={handleCopy}
+            disabled={!hasResult}
+            variant="outline"
+            size="sm"
+            className="gap-2"
+          >
+            {copied ? <Check size={14} /> : <Copy size={14} />}
+            {copied ? "Copied!" : "Copy SVG"}
+          </Button>
         </div>
       </div>
-    </div>
+    </ToolLayout>
   );
 }
