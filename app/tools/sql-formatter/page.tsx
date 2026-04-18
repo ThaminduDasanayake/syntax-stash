@@ -1,29 +1,16 @@
 "use client";
 
-import { Check, Copy, Table } from "lucide-react";
-import { format } from "sql-formatter";
-import { useMemo, useState } from "react";
+import { Table } from "lucide-react";
+import { useEffect, useState } from "react";
 
+import { ErrorAlert } from "@/components/error-alert";
 import { ToolLayout } from "@/components/layout/tool-layout";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import ClearButton from "@/components/ui/clear-button";
+import CopyButton from "@/components/ui/copy-button";
+import { SelectField } from "@/components/ui/select-field";
+import { TextAreaField } from "@/components/ui/textarea-field";
 
-type SqlDialect =
-  | "sql"
-  | "mysql"
-  | "postgresql"
-  | "sqlite"
-  | "bigquery"
-  | "transactsql";
+type SqlDialect = "sql" | "mysql" | "postgresql" | "sqlite" | "bigquery" | "transactsql";
 
 const DIALECTS: { id: SqlDialect; label: string }[] = [
   { id: "sql", label: "Standard SQL" },
@@ -34,21 +21,44 @@ const DIALECTS: { id: SqlDialect; label: string }[] = [
   { id: "transactsql", label: "T-SQL (MSSQL)" },
 ];
 
-const PLACEHOLDER = `SELECT u.id, u.name, COUNT(o.id) AS order_count, SUM(o.total) AS total_spent FROM users u LEFT JOIN orders o ON u.id = o.user_id WHERE u.created_at > '2024-01-01' GROUP BY u.id, u.name HAVING COUNT(o.id) > 5 ORDER BY total_spent DESC LIMIT 20;`;
+const PLACEHOLDER =
+  "SELECT u.id, u.name, COUNT(o.id) AS order_count, SUM(o.total) AS total_spent FROM users u LEFT JOIN orders o ON u.id = o.user_id WHERE u.created_at > '2024-01-01' GROUP BY u.id, u.name HAVING COUNT(o.id) > 5 ORDER BY total_spent DESC LIMIT 20;";
 
 export default function SqlFormatterPage() {
   const [input, setInput] = useState(PLACEHOLDER);
   const [dialect, setDialect] = useState<SqlDialect>("sql");
-  const { copied, copy } = useCopyToClipboard();
 
-  const result = useMemo<{ ok: true; output: string } | { ok: false; error: string }>(() => {
-    if (!input.trim()) return { ok: true, output: "" };
-    try {
-      const output = format(input, { language: dialect, keywordCase: "upper", tabWidth: 2 });
-      return { ok: true, output };
-    } catch (e) {
-      return { ok: false, error: e instanceof Error ? e.message : "Failed to format SQL" };
+  const [output, setOutput] = useState("");
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!input.trim()) {
+      setOutput("");
+      setError(null);
+      return;
     }
+
+    let isMounted = true;
+
+    import("sql-formatter")
+      .then(({ format }) => {
+        if (!isMounted) return;
+        try {
+          const result = format(input, { language: dialect, keywordCase: "upper", tabWidth: 2 });
+          setOutput(result);
+          setError(null);
+        } catch (e) {
+          setError(e instanceof Error ? e.message : "Failed to format SQL");
+        }
+      })
+      .catch(() => {
+        if (!isMounted) return;
+        setError("Failed to load SQL formatter module.");
+      });
+
+    return () => {
+      isMounted = false;
+    };
   }, [input, dialect]);
 
   return (
@@ -58,71 +68,46 @@ export default function SqlFormatterPage() {
       highlight="Formatter"
       description="Prettify and format raw SQL queries with proper indentation and capitalized keywords."
     >
+      <div className="mb-4 grid grid-cols-1 gap-8 lg:grid-cols-2">
+        <SelectField
+          label="SQL Dialect"
+          value={dialect}
+          onValueChange={(v) => setDialect(v as SqlDialect)}
+          options={DIALECTS.map((d) => ({ value: d.id, label: d.label }))}
+        />
+      </div>
+
+      {/* Editor Grid */}
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Left — Input */}
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label>SQL Dialect</Label>
-            <Select
-              value={dialect}
-              onValueChange={(v) => setDialect(v as SqlDialect)}
-            >
-              <SelectTrigger className="h-10 w-full">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {DIALECTS.map((d) => (
-                  <SelectItem key={d.id} value={d.id}>
-                    {d.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <Label>Raw SQL</Label>
-            <Textarea
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Paste your unformatted SQL here..."
-              rows={20}
+        <TextAreaField
+          label="Raw SQL"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Paste your unformatted SQL here..."
+          rows={20}
+          action={
+            <ClearButton
+              onClick={() => {
+                setInput("");
+              }}
+              disabled={!input}
             />
-          </div>
-        </div>
+          }
+        />
 
         {/* Right — Output */}
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <Label>Formatted SQL</Label>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => result.ok && copy(result.output)}
-              disabled={!result.ok || !result.output}
-              className="rounded-full font-semibold"
-            >
-              {copied ? (
-                <>
-                  <Check size={12} />
-                  Copied!
-                </>
-              ) : (
-                <>
-                  <Copy size={12} />
-                  Copy
-                </>
-              )}
-            </Button>
-          </div>
+          {error && <ErrorAlert message={error} />}
 
-          {!result.ok ? (
-            <div className="border-destructive/30 bg-destructive/10 text-destructive rounded-lg border p-4 text-sm">
-              <p className="font-mono">{result.error}</p>
-            </div>
-          ) : (
-            <Textarea readOnly value={result.output} rows={20} />
-          )}
+          <TextAreaField
+            label="Formatted SQL"
+            readOnly
+            value={output}
+            rows={20}
+            placeholder={!input ? "Paste unformatted SQL on the left to format SQL" : ""}
+            action={<CopyButton value={output} disabled={!!error || !output} />}
+          />
         </div>
       </div>
     </ToolLayout>

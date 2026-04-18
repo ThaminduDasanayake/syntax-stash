@@ -8,6 +8,7 @@ import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
 import { optimizeSvg } from "./actions";
 
@@ -22,7 +23,6 @@ const PLACEHOLDER = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10
 export default function SvgOptimizerPage() {
   const [input, setInput] = useState("");
   const [result, setResult] = useState<OptimizeResponse | null>(null);
-  const [copied, setCopied] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   // Debounce optimization calls so we don't spam the server action while typing
@@ -40,14 +40,7 @@ export default function SvgOptimizerPage() {
     return () => clearTimeout(id);
   }, [input]);
 
-  function handleCopy() {
-    if (result && "svg" in result && result.svg) {
-      navigator.clipboard.writeText(result.svg).then(() => {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      });
-    }
-  }
+  const { copied, copy } = useCopyToClipboard();
 
   const textareaClass =
     "h-72 resize-none bg-background border-border text-foreground font-mono text-xs placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-primary/30";
@@ -111,7 +104,9 @@ export default function SvgOptimizerPage() {
           )}
 
           <Button
-            onClick={handleCopy}
+            onClick={() => {
+              if (hasResult && result.svg) copy(result.svg);
+            }}
             disabled={!hasResult}
             variant="outline"
             size="sm"

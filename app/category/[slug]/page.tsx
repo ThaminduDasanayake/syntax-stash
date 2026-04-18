@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
-import ToolCard from "@/components/ToolCard";
-import { resourceCategories, resourceLinks } from "@/lib/data";
+import ToolCard from "@/components/tool-card";
+import { resourceCategories, resourceLinks } from "@/lib/resources-data";
 import { slugify } from "@/lib/utils";
 
 // Tell Next.js which slugs are valid at build time

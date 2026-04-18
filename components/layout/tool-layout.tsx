@@ -14,7 +14,7 @@ export function ToolLayout({
   maxWidth = "max-w-7xl",
 }: ToolLayoutProps) {
   return (
-    <div className="min-h-screen">
+    <div className="">
       <div className={`relative z-10 mx-auto ${maxWidth} px-4 py-8 md:py-12`}>
         {/* Back link */}
         <Link
@@ -29,7 +29,10 @@ export function ToolLayout({
         <div className="mb-10">
           <h1 className="text-foreground mb-3 flex items-center gap-3 text-4xl font-bold tracking-tighter md:text-5xl">
             <Icon className="text-primary" size={36} />
-            {title} {highlight && <span className="text-primary">{highlight}</span>}
+            <span>
+              {title}
+              {highlight && <span className="text-primary"> {highlight}</span>}
+            </span>
           </h1>
           <p className="text-foreground text-base md:text-lg">{description}</p>
         </div>

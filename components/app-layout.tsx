@@ -16,7 +16,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
       <main className="relative z-10 flex min-w-0 flex-1 flex-col overflow-hidden">
         <AppHeader onSearchOpenAction={() => setCommandMenuOpen(true)} />
         <div className="flex-1 overflow-y-auto">
-          <div className="p-8">{children}</div>
+          <div className="p-2 md:p-8">{children}</div>
         </div>
         <CommandMenu open={commandMenuOpen} setOpenAction={setCommandMenuOpen} />
       </main>

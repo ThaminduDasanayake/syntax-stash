@@ -2,7 +2,6 @@
 
 import { Download, QrCode } from "lucide-react";
 import Image from "next/image";
-import QRCode from "qrcode";
 import { useEffect, useState } from "react";
 
 import { ToolLayout } from "@/components/layout/tool-layout";
@@ -28,23 +27,36 @@ const QRGeneratorPage = () => {
       }, 0);
       return;
     }
-    QRCode.toDataURL(text, {
-      color: { dark: fg, light: bg },
-      margin: 2,
-      width: 512,
-    })
-      .then((url) => {
-        if (!cancelled) {
-          setDataUrl(url);
-          setError(null);
-        }
+
+    import("qrcode")
+      .then((QRCodeModule) => {
+        if (cancelled) return;
+
+        // Handle potential differences in CommonJS vs ESM dynamic loading
+        const QRCode = QRCodeModule.default || QRCodeModule;
+
+        QRCode.toDataURL(text, {
+          color: { dark: fg, light: bg },
+          margin: 2,
+          width: 512,
+        })
+          .then((url: string) => {
+            if (!cancelled) {
+              setDataUrl(url);
+              setError(null);
+            }
+          })
+          .catch((e: Error) => {
+            if (!cancelled) {
+              setError(e.message);
+              setDataUrl(null);
+            }
+          });
       })
-      .catch((e: Error) => {
-        if (!cancelled) {
-          setError(e.message);
-          setDataUrl(null);
-        }
+      .catch(() => {
+        if (!cancelled) setError("Failed to load QR generator module.");
       });
+
     return () => {
       cancelled = true;
     };

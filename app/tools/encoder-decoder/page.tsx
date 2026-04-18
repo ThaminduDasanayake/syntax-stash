@@ -1,47 +1,21 @@
 "use client";
 
-import { AlertTriangle, ShieldHalf } from "lucide-react";
-import { useState } from "react";
+import { ShieldHalf } from "lucide-react";
+import { useMemo, useState } from "react";
 
 import { EncoderAction } from "@/app/tools/encoder-decoder/types";
+import {
+  decodeBase64,
+  encodeBase64,
+  hexToString,
+  stringToHex,
+} from "@/app/tools/encoder-decoder/utils";
+import { ErrorAlert } from "@/components/error-alert";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-
-function encodeBase64(s: string): string {
-  const bytes = new TextEncoder().encode(s);
-  let binary = "";
-  for (const b of bytes) binary += String.fromCharCode(b);
-  return btoa(binary);
-}
-
-function decodeBase64(s: string): string {
-  const binary = atob(s.trim());
-  const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
-  return new TextDecoder().decode(bytes);
-}
-
-function stringToHex(s: string): string {
-  const bytes = new TextEncoder().encode(s);
-  return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
-}
-
-function hexToString(s: string): string {
-  const clean = s.replace(/\s+/g, "").replace(/^0x/i, "");
-  if (clean.length === 0) return "";
-  if (clean.length % 2 !== 0) {
-    throw new Error("Hex string must have an even number of characters");
-  }
-  if (!/^[0-9a-fA-F]+$/.test(clean)) {
-    throw new Error("Hex string contains non-hex characters");
-  }
-  const bytes = new Uint8Array(clean.length / 2);
-  for (let i = 0; i < clean.length; i += 2) {
-    bytes[i / 2] = parseInt(clean.slice(i, i + 2), 16);
-  }
-  return new TextDecoder().decode(bytes);
-}
+import ClearButton from "@/components/ui/clear-button";
+import CopyButton from "@/components/ui/copy-button";
+import { TextAreaField } from "@/components/ui/textarea-field";
 
 const ACTIONS: EncoderAction[] = [
   { id: "b64-enc", label: "Encode Base64", run: encodeBase64 },
@@ -54,41 +28,59 @@ const ACTIONS: EncoderAction[] = [
 
 export default function EncoderPage() {
   const [input, setInput] = useState("Hello, syntax-stash!");
-  const [output, setOutput] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [lastAction, setLastAction] = useState<string | null>(null);
+  const [actionId, setActionId] = useState<string | null>(null);
 
   function handleRun(action: EncoderAction) {
-    try {
-      setOutput(action.run(input));
-      setError(null);
-      setLastAction(action.id);
-    } catch (e) {
-      setOutput("");
-      setError(e instanceof Error ? e.message : `Failed to run ${action.label}`);
-      setLastAction(action.id);
+    if (actionId === action.id) {
+      setActionId(null);
+    } else {
+      setActionId(action.id);
     }
   }
+
+  const { output, error } = useMemo(() => {
+    if (!actionId) return { output: "", error: null };
+
+    const activeAction = ACTIONS.find((a) => a.id === actionId);
+    if (!activeAction) return { output: "", error: null };
+
+    try {
+      return { output: activeAction.run(input), error: null };
+    } catch (e) {
+      return {
+        output: "",
+        error: e instanceof Error ? e.message : `Failed to run ${activeAction.label}`,
+      };
+    }
+  }, [input, actionId]);
 
   return (
     <ToolLayout
       icon={ShieldHalf}
-      title="Encoder Decoder"
-      highlight="/"
+      title={
+        <>
+          Encoder <span className="text-primary">/</span> Decoder
+        </>
+      }
       description="Convert strings between Base64, URL-encoded, and Hex encodings."
     >
       <div className="space-y-6">
         {/* Input */}
-        <div className="space-y-2">
-          <Label className="text-foreground">Input</Label>
-          <Textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Paste text or encoded string here..."
-            rows={8}
-            className="bg-background border-border text-foreground focus-visible:ring-primary/30 resize-none font-mono text-sm leading-relaxed focus-visible:ring-1"
-          />
-        </div>
+        <TextAreaField
+          label="Input"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Paste text or encoded string here..."
+          rows={8}
+          action={
+            <ClearButton
+              onClick={() => {
+                setInput("");
+              }}
+              disabled={!input}
+            />
+          }
+        />
 
         {/* Action buttons */}
         <div className="flex flex-wrap gap-2">
@@ -96,8 +88,8 @@ export default function EncoderPage() {
             <Button
               key={a.id}
               onClick={() => handleRun(a)}
-              variant="outline"
-              className="border-primary/30 bg-primary/10 text-primary hover:bg-primary/20 h-9 rounded-full px-4 text-xs font-semibold transition-colors"
+              variant={actionId === a.id ? "default" : "outline"}
+              className="px-4 text-xs font-semibold"
             >
               {a.label}
             </Button>
@@ -105,31 +97,17 @@ export default function EncoderPage() {
         </div>
 
         {/* Error */}
-        {error && (
-          <div className="border-destructive/30 bg-destructive/10 text-destructive flex items-start gap-3 rounded-lg border p-4 text-sm">
-            <AlertTriangle size={18} className="mt-0.5 shrink-0" />
-            <p className="font-mono">{error}</p>
-          </div>
-        )}
+        {error && <ErrorAlert message={error} />}
 
         {/* Output */}
-        <div className="space-y-2">
-          <div className="flex items-baseline justify-between">
-            <Label className="text-foreground">Output</Label>
-            {lastAction && !error && (
-              <span className="text-muted-foreground font-mono text-xs">
-                {ACTIONS.find((a) => a.id === lastAction)?.label}
-              </span>
-            )}
-          </div>
-          <Textarea
-            readOnly
-            value={output}
-            placeholder="Run an action to see the result..."
-            rows={8}
-            className="bg-background border-border text-foreground focus-visible:ring-primary/30 resize-none font-mono text-sm leading-relaxed break-all focus-visible:ring-1"
-          />
-        </div>
+        <TextAreaField
+          label="Output"
+          readOnly
+          value={output}
+          placeholder="Run an action to see the result..."
+          rows={8}
+          action={<CopyButton value={output} disabled={!output} />}
+        />
       </div>
     </ToolLayout>
   );

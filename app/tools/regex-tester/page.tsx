@@ -1,14 +1,16 @@
 "use client";
 
-import { AlertTriangle, Regex } from "lucide-react";
+import { Regex } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { RegexResult } from "@/app/tools/regex-tester/types";
+import { ErrorAlert } from "@/components/error-alert";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import ClearButton from "@/components/ui/clear-button";
+import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { TextAreaField } from "@/components/ui/textarea-field";
 
 export default function RegexTesterPage() {
   const [pattern, setPattern] = useState("[a-z]+");
@@ -65,45 +67,39 @@ export default function RegexTesterPage() {
       <div className="space-y-6">
         {/* Pattern + flags row */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_140px]">
-          <div className="space-y-2">
-            <Label className="text-foreground">Pattern</Label>
-            <Input
-              value={pattern}
-              onChange={(e) => setPattern(e.target.value)}
-              placeholder="[a-z]+"
-              className="bg-background border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-primary/30 h-10 font-mono focus-visible:ring-1"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label className="text-foreground">Flags</Label>
-            <Input
-              value={flags}
-              onChange={(e) => setFlags(e.target.value)}
-              placeholder="g"
-              className="bg-background border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-primary/30 h-10 font-mono focus-visible:ring-1"
-            />
-          </div>
+          <InputField
+            label="Pattern"
+            value={pattern}
+            onChange={(e) => setPattern(e.target.value)}
+            placeholder="[a-z]+"
+          />
+          <InputField
+            label="Flags"
+            value={flags}
+            onChange={(e) => setFlags(e.target.value)}
+            placeholder="g"
+          />
         </div>
 
         {/* Error */}
-        {!result.ok && (
-          <div className="border-destructive/30 bg-destructive/10 text-destructive flex items-start gap-3 rounded-lg border p-4 text-sm">
-            <AlertTriangle size={18} className="mt-0.5 shrink-0" />
-            <p className="font-mono">{result.error}</p>
-          </div>
-        )}
+        {!result.ok && <ErrorAlert message={result.error} />}
 
         {/* Test string */}
-        <div className="space-y-2">
-          <Label className="text-foreground">Test String</Label>
-          <Textarea
-            value={testString}
-            onChange={(e) => setTestString(e.target.value)}
-            placeholder="Paste text to test against..."
-            rows={8}
-            className="bg-background border-border text-foreground focus-visible:ring-primary/30 resize-none font-mono text-sm leading-relaxed focus-visible:ring-1"
-          />
-        </div>
+        <TextAreaField
+          label="Test String"
+          value={testString}
+          onChange={(e) => setTestString(e.target.value)}
+          placeholder="Paste text to test against..."
+          rows={8}
+          action={
+            <ClearButton
+              onClick={() => {
+                setTestString("");
+              }}
+              disabled={!testString}
+            />
+          }
+        />
 
         {/* Results */}
         <div className="space-y-3">

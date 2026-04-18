@@ -5,8 +5,14 @@ import { useMemo, useState } from "react";
 
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Input } from "@/components/ui/input";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
-import { HTTP_STATUS_CODES, STATUS_CATEGORIES, STATUS_CATEGORY_LABELS, StatusCategory } from "./data";
+import {
+  HTTP_STATUS_CODES,
+  STATUS_CATEGORIES,
+  STATUS_CATEGORY_LABELS,
+  StatusCategory,
+} from "./data";
 
 const CATEGORY_STYLES: Record<StatusCategory, { card: string; code: string; badge: string }> = {
   "1xx": {
@@ -39,13 +45,11 @@ const CATEGORY_STYLES: Record<StatusCategory, { card: string; code: string; badg
 export default function HttpStatusPage() {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("All");
-  const [copiedCode, setCopiedCode] = useState<number | null>(null);
 
   const filtered = useMemo(() => {
     const q = search.toLowerCase();
     return HTTP_STATUS_CODES.filter((entry) => {
-      const matchesCategory =
-        activeCategory === "All" || entry.category === activeCategory;
+      const matchesCategory = activeCategory === "All" || entry.category === activeCategory;
       const matchesSearch =
         !q ||
         String(entry.code).includes(q) ||
@@ -56,11 +60,7 @@ export default function HttpStatusPage() {
     });
   }, [search, activeCategory]);
 
-  function copyCode(code: number) {
-    navigator.clipboard.writeText(String(code));
-    setCopiedCode(code);
-    setTimeout(() => setCopiedCode(null), 1500);
-  }
+  const { copiedItem, copy } = useCopyToClipboard<number>();
 
   return (
     <ToolLayout
@@ -103,7 +103,8 @@ export default function HttpStatusPage() {
 
         {/* Result count */}
         <p className="text-muted-foreground text-xs">
-          Showing <span className="text-foreground font-semibold">{filtered.length}</span> of {HTTP_STATUS_CODES.length} codes
+          Showing <span className="text-foreground font-semibold">{filtered.length}</span> of{" "}
+          {HTTP_STATUS_CODES.length} codes
         </p>
 
         {/* Cards grid */}
@@ -115,32 +116,40 @@ export default function HttpStatusPage() {
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {filtered.map((entry) => {
               const styles = CATEGORY_STYLES[entry.category];
-              const isCopied = copiedCode === entry.code;
+              const isCopied = copiedItem === entry.code;
               return (
                 <button
                   key={entry.code}
-                  onClick={() => copyCode(entry.code)}
-                  className={`bg-card border rounded-xl p-4 text-left transition-all hover:shadow-sm ${styles.card}`}
+                  onClick={() => copy(String(entry.code), entry.code)}
+                  className={`bg-card rounded-xl border p-4 text-left transition-all hover:shadow-sm ${styles.card}`}
                 >
                   {/* Code + badge */}
                   <div className="mb-2 flex items-start justify-between gap-2">
-                    <span className={`font-mono text-2xl font-bold tabular-nums ${isCopied ? "text-primary" : styles.code}`}>
+                    <span
+                      className={`font-mono text-2xl font-bold tabular-nums ${isCopied ? "text-primary" : styles.code}`}
+                    >
                       {isCopied ? "Copied!" : entry.code}
                     </span>
-                    <span className={`shrink-0 rounded-full border px-2 py-0.5 text-xs font-medium ${styles.badge}`}>
+                    <span
+                      className={`shrink-0 rounded-full border px-2 py-0.5 text-xs font-medium ${styles.badge}`}
+                    >
                       {entry.category}
                     </span>
                   </div>
 
                   {/* Name */}
-                  <p className="text-foreground mb-1 text-sm font-semibold leading-snug">{entry.name}</p>
+                  <p className="text-foreground mb-1 text-sm leading-snug font-semibold">
+                    {entry.name}
+                  </p>
 
                   {/* Description */}
-                  <p className="text-muted-foreground mb-3 text-xs leading-relaxed line-clamp-3">{entry.description}</p>
+                  <p className="text-muted-foreground mb-3 line-clamp-3 text-xs leading-relaxed">
+                    {entry.description}
+                  </p>
 
                   {/* Use case */}
                   <div className="border-border border-t pt-2">
-                    <p className="text-muted-foreground/70 text-xs leading-relaxed line-clamp-2">
+                    <p className="text-muted-foreground/70 line-clamp-2 text-xs leading-relaxed">
                       {entry.useCase}
                     </p>
                   </div>
@@ -151,7 +160,8 @@ export default function HttpStatusPage() {
         )}
 
         <p className="text-muted-foreground text-xs">
-          Click any card to copy the status code. Descriptions based on RFC 7231 and related standards.
+          Click any card to copy the status code. Descriptions based on RFC 7231 and related
+          standards.
         </p>
       </div>
     </ToolLayout>

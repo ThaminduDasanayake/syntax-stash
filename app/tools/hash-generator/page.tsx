@@ -3,12 +3,11 @@
 import { Fingerprint } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import HashCopyButton from "@/app/tools/hash-generator/hash-copy-button";
 import { HashAlgo } from "@/app/tools/hash-generator/types";
 import { ToolLayout } from "@/components/layout/tool-layout";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import ClearButton from "@/components/ui/clear-button";
+import CopyButton from "@/components/ui/copy-button";
+import { TextAreaField } from "@/components/ui/textarea-field";
 
 const ALGOS: HashAlgo[] = [
   { id: "sha1", name: "SHA-1", subtleName: "SHA-1" },
@@ -41,7 +40,9 @@ export default function HashGeneratorPage() {
       }
     }
 
-    run();
+    run().catch((error) => {
+      console.error("Failed to compute hashes: ", error);
+    });
     return () => {
       cancelled = true;
     };
@@ -56,39 +57,43 @@ export default function HashGeneratorPage() {
     >
       <div className="space-y-8">
         {/* Input */}
-        <div className="space-y-2">
-          <Label className="text-foreground">Input Text</Label>
-          <Textarea
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="Type or paste text to hash..."
-            rows={6}
-            className="bg-background border-border text-foreground focus-visible:ring-primary/30 resize-none font-mono text-sm leading-relaxed focus-visible:ring-1"
-          />
-        </div>
+        <TextAreaField
+          label="Input Text"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Type or paste text to hash..."
+          rows={6}
+          action={
+            <ClearButton
+              onClick={() => {
+                setText("");
+              }}
+              disabled={!text}
+            />
+          }
+        />
 
         {/* Hash outputs */}
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
           {ALGOS.map((algo) => {
             const value = hashes[algo.id] ?? "";
 
             return (
-              <div key={algo.id} className="space-y-2">
-                <div className="flex items-baseline justify-between">
-                  <Label className="text-foreground">{algo.name}</Label>
-                  <span className="text-muted-foreground font-mono text-[10px]">
-                    {value.length ? `${value.length / 2} bytes` : ""}
-                  </span>
-                </div>
-                <div className="flex gap-2">
-                  <Input
-                    readOnly
-                    value={value}
-                    className="bg-background border-border text-foreground focus-visible:ring-primary/30 h-10 font-mono text-xs focus-visible:ring-1"
-                  />
-                  <HashCopyButton value={value} />
-                </div>
-              </div>
+              <TextAreaField
+                key={algo.id}
+                label={
+                  <div className="flex gap-4">
+                    <span className="">{algo.name}</span>
+                    <span className="text-muted-foreground font-mono text-xs">
+                      {value.length ? `${value.length / 2} bytes` : ""}
+                    </span>
+                  </div>
+                }
+                readOnly
+                value={value}
+                rows={4}
+                action={<CopyButton value={value} disabled={!value} />}
+              />
             );
           })}
         </div>

@@ -26,37 +26,41 @@ export const STATUS_CATEGORY_LABELS: Record<StatusCategory, string> = {
 };
 
 export const HTTP_STATUS_CODES: HttpStatus[] = [
-  // ─── 1xx Informational ───────────────────────────────────────────────────────
+  // 1xx Informational
   {
     code: 100,
     name: "Continue",
-    description: "The server has received the request headers and the client should proceed to send the request body.",
+    description:
+      "The server has received the request headers and the client should proceed to send the request body.",
     category: "1xx",
     useCase: "Used with Expect: 100-continue header before sending large payloads.",
   },
   {
     code: 101,
     name: "Switching Protocols",
-    description: "The requester has asked the server to switch protocols and the server has agreed to do so.",
+    description:
+      "The requester has asked the server to switch protocols and the server has agreed to do so.",
     category: "1xx",
     useCase: "WebSocket upgrade from HTTP to WS protocol.",
   },
   {
     code: 102,
     name: "Processing",
-    description: "The server has received and is processing the request, but no response is available yet.",
+    description:
+      "The server has received and is processing the request, but no response is available yet.",
     category: "1xx",
     useCase: "Long-running operations like file uploads or complex database migrations.",
   },
   {
     code: 103,
     name: "Early Hints",
-    description: "Allows user agents to preload resources while the server prepares the final response.",
+    description:
+      "Allows user agents to preload resources while the server prepares the final response.",
     category: "1xx",
     useCase: "Preloading critical CSS/JS resources to improve page load time.",
   },
 
-  // ─── 2xx Success ─────────────────────────────────────────────────────────────
+  // 2xx Success
   {
     code: 200,
     name: "OK",
@@ -74,7 +78,8 @@ export const HTTP_STATUS_CODES: HttpStatus[] = [
   {
     code: 202,
     name: "Accepted",
-    description: "The request has been accepted for processing, but the processing has not been completed.",
+    description:
+      "The request has been accepted for processing, but the processing has not been completed.",
     category: "2xx",
     useCase: "Async jobs: the server queued the task but hasn't finished it yet.",
   },
@@ -116,23 +121,26 @@ export const HTTP_STATUS_CODES: HttpStatus[] = [
   {
     code: 208,
     name: "Already Reported",
-    description: "Used in a DAV binding, to avoid repeatedly enumerating the internal members of multiple bindings.",
+    description:
+      "Used in a DAV binding, to avoid repeatedly enumerating the internal members of multiple bindings.",
     category: "2xx",
     useCase: "WebDAV — prevents duplicate entries in multi-status responses.",
   },
   {
     code: 226,
     name: "IM Used",
-    description: "The server has fulfilled a GET request and the response is a representation of the result of one or more instance-manipulations.",
+    description:
+      "The server has fulfilled a GET request and the response is a representation of the result of one or more instance-manipulations.",
     category: "2xx",
     useCase: "HTTP delta encoding (RFC 3229) — rarely used in practice.",
   },
 
-  // ─── 3xx Redirect ────────────────────────────────────────────────────────────
+  // 3xx Redirect
   {
     code: 300,
     name: "Multiple Choices",
-    description: "The request has more than one possible response. The user-agent should choose one.",
+    description:
+      "The request has more than one possible response. The user-agent should choose one.",
     category: "3xx",
     useCase: "Content negotiation — multiple formats or languages available.",
   },
@@ -153,21 +161,24 @@ export const HTTP_STATUS_CODES: HttpStatus[] = [
   {
     code: 303,
     name: "See Other",
-    description: "The server directs the client to get the requested resource at another URI with a GET request.",
+    description:
+      "The server directs the client to get the requested resource at another URI with a GET request.",
     category: "3xx",
     useCase: "POST/Redirect/GET pattern to prevent form resubmission.",
   },
   {
     code: 304,
     name: "Not Modified",
-    description: "The resource has not been modified since the version specified in If-Modified-Since.",
+    description:
+      "The resource has not been modified since the version specified in If-Modified-Since.",
     category: "3xx",
     useCase: "Browser caching — tells the client to use its cached version.",
   },
   {
     code: 307,
     name: "Temporary Redirect",
-    description: "The request should be repeated with another URI, but future requests should still use the original URI.",
+    description:
+      "The request should be repeated with another URI, but future requests should still use the original URI.",
     category: "3xx",
     useCase: "Temporary redirects that preserve the HTTP method (unlike 302).",
   },
@@ -179,11 +190,12 @@ export const HTTP_STATUS_CODES: HttpStatus[] = [
     useCase: "Like 301, but explicitly preserves the HTTP method and body.",
   },
 
-  // ─── 4xx Client Error ────────────────────────────────────────────────────────
+  // 4xx Client Error
   {
     code: 400,
     name: "Bad Request",
-    description: "The server cannot process the request due to a client error such as malformed syntax.",
+    description:
+      "The server cannot process the request due to a client error such as malformed syntax.",
     category: "4xx",
     useCase: "Invalid JSON body, missing required fields, or malformed query params.",
   },
@@ -218,7 +230,8 @@ export const HTTP_STATUS_CODES: HttpStatus[] = [
   {
     code: 405,
     name: "Method Not Allowed",
-    description: "The request method is known by the server but is not supported by the target resource.",
+    description:
+      "The request method is known by the server but is not supported by the target resource.",
     category: "4xx",
     useCase: "Sending POST to a read-only endpoint, or DELETE to a create-only endpoint.",
   },
@@ -267,7 +280,8 @@ export const HTTP_STATUS_CODES: HttpStatus[] = [
   {
     code: 412,
     name: "Precondition Failed",
-    description: "The server does not meet one of the preconditions the requester put on the request.",
+    description:
+      "The server does not meet one of the preconditions the requester put on the request.",
     category: "4xx",
     useCase: "Conditional updates (If-Match) failing due to stale ETag.",
   },
@@ -281,7 +295,8 @@ export const HTTP_STATUS_CODES: HttpStatus[] = [
   {
     code: 414,
     name: "URI Too Long",
-    description: "The URI requested by the client is longer than the server is willing to interpret.",
+    description:
+      "The URI requested by the client is longer than the server is willing to interpret.",
     category: "4xx",
     useCase: "Extremely long query strings or base64-encoded data in URLs.",
   },
@@ -316,7 +331,8 @@ export const HTTP_STATUS_CODES: HttpStatus[] = [
   {
     code: 422,
     name: "Unprocessable Entity",
-    description: "The server understands the content type but was unable to process the contained instructions.",
+    description:
+      "The server understands the content type but was unable to process the contained instructions.",
     category: "4xx",
     useCase: "Validation errors — request is well-formed but semantically incorrect.",
   },
@@ -337,7 +353,8 @@ export const HTTP_STATUS_CODES: HttpStatus[] = [
   {
     code: 425,
     name: "Too Early",
-    description: "Indicates that the server is unwilling to risk processing a request that might be replayed.",
+    description:
+      "Indicates that the server is unwilling to risk processing a request that might be replayed.",
     category: "4xx",
     useCase: "TLS 1.3 early data (0-RTT) is not safe to act upon for this request.",
   },
@@ -365,7 +382,8 @@ export const HTTP_STATUS_CODES: HttpStatus[] = [
   {
     code: 431,
     name: "Request Header Fields Too Large",
-    description: "The server is unwilling to process the request because its header fields are too large.",
+    description:
+      "The server is unwilling to process the request because its header fields are too large.",
     category: "4xx",
     useCase: "Oversized cookies or authorization headers exceeding server limits.",
   },
@@ -377,11 +395,12 @@ export const HTTP_STATUS_CODES: HttpStatus[] = [
     useCase: "GDPR data removal, DMCA takedowns, government censorship.",
   },
 
-  // ─── 5xx Server Error ────────────────────────────────────────────────────────
+  // 5xx Server Error
   {
     code: 500,
     name: "Internal Server Error",
-    description: "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+    description:
+      "The server encountered an unexpected condition that prevented it from fulfilling the request.",
     category: "5xx",
     useCase: "Unhandled exceptions, database errors, or misconfigured servers.",
   },
@@ -395,21 +414,24 @@ export const HTTP_STATUS_CODES: HttpStatus[] = [
   {
     code: 502,
     name: "Bad Gateway",
-    description: "The server, while acting as a gateway, received an invalid response from an upstream server.",
+    description:
+      "The server, while acting as a gateway, received an invalid response from an upstream server.",
     category: "5xx",
     useCase: "Reverse proxy (Nginx/ALB) can't reach the upstream app server.",
   },
   {
     code: 503,
     name: "Service Unavailable",
-    description: "The server is not ready to handle the request — overloaded or down for maintenance.",
+    description:
+      "The server is not ready to handle the request — overloaded or down for maintenance.",
     category: "5xx",
     useCase: "Planned maintenance windows or traffic spikes overwhelming the server.",
   },
   {
     code: 504,
     name: "Gateway Timeout",
-    description: "The server, acting as a gateway, did not receive a timely response from upstream.",
+    description:
+      "The server, acting as a gateway, did not receive a timely response from upstream.",
     category: "5xx",
     useCase: "Upstream service too slow — database query timeout, slow microservice.",
   },
@@ -430,7 +452,8 @@ export const HTTP_STATUS_CODES: HttpStatus[] = [
   {
     code: 507,
     name: "Insufficient Storage",
-    description: "The method could not be performed on the resource because the server is unable to store the representation.",
+    description:
+      "The method could not be performed on the resource because the server is unable to store the representation.",
     category: "5xx",
     useCase: "WebDAV — disk full; can't save the uploaded file.",
   },

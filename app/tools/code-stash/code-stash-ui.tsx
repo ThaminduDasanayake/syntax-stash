@@ -185,10 +185,10 @@ export default function CodeStashUi({ initialSnippets }: { initialSnippets: Snip
                 {activeSnippet.files.map((file) => (
                   <div
                     key={file.filename}
-                    className="border-border overflow-hidden rounded-xl border bg-[#1e1e1e] shadow-2xl"
+                    className="border-border bg-muted overflow-hidden rounded-xl border shadow-2xl"
                   >
                     {/* Title bar */}
-                    <div className="border-accent flex items-center justify-between border-b bg-[#1e1e1e] px-4 py-3">
+                    <div className="border-accent bg-muted flex items-center justify-between border-b px-4 py-3">
                       <div className="flex items-center gap-2">
                         <div className="mr-2 flex gap-1.5">
                           <span className="h-3 w-3 rounded-full bg-red-500/60" />

@@ -6,7 +6,9 @@ import { useMemo, useState } from "react";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
+import ClearButton from "@/components/ui/clear-button";
+import { Label } from "@/components/ui/label";
+import { TextAreaField } from "@/components/ui/textarea-field";
 
 function getImageDataUri(base64String: string): string | null {
   const trimmed = base64String.trim();
@@ -27,10 +29,10 @@ function getImageDataUri(base64String: string): string | null {
 
   // Try to detect the image format from the base64 data
   // PNG: iVBORw0KGgo=
-  // JPG: /9j/4AAQSkZJRgABA
+  // JPG: /9j/
   // GIF: R0lGODlh
   // WebP: UklGR
-  // SVG: PD94bWwgdmVyc2lvbg== or PHN2ZyB4bWxucz0=
+  // SVG: PD94bW or PHN2Z
 
   let imageType = "png"; // default
 
@@ -40,7 +42,7 @@ function getImageDataUri(base64String: string): string | null {
     imageType = "gif";
   } else if (trimmed.startsWith("UklGR")) {
     imageType = "webp";
-  } else if (trimmed.startsWith("PD94bWwgdmVyc2lvbg==") || trimmed.startsWith("PHN2ZyB4bWxucz0=")) {
+  } else if (trimmed.startsWith("PD94bW") || trimmed.startsWith("PHN2Z")) {
     imageType = "svg+xml";
   }
 
@@ -57,10 +59,27 @@ export default function Base64ImagePage() {
   function handleDownload() {
     if (!imageDataUri) return;
 
+    let extension = "png";
+
+    const mimeMatch = imageDataUri.match(/data:image\/([^;]+);/);
+
+    if (mimeMatch && mimeMatch[1]) {
+      const subtype = mimeMatch[1];
+
+      // Map the MIME subtypes to their proper file extensions
+      if (subtype === "svg+xml") {
+        extension = "svg";
+      } else if (subtype === "jpeg") {
+        extension = "jpg";
+      } else {
+        extension = subtype; // smoothly handles 'png', 'gif', 'webp'
+      }
+    }
+
     // Create a temporary anchor element
     const link = document.createElement("a");
     link.href = imageDataUri;
-    link.download = "decoded-image.png";
+    link.download = `decoded-image.${extension}`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -75,17 +94,26 @@ export default function Base64ImagePage() {
     >
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Left Column: Input */}
+
         <div className="space-y-3">
-          <label className="text-foreground text-sm font-medium">Base64 String</label>
-          <Textarea
+          <TextAreaField
+            label="Base64 String"
             value={base64Input}
             onChange={(e) => setBase64Input(e.target.value)}
             placeholder={
               'Paste your Base64 string here...\n\nWith or without the "data:image/png;base64," prefix.\n\nSupports: PNG, JPEG, GIF, WebP, SVG'
             }
-            rows={20}
-            className="bg-background border-border text-foreground focus-visible:ring-primary/30 resize-none font-mono text-xs leading-relaxed focus-visible:ring-1"
+            className="min-h-108"
+            action={
+              <ClearButton
+                onClick={() => {
+                  setBase64Input("");
+                }}
+                disabled={!base64Input}
+              />
+            }
           />
+
           <p className="text-muted-foreground text-xs">
             Paste the Base64 string with or without the data URI scheme. If the scheme is missing,
             it will be auto-detected based on the image format.
@@ -93,16 +121,15 @@ export default function Base64ImagePage() {
         </div>
 
         {/* Right Column: Preview */}
-        <div className="space-y-4">
-          <label className="text-foreground text-sm font-medium">Preview</label>
-          <Card className="bg-background overflow-hidden">
+        <div className="mt-2.5 space-y-4">
+          <Label className="">Preview</Label>
+          <Card className="overflow-hidden bg-white">
             <CardContent className="flex min-h-100 items-center justify-center p-4">
               {base64Input.trim() === "" ? (
                 <p className="text-muted-foreground text-center text-sm">
                   Paste a Base64 string to preview the image here
                 </p>
               ) : isValidImage ? (
-                // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={imageDataUri}
                   alt="Decoded Base64 Image"
@@ -112,7 +139,7 @@ export default function Base64ImagePage() {
                 <div className="space-y-2 text-center">
                   <p className="text-destructive text-sm font-medium">Invalid Base64 String</p>
                   <p className="text-muted-foreground text-xs">
-                    The input doesn't appear to be valid Base64 data or a recognized image format.
+                    The input does not appear to be valid Base64 data or a recognized image format.
                   </p>
                   <p className="text-muted-foreground text-xs">
                     Supported formats: PNG, JPEG, GIF, WebP, SVG

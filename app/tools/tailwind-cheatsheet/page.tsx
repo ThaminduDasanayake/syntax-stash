@@ -4,8 +4,8 @@ import { Wind } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { ToolLayout } from "@/components/layout/tool-layout";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
 import { CATEGORIES, TAILWIND_CLASSES } from "./data";
 
@@ -24,26 +24,18 @@ const CATEGORY_COLORS: Record<string, string> = {
 export default function TailwindCheatsheetPage() {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("All");
-  const [copiedClass, setCopiedClass] = useState<string | null>(null);
 
   const filtered = useMemo(() => {
     const q = search.toLowerCase();
     return TAILWIND_CLASSES.filter((entry) => {
-      const matchesCategory =
-        activeCategory === "All" || entry.category === activeCategory;
+      const matchesCategory = activeCategory === "All" || entry.category === activeCategory;
       const matchesSearch =
-        !q ||
-        entry.className.toLowerCase().includes(q) ||
-        entry.css.toLowerCase().includes(q);
+        !q || entry.className.toLowerCase().includes(q) || entry.css.toLowerCase().includes(q);
       return matchesCategory && matchesSearch;
     });
   }, [search, activeCategory]);
 
-  function copyClass(className: string) {
-    navigator.clipboard.writeText(className);
-    setCopiedClass(className);
-    setTimeout(() => setCopiedClass(null), 1500);
-  }
+  const { copiedItem, copy } = useCopyToClipboard();
 
   return (
     <ToolLayout
@@ -81,16 +73,23 @@ export default function TailwindCheatsheetPage() {
 
         {/* Result count */}
         <p className="text-muted-foreground text-xs">
-          Showing <span className="text-foreground font-semibold">{filtered.length}</span> of {TAILWIND_CLASSES.length} classes
+          Showing <span className="text-foreground font-semibold">{filtered.length}</span> of{" "}
+          {TAILWIND_CLASSES.length} classes
         </p>
 
         {/* Table */}
         <div className="border-border overflow-hidden rounded-xl border">
           {/* Header */}
           <div className="border-border bg-muted/50 grid grid-cols-[1fr_2fr_auto] border-b px-4 py-2">
-            <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">Class</span>
-            <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">CSS Output</span>
-            <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">Category</span>
+            <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
+              Class
+            </span>
+            <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
+              CSS Output
+            </span>
+            <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
+              Category
+            </span>
           </div>
 
           {/* Rows */}
@@ -103,17 +102,15 @@ export default function TailwindCheatsheetPage() {
               filtered.map((entry) => (
                 <button
                   key={entry.className}
-                  onClick={() => copyClass(entry.className)}
+                  onClick={() => copy(entry.className, entry.className)}
                   className="hover:bg-muted/30 grid w-full grid-cols-[1fr_2fr_auto] items-center gap-4 px-4 py-2.5 text-left transition-colors"
                 >
                   <span
                     className={`font-mono text-sm font-semibold transition-colors ${
-                      copiedClass === entry.className
-                        ? "text-primary"
-                        : "text-foreground"
+                      copiedItem === entry.className ? "text-primary" : "text-foreground"
                     }`}
                   >
-                    {copiedClass === entry.className ? "Copied!" : entry.className}
+                    {copiedItem === entry.className ? "Copied!" : entry.className}
                   </span>
                   <span className="text-muted-foreground truncate font-mono text-xs">
                     {entry.css}

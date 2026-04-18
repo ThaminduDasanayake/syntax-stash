@@ -1,14 +1,14 @@
 "use client";
 
-import { Braces, Check, Copy } from "lucide-react";
+import { Braces } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { JsonResult } from "@/app/tools/json-formatter/types";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import ClearButton from "@/components/ui/clear-button";
+import CopyButton from "@/components/ui/copy-button";
+import { TextAreaField } from "@/components/ui/textarea-field";
 import { cn } from "@/lib/utils";
 
 type Mode = "format" | "minify";
@@ -18,7 +18,6 @@ export default function JsonFormatterPage() {
     '{\n  "name": "syntax-stash",\n  "version": 1,\n  "features": ["fast", "local", "focused"]\n}',
   );
   const [mode, setMode] = useState<Mode>("format");
-  const { copied, copy } = useCopyToClipboard();
 
   const result = useMemo<JsonResult>(() => {
     const trimmed = input.trim();
@@ -52,63 +51,26 @@ export default function JsonFormatterPage() {
       description="Format, minify and validate JSON payloads instantly in your browser."
     >
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {/* Left — input */}
-        <div className="mt-3 space-y-6">
-          <Label className="text-foreground">Input JSON</Label>
-          <Textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Paste JSON here..."
-            rows={22}
-          />
-        </div>
+        <TextAreaField
+          label="Input JSON"
+          containerClassName=""
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Paste JSON here..."
+          rows={22}
+          action={
+            <ClearButton
+              onClick={() => {
+                setInput("");
+              }}
+              disabled={!input}
+            />
+          }
+        />
 
-        {/* Right — output */}
         <div className="space-y-4">
-          <div className="flex items-center justify-between gap-4">
-            <Label>
-              {result.ok ? "Output" : <span className="text-destructive">Invalid JSON</span>}
-            </Label>
-            <div className="flex gap-2">
-              {modes.map((m) => (
-                <Button
-                  key={m.id}
-                  onClick={() => setMode(m.id)}
-                  variant="outline"
-                  className={cn(
-                    "rounded-full px-4 text-xs font-semibold transition-colors",
-                    mode === m.id
-                      ? "border-ring/40! bg-primary/20! hover:bg-primary/30! text-primary!"
-                      : "bg-input! text-muted-foreground",
-                  )}
-                >
-                  {m.label}
-                </Button>
-              ))}
-            </div>
-
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => copy(result.ok ? result.output : "")}
-              disabled={!result.ok || !result.output}
-              className="rounded-full px-5 font-semibold transition-all"
-            >
-              {copied ? (
-                <span className="flex items-center gap-1 text-emerald-400">
-                  <Check />
-                  Copied!
-                </span>
-              ) : (
-                <span className="flex items-center gap-1">
-                  <Copy />
-                  Copy
-                </span>
-              )}
-            </Button>
-          </div>
-
-          <Textarea
+          <TextAreaField
+            label={result.ok ? "Output" : <span className="text-destructive">Invalid JSON</span>}
             readOnly
             value={result.ok ? result.output : result.error}
             rows={22}
@@ -116,6 +78,26 @@ export default function JsonFormatterPage() {
               !result.ok &&
                 "text-destructive border-destructive/50 focus-visible:ring-destructive/30",
             )}
+            action={
+              <>
+                <div className="flex gap-2">
+                  {modes.map((m) => (
+                    <Button
+                      key={m.id}
+                      onClick={() => setMode(m.id)}
+                      variant={mode === m.id ? "default" : "outline"}
+                      className="px-4 text-xs font-semibold transition-colors"
+                    >
+                      {m.label}
+                    </Button>
+                  ))}
+                </div>
+                <CopyButton
+                  value={result.ok ? result.output : ""}
+                  disabled={!result.ok || !result.output}
+                />
+              </>
+            }
           />
         </div>
       </div>

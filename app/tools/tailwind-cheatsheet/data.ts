@@ -18,7 +18,7 @@ export const CATEGORIES = [
 ] as const;
 
 export const TAILWIND_CLASSES: TailwindEntry[] = [
-  // ─── Spacing ────────────────────────────────────────────────────────────────
+  // Spacing
   { className: "p-0", css: "padding: 0px", category: "Spacing" },
   { className: "p-1", css: "padding: 0.25rem /* 4px */", category: "Spacing" },
   { className: "p-2", css: "padding: 0.5rem /* 8px */", category: "Spacing" },
@@ -62,17 +62,57 @@ export const TAILWIND_CLASSES: TailwindEntry[] = [
   { className: "space-x-4", css: "& > * + * { margin-left: 1rem }", category: "Spacing" },
   { className: "space-y-4", css: "& > * + * { margin-top: 1rem }", category: "Spacing" },
 
-  // ─── Typography ─────────────────────────────────────────────────────────────
-  { className: "text-xs", css: "font-size: 0.75rem /* 12px */; line-height: 1rem", category: "Typography" },
-  { className: "text-sm", css: "font-size: 0.875rem /* 14px */; line-height: 1.25rem", category: "Typography" },
-  { className: "text-base", css: "font-size: 1rem /* 16px */; line-height: 1.5rem", category: "Typography" },
-  { className: "text-lg", css: "font-size: 1.125rem /* 18px */; line-height: 1.75rem", category: "Typography" },
-  { className: "text-xl", css: "font-size: 1.25rem /* 20px */; line-height: 1.75rem", category: "Typography" },
-  { className: "text-2xl", css: "font-size: 1.5rem /* 24px */; line-height: 2rem", category: "Typography" },
-  { className: "text-3xl", css: "font-size: 1.875rem /* 30px */; line-height: 2.25rem", category: "Typography" },
-  { className: "text-4xl", css: "font-size: 2.25rem /* 36px */; line-height: 2.5rem", category: "Typography" },
-  { className: "text-5xl", css: "font-size: 3rem /* 48px */; line-height: 1", category: "Typography" },
-  { className: "text-6xl", css: "font-size: 3.75rem /* 60px */; line-height: 1", category: "Typography" },
+  // Typography
+  {
+    className: "text-xs",
+    css: "font-size: 0.75rem /* 12px */; line-height: 1rem",
+    category: "Typography",
+  },
+  {
+    className: "text-sm",
+    css: "font-size: 0.875rem /* 14px */; line-height: 1.25rem",
+    category: "Typography",
+  },
+  {
+    className: "text-base",
+    css: "font-size: 1rem /* 16px */; line-height: 1.5rem",
+    category: "Typography",
+  },
+  {
+    className: "text-lg",
+    css: "font-size: 1.125rem /* 18px */; line-height: 1.75rem",
+    category: "Typography",
+  },
+  {
+    className: "text-xl",
+    css: "font-size: 1.25rem /* 20px */; line-height: 1.75rem",
+    category: "Typography",
+  },
+  {
+    className: "text-2xl",
+    css: "font-size: 1.5rem /* 24px */; line-height: 2rem",
+    category: "Typography",
+  },
+  {
+    className: "text-3xl",
+    css: "font-size: 1.875rem /* 30px */; line-height: 2.25rem",
+    category: "Typography",
+  },
+  {
+    className: "text-4xl",
+    css: "font-size: 2.25rem /* 36px */; line-height: 2.5rem",
+    category: "Typography",
+  },
+  {
+    className: "text-5xl",
+    css: "font-size: 3rem /* 48px */; line-height: 1",
+    category: "Typography",
+  },
+  {
+    className: "text-6xl",
+    css: "font-size: 3.75rem /* 60px */; line-height: 1",
+    category: "Typography",
+  },
   { className: "font-thin", css: "font-weight: 100", category: "Typography" },
   { className: "font-light", css: "font-weight: 300", category: "Typography" },
   { className: "font-normal", css: "font-weight: 400", category: "Typography" },
@@ -81,8 +121,16 @@ export const TAILWIND_CLASSES: TailwindEntry[] = [
   { className: "font-bold", css: "font-weight: 700", category: "Typography" },
   { className: "font-extrabold", css: "font-weight: 800", category: "Typography" },
   { className: "font-black", css: "font-weight: 900", category: "Typography" },
-  { className: "font-mono", css: "font-family: ui-monospace, SFMono-Regular, …", category: "Typography" },
-  { className: "font-sans", css: "font-family: ui-sans-serif, system-ui, …", category: "Typography" },
+  {
+    className: "font-mono",
+    css: "font-family: ui-monospace, SFMono-Regular, …",
+    category: "Typography",
+  },
+  {
+    className: "font-sans",
+    css: "font-family: ui-sans-serif, system-ui, …",
+    category: "Typography",
+  },
   { className: "font-serif", css: "font-family: ui-serif, Georgia, …", category: "Typography" },
   { className: "tracking-tighter", css: "letter-spacing: -0.05em", category: "Typography" },
   { className: "tracking-tight", css: "letter-spacing: -0.025em", category: "Typography" },
@@ -109,17 +157,33 @@ export const TAILWIND_CLASSES: TailwindEntry[] = [
   { className: "underline", css: "text-decoration-line: underline", category: "Typography" },
   { className: "line-through", css: "text-decoration-line: line-through", category: "Typography" },
   { className: "no-underline", css: "text-decoration-line: none", category: "Typography" },
-  { className: "truncate", css: "overflow: hidden; text-overflow: ellipsis; white-space: nowrap", category: "Typography" },
+  {
+    className: "truncate",
+    css: "overflow: hidden; text-overflow: ellipsis; white-space: nowrap",
+    category: "Typography",
+  },
   { className: "text-ellipsis", css: "text-overflow: ellipsis", category: "Typography" },
   { className: "whitespace-nowrap", css: "white-space: nowrap", category: "Typography" },
   { className: "whitespace-pre", css: "white-space: pre", category: "Typography" },
   { className: "break-words", css: "overflow-wrap: break-word", category: "Typography" },
   { className: "break-all", css: "word-break: break-all", category: "Typography" },
-  { className: "line-clamp-1", css: "display: -webkit-box; -webkit-line-clamp: 1; overflow: hidden", category: "Typography" },
-  { className: "line-clamp-2", css: "display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden", category: "Typography" },
-  { className: "line-clamp-3", css: "display: -webkit-box; -webkit-line-clamp: 3; overflow: hidden", category: "Typography" },
+  {
+    className: "line-clamp-1",
+    css: "display: -webkit-box; -webkit-line-clamp: 1; overflow: hidden",
+    category: "Typography",
+  },
+  {
+    className: "line-clamp-2",
+    css: "display: -webkit-box; -webkit-line-clamp: 2; overflow: hidden",
+    category: "Typography",
+  },
+  {
+    className: "line-clamp-3",
+    css: "display: -webkit-box; -webkit-line-clamp: 3; overflow: hidden",
+    category: "Typography",
+  },
 
-  // ─── Sizing ─────────────────────────────────────────────────────────────────
+  // Sizing
   { className: "w-0", css: "width: 0px", category: "Sizing" },
   { className: "w-1", css: "width: 0.25rem /* 4px */", category: "Sizing" },
   { className: "w-4", css: "width: 1rem /* 16px */", category: "Sizing" },
@@ -165,7 +229,7 @@ export const TAILWIND_CLASSES: TailwindEntry[] = [
   { className: "size-8", css: "width: 2rem /* 32px */; height: 2rem", category: "Sizing" },
   { className: "size-full", css: "width: 100%; height: 100%", category: "Sizing" },
 
-  // ─── Flexbox ─────────────────────────────────────────────────────────────────
+  // Flexbox
   { className: "flex", css: "display: flex", category: "Flexbox" },
   { className: "inline-flex", css: "display: inline-flex", category: "Flexbox" },
   { className: "flex-row", css: "flex-direction: row", category: "Flexbox" },
@@ -201,15 +265,39 @@ export const TAILWIND_CLASSES: TailwindEntry[] = [
   { className: "order-last", css: "order: 9999", category: "Flexbox" },
   { className: "order-none", css: "order: 0", category: "Flexbox" },
 
-  // ─── Grid ────────────────────────────────────────────────────────────────────
+  // Grid
   { className: "grid", css: "display: grid", category: "Grid" },
   { className: "inline-grid", css: "display: inline-grid", category: "Grid" },
-  { className: "grid-cols-1", css: "grid-template-columns: repeat(1, minmax(0, 1fr))", category: "Grid" },
-  { className: "grid-cols-2", css: "grid-template-columns: repeat(2, minmax(0, 1fr))", category: "Grid" },
-  { className: "grid-cols-3", css: "grid-template-columns: repeat(3, minmax(0, 1fr))", category: "Grid" },
-  { className: "grid-cols-4", css: "grid-template-columns: repeat(4, minmax(0, 1fr))", category: "Grid" },
-  { className: "grid-cols-6", css: "grid-template-columns: repeat(6, minmax(0, 1fr))", category: "Grid" },
-  { className: "grid-cols-12", css: "grid-template-columns: repeat(12, minmax(0, 1fr))", category: "Grid" },
+  {
+    className: "grid-cols-1",
+    css: "grid-template-columns: repeat(1, minmax(0, 1fr))",
+    category: "Grid",
+  },
+  {
+    className: "grid-cols-2",
+    css: "grid-template-columns: repeat(2, minmax(0, 1fr))",
+    category: "Grid",
+  },
+  {
+    className: "grid-cols-3",
+    css: "grid-template-columns: repeat(3, minmax(0, 1fr))",
+    category: "Grid",
+  },
+  {
+    className: "grid-cols-4",
+    css: "grid-template-columns: repeat(4, minmax(0, 1fr))",
+    category: "Grid",
+  },
+  {
+    className: "grid-cols-6",
+    css: "grid-template-columns: repeat(6, minmax(0, 1fr))",
+    category: "Grid",
+  },
+  {
+    className: "grid-cols-12",
+    css: "grid-template-columns: repeat(12, minmax(0, 1fr))",
+    category: "Grid",
+  },
   { className: "grid-cols-none", css: "grid-template-columns: none", category: "Grid" },
   { className: "col-span-1", css: "grid-column: span 1 / span 1", category: "Grid" },
   { className: "col-span-2", css: "grid-column: span 2 / span 2", category: "Grid" },
@@ -217,8 +305,16 @@ export const TAILWIND_CLASSES: TailwindEntry[] = [
   { className: "col-span-full", css: "grid-column: 1 / -1", category: "Grid" },
   { className: "col-start-1", css: "grid-column-start: 1", category: "Grid" },
   { className: "col-end-3", css: "grid-column-end: 3", category: "Grid" },
-  { className: "grid-rows-1", css: "grid-template-rows: repeat(1, minmax(0, 1fr))", category: "Grid" },
-  { className: "grid-rows-2", css: "grid-template-rows: repeat(2, minmax(0, 1fr))", category: "Grid" },
+  {
+    className: "grid-rows-1",
+    css: "grid-template-rows: repeat(1, minmax(0, 1fr))",
+    category: "Grid",
+  },
+  {
+    className: "grid-rows-2",
+    css: "grid-template-rows: repeat(2, minmax(0, 1fr))",
+    category: "Grid",
+  },
   { className: "row-span-2", css: "grid-row: span 2 / span 2", category: "Grid" },
   { className: "row-span-full", css: "grid-row: 1 / -1", category: "Grid" },
   { className: "grid-flow-row", css: "grid-auto-flow: row", category: "Grid" },
@@ -229,7 +325,7 @@ export const TAILWIND_CLASSES: TailwindEntry[] = [
   { className: "auto-rows-auto", css: "grid-auto-rows: auto", category: "Grid" },
   { className: "auto-rows-fr", css: "grid-auto-rows: minmax(0, 1fr)", category: "Grid" },
 
-  // ─── Layout ──────────────────────────────────────────────────────────────────
+  // Layout
   { className: "block", css: "display: block", category: "Layout" },
   { className: "inline-block", css: "display: inline-block", category: "Layout" },
   { className: "inline", css: "display: inline", category: "Layout" },
@@ -261,9 +357,21 @@ export const TAILWIND_CLASSES: TailwindEntry[] = [
   { className: "overflow-visible", css: "overflow: visible", category: "Layout" },
   { className: "overflow-x-hidden", css: "overflow-x: hidden", category: "Layout" },
   { className: "overflow-y-auto", css: "overflow-y: auto", category: "Layout" },
-  { className: "container", css: "width: 100%; max-width varies by breakpoint", category: "Layout" },
-  { className: "sr-only", css: "position: absolute; width: 1px; height: 1px; …", category: "Layout" },
-  { className: "not-sr-only", css: "position: static; width: auto; height: auto; …", category: "Layout" },
+  {
+    className: "container",
+    css: "width: 100%; max-width varies by breakpoint",
+    category: "Layout",
+  },
+  {
+    className: "sr-only",
+    css: "position: absolute; width: 1px; height: 1px; …",
+    category: "Layout",
+  },
+  {
+    className: "not-sr-only",
+    css: "position: static; width: auto; height: auto; …",
+    category: "Layout",
+  },
   { className: "visible", css: "visibility: visible", category: "Layout" },
   { className: "invisible", css: "visibility: hidden", category: "Layout" },
   { className: "cursor-pointer", css: "cursor: pointer", category: "Layout" },
@@ -275,7 +383,7 @@ export const TAILWIND_CLASSES: TailwindEntry[] = [
   { className: "select-text", css: "user-select: text", category: "Layout" },
   { className: "select-all", css: "user-select: all", category: "Layout" },
 
-  // ─── Borders ─────────────────────────────────────────────────────────────────
+  // Borders
   { className: "border", css: "border-width: 1px", category: "Borders" },
   { className: "border-0", css: "border-width: 0px", category: "Borders" },
   { className: "border-2", css: "border-width: 2px", category: "Borders" },
@@ -300,20 +408,48 @@ export const TAILWIND_CLASSES: TailwindEntry[] = [
   { className: "rounded-2xl", css: "border-radius: 1rem /* 16px */", category: "Borders" },
   { className: "rounded-3xl", css: "border-radius: 1.5rem /* 24px */", category: "Borders" },
   { className: "rounded-full", css: "border-radius: 9999px", category: "Borders" },
-  { className: "rounded-t-lg", css: "border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem", category: "Borders" },
+  {
+    className: "rounded-t-lg",
+    css: "border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem",
+    category: "Borders",
+  },
   { className: "ring-1", css: "box-shadow: 0 0 0 1px rgb(0 0 0 / 0.05)", category: "Borders" },
   { className: "ring-2", css: "box-shadow: 0 0 0 2px rgb(0 0 0 / 0.05)", category: "Borders" },
   { className: "ring-4", css: "box-shadow: 0 0 0 4px rgb(0 0 0 / 0.05)", category: "Borders" },
-  { className: "outline-none", css: "outline: 2px solid transparent; outline-offset: 2px", category: "Borders" },
+  {
+    className: "outline-none",
+    css: "outline: 2px solid transparent; outline-offset: 2px",
+    category: "Borders",
+  },
   { className: "outline", css: "outline-style: solid", category: "Borders" },
 
-  // ─── Effects ─────────────────────────────────────────────────────────────────
+  // Effects
   { className: "shadow-sm", css: "box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05)", category: "Effects" },
-  { className: "shadow", css: "box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)", category: "Effects" },
-  { className: "shadow-md", css: "box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)", category: "Effects" },
-  { className: "shadow-lg", css: "box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)", category: "Effects" },
-  { className: "shadow-xl", css: "box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)", category: "Effects" },
-  { className: "shadow-2xl", css: "box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25)", category: "Effects" },
+  {
+    className: "shadow",
+    css: "box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+    category: "Effects",
+  },
+  {
+    className: "shadow-md",
+    css: "box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+    category: "Effects",
+  },
+  {
+    className: "shadow-lg",
+    css: "box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+    category: "Effects",
+  },
+  {
+    className: "shadow-xl",
+    css: "box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+    category: "Effects",
+  },
+  {
+    className: "shadow-2xl",
+    css: "box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25)",
+    category: "Effects",
+  },
   { className: "shadow-none", css: "box-shadow: 0 0 #0000", category: "Effects" },
   { className: "opacity-0", css: "opacity: 0", category: "Effects" },
   { className: "opacity-25", css: "opacity: 0.25", category: "Effects" },
@@ -338,13 +474,37 @@ export const TAILWIND_CLASSES: TailwindEntry[] = [
   { className: "mix-blend-multiply", css: "mix-blend-mode: multiply", category: "Effects" },
   { className: "mix-blend-screen", css: "mix-blend-mode: screen", category: "Effects" },
 
-  // ─── Transitions ─────────────────────────────────────────────────────────────
-  { className: "transition", css: "transition-property: color, background-color, border-color, …; duration: 150ms; timing: cubic-bezier(0.4, 0, 0.2, 1)", category: "Transitions" },
-  { className: "transition-all", css: "transition-property: all; duration: 150ms; timing: cubic-bezier(0.4, 0, 0.2, 1)", category: "Transitions" },
-  { className: "transition-colors", css: "transition-property: color, background-color, border-color, …; duration: 150ms", category: "Transitions" },
-  { className: "transition-opacity", css: "transition-property: opacity; duration: 150ms", category: "Transitions" },
-  { className: "transition-shadow", css: "transition-property: box-shadow; duration: 150ms", category: "Transitions" },
-  { className: "transition-transform", css: "transition-property: transform; duration: 150ms", category: "Transitions" },
+  // Transitions
+  {
+    className: "transition",
+    css: "transition-property: color, background-color, border-color, …; duration: 150ms; timing: cubic-bezier(0.4, 0, 0.2, 1)",
+    category: "Transitions",
+  },
+  {
+    className: "transition-all",
+    css: "transition-property: all; duration: 150ms; timing: cubic-bezier(0.4, 0, 0.2, 1)",
+    category: "Transitions",
+  },
+  {
+    className: "transition-colors",
+    css: "transition-property: color, background-color, border-color, …; duration: 150ms",
+    category: "Transitions",
+  },
+  {
+    className: "transition-opacity",
+    css: "transition-property: opacity; duration: 150ms",
+    category: "Transitions",
+  },
+  {
+    className: "transition-shadow",
+    css: "transition-property: box-shadow; duration: 150ms",
+    category: "Transitions",
+  },
+  {
+    className: "transition-transform",
+    css: "transition-property: transform; duration: 150ms",
+    category: "Transitions",
+  },
   { className: "transition-none", css: "transition-property: none", category: "Transitions" },
   { className: "duration-75", css: "transition-duration: 75ms", category: "Transitions" },
   { className: "duration-100", css: "transition-duration: 100ms", category: "Transitions" },
@@ -355,9 +515,21 @@ export const TAILWIND_CLASSES: TailwindEntry[] = [
   { className: "duration-700", css: "transition-duration: 700ms", category: "Transitions" },
   { className: "duration-1000", css: "transition-duration: 1000ms", category: "Transitions" },
   { className: "ease-linear", css: "transition-timing-function: linear", category: "Transitions" },
-  { className: "ease-in", css: "transition-timing-function: cubic-bezier(0.4, 0, 1, 1)", category: "Transitions" },
-  { className: "ease-out", css: "transition-timing-function: cubic-bezier(0, 0, 0.2, 1)", category: "Transitions" },
-  { className: "ease-in-out", css: "transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)", category: "Transitions" },
+  {
+    className: "ease-in",
+    css: "transition-timing-function: cubic-bezier(0.4, 0, 1, 1)",
+    category: "Transitions",
+  },
+  {
+    className: "ease-out",
+    css: "transition-timing-function: cubic-bezier(0, 0, 0.2, 1)",
+    category: "Transitions",
+  },
+  {
+    className: "ease-in-out",
+    css: "transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)",
+    category: "Transitions",
+  },
   { className: "delay-75", css: "transition-delay: 75ms", category: "Transitions" },
   { className: "delay-100", css: "transition-delay: 100ms", category: "Transitions" },
   { className: "delay-150", css: "transition-delay: 150ms", category: "Transitions" },
@@ -365,8 +537,16 @@ export const TAILWIND_CLASSES: TailwindEntry[] = [
   { className: "delay-500", css: "transition-delay: 500ms", category: "Transitions" },
   { className: "animate-none", css: "animation: none", category: "Transitions" },
   { className: "animate-spin", css: "animation: spin 1s linear infinite", category: "Transitions" },
-  { className: "animate-ping", css: "animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite", category: "Transitions" },
-  { className: "animate-pulse", css: "animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite", category: "Transitions" },
+  {
+    className: "animate-ping",
+    css: "animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite",
+    category: "Transitions",
+  },
+  {
+    className: "animate-pulse",
+    css: "animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+    category: "Transitions",
+  },
   { className: "animate-bounce", css: "animation: bounce 1s infinite", category: "Transitions" },
   { className: "scale-50", css: "transform: scale(0.5)", category: "Transitions" },
   { className: "scale-75", css: "transform: scale(0.75)", category: "Transitions" },

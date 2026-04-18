@@ -1,3 +1,6 @@
-export type JwtDecoded =
-  | { ok: true; header: string; payload: string; signature: string }
-  | { ok: false; error: string };
+export interface JwtDecoded {
+  header: string;
+  payload: string;
+  signature: string;
+  error: string | null;
+}

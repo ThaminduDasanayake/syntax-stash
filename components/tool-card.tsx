@@ -50,7 +50,7 @@ function CardBody({ tool }: ToolCardProps) {
         </CardDescription>
       </CardHeader>
       <CardContent className="mt-auto flex-none pt-4">
-        <Badge className="bg-primary/10 text-primary hover:bg-primary/20 border-none px-2 py-0.5 text-[11px] tracking-wide lowercase">
+        <Badge className="bg-primary/10 text-primary hover:bg-primary/20 border-none px-2 py-0.5 text-[11px] tracking-wide uppercase">
           {tool.category}
         </Badge>
       </CardContent>

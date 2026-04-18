@@ -1,7 +1,7 @@
 "use client";
 
 import { Check, Copy, Grid3X3, Minus, RotateCcw, Square, Type } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { CSSProperties, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
@@ -9,8 +9,10 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
-const ROWS = 20;
-const COLS = 48;
+const ROWS = 24;
+const COLS = 54;
+const FONT_SIZE = 13;
+const LINE_HEIGHT = 1.5;
 
 type DrawTool = "box" | "erase" | "text";
 type Cell = { row: number; col: number };
@@ -23,11 +25,7 @@ function clamp(n: number, lo: number, hi: number) {
   return Math.max(lo, Math.min(hi, n));
 }
 
-function drawBox(
-  grid: string[][],
-  r1: number, c1: number,
-  r2: number, c2: number,
-): string[][] {
+function drawBox(grid: string[][], r1: number, c1: number, r2: number, c2: number): string[][] {
   const minR = Math.min(r1, r2);
   const maxR = Math.max(r1, r2);
   const minC = Math.min(c1, c2);
@@ -41,21 +39,27 @@ function drawBox(
   for (let r = minR; r <= maxR; r++) {
     for (let c = minC; c <= maxC; c++) {
       const top = r === minR;
-      const bot = r === maxR;
-      const lft = c === minC;
-      const rgt = c === maxC;
+      const bottom = r === maxR;
+      const left = c === minC;
+      const right = c === maxC;
 
-      if (top && lft) next[r][c] = "┌";
-      else if (top && rgt) next[r][c] = "┐";
-      else if (bot && lft) next[r][c] = "└";
-      else if (bot && rgt) next[r][c] = "┘";
-      else if (top || bot) next[r][c] = "─";
-      else if (lft || rgt) next[r][c] = "│";
+      if (top && left) next[r][c] = "┌";
+      else if (top && right) next[r][c] = "┐";
+      else if (bottom && left) next[r][c] = "└";
+      else if (bottom && right) next[r][c] = "┘";
+      else if (top || bottom) next[r][c] = "─";
+      else if (left || right) next[r][c] = "│";
       // interior cells left unchanged
     }
   }
   return next;
 }
+
+const TOOLS: { id: DrawTool; label: string; icon: ReactNode }[] = [
+  { id: "box", label: "Box", icon: <Square size={13} /> },
+  { id: "erase", label: "Erase", icon: <Minus size={13} /> },
+  { id: "text", label: "Text", icon: <Type size={13} /> },
+] as const;
 
 export default function AsciiDiagramPage() {
   const [grid, setGrid] = useState<string[][]>(makeGrid);
@@ -63,17 +67,16 @@ export default function AsciiDiagramPage() {
   const [textCell, setTextCell] = useState<Cell | null>(null);
   const [textInput, setTextInput] = useState("");
 
-  // Drag state in refs — avoids stale closure / lag issues in mousemove
-  const dragging = useRef(false);
-  const dragStart = useRef<Cell | null>(null);
-  const dragEnd = useRef<Cell | null>(null);
-  // Force re-render while dragging to show preview
-  const [previewTick, setPreviewTick] = useState(0);
+  const [dragStart, setDragStart] = useState<Cell | null>(null);
+  const [dragEnd, setDragEnd] = useState<Cell | null>(null);
+  const isDragging = dragStart !== null;
 
   // Measure one character cell so we can compute row/col from pixel coords
   const gridRef = useRef<HTMLDivElement>(null);
   const cellW = useRef(0);
   const cellH = useRef(0);
+  const textRef = useRef<HTMLInputElement>(null);
+  const placingRef = useRef(false);
 
   useEffect(() => {
     const el = gridRef.current?.querySelector<HTMLSpanElement>("[data-cell]");
@@ -84,7 +87,11 @@ export default function AsciiDiagramPage() {
     }
   }, []);
 
-  function cellFromPointer(clientX: number, clientY: number): Cell | null {
+  useEffect(() => {
+    if (textCell) textRef.current?.focus();
+  }, [textCell]);
+
+  const cellFromPointer = useCallback((clientX: number, clientY: number): Cell | null => {
     const container = gridRef.current;
     if (!container || !cellW.current || !cellH.current) return null;
     const rect = container.getBoundingClientRect();
@@ -95,25 +102,27 @@ export default function AsciiDiagramPage() {
     const row = Math.floor(y / cellH.current);
     if (row >= ROWS || col >= COLS) return null;
     return { row: clamp(row, 0, ROWS - 1), col: clamp(col, 0, COLS - 1) };
-  }
+  }, []);
 
-  // Preview: merge current drag state onto grid (no state update)
-  const displayGrid = useMemo(() => {
-    // previewTick included so useMemo re-runs during drag
-    void previewTick;
-    if (!dragging.current || !dragStart.current || !dragEnd.current) return grid;
-    if (activeTool === "box") {
-      return drawBox(
-        grid,
-        dragStart.current.row, dragStart.current.col,
-        dragEnd.current.row, dragEnd.current.col,
-      );
+  const commitText = useCallback(() => {
+    if (!textCell) return;
+
+    // Only save to the actual grid if they typed something
+    if (textInput) {
+      setGrid((g) => {
+        const next = g.map((r) => [...r]);
+        for (let i = 0; i < textInput.length; i++) {
+          const c = textCell.col + i;
+          if (c < COLS) next[textCell.row][c] = textInput[i];
+        }
+        return next;
+      });
     }
-    return grid;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [grid, activeTool, previewTick]);
 
-  const ascii = useMemo(() => displayGrid.map((r) => r.join("")).join("\n"), [displayGrid]);
+    // Clear the input UI
+    setTextCell(null);
+    setTextInput("");
+  }, [textCell, textInput]);
 
   const handlePointerDown = useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
@@ -127,9 +136,8 @@ export default function AsciiDiagramPage() {
       }
 
       (e.currentTarget as HTMLDivElement).setPointerCapture(e.pointerId);
-      dragging.current = true;
-      dragStart.current = cell;
-      dragEnd.current = cell;
+      setDragStart(cell);
+      setDragEnd(cell);
 
       if (activeTool === "erase") {
         setGrid((g) => {
@@ -138,18 +146,17 @@ export default function AsciiDiagramPage() {
           return next;
         });
       }
-      setPreviewTick((t) => t + 1);
     },
-    [activeTool],
+    [activeTool, cellFromPointer],
   );
 
   const handlePointerMove = useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
-      if (!dragging.current) return;
+      if (!isDragging) return;
       const cell = cellFromPointer(e.clientX, e.clientY);
       if (!cell) return;
 
-      dragEnd.current = cell;
+      setDragEnd(cell);
 
       if (activeTool === "erase") {
         setGrid((g) => {
@@ -159,58 +166,56 @@ export default function AsciiDiagramPage() {
         });
         return;
       }
-
-      setPreviewTick((t) => t + 1);
     },
-    [activeTool],
+    [activeTool, isDragging, cellFromPointer],
   );
 
   const handlePointerUp = useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
-      if (!dragging.current) return;
-      dragging.current = false;
+      if (!isDragging || !dragStart) return;
 
-      const start = dragStart.current;
-      const end = cellFromPointer(e.clientX, e.clientY) ?? dragEnd.current;
+      const end = cellFromPointer(e.clientX, e.clientY) ?? dragEnd;
 
-      if (activeTool === "box" && start && end) {
-        setGrid((g) => drawBox(g, start.row, start.col, end.row, end.col));
+      if (activeTool === "box" && end) {
+        setGrid((g) => drawBox(g, dragStart.row, dragStart.col, end.row, end.col));
       }
 
-      dragStart.current = null;
-      dragEnd.current = null;
-      setPreviewTick((t) => t + 1);
+      setDragStart(null);
+      setDragEnd(null);
     },
-    [activeTool],
+    [activeTool, isDragging, dragStart, dragEnd, cellFromPointer],
   );
 
-  function commitText() {
-    if (!textCell) return;
-    const text = textInput;
-    setGrid((g) => {
-      const next = g.map((r) => [...r]);
-      for (let i = 0; i < text.length; i++) {
-        const c = textCell.col + i;
-        if (c < COLS) next[textCell.row][c] = text[i];
-      }
-      return next;
-    });
-    setTextCell(null);
-    setTextInput("");
-  }
+  const displayGrid = useMemo(() => {
+    let currentGrid = grid;
 
-  const textRef = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    if (textCell) textRef.current?.focus();
-  }, [textCell]);
+    // 1. Draw box if dragging
+    if (isDragging && dragStart && dragEnd && activeTool === "box") {
+      currentGrid = drawBox(currentGrid, dragStart.row, dragStart.col, dragEnd.row, dragEnd.col);
+    }
+
+    // 2. Live Text Preview
+    if (textCell && textInput) {
+      const next = currentGrid.map((r) => [...r]);
+      for (let i = 0; i < textInput.length; i++) {
+        const c = textCell.col + i;
+        if (c < COLS) next[textCell.row][c] = textInput[i];
+      }
+      currentGrid = next;
+    }
+
+    return currentGrid;
+  }, [grid, activeTool, isDragging, dragStart, dragEnd, textCell, textInput]);
+
+  const ascii = useMemo(() => displayGrid.map((r) => r.join("")).join("\n"), [displayGrid]);
 
   const { copied, copy } = useCopyToClipboard();
 
-  const TOOLS: { id: DrawTool; label: string; icon: React.ReactNode }[] = [
-    { id: "box", label: "Box", icon: <Square size={13} /> },
-    { id: "erase", label: "Erase", icon: <Minus size={13} /> },
-    { id: "text", label: "Text", icon: <Type size={13} /> },
-  ];
+  const monoStyle: CSSProperties = {
+    fontFamily: "monospace",
+    fontSize: `${FONT_SIZE}px`,
+    lineHeight: LINE_HEIGHT,
+  };
 
   return (
     <ToolLayout
@@ -218,9 +223,8 @@ export default function AsciiDiagramPage() {
       title="ASCII Diagram"
       highlight="Editor"
       description="Draw boxes and add text on a character grid. Outputs clean ASCII art using Unicode box-drawing characters."
-      maxWidth="max-w-7xl"
     >
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Left — Canvas */}
         <div className="space-y-4">
           {/* Toolbar */}
@@ -256,21 +260,34 @@ export default function AsciiDiagramPage() {
           </div>
 
           {/* Text input (shown when text tool is active and a cell is selected) */}
-          {textCell && (
+          {activeTool === "text" && (
             <div className="flex items-center gap-2">
               <input
                 ref={textRef}
+                disabled={!textCell}
                 type="text"
                 value={textInput}
                 onChange={(e) => setTextInput(e.target.value)}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === "Escape") commitText();
+                  if (e.key === "Enter") commitText();
+                  if (e.key === "Escape") {
+                    setTextCell(null);
+                    setTextInput("");
+                  }
                 }}
-                onBlur={commitText}
-                className="bg-input border-border text-foreground placeholder:text-muted-foreground focus-visible:border-ring w-full rounded-md border px-3 py-1.5 font-mono text-sm outline-none"
-                placeholder={`Typing at row ${textCell.row}, col ${textCell.col} — press Enter to place`}
+                className="bg-input border-border text-foreground placeholder:text-muted-foreground focus-visible:border-ring w-full rounded-md border px-3 py-1.5 font-mono text-sm outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                placeholder={
+                  textCell
+                    ? `Typing at row ${textCell.row}, col ${textCell.col} — press Enter to place`
+                    : "Click a cell on the canvas to start typing..."
+                }
               />
-              <Button size="sm" onClick={commitText} className="shrink-0 rounded-full">
+              <Button
+                size="sm"
+                disabled={!textCell || !textInput}
+                onClick={commitText}
+                className="shrink-0 rounded-full"
+              >
                 Place
               </Button>
             </div>
@@ -278,28 +295,20 @@ export default function AsciiDiagramPage() {
 
           {/* Grid */}
           <div className="space-y-1">
-            <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
-              Canvas ({COLS} × {ROWS})
-              {activeTool === "box" && " — drag to draw a box"}
-              {activeTool === "erase" && " — click/drag to erase"}
-              {activeTool === "text" && " — click a cell, then type"}
-            </Label>
-            <div className="border-border overflow-auto rounded-lg border bg-muted/20">
+            <div className="border-border bg-input overflow-auto rounded-lg border p-2">
               <div
                 ref={gridRef}
-                className="cursor-crosshair select-none p-2"
-                style={{ fontFamily: "monospace", fontSize: "13px", lineHeight: "1.5" }}
+                className="cursor-crosshair select-none"
+                style={{ ...monoStyle, width: "max-content" }}
                 onPointerDown={handlePointerDown}
                 onPointerMove={handlePointerMove}
                 onPointerUp={handlePointerUp}
-                // Do NOT commit on leave — just let the pointer capture handle it
               >
                 {displayGrid.map((row, r) => (
                   <div key={r} style={{ display: "flex", height: "1.5em" }}>
                     {row.map((char, c) => {
                       const isTextTarget = textCell?.row === r && textCell?.col === c;
-                      const isDragStart =
-                        dragStart.current?.row === r && dragStart.current?.col === c;
+                      const isDragStartCell = dragStart?.row === r && dragStart?.col === c;
                       return (
                         <span
                           key={c}
@@ -309,14 +318,19 @@ export default function AsciiDiagramPage() {
                           style={{
                             display: "inline-block",
                             width: "1ch",
+                            height: "100%",
                             textAlign: "center",
+                            backgroundImage: `
+                      linear-gradient(to right, transparent calc(50% - 0.5px), rgba(255,255,255,0.08) calc(50% - 0.5px), rgba(255,255,255,0.08) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+                      linear-gradient(to bottom, transparent calc(50% - 0.5px), rgba(255,255,255,0.08) calc(50% - 0.5px), rgba(255,255,255,0.08) calc(50% + 0.5px), transparent calc(50% + 0.5px))
+                    `,
                           }}
                           className={
                             isTextTarget
-                              ? "bg-primary/30 text-primary"
-                              : isDragStart
-                                ? "bg-primary/20 text-foreground"
-                                : "text-foreground hover:bg-muted/60"
+                              ? "bg-accent-foreground text-accent-foreground"
+                              : isDragStartCell
+                                ? "bg-accent-foreground text-foreground"
+                                : "text-foreground hover:bg-white/20"
                           }
                         >
                           {char}
@@ -328,6 +342,11 @@ export default function AsciiDiagramPage() {
               </div>
             </div>
           </div>
+          <Label className="text-xs font-semibold tracking-wider uppercase">
+            Canvas ({COLS} × {ROWS}){activeTool === "box" && " — drag to draw a box"}
+            {activeTool === "erase" && " — click/drag to erase"}
+            {activeTool === "text" && " — click a cell, then type"}
+          </Label>
         </div>
 
         {/* Right — ASCII Output */}
@@ -340,17 +359,25 @@ export default function AsciiDiagramPage() {
               onClick={() => copy(ascii)}
               className="rounded-full font-semibold"
             >
-              {copied ? <><Check size={12} /> Copied!</> : <><Copy size={12} /> Copy</>}
+              {copied ? (
+                <>
+                  <Check size={12} /> Copied!
+                </>
+              ) : (
+                <>
+                  <Copy size={12} /> Copy
+                </>
+              )}
             </Button>
           </div>
           <Textarea
             readOnly
             value={ascii}
-            rows={ROWS + 2}
+            rows={ROWS}
             style={{ fontFamily: "monospace", fontSize: "13px", lineHeight: "1.5" }}
           />
           <p className="text-muted-foreground text-xs">
-            Box-drawing chars: ┌ ─ ┐ │ └ ┘ · Drag to draw · Double-click Clear to reset
+            Box-drawing chars: ┌ ─ ┐ │ └ ┘ · Drag to draw
           </p>
         </div>
       </div>

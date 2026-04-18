@@ -6,7 +6,7 @@ import { ReactNode } from "react";
 export interface ToolLayoutProps {
   children: ReactNode;
   icon: LucideIcon;
-  title: string;
+  title: string | ReactNode;
   highlight?: string;
   description: string;
   backHref?: string;

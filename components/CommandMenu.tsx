@@ -13,7 +13,8 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
-import { internalTools, resourceLinks } from "@/lib/data";
+import { resourceLinks } from "@/lib/resources-data";
+import { internalTools } from "@/lib/tools-data";
 import { CommandMenuProps, Tool } from "@/types";
 
 export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {

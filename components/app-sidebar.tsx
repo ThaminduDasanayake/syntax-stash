@@ -1,8 +1,9 @@
 "use client";
 
-import { BookMarked, Box, ChevronRight, Home, Wrench } from "lucide-react";
+import { BookMarked, Box, ChevronRight, Home } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useMemo } from "react";
 
 import {
   Sidebar,
@@ -16,7 +17,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { internalTools, resourceCategories } from "@/lib/data";
+import { resourceCategories } from "@/lib/resources-data";
+import { internalTools } from "@/lib/tools-data";
 import { slugify } from "@/lib/utils";
 
 const AppSidebar = () => {
@@ -31,6 +33,22 @@ const AppSidebar = () => {
   };
 
   const categorySlug = (cat: string) => `/category/${slugify(cat)}`;
+
+  // Memoize the tool grouping so it only calculates once on mount
+  const groupedTools = useMemo(() => {
+    const grouped = internalTools.reduce(
+      (acc, tool) => {
+        if (!acc[tool.category]) {
+          acc[tool.category] = [];
+        }
+        acc[tool.category].push(tool);
+        return acc;
+      },
+      {} as Record<string, typeof internalTools>,
+    );
+
+    return Object.entries(grouped);
+  }, []);
 
   return (
     <Sidebar>
@@ -67,43 +85,7 @@ const AppSidebar = () => {
           </SidebarMenu>
         </SidebarGroup>
 
-        {/* Section 1: Inbuilt Tools */}
-        {/*<SidebarGroup className="p-0">*/}
-        {/*  <SidebarGroupLabel className="text-muted-foreground mb-2 flex h-auto items-center gap-1.5 px-2 text-[10px] font-semibold tracking-wider uppercase">*/}
-        {/*    <Wrench size={11} className="text-primary" />*/}
-        {/*    Inbuilt Tools*/}
-        {/*  </SidebarGroupLabel>*/}
-        {/*  <SidebarMenu>*/}
-        {/*    {internalTools.map((tool) => {*/}
-        {/*      const Icon = tool.icon || Box;*/}
-        {/*      return (*/}
-        {/*        <SidebarMenuItem key={tool.url}>*/}
-        {/*          <SidebarMenuButton*/}
-        {/*            isActive={pathname === tool.url}*/}
-        {/*            className="h-9 cursor-pointer"*/}
-        {/*            onClick={() => handleNav(tool.url)}*/}
-        {/*          >*/}
-        {/*            <Icon className="text-primary" />*/}
-        {/*            <span>{tool.title}</span>*/}
-        {/*          </SidebarMenuButton>*/}
-        {/*        </SidebarMenuItem>*/}
-        {/*      );*/}
-        {/*    })}*/}
-        {/*  </SidebarMenu>*/}
-        {/*</SidebarGroup>*/}
-        {Object.entries(
-          internalTools.reduce(
-            (acc, tool) => {
-              // Group tools by their category
-              if (!acc[tool.category]) {
-                acc[tool.category] = [];
-              }
-              acc[tool.category].push(tool);
-              return acc;
-            },
-            {} as Record<string, typeof internalTools>,
-          ),
-        ).map(([category, tools]) => (
+        {groupedTools.map(([category, tools]) => (
           <SidebarGroup key={category} className="p-0 pb-4">
             <SidebarGroupLabel className="text-muted-foreground mb-2 flex h-auto items-center gap-1.5 px-2 text-[10px] font-semibold tracking-wider uppercase">
               {category}
@@ -162,7 +144,7 @@ const AppSidebar = () => {
         </SidebarGroup>
       </SidebarContent>
 
-      {/* ── Footer ────────────────────────────────────────────────── */}
+      {/* Footer */}
       <SidebarFooter className="border-sidebar-border border-t p-3">
         <p className="text-muted-foreground text-center font-mono text-[10px]">
           syntax-stash · handmade

@@ -1,22 +1,16 @@
 "use client";
 
-import { Check, Container, Copy, Minus, Plus, Trash2 } from "lucide-react";
+import { Container, Minus, Plus, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import CopyButton from "@/components/ui/copy-button";
+import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { SelectField } from "@/components/ui/select-field";
+import { TextAreaField } from "@/components/ui/textarea-field";
 
 import { SERVICE_TEMPLATES } from "./templates";
 
@@ -107,17 +101,12 @@ function buildYaml(services: Service[]): string {
 export default function DockerComposePage() {
   const [services, setServices] = useState<Service[]>([makeService("postgres")]);
   const [selectedTemplate, setSelectedTemplate] = useState("node");
-  const { copied, copy } = useCopyToClipboard();
 
   const yaml = useMemo(() => buildYaml(services), [services]);
 
   // Port validation — check for duplicate host ports
-  const usedHostPorts = services.flatMap((s) =>
-    s.ports.filter((p) => p.host).map((p) => p.host),
-  );
-  const duplicatePorts = usedHostPorts.filter(
-    (p, i) => usedHostPorts.indexOf(p) !== i,
-  );
+  const usedHostPorts = services.flatMap((s) => s.ports.filter((p) => p.host).map((p) => p.host));
+  const duplicatePorts = usedHostPorts.filter((p, i) => usedHostPorts.indexOf(p) !== i);
 
   function addService() {
     setServices((prev) => [...prev, makeService(selectedTemplate)]);
@@ -128,9 +117,7 @@ export default function DockerComposePage() {
   }
 
   function updateService<K extends keyof Service>(id: string, field: K, value: Service[K]) {
-    setServices((prev) =>
-      prev.map((s) => (s.id === id ? { ...s, [field]: value } : s)),
-    );
+    setServices((prev) => prev.map((s) => (s.id === id ? { ...s, [field]: value } : s)));
   }
 
   // ── Port helpers
@@ -140,7 +127,11 @@ export default function DockerComposePage() {
   }
   function removePort(svcId: string, idx: number) {
     const svc = services.find((s) => s.id === svcId)!;
-    updateService(svcId, "ports", svc.ports.filter((_, i) => i !== idx));
+    updateService(
+      svcId,
+      "ports",
+      svc.ports.filter((_, i) => i !== idx),
+    );
   }
   function updatePort(svcId: string, idx: number, field: keyof Port, val: string) {
     const svc = services.find((s) => s.id === svcId)!;
@@ -158,7 +149,11 @@ export default function DockerComposePage() {
   }
   function removeEnv(svcId: string, idx: number) {
     const svc = services.find((s) => s.id === svcId)!;
-    updateService(svcId, "env", svc.env.filter((_, i) => i !== idx));
+    updateService(
+      svcId,
+      "env",
+      svc.env.filter((_, i) => i !== idx),
+    );
   }
   function updateEnv(svcId: string, idx: number, field: keyof EnvVar, val: string) {
     const svc = services.find((s) => s.id === svcId)!;
@@ -176,7 +171,11 @@ export default function DockerComposePage() {
   }
   function removeVolume(svcId: string, idx: number) {
     const svc = services.find((s) => s.id === svcId)!;
-    updateService(svcId, "volumes", svc.volumes.filter((_, i) => i !== idx));
+    updateService(
+      svcId,
+      "volumes",
+      svc.volumes.filter((_, i) => i !== idx),
+    );
   }
   function updateVolume(svcId: string, idx: number, field: keyof Volume, val: string) {
     const svc = services.find((s) => s.id === svcId)!;
@@ -194,37 +193,29 @@ export default function DockerComposePage() {
       highlight="Builder"
       description="Add services from templates, configure ports, environment variables, and volumes. Generates a docker-compose.yml file instantly."
     >
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Left — Service editor */}
         <div className="space-y-6">
           {/* Add service */}
-          <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
-              Add Service
-            </Label>
+          <div className="mt-2 space-y-2">
+            <Label>Add Service</Label>
             <div className="flex gap-2">
-              <Select value={selectedTemplate} onValueChange={(v) => v && setSelectedTemplate(v)}>
-                <SelectTrigger className="flex-1">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {SERVICE_TEMPLATES.map((tpl) => (
-                    <SelectItem key={tpl.id} value={tpl.id}>
-                      {tpl.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Button onClick={addService} className="shrink-0 rounded-full font-semibold">
-                <Plus size={14} /> Add
+              <SelectField
+                value={selectedTemplate}
+                onValueChange={(v) => v && setSelectedTemplate(v)}
+                options={SERVICE_TEMPLATES.map((tpl) => ({ value: tpl.id, label: tpl.name }))}
+              />
+              <Button onClick={addService} className="font-semibold">
+                <Plus /> Add
               </Button>
             </div>
           </div>
 
           {/* Duplicate port warning */}
           {duplicatePorts.length > 0 && (
-            <div className="border-yellow-500/30 bg-yellow-500/10 text-yellow-400 rounded-lg border px-4 py-3 text-xs">
-              Duplicate host ports detected: {duplicatePorts.join(", ")}. This will cause a conflict.
+            <div className="rounded-lg border border-yellow-500/30 bg-yellow-500/10 px-4 py-3 text-xs text-yellow-400">
+              Duplicate host ports detected: {duplicatePorts.join(", ")}. This will cause a
+              conflict.
             </div>
           )}
 
@@ -241,69 +232,55 @@ export default function DockerComposePage() {
                     {/* Name + image */}
                     <div className="flex items-center justify-between gap-2">
                       <p className="text-foreground text-sm font-semibold capitalize">{svc.name}</p>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => removeService(svc.id)}
-                        className="shrink-0 rounded-full text-xs"
-                      >
-                        <Trash2 size={12} /> Remove
+                      <Button variant="destructive" size="sm" onClick={() => removeService(svc.id)}>
+                        <Trash2 /> Remove
                       </Button>
                     </div>
 
                     <div className="grid grid-cols-2 gap-2">
-                      <div className="space-y-1">
-                        <Label className="text-xs">Service Name</Label>
-                        <Input
-                          value={svc.name}
-                          onChange={(e) => updateService(svc.id, "name", e.target.value)}
-                          placeholder="service-name"
-                          className="font-mono text-xs"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-xs">Image</Label>
-                        <Input
-                          value={svc.image}
-                          onChange={(e) => updateService(svc.id, "image", e.target.value)}
-                          placeholder="image:tag"
-                          className="font-mono text-xs"
-                        />
-                      </div>
+                      <InputField
+                        label="Service Name"
+                        labelClassName="text-xs"
+                        value={svc.name}
+                        onChange={(e) => updateService(svc.id, "name", e.target.value)}
+                        placeholder="service-name"
+                      />
+
+                      <InputField
+                        label="Image"
+                        labelClassName="text-xs"
+                        value={svc.image}
+                        onChange={(e) => updateService(svc.id, "image", e.target.value)}
+                        placeholder="image:tag"
+                      />
                     </div>
 
                     {/* Ports */}
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
                         <Label className="text-xs">Ports</Label>
-                        <button
-                          onClick={() => addPort(svc.id)}
-                          className="text-muted-foreground hover:text-foreground flex items-center gap-1 text-xs transition-colors"
-                        >
-                          <Plus size={11} /> Add
-                        </button>
+                        <Button size="sm" variant="ghost" onClick={() => addPort(svc.id)}>
+                          <Plus /> Add
+                        </Button>
                       </div>
                       {svc.ports.map((p, idx) => (
                         <div key={idx} className="flex items-center gap-2">
-                          <Input
+                          <InputField
                             value={p.host}
                             onChange={(e) => updatePort(svc.id, idx, "host", e.target.value)}
                             placeholder="host"
-                            className="font-mono text-xs"
                           />
-                          <span className="text-muted-foreground text-xs">:</span>
-                          <Input
+
+                          <span className="text-xs">:</span>
+                          <InputField
                             value={p.container}
                             onChange={(e) => updatePort(svc.id, idx, "container", e.target.value)}
                             placeholder="container"
-                            className="font-mono text-xs"
                           />
-                          <button
-                            onClick={() => removePort(svc.id, idx)}
-                            className="text-muted-foreground hover:text-destructive shrink-0 transition-colors"
-                          >
-                            <Minus size={14} />
-                          </button>
+
+                          <Button size="sm" variant="ghost" onClick={() => removePort(svc.id, idx)}>
+                            <Minus />
+                          </Button>
                         </div>
                       ))}
                     </div>
@@ -312,34 +289,28 @@ export default function DockerComposePage() {
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
                         <Label className="text-xs">Environment</Label>
-                        <button
-                          onClick={() => addEnv(svc.id)}
-                          className="text-muted-foreground hover:text-foreground flex items-center gap-1 text-xs transition-colors"
-                        >
-                          <Plus size={11} /> Add
-                        </button>
+                        <Button size="sm" variant="ghost" onClick={() => addEnv(svc.id)}>
+                          <Plus /> Add
+                        </Button>
                       </div>
                       {svc.env.map((e, idx) => (
                         <div key={idx} className="flex items-center gap-2">
-                          <Input
+                          <InputField
                             value={e.key}
                             onChange={(ev) => updateEnv(svc.id, idx, "key", ev.target.value)}
                             placeholder="KEY"
-                            className="font-mono text-xs"
                           />
-                          <span className="text-muted-foreground text-xs">=</span>
-                          <Input
+
+                          <span className="text-xs">=</span>
+                          <InputField
                             value={e.value}
                             onChange={(ev) => updateEnv(svc.id, idx, "value", ev.target.value)}
                             placeholder="value"
-                            className="font-mono text-xs"
                           />
-                          <button
-                            onClick={() => removeEnv(svc.id, idx)}
-                            className="text-muted-foreground hover:text-destructive shrink-0 transition-colors"
-                          >
-                            <Minus size={14} />
-                          </button>
+
+                          <Button size="sm" variant="ghost" onClick={() => removeEnv(svc.id, idx)}>
+                            <Minus />
+                          </Button>
                         </div>
                       ))}
                     </div>
@@ -348,34 +319,32 @@ export default function DockerComposePage() {
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
                         <Label className="text-xs">Volumes</Label>
-                        <button
-                          onClick={() => addVolume(svc.id)}
-                          className="text-muted-foreground hover:text-foreground flex items-center gap-1 text-xs transition-colors"
-                        >
-                          <Plus size={11} /> Add
-                        </button>
+                        <Button size="sm" variant="ghost" onClick={() => addVolume(svc.id)}>
+                          <Plus /> Add
+                        </Button>
                       </div>
                       {svc.volumes.map((v, idx) => (
                         <div key={idx} className="flex items-center gap-2">
-                          <Input
+                          <InputField
                             value={v.host}
                             onChange={(e) => updateVolume(svc.id, idx, "host", e.target.value)}
                             placeholder="./local or named"
-                            className="font-mono text-xs"
                           />
-                          <span className="text-muted-foreground text-xs">:</span>
-                          <Input
+
+                          <span className="text-xs">:</span>
+                          <InputField
                             value={v.container}
                             onChange={(e) => updateVolume(svc.id, idx, "container", e.target.value)}
                             placeholder="/container/path"
-                            className="font-mono text-xs"
                           />
-                          <button
+
+                          <Button
+                            size="sm"
+                            variant="ghost"
                             onClick={() => removeVolume(svc.id, idx)}
-                            className="text-muted-foreground hover:text-destructive shrink-0 transition-colors"
                           >
-                            <Minus size={14} />
-                          </button>
+                            <Minus />
+                          </Button>
                         </div>
                       ))}
                     </div>
@@ -387,27 +356,13 @@ export default function DockerComposePage() {
         </div>
 
         {/* Right — YAML output */}
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
-              docker-compose.yml
-            </Label>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => copy(yaml)}
-              className="rounded-full font-semibold"
-            >
-              {copied ? <><Check size={12} /> Copied!</> : <><Copy size={12} /> Copy</>}
-            </Button>
-          </div>
-          <Textarea
-            readOnly
-            value={yaml}
-            rows={30}
-            className="font-mono text-xs"
-          />
-        </div>
+        <TextAreaField
+          label="DOCKER-COMPOSE.YML"
+          readOnly
+          value={yaml}
+          rows={30}
+          action={<CopyButton value={yaml} disabled={!yaml} />}
+        />
       </div>
     </ToolLayout>
   );

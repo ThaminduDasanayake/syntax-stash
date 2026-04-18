@@ -3,6 +3,12 @@
 import { Check, Copy, Minus, Play, Plus, RotateCcw } from "lucide-react";
 import { useId, useMemo, useState } from "react";
 
+import {
+  type Keyframe,
+  type Preset,
+  PRESETS,
+  TIMING_FUNCTIONS,
+} from "@/app/tools/animation-builder/presets";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -17,92 +23,6 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
-
-type Keyframe = {
-  percent: number;
-  properties: { key: string; value: string }[];
-};
-
-type Preset = {
-  label: string;
-  keyframes: Keyframe[];
-  duration: number;
-  timing: string;
-  iterations: string;
-};
-
-const PRESETS: Preset[] = [
-  {
-    label: "Fade In",
-    keyframes: [
-      { percent: 0, properties: [{ key: "opacity", value: "0" }] },
-      { percent: 100, properties: [{ key: "opacity", value: "1" }] },
-    ],
-    duration: 400,
-    timing: "ease-out",
-    iterations: "1",
-  },
-  {
-    label: "Slide Up",
-    keyframes: [
-      { percent: 0, properties: [{ key: "opacity", value: "0" }, { key: "transform", value: "translateY(24px)" }] },
-      { percent: 100, properties: [{ key: "opacity", value: "1" }, { key: "transform", value: "translateY(0)" }] },
-    ],
-    duration: 400,
-    timing: "ease-out",
-    iterations: "1",
-  },
-  {
-    label: "Bounce",
-    keyframes: [
-      { percent: 0, properties: [{ key: "transform", value: "translateY(0)" }] },
-      { percent: 25, properties: [{ key: "transform", value: "translateY(-12px)" }] },
-      { percent: 50, properties: [{ key: "transform", value: "translateY(0)" }] },
-      { percent: 75, properties: [{ key: "transform", value: "translateY(-6px)" }] },
-      { percent: 100, properties: [{ key: "transform", value: "translateY(0)" }] },
-    ],
-    duration: 800,
-    timing: "ease-in-out",
-    iterations: "infinite",
-  },
-  {
-    label: "Pulse",
-    keyframes: [
-      { percent: 0, properties: [{ key: "opacity", value: "1" }] },
-      { percent: 50, properties: [{ key: "opacity", value: "0.4" }] },
-      { percent: 100, properties: [{ key: "opacity", value: "1" }] },
-    ],
-    duration: 2000,
-    timing: "ease-in-out",
-    iterations: "infinite",
-  },
-  {
-    label: "Spin",
-    keyframes: [
-      { percent: 0, properties: [{ key: "transform", value: "rotate(0deg)" }] },
-      { percent: 100, properties: [{ key: "transform", value: "rotate(360deg)" }] },
-    ],
-    duration: 1000,
-    timing: "linear",
-    iterations: "infinite",
-  },
-  {
-    label: "Shake",
-    keyframes: [
-      { percent: 0, properties: [{ key: "transform", value: "translateX(0)" }] },
-      { percent: 20, properties: [{ key: "transform", value: "translateX(-8px)" }] },
-      { percent: 40, properties: [{ key: "transform", value: "translateX(8px)" }] },
-      { percent: 60, properties: [{ key: "transform", value: "translateX(-8px)" }] },
-      { percent: 80, properties: [{ key: "transform", value: "translateX(8px)" }] },
-      { percent: 100, properties: [{ key: "transform", value: "translateX(0)" }] },
-    ],
-    duration: 600,
-    timing: "ease-in-out",
-    iterations: "1",
-  },
-];
-
-const TIMING_FUNCTIONS = ["ease", "ease-in", "ease-out", "ease-in-out", "linear"];
 
 export default function AnimationBuilderPage() {
   const animId = useId().replace(/:/g, "");
@@ -134,20 +54,25 @@ export default function AnimationBuilderPage() {
   }
 
   function updateStop(idx: number, field: "percent", value: number): void;
-  function updateStop(idx: number, field: "properties", value: { key: string; value: string }[]): void;
+  function updateStop(
+    idx: number,
+    field: "properties",
+    value: { key: string; value: string }[],
+  ): void;
   function updateStop(idx: number, field: string, value: unknown) {
     setKeyframes(keyframes.map((kf, i) => (i === idx ? { ...kf, [field]: value } : kf)));
   }
 
   function addProp(stopIdx: number) {
-    updateStop(stopIdx, "properties", [
-      ...keyframes[stopIdx].properties,
-      { key: "", value: "" },
-    ]);
+    updateStop(stopIdx, "properties", [...keyframes[stopIdx].properties, { key: "", value: "" }]);
   }
 
   function removeProp(stopIdx: number, propIdx: number) {
-    updateStop(stopIdx, "properties", keyframes[stopIdx].properties.filter((_, i) => i !== propIdx));
+    updateStop(
+      stopIdx,
+      "properties",
+      keyframes[stopIdx].properties.filter((_, i) => i !== propIdx),
+    );
   }
 
   function updateProp(stopIdx: number, propIdx: number, field: "key" | "value", val: string) {
@@ -250,7 +175,9 @@ export default function AnimationBuilderPage() {
                         min={0}
                         max={100}
                         value={kf.percent}
-                        onChange={(e) => updateStop(stopIdx, "percent", parseInt(e.target.value) || 0)}
+                        onChange={(e) =>
+                          updateStop(stopIdx, "percent", parseInt(e.target.value) || 0)
+                        }
                         className="font-mono"
                       />
                     </div>
@@ -325,7 +252,9 @@ export default function AnimationBuilderPage() {
                 </SelectTrigger>
                 <SelectContent>
                   {TIMING_FUNCTIONS.map((t) => (
-                    <SelectItem key={t} value={t}>{t}</SelectItem>
+                    <SelectItem key={t} value={t}>
+                      {t}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -363,7 +292,7 @@ export default function AnimationBuilderPage() {
               <div
                 key={replayKey}
                 style={previewStyle}
-                className="bg-primary/20 border-primary/40 flex h-16 w-16 items-center justify-center rounded-xl border font-mono text-xs text-primary"
+                className="bg-primary/20 border-primary/40 text-primary flex h-16 w-16 items-center justify-center rounded-xl border font-mono text-xs"
               >
                 .el
               </div>
@@ -380,7 +309,15 @@ export default function AnimationBuilderPage() {
                 onClick={() => copy(cssOutput)}
                 className="rounded-full font-semibold"
               >
-                {copied ? <><Check size={12} /> Copied!</> : <><Copy size={12} /> Copy</>}
+                {copied ? (
+                  <>
+                    <Check size={12} /> Copied!
+                  </>
+                ) : (
+                  <>
+                    <Copy size={12} /> Copy
+                  </>
+                )}
               </Button>
             </div>
             <Textarea readOnly value={cssOutput} rows={16} className="font-mono text-xs" />

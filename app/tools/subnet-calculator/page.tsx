@@ -75,8 +75,11 @@ export default function SubnetCalculatorPage() {
   return (
     <ToolLayout
       icon={Network}
-      title="Subnet / CIDR"
-      highlight="Calculator"
+      title={
+        <>
+          Subnet <span className="text-primary">/</span> CIDR Calculator
+        </>
+      }
       description="Calculate network address, broadcast, subnet mask, and host ranges from any CIDR notation."
     >
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
@@ -91,7 +94,8 @@ export default function SubnetCalculatorPage() {
               className="font-mono"
             />
             <p className="text-muted-foreground text-xs">
-              Enter an IP address with CIDR prefix, e.g. <code className="text-primary">10.0.0.0/8</code>
+              Enter an IP address with CIDR prefix, e.g.{" "}
+              <code className="text-primary">10.0.0.0/8</code>
             </p>
           </div>
 
@@ -107,12 +111,10 @@ export default function SubnetCalculatorPage() {
                 <p className="text-muted-foreground mb-2 text-xs font-semibold tracking-wider uppercase">
                   Summary
                 </p>
-                <p className="text-primary font-mono text-2xl font-bold">
-                  /{result.cidr}
-                </p>
+                <p className="text-primary font-mono text-2xl font-bold">/{result.cidr}</p>
                 <p className="text-muted-foreground mt-1 font-mono text-sm">
-                  {result.totalHosts.toLocaleString()} total ·{" "}
-                  {result.usableHosts.toLocaleString()} usable hosts
+                  {result.totalHosts.toLocaleString()} total · {result.usableHosts.toLocaleString()}{" "}
+                  usable hosts
                 </p>
               </CardContent>
             </Card>

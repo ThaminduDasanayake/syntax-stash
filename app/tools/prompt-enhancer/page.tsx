@@ -1,21 +1,20 @@
 "use client";
 
-import { Check, Copy, Sparkles, Trash2 } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { useState } from "react";
 
 import { promptTemplates } from "@/app/tools/prompt-enhancer/prompt-templates";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
+import ClearButton from "@/components/ui/clear-button";
+import CopyButton from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { TextAreaField } from "@/components/ui/textarea-field";
 
 export default function PromptEnhancerPage() {
   const [input, setInput] = useState("");
   const [enhancedOutput, setEnhancedOutput] = useState("");
   const [isEnhancing, setIsEnhancing] = useState(false);
-
-  const { copied, copy } = useCopyToClipboard();
 
   function handleTemplateClick(starter: string) {
     setInput(starter);
@@ -66,10 +65,10 @@ export default function PromptEnhancerPage() {
           {promptTemplates.map((t) => (
             <Button
               key={t.id}
-              variant="outline"
+              variant="secondary"
               size="sm"
               onClick={() => handleTemplateClick(t.starter)}
-              className="bg-muted/50! hover:bg-muted/80! rounded-full text-xs transition-all"
+              className="px-4 font-semibold"
             >
               {t.title}
             </Button>
@@ -79,73 +78,48 @@ export default function PromptEnhancerPage() {
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Left Column — Workspace */}
-        <div className="space-y-4">
-          <Label>Your Prompt</Label>
-          <Textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Write your rough prompt here, or pick a starter above..."
-            rows={16}
-          />
-
-          {/* Action Bar */}
-          <div className="flex items-center justify-between gap-3">
-            <Button
-              onClick={handleEnhance}
-              disabled={isEnhancing || !input.trim()}
-              className="rounded-full px-5 font-semibold transition-all duration-200 disabled:opacity-50"
-            >
-              <Sparkles size={14} />
-              {isEnhancing ? "Enhancing..." : "Enhance Prompt"}
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="xs"
-              disabled={!input}
-              onClick={() => {
-                setInput("");
-                setEnhancedOutput("");
-              }}
-            >
-              <Trash2 />
-              Clear
-            </Button>
-          </div>
-        </div>
+        <TextAreaField
+          label="Your Prompt"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Write your rough prompt here, or pick a starter above..."
+          rows={16}
+          action={
+            <div className="flex gap-2">
+              <Button
+                onClick={handleEnhance}
+                disabled={isEnhancing || !input.trim()}
+                className="px-4 font-semibold"
+              >
+                <Sparkles />
+                {isEnhancing ? "Enhancing..." : "Enhance"}
+              </Button>
+              <ClearButton
+                onClick={() => {
+                  setInput("");
+                }}
+                disabled={!input}
+              />
+            </div>
+          }
+        />
 
         {/* Right Column — Output */}
-        <div className="space-y-4">
-          <Label>Enhanced Output</Label>
-          <Textarea
-            value={enhancedOutput}
-            readOnly
-            rows={16}
-            placeholder={
-              isEnhancing
-                ? "✨ Enhancing your prompt..."
-                : 'Write a prompt and click "Enhance Prompt" to see the improved version here.'
-            }
-            className={isEnhancing ? "animate-pulse" : ""}
-          />
-          <Button
-            variant="ghost"
-            onClick={() => copy(enhancedOutput)}
-            disabled={isEnhancing || !enhancedOutput.trim()}
-          >
-            {copied ? (
-              <span className="flex items-center gap-1 text-emerald-400">
-                <Check />
-                Copied!
-              </span>
-            ) : (
-              <>
-                <Copy />
-                Copy to Clipboard
-              </>
-            )}
-          </Button>
-        </div>
+        <TextAreaField
+          label="Formatted SQL"
+          readOnly
+          value={enhancedOutput}
+          rows={16}
+          placeholder={
+            isEnhancing
+              ? "✨ Enhancing your prompt..."
+              : 'Write a prompt and click "Enhance Prompt" to see the improved version here.'
+          }
+          className={isEnhancing ? "animate-pulse" : ""}
+          action={
+            <CopyButton value={enhancedOutput} disabled={isEnhancing || !enhancedOutput.trim()} />
+          }
+        />
       </div>
     </ToolLayout>
   );
