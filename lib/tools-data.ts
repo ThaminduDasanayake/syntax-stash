@@ -3,6 +3,7 @@ import {
   Braces,
   CalendarClock,
   Clock,
+  Code2,
   CodeXml,
   Container,
   Database,
@@ -22,6 +23,8 @@ import {
   KeyRound,
   Layers,
   LayoutGrid,
+  Link,
+  ListOrdered,
   Lock,
   Network,
   Palette,
@@ -36,7 +39,10 @@ import {
   Sparkles,
   Square,
   Table,
+  TableProperties,
   Terminal,
+  Type,
+  Wifi,
   Wind,
 } from "lucide-react";
 
@@ -158,6 +164,27 @@ export const developmentTools: Tool[] = [
     category: "Utilities",
     icon: BookOpen,
   },
+  {
+    title: ".gitignore Generator",
+    url: "/tools/gitignore-generator",
+    description: "Generate .gitignore files for your project with common patterns for popular stacks.",
+    category: CATEGORIES.development,
+    icon: FileText,
+  },
+  {
+    title: "Markdown Table of Contents",
+    url: "/tools/markdown-toc-generator",
+    description: "Generate a nested Table of Contents from your Markdown document with automatic anchor links.",
+    category: CATEGORIES.development,
+    icon: ListOrdered,
+  },
+  {
+    title: "Markdown to HTML",
+    url: "/tools/markdown-to-html",
+    description: "Convert Markdown to HTML with live preview and export.",
+    category: CATEGORIES.development,
+    icon: Code2,
+  },
 ];
 
 export const devopsTools: Tool[] = [
@@ -267,6 +294,20 @@ export const networkTools: Tool[] = [
     category: CATEGORIES.network,
     icon: Globe,
   },
+  {
+    title: "URL Parser & Builder",
+    url: "/tools/url-parser",
+    description: "Parse, analyze, and rebuild URLs with editable query parameters.",
+    category: CATEGORIES.network,
+    icon: Link,
+  },
+  {
+    title: "MAC Address Vendor Lookup",
+    url: "/tools/mac-vendor-lookup",
+    description: "Look up MAC address vendors by OUI with support for multiple formats.",
+    category: CATEGORIES.network,
+    icon: Wifi,
+  },
 ];
 
 export const systemTools: Tool[] = [
@@ -325,6 +366,20 @@ export const typographyTools: Tool[] = [
       "Draw boxes and add text on a character grid. Outputs clean ASCII art using Unicode box-drawing characters.",
     category: CATEGORIES.typography,
     icon: Grid3X3,
+  },
+  {
+    title: "String Case Converter",
+    url: "/tools/string-case-converter",
+    description: "Convert text between different naming conventions and typographical styles.",
+    category: CATEGORIES.typography,
+    icon: Type,
+  },
+  {
+    title: "CSV to Markdown Table",
+    url: "/tools/csv-to-markdown",
+    description: "Convert CSV and spreadsheet data into beautifully formatted Markdown tables.",
+    category: CATEGORIES.typography,
+    icon: TableProperties,
   },
 ];
 
@@ -393,6 +448,13 @@ export const uiStyling: Tool[] = [
     url: "/tools/border-radius",
     description:
       "Visually configure CSS border-radius with per-corner sliders, presets, and live shape preview.",
+    category: CATEGORIES.uiStyling,
+    icon: Square,
+  },
+  {
+    title: "Shadow Builder",
+    url: "/tools/box-shadow-builder",
+    description: "Visually generate CSS box-shadow styles with live preview.",
     category: CATEGORIES.uiStyling,
     icon: Square,
   },
