@@ -1,5 +1,6 @@
 import {
   ArrowRightLeft,
+  Binary,
   BookOpen,
   BrainCircuit,
   Braces,
@@ -81,6 +82,14 @@ export const calculatorTools: Tool[] = [
       "Convert Unix timestamps, ISO dates, and local time. Timezone viewer and date arithmetic.",
     category: CATEGORIES.calculators,
     icon: Clock,
+  },
+  {
+    title: "Base Converter",
+    url: "/tools/base-converter",
+    description:
+      "Convert between decimal, hex, binary, and octal with a 16-bit toggle grid and bitwise ops.",
+    category: CATEGORIES.calculators,
+    icon: Binary,
   },
 ];
 
