@@ -290,6 +290,14 @@ export const devopsTools: Tool[] = [
     category: CATEGORIES.devops,
     icon: FileDiff,
   },
+  {
+    title: "Docker Run → Compose",
+    url: "/tools/docker-to-compose",
+    description:
+      "Instantly convert complex docker run commands into clean docker-compose.yml files.",
+    category: CATEGORIES.devops,
+    icon: Container,
+  },
 ];
 
 export const imageTools: Tool[] = [
