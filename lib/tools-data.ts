@@ -3,6 +3,7 @@ import {
   BookOpen,
   BrainCircuit,
   Braces,
+  Wand2,
   CalendarClock,
   Clock,
   Code2,
@@ -496,6 +497,13 @@ export const uiStyling: Tool[] = [
     description: "Visually generate CSS box-shadow styles with live preview.",
     category: CATEGORIES.uiStyling,
     icon: Square,
+  },
+  {
+    title: "GSAP Builder",
+    url: "/tools/gsap-builder",
+    description: "Visually build GSAP animations and generate optimized React 19 boilerplate.",
+    category: CATEGORIES.uiStyling,
+    icon: Wand2,
   },
 ];
 
