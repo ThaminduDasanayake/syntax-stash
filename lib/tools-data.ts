@@ -1,8 +1,14 @@
 import {
+  ArrowRightLeft,
+  Binary,
   BookOpen,
+  BrainCircuit,
   Braces,
+  SearchCode,
   CalendarClock,
   Clock,
+  Scale,
+  Wand2,
   Code2,
   CodeXml,
   Container,
@@ -10,6 +16,7 @@ import {
   Eye,
   FileDiff,
   FileImage,
+  FileJson,
   FileText,
   Fingerprint,
   Frame,
@@ -49,6 +56,7 @@ import {
 import { Tool } from "@/types";
 
 export const CATEGORIES = {
+  calculators: "Calculators",
   data: "Data & Formats",
   development: "Development & Code",
   devops: "DevOps",
@@ -58,6 +66,33 @@ export const CATEGORIES = {
   typography: "Typography & Text",
   uiStyling: "UI & Styling",
 } as const;
+
+export const calculatorTools: Tool[] = [
+  {
+    title: "Unit Converter",
+    url: "/tools/unit-converter",
+    description:
+      "Convert between units of length, weight, data, temperature, speed, area, and volume.",
+    category: CATEGORIES.calculators,
+    icon: Scale,
+  },
+  {
+    title: "Time Calculator",
+    url: "/tools/time-calculator",
+    description:
+      "Convert Unix timestamps, ISO dates, and local time. Timezone viewer and date arithmetic.",
+    category: CATEGORIES.calculators,
+    icon: Clock,
+  },
+  {
+    title: "Base Converter",
+    url: "/tools/base-converter",
+    description:
+      "Convert between decimal, hex, binary, and octal with a 16-bit toggle grid and bitwise ops.",
+    category: CATEGORIES.calculators,
+    icon: Binary,
+  },
+];
 
 export const dataTools: Tool[] = [
   {
@@ -125,6 +160,22 @@ export const dataTools: Tool[] = [
     category: CATEGORIES.data,
     icon: Hash,
   },
+  {
+    title: "NLP Sandbox",
+    url: "/tools/nlp-sandbox",
+    description:
+      "Simulate text cleaning, vectorization, and scaling pipelines with live output.",
+    category: CATEGORIES.data,
+    icon: BrainCircuit,
+  },
+  {
+    title: "JSONPath Sandbox",
+    url: "/tools/jsonpath-sandbox",
+    description:
+      "Test and evaluate JSONPath queries against any JSON payload in real-time.",
+    category: CATEGORIES.data,
+    icon: SearchCode,
+  },
 ];
 
 export const developmentTools: Tool[] = [
@@ -185,6 +236,34 @@ export const developmentTools: Tool[] = [
     category: CATEGORIES.development,
     icon: Code2,
   },
+  {
+    title: "SQL to Drizzle ORM",
+    url: "/tools/sql-drizzle-converter",
+    description: "Convert PostgreSQL and MySQL CREATE TABLE statements into Drizzle ORM schemas.",
+    category: CATEGORIES.development,
+    icon: Database,
+  },
+  {
+    title: "JSON to Schemas",
+    url: "/tools/json-to-schemas",
+    description: "Convert JSON payloads into Zod (TypeScript) and Pydantic (Python) validation schemas.",
+    category: CATEGORIES.development,
+    icon: FileJson,
+  },
+  {
+    title: "Prisma to Drizzle",
+    url: "/tools/prisma-to-drizzle",
+    description: "Migrate schema.prisma models directly into Drizzle ORM syntax for PostgreSQL or SQLite.",
+    category: CATEGORIES.development,
+    icon: ArrowRightLeft,
+  },
+  {
+    title: "Mongo Aggregation Builder",
+    url: "/tools/mongo-pipeline-builder",
+    description: "Visually scaffold complex MongoDB aggregation pipelines with live JSON output.",
+    category: CATEGORIES.development,
+    icon: Layers,
+  },
 ];
 
 export const devopsTools: Tool[] = [
@@ -219,6 +298,14 @@ export const devopsTools: Tool[] = [
       "Semantically compare two .env files to find missing keys, extra keys, and value mismatches.",
     category: CATEGORIES.devops,
     icon: FileDiff,
+  },
+  {
+    title: "Docker Run → Compose",
+    url: "/tools/docker-to-compose",
+    description:
+      "Instantly convert complex docker run commands into clean docker-compose.yml files.",
+    category: CATEGORIES.devops,
+    icon: Container,
   },
 ];
 
@@ -458,10 +545,18 @@ export const uiStyling: Tool[] = [
     category: CATEGORIES.uiStyling,
     icon: Square,
   },
+  {
+    title: "GSAP Builder",
+    url: "/tools/gsap-builder",
+    description: "Visually build GSAP animations and generate optimized React 19 boilerplate.",
+    category: CATEGORIES.uiStyling,
+    icon: Wand2,
+  },
 ];
 
 // Internal Tools
 export const internalTools: Tool[] = [
+  ...calculatorTools,
   ...dataTools,
   ...developmentTools,
   ...devopsTools,
