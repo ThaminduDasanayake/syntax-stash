@@ -45,6 +45,7 @@ import {
   ShieldHalf,
   Sparkles,
   Square,
+  WandSparkles,
   Table,
   TableProperties,
   Terminal,
@@ -176,6 +177,13 @@ export const dataTools: Tool[] = [
     category: CATEGORIES.data,
     icon: SearchCode,
   },
+  {
+    title: "Web Extractor",
+    url: "/tools/web-extractor",
+    description: "Extract meta tags, headings, and links from any public URL.",
+    category: CATEGORIES.data,
+    icon: Globe,
+  },
 ];
 
 export const developmentTools: Tool[] = [
@@ -185,6 +193,13 @@ export const developmentTools: Tool[] = [
     description: "Dynamic templates to generate high-quality AI prompts.",
     category: "Utilities",
     icon: Sparkles,
+  },
+  {
+    title: "AI Prompt Studio",
+    url: "/tools/prompt-studio",
+    description: "Write, inject variables, and minify LLM prompts with real-time token tracking.",
+    category: "Utilities",
+    icon: WandSparkles,
   },
   {
     title: "Code Stash",
