@@ -37,21 +37,19 @@ function Section({ title, count, defaultOpen = true, children }: SectionProps) {
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
       <Card>
-        <CollapsibleTrigger asChild>
-          <button className="flex w-full items-center justify-between px-5 py-3.5 text-left transition-colors hover:bg-muted/50">
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-semibold">{title}</span>
-              {count !== undefined && (
-                <Badge variant="secondary" className="font-mono text-[11px]">
-                  {count}
-                </Badge>
-              )}
-            </div>
-            <ChevronDown
-              size={15}
-              className={`text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`}
-            />
-          </button>
+        <CollapsibleTrigger className="flex w-full items-center justify-between px-5 py-3.5 text-left transition-colors hover:bg-muted/50">
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-semibold">{title}</span>
+            {count !== undefined && (
+              <Badge variant="secondary" className="font-mono text-[11px]">
+                {count}
+              </Badge>
+            )}
+          </div>
+          <ChevronDown
+            size={15}
+            className={`text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`}
+          />
         </CollapsibleTrigger>
         <CollapsibleContent>
           <CardContent className="border-t px-5 pb-5 pt-4">
