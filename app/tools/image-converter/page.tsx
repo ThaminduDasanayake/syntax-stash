@@ -9,19 +9,19 @@ import FileDropzone from "@/components/file-dropzone";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { SelectField } from "@/components/ui/select-field";
 
 const EXT_MAP: Record<ImageFormat, string> = {
   "image/webp": "webp",
   "image/jpeg": "jpg",
   "image/png": "png",
 };
+
+const formats = [
+  { id: "image/webp", label: "WebP" },
+  { id: "image/jpeg", label: "JPEG" },
+  { id: "image/png", label: "PNG" },
+];
 
 export default function ImageConverterPage() {
   const [file, setFile] = useState<File | null>(null);
@@ -126,8 +126,8 @@ export default function ImageConverterPage() {
     >
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Left — Dropzone or Preview */}
-        <div className="space-y-4">
-          <Label className="text-foreground">Image</Label>
+        <div className="space-y-2">
+          <Label>Image</Label>
           {!file ? (
             <FileDropzone
               onFileDropAction={handleFileDrop}
@@ -159,26 +159,19 @@ export default function ImageConverterPage() {
 
         {/* Right — Format & Convert */}
         <div className="space-y-6">
-          <div className="space-y-2">
-            <Label className="text-foreground">Target Format</Label>
-            <Select value={format} onValueChange={handleFormatChange}>
-              <SelectTrigger className="border-foreground/30 w-full">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="image/webp">WebP</SelectItem>
-                <SelectItem value="image/jpeg">JPEG</SelectItem>
-                <SelectItem value="image/png">PNG</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          <SelectField
+            value={format}
+            label={"Target Format"}
+            onValueChange={handleFormatChange}
+            options={formats.map((format) => ({ value: format.id, label: format.label }))}
+          />
 
           <Button
             onClick={handleConvert}
             disabled={!file || isConverting}
-            className="border-primary/30 bg-primary/10 hover:bg-primary/20 text-primary rounded-full border px-6 py-2 font-semibold transition-all duration-200 disabled:opacity-50"
+            className="px-4 font-semibold"
           >
-            <Download size={16} className="mr-2" />
+            <Download className="mr-2" />
             {isConverting ? "Converting..." : "Convert & Download"}
           </Button>
         </div>
