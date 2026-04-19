@@ -287,7 +287,7 @@ export default function GSAPBuilderPage() {
               opacity !== 1 ? [`opacity: ${opacity}`, ""] : null,
               scale !== 1 ? [`scale: ${scale}`, ""] : null,
             ]
-              .filter(Boolean)
+              .filter((item): item is [string, string] => item !== null)
               .map(([label], i) => (
                 <span
                   key={i}
