@@ -53,10 +53,10 @@ function injectVariables(text: string, vars: Record<string, string>): string {
 function minifyPrompt(text: string): string {
   return text
     .replace(/^#{1,6}\s+/gm, "")
-    .replace(/\*\*(.+?)\*\*/gs, "$1")
-    .replace(/\*(.+?)\*/gs, "$1")
-    .replace(/__(.+?)__/gs, "$1")
-    .replace(/_(.+?)_/gs, "$1")
+    .replace(/\*\*([\s\S]+?)\*\*/g, "$1")
+    .replace(/\*([\s\S]+?)\*/g, "$1")
+    .replace(/__([\s\S]+?)__/g, "$1")
+    .replace(/_([\s\S]+?)_/g, "$1")
     .replace(/```[\s\S]*?```/g, (m) => m.replace(/```\w*\n?/g, "").trim())
     .replace(/`(.+?)`/g, "$1")
     .replace(/^[-*+]\s+/gm, "")
