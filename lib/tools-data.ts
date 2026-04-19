@@ -208,6 +208,13 @@ export const developmentTools: Tool[] = [
     category: CATEGORIES.development,
     icon: ArrowRightLeft,
   },
+  {
+    title: "Mongo Aggregation Builder",
+    url: "/tools/mongo-pipeline-builder",
+    description: "Visually scaffold complex MongoDB aggregation pipelines with live JSON output.",
+    category: CATEGORIES.development,
+    icon: Layers,
+  },
 ];
 
 export const devopsTools: Tool[] = [
