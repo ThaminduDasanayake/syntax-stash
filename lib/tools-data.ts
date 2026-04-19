@@ -10,6 +10,7 @@ import {
   Eye,
   FileDiff,
   FileImage,
+  FileJson,
   FileText,
   Fingerprint,
   Frame,
@@ -191,6 +192,13 @@ export const developmentTools: Tool[] = [
     description: "Convert PostgreSQL and MySQL CREATE TABLE statements into Drizzle ORM schemas.",
     category: CATEGORIES.development,
     icon: Database,
+  },
+  {
+    title: "JSON to Schemas",
+    url: "/tools/json-to-schemas",
+    description: "Convert JSON payloads into Zod (TypeScript) and Pydantic (Python) validation schemas.",
+    category: CATEGORIES.development,
+    icon: FileJson,
   },
 ];
 
