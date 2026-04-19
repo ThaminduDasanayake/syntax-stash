@@ -185,6 +185,13 @@ export const developmentTools: Tool[] = [
     category: CATEGORIES.development,
     icon: Code2,
   },
+  {
+    title: "SQL to Drizzle ORM",
+    url: "/tools/sql-drizzle-converter",
+    description: "Convert PostgreSQL and MySQL CREATE TABLE statements into Drizzle ORM schemas.",
+    category: CATEGORIES.development,
+    icon: Database,
+  },
 ];
 
 export const devopsTools: Tool[] = [
