@@ -3,10 +3,10 @@ import {
   BookOpen,
   BrainCircuit,
   Braces,
-  Scale,
-  Wand2,
   CalendarClock,
   Clock,
+  Scale,
+  Wand2,
   Code2,
   CodeXml,
   Container,
@@ -73,6 +73,14 @@ export const calculatorTools: Tool[] = [
       "Convert between units of length, weight, data, temperature, speed, area, and volume.",
     category: CATEGORIES.calculators,
     icon: Scale,
+  },
+  {
+    title: "Time Calculator",
+    url: "/tools/time-calculator",
+    description:
+      "Convert Unix timestamps, ISO dates, and local time. Timezone viewer and date arithmetic.",
+    category: CATEGORIES.calculators,
+    icon: Clock,
   },
 ];
 
