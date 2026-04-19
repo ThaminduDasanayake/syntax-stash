@@ -3,6 +3,7 @@ import {
   BookOpen,
   BrainCircuit,
   Braces,
+  Scale,
   Wand2,
   CalendarClock,
   Clock,
@@ -53,6 +54,7 @@ import {
 import { Tool } from "@/types";
 
 export const CATEGORIES = {
+  calculators: "Calculators",
   data: "Data & Formats",
   development: "Development & Code",
   devops: "DevOps",
@@ -62,6 +64,17 @@ export const CATEGORIES = {
   typography: "Typography & Text",
   uiStyling: "UI & Styling",
 } as const;
+
+export const calculatorTools: Tool[] = [
+  {
+    title: "Unit Converter",
+    url: "/tools/unit-converter",
+    description:
+      "Convert between units of length, weight, data, temperature, speed, area, and volume.",
+    category: CATEGORIES.calculators,
+    icon: Scale,
+  },
+];
 
 export const dataTools: Tool[] = [
   {
@@ -509,6 +522,7 @@ export const uiStyling: Tool[] = [
 
 // Internal Tools
 export const internalTools: Tool[] = [
+  ...calculatorTools,
   ...dataTools,
   ...developmentTools,
   ...devopsTools,
