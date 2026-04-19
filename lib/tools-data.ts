@@ -4,6 +4,7 @@ import {
   BookOpen,
   BrainCircuit,
   Braces,
+  SearchCode,
   CalendarClock,
   Clock,
   Scale,
@@ -166,6 +167,14 @@ export const dataTools: Tool[] = [
       "Simulate text cleaning, vectorization, and scaling pipelines with live output.",
     category: CATEGORIES.data,
     icon: BrainCircuit,
+  },
+  {
+    title: "JSONPath Sandbox",
+    url: "/tools/jsonpath-sandbox",
+    description:
+      "Test and evaluate JSONPath queries against any JSON payload in real-time.",
+    category: CATEGORIES.data,
+    icon: SearchCode,
   },
 ];
 
