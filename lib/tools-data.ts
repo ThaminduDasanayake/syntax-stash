@@ -35,6 +35,7 @@ import {
   ShieldHalf,
   Sparkles,
   Square,
+  WandSparkles,
   Table,
   Terminal,
   Wind,
@@ -135,6 +136,13 @@ export const developmentTools: Tool[] = [
     description: "Dynamic templates to generate high-quality AI prompts.",
     category: "Utilities",
     icon: Sparkles,
+  },
+  {
+    title: "AI Prompt Studio",
+    url: "/tools/prompt-studio",
+    description: "Write, inject variables, and minify LLM prompts with real-time token tracking.",
+    category: "Utilities",
+    icon: WandSparkles,
   },
   {
     title: "Code Stash",
