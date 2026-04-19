@@ -1,4 +1,5 @@
 import {
+  ArrowRightLeft,
   BookOpen,
   Braces,
   CalendarClock,
@@ -199,6 +200,13 @@ export const developmentTools: Tool[] = [
     description: "Convert JSON payloads into Zod (TypeScript) and Pydantic (Python) validation schemas.",
     category: CATEGORIES.development,
     icon: FileJson,
+  },
+  {
+    title: "Prisma to Drizzle",
+    url: "/tools/prisma-to-drizzle",
+    description: "Migrate schema.prisma models directly into Drizzle ORM syntax for PostgreSQL or SQLite.",
+    category: CATEGORIES.development,
+    icon: ArrowRightLeft,
   },
 ];
 
