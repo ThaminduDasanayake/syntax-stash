@@ -1,6 +1,7 @@
 import {
   ArrowRightLeft,
   BookOpen,
+  BrainCircuit,
   Braces,
   CalendarClock,
   Clock,
@@ -126,6 +127,14 @@ export const dataTools: Tool[] = [
       "Decode a MongoDB ObjectId into its timestamp, machine ID, process ID, and counter.",
     category: CATEGORIES.data,
     icon: Hash,
+  },
+  {
+    title: "NLP Sandbox",
+    url: "/tools/nlp-sandbox",
+    description:
+      "Simulate text cleaning, vectorization, and scaling pipelines with live output.",
+    category: CATEGORIES.data,
+    icon: BrainCircuit,
   },
 ];
 
