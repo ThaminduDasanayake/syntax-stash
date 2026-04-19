@@ -119,6 +119,13 @@ export const dataTools: Tool[] = [
     category: CATEGORIES.data,
     icon: Hash,
   },
+  {
+    title: "Web Extractor",
+    url: "/tools/web-extractor",
+    description: "Extract meta tags, headings, and links from any public URL.",
+    category: CATEGORIES.data,
+    icon: Globe,
+  },
 ];
 
 export const developmentTools: Tool[] = [
