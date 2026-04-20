@@ -21,7 +21,6 @@ import {
   Globe,
   Globe2,
   Grid3X3,
-  Hash,
   Image,
   ImageIcon,
   KeyRound,
@@ -153,14 +152,6 @@ export const dataTools: Tool[] = [
       "Paste any mystery string — JWT, Unix timestamp, UUID, MongoDB ObjectId, or Snowflake ID — and decode it instantly.",
     category: CATEGORIES.data,
     icon: Scan,
-  },
-  {
-    title: "MongoDB ObjectId Decoder",
-    url: "/tools/mongo-decoder",
-    description:
-      "Decode a MongoDB ObjectId into its timestamp, machine ID, process ID, and counter.",
-    category: CATEGORIES.data,
-    icon: Hash,
   },
   {
     title: "NLP Sandbox",
@@ -443,13 +434,6 @@ export const systemTools: Tool[] = [
     title: "Cron Translator",
     url: "/tools/cron-translator",
     description: "Convert cron expressions to human-readable text and upcoming dates.",
-    category: CATEGORIES.system,
-    icon: Clock,
-  },
-  {
-    title: "Unix Timestamp Converter",
-    url: "/tools/timestamp-converter",
-    description: "Convert Unix epoch timestamps to human-readable dates.",
     category: CATEGORIES.system,
     icon: Clock,
   },
