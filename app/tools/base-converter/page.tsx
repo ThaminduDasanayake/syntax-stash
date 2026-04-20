@@ -3,103 +3,23 @@
 import { Binary } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 
+import {
+  BITS,
+  BITWISE_OPS,
+  clamp,
+  toBin,
+  toDec,
+  toHex,
+  toOct,
+  toSigned,
+} from "@/app/tools/base-converter/helpers";
+import PrefixInput from "@/app/tools/base-converter/prefix-input";
 import { ToolLayout } from "@/components/layout/tool-layout";
-import CopyButton from "@/components/ui/copy-button";
 import { Card, CardContent } from "@/components/ui/card";
+import CopyButton from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-// ---------------------------------------------------------------------------
-// Constants & types
-// ---------------------------------------------------------------------------
-
-const BITS = 16;
-const MAX = (1 << BITS) - 1;   // 65535  (unsigned 16-bit)
-const SIGNED_MIN = -(1 << (BITS - 1)); // -32768
-const SIGNED_MAX = (1 << (BITS - 1)) - 1; // 32767
-
-// Bitwise operations config
-interface BitwiseOp {
-  id: string;
-  label: string;
-  symbol: string;
-  fn: (a: number, b: number) => number;
-  unary?: boolean;
-}
-
-const BITWISE_OPS: BitwiseOp[] = [
-  { id: "and",  label: "AND",  symbol: "&",   fn: (a, b) => a & b },
-  { id: "or",   label: "OR",   symbol: "|",   fn: (a, b) => a | b },
-  { id: "xor",  label: "XOR",  symbol: "^",   fn: (a, b) => a ^ b },
-  { id: "not",  label: "NOT",  symbol: "~",   fn: (a)    => (~a) & MAX, unary: true },
-  { id: "shl",  label: "Shift Left",  symbol: "<<",  fn: (a, b) => (a << b) & MAX },
-  { id: "shr",  label: "Shift Right", symbol: ">>",  fn: (a, b) => a >> b },
-];
-
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
-function clamp(n: number): number {
-  if (!isFinite(n) || isNaN(n)) return 0;
-  return Math.max(0, Math.min(MAX, Math.floor(n)));
-}
-
-function toBin(n: number): string   { return n.toString(2).padStart(BITS, "0"); }
-function toHex(n: number): string   { return n.toString(16).toUpperCase(); }
-function toOct(n: number): string   { return n.toString(8); }
-function toDec(n: number): string   { return n.toString(10); }
-
-// Two's-complement signed value for 16-bit
-function toSigned(n: number): number {
-  return n >= (1 << (BITS - 1)) ? n - (1 << BITS) : n;
-}
-
-// ---------------------------------------------------------------------------
-// PrefixInput — input with a visual prefix label
-// ---------------------------------------------------------------------------
-
-interface PrefixInputProps {
-  label: string;
-  prefix: string;
-  value: string;
-  onChange: (raw: string) => void;
-  placeholder?: string;
-}
-
-function PrefixInput({ label, prefix, value, onChange, placeholder }: PrefixInputProps) {
-  return (
-    <Card className="transition-colors focus-within:border-primary/50">
-      <CardContent className="p-4">
-        <div className="mb-2 flex items-baseline justify-between">
-          <Label className="text-sm font-medium">{label}</Label>
-          <span className="font-mono text-[11px] text-muted-foreground">{prefix}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="relative flex flex-1 items-center">
-            {prefix && (
-              <span className="pointer-events-none absolute left-3 select-none font-mono text-sm text-muted-foreground">
-                {prefix}
-              </span>
-            )}
-            <Input
-              value={value}
-              onChange={(e) => onChange(e.target.value)}
-              placeholder={placeholder}
-              className={`font-mono text-sm ${prefix ? "pl-8" : ""}`}
-            />
-          </div>
-          <CopyButton value={prefix + value} disabled={!value} />
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Page
-// ---------------------------------------------------------------------------
 
 export default function BaseConverterPage() {
   const [value, setValue] = useState<number>(0);
@@ -115,10 +35,6 @@ export default function BaseConverterPage() {
   const [bitwiseB, setBitwiseB] = useState("0");
   const [selectedOp, setSelectedOp] = useState<string>("and");
 
-  // ---------------------------------------------------------------------------
-  // Sync all derived fields from a new number
-  // ---------------------------------------------------------------------------
-
   const syncFrom = useCallback((n: number) => {
     const safe = clamp(n);
     setValue(safe);
@@ -127,10 +43,6 @@ export default function BaseConverterPage() {
     setBinRaw(toBin(safe));
     setOctRaw(toOct(safe));
   }, []);
-
-  // ---------------------------------------------------------------------------
-  // Per-field parsers
-  // ---------------------------------------------------------------------------
 
   const handleDec = (raw: string) => {
     setDecRaw(raw);
@@ -182,10 +94,6 @@ export default function BaseConverterPage() {
     setBinRaw(toBin(safe));
   };
 
-  // ---------------------------------------------------------------------------
-  // Bit toggle
-  // ---------------------------------------------------------------------------
-
   const bits = useMemo(() => {
     return Array.from({ length: BITS }, (_, i) => {
       const bitIndex = BITS - 1 - i;
@@ -193,14 +101,13 @@ export default function BaseConverterPage() {
     });
   }, [value]);
 
-  const toggleBit = useCallback((i: number) => {
-    const bitIndex = BITS - 1 - i;
-    syncFrom(value ^ (1 << bitIndex));
-  }, [value, syncFrom]);
-
-  // ---------------------------------------------------------------------------
-  // Bitwise ops
-  // ---------------------------------------------------------------------------
+  const toggleBit = useCallback(
+    (i: number) => {
+      const bitIndex = BITS - 1 - i;
+      syncFrom(value ^ (1 << bitIndex));
+    },
+    [value, syncFrom],
+  );
 
   const bitwiseResult = useMemo(() => {
     const op = BITWISE_OPS.find((o) => o.id === selectedOp);
@@ -211,9 +118,9 @@ export default function BaseConverterPage() {
     const safe = clamp(result);
     return {
       decimal: toDec(safe),
-      hex:     "0x" + toHex(safe),
-      binary:  "0b" + toBin(safe),
-      octal:   "0o" + toOct(safe),
+      hex: "0x" + toHex(safe),
+      binary: "0b" + toBin(safe),
+      octal: "0o" + toOct(safe),
     };
   }, [bitwiseA, bitwiseB, selectedOp]);
 
@@ -226,30 +133,72 @@ export default function BaseConverterPage() {
       highlight="Converter"
       description="Convert between decimal, hex, binary, and octal with a 16-bit toggle grid."
     >
-      <Tabs defaultValue="converter">
-        <TabsList className="mb-6 w-full">
-          <TabsTrigger value="converter" className="flex-1">Converter</TabsTrigger>
-          <TabsTrigger value="bitwise"   className="flex-1">Bitwise Ops</TabsTrigger>
+      <Tabs defaultValue="converter" className="flex w-full flex-col">
+        <TabsList className="mb-4 w-full flex-wrap">
+          <TabsTrigger
+            value="converter"
+            className="data-active:bg-primary! data-active:text-background! data-active:border-card/60! p-1 font-semibold hover:cursor-pointer data-active:border!"
+          >
+            Converter
+          </TabsTrigger>
+          <TabsTrigger
+            value="bitwise"
+            className="data-active:bg-primary! data-active:text-background! data-active:border-card/60! p-1 font-semibold hover:cursor-pointer data-active:border!"
+          >
+            Bitwise Ops
+          </TabsTrigger>
         </TabsList>
 
-        {/* ---------------------------------------------------------------- */}
-        {/* Converter tab                                                     */}
-        {/* ---------------------------------------------------------------- */}
         <TabsContent value="converter" className="space-y-6">
           {/* Signed / unsigned info bar */}
-          <div className="flex flex-wrap gap-4 rounded-lg bg-muted/50 px-4 py-3 font-mono text-xs">
-            <span><span className="text-muted-foreground">unsigned </span>{value}</span>
-            <span><span className="text-muted-foreground">signed   </span>{signed}</span>
-            <span><span className="text-muted-foreground">hex      </span>0x{toHex(value)}</span>
-            <span><span className="text-muted-foreground">bits     </span>{BITS}-bit</span>
+          <div className="bg-muted/50 flex flex-wrap gap-4 rounded-lg px-4 py-3 font-mono text-xs">
+            <span>
+              <span className="text-muted-foreground">unsigned </span>
+              {value}
+            </span>
+            <span>
+              <span className="text-muted-foreground">signed </span>
+              {signed}
+            </span>
+            <span>
+              <span className="text-muted-foreground">hex </span>0x{toHex(value)}
+            </span>
+            <span>
+              <span className="text-muted-foreground">bits </span>
+              {BITS}-bit
+            </span>
           </div>
 
           {/* 2×2 input grid */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <PrefixInput label="Decimal"     prefix=""   value={decRaw} onChange={handleDec} placeholder="e.g. 255" />
-            <PrefixInput label="Hexadecimal" prefix="0x" value={hexRaw} onChange={handleHex} placeholder="e.g. FF" />
-            <PrefixInput label="Binary"      prefix="0b" value={binRaw} onChange={handleBin} placeholder="e.g. 11111111" />
-            <PrefixInput label="Octal"       prefix="0o" value={octRaw} onChange={handleOct} placeholder="e.g. 377" />
+            <PrefixInput
+              label="Decimal"
+              prefix=""
+              value={decRaw}
+              onChange={handleDec}
+              placeholder="e.g. 255"
+            />
+            <PrefixInput
+              label="Hexadecimal"
+              prefix="0x"
+              value={hexRaw}
+              onChange={handleHex}
+              placeholder="e.g. FF"
+            />
+            <PrefixInput
+              label="Binary"
+              prefix="0b"
+              value={binRaw}
+              onChange={handleBin}
+              placeholder="e.g. 11111111"
+            />
+            <PrefixInput
+              label="Octal"
+              prefix="0o"
+              value={octRaw}
+              onChange={handleOct}
+              placeholder="e.g. 377"
+            />
           </div>
 
           {/* Bit toggle grid */}
@@ -266,24 +215,21 @@ export default function BaseConverterPage() {
                   const nibbleColor = isMsbNibble
                     ? "data-[on=true]:bg-violet-500 data-[on=true]:border-violet-600"
                     : isHighNibble
-                    ? "data-[on=true]:bg-blue-500 data-[on=true]:border-blue-600"
-                    : isLowNibble
-                    ? "data-[on=true]:bg-emerald-500 data-[on=true]:border-emerald-600"
-                    : "data-[on=true]:bg-amber-500 data-[on=true]:border-amber-600";
+                      ? "data-[on=true]:bg-blue-500 data-[on=true]:border-blue-600"
+                      : isLowNibble
+                        ? "data-[on=true]:bg-emerald-500 data-[on=true]:border-emerald-600"
+                        : "data-[on=true]:bg-amber-500 data-[on=true]:border-amber-600";
 
                   return (
                     <div key={i} className="flex flex-col items-center gap-1">
                       <button
                         onClick={() => toggleBit(i)}
                         data-on={bit === 1}
-                        className={`h-9 w-9 rounded border-2 font-mono text-sm font-bold transition-all
-                          border-border bg-card text-foreground/40
-                          hover:border-primary/50 hover:text-foreground
-                          data-[on=true]:text-white ${nibbleColor}`}
+                        className={`border-border bg-card text-foreground/40 hover:border-primary/50 hover:text-foreground h-9 w-9 rounded border-2 font-mono text-sm font-bold transition-all data-[on=true]:text-white ${nibbleColor}`}
                       >
                         {bit}
                       </button>
-                      <span className="font-mono text-[10px] text-muted-foreground">
+                      <span className="text-muted-foreground font-mono text-[10px]">
                         {bitIndex}
                       </span>
                     </div>
@@ -295,11 +241,11 @@ export default function BaseConverterPage() {
             <div className="mt-2 flex flex-wrap gap-3 text-[10px]">
               {[
                 { label: "bits 15–12", color: "bg-violet-500" },
-                { label: "bits 11–8",  color: "bg-blue-500" },
-                { label: "bits 7–4",   color: "bg-emerald-500" },
-                { label: "bits 3–0",   color: "bg-amber-500" },
+                { label: "bits 11–8", color: "bg-blue-500" },
+                { label: "bits 7–4", color: "bg-emerald-500" },
+                { label: "bits 3–0", color: "bg-amber-500" },
               ].map(({ label, color }) => (
-                <span key={label} className="flex items-center gap-1 text-muted-foreground">
+                <span key={label} className="text-muted-foreground flex items-center gap-1">
                   <span className={`inline-block h-2 w-2 rounded-sm ${color}`} />
                   {label}
                 </span>
@@ -308,9 +254,6 @@ export default function BaseConverterPage() {
           </div>
         </TabsContent>
 
-        {/* ---------------------------------------------------------------- */}
-        {/* Bitwise Ops tab                                                   */}
-        {/* ---------------------------------------------------------------- */}
         <TabsContent value="bitwise" className="space-y-6">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {/* Operands */}
@@ -324,7 +267,7 @@ export default function BaseConverterPage() {
                   className="font-mono"
                   placeholder="0"
                 />
-                <p className="font-mono text-xs text-muted-foreground">
+                <p className="text-muted-foreground font-mono text-xs">
                   0b{toBin(clamp(parseInt(bitwiseA) || 0))}
                 </p>
               </div>
@@ -337,9 +280,7 @@ export default function BaseConverterPage() {
                       key={op.id}
                       onClick={() => setSelectedOp(op.id)}
                       data-active={selectedOp === op.id}
-                      className="rounded-md border px-3 py-1.5 font-mono text-xs transition-colors
-                        border-border hover:border-primary/50
-                        data-[active=true]:border-primary data-[active=true]:bg-primary data-[active=true]:text-primary-foreground"
+                      className="border-border hover:border-primary/50 data-[active=true]:border-primary data-[active=true]:bg-primary data-[active=true]:text-primary-foreground rounded-md border px-3 py-1.5 font-mono text-xs transition-colors"
                     >
                       {op.symbol} {op.label}
                     </button>
@@ -357,7 +298,7 @@ export default function BaseConverterPage() {
                     className="font-mono"
                     placeholder="0"
                   />
-                  <p className="font-mono text-xs text-muted-foreground">
+                  <p className="text-muted-foreground font-mono text-xs">
                     0b{toBin(clamp(parseInt(bitwiseB) || 0))}
                   </p>
                 </div>
@@ -370,7 +311,7 @@ export default function BaseConverterPage() {
                 <CardContent className="p-5">
                   <p className="mb-4 text-sm font-semibold">
                     Result
-                    <span className="ml-2 font-mono text-muted-foreground">
+                    <span className="text-muted-foreground ml-2 font-mono">
                       A {BITWISE_OPS.find((o) => o.id === selectedOp)?.symbol}{" "}
                       {!BITWISE_OPS.find((o) => o.id === selectedOp)?.unary && "B"}
                     </span>
@@ -378,8 +319,12 @@ export default function BaseConverterPage() {
                   <div className="space-y-3">
                     {(["decimal", "hex", "binary", "octal"] as const).map((fmt) => (
                       <div key={fmt} className="flex items-center justify-between gap-2">
-                        <Label className="w-16 shrink-0 capitalize text-muted-foreground">{fmt}</Label>
-                        <code className="flex-1 truncate font-mono text-sm">{bitwiseResult[fmt]}</code>
+                        <Label className="text-muted-foreground w-16 shrink-0 capitalize">
+                          {fmt}
+                        </Label>
+                        <code className="flex-1 truncate font-mono text-sm">
+                          {bitwiseResult[fmt]}
+                        </code>
                         <CopyButton value={bitwiseResult[fmt]} disabled={false} />
                       </div>
                     ))}

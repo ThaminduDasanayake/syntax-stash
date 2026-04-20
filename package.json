@@ -24,6 +24,7 @@
     "cronstrue": "^3.14.0",
     "fuse.js": "^7.3.0",
     "gsap": "^3.15.0",
+    "json5": "^2.2.3",
     "jsonpath-plus": "^10.4.0",
     "lucide-react": "^1.8.0",
     "mammoth": "^1.12.0",

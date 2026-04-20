@@ -3,19 +3,21 @@
 import { ListFilter } from "lucide-react";
 import { useMemo, useState } from "react";
 
+import {
+  compareValues,
+  FilterOperator,
+  matchesFilter,
+  parseSmartBlocks,
+} from "@/app/tools/json-array-sorter/helpers";
 import { ErrorAlert } from "@/components/error-alert";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ClearButton from "@/components/ui/clear-button";
 import CopyButton from "@/components/ui/copy-button";
-import { Input } from "@/components/ui/input";
+import { InputField } from "@/components/ui/input-field";
 import { SelectField } from "@/components/ui/select-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
-
-// ---------------------------------------------------------------------------
-// Default placeholder
-// ---------------------------------------------------------------------------
 
 const PLACEHOLDER = `[
   { "name": "Alice", "age": 28, "city": "New York", "salary": 75000 },
@@ -24,92 +26,6 @@ const PLACEHOLDER = `[
   { "name": "Diana", "age": 31, "city": "New York", "salary": 85000 },
   { "name": "Eve", "age": 29, "city": "Seattle", "salary": 88000 }
 ]`;
-
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
-
-type FilterOperator = "contains" | "equals" | "greater" | "less";
-
-interface ParsedData {
-  items: Record<string, unknown>[];
-  keys: string[];
-}
-
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
-function parseJSON(text: string): ParsedData | null {
-  try {
-    const parsed = JSON.parse(text.trim());
-    if (!Array.isArray(parsed) || parsed.length === 0) {
-      return null;
-    }
-    if (typeof parsed[0] !== "object" || parsed[0] === null) {
-      return null;
-    }
-    const keys = Object.keys(parsed[0]);
-    return { items: parsed, keys };
-  } catch {
-    return null;
-  }
-}
-
-function compareValues(a: unknown, b: unknown): number {
-  if (a === b) return 0;
-  if (a == null) return -1;
-  if (b == null) return 1;
-
-  // String comparison
-  if (typeof a === "string" && typeof b === "string") {
-    return a.localeCompare(b);
-  }
-
-  // Numeric comparison
-  const aNum = Number(a);
-  const bNum = Number(b);
-  if (!isNaN(aNum) && !isNaN(bNum)) {
-    return aNum - bNum;
-  }
-
-  // Fallback
-  return String(a).localeCompare(String(b));
-}
-
-function matchesFilter(
-  item: Record<string, unknown>,
-  key: string,
-  operator: FilterOperator,
-  value: string,
-): boolean {
-  const itemValue = item[key];
-  const strValue = String(itemValue).toLowerCase();
-  const filterValue = value.toLowerCase();
-
-  switch (operator) {
-    case "contains":
-      return strValue.includes(filterValue);
-    case "equals":
-      return String(itemValue).toLowerCase() === filterValue;
-    case "greater": {
-      const num = Number(itemValue);
-      const filterNum = Number(value);
-      return !isNaN(num) && !isNaN(filterNum) && num > filterNum;
-    }
-    case "less": {
-      const num = Number(itemValue);
-      const filterNum = Number(value);
-      return !isNaN(num) && !isNaN(filterNum) && num < filterNum;
-    }
-    default:
-      return true;
-  }
-}
-
-// ---------------------------------------------------------------------------
-// Page
-// ---------------------------------------------------------------------------
 
 export default function JSONArraySorterPage() {
   const [rawJSON, setRawJSON] = useState(PLACEHOLDER);
@@ -120,49 +36,56 @@ export default function JSONArraySorterPage() {
   const [filterValue, setFilterValue] = useState("");
 
   // Parse JSON and extract keys
-  const parsed = useMemo(() => parseJSON(rawJSON), [rawJSON]);
-  const keys = parsed?.keys ?? [];
+  const parsed = useMemo(() => parseSmartBlocks(rawJSON), [rawJSON]);
   const hasValidJSON = parsed !== null;
+  const keys = useMemo(() => parsed?.keys ?? [], [parsed]);
 
-  // Initialize sort/filter keys if not set
-  useMemo(() => {
-    if (keys.length > 0 && !sortKey) {
-      setSortKey(keys[0]);
-    }
-    if (keys.length > 0 && !filterKey) {
-      setFilterKey(keys[0]);
-    }
-  }, [keys, sortKey, filterKey]);
+  const activeSortKey = keys.includes(sortKey) ? sortKey : (keys[0] ?? "");
+  const activeFilterKey = keys.includes(filterKey) ? filterKey : (keys[0] ?? "");
 
   // Process array: filter then sort
   const result = useMemo(() => {
     if (!hasValidJSON) return null;
 
-    let items = parsed!.items;
+    let items = [...parsed!.items];
 
     // Apply filter
-    if (filterValue && filterKey) {
-      items = items.filter((item) => matchesFilter(item, filterKey, filterOperator, filterValue));
+    if (filterValue && activeFilterKey) {
+      items = items.filter((item) =>
+        matchesFilter(item.data, activeFilterKey, filterOperator, filterValue),
+      );
     }
 
     // Apply sort
-    if (sortKey) {
-      items = [...items].sort((a, b) => {
-        const cmp = compareValues(a[sortKey], b[sortKey]);
+    if (activeSortKey) {
+      items.sort((a, b) => {
+        // Push items that failed shadow parsing to the bottom
+        if (!a.data) return 1;
+        if (!b.data) return -1;
+
+        const cmp = compareValues(a.data[activeSortKey], b.data[activeSortKey]);
         return sortOrder === "asc" ? cmp : -cmp;
       });
     }
 
     return items;
-  }, [parsed, sortKey, sortOrder, filterKey, filterOperator, filterValue, hasValidJSON]);
+  }, [
+    parsed,
+    activeSortKey,
+    sortOrder,
+    activeFilterKey,
+    filterOperator,
+    filterValue,
+    hasValidJSON,
+  ]);
 
-  const resultJSON = useMemo(
-    () => (result ? JSON.stringify(result, null, 2) : ""),
-    [result],
-  );
+  const resultJSON = useMemo(() => {
+    if (!result) return "";
+    return `[\n  ${result.map((item) => item.originalText).join(",\n  ")}\n]`;
+  }, [result]);
 
   const resultCount = result?.length ?? 0;
-  const totalCount = parsed?.items.length ?? 0;
+  const totalCount = parsed?.items?.length ?? 0;
 
   function handleClear() {
     setRawJSON("");
@@ -190,9 +113,6 @@ export default function JSONArraySorterPage() {
       description="Sort and filter massive JSON arrays in real-time."
     >
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {/* ---------------------------------------------------------------- */}
-        {/* Left — inputs & controls                                         */}
-        {/* ---------------------------------------------------------------- */}
         <div className="space-y-4">
           {/* Raw JSON Input */}
           <TextAreaField
@@ -219,7 +139,7 @@ export default function JSONArraySorterPage() {
               <CardContent className="space-y-3">
                 <SelectField
                   label="Key"
-                  value={sortKey}
+                  value={activeSortKey}
                   onValueChange={setSortKey}
                   options={keyOptions}
                   placeholder="Select a key"
@@ -243,7 +163,7 @@ export default function JSONArraySorterPage() {
               <CardContent className="space-y-3">
                 <SelectField
                   label="Key"
-                  value={filterKey}
+                  value={activeFilterKey}
                   onValueChange={setFilterKey}
                   options={keyOptions}
                   placeholder="Select a key"
@@ -254,44 +174,37 @@ export default function JSONArraySorterPage() {
                   onValueChange={(v) => setFilterOperator(v as FilterOperator)}
                   options={operatorOptions}
                 />
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Value</label>
-                  <Input
-                    value={filterValue}
-                    onChange={(e) => setFilterValue(e.target.value)}
-                    placeholder="Enter filter value..."
-                    className="font-mono text-sm"
-                  />
-                </div>
+
+                <InputField
+                  label="Value"
+                  value={filterValue}
+                  onChange={(e) => setFilterValue(e.target.value)}
+                  placeholder="Enter filter value..."
+                />
               </CardContent>
             </Card>
           )}
         </div>
 
-        {/* ---------------------------------------------------------------- */}
-        {/* Right — output                                                    */}
-        {/* ---------------------------------------------------------------- */}
-        <div className="space-y-3">
-          {/* Result Count Badge */}
-          {hasValidJSON && (
-            <div className="flex items-center gap-2 text-sm">
-              <span className="text-muted-foreground">Result</span>
-              <Badge variant="secondary" className="font-mono text-[11px]">
-                {resultCount.toLocaleString()}
-                {totalCount !== resultCount && ` of ${totalCount.toLocaleString()}`}
-              </Badge>
-            </div>
-          )}
-
-          {/* Output JSON */}
-          <TextAreaField
-            value={resultJSON}
-            readOnly
-            rows={28}
-            className="font-mono text-sm"
-            action={<CopyButton value={resultJSON} disabled={!resultJSON} />}
-          />
-        </div>
+        {/* Output JSON */}
+        <TextAreaField
+          label={
+            hasValidJSON && (
+              <div className="flex items-center gap-2">
+                Result
+                <Badge variant="secondary">
+                  {resultCount.toLocaleString()}
+                  {totalCount !== resultCount && ` of ${totalCount.toLocaleString()}`}
+                </Badge>
+              </div>
+            )
+          }
+          value={resultJSON}
+          readOnly
+          rows={38}
+          className="font-mono text-sm"
+          action={<CopyButton value={resultJSON} disabled={!resultJSON} />}
+        />
       </div>
     </ToolLayout>
   );

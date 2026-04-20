@@ -74,8 +74,8 @@ function TokenBadge({ text }: { text: string }) {
   const count = Math.ceil(text.length / 4);
   return (
     <div className="flex items-center gap-2">
-      <span className="text-muted-foreground text-xs">Est. tokens</span>
-      <Badge variant="secondary" className="font-mono text-[11px]">
+      <span>Est. tokens</span>
+      <Badge variant="secondary" className="font-mono font-semibold">
         ~{count.toLocaleString()}
       </Badge>
     </div>
@@ -116,9 +116,6 @@ export default function PromptStudioPage() {
       description="Write, inject, minify, and enhance LLM prompts with real-time token tracking."
     >
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {/* ---------------------------------------------------------------- */}
-        {/* Left — draft prompt + variable inputs                             */}
-        {/* ---------------------------------------------------------------- */}
         <div className="space-y-4">
           <TextAreaField
             label="Draft Prompt"
@@ -127,13 +124,18 @@ export default function PromptStudioPage() {
             rows={16}
             placeholder={`Write your prompt here.\nUse {{variable}} syntax for dynamic values.`}
             className="font-mono text-sm"
-            action={<ClearButton onClick={handleClear} disabled={!rawPrompt && !Object.keys(varValues).length} />}
+            action={
+              <ClearButton
+                onClick={handleClear}
+                disabled={!rawPrompt && !Object.keys(varValues).length}
+              />
+            }
           />
 
           {variables.length > 0 && (
             <Card>
               <CardContent className="space-y-3 pt-4">
-                <p className="text-muted-foreground font-mono text-[11px] font-semibold uppercase tracking-wider">
+                <p className="text-muted-foreground font-mono text-[11px] font-semibold tracking-wider uppercase">
                   Variable Injection · {variables.length} detected
                 </p>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -156,15 +158,26 @@ export default function PromptStudioPage() {
           )}
         </div>
 
-        {/* ---------------------------------------------------------------- */}
-        {/* Right — tabbed output                                             */}
-        {/* ---------------------------------------------------------------- */}
         <div>
           <Tabs defaultValue="injected" className="flex flex-col gap-4">
-            <TabsList>
-              <TabsTrigger value="injected">Injected Output</TabsTrigger>
-              <TabsTrigger value="minified">Minified Output</TabsTrigger>
-              <TabsTrigger value="ai" aria-disabled>
+            <TabsList className="w-full">
+              <TabsTrigger
+                value="injected"
+                className="data-active:bg-primary! data-active:text-background! data-active:border-card/60! p-1 hover:cursor-pointer data-active:border!"
+              >
+                Injected Output
+              </TabsTrigger>
+              <TabsTrigger
+                value="minified"
+                className="data-active:bg-primary! data-active:text-background! data-active:border-card/60! p-1 hover:cursor-pointer data-active:border!"
+              >
+                Minified Output
+              </TabsTrigger>
+              <TabsTrigger
+                value="ai"
+                className="data-active:bg-primary! data-active:text-background! data-active:border-card/60! p-1 hover:cursor-pointer data-active:border!"
+                aria-disabled
+              >
                 <Sparkles size={13} />
                 AI Enhanced
               </TabsTrigger>
@@ -172,29 +185,23 @@ export default function PromptStudioPage() {
 
             {/* Injected */}
             <TabsContent value="injected" className="space-y-3">
-              <div className="flex items-center justify-between">
-                <TokenBadge text={injectedOutput} />
-                <CopyButton value={injectedOutput} disabled={!injectedOutput} />
-              </div>
               <TextAreaField
+                label={<TokenBadge text={injectedOutput} />}
                 value={injectedOutput}
                 readOnly
                 rows={20}
-                className="font-mono text-sm"
+                action={<CopyButton value={injectedOutput} disabled={!injectedOutput} />}
               />
             </TabsContent>
 
             {/* Minified */}
             <TabsContent value="minified" className="space-y-3">
-              <div className="flex items-center justify-between">
-                <TokenBadge text={minifiedOutput} />
-                <CopyButton value={minifiedOutput} disabled={!minifiedOutput} />
-              </div>
               <TextAreaField
+                label={<TokenBadge text={minifiedOutput} />}
                 value={minifiedOutput}
                 readOnly
                 rows={20}
-                className="font-mono text-sm"
+                action={<CopyButton value={minifiedOutput} disabled={!minifiedOutput} />}
               />
             </TabsContent>
 

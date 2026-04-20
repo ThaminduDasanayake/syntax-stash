@@ -14,7 +14,7 @@ export function ToolLayout({
   maxWidth = "max-w-7xl",
 }: ToolLayoutProps) {
   return (
-    <div className="">
+    <div>
       <div className={`relative z-10 mx-auto ${maxWidth} px-4 py-8 md:py-12`}>
         {/* Back link */}
         <Link

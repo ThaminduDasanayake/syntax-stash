@@ -9,7 +9,8 @@ import { cn } from "@/lib/utils";
 
 export interface CopyButtonProps extends ButtonPrimitive.Props {
   value: string;
-  label?: string;
+  label?: boolean;
+  labelName?: string;
   className?: string;
   variant?: "default" | "outline" | "secondary" | "ghost";
   size?: "default" | "xs" | "sm" | "lg";
@@ -17,7 +18,8 @@ export interface CopyButtonProps extends ButtonPrimitive.Props {
 
 const CopyButton = ({
   value,
-  label = "Copy",
+  label = true,
+  labelName = "Copy",
   className,
   variant = "outline",
   size = "default",
@@ -39,7 +41,7 @@ const CopyButton = ({
       {...props}
     >
       {copied ? <Check /> : <Copy />}
-      {label}
+      {label && labelName}
     </Button>
   );
 };

@@ -1,16 +1,17 @@
 "use client";
 
-import { InputHTMLAttributes, useId } from "react";
+import { InputHTMLAttributes, ReactNode, useId } from "react";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
 interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
+  label?: string | ReactNode;
   containerClassName?: string;
   labelClassName?: string;
   inputClassName?: string;
+  action?: ReactNode;
 }
 
 export function InputField({
@@ -18,6 +19,7 @@ export function InputField({
   containerClassName,
   labelClassName,
   inputClassName,
+  action,
   id,
   ...props
 }: InputFieldProps) {
@@ -33,7 +35,10 @@ export function InputField({
       <Label htmlFor={inputId} className={labelClassName}>
         {label}
       </Label>
-      <Input id={inputId} className={cn("font-mono", inputClassName)} {...props} />
+      <div className="flex gap-2">
+        <Input id={inputId} className={cn("font-mono", inputClassName)} {...props} />
+        {action && <>{action}</>}
+      </div>
     </div>
   );
 }

@@ -74,7 +74,7 @@ export const calculatorTools: Tool[] = [
     title: "Unit Converter",
     url: "/tools/unit-converter",
     description:
-      "Convert between units of length, weight, data, temperature, speed, area, and volume.",
+      "Convert between units of length, weight, data, temperature, speed, area and volume.",
     category: CATEGORIES.calculators,
     icon: Scale,
   },

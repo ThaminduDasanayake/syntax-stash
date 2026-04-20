@@ -3,28 +3,13 @@
 import { BrainCircuit } from "lucide-react";
 import { useMemo, useState } from "react";
 
+import { STOPWORDS } from "@/app/tools/nlp-sandbox/constants";
 import { ToolLayout } from "@/components/layout/tool-layout";
+import { Card, CardContent } from "@/components/ui/card";
 import ClearButton from "@/components/ui/clear-button";
 import CopyButton from "@/components/ui/copy-button";
 import { SelectField } from "@/components/ui/select-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
-import { Card, CardContent } from "@/components/ui/card";
-
-// ---------------------------------------------------------------------------
-// NLP primitives
-// ---------------------------------------------------------------------------
-
-const STOPWORDS = new Set([
-  "a","an","the","and","or","but","in","on","at","to","for","of","with",
-  "by","from","is","was","are","were","be","been","being","have","has",
-  "had","do","does","did","will","would","could","should","may","might",
-  "shall","can","this","that","these","those","it","its","there","their",
-  "they","we","you","he","she","him","her","his","our","your","my","me",
-  "not","no","so","as","if","up","out","than","then","when","all","each",
-  "every","any","few","more","most","other","some","such","own","same",
-  "about","into","through","during","before","after","above","below",
-  "just","because","while","although","though","even","also","very","i",
-]);
 
 function tokenize(text: string): string[] {
   return text.split(/\s+/).filter(Boolean);
@@ -42,7 +27,7 @@ function tfidf(tf: Map<string, number>, totalTokens: number): Map<string, number
   const N = totalTokens;
   for (const [term, freq] of tf) {
     const termFreqNorm = freq / N;
-    const idf = Math.log(1 + N / freq);          // single-doc approximation
+    const idf = Math.log(1 + N / freq); // single-doc approximation
     out.set(term, termFreqNorm * idf);
   }
   return out;
@@ -52,9 +37,7 @@ function tfidf(tf: Map<string, number>, totalTokens: number): Map<string, number
 function standardScale(values: number[]): number[] {
   if (values.length === 0) return [];
   const mean = values.reduce((s, v) => s + v, 0) / values.length;
-  const std = Math.sqrt(
-    values.reduce((s, v) => s + (v - mean) ** 2, 0) / values.length,
-  ) || 1;
+  const std = Math.sqrt(values.reduce((s, v) => s + (v - mean) ** 2, 0) / values.length) || 1;
   return values.map((v) => (v - mean) / std);
 }
 
@@ -95,11 +78,11 @@ function ToggleRow({ label, description, checked, onToggle }: ToggleRowProps) {
   return (
     <button
       onClick={onToggle}
-      className="flex w-full items-center justify-between rounded-md px-1 py-1.5 text-left transition-colors hover:bg-accent"
+      className="hover:bg-accent flex w-full items-center justify-between rounded-md px-1 py-1.5 text-left transition-colors"
     >
       <div>
         <p className="text-sm font-medium">{label}</p>
-        <p className="text-xs text-muted-foreground">{description}</p>
+        <p className="text-muted-foreground text-xs">{description}</p>
       </div>
       <div
         className={`relative h-5 w-9 rounded-full transition-colors ${
@@ -119,16 +102,15 @@ function ToggleRow({ label, description, checked, onToggle }: ToggleRowProps) {
 export default function NLPSandboxPage() {
   const [rawText, setRawText] = useState(SAMPLE);
   const [lowercase, setLowercase] = useState(true);
-  const [removePunct, setRemovePunct] = useState(true);
+  const [removePunctuation, setRemovePunctuation] = useState(true);
   const [removeStopwords, setRemoveStopwords] = useState(true);
   const [vectorizer, setVectorizer] = useState<VectorizerType>("tfidf");
   const [scaler, setScaler] = useState<ScalerType>("standard");
 
-  // ── Cleaned text ──────────────────────────────────────────────────────────
   const cleanedText = useMemo(() => {
     let text = rawText;
     if (lowercase) text = text.toLowerCase();
-    if (removePunct) text = text.replace(/[^\w\s]/g, "");
+    if (removePunctuation) text = text.replace(/[^\w\s]/g, "");
     if (removeStopwords) {
       text = text
         .split(/\s+/)
@@ -136,9 +118,9 @@ export default function NLPSandboxPage() {
         .join(" ");
     }
     return text.trim();
-  }, [rawText, lowercase, removePunct, removeStopwords]);
+  }, [rawText, lowercase, removePunctuation, removeStopwords]);
 
-  // ── Vectorized + scaled output ────────────────────────────────────────────
+  // Vectorized + scaled output
   const processedJSON = useMemo(() => {
     if (!cleanedText) return "[]";
 
@@ -156,9 +138,7 @@ export default function NLPSandboxPage() {
     }
 
     // Top N by score
-    const sorted = [...scoreMap.entries()]
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, TOP_N);
+    const sorted = [...scoreMap.entries()].sort((a, b) => b[1] - a[1]).slice(0, TOP_N);
 
     let entries = sorted.map(([term, score]) => ({ term, score }));
 
@@ -176,9 +156,7 @@ export default function NLPSandboxPage() {
 
     const result = entries.map(({ term, score }) => ({
       term,
-      [vectorizer === "count" ? "count_scaled" : "tfidf_scaled"]: parseFloat(
-        score.toFixed(6),
-      ),
+      [vectorizer === "count" ? "count_scaled" : "tfidf_scaled"]: parseFloat(score.toFixed(6)),
       ...(scaler === "svd" ? { svd_component_1: parseFloat((score * 0.92).toFixed(6)) } : {}),
     }));
 
@@ -206,9 +184,6 @@ export default function NLPSandboxPage() {
       description="Simulate text cleaning, vectorization, and scaling pipelines."
     >
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {/* ---------------------------------------------------------------- */}
-        {/* Left — input + controls                                           */}
-        {/* ---------------------------------------------------------------- */}
         <div className="space-y-4">
           <TextAreaField
             label="Raw Text Input"
@@ -216,9 +191,7 @@ export default function NLPSandboxPage() {
             onChange={(e) => setRawText(e.target.value)}
             placeholder="Paste any raw text — a review, article, tweet…"
             rows={10}
-            action={
-              <ClearButton onClick={() => setRawText("")} disabled={!rawText} />
-            }
+            action={<ClearButton onClick={() => setRawText("")} disabled={!rawText} />}
           />
 
           {/* Control panel */}
@@ -226,7 +199,7 @@ export default function NLPSandboxPage() {
             <CardContent className="space-y-5 p-4">
               {/* Cleaning toggles */}
               <div>
-                <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                <p className="text-muted-foreground mb-2 text-xs font-semibold tracking-wider uppercase">
                   Text Cleaning
                 </p>
                 <div className="space-y-1">
@@ -239,8 +212,8 @@ export default function NLPSandboxPage() {
                   <ToggleRow
                     label="Remove Punctuation"
                     description="Strip commas, periods, quotes, etc."
-                    checked={removePunct}
-                    onToggle={() => setRemovePunct((v) => !v)}
+                    checked={removePunctuation}
+                    onToggle={() => setRemovePunctuation((v) => !v)}
                   />
                   <ToggleRow
                     label="Remove Stopwords"
@@ -268,7 +241,7 @@ export default function NLPSandboxPage() {
               />
 
               {/* Stats */}
-              <div className="flex gap-4 rounded-md bg-muted p-3 text-xs">
+              <div className="bg-muted flex gap-4 rounded-md p-3 text-xs">
                 <div>
                   <span className="text-muted-foreground">Tokens </span>
                   <span className="font-semibold">{wordCount}</span>
@@ -280,10 +253,7 @@ export default function NLPSandboxPage() {
                 <div>
                   <span className="text-muted-foreground">Vocabulary ratio </span>
                   <span className="font-semibold">
-                    {wordCount > 0
-                      ? ((uniqueCount / wordCount) * 100).toFixed(1)
-                      : "0"}
-                    %
+                    {wordCount > 0 ? ((uniqueCount / wordCount) * 100).toFixed(1) : "0"}%
                   </span>
                 </div>
               </div>
@@ -291,30 +261,23 @@ export default function NLPSandboxPage() {
           </Card>
         </div>
 
-        {/* ---------------------------------------------------------------- */}
-        {/* Right — outputs                                                   */}
-        {/* ---------------------------------------------------------------- */}
         <div className="space-y-4">
           <TextAreaField
             label="Cleaned Text"
             value={cleanedText}
             readOnly
-            rows={6}
+            rows={10}
             placeholder="Cleaned text will appear here…"
-            action={
-              <CopyButton value={cleanedText} disabled={!cleanedText} />
-            }
+            action={<CopyButton value={cleanedText} disabled={!cleanedText} />}
           />
 
           <TextAreaField
             label={`Processed Output — ${vectorizer === "count" ? "Count Vectorizer" : "TF-IDF"} + ${scaler === "standard" ? "Standard Scaler" : "Truncated SVD"} (top 12 terms)`}
             value={processedJSON}
             readOnly
-            rows={14}
+            rows={16}
             placeholder="Vectorized output will appear here…"
-            action={
-              <CopyButton value={processedJSON} disabled={processedJSON === "[]"} />
-            }
+            action={<CopyButton value={processedJSON} disabled={processedJSON === "[]"} />}
           />
         </div>
       </div>
