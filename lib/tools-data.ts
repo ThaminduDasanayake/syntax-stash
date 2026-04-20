@@ -31,6 +31,7 @@ import {
   Layers,
   LayoutGrid,
   Link,
+  ListFilter,
   ListOrdered,
   Lock,
   Network,
@@ -183,6 +184,13 @@ export const dataTools: Tool[] = [
     description: "Extract meta tags, headings, and links from any public URL.",
     category: CATEGORIES.data,
     icon: Globe,
+  },
+  {
+    title: "JSON Array Organizer",
+    url: "/tools/json-array-sorter",
+    description: "Sort and filter massive JSON arrays in real-time with dynamic controls.",
+    category: CATEGORIES.data,
+    icon: ListFilter,
   },
 ];
 
