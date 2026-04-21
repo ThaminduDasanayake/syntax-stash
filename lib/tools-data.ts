@@ -63,7 +63,6 @@ export const CATEGORIES = {
   devops: "DevOps",
   imagesAssets: "Images & Assets",
   network: "Network & Security",
-  system: "System & OS",
   typography: "Typography & Text",
   uiStyling: "UI & Styling",
 } as const;
@@ -107,13 +106,6 @@ export const dataTools: Tool[] = [
     title: "JSON Formatter",
     url: "/tools/json-formatter",
     description: "Format, minify, and validate JSON payloads instantly.",
-    category: CATEGORIES.data,
-    icon: Braces,
-  },
-  {
-    title: "JSON to TS",
-    url: "/tools/json-to-ts",
-    description: "Convert JSON objects into TypeScript interfaces with full type inference.",
     category: CATEGORIES.data,
     icon: Braces,
   },
@@ -284,6 +276,22 @@ export const developmentTools: Tool[] = [
 
 export const devopsTools: Tool[] = [
   {
+    title: "chmod Calculator",
+    url: "/tools/chmod-calculator",
+    description:
+      "Calculate Unix file permissions with a click-to-toggle grid, synced across octal and symbolic formats.",
+    category: CATEGORIES.devops,
+    icon: Lock,
+  },
+  {
+    title: "Cron Explorer",
+    url: "/tools/cron-explorer",
+    description:
+      "Translate cron expressions to plain English, and visualize upcoming executions on a timeline.",
+    category: CATEGORIES.devops,
+    icon: CalendarClock,
+  },
+  {
     title: "Docker Compose Builder",
     url: "/tools/docker-compose",
     description:
@@ -327,9 +335,9 @@ export const devopsTools: Tool[] = [
 
 export const imageTools: Tool[] = [
   {
-    title: "Omni-Image Converter",
+    title: "Image Converter",
     url: "/tools/image-converter",
-    description: "Convert images locally between WebP, PNG, and JPEG formats.",
+    description: "Batch convert, resize, and process images natively in your browser.",
     category: CATEGORIES.imagesAssets,
     icon: ImageIcon,
   },
@@ -410,32 +418,6 @@ export const networkTools: Tool[] = [
     description: "Look up MAC address vendors by OUI with support for multiple formats.",
     category: CATEGORIES.network,
     icon: Wifi,
-  },
-];
-
-export const systemTools: Tool[] = [
-  {
-    title: "chmod Calculator",
-    url: "/tools/chmod-calculator",
-    description:
-      "Calculate Unix file permissions with a click-to-toggle grid, synced across octal and symbolic formats.",
-    category: CATEGORIES.system,
-    icon: Lock,
-  },
-  {
-    title: "Crontab Schedule Visualizer",
-    url: "/tools/cron-visualizer",
-    description:
-      "See exactly when your cron jobs fire with a timeline and table of the next 20 executions.",
-    category: CATEGORIES.system,
-    icon: CalendarClock,
-  },
-  {
-    title: "Cron Translator",
-    url: "/tools/cron-translator",
-    description: "Convert cron expressions to human-readable text and upcoming dates.",
-    category: CATEGORIES.system,
-    icon: Clock,
   },
 ];
 
@@ -571,7 +553,6 @@ export const internalTools: Tool[] = [
   ...devopsTools,
   ...imageTools,
   ...networkTools,
-  ...systemTools,
   ...typographyTools,
   ...uiStyling,
 ];
