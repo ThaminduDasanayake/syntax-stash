@@ -30,6 +30,7 @@ import {
   ListOrdered,
   Lock,
   Network,
+  NotebookPen,
   Palette,
   PenTool,
   Play,
@@ -228,6 +229,14 @@ export const developmentTools: Tool[] = [
     icon: Code2,
   },
   {
+    title: "Markdown Live Preview",
+    url: "/tools/markdown-live-preview",
+    description:
+      "Write markdown in a side-by-side editor with real-time rendered preview and export.",
+    category: CATEGORIES.development,
+    icon: NotebookPen,
+  },
+  {
     title: "SQL to Drizzle ORM",
     url: "/tools/sql-drizzle-converter",
     description: "Convert PostgreSQL and MySQL CREATE TABLE statements into Drizzle ORM schemas.",
@@ -256,6 +265,13 @@ export const developmentTools: Tool[] = [
     description: "Visually scaffold complex MongoDB aggregation pipelines with live JSON output.",
     category: CATEGORIES.development,
     icon: Layers,
+  },
+  {
+    title: "Diff Viewer",
+    url: "/tools/diff-viewer",
+    description: "Compare two text blocks and visualize additions, deletions, and changes.",
+    category: CATEGORIES.development,
+    icon: FileDiff,
   },
 ];
 
@@ -519,6 +535,14 @@ export const uiStyling: Tool[] = [
     description: "Visually build GSAP animations and generate optimized React 19 boilerplate.",
     category: CATEGORIES.uiStyling,
     icon: Wand2,
+  },
+  {
+    title: "Color Palette Generator",
+    url: "/tools/color-palette-generator",
+    description:
+      "Generate complementary, analogous, triadic, and monochromatic palettes from a base color.",
+    category: CATEGORIES.uiStyling,
+    icon: Palette,
   },
 ];
 
