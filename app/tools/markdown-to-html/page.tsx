@@ -1,6 +1,7 @@
 "use client";
 
 import { Code2 } from "lucide-react";
+import { marked } from "marked";
 import { useMemo, useState } from "react";
 
 import { ToolLayout } from "@/components/layout/tool-layout";
@@ -20,7 +21,22 @@ This is a **bold text** and this is *italic text*.
 - Convert Markdown to HTML
 - Live preview
 - Copy generated HTML
-- Support for lists and code blocks
+- Support for ~~strikethrough~~, **bold**, and *italic*
+
+### Task List
+
+- [x] Tables support
+- [x] Images support
+- [ ] More features coming soon
+
+### Table Example
+
+| Feature | Status |
+|---------|--------|
+| Headings | ✅ |
+| Lists | ✅ |
+| Tables | ✅ |
+| Images | ✅ |
 
 ### Code Example
 
@@ -30,9 +46,11 @@ function hello() {
 }
 \`\`\`
 
-### Links
+### Links & Images
 
-Visit [OpenAI](https://openai.com) for more info.
+Visit [GitHub](https://github.com) for more info.
+
+![Placeholder](https://via.placeholder.com/200x100)
 
 > This is a blockquote. It's useful for highlighting important information.
 
@@ -42,183 +60,14 @@ That's it! Enjoy converting Markdown to HTML.`);
 
   const htmlOutput = useMemo<string>(() => {
     if (!input.trim()) return "";
-
-    let markdown = input;
-
-    // Escape HTML special characters first (but we'll re-handle certain ones)
-    const escapeHtml = (text: string) => {
-      return text
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#39;");
-    };
-
-    // Process code blocks first (to preserve content)
-    let codeBlocks: string[] = [];
-    markdown = markdown.replace(/```([\s\S]*?)```/g, (match, code) => {
-      const language = code.split("\n")[0].trim();
-      const codeContent = code.replace(/^[^\n]*\n?/, "").trim();
-      const index = codeBlocks.length;
-      codeBlocks.push(`<pre><code class="language-${language || "plaintext"}">${escapeHtml(codeContent)}</code></pre>`);
-      return `<!--CODE_BLOCK_${index}-->`;
-    });
-
-    // Split into lines and process
-    let lines = markdown.split("\n");
-    let html: string[] = [];
-    let listStack: Array<"ul" | "ol"> = [];
-    let inParagraph = false;
-    let paragraphLines: string[] = [];
-
-    for (let i = 0; i < lines.length; i++) {
-      let line = lines[i];
-
-      // Restore code blocks temporarily to check for empty lines
-      if (line.includes("<!--CODE_BLOCK")) {
-        if (inParagraph) {
-          html.push(`<p>${paragraphLines.join(" ")}</p>`);
-          paragraphLines = [];
-          inParagraph = false;
-        }
-        // Close any open lists
-        while (listStack.length > 0) {
-          html.push(`</${listStack.pop()}>`);
-        }
-        html.push(line);
-        continue;
-      }
-
-      // Horizontal rule
-      if (/^(---+|\*\*\*+|___+)$/.test(line.trim())) {
-        if (inParagraph) {
-          html.push(`<p>${paragraphLines.join(" ")}</p>`);
-          paragraphLines = [];
-          inParagraph = false;
-        }
-        while (listStack.length > 0) {
-          html.push(`</${listStack.pop()}>`);
-        }
-        html.push("<hr />");
-        continue;
-      }
-
-      // Headings
-      const headingMatch = line.match(/^(#{1,6})\s+(.+)$/);
-      if (headingMatch) {
-        if (inParagraph) {
-          html.push(`<p>${paragraphLines.join(" ")}</p>`);
-          paragraphLines = [];
-          inParagraph = false;
-        }
-        while (listStack.length > 0) {
-          html.push(`</${listStack.pop()}>`);
-        }
-        const level = headingMatch[1].length;
-        const text = processInlineMarkdown(headingMatch[2]);
-        html.push(`<h${level}>${text}</h${level}>`);
-        continue;
-      }
-
-      // Blockquotes
-      const blockquoteMatch = line.match(/^>\s+(.+)$/);
-      if (blockquoteMatch) {
-        if (inParagraph) {
-          html.push(`<p>${paragraphLines.join(" ")}</p>`);
-          paragraphLines = [];
-          inParagraph = false;
-        }
-        while (listStack.length > 0) {
-          html.push(`</${listStack.pop()}>`);
-        }
-        const text = processInlineMarkdown(blockquoteMatch[1]);
-        html.push(`<blockquote>${text}</blockquote>`);
-        continue;
-      }
-
-      // Lists
-      const unorderedMatch = line.match(/^\s*[-*+]\s+(.+)$/);
-      const orderedMatch = line.match(/^\s*\d+\.\s+(.+)$/);
-
-      if (unorderedMatch || orderedMatch) {
-        const isList = unorderedMatch ? "ul" : "ol";
-        const text = processInlineMarkdown(
-          (unorderedMatch || orderedMatch)![1],
-        );
-
-        if (inParagraph) {
-          html.push(`<p>${paragraphLines.join(" ")}</p>`);
-          paragraphLines = [];
-          inParagraph = false;
-        }
-
-        if (listStack.length === 0 || listStack[listStack.length - 1] !== isList) {
-          if (listStack.length > 0 && listStack[listStack.length - 1] !== isList) {
-            html.push(`</${listStack.pop()}>`);
-          }
-          listStack.push(isList);
-          html.push(`<${isList}>`);
-        }
-
-        html.push(`<li>${text}</li>`);
-        continue;
-      }
-
-      // Empty line
-      if (!line.trim()) {
-        if (inParagraph) {
-          html.push(`<p>${paragraphLines.join(" ")}</p>`);
-          paragraphLines = [];
-          inParagraph = false;
-        }
-        while (listStack.length > 0) {
-          html.push(`</${listStack.pop()}>`);
-        }
-        continue;
-      }
-
-      // Paragraph
-      if (!inParagraph) {
-        inParagraph = true;
-      }
-      paragraphLines.push(processInlineMarkdown(line));
+    try {
+      return marked.parse(input, { async: false, gfm: true, breaks: false }) as string;
+    } catch {
+      return "<p>Error parsing markdown.</p>";
     }
-
-    // Close any remaining tags
-    if (inParagraph && paragraphLines.length > 0) {
-      html.push(`<p>${paragraphLines.join(" ")}</p>`);
-    }
-    while (listStack.length > 0) {
-      html.push(`</${listStack.pop()}>`);
-    }
-
-    // Replace code block placeholders
-    let result = html.join("\n");
-    codeBlocks.forEach((block, index) => {
-      result = result.replace(`<!--CODE_BLOCK_${index}-->`, block);
-    });
-
-    return result;
   }, [input]);
 
-  function processInlineMarkdown(text: string): string {
-    // Inline code (backticks)
-    text = text.replace(/`([^`]+)`/g, "<code>$1</code>");
-
-    // Links
-    text = text.replace(/\[([^\]]+)\]\(([^\)]+)\)/g, '<a href="$2">$1</a>');
-
-    // Bold
-    text = text.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
-    text = text.replace(/__([^_]+)__/g, "<strong>$1</strong>");
-
-    // Italic
-    text = text.replace(/\*([^*]+)\*/g, "<em>$1</em>");
-    text = text.replace(/_([^_]+)_/g, "<em>$1</em>");
-
-    return text;
-  }
+  // marked escapes HTML by default — no separate sanitization needed
 
   return (
     <ToolLayout
@@ -252,7 +101,7 @@ That's it! Enjoy converting Markdown to HTML.`);
               <CardContent className="prose prose-sm dark:prose-invert max-w-none overflow-auto p-4 h-full">
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: htmlOutput || "<p className='text-muted-foreground'>Preview will appear here...</p>",
+                    __html: htmlOutput || "<p class='text-muted-foreground'>Preview will appear here...</p>",
                   }}
                 />
               </CardContent>
@@ -288,23 +137,23 @@ That's it! Enjoy converting Markdown to HTML.`);
           </div>
           <div className="rounded-lg bg-muted/50 p-3">
             <p className="text-xs font-medium">Bold & Italic</p>
-            <p className="text-xs text-muted-foreground">**bold** or __bold__, *italic* or _italic_</p>
+            <p className="text-xs text-muted-foreground">**bold**, *italic*, ~~strikethrough~~</p>
           </div>
           <div className="rounded-lg bg-muted/50 p-3">
             <p className="text-xs font-medium">Code</p>
-            <p className="text-xs text-muted-foreground">Inline `code` and ```code blocks```</p>
+            <p className="text-xs text-muted-foreground">Inline `code` and fenced code blocks</p>
           </div>
           <div className="rounded-lg bg-muted/50 p-3">
-            <p className="text-xs font-medium">Lists</p>
-            <p className="text-xs text-muted-foreground">- Unordered and 1. ordered lists</p>
+            <p className="text-xs font-medium">Lists & Tasks</p>
+            <p className="text-xs text-muted-foreground">Ordered, unordered, nested, and task lists</p>
           </div>
           <div className="rounded-lg bg-muted/50 p-3">
-            <p className="text-xs font-medium">Links</p>
-            <p className="text-xs text-muted-foreground">[Text](https://url.com)</p>
+            <p className="text-xs font-medium">Tables</p>
+            <p className="text-xs text-muted-foreground">GFM tables with alignment</p>
           </div>
           <div className="rounded-lg bg-muted/50 p-3">
-            <p className="text-xs font-medium">Blockquotes</p>
-            <p className="text-xs text-muted-foreground">&gt; Quoted text</p>
+            <p className="text-xs font-medium">Links & Images</p>
+            <p className="text-xs text-muted-foreground">[text](url) and ![alt](src)</p>
           </div>
         </div>
       </div>

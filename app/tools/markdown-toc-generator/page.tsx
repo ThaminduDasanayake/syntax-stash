@@ -38,21 +38,40 @@ export default function MarkdownTOCGeneratorPage() {
     if (!input.trim()) return "";
 
     const maxDepthNum = parseInt(maxDepth, 10);
+
+    // Strip fenced code blocks before extracting headings
+    const stripped = input.replace(/```[\s\S]*?```/g, "");
+
     const headingRegex = /^(#{1,6})\s+(.+)$/gm;
     const headings: Heading[] = [];
+    const anchorCounts = new Map<string, number>();
 
     let match;
-    while ((match = headingRegex.exec(input)) !== null) {
+    while ((match = headingRegex.exec(stripped)) !== null) {
       const level = match[1].length;
-      const text = match[2].trim();
+      // Strip inline markdown (bold, italic, code, links) from heading text
+      const rawText = match[2].trim();
+      const text = rawText
+        .replace(/\*\*(.+?)\*\*/g, "$1")
+        .replace(/__(.+?)__/g, "$1")
+        .replace(/\*(.+?)\*/g, "$1")
+        .replace(/_(.+?)_/g, "$1")
+        .replace(/`(.+?)`/g, "$1")
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1");
 
       if (level <= maxDepthNum) {
-        // Convert text to anchor
-        const anchor = text
+        let anchor = text
           .toLowerCase()
-          .replace(/[^\w\s-]/g, "") // Remove special characters
-          .replace(/\s+/g, "-") // Replace spaces with hyphens
-          .replace(/^-+|-+$/g, ""); // Remove leading/trailing hyphens
+          .replace(/[^\w\s-]/g, "")
+          .replace(/\s+/g, "-")
+          .replace(/^-+|-+$/g, "");
+
+        // Handle duplicate anchors (GitHub-style: append -1, -2, etc.)
+        const count = anchorCounts.get(anchor) ?? 0;
+        anchorCounts.set(anchor, count + 1);
+        if (count > 0) {
+          anchor = `${anchor}-${count}`;
+        }
 
         headings.push({ level, text, anchor });
       }
@@ -60,14 +79,11 @@ export default function MarkdownTOCGeneratorPage() {
 
     if (headings.length === 0) return "";
 
-    // Generate ToC
-    const lines: string[] = [];
-
-    headings.forEach((heading) => {
-      // Calculate indentation: (level - 1) * 2 spaces
-      const indent = " ".repeat((heading.level - 1) * 2);
-      const line = `${indent}- [${heading.text}](#${heading.anchor})`;
-      lines.push(line);
+    // Normalize indentation relative to the minimum heading level
+    const minLevel = Math.min(...headings.map((h) => h.level));
+    const lines = headings.map((heading) => {
+      const indent = " ".repeat((heading.level - minLevel) * 2);
+      return `${indent}- [${heading.text}](#${heading.anchor})`;
     });
 
     return lines.join("\n");
@@ -84,11 +100,12 @@ export default function MarkdownTOCGeneratorPage() {
 
   const headingCount = useMemo(() => {
     const maxDepthNum = parseInt(maxDepth, 10);
-    const headingRegex = /^#{1,6}\s+/gm;
+    const stripped = input.replace(/```[\s\S]*?```/g, "");
+    const headingRegex = /^(#{1,6})\s+/gm;
     let count = 0;
     let match;
-    while ((match = headingRegex.exec(input)) !== null) {
-      if (match[0].length - 1 <= maxDepthNum) {
+    while ((match = headingRegex.exec(stripped)) !== null) {
+      if (match[1].length <= maxDepthNum) {
         count++;
       }
     }
