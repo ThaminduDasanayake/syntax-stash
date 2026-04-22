@@ -40,7 +40,7 @@ function TabsList({
     <TabsPrimitive.List
       data-slot="tabs-list"
       data-variant={variant}
-      className={cn(tabsListVariants({ variant }), "gap-1", className)}
+      className={cn(tabsListVariants({ variant }), "gap-1.5", className)}
       {...props}
     />
   );

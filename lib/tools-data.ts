@@ -1,7 +1,6 @@
 import {
   ArrowRightLeft,
   Binary,
-  BookOpen,
   Braces,
   BrainCircuit,
   CalendarClock,
@@ -42,7 +41,6 @@ import {
   SearchCode,
   ShieldCheck,
   ShieldHalf,
-  Sparkles,
   Square,
   Table,
   TableProperties,
@@ -177,16 +175,10 @@ export const dataTools: Tool[] = [
 
 export const developmentTools: Tool[] = [
   {
-    title: "AI Prompt Enhancer",
-    url: "/tools/prompt-enhancer",
-    description: "Dynamic templates to generate high-quality AI prompts.",
-    category: CATEGORIES.development,
-    icon: Sparkles,
-  },
-  {
     title: "AI Prompt Studio",
     url: "/tools/prompt-studio",
-    description: "Write, inject variables, and minify LLM prompts with real-time token tracking.",
+    description:
+      "Write, inject variables, minify, and enhance LLM prompts with real-time token tracking.",
     category: CATEGORIES.development,
     icon: WandSparkles,
   },
@@ -205,19 +197,12 @@ export const developmentTools: Tool[] = [
     icon: Database,
   },
   {
-    title: "Regex Tester",
-    url: "/tools/regex-tester",
-    description: "Test and debug regular expressions with real-time match highlighting.",
+    title: "Regex Studio",
+    url: "/tools/regex-studio",
+    description:
+      "Build, test, and browse a curated library of production-ready regular expressions.",
     category: CATEGORIES.development,
     icon: Regex,
-  },
-  {
-    title: "Regex Pattern Library",
-    url: "/tools/regex-library",
-    description:
-      "A curated library of 30+ production-ready regex patterns with match examples and one-click copy.",
-    category: CATEGORIES.development,
-    icon: BookOpen,
   },
   {
     title: ".gitignore Generator",
@@ -292,10 +277,10 @@ export const devopsTools: Tool[] = [
     icon: CalendarClock,
   },
   {
-    title: "Docker Compose Builder",
+    title: "Docker Compose Studio",
     url: "/tools/docker-compose",
     description:
-      "Add services from templates, configure ports, environment variables, and volumes to generate a docker-compose.yml.",
+      "Build compose files visually or convert complex 'docker run' commands into YAML instantly.",
     category: CATEGORIES.devops,
     icon: Container,
   },
@@ -322,14 +307,6 @@ export const devopsTools: Tool[] = [
       "Semantically compare two .env files to find missing keys, extra keys, and value mismatches.",
     category: CATEGORIES.devops,
     icon: FileDiff,
-  },
-  {
-    title: "Docker Run → Compose",
-    url: "/tools/docker-to-compose",
-    description:
-      "Instantly convert complex docker run commands into clean docker-compose.yml files.",
-    category: CATEGORIES.devops,
-    icon: Container,
   },
 ];
 
