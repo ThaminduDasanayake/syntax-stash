@@ -1,4 +1,10 @@
-import { PromptTemplate } from "@/app/tools/prompt-enhancer/types";
+type PromptTemplate = {
+  id: string;
+  title: string;
+  description: string;
+  starter: string;
+  category: "coding" | "writing" | "analysis";
+};
 
 export const promptTemplates: PromptTemplate[] = [
   {
