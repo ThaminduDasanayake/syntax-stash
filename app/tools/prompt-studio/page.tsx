@@ -3,19 +3,18 @@
 import { Sparkles, WandSparkles } from "lucide-react";
 import { useMemo, useState } from "react";
 
+import { injectVariables, minifyPrompt, parseVariables } from "@/app/tools/prompt-studio/helpers";
+import { promptTemplates } from "@/app/tools/prompt-studio/prompt-templates";
+import TokenBadge from "@/app/tools/prompt-studio/token-badge";
 import { ToolLayout } from "@/components/layout/tool-layout";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import ClearButton from "@/components/ui/clear-button";
 import CopyButton from "@/components/ui/copy-button";
-import { Input } from "@/components/ui/input";
+import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TextAreaField } from "@/components/ui/textarea-field";
-
-// ---------------------------------------------------------------------------
-// Default placeholder
-// ---------------------------------------------------------------------------
 
 const PLACEHOLDER = `You are an expert {{role}} with deep knowledge of {{domain}}.
 
@@ -31,74 +30,27 @@ Your task is to help {{user_name}} accomplish the following:
 ## Guidelines
 - Be **clear** and **concise**
 - Provide concrete examples where helpful
-- Avoid unnecessary jargon unless the skill level warrants it
 
 Begin your response now.`;
-
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
-function parseVariables(text: string): string[] {
-  const seen = new Set<string>();
-  return [...text.matchAll(/\{\{(\w+)\}\}/g)]
-    .map((m) => m[1])
-    .filter((name) => (seen.has(name) ? false : (seen.add(name), true)));
-}
-
-function injectVariables(text: string, vars: Record<string, string>): string {
-  return text.replace(/\{\{(\w+)\}\}/g, (match, name) => vars[name] || match);
-}
-
-function minifyPrompt(text: string): string {
-  return text
-    .replace(/^#{1,6}\s+/gm, "")
-    .replace(/\*\*([\s\S]+?)\*\*/g, "$1")
-    .replace(/\*([\s\S]+?)\*/g, "$1")
-    .replace(/__([\s\S]+?)__/g, "$1")
-    .replace(/_([\s\S]+?)_/g, "$1")
-    .replace(/```[\s\S]*?```/g, (m) => m.replace(/```\w*\n?/g, "").trim())
-    .replace(/`(.+?)`/g, "$1")
-    .replace(/^[-*+]\s+/gm, "")
-    .replace(/^\s*>\s*/gm, "")
-    .replace(/\s*\n\s*/g, " ")
-    .replace(/\s{2,}/g, " ")
-    .trim();
-}
-
-// ---------------------------------------------------------------------------
-// Token badge
-// ---------------------------------------------------------------------------
-
-function TokenBadge({ text }: { text: string }) {
-  const count = Math.ceil(text.length / 4);
-  return (
-    <div className="flex items-center gap-2">
-      <span>Est. tokens</span>
-      <Badge variant="secondary" className="font-mono font-semibold">
-        ~{count.toLocaleString()}
-      </Badge>
-    </div>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Page
-// ---------------------------------------------------------------------------
 
 export default function PromptStudioPage() {
   const [rawPrompt, setRawPrompt] = useState(PLACEHOLDER);
   const [varValues, setVarValues] = useState<Record<string, string>>({});
 
-  const variables = useMemo(() => parseVariables(rawPrompt), [rawPrompt]);
+  // AI Enhancement State
+  const [enhancedOutput, setEnhancedOutput] = useState("");
+  const [isEnhancing, setIsEnhancing] = useState(false);
+  const [activeTab, setActiveTab] = useState("injected");
 
+  // Memos
+  const variables = useMemo(() => parseVariables(rawPrompt), [rawPrompt]);
   const injectedOutput = useMemo(
     () => injectVariables(rawPrompt, varValues),
     [rawPrompt, varValues],
   );
-
   const minifiedOutput = useMemo(() => minifyPrompt(injectedOutput), [injectedOutput]);
 
+  // Handlers
   function setVar(name: string, value: string) {
     setVarValues((prev) => ({ ...prev, [name]: value }));
   }
@@ -106,6 +58,43 @@ export default function PromptStudioPage() {
   function handleClear() {
     setRawPrompt("");
     setVarValues({});
+    setEnhancedOutput("");
+  }
+
+  function handleTemplateClick(starter: string) {
+    setRawPrompt(starter);
+    setVarValues({});
+    setEnhancedOutput("");
+    setActiveTab("injected");
+  }
+
+  async function handleEnhance() {
+    if (!injectedOutput.trim()) return;
+    setIsEnhancing(true);
+    try {
+      const res = await fetch("/api/enhance", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        // Send the fully injected prompt to the AI, not the raw one with {{brackets}}
+        body: JSON.stringify({ prompt: injectedOutput }),
+      });
+
+      if (!res.ok) {
+        setEnhancedOutput(`Error: Failed with status ${res.status}`);
+        return;
+      }
+
+      const data = await res.json();
+      if (data.text) {
+        setEnhancedOutput(data.text);
+      } else if (data.error) {
+        setEnhancedOutput(`Error: ${data.error}`);
+      }
+    } catch {
+      setEnhancedOutput("Error: Failed to connect to the enhancement API.");
+    } finally {
+      setIsEnhancing(false);
+    }
   }
 
   return (
@@ -113,14 +102,36 @@ export default function PromptStudioPage() {
       icon={WandSparkles}
       title="Prompt"
       highlight="Studio"
-      description="Write, inject, minify, and enhance LLM prompts with real-time token tracking."
+      description="Write, inject variables, minify, and enhance LLM prompts with real-time token tracking."
     >
+      {/* Quick Starters */}
+      <div className="mb-8 space-y-3">
+        <Label className="text-xs font-semibold tracking-wider uppercase">Quick Starters</Label>
+        <div className="flex flex-wrap gap-2">
+          {promptTemplates?.map((t) => (
+            <Button
+              key={t.id}
+              variant="secondary"
+              size="sm"
+              onClick={() => handleTemplateClick(t.starter)}
+              className="px-4 font-semibold"
+            >
+              {t.title}
+            </Button>
+          ))}
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+        {/* Draft & Variables */}
         <div className="space-y-4">
           <TextAreaField
             label="Draft Prompt"
             value={rawPrompt}
-            onChange={(e) => setRawPrompt(e.target.value)}
+            onChange={(e) => {
+              setRawPrompt(e.target.value);
+              setEnhancedOutput(""); // Reset enhancement if draft changes
+            }}
             rows={16}
             placeholder={`Write your prompt here.\nUse {{variable}} syntax for dynamic values.`}
             className="font-mono text-sm"
@@ -141,14 +152,12 @@ export default function PromptStudioPage() {
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   {variables.map((name) => (
                     <div key={name} className="space-y-1.5">
-                      <Label className="text-muted-foreground font-mono text-xs">
-                        {`{{${name}}}`}
-                      </Label>
-                      <Input
+                      {/*<Label className="text-muted-foreground font-mono text-xs"></Label>*/}
+                      <InputField
+                        label={`{{${name}}}`}
                         value={varValues[name] ?? ""}
                         onChange={(e) => setVar(name, e.target.value)}
                         placeholder={name.replace(/_/g, " ")}
-                        className="h-8 font-mono text-xs"
                       />
                     </div>
                   ))}
@@ -158,33 +167,24 @@ export default function PromptStudioPage() {
           )}
         </div>
 
+        {/* Output Tabs */}
         <div>
-          <Tabs defaultValue="injected" className="flex flex-col gap-4">
-            <TabsList className="w-full">
-              <TabsTrigger
-                value="injected"
-                className="data-active:bg-primary! data-active:text-background! data-active:border-card/60! p-1 hover:cursor-pointer data-active:border!"
-              >
-                Injected Output
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col gap-4">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="injected" className="tab-trigger">
+                Injected
               </TabsTrigger>
-              <TabsTrigger
-                value="minified"
-                className="data-active:bg-primary! data-active:text-background! data-active:border-card/60! p-1 hover:cursor-pointer data-active:border!"
-              >
-                Minified Output
+              <TabsTrigger value="minified" className="tab-trigger">
+                Minified
               </TabsTrigger>
-              <TabsTrigger
-                value="ai"
-                className="data-active:bg-primary! data-active:text-background! data-active:border-card/60! p-1 hover:cursor-pointer data-active:border!"
-                aria-disabled
-              >
-                <Sparkles size={13} />
+              <TabsTrigger value="ai" className="tab-trigger">
+                <Sparkles />
                 AI Enhanced
               </TabsTrigger>
             </TabsList>
 
             {/* Injected */}
-            <TabsContent value="injected" className="space-y-3">
+            <TabsContent value="injected" className="mt-0 space-y-3">
               <TextAreaField
                 label={<TokenBadge text={injectedOutput} />}
                 value={injectedOutput}
@@ -195,7 +195,7 @@ export default function PromptStudioPage() {
             </TabsContent>
 
             {/* Minified */}
-            <TabsContent value="minified" className="space-y-3">
+            <TabsContent value="minified" className="mt-0 space-y-3">
               <TextAreaField
                 label={<TokenBadge text={minifiedOutput} />}
                 value={minifiedOutput}
@@ -205,15 +205,39 @@ export default function PromptStudioPage() {
               />
             </TabsContent>
 
-            {/* AI Enhanced — placeholder */}
-            <TabsContent value="ai">
-              <div className="flex flex-col items-center justify-center rounded-xl border border-dashed py-24 text-center">
-                <Sparkles size={28} className="text-muted-foreground mb-3" />
-                <p className="text-sm font-medium">AI Enhancement coming soon</p>
-                <p className="text-muted-foreground mt-1 text-xs">
-                  This tab will call the Gemini API to rewrite and strengthen your prompt.
-                </p>
-              </div>
+            {/* AI Enhanced */}
+            <TabsContent value="ai" className="mt-0 space-y-3">
+              <TextAreaField
+                label={
+                  <TokenBadge
+                    text={enhancedOutput || injectedOutput}
+                    label={enhancedOutput ? "Enhanced Tokens" : "Input Tokens"}
+                  />
+                }
+                value={enhancedOutput}
+                readOnly
+                rows={20}
+                className={isEnhancing ? "bg-muted/20 animate-pulse" : ""}
+                placeholder={
+                  isEnhancing
+                    ? "✨ AI is rewriting and strengthening your prompt..."
+                    : "Click the button below to generate a professionally enhanced version of your injected prompt."
+                }
+                action={<CopyButton value={enhancedOutput} disabled={!enhancedOutput} />}
+              />
+              <Button
+                size="lg"
+                className="w-full font-bold"
+                onClick={handleEnhance}
+                disabled={isEnhancing || !injectedOutput.trim()}
+              >
+                <Sparkles className="mr-2 size-5" />
+                {isEnhancing
+                  ? "Enhancing..."
+                  : enhancedOutput
+                    ? "Regenerate Enhancement"
+                    : "Enhance with Gemini"}
+              </Button>
             </TabsContent>
           </Tabs>
         </div>

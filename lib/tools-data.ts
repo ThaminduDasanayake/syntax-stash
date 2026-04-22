@@ -177,16 +177,10 @@ export const dataTools: Tool[] = [
 
 export const developmentTools: Tool[] = [
   {
-    title: "AI Prompt Enhancer",
-    url: "/tools/prompt-enhancer",
-    description: "Dynamic templates to generate high-quality AI prompts.",
-    category: CATEGORIES.development,
-    icon: Sparkles,
-  },
-  {
     title: "AI Prompt Studio",
     url: "/tools/prompt-studio",
-    description: "Write, inject variables, and minify LLM prompts with real-time token tracking.",
+    description:
+      "Write, inject variables, minify, and enhance LLM prompts with real-time token tracking.",
     category: CATEGORIES.development,
     icon: WandSparkles,
   },
