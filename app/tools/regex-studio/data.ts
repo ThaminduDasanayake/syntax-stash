@@ -1,3 +1,10 @@
+export const CATEGORY_COLORS: Record<RegexCategory, string> = {
+  Validation: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+  Formats: "bg-purple-500/10 text-purple-400 border-purple-500/20",
+  Code: "bg-green-500/10 text-green-400 border-green-500/20",
+  Numbers: "bg-orange-500/10 text-orange-400 border-orange-500/20",
+};
+
 export type RegexCategory = "Validation" | "Formats" | "Code" | "Numbers";
 
 export type RegexPattern = {
@@ -21,11 +28,11 @@ export const REGEX_CATEGORIES: ("All" | RegexCategory)[] = [
 ];
 
 export const REGEX_PATTERNS: RegexPattern[] = [
-  // ─── Validation ──────────────────────────────────────────────────────────────
+  // Validation
   {
     name: "Email Address",
     pattern: "^[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}$",
-    flags: "i",
+    flags: "img",
     description: "Validates a standard email address format.",
     category: "Validation",
     examples: {
@@ -36,7 +43,7 @@ export const REGEX_PATTERNS: RegexPattern[] = [
   {
     name: "URL (http/https)",
     pattern: "^https?:\\/\\/[^\\s/$.?#].[^\\s]*$",
-    flags: "i",
+    flags: "img",
     description: "Matches HTTP and HTTPS URLs.",
     category: "Validation",
     examples: {
@@ -46,8 +53,9 @@ export const REGEX_PATTERNS: RegexPattern[] = [
   },
   {
     name: "IPv4 Address",
-    pattern: "^(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)$",
-    flags: "",
+    pattern:
+      "^(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)$",
+    flags: "mg",
     description: "Validates IPv4 addresses (0.0.0.0 – 255.255.255.255).",
     category: "Validation",
     examples: {
@@ -58,7 +66,7 @@ export const REGEX_PATTERNS: RegexPattern[] = [
   {
     name: "IPv6 Address",
     pattern: "^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$",
-    flags: "i",
+    flags: "img",
     description: "Matches full (non-compressed) IPv6 addresses.",
     category: "Validation",
     examples: {
@@ -69,7 +77,7 @@ export const REGEX_PATTERNS: RegexPattern[] = [
   {
     name: "Phone Number (E.164)",
     pattern: "^\\+[1-9]\\d{1,14}$",
-    flags: "",
+    flags: "mg",
     description: "Validates international phone numbers in E.164 format.",
     category: "Validation",
     examples: {
@@ -80,7 +88,7 @@ export const REGEX_PATTERNS: RegexPattern[] = [
   {
     name: "US Phone Number",
     pattern: "^(\\+1[\\s.-]?)?\\(?[2-9]\\d{2}\\)?[\\s.-]?[2-9]\\d{2}[\\s.-]?\\d{4}$",
-    flags: "",
+    flags: "mg",
     description: "Matches common US phone number formats.",
     category: "Validation",
     examples: {
@@ -90,8 +98,9 @@ export const REGEX_PATTERNS: RegexPattern[] = [
   },
   {
     name: "Credit Card Number",
-    pattern: "^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|6(?:011|5[0-9]{2})[0-9]{12})$",
-    flags: "",
+    pattern:
+      "^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|6(?:011|5[0-9]{2})[0-9]{12})$",
+    flags: "mg",
     description: "Validates Visa, Mastercard, Amex, and Discover card numbers.",
     category: "Validation",
     examples: {
@@ -102,7 +111,7 @@ export const REGEX_PATTERNS: RegexPattern[] = [
   {
     name: "Strong Password",
     pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*]).{8,}$",
-    flags: "",
+    flags: "mg",
     description: "Requires 8+ chars with uppercase, lowercase, digit, and special character.",
     category: "Validation",
     examples: {
@@ -113,7 +122,7 @@ export const REGEX_PATTERNS: RegexPattern[] = [
   {
     name: "Username",
     pattern: "^[a-zA-Z0-9_\\-]{3,20}$",
-    flags: "",
+    flags: "mg",
     description: "3–20 alphanumeric characters, underscores, and hyphens.",
     category: "Validation",
     examples: {
@@ -122,11 +131,11 @@ export const REGEX_PATTERNS: RegexPattern[] = [
     },
   },
 
-  // ─── Formats ─────────────────────────────────────────────────────────────────
+  // Formats
   {
     name: "ISO 8601 Date",
     pattern: "^\\d{4}-\\d{2}-\\d{2}$",
-    flags: "",
+    flags: "mg",
     description: "Matches YYYY-MM-DD date strings.",
     category: "Formats",
     examples: {
@@ -137,7 +146,7 @@ export const REGEX_PATTERNS: RegexPattern[] = [
   {
     name: "ISO 8601 DateTime",
     pattern: "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})$",
-    flags: "",
+    flags: "mg",
     description: "Matches ISO 8601 datetime strings with timezone.",
     category: "Formats",
     examples: {
@@ -148,7 +157,7 @@ export const REGEX_PATTERNS: RegexPattern[] = [
   {
     name: "Time (HH:MM)",
     pattern: "^([01]\\d|2[0-3]):[0-5]\\d$",
-    flags: "",
+    flags: "mg",
     description: "Validates 24-hour time in HH:MM format.",
     category: "Formats",
     examples: {
@@ -159,7 +168,7 @@ export const REGEX_PATTERNS: RegexPattern[] = [
   {
     name: "Hex Color",
     pattern: "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$",
-    flags: "i",
+    flags: "img",
     description: "Matches 3, 6, or 8-digit hex color codes.",
     category: "Formats",
     examples: {
@@ -170,18 +179,23 @@ export const REGEX_PATTERNS: RegexPattern[] = [
   {
     name: "UUID (v4)",
     pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
-    flags: "i",
+    flags: "img",
     description: "Matches UUID version 4 strings.",
     category: "Formats",
     examples: {
       match: ["550e8400-e29b-41d4-a716-446655440000", "a3b4c5d6-e7f8-4a9b-8c0d-1e2f3a4b5c6d"],
-      noMatch: ["550e8400-e29b-31d4-a716-446655440000", "not-a-uuid", "550e8400-e29b41d4-a716-446655440000"],
+      noMatch: [
+        "550e8400-e29b-31d4-a716-446655440000",
+        "not-a-uuid",
+        "550e8400-e29b41d4-a716-446655440000",
+      ],
     },
   },
   {
     name: "Semantic Version",
-    pattern: "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
-    flags: "",
+    pattern:
+      "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+    flags: "mg",
     description: "Validates semver strings like 1.2.3 or 1.0.0-beta.1+build.42.",
     category: "Formats",
     examples: {
@@ -192,7 +206,7 @@ export const REGEX_PATTERNS: RegexPattern[] = [
   {
     name: "URL Slug",
     pattern: "^[a-z0-9]+(?:-[a-z0-9]+)*$",
-    flags: "",
+    flags: "mg",
     description: "Matches lowercase URL-friendly slugs.",
     category: "Formats",
     examples: {
@@ -203,7 +217,7 @@ export const REGEX_PATTERNS: RegexPattern[] = [
   {
     name: "MAC Address",
     pattern: "^([0-9A-Fa-f]{2}[:\\-]){5}([0-9A-Fa-f]{2})$",
-    flags: "i",
+    flags: "img",
     description: "Matches MAC addresses with colon or hyphen separators.",
     category: "Formats",
     examples: {
@@ -214,20 +228,22 @@ export const REGEX_PATTERNS: RegexPattern[] = [
   {
     name: "JWT Token",
     pattern: "^[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+$",
-    flags: "",
+    flags: "mg",
     description: "Matches the three-part structure of a JSON Web Token.",
     category: "Formats",
     examples: {
-      match: ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"],
+      match: [
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+      ],
       noMatch: ["not.a.jwt.token.parts", "onlyonepart", "two.parts"],
     },
   },
 
-  // ─── Code ─────────────────────────────────────────────────────────────────────
+  // Code
   {
     name: "JavaScript Import",
     pattern: "^import\\s+(?:[\\w*{}\\s,]+\\s+from\\s+)?['\"][^'\"]+['\"];?$",
-    flags: "m",
+    flags: "mg",
     description: "Matches ES module import statements.",
     category: "Code",
     examples: {
@@ -242,7 +258,7 @@ export const REGEX_PATTERNS: RegexPattern[] = [
     description: "Matches opening HTML tags (non-self-closing).",
     category: "Code",
     examples: {
-      match: ["<div>", "<a href=\"https://example.com\">", "<input type=\"text\">"],
+      match: ["<div>", '<a href="https://example.com">', '<input type="text">'],
       noMatch: ["</div>", "<!-- comment -->", "<123invalid>"],
     },
   },
@@ -282,7 +298,7 @@ export const REGEX_PATTERNS: RegexPattern[] = [
   {
     name: "Git Commit Hash",
     pattern: "\\b[0-9a-f]{7,40}\\b",
-    flags: "i",
+    flags: "gi",
     description: "Matches short (7-char) or full (40-char) Git commit hashes.",
     category: "Code",
     examples: {
@@ -302,11 +318,11 @@ export const REGEX_PATTERNS: RegexPattern[] = [
     },
   },
 
-  // ─── Numbers ─────────────────────────────────────────────────────────────────
+  // Numbers
   {
     name: "Integer",
     pattern: "^-?(0|[1-9]\\d*)$",
-    flags: "",
+    flags: "mg",
     description: "Matches integers (positive, negative, or zero). No leading zeros.",
     category: "Numbers",
     examples: {
@@ -317,7 +333,7 @@ export const REGEX_PATTERNS: RegexPattern[] = [
   {
     name: "Decimal Number",
     pattern: "^-?\\d+(\\.\\d+)?$",
-    flags: "",
+    flags: "mg",
     description: "Matches integers and decimal numbers.",
     category: "Numbers",
     examples: {
@@ -328,7 +344,7 @@ export const REGEX_PATTERNS: RegexPattern[] = [
   {
     name: "Currency (USD)",
     pattern: "^\\$?\\d{1,3}(,\\d{3})*(\\.\\d{2})?$",
-    flags: "",
+    flags: "mg",
     description: "Matches US currency amounts with optional comma separators.",
     category: "Numbers",
     examples: {
@@ -339,7 +355,7 @@ export const REGEX_PATTERNS: RegexPattern[] = [
   {
     name: "Percentage",
     pattern: "^(100(\\.0+)?|\\d{1,2}(\\.\\d+)?)%$",
-    flags: "",
+    flags: "mg",
     description: "Matches percentage values from 0% to 100%.",
     category: "Numbers",
     examples: {
@@ -350,7 +366,7 @@ export const REGEX_PATTERNS: RegexPattern[] = [
   {
     name: "Binary Number",
     pattern: "^[01]+$",
-    flags: "",
+    flags: "mg",
     description: "Matches binary number strings (only 0s and 1s).",
     category: "Numbers",
     examples: {

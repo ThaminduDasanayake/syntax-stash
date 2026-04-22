@@ -199,19 +199,12 @@ export const developmentTools: Tool[] = [
     icon: Database,
   },
   {
-    title: "Regex Tester",
-    url: "/tools/regex-tester",
-    description: "Test and debug regular expressions with real-time match highlighting.",
+    title: "Regex Studio",
+    url: "/tools/regex-studio",
+    description:
+      "Build, test, and browse a curated library of production-ready regular expressions.",
     category: CATEGORIES.development,
     icon: Regex,
-  },
-  {
-    title: "Regex Pattern Library",
-    url: "/tools/regex-library",
-    description:
-      "A curated library of 30+ production-ready regex patterns with match examples and one-click copy.",
-    category: CATEGORIES.development,
-    icon: BookOpen,
   },
   {
     title: ".gitignore Generator",
