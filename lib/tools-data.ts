@@ -292,10 +292,10 @@ export const devopsTools: Tool[] = [
     icon: CalendarClock,
   },
   {
-    title: "Docker Compose Builder",
+    title: "Docker Compose Studio",
     url: "/tools/docker-compose",
     description:
-      "Add services from templates, configure ports, environment variables, and volumes to generate a docker-compose.yml.",
+      "Build compose files visually or convert complex 'docker run' commands into YAML instantly.",
     category: CATEGORIES.devops,
     icon: Container,
   },
@@ -322,14 +322,6 @@ export const devopsTools: Tool[] = [
       "Semantically compare two .env files to find missing keys, extra keys, and value mismatches.",
     category: CATEGORIES.devops,
     icon: FileDiff,
-  },
-  {
-    title: "Docker Run → Compose",
-    url: "/tools/docker-to-compose",
-    description:
-      "Instantly convert complex docker run commands into clean docker-compose.yml files.",
-    category: CATEGORIES.devops,
-    icon: Container,
   },
 ];
 

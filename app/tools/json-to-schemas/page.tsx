@@ -120,31 +120,21 @@ export default function JSONToSchemasPage() {
           >
             <div className="flex justify-between gap-2">
               <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger
-                  value="ts"
-                  className="data-active:bg-primary! data-active:text-background! data-active:border-card/60! hover:bg-accent! hover:cursor-pointer data-active:border!"
-                >
+                <TabsTrigger value="ts" className="tab-trigger">
                   TypeScript
                 </TabsTrigger>
-                <TabsTrigger
-                  value="zod"
-                  className="data-active:bg-primary! data-active:text-background! data-active:border-card/60! hover:bg-accent! hover:cursor-pointer data-active:border!"
-                >
+                <TabsTrigger value="zod" className="tab-trigger">
                   Zod
                 </TabsTrigger>
-                <TabsTrigger
-                  value="pydantic"
-                  className="data-active:bg-primary! data-active:text-background! data-active:border-card/60! hover:bg-accent! hover:cursor-pointer data-active:border!"
-                >
+                <TabsTrigger value="pydantic" className="tab-trigger">
                   Pydantic
                 </TabsTrigger>
               </TabsList>
               <CopyButton value={currentOutput} disabled={!result.ok || !currentOutput} />
             </div>
 
-            <TabsContent value="ts" className="-mt-2">
+            <TabsContent value="ts">
               <TextAreaField
-                label={" "}
                 value={result.ok ? result.ts : ""}
                 readOnly
                 rows={24}
@@ -152,9 +142,8 @@ export default function JSONToSchemasPage() {
               />
             </TabsContent>
 
-            <TabsContent value="zod" className="-mt-2">
+            <TabsContent value="zod">
               <TextAreaField
-                label={" "}
                 value={result.ok ? result.zod : ""}
                 readOnly
                 rows={24}
@@ -162,9 +151,8 @@ export default function JSONToSchemasPage() {
               />
             </TabsContent>
 
-            <TabsContent value="pydantic" className="-mt-2">
+            <TabsContent value="pydantic">
               <TextAreaField
-                label={" "}
                 value={result.ok ? result.pydantic : ""}
                 readOnly
                 rows={24}
