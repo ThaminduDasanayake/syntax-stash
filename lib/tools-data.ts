@@ -1,7 +1,6 @@
 import {
   ArrowRightLeft,
   Binary,
-  BookOpen,
   Braces,
   BrainCircuit,
   CalendarClock,
@@ -42,7 +41,6 @@ import {
   SearchCode,
   ShieldCheck,
   ShieldHalf,
-  Sparkles,
   Square,
   Table,
   TableProperties,
