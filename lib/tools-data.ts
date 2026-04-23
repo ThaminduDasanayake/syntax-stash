@@ -1,6 +1,8 @@
 import {
   ArrowRightLeft,
+  Atom,
   Binary,
+  BookText,
   Braces,
   BrainCircuit,
   CalendarClock,
@@ -14,6 +16,7 @@ import {
   FileImage,
   FileJson,
   FileText,
+  FileType2,
   Fingerprint,
   Frame,
   GitBranch,
@@ -21,6 +24,7 @@ import {
   Globe2,
   Grid3X3,
   Image,
+  ImageDown,
   ImageIcon,
   KeyRound,
   Layers,
@@ -172,6 +176,13 @@ export const dataTools: Tool[] = [
     category: CATEGORIES.data,
     icon: ListFilter,
   },
+  {
+    title: "JSON Tree Viewer",
+    url: "/tools/json-tree-viewer",
+    description: "Explore large JSON payloads as a collapsible tree with path copy and search.",
+    category: CATEGORIES.data,
+    icon: Network,
+  },
 ];
 
 export const developmentTools: Tool[] = [
@@ -272,6 +283,53 @@ export const developmentTools: Tool[] = [
     description: "Compare two text blocks and visualize additions, deletions, and changes.",
     category: CATEGORIES.development,
     icon: FileDiff,
+  },
+  {
+    title: "HTML to JSX",
+    url: "/tools/html-to-jsx",
+    description:
+      "Convert HTML to React-ready JSX with renamed attributes, camelCase events, and style objects.",
+    category: CATEGORIES.development,
+    icon: Atom,
+  },
+  {
+    title: "JSON to TypeScript",
+    url: "/tools/json-to-typescript",
+    description:
+      "Paste any JSON payload and generate TypeScript interfaces with optional fields and unions inferred.",
+    category: CATEGORIES.development,
+    icon: FileType2,
+  },
+  {
+    title: "JSDoc / TSDoc Generator",
+    url: "/tools/jsdoc-generator",
+    description:
+      "Paste a TypeScript function signature and generate JSDoc or TSDoc with @param and @returns stubs.",
+    category: CATEGORIES.development,
+    icon: BookText,
+  },
+  {
+    title: "Code Screenshot",
+    url: "/tools/code-screenshot",
+    description:
+      "Turn any code snippet into a styled screenshot for docs, social posts, or PR reviews.",
+    category: CATEGORIES.development,
+    icon: ImageDown,
+  },
+  {
+    title: "Mermaid Live Editor",
+    url: "/tools/mermaid-editor",
+    description:
+      "Write Mermaid diagrams with a live SVG preview. Supports flowcharts, sequence, ER, and more.",
+    category: CATEGORIES.development,
+    icon: GitBranch,
+  },
+  {
+    title: "Regex Railroad",
+    url: "/tools/regex-railroad",
+    description: "Visualize a regular expression as a railroad diagram to see its structure at a glance.",
+    category: CATEGORIES.development,
+    icon: Regex,
   },
 ];
 
@@ -543,6 +601,13 @@ export const uiStyling: Tool[] = [
       "Generate complementary, analogous, triadic, and monochromatic palettes from a base color.",
     category: CATEGORIES.uiStyling,
     icon: Palette,
+  },
+  {
+    title: "Cubic Bezier Editor",
+    url: "/tools/cubic-bezier",
+    description: "Design custom CSS easing curves with draggable control points and a live preview.",
+    category: CATEGORIES.uiStyling,
+    icon: PenTool,
   },
 ];
 
