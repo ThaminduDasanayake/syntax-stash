@@ -27,7 +27,12 @@ export function InputField({
   const inputId = id ?? generatedId;
 
   if (!label) {
-    return <Input id={inputId} className={inputClassName} {...props} />;
+    return (
+      <div className="flex items-center gap-2">
+        <Input id={inputId} className={cn("font-mono", inputClassName)} {...props} />
+        {action && <>{action}</>}
+      </div>
+    );
   }
 
   return (
@@ -35,7 +40,7 @@ export function InputField({
       <Label htmlFor={inputId} className={labelClassName}>
         {label}
       </Label>
-      <div className="flex gap-2">
+      <div className="flex items-center gap-2">
         <Input id={inputId} className={cn("font-mono", inputClassName)} {...props} />
         {action && <>{action}</>}
       </div>
