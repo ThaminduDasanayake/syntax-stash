@@ -1,5 +1,4 @@
 import {
-  ArrowRightLeft,
   Atom,
   Binary,
   BookText,
@@ -43,6 +42,7 @@ import {
   Regex,
   Scale,
   Scan,
+  Scissors,
   SearchCode,
   ShieldCheck,
   ShieldHalf,
@@ -248,9 +248,9 @@ export const developmentTools: Tool[] = [
     icon: NotebookPen,
   },
   {
-    title: "SQL to Drizzle ORM",
-    url: "/tools/sql-drizzle-converter",
-    description: "Convert PostgreSQL and MySQL CREATE TABLE statements into Drizzle ORM schemas.",
+    title: "Drizzle Schema Studio",
+    url: "/tools/drizzle-schema-studio",
+    description: "Convert SQL CREATE TABLE statements or Prisma schema models into Drizzle ORM schemas.",
     category: CATEGORIES.development,
     icon: Database,
   },
@@ -261,14 +261,6 @@ export const developmentTools: Tool[] = [
       "Convert JSON payloads into Zod (TypeScript) and Pydantic (Python) validation schemas.",
     category: CATEGORIES.development,
     icon: FileJson,
-  },
-  {
-    title: "Prisma to Drizzle",
-    url: "/tools/prisma-to-drizzle",
-    description:
-      "Migrate schema.prisma models directly into Drizzle ORM syntax for PostgreSQL or SQLite.",
-    category: CATEGORIES.development,
-    icon: ArrowRightLeft,
   },
   {
     title: "Mongo Aggregation Builder",
@@ -608,6 +600,13 @@ export const uiStyling: Tool[] = [
     description: "Design custom CSS easing curves with draggable control points and a live preview.",
     category: CATEGORIES.uiStyling,
     icon: PenTool,
+  },
+  {
+    title: "Tailwind Extractor Studio",
+    url: "/tools/tailwind-extractor",
+    description: "Extract inline Tailwind classes from JSX into @apply-based semantic CSS components.",
+    category: CATEGORIES.uiStyling,
+    icon: Scissors,
   },
 ];
 

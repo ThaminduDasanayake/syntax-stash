@@ -201,9 +201,58 @@
         @apply border-border outline-ring/50;
     }
 
+    @supports (-moz-appearance: none) {
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: color-mix(in oklab, var(--primary) 30%, transparent) transparent;
+        }
+    }
+
     body {
         @apply bg-background text-foreground;
         letter-spacing: var(--tracking-normal);
+    }
+
+    /* WebKit Rules */
+    ::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+    }
+
+    ::-webkit-scrollbar-track,
+    ::-webkit-scrollbar-track:hover {
+        background-color: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: color-mix(in oklab, var(--primary) 60%, transparent);
+        border-radius: 9999px;
+        border: 3px solid transparent;
+        background-clip: content-box;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: color-mix(in oklab, var(--primary) 80%, transparent);
+        border-radius: 9999px;
+        border: 3px solid transparent;
+        background-clip: content-box;
+    }
+
+    ::-webkit-scrollbar-corner {
+        background-color: transparent;
+    }
+}
+
+@layer utilities {
+    .scrollbar-hide {
+        -ms-overflow-style: none !important;
+        scrollbar-width: none !important;
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
     }
 }
 
