@@ -12,6 +12,7 @@ import {
   Database,
   Eye,
   FileDiff,
+  FileDown,
   FileImage,
   FileJson,
   FileText,
@@ -471,6 +472,14 @@ export const typographyTools: Tool[] = [
     description: "Extract clean text/markdown from PDF, DOCX, CSV, and TXT files.",
     category: CATEGORIES.typography,
     icon: FileText,
+  },
+  {
+    title: "Document to Markdown",
+    url: "/tools/document-to-markdown",
+    description:
+      "Convert PDF, DOCX, HTML, and text files into LLM-ready Markdown with optional YAML frontmatter and .md download.",
+    category: CATEGORIES.typography,
+    icon: FileDown,
   },
   {
     title: "Text Analyzer",

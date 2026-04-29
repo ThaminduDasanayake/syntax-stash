@@ -3,6 +3,14 @@ export const maxDuration = 30;
 
 import { NextResponse } from "next/server";
 
+async function htmlToMarkdown(html: string): Promise<string> {
+  const TurndownService = (await import("turndown")).default;
+  const { gfm } = await import("turndown-plugin-gfm");
+  const td = new TurndownService();
+  td.use(gfm);
+  return td.turndown(html);
+}
+
 export async function POST(request: Request) {
   try {
     const form = await request.formData();
@@ -29,10 +37,13 @@ export async function POST(request: Request) {
     } else if (type.includes("officedocument.wordprocessingml") || ext === "docx") {
       const mammoth = await import("mammoth");
       const { value: html } = await mammoth.convertToHtml({ buffer });
-      const TurndownService = (await import("turndown")).default;
-      text = new TurndownService().turndown(html);
+      text = await htmlToMarkdown(html);
     } else if (type === "text/plain" || type === "text/csv" || ext === "txt" || ext === "csv") {
       // MIME type for .txt/.csv is often empty or application/octet-stream in browsers
+      text = buffer.toString("utf-8");
+    } else if (type === "text/html" || ext === "html" || ext === "htm") {
+      text = await htmlToMarkdown(buffer.toString("utf-8"));
+    } else if (type === "text/markdown" || ext === "md" || ext === "markdown") {
       text = buffer.toString("utf-8");
     } else {
       return NextResponse.json({ error: `Unsupported file type: ${type || ext}` }, { status: 400 });
