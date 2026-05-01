@@ -1,39 +1,60 @@
 "use client";
 
-import { Check, Copy, FileText } from "lucide-react";
+import { Download, FileCode2, FileText, Lightbulb, PenTool } from "lucide-react";
 import { useState } from "react";
 
+import Editor from "@/app/tools/document-extractor/editor.tsx";
 import FileDropzone from "@/components/file-dropzone";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
+import CopyButton from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { TextAreaField } from "@/components/ui/textarea-field.tsx";
+
+import { composeOutput, downloadMarkdown } from "./helpers";
+
+const MAX_BYTES = 4 * 1024 * 1024;
 
 export default function DocumentExtractorPage() {
   const [fileName, setFileName] = useState<string | null>(null);
-  const [text, setText] = useState("");
+  const [parsedMarkdown, setParsedMarkdown] = useState("");
+  const [markdown, setMarkdown] = useState("");
+  const [plainText, setPlainText] = useState("");
+  const [withFrontmatter, setWithFrontmatter] = useState(false);
+  const [llmReady, setLlmReady] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   async function handleFileDrop(file: File) {
     setFileName(file.name);
-    setText("");
+    setParsedMarkdown("");
+    setMarkdown("");
+    setPlainText("");
     setError(null);
-    setIsLoading(true);
 
+    if (file.size > MAX_BYTES) {
+      setError(
+        "File exceeds 4 MB. Vercel/Next.js serverless limits apply — split or compress the document.",
+      );
+      return;
+    }
+
+    setIsLoading(true);
     try {
-      // Do NOT set Content-Type — browser must set it with the multipart boundary
       const fd = new FormData();
       fd.append("file", file);
-
       const res = await fetch("/api/extract-text", { method: "POST", body: fd });
       const data = await res.json();
 
       if (!res.ok || data.error) {
         setError(data.error ?? "Extraction failed.");
       } else {
-        setText(data.text ?? "");
+        const extracted = data.text ?? "";
+        setParsedMarkdown(extracted);
+        setPlainText(extracted);
       }
     } catch {
       setError("Network error — could not reach the server.");
@@ -41,63 +62,150 @@ export default function DocumentExtractorPage() {
       setIsLoading(false);
     }
   }
-  const { copied, copy } = useCopyToClipboard();
+
+  const output = composeOutput(markdown, withFrontmatter, fileName);
 
   return (
     <ToolLayout
       icon={FileText}
-      title="Universal Document"
+      title="Document"
       highlight="Extractor"
-      description="Extract clean text from PDF, DOCX, TXT, and CSV files for AI prompting."
+      description="Extract clean text or LLM-ready Markdown from PDF, DOCX, HTML, CSV, and text files."
     >
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {/* Left — Dropzone & Status */}
-        <div className="space-y-4">
-          <Label className="text-foreground">File</Label>
-          <FileDropzone
-            onFileDropAction={handleFileDrop}
-            accept=".pdf,.docx,.txt,.csv"
-            label="Drop a PDF, DOCX, TXT, or CSV file"
-          />
-          <div className="space-y-1">
-            {fileName && (
-              <p className="text-muted-foreground text-xs">
-                {fileName}
-                {isLoading && <span className="text-primary ml-2">Extracting...</span>}
-              </p>
-            )}
-            {error && <p className="text-destructive text-sm">{error}</p>}
+      <div className="flex flex-col gap-8">
+        {/* Dropzone & Options */}
+        <div className="space-y-6">
+          <div className="space-y-3">
+            <FileDropzone
+              onFileDropAction={handleFileDrop}
+              accept=".pdf,.docx,.html,.htm,.md,.markdown,.txt,.csv"
+              label="Drop a PDF, DOCX, HTML, MD, TXT, or CSV file (Max size: 4 MB)"
+            />
+            <div className="space-y-1">
+              {fileName && (
+                <p className="text-muted-foreground text-xs">
+                  {fileName}
+                  {isLoading && <span className="text-primary ml-2">Extracting...</span>}
+                </p>
+              )}
+              {error && <p className="text-destructive text-sm">{error}</p>}
+            </div>
           </div>
+
+          <div className="flex items-center gap-3">
+            <Switch
+              id="llm-ready-toggle"
+              checked={llmReady}
+              onCheckedChange={setLlmReady}
+              disabled={isLoading}
+            />
+            <Label htmlFor="llm-ready-toggle" className="text-foreground cursor-pointer">
+              LLM-ready Markdown
+            </Label>
+            <span className="text-muted-foreground text-xs">
+              — rich editor, YAML frontmatter, and .md download
+            </span>
+          </div>
+
+          <p className="text-muted-foreground text-xs">
+            Note: PDF output is flat text — structural headings and tables are not reconstructed.
+          </p>
         </div>
 
-        {/* Right — Output */}
-        <div className="space-y-4">
-          <Label className="text-foreground">Extracted Text</Label>
-          <Textarea
-            readOnly
-            value={text}
-            rows={18}
-            placeholder="Extracted text will appear here..."
-            className="text-foreground bg-background placeholder:text-muted-foreground resize-none font-mono text-sm leading-relaxed focus-visible:ring-0"
-          />
-          <Button
-            onClick={() => copy(text)}
-            disabled={!text || isLoading}
-            className="hover:text-foreground text-background bg-foreground rounded-full px-6 py-2 font-semibold transition-all duration-200 disabled:opacity-50"
-          >
-            {copied ? (
-              <>
-                <Check size={16} className="mr-2" />
-                Copied!
-              </>
-            ) : (
-              <>
-                <Copy size={16} className="mr-2" />
-                Copy to Clipboard
-              </>
-            )}
-          </Button>
-        </div>
+        {/* Output */}
+        {llmReady ? (
+          <div className="space-y-4">
+            <div className="bg-muted/70 text-muted-foreground flex items-center gap-3 rounded-lg border px-4 py-3 text-sm">
+              <Lightbulb className="text-yellow-500" size={18} />
+              <p>
+                <strong>Pro tip:</strong> The Rich Editor supports Notion-style commands! Type{" "}
+                <kbd className="bg-background border-border rounded border px-1.5 py-0.5 font-mono text-xs font-semibold">
+                  /
+                </kbd>{" "}
+                on any new line to quickly add headings, lists, and formatting.
+              </p>
+            </div>
+
+            <Tabs
+              defaultValue="rich"
+              className="flex flex-col gap-4"
+              onValueChange={(tab) => {
+                if (tab === "rich") {
+                  setParsedMarkdown(markdown);
+                }
+              }}
+            >
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <TabsList className="w-xs">
+                  <TabsTrigger value="rich" className="tab-trigger">
+                    <PenTool size={16} />
+                    Rich Editor
+                  </TabsTrigger>
+                  <TabsTrigger value="raw" className="tab-trigger">
+                    <FileCode2 size={16} />
+                    Raw Markdown
+                  </TabsTrigger>
+                </TabsList>
+
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2">
+                    <Switch
+                      id="frontmatter-toggle"
+                      checked={withFrontmatter}
+                      onCheckedChange={setWithFrontmatter}
+                      disabled={isLoading}
+                    />
+                    <Label htmlFor="frontmatter-toggle" className="text-foreground cursor-pointer">
+                      Add YAML frontmatter
+                    </Label>
+                  </div>
+                  <div className="flex gap-2">
+                    <CopyButton value={output} disabled={!markdown || isLoading} />
+                    <Button
+                      onClick={() => downloadMarkdown(output, fileName ?? "document")}
+                      disabled={!markdown || isLoading}
+                      variant="secondary"
+                    >
+                      <Download />
+                      Download .md
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
+              <TabsContent value="rich">
+                <Editor initialMarkdown={parsedMarkdown} onChange={setMarkdown} />
+              </TabsContent>
+
+              <TabsContent value="raw">
+                <TextAreaField
+                  value={markdown}
+                  onChange={(e) => {
+                    const newValue = e.target.value;
+                    setMarkdown(newValue);
+                    setParsedMarkdown(newValue);
+                  }}
+                  className="field-sizing-content min-h-[18lh]"
+                  placeholder="Raw markdown will appear here..."
+                />
+              </TabsContent>
+            </Tabs>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <Label className="text-foreground">Extracted Text</Label>
+              <CopyButton value={plainText} disabled={!plainText || isLoading} />
+            </div>
+            <Textarea
+              readOnly
+              value={plainText}
+              rows={18}
+              placeholder="Extracted text will appear here..."
+              className="text-foreground bg-background placeholder:text-muted-foreground resize-none font-mono text-sm leading-relaxed focus-visible:ring-0"
+            />
+          </div>
+        )}
       </div>
     </ToolLayout>
   );

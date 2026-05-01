@@ -1,124 +1,20 @@
 "use client";
 
-import { Check, Copy, Download, NotebookPen, RotateCcw } from "lucide-react";
+import { Code2, Download, Eye, NotebookPen, RotateCcw } from "lucide-react";
 import { marked } from "marked";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 
+import { DEFAULT_MARKDOWN } from "@/app/tools/markdown-live-preview/data.ts";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
-
-const DEFAULT_MARKDOWN = `# Markdown Live Preview
-
-Write your markdown on the left and see it rendered in real time.
-
-## Text Formatting
-
-This is **bold**, this is *italic*, and this is ~~strikethrough~~.
-
-You can also use \`inline code\` in your text.
-
-## Lists
-
-### Unordered
-
-- First item
-- Second item
-  - Nested item
-  - Another nested item
-- Third item
-
-### Ordered
-
-1. Step one
-2. Step two
-3. Step three
-
-### Task List
-
-- [x] Write the markdown
-- [x] Preview it live
-- [ ] Export when ready
-
-## Links & Images
-
-Visit [GitHub](https://github.com) for more info.
-
-![Placeholder image](https://via.placeholder.com/600x200/1e293b/94a3b8?text=Markdown+Preview)
-
-## Blockquote
-
-> The best way to predict the future is to invent it.
->
-> — Alan Kay
-
-## Table
-
-| Feature | Supported |
-|---------|-----------|
-| Headings | Yes |
-| Bold / Italic | Yes |
-| Tables | Yes |
-| Code blocks | Yes |
-| Task lists | Yes |
-| Images | Yes |
-
-## Code Block
-
-\`\`\`typescript
-interface User {
-  id: string;
-  name: string;
-  email: string;
-}
-
-function greet(user: User): string {
-  return \`Hello, \${user.name}!\`;
-}
-\`\`\`
-
-## Horizontal Rule
-
----
-
-*Start editing on the left to see your changes here instantly.*`;
-
-function useScrollSync(ref1: React.RefObject<HTMLElement | null>, ref2: React.RefObject<HTMLElement | null>) {
-  const isSyncing = useRef(false);
-
-  const handleScroll = useCallback(
-    (source: React.RefObject<HTMLElement | null>, target: React.RefObject<HTMLElement | null>) => {
-      if (isSyncing.current) return;
-      if (!source.current || !target.current) return;
-      isSyncing.current = true;
-
-      const sourceEl = source.current;
-      const targetEl = target.current;
-      const ratio = sourceEl.scrollTop / (sourceEl.scrollHeight - sourceEl.clientHeight || 1);
-      targetEl.scrollTop = ratio * (targetEl.scrollHeight - targetEl.clientHeight);
-
-      requestAnimationFrame(() => {
-        isSyncing.current = false;
-      });
-    },
-    [],
-  );
-
-  return {
-    onScrollLeft: () => handleScroll(ref1, ref2),
-    onScrollRight: () => handleScroll(ref2, ref1),
-  };
-}
+import ClearButton from "@/components/ui/clear-button.tsx";
+import CopyButton from "@/components/ui/copy-button.tsx";
+import { Label } from "@/components/ui/label.tsx";
+import { TextAreaField } from "@/components/ui/textarea-field.tsx";
 
 export default function MarkdownLivePreviewPage() {
   const [markdown, setMarkdown] = useState(DEFAULT_MARKDOWN);
-  const { copied, copy } = useCopyToClipboard();
-
-  const editorRef = useRef<HTMLTextAreaElement | null>(null);
-  const previewRef = useRef<HTMLDivElement | null>(null);
-  const { onScrollLeft, onScrollRight } = useScrollSync(editorRef, previewRef);
+  const [showHtml, setShowHtml] = useState(false);
 
   const renderedHtml = useMemo(() => {
     if (!markdown.trim()) return "";
@@ -193,48 +89,45 @@ ${renderedHtml}
             <span>{stats.lines} lines</span>
           </div>
           <div className="ml-auto flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setMarkdown("")}
-              disabled={!markdown}
-              className="rounded-full"
-            >
-              <RotateCcw size={12} />
-              Clear
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => copy(markdown)}
-              disabled={!markdown}
-              className="rounded-full font-semibold"
-            >
-              {copied ? (
-                <><Check size={12} className="text-emerald-400" /><span className="text-emerald-400">Copied</span></>
-              ) : (
-                <><Copy size={12} />Copy MD</>
-              )}
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleDownloadMd}
-              disabled={!markdown}
-              className="rounded-full"
-            >
-              <Download size={12} />
+            {/*<Button*/}
+            {/*  variant="outline"*/}
+            {/*  onClick={() => copy(markdown)}*/}
+            {/*  disabled={!markdown}*/}
+            {/*  className="rounded-full font-semibold"*/}
+            {/*>*/}
+            {/*  {copied ? (*/}
+            {/*    <>*/}
+            {/*      <Check className="text-emerald-400" />*/}
+            {/*      <span className="text-emerald-400">Copied</span>*/}
+            {/*    </>*/}
+            {/*  ) : (*/}
+            {/*    <>*/}
+            {/*      <Copy />*/}
+            {/*      Copy MD*/}
+            {/*    </>*/}
+            {/*  )}*/}
+            {/*</Button>*/}
+
+            <Button variant="outline" onClick={handleDownloadMd} disabled={!markdown}>
+              <Download />
               .md
             </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleDownloadHtml}
-              disabled={!renderedHtml}
-              className="rounded-full"
-            >
-              <Download size={12} />
+            <Button variant="outline" onClick={handleDownloadHtml} disabled={!renderedHtml}>
+              <Download />
               .html
+            </Button>
+            <Button variant="outline" onClick={() => setShowHtml((v) => !v)}>
+              {showHtml ? (
+                <>
+                  <Eye />
+                  Show preview
+                </>
+              ) : (
+                <>
+                  <Code2 />
+                  Show HTML
+                </>
+              )}
             </Button>
           </div>
         </div>
@@ -242,38 +135,52 @@ ${renderedHtml}
         {/* Editor + Preview */}
         <div className="grid h-[70vh] grid-cols-1 gap-4 lg:grid-cols-2">
           {/* Editor */}
-          <div className="flex flex-col gap-1.5">
-            <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
-              Editor
-            </Label>
-            <Textarea
-              ref={editorRef}
-              value={markdown}
-              onChange={(e) => setMarkdown(e.target.value)}
-              onScroll={onScrollLeft}
-              placeholder="Start writing markdown…"
-              className="flex-1 resize-none font-mono text-sm leading-relaxed"
-              spellCheck={false}
-            />
-          </div>
+          <TextAreaField
+            label="Editor"
+            value={markdown}
+            onChange={(e) => setMarkdown(e.target.value)}
+            placeholder="Start writing markdown…"
+            className="h-full resize-none text-sm leading-relaxed"
+            spellCheck={false}
+            action={
+              <ClearButton
+                icon={<RotateCcw />}
+                onClick={() => setMarkdown("")}
+                disabled={!markdown}
+              />
+            }
+          />
 
-          {/* Preview */}
-          <div className="flex flex-col gap-1.5">
-            <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
-              Preview
-            </Label>
-            <div
-              ref={previewRef}
-              onScroll={onScrollRight}
-              className="border-border bg-card prose prose-sm dark:prose-invert flex-1 overflow-y-auto rounded-xl border p-5 shadow-sm"
-            >
-              {renderedHtml ? (
-                <div dangerouslySetInnerHTML={{ __html: renderedHtml }} />
-              ) : (
-                <p className="text-muted-foreground">Preview will appear here…</p>
-              )}
+          {/* Preview / HTML */}
+
+          {showHtml ? (
+            <TextAreaField
+              label="HTML Output"
+              readOnly
+              value={renderedHtml}
+              placeholder="Generated HTML will appear here…"
+              className="h-full resize-none text-sm leading-relaxed"
+              spellCheck={false}
+              action={<CopyButton value={renderedHtml} disabled={!renderedHtml} />}
+            />
+          ) : (
+            <div className="flex h-full flex-col gap-1.5">
+              <div className="flex items-center justify-between">
+                <Label className="text-sm font-semibold">Preview</Label>
+                <CopyButton value={markdown} disabled={!markdown} />
+              </div>
+
+              <div className="bg-card h-full rounded-lg border px-3 py-2 text-sm">
+                <div className="prose prose-sm dark:prose-invert max-w-none">
+                  {renderedHtml ? (
+                    <div dangerouslySetInnerHTML={{ __html: renderedHtml }} />
+                  ) : (
+                    <p className="text-muted-foreground">Preview will appear here…</p>
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </ToolLayout>

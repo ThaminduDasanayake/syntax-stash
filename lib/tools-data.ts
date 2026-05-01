@@ -6,13 +6,11 @@ import {
   BrainCircuit,
   CalendarClock,
   Clock,
-  Code2,
   CodeXml,
   Container,
   Database,
   Eye,
   FileDiff,
-  FileDown,
   FileImage,
   FileJson,
   FileText,
@@ -66,6 +64,7 @@ export const CATEGORIES = {
   devops: "DevOps",
   imagesAssets: "Images & Assets",
   network: "Network & Security",
+  schemas: "Schema & Database",
   typography: "Typography & Text",
   uiStyling: "UI & Styling",
 } as const;
@@ -155,33 +154,12 @@ export const dataTools: Tool[] = [
     icon: KeyRound,
   },
   {
-    title: "NLP Sandbox",
-    url: "/tools/nlp-sandbox",
-    description: "Simulate text cleaning, vectorization, and scaling pipelines with live output.",
-    category: CATEGORIES.data,
-    icon: BrainCircuit,
-  },
-  {
-    title: "SQL Formatter",
-    url: "/tools/sql-formatter",
-    description: "Prettify raw SQL queries with proper indentation and capitalized keywords.",
-    category: CATEGORIES.data,
-    icon: Table,
-  },
-  {
     title: "Universal Decoder",
     url: "/tools/universal-decoder",
     description:
       "Paste any mystery string — JWT, Unix timestamp, UUID, MongoDB ObjectId, or Snowflake ID — and decode it instantly.",
     category: CATEGORIES.data,
     icon: Scan,
-  },
-  {
-    title: "Web Extractor",
-    url: "/tools/web-extractor",
-    description: "Extract meta tags, headings, and links from any public URL.",
-    category: CATEGORIES.data,
-    icon: Globe,
   },
 ];
 
@@ -217,14 +195,6 @@ export const developmentTools: Tool[] = [
     icon: FileDiff,
   },
   {
-    title: "Drizzle Schema Studio",
-    url: "/tools/drizzle-schema-studio",
-    description:
-      "Convert SQL CREATE TABLE statements or Prisma schema models into Drizzle ORM schemas.",
-    category: CATEGORIES.development,
-    icon: Database,
-  },
-  {
     title: "HTML to JSX",
     url: "/tools/html-to-jsx",
     description:
@@ -249,18 +219,10 @@ export const developmentTools: Tool[] = [
     icon: BookText,
   },
   {
-    title: "JSON Schema Studio",
-    url: "/tools/json-schema-studio",
-    description:
-      "Convert JSON payloads into strict TypeScript interfaces, Zod schemas, Pydantic models, and generic JSON Schemas.",
-    category: CATEGORIES.development,
-    icon: FileJson,
-  },
-  {
     title: "Markdown Live Preview",
     url: "/tools/markdown-live-preview",
     description:
-      "Write markdown in a side-by-side editor with real-time rendered preview and export.",
+      "Write markdown with a side-by-side preview, view the generated HTML, and export to .md or .html.",
     category: CATEGORIES.development,
     icon: NotebookPen,
   },
@@ -271,13 +233,6 @@ export const developmentTools: Tool[] = [
       "Generate a nested Table of Contents from your Markdown document with automatic anchor links.",
     category: CATEGORIES.development,
     icon: ListOrdered,
-  },
-  {
-    title: "Markdown to HTML",
-    url: "/tools/markdown-to-html",
-    description: "Convert Markdown to HTML with live preview and export.",
-    category: CATEGORIES.development,
-    icon: Code2,
   },
   {
     title: "Mermaid Live Editor",
@@ -295,11 +250,11 @@ export const developmentTools: Tool[] = [
     icon: Database,
   },
   {
-    title: "Mongo Aggregation Builder",
-    url: "/tools/mongo-pipeline-builder",
-    description: "Visually scaffold complex MongoDB aggregation pipelines with live JSON output.",
+    title: "NLP Sandbox",
+    url: "/tools/nlp-sandbox",
+    description: "Simulate text cleaning, vectorization, and scaling pipelines with live output.",
     category: CATEGORIES.development,
-    icon: Layers,
+    icon: BrainCircuit,
   },
   {
     title: "Regex Studio",
@@ -308,6 +263,13 @@ export const developmentTools: Tool[] = [
       "Build, visualize, test, and browse a curated library of production-ready regular expressions.",
     category: CATEGORIES.development,
     icon: Regex,
+  },
+  {
+    title: "Web Extractor",
+    url: "/tools/web-extractor",
+    description: "Extract meta tags, headings, and links from any public URL.",
+    category: CATEGORIES.development,
+    icon: Globe,
   },
 ];
 
@@ -363,6 +325,14 @@ export const devopsTools: Tool[] = [
 ];
 
 export const imageTools: Tool[] = [
+  {
+    title: "ASCII Diagram Editor",
+    url: "/tools/ascii-diagram",
+    description:
+      "Draw boxes and add text on a character grid. Outputs clean ASCII art using Unicode box-drawing characters.",
+    category: CATEGORIES.imagesAssets,
+    icon: Grid3X3,
+  },
   {
     title: "Image Converter",
     url: "/tools/image-converter",
@@ -449,29 +419,46 @@ export const networkTools: Tool[] = [
   },
 ];
 
-export const typographyTools: Tool[] = [
+export const schemaTools: Tool[] = [
   {
-    title: "ASCII Diagram Editor",
-    url: "/tools/ascii-diagram",
+    title: "Drizzle Schema Studio",
+    url: "/tools/drizzle-schema-studio",
     description:
-      "Draw boxes and add text on a character grid. Outputs clean ASCII art using Unicode box-drawing characters.",
-    category: CATEGORIES.typography,
-    icon: Grid3X3,
+      "Convert SQL CREATE TABLE statements or Prisma schema models into Drizzle ORM schemas.",
+    category: CATEGORIES.schemas,
+    icon: Database,
   },
+  {
+    title: "JSON Schema Studio",
+    url: "/tools/json-schema-studio",
+    description:
+      "Convert JSON payloads into strict TypeScript interfaces, Zod schemas, Pydantic models, and generic JSON Schemas.",
+    category: CATEGORIES.schemas,
+    icon: FileJson,
+  },
+  {
+    title: "Mongo Aggregation Builder",
+    url: "/tools/mongo-pipeline-builder",
+    description: "Visually scaffold complex MongoDB aggregation pipelines with live JSON output.",
+    category: CATEGORIES.schemas,
+    icon: Layers,
+  },
+  {
+    title: "SQL Formatter",
+    url: "/tools/sql-formatter",
+    description: "Prettify raw SQL queries with proper indentation and capitalized keywords.",
+    category: CATEGORIES.schemas,
+    icon: Table,
+  },
+];
+
+export const typographyTools: Tool[] = [
   {
     title: "CSV to Markdown Table",
     url: "/tools/csv-to-markdown",
     description: "Convert CSV and spreadsheet data into beautifully formatted Markdown tables.",
     category: CATEGORIES.typography,
     icon: TableProperties,
-  },
-  {
-    title: "Document to Markdown",
-    url: "/tools/document-to-markdown",
-    description:
-      "Convert PDF, DOCX, HTML, and text files into LLM-ready Markdown with optional YAML frontmatter and .md download.",
-    category: CATEGORIES.typography,
-    icon: FileDown,
   },
   {
     title: "String Case Converter",
@@ -488,9 +475,10 @@ export const typographyTools: Tool[] = [
     icon: FileText,
   },
   {
-    title: "Universal Document Extractor",
+    title: "Document Extractor",
     url: "/tools/document-extractor",
-    description: "Extract clean text/markdown from PDF, DOCX, CSV, and TXT files.",
+    description:
+      "Extract clean text or LLM-ready Markdown from PDF, DOCX, HTML, CSV, and text files. Optional rich editor, YAML frontmatter, and .md download.",
     category: CATEGORIES.typography,
     icon: FileText,
   },
@@ -612,6 +600,7 @@ export const internalTools: Tool[] = [
   ...devopsTools,
   ...imageTools,
   ...networkTools,
+  ...schemaTools,
   ...typographyTools,
   ...uiStyling,
 ];

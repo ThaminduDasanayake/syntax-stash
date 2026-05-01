@@ -5,7 +5,7 @@ import { EditorContent, EditorRoot, handleCommandNavigation, Placeholder } from 
 import { useEffect, useRef } from "react";
 import { useDebounceCallback } from "usehooks-ts";
 
-import { htmlToMarkdown, markdownToHtml } from "@/app/tools/document-to-markdown/helpers";
+import { htmlToMarkdown, markdownToHtml } from "@/app/tools/document-extractor/helpers";
 
 import { defaultExtensions } from "./extensions";
 import { slashCommand, SlashCommandMenu } from "./slash-command";
