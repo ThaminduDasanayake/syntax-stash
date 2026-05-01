@@ -19,17 +19,27 @@ export function downloadMarkdown(content: string, filename: string): void {
 
 export function markdownToHtml(md: string): string {
   if (!md) return "";
-  return marked.parse(md, { async: false, gfm: true, breaks: true }) as string;
+  const html = marked.parse(md, { async: false, gfm: true, breaks: true }) as string;
+
+  return html.replace(/\n<\/code><\/pre>/g, "</code></pre>");
 }
 
-const _td = new TurndownService({ headingStyle: "atx", codeBlockStyle: "fenced", bulletListMarker: "-" });
+const _td = new TurndownService({
+  headingStyle: "atx",
+  codeBlockStyle: "fenced",
+  bulletListMarker: "-",
+});
 _td.use(gfm);
 
 export function htmlToMarkdown(html: string): string {
   return _td.turndown(html ?? "");
 }
 
-export function composeOutput(md: string, withFrontmatter: boolean, fileName: string | null): string {
+export function composeOutput(
+  md: string,
+  withFrontmatter: boolean,
+  fileName: string | null,
+): string {
   if (!withFrontmatter || !fileName) return md;
   return buildFrontmatter(fileName, new Date().toISOString().slice(0, 10)) + md;
 }

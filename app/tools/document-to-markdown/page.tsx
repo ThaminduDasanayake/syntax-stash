@@ -1,6 +1,6 @@
 "use client";
 
-import { Download, FileDown } from "lucide-react";
+import { Download, FileCode2, FileDown, Lightbulb, PenTool } from "lucide-react";
 import { useState } from "react";
 
 import Editor from "@/app/tools/document-to-markdown/editor.tsx";
@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import CopyButton from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TextAreaField } from "@/components/ui/textarea-field.tsx";
 
 import { composeOutput, downloadMarkdown } from "./helpers";
 
@@ -91,32 +93,81 @@ export default function DocumentToMarkdownPage() {
 
         {/* Output */}
         <div className="space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
-              <Switch
-                id="frontmatter-toggle"
-                checked={withFrontmatter}
-                onCheckedChange={setWithFrontmatter}
-                disabled={isLoading}
-              />
-              <Label htmlFor="frontmatter-toggle" className="text-foreground cursor-pointer">
-                Add YAML frontmatter
-              </Label>
-            </div>
-            <div className="flex gap-3">
-              <CopyButton value={output} disabled={!markdown || isLoading} />
-              <Button
-                onClick={() => downloadMarkdown(output, fileName ?? "document")}
-                disabled={!markdown || isLoading}
-                variant="secondary"
-              >
-                <Download />
-                Download .md
-              </Button>
-            </div>
+          <div className="bg-muted/70 text-muted-foreground flex items-center gap-3 rounded-lg border px-4 py-3 text-sm">
+            <Lightbulb className="text-yellow-500" size={18} />
+            <p>
+              <strong>Pro tip:</strong> The Rich Editor supports Notion-style commands! Type{" "}
+              <kbd className="bg-background border-border rounded border px-1.5 py-0.5 font-mono text-xs font-semibold">
+                /
+              </kbd>{" "}
+              on any new line to quickly add headings, lists, and formatting.
+            </p>
           </div>
 
-          <Editor />
+          <Tabs
+            defaultValue="rich"
+            className="flex flex-col gap-4"
+            onValueChange={(tab) => {
+              if (tab === "rich") {
+                setParsedMarkdown(markdown);
+              }
+            }}
+          >
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <TabsList className="w-xs">
+                <TabsTrigger value="rich" className="tab-trigger">
+                  <PenTool size={16} />
+                  Rich Editor
+                </TabsTrigger>
+                <TabsTrigger value="raw" className="tab-trigger">
+                  <FileCode2 size={16} />
+                  Raw Markdown
+                </TabsTrigger>
+              </TabsList>
+
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <Switch
+                    id="frontmatter-toggle"
+                    checked={withFrontmatter}
+                    onCheckedChange={setWithFrontmatter}
+                    disabled={isLoading}
+                  />
+                  <Label htmlFor="frontmatter-toggle" className="text-foreground cursor-pointer">
+                    Add YAML frontmatter
+                  </Label>
+                </div>
+                <div className="flex gap-2">
+                  <CopyButton value={output} disabled={!markdown || isLoading} />
+                  <Button
+                    onClick={() => downloadMarkdown(output, fileName ?? "document")}
+                    disabled={!markdown || isLoading}
+                    variant="secondary"
+                  >
+                    <Download />
+                    Download .md
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            <TabsContent value="rich">
+              <Editor initialMarkdown={parsedMarkdown} onChange={setMarkdown} />
+            </TabsContent>
+
+            <TabsContent value="raw">
+              <TextAreaField
+                value={markdown}
+                onChange={(e) => {
+                  const newValue = e.target.value;
+                  setMarkdown(newValue);
+                  setParsedMarkdown(newValue);
+                }}
+                className="field-sizing-content min-h-[18lh]"
+                placeholder="Raw markdown will appear here..."
+              />
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </ToolLayout>

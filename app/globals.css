@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
@@ -27,6 +28,15 @@
     pointer-events: none;
     z-index: 0;
 }
+
+.ProseMirror .is-empty::before {
+    content: attr(data-placeholder);
+    float: left;
+    color: hsl(var(--muted-foreground));
+    pointer-events: none;
+    height: 0;
+}
+
 
 :root {
     --background: oklch(1.0000 0 0);
@@ -81,15 +91,6 @@
     --shadow-2xl: 0px 1px 4px 0px hsl(0 0% 0% / 0.13);
     --tracking-normal: 0rem;
     --spacing: 0.25rem;
-    --novel-highlight-default: #ffffff;
-    --novel-highlight-purple: #f6f3f8;
-    --novel-highlight-red: #fdebeb;
-    --novel-highlight-yellow: #fbf4a2;
-    --novel-highlight-blue: #c1ecf9;
-    --novel-highlight-green: #acf79f;
-    --novel-highlight-orange: #faebdd;
-    --novel-highlight-pink: #faf1f5;
-    --novel-highlight-gray: #f1f1ef;
 }
 
 .dark {
@@ -143,15 +144,6 @@
     --shadow-lg: 0px 1px 4px 0px hsl(0 0% 0% / 0.05), 0px 4px 6px -1px hsl(0 0% 0% / 0.05);
     --shadow-xl: 0px 1px 4px 0px hsl(0 0% 0% / 0.05), 0px 8px 10px -1px hsl(0 0% 0% / 0.05);
     --shadow-2xl: 0px 1px 4px 0px hsl(0 0% 0% / 0.13);
-    --novel-highlight-default: #000000;
-    --novel-highlight-purple: #3f2c4b;
-    --novel-highlight-red: #5c1a1a;
-    --novel-highlight-yellow: #5c4b1a;
-    --novel-highlight-blue: #1a3d5c;
-    --novel-highlight-green: #1a5c20;
-    --novel-highlight-orange: #5c3a1a;
-    --novel-highlight-pink: #5c1a3a;
-    --novel-highlight-gray: #3a3a3a;
 }
 
 @theme inline {
