@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@plugin "@tailwindcss/typography";
+
 @custom-variant dark (&:is(.dark *));
 
 .hacker-grid {
@@ -26,6 +28,15 @@
     pointer-events: none;
     z-index: 0;
 }
+
+.ProseMirror .is-empty::before {
+    content: attr(data-placeholder);
+    float: left;
+    color: hsl(var(--muted-foreground));
+    pointer-events: none;
+    height: 0;
+}
+
 
 :root {
     --background: oklch(1.0000 0 0);
