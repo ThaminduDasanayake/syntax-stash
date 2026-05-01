@@ -16,7 +16,6 @@ import {
   FileImage,
   FileJson,
   FileText,
-  FileType2,
   Fingerprint,
   Frame,
   GitBranch,
@@ -100,25 +99,11 @@ export const calculatorTools: Tool[] = [
 
 export const dataTools: Tool[] = [
   {
-    title: "JWT Decoder",
-    url: "/tools/jwt-decoder",
-    description: "Decode and inspect JSON Web Tokens locally in your browser.",
+    title: "Base64 Image Decoder",
+    url: "/tools/base64-image-decoder",
+    description: "Decode and preview base64-encoded images locally.",
     category: CATEGORIES.data,
-    icon: KeyRound,
-  },
-  {
-    title: "JSON Formatter",
-    url: "/tools/json-formatter",
-    description: "Format, minify, and validate JSON payloads instantly.",
-    category: CATEGORIES.data,
-    icon: Braces,
-  },
-  {
-    title: "SQL Formatter",
-    url: "/tools/sql-formatter",
-    description: "Prettify raw SQL queries with proper indentation and capitalized keywords.",
-    category: CATEGORIES.data,
-    icon: Table,
+    icon: Image,
   },
   {
     title: "Encoder / Decoder",
@@ -135,11 +120,53 @@ export const dataTools: Tool[] = [
     icon: Fingerprint,
   },
   {
-    title: "Base64 Image Decoder",
-    url: "/tools/base64-image-decoder",
-    description: "Decode and preview base64-encoded images locally.",
+    title: "JSON Array Organizer",
+    url: "/tools/json-array-sorter",
+    description: "Sort and filter massive JSON arrays in real-time with dynamic controls.",
     category: CATEGORIES.data,
-    icon: Image,
+    icon: ListFilter,
+  },
+  {
+    title: "JSON Formatter",
+    url: "/tools/json-formatter",
+    description: "Format, minify, and validate JSON payloads instantly.",
+    category: CATEGORIES.data,
+    icon: Braces,
+  },
+  {
+    title: "JSONPath Sandbox",
+    url: "/tools/jsonpath-sandbox",
+    description: "Test and evaluate JSONPath queries against any JSON payload in real-time.",
+    category: CATEGORIES.data,
+    icon: SearchCode,
+  },
+  {
+    title: "JSON Tree Viewer",
+    url: "/tools/json-tree-viewer",
+    description: "Explore large JSON payloads as a collapsible tree with path copy and search.",
+    category: CATEGORIES.data,
+    icon: Network,
+  },
+  {
+    title: "JWT Decoder",
+    url: "/tools/jwt-decoder",
+    description: "Decode and inspect JSON Web Tokens locally in your browser.",
+    category: CATEGORIES.data,
+    icon: KeyRound,
+  },
+  {
+    title: "NLP Sandbox",
+    url: "/tools/nlp-sandbox",
+    description: "Simulate text cleaning, vectorization, and scaling pipelines with live output.",
+    category: CATEGORIES.data,
+    icon: BrainCircuit,
+  },
+  {
+    title: "SQL Formatter",
+    url: "/tools/sql-formatter",
+    description: "Prettify raw SQL queries with proper indentation and capitalized keywords.",
+    category: CATEGORIES.data,
+    icon: Table,
   },
   {
     title: "Universal Decoder",
@@ -150,39 +177,11 @@ export const dataTools: Tool[] = [
     icon: Scan,
   },
   {
-    title: "NLP Sandbox",
-    url: "/tools/nlp-sandbox",
-    description: "Simulate text cleaning, vectorization, and scaling pipelines with live output.",
-    category: CATEGORIES.data,
-    icon: BrainCircuit,
-  },
-  {
-    title: "JSONPath Sandbox",
-    url: "/tools/jsonpath-sandbox",
-    description: "Test and evaluate JSONPath queries against any JSON payload in real-time.",
-    category: CATEGORIES.data,
-    icon: SearchCode,
-  },
-  {
     title: "Web Extractor",
     url: "/tools/web-extractor",
     description: "Extract meta tags, headings, and links from any public URL.",
     category: CATEGORIES.data,
     icon: Globe,
-  },
-  {
-    title: "JSON Array Organizer",
-    url: "/tools/json-array-sorter",
-    description: "Sort and filter massive JSON arrays in real-time with dynamic controls.",
-    category: CATEGORIES.data,
-    icon: ListFilter,
-  },
-  {
-    title: "JSON Tree Viewer",
-    url: "/tools/json-tree-viewer",
-    description: "Explore large JSON payloads as a collapsible tree with path copy and search.",
-    category: CATEGORIES.data,
-    icon: Network,
   },
 ];
 
@@ -196,6 +195,14 @@ export const developmentTools: Tool[] = [
     icon: WandSparkles,
   },
   {
+    title: "Code Screenshot",
+    url: "/tools/code-screenshot",
+    description:
+      "Turn any code snippet into a styled screenshot for docs, social posts, or PR reviews.",
+    category: CATEGORIES.development,
+    icon: ImageDown,
+  },
+  {
     title: "Code Stash",
     url: "/tools/code-stash",
     description: "A curated library of developer snippets and configurations.",
@@ -203,19 +210,27 @@ export const developmentTools: Tool[] = [
     icon: CodeXml,
   },
   {
-    title: "Mock Data Generator",
-    url: "/tools/mock-data-generator",
-    description: "Generate structured dummy JSON data for testing.",
+    title: "Diff Viewer",
+    url: "/tools/diff-viewer",
+    description: "Compare two text blocks and visualize additions, deletions, and changes.",
+    category: CATEGORIES.development,
+    icon: FileDiff,
+  },
+  {
+    title: "Drizzle Schema Studio",
+    url: "/tools/drizzle-schema-studio",
+    description:
+      "Convert SQL CREATE TABLE statements or Prisma schema models into Drizzle ORM schemas.",
     category: CATEGORIES.development,
     icon: Database,
   },
   {
-    title: "Regex Studio",
-    url: "/tools/regex-studio",
+    title: "HTML to JSX",
+    url: "/tools/html-to-jsx",
     description:
-      "Build, test, and browse a curated library of production-ready regular expressions.",
+      "Convert HTML to React-ready JSX with renamed attributes, camelCase events, and style objects.",
     category: CATEGORIES.development,
-    icon: Regex,
+    icon: Atom,
   },
   {
     title: ".gitignore Generator",
@@ -224,6 +239,30 @@ export const developmentTools: Tool[] = [
       "Generate .gitignore files for your project with common patterns for popular stacks.",
     category: CATEGORIES.development,
     icon: FileText,
+  },
+  {
+    title: "JSDoc / TSDoc Generator",
+    url: "/tools/jsdoc-generator",
+    description:
+      "Paste a TypeScript function signature and generate JSDoc or TSDoc with @param and @returns stubs.",
+    category: CATEGORIES.development,
+    icon: BookText,
+  },
+  {
+    title: "JSON Schema Studio",
+    url: "/tools/json-schema-studio",
+    description:
+      "Convert JSON payloads into strict TypeScript interfaces, Zod schemas, Pydantic models, and generic JSON Schemas.",
+    category: CATEGORIES.development,
+    icon: FileJson,
+  },
+  {
+    title: "Markdown Live Preview",
+    url: "/tools/markdown-live-preview",
+    description:
+      "Write markdown in a side-by-side editor with real-time rendered preview and export.",
+    category: CATEGORIES.development,
+    icon: NotebookPen,
   },
   {
     title: "Markdown Table of Contents",
@@ -241,27 +280,19 @@ export const developmentTools: Tool[] = [
     icon: Code2,
   },
   {
-    title: "Markdown Live Preview",
-    url: "/tools/markdown-live-preview",
+    title: "Mermaid Live Editor",
+    url: "/tools/mermaid-editor",
     description:
-      "Write markdown in a side-by-side editor with real-time rendered preview and export.",
+      "Write Mermaid diagrams with a live SVG preview. Supports flowcharts, sequence, ER, and more.",
     category: CATEGORIES.development,
-    icon: NotebookPen,
+    icon: GitBranch,
   },
   {
-    title: "Drizzle Schema Studio",
-    url: "/tools/drizzle-schema-studio",
-    description: "Convert SQL CREATE TABLE statements or Prisma schema models into Drizzle ORM schemas.",
+    title: "Mock Data Generator",
+    url: "/tools/mock-data-generator",
+    description: "Generate structured dummy JSON data for testing.",
     category: CATEGORIES.development,
     icon: Database,
-  },
-  {
-    title: "JSON to Schemas",
-    url: "/tools/json-to-schemas",
-    description:
-      "Convert JSON payloads into Zod (TypeScript) and Pydantic (Python) validation schemas.",
-    category: CATEGORIES.development,
-    icon: FileJson,
   },
   {
     title: "Mongo Aggregation Builder",
@@ -271,56 +302,10 @@ export const developmentTools: Tool[] = [
     icon: Layers,
   },
   {
-    title: "Diff Viewer",
-    url: "/tools/diff-viewer",
-    description: "Compare two text blocks and visualize additions, deletions, and changes.",
-    category: CATEGORIES.development,
-    icon: FileDiff,
-  },
-  {
-    title: "HTML to JSX",
-    url: "/tools/html-to-jsx",
+    title: "Regex Studio",
+    url: "/tools/regex-studio",
     description:
-      "Convert HTML to React-ready JSX with renamed attributes, camelCase events, and style objects.",
-    category: CATEGORIES.development,
-    icon: Atom,
-  },
-  {
-    title: "JSON to TypeScript",
-    url: "/tools/json-to-typescript",
-    description:
-      "Paste any JSON payload and generate TypeScript interfaces with optional fields and unions inferred.",
-    category: CATEGORIES.development,
-    icon: FileType2,
-  },
-  {
-    title: "JSDoc / TSDoc Generator",
-    url: "/tools/jsdoc-generator",
-    description:
-      "Paste a TypeScript function signature and generate JSDoc or TSDoc with @param and @returns stubs.",
-    category: CATEGORIES.development,
-    icon: BookText,
-  },
-  {
-    title: "Code Screenshot",
-    url: "/tools/code-screenshot",
-    description:
-      "Turn any code snippet into a styled screenshot for docs, social posts, or PR reviews.",
-    category: CATEGORIES.development,
-    icon: ImageDown,
-  },
-  {
-    title: "Mermaid Live Editor",
-    url: "/tools/mermaid-editor",
-    description:
-      "Write Mermaid diagrams with a live SVG preview. Supports flowcharts, sequence, ER, and more.",
-    category: CATEGORIES.development,
-    icon: GitBranch,
-  },
-  {
-    title: "Regex Railroad",
-    url: "/tools/regex-railroad",
-    description: "Visualize a regular expression as a railroad diagram to see its structure at a glance.",
+      "Build, visualize, test, and browse a curated library of production-ready regular expressions.",
     category: CATEGORIES.development,
     icon: Regex,
   },
@@ -344,22 +329,6 @@ export const devopsTools: Tool[] = [
     icon: CalendarClock,
   },
   {
-    title: "Docker Compose Studio",
-    url: "/tools/docker-compose",
-    description:
-      "Build compose files visually or convert complex 'docker run' commands into YAML instantly.",
-    category: CATEGORIES.devops,
-    icon: Container,
-  },
-  {
-    title: "Git Command Cheatsheet",
-    url: "/tools/git-cheatsheet",
-    description:
-      "A searchable reference of ~70 git commands, organised by intent with danger-level indicators.",
-    category: CATEGORIES.devops,
-    icon: GitBranch,
-  },
-  {
     title: "curl Command Builder",
     url: "/tools/curl-builder",
     description:
@@ -368,12 +337,28 @@ export const devopsTools: Tool[] = [
     icon: Terminal,
   },
   {
+    title: "Docker Compose Studio",
+    url: "/tools/docker-compose",
+    description:
+      "Build compose files visually or convert complex 'docker run' commands into YAML instantly.",
+    category: CATEGORIES.devops,
+    icon: Container,
+  },
+  {
     title: ".env File Diff & Merge",
     url: "/tools/env-diff",
     description:
       "Semantically compare two .env files to find missing keys, extra keys, and value mismatches.",
     category: CATEGORIES.devops,
     icon: FileDiff,
+  },
+  {
+    title: "Git Command Cheatsheet",
+    url: "/tools/git-cheatsheet",
+    description:
+      "A searchable reference of ~70 git commands, organised by intent with danger-level indicators.",
+    category: CATEGORIES.devops,
+    icon: GitBranch,
   },
 ];
 
@@ -385,21 +370,6 @@ export const imageTools: Tool[] = [
     category: CATEGORIES.imagesAssets,
     icon: ImageIcon,
   },
-  {
-    title: "SVG Optimizer",
-    url: "/tools/svg-optimizer",
-    description: "Minify and clean bloated SVG files.",
-    category: CATEGORIES.imagesAssets,
-    icon: FileImage,
-  },
-  {
-    title: "SVG Path Viewer",
-    url: "/tools/svg-path",
-    description: "Preview and edit SVG 'd' paths with real-time visualization.",
-    category: CATEGORIES.imagesAssets,
-    icon: PenTool,
-  },
-
   {
     title: "Placeholder Generator",
     url: "/tools/placeholder-generator",
@@ -414,6 +384,20 @@ export const imageTools: Tool[] = [
     description: "Generate downloadable QR codes instantly.",
     category: CATEGORIES.imagesAssets,
     icon: QrCode,
+  },
+  {
+    title: "SVG Optimizer",
+    url: "/tools/svg-optimizer",
+    description: "Minify and clean bloated SVG files.",
+    category: CATEGORIES.imagesAssets,
+    icon: FileImage,
+  },
+  {
+    title: "SVG Path Viewer",
+    url: "/tools/svg-path",
+    description: "Preview and edit SVG 'd' paths with real-time visualization.",
+    category: CATEGORIES.imagesAssets,
+    icon: PenTool,
   },
 ];
 
@@ -435,12 +419,11 @@ export const networkTools: Tool[] = [
     icon: Globe2,
   },
   {
-    title: "Subnet / CIDR Calculator",
-    url: "/tools/subnet-calculator",
-    description:
-      "Calculate network address, broadcast, subnet mask, and host ranges from CIDR notation.",
+    title: "MAC Address Vendor Lookup",
+    url: "/tools/mac-vendor-lookup",
+    description: "Look up MAC address vendors by OUI with support for multiple formats.",
     category: CATEGORIES.network,
-    icon: Network,
+    icon: Wifi,
   },
   {
     title: "Open Graph Previewer",
@@ -450,28 +433,37 @@ export const networkTools: Tool[] = [
     icon: Globe,
   },
   {
+    title: "Subnet / CIDR Calculator",
+    url: "/tools/subnet-calculator",
+    description:
+      "Calculate network address, broadcast, subnet mask, and host ranges from CIDR notation.",
+    category: CATEGORIES.network,
+    icon: Network,
+  },
+  {
     title: "URL Parser & Builder",
     url: "/tools/url-parser",
     description: "Parse, analyze, and rebuild URLs with editable query parameters.",
     category: CATEGORIES.network,
     icon: Link,
   },
-  {
-    title: "MAC Address Vendor Lookup",
-    url: "/tools/mac-vendor-lookup",
-    description: "Look up MAC address vendors by OUI with support for multiple formats.",
-    category: CATEGORIES.network,
-    icon: Wifi,
-  },
 ];
 
 export const typographyTools: Tool[] = [
   {
-    title: "Universal Document Extractor",
-    url: "/tools/document-extractor",
-    description: "Extract clean text/markdown from PDF, DOCX, CSV, and TXT files.",
+    title: "ASCII Diagram Editor",
+    url: "/tools/ascii-diagram",
+    description:
+      "Draw boxes and add text on a character grid. Outputs clean ASCII art using Unicode box-drawing characters.",
     category: CATEGORIES.typography,
-    icon: FileText,
+    icon: Grid3X3,
+  },
+  {
+    title: "CSV to Markdown Table",
+    url: "/tools/csv-to-markdown",
+    description: "Convert CSV and spreadsheet data into beautifully formatted Markdown tables.",
+    category: CATEGORIES.typography,
+    icon: TableProperties,
   },
   {
     title: "Document to Markdown",
@@ -482,22 +474,6 @@ export const typographyTools: Tool[] = [
     icon: FileDown,
   },
   {
-    title: "Text Analyzer",
-    url: "/tools/text-analyzer",
-    description: "Analyze text for word counts, bytes, and estimated LLM tokens.",
-    category: CATEGORIES.typography,
-    icon: FileText,
-  },
-
-  {
-    title: "ASCII Diagram Editor",
-    url: "/tools/ascii-diagram",
-    description:
-      "Draw boxes and add text on a character grid. Outputs clean ASCII art using Unicode box-drawing characters.",
-    category: CATEGORIES.typography,
-    icon: Grid3X3,
-  },
-  {
     title: "String Case Converter",
     url: "/tools/string-case-converter",
     description: "Convert text between different naming conventions and typographical styles.",
@@ -505,27 +481,35 @@ export const typographyTools: Tool[] = [
     icon: Type,
   },
   {
-    title: "CSV to Markdown Table",
-    url: "/tools/csv-to-markdown",
-    description: "Convert CSV and spreadsheet data into beautifully formatted Markdown tables.",
+    title: "Text Analyzer",
+    url: "/tools/text-analyzer",
+    description: "Analyze text for word counts, bytes, and estimated LLM tokens.",
     category: CATEGORIES.typography,
-    icon: TableProperties,
+    icon: FileText,
+  },
+  {
+    title: "Universal Document Extractor",
+    url: "/tools/document-extractor",
+    description: "Extract clean text/markdown from PDF, DOCX, CSV, and TXT files.",
+    category: CATEGORIES.typography,
+    icon: FileText,
   },
 ];
 
 export const uiStyling: Tool[] = [
   {
-    title: "Tailwind CSS Cheatsheet",
-    url: "/tools/tailwind-cheatsheet",
+    title: "Border Radius Previewer",
+    url: "/tools/border-radius",
     description:
-      "A searchable, filterable reference of the most-used Tailwind utility classes. Click any class to copy it.",
+      "Visually configure CSS border-radius with per-corner sliders, presets, and live shape preview.",
     category: CATEGORIES.uiStyling,
-    icon: Wind,
+    icon: Square,
   },
   {
-    title: "Tailwind Shades",
-    url: "/tools/tailwind-shades",
-    description: "Generate a full 50–950 Tailwind color scale from a single hex.",
+    title: "Color Palette Generator",
+    url: "/tools/color-palette-generator",
+    description:
+      "Generate complementary, analogous, triadic, and monochromatic palettes from a base color.",
     category: CATEGORIES.uiStyling,
     icon: Palette,
   },
@@ -535,20 +519,6 @@ export const uiStyling: Tool[] = [
     description: "Convert colors between HEX, RGB, HSL, OKLCH, and more.",
     category: CATEGORIES.uiStyling,
     icon: Palette,
-  },
-  {
-    title: "Glassmorphism Generator",
-    url: "/tools/glassmorphism-generator",
-    description: "Generate beautiful glassmorphism UI elements with backdrop blur.",
-    category: CATEGORIES.uiStyling,
-    icon: Layers,
-  },
-  {
-    title: "WCAG Contrast Checker",
-    url: "/tools/contrast-checker",
-    description: "Check foreground/background contrast ratios against WCAG AA and AAA standards.",
-    category: CATEGORIES.uiStyling,
-    icon: Eye,
   },
   {
     title: "CSS Animation Builder",
@@ -567,26 +537,19 @@ export const uiStyling: Tool[] = [
     icon: Ratio,
   },
   {
-    title: "Layout Visualizer",
-    url: "/tools/layout-visualizer",
-    description: "Explore Tailwind Flex and Grid layout properties interactively.",
-    category: CATEGORIES.uiStyling,
-    icon: LayoutGrid,
-  },
-  {
-    title: "Border Radius Previewer",
-    url: "/tools/border-radius",
+    title: "Cubic Bezier Editor",
+    url: "/tools/cubic-bezier",
     description:
-      "Visually configure CSS border-radius with per-corner sliders, presets, and live shape preview.",
+      "Design custom CSS easing curves with draggable control points and a live preview.",
     category: CATEGORIES.uiStyling,
-    icon: Square,
+    icon: PenTool,
   },
   {
-    title: "Shadow Builder",
-    url: "/tools/box-shadow-builder",
-    description: "Visually generate CSS box-shadow styles with live preview.",
+    title: "Glassmorphism Generator",
+    url: "/tools/glassmorphism-generator",
+    description: "Generate beautiful glassmorphism UI elements with backdrop blur.",
     category: CATEGORIES.uiStyling,
-    icon: Square,
+    icon: Layers,
   },
   {
     title: "GSAP Builder",
@@ -596,26 +559,48 @@ export const uiStyling: Tool[] = [
     icon: Wand2,
   },
   {
-    title: "Color Palette Generator",
-    url: "/tools/color-palette-generator",
-    description:
-      "Generate complementary, analogous, triadic, and monochromatic palettes from a base color.",
+    title: "Layout Visualizer",
+    url: "/tools/layout-visualizer",
+    description: "Explore Tailwind Flex and Grid layout properties interactively.",
     category: CATEGORIES.uiStyling,
-    icon: Palette,
+    icon: LayoutGrid,
   },
   {
-    title: "Cubic Bezier Editor",
-    url: "/tools/cubic-bezier",
-    description: "Design custom CSS easing curves with draggable control points and a live preview.",
+    title: "Shadow Builder",
+    url: "/tools/box-shadow-builder",
+    description: "Visually generate CSS box-shadow styles with live preview.",
     category: CATEGORIES.uiStyling,
-    icon: PenTool,
+    icon: Square,
   },
   {
     title: "Tailwind Extractor Studio",
     url: "/tools/tailwind-extractor",
-    description: "Extract inline Tailwind classes from JSX into @apply-based semantic CSS components.",
+    description:
+      "Extract inline Tailwind classes from JSX into @apply-based semantic CSS components.",
     category: CATEGORIES.uiStyling,
     icon: Scissors,
+  },
+  {
+    title: "Tailwind CSS Cheatsheet",
+    url: "/tools/tailwind-cheatsheet",
+    description:
+      "A searchable, filterable reference of the most-used Tailwind utility classes. Click any class to copy it.",
+    category: CATEGORIES.uiStyling,
+    icon: Wind,
+  },
+  {
+    title: "Tailwind Shades",
+    url: "/tools/tailwind-shades",
+    description: "Generate a full 50–950 Tailwind color scale from a single hex.",
+    category: CATEGORIES.uiStyling,
+    icon: Palette,
+  },
+  {
+    title: "WCAG Contrast Checker",
+    url: "/tools/contrast-checker",
+    description: "Check foreground/background contrast ratios against WCAG AA and AAA standards.",
+    category: CATEGORIES.uiStyling,
+    icon: Eye,
   },
 ];
 

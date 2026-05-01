@@ -70,7 +70,6 @@ export default function DocumentToMarkdownPage() {
         {/* Dropzone & Options */}
         <div className="space-y-6">
           <div className="space-y-3">
-            <Label className="text-foreground">File</Label>
             <FileDropzone
               onFileDropAction={handleFileDrop}
               accept=".pdf,.docx,.html,.htm,.md,.markdown,.txt"

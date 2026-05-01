@@ -9,8 +9,18 @@ export type GenerateOptions = {
 };
 
 const RESERVED = new Set([
-  "string", "number", "boolean", "null", "undefined", "any", "unknown", "never",
-  "void", "object", "true", "false",
+  "string",
+  "number",
+  "boolean",
+  "null",
+  "undefined",
+  "any",
+  "unknown",
+  "never",
+  "void",
+  "object",
+  "true",
+  "false",
 ]);
 
 function pascalCase(input: string): string {
@@ -31,12 +41,6 @@ function singularize(name: string): string {
 
 function isValidIdentifier(key: string): boolean {
   return /^[A-Za-z_$][\w$]*$/.test(key) && !RESERVED.has(key);
-}
-
-function getValueType(value: JsonValue): string {
-  if (value === null) return "null";
-  if (Array.isArray(value)) return "array";
-  return typeof value;
 }
 
 type InterfaceDef = {
@@ -61,23 +65,15 @@ function mergeObjectShapes(items: Array<Record<string, JsonValue>>): {
 }
 
 function uniqueTypes(types: string[]): string[] {
-  const seen = new Set<string>();
-  const result: string[] = [];
-  for (const t of types) {
-    if (!seen.has(t)) {
-      seen.add(t);
-      result.push(t);
-    }
-  }
-  return result;
+  return Array.from(new Set(types));
 }
 
-export function generateTypeScript(json: JsonValue, options: GenerateOptions): string {
+export function generateTypeScript(json: unknown, options: GenerateOptions): string {
   const interfaces: InterfaceDef[] = [];
   const usedNames = new Set<string>();
 
   function reserveName(base: string): string {
-    let name = pascalCase(base) || "Root";
+    const name = pascalCase(base) || "Root";
     let candidate = name;
     let i = 2;
     while (usedNames.has(candidate)) {
@@ -92,21 +88,46 @@ export function generateTypeScript(json: JsonValue, options: GenerateOptions): s
     if (typeof value === "string") return "string";
     if (typeof value === "number") return "number";
     if (typeof value === "boolean") return "boolean";
+
     if (Array.isArray(value)) {
       if (value.length === 0) return "unknown[]";
       const elementHint = singularize(hint);
-      const elementTypes = uniqueTypes(value.map((v) => inferType(v, elementHint)));
-      const inner = elementTypes.length === 1 ? elementTypes[0] : `(${elementTypes.join(" | ")})`;
+
+      const objects = value.filter(
+        (v): v is Record<string, JsonValue> =>
+          v !== null && typeof v === "object" && !Array.isArray(v),
+      );
+      const nonObjects = value.filter(
+        (v) => v === null || typeof v !== "object" || Array.isArray(v),
+      );
+
+      const elementTypes: string[] = [];
+
+      if (objects.length > 0) {
+        const merged = mergeObjectShapes(objects);
+        const fields = buildFields(merged.fields, merged.total);
+        const name = reserveName(elementHint);
+        interfaces.push({ name, fields });
+        elementTypes.push(name);
+      }
+
+      for (const item of nonObjects) {
+        elementTypes.push(inferType(item, elementHint));
+      }
+
+      const unique = uniqueTypes(elementTypes);
+      const inner = unique.length === 1 ? unique[0] : `(${unique.join(" | ")})`;
       return `${inner}[]`;
     }
+
     if (typeof value === "object") {
-      // Build interface for this object
       const name = reserveName(hint);
       const merged = mergeObjectShapes([value as Record<string, JsonValue>]);
       const fields = buildFields(merged.fields, merged.total);
       interfaces.push({ name, fields });
       return name;
     }
+
     return "unknown";
   }
 
@@ -131,43 +152,36 @@ export function generateTypeScript(json: JsonValue, options: GenerateOptions): s
     return result;
   }
 
-  // Root handling
   const rootName = pascalCase(options.rootName) || "Root";
   usedNames.add(rootName);
+  const typedJson = json as JsonValue;
 
-  if (Array.isArray(json)) {
-    const objectItems = json.filter((v): v is Record<string, JsonValue> => v !== null && typeof v === "object" && !Array.isArray(v));
-    if (objectItems.length > 0 && objectItems.length === json.length) {
+  if (Array.isArray(typedJson)) {
+    const objectItems = typedJson.filter(
+      (v): v is Record<string, JsonValue> =>
+        v !== null && typeof v === "object" && !Array.isArray(v),
+    );
+    if (objectItems.length > 0 && objectItems.length === typedJson.length) {
       const merged = mergeObjectShapes(objectItems);
       const fields = buildFields(merged.fields, merged.total);
       interfaces.push({ name: rootName, fields });
     } else {
-      // Not all objects — use union
       const elementHint = singularize(rootName);
-      const types = uniqueTypes(json.map((v) => inferType(v, elementHint)));
-      interfaces.push({
-        name: rootName,
-        fields: [],
-      });
-      // Special: emit type alias instead
-      const aliasType = json.length === 0 ? "unknown[]" : `(${types.join(" | ")})[]`;
-      return renderOutput(interfaces.filter((i) => i.name !== rootName), options, [{
-        kind: "alias",
-        name: rootName,
-        value: aliasType,
-      }]);
+      const types = uniqueTypes(typedJson.map((v) => inferType(v, elementHint)));
+      const aliasType = typedJson.length === 0 ? "unknown[]" : `(${types.join(" | ")})[]`;
+      return renderOutput(interfaces, options, [
+        { kind: "alias", name: rootName, value: aliasType },
+      ]);
     }
-  } else if (json !== null && typeof json === "object") {
-    const merged = mergeObjectShapes([json as Record<string, JsonValue>]);
+  } else if (typedJson !== null && typeof typedJson === "object") {
+    const merged = mergeObjectShapes([typedJson as Record<string, JsonValue>]);
     const fields = buildFields(merged.fields, merged.total);
     interfaces.push({ name: rootName, fields });
   } else {
-    // Scalar root — emit alias
-    const aliasType = inferType(json, rootName);
+    const aliasType = inferType(typedJson, rootName);
     return renderOutput([], options, [{ kind: "alias", name: rootName, value: aliasType }]);
   }
 
-  // Move root interface to the end so dependencies come first
   const rootIdx = interfaces.findIndex((i) => i.name === rootName);
   if (rootIdx > -1 && rootIdx !== interfaces.length - 1) {
     const [root] = interfaces.splice(rootIdx, 1);
@@ -179,18 +193,20 @@ export function generateTypeScript(json: JsonValue, options: GenerateOptions): s
 
 type TypeAlias = { kind: "alias"; name: string; value: string };
 
-function renderOutput(interfaces: InterfaceDef[], options: GenerateOptions, aliases: TypeAlias[]): string {
+function renderOutput(
+  interfaces: InterfaceDef[],
+  options: GenerateOptions,
+  aliases: TypeAlias[],
+): string {
   const blocks: string[] = [];
   const exportPrefix = options.exportTypes ? "export " : "";
   const readonlyPrefix = options.readonly ? "readonly " : "";
 
   for (const def of interfaces) {
     const lines: string[] = [];
-    if (options.useType) {
-      lines.push(`${exportPrefix}type ${def.name} = {`);
-    } else {
-      lines.push(`${exportPrefix}interface ${def.name} {`);
-    }
+    lines.push(
+      `${exportPrefix}${options.useType ? "type" : "interface"} ${def.name} ${options.useType ? "=" : ""} {`,
+    );
     for (const field of def.fields) {
       const key = isValidIdentifier(field.key) ? field.key : JSON.stringify(field.key);
       const opt = field.optional ? "?" : "";

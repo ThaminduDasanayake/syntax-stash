@@ -1,31 +1,4 @@
-export const CATEGORY_COLORS: Record<RegexCategory, string> = {
-  Validation: "bg-blue-500/10 text-blue-400 border-blue-500/20",
-  Formats: "bg-purple-500/10 text-purple-400 border-purple-500/20",
-  Code: "bg-green-500/10 text-green-400 border-green-500/20",
-  Numbers: "bg-orange-500/10 text-orange-400 border-orange-500/20",
-};
-
-export type RegexCategory = "Validation" | "Formats" | "Code" | "Numbers";
-
-export type RegexPattern = {
-  name: string;
-  pattern: string;
-  flags: string;
-  description: string;
-  category: RegexCategory;
-  examples: {
-    match: string[];
-    noMatch: string[];
-  };
-};
-
-export const REGEX_CATEGORIES: ("All" | RegexCategory)[] = [
-  "All",
-  "Validation",
-  "Formats",
-  "Code",
-  "Numbers",
-];
+import { RegexPattern } from "@/app/tools/regex-studio/types.ts";
 
 export const REGEX_PATTERNS: RegexPattern[] = [
   // Validation

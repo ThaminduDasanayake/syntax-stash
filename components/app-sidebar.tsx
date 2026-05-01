@@ -2,7 +2,7 @@
 
 import { BookMarked, Box, ChevronRight, Home } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 
 import {
@@ -23,14 +23,7 @@ import { slugify } from "@/lib/utils";
 
 const AppSidebar = () => {
   const pathname = usePathname();
-  const router = useRouter();
   const { setOpenMobile } = useSidebar();
-
-  // Closes the sidebar on mobile and navigates
-  const handleNav = (path: string) => {
-    router.push(path);
-    setOpenMobile(false);
-  };
 
   const categorySlug = (cat: string) => `/category/${slugify(cat)}`;
 
@@ -68,15 +61,14 @@ const AppSidebar = () => {
 
       {/* Navigation */}
       <SidebarContent className="space-y-6 px-2 py-4">
-        {/* Section 0: Home */}
+        {/* Home */}
         <SidebarGroup className="p-0">
           <SidebarMenu>
             <SidebarMenuItem>
-              {/* Removed asChild, added onClick router push */}
               <SidebarMenuButton
                 isActive={pathname === "/"}
                 className="h-9 cursor-pointer"
-                onClick={() => handleNav("/")}
+                render={<Link href={"/"} onClick={() => setOpenMobile(false)} />}
               >
                 <Home className="text-foreground/80" />
                 <span>Home</span>
@@ -98,7 +90,7 @@ const AppSidebar = () => {
                     <SidebarMenuButton
                       isActive={pathname === tool.url}
                       className="h-9 cursor-pointer"
-                      onClick={() => handleNav(tool.url)}
+                      render={<Link href={tool.url} onClick={() => setOpenMobile(false)} />}
                     >
                       <Icon className="text-primary" />
                       <span>{tool.title}</span>
@@ -127,7 +119,7 @@ const AppSidebar = () => {
                   <SidebarMenuButton
                     isActive={pathname === href}
                     className="group flex h-9 cursor-pointer justify-between"
-                    onClick={() => handleNav(href)}
+                    render={<Link href={href} onClick={() => setOpenMobile(false)} />}
                   >
                     <div className="flex w-full items-center justify-between">
                       <span className="truncate">{cat}</span>

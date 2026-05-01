@@ -1,9 +1,12 @@
 "use client";
 
-import { BookOpen, FlaskConical, Regex } from "lucide-react";
-import { useMemo, useState } from "react";
+import { BookOpen, Download, FlaskConical, Regex } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
 
-import { CATEGORY_COLORS, REGEX_CATEGORIES, REGEX_PATTERNS } from "@/app/tools/regex-studio/data";
+import Diagram from "@/app/tools/regex-studio/components/diagram.tsx";
+import { CATEGORY_COLORS, REGEX_CATEGORIES } from "@/app/tools/regex-studio/constants.ts";
+import { REGEX_PATTERNS } from "@/app/tools/regex-studio/data";
+import { parseRegex } from "@/app/tools/regex-studio/helpers.ts";
 import { RegexResult } from "@/app/tools/regex-studio/types";
 import { ErrorAlert } from "@/components/error-alert";
 import { ToolLayout } from "@/components/layout/tool-layout";
@@ -20,6 +23,8 @@ import { TextAreaField } from "@/components/ui/textarea-field";
 export default function RegexStudioPage() {
   const [activeTab, setActiveTab] = useState<string>("tester");
 
+  const diagramRef = useRef<SVGSVGElement>(null);
+
   // Tester State
   const [pattern, setPattern] = useState("[a-z]+");
   const [flags, setFlags] = useState("g");
@@ -30,6 +35,8 @@ export default function RegexStudioPage() {
   // Library State
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("All");
+
+  const parsed = useMemo(() => parseRegex(pattern, flags), [pattern, flags]);
 
   // Logic
   const result = useMemo<RegexResult>(() => {
@@ -83,10 +90,31 @@ export default function RegexStudioPage() {
     });
   }, [search, activeCategory]);
 
+  function downloadSvg() {
+    const svg = diagramRef.current;
+    if (!svg) return;
+    const serializer = new XMLSerializer();
+    const svgStr = serializer.serializeToString(svg);
+    const blob = new Blob([svgStr], { type: "image/svg+xml" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "regex-railroad.svg";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  const getSvgString = () => {
+    const svg = diagramRef.current;
+    if (!svg) return "";
+    const serializer = new XMLSerializer();
+    return serializer.serializeToString(svg);
+  };
+
   function handleUsePattern(entry: (typeof REGEX_PATTERNS)[0]) {
     setPattern(entry.pattern);
     setFlags(entry.flags);
-    // Pre-load the test string with both valid and invalid examples to demonstrate how it works
+    // Preload the test string with both valid and invalid examples to demonstrate how it works
     const exampleText = `--- Valid Matches ---\n${entry.examples.match.join(
       "\n",
     )}\n\n--- Invalid Matches ---\n${entry.examples.noMatch.join("\n")}`;
@@ -238,6 +266,20 @@ export default function RegexStudioPage() {
               </div>
             )}
           </div>
+
+          <div className="flex gap-2">
+            <CopyButton value={getSvgString} labelName="Copy SVG" disabled={!parsed.ok} />
+            <Button variant="outline" onClick={downloadSvg} disabled={!parsed.ok}>
+              <Download />
+              Download SVG
+            </Button>
+          </div>
+
+          {parsed.ok && (
+            <div className="border-border bg-card overflow-auto rounded-xl border p-6">
+              <Diagram ast={parsed.ast} svgRef={diagramRef} />
+            </div>
+          )}
         </TabsContent>
 
         <TabsContent value="library" className="mt-0 space-y-6">
