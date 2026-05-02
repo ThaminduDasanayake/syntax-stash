@@ -1,56 +1,59 @@
 import {
-  Atom,
-  Binary,
-  BookText,
-  BrainCircuit,
-  CalendarClock,
-  Clock,
-  CodeXml,
-  Container,
-  Database,
-  Eye,
-  FileDiff,
-  FileImage,
-  FileJson,
-  FileText,
-  Fingerprint,
-  Frame,
-  GitBranch,
-  Globe,
-  Globe2,
-  Grid3X3,
-  Image,
-  ImageDown,
+  ArrowsClockwiseIcon,
+  AsteriskIcon,
+  BinaryIcon,
+  BookOpenTextIcon,
+  BracketsCurlyIcon,
+  CardsIcon,
+  CircuitryIcon,
+  ClockIcon,
+  CodeIcon,
+  CubeIcon,
+  DatabaseIcon,
+  EyedropperIcon,
+  EyeIcon,
+  FileCssIcon,
+  FileCsvIcon,
+  FileImageIcon,
+  FileJsxIcon,
+  FileMdIcon,
+  FilesIcon,
+  FileSqlIcon,
+  FileSvgIcon,
+  FileTxtIcon,
+  FingerprintIcon,
+  FlaskIcon,
+  GitBranchIcon,
+  GlobeHemisphereEastIcon,
+  GlobeIcon,
+  GridNineIcon,
   ImageIcon,
-  KeyRound,
-  Layers,
-  LayoutGrid,
-  Link,
-  ListOrdered,
-  Lock,
-  Network,
-  NotebookPen,
-  Palette,
-  PenTool,
-  Play,
-  QrCode,
-  Ratio,
-  Regex,
-  Scale,
-  Scan,
-  Scissors,
-  ShieldCheck,
-  ShieldHalf,
-  Square,
-  Table,
-  TableProperties,
-  Terminal,
-  Type,
-  Wand2,
-  WandSparkles,
-  Wifi,
-  Wind,
-} from "lucide-react";
+  KeyIcon,
+  LayoutIcon,
+  LinkIcon,
+  LockIcon,
+  MagicWandIcon,
+  MarkdownLogoIcon,
+  NetworkIcon,
+  PaletteIcon,
+  PasswordIcon,
+  PlaceholderIcon,
+  PlayIcon,
+  PlusMinusIcon,
+  QrCodeIcon,
+  RssIcon,
+  ScalesIcon,
+  ScanIcon,
+  ScissorsIcon,
+  ShieldCheckeredIcon,
+  ShieldCheckIcon,
+  ShippingContainerIcon,
+  SquareIcon,
+  SwatchesIcon,
+  TerminalWindowIcon,
+  TextTIcon,
+  TreeStructureIcon,
+} from "@phosphor-icons/react/ssr";
 
 import { Tool } from "@/types";
 
@@ -73,7 +76,7 @@ export const calculatorTools: Tool[] = [
     description:
       "Convert between units of length, weight, data, temperature, speed, area and volume.",
     category: CATEGORIES.calculators,
-    icon: Scale,
+    icon: ScalesIcon,
   },
   {
     title: "Time Calculator",
@@ -81,7 +84,7 @@ export const calculatorTools: Tool[] = [
     description:
       "Convert Unix timestamps, ISO dates, and local time. Timezone viewer and date arithmetic.",
     category: CATEGORIES.calculators,
-    icon: Clock,
+    icon: ClockIcon,
   },
   {
     title: "Base Converter",
@@ -89,7 +92,7 @@ export const calculatorTools: Tool[] = [
     description:
       "Convert between decimal, hex, binary, and octal with a 16-bit toggle grid and bitwise ops.",
     category: CATEGORIES.calculators,
-    icon: Binary,
+    icon: BinaryIcon,
   },
 ];
 
@@ -99,35 +102,35 @@ export const dataTools: Tool[] = [
     url: "/tools/base64-image-decoder",
     description: "Decode and preview base64-encoded images locally.",
     category: CATEGORIES.data,
-    icon: Image,
+    icon: FileImageIcon,
   },
   {
     title: "Encoder / Decoder",
     url: "/tools/encoder-decoder",
     description: "Convert strings between Base64, URL, and Hex encoding.",
     category: CATEGORIES.data,
-    icon: ShieldHalf,
+    icon: ShieldCheckeredIcon,
   },
   {
     title: "Hash Generator",
     url: "/tools/hash-generator",
     description: "Generate secure cryptographic hashes locally.",
     category: CATEGORIES.data,
-    icon: Fingerprint,
+    icon: FingerprintIcon,
   },
   {
     title: "JSON Studio",
     url: "/tools/json-studio",
     description: "Format, browse, query, and organize JSON — all in one place.",
     category: CATEGORIES.data,
-    icon: FileJson,
+    icon: BracketsCurlyIcon,
   },
   {
     title: "JWT Decoder",
     url: "/tools/jwt-decoder",
     description: "Decode and inspect JSON Web Tokens locally in your browser.",
     category: CATEGORIES.data,
-    icon: KeyRound,
+    icon: KeyIcon,
   },
   {
     title: "Universal Decoder",
@@ -135,40 +138,44 @@ export const dataTools: Tool[] = [
     description:
       "Paste any mystery string — JWT, Unix timestamp, UUID, MongoDB ObjectId, or Snowflake ID — and decode it instantly.",
     category: CATEGORIES.data,
-    icon: Scan,
+    icon: ScanIcon,
   },
 ];
 
 export const developmentTools: Tool[] = [
   {
     title: "AI Prompt Studio",
+    highlight: "Studio",
     url: "/tools/prompt-studio",
     description:
       "Write, inject variables, minify, and enhance LLM prompts with real-time token tracking.",
     category: CATEGORIES.development,
-    icon: WandSparkles,
+    icon: FlaskIcon,
   },
   {
     title: "Code Screenshot",
+    highlight: "Screenshot",
     url: "/tools/code-screenshot",
     description:
-      "Turn any code snippet into a styled screenshot for docs, social posts, or PR reviews.",
+      "Turn any code snippet into a styled screenshot for docs, social posts, or PR reviews. Powered by Shiki.",
     category: CATEGORIES.development,
-    icon: ImageDown,
+    icon: ImageIcon,
   },
   {
     title: "Code Stash",
+    highlight: "Stash",
     url: "/tools/code-stash",
     description: "A curated library of developer snippets and configurations.",
     category: CATEGORIES.development,
-    icon: CodeXml,
+    icon: CodeIcon,
   },
   {
     title: "Diff Viewer",
+    highlight: "Viewer",
     url: "/tools/diff-viewer",
     description: "Compare two text blocks and visualize additions, deletions, and changes.",
     category: CATEGORIES.development,
-    icon: FileDiff,
+    icon: PlusMinusIcon,
   },
   {
     title: "HTML to JSX",
@@ -176,7 +183,7 @@ export const developmentTools: Tool[] = [
     description:
       "Convert HTML to React-ready JSX with renamed attributes, camelCase events, and style objects.",
     category: CATEGORIES.development,
-    icon: Atom,
+    icon: FileJsxIcon,
   },
   {
     title: ".gitignore Generator",
@@ -184,7 +191,7 @@ export const developmentTools: Tool[] = [
     description:
       "Generate .gitignore files for your project with common patterns for popular stacks.",
     category: CATEGORIES.development,
-    icon: FileText,
+    icon: GitBranchIcon,
   },
   {
     title: "JSDoc / TSDoc Generator",
@@ -192,7 +199,7 @@ export const developmentTools: Tool[] = [
     description:
       "Paste a TypeScript function signature and generate JSDoc or TSDoc with @param and @returns stubs.",
     category: CATEGORIES.development,
-    icon: BookText,
+    icon: FilesIcon,
   },
   {
     title: "Markdown Live Preview",
@@ -200,7 +207,7 @@ export const developmentTools: Tool[] = [
     description:
       "Write markdown with a side-by-side preview, view the generated HTML, and export to .md or .html.",
     category: CATEGORIES.development,
-    icon: NotebookPen,
+    icon: MarkdownLogoIcon,
   },
   {
     title: "Markdown Table of Contents",
@@ -208,7 +215,7 @@ export const developmentTools: Tool[] = [
     description:
       "Generate a nested Table of Contents from your Markdown document with automatic anchor links.",
     category: CATEGORIES.development,
-    icon: ListOrdered,
+    icon: FileMdIcon,
   },
   {
     title: "Mermaid Live Editor",
@@ -216,21 +223,21 @@ export const developmentTools: Tool[] = [
     description:
       "Write Mermaid diagrams with a live SVG preview. Supports flowcharts, sequence, ER, and more.",
     category: CATEGORIES.development,
-    icon: GitBranch,
+    icon: TreeStructureIcon,
   },
   {
     title: "Mock Data Generator",
     url: "/tools/mock-data-generator",
     description: "Generate structured dummy JSON data for testing.",
     category: CATEGORIES.development,
-    icon: Database,
+    icon: DatabaseIcon,
   },
   {
     title: "NLP Sandbox",
     url: "/tools/nlp-sandbox",
     description: "Simulate text cleaning, vectorization, and scaling pipelines with live output.",
     category: CATEGORIES.development,
-    icon: BrainCircuit,
+    icon: CircuitryIcon,
   },
   {
     title: "Regex Studio",
@@ -238,14 +245,14 @@ export const developmentTools: Tool[] = [
     description:
       "Build, visualize, test, and browse a curated library of production-ready regular expressions.",
     category: CATEGORIES.development,
-    icon: Regex,
+    icon: AsteriskIcon,
   },
   {
     title: "Web Extractor",
     url: "/tools/web-extractor",
     description: "Extract meta tags, headings, and links from any public URL.",
     category: CATEGORIES.development,
-    icon: Globe,
+    icon: GlobeIcon,
   },
 ];
 
@@ -256,7 +263,7 @@ export const devopsTools: Tool[] = [
     description:
       "Calculate Unix file permissions with a click-to-toggle grid, synced across octal and symbolic formats.",
     category: CATEGORIES.devops,
-    icon: Lock,
+    icon: LockIcon,
   },
   {
     title: "Cron Explorer",
@@ -264,7 +271,7 @@ export const devopsTools: Tool[] = [
     description:
       "Translate cron expressions to plain English, and visualize upcoming executions on a timeline.",
     category: CATEGORIES.devops,
-    icon: CalendarClock,
+    icon: PasswordIcon,
   },
   {
     title: "curl Command Builder",
@@ -272,7 +279,7 @@ export const devopsTools: Tool[] = [
     description:
       "Build curl commands from a form, or paste a curl command to parse it into structured fields.",
     category: CATEGORIES.devops,
-    icon: Terminal,
+    icon: TerminalWindowIcon,
   },
   {
     title: "Docker Compose Studio",
@@ -280,15 +287,7 @@ export const devopsTools: Tool[] = [
     description:
       "Build compose files visually or convert complex 'docker run' commands into YAML instantly.",
     category: CATEGORIES.devops,
-    icon: Container,
-  },
-  {
-    title: ".env File Diff & Merge",
-    url: "/tools/env-diff",
-    description:
-      "Semantically compare two .env files to find missing keys, extra keys, and value mismatches.",
-    category: CATEGORIES.devops,
-    icon: FileDiff,
+    icon: ShippingContainerIcon,
   },
   {
     title: "Git Command Cheatsheet",
@@ -296,7 +295,7 @@ export const devopsTools: Tool[] = [
     description:
       "A searchable reference of ~70 git commands, organised by intent with danger-level indicators.",
     category: CATEGORIES.devops,
-    icon: GitBranch,
+    icon: GitBranchIcon,
   },
 ];
 
@@ -307,7 +306,7 @@ export const imageTools: Tool[] = [
     description:
       "Draw boxes and add text on a character grid. Outputs clean ASCII art using Unicode box-drawing characters.",
     category: CATEGORIES.imagesAssets,
-    icon: Grid3X3,
+    icon: GridNineIcon,
   },
   {
     title: "Image Converter",
@@ -322,28 +321,28 @@ export const imageTools: Tool[] = [
     description:
       "Generate custom placeholder images with the Canvas API, entirely in your browser.",
     category: CATEGORIES.imagesAssets,
-    icon: Frame,
+    icon: PlaceholderIcon,
   },
   {
     title: "QR Generator",
     url: "/tools/qr-generator",
     description: "Generate downloadable QR codes instantly.",
     category: CATEGORIES.imagesAssets,
-    icon: QrCode,
+    icon: QrCodeIcon,
   },
   {
     title: "SVG Optimizer",
     url: "/tools/svg-optimizer",
     description: "Minify and clean bloated SVG files.",
     category: CATEGORIES.imagesAssets,
-    icon: FileImage,
+    icon: FileSvgIcon,
   },
   {
     title: "SVG Path Viewer",
     url: "/tools/svg-path",
     description: "Preview and edit SVG 'd' paths with real-time visualization.",
     category: CATEGORIES.imagesAssets,
-    icon: PenTool,
+    icon: FileSvgIcon,
   },
 ];
 
@@ -354,7 +353,7 @@ export const networkTools: Tool[] = [
     description:
       "Grade your HTTP response headers against OWASP best practices and generate a Next.js config.",
     category: CATEGORIES.network,
-    icon: ShieldCheck,
+    icon: ShieldCheckIcon,
   },
   {
     title: "HTTP Status Reference",
@@ -362,21 +361,21 @@ export const networkTools: Tool[] = [
     description:
       "Every standard HTTP status code with descriptions, use cases, and category colour-coding.",
     category: CATEGORIES.network,
-    icon: Globe2,
+    icon: GlobeHemisphereEastIcon,
   },
   {
     title: "MAC Address Vendor Lookup",
     url: "/tools/mac-vendor-lookup",
     description: "Look up MAC address vendors by OUI with support for multiple formats.",
     category: CATEGORIES.network,
-    icon: Wifi,
+    icon: RssIcon,
   },
   {
     title: "Open Graph Previewer",
     url: "/tools/og-preview",
     description: "Preview how your link card will appear when shared on Twitter/X and LinkedIn.",
     category: CATEGORIES.network,
-    icon: Globe,
+    icon: GlobeIcon,
   },
   {
     title: "Subnet / CIDR Calculator",
@@ -384,14 +383,14 @@ export const networkTools: Tool[] = [
     description:
       "Calculate network address, broadcast, subnet mask, and host ranges from CIDR notation.",
     category: CATEGORIES.network,
-    icon: Network,
+    icon: NetworkIcon,
   },
   {
     title: "URL Parser & Builder",
     url: "/tools/url-parser",
     description: "Parse, analyze, and rebuild URLs with editable query parameters.",
     category: CATEGORIES.network,
-    icon: Link,
+    icon: LinkIcon,
   },
 ];
 
@@ -402,7 +401,7 @@ export const schemaTools: Tool[] = [
     description:
       "Convert SQL CREATE TABLE statements or Prisma schema models into Drizzle ORM schemas.",
     category: CATEGORIES.schemas,
-    icon: Database,
+    icon: DatabaseIcon,
   },
   {
     title: "JSON Schema Studio",
@@ -410,21 +409,21 @@ export const schemaTools: Tool[] = [
     description:
       "Convert JSON payloads into strict TypeScript interfaces, Zod schemas, Pydantic models, and generic JSON Schemas.",
     category: CATEGORIES.schemas,
-    icon: FileJson,
+    icon: BracketsCurlyIcon,
   },
   {
     title: "Mongo Aggregation Builder",
     url: "/tools/mongo-pipeline-builder",
     description: "Visually scaffold complex MongoDB aggregation pipelines with live JSON output.",
     category: CATEGORIES.schemas,
-    icon: Layers,
+    icon: DatabaseIcon,
   },
   {
     title: "SQL Formatter",
     url: "/tools/sql-formatter",
     description: "Prettify raw SQL queries with proper indentation and capitalized keywords.",
     category: CATEGORIES.schemas,
-    icon: Table,
+    icon: FileSqlIcon,
   },
 ];
 
@@ -434,21 +433,21 @@ export const typographyTools: Tool[] = [
     url: "/tools/csv-to-markdown",
     description: "Convert CSV and spreadsheet data into beautifully formatted Markdown tables.",
     category: CATEGORIES.typography,
-    icon: TableProperties,
+    icon: FileCsvIcon,
   },
   {
     title: "String Case Converter",
     url: "/tools/string-case-converter",
     description: "Convert text between different naming conventions and typographical styles.",
     category: CATEGORIES.typography,
-    icon: Type,
+    icon: TextTIcon,
   },
   {
     title: "Text Analyzer",
     url: "/tools/text-analyzer",
     description: "Analyze text for word counts, bytes, and estimated LLM tokens.",
     category: CATEGORIES.typography,
-    icon: FileText,
+    icon: FileTxtIcon,
   },
   {
     title: "Document Extractor",
@@ -456,7 +455,7 @@ export const typographyTools: Tool[] = [
     description:
       "Extract clean text or LLM-ready Markdown from PDF, DOCX, HTML, CSV, and text files. Optional rich editor, YAML frontmatter, and .md download.",
     category: CATEGORIES.typography,
-    icon: FileText,
+    icon: BookOpenTextIcon,
   },
 ];
 
@@ -467,7 +466,7 @@ export const uiStyling: Tool[] = [
     description:
       "Visually configure CSS border-radius with per-corner sliders, presets, and live shape preview.",
     category: CATEGORIES.uiStyling,
-    icon: Square,
+    icon: SquareIcon,
   },
   {
     title: "Color Palette Generator",
@@ -475,14 +474,14 @@ export const uiStyling: Tool[] = [
     description:
       "Generate complementary, analogous, triadic, and monochromatic palettes from a base color.",
     category: CATEGORIES.uiStyling,
-    icon: Palette,
+    icon: PaletteIcon,
   },
   {
     title: "Color Space Converter",
     url: "/tools/color-converter",
     description: "Convert colors between HEX, RGB, HSL, OKLCH, and more.",
     category: CATEGORIES.uiStyling,
-    icon: Palette,
+    icon: ArrowsClockwiseIcon,
   },
   {
     title: "CSS Animation Builder",
@@ -490,7 +489,7 @@ export const uiStyling: Tool[] = [
     description:
       "Build CSS @keyframes animations visually with live preview and generated CSS output.",
     category: CATEGORIES.uiStyling,
-    icon: Play,
+    icon: PlayIcon,
   },
   {
     title: "CSS Aspect-Ratio Calculator",
@@ -498,7 +497,7 @@ export const uiStyling: Tool[] = [
     description:
       "Calculate CSS aspect-ratio, Tailwind utility, and legacy padding-bottom values for any dimensions.",
     category: CATEGORIES.uiStyling,
-    icon: Ratio,
+    icon: FileCssIcon,
   },
   {
     title: "Cubic Bezier Editor",
@@ -506,35 +505,35 @@ export const uiStyling: Tool[] = [
     description:
       "Design custom CSS easing curves with draggable control points and a live preview.",
     category: CATEGORIES.uiStyling,
-    icon: PenTool,
+    icon: CubeIcon,
   },
   {
     title: "Glassmorphism Generator",
     url: "/tools/glassmorphism-generator",
     description: "Generate beautiful glassmorphism UI elements with backdrop blur.",
     category: CATEGORIES.uiStyling,
-    icon: Layers,
+    icon: CardsIcon,
   },
   {
     title: "GSAP Builder",
     url: "/tools/gsap-builder",
     description: "Visually build GSAP animations and generate optimized React 19 boilerplate.",
     category: CATEGORIES.uiStyling,
-    icon: Wand2,
+    icon: MagicWandIcon,
   },
   {
     title: "Layout Visualizer",
     url: "/tools/layout-visualizer",
     description: "Explore Tailwind Flex and Grid layout properties interactively.",
     category: CATEGORIES.uiStyling,
-    icon: LayoutGrid,
+    icon: LayoutIcon,
   },
   {
     title: "Shadow Builder",
     url: "/tools/box-shadow-builder",
     description: "Visually generate CSS box-shadow styles with live preview.",
     category: CATEGORIES.uiStyling,
-    icon: Square,
+    icon: SquareIcon,
   },
   {
     title: "Tailwind Extractor Studio",
@@ -542,7 +541,7 @@ export const uiStyling: Tool[] = [
     description:
       "Extract inline Tailwind classes from JSX into @apply-based semantic CSS components.",
     category: CATEGORIES.uiStyling,
-    icon: Scissors,
+    icon: ScissorsIcon,
   },
   {
     title: "Tailwind CSS Cheatsheet",
@@ -550,21 +549,21 @@ export const uiStyling: Tool[] = [
     description:
       "A searchable, filterable reference of the most-used Tailwind utility classes. Click any class to copy it.",
     category: CATEGORIES.uiStyling,
-    icon: Wind,
+    icon: SwatchesIcon,
   },
   {
     title: "Tailwind Shades",
     url: "/tools/tailwind-shades",
     description: "Generate a full 50–950 Tailwind color scale from a single hex.",
     category: CATEGORIES.uiStyling,
-    icon: Palette,
+    icon: EyedropperIcon,
   },
   {
     title: "WCAG Contrast Checker",
     url: "/tools/contrast-checker",
     description: "Check foreground/background contrast ratios against WCAG AA and AAA standards.",
     category: CATEGORIES.uiStyling,
-    icon: Eye,
+    icon: EyeIcon,
   },
 ];
 

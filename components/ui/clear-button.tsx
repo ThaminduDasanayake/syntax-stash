@@ -1,5 +1,5 @@
 import { Button as ButtonPrimitive } from "@base-ui/react/button";
-import { Trash2 } from "lucide-react";
+import { ArrowCounterClockwiseIcon } from "@phosphor-icons/react";
 import { ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -16,7 +16,7 @@ export interface ClearButtonProps extends ButtonPrimitive.Props {
 
 const ClearButton = ({
   label = "Clear",
-  icon = <Trash2 />,
+  icon = <ArrowCounterClockwiseIcon />,
   className,
   variant = "outline",
   size = "default",

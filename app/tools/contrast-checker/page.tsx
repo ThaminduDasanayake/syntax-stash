@@ -54,8 +54,8 @@ function PassFail({ pass }: { pass: boolean }) {
 }
 
 export default function ContrastCheckerPage() {
-  const [fg, setFg] = useState("#000000");
-  const [bg, setBg] = useState("#ffffff");
+  const [fg, setFg] = useState("#3c402b");
+  const [bg, setBg] = useState("#eeeae3");
 
   const result = useMemo(() => {
     const fgRgb = hexToRgb(fg);
@@ -179,7 +179,7 @@ export default function ContrastCheckerPage() {
             </div>
           </div>
           {!result && (
-            <p className="text-destructive text-sm font-mono">
+            <p className="text-destructive font-mono text-sm">
               Enter valid 6-digit hex codes for both colors.
             </p>
           )}

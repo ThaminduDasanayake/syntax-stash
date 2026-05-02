@@ -45,15 +45,47 @@ const ATTR_RENAME: Record<string, string> = {
 };
 
 const VOID_ELEMENTS = new Set([
-  "area", "base", "br", "col", "embed", "hr", "img", "input", "keygen",
-  "link", "meta", "param", "source", "track", "wbr",
+  "area",
+  "base",
+  "br",
+  "col",
+  "embed",
+  "hr",
+  "img",
+  "input",
+  "keygen",
+  "link",
+  "meta",
+  "param",
+  "source",
+  "track",
+  "wbr",
 ]);
 
 const BOOLEAN_ATTRS = new Set([
-  "allowfullscreen", "async", "autofocus", "autoplay", "checked", "controls",
-  "default", "defer", "disabled", "formnovalidate", "hidden", "ismap", "loop",
-  "multiple", "muted", "nomodule", "novalidate", "open", "playsinline",
-  "readonly", "required", "reversed", "selected",
+  "allowfullscreen",
+  "async",
+  "autofocus",
+  "autoplay",
+  "checked",
+  "controls",
+  "default",
+  "defer",
+  "disabled",
+  "formnovalidate",
+  "hidden",
+  "ismap",
+  "loop",
+  "multiple",
+  "muted",
+  "nomodule",
+  "novalidate",
+  "open",
+  "playsinline",
+  "readonly",
+  "required",
+  "reversed",
+  "selected",
 ]);
 
 function camelCase(input: string): string {
@@ -81,8 +113,17 @@ function styleStringToObject(style: string): string {
 function needsUnit(prop: string): boolean {
   // Properties where unitless numbers are valid in React
   const unitless = new Set([
-    "opacity", "zIndex", "fontWeight", "lineHeight", "flex", "flexGrow",
-    "flexShrink", "order", "columnCount", "tabSize", "zoom",
+    "opacity",
+    "zIndex",
+    "fontWeight",
+    "lineHeight",
+    "flex",
+    "flexGrow",
+    "flexShrink",
+    "order",
+    "columnCount",
+    "tabSize",
+    "zoom",
   ]);
   return !unitless.has(prop);
 }
@@ -101,9 +142,7 @@ function renameAttr(name: string): string {
 }
 
 function escapeJsxText(text: string): string {
-  return text
-    .replace(/\{/g, "&#123;")
-    .replace(/\}/g, "&#125;");
+  return text.replace(/\{/g, "&#123;").replace(/}/g, "&#125;");
 }
 
 type CheerioLikeNode = {
@@ -203,9 +242,7 @@ export function convertHtmlToJsx(html: string, options: ConvertOptions): string 
 
   const needsFragment = roots.length > 1;
   const componentName = options.componentName.trim() || "MyComponent";
-  const wrapped = needsFragment
-    ? `    <>\n${indentBlock(body, 1)}\n    </>`
-    : body;
+  const wrapped = needsFragment ? `    <>\n${indentBlock(body, 1)}\n    </>` : body;
 
   return `export default function ${componentName}() {
   return (
@@ -216,5 +253,8 @@ ${wrapped}
 
 function indentBlock(text: string, extraLevels: number): string {
   const pad = "  ".repeat(extraLevels);
-  return text.split("\n").map((l) => (l.trim() ? pad + l : l)).join("\n");
+  return text
+    .split("\n")
+    .map((l) => (l.trim() ? pad + l : l))
+    .join("\n");
 }

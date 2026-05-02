@@ -1,40 +1,29 @@
 "use client";
 
-import { Check, Copy, FileDiff, RotateCcw } from "lucide-react";
 import { useMemo, useState } from "react";
 
-import { computeDiff, formatUnifiedDiff, type DiffLine } from "@/app/tools/diff-viewer/helpers";
-import { ToolLayout } from "@/components/layout/tool-layout";
-import { Button } from "@/components/ui/button";
+import { PLACEHOLDER_MODIFIED, PLACEHOLDER_ORIGINAL } from "@/app/tools/diff-viewer/data.ts";
+import { computeDiff, type DiffLine, formatUnifiedDiff } from "@/app/tools/diff-viewer/helpers";
+import ToolLayout from "@/components/layout/layout";
+import ClearButton from "@/components/ui/clear-button.tsx";
+import CopyButton from "@/components/ui/copy-button.tsx";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Textarea } from "@/components/ui/textarea";
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { TextAreaField } from "@/components/ui/textarea-field.tsx";
+import { developmentTools } from "@/lib/tools-data.ts";
 
-const PLACEHOLDER_ORIGINAL = `function greet(name) {
-  console.log("Hello, " + name);
-  return name;
-}
-
-const result = greet("world");
-console.log(result);`;
-
-const PLACEHOLDER_MODIFIED = `function greet(name, greeting = "Hello") {
-  console.log(\`\${greeting}, \${name}!\`);
-  return { name, greeting };
-}
-
-const result = greet("world", "Hi");
-console.log(result.name);`;
-
-function DiffLineRow({ line, showOld, showNew }: { line: DiffLine; showOld: boolean; showNew: boolean }) {
+function DiffLineRow({
+  line,
+  showOld,
+  showNew,
+}: {
+  line: DiffLine;
+  showOld: boolean;
+  showNew: boolean;
+}) {
   const bgClass =
-    line.type === "added"
-      ? "bg-green-500/10"
-      : line.type === "removed"
-        ? "bg-red-500/10"
-        : "";
+    line.type === "added" ? "bg-green-500/10" : line.type === "removed" ? "bg-red-500/10" : "";
   const textClass =
     line.type === "added"
       ? "text-green-400"
@@ -46,17 +35,17 @@ function DiffLineRow({ line, showOld, showNew }: { line: DiffLine; showOld: bool
   return (
     <div className={`flex min-w-0 font-mono text-xs leading-5 ${bgClass}`}>
       {showOld && (
-        <span className="border-border text-muted-foreground w-10 shrink-0 select-none border-r px-2 text-right">
+        <span className="border-border text-muted-foreground w-10 shrink-0 border-r px-2 text-right select-none">
           {line.oldLineNum ?? ""}
         </span>
       )}
       {showNew && (
-        <span className="border-border text-muted-foreground w-10 shrink-0 select-none border-r px-2 text-right">
+        <span className="border-border text-muted-foreground w-10 shrink-0 border-r px-2 text-right select-none">
           {line.newLineNum ?? ""}
         </span>
       )}
-      <span className={`w-4 shrink-0 select-none px-1 ${textClass}`}>{prefix}</span>
-      <span className={`min-w-0 flex-1 whitespace-pre-wrap break-all px-2 ${textClass}`}>
+      <span className={`w-4 shrink-0 px-1 select-none ${textClass}`}>{prefix}</span>
+      <span className={`min-w-0 flex-1 px-2 break-all whitespace-pre-wrap ${textClass}`}>
         {line.content}
       </span>
     </div>
@@ -99,9 +88,17 @@ function buildSideColumns(lines: DiffLine[]): { left: SideLine[]; right: SideLin
   return { left, right };
 }
 
-function SideBySideLineRow({ line, showOld, showNew }: { line: DiffLine | null; showOld: boolean; showNew: boolean }) {
+function SideBySideLineRow({
+  line,
+  showOld,
+  showNew,
+}: {
+  line: DiffLine | null;
+  showOld: boolean;
+  showNew: boolean;
+}) {
   if (!line) {
-    return <div className="bg-muted/30 min-h-[20px] w-full font-mono text-xs leading-5" />;
+    return <div className="bg-muted/30 min-h-5 w-full font-mono text-xs leading-5" />;
   }
   return <DiffLineRow line={line} showOld={showOld} showNew={showNew} />;
 }
@@ -111,7 +108,6 @@ export default function DiffViewerPage() {
   const [modified, setModified] = useState(PLACEHOLDER_MODIFIED);
   const [viewMode, setViewMode] = useState<"unified" | "side-by-side">("unified");
   const [ignoreWhitespace, setIgnoreWhitespace] = useState(false);
-  const { copied, copy } = useCopyToClipboard();
 
   const { diffLines, diffText, stats } = useMemo(() => {
     const lines = computeDiff(original, modified, ignoreWhitespace);
@@ -129,44 +125,58 @@ export default function DiffViewerPage() {
 
   const hasChanges = stats.added > 0 || stats.removed > 0;
 
+  const tool = developmentTools.find((t) => t.url === "/tools/diff-viewer");
+
   return (
-    <ToolLayout
-      icon={FileDiff}
-      title="Diff"
-      highlight="Viewer"
-      description="Compare two text blocks and visualize additions, deletions, and unchanged lines."
-    >
+    <ToolLayout tool={tool}>
       <div className="space-y-6">
         {/* Inputs */}
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          <div className="space-y-2">
-            <Label>Original</Label>
-            <Textarea
-              value={original}
-              onChange={(e) => setOriginal(e.target.value)}
-              rows={10}
-              className="resize-y font-mono text-xs"
-              placeholder="Paste original text here…"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label>Modified</Label>
-            <Textarea
-              value={modified}
-              onChange={(e) => setModified(e.target.value)}
-              rows={10}
-              className="resize-y font-mono text-xs"
-              placeholder="Paste modified text here…"
-            />
-          </div>
+          <TextAreaField
+            label="Original"
+            value={original}
+            onChange={(e) => setOriginal(e.target.value)}
+            rows={10}
+            className="resize-y font-mono text-xs"
+            placeholder="Paste original text here…"
+            action={
+              <ClearButton
+                onClick={() => {
+                  setOriginal("");
+                }}
+                disabled={!hasChanges}
+              />
+            }
+          />
+
+          <TextAreaField
+            label="Modified"
+            value={modified}
+            onChange={(e) => setModified(e.target.value)}
+            rows={10}
+            className="resize-y font-mono text-xs"
+            placeholder="Paste modified text here…"
+            action={
+              <ClearButton
+                onClick={() => {
+                  setModified("");
+                }}
+                disabled={!hasChanges}
+              />
+            }
+          />
         </div>
 
         {/* Controls */}
         <div className="flex flex-wrap items-center gap-3">
           <Tabs value={viewMode} onValueChange={(v) => setViewMode(v as typeof viewMode)}>
-            <TabsList>
-              <TabsTrigger value="unified">Unified</TabsTrigger>
-              <TabsTrigger value="side-by-side">Side by side</TabsTrigger>
+            <TabsList className="grid grid-cols-2">
+              <TabsTrigger className="tab-trigger" value="unified">
+                Unified
+              </TabsTrigger>
+              <TabsTrigger className="tab-trigger" value="side-by-side">
+                Side by side
+              </TabsTrigger>
             </TabsList>
           </Tabs>
 
@@ -183,34 +193,13 @@ export default function DiffViewerPage() {
 
           <div className="ml-auto flex items-center gap-2">
             {hasChanges && (
-              <div className="text-muted-foreground flex gap-3 text-xs">
+              <div className="flex gap-3 text-xs">
                 <span className="text-green-400">+{stats.added}</span>
                 <span className="text-red-400">−{stats.removed}</span>
                 <span>{stats.unchanged} unchanged</span>
               </div>
             )}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => { setOriginal(""); setModified(""); }}
-              className="rounded-full"
-            >
-              <RotateCcw size={12} />
-              Clear
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => copy(diffText)}
-              disabled={!hasChanges}
-              className="rounded-full font-semibold"
-            >
-              {copied ? (
-                <><Check size={12} className="text-emerald-400" /><span className="text-emerald-400">Copied</span></>
-              ) : (
-                <><Copy size={12} />Copy diff</>
-              )}
-            </Button>
+            <CopyButton value={diffText} disabled={!hasChanges} />
           </div>
         </div>
 
@@ -240,12 +229,7 @@ export default function DiffViewerPage() {
                     </span>
                   </div>
                   {left.map((item) => (
-                    <SideBySideLineRow
-                      key={item.key}
-                      line={item.line}
-                      showOld
-                      showNew={false}
-                    />
+                    <SideBySideLineRow key={item.key} line={item.line} showOld showNew={false} />
                   ))}
                 </div>
                 <div>
@@ -255,12 +239,7 @@ export default function DiffViewerPage() {
                     </span>
                   </div>
                   {right.map((item) => (
-                    <SideBySideLineRow
-                      key={item.key}
-                      line={item.line}
-                      showOld={false}
-                      showNew
-                    />
+                    <SideBySideLineRow key={item.key} line={item.line} showOld={false} showNew />
                   ))}
                 </div>
               </div>

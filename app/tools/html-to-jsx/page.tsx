@@ -1,15 +1,18 @@
 "use client";
 
-import { Atom } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { convertHtmlToJsx, type ConvertOptions } from "@/app/tools/html-to-jsx/helpers";
-import { ToolLayout } from "@/components/layout/tool-layout";
+import ToolLayout from "@/components/layout/layout.tsx";
+import { Card, CardContent } from "@/components/ui/card.tsx";
+import ClearButton from "@/components/ui/clear-button.tsx";
 import CopyButton from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
+import { InputField } from "@/components/ui/input-field.tsx";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
+import { TextAreaField } from "@/components/ui/textarea-field.tsx";
+import { developmentTools } from "@/lib/tools-data.ts";
 
 const PLACEHOLDER = `<!-- A login form -->
 <form class="login-form" onsubmit="handleSubmit(event)">
@@ -43,41 +46,40 @@ export default function HtmlToJsxPage() {
     }
   }, [input, componentName, asComponent, selfCloseEmpty]);
 
+  const tool = developmentTools.find((t) => t.url === "/tools/html-to-jsx");
+
   return (
-    <ToolLayout
-      icon={Atom}
-      title="HTML to"
-      highlight="JSX"
-      description="Convert HTML to React-ready JSX. Renames attributes (class → className, for → htmlFor), camelCases events, and converts inline styles to objects."
-    >
+    <ToolLayout tool={tool}>
       <div className="space-y-6">
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          <div className="space-y-2">
-            <Label>HTML input</Label>
-            <Textarea
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              rows={20}
-              className="resize-y font-mono text-xs"
-              placeholder="Paste HTML here…"
-              spellCheck={false}
-            />
-            {error && <p className="text-destructive text-xs">{error}</p>}
-          </div>
+          <TextAreaField
+            label="HTML input"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            rows={20}
+            className="resize-y text-xs"
+            placeholder="Paste HTML here…"
+            spellCheck={false}
+            action={
+              <ClearButton
+                onClick={() => {
+                  setInput("");
+                }}
+                disabled={!input}
+              />
+            }
+          />
+          {error && <p className="text-destructive text-xs">{error}</p>}
 
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label>JSX output</Label>
-              <CopyButton value={output} disabled={!output} />
-            </div>
-            <Textarea
-              readOnly
-              value={output}
-              rows={20}
-              className="resize-y font-mono text-xs"
-              placeholder="JSX will appear here…"
-            />
-          </div>
+          <TextAreaField
+            label="JSX output"
+            readOnly
+            value={output}
+            rows={20}
+            className="resize-y text-xs"
+            placeholder="JSX will appear here…"
+            action={<CopyButton value={output} disabled={!output} />}
+          />
         </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -90,36 +92,58 @@ export default function HtmlToJsxPage() {
               </Label>
             </div>
             <div className="flex items-center gap-2">
-              <Switch id="self-close" checked={selfCloseEmpty} onCheckedChange={setSelfCloseEmpty} />
+              <Switch
+                id="self-close"
+                checked={selfCloseEmpty}
+                onCheckedChange={setSelfCloseEmpty}
+              />
               <Label htmlFor="self-close" className="cursor-pointer text-sm">
                 Self-close empty elements
               </Label>
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="component-name">Component name</Label>
-            <Input
-              id="component-name"
-              value={componentName}
-              onChange={(e) => setComponentName(e.target.value)}
-              disabled={!asComponent}
-              className="font-mono text-sm"
-              placeholder="MyComponent"
-            />
-          </div>
+          <InputField
+            label="Component name"
+            value={componentName}
+            onChange={(e) => setComponentName(e.target.value)}
+            disabled={!asComponent}
+            className="text-sm"
+            placeholder="MyComponent"
+          />
         </div>
 
-        <div className="border-border bg-muted/30 rounded-xl border p-4 text-xs">
-          <p className="text-foreground mb-2 font-semibold">What this does</p>
-          <ul className="text-muted-foreground space-y-1">
-            <li>• Renames reserved attributes: <code className="bg-card px-1 rounded">class</code> → <code className="bg-card px-1 rounded">className</code>, <code className="bg-card px-1 rounded">for</code> → <code className="bg-card px-1 rounded">htmlFor</code>, <code className="bg-card px-1 rounded">tabindex</code> → <code className="bg-card px-1 rounded">tabIndex</code>, etc.</li>
-            <li>• Converts event handlers to camelCase (<code className="bg-card px-1 rounded">onclick</code> → <code className="bg-card px-1 rounded">onClick</code>)</li>
-            <li>• Converts inline <code className="bg-card px-1 rounded">style</code> strings into JSX style objects with camelCase properties.</li>
-            <li>• Self-closes void elements like <code className="bg-card px-1 rounded">{"<br>"}</code>, <code className="bg-card px-1 rounded">{"<img>"}</code>, <code className="bg-card px-1 rounded">{"<input>"}</code>.</li>
-            <li>• Wraps multiple root elements in a fragment when generating a component.</li>
-          </ul>
-        </div>
+        <Card className="p-4 text-xs">
+          <CardContent>
+            <p className="text-foreground mb-2 font-semibold">What this does</p>
+            <ul className="text-muted-foreground space-y-1">
+              <li>
+                • Renames reserved attributes: <code className="bg-card rounded px-1">class</code> →{" "}
+                <code className="bg-card rounded px-1">className</code>,{" "}
+                <code className="bg-card rounded px-1">for</code> →{" "}
+                <code className="bg-card rounded px-1">htmlFor</code>,{" "}
+                <code className="bg-card rounded px-1">tabindex</code> →{" "}
+                <code className="bg-card rounded px-1">tabIndex</code>, etc.
+              </li>
+              <li>
+                • Converts event handlers to camelCase (
+                <code className="bg-card rounded px-1">onclick</code> →{" "}
+                <code className="bg-card rounded px-1">onClick</code>)
+              </li>
+              <li>
+                • Converts inline <code className="bg-card rounded px-1">style</code> strings into
+                JSX style objects with camelCase properties.
+              </li>
+              <li>
+                • Self-closes void elements like{" "}
+                <code className="bg-card rounded px-1">{"<br>"}</code>,{" "}
+                <code className="bg-card rounded px-1">{"<img>"}</code>,{" "}
+                <code className="bg-card rounded px-1">{"<input>"}</code>.
+              </li>
+              <li>• Wraps multiple root elements in a fragment when generating a component.</li>
+            </ul>
+          </CardContent>
+        </Card>
       </div>
     </ToolLayout>
   );

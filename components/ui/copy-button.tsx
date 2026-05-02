@@ -1,7 +1,7 @@
 "use client";
 
 import { ButtonProps } from "@base-ui/react";
-import { Check, Copy } from "lucide-react";
+import { CheckIcon, CopyIcon } from "@phosphor-icons/react";
 
 import { Button } from "@/components/ui/button";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
@@ -47,7 +47,7 @@ const CopyButton = ({
       )}
       {...props}
     >
-      {copied ? <Check /> : <Copy />}
+      {copied ? <CheckIcon weight="bold" /> : <CopyIcon />}
       {label && labelName}
     </Button>
   );

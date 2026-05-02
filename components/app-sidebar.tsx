@@ -1,6 +1,13 @@
 "use client";
 
-import { BookMarked, Box, ChevronRight, Folder, Home } from "lucide-react";
+import {
+  BookBookmarkIcon,
+  CaretCircleRightIcon,
+  FolderIcon,
+  FolderOpenIcon,
+  HouseIcon,
+  ToolboxIcon,
+} from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -28,7 +35,6 @@ const AppSidebar = () => {
   const { setOpenMobile } = useSidebar();
 
   const categorySlug = (cat: string) => `/category/${slugify(cat)}`;
-
   // Memoize the tool grouping so it only calculates once on mount
   const groupedTools = useMemo(() => {
     const grouped = internalTools.reduce(
@@ -57,7 +63,7 @@ const AppSidebar = () => {
           <Image
             src={logo}
             unoptimized
-            className="h-10 w-10 max-w-none shrink-0"
+            className="h-9 w-9 max-w-none shrink-0"
             alt="syntax-stash"
           />
           <div className="sidebar-text-collapse grid flex-1 text-left leading-tight group-data-[collapsible=icon]:hidden">
@@ -80,11 +86,11 @@ const AppSidebar = () => {
               <SidebarMenuButton
                 tooltip="Home"
                 isActive={pathname === "/"}
-                className="h-9 cursor-pointer"
+                className="h-9 cursor-pointer group-data-[collapsible=icon]:justify-center"
                 render={<Link href={"/"} onClick={() => setOpenMobile(false)} />}
               >
-                <Home className="text-primary" />
-                <span>Home</span>
+                <HouseIcon className="text-primary size-5!" />
+                <span className="group-data-[collapsible=icon]:hidden">Home</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
@@ -97,17 +103,17 @@ const AppSidebar = () => {
             </SidebarGroupLabel>
             <SidebarMenu>
               {tools.map((tool) => {
-                const Icon = tool.icon || Box;
+                const Icon = tool.icon || ToolboxIcon;
                 return (
                   <SidebarMenuItem key={tool.url}>
                     <SidebarMenuButton
                       tooltip={tool.title}
                       isActive={pathname === tool.url}
-                      className="h-9 cursor-pointer"
+                      className="h-9 cursor-pointer group-data-[collapsible=icon]:justify-center"
                       render={<Link href={tool.url} onClick={() => setOpenMobile(false)} />}
                     >
-                      <Icon className="text-primary" />
-                      <span>{tool.title}</span>
+                      <Icon weight="duotone" className="text-primary size-5! shrink-0" />
+                      <span className="group-data-[collapsible=icon]:hidden">{tool.title}</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 );
@@ -122,25 +128,42 @@ const AppSidebar = () => {
         {/*  Resource Stash */}
         <SidebarGroup className="p-0">
           <SidebarGroupLabel className="text-muted-foreground mb-2 flex h-auto items-center gap-1.5 px-2 text-[10px] font-semibold tracking-wider uppercase">
-            <BookMarked className="text-secondary shrink-0" />
+            <BookBookmarkIcon weight="duotone" className="text-secondary size-5! shrink-0" />
             <span className="sidebar-text-collapse">Resource Stash</span>
           </SidebarGroupLabel>
           <SidebarMenu>
             {resourceCategories.map((cat) => {
               const href = categorySlug(cat);
+              const isActive = pathname === href;
+
               return (
                 <SidebarMenuItem key={cat}>
                   <SidebarMenuButton
                     tooltip={cat}
-                    isActive={pathname === href}
-                    className="group flex h-9 cursor-pointer justify-between"
+                    isActive={isActive}
+                    className="group flex h-9 cursor-pointer justify-between group-data-[collapsible=icon]:justify-center"
                     render={<Link href={href} onClick={() => setOpenMobile(false)} />}
                   >
-                    <Folder className="text-muted-foreground shrink-0" />
+                    {isActive ? (
+                      <FolderOpenIcon
+                        weight="duotone"
+                        className="text-secondary size-5! shrink-0"
+                      />
+                    ) : (
+                      <FolderIcon
+                        weight="duotone"
+                        className="text-muted-foreground size-5! shrink-0"
+                      />
+                    )}
 
-                    <div className="sidebar-text-collapse flex w-full items-center justify-between">
+                    <div className="sidebar-text-collapse flex w-full items-center justify-between group-data-[collapsible=icon]:hidden">
                       <span className="truncate">{cat}</span>
-                      <ChevronRight className="shrink-0 opacity-0 transition-opacity group-hover:opacity-60" />
+                      <CaretCircleRightIcon
+                        weight="duotone"
+                        className={`size-4.5! shrink-0 transition-all duration-200 ${
+                          isActive ? "rotate-90" : "rotate-0"
+                        }`}
+                      />
                     </div>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -151,7 +174,7 @@ const AppSidebar = () => {
       </SidebarContent>
 
       {/* Footer */}
-      <SidebarFooter className="border-sidebar-border border-t p-3">
+      <SidebarFooter className="border-sidebar-border sidebar-text-collapse border-t p-3">
         <p className="text-muted-foreground text-center font-mono text-[10px]">
           syntax-stash · handmade
         </p>

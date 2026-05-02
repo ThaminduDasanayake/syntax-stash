@@ -1,12 +1,12 @@
-
 // Data Models
+import { Icon } from "@phosphor-icons/react";
 import { LucideIcon } from "lucide-react";
 import { ReactNode } from "react";
 
 // Component Props
 export interface ToolLayoutProps {
   children: ReactNode;
-  icon: LucideIcon;
+  icon: LucideIcon | Icon;
   title: string | ReactNode;
   highlight?: string;
   description: string;
@@ -17,10 +17,11 @@ export interface ToolLayoutProps {
 
 export type Tool = {
   title: string;
+  highlight?: string;
   url: string;
   description: string;
   category: string;
-  icon?: LucideIcon;
+  icon?: LucideIcon | Icon;
 };
 
 export type ToolCardProps = {

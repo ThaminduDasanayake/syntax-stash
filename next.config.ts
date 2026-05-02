@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
     ],
   },
   serverExternalPackages: ["pdf-parse", "pdfjs-dist"],
+  experimental: {
+    optimizePackageImports: ["@phosphor-icons/react"],
+  },
 };
 
 export default nextConfig;

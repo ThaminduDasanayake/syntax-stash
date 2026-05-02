@@ -1,6 +1,6 @@
 "use client";
 
-import { CodeXml, Search } from "lucide-react";
+import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 
 import CodeCopyButton from "@/app/tools/code-stash/components/code-copy-button";
@@ -8,11 +8,12 @@ import FilenameCopyButton from "@/app/tools/code-stash/components/filename-copy-
 import SetupCopyButton from "@/app/tools/code-stash/components/setup-copy-button";
 import { LANG_COLORS } from "@/app/tools/code-stash/constants";
 import { Snippet } from "@/app/tools/code-stash/types";
-import { ToolLayout } from "@/components/layout/tool-layout";
+import ToolLayout from "@/components/layout/layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useFuzzySearch } from "@/hooks/use-fuzzy-search";
+import { developmentTools } from "@/lib/tools-data.ts";
 import { cn } from "@/lib/utils";
 
 export default function CodeStashUi({ initialSnippets }: { initialSnippets: Snippet[] }) {
@@ -40,13 +41,10 @@ export default function CodeStashUi({ initialSnippets }: { initialSnippets: Snip
 
   const activeSnippet = initialSnippets.find((s) => s.id === activeId);
 
+  const tool = developmentTools.find((t) => t.url === "/tools/code-stash");
+
   return (
-    <ToolLayout
-      icon={CodeXml}
-      title="Code"
-      highlight="Stash"
-      description="A curated library of developer snippets and configurations."
-    >
+    <ToolLayout tool={tool}>
       {/* Split layout */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Left Column: Directory */}
@@ -55,8 +53,8 @@ export default function CodeStashUi({ initialSnippets }: { initialSnippets: Snip
           <div className="sticky top-0 z-10 space-y-3 pb-3">
             {/* Search bar */}
             <div className="relative">
-              <Search
-                size={15}
+              <MagnifyingGlassIcon
+                weight="duotone"
                 className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 -translate-y-1/2"
               />
               <Input
