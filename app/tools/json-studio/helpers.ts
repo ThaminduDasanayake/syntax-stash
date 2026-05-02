@@ -1,3 +1,4 @@
+// Re-export shared JSON utilities used across tabs
 export type JsonValue =
   | string | number | boolean | null
   | JsonValue[]
@@ -34,7 +35,6 @@ export function matchesSearch(key: string, value: JsonValue, query: string): boo
   return false;
 }
 
-/** Recursively check if any descendant matches the search query. */
 export function subtreeMatches(value: JsonValue, query: string): boolean {
   if (!query) return false;
   if (value === null || typeof value !== "object") {

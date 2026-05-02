@@ -89,24 +89,7 @@ ${renderedHtml}
             <span>{stats.lines} lines</span>
           </div>
           <div className="ml-auto flex items-center gap-2">
-            {/*<Button*/}
-            {/*  variant="outline"*/}
-            {/*  onClick={() => copy(markdown)}*/}
-            {/*  disabled={!markdown}*/}
-            {/*  className="rounded-full font-semibold"*/}
-            {/*>*/}
-            {/*  {copied ? (*/}
-            {/*    <>*/}
-            {/*      <Check className="text-emerald-400" />*/}
-            {/*      <span className="text-emerald-400">Copied</span>*/}
-            {/*    </>*/}
-            {/*  ) : (*/}
-            {/*    <>*/}
-            {/*      <Copy />*/}
-            {/*      Copy MD*/}
-            {/*    </>*/}
-            {/*  )}*/}
-            {/*</Button>*/}
+
 
             <Button variant="outline" onClick={handleDownloadMd} disabled={!markdown}>
               <Download />
@@ -151,7 +134,6 @@ ${renderedHtml}
             }
           />
 
-          {/* Preview / HTML */}
 
           {showHtml ? (
             <TextAreaField

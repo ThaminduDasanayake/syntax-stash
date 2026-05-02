@@ -76,7 +76,7 @@ export function parseSmartBlocks(text: string): ParsedData | null {
   for (const el of elements) {
     let data = null;
     try {
-      // Create a "Shadow" copy by wrapping unquoted JS variables in quotes
+      // Shadow-quote bare JS identifiers so json5 can parse them
       // e.g. `icon: Scale,` -> `icon: "Scale",`
       const shadow = el.replace(/:\s*([a-zA-Z_$][a-zA-Z0-9_$.]*)\s*([,}])/g, ':"$1"$2');
       data = json5.parse(shadow);
@@ -85,7 +85,7 @@ export function parseSmartBlocks(text: string): ParsedData | null {
         Object.keys(data).forEach((k) => keySet.add(k));
       }
     } catch {
-      // If parsing the shadow copy fails, we still keep the original text block
+      // keep original text even if parsing fails
     }
     items.push({ originalText: el, data });
   }

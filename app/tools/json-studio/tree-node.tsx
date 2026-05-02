@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, ChevronDown, ChevronRight, Clipboard, Link2 } from "lucide-react";
+import { Check, ChevronDown, ChevronRight, Clipboard, Link2, PlayCircle } from "lucide-react";
 import { useState } from "react";
 
 import {
@@ -23,7 +23,8 @@ type Props = {
   path: string;
   depth: number;
   searchQuery: string;
-  forceExpand: boolean | null; // null = user-controlled
+  forceExpand: boolean | null;
+  onTestInQuery?: (path: string) => void;
 };
 
 const TYPE_COLORS: Record<string, string> = {
@@ -61,7 +62,19 @@ function CopyBtn({ text, icon: Icon }: { text: string; icon: typeof Clipboard })
   );
 }
 
-export function TreeNode({ name, value, path, depth, searchQuery, forceExpand }: Props) {
+function TestInQueryBtn({ path, onTestInQuery }: { path: string; onTestInQuery: (p: string) => void }) {
+  return (
+    <button
+      onClick={(e) => { e.stopPropagation(); onTestInQuery(path); }}
+      className="text-muted-foreground hover:text-primary rounded p-0.5 opacity-0 transition-opacity group-hover:opacity-100"
+      title="Test path in Query tab"
+    >
+      <PlayCircle size={10} />
+    </button>
+  );
+}
+
+export function TreeNode({ name, value, path, depth, searchQuery, forceExpand, onTestInQuery }: Props) {
   const type = getValueType(value);
   const isContainer = type === "object" || type === "array";
   const childCount = countChildren(value);
@@ -100,6 +113,7 @@ export function TreeNode({ name, value, path, depth, searchQuery, forceExpand }:
           )}
         </span>
         <span className="text-muted-foreground ml-auto flex items-center gap-1">
+          {onTestInQuery && <TestInQueryBtn path={path} onTestInQuery={onTestInQuery} />}
           <CopyBtn text={path} icon={Link2} />
           <CopyBtn text={displayValue()} icon={Clipboard} />
         </span>
@@ -143,6 +157,7 @@ export function TreeNode({ name, value, path, depth, searchQuery, forceExpand }:
           {!isOpen && <span className="text-muted-foreground font-mono text-xs">{bracket[1]}</span>}
         </CollapsibleTrigger>
         <span className="ml-auto flex items-center gap-1 opacity-0 group-hover:opacity-100">
+          {onTestInQuery && <TestInQueryBtn path={path} onTestInQuery={onTestInQuery} />}
           <CopyBtn text={path} icon={Link2} />
         </span>
       </div>
@@ -157,6 +172,7 @@ export function TreeNode({ name, value, path, depth, searchQuery, forceExpand }:
             depth={depth + 1}
             searchQuery={searchQuery}
             forceExpand={forceExpand}
+            onTestInQuery={onTestInQuery}
           />
         ))}
         <div

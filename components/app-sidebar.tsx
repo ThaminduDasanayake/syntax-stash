@@ -1,10 +1,12 @@
 "use client";
 
-import { BookMarked, Box, ChevronRight, Home } from "lucide-react";
+import { BookMarked, Box, ChevronRight, Folder, Home } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 
+import logo from "@/app/logo.svg";
 import {
   Sidebar,
   SidebarContent,
@@ -44,19 +46,29 @@ const AppSidebar = () => {
   }, []);
 
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon">
       {/* Branding */}
-      <SidebarHeader className="border-sidebar-border border-b p-4">
-        <div>
-          <Link
-            href="/"
-            onClick={() => setOpenMobile(false)}
-            className="text-sidebar-foreground block text-left font-mono text-base font-semibold tracking-tight"
-          >
-            syntax<span className="text-primary">-</span>stash
-          </Link>
-          <p className="text-muted-foreground mt-0.5 text-[11px]">Developer swiss army knife</p>
-        </div>
+      <SidebarHeader className="border-sidebar-border border-b transition-all duration-300 ease-in-out">
+        <Link
+          href="/"
+          onClick={() => setOpenMobile(false)}
+          className="flex items-center gap-2 overflow-hidden p-3 transition-all duration-300 ease-in-out group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:py-3"
+        >
+          <Image
+            src={logo}
+            unoptimized
+            className="h-10 w-10 max-w-none shrink-0"
+            alt="syntax-stash"
+          />
+          <div className="sidebar-text-collapse grid flex-1 text-left leading-tight group-data-[collapsible=icon]:hidden">
+            <span className="font-mono text-base font-semibold tracking-tight">
+              syntax<span className="text-primary">-</span>stash
+            </span>
+            <span className="text-muted-foreground truncate text-[11px]">
+              Developer swiss army knife
+            </span>
+          </div>
+        </Link>
       </SidebarHeader>
 
       {/* Navigation */}
@@ -66,11 +78,12 @@ const AppSidebar = () => {
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton
+                tooltip="Home"
                 isActive={pathname === "/"}
                 className="h-9 cursor-pointer"
                 render={<Link href={"/"} onClick={() => setOpenMobile(false)} />}
               >
-                <Home className="text-foreground/80" />
+                <Home className="text-primary" />
                 <span>Home</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -80,7 +93,7 @@ const AppSidebar = () => {
         {groupedTools.map(([category, tools]) => (
           <SidebarGroup key={category} className="p-0 pb-4">
             <SidebarGroupLabel className="text-muted-foreground mb-2 flex h-auto items-center gap-1.5 px-2 text-[10px] font-semibold tracking-wider uppercase">
-              {category}
+              <span className="sidebar-text-collapse">{category}</span>
             </SidebarGroupLabel>
             <SidebarMenu>
               {tools.map((tool) => {
@@ -88,6 +101,7 @@ const AppSidebar = () => {
                 return (
                   <SidebarMenuItem key={tool.url}>
                     <SidebarMenuButton
+                      tooltip={tool.title}
                       isActive={pathname === tool.url}
                       className="h-9 cursor-pointer"
                       render={<Link href={tool.url} onClick={() => setOpenMobile(false)} />}
@@ -105,11 +119,11 @@ const AppSidebar = () => {
         {/* Divider */}
         <div className="border-sidebar-border mx-4 border-t" />
 
-        {/* Section 2: Resource Stash */}
+        {/*  Resource Stash */}
         <SidebarGroup className="p-0">
           <SidebarGroupLabel className="text-muted-foreground mb-2 flex h-auto items-center gap-1.5 px-2 text-[10px] font-semibold tracking-wider uppercase">
-            <BookMarked size={11} className="text-secondary" />
-            Resource Stash
+            <BookMarked className="text-secondary shrink-0" />
+            <span className="sidebar-text-collapse">Resource Stash</span>
           </SidebarGroupLabel>
           <SidebarMenu>
             {resourceCategories.map((cat) => {
@@ -117,16 +131,16 @@ const AppSidebar = () => {
               return (
                 <SidebarMenuItem key={cat}>
                   <SidebarMenuButton
+                    tooltip={cat}
                     isActive={pathname === href}
                     className="group flex h-9 cursor-pointer justify-between"
                     render={<Link href={href} onClick={() => setOpenMobile(false)} />}
                   >
-                    <div className="flex w-full items-center justify-between">
+                    <Folder className="text-muted-foreground shrink-0" />
+
+                    <div className="sidebar-text-collapse flex w-full items-center justify-between">
                       <span className="truncate">{cat}</span>
-                      <ChevronRight
-                        size={12}
-                        className="shrink-0 opacity-0 transition-opacity group-hover:opacity-60"
-                      />
+                      <ChevronRight className="shrink-0 opacity-0 transition-opacity group-hover:opacity-60" />
                     </div>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
