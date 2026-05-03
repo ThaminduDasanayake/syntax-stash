@@ -2,35 +2,19 @@
 
 import { useMemo, useState } from "react";
 
+import { PLACEHOLDER } from "@/app/tools/html-to-jsx/data";
 import { convertHtmlToJsx, type ConvertOptions } from "@/app/tools/html-to-jsx/helpers";
-import ToolLayout from "@/components/layout/layout.tsx";
-import { Card, CardContent } from "@/components/ui/card.tsx";
-import ClearButton from "@/components/ui/clear-button.tsx";
+import { ToolLayout } from "@/components/layout/layout";
+import { Card, CardContent } from "@/components/ui/card";
+import ClearButton from "@/components/ui/clear-button";
 import CopyButton from "@/components/ui/copy-button";
-import { Input } from "@/components/ui/input";
-import { InputField } from "@/components/ui/input-field.tsx";
+import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { TextAreaField } from "@/components/ui/textarea-field.tsx";
-import { developmentTools } from "@/lib/tools-data.ts";
+import { TextAreaField } from "@/components/ui/textarea-field";
+import { developmentTools } from "@/lib/tools-data";
 
-const PLACEHOLDER = `<!-- A login form -->
-<form class="login-form" onsubmit="handleSubmit(event)">
-  <label for="email">Email</label>
-  <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
-
-  <label for="password">Password</label>
-  <input type="password" id="password" name="password" minlength="8" required>
-
-  <div style="margin-top: 16px; display: flex; gap: 8px;">
-    <button type="submit" class="primary">Sign in</button>
-    <button type="button" tabindex="-1">Cancel</button>
-  </div>
-
-  <img src="/logo.png" alt="Logo" width="120">
-</form>`;
-
-export default function HtmlToJsxPage() {
+function HtmlToJsxPage() {
   const [input, setInput] = useState(PLACEHOLDER);
   const [componentName, setComponentName] = useState("MyComponent");
   const [asComponent, setAsComponent] = useState(true);
@@ -136,9 +120,9 @@ export default function HtmlToJsxPage() {
               </li>
               <li>
                 • Self-closes void elements like{" "}
-                <code className="bg-card rounded px-1">{"<br>"}</code>,{" "}
-                <code className="bg-card rounded px-1">{"<img>"}</code>,{" "}
-                <code className="bg-card rounded px-1">{"<input>"}</code>.
+                <code className="bg-card rounded px-1">&lt;br&gt;</code>,{" "}
+                <code className="bg-card rounded px-1">&lt;img&gt;</code>,{" "}
+                <code className="bg-card rounded px-1">&lt;input&gt;</code>.
               </li>
               <li>• Wraps multiple root elements in a fragment when generating a component.</li>
             </ul>
@@ -148,3 +132,5 @@ export default function HtmlToJsxPage() {
     </ToolLayout>
   );
 }
+
+export default HtmlToJsxPage;

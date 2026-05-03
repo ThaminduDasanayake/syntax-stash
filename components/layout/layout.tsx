@@ -13,13 +13,13 @@ interface SmartToolLayoutProps {
   maxWidth?: "max-w-4xl" | "max-w-6xl" | "max-w-7xl";
 }
 
-const ToolLayout = ({
+export function ToolLayout({
   children,
   tool,
   backHref = "/",
   backText = "Back",
   maxWidth = "max-w-7xl",
-}: SmartToolLayoutProps) => {
+}: SmartToolLayoutProps) {
   if (!tool) {
     notFound();
   }
@@ -41,7 +41,7 @@ const ToolLayout = ({
         {/* Heading */}
         <div className="mb-10">
           <h1 className="text-foreground mb-3 flex items-center gap-3 text-4xl font-bold tracking-tighter md:text-5xl">
-            {Icon && <Icon className="text-primary" size={36} weight="duotone" />}
+            {Icon && <Icon className="text-primary" size={44} weight="duotone" />}
             <span>
               {title.split(new RegExp(`(${highlight})`, "gi")).map((part, i) =>
                 part.toLowerCase() === highlight?.toLowerCase() ? (
@@ -62,5 +62,4 @@ const ToolLayout = ({
       </div>
     </div>
   );
-};
-export default ToolLayout;
+}

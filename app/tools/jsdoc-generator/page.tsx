@@ -3,7 +3,11 @@
 import { BookText } from "lucide-react";
 import { useMemo, useState } from "react";
 
-import { generateDoc, parseFunctionSignature, type DocStyle } from "@/app/tools/jsdoc-generator/helpers";
+import {
+  type DocStyle,
+  generateDoc,
+  parseFunctionSignature,
+} from "@/app/tools/jsdoc-generator/helpers";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import CopyButton from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";
@@ -24,7 +28,8 @@ export default function JsdocGeneratorPage() {
     if (!input.trim()) return { output: "", error: null, parsed: null };
     try {
       const result = parseFunctionSignature(input);
-      if (!result) return { output: "", error: "Could not parse function signature.", parsed: null };
+      if (!result)
+        return { output: "", error: "Could not parse function signature.", parsed: null };
       return { output: generateDoc(result, style, includeThrows), error: null, parsed: result };
     } catch (e) {
       return { output: "", error: e instanceof Error ? e.message : "Parse error", parsed: null };
@@ -37,12 +42,7 @@ export default function JsdocGeneratorPage() {
   }, [output, input]);
 
   return (
-    <ToolLayout
-      icon={BookText}
-      title="JSDoc / TSDoc"
-      highlight="Generator"
-      description="Paste a TypeScript function signature and generate JSDoc or TSDoc with @param, @returns, and @throws stubs."
-    >
+    <ToolLayout icon={BookText} title="JSDoc / TSDoc" highlight="Generator" description="">
       <div className="space-y-6">
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <div className="space-y-2">
@@ -58,7 +58,8 @@ export default function JsdocGeneratorPage() {
             {parsed && (
               <p className="text-muted-foreground text-xs">
                 Parsed <span className="text-foreground font-mono">{parsed.name}</span>
-                {parsed.params.length > 0 && ` — ${parsed.params.length} parameter${parsed.params.length === 1 ? "" : "s"}`}
+                {parsed.params.length > 0 &&
+                  ` — ${parsed.params.length} parameter${parsed.params.length === 1 ? "" : "s"}`}
                 {parsed.isAsync && ", async"}
                 {parsed.isArrow && ", arrow"}
                 {parsed.isGenerator && ", generator"}
@@ -101,8 +102,16 @@ export default function JsdocGeneratorPage() {
         <div className="border-border bg-muted/30 rounded-xl border p-4 text-xs">
           <p className="text-foreground mb-2 font-semibold">Style differences</p>
           <ul className="text-muted-foreground space-y-1">
-            <li><strong className="text-foreground">JSDoc</strong> — includes <code className="bg-card px-1 rounded">{"{type}"}</code> in tags. Common for plain JavaScript files where types live in comments.</li>
-            <li><strong className="text-foreground">TSDoc</strong> — omits <code className="bg-card px-1 rounded">{"{type}"}</code>. Used in TypeScript projects where the compiler already knows the types.</li>
+            <li>
+              <strong className="text-foreground">JSDoc</strong> — includes{" "}
+              <code className="bg-card rounded px-1">{"{type}"}</code> in tags. Common for plain
+              JavaScript files where types live in comments.
+            </li>
+            <li>
+              <strong className="text-foreground">TSDoc</strong> — omits{" "}
+              <code className="bg-card rounded px-1">{"{type}"}</code>. Used in TypeScript projects
+              where the compiler already knows the types.
+            </li>
           </ul>
         </div>
       </div>

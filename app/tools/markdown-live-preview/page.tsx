@@ -1,16 +1,18 @@
 "use client";
 
-import { Code2, Download, Eye, NotebookPen, RotateCcw } from "lucide-react";
+import { DownloadIcon, EyeIcon, FileHtmlIcon } from "@phosphor-icons/react";
 import { marked } from "marked";
 import { useMemo, useState } from "react";
 
-import { DEFAULT_MARKDOWN } from "@/app/tools/markdown-live-preview/data.ts";
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { DEFAULT_MARKDOWN } from "@/app/tools/markdown-live-preview/data";
+import { ToolLayout } from "@/components/layout/layout";
 import { Button } from "@/components/ui/button";
-import ClearButton from "@/components/ui/clear-button.tsx";
-import CopyButton from "@/components/ui/copy-button.tsx";
-import { Label } from "@/components/ui/label.tsx";
-import { TextAreaField } from "@/components/ui/textarea-field.tsx";
+import { Card, CardContent } from "@/components/ui/card";
+import ClearButton from "@/components/ui/clear-button";
+import CopyButton from "@/components/ui/copy-button";
+import { Label } from "@/components/ui/label";
+import { TextAreaField } from "@/components/ui/textarea-field";
+import { developmentTools } from "@/lib/tools-data";
 
 export default function MarkdownLivePreviewPage() {
   const [markdown, setMarkdown] = useState(DEFAULT_MARKDOWN);
@@ -73,41 +75,38 @@ ${renderedHtml}
     URL.revokeObjectURL(url);
   }
 
+  const tool = developmentTools.find((t) => t.url === "/tools/markdown-live-preview");
+
   return (
-    <ToolLayout
-      icon={NotebookPen}
-      title="Markdown"
-      highlight="Live Preview"
-      description="Write markdown with a real-time side-by-side preview. Supports GFM tables, task lists, and more."
-    >
+    <ToolLayout tool={tool}>
       <div className="space-y-3">
         {/* Toolbar */}
         <div className="flex flex-wrap items-center gap-2">
-          <div className="text-muted-foreground flex gap-3 text-xs">
-            <span>{stats.words} words</span>
-            <span>{stats.chars} chars</span>
-            <span>{stats.lines} lines</span>
-          </div>
+          <Card className="text-xs">
+            <CardContent className="space-x-4">
+              <span>{stats.words} words</span>
+              <span>{stats.chars} chars</span>
+              <span>{stats.lines} lines</span>
+            </CardContent>
+          </Card>
           <div className="ml-auto flex items-center gap-2">
-
-
             <Button variant="outline" onClick={handleDownloadMd} disabled={!markdown}>
-              <Download />
+              <DownloadIcon weight="duotone" />
               .md
             </Button>
             <Button variant="outline" onClick={handleDownloadHtml} disabled={!renderedHtml}>
-              <Download />
+              <DownloadIcon weight="duotone" />
               .html
             </Button>
-            <Button variant="outline" onClick={() => setShowHtml((v) => !v)}>
+            <Button variant="outline" className="w-36" onClick={() => setShowHtml((v) => !v)}>
               {showHtml ? (
                 <>
-                  <Eye />
+                  <EyeIcon weight="duotone" />
                   Show preview
                 </>
               ) : (
                 <>
-                  <Code2 />
+                  <FileHtmlIcon weight="duotone" />
                   Show HTML
                 </>
               )}
@@ -125,15 +124,8 @@ ${renderedHtml}
             placeholder="Start writing markdown…"
             className="h-full resize-none text-sm leading-relaxed"
             spellCheck={false}
-            action={
-              <ClearButton
-                icon={<RotateCcw />}
-                onClick={() => setMarkdown("")}
-                disabled={!markdown}
-              />
-            }
+            action={<ClearButton onClick={() => setMarkdown("")} disabled={!markdown} />}
           />
-
 
           {showHtml ? (
             <TextAreaField

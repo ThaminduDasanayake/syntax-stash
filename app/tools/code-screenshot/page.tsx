@@ -10,16 +10,16 @@ import {
   LANGUAGES,
   PLACEHOLDER_CODE,
   THEMES,
-} from "@/app/tools/code-screenshot/constants.ts";
-import ToolLayout from "@/components/layout/layout.tsx";
+} from "@/app/tools/code-screenshot/constants";
+import { ToolLayout } from "@/components/layout/layout";
 import { Button } from "@/components/ui/button";
-import { InputField } from "@/components/ui/input-field.tsx";
+import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
-import { SelectField } from "@/components/ui/select-field.tsx";
-import { Slider } from "@/components/ui/slider.tsx";
+import { SelectField } from "@/components/ui/select-field";
+import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
-import { TextAreaField } from "@/components/ui/textarea-field.tsx";
-import { developmentTools } from "@/lib/tools-data.ts";
+import { TextAreaField } from "@/components/ui/textarea-field";
+import { developmentTools } from "@/lib/tools-data";
 
 export default function CodeScreenshotPage() {
   const [code, setCode] = useState(PLACEHOLDER_CODE);
@@ -34,8 +34,6 @@ export default function CodeScreenshotPage() {
   const [highlighted, setHighlighted] = useState("");
   const [isExporting, setIsExporting] = useState(false);
   const exportRef = useRef<HTMLDivElement | null>(null);
-
-  const tool = developmentTools.find((t) => t.url === "/tools/code-screenshot");
 
   useEffect(() => {
     let cancelled = false;
@@ -78,6 +76,8 @@ export default function CodeScreenshotPage() {
 
   const activeBackgroundValue =
     BACKGROUNDS.find((bg) => bg.id === background)?.value || "transparent";
+
+  const tool = developmentTools.find((t) => t.url === "/tools/code-screenshot");
 
   return (
     <ToolLayout tool={tool}>
@@ -166,9 +166,7 @@ export default function CodeScreenshotPage() {
 
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-2">
-                <Label htmlFor="padding" className="text-xs">
-                  Padding: {padding}px
-                </Label>
+                <Label className="text-xs">Padding: {padding}px</Label>
                 <Slider
                   value={[padding]}
                   onValueChange={(vals) => setPadding(Array.isArray(vals) ? vals[0] : vals)}
@@ -176,21 +174,9 @@ export default function CodeScreenshotPage() {
                   max={128}
                   step={4}
                 />
-                {/*<input*/}
-                {/*  id="padding"*/}
-                {/*  type="range"*/}
-                {/*  min={0}*/}
-                {/*  max={128}*/}
-                {/*  step={4}*/}
-                {/*  value={padding}*/}
-                {/*  onChange={(e) => setPadding(Number(e.target.value))}*/}
-                {/*  className="w-full"*/}
-                {/*/>*/}
               </div>
               <div className="space-y-2">
-                <Label htmlFor="fontSize" className="text-xs">
-                  Font: {fontSize}px
-                </Label>
+                <Label className="text-xs">Font: {fontSize}px</Label>
                 <Slider
                   value={[fontSize]}
                   onValueChange={(vals) => setFontSize(Array.isArray(vals) ? vals[0] : vals)}

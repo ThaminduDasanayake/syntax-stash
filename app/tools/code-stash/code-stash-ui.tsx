@@ -1,6 +1,5 @@
 "use client";
 
-import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 
 import CodeCopyButton from "@/app/tools/code-stash/components/code-copy-button";
@@ -8,10 +7,10 @@ import FilenameCopyButton from "@/app/tools/code-stash/components/filename-copy-
 import SetupCopyButton from "@/app/tools/code-stash/components/setup-copy-button";
 import { LANG_COLORS } from "@/app/tools/code-stash/constants";
 import { Snippet } from "@/app/tools/code-stash/types";
-import ToolLayout from "@/components/layout/layout";
+import { ToolLayout } from "@/components/layout/layout.tsx";
+import { SearchInput } from "@/components/search-input.tsx";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useFuzzySearch } from "@/hooks/use-fuzzy-search";
 import { developmentTools } from "@/lib/tools-data.ts";
 import { cn } from "@/lib/utils";
@@ -52,18 +51,11 @@ export default function CodeStashUi({ initialSnippets }: { initialSnippets: Snip
           {/* Sticky header: search + filters */}
           <div className="sticky top-0 z-10 space-y-3 pb-3">
             {/* Search bar */}
-            <div className="relative">
-              <MagnifyingGlassIcon
-                weight="duotone"
-                className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 -translate-y-1/2"
-              />
-              <Input
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search snippets…"
-                className="bg-background border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-primary/30 h-9 pl-9 text-sm focus-visible:ring-1"
-              />
-            </div>
+            <SearchInput
+              placeholder="Search snippets..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
 
             {/* Language filter pills */}
             <div className="scrollbar-none flex gap-1.5 overflow-x-auto pb-2">

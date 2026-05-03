@@ -47,7 +47,7 @@ const CopyButton = ({
       )}
       {...props}
     >
-      {copied ? <CheckIcon weight="bold" /> : <CopyIcon />}
+      {copied ? <CheckIcon weight="bold" /> : <CopyIcon weight="duotone" className="size-4.5" />}
       {label && labelName}
     </Button>
   );

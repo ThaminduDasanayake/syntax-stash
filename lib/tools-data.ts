@@ -23,6 +23,7 @@ import {
   FileTxtIcon,
   FingerprintIcon,
   FlaskIcon,
+  FlowArrowIcon,
   GitBranchIcon,
   GlobeHemisphereEastIcon,
   GlobeIcon,
@@ -52,7 +53,6 @@ import {
   SwatchesIcon,
   TerminalWindowIcon,
   TextTIcon,
-  TreeStructureIcon,
 } from "@phosphor-icons/react/ssr";
 
 import { Tool } from "@/types";
@@ -178,15 +178,8 @@ export const developmentTools: Tool[] = [
     icon: PlusMinusIcon,
   },
   {
-    title: "HTML to JSX",
-    url: "/tools/html-to-jsx",
-    description:
-      "Convert HTML to React-ready JSX with renamed attributes, camelCase events, and style objects.",
-    category: CATEGORIES.development,
-    icon: FileJsxIcon,
-  },
-  {
     title: ".gitignore Generator",
+    highlight: "Generator",
     url: "/tools/gitignore-generator",
     description:
       "Generate .gitignore files for your project with common patterns for popular stacks.",
@@ -194,18 +187,29 @@ export const developmentTools: Tool[] = [
     icon: GitBranchIcon,
   },
   {
+    title: "HTML to JSX",
+    highlight: "JSX",
+    url: "/tools/html-to-jsx",
+    description:
+      "Convert HTML to React-ready JSX with renamed attributes, camelCase events, and style objects.",
+    category: CATEGORIES.development,
+    icon: FileJsxIcon,
+  },
+  {
     title: "JSDoc / TSDoc Generator",
+    highlight: "Generator",
     url: "/tools/jsdoc-generator",
     description:
-      "Paste a TypeScript function signature and generate JSDoc or TSDoc with @param and @returns stubs.",
+      "Paste a JavaScript or TypeScript function signature and generate JSDoc or TSDoc with @param, @returns, and @throws stubs.",
     category: CATEGORIES.development,
     icon: FilesIcon,
   },
   {
     title: "Markdown Live Preview",
+    highlight: "Preview",
     url: "/tools/markdown-live-preview",
     description:
-      "Write markdown with a side-by-side preview, view the generated HTML, and export to .md or .html.",
+      "Write markdown with a real-time side-by-side preview. Supports GFM tables, task lists, and more.",
     category: CATEGORIES.development,
     icon: MarkdownLogoIcon,
   },
@@ -219,14 +223,16 @@ export const developmentTools: Tool[] = [
   },
   {
     title: "Mermaid Live Editor",
+    highlight: "Live Editor",
     url: "/tools/mermaid-editor",
     description:
       "Write Mermaid diagrams with a live SVG preview. Supports flowcharts, sequence, ER, and more.",
     category: CATEGORIES.development,
-    icon: TreeStructureIcon,
+    icon: FlowArrowIcon,
   },
   {
     title: "Mock Data Generator",
+    highlight: "Generator",
     url: "/tools/mock-data-generator",
     description: "Generate structured dummy JSON data for testing.",
     category: CATEGORIES.development,
@@ -234,6 +240,7 @@ export const developmentTools: Tool[] = [
   },
   {
     title: "NLP Sandbox",
+    highlight: "Sandbox",
     url: "/tools/nlp-sandbox",
     description: "Simulate text cleaning, vectorization, and scaling pipelines with live output.",
     category: CATEGORIES.development,
@@ -241,6 +248,7 @@ export const developmentTools: Tool[] = [
   },
   {
     title: "Regex Studio",
+    highlight: "Studio",
     url: "/tools/regex-studio",
     description:
       "Build, visualize, test, and browse a curated library of production-ready regular expressions.",
@@ -249,6 +257,7 @@ export const developmentTools: Tool[] = [
   },
   {
     title: "Web Extractor",
+    highlight: "Extractor",
     url: "/tools/web-extractor",
     description: "Extract meta tags, headings, and links from any public URL.",
     category: CATEGORIES.development,

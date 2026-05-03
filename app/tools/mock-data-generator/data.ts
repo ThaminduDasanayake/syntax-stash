@@ -1,3 +1,8 @@
+export const SCHEMA_DETAILS = [
+  { value: "users", label: "Users" },
+  { value: "products", label: "Products" },
+  { value: "posts", label: "Posts" },
+];
 export const FIRST_NAMES = [
   "Alex",
   "Jordan",

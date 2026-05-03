@@ -1,15 +1,15 @@
 "use client";
 
-import { BookOpen, Download, FlaskConical, Regex } from "lucide-react";
+import { BookOpenIcon, DownloadIcon, FlaskIcon } from "@phosphor-icons/react";
 import { useMemo, useRef, useState } from "react";
 
-import Diagram from "@/app/tools/regex-studio/components/diagram.tsx";
-import { CATEGORY_COLORS, REGEX_CATEGORIES } from "@/app/tools/regex-studio/constants.ts";
+import Diagram from "@/app/tools/regex-studio/components/diagram";
+import { CATEGORY_COLORS, REGEX_CATEGORIES } from "@/app/tools/regex-studio/constants";
 import { REGEX_PATTERNS } from "@/app/tools/regex-studio/data";
-import { parseRegex } from "@/app/tools/regex-studio/helpers.ts";
+import { parseRegex } from "@/app/tools/regex-studio/helpers";
 import { RegexResult } from "@/app/tools/regex-studio/types";
 import { ErrorAlert } from "@/components/error-alert";
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { ToolLayout } from "@/components/layout/layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import ClearButton from "@/components/ui/clear-button";
@@ -19,6 +19,7 @@ import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TextAreaField } from "@/components/ui/textarea-field";
+import { developmentTools } from "@/lib/tools-data";
 
 export default function RegexStudioPage() {
   const [activeTab, setActiveTab] = useState<string>("tester");
@@ -132,22 +133,19 @@ export default function RegexStudioPage() {
     }
   }
 
+  const tool = developmentTools.find((t) => t.url === "/tools/regex-studio");
+
   return (
-    <ToolLayout
-      icon={Regex}
-      title="Regex"
-      highlight="Studio"
-      description="Build, test, and browse a curated library of production-ready regular expressions."
-    >
+    <ToolLayout tool={tool}>
       <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col gap-6">
         <div className="flex w-full">
           <TabsList className="grid w-full max-w-md grid-cols-2">
             <TabsTrigger value="tester" className="tab-trigger">
-              <FlaskConical />
+              <FlaskIcon weight="duotone" className="size-4.5" />
               Live Tester
             </TabsTrigger>
             <TabsTrigger value="library" className="tab-trigger">
-              <BookOpen />
+              <BookOpenIcon weight="duotone" className="size-4.5" />
               Pattern Library
             </TabsTrigger>
           </TabsList>
@@ -270,8 +268,8 @@ export default function RegexStudioPage() {
           <div className="flex gap-2">
             <CopyButton value={getSvgString} labelName="Copy SVG" disabled={!parsed.ok} />
             <Button variant="outline" onClick={downloadSvg} disabled={!parsed.ok}>
-              <Download />
-              Download SVG
+              <DownloadIcon weight="duotone" />
+              Download .svg
             </Button>
           </div>
 
@@ -337,7 +335,7 @@ export default function RegexStudioPage() {
                             onClick={() => handleUsePattern(entry)}
                             title="Use in Tester"
                           >
-                            <FlaskConical />
+                            <FlaskIcon weight="duotone" className="size-4.5" />
                           </Button>
                         </div>
                       </div>
@@ -371,7 +369,7 @@ export default function RegexStudioPage() {
                           ))}
                           {entry.examples.noMatch.slice(0, 2).map((ex) => (
                             <div key={ex} className="flex items-center gap-2">
-                              <span className="mt-0.5 h-2 w-2 shrink-0 rounded-full bg-red-500/70" />
+                              <span className="bg-destructive/80 mt-0.5 h-2 w-2 shrink-0 rounded-full" />
                               <span className="text-muted-foreground font-mono text-xs break-all">
                                 {ex}
                               </span>

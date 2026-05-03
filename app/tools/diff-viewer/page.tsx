@@ -3,90 +3,21 @@
 import { useMemo, useState } from "react";
 
 import { PLACEHOLDER_MODIFIED, PLACEHOLDER_ORIGINAL } from "@/app/tools/diff-viewer/data.ts";
-import { computeDiff, type DiffLine, formatUnifiedDiff } from "@/app/tools/diff-viewer/helpers";
-import ToolLayout from "@/components/layout/layout";
-import ClearButton from "@/components/ui/clear-button.tsx";
-import CopyButton from "@/components/ui/copy-button.tsx";
+import { DiffLineRow } from "@/app/tools/diff-viewer/diff-line-row";
+import {
+  buildSideColumns,
+  computeDiff,
+  type DiffLine,
+  formatUnifiedDiff,
+} from "@/app/tools/diff-viewer/helpers";
+import { ToolLayout } from "@/components/layout/layout";
+import ClearButton from "@/components/ui/clear-button";
+import CopyButton from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TextAreaField } from "@/components/ui/textarea-field.tsx";
-import { developmentTools } from "@/lib/tools-data.ts";
-
-function DiffLineRow({
-  line,
-  showOld,
-  showNew,
-}: {
-  line: DiffLine;
-  showOld: boolean;
-  showNew: boolean;
-}) {
-  const bgClass =
-    line.type === "added" ? "bg-green-500/10" : line.type === "removed" ? "bg-red-500/10" : "";
-  const textClass =
-    line.type === "added"
-      ? "text-green-400"
-      : line.type === "removed"
-        ? "text-red-400"
-        : "text-muted-foreground";
-  const prefix = line.type === "added" ? "+" : line.type === "removed" ? "-" : " ";
-
-  return (
-    <div className={`flex min-w-0 font-mono text-xs leading-5 ${bgClass}`}>
-      {showOld && (
-        <span className="border-border text-muted-foreground w-10 shrink-0 border-r px-2 text-right select-none">
-          {line.oldLineNum ?? ""}
-        </span>
-      )}
-      {showNew && (
-        <span className="border-border text-muted-foreground w-10 shrink-0 border-r px-2 text-right select-none">
-          {line.newLineNum ?? ""}
-        </span>
-      )}
-      <span className={`w-4 shrink-0 px-1 select-none ${textClass}`}>{prefix}</span>
-      <span className={`min-w-0 flex-1 px-2 break-all whitespace-pre-wrap ${textClass}`}>
-        {line.content}
-      </span>
-    </div>
-  );
-}
-
-type SideLine = { line: DiffLine | null; key: string };
-
-function buildSideColumns(lines: DiffLine[]): { left: SideLine[]; right: SideLine[] } {
-  const left: SideLine[] = [];
-  const right: SideLine[] = [];
-
-  let i = 0;
-  while (i < lines.length) {
-    const line = lines[i];
-    if (line.type === "unchanged") {
-      left.push({ line, key: `u-${i}` });
-      right.push({ line, key: `u-${i}` });
-      i++;
-    } else if (line.type === "removed") {
-      // check if next line is added (a modification pair)
-      const next = lines[i + 1];
-      if (next?.type === "added") {
-        left.push({ line, key: `r-${i}` });
-        right.push({ line: next, key: `a-${i + 1}` });
-        i += 2;
-      } else {
-        left.push({ line, key: `r-${i}` });
-        right.push({ line: null, key: `empty-r-${i}` });
-        i++;
-      }
-    } else {
-      // added without a preceding removed
-      left.push({ line: null, key: `empty-a-${i}` });
-      right.push({ line, key: `a-${i}` });
-      i++;
-    }
-  }
-
-  return { left, right };
-}
+import { TextAreaField } from "@/components/ui/textarea-field";
+import { developmentTools } from "@/lib/tools-data";
 
 function SideBySideLineRow({
   line,

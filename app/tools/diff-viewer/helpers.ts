@@ -13,7 +13,10 @@ function buildLcsTable(a: string[], b: string[]): number[][] {
   const table: number[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
   for (let i = 1; i <= m; i++) {
     for (let j = 1; j <= n; j++) {
-      table[i][j] = a[i - 1] === b[j - 1] ? table[i - 1][j - 1] + 1 : Math.max(table[i - 1][j], table[i][j - 1]);
+      table[i][j] =
+        a[i - 1] === b[j - 1]
+          ? table[i - 1][j - 1] + 1
+          : Math.max(table[i - 1][j], table[i][j - 1]);
     }
   }
   return table;
@@ -40,7 +43,12 @@ export function computeDiff(
 
   while (i > 0 || j > 0) {
     if (i > 0 && j > 0 && aKeys[i - 1] === bKeys[j - 1]) {
-      result.push({ type: "unchanged", content: aLines[i - 1], oldLineNum: oldNum--, newLineNum: newNum-- });
+      result.push({
+        type: "unchanged",
+        content: aLines[i - 1],
+        oldLineNum: oldNum--,
+        newLineNum: newNum--,
+      });
       i--;
       j--;
     } else if (j > 0 && (i === 0 || table[i][j - 1] >= table[i - 1][j])) {
@@ -64,4 +72,40 @@ export function formatUnifiedDiff(lines: DiffLine[]): string {
       return `${oldN} ${newN} ${prefix} ${line.content}`;
     })
     .join("\n");
+}
+
+type SideLine = { line: DiffLine | null; key: string };
+
+export function buildSideColumns(lines: DiffLine[]): { left: SideLine[]; right: SideLine[] } {
+  const left: SideLine[] = [];
+  const right: SideLine[] = [];
+
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i];
+    if (line.type === "unchanged") {
+      left.push({ line, key: `u-${i}` });
+      right.push({ line, key: `u-${i}` });
+      i++;
+    } else if (line.type === "removed") {
+      // check if next line is added (a modification pair)
+      const next = lines[i + 1];
+      if (next?.type === "added") {
+        left.push({ line, key: `r-${i}` });
+        right.push({ line: next, key: `a-${i + 1}` });
+        i += 2;
+      } else {
+        left.push({ line, key: `r-${i}` });
+        right.push({ line: null, key: `empty-r-${i}` });
+        i++;
+      }
+    } else {
+      // added without a preceding removed
+      left.push({ line: null, key: `empty-a-${i}` });
+      right.push({ line, key: `a-${i}` });
+      i++;
+    }
+  }
+
+  return { left, right };
 }

@@ -1,140 +1,32 @@
 "use client";
 
-import { ChevronDown, ExternalLink, Globe, Loader2, Search, Tag } from "lucide-react";
-import { useRef, useState } from "react";
+import {
+  ArrowSquareOutIcon,
+  GlobeIcon,
+  MagnifyingGlassIcon,
+  SpinnerGapIcon,
+} from "@phosphor-icons/react";
+import { KeyboardEvent, useRef, useState } from "react";
 
 import type { ExtractedData } from "@/app/api/extract/route";
+import { HeadingGroup } from "@/app/tools/web-extractor/heading-group";
+import { MetaRow } from "@/app/tools/web-extractor/meta-row";
+import { Section } from "@/app/tools/web-extractor/section";
 import { ErrorAlert } from "@/components/error-alert";
-import { ToolLayout } from "@/components/layout/tool-layout";
-import { Badge } from "@/components/ui/badge";
+import { ToolLayout } from "@/components/layout/layout";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import ClearButton from "@/components/ui/clear-button";
 import CopyButton from "@/components/ui/copy-button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { EmptyState } from "@/components/ui/empty-state";
+import { InputField } from "@/components/ui/input-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-
-// ---------------------------------------------------------------------------
-// Section — collapsible card used for each data group
-// ---------------------------------------------------------------------------
-
-interface SectionProps {
-  title: string;
-  count?: number;
-  defaultOpen?: boolean;
-  children: React.ReactNode;
-}
-
-function Section({ title, count, defaultOpen = true, children }: SectionProps) {
-  const [open, setOpen] = useState(defaultOpen);
-
-  return (
-    <Collapsible open={open} onOpenChange={setOpen}>
-      <Card>
-        <CollapsibleTrigger className="flex w-full items-center justify-between px-5 py-3.5 text-left transition-colors hover:bg-muted/50">
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-semibold">{title}</span>
-            {count !== undefined && (
-              <Badge variant="secondary" className="font-mono text-[11px]">
-                {count}
-              </Badge>
-            )}
-          </div>
-          <ChevronDown
-            size={15}
-            className={`text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`}
-          />
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <CardContent className="border-t px-5 pb-5 pt-4">
-            {children}
-          </CardContent>
-        </CollapsibleContent>
-      </Card>
-    </Collapsible>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// MetaRow — single key → value row inside SEO section
-// ---------------------------------------------------------------------------
-
-function MetaRow({ label, value }: { label: string; value: string }) {
-  if (!value) return null;
-  return (
-    <div className="grid grid-cols-[120px_1fr] gap-3 py-2 text-sm [&:not(:last-child)]:border-b">
-      <span className="shrink-0 font-medium text-muted-foreground">{label}</span>
-      <span className="break-all">{value}</span>
-    </div>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// HeadingRow — H1 / H2 / H3 group
-// ---------------------------------------------------------------------------
-
-function HeadingGroup({
-  level,
-  items,
-}: {
-  level: "h1" | "h2" | "h3";
-  items: string[];
-}) {
-  if (items.length === 0) return null;
-  const colors = {
-    h1: "text-foreground font-semibold text-base",
-    h2: "text-foreground/80 font-medium text-sm",
-    h3: "text-muted-foreground text-sm",
-  } as const;
-  return (
-    <div className="space-y-1.5">
-      <p className="font-mono text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-        {level} · {items.length}
-      </p>
-      <ul className="space-y-1">
-        {items.map((text, i) => (
-          <li key={i} className={`${colors[level]} truncate`} title={text}>
-            {text}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Empty state
-// ---------------------------------------------------------------------------
-
-function EmptyState() {
-  return (
-    <div className="flex flex-col items-center justify-center rounded-xl border border-dashed py-16 text-center">
-      <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-muted">
-        <Tag size={20} className="text-muted-foreground" />
-      </div>
-      <p className="text-sm font-medium">No data yet</p>
-      <p className="mt-1 text-xs text-muted-foreground">
-        Enter a URL and click Extract to see results
-      </p>
-    </div>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Page
-// ---------------------------------------------------------------------------
+import { developmentTools } from "@/lib/tools-data";
 
 export default function WebExtractorPage() {
-  const [url, setUrl]       = useState("");
+  const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError]   = useState<string | null>(null);
-  const [data, setData]     = useState<ExtractedData | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<ExtractedData | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   async function handleExtract() {
@@ -165,7 +57,7 @@ export default function WebExtractorPage() {
     }
   }
 
-  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+  function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
     if (e.key === "Enter") handleExtract();
   }
 
@@ -176,52 +68,37 @@ export default function WebExtractorPage() {
     (data?.headings.h2.length ?? 0) +
     (data?.headings.h3.length ?? 0);
 
-  return (
-    <ToolLayout
-      icon={Globe}
-      title="Web"
-      highlight="Extractor"
-      description="Extract meta tags, headings, and links from any public URL."
-    >
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {/* ---------------------------------------------------------------- */}
-        {/* Left — URL input                                                  */}
-        {/* ---------------------------------------------------------------- */}
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label>Target URL</Label>
-            <Input
-              ref={inputRef}
-              type="url"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="https://example.com"
-              className="font-mono text-sm"
-              disabled={loading}
-            />
-          </div>
+  const tool = developmentTools.find((t) => t.url === "/tools/web-extractor");
 
-          <div className="flex gap-2">
+  return (
+    <ToolLayout tool={tool}>
+      <div className="flex flex-col gap-8">
+        <div className="mx-auto w-full max-w-2xl space-y-4">
+          <InputField
+            ref={inputRef}
+            label="Target URL"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="https://example.com"
+            className="font-mono text-sm"
+            disabled={loading}
+          />
+
+          <div className="flex gap-3">
             <Button
-              className="flex-1 gap-2"
+              className="flex-1 font-medium"
               onClick={handleExtract}
               disabled={loading || !url.trim()}
             >
               {loading ? (
-                <>
-                  <Loader2 size={15} className="animate-spin" />
-                  Extracting…
-                </>
+                <SpinnerGapIcon className="mr-2 size-4.5 animate-spin" />
               ) : (
-                <>
-                  <Search size={15} />
-                  Extract Data
-                </>
+                <MagnifyingGlassIcon weight="bold" className="mr-2 size-4.5" />
               )}
+              {loading ? "Extracting..." : "Extract Data"}
             </Button>
-            <Button
-              variant="outline"
+            <ClearButton
               onClick={() => {
                 setUrl("");
                 setData(null);
@@ -229,80 +106,77 @@ export default function WebExtractorPage() {
                 inputRef.current?.focus();
               }}
               disabled={loading || (!url && !data)}
-            >
-              Clear
-            </Button>
+            />
           </div>
 
           {error && <ErrorAlert message={error} />}
-
-          {/* Raw JSON output lives in the left column on mobile but we
-              render it here as a secondary panel */}
-          {data && (
-            <TextAreaField
-              label="Raw JSON"
-              value={rawJSON}
-              readOnly
-              rows={12}
-              action={
-                <CopyButton value={rawJSON} disabled={!rawJSON} />
-              }
-            />
-          )}
         </div>
 
-        {/* ---------------------------------------------------------------- */}
-        {/* Right — structured results                                        */}
-        {/* ---------------------------------------------------------------- */}
-        <div className="space-y-3">
-          {!data && !loading && <EmptyState />}
+        {!data && !loading && !error && (
+          <EmptyState
+            title="Awaiting Target URL"
+            description="Enter a website address above to extract its SEO metadata, headings, and links."
+          />
+        )}
 
-          {loading && (
-            <div className="flex flex-col items-center justify-center rounded-xl border border-dashed py-16 text-center">
-              <Loader2 size={32} className="mb-3 animate-spin text-primary" />
-              <p className="text-sm font-medium">Fetching and parsing…</p>
-              <p className="mt-1 text-xs text-muted-foreground">{url}</p>
-            </div>
-          )}
+        {loading && (
+          <div className="border-border bg-card mx-auto flex w-full max-w-2xl flex-col items-center justify-center rounded-xl border border-dashed py-16 text-center shadow-sm">
+            <SpinnerGapIcon size={32} className="text-primary mb-4 animate-spin" />
+            <p className="text-sm font-semibold">Parsing Website...</p>
+            <p className="text-muted-foreground mt-1 max-w-[80%] truncate font-mono text-xs">
+              {url}
+            </p>
+          </div>
+        )}
 
-          {data && (
-            <>
-              {/* Page info strip */}
-              <div className="flex items-center gap-2 rounded-lg bg-muted/50 px-3 py-2">
-                <Globe size={13} className="shrink-0 text-muted-foreground" />
+        {/* Results Grid */}
+        {data && (
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_350px] xl:grid-cols-[1fr_400px]">
+            {/* Visual Data */}
+            <div className="flex flex-col gap-6">
+              {/* Page Link Banner */}
+              <div className="border-border bg-card flex items-center gap-3 rounded-lg border px-4 py-3 shadow-sm">
+                <GlobeIcon size={20} className="text-primary shrink-0" />
                 <a
                   href={data.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="truncate font-mono text-xs text-primary hover:underline"
+                  className="text-foreground truncate font-mono text-sm font-medium hover:underline"
                 >
                   {data.url}
                 </a>
-                <ExternalLink size={11} className="shrink-0 text-muted-foreground" />
+                <ArrowSquareOutIcon
+                  weight="duotone"
+                  size={16}
+                  className="text-muted-foreground ml-auto shrink-0"
+                />
               </div>
 
-              {/* SEO Meta */}
+              {/* Data Sections */}
               <Section title="SEO & Open Graph">
-                <div className="divide-y">
-                  <MetaRow label="Title"        value={data.title} />
-                  <MetaRow label="Description"  value={data.description} />
-                  <MetaRow label="OG Title"     value={data.openGraph.title} />
-                  <MetaRow label="OG Desc."     value={data.openGraph.description} />
-                  <MetaRow label="OG Image"     value={data.openGraph.image} />
-                  <MetaRow label="OG Type"      value={data.openGraph.type} />
-                  <MetaRow label="OG Site"      value={data.openGraph.siteName} />
+                <div className="flex flex-col">
+                  <MetaRow label="Title" value={data.title} />
+                  <MetaRow label="Description" value={data.description} />
+                  <MetaRow label="OG Title" value={data.openGraph.title} />
+                  <MetaRow label="OG Desc." value={data.openGraph.description} />
+                  <MetaRow label="OG Image" value={data.openGraph.image} />
+                  <MetaRow label="OG Type" value={data.openGraph.type} />
+                  <MetaRow label="OG Site" value={data.openGraph.siteName} />
                 </div>
                 {!data.title && !data.description && !data.openGraph.title && (
-                  <p className="text-xs text-muted-foreground">No meta tags found.</p>
+                  <p className="text-muted-foreground py-4 text-center text-sm">
+                    No meta tags found on this page.
+                  </p>
                 )}
               </Section>
 
-              {/* Headings */}
-              <Section title="Headings" count={totalHeadings}>
+              <Section title="Page Headings" count={totalHeadings}>
                 {totalHeadings === 0 ? (
-                  <p className="text-xs text-muted-foreground">No headings found.</p>
+                  <p className="text-muted-foreground py-4 text-center text-sm">
+                    No headings (H1-H3) found.
+                  </p>
                 ) : (
-                  <div className="space-y-4">
+                  <div className="space-y-4 pt-1">
                     <HeadingGroup level="h1" items={data.headings.h1} />
                     <HeadingGroup level="h2" items={data.headings.h2} />
                     <HeadingGroup level="h3" items={data.headings.h3} />
@@ -310,24 +184,26 @@ export default function WebExtractorPage() {
                 )}
               </Section>
 
-              {/* Links */}
-              <Section title="Links" count={totalLinks} defaultOpen={false}>
+              <Section title="Extracted Links" count={totalLinks} defaultOpen={false}>
                 {totalLinks === 0 ? (
-                  <p className="text-xs text-muted-foreground">No links found.</p>
+                  <p className="text-muted-foreground py-4 text-center text-sm">No links found.</p>
                 ) : (
-                  <ul className="max-h-72 space-y-1.5 overflow-y-auto pr-1">
-                    {data.links.map((href, i) => (
-                      <li key={i} className="flex items-start gap-2 text-xs">
-                        <ExternalLink
-                          size={11}
-                          className="mt-0.5 shrink-0 text-muted-foreground"
+                  <ul className="flex flex-col gap-2 pt-1">
+                    {data?.links.map((href, i) => (
+                      <li
+                        key={i}
+                        className="hover:bg-muted/50 flex items-start gap-2 rounded-md p-1.5 transition-colors"
+                      >
+                        <ArrowSquareOutIcon
+                          weight="duotone"
+                          size={15}
+                          className="text-muted-foreground mt-0.5 shrink-0"
                         />
                         <a
                           href={href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="truncate text-primary hover:underline"
-                          title={href}
+                          className="text-primary text-sm break-all hover:underline"
                         >
                           {href}
                         </a>
@@ -336,9 +212,22 @@ export default function WebExtractorPage() {
                   </ul>
                 )}
               </Section>
-            </>
-          )}
-        </div>
+            </div>
+
+            <div className="relative">
+              <div className="sticky top-6">
+                <TextAreaField
+                  label="Raw JSON Response"
+                  value={rawJSON}
+                  readOnly
+                  rows={28}
+                  className="font-mono text-xs"
+                  action={<CopyButton value={rawJSON} disabled={!rawJSON} />}
+                />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </ToolLayout>
   );

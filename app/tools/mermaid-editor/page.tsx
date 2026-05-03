@@ -1,6 +1,6 @@
 "use client";
 
-import { Download, GitBranch, RotateCcw } from "lucide-react";
+import { DownloadIcon } from "@phosphor-icons/react";
 import { useCallback, useState } from "react";
 
 import { MermaidPreview } from "@/app/tools/mermaid-editor/mermaid-preview";
@@ -9,18 +9,14 @@ import {
   DIAGRAM_TEMPLATES,
   type DiagramType,
 } from "@/app/tools/mermaid-editor/templates";
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { ToolLayout } from "@/components/layout/layout";
 import { Button } from "@/components/ui/button";
+import ClearButton from "@/components/ui/clear-button";
 import CopyButton from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+import { SelectField } from "@/components/ui/select-field";
+import { TextAreaField } from "@/components/ui/textarea-field";
+import { developmentTools } from "@/lib/tools-data";
 
 export default function MermaidEditorPage() {
   const [diagramType, setDiagramType] = useState<DiagramType>("flowchart");
@@ -49,62 +45,47 @@ export default function MermaidEditorPage() {
     URL.revokeObjectURL(url);
   }
 
+  const tool = developmentTools.find((t) => t.url === "/tools/mermaid-editor");
+
   return (
-    <ToolLayout
-      icon={GitBranch}
-      title="Mermaid"
-      highlight="Live Editor"
-      description="Write Mermaid diagrams with a live SVG preview. Supports flowcharts, sequence, ER, class, state, Gantt, and pie charts."
-    >
+    <ToolLayout tool={tool}>
       <div className="space-y-3">
         {/* Toolbar */}
-        <div className="flex flex-wrap items-center gap-2">
-          <Select value={diagramType} onValueChange={(v) => v && handleDiagramTypeChange(v)}>
-            <SelectTrigger className="w-48">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {(Object.entries(DIAGRAM_LABELS) as [DiagramType, string][]).map(([key, label]) => (
-                <SelectItem key={key} value={key}>{label}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <div className="ml-auto flex items-center gap-2">
-            <Button
-              variant="outline" size="sm"
-              onClick={() => { setCode(DIAGRAM_TEMPLATES[diagramType]); setError(null); }}
-              className="rounded-full"
-            >
-              <RotateCcw size={12} />
-              Reset
-            </Button>
-            <CopyButton value={code} />
-            <Button
-              variant="outline" size="sm"
-              onClick={downloadSvg}
-              disabled={!lastSvg}
-              className="rounded-full"
-            >
-              <Download size={12} />
-              SVG
-            </Button>
-          </div>
-        </div>
+        <SelectField
+          value={diagramType}
+          onValueChange={(v) => v && handleDiagramTypeChange(v)}
+          options={(Object.entries(DIAGRAM_LABELS) as [DiagramType, string][]).map(
+            ([key, label]) => ({
+              value: key,
+              label: label,
+            }),
+          )}
+          triggerClassName="max-w-xs"
+        />
 
         {/* Editor + Preview */}
-        <div className="grid h-[68vh] grid-cols-1 gap-4 lg:grid-cols-2">
+        <div className="flex flex-col gap-4">
           {/* Editor */}
           <div className="flex flex-col gap-1.5">
-            <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
-              Mermaid source
-            </Label>
-            <Textarea
+            <TextAreaField
+              label="Mermaid source"
               value={code}
               onChange={(e) => setCode(e.target.value)}
-              className="flex-1 resize-none font-mono text-xs leading-relaxed"
+              className="resize-none"
               placeholder="Write mermaid diagram here…"
+              rows={20}
               spellCheck={false}
+              action={
+                <div className="flex gap-2">
+                  <ClearButton
+                    onClick={() => {
+                      setCode(DIAGRAM_TEMPLATES[diagramType]);
+                      setError(null);
+                    }}
+                  />
+                  <CopyButton value={code} />
+                </div>
+              }
             />
             {error && (
               <p className="text-destructive bg-destructive/10 rounded-lg px-3 py-2 text-xs">
@@ -115,9 +96,13 @@ export default function MermaidEditorPage() {
 
           {/* Preview */}
           <div className="flex flex-col gap-1.5">
-            <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
-              Preview
-            </Label>
+            <div className="flex items-center justify-between">
+              <Label>Preview</Label>
+              <Button variant="outline" onClick={downloadSvg} disabled={!lastSvg}>
+                <DownloadIcon weight="duotone" />
+                Download .svg
+              </Button>
+            </div>
             <div className="border-border bg-card flex-1 overflow-hidden rounded-xl border">
               <MermaidPreview code={code} onError={handleError} onRender={handleRender} />
             </div>

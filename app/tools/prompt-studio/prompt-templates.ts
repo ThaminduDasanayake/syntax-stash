@@ -56,3 +56,20 @@ export const promptTemplates: PromptTemplate[] = [
     category: "analysis",
   },
 ];
+
+export const PLACEHOLDER = `You are an expert {{role}} with deep knowledge of {{domain}}.
+
+## Task
+Your task is to help {{user_name}} accomplish the following:
+{{task_description}}
+
+## Constraints
+- Skill level of the audience: **{{skill_level}}**
+- Response format: **{{output_format}}**
+- Language: **{{language}}**
+
+## Guidelines
+- Be **clear** and **concise**
+- Provide concrete examples where helpful
+
+Begin your response now.`;

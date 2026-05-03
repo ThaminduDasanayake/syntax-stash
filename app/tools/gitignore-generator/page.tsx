@@ -1,16 +1,15 @@
 "use client";
 
-import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 
-import { GITIGNORE_SNIPPETS } from "@/app/tools/gitignore-generator/data.ts";
-import ToolLayout from "@/components/layout/layout.tsx";
+import { GITIGNORE_SNIPPETS } from "@/app/tools/gitignore-generator/data";
+import { ToolLayout } from "@/components/layout/layout";
+import { SearchInput } from "@/components/search-input";
 import { Button } from "@/components/ui/button";
-import ClearButton from "@/components/ui/clear-button.tsx";
+import ClearButton from "@/components/ui/clear-button";
 import CopyButton from "@/components/ui/copy-button";
-import { InputField } from "@/components/ui/input-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
-import { developmentTools } from "@/lib/tools-data.ts";
+import { developmentTools } from "@/lib/tools-data";
 
 export default function GitignoreGeneratorPage() {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
@@ -56,19 +55,12 @@ export default function GitignoreGeneratorPage() {
           <div>
             <h3 className="mb-3 text-sm font-semibold">Select environments & frameworks</h3>
 
-            <div className="relative">
-              <MagnifyingGlassIcon
-                weight="duotone"
-                className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 -translate-y-4"
-              />
-              <InputField
-                placeholder="Search stacks..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="mb-4 pl-9"
-                containerClassName=""
-              />
-            </div>
+            <SearchInput
+              placeholder="Search stacks..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              containerClassName="mb-4"
+            />
           </div>
 
           {/* Action buttons */}

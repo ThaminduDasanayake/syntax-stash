@@ -1,12 +1,12 @@
 "use client";
 
-import { Sparkles, WandSparkles } from "lucide-react";
+import { SparkleIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 
 import { injectVariables, minifyPrompt, parseVariables } from "@/app/tools/prompt-studio/helpers";
-import { promptTemplates } from "@/app/tools/prompt-studio/prompt-templates";
-import TokenBadge from "@/app/tools/prompt-studio/token-badge";
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { PLACEHOLDER, promptTemplates } from "@/app/tools/prompt-studio/prompt-templates";
+import { TokenBadge } from "@/app/tools/prompt-studio/token-badge";
+import { ToolLayout } from "@/components/layout/layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import ClearButton from "@/components/ui/clear-button";
@@ -15,23 +15,7 @@ import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TextAreaField } from "@/components/ui/textarea-field";
-
-const PLACEHOLDER = `You are an expert {{role}} with deep knowledge of {{domain}}.
-
-## Task
-Your task is to help {{user_name}} accomplish the following:
-{{task_description}}
-
-## Constraints
-- Skill level of the audience: **{{skill_level}}**
-- Response format: **{{output_format}}**
-- Language: **{{language}}**
-
-## Guidelines
-- Be **clear** and **concise**
-- Provide concrete examples where helpful
-
-Begin your response now.`;
+import { developmentTools } from "@/lib/tools-data";
 
 export default function PromptStudioPage() {
   const [rawPrompt, setRawPrompt] = useState(PLACEHOLDER);
@@ -97,13 +81,10 @@ export default function PromptStudioPage() {
     }
   }
 
+  const tool = developmentTools.find((t) => t.url === "/tools/prompt-studio");
+
   return (
-    <ToolLayout
-      icon={WandSparkles}
-      title="Prompt"
-      highlight="Studio"
-      description="Write, inject variables, minify, and enhance LLM prompts with real-time token tracking."
-    >
+    <ToolLayout tool={tool}>
       {/* Quick Starters */}
       <div className="mb-8 space-y-3">
         <Label className="text-xs font-semibold tracking-wider uppercase">Quick Starters</Label>
@@ -152,7 +133,6 @@ export default function PromptStudioPage() {
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   {variables.map((name) => (
                     <div key={name} className="space-y-1.5">
-                      {/*<Label className="text-muted-foreground font-mono text-xs"></Label>*/}
                       <InputField
                         label={`{{${name}}}`}
                         value={varValues[name] ?? ""}
@@ -178,7 +158,7 @@ export default function PromptStudioPage() {
                 Minified
               </TabsTrigger>
               <TabsTrigger value="ai" className="tab-trigger">
-                <Sparkles />
+                <SparkleIcon weight="duotone" />
                 AI Enhanced
               </TabsTrigger>
             </TabsList>
@@ -231,7 +211,7 @@ export default function PromptStudioPage() {
                 onClick={handleEnhance}
                 disabled={isEnhancing || !injectedOutput.trim()}
               >
-                <Sparkles className="mr-2 size-5" />
+                <SparkleIcon weight="duotone" className="mr-2 size-5" />
                 {isEnhancing
                   ? "Enhancing..."
                   : enhancedOutput
