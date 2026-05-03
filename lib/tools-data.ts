@@ -326,6 +326,7 @@ export const imageTools: Tool[] = [
   },
   {
     title: "Placeholder Generator",
+    highlight: "Generator",
     url: "/tools/placeholder-generator",
     description:
       "Generate custom placeholder images with the Canvas API, entirely in your browser.",

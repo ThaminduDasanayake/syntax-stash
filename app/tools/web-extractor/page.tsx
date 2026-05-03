@@ -20,7 +20,7 @@ import CopyButton from "@/components/ui/copy-button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { InputField } from "@/components/ui/input-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
-import { developmentTools } from "@/lib/tools-data";
+import { internalTools } from "@/lib/tools-data";
 
 export default function WebExtractorPage() {
   const [url, setUrl] = useState("");
@@ -68,7 +68,7 @@ export default function WebExtractorPage() {
     (data?.headings.h2.length ?? 0) +
     (data?.headings.h3.length ?? 0);
 
-  const tool = developmentTools.find((t) => t.url === "/tools/web-extractor");
+  const tool = internalTools.find((t) => t.url === "/tools/web-extractor");
 
   return (
     <ToolLayout tool={tool}>

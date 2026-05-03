@@ -15,7 +15,7 @@ import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TextAreaField } from "@/components/ui/textarea-field";
-import { developmentTools } from "@/lib/tools-data";
+import { internalTools } from "@/lib/tools-data";
 
 export default function PromptStudioPage() {
   const [rawPrompt, setRawPrompt] = useState(PLACEHOLDER);
@@ -81,7 +81,7 @@ export default function PromptStudioPage() {
     }
   }
 
-  const tool = developmentTools.find((t) => t.url === "/tools/prompt-studio");
+  const tool = internalTools.find((t) => t.url === "/tools/prompt-studio");
 
   return (
     <ToolLayout tool={tool}>

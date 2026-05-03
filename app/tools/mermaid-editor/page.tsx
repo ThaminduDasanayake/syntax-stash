@@ -16,7 +16,7 @@ import CopyButton from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
-import { developmentTools } from "@/lib/tools-data";
+import { internalTools } from "@/lib/tools-data";
 
 export default function MermaidEditorPage() {
   const [diagramType, setDiagramType] = useState<DiagramType>("flowchart");
@@ -45,7 +45,7 @@ export default function MermaidEditorPage() {
     URL.revokeObjectURL(url);
   }
 
-  const tool = developmentTools.find((t) => t.url === "/tools/mermaid-editor");
+  const tool = internalTools.find((t) => t.url === "/tools/mermaid-editor");
 
   return (
     <ToolLayout tool={tool}>
@@ -99,7 +99,7 @@ export default function MermaidEditorPage() {
             <div className="flex items-center justify-between">
               <Label>Preview</Label>
               <Button variant="outline" onClick={downloadSvg} disabled={!lastSvg}>
-                <DownloadIcon weight="duotone" />
+                <DownloadIcon weight="duotone" className="size-4.5" />
                 Download .svg
               </Button>
             </div>

@@ -12,7 +12,7 @@ import ClearButton from "@/components/ui/clear-button";
 import CopyButton from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";
 import { TextAreaField } from "@/components/ui/textarea-field";
-import { developmentTools } from "@/lib/tools-data";
+import { internalTools } from "@/lib/tools-data";
 
 export default function MarkdownLivePreviewPage() {
   const [markdown, setMarkdown] = useState(DEFAULT_MARKDOWN);
@@ -75,7 +75,7 @@ ${renderedHtml}
     URL.revokeObjectURL(url);
   }
 
-  const tool = developmentTools.find((t) => t.url === "/tools/markdown-live-preview");
+  const tool = internalTools.find((t) => t.url === "/tools/markdown-live-preview");
 
   return (
     <ToolLayout tool={tool}>

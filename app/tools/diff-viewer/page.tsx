@@ -17,7 +17,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TextAreaField } from "@/components/ui/textarea-field";
-import { developmentTools } from "@/lib/tools-data";
+import { internalTools } from "@/lib/tools-data";
 
 function SideBySideLineRow({
   line,
@@ -56,7 +56,7 @@ export default function DiffViewerPage() {
 
   const hasChanges = stats.added > 0 || stats.removed > 0;
 
-  const tool = developmentTools.find((t) => t.url === "/tools/diff-viewer");
+  const tool = internalTools.find((t) => t.url === "/tools/diff-viewer");
 
   return (
     <ToolLayout tool={tool}>

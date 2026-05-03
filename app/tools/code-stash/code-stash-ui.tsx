@@ -7,12 +7,12 @@ import FilenameCopyButton from "@/app/tools/code-stash/components/filename-copy-
 import SetupCopyButton from "@/app/tools/code-stash/components/setup-copy-button";
 import { LANG_COLORS } from "@/app/tools/code-stash/constants";
 import { Snippet } from "@/app/tools/code-stash/types";
-import { ToolLayout } from "@/components/layout/layout.tsx";
-import { SearchInput } from "@/components/search-input.tsx";
+import { ToolLayout } from "@/components/layout/layout";
+import { SearchInput } from "@/components/search-input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useFuzzySearch } from "@/hooks/use-fuzzy-search";
-import { developmentTools } from "@/lib/tools-data.ts";
+import { internalTools } from "@/lib/tools-data";
 import { cn } from "@/lib/utils";
 
 export default function CodeStashUi({ initialSnippets }: { initialSnippets: Snippet[] }) {
@@ -40,7 +40,7 @@ export default function CodeStashUi({ initialSnippets }: { initialSnippets: Snip
 
   const activeSnippet = initialSnippets.find((s) => s.id === activeId);
 
-  const tool = developmentTools.find((t) => t.url === "/tools/code-stash");
+  const tool = internalTools.find((t) => t.url === "/tools/code-stash");
 
   return (
     <ToolLayout tool={tool}>

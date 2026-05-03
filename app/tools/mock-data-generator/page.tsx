@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { Slider } from "@/components/ui/slider";
 import { TextAreaField } from "@/components/ui/textarea-field";
-import { developmentTools } from "@/lib/tools-data";
+import { internalTools } from "@/lib/tools-data";
 import { cn } from "@/lib/utils";
 
 export default function MockDataPage() {
@@ -38,7 +38,7 @@ export default function MockDataPage() {
     }, 500);
   };
 
-  const tool = developmentTools.find((t) => t.url === "/tools/mock-data-generator");
+  const tool = internalTools.find((t) => t.url === "/tools/mock-data-generator");
 
   return (
     <ToolLayout tool={tool}>

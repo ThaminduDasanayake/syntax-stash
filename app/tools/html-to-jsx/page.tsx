@@ -12,7 +12,7 @@ import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { TextAreaField } from "@/components/ui/textarea-field";
-import { developmentTools } from "@/lib/tools-data";
+import { internalTools } from "@/lib/tools-data";
 
 function HtmlToJsxPage() {
   const [input, setInput] = useState(PLACEHOLDER);
@@ -30,7 +30,7 @@ function HtmlToJsxPage() {
     }
   }, [input, componentName, asComponent, selfCloseEmpty]);
 
-  const tool = developmentTools.find((t) => t.url === "/tools/html-to-jsx");
+  const tool = internalTools.find((t) => t.url === "/tools/html-to-jsx");
 
   return (
     <ToolLayout tool={tool}>

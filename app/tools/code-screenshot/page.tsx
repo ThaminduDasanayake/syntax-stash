@@ -19,7 +19,7 @@ import { SelectField } from "@/components/ui/select-field";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { TextAreaField } from "@/components/ui/textarea-field";
-import { developmentTools } from "@/lib/tools-data";
+import { internalTools } from "@/lib/tools-data";
 
 export default function CodeScreenshotPage() {
   const [code, setCode] = useState(PLACEHOLDER_CODE);
@@ -77,7 +77,7 @@ export default function CodeScreenshotPage() {
   const activeBackgroundValue =
     BACKGROUNDS.find((bg) => bg.id === background)?.value || "transparent";
 
-  const tool = developmentTools.find((t) => t.url === "/tools/code-screenshot");
+  const tool = internalTools.find((t) => t.url === "/tools/code-screenshot");
 
   return (
     <ToolLayout tool={tool}>

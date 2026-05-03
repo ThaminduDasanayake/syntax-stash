@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import ClearButton from "@/components/ui/clear-button";
 import CopyButton from "@/components/ui/copy-button";
 import { TextAreaField } from "@/components/ui/textarea-field";
-import { developmentTools } from "@/lib/tools-data";
+import { internalTools } from "@/lib/tools-data";
 
 export default function GitignoreGeneratorPage() {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
@@ -45,7 +45,7 @@ export default function GitignoreGeneratorPage() {
     setSelectedIds(new Set(GITIGNORE_SNIPPETS.map((s) => s.id)));
   };
 
-  const tool = developmentTools.find((t) => t.url === "/tools/gitignore-generator");
+  const tool = internalTools.find((t) => t.url === "/tools/gitignore-generator");
 
   return (
     <ToolLayout tool={tool}>

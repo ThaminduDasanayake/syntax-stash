@@ -1,13 +1,15 @@
 "use client";
 
-import { Check, Copy, Download, Frame } from "lucide-react";
+import { DownloadIcon } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
 
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { ToolLayout } from "@/components/layout/layout";
 import { Button } from "@/components/ui/button";
+import CopyButton from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
+import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { internalTools } from "@/lib/tools-data";
 
 export default function PlaceholderGeneratorPage() {
   const [width, setWidth] = useState(800);
@@ -16,7 +18,6 @@ export default function PlaceholderGeneratorPage() {
   const [textColor, setTextColor] = useState("#e94560");
   const [customText, setCustomText] = useState("");
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { copied, copy } = useCopyToClipboard();
 
   const displayText = customText || `${width} x ${height}`;
 
@@ -52,43 +53,31 @@ export default function PlaceholderGeneratorPage() {
     a.click();
   }
 
-  function handleCopyDataUrl() {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    copy(canvas.toDataURL("image/png"));
-  }
+  const tool = internalTools.find((t) => t.url === "/tools/placeholder-generator");
 
   return (
-    <ToolLayout
-      icon={Frame}
-      title="Placeholder"
-      highlight="Generator"
-      description="Generate custom placeholder images using the Canvas API, entirely in your browser."
-    >
+    <ToolLayout tool={tool}>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Left — Controls */}
         <div className="space-y-6">
           <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label>Width (px)</Label>
-              <Input
-                type="number"
-                value={width}
-                onChange={(e) => setWidth(Math.max(1, Number(e.target.value)))}
-                min={1}
-                max={4096}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label>Height (px)</Label>
-              <Input
-                type="number"
-                value={height}
-                onChange={(e) => setHeight(Math.max(1, Number(e.target.value)))}
-                min={1}
-                max={4096}
-              />
-            </div>
+            <InputField
+              label="Width (px)"
+              type="number"
+              value={width}
+              onChange={(e) => setWidth(Math.max(1, Number(e.target.value)))}
+              min={1}
+              max={4096}
+            />
+
+            <InputField
+              label="Height (px)"
+              type="number"
+              value={height}
+              onChange={(e) => setHeight(Math.max(1, Number(e.target.value)))}
+              min={1}
+              max={4096}
+            />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -122,44 +111,32 @@ export default function PlaceholderGeneratorPage() {
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label>Custom Text (optional)</Label>
-            <Input
-              value={customText}
-              onChange={(e) => setCustomText(e.target.value)}
-              placeholder={`${width} x ${height}`}
-            />
-          </div>
+          <InputField
+            label="Custom Text (optional)"
+            value={customText}
+            onChange={(e) => setCustomText(e.target.value)}
+            placeholder={`${width} x ${height}`}
+          />
 
           <div className="flex gap-3">
-            <Button onClick={handleDownload} className="rounded-full px-5 font-semibold">
-              <Download size={14} />
+            <Button onClick={handleDownload} className="px-4">
+              <DownloadIcon weight="duotone" className="size-4.5" />
               Download PNG
             </Button>
-            <Button
-              variant="outline"
-              onClick={handleCopyDataUrl}
-              className="rounded-full px-5 font-semibold"
-            >
-              {copied ? (
-                <>
-                  <Check size={14} />
-                  Copied!
-                </>
-              ) : (
-                <>
-                  <Copy size={14} />
-                  Copy Data URL
-                </>
-              )}
-            </Button>
+            <CopyButton
+              labelName="Copy Data URL"
+              value={() => {
+                const canvas = canvasRef.current;
+                return canvas ? canvas.toDataURL("image/png") : "";
+              }}
+            />
           </div>
         </div>
 
         {/* Right — Preview */}
         <div className="space-y-4">
           <Label>Preview</Label>
-          <div className="border-border flex items-center justify-center overflow-hidden rounded-lg border p-4">
+          <div className="border-border bg-foreground flex items-center justify-center overflow-hidden rounded-lg border p-4">
             <canvas
               ref={canvasRef}
               className="max-h-96 max-w-full rounded object-contain"
