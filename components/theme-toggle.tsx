@@ -6,14 +6,43 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, systemTheme } = useTheme();
+
+  const handleToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const currentTheme = theme === "system" ? systemTheme : theme;
+    const nextTheme = currentTheme === "light" ? "dark" : "light";
+
+    if (!document.startViewTransition) {
+      setTheme(nextTheme);
+      return;
+    }
+
+    const x = e.clientX;
+    const y = e.clientY;
+    const root = document.documentElement;
+
+    root.style.setProperty("--x", `${x}px`);
+    root.style.setProperty("--y", `${y}px`);
+
+    document.startViewTransition(() => {
+      // 1. Force the DOM to update synchronously so the transition captures the new theme immediately
+      if (nextTheme === "dark") {
+        root.classList.add("dark");
+      } else {
+        root.classList.remove("dark");
+      }
+
+      // 2. Update next-themes state to keep React in sync
+      setTheme(nextTheme);
+    });
+  };
 
   return (
     <Button
-      variant="ghost"
+      variant="secondary"
       size="icon"
       className="text-muted-foreground hover:text-foreground relative h-9 w-9 overflow-hidden"
-      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+      onClick={handleToggle}
       title="Toggle theme"
     >
       <SunIcon

@@ -34,7 +34,7 @@ function generateShades(hex: string): { shade: number; hex: string; oklch: strin
 }
 
 export default function TailwindShadesPage() {
-  const [baseColor, setBaseColor] = useState("#01d06f");
+  const [baseColor, setBaseColor] = useState("#c4e456");
   const [colorName, setColorName] = useState("primary");
 
   const shades = useMemo(() => {

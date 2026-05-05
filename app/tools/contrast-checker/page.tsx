@@ -1,6 +1,7 @@
 "use client";
 
 import { Check, Eye, X } from "lucide-react";
+import { useTheme } from "next-themes";
 import { useMemo, useState } from "react";
 
 import { ToolLayout } from "@/components/layout/tool-layout";
@@ -54,8 +55,27 @@ function PassFail({ pass }: { pass: boolean }) {
 }
 
 export default function ContrastCheckerPage() {
-  const [fg, setFg] = useState("#3c402b");
-  const [bg, setBg] = useState("#eeeae3");
+  const { resolvedTheme } = useTheme();
+  const [prevTheme, setPrevTheme] = useState(resolvedTheme);
+  const [fg, setFg] = useState("#3C402B");
+  const [bg, setBg] = useState("#F7F5F1");
+
+  if (resolvedTheme !== prevTheme) {
+    setPrevTheme(resolvedTheme); // Update the tracker
+
+    // Set your colors immediately
+    if (resolvedTheme === "dark") {
+      setBg("#F7F5F1");
+      setFg("#3C402B");
+    } else {
+      setBg("#141312");
+      setFg("#F7F5F1");
+    }
+  }
+
+  // when in light mode, how to switch into these colors
+  // background: 141312
+  // foreground: F7F5F1
 
   const result = useMemo(() => {
     const fgRgb = hexToRgb(fg);
