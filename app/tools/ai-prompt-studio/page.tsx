@@ -3,16 +3,18 @@
 import { SparkleIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 
-import { injectVariables, minifyPrompt, parseVariables } from "@/app/tools/prompt-studio/helpers";
-import { PLACEHOLDER, promptTemplates } from "@/app/tools/prompt-studio/prompt-templates";
-import { TokenBadge } from "@/app/tools/prompt-studio/token-badge";
+import {
+  injectVariables,
+  minifyPrompt,
+  parseVariables,
+} from "@/app/tools/ai-prompt-studio/helpers";
+import { PLACEHOLDER, promptTemplates } from "@/app/tools/ai-prompt-studio/prompt-templates";
+import { TokenBadge } from "@/app/tools/ai-prompt-studio/token-badge";
 import { ToolLayout } from "@/components/layout/layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ClearButton } from "@/components/ui/clear-button";
-
 import { CopyButton } from "@/components/ui/copy-button";
-
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -83,7 +85,7 @@ export default function PromptStudioPage() {
     }
   }
 
-  const tool = internalTools.find((t) => t.url === "/tools/prompt-studio");
+  const tool = internalTools.find((t) => t.url === "/tools/ai-prompt-studio");
 
   return (
     <ToolLayout tool={tool}>

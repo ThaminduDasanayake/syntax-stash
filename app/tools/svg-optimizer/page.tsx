@@ -1,23 +1,27 @@
 "use client";
 
-import { Check, Copy, FileImage } from "lucide-react";
 import { useEffect, useState, useTransition } from "react";
 
 import { OptimizeResponse } from "@/app/tools/svg-optimizer/types";
-import { ToolLayout } from "@/components/layout/tool-layout";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { ErrorAlert } from "@/components/error-alert";
+import { ToolLayout } from "@/components/layout/layout";
+import { ClearButton } from "@/components/ui/clear-button";
+import { CopyButton } from "@/components/ui/copy-button";
+import { TextAreaField } from "@/components/ui/textarea-field";
+import { internalTools } from "@/lib/tools-data";
 
 import { optimizeSvg } from "./actions";
 
-const PLACEHOLDER = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <!-- Example bloated SVG -->
-  <g id="layer1" style="display:inline">
-    <rect x="10.000" y="10.000" width="80.000" height="80.000" fill="#f97316" stroke="none" stroke-width="0"/>
-    <circle cx="50.000" cy="50.000" r="30.000" fill="white" opacity="1.0"/>
-  </g>
+const PLACEHOLDER = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+    <rect width="64" height="64" rx="14" fill="currentColor"/>
+
+    <g transform="translate(32 32) scale(3) translate(-12 -12)"
+       stroke="#c4e456"
+       stroke-width="2"
+       stroke-linecap="round"
+       stroke-linejoin="round">
+        <path d="M17 5L10 9L17 13M7 11L14 15L7 19"/>
+    </g>
 </svg>`;
 
 export default function SvgOptimizerPage() {
@@ -40,81 +44,58 @@ export default function SvgOptimizerPage() {
     return () => clearTimeout(id);
   }, [input]);
 
-  const { copied, copy } = useCopyToClipboard();
-
-  const textareaClass =
-    "h-72 resize-none bg-background border-border text-foreground font-mono text-xs placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-primary/30";
-
   const hasResult = result && "svg" in result && result.svg;
   const savedPct =
     hasResult && result.originalSize > 0
       ? ((1 - result.optimizedSize / result.originalSize) * 100).toFixed(1)
       : null;
 
+  const tool = internalTools.find((t) => t.url === "/tools/svg-optimizer");
+
   return (
-    <ToolLayout
-      icon={FileImage}
-      title="SVG"
-      highlight="Optimizer"
-      description="Minify and clean bloated SVG markup using SVGO with multipass optimization."
-    >
+    <ToolLayout tool={tool}>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {/* Left — input */}
-        <div className="space-y-2">
-          <Label className="text-foreground">Input SVG</Label>
-          <Textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder={PLACEHOLDER}
-            className={textareaClass}
-          />
-        </div>
+        <TextAreaField
+          label="Input SVG"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder={PLACEHOLDER}
+          className="h-120 resize-none text-xs"
+          action={<ClearButton onClick={() => setInput("")} disabled={!input} />}
+        />
 
-        {/* Right — output */}
-        <div className="space-y-2">
-          <div className="flex min-h-6 items-center justify-between">
-            <Label className="text-foreground">
-              Optimized SVG
-              {isPending && (
-                <span className="text-muted-foreground ml-2 font-mono text-[10px] normal-case">
-                  optimizing…
-                </span>
-              )}
-            </Label>
-            {hasResult && savedPct !== null && (
-              <span className="text-muted-foreground font-mono text-xs">
-                {(result.originalSize / 1024).toFixed(2)} KB →{" "}
-                {(result.optimizedSize / 1024).toFixed(2)} KB{" "}
-                <span className="text-primary font-semibold">({savedPct}% saved)</span>
-              </span>
-            )}
-          </div>
-
+        <div className="flex flex-col gap-2">
           {result && "error" in result ? (
-            <div className="border-destructive/50 bg-destructive/10 flex h-72 items-center justify-center rounded-md border">
-              <p className="text-destructive px-4 text-center font-mono text-sm">{result.error}</p>
-            </div>
+            <ErrorAlert
+              message={result.error || "An unknown error occurred during optimization."}
+            />
           ) : (
-            <Textarea
+            <TextAreaField
+              label={
+                <>
+                  Optimized SVG
+                  {isPending && (
+                    <span className="text-muted-foreground ml-2 font-mono text-[10px] normal-case">
+                      optimizing…
+                    </span>
+                  )}
+                </>
+              }
               value={hasResult ? result.svg : ""}
               readOnly
               placeholder="Optimized SVG will appear here..."
-              className={textareaClass}
+              className="h-120 resize-none text-xs"
+              action={<CopyButton value={hasResult ? result.svg : ""} disabled={!hasResult} />}
             />
           )}
 
-          <Button
-            onClick={() => {
-              if (hasResult && result.svg) copy(result.svg);
-            }}
-            disabled={!hasResult}
-            variant="outline"
-            size="sm"
-            className="gap-2"
-          >
-            {copied ? <Check size={14} /> : <Copy size={14} />}
-            {copied ? "Copied!" : "Copy SVG"}
-          </Button>
+          {hasResult && savedPct !== null && (
+            <span className="text-muted-foreground shrink-0 font-mono text-xs">
+              {(result.originalSize / 1024).toFixed(2)} KB →{" "}
+              {(result.optimizedSize / 1024).toFixed(2)} KB{" "}
+              <span className="text-primary font-semibold">({savedPct}% saved)</span>
+            </span>
+          )}
         </div>
       </div>
     </ToolLayout>

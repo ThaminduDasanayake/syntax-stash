@@ -31,7 +31,7 @@ export function TextAreaField({
   }
 
   return (
-    <div className={cn("space-y-2", containerClassName)}>
+    <div className={cn("h-full space-y-2", containerClassName)}>
       <div className="flex items-center justify-between">
         <Label htmlFor={textareaId} className={labelClassName}>
           {label}

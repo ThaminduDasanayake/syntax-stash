@@ -1,145 +1,227 @@
 "use client";
 
-import { PenTool } from "lucide-react";
+import { DownloadIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { ToolLayout } from "@/components/layout/layout";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { ClearButton } from "@/components/ui/clear-button";
+import { CopyButton } from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
+import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { SelectField } from "@/components/ui/select-field";
+import { TextAreaField } from "@/components/ui/textarea-field";
+import { internalTools } from "@/lib/tools-data";
 
 export default function SvgPathViewerPage() {
-  const [pathData, setPathData] = useState(
-    "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z",
-  );
-  const [viewBoxWidth, setViewBoxWidth] = useState("24");
-  const [viewBoxHeight, setViewBoxHeight] = useState("24");
-  const [fillColor, setFillColor] = useState("#000000");
-  const [strokeColor, setStrokeColor] = useState("none");
-  const [strokeWidth, setStrokeWidth] = useState("0");
+  const [pathData, setPathData] = useState("M47 11 26 23l21 12m-30-6 21 12-21 12");
+  const [viewBoxWidth, setViewBoxWidth] = useState("64");
+  const [viewBoxHeight, setViewBoxHeight] = useState("64");
+  const [fillColor, setFillColor] = useState("none");
+  const [strokeColor, setStrokeColor] = useState("#c4e456");
+  const [strokeWidth, setStrokeWidth] = useState("5");
+  const [strokeLinecap, setStrokeLinecap] = useState<"butt" | "round" | "square">("round");
+  const [strokeLinejoin, setStrokeLinejoin] = useState<"miter" | "round" | "bevel">("round");
+  const [showBackground, setShowBackground] = useState(false);
+  const [bgRadius, setBgRadius] = useState("14");
+  const [bgColor, setBgColor] = useState("#000000");
+  const [scale, setScale] = useState("1");
 
   const viewBoxValue = `0 0 ${viewBoxWidth} ${viewBoxHeight}`;
 
+  const STROKE_LINECAP = [
+    { value: "butt", label: "Butt" },
+    { value: "round", label: "Round" },
+    { value: "square", label: "Square" },
+  ];
+
+  const STROKE_LINEJOIN = [
+    { value: "miter", label: "Miter" },
+    { value: "round", label: "Round" },
+    { value: "bevel", label: "Bevel" },
+  ];
+
+  const isValidPath = pathData.trim().length > 0;
+
+  const svgCode = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBoxValue}">
+${showBackground ? `  <rect width="100%" height="100%" fill="${bgColor}" rx="${bgRadius}" />\n` : ""}${
+    isValidPath
+      ? `  <g transform="scale(${scale})">
+    <path d="${pathData}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="${strokeWidth}" stroke-linecap="${strokeLinecap}" stroke-linejoin="${strokeLinejoin}" />
+  </g>`
+      : ""
+  }
+</svg>`;
+
+  function downloadSvg() {
+    const blob = new Blob([svgCode], { type: "image/svg+xml" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "icon.svg";
+    a.click();
+
+    URL.revokeObjectURL(url);
+  }
+
+  const tool = internalTools.find((t) => t.url === "/tools/svg-path");
+
   return (
-    <ToolLayout
-      icon={PenTool}
-      title="SVG Path Viewer"
-      highlight="Editor"
-      description="Preview and edit raw SVG 'd' paths with real-time visualization and customizable styling."
-    >
+    <ToolLayout tool={tool}>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {/* Left Column: Controls */}
         <div className="space-y-6">
           {/* SVG Path Input */}
           <div className="space-y-2">
-            <Label className="text-foreground text-sm font-semibold">SVG Path (d attribute)</Label>
-            <Textarea
+            <TextAreaField
+              label="SVG Path (d attribute)"
               value={pathData}
               onChange={(e) => setPathData(e.target.value)}
               placeholder={"M10 10 H 90 V 90 H 10 Z\n\nExample path data..."}
               rows={12}
-              className="bg-background border-border text-foreground focus-visible:ring-primary/30 resize-none font-mono text-xs leading-relaxed focus-visible:ring-1"
+              action={<ClearButton onClick={() => setPathData("")} disabled={!pathData} />}
             />
             <p className="text-muted-foreground text-xs">
-              Paste the content from the SVG's d attribute. Supports all SVG path commands (M, L, H,
-              V, C, S, Q, T, A, Z, etc.)
+              Paste the content from the SVG&apos;s d attribute. Supports all SVG path commands (M,
+              L, H, V, C, S, Q, T, A, Z, etc.)
             </p>
           </div>
 
           {/* ViewBox Controls */}
           <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label className="text-foreground text-sm font-medium">ViewBox Width</Label>
-              <Input
-                type="number"
-                value={viewBoxWidth}
-                onChange={(e) => setViewBoxWidth(e.target.value)}
-                className="bg-background border-border text-foreground focus-visible:ring-primary/30 h-9 font-mono focus-visible:ring-1"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label className="text-foreground text-sm font-medium">ViewBox Height</Label>
-              <Input
-                type="number"
-                value={viewBoxHeight}
-                onChange={(e) => setViewBoxHeight(e.target.value)}
-                className="bg-background border-border text-foreground focus-visible:ring-primary/30 h-9 font-mono focus-visible:ring-1"
-              />
-            </div>
+            <InputField
+              type="number"
+              label="ViewBox Width"
+              value={viewBoxWidth}
+              onChange={(e) => setViewBoxWidth(e.target.value)}
+            />
+
+            <InputField
+              type="number"
+              label="ViewBox Height"
+              value={viewBoxHeight}
+              onChange={(e) => setViewBoxHeight(e.target.value)}
+            />
           </div>
 
           {/* Color Controls */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label className="text-foreground text-sm font-medium">Fill Color</Label>
+              <Label>Fill Color</Label>
               <div className="flex gap-2">
-                <input
+                <Input
                   type="color"
                   value={fillColor}
                   onChange={(e) => setFillColor(e.target.value)}
-                  className="border-border h-9 w-20 cursor-pointer rounded border"
+                  className="border-border h-9 w-12 cursor-pointer rounded border p-0"
                 />
                 <Input
-                  type="text"
                   value={fillColor}
                   onChange={(e) => setFillColor(e.target.value)}
-                  className="bg-background border-border text-foreground focus-visible:ring-primary/30 h-9 flex-1 font-mono text-xs focus-visible:ring-1"
+                  className="text-xs"
                   placeholder="#000000"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label className="text-foreground text-sm font-medium">Stroke Color</Label>
+              <Label>Stroke Color</Label>
               <div className="flex gap-2">
-                <input
+                <Input
                   type="color"
                   value={strokeColor === "none" ? "#000000" : strokeColor}
                   onChange={(e) => setStrokeColor(e.target.value)}
-                  className="border-border h-9 w-20 cursor-pointer rounded border"
+                  className="border-border h-9 w-12 cursor-pointer rounded border p-0"
                 />
-                <Input
-                  type="text"
+                <InputField
                   value={strokeColor}
                   onChange={(e) => setStrokeColor(e.target.value)}
-                  className="bg-background border-border text-foreground focus-visible:ring-primary/30 h-9 flex-1 font-mono text-xs focus-visible:ring-1"
+                  className="text-xs"
                   placeholder="none"
                 />
               </div>
             </div>
           </div>
 
-          {/* Stroke Width */}
-          <div className="space-y-2">
-            <Label className="text-foreground text-sm font-medium">Stroke Width</Label>
-            <Input
+          <div className="space-y-6">
+            <Label>Background</Label>
+
+            <div className="flex items-center gap-2">
+              <Checkbox checked={showBackground} onCheckedChange={setShowBackground} />
+              <Label>Enable background</Label>
+            </div>
+
+            {showBackground && (
+              <div className="grid grid-cols-2 gap-4">
+                <InputField
+                  type="number"
+                  label="Radius"
+                  value={bgRadius}
+                  onChange={(e) => setBgRadius(e.target.value)}
+                />
+
+                <div className="space-y-2">
+                  <Label>Color</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      type="color"
+                      value={bgColor}
+                      onChange={(e) => setBgColor(e.target.value)}
+                      className="h-9 w-12 p-0"
+                    />
+                    <Input value={bgColor} onChange={(e) => setBgColor(e.target.value)} />
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <InputField
               type="number"
+              label="Stroke Width"
               value={strokeWidth}
               onChange={(e) => setStrokeWidth(e.target.value)}
               min="0"
               step="0.5"
-              className="bg-background border-border text-foreground focus-visible:ring-primary/30 h-9 font-mono focus-visible:ring-1"
+            />
+
+            <InputField
+              type="number"
+              label="Scale"
+              value={scale}
+              onChange={(e) => setScale(e.target.value)}
+              step="0.1"
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <SelectField
+              label="Stroke Linecap"
+              value={strokeLinecap}
+              onValueChange={(v) => v && setStrokeLinecap(v as "butt" | "round" | "square")}
+              options={STROKE_LINECAP.map(({ value, label }) => ({ value: value, label: label }))}
+            />
+
+            <SelectField
+              label="Stroke Linejoin"
+              value={strokeLinejoin}
+              onValueChange={(v) => v && setStrokeLinejoin(v as "miter" | "round" | "bevel")}
+              options={STROKE_LINEJOIN.map(({ value, label }) => ({ value: value, label: label }))}
             />
           </div>
         </div>
 
-        {/* Right Column: Preview */}
-        <div className="space-y-3">
-          <Label className="text-foreground text-sm font-semibold">Preview</Label>
+        <div className="space-y-4">
+          <Label>Preview</Label>
           <Card className="bg-background overflow-hidden">
-            <CardContent
-              className="flex min-h-125 items-center justify-center p-0"
-              style={{
-                backgroundImage:
-                  "linear-gradient(0deg, transparent 24%, rgba(200, 200, 200, 0.05) 25%, rgba(200, 200, 200, 0.05) 26%, transparent 27%, transparent 74%, rgba(200, 200, 200, 0.05) 75%, rgba(200, 200, 200, 0.05) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(200, 200, 200, 0.05) 25%, rgba(200, 200, 200, 0.05) 26%, transparent 27%, transparent 74%, rgba(200, 200, 200, 0.05) 75%, rgba(200, 200, 200, 0.05) 76%, transparent 77%, transparent)",
-                backgroundSize: "50px 50px",
-              }}
-            >
+            <CardContent className="bg-grid-slate flex min-h-125 items-center justify-center p-0">
               <svg
-                viewBox={viewBoxValue}
-                className="text-primary"
                 xmlns="http://www.w3.org/2000/svg"
+                viewBox={viewBoxValue}
                 style={{
                   maxWidth: "400px",
                   maxHeight: "400px",
@@ -147,12 +229,21 @@ export default function SvgPathViewerPage() {
                   height: "auto",
                 }}
               >
-                <path
-                  d={pathData}
-                  fill={fillColor}
-                  stroke={strokeColor}
-                  strokeWidth={Number(strokeWidth)}
-                />
+                {showBackground && (
+                  <rect width="100%" height="100%" fill={bgColor} rx={Number(bgRadius)} />
+                )}
+                {isValidPath && (
+                  <g transform={`scale(${scale})`}>
+                    <path
+                      d={pathData}
+                      fill={fillColor}
+                      stroke={strokeColor}
+                      strokeWidth={Number(strokeWidth)}
+                      strokeLinecap={strokeLinecap}
+                      strokeLinejoin={strokeLinejoin}
+                    />
+                  </g>
+                )}
               </svg>
             </CardContent>
           </Card>
@@ -161,65 +252,71 @@ export default function SvgPathViewerPage() {
           <div className="space-y-2">
             <Label className="text-foreground text-sm font-medium">SVG Code</Label>
             <div className="bg-background border-border text-foreground max-h-32 overflow-x-auto rounded border p-3 font-mono text-xs">
-              <pre className="wrap-break-word whitespace-pre-wrap">{`<svg viewBox="${viewBoxValue}" xmlns="http://www.w3.org/2000/svg">
-  <path d="${pathData}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="${strokeWidth}" />
-</svg>`}</pre>
+              <pre className="wrap-break-word whitespace-pre-wrap">{svgCode}</pre>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Reference Section */}
-      <div className="bg-muted/30 border-border mt-8 space-y-3 rounded-lg border p-4">
-        <h4 className="text-foreground text-sm font-semibold">SVG Path Commands Reference</h4>
-        <div className="text-muted-foreground grid grid-cols-1 gap-4 font-mono text-xs md:grid-cols-2 lg:grid-cols-4">
-          <div className="space-y-1">
-            <p>
-              <span className="text-foreground font-semibold">M/m</span> Move to
-            </p>
-            <p>
-              <span className="text-foreground font-semibold">L/l</span> Line to
-            </p>
-            <p>
-              <span className="text-foreground font-semibold">H/h</span> Horizontal line
-            </p>
-            <p>
-              <span className="text-foreground font-semibold">V/v</span> Vertical line
-            </p>
+          <div className="flex items-center gap-2">
+            <CopyButton value={svgCode} disabled={!svgCode} />
+            <Button variant="outline" onClick={downloadSvg} disabled={!svgCode}>
+              <DownloadIcon weight="duotone" className="size-4.5" />
+              Download .svg
+            </Button>
           </div>
-          <div className="space-y-1">
-            <p>
-              <span className="text-foreground font-semibold">C/c</span> Cubic Bézier
-            </p>
-            <p>
-              <span className="text-foreground font-semibold">S/s</span> Smooth cubic
-            </p>
-            <p>
-              <span className="text-foreground font-semibold">Q/q</span> Quadratic Bézier
-            </p>
-            <p>
-              <span className="text-foreground font-semibold">T/t</span> Smooth quadratic
-            </p>
-          </div>
-          <div className="space-y-1">
-            <p>
-              <span className="text-foreground font-semibold">A/a</span> Elliptical arc
-            </p>
-            <p>
-              <span className="text-foreground font-semibold">Z/z</span> Close path
-            </p>
-            <p>Uppercase = absolute</p>
-            <p>Lowercase = relative</p>
-          </div>
-          <div className="space-y-1">
-            <p>
-              Example: <span className="text-primary">M10 10</span>
-            </p>
-            <p>Move to 10,10</p>
-            <p>
-              <span className="text-primary">L20 20</span>
-            </p>
-            <p>Line to 20,20</p>
+        </div>
+
+        {/* Reference Section */}
+        <div className="bg-muted/30 border-border col-span-2 mt-8 mb-8 space-y-3 rounded-lg border p-4">
+          <h4 className="text-foreground text-sm font-semibold">SVG Path Commands Reference</h4>
+          <div className="text-muted-foreground grid grid-cols-1 gap-4 font-mono text-xs md:grid-cols-2 lg:grid-cols-4">
+            <div className="space-y-1">
+              <p>
+                <span className="text-foreground font-semibold">M/m</span> Move to
+              </p>
+              <p>
+                <span className="text-foreground font-semibold">L/l</span> Line to
+              </p>
+              <p>
+                <span className="text-foreground font-semibold">H/h</span> Horizontal line
+              </p>
+              <p>
+                <span className="text-foreground font-semibold">V/v</span> Vertical line
+              </p>
+            </div>
+            <div className="space-y-1">
+              <p>
+                <span className="text-foreground font-semibold">C/c</span> Cubic Bézier
+              </p>
+              <p>
+                <span className="text-foreground font-semibold">S/s</span> Smooth cubic
+              </p>
+              <p>
+                <span className="text-foreground font-semibold">Q/q</span> Quadratic Bézier
+              </p>
+              <p>
+                <span className="text-foreground font-semibold">T/t</span> Smooth quadratic
+              </p>
+            </div>
+            <div className="space-y-1">
+              <p>
+                <span className="text-foreground font-semibold">A/a</span> Elliptical arc
+              </p>
+              <p>
+                <span className="text-foreground font-semibold">Z/z</span> Close path
+              </p>
+              <p>Uppercase = absolute</p>
+              <p>Lowercase = relative</p>
+            </div>
+            <div className="space-y-1">
+              <p>
+                Example: <span className="text-primary">M10 10</span>
+              </p>
+              <p>Move to 10,10</p>
+              <p>
+                <span className="text-primary">L20 20</span>
+              </p>
+              <p>Line to 20,20</p>
+            </div>
           </div>
         </div>
       </div>

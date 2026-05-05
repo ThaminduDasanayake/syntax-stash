@@ -1,0 +1,112 @@
+"use client";
+
+import { ImageIcon } from "@phosphor-icons/react";
+import { useEffect, useRef, useState } from "react";
+
+import { imageToAscii } from "@/app/tools/ascii-studio/helpers";
+import { CopyButton } from "@/components/ui/copy-button";
+import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
+
+export function ImageToAsciiTab() {
+  const [file, setFile] = useState<File | null>(null);
+  const [resolution, setResolution] = useState(80);
+  const [output, setOutput] = useState("");
+  const [preview, setPreview] = useState<string | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const src = e.target?.result as string;
+      setPreview(src);
+
+      const img = new Image();
+      img.onload = () => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const w = resolution;
+        // 0.45 corrects for character aspect ratio (chars are taller than wide)
+        const h = Math.round(resolution * (img.height / img.width) * 0.45);
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+        ctx.drawImage(img, 0, 0, w, h);
+        const data = ctx.getImageData(0, 0, w, h);
+        setOutput(imageToAscii(data));
+      };
+      img.src = src;
+    };
+    reader.readAsDataURL(file);
+  }, [file, resolution]);
+
+  return (
+    <div className="space-y-6">
+      {/* Hidden canvas for pixel processing */}
+      <canvas ref={canvasRef} className="hidden" />
+
+      {/* Upload zone */}
+      <label className="border-border bg-muted/20 hover:bg-muted/40 hover:border-primary/50 flex cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed p-10 transition-colors">
+        <input
+          type="file"
+          accept="image/png,image/jpeg,image/webp"
+          className="sr-only"
+          onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+        />
+        {preview ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={preview} alt="preview" className="max-h-32 max-w-xs rounded-lg object-contain" />
+        ) : (
+          <ImageIcon weight="duotone" size={40} className="text-muted-foreground" />
+        )}
+        <span className="text-muted-foreground text-sm">
+          {file ? file.name : "Click or drag a PNG / JPG / WebP image"}
+        </span>
+      </label>
+
+      {/* Resolution slider */}
+      <div className="space-y-3">
+        <Label>
+          Resolution —{" "}
+          <span className="text-primary font-mono font-semibold">{resolution} chars wide</span>
+        </Label>
+        <Slider
+          value={[resolution]}
+          onValueChange={(v) => setResolution(Array.isArray(v) ? v[0] : v)}
+          min={40}
+          max={200}
+          step={5}
+          className="py-1"
+        />
+        <div className="flex justify-between">
+          <span className="text-muted-foreground text-xs">Low detail</span>
+          <span className="text-muted-foreground text-xs">High detail</span>
+        </div>
+      </div>
+
+      {/* Output */}
+      {output && (
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <Label>ASCII Output</Label>
+            <CopyButton value={output} />
+          </div>
+          <div className="bg-muted/30 border-border overflow-auto rounded-xl border p-4">
+            <pre className="text-foreground font-mono text-[5px] leading-[5.5px] whitespace-pre select-all">
+              {output}
+            </pre>
+          </div>
+        </div>
+      )}
+
+      {!output && (
+        <p className="text-muted-foreground text-center text-sm">
+          Upload an image to see the ASCII conversion.
+        </p>
+      )}
+    </div>
+  );
+}

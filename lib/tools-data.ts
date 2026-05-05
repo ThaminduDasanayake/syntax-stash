@@ -146,7 +146,7 @@ export const developmentTools: Tool[] = [
   {
     title: "AI Prompt Studio",
     highlight: "Studio",
-    url: "/tools/prompt-studio",
+    url: "/tools/ai-prompt-studio",
     description:
       "Write, inject variables, minify, and enhance LLM prompts with real-time token tracking.",
     category: CATEGORIES.development,
@@ -310,12 +310,13 @@ export const devopsTools: Tool[] = [
 
 export const imageTools: Tool[] = [
   {
-    title: "ASCII Diagram Editor",
-    url: "/tools/ascii-diagram",
+    title: "ASCII Studio",
+    url: "/tools/ascii-studio",
     description:
-      "Draw boxes and add text on a character grid. Outputs clean ASCII art using Unicode box-drawing characters.",
+      "Generate ASCII banners, folder trees, markdown tables, glitch text, and convert images to ASCII art.",
     category: CATEGORIES.imagesAssets,
-    icon: GridNineIcon,
+    highlight: "Studio",
+    icon: TerminalWindowIcon,
   },
   {
     title: "Image Converter",
@@ -343,14 +344,16 @@ export const imageTools: Tool[] = [
   {
     title: "SVG Optimizer",
     url: "/tools/svg-optimizer",
-    description: "Minify and clean bloated SVG files.",
+    description: "Minify and clean bloated SVG files with multipass optimization..",
     category: CATEGORIES.imagesAssets,
     icon: FileSvgIcon,
   },
   {
-    title: "SVG Path Viewer",
+    title: "SVG Path Viewer Editor",
+    highlight: "Editor",
     url: "/tools/svg-path",
-    description: "Preview and edit SVG 'd' paths with real-time visualization.",
+    description:
+      "Preview and edit raw SVG 'd' paths with real-time visualization and customizable styling.",
     category: CATEGORIES.imagesAssets,
     icon: FileSvgIcon,
   },

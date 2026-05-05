@@ -8,7 +8,7 @@ export function ErrorAlert({ message }: ErrorAlertProps) {
   if (!message) return null;
 
   return (
-    <div className="border-destructive/30 bg-destructive/10 text-destructive flex items-center gap-3 rounded-lg border p-4 text-xs">
+    <div className="border-destructive/30 bg-destructive/10 text-destructive flex h-full items-center gap-3 rounded-lg border p-4 text-xs">
       <AlertTriangle size={18} />
       <p className="font-mono">{message}</p>
     </div>
