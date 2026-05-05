@@ -4,8 +4,10 @@ import { ListOrdered } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { ToolLayout } from "@/components/layout/tool-layout";
-import ClearButton from "@/components/ui/clear-button";
-import CopyButton from "@/components/ui/copy-button";
+import { ClearButton } from "@/components/ui/clear-button";
+
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { SelectField } from "@/components/ui/select-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
 
@@ -135,12 +137,7 @@ export default function MarkdownTOCGeneratorPage() {
             onChange={(e) => setInput(e.target.value)}
             placeholder="Paste your Markdown document here..."
             rows={20}
-            action={
-              <ClearButton
-                onClick={() => setInput("")}
-                disabled={!input}
-              />
-            }
+            action={<ClearButton onClick={() => setInput("")} disabled={!input} />}
           />
         </div>
 
@@ -152,18 +149,13 @@ export default function MarkdownTOCGeneratorPage() {
             readOnly
             rows={22}
             placeholder="Your ToC will appear here..."
-            action={
-              <CopyButton
-                value={toc}
-                disabled={!toc}
-              />
-            }
+            action={<CopyButton value={toc} disabled={!toc} />}
           />
 
           {/* Stats */}
           {input.trim() && (
-            <div className="rounded-lg bg-muted p-3">
-              <p className="text-xs font-medium text-muted-foreground">
+            <div className="bg-muted rounded-lg p-3">
+              <p className="text-muted-foreground text-xs font-medium">
                 Found {headingCount} heading{headingCount !== 1 ? "s" : ""} (max depth: H{maxDepth})
               </p>
             </div>
@@ -175,15 +167,20 @@ export default function MarkdownTOCGeneratorPage() {
       <div className="mt-8 border-t pt-8">
         <h3 className="mb-4 text-sm font-semibold">How It Works</h3>
         <div className="grid gap-4 md:grid-cols-2">
-          <div className="rounded-lg bg-muted/50 p-4">
+          <div className="bg-muted/50 rounded-lg p-4">
             <h4 className="mb-2 text-sm font-medium">Anchor Generation</h4>
-            <p className="text-xs text-muted-foreground">
-              Special characters are stripped and spaces become hyphens. Example: <code className="font-mono text-xs bg-background px-1 py-0.5 rounded">## My Setup</code> → <code className="font-mono text-xs bg-background px-1 py-0.5 rounded">#my-setup</code>
+            <p className="text-muted-foreground text-xs">
+              Special characters are stripped and spaces become hyphens. Example:{" "}
+              <code className="bg-background rounded px-1 py-0.5 font-mono text-xs">
+                ## My Setup
+              </code>{" "}
+              →{" "}
+              <code className="bg-background rounded px-1 py-0.5 font-mono text-xs">#my-setup</code>
             </p>
           </div>
-          <div className="rounded-lg bg-muted/50 p-4">
+          <div className="bg-muted/50 rounded-lg p-4">
             <h4 className="mb-2 text-sm font-medium">Indentation</h4>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               Each heading level adds 2 spaces of indentation for proper nesting in Markdown.
             </p>
           </div>

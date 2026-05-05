@@ -3,11 +3,13 @@
 import { Layers, Plus, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
 
-import { ToolLayout } from "@/components/layout/tool-layout";
-import CopyButton from "@/components/ui/copy-button";
+import { ToolLayout } from "@/components/layout/layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { TextAreaField } from "@/components/ui/textarea-field";
+import { internalTools } from "@/lib/tools-data";
 
 type StageType = "$match" | "$group" | "$sort" | "$project" | "$limit" | "$lookup";
 
@@ -52,14 +54,7 @@ const STAGE_DESCRIPTIONS: Record<StageType, string> = {
   $lookup: "Join a collection",
 };
 
-const ALL_STAGES: StageType[] = [
-  "$match",
-  "$group",
-  "$sort",
-  "$project",
-  "$limit",
-  "$lookup",
-];
+const ALL_STAGES: StageType[] = ["$match", "$group", "$sort", "$project", "$limit", "$lookup"];
 
 function uid(): string {
   return Math.random().toString(36).slice(2, 9);
@@ -81,10 +76,7 @@ export default function MongoPipelineBuilderPage() {
   ]);
 
   const addStage = (type: StageType) => {
-    setStages((prev) => [
-      ...prev,
-      { id: uid(), type, value: STAGE_DEFAULTS[type] },
-    ]);
+    setStages((prev) => [...prev, { id: uid(), type, value: STAGE_DEFAULTS[type] }]);
   };
 
   const removeStage = (id: string) => {
@@ -97,8 +89,7 @@ export default function MongoPipelineBuilderPage() {
 
   // Compile result
   const { pipelineJSON, hasErrors } = useMemo(() => {
-    if (stages.length === 0)
-      return { pipelineJSON: "[]", hasErrors: false };
+    if (stages.length === 0) return { pipelineJSON: "[]", hasErrors: false };
 
     const compiled: unknown[] = [];
     let hasErrors = false;
@@ -120,38 +111,24 @@ export default function MongoPipelineBuilderPage() {
   }, [stages]);
 
   const nodeSnippet = useMemo(
-    () =>
-      `const pipeline = ${pipelineJSON};\n\nconst results = await Model.aggregate(pipeline);`,
+    () => `const pipeline = ${pipelineJSON};\n\nconst results = await Model.aggregate(pipeline);`,
     [pipelineJSON],
   );
 
   const validStageIds = useMemo(
-    () =>
-      new Set(
-        stages
-          .filter((s) => tryParseJSON(s.value).ok)
-          .map((s) => s.id),
-      ),
+    () => new Set(stages.filter((s) => tryParseJSON(s.value).ok).map((s) => s.id)),
     [stages],
   );
 
+  const tool = internalTools.find((t) => t.url === "/tools/mongo-pipeline-builder");
+
   return (
-    <ToolLayout
-      icon={Layers}
-      title="Mongo Aggregation"
-      highlight="Builder"
-      description="Visually scaffold complex MongoDB aggregation pipelines."
-    >
+    <ToolLayout tool={tool}>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {/* ---------------------------------------------------------------- */}
-        {/* Left — visual builder                                             */}
-        {/* ---------------------------------------------------------------- */}
         <div className="space-y-4">
           {/* Add-stage buttons */}
           <div>
-            <p className="mb-2 text-xs font-medium text-muted-foreground">
-              Add a stage
-            </p>
+            <p className="text-muted-foreground mb-2 text-xs font-medium">Add a stage</p>
             <div className="flex flex-wrap gap-2">
               {ALL_STAGES.map((type) => (
                 <Button
@@ -171,9 +148,7 @@ export default function MongoPipelineBuilderPage() {
           {/* Stage cards */}
           {stages.length === 0 ? (
             <div className="rounded-lg border border-dashed p-8 text-center">
-              <p className="text-sm text-muted-foreground">
-                No stages yet. Add one above.
-              </p>
+              <p className="text-muted-foreground text-sm">No stages yet. Add one above.</p>
             </div>
           ) : (
             <div className="space-y-3">
@@ -182,34 +157,28 @@ export default function MongoPipelineBuilderPage() {
                 return (
                   <Card
                     key={stage.id}
-                    className={`transition-colors ${
-                      !isValid ? "border-destructive/50" : ""
-                    }`}
+                    className={`transition-colors ${!isValid ? "border-destructive/50" : ""}`}
                   >
                     <CardContent className="space-y-2 p-3">
                       {/* Card header row */}
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
+                          <span className="bg-primary text-primary-foreground flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold">
                             {idx + 1}
                           </span>
-                          <span className="font-mono text-sm font-semibold">
-                            {stage.type}
-                          </span>
-                          <span className="text-xs text-muted-foreground">
+                          <span className="font-mono text-sm font-semibold">{stage.type}</span>
+                          <span className="text-muted-foreground text-xs">
                             — {STAGE_DESCRIPTIONS[stage.type]}
                           </span>
                         </div>
                         <div className="flex items-center gap-2">
                           {!isValid && (
-                            <span className="text-xs text-destructive">
-                              invalid JSON
-                            </span>
+                            <span className="text-destructive text-xs">invalid JSON</span>
                           )}
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="h-7 w-7 p-0 text-muted-foreground hover:text-destructive"
+                            className="text-muted-foreground hover:text-destructive h-7 w-7 p-0"
                             onClick={() => removeStage(stage.id)}
                           >
                             <Trash2 size={14} />
@@ -233,16 +202,13 @@ export default function MongoPipelineBuilderPage() {
           )}
         </div>
 
-        {/* ---------------------------------------------------------------- */}
-        {/* Right — compiled output                                          */}
-        {/* ---------------------------------------------------------------- */}
         <div className="space-y-4">
           <TextAreaField
             label={
               hasErrors ? (
                 <span>
                   Pipeline JSON{" "}
-                  <span className="text-xs font-normal text-destructive">
+                  <span className="text-destructive text-xs font-normal">
                     (some stages have invalid JSON)
                   </span>
                 </span>
@@ -253,9 +219,7 @@ export default function MongoPipelineBuilderPage() {
             value={pipelineJSON}
             readOnly
             rows={16}
-            action={
-              <CopyButton value={pipelineJSON} disabled={!pipelineJSON} />
-            }
+            action={<CopyButton value={pipelineJSON} disabled={!pipelineJSON} />}
           />
 
           <TextAreaField
@@ -263,9 +227,7 @@ export default function MongoPipelineBuilderPage() {
             value={nodeSnippet}
             readOnly
             rows={8}
-            action={
-              <CopyButton value={nodeSnippet} disabled={!nodeSnippet} />
-            }
+            action={<CopyButton value={nodeSnippet} disabled={!nodeSnippet} />}
           />
         </div>
       </div>

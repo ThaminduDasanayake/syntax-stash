@@ -22,6 +22,7 @@ export type Tool = {
   description: string;
   category: string;
   icon?: LucideIcon | Icon;
+  favicon?: string;
 };
 
 export type ToolCardProps = {

@@ -16,7 +16,8 @@ import {
 import PrefixInput from "@/app/tools/base-converter/prefix-input";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Card, CardContent } from "@/components/ui/card";
-import CopyButton from "@/components/ui/copy-button";
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";

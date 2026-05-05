@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 
 import { HashAlgo } from "@/app/tools/hash-generator/types";
 import { ToolLayout } from "@/components/layout/tool-layout";
-import ClearButton from "@/components/ui/clear-button";
-import CopyButton from "@/components/ui/copy-button";
+import { ClearButton } from "@/components/ui/clear-button";
+
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { TextAreaField } from "@/components/ui/textarea-field";
 
 const ALGOS: HashAlgo[] = [

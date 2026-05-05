@@ -1,56 +1,96 @@
-import { Box, ExternalLink } from "lucide-react";
+"use client";
+
+import { ArrowSquareOutIcon, ToolboxIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ToolCardProps } from "@/types";
 
-function getHostname(url: string): string {
-  try {
-    return new URL(url).hostname.replace(/^www\./, "");
-  } catch {
-    return "";
+function getFavicon(toolUrl: string, explicitFavicon?: string) {
+  const url = new URL(toolUrl);
+  const domain = url.hostname;
+  const origin = url.origin;
+
+  const sources: string[] = [];
+
+  if (explicitFavicon) {
+    sources.push(explicitFavicon);
   }
+
+  sources.push(`${origin}/favicon.ico`);
+  sources.push(`https://www.google.com/s2/favicons?domain=${domain}&sz=128`);
+
+  return sources;
+}
+
+function Favicon({
+  url,
+  alt,
+  explicitFavicon,
+}: {
+  url: string;
+  alt: string;
+  explicitFavicon?: string;
+}) {
+  const sources = getFavicon(url, explicitFavicon);
+  const [index, setIndex] = useState(0);
+
+  return (
+    <div className="border-border/50 bg-foreground/60 dark:bg-primary/40 flex h-8 w-8 shrink-0 items-center justify-center rounded-md border p-1 shadow-sm">
+      <Image
+        src={sources[index]}
+        alt={alt}
+        width={24}
+        height={24}
+        unoptimized
+        className="h-full w-full object-contain"
+        onError={() => {
+          if (index < sources.length - 1) {
+            setIndex(index + 1);
+          }
+        }}
+      />
+    </div>
+  );
 }
 
 function CardBody({ tool }: ToolCardProps) {
   const isInternal = tool.url.startsWith("/");
-  const hostname = isInternal ? null : getHostname(tool.url);
-  const Icon = tool.icon || Box;
+  const Icon = tool.icon || ToolboxIcon;
 
   return (
-    <Card className="bg-card text-card-foreground border-border flex h-full w-full flex-col py-4 ring-0 transition-colors">
-      <CardHeader className="flex-none">
+    <Card className="h-full w-full">
+      <CardHeader>
         <div className="flex flex-row items-center gap-3">
           {isInternal ? (
-            <div className="bg-primary/10 border-primary/20 flex h-8 w-8 shrink-0 items-center justify-center rounded-md border">
-              <Icon size={14} className="text-primary" />
+            <div className="bg-primary/10 border-ring/30 flex h-8 w-8 shrink-0 items-center justify-center rounded-md border">
+              <Icon className="text-primary size-4.5!" />
             </div>
           ) : (
-            <Image
-              src={`https://www.google.com/s2/favicons?domain=${hostname}&sz=128`}
-              alt={`${tool.title} logo`}
-              width={32}
-              height={32}
-              className="bg-accent h-8 w-8 shrink-0 rounded-md border p-1"
-            />
+            <Favicon url={tool.url} alt={tool.title} explicitFavicon={tool.favicon} />
           )}
+
           <div className="min-w-0 flex-1">
             <div className="flex items-start justify-between gap-2">
               <CardTitle className="text-foreground font-semibold">{tool.title}</CardTitle>
-              {isInternal ? null : (
-                <ExternalLink size={14} className="text-muted-foreground mt-0.5 shrink-0" />
+              {!isInternal && (
+                <ArrowSquareOutIcon
+                  weight="duotone"
+                  className="text-muted-foreground mt-0.5 shrink-0"
+                />
               )}
             </div>
           </div>
         </div>
-        <CardDescription className="text-muted-foreground mt-2 line-clamp-2 text-sm leading-relaxed">
+        <CardDescription className="mt-2 line-clamp-3 leading-relaxed">
           {tool.description}
         </CardDescription>
       </CardHeader>
-      <CardContent className="mt-auto flex-none pt-4">
-        <Badge className="bg-primary/10 text-primary hover:bg-primary/20 border-none px-2 py-0.5 text-[11px] tracking-wide uppercase">
+      <CardContent className="mt-auto pt-4">
+        <Badge className="bg-primary/10 text-primary hover:bg-primary/20 text-[11px] tracking-wider uppercase">
           {tool.category}
         </Badge>
       </CardContent>

@@ -4,8 +4,10 @@ import { ArrowRightLeft } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { ToolLayout } from "@/components/layout/tool-layout";
-import ClearButton from "@/components/ui/clear-button";
-import CopyButton from "@/components/ui/copy-button";
+import { ClearButton } from "@/components/ui/clear-button";
+
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { SelectField } from "@/components/ui/select-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
 
@@ -118,14 +120,18 @@ function toCamelCase(s: string): string {
 }
 
 function toSnakeCase(s: string): string {
-  return s.replace(/([A-Z])/g, "_$1").toLowerCase().replace(/^_/, "");
+  return s
+    .replace(/([A-Z])/g, "_$1")
+    .toLowerCase()
+    .replace(/^_/, "");
 }
 
 function mapDefaultValue(raw: string, drizzleType: string, dialect: Dialect): string {
   const v = raw.trim();
   if (v === "autoincrement()") return dialect === "postgres" ? "" : "";
   if (v === "now()") return `.default(sql\`now()\`)`;
-  if (v === "cuid()" || v === "uuid()") return dialect === "postgres" ? ".default(sql`gen_random_uuid()`)" : "";
+  if (v === "cuid()" || v === "uuid()")
+    return dialect === "postgres" ? ".default(sql`gen_random_uuid()`)" : "";
   if (v === "true") return ".default(true)";
   if (v === "false") return ".default(false)";
   if (/^\d+$/.test(v)) return `.default(${v})`;
@@ -188,8 +194,7 @@ function generateDrizzle(models: ParsedModel[], dialect: Dialect): string {
   if (models.length === 0) return "";
 
   const tableFn = dialect === "postgres" ? "pgTable" : "sqliteTable";
-  const corePackage =
-    dialect === "postgres" ? "drizzle-orm/pg-core" : "drizzle-orm/sqlite-core";
+  const corePackage = dialect === "postgres" ? "drizzle-orm/pg-core" : "drizzle-orm/sqlite-core";
 
   // Collect only the column types actually used
   const usedTypes = new Set<string>();
@@ -198,9 +203,7 @@ function generateDrizzle(models: ParsedModel[], dialect: Dialect): string {
       if (field.isList || field.isRelation) continue;
       const typeMap = dialect === "postgres" ? PG_TYPE_MAP : SQLITE_TYPE_MAP;
       if (field.isId && dialect === "postgres") {
-        usedTypes.add(
-          field.prismaType === "BigInt" ? "bigserial" : "serial",
-        );
+        usedTypes.add(field.prismaType === "BigInt" ? "bigserial" : "serial");
         continue;
       }
       const t = typeMap[field.prismaType];
@@ -225,12 +228,8 @@ function generateDrizzle(models: ParsedModel[], dialect: Dialect): string {
     lines.push(`export const ${constName} = ${tableFn}("${tableName}", {`);
     lines.push(...columnDefs.map((d) => `${d},`));
     lines.push("});");
-    lines.push(
-      `export type ${model.name} = typeof ${constName}.$inferSelect;`,
-    );
-    lines.push(
-      `export type New${model.name} = typeof ${constName}.$inferInsert;`,
-    );
+    lines.push(`export type ${model.name} = typeof ${constName}.$inferSelect;`);
+    lines.push(`export type New${model.name} = typeof ${constName}.$inferInsert;`);
     lines.push("");
   }
 
@@ -328,9 +327,9 @@ export default function PrismaToDrizzlePage() {
             ["Json", "jsonb", "text"],
             ["Bytes", "bytea", "blob"],
           ].map(([prisma, pg, sqlite]) => (
-            <div key={prisma} className="rounded-lg bg-muted/50 p-3 font-mono">
+            <div key={prisma} className="bg-muted/50 rounded-lg p-3 font-mono">
               <span className="text-primary">{prisma}</span>
-              <span className="mx-2 text-muted-foreground">→</span>
+              <span className="text-muted-foreground mx-2">→</span>
               <span>{dialect === "postgres" ? pg : sqlite}</span>
             </div>
           ))}

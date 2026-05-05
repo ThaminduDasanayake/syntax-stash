@@ -1,14 +1,16 @@
 "use client";
 
-import { Table } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { ErrorAlert } from "@/components/error-alert";
-import { ToolLayout } from "@/components/layout/tool-layout";
-import ClearButton from "@/components/ui/clear-button";
-import CopyButton from "@/components/ui/copy-button";
+import { ToolLayout } from "@/components/layout/layout";
+import { ClearButton } from "@/components/ui/clear-button";
+
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { SelectField } from "@/components/ui/select-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
+import { internalTools } from "@/lib/tools-data";
 
 type SqlDialect = "sql" | "mysql" | "postgresql" | "sqlite" | "bigquery" | "transactsql";
 
@@ -61,13 +63,10 @@ export default function SqlFormatterPage() {
     };
   }, [input, dialect]);
 
+  const tool = internalTools.find((t) => t.url === "/tools/sql-formatter");
+
   return (
-    <ToolLayout
-      icon={Table}
-      title="SQL Query"
-      highlight="Formatter"
-      description="Prettify and format raw SQL queries with proper indentation and capitalized keywords."
-    >
+    <ToolLayout tool={tool}>
       <div className="mb-4 grid grid-cols-1 gap-8 lg:grid-cols-2">
         <SelectField
           label="SQL Dialect"

@@ -6,8 +6,10 @@ import { useMemo, useState } from "react";
 import { JwtDecoded } from "@/app/tools/jwt-decoder/types";
 import { ErrorAlert } from "@/components/error-alert";
 import { ToolLayout } from "@/components/layout/tool-layout";
-import ClearButton from "@/components/ui/clear-button";
-import CopyButton from "@/components/ui/copy-button";
+import { ClearButton } from "@/components/ui/clear-button";
+
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { TextAreaField } from "@/components/ui/textarea-field";
 
 function base64UrlDecode(input: string): string {

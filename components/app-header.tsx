@@ -4,6 +4,7 @@ import { Search } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { ThemeToggle } from "@/components/theme-toggle";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -15,9 +16,6 @@ import {
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { HeaderProps } from "@/types";
 
-/** Convert a URL segment to a human-readable label.
- *  e.g. "prompt-enhancer" → "Prompt Enhancer"
- */
 function segmentToLabel(segment: string): string {
   return segment
     .split("-")
@@ -31,13 +29,12 @@ const sectionLabels: Record<string, string> = {
 };
 
 export default function AppHeader({ onSearchOpenAction }: HeaderProps) {
-  // onMenuOpenAction
   const pathname = usePathname();
 
   const parts = pathname.split("/").filter(Boolean);
 
   return (
-    <header className="border-border bg-background/80 sticky top-0 z-30 grid h-12 shrink-0 grid-cols-[1fr_auto_1fr] items-center gap-2 border-b px-4 backdrop-blur-sm">
+    <header className="border-border bg-background/80 sticky top-0 z-30 flex h-12 shrink-0 items-center justify-between gap-2 border-b px-4 backdrop-blur-sm">
       <div className="flex min-w-0 items-center gap-2">
         <SidebarTrigger className="text-muted-foreground hover:bg-muted -ml-2" />
 
@@ -107,8 +104,7 @@ export default function AppHeader({ onSearchOpenAction }: HeaderProps) {
         </kbd>
       </button>
 
-      {/* Right: placeholder */}
-      <div className="flex items-center justify-end gap-2"></div>
+      <ThemeToggle />
     </header>
   );
 }

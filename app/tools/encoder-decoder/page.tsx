@@ -13,8 +13,10 @@ import {
 import { ErrorAlert } from "@/components/error-alert";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
-import ClearButton from "@/components/ui/clear-button";
-import CopyButton from "@/components/ui/copy-button";
+import { ClearButton } from "@/components/ui/clear-button";
+
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { TextAreaField } from "@/components/ui/textarea-field";
 
 const ACTIONS: EncoderAction[] = [

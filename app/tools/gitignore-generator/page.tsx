@@ -4,10 +4,12 @@ import { useMemo, useState } from "react";
 
 import { GITIGNORE_SNIPPETS } from "@/app/tools/gitignore-generator/data";
 import { ToolLayout } from "@/components/layout/layout";
-import { SearchInput } from "@/components/search-input";
 import { Button } from "@/components/ui/button";
-import ClearButton from "@/components/ui/clear-button";
-import CopyButton from "@/components/ui/copy-button";
+import { ClearButton } from "@/components/ui/clear-button";
+
+import { CopyButton } from "@/components/ui/copy-button";
+
+import { SearchInput } from "@/components/ui/search-input";
 import { TextAreaField } from "@/components/ui/textarea-field";
 import { internalTools } from "@/lib/tools-data";
 

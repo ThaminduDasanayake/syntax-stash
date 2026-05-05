@@ -15,7 +15,8 @@ import { MathUnit } from "@/app/tools/time-calculator/types";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import CopyButton from "@/components/ui/copy-button";
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { Input } from "@/components/ui/input";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";

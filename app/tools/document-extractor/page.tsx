@@ -7,7 +7,8 @@ import Editor from "@/app/tools/document-extractor/editor.tsx";
 import FileDropzone from "@/components/file-dropzone";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
-import CopyButton from "@/components/ui/copy-button";
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";

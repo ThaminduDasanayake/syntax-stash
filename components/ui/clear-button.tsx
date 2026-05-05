@@ -14,7 +14,7 @@ export interface ClearButtonProps extends ButtonPrimitive.Props {
   disabled?: boolean;
 }
 
-const ClearButton = ({
+export const ClearButton = ({
   label = "Clear",
   icon = <ArrowCounterClockwiseIcon />,
   className,
@@ -35,4 +35,4 @@ const ClearButton = ({
   );
 };
 
-export default ClearButton;
+ClearButton.displayName = "ClearButton";

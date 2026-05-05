@@ -11,7 +11,8 @@ import {
 import { ErrorAlert } from "@/components/error-alert";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import CopyButton from "@/components/ui/copy-button";
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { InputField } from "@/components/ui/input-field";
 import { SelectField } from "@/components/ui/select-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
@@ -51,7 +52,15 @@ export function OrganizeTab({ input }: { input: string }) {
     }
 
     return items;
-  }, [parsed, activeSortKey, sortOrder, activeFilterKey, filterOperator, filterValue, hasValidData]);
+  }, [
+    parsed,
+    activeSortKey,
+    sortOrder,
+    activeFilterKey,
+    filterOperator,
+    filterValue,
+    hasValidData,
+  ]);
 
   const resultJSON = useMemo(() => {
     if (!result) return "";
@@ -143,7 +152,9 @@ export function OrganizeTab({ input }: { input: string }) {
                 {totalCount !== resultCount && ` of ${totalCount.toLocaleString()}`}
               </Badge>
             </div>
-          ) : "Result"
+          ) : (
+            "Result"
+          )
         }
         value={resultJSON}
         readOnly

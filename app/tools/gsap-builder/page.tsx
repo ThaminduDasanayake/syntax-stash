@@ -6,7 +6,8 @@ import { Play, RotateCcw, Wand2 } from "lucide-react";
 import { useCallback, useMemo, useRef, useState } from "react";
 
 import { ToolLayout } from "@/components/layout/tool-layout";
-import CopyButton from "@/components/ui/copy-button";
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SelectField } from "@/components/ui/select-field";
@@ -140,9 +141,19 @@ export default function GSAPBuilderPage() {
     setPlayKey(0);
   }, []);
 
-  const generatedCode = useMemo(() => generateCode(config), [
-    type, ease, duration, x, y, rotation, opacity, scale, // eslint-disable-line react-hooks/exhaustive-deps
-  ]);
+  const generatedCode = useMemo(
+    () => generateCode(config),
+    [
+      type,
+      ease,
+      duration,
+      x,
+      y,
+      rotation,
+      opacity,
+      scale, // eslint-disable-line react-hooks/exhaustive-deps
+    ],
+  );
 
   const typeOptions = [
     { value: "to", label: "gsap.to() — animate to values" },
@@ -261,14 +272,13 @@ export default function GSAPBuilderPage() {
         <div className="space-y-4">
           {/* Live preview card */}
           <Card>
-            <CardContent className="flex h-52 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-muted/60 to-muted p-6">
+            <CardContent className="from-muted/60 to-muted flex h-52 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br p-6">
               {/* GSAP scope container */}
               <div ref={containerRef} className="flex items-center justify-center">
                 <div
                   className="gsap-preview-box h-16 w-16 rounded-xl shadow-lg"
                   style={{
-                    background:
-                      "linear-gradient(135deg, oklch(0.6 0.22 260), oklch(0.5 0.22 310))",
+                    background: "linear-gradient(135deg, oklch(0.6 0.22 260), oklch(0.5 0.22 310))",
                   }}
                 />
               </div>
@@ -291,7 +301,7 @@ export default function GSAPBuilderPage() {
               .map(([label], i) => (
                 <span
                   key={i}
-                  className="rounded-full bg-primary/10 px-2 py-0.5 font-mono text-primary"
+                  className="bg-primary/10 text-primary rounded-full px-2 py-0.5 font-mono"
                 >
                   {label}
                 </span>
@@ -304,9 +314,7 @@ export default function GSAPBuilderPage() {
             value={generatedCode}
             readOnly
             rows={16}
-            action={
-              <CopyButton value={generatedCode} disabled={!generatedCode} />
-            }
+            action={<CopyButton value={generatedCode} disabled={!generatedCode} />}
           />
         </div>
       </div>

@@ -6,8 +6,10 @@ import { useMemo, useState } from "react";
 import { STOPWORDS } from "@/app/tools/nlp-sandbox/constants";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Card, CardContent } from "@/components/ui/card";
-import ClearButton from "@/components/ui/clear-button";
-import CopyButton from "@/components/ui/copy-button";
+import { ClearButton } from "@/components/ui/clear-button";
+
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { SelectField } from "@/components/ui/select-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
 

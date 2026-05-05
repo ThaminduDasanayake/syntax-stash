@@ -7,7 +7,8 @@ import { CurveCanvas } from "@/app/tools/cubic-bezier/curve-canvas";
 import { PRESETS } from "@/app/tools/cubic-bezier/helpers";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
-import CopyButton from "@/components/ui/copy-button";
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -31,20 +32,20 @@ export default function CubicBezierPage() {
   const fmt = (n: number) => parseFloat(n.toFixed(3)).toString();
   const cubicBezier = `cubic-bezier(${fmt(p1x)}, ${fmt(p1y)}, ${fmt(p2x)}, ${fmt(p2y)})`;
 
-  const handleChange = useCallback(
-    (field: "p1x" | "p1y" | "p2x" | "p2y", value: number) => {
-      if (field === "p1x") setP1x(value);
-      else if (field === "p1y") setP1y(value);
-      else if (field === "p2x") setP2x(value);
-      else setP2y(value);
-    },
-    [],
-  );
+  const handleChange = useCallback((field: "p1x" | "p1y" | "p2x" | "p2y", value: number) => {
+    if (field === "p1x") setP1x(value);
+    else if (field === "p1y") setP1y(value);
+    else if (field === "p2x") setP2x(value);
+    else setP2y(value);
+  }, []);
 
   function applyPreset(label: string) {
     const p = PRESETS.find((pr) => pr.label === label);
     if (!p) return;
-    setP1x(p.p1x); setP1y(p.p1y); setP2x(p.p2x); setP2y(p.p2y);
+    setP1x(p.p1x);
+    setP1y(p.p1y);
+    setP2x(p.p2x);
+    setP2y(p.p2y);
   }
 
   function handlePlay() {
@@ -87,7 +88,10 @@ export default function CubicBezierPage() {
                     <div className="space-y-1">
                       <Label className="text-muted-foreground text-xs">x</Label>
                       <Input
-                        type="number" min={0} max={1} step={0.01}
+                        type="number"
+                        min={0}
+                        max={1}
+                        step={0.01}
                         value={fmt(p1x)}
                         onChange={(e) => setP1x(Number(e.target.value))}
                         className="w-20 font-mono text-xs"
@@ -96,7 +100,8 @@ export default function CubicBezierPage() {
                     <div className="space-y-1">
                       <Label className="text-muted-foreground text-xs">y</Label>
                       <Input
-                        type="number" step={0.01}
+                        type="number"
+                        step={0.01}
                         value={fmt(p1y)}
                         onChange={(e) => setP1y(Number(e.target.value))}
                         className="w-20 font-mono text-xs"
@@ -111,7 +116,10 @@ export default function CubicBezierPage() {
                     <div className="space-y-1">
                       <Label className="text-muted-foreground text-xs">x</Label>
                       <Input
-                        type="number" min={0} max={1} step={0.01}
+                        type="number"
+                        min={0}
+                        max={1}
+                        step={0.01}
                         value={fmt(p2x)}
                         onChange={(e) => setP2x(Number(e.target.value))}
                         className="w-20 font-mono text-xs"
@@ -120,7 +128,8 @@ export default function CubicBezierPage() {
                     <div className="space-y-1">
                       <Label className="text-muted-foreground text-xs">y</Label>
                       <Input
-                        type="number" step={0.01}
+                        type="number"
+                        step={0.01}
                         value={fmt(p2y)}
                         onChange={(e) => setP2y(Number(e.target.value))}
                         className="w-20 font-mono text-xs"
@@ -132,7 +141,10 @@ export default function CubicBezierPage() {
                 <div className="space-y-1">
                   <Label className="text-muted-foreground text-xs">Duration (ms)</Label>
                   <Input
-                    type="number" min={100} max={5000} step={50}
+                    type="number"
+                    min={100}
+                    max={5000}
+                    step={50}
                     value={duration}
                     onChange={(e) => setDuration(Number(e.target.value))}
                     className="w-24 font-mono text-xs"
@@ -144,13 +156,19 @@ export default function CubicBezierPage() {
             {/* Preset picker */}
             <div className="flex items-center gap-3">
               <Label className="shrink-0 text-sm">Preset</Label>
-              <Select onValueChange={(v) => { if (v) applyPreset(String(v)); }}>
+              <Select
+                onValueChange={(v) => {
+                  if (v) applyPreset(String(v));
+                }}
+              >
                 <SelectTrigger className="flex-1">
                   <SelectValue placeholder="Choose a preset…" />
                 </SelectTrigger>
                 <SelectContent>
                   {PRESETS.map((p) => (
-                    <SelectItem key={p.label} value={p.label}>{p.label}</SelectItem>
+                    <SelectItem key={p.label} value={p.label}>
+                      {p.label}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -168,9 +186,7 @@ export default function CubicBezierPage() {
                   className="bg-primary absolute top-1/2 h-8 w-8 -translate-y-1/2 rounded-lg"
                   style={{
                     left: animating ? "calc(100% - 2.5rem)" : "0.5rem",
-                    transition: animating
-                      ? `left ${duration}ms ${cubicBezier}`
-                      : "none",
+                    transition: animating ? `left ${duration}ms ${cubicBezier}` : "none",
                   }}
                 />
               </div>

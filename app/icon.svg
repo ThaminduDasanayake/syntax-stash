@@ -2,7 +2,7 @@
     <rect width="64" height="64" rx="14" fill="currentColor"/>
 
     <g transform="translate(32 32) scale(3) translate(-12 -12)"
-       stroke="white"
+       stroke="#c4e456"
        stroke-width="2"
        stroke-linecap="round"
        stroke-linejoin="round">

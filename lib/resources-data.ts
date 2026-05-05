@@ -15,11 +15,13 @@ export const uiStyling: Tool[] = [
   {
     title: "Picular",
     url: "https://picular.co/",
+    favicon: "https://picular.co/images/favicon-base.png",
     description: "The color search engine for designers.",
     category: "UI & Styling",
   },
   {
     title: "Ark UI",
+    favicon: "https://ark-ui.com/icon.svg?3e91f991fe6d39a3",
     url: "https://ark-ui.com/",
     description: "A headless, accessible UI component library.",
     category: "UI & Styling",
@@ -38,7 +40,7 @@ export const uiStyling: Tool[] = [
   },
   {
     title: "ThemeCN",
-    url: "https://themecn.dev/",
+    url: "https://tweakcn.com/",
     description: "Tailwind CSS components and templates.",
     category: "UI & Styling",
   },
@@ -87,6 +89,7 @@ export const uiStyling: Tool[] = [
   {
     title: "UV Canvas",
     url: "https://uvcanvas.com/",
+    favicon: "https://uvcanvas.com/favicon-32x32.png",
     description: "React components for beautiful canvas gradients.",
     category: "UI & Styling",
   },
@@ -141,6 +144,7 @@ export const uiStyling: Tool[] = [
   {
     title: "Hypercolor",
     url: "https://hypercolor.dev/",
+    favicon: "https://hypercolor.dev/favicon.png",
     description: "Tailwind CSS gradient generator.",
     category: "UI & Styling",
   },

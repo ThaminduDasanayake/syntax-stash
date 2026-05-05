@@ -1,5 +1,5 @@
 import { ClassEntry } from "@/app/tools/tailwind-extractor/helpers";
-import CopyButton from "@/components/ui/copy-button";
+import { CopyButton } from "@/components/ui/copy-button";
 import { InputField } from "@/components/ui/input-field";
 
 const ClassMapRow = ({

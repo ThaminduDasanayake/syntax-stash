@@ -3,15 +3,14 @@
 import { useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import CopyButton from "@/components/ui/copy-button";
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { TextAreaField } from "@/components/ui/textarea-field";
 import { cn } from "@/lib/utils";
 
 type Mode = "format" | "minify";
 
-type FormatResult =
-  | { ok: true; output: string }
-  | { ok: false; error: string };
+type FormatResult = { ok: true; output: string } | { ok: false; error: string };
 
 export function FormatTab({ input }: { input: string }) {
   const [mode, setMode] = useState<Mode>("format");
@@ -21,7 +20,10 @@ export function FormatTab({ input }: { input: string }) {
     if (!trimmed) return { ok: true, output: "" };
     try {
       const parsed = JSON.parse(trimmed);
-      return { ok: true, output: mode === "format" ? JSON.stringify(parsed, null, 2) : JSON.stringify(parsed) };
+      return {
+        ok: true,
+        output: mode === "format" ? JSON.stringify(parsed, null, 2) : JSON.stringify(parsed),
+      };
     } catch (e) {
       return { ok: false, error: e instanceof Error ? e.message : "Invalid JSON" };
     }

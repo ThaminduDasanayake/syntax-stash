@@ -6,8 +6,10 @@ import { PLACEHOLDER } from "@/app/tools/html-to-jsx/data";
 import { convertHtmlToJsx, type ConvertOptions } from "@/app/tools/html-to-jsx/helpers";
 import { ToolLayout } from "@/components/layout/layout";
 import { Card, CardContent } from "@/components/ui/card";
-import ClearButton from "@/components/ui/clear-button";
-import CopyButton from "@/components/ui/copy-button";
+import { ClearButton } from "@/components/ui/clear-button";
+
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";

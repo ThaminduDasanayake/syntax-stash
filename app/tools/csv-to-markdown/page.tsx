@@ -4,8 +4,10 @@ import { TableProperties } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { ToolLayout } from "@/components/layout/tool-layout";
-import ClearButton from "@/components/ui/clear-button";
-import CopyButton from "@/components/ui/copy-button";
+import { ClearButton } from "@/components/ui/clear-button";
+
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { SelectField } from "@/components/ui/select-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
 
@@ -51,9 +53,7 @@ Charlie Brown,charlie@example.com,Manager`);
     const rows = trimmed
       .split("\n")
       .filter((line) => line.trim().length > 0)
-      .map((line) =>
-        line.split(actualDelimiter).map((cell) => cell.trim())
-      );
+      .map((line) => line.split(actualDelimiter).map((cell) => cell.trim()));
 
     if (rows.length === 0) return "";
 
@@ -81,13 +81,7 @@ Charlie Brown,charlie@example.com,Manager`);
 
     // Format rows
     const formatRow = (row: string[], widths: number[]) => {
-      return (
-        "| " +
-        row
-          .map((cell, idx) => (cell || "").padEnd(widths[idx]))
-          .join(" | ") +
-        " |"
-      );
+      return "| " + row.map((cell, idx) => (cell || "").padEnd(widths[idx])).join(" | ") + " |";
     };
 
     // Build table
@@ -98,13 +92,7 @@ Charlie Brown,charlie@example.com,Manager`);
       lines.push(formatRow(paddedRows[0], columnWidths));
 
       // Separator
-      lines.push(
-        "| " +
-          columnWidths
-            .map((width) => "-".repeat(width))
-            .join(" | ") +
-          " |",
-      );
+      lines.push("| " + columnWidths.map((width) => "-".repeat(width)).join(" | ") + " |");
 
       // Data rows
       for (let i = 1; i < paddedRows.length; i++) {
@@ -145,12 +133,7 @@ Charlie Brown,charlie@example.com,Manager`);
             onChange={(e) => setInput(e.target.value)}
             placeholder="Paste your CSV or spreadsheet data here..."
             rows={20}
-            action={
-              <ClearButton
-                onClick={() => setInput("")}
-                disabled={!input}
-              />
-            }
+            action={<ClearButton onClick={() => setInput("")} disabled={!input} />}
           />
         </div>
 
@@ -161,12 +144,7 @@ Charlie Brown,charlie@example.com,Manager`);
           readOnly
           rows={22}
           placeholder="Your Markdown table will appear here..."
-          action={
-            <CopyButton
-              value={markdownTable}
-              disabled={!markdownTable}
-            />
-          }
+          action={<CopyButton value={markdownTable} disabled={!markdownTable} />}
         />
       </div>
 
@@ -175,26 +153,31 @@ Charlie Brown,charlie@example.com,Manager`);
         <div className="mt-8 border-t pt-8">
           <h3 className="mb-4 text-sm font-semibold">Table Info</h3>
           <div className="grid gap-4 md:grid-cols-3">
-            <div className="rounded-lg bg-muted p-3">
-              <p className="text-xs text-muted-foreground">Rows (excluding header)</p>
+            <div className="bg-muted rounded-lg p-3">
+              <p className="text-muted-foreground text-xs">Rows (excluding header)</p>
               <p className="text-lg font-semibold">
                 {Math.max(0, input.trim().split("\n").length - 1)}
               </p>
             </div>
-            <div className="rounded-lg bg-muted p-3">
-              <p className="text-xs text-muted-foreground">Columns</p>
+            <div className="bg-muted rounded-lg p-3">
+              <p className="text-muted-foreground text-xs">Columns</p>
               <p className="text-lg font-semibold">
                 {input
                   .trim()
                   .split("\n")[0]
-                  ?.split(delimiter === "auto" ? /[,\t|]/ :
-                    delimiter === "comma" ? "," :
-                    delimiter === "tab" ? "\t" : "|")
-                  .length || 0}
+                  ?.split(
+                    delimiter === "auto"
+                      ? /[,\t|]/
+                      : delimiter === "comma"
+                        ? ","
+                        : delimiter === "tab"
+                          ? "\t"
+                          : "|",
+                  ).length || 0}
               </p>
             </div>
-            <div className="rounded-lg bg-muted p-3">
-              <p className="text-xs text-muted-foreground">Character Count</p>
+            <div className="bg-muted rounded-lg p-3">
+              <p className="text-muted-foreground text-xs">Character Count</p>
               <p className="text-lg font-semibold">{markdownTable.length}</p>
             </div>
           </div>

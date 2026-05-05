@@ -16,7 +16,7 @@ interface CopyButtonProps extends Omit<ButtonProps, "value"> {
   size?: "default" | "xs" | "sm" | "lg";
 }
 
-const CopyButton = ({
+export const CopyButton = ({
   value,
   label = true,
   labelName = "Copy",
@@ -52,4 +52,5 @@ const CopyButton = ({
     </Button>
   );
 };
-export default CopyButton;
+
+CopyButton.displayName = "CopyButton";

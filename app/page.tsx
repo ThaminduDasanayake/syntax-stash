@@ -1,4 +1,6 @@
-import { Link, Wrench } from "lucide-react";
+"use client";
+
+import { LinkIcon, WrenchIcon } from "@phosphor-icons/react/ssr";
 
 import ToolCard from "@/components/tool-card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -27,12 +29,12 @@ const groupedResources = resourceLinks.reduce(
 
 export default function Home() {
   return (
-    <div className="mx-auto flex h-full w-full max-w-7xl flex-col overflow-y-auto p-6">
+    <div className="hacker-grid mx-auto flex w-full max-w-7xl flex-col p-6">
       <div className="bg-card border-border mb-8 flex w-full shrink-0 flex-col items-center justify-center space-y-4 rounded-xl border p-8 text-center">
         <h1 className="text-foreground text-4xl font-semibold tracking-tight">
           syntax<span className="text-primary">-</span>stash
         </h1>
-        <p className="text-muted-foreground font-mono text-sm">
+        <p className="text-muted-foreground text-sm">
           A curated command center for modern web development.
         </p>
         <p className="text-muted-foreground mt-4 font-mono text-xs">
@@ -42,18 +44,12 @@ export default function Home() {
 
       {/* Tabs */}
       <Tabs defaultValue="tools" className="flex w-full flex-col">
-        <TabsList className="mb-8 h-10 gap-1 px-1">
-          <TabsTrigger
-            value="tools"
-            className="data-active:bg-accent! data-active:decoration-primary data-active:border-muted-foreground! h-9 p-2 hover:cursor-pointer data-active:border! data-active:underline data-active:decoration-2 data-active:underline-offset-4"
-          >
-            <Wrench className="text-primary" /> Tools
+        <TabsList className="mb-8 h-10 min-w-xs">
+          <TabsTrigger value="tools" className="tab-trigger">
+            <WrenchIcon weight="duotone" /> Tools
           </TabsTrigger>
-          <TabsTrigger
-            value="resources"
-            className="data-active:bg-accent! data-active:decoration-secondary data-active:border-muted-foreground! h-9 p-2 hover:cursor-pointer data-active:border! data-active:underline data-active:decoration-2 data-active:underline-offset-4"
-          >
-            <Link className="text-secondary" /> Resources
+          <TabsTrigger value="resources" className="tab-trigger">
+            <LinkIcon weight="bold" /> Resources
           </TabsTrigger>
         </TabsList>
 
@@ -78,9 +74,9 @@ export default function Home() {
         <TabsContent value="resources" className="space-y-12 pb-8">
           {Object.entries(groupedResources).map(([category, items]) => (
             <div key={category} className="space-y-6">
-              <h3 className="text-secondary flex items-center gap-4 font-mono text-sm font-semibold tracking-wider uppercase">
+              <h3 className="text-primary flex items-center gap-4 font-mono text-sm font-semibold tracking-wider uppercase">
                 {category}
-                <span className="bg-secondary h-px flex-1" />
+                <span className="bg-primary h-px flex-1" />
               </h3>
               <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {items.map((resource) => (
@@ -93,132 +89,4 @@ export default function Home() {
       </Tabs>
     </div>
   );
-}
-
-{
-  /*<div className="w-full space-y-10 pb-8">*/
-}
-{
-  /*  {internalTools.length > 0 && (*/
-}
-{
-  /*    <div>*/
-}
-{
-  /*      <h2 className="text-foreground mb-4 font-mono text-lg font-semibold tracking-tight uppercase">*/
-}
-{
-  /*        <span className="text-primary mr-2">/</span> Inbuilt Tools*/
-}
-{
-  /*      </h2>*/
-}
-
-{
-  /*      <div className="space-y-12">*/
-}
-{
-  /*        {Object.entries(groupedTools).map(([category, tools]) => (*/
-}
-{
-  /*          <div key={category} className="space-y-6">*/
-}
-{
-  /*            <h3 className="text-primary flex items-center gap-4 font-mono text-sm font-semibold tracking-wider uppercase">*/
-}
-{
-  /*              {category}*/
-}
-{
-  /*              <span className="bg-border h-px flex-1" />*/
-}
-{
-  /*            </h3>*/
-}
-
-{
-  /*            <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">*/
-}
-{
-  /*              {tools.map((tool) => (*/
-}
-{
-  /*                <ToolCard key={tool.url} tool={tool} />*/
-}
-{
-  /*              ))}*/
-}
-{
-  /*            </div>*/
-}
-{
-  /*          </div>*/
-}
-{
-  /*        ))}*/
-}
-{
-  /*      </div>*/
-}
-{
-  /*    </div>*/
-}
-{
-  /*  )}*/
-}
-
-{
-  /*  {resourceCategories.length > 0 && (*/
-}
-{
-  /*    <div>*/
-}
-{
-  /*      <h2 className="text-foreground mb-4 font-mono text-lg font-semibold tracking-tight uppercase">*/
-}
-{
-  /*        <span className="text-secondary mr-2">/</span> Resource Stash*/
-}
-{
-  /*      </h2>*/
-}
-{
-  /*      <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">*/
-}
-{
-  /*        {resourceCategories.map((category) => (*/
-}
-{
-  /*          <ResourceCard key={category} category={category} />*/
-}
-{
-  /*        ))}*/
-}
-{
-  /*      </div>*/
-}
-{
-  /*    </div>*/
-}
-{
-  /*  )}*/
-}
-
-{
-  /*  {internalTools.length === 0 && resourceCategories.length === 0 && (*/
-}
-{
-  /*    <div className="text-muted-foreground mt-10 text-center text-sm">*/
-}
-{
-  /*      No tools or resources found.*/
-}
-{
-  /*    </div>*/
-}
-{
-  /*  )}*/
-}
-{
-  /*</div>*/
 }

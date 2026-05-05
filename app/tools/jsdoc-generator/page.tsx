@@ -9,7 +9,8 @@ import {
   parseFunctionSignature,
 } from "@/app/tools/jsdoc-generator/helpers";
 import { ToolLayout } from "@/components/layout/tool-layout";
-import CopyButton from "@/components/ui/copy-button";
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";

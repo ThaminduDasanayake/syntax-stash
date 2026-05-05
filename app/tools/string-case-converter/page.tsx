@@ -4,8 +4,10 @@ import { Type } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { ToolLayout } from "@/components/layout/tool-layout";
-import ClearButton from "@/components/ui/clear-button";
-import CopyButton from "@/components/ui/copy-button";
+import { ClearButton } from "@/components/ui/clear-button";
+
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { TextAreaField } from "@/components/ui/textarea-field";
 
 interface CaseOutputs {
@@ -21,9 +23,7 @@ interface CaseOutputs {
 }
 
 export default function StringCaseConverterPage() {
-  const [input, setInput] = useState(
-    "hello World, this is a TEST!",
-  );
+  const [input, setInput] = useState("hello World, this is a TEST!");
 
   const outputs = useMemo<CaseOutputs>(() => {
     if (!input.trim()) {
@@ -55,9 +55,7 @@ export default function StringCaseConverterPage() {
       .map((word, i) => (i === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)))
       .join("");
 
-    const pascalCase = words
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join("");
+    const pascalCase = words.map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join("");
 
     const snakeCase = words.join("_");
 
@@ -65,13 +63,9 @@ export default function StringCaseConverterPage() {
 
     const constantCase = words.join("_").toUpperCase();
 
-    const trainCase = words
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join("-");
+    const trainCase = words.map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join("-");
 
-    const titleCase = words
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
+    const titleCase = words.map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
 
     const lowercase = input.toLowerCase();
 
@@ -121,12 +115,7 @@ export default function StringCaseConverterPage() {
           onChange={(e) => setInput(e.target.value)}
           placeholder="Paste text to convert (e.g., hello World, this is a TEST!)"
           rows={22}
-          action={
-            <ClearButton
-              onClick={() => setInput("")}
-              disabled={!input}
-            />
-          }
+          action={<ClearButton onClick={() => setInput("")} disabled={!input} />}
         />
 
         {/* Right: Outputs */}
@@ -137,20 +126,13 @@ export default function StringCaseConverterPage() {
                 label={
                   <div className="flex items-center justify-between gap-2">
                     <span>{label}</span>
-                    <span className="text-xs font-normal text-muted-foreground">
-                      {description}
-                    </span>
+                    <span className="text-muted-foreground text-xs font-normal">{description}</span>
                   </div>
                 }
                 value={outputs[key]}
                 readOnly
                 rows={2}
-                action={
-                  <CopyButton
-                    value={outputs[key]}
-                    disabled={!outputs[key]}
-                  />
-                }
+                action={<CopyButton value={outputs[key]} disabled={!outputs[key]} />}
               />
             </div>
           ))}

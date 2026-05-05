@@ -10,7 +10,7 @@ import { QueryTab } from "@/app/tools/json-studio/tabs/query-tab";
 import { TreeTab } from "@/app/tools/json-studio/tabs/tree-tab";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
-import ClearButton from "@/components/ui/clear-button";
+import { ClearButton } from "@/components/ui/clear-button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TextAreaField } from "@/components/ui/textarea-field";
 

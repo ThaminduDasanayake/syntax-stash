@@ -6,7 +6,7 @@ import { useMemo, useState } from "react";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import ClearButton from "@/components/ui/clear-button";
+import { ClearButton } from "@/components/ui/clear-button";
 import { Label } from "@/components/ui/label";
 import { TextAreaField } from "@/components/ui/textarea-field";
 
@@ -26,13 +26,6 @@ function getImageDataUri(base64String: string): string | null {
   if (!/^[A-Za-z0-9+/]*={0,2}$/.test(trimmed)) {
     return null;
   }
-
-  // Try to detect the image format from the base64 data
-  // PNG: iVBORw0KGgo=
-  // JPG: /9j/
-  // GIF: R0lGODlh
-  // WebP: UklGR
-  // SVG: PD94bW or PHN2Z
 
   let imageType = "png"; // default
 

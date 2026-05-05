@@ -6,7 +6,6 @@ import { forwardRef, InputHTMLAttributes } from "react";
 import { InputField } from "@/components/ui/input-field.tsx";
 import { cn } from "@/lib/utils";
 
-// Extend standard Input props so value, onChange, etc. just work automatically
 interface SearchInputProps extends InputHTMLAttributes<HTMLInputElement> {
   containerClassName?: string;
 }

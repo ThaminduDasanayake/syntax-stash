@@ -5,8 +5,10 @@ import { useMemo, useState } from "react";
 
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
-import ClearButton from "@/components/ui/clear-button";
-import CopyButton from "@/components/ui/copy-button";
+import { ClearButton } from "@/components/ui/clear-button";
+
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { InputField } from "@/components/ui/input-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
 import { Label } from "@/components/ui/label";
@@ -59,9 +61,9 @@ export default function BoxShadowBuilderPage() {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label>X Offset</Label>
-              <span className="text-sm font-mono text-muted-foreground">{xOffset}px</span>
+              <span className="text-muted-foreground font-mono text-sm">{xOffset}px</span>
             </div>
-            <div className="flex gap-3 items-center">
+            <div className="flex items-center gap-3">
               <input
                 type="range"
                 min="-50"
@@ -84,9 +86,9 @@ export default function BoxShadowBuilderPage() {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label>Y Offset</Label>
-              <span className="text-sm font-mono text-muted-foreground">{yOffset}px</span>
+              <span className="text-muted-foreground font-mono text-sm">{yOffset}px</span>
             </div>
-            <div className="flex gap-3 items-center">
+            <div className="flex items-center gap-3">
               <input
                 type="range"
                 min="-50"
@@ -109,9 +111,9 @@ export default function BoxShadowBuilderPage() {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label>Blur Radius</Label>
-              <span className="text-sm font-mono text-muted-foreground">{blurRadius}px</span>
+              <span className="text-muted-foreground font-mono text-sm">{blurRadius}px</span>
             </div>
-            <div className="flex gap-3 items-center">
+            <div className="flex items-center gap-3">
               <input
                 type="range"
                 min="0"
@@ -134,9 +136,9 @@ export default function BoxShadowBuilderPage() {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label>Spread Radius</Label>
-              <span className="text-sm font-mono text-muted-foreground">{spreadRadius}px</span>
+              <span className="text-muted-foreground font-mono text-sm">{spreadRadius}px</span>
             </div>
-            <div className="flex gap-3 items-center">
+            <div className="flex items-center gap-3">
               <input
                 type="range"
                 min="-20"
@@ -158,12 +160,12 @@ export default function BoxShadowBuilderPage() {
           {/* Shadow Color */}
           <div className="space-y-2">
             <Label>Shadow Color</Label>
-            <div className="flex gap-3 items-center">
+            <div className="flex items-center gap-3">
               <input
                 type="color"
                 value={shadowColor}
                 onChange={(e) => setShadowColor(e.target.value)}
-                className="h-10 w-16 rounded cursor-pointer border"
+                className="h-10 w-16 cursor-pointer rounded border"
               />
               <InputField
                 value={shadowColor}
@@ -179,11 +181,11 @@ export default function BoxShadowBuilderPage() {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label>Opacity</Label>
-              <span className="text-sm font-mono text-muted-foreground">
+              <span className="text-muted-foreground font-mono text-sm">
                 {(shadowOpacity * 100).toFixed(0)}%
               </span>
             </div>
-            <div className="flex gap-3 items-center">
+            <div className="flex items-center gap-3">
               <input
                 type="range"
                 min="0"
@@ -222,11 +224,7 @@ export default function BoxShadowBuilderPage() {
           </div>
 
           {/* Reset Button */}
-          <Button
-            variant="ghost"
-            onClick={handleReset}
-            className="w-full border"
-          >
+          <Button variant="ghost" onClick={handleReset} className="w-full border">
             Reset to Defaults
           </Button>
         </div>
@@ -234,8 +232,8 @@ export default function BoxShadowBuilderPage() {
         {/* Right: Preview & Code */}
         <div className="space-y-6">
           {/* Preview Card */}
-          <div className="rounded-lg border bg-card p-8">
-            <div className="flex items-center justify-center h-64 bg-gradient-to-br from-slate-100 to-slate-50 rounded-lg">
+          <div className="bg-card rounded-lg border p-8">
+            <div className="flex h-64 items-center justify-center rounded-lg bg-gradient-to-br from-slate-100 to-slate-50">
               <div
                 style={{
                   width: "120px",
@@ -255,19 +253,14 @@ export default function BoxShadowBuilderPage() {
             value={cssCode}
             readOnly
             rows={3}
-            action={
-              <CopyButton
-                value={cssCode}
-                disabled={false}
-              />
-            }
+            action={<CopyButton value={cssCode} disabled={false} />}
           />
 
           {/* Additional Info */}
-          <div className="rounded-lg bg-muted p-4 text-sm text-muted-foreground space-y-2">
+          <div className="bg-muted text-muted-foreground space-y-2 rounded-lg p-4 text-sm">
             <div>
               <span className="font-medium">Format:</span>
-              <p className="font-mono text-xs mt-1">box-shadow: [inset] X Y Blur Spread Color;</p>
+              <p className="mt-1 font-mono text-xs">box-shadow: [inset] X Y Blur Spread Color;</p>
             </div>
           </div>
         </div>

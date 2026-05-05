@@ -213,14 +213,14 @@ export const developmentTools: Tool[] = [
     category: CATEGORIES.development,
     icon: MarkdownLogoIcon,
   },
-  {
-    title: "Markdown Table of Contents",
-    url: "/tools/markdown-toc-generator",
-    description:
-      "Generate a nested Table of Contents from your Markdown document with automatic anchor links.",
-    category: CATEGORIES.development,
-    icon: FileMdIcon,
-  },
+  // {
+  //   title: "Markdown Table of Contents",
+  //   url: "/tools/markdown-toc-generator",
+  //   description:
+  //     "Generate a nested Table of Contents from your Markdown document with automatic anchor links.",
+  //   category: CATEGORIES.development,
+  //   icon: FileMdIcon,
+  // },
   {
     title: "Mermaid Live Editor",
     highlight: "Live Editor",
@@ -324,15 +324,15 @@ export const imageTools: Tool[] = [
     category: CATEGORIES.imagesAssets,
     icon: ImageIcon,
   },
-  {
-    title: "Placeholder Generator",
-    highlight: "Generator",
-    url: "/tools/placeholder-generator",
-    description:
-      "Generate custom placeholder images with the Canvas API, entirely in your browser.",
-    category: CATEGORIES.imagesAssets,
-    icon: PlaceholderIcon,
-  },
+  // {
+  //   title: "Placeholder Generator",
+  //   highlight: "Generator",
+  //   url: "/tools/placeholder-generator",
+  //   description:
+  //     "Generate custom placeholder images with the Canvas API, entirely in your browser.",
+  //   category: CATEGORIES.imagesAssets,
+  //   icon: PlaceholderIcon,
+  // },
   {
     title: "QR Generator",
     url: "/tools/qr-generator",
@@ -373,20 +373,20 @@ export const networkTools: Tool[] = [
     category: CATEGORIES.network,
     icon: GlobeHemisphereEastIcon,
   },
-  {
-    title: "MAC Address Vendor Lookup",
-    url: "/tools/mac-vendor-lookup",
-    description: "Look up MAC address vendors by OUI with support for multiple formats.",
-    category: CATEGORIES.network,
-    icon: RssIcon,
-  },
-  {
-    title: "Open Graph Previewer",
-    url: "/tools/og-preview",
-    description: "Preview how your link card will appear when shared on Twitter/X and LinkedIn.",
-    category: CATEGORIES.network,
-    icon: GlobeIcon,
-  },
+  // {
+  //   title: "MAC Address Vendor Lookup",
+  //   url: "/tools/mac-vendor-lookup",
+  //   description: "Look up MAC address vendors by OUI with support for multiple formats.",
+  //   category: CATEGORIES.network,
+  //   icon: RssIcon,
+  // },
+  // {
+  //   title: "Open Graph Previewer",
+  //   url: "/tools/og-preview",
+  //   description: "Preview how your link card will appear when shared on Twitter/X and LinkedIn.",
+  //   category: CATEGORIES.network,
+  //   icon: GlobeIcon,
+  // },
   {
     title: "Subnet / CIDR Calculator",
     url: "/tools/subnet-calculator",
@@ -407,6 +407,7 @@ export const networkTools: Tool[] = [
 export const schemaTools: Tool[] = [
   {
     title: "Drizzle Schema Studio",
+    highlight: "Studio",
     url: "/tools/drizzle-schema-studio",
     description:
       "Convert SQL CREATE TABLE statements or Prisma schema models into Drizzle ORM schemas.",
@@ -415,6 +416,7 @@ export const schemaTools: Tool[] = [
   },
   {
     title: "JSON Schema Studio",
+    highlight: "Studio",
     url: "/tools/json-schema-studio",
     description:
       "Convert JSON payloads into strict TypeScript interfaces, Zod schemas, Pydantic models, and generic JSON Schemas.",
@@ -423,15 +425,18 @@ export const schemaTools: Tool[] = [
   },
   {
     title: "Mongo Aggregation Builder",
+    highlight: "Builder",
     url: "/tools/mongo-pipeline-builder",
     description: "Visually scaffold complex MongoDB aggregation pipelines with live JSON output.",
     category: CATEGORIES.schemas,
     icon: DatabaseIcon,
   },
   {
-    title: "SQL Formatter",
+    title: "SQL Query Formatter",
+    highlight: "Formatter",
     url: "/tools/sql-formatter",
-    description: "Prettify raw SQL queries with proper indentation and capitalized keywords.",
+    description:
+      "Prettify and format raw SQL queries with proper indentation and capitalized keywords.",
     category: CATEGORIES.schemas,
     icon: FileSqlIcon,
   },

@@ -7,7 +7,8 @@ import { useEffect, useState } from "react";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import ClearButton from "@/components/ui/clear-button";
+import { ClearButton } from "@/components/ui/clear-button";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { TextAreaField } from "@/components/ui/textarea-field";

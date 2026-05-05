@@ -4,8 +4,10 @@ import { Database } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { ToolLayout } from "@/components/layout/tool-layout";
-import ClearButton from "@/components/ui/clear-button";
-import CopyButton from "@/components/ui/copy-button";
+import { ClearButton } from "@/components/ui/clear-button";
+
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { SelectField } from "@/components/ui/select-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
 
@@ -56,7 +58,9 @@ CREATE TABLE posts (
     const lines: string[] = [];
     const tableFunction = dialect === "postgres" ? "pgTable" : "mysqlTable";
 
-    lines.push(`import { ${tableFunction}, serial, varchar, text, timestamp, boolean, int, bigint } from 'drizzle-orm/${dialect === "postgres" ? "pg-core" : "mysql-core"}';\n`);
+    lines.push(
+      `import { ${tableFunction}, serial, varchar, text, timestamp, boolean, int, bigint } from 'drizzle-orm/${dialect === "postgres" ? "pg-core" : "mysql-core"}';\n`,
+    );
 
     tables.forEach((table, idx) => {
       lines.push(`export const ${table.name} = ${tableFunction}('${table.name}', {`);
@@ -86,7 +90,8 @@ CREATE TABLE posts (
 
   function parseSQLTables(sql: string): Table[] {
     const tables: Table[] = [];
-    const createTableRegex = /CREATE\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?["`]?(\w+)["`]?\s*\(([\s\S]*?)\);/gi;
+    const createTableRegex =
+      /CREATE\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?["`]?(\w+)["`]?\s*\(([\s\S]*?)\);/gi;
 
     let match;
     while ((match = createTableRegex.exec(sql)) !== null) {
@@ -220,12 +225,7 @@ CREATE TABLE posts (
             onChange={(e) => setInput(e.target.value)}
             placeholder="Paste your SQL CREATE TABLE statements here..."
             rows={20}
-            action={
-              <ClearButton
-                onClick={() => setInput("")}
-                disabled={!input}
-              />
-            }
+            action={<ClearButton onClick={() => setInput("")} disabled={!input} />}
           />
         </div>
 
@@ -236,12 +236,7 @@ CREATE TABLE posts (
           readOnly
           rows={24}
           placeholder="Your Drizzle code will appear here..."
-          action={
-            <CopyButton
-              value={drizzleCode}
-              disabled={!drizzleCode}
-            />
-          }
+          action={<CopyButton value={drizzleCode} disabled={!drizzleCode} />}
         />
       </div>
 
@@ -249,41 +244,37 @@ CREATE TABLE posts (
       <div className="mt-8 border-t pt-8">
         <h3 className="mb-4 text-sm font-semibold">Supported Features</h3>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          <div className="rounded-lg bg-muted/50 p-3">
+          <div className="bg-muted/50 rounded-lg p-3">
             <p className="text-xs font-medium">Data Types</p>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               SERIAL, INT, VARCHAR, TEXT, TIMESTAMP, BOOLEAN, UUID, JSON, and more
             </p>
           </div>
-          <div className="rounded-lg bg-muted/50 p-3">
+          <div className="bg-muted/50 rounded-lg p-3">
             <p className="text-xs font-medium">Constraints</p>
-            <p className="text-xs text-muted-foreground">
-              PRIMARY KEY, NOT NULL, UNIQUE, DEFAULT
-            </p>
+            <p className="text-muted-foreground text-xs">PRIMARY KEY, NOT NULL, UNIQUE, DEFAULT</p>
           </div>
-          <div className="rounded-lg bg-muted/50 p-3">
+          <div className="bg-muted/50 rounded-lg p-3">
             <p className="text-xs font-medium">Dialects</p>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               PostgreSQL (pgTable) and MySQL (mysqlTable)
             </p>
           </div>
-          <div className="rounded-lg bg-muted/50 p-3">
+          <div className="bg-muted/50 rounded-lg p-3">
             <p className="text-xs font-medium">Multiple Tables</p>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               Convert multiple CREATE TABLE statements at once
             </p>
           </div>
-          <div className="rounded-lg bg-muted/50 p-3">
+          <div className="bg-muted/50 rounded-lg p-3">
             <p className="text-xs font-medium">Type Mapping</p>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               Automatic conversion of SQL types to Drizzle equivalents
             </p>
           </div>
-          <div className="rounded-lg bg-muted/50 p-3">
+          <div className="bg-muted/50 rounded-lg p-3">
             <p className="text-xs font-medium">Comments & Format</p>
-            <p className="text-xs text-muted-foreground">
-              Clean, production-ready TypeScript code
-            </p>
+            <p className="text-muted-foreground text-xs">Clean, production-ready TypeScript code</p>
           </div>
         </div>
       </div>

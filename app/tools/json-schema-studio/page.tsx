@@ -1,6 +1,5 @@
 "use client";
 
-import { Braces } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import {
@@ -11,16 +10,19 @@ import {
   generateTypeScript,
 } from "@/app/tools/json-schema-studio/helpers";
 import { ErrorAlert } from "@/components/error-alert";
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { ToolLayout } from "@/components/layout/layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card.tsx";
-import ClearButton from "@/components/ui/clear-button";
-import CopyButton from "@/components/ui/copy-button";
+import { ClearButton } from "@/components/ui/clear-button";
+
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { InputField } from "@/components/ui/input-field.tsx";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TextAreaField } from "@/components/ui/textarea-field";
+import { internalTools } from "@/lib/tools-data";
 
 type TabType = "ts" | "zod" | "pydantic" | "jsonSchema";
 
@@ -102,13 +104,11 @@ export default function JsonSchemaStudioPage() {
   }
 
   const currentOutput = (result.ok ? result[activeTab] : "") || "";
+
+  const tool = internalTools.find((t) => t.url === "/tools/json-schema-studio");
+
   return (
-    <ToolLayout
-      icon={Braces}
-      title="JSON Schema"
-      highlight="Studio"
-      description="Convert JSON payloads into strict TypeScript interfaces, Zod schemas, Pydantic models, and generic JSON Schemas."
-    >
+    <ToolLayout tool={tool}>
       <div className="grid grid-cols-1 gap-8 xl:grid-cols-2">
         {/* Input & Settings */}
         <div className="flex flex-col space-y-6">

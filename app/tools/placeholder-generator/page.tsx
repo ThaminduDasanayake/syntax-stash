@@ -5,7 +5,8 @@ import { useEffect, useRef, useState } from "react";
 
 import { ToolLayout } from "@/components/layout/layout";
 import { Button } from "@/components/ui/button";
-import CopyButton from "@/components/ui/copy-button";
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { Input } from "@/components/ui/input";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";

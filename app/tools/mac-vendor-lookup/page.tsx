@@ -4,8 +4,10 @@ import { Wifi } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { ToolLayout } from "@/components/layout/tool-layout";
-import ClearButton from "@/components/ui/clear-button";
-import CopyButton from "@/components/ui/copy-button";
+import { ClearButton } from "@/components/ui/clear-button";
+
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { InputField } from "@/components/ui/input-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
 import { ErrorAlert } from "@/components/error-alert";
@@ -91,13 +93,18 @@ export default function MACVendorLookupPage() {
         normalized: "",
         oui: "",
         vendor: null,
-        error: "Invalid MAC address format. Use XX:XX:XX:XX:XX:XX, XX-XX-XX-XX-XX-XX, or XXXXXXXXXXXX",
+        error:
+          "Invalid MAC address format. Use XX:XX:XX:XX:XX:XX, XX-XX-XX-XX-XX-XX, or XXXXXXXXXXXX",
       };
     }
 
     // Normalize to colon format
     const cleaned = trimmed.replace(/[-]/g, ":");
-    const normalized = cleaned.match(/[0-9A-Fa-f]{2}/g)?.join(":").toUpperCase() || "";
+    const normalized =
+      cleaned
+        .match(/[0-9A-Fa-f]{2}/g)
+        ?.join(":")
+        .toUpperCase() || "";
 
     if (normalized.length !== 17) {
       return {
@@ -112,9 +119,7 @@ export default function MACVendorLookupPage() {
     const oui = normalized.substring(0, 8).toUpperCase();
 
     // Look up vendor
-    const ouiEntry = OUI_DICTIONARY.find(
-      (entry) => entry.oui.toUpperCase() === oui,
-    );
+    const ouiEntry = OUI_DICTIONARY.find((entry) => entry.oui.toUpperCase() === oui);
 
     return {
       normalized,
@@ -139,12 +144,7 @@ export default function MACVendorLookupPage() {
           onChange={(e) => setInput(e.target.value)}
           placeholder="Enter MAC address (e.g., 00:1A:92:00:00:01 or 00-1A-92-00-00-01)"
           rows={6}
-          action={
-            <ClearButton
-              onClick={() => setInput("")}
-              disabled={!input}
-            />
-          }
+          action={<ClearButton onClick={() => setInput("")} disabled={!input} />}
         />
 
         {/* Right: Output */}
@@ -153,11 +153,7 @@ export default function MACVendorLookupPage() {
 
           {result.normalized && !result.error && (
             <>
-              <InputField
-                label="Normalized MAC Address"
-                value={result.normalized}
-                readOnly
-              />
+              <InputField label="Normalized MAC Address" value={result.normalized} readOnly />
 
               <InputField
                 label="OUI (Organizationally Unique Identifier)"
@@ -183,8 +179,8 @@ export default function MACVendorLookupPage() {
           )}
 
           {!input.trim() && !result.error && (
-            <div className="rounded-lg bg-muted p-4">
-              <p className="text-sm text-muted-foreground">
+            <div className="bg-muted rounded-lg p-4">
+              <p className="text-muted-foreground text-sm">
                 Enter a MAC address to see the normalized format, OUI, and vendor name.
               </p>
             </div>
@@ -197,12 +193,9 @@ export default function MACVendorLookupPage() {
         <h3 className="mb-4 text-sm font-semibold">OUI Dictionary Reference</h3>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {OUI_DICTIONARY.map((entry) => (
-            <div
-              key={entry.oui}
-              className="rounded-lg border bg-card p-3 text-sm"
-            >
+            <div key={entry.oui} className="bg-card rounded-lg border p-3 text-sm">
               <div className="font-mono font-semibold">{entry.oui}</div>
-              <div className="text-xs text-muted-foreground">{entry.vendor}</div>
+              <div className="text-muted-foreground text-xs">{entry.vendor}</div>
             </div>
           ))}
         </div>

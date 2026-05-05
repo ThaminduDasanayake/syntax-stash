@@ -5,8 +5,10 @@ import { useMemo, useState } from "react";
 
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
-import ClearButton from "@/components/ui/clear-button";
-import CopyButton from "@/components/ui/copy-button";
+import { ClearButton } from "@/components/ui/clear-button";
+
+import { CopyButton } from "@/components/ui/copy-button";
+
 import { InputField } from "@/components/ui/input-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
 import { ErrorAlert } from "@/components/error-alert";
@@ -105,12 +107,7 @@ export default function URLParserPage() {
           onChange={(e) => setInput(e.target.value)}
           placeholder="Paste a complete URL here..."
           rows={6}
-          action={
-            <ClearButton
-              onClick={() => setInput("")}
-              disabled={!input}
-            />
-          }
+          action={<ClearButton onClick={() => setInput("")} disabled={!input} />}
         />
 
         {/* Right: Output and Analysis */}
@@ -119,27 +116,10 @@ export default function URLParserPage() {
 
           {parsed && (
             <>
-              <InputField
-                label="Protocol"
-                value={parsed.protocol}
-                readOnly
-              />
-              <InputField
-                label="Host"
-                value={parsed.host}
-                readOnly
-              />
-              <InputField
-                label="Path"
-                value={parsed.path}
-                readOnly
-              />
-              <InputField
-                label="Port"
-                value={parsed.port}
-                readOnly
-                placeholder="(default)"
-              />
+              <InputField label="Protocol" value={parsed.protocol} readOnly />
+              <InputField label="Host" value={parsed.host} readOnly />
+              <InputField label="Path" value={parsed.path} readOnly />
+              <InputField label="Port" value={parsed.port} readOnly placeholder="(default)" />
             </>
           )}
         </div>
@@ -154,7 +134,7 @@ export default function URLParserPage() {
 
           <div className="space-y-3">
             {Object.entries(queryParams).length === 0 ? (
-              <p className="text-sm text-muted-foreground">No query parameters</p>
+              <p className="text-muted-foreground text-sm">No query parameters</p>
             ) : (
               Object.entries(queryParams).map(([key, value]) => (
                 <div key={key} className="flex gap-2">
@@ -185,12 +165,7 @@ export default function URLParserPage() {
             )}
           </div>
 
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleAddQueryParam}
-            className="mt-4"
-          >
+          <Button variant="outline" size="sm" onClick={handleAddQueryParam} className="mt-4">
             + Add Parameter
           </Button>
         </div>
@@ -204,12 +179,7 @@ export default function URLParserPage() {
             value={rebuiltURL}
             readOnly
             rows={3}
-            action={
-              <CopyButton
-                value={rebuiltURL}
-                disabled={!rebuiltURL}
-              />
-            }
+            action={<CopyButton value={rebuiltURL} disabled={!rebuiltURL} />}
           />
         </div>
       )}
