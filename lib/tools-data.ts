@@ -363,7 +363,7 @@ export const imageTools: Tool[] = [
 export const networkTools: Tool[] = [
   {
     title: "HTTP Security Header Analyzer",
-    url: "/tools/header-analyzer",
+    url: "/tools/http-security-header-analyzer",
     description:
       "Grade your HTTP response headers against OWASP best practices and generate a Next.js config.",
     category: CATEGORIES.network,

@@ -104,7 +104,8 @@ ${renderedHtml}
               value={markdown}
               onChange={(e) => setMarkdown(e.target.value)}
               placeholder="Start writing markdown…"
-              className="h-full resize-none text-sm leading-relaxed"
+              containerClassName="flex flex-col"
+              textClassName="flex-1 resize-none"
               spellCheck={false}
               action={<ClearButton onClick={() => setMarkdown("")} disabled={!markdown} />}
             />
@@ -122,7 +123,8 @@ ${renderedHtml}
               readOnly
               value={renderedHtml}
               placeholder="Generated HTML will appear here…"
-              className="h-[70vh] resize-none text-sm leading-relaxed"
+              containerClassName="min-h-[100vh] h-full flex flex-col"
+              textClassName="flex-1 resize-none text-sm"
               spellCheck={false}
               action={<CopyButton value={renderedHtml} disabled={!renderedHtml} />}
             />
@@ -133,7 +135,7 @@ ${renderedHtml}
                 <CopyButton value={markdown} disabled={!markdown} />
               </div>
 
-              <div className="bg-card min-h-[70vh] rounded-lg border px-3 py-2 text-sm">
+              <div className="bg-card h-full min-h-[70vh] rounded-lg border px-3 py-2 text-sm">
                 <div className="prose prose-sm dark:prose-invert max-w-none">
                   {renderedHtml ? (
                     <div dangerouslySetInnerHTML={{ __html: renderedHtml }} />

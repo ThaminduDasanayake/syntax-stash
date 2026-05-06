@@ -34,15 +34,15 @@ export default function AppHeader({ onSearchOpenAction }: HeaderProps) {
   const parts = pathname.split("/").filter(Boolean);
 
   return (
-    <header className="border-border bg-background/80 sticky top-0 z-30 flex h-12 shrink-0 items-center justify-between gap-2 border-b px-4 backdrop-blur-sm">
+    <header className="border-border bg-background/80 sticky top-0 z-30 grid h-12 shrink-0 grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-4 border-b px-4 backdrop-blur-sm">
       <div className="flex min-w-0 items-center gap-2">
-        <SidebarTrigger className="text-muted-foreground hover:bg-muted -ml-2" />
+        <SidebarTrigger className="text-muted-foreground hover:bg-muted -ml-2 shrink-0" />
 
         <Breadcrumb className="hidden min-w-0 sm:flex">
-          <BreadcrumbList className="flex-nowrap">
-            <BreadcrumbItem>
+          <BreadcrumbList className="min-w-0 flex-nowrap">
+            <BreadcrumbItem className="shrink-0">
               {parts.length === 0 ? (
-                <BreadcrumbPage className="text-foreground font-medium">Home</BreadcrumbPage>
+                <BreadcrumbPage className="text-foreground">Home</BreadcrumbPage>
               ) : (
                 <BreadcrumbLink
                   render={
@@ -64,11 +64,11 @@ export default function AppHeader({ onSearchOpenAction }: HeaderProps) {
                 idx === 0 ? (sectionLabels[part] ?? segmentToLabel(part)) : segmentToLabel(part);
 
               return (
-                <span key={href} className="flex items-center gap-1.5">
-                  <BreadcrumbSeparator />
-                  <BreadcrumbItem>
+                <span key={href} className="flex min-w-0 shrink-0 items-center gap-1.5 last:shrink">
+                  <BreadcrumbSeparator className="shrink-0" />
+                  <BreadcrumbItem className="min-w-0">
                     {isLast ? (
-                      <BreadcrumbPage className="text-foreground max-w-35 truncate font-medium">
+                      <BreadcrumbPage className="text-foreground block truncate">
                         {label}
                       </BreadcrumbPage>
                     ) : (
@@ -90,11 +90,10 @@ export default function AppHeader({ onSearchOpenAction }: HeaderProps) {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-
       {/* Center: spotlight search */}
       <button
         onClick={onSearchOpenAction}
-        className="border-border bg-muted/30 hover:bg-muted/60 text-muted-foreground flex h-8 w-45 items-center gap-2 rounded-full border px-3 text-xs font-normal transition-colors sm:w-60 md:w-70"
+        className="border-border bg-muted/30 hover:bg-muted/60 text-muted-foreground flex h-8 w-45 shrink-0 items-center gap-2 rounded-full border px-3 text-xs font-normal transition-colors sm:w-60 md:w-70"
         aria-label="Search"
       >
         <Search size={13} className="shrink-0" />
@@ -103,7 +102,6 @@ export default function AppHeader({ onSearchOpenAction }: HeaderProps) {
           <span className="text-xs">⌘</span>K
         </kbd>
       </button>
-
       <ThemeToggle />
     </header>
   );

@@ -3,7 +3,7 @@
 import { Check, Copy, ShieldCheck } from "lucide-react";
 import { useMemo, useState } from "react";
 
-import { Grade, SECURITY_HEADERS } from "@/app/tools/header-analyzer/rules";
+import { Grade, SECURITY_HEADERS } from "@/app/tools/http-security-header-analyzer/rules";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
