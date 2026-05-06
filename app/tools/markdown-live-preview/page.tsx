@@ -1,24 +1,24 @@
 "use client";
 
-import { DownloadIcon, EyeIcon, FileHtmlIcon } from "@phosphor-icons/react";
 import { marked } from "marked";
 import { useMemo, useState } from "react";
 
 import { DEFAULT_MARKDOWN } from "@/app/tools/markdown-live-preview/data";
+import { Header } from "@/app/tools/markdown-live-preview/header";
 import { ToolLayout } from "@/components/layout/layout";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import RichMarkdownEditor from "@/components/rich-markdown-editor";
 import { ClearButton } from "@/components/ui/clear-button";
-
 import { CopyButton } from "@/components/ui/copy-button";
-
 import { Label } from "@/components/ui/label";
 import { TextAreaField } from "@/components/ui/textarea-field";
 import { internalTools } from "@/lib/tools-data";
 
+type EditorMode = "raw" | "rich";
+
 export default function MarkdownLivePreviewPage() {
   const [markdown, setMarkdown] = useState(DEFAULT_MARKDOWN);
   const [showHtml, setShowHtml] = useState(false);
+  const [editorMode, setEditorMode] = useState<EditorMode>("raw");
 
   const renderedHtml = useMemo(() => {
     if (!markdown.trim()) return "";
@@ -83,70 +83,57 @@ ${renderedHtml}
     <ToolLayout tool={tool}>
       <div className="space-y-3">
         {/* Toolbar */}
-        <div className="flex flex-wrap items-center gap-2">
-          <Card className="text-xs">
-            <CardContent className="space-x-4">
-              <span>{stats.words} words</span>
-              <span>{stats.chars} chars</span>
-              <span>{stats.lines} lines</span>
-            </CardContent>
-          </Card>
-          <div className="ml-auto flex items-center gap-2">
-            <Button variant="outline" onClick={handleDownloadMd} disabled={!markdown}>
-              <DownloadIcon weight="duotone" />
-              .md
-            </Button>
-            <Button variant="outline" onClick={handleDownloadHtml} disabled={!renderedHtml}>
-              <DownloadIcon weight="duotone" />
-              .html
-            </Button>
-            <Button variant="outline" className="w-36" onClick={() => setShowHtml((v) => !v)}>
-              {showHtml ? (
-                <>
-                  <EyeIcon weight="duotone" />
-                  Show preview
-                </>
-              ) : (
-                <>
-                  <FileHtmlIcon weight="duotone" />
-                  Show HTML
-                </>
-              )}
-            </Button>
-          </div>
-        </div>
+        <Header
+          stats={stats}
+          editorMode={editorMode}
+          setEditorMode={setEditorMode}
+          showHtml={showHtml}
+          setShowHtml={setShowHtml}
+          markdown={markdown}
+          renderedHtml={renderedHtml}
+          handleDownloadMd={handleDownloadMd}
+          handleDownloadHtml={handleDownloadHtml}
+        />
 
         {/* Editor + Preview */}
-        <div className="grid h-[70vh] grid-cols-1 gap-4 lg:grid-cols-2">
+        <div className="grid h-full grid-cols-1 gap-4 lg:grid-cols-2">
           {/* Editor */}
-          <TextAreaField
-            label="Editor"
-            value={markdown}
-            onChange={(e) => setMarkdown(e.target.value)}
-            placeholder="Start writing markdown…"
-            className="h-full resize-none text-sm leading-relaxed"
-            spellCheck={false}
-            action={<ClearButton onClick={() => setMarkdown("")} disabled={!markdown} />}
-          />
+          {editorMode === "raw" ? (
+            <TextAreaField
+              label="Editor"
+              value={markdown}
+              onChange={(e) => setMarkdown(e.target.value)}
+              placeholder="Start writing markdown…"
+              className="h-full resize-none text-sm leading-relaxed"
+              spellCheck={false}
+              action={<ClearButton onClick={() => setMarkdown("")} disabled={!markdown} />}
+            />
+          ) : (
+            <div className="flex flex-col gap-3">
+              <Label className="pt-1.5 text-sm font-semibold">Editor</Label>
+              <RichMarkdownEditor initialMarkdown={markdown} onChange={setMarkdown} />
+            </div>
+          )}
 
+          {/* Preview / HTML */}
           {showHtml ? (
             <TextAreaField
               label="HTML Output"
               readOnly
               value={renderedHtml}
               placeholder="Generated HTML will appear here…"
-              className="h-full resize-none text-sm leading-relaxed"
+              className="h-[70vh] resize-none text-sm leading-relaxed"
               spellCheck={false}
               action={<CopyButton value={renderedHtml} disabled={!renderedHtml} />}
             />
           ) : (
             <div className="flex h-full flex-col gap-1.5">
               <div className="flex items-center justify-between">
-                <Label className="text-sm font-semibold">Preview</Label>
+                <Label>Preview</Label>
                 <CopyButton value={markdown} disabled={!markdown} />
               </div>
 
-              <div className="bg-card h-full rounded-lg border px-3 py-2 text-sm">
+              <div className="bg-card min-h-[70vh] rounded-lg border px-3 py-2 text-sm">
                 <div className="prose prose-sm dark:prose-invert max-w-none">
                   {renderedHtml ? (
                     <div dangerouslySetInnerHTML={{ __html: renderedHtml }} />

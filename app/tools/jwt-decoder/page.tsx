@@ -5,12 +5,11 @@ import { useMemo, useState } from "react";
 
 import { JwtDecoded } from "@/app/tools/jwt-decoder/types";
 import { ErrorAlert } from "@/components/error-alert";
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { ToolLayout } from "@/components/layout/layout";
 import { ClearButton } from "@/components/ui/clear-button";
-
 import { CopyButton } from "@/components/ui/copy-button";
-
 import { TextAreaField } from "@/components/ui/textarea-field";
+import { internalTools } from "@/lib/tools-data";
 
 function base64UrlDecode(input: string): string {
   let b64 = input.replace(/-/g, "+").replace(/_/g, "/");
@@ -49,15 +48,12 @@ export default function JwtDecoderPage() {
     }
   }, [token]);
 
+  const tool = internalTools.find((t) => t.url === "/tools/jwt-decoder");
+
   return (
-    <ToolLayout
-      icon={KeyRound}
-      title="JWT"
-      highlight="Decoder"
-      description="Decode and inspect JSON Web Tokens locally. Nothing leaves your browser."
-    >
+    <ToolLayout tool={tool}>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        <div className="space-y-4">
+        <div className="flex flex-col space-y-4">
           <TextAreaField
             label="Encoded Token"
             value={token}
@@ -77,7 +73,7 @@ export default function JwtDecoderPage() {
         </div>
 
         {/* Right — decoded output */}
-        <div className="space-y-3">
+        <div className="flex flex-col space-y-3">
           <TextAreaField
             label="Header"
             readOnly

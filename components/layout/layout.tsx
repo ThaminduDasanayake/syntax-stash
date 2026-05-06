@@ -13,7 +13,7 @@ export function ToolLayout({ children, tool }: { children: ReactNode; tool: Tool
   const { icon: Icon, title, highlight, description } = tool;
 
   return (
-    <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col px-4 py-8 md:py-12">
+    <div className="relative z-10 mx-auto flex min-h-full max-w-7xl flex-col px-4 py-8 md:py-12 md:pb-24">
       {/* Back link */}
       <Link
         href={"/"}

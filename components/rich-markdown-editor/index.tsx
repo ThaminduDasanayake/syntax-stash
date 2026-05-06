@@ -5,7 +5,7 @@ import { EditorContent, EditorRoot, handleCommandNavigation, Placeholder } from 
 import { useEffect, useRef } from "react";
 import { useDebounceCallback } from "usehooks-ts";
 
-import { htmlToMarkdown, markdownToHtml } from "@/app/tools/document-extractor/helpers";
+import { htmlToMarkdown, markdownToHtml } from "@/components/rich-markdown-editor/helpers";
 
 import { defaultExtensions } from "./extensions";
 import { slashCommand, SlashCommandMenu } from "./slash-command";
@@ -24,12 +24,12 @@ const extensions = [
   }),
 ];
 
-interface EditorProps {
+interface RichMarkdownEditorProps {
   initialMarkdown?: string;
   onChange?: (markdown: string) => void;
 }
 
-export default function Editor({ initialMarkdown, onChange }: EditorProps) {
+export default function RichMarkdownEditor({ initialMarkdown, onChange }: RichMarkdownEditorProps) {
   const editorRef = useRef<TiptapEditor | null>(null);
 
   useEffect(() => {
@@ -44,12 +44,12 @@ export default function Editor({ initialMarkdown, onChange }: EditorProps) {
   const debouncedUpdates = useDebounceCallback((editor: TiptapEditor) => {
     onChange?.(htmlToMarkdown(editor.getHTML()));
   }, 500);
+
   return (
-    <div className="border-input bg-background relative min-h-100 w-full rounded-md border">
+    <div className="border-input bg-background relative min-h-100 w-full rounded-lg border">
       <EditorRoot>
         <EditorContent
           immediatelyRender={false}
-          key={initialMarkdown || "empty-editor"}
           extensions={extensions}
           className="w-full"
           onCreate={({ editor }) => {
@@ -64,7 +64,7 @@ export default function Editor({ initialMarkdown, onChange }: EditorProps) {
             },
             attributes: {
               class:
-                "prose prose-sm sm:prose-base dark:prose-invert prose-headings:font-semibold focus:outline-none max-w-full p-8 min-h-[400px]",
+                "prose prose-sm sm:prose-base dark:prose-invert prose-headings:font-semibold focus:outline-none max-w-full px-3 py-2 min-h-[400px]",
             },
           }}
           onUpdate={({ editor }) => debouncedUpdates(editor)}

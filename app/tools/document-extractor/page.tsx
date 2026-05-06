@@ -3,7 +3,7 @@
 import { Download, FileCode2, FileText, Lightbulb, PenTool } from "lucide-react";
 import { useState } from "react";
 
-import Editor from "@/app/tools/document-extractor/editor.tsx";
+import RichMarkdownEditor from "@/components/rich-markdown-editor";
 import FileDropzone from "@/components/file-dropzone";
 import { ToolLayout } from "@/components/layout/tool-layout";
 import { Button } from "@/components/ui/button";
@@ -55,6 +55,7 @@ export default function DocumentExtractorPage() {
       } else {
         const extracted = data.text ?? "";
         setParsedMarkdown(extracted);
+        setMarkdown(extracted);
         setPlainText(extracted);
       }
     } catch {
@@ -175,7 +176,7 @@ export default function DocumentExtractorPage() {
               </div>
 
               <TabsContent value="rich">
-                <Editor initialMarkdown={parsedMarkdown} onChange={setMarkdown} />
+                <RichMarkdownEditor initialMarkdown={parsedMarkdown} onChange={setMarkdown} />
               </TabsContent>
 
               <TabsContent value="raw">

@@ -20,6 +20,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TextAreaField } from "@/components/ui/textarea-field";
 import { internalTools } from "@/lib/tools-data";
+import { cn } from "@/lib/utils";
 
 export default function PromptStudioPage() {
   const [rawPrompt, setRawPrompt] = useState(PLACEHOLDER);
@@ -91,13 +92,12 @@ export default function PromptStudioPage() {
     <ToolLayout tool={tool}>
       {/* Quick Starters */}
       <div className="mb-8 space-y-3">
-        <Label className="text-xs font-semibold tracking-wider uppercase">Quick Starters</Label>
+        <Label>Quick Starters</Label>
         <div className="flex flex-wrap gap-2">
           {promptTemplates?.map((t) => (
             <Button
               key={t.id}
               variant="secondary"
-              size="sm"
               onClick={() => handleTemplateClick(t.starter)}
               className="px-4 font-semibold"
             >
@@ -109,17 +109,17 @@ export default function PromptStudioPage() {
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Draft & Variables */}
-        <div className="space-y-4">
+        <div className="flex h-fit flex-col space-y-4">
           <TextAreaField
             label="Draft Prompt"
             value={rawPrompt}
             onChange={(e) => {
               setRawPrompt(e.target.value);
-              setEnhancedOutput(""); // Reset enhancement if draft changes
+              setEnhancedOutput("");
             }}
             rows={16}
             placeholder={`Write your prompt here.\nUse {{variable}} syntax for dynamic values.`}
-            className="font-mono text-sm"
+            className="text-sm"
             action={
               <ClearButton
                 onClick={handleClear}
@@ -152,79 +152,84 @@ export default function PromptStudioPage() {
         </div>
 
         {/* Output Tabs */}
-        <div>
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col gap-4">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="injected" className="tab-trigger">
-                Injected
-              </TabsTrigger>
-              <TabsTrigger value="minified" className="tab-trigger">
-                Minified
-              </TabsTrigger>
-              <TabsTrigger value="ai" className="tab-trigger">
-                <SparkleIcon weight="duotone" />
-                AI Enhanced
-              </TabsTrigger>
-            </TabsList>
+        <Tabs
+          value={activeTab}
+          onValueChange={setActiveTab}
+          className="flex h-full min-h-0 flex-col"
+        >
+          <TabsList className="grid w-full shrink-0 grid-cols-3">
+            <TabsTrigger value="injected" className="tab-trigger">
+              Injected
+            </TabsTrigger>
+            <TabsTrigger value="minified" className="tab-trigger">
+              Minified
+            </TabsTrigger>
+            <TabsTrigger value="ai" className="tab-trigger">
+              <SparkleIcon weight="duotone" className="mr-2" />
+              AI Enhanced
+            </TabsTrigger>
+          </TabsList>
 
-            {/* Injected */}
-            <TabsContent value="injected" className="mt-0 space-y-3">
-              <TextAreaField
-                label={<TokenBadge text={injectedOutput} />}
-                value={injectedOutput}
-                readOnly
-                rows={20}
-                action={<CopyButton value={injectedOutput} disabled={!injectedOutput} />}
-              />
-            </TabsContent>
+          {/* Injected */}
+          <TabsContent value="injected">
+            <TextAreaField
+              label={<TokenBadge text={injectedOutput} />}
+              value={injectedOutput}
+              readOnly
+              action={<CopyButton value={injectedOutput} disabled={!injectedOutput} />}
+              containerClassName="flex flex-col"
+              textClassName="flex-1 resize-none"
+            />
+          </TabsContent>
 
-            {/* Minified */}
-            <TabsContent value="minified" className="mt-0 space-y-3">
-              <TextAreaField
-                label={<TokenBadge text={minifiedOutput} />}
-                value={minifiedOutput}
-                readOnly
-                rows={20}
-                action={<CopyButton value={minifiedOutput} disabled={!minifiedOutput} />}
-              />
-            </TabsContent>
+          {/* Minified */}
+          <TabsContent value="minified">
+            <TextAreaField
+              label={<TokenBadge text={minifiedOutput} />}
+              value={minifiedOutput}
+              readOnly
+              action={<CopyButton value={minifiedOutput} disabled={!minifiedOutput} />}
+              containerClassName="flex flex-col"
+              textClassName="flex-1 resize-none"
+            />
+          </TabsContent>
 
-            {/* AI Enhanced */}
-            <TabsContent value="ai" className="mt-0 space-y-3">
-              <TextAreaField
-                label={
-                  <TokenBadge
-                    text={enhancedOutput || injectedOutput}
-                    label={enhancedOutput ? "Enhanced Tokens" : "Input Tokens"}
-                  />
-                }
-                value={enhancedOutput}
-                readOnly
-                rows={20}
-                className={isEnhancing ? "bg-muted/20 animate-pulse" : ""}
-                placeholder={
-                  isEnhancing
-                    ? "✨ AI is rewriting and strengthening your prompt..."
-                    : "Click the button below to generate a professionally enhanced version of your injected prompt."
-                }
-                action={<CopyButton value={enhancedOutput} disabled={!enhancedOutput} />}
-              />
-              <Button
-                size="lg"
-                className="w-full font-bold"
-                onClick={handleEnhance}
-                disabled={isEnhancing || !injectedOutput.trim()}
-              >
-                <SparkleIcon weight="duotone" className="mr-2 size-5" />
-                {isEnhancing
-                  ? "Enhancing..."
-                  : enhancedOutput
-                    ? "Regenerate Enhancement"
-                    : "Enhance with Gemini"}
-              </Button>
-            </TabsContent>
-          </Tabs>
-        </div>
+          {/* AI Enhanced */}
+          <TabsContent value="ai" className="space-y-4">
+            <TextAreaField
+              label={
+                <TokenBadge
+                  text={enhancedOutput || injectedOutput}
+                  label={enhancedOutput ? "Enhanced Tokens" : "Input Tokens"}
+                />
+              }
+              value={enhancedOutput}
+              readOnly
+              placeholder={
+                isEnhancing
+                  ? "✨ AI is rewriting and strengthening your prompt..."
+                  : "Click the button below to generate a professionally enhanced version of your injected prompt."
+              }
+              action={<CopyButton value={enhancedOutput} disabled={!enhancedOutput} />}
+              containerClassName="flex flex-col"
+              textClassName={cn("flex-1 resize-none", isEnhancing && "bg-muted/20 animate-pulse")}
+            />
+
+            <Button
+              size="lg"
+              className="w-full shrink-0 font-bold"
+              onClick={handleEnhance}
+              disabled={isEnhancing || !injectedOutput.trim()}
+            >
+              <SparkleIcon weight="duotone" className="mr-2 size-5" />
+              {isEnhancing
+                ? "Enhancing..."
+                : enhancedOutput
+                  ? "Regenerate Enhancement"
+                  : "Enhance with Gemini"}
+            </Button>
+          </TabsContent>
+        </Tabs>
       </div>
     </ToolLayout>
   );

@@ -1,15 +1,22 @@
+"use client";
+
 import {
-  CheckSquare,
-  Code,
-  Heading1,
-  Heading2,
-  Heading3,
-  List,
-  ListOrdered,
-  Minus,
-  Text,
-  TextQuote,
-} from "lucide-react";
+  CodeIcon,
+  CodeSimpleIcon,
+  LinkIcon,
+  ListBulletsIcon,
+  ListChecksIcon,
+  ListNumbersIcon,
+  MinusIcon,
+  QuotesIcon,
+  TextAlignLeftIcon,
+  TextBIcon,
+  TextHOneIcon,
+  TextHThreeIcon,
+  TextHTwoIcon,
+  TextItalicIcon,
+  TextStrikethroughIcon,
+} from "@phosphor-icons/react";
 import {
   Command,
   createSuggestionItems,
@@ -25,7 +32,7 @@ export const suggestionItems = createSuggestionItems([
     title: "Text",
     description: "Just start typing with plain text.",
     searchTerms: ["p", "paragraph"],
-    icon: <Text size={18} />,
+    icon: <TextAlignLeftIcon size={20} />,
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).toggleNode("paragraph", "paragraph").run();
     },
@@ -34,7 +41,7 @@ export const suggestionItems = createSuggestionItems([
     title: "Heading 1",
     description: "Big section heading.",
     searchTerms: ["title", "big", "large", "h1"],
-    icon: <Heading1 size={18} />,
+    icon: <TextHOneIcon size={20} />,
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).setNode("heading", { level: 1 }).run();
     },
@@ -43,7 +50,7 @@ export const suggestionItems = createSuggestionItems([
     title: "Heading 2",
     description: "Medium section heading.",
     searchTerms: ["subtitle", "medium", "h2"],
-    icon: <Heading2 size={18} />,
+    icon: <TextHTwoIcon size={20} />,
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).setNode("heading", { level: 2 }).run();
     },
@@ -52,16 +59,66 @@ export const suggestionItems = createSuggestionItems([
     title: "Heading 3",
     description: "Small section heading.",
     searchTerms: ["subtitle", "small", "h3"],
-    icon: <Heading3 size={18} />,
+    icon: <TextHThreeIcon size={20} />,
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).setNode("heading", { level: 3 }).run();
+    },
+  },
+  {
+    title: "Bold",
+    description: "Toggle bold for the next text you type.",
+    searchTerms: ["strong", "b"],
+    icon: <TextBIcon size={20} />,
+    command: ({ editor, range }) => {
+      editor.chain().focus().deleteRange(range).toggleBold().run();
+    },
+  },
+  {
+    title: "Italic",
+    description: "Toggle italic for the next text you type.",
+    searchTerms: ["em", "i", "emphasis"],
+    icon: <TextItalicIcon size={20} />,
+    command: ({ editor, range }) => {
+      editor.chain().focus().deleteRange(range).toggleItalic().run();
+    },
+  },
+  {
+    title: "Strikethrough",
+    description: "Toggle strikethrough for the next text you type.",
+    searchTerms: ["strike", "s", "del"],
+    icon: <TextStrikethroughIcon size={20} />,
+    command: ({ editor, range }) => {
+      editor.chain().focus().deleteRange(range).toggleStrike().run();
+    },
+  },
+  {
+    title: "Inline Code",
+    description: "Format the next text as inline code.",
+    searchTerms: ["code", "monospace", "tt"],
+    icon: <CodeIcon size={20} />,
+    command: ({ editor, range }) => {
+      editor.chain().focus().deleteRange(range).toggleCode().run();
+    },
+  },
+  {
+    title: "Link",
+    description: "Add a hyperlink to selected or upcoming text.",
+    searchTerms: ["url", "href", "anchor"],
+    icon: <LinkIcon size={20} />,
+    command: ({ editor, range }) => {
+      const url = window.prompt("Enter URL");
+      if (!url) {
+        editor.chain().focus().deleteRange(range).run();
+        return;
+      }
+      editor.chain().focus().deleteRange(range).setLink({ href: url }).run();
     },
   },
   {
     title: "To-do List",
     description: "Track tasks with a to-do list.",
     searchTerms: ["todo", "task", "list", "check", "checkbox"],
-    icon: <CheckSquare size={18} />,
+    icon: <ListChecksIcon size={20} />,
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).toggleTaskList().run();
     },
@@ -70,7 +127,7 @@ export const suggestionItems = createSuggestionItems([
     title: "Bullet List",
     description: "Create a simple bullet list.",
     searchTerms: ["unordered", "point", "ul"],
-    icon: <List size={18} />,
+    icon: <ListBulletsIcon size={20} />,
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).toggleBulletList().run();
     },
@@ -79,7 +136,7 @@ export const suggestionItems = createSuggestionItems([
     title: "Numbered List",
     description: "Create a list with numbering.",
     searchTerms: ["ordered", "ol"],
-    icon: <ListOrdered size={18} />,
+    icon: <ListNumbersIcon size={20} />,
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).toggleOrderedList().run();
     },
@@ -88,7 +145,7 @@ export const suggestionItems = createSuggestionItems([
     title: "Quote",
     description: "Capture a quote.",
     searchTerms: ["blockquote", "cite"],
-    icon: <TextQuote size={18} />,
+    icon: <QuotesIcon size={20} />,
     command: ({ editor, range }) =>
       editor
         .chain()
@@ -102,7 +159,7 @@ export const suggestionItems = createSuggestionItems([
     title: "Code Block",
     description: "Capture a code snippet.",
     searchTerms: ["codeblock", "pre", "code"],
-    icon: <Code size={18} />,
+    icon: <CodeSimpleIcon size={20} />,
     command: ({ editor, range }) =>
       editor.chain().focus().deleteRange(range).toggleCodeBlock().run(),
   },
@@ -110,7 +167,7 @@ export const suggestionItems = createSuggestionItems([
     title: "Divider",
     description: "Insert a horizontal divider.",
     searchTerms: ["hr", "rule", "line", "divider", "separator"],
-    icon: <Minus size={18} />,
+    icon: <MinusIcon size={20} />,
     command: ({ editor, range }) =>
       editor.chain().focus().deleteRange(range).setHorizontalRule().run(),
   },

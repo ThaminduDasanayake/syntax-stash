@@ -127,6 +127,7 @@ export const dataTools: Tool[] = [
   },
   {
     title: "JWT Decoder",
+    highlight: "Decoder",
     url: "/tools/jwt-decoder",
     description: "Decode and inspect JSON Web Tokens locally in your browser.",
     category: CATEGORIES.data,
