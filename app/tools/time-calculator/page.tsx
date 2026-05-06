@@ -1,6 +1,6 @@
 "use client";
 
-import { Clock, Minus, Plus, RefreshCw } from "lucide-react";
+import { ArrowsCounterClockwiseIcon, MinusIcon, PlusIcon } from "@phosphor-icons/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { MATH_UNIT_OPTIONS, TIMEZONES, UNIT_MS } from "@/app/tools/time-calculator/constants";
@@ -12,15 +12,15 @@ import {
   toLocal,
 } from "@/app/tools/time-calculator/helpers";
 import { MathUnit } from "@/app/tools/time-calculator/types";
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { ToolLayout } from "@/components/layout/layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
-
 import { Input } from "@/components/ui/input";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { internalTools } from "@/lib/tools-data";
 
 export default function TimeCalculatorPage() {
   const [mounted, setMounted] = useState(false);
@@ -139,13 +139,10 @@ export default function TimeCalculatorPage() {
 
   if (!mounted) return null;
 
+  const tool = internalTools.find((t) => t.url === "/tools/time-calculator");
+
   return (
-    <ToolLayout
-      icon={Clock}
-      title="Time"
-      highlight="Calculator"
-      description="Unix timestamps, date arithmetic, and timezone conversion."
-    >
+    <ToolLayout tool={tool}>
       <div className="space-y-6">
         <Card className="mb-6">
           <CardContent className="flex flex-row items-center justify-between py-4">
@@ -228,7 +225,7 @@ export default function TimeCalculatorPage() {
               />
             </div>
             <Button onClick={useNow} variant="secondary" className="w-full gap-2">
-              <RefreshCw size={15} /> Set Inputs to Current Time
+              <ArrowsCounterClockwiseIcon size={15} /> Set Inputs to Current Time
             </Button>
           </TabsContent>
 
@@ -294,14 +291,14 @@ export default function TimeCalculatorPage() {
                           onClick={() => setMathMode("add")}
                           className="gap-2"
                         >
-                          <Plus size={14} /> Add
+                          <PlusIcon weight="bold" /> Add
                         </Button>
                         <Button
                           variant={mathMode === "subtract" ? "default" : "outline"}
                           onClick={() => setMathMode("subtract")}
                           className="gap-2"
                         >
-                          <Minus size={14} /> Subtract
+                          <MinusIcon weight="bold" /> Subtract
                         </Button>
                       </div>
 

@@ -72,6 +72,7 @@ export const CATEGORIES = {
 export const calculatorTools: Tool[] = [
   {
     title: "Unit Converter",
+    highlight: "Converter",
     url: "/tools/unit-converter",
     description:
       "Convert between units of length, weight, data, temperature, speed, area and volume.",
@@ -80,6 +81,7 @@ export const calculatorTools: Tool[] = [
   },
   {
     title: "Time Calculator",
+    highlight: "Calculator",
     url: "/tools/time-calculator",
     description:
       "Convert Unix timestamps, ISO dates, and local time. Timezone viewer and date arithmetic.",
@@ -88,6 +90,7 @@ export const calculatorTools: Tool[] = [
   },
   {
     title: "Base Converter",
+    highlight: "Converter",
     url: "/tools/base-converter",
     description:
       "Convert between decimal, hex, binary, and octal with a 16-bit toggle grid and bitwise ops.",

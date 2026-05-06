@@ -1,6 +1,5 @@
 "use client";
 
-import { Binary } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 
 import {
@@ -14,13 +13,14 @@ import {
   toSigned,
 } from "@/app/tools/base-converter/helpers";
 import PrefixInput from "@/app/tools/base-converter/prefix-input";
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { ToolLayout } from "@/components/layout/layout";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
-
-import { Input } from "@/components/ui/input";
+import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { internalTools } from "@/lib/tools-data";
 
 export default function BaseConverterPage() {
   const [value, setValue] = useState<number>(0);
@@ -127,13 +127,10 @@ export default function BaseConverterPage() {
 
   const signed = toSigned(value);
 
+  const tool = internalTools.find((t) => t.url === "/tools/base-converter");
+
   return (
-    <ToolLayout
-      icon={Binary}
-      title="Base"
-      highlight="Converter"
-      description="Convert between decimal, hex, binary, and octal with a 16-bit toggle grid."
-    >
+    <ToolLayout tool={tool}>
       <Tabs defaultValue="converter" className="flex w-full flex-col">
         <TabsList className="mb-4 w-full flex-wrap">
           <TabsTrigger
@@ -260,8 +257,8 @@ export default function BaseConverterPage() {
             {/* Operands */}
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label>Operand A (decimal)</Label>
-                <Input
+                <InputField
+                  label="Operand A (decimal)"
                   type="number"
                   value={bitwiseA}
                   onChange={(e) => setBitwiseA(e.target.value)}
@@ -274,25 +271,25 @@ export default function BaseConverterPage() {
               </div>
 
               <div className="space-y-2">
-                <Label>Operation</Label>
+                <Label>Operator</Label>
                 <div className="flex flex-wrap gap-2">
                   {BITWISE_OPS.map((op) => (
-                    <button
+                    <Button
                       key={op.id}
                       onClick={() => setSelectedOp(op.id)}
-                      data-active={selectedOp === op.id}
-                      className="border-border hover:border-primary/50 data-[active=true]:border-primary data-[active=true]:bg-primary data-[active=true]:text-primary-foreground rounded-md border px-3 py-1.5 font-mono text-xs transition-colors"
+                      variant={selectedOp === op.id ? "default" : "secondary"}
+                      className="px-3 font-mono text-xs"
                     >
                       {op.symbol} {op.label}
-                    </button>
+                    </Button>
                   ))}
                 </div>
               </div>
 
               {!BITWISE_OPS.find((o) => o.id === selectedOp)?.unary && (
                 <div className="space-y-2">
-                  <Label>Operand B (decimal)</Label>
-                  <Input
+                  <InputField
+                    label="Operand B (decimal)"
                     type="number"
                     value={bitwiseB}
                     onChange={(e) => setBitwiseB(e.target.value)}
@@ -308,7 +305,7 @@ export default function BaseConverterPage() {
 
             {/* Result */}
             {bitwiseResult && (
-              <Card className="border-primary/20 bg-primary/5">
+              <Card>
                 <CardContent className="p-5">
                   <p className="mb-4 text-sm font-semibold">
                     Result

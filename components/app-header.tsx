@@ -14,6 +14,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { internalTools } from "@/lib/tools-data";
 import { HeaderProps } from "@/types";
 
 function segmentToLabel(segment: string): string {
@@ -33,8 +34,10 @@ export default function AppHeader({ onSearchOpenAction }: HeaderProps) {
 
   const parts = pathname.split("/").filter(Boolean);
 
+  const toolMap = new Map(internalTools.map((t) => [t.url, t.title]));
+
   return (
-    <header className="border-border bg-background/80 sticky top-0 z-30 grid h-12 shrink-0 grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-4 border-b px-4 backdrop-blur-sm">
+    <header className="border-border bg-background/80 sticky top-0 z-30 grid h-12 shrink-0 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-4 border-b px-4 backdrop-blur-sm">
       <div className="flex min-w-0 items-center gap-2">
         <SidebarTrigger className="text-muted-foreground hover:bg-muted -ml-2 shrink-0" />
 
@@ -61,7 +64,8 @@ export default function AppHeader({ onSearchOpenAction }: HeaderProps) {
               const isLast = idx === parts.length - 1;
               const href = "/" + parts.slice(0, idx + 1).join("/");
               const label =
-                idx === 0 ? (sectionLabels[part] ?? segmentToLabel(part)) : segmentToLabel(part);
+                toolMap.get(href) ??
+                (idx === 0 ? (sectionLabels[part] ?? segmentToLabel(part)) : segmentToLabel(part));
 
               return (
                 <span key={href} className="flex min-w-0 shrink-0 items-center gap-1.5 last:shrink">
@@ -102,7 +106,9 @@ export default function AppHeader({ onSearchOpenAction }: HeaderProps) {
           <span className="text-xs">⌘</span>K
         </kbd>
       </button>
-      <ThemeToggle />
+      <div className="flex items-center justify-end">
+        <ThemeToggle />
+      </div>
     </header>
   );
 }
