@@ -1,6 +1,5 @@
 "use client";
 
-import { KeyRound } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { JwtDecoded } from "@/app/tools/jwt-decoder/types";
@@ -72,7 +71,7 @@ export default function JwtDecoderPage() {
           {decoded.error && <ErrorAlert message={decoded.error} />}
         </div>
 
-        {/* Right — decoded output */}
+        {/* Decoded output */}
         <div className="flex flex-col space-y-3">
           <TextAreaField
             label="Header"

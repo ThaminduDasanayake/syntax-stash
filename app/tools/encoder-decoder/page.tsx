@@ -1,6 +1,5 @@
 "use client";
 
-import { ShieldHalf } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { EncoderAction } from "@/app/tools/encoder-decoder/types";
@@ -11,13 +10,12 @@ import {
   stringToHex,
 } from "@/app/tools/encoder-decoder/utils";
 import { ErrorAlert } from "@/components/error-alert";
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { ToolLayout } from "@/components/layout/layout";
 import { Button } from "@/components/ui/button";
 import { ClearButton } from "@/components/ui/clear-button";
-
 import { CopyButton } from "@/components/ui/copy-button";
-
 import { TextAreaField } from "@/components/ui/textarea-field";
+import { internalTools } from "@/lib/tools-data";
 
 const ACTIONS: EncoderAction[] = [
   { id: "b64-enc", label: "Encode Base64", run: encodeBase64 },
@@ -56,16 +54,10 @@ export default function EncoderPage() {
     }
   }, [input, actionId]);
 
+  const tool = internalTools.find((t) => t.url === "/tools/encoder-decoder");
+
   return (
-    <ToolLayout
-      icon={ShieldHalf}
-      title={
-        <>
-          Encoder <span className="text-primary">/</span> Decoder
-        </>
-      }
-      description="Convert strings between Base64, URL-encoded, and Hex encodings."
-    >
+    <ToolLayout tool={tool}>
       <div className="space-y-6">
         {/* Input */}
         <TextAreaField
@@ -74,14 +66,7 @@ export default function EncoderPage() {
           onChange={(e) => setInput(e.target.value)}
           placeholder="Paste text or encoded string here..."
           rows={8}
-          action={
-            <ClearButton
-              onClick={() => {
-                setInput("");
-              }}
-              disabled={!input}
-            />
-          }
+          action={<ClearButton onClick={() => setInput("")} disabled={!input} />}
         />
 
         {/* Action buttons */}
@@ -91,7 +76,7 @@ export default function EncoderPage() {
               key={a.id}
               onClick={() => handleRun(a)}
               variant={actionId === a.id ? "default" : "outline"}
-              className="px-4 text-xs font-semibold"
+              className="text-xs font-semibold"
             >
               {a.label}
             </Button>

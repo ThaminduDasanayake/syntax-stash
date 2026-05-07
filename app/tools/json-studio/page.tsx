@@ -8,11 +8,12 @@ import { FormatTab } from "@/app/tools/json-studio/tabs/format-tab";
 import { OrganizeTab } from "@/app/tools/json-studio/tabs/organize-tab";
 import { QueryTab } from "@/app/tools/json-studio/tabs/query-tab";
 import { TreeTab } from "@/app/tools/json-studio/tabs/tree-tab";
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { ToolLayout } from "@/components/layout/layout";
 import { Button } from "@/components/ui/button";
 import { ClearButton } from "@/components/ui/clear-button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TextAreaField } from "@/components/ui/textarea-field";
+import { internalTools } from "@/lib/tools-data";
 
 type TabId = "format" | "tree" | "query" | "organize";
 
@@ -40,38 +41,30 @@ export default function JsonStudioPage() {
     setActiveTab("query");
   }, []);
 
+  const tool = internalTools.find((t) => t.url === "/tools/json-studio");
+
   return (
-    <ToolLayout
-      icon={FileJson}
-      title="JSON"
-      highlight="Studio"
-      description="Format, browse, query, and organize JSON — all in one place."
-    >
+    <ToolLayout tool={tool}>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Input pane */}
         <div className="space-y-2">
+          <div className="flex flex-wrap gap-1.5">
+            {SAMPLE_LABELS.map(({ key, label }) => (
+              <Button key={key} size="sm" variant="outline" onClick={() => setInput(SAMPLES[key])}>
+                {label}
+              </Button>
+            ))}
+          </div>
+
           <TextAreaField
             label="JSON Input"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Paste JSON here…"
             rows={28}
-            className="font-mono text-sm"
+            className="text-sm"
             action={<ClearButton onClick={() => setInput("")} disabled={!input} />}
           />
-
-          <div className="flex flex-wrap gap-1.5">
-            {SAMPLE_LABELS.map(({ key, label }) => (
-              <Button
-                key={key}
-                variant="outline"
-                className="text-xs"
-                onClick={() => setInput(SAMPLES[key])}
-              >
-                {label}
-              </Button>
-            ))}
-          </div>
         </div>
 
         {/* Output pane */}

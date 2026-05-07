@@ -109,20 +109,24 @@ export const dataTools: Tool[] = [
   },
   {
     title: "Encoder / Decoder",
+    highlight: "Decoder",
     url: "/tools/encoder-decoder",
-    description: "Convert strings between Base64, URL, and Hex encoding.",
+    description: "Convert strings between Base64, URL-encoded, and Hex encoding.",
     category: CATEGORIES.data,
     icon: ShieldCheckeredIcon,
   },
   {
     title: "Hash Generator",
+    highlight: "Generator",
     url: "/tools/hash-generator",
-    description: "Generate secure cryptographic hashes locally.",
+    description:
+      "SHA-1, SHA-256, SHA-384, and SHA-512 digests computed locally via the Web Crypto API.",
     category: CATEGORIES.data,
     icon: FingerprintIcon,
   },
   {
     title: "JSON Studio",
+    highlight: "Studio",
     url: "/tools/json-studio",
     description: "Format, browse, query, and organize JSON — all in one place.",
     category: CATEGORIES.data,
@@ -138,9 +142,10 @@ export const dataTools: Tool[] = [
   },
   {
     title: "Universal Decoder",
+    highlight: "Decoder",
     url: "/tools/universal-decoder",
     description:
-      "Paste any mystery string — JWT, Unix timestamp, UUID, MongoDB ObjectId, or Snowflake ID — and decode it instantly.",
+      "Paste any mystery string — JWT, Unix timestamp, UUID, MongoDB ObjectId, ISO date, or Snowflake ID — and decode it instantly.",
     category: CATEGORIES.data,
     icon: ScanIcon,
   },
@@ -217,14 +222,6 @@ export const developmentTools: Tool[] = [
     category: CATEGORIES.development,
     icon: MarkdownLogoIcon,
   },
-  // {
-  //   title: "Markdown Table of Contents",
-  //   url: "/tools/markdown-toc-generator",
-  //   description:
-  //     "Generate a nested Table of Contents from your Markdown document with automatic anchor links.",
-  //   category: CATEGORIES.development,
-  //   icon: FileMdIcon,
-  // },
   {
     title: "Mermaid Live Editor",
     highlight: "Live Editor",
@@ -329,15 +326,6 @@ export const imageTools: Tool[] = [
     category: CATEGORIES.imagesAssets,
     icon: ImageIcon,
   },
-  // {
-  //   title: "Placeholder Generator",
-  //   highlight: "Generator",
-  //   url: "/tools/placeholder-generator",
-  //   description:
-  //     "Generate custom placeholder images with the Canvas API, entirely in your browser.",
-  //   category: CATEGORIES.imagesAssets,
-  //   icon: PlaceholderIcon,
-  // },
   {
     title: "QR Generator",
     url: "/tools/qr-generator",
@@ -380,20 +368,6 @@ export const networkTools: Tool[] = [
     category: CATEGORIES.network,
     icon: GlobeHemisphereEastIcon,
   },
-  // {
-  //   title: "MAC Address Vendor Lookup",
-  //   url: "/tools/mac-vendor-lookup",
-  //   description: "Look up MAC address vendors by OUI with support for multiple formats.",
-  //   category: CATEGORIES.network,
-  //   icon: RssIcon,
-  // },
-  // {
-  //   title: "Open Graph Previewer",
-  //   url: "/tools/og-preview",
-  //   description: "Preview how your link card will appear when shared on Twitter/X and LinkedIn.",
-  //   category: CATEGORIES.network,
-  //   icon: GlobeIcon,
-  // },
   {
     title: "Subnet / CIDR Calculator",
     url: "/tools/subnet-calculator",
@@ -431,7 +405,7 @@ export const schemaTools: Tool[] = [
     icon: BracketsCurlyIcon,
   },
   {
-    title: "Mongo Aggregation Builder",
+    title: "Mongo Aggregation Pipeline Builder",
     highlight: "Builder",
     url: "/tools/mongo-pipeline-builder",
     description: "Visually scaffold complex MongoDB aggregation pipelines with live JSON output.",
@@ -484,9 +458,10 @@ export const typographyTools: Tool[] = [
 export const uiStyling: Tool[] = [
   {
     title: "Border Radius Previewer",
-    url: "/tools/border-radius",
+    highlight: "Previewer",
+    url: "/tools/border-radius-previewer",
     description:
-      "Visually configure CSS border-radius with per-corner sliders, presets, and live shape preview.",
+      "Visually configure CSS border-radius with per-corner sliders and preset shapes. Copy the CSS or Tailwind class.",
     category: CATEGORIES.uiStyling,
     icon: SquareIcon,
   },
@@ -515,6 +490,7 @@ export const uiStyling: Tool[] = [
   },
   {
     title: "CSS Aspect-Ratio Calculator",
+    highlight: "Calculator",
     url: "/tools/aspect-ratio",
     description:
       "Calculate CSS aspect-ratio, Tailwind utility, and legacy padding-bottom values for any dimensions.",
@@ -531,8 +507,10 @@ export const uiStyling: Tool[] = [
   },
   {
     title: "Glassmorphism Generator",
+    highlight: "Generator",
     url: "/tools/glassmorphism-generator",
-    description: "Generate beautiful glassmorphism UI elements with backdrop blur.",
+    description:
+      "Generate beautiful glassmorphism UI elements with backdrop blur and transparency.",
     category: CATEGORIES.uiStyling,
     icon: CardsIcon,
   },

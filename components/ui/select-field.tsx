@@ -53,7 +53,7 @@ export function SelectField({
       >
         <SelectValue placeholder={placeholder}>{selectedLabel}</SelectValue>
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent side="bottom" alignItemWithTrigger={false}>
         {options.map((opt) => (
           <SelectItem key={opt.value} value={opt.value}>
             {opt.label}

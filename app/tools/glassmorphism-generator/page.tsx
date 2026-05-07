@@ -1,13 +1,13 @@
 "use client";
 
-import { Check, Copy, Layers } from "lucide-react";
 import { useState } from "react";
 
-import { ToolLayout } from "@/components/layout/tool-layout";
-import { Button } from "@/components/ui/button";
+import { ToolLayout } from "@/components/layout/layout";
 import { Card, CardContent } from "@/components/ui/card";
+import { CopyButton } from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { Slider } from "@/components/ui/slider";
+import { internalTools } from "@/lib/tools-data";
 
 function getBlurClass(blur: number): string {
   if (blur <= 5) return "backdrop-blur-sm";
@@ -65,35 +65,30 @@ export default function GlassmorphismPage() {
   const glassStyle = {
     backdropFilter: `blur(${blur}px)`,
     backgroundColor: `rgba(255, 255, 255, ${(opacity / 100).toFixed(2)})`,
-    border: `1px solid rgba(255, 255, 255, ${(borderOpacity / 100).toFixed(2)})`,
+    border: `1px solid rgba(0, 0, 0, ${(borderOpacity / 100).toFixed(2)})`,
   };
 
-  const { copied, copy } = useCopyToClipboard();
+  const tool = internalTools.find((t) => t.url === "/tools/glassmorphism-generator");
 
   return (
-    <ToolLayout
-      icon={Layers}
-      title="Glassmorphism"
-      highlight="Generator"
-      description="Generate beautiful glassmorphism UI elements with customizable backdrop blur and transparency."
-    >
+    <ToolLayout tool={tool}>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         {/* Left Column: Controls */}
         <div className="space-y-8 lg:col-span-1">
           {/* Blur Amount */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <Label className="text-foreground text-sm font-semibold">Blur Amount</Label>
+              <Label>Blur Amount</Label>
               <span className="text-primary font-mono text-sm font-semibold">{blur}px</span>
             </div>
-            <input
-              type="range"
-              min="0"
-              max="40"
-              value={blur}
-              onChange={(e) => setBlur(Number(e.target.value))}
-              className="bg-muted accent-primary h-2 w-full cursor-pointer appearance-none rounded-lg"
+            <Slider
+              value={[blur]}
+              onValueChange={(vals) => setBlur(Array.isArray(vals) ? vals[0] : vals)}
+              min={0}
+              max={40}
+              step={1}
             />
+
             <p className="text-muted-foreground text-xs">
               Controls the blur radius of the background
             </p>
@@ -102,50 +97,61 @@ export default function GlassmorphismPage() {
           {/* Opacity */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <Label className="text-foreground text-sm font-semibold">Opacity</Label>
+              <Label>Opacity</Label>
               <span className="text-primary font-mono text-sm font-semibold">{opacity}%</span>
             </div>
-            <input
-              type="range"
-              min="0"
-              max="100"
-              value={opacity}
-              onChange={(e) => setOpacity(Number(e.target.value))}
-              className="bg-muted accent-primary h-2 w-full cursor-pointer appearance-none rounded-lg"
+            <Slider
+              value={[opacity]}
+              onValueChange={(vals) => setOpacity(Array.isArray(vals) ? vals[0] : vals)}
+              min={0}
+              max={100}
+              step={1}
             />
+
             <p className="text-muted-foreground text-xs">Controls the background transparency</p>
           </div>
 
           {/* Border Opacity */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <Label className="text-foreground text-sm font-semibold">Border Opacity</Label>
+              <Label>Border Opacity</Label>
               <span className="text-primary font-mono text-sm font-semibold">{borderOpacity}%</span>
             </div>
-            <input
-              type="range"
-              min="0"
-              max="100"
-              value={borderOpacity}
-              onChange={(e) => setBorderOpacity(Number(e.target.value))}
-              className="bg-muted accent-primary h-2 w-full cursor-pointer appearance-none rounded-lg"
+            <Slider
+              value={[borderOpacity]}
+              onValueChange={(vals) => setBorderOpacity(Array.isArray(vals) ? vals[0] : vals)}
+              min={1}
+              max={100}
+              step={1}
             />
+
             <p className="text-muted-foreground text-xs">Controls the border transparency</p>
           </div>
         </div>
 
         {/* Right Column: Preview */}
         <div className="space-y-4 lg:col-span-2">
-          <Label className="text-foreground text-sm font-semibold">Preview</Label>
-          <Card className="to-primary overflow-hidden bg-linear-to-br from-purple-500 via-pink-500">
+          <Label>Preview</Label>
+          <Card
+            className="overflow-hidden"
+            style={{
+              background: `linear-gradient(to bottom, 
+                #61bb46 16.6%, 
+                #fdb827 16.6% 33.3%, 
+                #f5821f 33.3% 50%, 
+                #e03a3e 50% 66.6%, 
+                #963d97 66.6% 83.3%, 
+                #009cdf 83.3%)`,
+            }}
+          >
             <CardContent className="flex min-h-125 items-center justify-center p-8">
               <div
                 style={glassStyle}
-                className="flex h-48 w-64 flex-col items-center justify-center rounded-2xl text-center shadow-2xl transition-all duration-300"
+                className="flex h-64 w-72 flex-col items-center justify-center rounded-lg text-center shadow-2xl transition-all duration-300"
               >
                 <div className="space-y-2">
-                  <p className="text-foreground text-lg font-semibold">Glass Card</p>
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-muted text-lg font-semibold">Glass Card</p>
+                  <p className="text-muted text-sm">
                     Blur: {blur}px • Opacity: {opacity}%
                   </p>
                 </div>
@@ -161,7 +167,10 @@ export default function GlassmorphismPage() {
 
         {/* CSS Code Block */}
         <div className="space-y-2">
-          <p className="text-foreground text-xs font-medium">CSS</p>
+          <div className="flex items-center justify-between">
+            <p className="text-foreground text-xs font-medium">CSS</p>
+            <CopyButton labelName="Copy CSS" value={cssCode} />
+          </div>
           <div className="bg-background border-border overflow-x-auto rounded-lg border p-4">
             <pre className="text-primary font-mono text-xs wrap-break-word whitespace-pre-wrap">
               {cssCode}
@@ -171,7 +180,10 @@ export default function GlassmorphismPage() {
 
         {/* Tailwind Classes Block */}
         <div className="space-y-2">
-          <p className="text-foreground text-xs font-medium">Tailwind Classes</p>
+          <div className="flex items-center justify-between">
+            <p className="text-foreground text-xs font-medium">Tailwind Classes</p>
+            <CopyButton labelName="Copy Tailwind CSS" value={tailwindClasses} />
+          </div>
           <div className="bg-background border-border space-y-3 rounded-lg border p-4">
             <pre className="text-primary font-mono text-xs wrap-break-word whitespace-pre-wrap">
               {tailwindClasses}
@@ -186,21 +198,6 @@ export default function GlassmorphismPage() {
             </div>
           </div>
         </div>
-
-        {/* Copy Button */}
-        <Button onClick={() => copy(cssCode)} variant="outline" className="gap-2">
-          {copied ? (
-            <>
-              <Check size={14} />
-              <span>CSS Copied</span>
-            </>
-          ) : (
-            <>
-              <Copy size={14} />
-              <span>Copy CSS</span>
-            </>
-          )}
-        </Button>
       </div>
 
       {/* Reference Section */}

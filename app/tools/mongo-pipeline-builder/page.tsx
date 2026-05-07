@@ -1,72 +1,25 @@
 "use client";
 
-import { Layers, Plus, Trash2 } from "lucide-react";
+import { PlusIcon, TrashIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 
+import {
+  ALL_STAGES,
+  Stage,
+  STAGE_DEFAULTS,
+  STAGE_DESCRIPTIONS,
+  StageType,
+  tryParseJSON,
+  uid,
+} from "@/app/tools/mongo-pipeline-builder/helpers";
 import { ToolLayout } from "@/components/layout/layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
-
+import { Label } from "@/components/ui/label";
 import { TextAreaField } from "@/components/ui/textarea-field";
 import { internalTools } from "@/lib/tools-data";
-
-type StageType = "$match" | "$group" | "$sort" | "$project" | "$limit" | "$lookup";
-
-interface Stage {
-  id: string;
-  type: StageType;
-  value: string;
-}
-
-const STAGE_DEFAULTS: Record<StageType, string> = {
-  $match: `{
-  "status": "active"
-}`,
-  $group: `{
-  "_id": "$userId",
-  "total": { "$sum": 1 },
-  "avgScore": { "$avg": "$score" }
-}`,
-  $sort: `{
-  "createdAt": -1
-}`,
-  $project: `{
-  "_id": 0,
-  "name": 1,
-  "email": 1
-}`,
-  $limit: `10`,
-  $lookup: `{
-  "from": "orders",
-  "localField": "_id",
-  "foreignField": "userId",
-  "as": "orders"
-}`,
-};
-
-const STAGE_DESCRIPTIONS: Record<StageType, string> = {
-  $match: "Filter documents",
-  $group: "Group & accumulate",
-  $sort: "Sort documents",
-  $project: "Shape the output",
-  $limit: "Limit document count",
-  $lookup: "Join a collection",
-};
-
-const ALL_STAGES: StageType[] = ["$match", "$group", "$sort", "$project", "$limit", "$lookup"];
-
-function uid(): string {
-  return Math.random().toString(36).slice(2, 9);
-}
-
-function tryParseJSON(raw: string): { ok: true; value: unknown } | { ok: false } {
-  try {
-    return { ok: true, value: JSON.parse(raw) };
-  } catch {
-    return { ok: false };
-  }
-}
 
 export default function MongoPipelineBuilderPage() {
   const [stages, setStages] = useState<Stage[]>([
@@ -127,18 +80,18 @@ export default function MongoPipelineBuilderPage() {
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <div className="space-y-4">
           {/* Add-stage buttons */}
-          <div>
-            <p className="text-muted-foreground mb-2 text-xs font-medium">Add a stage</p>
+          <div className="space-y-2">
+            <Label>Add a stage</Label>
             <div className="flex flex-wrap gap-2">
               {ALL_STAGES.map((type) => (
                 <Button
                   key={type}
                   variant="outline"
                   size="sm"
-                  className="h-7 gap-1 px-3 font-mono text-xs"
+                  className="font-mono text-xs"
                   onClick={() => addStage(type)}
                 >
-                  <Plus size={11} />
+                  <PlusIcon weight="bold" />
                   {type}
                 </Button>
               ))}
@@ -161,38 +114,41 @@ export default function MongoPipelineBuilderPage() {
                   >
                     <CardContent className="space-y-2 p-3">
                       {/* Card header row */}
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <span className="bg-primary text-primary-foreground flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold">
-                            {idx + 1}
-                          </span>
-                          <span className="font-mono text-sm font-semibold">{stage.type}</span>
-                          <span className="text-muted-foreground text-xs">
-                            — {STAGE_DESCRIPTIONS[stage.type]}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          {!isValid && (
-                            <span className="text-destructive text-xs">invalid JSON</span>
-                          )}
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="text-muted-foreground hover:text-destructive h-7 w-7 p-0"
-                            onClick={() => removeStage(stage.id)}
-                          >
-                            <Trash2 size={14} />
-                          </Button>
-                        </div>
-                      </div>
 
                       {/* Stage JSON editor */}
                       <TextAreaField
+                        label={
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <span className="bg-primary text-primary-foreground flex h-5 w-5 items-center justify-center rounded-full text-xs font-bold">
+                                {idx + 1}
+                              </span>
+                              <span className="font-mono font-semibold">{stage.type}</span>
+                              <span className="text-muted-foreground text-xs">
+                                — {STAGE_DESCRIPTIONS[stage.type]}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              {!isValid && (
+                                <span className="text-destructive text-xs">invalid JSON</span>
+                              )}
+                            </div>
+                          </div>
+                        }
                         value={stage.value}
                         onChange={(e) => updateStage(stage.id, e.target.value)}
                         rows={4}
-                        className="font-mono text-xs"
-                        textClassName="font-mono text-xs"
+                        textClassName="text-xs"
+                        action={
+                          <ClearButton
+                            onClick={() => removeStage(stage.id)}
+                            disabled={!stage.value}
+                            label=""
+                            variant="destructive"
+                            className="w-5"
+                            icon={<TrashIcon />}
+                          />
+                        }
                       />
                     </CardContent>
                   </Card>
@@ -202,7 +158,7 @@ export default function MongoPipelineBuilderPage() {
           )}
         </div>
 
-        <div className="space-y-4">
+        <div className="flex flex-col space-y-4">
           <TextAreaField
             label={
               hasErrors ? (
@@ -218,7 +174,7 @@ export default function MongoPipelineBuilderPage() {
             }
             value={pipelineJSON}
             readOnly
-            rows={16}
+            rows={12}
             action={<CopyButton value={pipelineJSON} disabled={!pipelineJSON} />}
           />
 
@@ -226,7 +182,7 @@ export default function MongoPipelineBuilderPage() {
             label="Node.js / Mongoose Snippet"
             value={nodeSnippet}
             readOnly
-            rows={8}
+            rows={12}
             action={<CopyButton value={nodeSnippet} disabled={!nodeSnippet} />}
           />
         </div>

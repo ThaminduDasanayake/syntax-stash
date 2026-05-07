@@ -9,7 +9,7 @@ export interface ClearButtonProps extends ButtonPrimitive.Props {
   label?: string;
   icon?: ReactNode | null;
   className?: string;
-  variant?: "default" | "outline" | "secondary" | "ghost";
+  variant?: "default" | "outline" | "secondary" | "ghost" | "destructive";
   size?: "default" | "xs" | "sm" | "lg";
   disabled?: boolean;
 }

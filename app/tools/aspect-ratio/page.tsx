@@ -3,12 +3,13 @@
 import { Check, Copy, Ratio } from "lucide-react";
 import { useMemo, useState } from "react";
 
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { ToolLayout } from "@/components/layout/layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { internalTools } from "@/lib/tools-data";
 
 function gcd(a: number, b: number): number {
   return b === 0 ? a : gcd(b, a % b);
@@ -22,7 +23,12 @@ const PRESETS: { label: string; w: number; h: number }[] = [
   { label: "9:16", w: 9, h: 16 },
 ];
 
-function CodeBlock({ label, code, onCopy, copied }: {
+function CodeBlock({
+  label,
+  code,
+  onCopy,
+  copied,
+}: {
   label: string;
   code: string;
   onCopy: () => void;
@@ -34,16 +40,19 @@ function CodeBlock({ label, code, onCopy, copied }: {
         <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
           {label}
         </Label>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={onCopy}
-          className="rounded-full font-semibold"
-        >
-          {copied ? <><Check size={12} /> Copied!</> : <><Copy size={12} /> Copy</>}
+        <Button variant="outline" size="sm" onClick={onCopy} className="rounded-full font-semibold">
+          {copied ? (
+            <>
+              <Check size={12} /> Copied!
+            </>
+          ) : (
+            <>
+              <Copy size={12} /> Copy
+            </>
+          )}
         </Button>
       </div>
-      <pre className="bg-muted text-foreground rounded-lg border border-border px-4 py-3 font-mono text-sm">
+      <pre className="bg-muted text-foreground border-border rounded-lg border px-4 py-3 font-mono text-sm">
         {code}
       </pre>
     </div>
@@ -77,13 +86,10 @@ export default function AspectRatioPage() {
     setHeight(h);
   }
 
+  const tool = internalTools.find((t) => t.url === "/tools/aspect-ratio");
+
   return (
-    <ToolLayout
-      icon={Ratio}
-      title="Aspect Ratio"
-      highlight="Calculator"
-      description="Calculate CSS aspect-ratio, Tailwind utility, and legacy padding-bottom values for any dimensions."
-    >
+    <ToolLayout tool={tool}>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Left — Inputs */}
         <div className="space-y-6">
@@ -149,9 +155,9 @@ export default function AspectRatioPage() {
             <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
               Preview
             </Label>
-            <div className="flex items-center justify-center rounded-lg border border-dashed border-border bg-muted/30 p-4">
+            <div className="border-border bg-muted/30 flex items-center justify-center rounded-lg border border-dashed p-4">
               <div
-                className="bg-primary/10 border-primary/40 flex items-center justify-center rounded border font-mono text-sm text-primary"
+                className="bg-primary/10 border-primary/40 text-primary flex items-center justify-center rounded border font-mono text-sm"
                 style={{
                   aspectRatio: `${width} / ${height}`,
                   width: "100%",
