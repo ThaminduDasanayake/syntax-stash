@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 
-import { PLACEHOLDER_MODIFIED, PLACEHOLDER_ORIGINAL } from "@/app/tools/diff-viewer/data.ts";
+import { PLACEHOLDER_MODIFIED, PLACEHOLDER_ORIGINAL } from "@/app/tools/diff-viewer/data";
 import { DiffLineRow } from "@/app/tools/diff-viewer/diff-line-row";
 import {
   buildSideColumns,
@@ -12,9 +12,7 @@ import {
 } from "@/app/tools/diff-viewer/helpers";
 import { ToolLayout } from "@/components/layout/layout";
 import { ClearButton } from "@/components/ui/clear-button";
-
 import { CopyButton } from "@/components/ui/copy-button";
-
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
