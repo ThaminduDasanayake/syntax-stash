@@ -1,17 +1,17 @@
 "use client";
 
-import { Download, QrCode } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { ToolLayout } from "@/components/layout/layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ClearButton } from "@/components/ui/clear-button";
-
+import { DownloadButton } from "@/components/ui/download-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { TextAreaField } from "@/components/ui/textarea-field";
+import { internalTools } from "@/lib/tools-data";
 
 type ErrorCorrectionLevel = "L" | "M" | "Q" | "H";
 
@@ -128,15 +128,12 @@ export default function QRGeneratorPage() {
   const inputClass =
     "h-10 bg-background border-border text-foreground font-mono placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-primary/30";
 
+  const tool = internalTools.find((t) => t.url === "/tools/qr-generator");
+
   return (
-    <ToolLayout
-      icon={QrCode}
-      title="QR"
-      highlight="Generator"
-      description="Generate downloadable QR codes instantly — works entirely in your browser."
-    >
+    <ToolLayout tool={tool}>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {/* Left — Inputs & Options */}
+        {/*  Inputs & Options */}
         <div className="space-y-8">
           {/* Content Section */}
           <div className="space-y-3">
@@ -282,24 +279,19 @@ export default function QRGeneratorPage() {
                 </div>
               )}
 
-              <div className="flex w-full gap-3">
-                <Button
+              <div className="flex w-full justify-center gap-3">
+                <DownloadButton
+                  label="PNG"
                   onClick={() => handleDownload("png")}
                   disabled={!dataUrl}
-                  className="flex-1 gap-2"
-                >
-                  <Download size={14} />
-                  PNG
-                </Button>
-                <Button
+                  className="flex-1"
+                />
+                <DownloadButton
+                  label="SVG"
                   onClick={() => handleDownload("svg")}
                   disabled={!svgString}
-                  variant="secondary"
-                  className="border-border flex-1 gap-2 border"
-                >
-                  <Download size={14} />
-                  SVG
-                </Button>
+                  className="flex-1"
+                />
               </div>
             </CardContent>
           </Card>

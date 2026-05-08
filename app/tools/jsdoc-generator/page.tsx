@@ -1,6 +1,5 @@
 "use client";
 
-import { BookText } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import {
@@ -8,14 +7,17 @@ import {
   generateDoc,
   parseFunctionSignature,
 } from "@/app/tools/jsdoc-generator/helpers";
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { ErrorAlert } from "@/components/error-alert";
+import { ToolLayout } from "@/components/layout/layout";
+import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
-
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Textarea } from "@/components/ui/textarea";
+import { TextAreaField } from "@/components/ui/textarea-field";
+import { internalTools } from "@/lib/tools-data";
 
+// language=text
 const PLACEHOLDER = `async function fetchUser<T extends { id: string }>(id: string, options?: { signal?: AbortSignal }): Promise<T> {
   // …
 }`;
@@ -42,19 +44,22 @@ export default function JsdocGeneratorPage() {
     return `${output}\n${input.trim()}`;
   }, [output, input]);
 
+  const tool = internalTools.find((t) => t.url === "/tools/jsdoc-generator");
+
   return (
-    <ToolLayout icon={BookText} title="JSDoc / TSDoc" highlight="Generator" description="">
+    <ToolLayout tool={tool}>
       <div className="space-y-6">
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <div className="space-y-2">
-            <Label>Function signature</Label>
-            <Textarea
+            <TextAreaField
+              label="Function signature"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               rows={12}
               className="resize-y font-mono text-xs"
               placeholder="Paste a function declaration, arrow function, or method signature…"
               spellCheck={false}
+              action={<ClearButton onClick={() => setInput("")} />}
             />
             {parsed && (
               <p className="text-muted-foreground text-xs">
@@ -66,29 +71,29 @@ export default function JsdocGeneratorPage() {
                 {parsed.isGenerator && ", generator"}
               </p>
             )}
-            {error && <p className="text-destructive text-xs">{error}</p>}
+            {error && <ErrorAlert message={error} />}
           </div>
 
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label>Generated comment</Label>
-              <CopyButton value={documented} disabled={!documented} />
-            </div>
-            <Textarea
-              readOnly
-              value={documented}
-              rows={12}
-              className="resize-y font-mono text-xs"
-              placeholder="Generated documentation will appear here…"
-            />
-          </div>
+          <TextAreaField
+            label="Generated comment"
+            readOnly
+            value={documented}
+            rows={12}
+            className="resize-y font-mono text-xs"
+            placeholder="Generated documentation will appear here…"
+            action={<CopyButton value={documented} disabled={!documented} />}
+          />
         </div>
 
         <div className="flex flex-wrap items-center gap-4">
           <Tabs value={style} onValueChange={(v) => setStyle(v as DocStyle)}>
-            <TabsList>
-              <TabsTrigger value="jsdoc">JSDoc</TabsTrigger>
-              <TabsTrigger value="tsdoc">TSDoc</TabsTrigger>
+            <TabsList className="grid w-40 grid-cols-2">
+              <TabsTrigger value="jsdoc" className="tab-trigger">
+                JSDoc
+              </TabsTrigger>
+              <TabsTrigger value="tsdoc" className="tab-trigger">
+                TSDoc
+              </TabsTrigger>
             </TabsList>
           </Tabs>
 

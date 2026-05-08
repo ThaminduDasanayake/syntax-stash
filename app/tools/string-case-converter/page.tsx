@@ -1,14 +1,12 @@
 "use client";
 
-import { Type } from "lucide-react";
 import { useMemo, useState } from "react";
 
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { ToolLayout } from "@/components/layout/layout";
 import { ClearButton } from "@/components/ui/clear-button";
-
 import { CopyButton } from "@/components/ui/copy-button";
-
 import { TextAreaField } from "@/components/ui/textarea-field";
+import { internalTools } from "@/lib/tools-data";
 
 interface CaseOutputs {
   camelCase: string;
@@ -100,15 +98,12 @@ export default function StringCaseConverterPage() {
     { key: "uppercase", label: "UPPERCASE", description: "All uppercase" },
   ];
 
+  const tool = internalTools.find((t) => t.url === "/tools/string-case-converter");
+
   return (
-    <ToolLayout
-      icon={Type}
-      title="String Case"
-      highlight="Converter"
-      description="Convert text between different naming conventions and typographical styles."
-    >
+    <ToolLayout tool={tool}>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {/* Left: Input */}
+        {/* Input */}
         <TextAreaField
           label="Text Input"
           value={input}
@@ -118,7 +113,7 @@ export default function StringCaseConverterPage() {
           action={<ClearButton onClick={() => setInput("")} disabled={!input} />}
         />
 
-        {/* Right: Outputs */}
+        {/* Outputs */}
         <div className="space-y-3">
           {cases.map(({ key, label, description }) => (
             <div key={key}>

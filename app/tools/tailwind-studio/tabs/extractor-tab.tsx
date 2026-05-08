@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertCircle } from "lucide-react";
+import { WarningCircleIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 
 import ClassMapRow from "@/app/tools/tailwind-studio/class-map-row";
@@ -16,7 +16,6 @@ import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Textarea } from "@/components/ui/textarea";
 import { TextAreaField } from "@/components/ui/textarea-field";
 
 export function ExtractorTab() {
@@ -62,7 +61,7 @@ export function ExtractorTab() {
         />
 
         <p className="text-muted-foreground flex items-center gap-1.5 text-xs">
-          <AlertCircle size={11} className="shrink-0" />
+          <WarningCircleIcon className="size-4 shrink-0" />
           Handles <code className="bg-muted rounded px-1">className=&quot;…&quot;</code> and{" "}
           <code className="bg-muted rounded px-1">{`className={'…'}`}</code>. Dynamic expressions
           like <code className="bg-muted rounded px-1">cn()</code> are left as-is.
@@ -88,7 +87,7 @@ export function ExtractorTab() {
           </div>
 
           <TabsContent value="css">
-            <Textarea
+            <TextAreaField
               readOnly
               value={generatedCss}
               rows={22}
@@ -98,7 +97,7 @@ export function ExtractorTab() {
           </TabsContent>
 
           <TabsContent value="jsx">
-            <Textarea
+            <TextAreaField
               readOnly
               value={refactoredJsx}
               rows={22}

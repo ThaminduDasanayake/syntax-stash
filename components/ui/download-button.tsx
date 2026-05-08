@@ -1,11 +1,11 @@
 import { Button as ButtonPrimitive } from "@base-ui/react/button";
-import { ArrowCounterClockwiseIcon } from "@phosphor-icons/react/ssr";
+import { DownloadIcon } from "@phosphor-icons/react/ssr";
 import { ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-export interface ClearButtonProps extends ButtonPrimitive.Props {
+export interface DownloadButtonProps extends ButtonPrimitive.Props {
   label?: string;
   icon?: ReactNode | null;
   className?: string;
@@ -14,14 +14,14 @@ export interface ClearButtonProps extends ButtonPrimitive.Props {
   disabled?: boolean;
 }
 
-export const ClearButton = ({
-  label = "Clear",
-  icon = <ArrowCounterClockwiseIcon className="size-4.5" />,
+export function DownloadButton({
+  label = "Download",
+  icon = <DownloadIcon className="size-4.5" />,
   className,
-  variant = "outline",
+  variant = "default",
   size = "default",
   ...props
-}: ClearButtonProps) => {
+}: DownloadButtonProps) {
   return (
     <Button
       variant={variant}
@@ -33,6 +33,6 @@ export const ClearButton = ({
       {label}
     </Button>
   );
-};
+}
 
-ClearButton.displayName = "ClearButton";
+DownloadButton.displayName = "DownloadButton";

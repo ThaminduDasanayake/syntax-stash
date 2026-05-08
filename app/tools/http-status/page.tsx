@@ -1,11 +1,12 @@
 "use client";
 
-import { Globe2 } from "lucide-react";
 import { useMemo, useState } from "react";
 
-import { ToolLayout } from "@/components/layout/tool-layout";
-import { Input } from "@/components/ui/input";
+import { ToolLayout } from "@/components/layout/layout";
+import { Button } from "@/components/ui/button";
+import { InputField } from "@/components/ui/input-field";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { internalTools } from "@/lib/tools-data";
 
 import {
   HTTP_STATUS_CODES,
@@ -62,22 +63,17 @@ export default function HttpStatusPage() {
 
   const { copiedItem, copy } = useCopyToClipboard<number>();
 
+  const tool = internalTools.find((t) => t.url === "/tools/http-status");
+
   return (
-    <ToolLayout
-      icon={Globe2}
-      title="HTTP Status"
-      highlight="Reference"
-      description="Every standard HTTP status code with descriptions and real-world use cases. Click any card to copy the code."
-      maxWidth="max-w-7xl"
-    >
+    <ToolLayout tool={tool}>
       <div className="space-y-6">
         {/* Search + filter */}
         <div className="space-y-3">
-          <Input
+          <InputField
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by code, name, or description (e.g. 404, redirect, rate limit)…"
-            className="h-11"
           />
           <div className="flex flex-wrap gap-2">
             {STATUS_CATEGORIES.map((cat) => {
@@ -85,17 +81,14 @@ export default function HttpStatusPage() {
               const label = isAll ? "All" : STATUS_CATEGORY_LABELS[cat as StatusCategory];
               const isActive = activeCategory === cat;
               return (
-                <button
+                <Button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`rounded-full border px-3 py-1 text-xs font-semibold transition-colors ${
-                    isActive
-                      ? "border-primary bg-primary text-primary-foreground"
-                      : "border-border text-muted-foreground hover:border-primary hover:text-foreground"
-                  }`}
+                  variant={isActive ? "default" : "secondary"}
+                  className="px-3 text-xs"
                 >
                   {label}
-                </button>
+                </Button>
               );
             })}
           </div>

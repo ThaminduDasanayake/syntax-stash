@@ -1,22 +1,15 @@
 import {
-
   AsteriskIcon,
   BinaryIcon,
   BookOpenTextIcon,
   BracketsCurlyIcon,
-
-  CircuitryIcon,
   ClockIcon,
   CodeIcon,
-
   DatabaseIcon,
-
-
   FileCssIcon,
   FileCsvIcon,
   FileImageIcon,
   FileJsxIcon,
-  FileMdIcon,
   FilesIcon,
   FileSqlIcon,
   FileSvgIcon,
@@ -27,29 +20,22 @@ import {
   GitBranchIcon,
   GlobeHemisphereEastIcon,
   GlobeIcon,
-  GridNineIcon,
   ImageIcon,
   KeyIcon,
   LayoutIcon,
   LinkIcon,
   LockIcon,
-  MagicWandIcon,
   MarkdownLogoIcon,
   NetworkIcon,
   PaletteIcon,
   PasswordIcon,
-  PlaceholderIcon,
-
   PlusMinusIcon,
   QrCodeIcon,
-  RssIcon,
   ScalesIcon,
   ScanIcon,
-
   ShieldCheckeredIcon,
   ShieldCheckIcon,
   ShippingContainerIcon,
-
   SwatchesIcon,
   TerminalWindowIcon,
   TextTIcon,
@@ -240,14 +226,6 @@ export const developmentTools: Tool[] = [
     icon: DatabaseIcon,
   },
   {
-    title: "NLP Sandbox",
-    highlight: "Sandbox",
-    url: "/tools/nlp-sandbox",
-    description: "Simulate text cleaning, vectorization, and scaling pipelines with live output.",
-    category: CATEGORIES.development,
-    icon: CircuitryIcon,
-  },
-  {
     title: "Regex Studio",
     highlight: "Studio",
     url: "/tools/regex-studio",
@@ -285,9 +263,10 @@ export const devopsTools: Tool[] = [
   },
   {
     title: "curl Command Builder",
+    highlight: "Builder",
     url: "/tools/curl-builder",
     description:
-      "Build curl commands from a form, or paste a curl command to parse it into structured fields.",
+      "Build curl commands from a form, or paste a curl command to parse it into a visual breakdown.",
     category: CATEGORIES.devops,
     icon: TerminalWindowIcon,
   },
@@ -328,8 +307,9 @@ export const imageTools: Tool[] = [
   },
   {
     title: "QR Generator",
+    highlight: "Generator",
     url: "/tools/qr-generator",
-    description: "Generate downloadable QR codes instantly.",
+    description: "Generate downloadable QR codes instantly — works entirely in your browser..",
     category: CATEGORIES.imagesAssets,
     icon: QrCodeIcon,
   },
@@ -354,22 +334,24 @@ export const imageTools: Tool[] = [
 export const networkTools: Tool[] = [
   {
     title: "HTTP Security Header Analyzer",
+    highlight: "Analyzer",
     url: "/tools/http-security-header-analyzer",
     description:
-      "Grade your HTTP response headers against OWASP best practices and generate a Next.js config.",
+      "Paste raw HTTP response headers and get an OWASP-graded security scorecard with fix recommendations.",
     category: CATEGORIES.network,
     icon: ShieldCheckIcon,
   },
   {
     title: "HTTP Status Reference",
+    highlight: "Reference",
     url: "/tools/http-status",
-    description:
-      "Every standard HTTP status code with descriptions, use cases, and category colour-coding.",
+    description: "Every standard HTTP status code with descriptions and real-world use cases.",
     category: CATEGORIES.network,
     icon: GlobeHemisphereEastIcon,
   },
   {
     title: "Subnet / CIDR Calculator",
+    highlight: "CIDR Calculator",
     url: "/tools/subnet-calculator",
     description:
       "Calculate network address, broadcast, subnet mask, and host ranges from CIDR notation.",
@@ -378,6 +360,7 @@ export const networkTools: Tool[] = [
   },
   {
     title: "URL Parser & Builder",
+    highlight: "Parser & Builder",
     url: "/tools/url-parser",
     description: "Parse, analyze, and rebuild URLs with editable query parameters.",
     category: CATEGORIES.network,
@@ -433,6 +416,7 @@ export const typographyTools: Tool[] = [
   },
   {
     title: "String Case Converter",
+    highlight: "Converter",
     url: "/tools/string-case-converter",
     description: "Convert text between different naming conventions and typographical styles.",
     category: CATEGORIES.typography,
@@ -440,16 +424,18 @@ export const typographyTools: Tool[] = [
   },
   {
     title: "Text Analyzer",
+    highlight: "Analyzer",
     url: "/tools/text-analyzer",
-    description: "Analyze text for word counts, bytes, and estimated LLM tokens.",
+    description: "Count characters, words, bytes, and estimate LLM tokens for any block of text.",
     category: CATEGORIES.typography,
     icon: FileTxtIcon,
   },
   {
     title: "Document Extractor",
+    highlight: "Extractor",
     url: "/tools/document-extractor",
     description:
-      "Extract clean text or LLM-ready Markdown from PDF, DOCX, HTML, CSV, and text files. Optional rich editor, YAML frontmatter, and .md download.",
+      "Extract clean text or LLM-ready Markdown from PDF, DOCX, HTML, CSV, and text files.",
     category: CATEGORIES.typography,
     icon: BookOpenTextIcon,
   },
@@ -458,6 +444,7 @@ export const typographyTools: Tool[] = [
 export const uiStyling: Tool[] = [
   {
     title: "Color Studio",
+    highlight: "Studio",
     url: "/tools/color-studio",
     description:
       "Convert between HEX/RGB/HSL/OKLCH, generate harmonic palettes, and check WCAG contrast — all in one tabbed studio.",
@@ -465,31 +452,26 @@ export const uiStyling: Tool[] = [
     icon: PaletteIcon,
   },
   {
-    title: "CSS Aspect-Ratio Calculator",
-    highlight: "Calculator",
-    url: "/tools/aspect-ratio",
-    description:
-      "Calculate CSS aspect-ratio, Tailwind utility, and legacy padding-bottom values for any dimensions.",
-    category: CATEGORIES.uiStyling,
-    icon: FileCssIcon,
-  },
-  {
     title: "CSS Studio",
+    highlight: "Studio",
     url: "/tools/css-studio",
     description:
       "Border-radius, box-shadow, glassmorphism, cubic-bezier, CSS keyframes, and GSAP animations — all in one tabbed studio.",
     category: CATEGORIES.uiStyling,
-    icon: MagicWandIcon,
+    icon: FileCssIcon,
   },
   {
     title: "Layout Visualizer",
+    highlight: "Visualizer",
     url: "/tools/layout-visualizer",
-    description: "Explore Tailwind Flex and Grid layout properties interactively.",
+    description:
+      "Interactively explore Tailwind Flex and Grid layout properties and see the code in real-time.",
     category: CATEGORIES.uiStyling,
     icon: LayoutIcon,
   },
   {
     title: "Tailwind Studio",
+    highlight: "Studio",
     url: "/tools/tailwind-studio",
     description:
       "Search Tailwind utilities, extract JSX classes into @apply CSS, and generate 50–950 color scales — all in one tabbed studio.",

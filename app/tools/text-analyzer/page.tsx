@@ -1,14 +1,13 @@
 "use client";
 
-import { FileText, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { AnalyzerMetrics, AnalyzerStat } from "@/app/tools/text-analyzer/types";
-import { ToolLayout } from "@/components/layout/tool-layout";
-import { Button } from "@/components/ui/button";
+import { ToolLayout } from "@/components/layout/layout";
 import { Card, CardContent } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { ClearButton } from "@/components/ui/clear-button";
+import { TextAreaField } from "@/components/ui/textarea-field";
+import { internalTools } from "@/lib/tools-data";
 
 function analyze(text: string): AnalyzerMetrics {
   const chars = text.length;
@@ -79,38 +78,20 @@ export default function AnalyzerPage() {
     },
   ];
 
+  const tool = internalTools.find((t) => t.url === "/tools/text-analyzer");
+
   return (
-    <ToolLayout
-      icon={FileText}
-      title="Text"
-      highlight="Analyzer"
-      description="Count characters, words, bytes, and estimate LLM tokens for any block of text."
-    >
+    <ToolLayout tool={tool}>
       <div className="space-y-8">
-        {/* Input */}
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <Label className="text-foreground">Input Text</Label>
-            {text && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setText("")}
-                className="text-muted-foreground hover:text-foreground h-8 gap-2"
-              >
-                <Trash2 size={14} />
-                <span className="text-xs">Clear</span>
-              </Button>
-            )}
-          </div>
-          <Textarea
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="Type or paste text to analyze..."
-            rows={12}
-            className="bg-background border-border text-foreground focus-visible:ring-primary/30 resize-none font-mono text-sm leading-relaxed focus-visible:ring-1"
-          />
-        </div>
+        <TextAreaField
+          label="Input Text"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Type or paste text to analyze..."
+          rows={12}
+          className="resize-none"
+          action={<ClearButton onClick={() => setText("")} disabled={!text} />}
+        />
 
         {/* Metric cards */}
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">

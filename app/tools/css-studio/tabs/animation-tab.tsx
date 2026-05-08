@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Copy, Minus, Plus, RotateCcw } from "lucide-react";
+import { ArrowCounterClockwiseIcon, MinusIcon, PlusIcon } from "@phosphor-icons/react";
 import { useId, useMemo, useState } from "react";
 
 import {
@@ -11,17 +11,11 @@ import {
 } from "@/app/tools/css-studio/animation-presets";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { CopyButton } from "@/components/ui/copy-button";
+import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { SelectField } from "@/components/ui/select-field";
+import { TextAreaField } from "@/components/ui/textarea-field";
 
 export function AnimationTab() {
   const animId = useId().replace(/:/g, "");
@@ -30,7 +24,6 @@ export function AnimationTab() {
   const [timing, setTiming] = useState("ease-out");
   const [iterations, setIterations] = useState("1");
   const [replayKey, setReplayKey] = useState(0);
-  const { copied, copy } = useCopyToClipboard();
 
   function applyPreset(preset: Preset) {
     setKeyframes(preset.keyframes);
@@ -127,17 +120,15 @@ export function AnimationTab() {
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <div className="space-y-6">
           <div className="space-y-2">
-            <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
-              Presets
-            </Label>
+            <Label>Presets</Label>
             <div className="flex flex-wrap gap-2">
               {PRESETS.map((p) => (
                 <Button
                   key={p.label}
-                  variant="outline"
+                  variant={p.label === animId ? "default" : "outline"}
                   size="sm"
                   onClick={() => applyPreset(p)}
-                  className="rounded-full font-semibold"
+                  className="font-semibold"
                 >
                   {p.label}
                 </Button>
@@ -147,11 +138,9 @@ export function AnimationTab() {
 
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
-                Keyframe Stops
-              </Label>
-              <Button variant="outline" size="sm" onClick={addStop} className="rounded-full">
-                <Plus size={12} /> Add Stop
+              <Label>Keyframe Stops</Label>
+              <Button variant="outline" size="sm" onClick={addStop}>
+                <PlusIcon /> Add Stop
               </Button>
             </div>
 
@@ -160,8 +149,8 @@ export function AnimationTab() {
                 <CardContent className="space-y-3">
                   <div className="flex items-center gap-3">
                     <div className="flex-1 space-y-1">
-                      <Label className="text-xs">Percent</Label>
-                      <Input
+                      <InputField
+                        label="Percent"
                         type="number"
                         min={0}
                         max={100}
@@ -169,7 +158,6 @@ export function AnimationTab() {
                         onChange={(e) =>
                           updateStop(stopIdx, "percent", parseInt(e.target.value) || 0)
                         }
-                        className="font-mono"
                       />
                     </div>
                     <Button
@@ -177,35 +165,35 @@ export function AnimationTab() {
                       size="sm"
                       onClick={() => removeStop(stopIdx)}
                       disabled={keyframes.length <= 2}
-                      className="mt-5 rounded-full"
+                      className="mt-5"
                     >
-                      <Minus size={12} />
+                      <MinusIcon />
                     </Button>
                   </div>
 
                   <div className="space-y-2">
                     {kf.properties.map((prop, propIdx) => (
-                      <div key={propIdx} className="flex items-center gap-2">
-                        <Input
+                      <div key={propIdx} className="flex w-full items-center gap-2">
+                        <InputField
                           value={prop.key}
                           onChange={(e) => updateProp(stopIdx, propIdx, "key", e.target.value)}
                           placeholder="property"
-                          className="flex-1 font-mono text-xs"
+                          inputClassName="w-full! flex-1 text-xs"
                         />
-                        <Input
+                        <InputField
                           value={prop.value}
                           onChange={(e) => updateProp(stopIdx, propIdx, "value", e.target.value)}
                           placeholder="value"
-                          className="flex-1 font-mono text-xs"
+                          inputClassName="flex-1 w-full! text-xs"
                         />
                         <Button
                           variant="outline"
                           size="sm"
                           onClick={() => removeProp(stopIdx, propIdx)}
                           disabled={kf.properties.length <= 1}
-                          className="shrink-0 rounded-full"
+                          className="shrink-0"
                         >
-                          <Minus size={12} />
+                          <MinusIcon />
                         </Button>
                       </div>
                     ))}
@@ -213,9 +201,9 @@ export function AnimationTab() {
                       variant="outline"
                       size="sm"
                       onClick={() => addProp(stopIdx)}
-                      className="w-full rounded-full text-xs"
+                      className="w-full gap-2"
                     >
-                      <Plus size={12} /> Add Property
+                      <PlusIcon /> Add Property
                     </Button>
                   </div>
                 </CardContent>
@@ -224,56 +212,36 @@ export function AnimationTab() {
           </div>
 
           <div className="grid grid-cols-3 gap-3">
-            <div className="space-y-2">
-              <Label>Duration (ms)</Label>
-              <Input
-                type="number"
-                min={50}
-                value={duration}
-                onChange={(e) => setDuration(parseInt(e.target.value) || 300)}
-                className="font-mono"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label>Timing</Label>
-              <Select value={timing} onValueChange={(v) => v && setTiming(v)}>
-                <SelectTrigger className="h-10">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {TIMING_FUNCTIONS.map((t) => (
-                    <SelectItem key={t} value={t}>
-                      {t}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label>Iterations</Label>
-              <Input
-                value={iterations}
-                onChange={(e) => setIterations(e.target.value)}
-                placeholder="1 or infinite"
-                className="font-mono"
-              />
-            </div>
+            <InputField
+              label="Duration (ms)"
+              type="number"
+              min={50}
+              value={duration}
+              onChange={(e) => setDuration(parseInt(e.target.value) || 300)}
+            />
+
+            <SelectField
+              label="Timing"
+              value={timing}
+              onValueChange={(v) => v && setTiming(v)}
+              options={TIMING_FUNCTIONS.map((timing) => ({ value: timing, label: timing }))}
+            />
+
+            <InputField
+              label="Iterations"
+              value={iterations}
+              onChange={(e) => setIterations(e.target.value)}
+              placeholder="1 or infinite"
+            />
           </div>
         </div>
 
         <div className="space-y-6">
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
-                Live Preview
-              </Label>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setReplayKey((k) => k + 1)}
-                className="rounded-full font-semibold"
-              >
-                <RotateCcw size={12} /> Replay
+              <Label>Live Preview</Label>
+              <Button variant="outline" size="sm" onClick={() => setReplayKey((k) => k + 1)}>
+                <ArrowCounterClockwiseIcon /> Replay
               </Button>
             </div>
             <div className="border-border bg-muted/20 flex h-52 items-center justify-center rounded-xl border">
@@ -287,28 +255,14 @@ export function AnimationTab() {
             </div>
           </div>
 
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label>Generated CSS</Label>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => copy(cssOutput)}
-                className="rounded-full font-semibold"
-              >
-                {copied ? (
-                  <>
-                    <Check size={12} /> Copied!
-                  </>
-                ) : (
-                  <>
-                    <Copy size={12} /> Copy
-                  </>
-                )}
-              </Button>
-            </div>
-            <Textarea readOnly value={cssOutput} rows={16} className="font-mono text-xs" />
-          </div>
+          <TextAreaField
+            label="Generated CSS"
+            readOnly
+            value={cssOutput}
+            rows={16}
+            className="text-xs"
+            action={<CopyButton value={cssOutput} disabled={!cssOutput} />}
+          />
         </div>
       </div>
     </>

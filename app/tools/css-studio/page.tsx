@@ -2,6 +2,7 @@
 
 import {
   CardsIcon,
+  FrameCornersIcon,
   DropIcon,
   PenNibIcon,
   PlayIcon,
@@ -10,6 +11,7 @@ import {
 } from "@phosphor-icons/react";
 
 import { AnimationTab } from "@/app/tools/css-studio/tabs/animation-tab";
+import { AspectRatioTab } from "@/app/tools/css-studio/tabs/aspect-ratio-tab";
 import { BorderRadiusTab } from "@/app/tools/css-studio/tabs/border-radius-tab";
 import { BoxShadowTab } from "@/app/tools/css-studio/tabs/box-shadow-tab";
 import { CubicBezierTab } from "@/app/tools/css-studio/tabs/cubic-bezier-tab";
@@ -26,10 +28,14 @@ export default function CssStudioPage() {
     <ToolLayout tool={tool}>
       <Tabs defaultValue="border-radius" className="flex flex-col gap-6">
         <div className="flex w-full">
-          <TabsList className="grid w-full max-w-3xl grid-cols-3 sm:grid-cols-6">
+          <TabsList className="grid w-full max-w-3xl grid-cols-4 sm:grid-cols-7">
             <TabsTrigger value="border-radius" className="tab-trigger">
               <SquareIcon weight="duotone" className="size-4.5" />
               Radius
+            </TabsTrigger>
+            <TabsTrigger value="aspect-ratio" className="tab-trigger">
+              <FrameCornersIcon weight="duotone" className="size-4.5" />
+              Ratio
             </TabsTrigger>
             <TabsTrigger value="box-shadow" className="tab-trigger">
               <DropIcon weight="duotone" className="size-4.5" />
@@ -56,6 +62,9 @@ export default function CssStudioPage() {
 
         <TabsContent value="border-radius" className="mt-0">
           <BorderRadiusTab />
+        </TabsContent>
+        <TabsContent value="aspect-ratio" className="mt-0">
+          <AspectRatioTab />
         </TabsContent>
         <TabsContent value="box-shadow" className="mt-0">
           <BoxShadowTab />

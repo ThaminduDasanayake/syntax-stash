@@ -1,11 +1,12 @@
 "use client";
 
-import { Check, Copy, Plus, Terminal, Trash2 } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
 
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { ToolLayout } from "@/components/layout/layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { CopyButton } from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -15,8 +16,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { TextAreaField } from "@/components/ui/textarea-field";
+import { internalTools } from "@/lib/tools-data";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD" | "OPTIONS";
 type AuthType = "none" | "bearer" | "basic" | "api-key";
@@ -63,9 +64,11 @@ function buildCurl(
   }
 
   // Headers
-  headers.filter((h) => h.key).forEach((h) => {
-    parts.push(`-H '${h.key}: ${h.value}'`);
-  });
+  headers
+    .filter((h) => h.key)
+    .forEach((h) => {
+      parts.push(`-H '${h.key}: ${h.value}'`);
+    });
 
   // Body
   if (body.trim()) {
@@ -76,7 +79,9 @@ function buildCurl(
   let fullUrl = url.trim() || "https://api.example.com/endpoint";
   const queryParts = params.filter((p) => p.key);
   if (queryParts.length > 0) {
-    const qs = queryParts.map((p) => `${encodeURIComponent(p.key)}=${encodeURIComponent(p.value)}`).join("&");
+    const qs = queryParts
+      .map((p) => `${encodeURIComponent(p.key)}=${encodeURIComponent(p.value)}`)
+      .join("&");
     fullUrl += (fullUrl.includes("?") ? "&" : "?") + qs;
   }
 
@@ -113,7 +118,9 @@ function parseCurl(raw: string): ParsedCurl {
   }
 
   // Body
-  const bodyMatch = input.match(/(?:--data(?:-raw)?|-d)\s+'([^']+)'|(?:--data(?:-raw)?|-d)\s+"([^"]+)"/);
+  const bodyMatch = input.match(
+    /(?:--data(?:-raw)?|-d)\s+'([^']+)'|(?:--data(?:-raw)?|-d)\s+"([^"]+)"/,
+  );
   if (bodyMatch) result.body = bodyMatch[1] ?? bodyMatch[2] ?? "";
 
   // Auth (-u user:pass)
@@ -135,7 +142,9 @@ export default function CurlBuilderPage() {
   // Build mode state
   const [method, setMethod] = useState<HttpMethod>("GET");
   const [url, setUrl] = useState("https://api.example.com/users");
-  const [headers, setHeaders] = useState<Header[]>([{ key: "Content-Type", value: "application/json" }]);
+  const [headers, setHeaders] = useState<Header[]>([
+    { key: "Content-Type", value: "application/json" },
+  ]);
   const [params, setParams] = useState<Param[]>([{ key: "", value: "" }]);
   const [body, setBody] = useState("");
   const [authType, setAuthType] = useState<AuthType>("none");
@@ -146,35 +155,38 @@ export default function CurlBuilderPage() {
   // Parse mode state
   const [rawCurl, setRawCurl] = useState("");
 
-  const { copied: copiedBuild, copy: copyBuild } = useCopyToClipboard();
-  const { copied: copiedParse, copy: copyParse } = useCopyToClipboard();
-
   const generatedCurl = useMemo(
-    () => buildCurl(method, url, headers, params, body, authType, authValue, followRedirects, verbose),
+    () =>
+      buildCurl(method, url, headers, params, body, authType, authValue, followRedirects, verbose),
     [method, url, headers, params, body, authType, authValue, followRedirects, verbose],
   );
 
   const parsedResult = useMemo(() => (rawCurl.trim() ? parseCurl(rawCurl) : null), [rawCurl]);
 
-  function addHeader() { setHeaders([...headers, { key: "", value: "" }]); }
-  function removeHeader(i: number) { setHeaders(headers.filter((_, idx) => idx !== i)); }
+  function addHeader() {
+    setHeaders([...headers, { key: "", value: "" }]);
+  }
+  function removeHeader(i: number) {
+    setHeaders(headers.filter((_, idx) => idx !== i));
+  }
   function updateHeader(i: number, field: "key" | "value", val: string) {
     setHeaders(headers.map((h, idx) => (idx === i ? { ...h, [field]: val } : h)));
   }
 
-  function addParam() { setParams([...params, { key: "", value: "" }]); }
-  function removeParam(i: number) { setParams(params.filter((_, idx) => idx !== i)); }
+  function addParam() {
+    setParams([...params, { key: "", value: "" }]);
+  }
+  function removeParam(i: number) {
+    setParams(params.filter((_, idx) => idx !== i));
+  }
   function updateParam(i: number, field: "key" | "value", val: string) {
     setParams(params.map((p, idx) => (idx === i ? { ...p, [field]: val } : p)));
   }
 
+  const tool = internalTools.find((t) => t.url === "/tools/curl-builder");
+
   return (
-    <ToolLayout
-      icon={Terminal}
-      title="curl Command"
-      highlight="Builder"
-      description="Build curl commands from form inputs, or paste a curl command to parse it into a visual breakdown."
-    >
+    <ToolLayout tool={tool}>
       {/* Mode toggle */}
       <div className="mb-6 flex gap-2">
         {(["build", "parse"] as Mode[]).map((m) => (
@@ -183,7 +195,7 @@ export default function CurlBuilderPage() {
             variant={mode === m ? "default" : "outline"}
             size="sm"
             onClick={() => setMode(m)}
-            className="rounded-full font-semibold capitalize"
+            className="font-semibold capitalize"
           >
             {m} Mode
           </Button>
@@ -203,7 +215,11 @@ export default function CurlBuilderPage() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {METHODS.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
+                    {METHODS.map((m) => (
+                      <SelectItem key={m} value={m}>
+                        {m}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -215,7 +231,9 @@ export default function CurlBuilderPage() {
 
             {/* Auth */}
             <div className="space-y-3">
-              <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">Authentication</Label>
+              <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
+                Authentication
+              </Label>
               <Select value={authType} onValueChange={(v) => v && setAuthType(v as AuthType)}>
                 <SelectTrigger className="h-10">
                   <SelectValue />
@@ -232,9 +250,11 @@ export default function CurlBuilderPage() {
                   value={authValue}
                   onChange={(e) => setAuthValue(e.target.value)}
                   placeholder={
-                    authType === "bearer" ? "your-token" :
-                    authType === "basic" ? "username:password" :
-                    "your-api-key"
+                    authType === "bearer"
+                      ? "your-token"
+                      : authType === "basic"
+                        ? "username:password"
+                        : "your-api-key"
                   }
                   className="font-mono"
                 />
@@ -244,16 +264,33 @@ export default function CurlBuilderPage() {
             {/* Headers */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">Headers</Label>
+                <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
+                  Headers
+                </Label>
                 <Button variant="outline" size="sm" onClick={addHeader} className="rounded-full">
                   <Plus size={12} /> Add
                 </Button>
               </div>
               {headers.map((h, i) => (
                 <div key={i} className="flex items-center gap-2">
-                  <Input value={h.key} onChange={(e) => updateHeader(i, "key", e.target.value)} placeholder="Key" className="flex-1 font-mono text-xs" />
-                  <Input value={h.value} onChange={(e) => updateHeader(i, "value", e.target.value)} placeholder="Value" className="flex-1 font-mono text-xs" />
-                  <Button variant="outline" size="sm" onClick={() => removeHeader(i)} className="shrink-0 rounded-full">
+                  <Input
+                    value={h.key}
+                    onChange={(e) => updateHeader(i, "key", e.target.value)}
+                    placeholder="Key"
+                    className="flex-1 font-mono text-xs"
+                  />
+                  <Input
+                    value={h.value}
+                    onChange={(e) => updateHeader(i, "value", e.target.value)}
+                    placeholder="Value"
+                    className="flex-1 font-mono text-xs"
+                  />
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => removeHeader(i)}
+                    className="shrink-0 rounded-full"
+                  >
                     <Trash2 size={12} />
                   </Button>
                 </div>
@@ -263,16 +300,33 @@ export default function CurlBuilderPage() {
             {/* Query Params */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">Query Params</Label>
+                <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
+                  Query Params
+                </Label>
                 <Button variant="outline" size="sm" onClick={addParam} className="rounded-full">
                   <Plus size={12} /> Add
                 </Button>
               </div>
               {params.map((p, i) => (
                 <div key={i} className="flex items-center gap-2">
-                  <Input value={p.key} onChange={(e) => updateParam(i, "key", e.target.value)} placeholder="Key" className="flex-1 font-mono text-xs" />
-                  <Input value={p.value} onChange={(e) => updateParam(i, "value", e.target.value)} placeholder="Value" className="flex-1 font-mono text-xs" />
-                  <Button variant="outline" size="sm" onClick={() => removeParam(i)} className="shrink-0 rounded-full">
+                  <Input
+                    value={p.key}
+                    onChange={(e) => updateParam(i, "key", e.target.value)}
+                    placeholder="Key"
+                    className="flex-1 font-mono text-xs"
+                  />
+                  <Input
+                    value={p.value}
+                    onChange={(e) => updateParam(i, "value", e.target.value)}
+                    placeholder="Value"
+                    className="flex-1 font-mono text-xs"
+                  />
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => removeParam(i)}
+                    className="shrink-0 rounded-full"
+                  >
                     <Trash2 size={12} />
                   </Button>
                 </div>
@@ -281,18 +335,34 @@ export default function CurlBuilderPage() {
 
             {/* Body */}
             <div className="space-y-2">
-              <Label>Request Body</Label>
-              <Textarea value={body} onChange={(e) => setBody(e.target.value)} rows={4} placeholder='{ "key": "value" }' className="font-mono text-xs" />
+              <TextAreaField
+                label="Request Body"
+                value={body}
+                onChange={(e) => setBody(e.target.value)}
+                rows={4}
+                placeholder='{ "key": "value" }'
+                className="text-xs"
+              />
             </div>
 
             {/* Flags */}
             <div className="flex items-center gap-6">
               <label className="flex cursor-pointer items-center gap-2 text-sm">
-                <input type="checkbox" checked={followRedirects} onChange={(e) => setFollowRedirects(e.target.checked)} className="accent-primary" />
+                <input
+                  type="checkbox"
+                  checked={followRedirects}
+                  onChange={(e) => setFollowRedirects(e.target.checked)}
+                  className="accent-primary"
+                />
                 <span>Follow redirects (-L)</span>
               </label>
               <label className="flex cursor-pointer items-center gap-2 text-sm">
-                <input type="checkbox" checked={verbose} onChange={(e) => setVerbose(e.target.checked)} className="accent-primary" />
+                <input
+                  type="checkbox"
+                  checked={verbose}
+                  onChange={(e) => setVerbose(e.target.checked)}
+                  className="accent-primary"
+                />
                 <span>Verbose (-v)</span>
               </label>
             </div>
@@ -300,34 +370,29 @@ export default function CurlBuilderPage() {
 
           {/* Right — Output */}
           <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <Label>Generated curl Command</Label>
-              <Button variant="outline" size="sm" onClick={() => copyBuild(generatedCurl)} className="rounded-full font-semibold">
-                {copiedBuild ? <><Check size={12} /> Copied!</> : <><Copy size={12} /> Copy</>}
-              </Button>
-            </div>
-            <Textarea readOnly value={generatedCurl} rows={16} className="font-mono text-xs" />
+            <TextAreaField
+              label="Generated curl Command"
+              readOnly
+              value={generatedCurl}
+              rows={16}
+              className="text-xs"
+              action={<CopyButton value={generatedCurl} disabled={!generatedCurl} />}
+            />
           </div>
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
           {/* Left — Raw input */}
           <div className="space-y-4">
-            <div className="space-y-2">
-              <Label>Paste curl Command</Label>
-              <Textarea
-                value={rawCurl}
-                onChange={(e) => setRawCurl(e.target.value)}
-                rows={16}
-                placeholder={`curl -X POST 'https://api.example.com/users' \\\n  -H 'Authorization: Bearer token' \\\n  -H 'Content-Type: application/json' \\\n  -d '{"name":"Alice"}'`}
-                className="font-mono text-xs"
-              />
-            </div>
-            {parsedResult && (
-              <Button variant="outline" size="sm" onClick={() => copyParse(rawCurl)} className="rounded-full font-semibold">
-                {copiedParse ? <><Check size={12} /> Copied!</> : <><Copy size={12} /> Copy Raw</>}
-              </Button>
-            )}
+            <TextAreaField
+              label="Paste curl Command"
+              value={rawCurl}
+              onChange={(e) => setRawCurl(e.target.value)}
+              rows={16}
+              placeholder={`curl -X POST 'https://api.example.com/users' \\\n  -H 'Authorization: Bearer token' \\\n  -H 'Content-Type: application/json' \\\n  -d '{"name":"Alice"}'`}
+              className="text-xs"
+              action={<CopyButton value={rawCurl} disabled={!rawCurl} />}
+            />
           </div>
 
           {/* Right — Parsed breakdown */}
@@ -336,11 +401,17 @@ export default function CurlBuilderPage() {
               <>
                 <Card>
                   <CardContent>
-                    <p className="text-muted-foreground mb-3 text-xs font-semibold tracking-wider uppercase">Request</p>
+                    <p className="text-muted-foreground mb-3 text-xs font-semibold tracking-wider uppercase">
+                      Request
+                    </p>
                     <div className="space-y-2">
                       <div className="flex items-center gap-3">
-                        <span className="bg-primary text-primary-foreground rounded px-2 py-0.5 font-mono text-xs font-bold">{parsedResult.method}</span>
-                        <span className="text-foreground break-all font-mono text-sm">{parsedResult.url || "—"}</span>
+                        <span className="bg-primary text-primary-foreground rounded px-2 py-0.5 font-mono text-xs font-bold">
+                          {parsedResult.method}
+                        </span>
+                        <span className="text-foreground font-mono text-sm break-all">
+                          {parsedResult.url || "—"}
+                        </span>
                       </div>
                     </div>
                   </CardContent>
@@ -349,12 +420,18 @@ export default function CurlBuilderPage() {
                 {parsedResult.headers.length > 0 && (
                   <Card>
                     <CardContent>
-                      <p className="text-muted-foreground mb-3 text-xs font-semibold tracking-wider uppercase">Headers ({parsedResult.headers.length})</p>
+                      <p className="text-muted-foreground mb-3 text-xs font-semibold tracking-wider uppercase">
+                        Headers ({parsedResult.headers.length})
+                      </p>
                       <div className="space-y-1.5">
                         {parsedResult.headers.map((h, i) => (
                           <div key={i} className="flex items-baseline justify-between gap-2">
-                            <span className="text-foreground font-mono text-xs font-semibold">{h.key}</span>
-                            <span className="text-muted-foreground truncate font-mono text-xs">{h.value}</span>
+                            <span className="text-foreground font-mono text-xs font-semibold">
+                              {h.key}
+                            </span>
+                            <span className="text-muted-foreground truncate font-mono text-xs">
+                              {h.value}
+                            </span>
                           </div>
                         ))}
                       </div>
@@ -365,8 +442,12 @@ export default function CurlBuilderPage() {
                 {parsedResult.body && (
                   <Card>
                     <CardContent>
-                      <p className="text-muted-foreground mb-2 text-xs font-semibold tracking-wider uppercase">Body</p>
-                      <pre className="text-foreground whitespace-pre-wrap break-all font-mono text-xs">{parsedResult.body}</pre>
+                      <p className="text-muted-foreground mb-2 text-xs font-semibold tracking-wider uppercase">
+                        Body
+                      </p>
+                      <pre className="text-foreground font-mono text-xs break-all whitespace-pre-wrap">
+                        {parsedResult.body}
+                      </pre>
                     </CardContent>
                   </Card>
                 )}
@@ -374,7 +455,9 @@ export default function CurlBuilderPage() {
                 {parsedResult.auth && (
                   <Card>
                     <CardContent>
-                      <p className="text-muted-foreground mb-2 text-xs font-semibold tracking-wider uppercase">Auth (-u)</p>
+                      <p className="text-muted-foreground mb-2 text-xs font-semibold tracking-wider uppercase">
+                        Auth (-u)
+                      </p>
                       <p className="text-foreground font-mono text-sm">{parsedResult.auth}</p>
                     </CardContent>
                   </Card>
@@ -383,10 +466,14 @@ export default function CurlBuilderPage() {
                 {parsedResult.flags.length > 0 && (
                   <Card>
                     <CardContent>
-                      <p className="text-muted-foreground mb-2 text-xs font-semibold tracking-wider uppercase">Flags</p>
+                      <p className="text-muted-foreground mb-2 text-xs font-semibold tracking-wider uppercase">
+                        Flags
+                      </p>
                       <div className="space-y-1">
                         {parsedResult.flags.map((f) => (
-                          <p key={f} className="text-foreground font-mono text-sm">{f}</p>
+                          <p key={f} className="text-foreground font-mono text-sm">
+                            {f}
+                          </p>
                         ))}
                       </div>
                     </CardContent>
@@ -395,7 +482,9 @@ export default function CurlBuilderPage() {
               </>
             ) : (
               <div className="border-border flex min-h-60 items-center justify-center rounded-lg border border-dashed">
-                <p className="text-muted-foreground text-sm">Paste a curl command to see the breakdown.</p>
+                <p className="text-muted-foreground text-sm">
+                  Paste a curl command to see the breakdown.
+                </p>
               </div>
             )}
           </div>

@@ -1,19 +1,19 @@
 "use client";
 
-import { Download, FileCode2, FileText, Lightbulb, PenTool } from "lucide-react";
+import { FileMdIcon, LightbulbIcon, PenNibIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
-import RichMarkdownEditor from "@/components/rich-markdown-editor";
+import { ErrorAlert } from "@/components/error-alert";
 import FileDropzone from "@/components/file-dropzone";
-import { ToolLayout } from "@/components/layout/tool-layout";
-import { Button } from "@/components/ui/button";
+import { ToolLayout } from "@/components/layout/layout";
+import RichMarkdownEditor from "@/components/rich-markdown-editor";
 import { CopyButton } from "@/components/ui/copy-button";
-
+import { DownloadButton } from "@/components/ui/download-button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Textarea } from "@/components/ui/textarea";
-import { TextAreaField } from "@/components/ui/textarea-field.tsx";
+import { TextAreaField } from "@/components/ui/textarea-field";
+import { internalTools } from "@/lib/tools-data";
 
 import { composeOutput, downloadMarkdown } from "./helpers";
 
@@ -67,13 +67,10 @@ export default function DocumentExtractorPage() {
 
   const output = composeOutput(markdown, withFrontmatter, fileName);
 
+  const tool = internalTools.find((t) => t.url === "/tools/document-extractor");
+
   return (
-    <ToolLayout
-      icon={FileText}
-      title="Document"
-      highlight="Extractor"
-      description="Extract clean text or LLM-ready Markdown from PDF, DOCX, HTML, CSV, and text files."
-    >
+    <ToolLayout tool={tool}>
       <div className="flex flex-col gap-8">
         {/* Dropzone & Options */}
         <div className="space-y-6">
@@ -90,7 +87,7 @@ export default function DocumentExtractorPage() {
                   {isLoading && <span className="text-primary ml-2">Extracting...</span>}
                 </p>
               )}
-              {error && <p className="text-destructive text-sm">{error}</p>}
+              {error && <ErrorAlert message={error} />}
             </div>
           </div>
 
@@ -118,7 +115,7 @@ export default function DocumentExtractorPage() {
         {llmReady ? (
           <div className="space-y-4">
             <div className="bg-muted/70 text-muted-foreground flex items-center gap-3 rounded-lg border px-4 py-3 text-sm">
-              <Lightbulb className="text-yellow-500" size={18} />
+              <LightbulbIcon weight="duotone" className="size-4.5 text-yellow-500" />
               <p>
                 <strong>Pro tip:</strong> The Rich Editor supports Notion-style commands! Type{" "}
                 <kbd className="bg-background border-border rounded border px-1.5 py-0.5 font-mono text-xs font-semibold">
@@ -140,11 +137,11 @@ export default function DocumentExtractorPage() {
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <TabsList className="w-xs">
                   <TabsTrigger value="rich" className="tab-trigger">
-                    <PenTool size={16} />
+                    <PenNibIcon weight="duotone" className="size-4.5" />
                     Rich Editor
                   </TabsTrigger>
                   <TabsTrigger value="raw" className="tab-trigger">
-                    <FileCode2 size={16} />
+                    <FileMdIcon weight="duotone" className="size-4.5" />
                     Raw Markdown
                   </TabsTrigger>
                 </TabsList>
@@ -163,14 +160,10 @@ export default function DocumentExtractorPage() {
                   </div>
                   <div className="flex gap-2">
                     <CopyButton value={output} disabled={!markdown || isLoading} />
-                    <Button
+                    <DownloadButton
+                      label="Download .md"
                       onClick={() => downloadMarkdown(output, fileName ?? "document")}
-                      disabled={!markdown || isLoading}
-                      variant="secondary"
-                    >
-                      <Download />
-                      Download .md
-                    </Button>
+                    />
                   </div>
                 </div>
               </div>
@@ -194,19 +187,15 @@ export default function DocumentExtractorPage() {
             </Tabs>
           </div>
         ) : (
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <Label className="text-foreground">Extracted Text</Label>
-              <CopyButton value={plainText} disabled={!plainText || isLoading} />
-            </div>
-            <Textarea
-              readOnly
-              value={plainText}
-              rows={18}
-              placeholder="Extracted text will appear here..."
-              className="text-foreground bg-background placeholder:text-muted-foreground resize-none font-mono text-sm leading-relaxed focus-visible:ring-0"
-            />
-          </div>
+          <TextAreaField
+            label="Extracted Text"
+            readOnly
+            value={plainText}
+            rows={18}
+            placeholder="Extracted text will appear here..."
+            className="resize-none text-sm leading-relaxed"
+            action={<CopyButton value={plainText} disabled={!plainText || isLoading} />}
+          />
         )}
       </div>
     </ToolLayout>

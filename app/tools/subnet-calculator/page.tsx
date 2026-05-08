@@ -1,12 +1,12 @@
 "use client";
 
-import { Network } from "lucide-react";
 import { useMemo, useState } from "react";
 
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { ToolLayout } from "@/components/layout/layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { internalTools } from "@/lib/tools-data";
 
 type SubnetResult = {
   networkAddress: string;
@@ -72,16 +72,10 @@ export default function SubnetCalculatorPage() {
 
   const result = useMemo(() => parseSubnet(input), [input]);
 
+  const tool = internalTools.find((t) => t.url === "/tools/subnet-calculator");
+
   return (
-    <ToolLayout
-      icon={Network}
-      title={
-        <>
-          Subnet <span className="text-primary">/</span> CIDR Calculator
-        </>
-      }
-      description="Calculate network address, broadcast, subnet mask, and host ranges from any CIDR notation."
-    >
+    <ToolLayout tool={tool}>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Left — Input */}
         <div className="space-y-6">

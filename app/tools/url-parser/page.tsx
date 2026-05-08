@@ -1,17 +1,16 @@
 "use client";
 
-import { Link, Trash2 } from "lucide-react";
+import { TrashIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { ErrorAlert } from "@/components/error-alert";
+import { ToolLayout } from "@/components/layout/layout";
 import { Button } from "@/components/ui/button";
 import { ClearButton } from "@/components/ui/clear-button";
-
 import { CopyButton } from "@/components/ui/copy-button";
-
 import { InputField } from "@/components/ui/input-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
-import { ErrorAlert } from "@/components/error-alert";
+import { internalTools } from "@/lib/tools-data";
 
 interface ParsedURL {
   protocol: string;
@@ -92,13 +91,10 @@ export default function URLParserPage() {
     setQueryParams(updated);
   };
 
+  const tool = internalTools.find((t) => t.url === "/tools/url-parser");
+
   return (
-    <ToolLayout
-      icon={Link}
-      title="URL"
-      highlight="Parser & Builder"
-      description="Parse, analyze, and rebuild URLs with editable query parameters."
-    >
+    <ToolLayout tool={tool}>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Left: Input */}
         <TextAreaField
@@ -137,7 +133,7 @@ export default function URLParserPage() {
               <p className="text-muted-foreground text-sm">No query parameters</p>
             ) : (
               Object.entries(queryParams).map(([key, value]) => (
-                <div key={key} className="flex gap-2">
+                <div key={key} className="flex items-center gap-2">
                   <InputField
                     placeholder="Parameter name"
                     value={key}
@@ -152,13 +148,8 @@ export default function URLParserPage() {
                     className="flex-1"
                     containerClassName=""
                   />
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleRemoveQueryParam(key)}
-                    className="mt-2"
-                  >
-                    <Trash2 size={16} />
+                  <Button variant="outline" size="sm" onClick={() => handleRemoveQueryParam(key)}>
+                    <TrashIcon weight="duotone" />
                   </Button>
                 </div>
               ))

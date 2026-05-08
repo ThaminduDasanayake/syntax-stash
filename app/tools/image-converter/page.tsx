@@ -1,6 +1,7 @@
 "use client";
 
-import { Archive, Download, ImageIcon, Loader2, Lock, Unlock, Upload, X } from "lucide-react";
+import { CircleNotchIcon, ImageIcon } from "@phosphor-icons/react";
+import { Archive, Download, Lock, Unlock, Upload, X } from "lucide-react";
 import type { ChangeEvent, DragEvent } from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -20,12 +21,13 @@ import {
   ImageFormat,
   ResizeOptions,
 } from "@/app/tools/image-converter/types";
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { ToolLayout } from "@/components/layout/layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
+import { internalTools } from "@/lib/tools-data";
 
 export default function ImageConverterPage() {
   const [images, setImages] = useState<File[]>([]);
@@ -239,19 +241,16 @@ export default function ImageConverterPage() {
           ? formatOptions.avif.quality
           : 90;
 
+  const tool = internalTools.find((t) => t.url === "/tools/image-converter");
+
   return (
-    <ToolLayout
-      icon={ImageIcon}
-      title="Image"
-      highlight="Converter"
-      description="Batch convert, resize, and process images natively in your browser."
-    >
+    <ToolLayout tool={tool}>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Dropzone & Image List */}
         <div className="space-y-6">
           {isReading ? (
             <div className="border-border bg-muted/30 flex h-48 flex-col items-center justify-center gap-3 rounded-xl border border-dashed">
-              <Loader2 className="text-muted-foreground size-8 animate-spin" />
+              <CircleNotchIcon className="text-muted-foreground size-8 animate-spin" />
               <p className="text-muted-foreground animate-pulse text-sm font-medium">
                 Decoding HEIC images...
               </p>
@@ -468,7 +467,7 @@ export default function ImageConverterPage() {
             disabled={converting || images.length === 0}
           >
             {converting ? (
-              <Loader2 className="mr-2 size-5 animate-spin" />
+              <CircleNotchIcon className="mr-2 size-5 animate-spin" />
             ) : (
               <ImageIcon className="mr-2 size-5" />
             )}
