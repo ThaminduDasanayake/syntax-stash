@@ -1,4 +1,4 @@
-import { ClassEntry } from "@/app/tools/tailwind-extractor/helpers";
+import { ClassEntry } from "@/app/tools/tailwind-studio/extractor-helpers";
 import { CopyButton } from "@/components/ui/copy-button";
 import { InputField } from "@/components/ui/input-field";
 

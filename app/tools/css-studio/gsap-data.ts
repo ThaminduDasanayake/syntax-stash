@@ -1,4 +1,4 @@
-import { PositionType } from "@/app/tools/gsap-builder/helpers";
+import { PositionType } from "@/app/tools/css-studio/gsap-helpers";
 
 export const positionOptions = [
   { value: "center", label: "Center" },

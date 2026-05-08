@@ -1,6 +1,6 @@
 import { Check, Copy } from "lucide-react";
 
-import { type PaletteColor } from "@/app/tools/color-palette-generator/harmonies";
+import { type PaletteColor } from "@/app/tools/color-studio/palette-harmonies";
 import { Button } from "@/components/ui/button";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 

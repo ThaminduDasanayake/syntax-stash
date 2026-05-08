@@ -1,4 +1,4 @@
-import { Corners, Mode } from "@/app/tools/border-radius-previewer/data";
+import { Corners, Mode } from "@/app/tools/css-studio/border-radius-data";
 
 export function buildCssBorderRadius(corners: Corners, mode: Mode): string {
   const { tl, tr, br, bl } = corners;

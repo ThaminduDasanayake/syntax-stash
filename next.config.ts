@@ -1,3 +1,4 @@
+import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -14,4 +15,9 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  org: "Thamindu",
+  project: "syntax-stash",
+  sentryUrl: "https://app.glitchtip.com",
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+});

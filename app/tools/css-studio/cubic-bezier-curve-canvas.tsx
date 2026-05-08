@@ -2,7 +2,7 @@
 
 import { useCallback, useRef } from "react";
 
-import { buildCurveSamples } from "./helpers";
+import { buildCurveSamples } from "@/app/tools/css-studio/cubic-bezier-helpers";
 
 type Props = {
   p1x: number; p1y: number;

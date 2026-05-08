@@ -1,10 +1,6 @@
 import * as cheerio from "cheerio";
 import { NextRequest, NextResponse } from "next/server";
 
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
-
 export interface ExtractedData {
   url: string;
   title: string;
@@ -24,10 +20,6 @@ export interface ExtractedData {
   };
   links: string[];
 }
-
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
 
 /** Resolve a potentially relative href against the page origin. */
 function resolveHref(href: string, base: string): string | null {
@@ -52,27 +44,18 @@ function texts($: cheerio.CheerioAPI, selector: string): string[] {
 /** Read a <meta> tag's content, matching by name or property attribute. */
 function meta($: cheerio.CheerioAPI, key: string): string {
   return (
-    $(`meta[name="${key}"]`).attr("content") ??
-    $(`meta[property="${key}"]`).attr("content") ??
-    ""
+    $(`meta[name="${key}"]`).attr("content") ?? $(`meta[property="${key}"]`).attr("content") ?? ""
   );
 }
-
-// ---------------------------------------------------------------------------
-// GET handler
-// ---------------------------------------------------------------------------
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const { searchParams } = req.nextUrl;
   const rawUrl = searchParams.get("url")?.trim();
 
-  // ── 1. Validate the URL parameter ────────────────────────────────────────
+  // Validate the URL parameter
 
   if (!rawUrl) {
-    return NextResponse.json(
-      { error: "Missing required query parameter: url" },
-      { status: 400 },
-    );
+    return NextResponse.json({ error: "Missing required query parameter: url" }, { status: 400 });
   }
 
   let targetUrl: URL;
@@ -88,15 +71,14 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     );
   }
 
-  // ── 2. Fetch the target page ──────────────────────────────────────────────
+  // Fetch the target page
 
   let html: string;
   try {
     const response = await fetch(targetUrl.href, {
       // Identify as a browser so servers don't reject the request outright
       headers: {
-        "User-Agent":
-          "Mozilla/5.0 (compatible; SyntaxStash/1.0; +https://syntax-stash.dev)",
+        "User-Agent": "Mozilla/5.0 (compatible; SyntaxStash/1.0; +https://syntax-stash.dev)",
         Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         "Accept-Language": "en-US,en;q=0.5",
       },
@@ -134,31 +116,25 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ error: `Fetch failed: ${message}` }, { status: 500 });
   }
 
-  // ── 3. Parse with Cheerio ─────────────────────────────────────────────────
+  // Parse with Cheerio
 
   const $ = cheerio.load(html);
   const base = targetUrl.href;
 
   // Title
-  const title =
-    $("title").first().text().trim() ||
-    meta($, "og:title") ||
-    "";
+  const title = $("title").first().text().trim() || meta($, "og:title") || "";
 
   // Description
-  const description =
-    meta($, "description") ||
-    meta($, "og:description") ||
-    "";
+  const description = meta($, "description") || meta($, "og:description") || "";
 
   // Open Graph
   const openGraph = {
-    title:       meta($, "og:title"),
+    title: meta($, "og:title"),
     description: meta($, "og:description"),
-    image:       meta($, "og:image"),
-    url:         meta($, "og:url"),
-    type:        meta($, "og:type"),
-    siteName:    meta($, "og:site_name"),
+    image: meta($, "og:image"),
+    url: meta($, "og:url"),
+    type: meta($, "og:type"),
+    siteName: meta($, "og:site_name"),
   };
 
   // Headings
@@ -180,7 +156,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     }
   });
 
-  // ── 4. Return structured result ───────────────────────────────────────────
+  // Return structured result
 
   const payload: ExtractedData = {
     url: targetUrl.href,

@@ -2,12 +2,10 @@
 
 import { useState } from "react";
 
-import { ToolLayout } from "@/components/layout/layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import { internalTools } from "@/lib/tools-data";
 
 function getBlurClass(blur: number): string {
   if (blur <= 5) return "backdrop-blur-sm";
@@ -49,7 +47,7 @@ function getBorderOpacityClass(borderOpacity: number): string {
   return "border-white";
 }
 
-export default function GlassmorphismPage() {
+export function GlassmorphismTab() {
   const [blur, setBlur] = useState(20);
   const [opacity, setOpacity] = useState(20);
   const [borderOpacity, setBorderOpacity] = useState(50);
@@ -68,14 +66,10 @@ export default function GlassmorphismPage() {
     border: `1px solid rgba(0, 0, 0, ${(borderOpacity / 100).toFixed(2)})`,
   };
 
-  const tool = internalTools.find((t) => t.url === "/tools/glassmorphism-generator");
-
   return (
-    <ToolLayout tool={tool}>
+    <div>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-        {/* Left Column: Controls */}
         <div className="space-y-8 lg:col-span-1">
-          {/* Blur Amount */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <Label>Blur Amount</Label>
@@ -88,13 +82,11 @@ export default function GlassmorphismPage() {
               max={40}
               step={1}
             />
-
             <p className="text-muted-foreground text-xs">
               Controls the blur radius of the background
             </p>
           </div>
 
-          {/* Opacity */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <Label>Opacity</Label>
@@ -107,11 +99,9 @@ export default function GlassmorphismPage() {
               max={100}
               step={1}
             />
-
             <p className="text-muted-foreground text-xs">Controls the background transparency</p>
           </div>
 
-          {/* Border Opacity */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <Label>Border Opacity</Label>
@@ -124,23 +114,21 @@ export default function GlassmorphismPage() {
               max={100}
               step={1}
             />
-
             <p className="text-muted-foreground text-xs">Controls the border transparency</p>
           </div>
         </div>
 
-        {/* Right Column: Preview */}
         <div className="space-y-4 lg:col-span-2">
           <Label>Preview</Label>
           <Card
             className="overflow-hidden"
             style={{
-              background: `linear-gradient(to bottom, 
-                #61bb46 16.6%, 
-                #fdb827 16.6% 33.3%, 
-                #f5821f 33.3% 50%, 
-                #e03a3e 50% 66.6%, 
-                #963d97 66.6% 83.3%, 
+              background: `linear-gradient(to bottom,
+                #61bb46 16.6%,
+                #fdb827 16.6% 33.3%,
+                #f5821f 33.3% 50%,
+                #e03a3e 50% 66.6%,
+                #963d97 66.6% 83.3%,
                 #009cdf 83.3%)`,
             }}
           >
@@ -161,11 +149,9 @@ export default function GlassmorphismPage() {
         </div>
       </div>
 
-      {/* Code Section */}
       <div className="mt-8 space-y-4">
         <Label className="text-foreground text-sm font-semibold">Generated Code</Label>
 
-        {/* CSS Code Block */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <p className="text-foreground text-xs font-medium">CSS</p>
@@ -178,7 +164,6 @@ export default function GlassmorphismPage() {
           </div>
         </div>
 
-        {/* Tailwind Classes Block */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <p className="text-foreground text-xs font-medium">Tailwind Classes</p>
@@ -200,7 +185,6 @@ export default function GlassmorphismPage() {
         </div>
       </div>
 
-      {/* Reference Section */}
       <div className="bg-muted/30 border-border mt-8 space-y-3 rounded-lg border p-4">
         <h4 className="text-foreground text-sm font-semibold">Glassmorphism Tips</h4>
         <div className="text-muted-foreground grid grid-cols-1 gap-4 text-xs md:grid-cols-2">
@@ -226,6 +210,6 @@ export default function GlassmorphismPage() {
           </div>
         </div>
       </div>
-    </ToolLayout>
+    </div>
   );
 }

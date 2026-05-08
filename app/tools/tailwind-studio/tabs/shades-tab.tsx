@@ -1,12 +1,10 @@
 "use client";
 
 import chroma from "chroma-js";
-import { Palette } from "lucide-react";
 import { useMemo, useState } from "react";
 
-import ExportBlock from "@/app/tools/tailwind-shades/export-block";
-import ShadeButton from "@/app/tools/tailwind-shades/shade-button";
-import { ToolLayout } from "@/components/layout/tool-layout";
+import ExportBlock from "@/app/tools/tailwind-studio/export-block";
+import ShadeButton from "@/app/tools/tailwind-studio/shade-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -33,7 +31,7 @@ function generateShades(hex: string): { shade: number; hex: string; oklch: strin
   });
 }
 
-export default function TailwindShadesPage() {
+export function ShadesTab() {
   const [baseColor, setBaseColor] = useState("#c4e456");
   const [colorName, setColorName] = useState("primary");
 
@@ -64,24 +62,17 @@ export default function TailwindShadesPage() {
   }, [shades, colorName]);
 
   return (
-    <ToolLayout
-      icon={Palette}
-      title="Tailwind"
-      highlight="Shades"
-      description="Generate a full 50–950 Tailwind color scale from a single hex value."
-    >
+    <div>
       <div className="mb-8 grid max-w-lg grid-cols-1 gap-10 sm:grid-cols-2">
         <div className="space-y-2">
           <Label>Base Color</Label>
           <div className="flex gap-2">
-            {/* The visual color swatch */}
             <input
               type="color"
               value={baseColor}
               onChange={(e) => setBaseColor(e.target.value)}
               className="h-9 cursor-pointer"
             />
-
             <Input
               value={baseColor}
               onChange={(e) => setBaseColor(e.target.value)}
@@ -98,7 +89,9 @@ export default function TailwindShadesPage() {
           <Label className="text-foreground">Color Name</Label>
           <Input
             value={colorName}
-            onChange={(e) => setColorName(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ""))}
+            onChange={(e) =>
+              setColorName(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ""))
+            }
             placeholder="primary"
           />
         </div>
@@ -106,9 +99,9 @@ export default function TailwindShadesPage() {
 
       {shades.length > 0 && (
         <div className="mb-12 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-          {shades.map(({ shade, hex }) => {
-            return <ShadeButton key={shade} shade={shade} hex={hex} />;
-          })}
+          {shades.map(({ shade, hex }) => (
+            <ShadeButton key={shade} shade={shade} hex={hex} />
+          ))}
         </div>
       )}
 
@@ -120,6 +113,6 @@ export default function TailwindShadesPage() {
           <ExportBlock title="Tailwind Config" code={tailwindConfig} />
         </div>
       )}
-    </ToolLayout>
+    </div>
   );
 }

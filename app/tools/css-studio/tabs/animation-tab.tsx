@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Copy, Minus, Play, Plus, RotateCcw } from "lucide-react";
+import { Check, Copy, Minus, Plus, RotateCcw } from "lucide-react";
 import { useId, useMemo, useState } from "react";
 
 import {
@@ -8,8 +8,7 @@ import {
   type Preset,
   PRESETS,
   TIMING_FUNCTIONS,
-} from "@/app/tools/animation-builder/presets";
-import { ToolLayout } from "@/components/layout/tool-layout";
+} from "@/app/tools/css-studio/animation-presets";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -24,7 +23,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
-export default function AnimationBuilderPage() {
+export function AnimationTab() {
   const animId = useId().replace(/:/g, "");
   const [keyframes, setKeyframes] = useState<Keyframe[]>(PRESETS[0].keyframes);
   const [duration, setDuration] = useState(400);
@@ -123,17 +122,10 @@ export default function AnimationBuilderPage() {
   }, [sortedFrames, animId]);
 
   return (
-    <ToolLayout
-      icon={Play}
-      title="CSS Animation"
-      highlight="Builder"
-      description="Build CSS @keyframes animations visually. Add stops, set properties, and preview the result live."
-    >
+    <>
       <style>{previewKeyframesCss}</style>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {/* Left — Editor */}
         <div className="space-y-6">
-          {/* Presets */}
           <div className="space-y-2">
             <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
               Presets
@@ -153,7 +145,6 @@ export default function AnimationBuilderPage() {
             </div>
           </div>
 
-          {/* Keyframe stops */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
@@ -232,7 +223,6 @@ export default function AnimationBuilderPage() {
             ))}
           </div>
 
-          {/* Animation settings */}
           <div className="grid grid-cols-3 gap-3">
             <div className="space-y-2">
               <Label>Duration (ms)</Label>
@@ -271,9 +261,7 @@ export default function AnimationBuilderPage() {
           </div>
         </div>
 
-        {/* Right — Preview + Output */}
         <div className="space-y-6">
-          {/* Live preview */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
@@ -299,7 +287,6 @@ export default function AnimationBuilderPage() {
             </div>
           </div>
 
-          {/* CSS Output */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label>Generated CSS</Label>
@@ -324,6 +311,6 @@ export default function AnimationBuilderPage() {
           </div>
         </div>
       </div>
-    </ToolLayout>
+    </>
   );
 }

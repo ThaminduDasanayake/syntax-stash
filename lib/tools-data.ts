@@ -1,17 +1,17 @@
 import {
-  ArrowsClockwiseIcon,
+
   AsteriskIcon,
   BinaryIcon,
   BookOpenTextIcon,
   BracketsCurlyIcon,
-  CardsIcon,
+
   CircuitryIcon,
   ClockIcon,
   CodeIcon,
-  CubeIcon,
+
   DatabaseIcon,
-  EyedropperIcon,
-  EyeIcon,
+
+
   FileCssIcon,
   FileCsvIcon,
   FileImageIcon,
@@ -39,17 +39,17 @@ import {
   PaletteIcon,
   PasswordIcon,
   PlaceholderIcon,
-  PlayIcon,
+
   PlusMinusIcon,
   QrCodeIcon,
   RssIcon,
   ScalesIcon,
   ScanIcon,
-  ScissorsIcon,
+
   ShieldCheckeredIcon,
   ShieldCheckIcon,
   ShippingContainerIcon,
-  SquareIcon,
+
   SwatchesIcon,
   TerminalWindowIcon,
   TextTIcon,
@@ -457,36 +457,12 @@ export const typographyTools: Tool[] = [
 
 export const uiStyling: Tool[] = [
   {
-    title: "Border Radius Previewer",
-    highlight: "Previewer",
-    url: "/tools/border-radius-previewer",
+    title: "Color Studio",
+    url: "/tools/color-studio",
     description:
-      "Visually configure CSS border-radius with per-corner sliders and preset shapes. Copy the CSS or Tailwind class.",
-    category: CATEGORIES.uiStyling,
-    icon: SquareIcon,
-  },
-  {
-    title: "Color Palette Generator",
-    url: "/tools/color-palette-generator",
-    description:
-      "Generate complementary, analogous, triadic, and monochromatic palettes from a base color.",
+      "Convert between HEX/RGB/HSL/OKLCH, generate harmonic palettes, and check WCAG contrast — all in one tabbed studio.",
     category: CATEGORIES.uiStyling,
     icon: PaletteIcon,
-  },
-  {
-    title: "Color Space Converter",
-    url: "/tools/color-converter",
-    description: "Convert colors between HEX, RGB, HSL, OKLCH, and more.",
-    category: CATEGORIES.uiStyling,
-    icon: ArrowsClockwiseIcon,
-  },
-  {
-    title: "CSS Animation Builder",
-    url: "/tools/animation-builder",
-    description:
-      "Build CSS @keyframes animations visually with live preview and generated CSS output.",
-    category: CATEGORIES.uiStyling,
-    icon: PlayIcon,
   },
   {
     title: "CSS Aspect-Ratio Calculator",
@@ -498,26 +474,10 @@ export const uiStyling: Tool[] = [
     icon: FileCssIcon,
   },
   {
-    title: "Cubic Bezier Editor",
-    url: "/tools/cubic-bezier",
+    title: "CSS Studio",
+    url: "/tools/css-studio",
     description:
-      "Design custom CSS easing curves with draggable control points and a live preview.",
-    category: CATEGORIES.uiStyling,
-    icon: CubeIcon,
-  },
-  {
-    title: "Glassmorphism Generator",
-    highlight: "Generator",
-    url: "/tools/glassmorphism-generator",
-    description:
-      "Generate beautiful glassmorphism UI elements with backdrop blur and transparency.",
-    category: CATEGORIES.uiStyling,
-    icon: CardsIcon,
-  },
-  {
-    title: "GSAP Builder",
-    url: "/tools/gsap-builder",
-    description: "Visually build GSAP animations and generate optimized React 19 boilerplate.",
+      "Border-radius, box-shadow, glassmorphism, cubic-bezier, CSS keyframes, and GSAP animations — all in one tabbed studio.",
     category: CATEGORIES.uiStyling,
     icon: MagicWandIcon,
   },
@@ -529,41 +489,12 @@ export const uiStyling: Tool[] = [
     icon: LayoutIcon,
   },
   {
-    title: "Shadow Builder",
-    url: "/tools/box-shadow-builder",
-    description: "Visually generate CSS box-shadow styles with live preview.",
-    category: CATEGORIES.uiStyling,
-    icon: SquareIcon,
-  },
-  {
-    title: "Tailwind Extractor Studio",
-    url: "/tools/tailwind-extractor",
+    title: "Tailwind Studio",
+    url: "/tools/tailwind-studio",
     description:
-      "Extract inline Tailwind classes from JSX into @apply-based semantic CSS components.",
-    category: CATEGORIES.uiStyling,
-    icon: ScissorsIcon,
-  },
-  {
-    title: "Tailwind CSS Cheatsheet",
-    url: "/tools/tailwind-cheatsheet",
-    description:
-      "A searchable, filterable reference of the most-used Tailwind utility classes. Click any class to copy it.",
+      "Search Tailwind utilities, extract JSX classes into @apply CSS, and generate 50–950 color scales — all in one tabbed studio.",
     category: CATEGORIES.uiStyling,
     icon: SwatchesIcon,
-  },
-  {
-    title: "Tailwind Shades",
-    url: "/tools/tailwind-shades",
-    description: "Generate a full 50–950 Tailwind color scale from a single hex.",
-    category: CATEGORIES.uiStyling,
-    icon: EyedropperIcon,
-  },
-  {
-    title: "WCAG Contrast Checker",
-    url: "/tools/contrast-checker",
-    description: "Check foreground/background contrast ratios against WCAG AA and AAA standards.",
-    category: CATEGORIES.uiStyling,
-    icon: EyeIcon,
   },
 ];
 
