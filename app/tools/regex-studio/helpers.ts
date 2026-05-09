@@ -1,6 +1,6 @@
 import { parse, type RootNode } from "regjsparser";
 
-import { ParseResult } from "@/app/tools/regex-studio/types.ts";
+import { ParseResult } from "@/app/tools/regex-studio/types";
 
 export function parseRegex(pattern: string, flags: string): ParseResult {
   if (!pattern) return { ok: false, error: "Enter a pattern" };

@@ -1,4 +1,4 @@
-import { RegexCategory } from "@/app/tools/regex-studio/types.ts";
+import { RegexCategory } from "@/app/tools/regex-studio/types";
 
 export const BOX_H = 30;
 export const R = 6; // border radius

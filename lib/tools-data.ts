@@ -297,15 +297,16 @@ export const devopsTools: Tool[] = [
 export const imageTools: Tool[] = [
   {
     title: "ASCII Studio",
+    highlight: "Studio",
     url: "/tools/ascii-studio",
     description:
       "Generate ASCII banners, folder trees, markdown tables, glitch text, and convert images to ASCII art.",
     category: CATEGORIES.imagesAssets,
-    highlight: "Studio",
     icon: TerminalWindowIcon,
   },
   {
     title: "Image Converter",
+    highlight: "Converter",
     url: "/tools/image-converter",
     description: "Batch convert, resize, and process images natively in your browser.",
     category: CATEGORIES.imagesAssets,
@@ -321,6 +322,7 @@ export const imageTools: Tool[] = [
   },
   {
     title: "SVG Optimizer",
+    highlight: "Optimizer",
     url: "/tools/svg-optimizer",
     description: "Minify and clean bloated SVG files with multipass optimization..",
     category: CATEGORIES.imagesAssets,

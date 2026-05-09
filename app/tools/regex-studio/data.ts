@@ -1,4 +1,4 @@
-import { RegexPattern } from "@/app/tools/regex-studio/types.ts";
+import { RegexPattern } from "@/app/tools/regex-studio/types";
 
 export const REGEX_PATTERNS: RegexPattern[] = [
   // Validation
