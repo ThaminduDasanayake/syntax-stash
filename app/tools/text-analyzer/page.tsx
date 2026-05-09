@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 
 import { AnalyzerMetrics, AnalyzerStat } from "@/app/tools/text-analyzer/types";
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { ClearButton } from "@/components/ui/clear-button";
 import { TextAreaField } from "@/components/ui/textarea-field";

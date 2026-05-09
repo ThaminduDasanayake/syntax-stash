@@ -10,7 +10,7 @@ import {
 } from "@/app/tools/ai-prompt-studio/helpers";
 import { PLACEHOLDER, promptTemplates } from "@/app/tools/ai-prompt-studio/prompt-templates";
 import { TokenBadge } from "@/app/tools/ai-prompt-studio/token-badge";
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ClearButton } from "@/components/ui/clear-button";

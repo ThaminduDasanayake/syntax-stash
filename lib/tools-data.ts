@@ -17,6 +17,7 @@ import {
   FingerprintIcon,
   FlaskIcon,
   FlowArrowIcon,
+  FrameCornersIcon,
   GitBranchIcon,
   GlobeHemisphereEastIcon,
   GlobeIcon,
@@ -88,8 +89,9 @@ export const calculatorTools: Tool[] = [
 export const dataTools: Tool[] = [
   {
     title: "Base64 Image Decoder",
+    highlight: "Decoder",
     url: "/tools/base64-image-decoder",
-    description: "Decode and preview base64-encoded images locally.",
+    description: "Decode and preview base64-encoded images directly in your browser.",
     category: CATEGORIES.data,
     icon: FileImageIcon,
   },
@@ -247,14 +249,16 @@ export const developmentTools: Tool[] = [
 export const devopsTools: Tool[] = [
   {
     title: "chmod Calculator",
+    highlight: "Calculator",
     url: "/tools/chmod-calculator",
     description:
-      "Calculate Unix file permissions with a click-to-toggle grid, synced across octal and symbolic formats.",
+      "Calculate Unix file permissions with a click-to-toggle grid. Bidirectionally synced across octal, symbolic, and ls formats.",
     category: CATEGORIES.devops,
     icon: LockIcon,
   },
   {
     title: "Cron Explorer",
+    highlight: "Explorer",
     url: "/tools/cron-explorer",
     description:
       "Translate cron expressions to plain English, and visualize upcoming executions on a timeline.",
@@ -272,7 +276,8 @@ export const devopsTools: Tool[] = [
   },
   {
     title: "Docker Compose Studio",
-    url: "/tools/docker-compose",
+    highlight: "Studio",
+    url: "/tools/docker-compose-studio",
     description:
       "Build compose files visually or convert complex 'docker run' commands into YAML instantly.",
     category: CATEGORIES.devops,
@@ -280,6 +285,7 @@ export const devopsTools: Tool[] = [
   },
   {
     title: "Git Command Cheatsheet",
+    highlight: "Cheatsheet",
     url: "/tools/git-cheatsheet",
     description:
       "A searchable reference of ~70 git commands, organised by intent with danger-level indicators.",
@@ -328,6 +334,15 @@ export const imageTools: Tool[] = [
       "Preview and edit raw SVG 'd' paths with real-time visualization and customizable styling.",
     category: CATEGORIES.imagesAssets,
     icon: FileSvgIcon,
+  },
+  {
+    title: "Placeholder Image Generator",
+    highlight: "Generator",
+    url: "/tools/placeholder-generator",
+    description:
+      "Generate custom placeholder images with configurable dimensions, colors, and text. Download as PNG or copy as a data URL.",
+    category: CATEGORIES.imagesAssets,
+    icon: FrameCornersIcon,
   },
 ];
 
@@ -409,6 +424,7 @@ export const schemaTools: Tool[] = [
 export const typographyTools: Tool[] = [
   {
     title: "CSV to Markdown Table",
+    highlight: "Markdown Table",
     url: "/tools/csv-to-markdown",
     description: "Convert CSV and spreadsheet data into beautifully formatted Markdown tables.",
     category: CATEGORIES.typography,

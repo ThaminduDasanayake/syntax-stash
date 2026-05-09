@@ -1,6 +1,5 @@
 "use client";
 
-import { FileJson } from "lucide-react";
 import { useCallback, useState } from "react";
 
 import { type SampleKey, SAMPLES } from "@/app/tools/json-studio/samples";
@@ -8,7 +7,7 @@ import { FormatTab } from "@/app/tools/json-studio/tabs/format-tab";
 import { OrganizeTab } from "@/app/tools/json-studio/tabs/organize-tab";
 import { QueryTab } from "@/app/tools/json-studio/tabs/query-tab";
 import { TreeTab } from "@/app/tools/json-studio/tabs/tree-tab";
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { ClearButton } from "@/components/ui/clear-button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";

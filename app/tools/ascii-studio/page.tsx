@@ -13,7 +13,7 @@ import { ImageToAsciiTab } from "@/app/tools/ascii-studio/tabs/image-to-ascii-ta
 import { MarkdownTableTab } from "@/app/tools/ascii-studio/tabs/markdown-table-tab";
 import { TextBannerTab } from "@/app/tools/ascii-studio/tabs/text-banner-tab";
 import { ZalgoTextTab } from "@/app/tools/ascii-studio/tabs/zalgo-text-tab";
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { internalTools } from "@/lib/tools-data";
 

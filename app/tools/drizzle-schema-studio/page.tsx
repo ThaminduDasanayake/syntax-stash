@@ -11,11 +11,9 @@ import {
   parseSQLTables,
 } from "@/app/tools/drizzle-schema-studio/helpers";
 import { Mode, PrismaDialect, SQLDialect } from "@/app/tools/drizzle-schema-studio/types";
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { ClearButton } from "@/components/ui/clear-button";
-
 import { CopyButton } from "@/components/ui/copy-button";
-
 import { SelectField } from "@/components/ui/select-field";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TextAreaField } from "@/components/ui/textarea-field";

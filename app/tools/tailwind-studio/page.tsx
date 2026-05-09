@@ -1,11 +1,11 @@
 "use client";
 
-import { ScissorsIcon, SwatchesIcon, EyedropperIcon } from "@phosphor-icons/react";
+import { EyedropperIcon, ScissorsIcon, SwatchesIcon } from "@phosphor-icons/react";
 
 import { CheatsheetTab } from "@/app/tools/tailwind-studio/tabs/cheatsheet-tab";
 import { ExtractorTab } from "@/app/tools/tailwind-studio/tabs/extractor-tab";
 import { ShadesTab } from "@/app/tools/tailwind-studio/tabs/shades-tab";
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { internalTools } from "@/lib/tools-data";
 

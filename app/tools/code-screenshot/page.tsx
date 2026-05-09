@@ -11,7 +11,7 @@ import {
   PLACEHOLDER_CODE,
   THEMES,
 } from "@/app/tools/code-screenshot/constants";
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";

@@ -3,7 +3,7 @@
 import { DownloadIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";

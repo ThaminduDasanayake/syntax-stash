@@ -5,8 +5,8 @@ import { useMemo, useState } from "react";
 
 import { DEFAULT_MARKDOWN } from "@/app/tools/markdown-live-preview/data";
 import { Header } from "@/app/tools/markdown-live-preview/header";
-import { ToolLayout } from "@/components/layout/layout";
 import RichMarkdownEditor from "@/components/rich-markdown-editor";
+import { ToolLayout } from "@/components/tool-layout";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";

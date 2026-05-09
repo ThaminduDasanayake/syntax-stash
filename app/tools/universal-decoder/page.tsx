@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 
 import { detect, localFmt, relativeTime, utcFmt } from "@/app/tools/universal-decoder/helpers";
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";

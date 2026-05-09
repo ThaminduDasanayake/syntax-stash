@@ -23,7 +23,7 @@ import {
   GapSize,
   JustifyContent,
 } from "@/app/tools/layout-visualizer/types";
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";

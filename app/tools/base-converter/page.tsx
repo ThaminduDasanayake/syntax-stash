@@ -13,7 +13,7 @@ import {
   toSigned,
 } from "@/app/tools/base-converter/helpers";
 import PrefixInput from "@/app/tools/base-converter/prefix-input";
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";

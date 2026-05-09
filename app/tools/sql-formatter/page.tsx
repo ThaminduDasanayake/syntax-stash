@@ -3,11 +3,9 @@
 import { useEffect, useState } from "react";
 
 import { ErrorAlert } from "@/components/error-alert";
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { ClearButton } from "@/components/ui/clear-button";
-
 import { CopyButton } from "@/components/ui/copy-button";
-
 import { SelectField } from "@/components/ui/select-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
 import { internalTools } from "@/lib/tools-data";

@@ -16,7 +16,7 @@ export function ToolLayout({ children, tool }: { children: ReactNode; tool: Tool
     <div className="relative z-10 mx-auto flex min-h-full max-w-7xl flex-col px-4 py-8 md:py-12 md:pb-24">
       {/* Back link */}
       <Link
-        href={"/"}
+        href={"/public"}
         className="text-muted-foreground hover:text-foreground mb-8 inline-flex items-center gap-2 text-sm transition-colors"
       >
         <ArrowLeftIcon weight="bold" size={20} />

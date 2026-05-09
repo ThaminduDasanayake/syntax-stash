@@ -1,10 +1,10 @@
 "use client";
 
-import { GitBranch } from "lucide-react";
 import { useMemo, useState } from "react";
 
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Input } from "@/components/ui/input";
+import { internalTools } from "@/lib/tools-data";
 
 import { DANGER_LEVELS, DangerLevel, GIT_CATEGORIES, GIT_COMMANDS } from "./data";
 
@@ -32,9 +32,7 @@ export default function GitCheatsheetPage() {
       const matchesCategory = activeCategory === "All" || cmd.category === activeCategory;
       const matchesDanger = activeDanger === "All" || cmd.danger === activeDanger;
       const matchesSearch =
-        !q ||
-        cmd.command.toLowerCase().includes(q) ||
-        cmd.description.toLowerCase().includes(q);
+        !q || cmd.command.toLowerCase().includes(q) || cmd.description.toLowerCase().includes(q);
       return matchesCategory && matchesDanger && matchesSearch;
     });
   }, [search, activeCategory, activeDanger]);
@@ -45,14 +43,10 @@ export default function GitCheatsheetPage() {
     setTimeout(() => setCopiedCmd(null), 1500);
   }
 
+  const tool = internalTools.find((t) => t.url === "/tools/git-cheatsheet");
+
   return (
-    <ToolLayout
-      icon={GitBranch}
-      title="Git Command"
-      highlight="Cheatsheet"
-      description="A searchable reference of ~70 git commands, organised by intent with danger-level indicators. Click any command to copy it."
-      maxWidth="max-w-7xl"
-    >
+    <ToolLayout tool={tool}>
       <div className="space-y-6">
         {/* Search */}
         <Input
@@ -64,7 +58,9 @@ export default function GitCheatsheetPage() {
 
         {/* Category filter */}
         <div className="space-y-2">
-          <p className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">Category</p>
+          <p className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
+            Category
+          </p>
           <div className="flex flex-wrap gap-2">
             {GIT_CATEGORIES.map((cat) => (
               <button
@@ -84,7 +80,9 @@ export default function GitCheatsheetPage() {
 
         {/* Danger filter */}
         <div className="space-y-2">
-          <p className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">Danger Level</p>
+          <p className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
+            Danger Level
+          </p>
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setActiveDanger("All")}
@@ -114,15 +112,22 @@ export default function GitCheatsheetPage() {
 
         {/* Result count */}
         <p className="text-muted-foreground text-xs">
-          Showing <span className="text-foreground font-semibold">{filtered.length}</span> of {GIT_COMMANDS.length} commands
+          Showing <span className="text-foreground font-semibold">{filtered.length}</span> of{" "}
+          {GIT_COMMANDS.length} commands
         </p>
 
         {/* Table */}
         <div className="border-border overflow-hidden rounded-xl border">
           <div className="border-border bg-muted/50 grid grid-cols-[2fr_3fr_auto] border-b px-4 py-2">
-            <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">Command</span>
-            <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">Description</span>
-            <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">Level</span>
+            <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
+              Command
+            </span>
+            <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
+              Description
+            </span>
+            <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
+              Level
+            </span>
           </div>
 
           <div className="divide-border divide-y">
@@ -159,8 +164,9 @@ export default function GitCheatsheetPage() {
         </div>
 
         <p className="text-muted-foreground text-xs">
-          Click any row to copy the command. <span className="text-yellow-400">Caution</span> commands rewrite history.{" "}
-          <span className="text-red-400">Destructive</span> commands may permanently discard work.
+          Click any row to copy the command. <span className="text-yellow-400">Caution</span>{" "}
+          commands rewrite history. <span className="text-red-400">Destructive</span> commands may
+          permanently discard work.
         </p>
       </div>
     </ToolLayout>

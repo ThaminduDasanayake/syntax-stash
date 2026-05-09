@@ -6,7 +6,7 @@ import { useMemo, useState } from "react";
 import { SCHEMA_DETAILS } from "@/app/tools/mock-data-generator/data";
 import { generate } from "@/app/tools/mock-data-generator/helpers";
 import { SchemaId } from "@/app/tools/mock-data-generator/types";
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";

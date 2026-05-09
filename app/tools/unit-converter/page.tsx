@@ -2,7 +2,7 @@
 
 import { TABS } from "@/app/tools/unit-converter/constants";
 import ConversionGrid from "@/app/tools/unit-converter/conversion-grid";
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { internalTools } from "@/lib/tools-data";
 

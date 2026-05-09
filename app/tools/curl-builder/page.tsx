@@ -1,9 +1,9 @@
 "use client";
 
-import { Plus, Trash2 } from "lucide-react";
+import { PlusIcon, TrashIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
@@ -268,7 +268,7 @@ export default function CurlBuilderPage() {
                   Headers
                 </Label>
                 <Button variant="outline" size="sm" onClick={addHeader} className="rounded-full">
-                  <Plus size={12} /> Add
+                  <PlusIcon weight="duotone" className="size-3.5" /> Add
                 </Button>
               </div>
               {headers.map((h, i) => (
@@ -291,7 +291,7 @@ export default function CurlBuilderPage() {
                     onClick={() => removeHeader(i)}
                     className="shrink-0 rounded-full"
                   >
-                    <Trash2 size={12} />
+                    <TrashIcon weight="duotone" className="size-3.5" />
                   </Button>
                 </div>
               ))}
@@ -304,7 +304,7 @@ export default function CurlBuilderPage() {
                   Query Params
                 </Label>
                 <Button variant="outline" size="sm" onClick={addParam} className="rounded-full">
-                  <Plus size={12} /> Add
+                  <PlusIcon weight="duotone" className="size-3.5" /> Add
                 </Button>
               </div>
               {params.map((p, i) => (
@@ -327,7 +327,7 @@ export default function CurlBuilderPage() {
                     onClick={() => removeParam(i)}
                     className="shrink-0 rounded-full"
                   >
-                    <Trash2 size={12} />
+                    <TrashIcon weight="duotone" className="size-3.5" />
                   </Button>
                 </div>
               ))}

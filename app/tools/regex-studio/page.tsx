@@ -9,13 +9,11 @@ import { REGEX_PATTERNS } from "@/app/tools/regex-studio/data";
 import { parseRegex } from "@/app/tools/regex-studio/helpers";
 import { RegexResult } from "@/app/tools/regex-studio/types";
 import { ErrorAlert } from "@/components/error-alert";
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ClearButton } from "@/components/ui/clear-button";
-
 import { CopyButton } from "@/components/ui/copy-button";
-
 import { Input } from "@/components/ui/input";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";

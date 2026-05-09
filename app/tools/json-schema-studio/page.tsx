@@ -10,13 +10,11 @@ import {
   generateTypeScript,
 } from "@/app/tools/json-schema-studio/helpers";
 import { ErrorAlert } from "@/components/error-alert";
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card.tsx";
 import { ClearButton } from "@/components/ui/clear-button";
-
 import { CopyButton } from "@/components/ui/copy-button";
-
 import { InputField } from "@/components/ui/input-field.tsx";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";

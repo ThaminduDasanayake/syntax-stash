@@ -2,8 +2,8 @@
 
 import {
   CardsIcon,
-  FrameCornersIcon,
   DropIcon,
+  FrameCornersIcon,
   PenNibIcon,
   PlayIcon,
   SparkleIcon,
@@ -17,7 +17,7 @@ import { BoxShadowTab } from "@/app/tools/css-studio/tabs/box-shadow-tab";
 import { CubicBezierTab } from "@/app/tools/css-studio/tabs/cubic-bezier-tab";
 import { GlassmorphismTab } from "@/app/tools/css-studio/tabs/glassmorphism-tab";
 import { GsapTab } from "@/app/tools/css-studio/tabs/gsap-tab";
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { internalTools } from "@/lib/tools-data";
 

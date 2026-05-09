@@ -1,5 +1,5 @@
-import { SERVICE_TEMPLATES } from "@/app/tools/docker-compose/templates";
-import { DockerService, ParseResult, Service } from "@/app/tools/docker-compose/types";
+import { SERVICE_TEMPLATES } from "@/app/tools/docker-compose-studio/templates";
+import { DockerService, ParseResult, Service } from "@/app/tools/docker-compose-studio/types";
 
 export function makeService(templateId: string): Service {
   const tpl = SERVICE_TEMPLATES.find((t) => t.id === templateId) ?? SERVICE_TEMPLATES[0];

@@ -4,7 +4,7 @@ import { TrashIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 
 import { ErrorAlert } from "@/components/error-alert";
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";

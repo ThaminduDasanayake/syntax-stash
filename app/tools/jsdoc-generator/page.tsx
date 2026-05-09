@@ -8,7 +8,7 @@ import {
   parseFunctionSignature,
 } from "@/app/tools/jsdoc-generator/helpers";
 import { ErrorAlert } from "@/components/error-alert";
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";

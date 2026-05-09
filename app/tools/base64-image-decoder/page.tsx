@@ -1,14 +1,14 @@
 "use client";
 
-import { Download, Image as ImageIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 
-import { ToolLayout } from "@/components/layout/tool-layout";
-import { Button } from "@/components/ui/button";
+import { ToolLayout } from "@/components/tool-layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { ClearButton } from "@/components/ui/clear-button";
+import { DownloadButton } from "@/components/ui/download-button";
 import { Label } from "@/components/ui/label";
 import { TextAreaField } from "@/components/ui/textarea-field";
+import { internalTools } from "@/lib/tools-data";
 
 function getImageDataUri(base64String: string): string | null {
   const trimmed = base64String.trim();
@@ -78,15 +78,12 @@ export default function Base64ImagePage() {
     document.body.removeChild(link);
   }
 
+  const tool = internalTools.find((t) => t.url === "/tools/base64-image-decoder");
+
   return (
-    <ToolLayout
-      icon={ImageIcon}
-      title="Base64 Image"
-      highlight="Decoder"
-      description="Decode and preview base64-encoded images directly in your browser."
-    >
+    <ToolLayout tool={tool}>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {/* Left Column: Input */}
+        {/* Input */}
 
         <div className="space-y-3">
           <TextAreaField
@@ -113,7 +110,7 @@ export default function Base64ImagePage() {
           </p>
         </div>
 
-        {/* Right Column: Preview */}
+        {/* Preview */}
         <div className="mt-2.5 space-y-4">
           <Label className="">Preview</Label>
           <Card className="overflow-hidden bg-white">
@@ -143,10 +140,7 @@ export default function Base64ImagePage() {
           </Card>
 
           {isValidImage && base64Input.trim() !== "" && (
-            <Button onClick={handleDownload} className="h-10 w-full gap-2">
-              <Download size={16} />
-              <span>Download Image</span>
-            </Button>
+            <DownloadButton label="Download Image" onClick={handleDownload} />
           )}
         </div>
       </div>

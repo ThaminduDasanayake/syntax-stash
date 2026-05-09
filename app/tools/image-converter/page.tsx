@@ -1,7 +1,15 @@
 "use client";
 
-import { CircleNotchIcon, ImageIcon } from "@phosphor-icons/react";
-import { Archive, Download, Lock, Unlock, Upload, X } from "lucide-react";
+import {
+  ArchiveIcon,
+  CircleNotchIcon,
+  DownloadIcon,
+  ImageIcon,
+  LockIcon,
+  LockOpenIcon,
+  UploadIcon,
+  XIcon,
+} from "@phosphor-icons/react";
 import type { ChangeEvent, DragEvent } from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -21,7 +29,7 @@ import {
   ImageFormat,
   ResizeOptions,
 } from "@/app/tools/image-converter/types";
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -270,7 +278,7 @@ export default function ImageConverterPage() {
                 onChange={handleFileSelect}
                 className="hidden"
               />
-              <Upload className="text-muted-foreground mb-4 size-10" />
+              <UploadIcon weight="duotone" className="text-muted-foreground mb-4 size-10" />
               <p className="text-foreground font-medium">Drop images here</p>
               <p className="text-muted-foreground mt-1 text-xs">
                 Supports PNG, JPEG, WEBP, AVIF, GIF, & HEIC
@@ -310,7 +318,7 @@ export default function ImageConverterPage() {
                       className="size-8"
                       onClick={() => setImages((p) => p.filter((_, idx) => idx !== i))}
                     >
-                      <X className="size-4" />
+                      <XIcon weight="duotone" className="size-4" />
                     </Button>
                   </div>
                 ))}
@@ -442,9 +450,9 @@ export default function ImageConverterPage() {
                   className={`mt-5 rounded-lg border p-2 ${resize.lockAspectRatio ? "bg-primary/10 border-primary text-primary" : "text-muted-foreground"}`}
                 >
                   {resize.lockAspectRatio ? (
-                    <Lock className="size-4" />
+                    <LockIcon weight="duotone" className="size-4" />
                   ) : (
-                    <Unlock className="size-4" />
+                    <LockOpenIcon weight="duotone" className="size-4" />
                   )}
                 </button>
                 <div className="flex-1 space-y-1.5">
@@ -490,7 +498,7 @@ export default function ImageConverterPage() {
                     onClick={downloadAllAsZip}
                     className="h-8 text-xs"
                   >
-                    <Archive className="mr-2 size-3" /> Download ZIP
+                    <ArchiveIcon weight="duotone" className="mr-2 size-3.5" /> Download ZIP
                   </Button>
                 )}
               </div>
@@ -518,7 +526,7 @@ export default function ImageConverterPage() {
                         a.click();
                       }}
                     >
-                      <Download className="size-4" />
+                      <DownloadIcon weight="duotone" className="size-4" />
                     </Button>
                   </div>
                 ))}

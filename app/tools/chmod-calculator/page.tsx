@@ -1,14 +1,14 @@
 "use client";
 
-import { Check, Copy, Lock } from "lucide-react";
 import { useMemo, useState } from "react";
 
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { CopyButton } from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { internalTools } from "@/lib/tools-data";
 
 // Bit layout (index from 0 = least significant):
 // bit 8 = owner read, 7 = owner write, 6 = owner exec
@@ -73,8 +73,6 @@ export default function ChmodCalculatorPage() {
   const [bits, setBits] = useState(0o644);
   const [octalInput, setOctalInput] = useState("644");
   const [symInput, setSymInput] = useState("rw-r--r--");
-  const { copied: copiedCmd, copy: copyCmd } = useCopyToClipboard();
-  const { copied: copiedLs, copy: copyLs } = useCopyToClipboard();
 
   const derived = useMemo(() => {
     const octal = bits.toString(8).padStart(3, "0");
@@ -119,13 +117,10 @@ export default function ChmodCalculatorPage() {
     setSymInput(bitsToSymbolic(presetBits));
   }
 
+  const tool = internalTools.find((t) => t.url === "/tools/chmod-calculator");
+
   return (
-    <ToolLayout
-      icon={Lock}
-      title="chmod"
-      highlight="Calculator"
-      description="Calculate Unix file permissions with a click-to-toggle grid. Bidirectionally synced across octal, symbolic, and ls formats."
-    >
+    <ToolLayout tool={tool}>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Left — Controls */}
         <div className="space-y-6">
@@ -154,14 +149,14 @@ export default function ChmodCalculatorPage() {
             <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
               Permission Grid
             </Label>
-            <div className="overflow-hidden rounded-lg border border-border">
+            <div className="border-border overflow-hidden rounded-lg border">
               {/* Header row */}
-              <div className="grid grid-cols-4 border-b border-border">
+              <div className="border-border grid grid-cols-4 border-b">
                 <div className="bg-muted/50 p-2" />
                 {PERMS.map((p) => (
                   <div
                     key={p}
-                    className="bg-muted/50 p-2 text-center text-xs font-semibold text-muted-foreground"
+                    className="bg-muted/50 text-muted-foreground p-2 text-center text-xs font-semibold"
                   >
                     {p}
                   </div>
@@ -171,9 +166,9 @@ export default function ChmodCalculatorPage() {
               {GROUPS.map((group, gi) => (
                 <div
                   key={group}
-                  className={`grid grid-cols-4 ${gi < 2 ? "border-b border-border" : ""}`}
+                  className={`grid grid-cols-4 ${gi < 2 ? "border-border border-b" : ""}`}
                 >
-                  <div className="flex items-center px-3 py-2 text-xs font-semibold text-muted-foreground">
+                  <div className="text-muted-foreground flex items-center px-3 py-2 text-xs font-semibold">
                     {group}
                   </div>
                   {PERMS.map((_, pi) => {
@@ -182,7 +177,7 @@ export default function ChmodCalculatorPage() {
                       <button
                         key={pi}
                         onClick={() => toggleBit(gi, pi)}
-                        className={`border-l border-border py-3 text-center text-xs font-bold font-mono transition-colors ${
+                        className={`border-border border-l py-3 text-center font-mono text-xs font-bold transition-colors ${
                           isActive
                             ? "bg-primary/15 text-primary"
                             : "text-muted-foreground hover:bg-muted/50"
@@ -234,14 +229,7 @@ export default function ChmodCalculatorPage() {
                 <p className="text-primary font-mono text-3xl font-bold tracking-widest">
                   {derived.ls}
                 </p>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => copyLs(derived.ls)}
-                  className="rounded-full font-semibold"
-                >
-                  {copiedLs ? <><Check size={12} /> Copied!</> : <><Copy size={12} /> Copy</>}
-                </Button>
+                <CopyButton value={derived.ls} disabled={!derived.ls} />
               </div>
             </CardContent>
           </Card>
@@ -253,17 +241,8 @@ export default function ChmodCalculatorPage() {
                 Command
               </p>
               <div className="flex items-center justify-between gap-3">
-                <p className="text-foreground font-mono text-base">
-                  {derived.command}
-                </p>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => copyCmd(derived.command)}
-                  className="shrink-0 rounded-full font-semibold"
-                >
-                  {copiedCmd ? <><Check size={12} /> Copied!</> : <><Copy size={12} /> Copy</>}
-                </Button>
+                <p className="text-foreground font-mono text-base">{derived.command}</p>
+                <CopyButton value={derived.command} disabled={!derived.command} />
               </div>
             </CardContent>
           </Card>

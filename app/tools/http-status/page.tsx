@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { InputField } from "@/components/ui/input-field";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Container, Minus, Plus, Trash2 } from "lucide-react";
+import { MinusIcon, PlusIcon, TrashIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 
 import {
@@ -8,21 +8,20 @@ import {
   generateCompose,
   makeService,
   parseDockerRun,
-} from "@/app/tools/docker-compose/helpers";
-import { EnvVar, Port, Service, TabType, Volume } from "@/app/tools/docker-compose/types";
+} from "@/app/tools/docker-compose-studio/helpers";
+import { EnvVar, Port, Service, TabType, Volume } from "@/app/tools/docker-compose-studio/types";
 import { ErrorAlert } from "@/components/error-alert";
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ClearButton } from "@/components/ui/clear-button";
-
 import { CopyButton } from "@/components/ui/copy-button";
-
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TextAreaField } from "@/components/ui/textarea-field";
+import { internalTools } from "@/lib/tools-data";
 
 import { SERVICE_TEMPLATES } from "./templates";
 
@@ -145,13 +144,10 @@ export default function DockerComposePage() {
     );
   }
 
+  const tool = internalTools.find((t) => t.url === "/tools/docker-compose-studio");
+
   return (
-    <ToolLayout
-      icon={Container}
-      title="Docker Compose"
-      highlight="Studio"
-      description="Build compose files visually or convert complex 'docker run' commands into YAML instantly."
-    >
+    <ToolLayout tool={tool}>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Mode Switcher & Inputs */}
         <div className="flex flex-col">
@@ -180,7 +176,7 @@ export default function DockerComposePage() {
                     options={SERVICE_TEMPLATES.map((tpl) => ({ value: tpl.id, label: tpl.name }))}
                   />
                   <Button onClick={addService} className="font-semibold">
-                    <Plus className="mr-1 size-4" /> Add
+                    <PlusIcon className="mr-1 size-4" /> Add
                   </Button>
                 </div>
               </div>
@@ -212,7 +208,7 @@ export default function DockerComposePage() {
                             size="sm"
                             onClick={() => removeService(svc.id)}
                           >
-                            <Trash2 /> Remove
+                            <TrashIcon weight="duotone" /> Remove
                           </Button>
                         </div>
 
@@ -238,7 +234,7 @@ export default function DockerComposePage() {
                           <div className="flex items-center justify-between">
                             <Label className="text-xs">Ports</Label>
                             <Button size="sm" variant="ghost" onClick={() => addPort(svc.id)}>
-                              <Plus /> Add
+                              <PlusIcon /> Add
                             </Button>
                           </div>
                           {svc.ports.map((p, idx) => (
@@ -261,7 +257,7 @@ export default function DockerComposePage() {
                                 variant="ghost"
                                 onClick={() => removePort(svc.id, idx)}
                               >
-                                <Minus />
+                                <MinusIcon />
                               </Button>
                             </div>
                           ))}
@@ -272,7 +268,7 @@ export default function DockerComposePage() {
                           <div className="flex items-center justify-between">
                             <Label className="text-xs">Environment</Label>
                             <Button size="sm" variant="ghost" onClick={() => addEnv(svc.id)}>
-                              <Plus /> Add
+                              <PlusIcon /> Add
                             </Button>
                           </div>
                           {svc.env.map((e, idx) => (
@@ -293,7 +289,7 @@ export default function DockerComposePage() {
                                 variant="ghost"
                                 onClick={() => removeEnv(svc.id, idx)}
                               >
-                                <Minus />
+                                <MinusIcon />
                               </Button>
                             </div>
                           ))}
@@ -304,7 +300,7 @@ export default function DockerComposePage() {
                           <div className="flex items-center justify-between">
                             <Label className="text-xs">Volumes</Label>
                             <Button size="sm" variant="ghost" onClick={() => addVolume(svc.id)}>
-                              <Plus /> Add
+                              <PlusIcon /> Add
                             </Button>
                           </div>
                           {svc.volumes.map((v, idx) => (
@@ -327,7 +323,7 @@ export default function DockerComposePage() {
                                 variant="ghost"
                                 onClick={() => removeVolume(svc.id, idx)}
                               >
-                                <Minus />
+                                <MinusIcon />
                               </Button>
                             </div>
                           ))}

@@ -5,8 +5,8 @@ import { useState } from "react";
 
 import { ErrorAlert } from "@/components/error-alert";
 import FileDropzone from "@/components/file-dropzone";
-import { ToolLayout } from "@/components/layout/layout";
 import RichMarkdownEditor from "@/components/rich-markdown-editor";
+import { ToolLayout } from "@/components/tool-layout";
 import { CopyButton } from "@/components/ui/copy-button";
 import { DownloadButton } from "@/components/ui/download-button";
 import { Label } from "@/components/ui/label";

@@ -5,7 +5,7 @@ import { ArrowsClockwiseIcon, EyeIcon, PaletteIcon } from "@phosphor-icons/react
 import { ContrastTab } from "@/app/tools/color-studio/tabs/contrast-tab";
 import { ConverterTab } from "@/app/tools/color-studio/tabs/converter-tab";
 import { PaletteTab } from "@/app/tools/color-studio/tabs/palette-tab";
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { internalTools } from "@/lib/tools-data";
 

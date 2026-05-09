@@ -9,7 +9,7 @@ import {
   parseHeaders,
 } from "@/app/tools/http-security-header-analyzer/helpers";
 import { SECURITY_HEADERS } from "@/app/tools/http-security-header-analyzer/rules";
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { ClearButton } from "@/components/ui/clear-button";

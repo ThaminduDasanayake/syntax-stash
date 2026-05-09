@@ -7,7 +7,7 @@ import FilenameCopyButton from "@/app/tools/code-stash/components/filename-copy-
 import SetupCopyButton from "@/app/tools/code-stash/components/setup-copy-button";
 import { LANG_COLORS } from "@/app/tools/code-stash/constants";
 import { Snippet } from "@/app/tools/code-stash/types";
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SearchInput } from "@/components/ui/search-input";

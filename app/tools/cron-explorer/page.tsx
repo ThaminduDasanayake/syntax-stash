@@ -2,18 +2,18 @@
 
 import { CronExpressionParser } from "cron-parser";
 import cronstrue from "cronstrue";
-import { CalendarClock } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
 import { COMMON_TIMEZONES, RANGE_OPTIONS } from "@/app/tools/cron-explorer/constants";
 import { formatDate, relativeTime } from "@/app/tools/cron-explorer/helpers";
 import { CronParsed, Range } from "@/app/tools/cron-explorer/types";
 import { ErrorAlert } from "@/components/error-alert";
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { internalTools } from "@/lib/tools-data";
 
 export default function CronExplorerPage() {
   const [mounted, setMounted] = useState(false);
@@ -71,15 +71,12 @@ export default function CronExplorerPage() {
 
   const localTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
+  const tool = internalTools.find((t) => t.url === "/tools/cron-explorer");
+
   return (
-    <ToolLayout
-      icon={CalendarClock}
-      title="Cron"
-      highlight="Explorer"
-      description="Translate cron expressions to plain English, and visualize upcoming executions on a timeline."
-    >
+    <ToolLayout tool={tool}>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {/* Left Column — Inputs & Translation */}
+        {/* Inputs & Translation */}
         <div className="space-y-6">
           {/* Cron Input */}
           <div className="space-y-2">
@@ -190,7 +187,7 @@ export default function CronExplorerPage() {
           )}
         </div>
 
-        {/* Right Column — Execution Table */}
+        {/* Execution Table */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <Label>Next 20 Executions</Label>

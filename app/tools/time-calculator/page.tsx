@@ -12,7 +12,7 @@ import {
   toLocal,
 } from "@/app/tools/time-calculator/helpers";
 import { MathUnit } from "@/app/tools/time-calculator/types";
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";

@@ -4,12 +4,10 @@ import { useMemo, useState } from "react";
 
 import { PLACEHOLDER } from "@/app/tools/html-to-jsx/data";
 import { convertHtmlToJsx, type ConvertOptions } from "@/app/tools/html-to-jsx/helpers";
-import { ToolLayout } from "@/components/layout/layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { ClearButton } from "@/components/ui/clear-button";
-
 import { CopyButton } from "@/components/ui/copy-button";
-
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";

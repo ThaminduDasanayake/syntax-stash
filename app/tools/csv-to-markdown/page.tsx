@@ -1,15 +1,13 @@
 "use client";
 
-import { TableProperties } from "lucide-react";
 import { useMemo, useState } from "react";
 
-import { ToolLayout } from "@/components/layout/tool-layout";
+import { ToolLayout } from "@/components/tool-layout";
 import { ClearButton } from "@/components/ui/clear-button";
-
 import { CopyButton } from "@/components/ui/copy-button";
-
 import { SelectField } from "@/components/ui/select-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
+import { internalTools } from "@/lib/tools-data";
 
 type DelimiterType = "auto" | "comma" | "tab" | "pipe";
 
@@ -110,15 +108,12 @@ Charlie Brown,charlie@example.com,Manager`);
     { value: "pipe", label: "Pipe (|)" },
   ];
 
+  const tool = internalTools.find((t) => t.url === "/tools/csv-to-markdown");
+
   return (
-    <ToolLayout
-      icon={TableProperties}
-      title="CSV/Spreadsheet"
-      highlight="to Markdown Table"
-      description="Convert CSV and spreadsheet data into beautifully formatted Markdown tables."
-    >
+    <ToolLayout tool={tool}>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {/* Left: Input */}
+        {/* Input */}
         <div className="space-y-4">
           <SelectField
             label="Delimiter"
@@ -137,7 +132,7 @@ Charlie Brown,charlie@example.com,Manager`);
           />
         </div>
 
-        {/* Right: Output */}
+        {/* Output */}
         <TextAreaField
           label="Markdown Table"
           value={markdownTable}
