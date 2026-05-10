@@ -119,7 +119,6 @@ export default function PromptStudioPage() {
             }}
             rows={16}
             placeholder={`Write your prompt here.\nUse {{variable}} syntax for dynamic values.`}
-            className="text-sm"
             action={
               <ClearButton
                 onClick={handleClear}
@@ -176,7 +175,7 @@ export default function PromptStudioPage() {
               label={<TokenBadge text={injectedOutput} />}
               value={injectedOutput}
               readOnly
-              action={<CopyButton value={injectedOutput} disabled={!injectedOutput} />}
+              action={<CopyButton textToCopy={injectedOutput} disabled={!injectedOutput} />}
               containerClassName="flex flex-col"
               textClassName="flex-1 resize-none"
             />
@@ -188,7 +187,7 @@ export default function PromptStudioPage() {
               label={<TokenBadge text={minifiedOutput} />}
               value={minifiedOutput}
               readOnly
-              action={<CopyButton value={minifiedOutput} disabled={!minifiedOutput} />}
+              action={<CopyButton textToCopy={minifiedOutput} disabled={!minifiedOutput} />}
               containerClassName="flex flex-col"
               textClassName="flex-1 resize-none"
             />
@@ -210,7 +209,7 @@ export default function PromptStudioPage() {
                   ? "✨ AI is rewriting and strengthening your prompt..."
                   : "Click the button below to generate a professionally enhanced version of your injected prompt."
               }
-              action={<CopyButton value={enhancedOutput} disabled={!enhancedOutput} />}
+              action={<CopyButton textToCopy={enhancedOutput} disabled={!enhancedOutput} />}
               containerClassName="flex flex-col"
               textClassName={cn("flex-1 resize-none", isEnhancing && "bg-muted/20 animate-pulse")}
             />

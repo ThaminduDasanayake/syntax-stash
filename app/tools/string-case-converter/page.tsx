@@ -127,7 +127,7 @@ export default function StringCaseConverterPage() {
                 value={outputs[key]}
                 readOnly
                 rows={2}
-                action={<CopyButton value={outputs[key]} disabled={!outputs[key]} />}
+                action={<CopyButton textToCopy={outputs[key]} disabled={!outputs[key]} />}
               />
             </div>
           ))}

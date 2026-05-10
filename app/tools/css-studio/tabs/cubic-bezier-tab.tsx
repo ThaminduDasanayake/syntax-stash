@@ -1,6 +1,6 @@
 "use client";
 
-import { Play } from "lucide-react";
+import { PlayIcon } from "@phosphor-icons/react";
 import { useCallback, useRef, useState } from "react";
 
 import { CurveCanvas } from "@/app/tools/css-studio/cubic-bezier-curve-canvas";
@@ -58,7 +58,6 @@ export function CubicBezierTab() {
 
   const cssSnippet = `transition-timing-function: ${cubicBezier};`;
   const tailwindSnippet = `ease-[${cubicBezier}]`;
-  const rawSnippet = cubicBezier;
 
   return (
     <div className="space-y-8">
@@ -66,7 +65,7 @@ export function CubicBezierTab() {
         <div className="space-y-5">
           <div className="flex items-start gap-6">
             <div className="border-border bg-muted/20 rounded-xl border p-2">
-              <CurveCanvas p1x={p1x} p1y={p1y} p2x={p2x} p2y={p2y} onChange={handleChange} />
+              <CurveCanvas p1x={p1x} p1y={p1y} p2x={p2x} p2y={p2y} onChangeAction={handleChange} />
             </div>
 
             <div className="flex-1 space-y-3 pt-1">
@@ -175,8 +174,8 @@ export function CubicBezierTab() {
                 }}
               />
             </div>
-            <Button onClick={handlePlay} variant="outline" size="sm" className="rounded-full">
-              <Play size={12} />
+            <Button onClick={handlePlay} variant="outline" size="sm">
+              <PlayIcon weight="duotone" />
               Play
             </Button>
           </div>
@@ -186,7 +185,7 @@ export function CubicBezierTab() {
             <div className="border-border bg-muted/30 space-y-2 rounded-xl border p-4">
               <OutputRow label="CSS" value={cssSnippet} />
               <OutputRow label="Tailwind" value={tailwindSnippet} />
-              <OutputRow label="Raw" value={rawSnippet} />
+              <OutputRow label="Raw" value={cubicBezier} />
             </div>
           </div>
         </div>
@@ -202,7 +201,7 @@ function OutputRow({ label, value }: { label: string; value: string }) {
       <code className="bg-card flex-1 overflow-x-auto rounded px-2 py-1 font-mono text-xs">
         {value}
       </code>
-      <CopyButton value={value} />
+      <CopyButton textToCopy={value} />
     </div>
   );
 }

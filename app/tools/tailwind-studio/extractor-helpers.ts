@@ -4,7 +4,7 @@ export type ClassEntry = {
   semanticName: string;
 };
 
-export const CLASSNAME_REGEX = /className\s*=\s*(?:"([^"]*)"|\{\s*['"]([^'"]*)['"]\s*\})/g;
+export const CLASSNAME_REGEX = /className\s*=\s*(?:"([^"]*)"|\{\s*['"]([^'"]*)['"]\s*})/g;
 
 // Normalisation
 export function normalizeClasses(raw: string): string {
@@ -33,7 +33,6 @@ export function extractClasses(source: string): string[] {
 export function reconcileEntries(previous: ClassEntry[], extracted: string[]): ClassEntry[] {
   const byClasses = new Map(previous.map((e) => [e.originalClasses, e]));
   const used = new Set(previous.map((e) => e.semanticName));
-  const counter = 1;
 
   return extracted.map((cls) => {
     const prev = byClasses.get(cls);

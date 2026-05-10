@@ -1,6 +1,5 @@
 "use client";
 
-import { DownloadIcon } from "@phosphor-icons/react";
 import { toPng } from "html-to-image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { codeToHtml } from "shiki";
@@ -12,7 +11,7 @@ import {
   THEMES,
 } from "@/app/tools/code-screenshot/constants";
 import { ToolLayout } from "@/components/tool-layout";
-import { Button } from "@/components/ui/button";
+import { DownloadButton } from "@/components/ui/download-button";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
@@ -25,7 +24,7 @@ export default function CodeScreenshotPage() {
   const [code, setCode] = useState(PLACEHOLDER_CODE);
   const [language, setLanguage] = useState("typescript");
   const [theme, setTheme] = useState("github-dark");
-  const [background, setBackground] = useState(BACKGROUNDS[0].id);
+  const [background, setBackground] = useState(BACKGROUNDS[0].value);
   const [padding, setPadding] = useState(64);
   const [fontSize, setFontSize] = useState(14);
   const [showWindow, setShowWindow] = useState(true);
@@ -75,7 +74,7 @@ export default function CodeScreenshotPage() {
   }
 
   const activeBackgroundValue =
-    BACKGROUNDS.find((bg) => bg.id === background)?.value || "transparent";
+    BACKGROUNDS.find((bg) => bg.value === background)?.color || "transparent";
 
   const tool = internalTools.find((t) => t.url === "/tools/code-screenshot");
 
@@ -145,14 +144,14 @@ export default function CodeScreenshotPage() {
 
             <SelectField
               label="Theme"
-              options={THEMES.map((theme) => ({ value: theme.id, label: theme.label }))}
+              options={THEMES}
               value={theme}
               onValueChange={(v) => v && setTheme(v)}
             />
 
             <SelectField
               label="Background"
-              options={BACKGROUNDS.map((bg) => ({ value: bg.id, label: bg.label }))}
+              options={BACKGROUNDS}
               value={background}
               onValueChange={(v) => v && setBackground(v)}
             />
@@ -206,14 +205,12 @@ export default function CodeScreenshotPage() {
               </div>
             </div>
 
-            <Button
+            <DownloadButton
               onClick={handleExport}
               disabled={isExporting || !highlighted}
-              className="w-full gap-2 font-semibold"
-            >
-              <DownloadIcon weight="duotone" className="size-5" />
-              {isExporting ? "Exporting…" : "Download PNG"}
-            </Button>
+              label={isExporting ? "Exporting…" : "Download PNG"}
+              className="w-full"
+            />
           </div>
         </div>
       </div>

@@ -20,8 +20,8 @@ export const REGEX_PATTERNS: RegexPattern[] = [
     description: "Matches HTTP and HTTPS URLs.",
     category: "Validation",
     examples: {
-      match: ["https://example.com", "http://sub.domain.org/path?q=1"],
-      noMatch: ["ftp://example.com", "not-a-url", "//missing-scheme.com"],
+      match: ["https://example.com", "https://sub.domain.org/path?q=1"],
+      noMatch: ["http://example.com", "ftp://example.com", "not-a-url", "//missing-scheme.com"],
     },
   },
   {

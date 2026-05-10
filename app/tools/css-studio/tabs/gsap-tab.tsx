@@ -197,7 +197,7 @@ export function GsapTab() {
           readOnly
           rows={16}
           className="h-full"
-          action={<CopyButton value={generatedCode} disabled={!generatedCode} />}
+          action={<CopyButton textToCopy={generatedCode} disabled={!generatedCode} />}
         />
       </div>
     </div>

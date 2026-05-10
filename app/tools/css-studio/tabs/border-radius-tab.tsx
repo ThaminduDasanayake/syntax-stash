@@ -148,7 +148,7 @@ export function BorderRadiusTab() {
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <Label className="text-xs">CSS</Label>
-            <CopyButton value={`border-radius: ${cssValue};`} />
+            <CopyButton textToCopy={`border-radius: ${cssValue};`} />
           </div>
           <div className="bg-muted/40 border-border overflow-x-auto rounded-lg border px-4 py-3">
             <code className="text-primary font-mono text-sm">border-radius: {cssValue};</code>
@@ -158,7 +158,7 @@ export function BorderRadiusTab() {
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <Label className="text-xs">Tailwind CSS</Label>
-            <CopyButton value={twClass} />
+            <CopyButton textToCopy={twClass} />
           </div>
           <div className="bg-muted/40 border-border overflow-x-auto rounded-lg border px-4 py-3">
             <code className="text-primary font-mono text-sm">{twClass}</code>

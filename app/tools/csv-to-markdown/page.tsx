@@ -139,7 +139,7 @@ Charlie Brown,charlie@example.com,Manager`);
           readOnly
           rows={22}
           placeholder="Your Markdown table will appear here..."
-          action={<CopyButton value={markdownTable} disabled={!markdownTable} />}
+          action={<CopyButton textToCopy={markdownTable} disabled={!markdownTable} />}
         />
       </div>
 

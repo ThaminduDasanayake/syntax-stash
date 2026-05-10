@@ -4,13 +4,13 @@ import { useEffect, useRef, useState } from "react";
 
 type Props = {
   code: string;
-  onError: (err: string | null) => void;
-  onRender: (svg: string) => void;
+  onErrorAction: (err: string | null) => void;
+  onRenderAction: (svg: string) => void;
 };
 
 let idCounter = 0;
 
-export function MermaidPreview({ code, onError, onRender }: Props) {
+export function MermaidPreview({ code, onErrorAction, onRenderAction }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [svg, setSvg] = useState<string>("");
   const [initialized, setInitialized] = useState(false);
@@ -23,7 +23,9 @@ export function MermaidPreview({ code, onError, onRender }: Props) {
       mod.default.initialize({ startOnLoad: false, theme: "dark", securityLevel: "loose" });
       setInitialized(true);
     });
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
@@ -40,16 +42,18 @@ export function MermaidPreview({ code, onError, onRender }: Props) {
         const { svg: rendered } = await mod.default.render(id, code);
         if (cancelled) return;
         setSvg(rendered);
-        onRender(rendered);
-        onError(null);
+        onRenderAction(rendered);
+        onErrorAction(null);
       } catch (e) {
         if (cancelled) return;
-        onError(e instanceof Error ? e.message : "Render error");
+        onErrorAction(e instanceof Error ? e.message : "Render error");
       }
     })();
 
-    return () => { cancelled = true; };
-  }, [code, initialized, onError, onRender]);
+    return () => {
+      cancelled = true;
+    };
+  }, [code, initialized, onErrorAction, onRenderAction]);
 
   if (!svg) {
     return (

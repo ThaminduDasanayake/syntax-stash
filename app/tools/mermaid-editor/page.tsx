@@ -1,6 +1,5 @@
 "use client";
 
-import { DownloadIcon } from "@phosphor-icons/react";
 import { useCallback, useState } from "react";
 
 import { MermaidPreview } from "@/app/tools/mermaid-editor/mermaid-preview";
@@ -10,9 +9,9 @@ import {
   type DiagramType,
 } from "@/app/tools/mermaid-editor/templates";
 import { ToolLayout } from "@/components/tool-layout";
-import { Button } from "@/components/ui/button";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
+import { DownloadButton } from "@/components/ui/download-button";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
@@ -83,7 +82,7 @@ export default function MermaidEditorPage() {
                       setError(null);
                     }}
                   />
-                  <CopyButton value={code} />
+                  <CopyButton textToCopy={code} />
                 </div>
               }
             />
@@ -98,13 +97,19 @@ export default function MermaidEditorPage() {
           <div className="flex flex-col gap-1.5">
             <div className="flex items-center justify-between">
               <Label>Preview</Label>
-              <Button variant="outline" onClick={downloadSvg} disabled={!lastSvg}>
-                <DownloadIcon weight="duotone" className="size-4.5" />
-                Download .svg
-              </Button>
+              <DownloadButton
+                label="Download .svg"
+                variant="outline"
+                onClick={downloadSvg}
+                disabled={!lastSvg}
+              />
             </div>
             <div className="border-border bg-card flex-1 overflow-hidden rounded-xl border">
-              <MermaidPreview code={code} onError={handleError} onRender={handleRender} />
+              <MermaidPreview
+                code={code}
+                onErrorAction={handleError}
+                onRenderAction={handleRender}
+              />
             </div>
           </div>
         </div>

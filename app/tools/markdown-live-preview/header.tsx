@@ -1,7 +1,8 @@
-import { CodeIcon, DownloadIcon, EyeIcon, FileHtmlIcon, PenIcon } from "@phosphor-icons/react";
+import { CodeIcon, EyeIcon, FileHtmlIcon, PenIcon } from "@phosphor-icons/react";
 import { Dispatch, SetStateAction } from "react";
 
 import { Button } from "@/components/ui/button";
+import { DownloadButton } from "@/components/ui/download-button";
 
 type EditorMode = "raw" | "rich";
 
@@ -75,14 +76,18 @@ export function Header({
             </>
           )}
         </Button>
-        <Button variant="outline" onClick={handleDownloadMd} disabled={!markdown}>
-          <DownloadIcon weight="duotone" />
-          .md
-        </Button>
-        <Button variant="outline" onClick={handleDownloadHtml} disabled={!renderedHtml}>
-          <DownloadIcon weight="duotone" />
-          .html
-        </Button>
+        <DownloadButton
+          label=".md"
+          variant="outline"
+          onClick={handleDownloadMd}
+          disabled={!markdown}
+        />
+        <DownloadButton
+          label=".html"
+          variant="outline"
+          onClick={handleDownloadHtml}
+          disabled={!renderedHtml}
+        />
       </div>
     </div>
   );

@@ -155,7 +155,7 @@ export function GlassmorphismTab() {
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <p className="text-foreground text-xs font-medium">CSS</p>
-            <CopyButton labelName="Copy CSS" value={cssCode} />
+            <CopyButton labelName="Copy CSS" textToCopy={cssCode} />
           </div>
           <div className="bg-background border-border overflow-x-auto rounded-lg border p-4">
             <pre className="text-primary font-mono text-xs wrap-break-word whitespace-pre-wrap">
@@ -167,7 +167,7 @@ export function GlassmorphismTab() {
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <p className="text-foreground text-xs font-medium">Tailwind Classes</p>
-            <CopyButton labelName="Copy Tailwind CSS" value={tailwindClasses} />
+            <CopyButton labelName="Copy Tailwind CSS" textToCopy={tailwindClasses} />
           </div>
           <div className="bg-background border-border space-y-3 rounded-lg border p-4">
             <pre className="text-primary font-mono text-xs wrap-break-word whitespace-pre-wrap">

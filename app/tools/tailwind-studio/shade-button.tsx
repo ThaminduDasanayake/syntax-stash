@@ -1,4 +1,4 @@
-import { Check, Copy } from "lucide-react";
+import { CheckIcon, CopyIcon } from "@phosphor-icons/react";
 
 import { Button } from "@/components/ui/button";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
@@ -26,9 +26,9 @@ const ShadeButton = ({ shade, hex }: { shade: number; hex: string }) => {
           <p className="text-muted-foreground truncate text-[10px]">{hex}</p>
           <span>
             {copied ? (
-              <Check className="text-emerald-400" />
+              <CheckIcon className="text-emerald-400" />
             ) : (
-              <Copy className="text-muted-foreground" />
+              <CopyIcon className="text-muted-foreground" />
             )}
           </span>
         </div>

@@ -83,7 +83,7 @@ export function ExtractorTab() {
                 Refactored JSX
               </TabsTrigger>
             </TabsList>
-            <CopyButton value={activeValue} disabled={!activeValue} />
+            <CopyButton textToCopy={activeValue} disabled={!activeValue} />
           </div>
 
           <TabsContent value="css">

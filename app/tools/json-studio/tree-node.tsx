@@ -1,7 +1,18 @@
 "use client";
 
-import { Check, ChevronDown, ChevronRight, Clipboard, Link2, PlayCircle } from "lucide-react";
+import {
+  CaretDownIcon,
+  CaretRightIcon,
+  CheckIcon,
+  ClipboardIcon,
+  LinkSimpleHorizontalIcon,
+  PlayCircleIcon,
+} from "@phosphor-icons/react";
 import { useState } from "react";
+
+import { Button } from "@/components/ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
 import {
   countChildren,
@@ -10,12 +21,6 @@ import {
   matchesSearch,
   subtreeMatches,
 } from "./helpers";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
 type Props = {
   name: string;
@@ -24,7 +29,7 @@ type Props = {
   depth: number;
   searchQuery: string;
   forceExpand: boolean | null;
-  onTestInQuery?: (path: string) => void;
+  onTestInQueryAction?: (path: string) => void;
 };
 
 const TYPE_COLORS: Record<string, string> = {
@@ -41,7 +46,7 @@ function Highlight({ text, query }: { text: string; query: string }) {
   return (
     <>
       {text.slice(0, idx)}
-      <mark className="bg-yellow-300/30 text-yellow-300 rounded-sm px-0.5">
+      <mark className="rounded-sm bg-yellow-300/30 px-0.5 text-yellow-300">
         {text.slice(idx, idx + query.length)}
       </mark>
       {text.slice(idx + query.length)}
@@ -49,32 +54,60 @@ function Highlight({ text, query }: { text: string; query: string }) {
   );
 }
 
-function CopyBtn({ text, icon: Icon }: { text: string; icon: typeof Clipboard }) {
+function CopyBtn({ text, icon: Icon }: { text: string; icon: typeof ClipboardIcon }) {
   const { copied, copy } = useCopyToClipboard();
   return (
-    <button
-      onClick={(e) => { e.stopPropagation(); copy(text); }}
+    <Button
+      onClick={(e) => {
+        e.stopPropagation();
+        copy(text);
+      }}
+      size="xs"
+      variant="ghost"
       className="text-muted-foreground hover:text-foreground rounded p-0.5 opacity-0 transition-opacity group-hover:opacity-100"
       title={`Copy ${text}`}
     >
-      {copied ? <Check size={10} className="text-emerald-400" /> : <Icon size={10} />}
-    </button>
+      {copied ? (
+        <CheckIcon weight="bold" className="text-emerald-400" />
+      ) : (
+        <Icon className="size-4" />
+      )}
+    </Button>
   );
 }
 
-function TestInQueryBtn({ path, onTestInQuery }: { path: string; onTestInQuery: (p: string) => void }) {
+function TestInQueryBtn({
+  path,
+  onTestInQueryAction,
+}: {
+  path: string;
+  onTestInQueryAction: (p: string) => void;
+}) {
   return (
-    <button
-      onClick={(e) => { e.stopPropagation(); onTestInQuery(path); }}
-      className="text-muted-foreground hover:text-primary rounded p-0.5 opacity-0 transition-opacity group-hover:opacity-100"
+    <Button
+      onClick={(e) => {
+        e.stopPropagation();
+        onTestInQueryAction(path);
+      }}
+      size="xs"
+      variant="ghost"
+      className="text-muted-foreground hover:text-primary rounded p-0.5! opacity-0 transition-opacity group-hover:opacity-100"
       title="Test path in Query tab"
     >
-      <PlayCircle size={10} />
-    </button>
+      <PlayCircleIcon weight="duotone" className="size-4" />
+    </Button>
   );
 }
 
-export function TreeNode({ name, value, path, depth, searchQuery, forceExpand, onTestInQuery }: Props) {
+export function TreeNode({
+  name,
+  value,
+  path,
+  depth,
+  searchQuery,
+  forceExpand,
+  onTestInQueryAction,
+}: Props) {
   const type = getValueType(value);
   const isContainer = type === "object" || type === "array";
   const childCount = countChildren(value);
@@ -83,7 +116,7 @@ export function TreeNode({ name, value, path, depth, searchQuery, forceExpand, o
 
   const autoExpand = searchQuery !== "" && childrenMatch;
   const [open, setOpen] = useState(depth < 2);
-  const isOpen = forceExpand !== null ? forceExpand : (autoExpand || open);
+  const isOpen = forceExpand !== null ? forceExpand : autoExpand || open;
 
   const indent = depth * 16;
 
@@ -96,7 +129,7 @@ export function TreeNode({ name, value, path, depth, searchQuery, forceExpand, o
   if (!isContainer) {
     return (
       <div
-        className="group flex items-center gap-1.5 py-0.5 pr-2 hover:bg-white/5 rounded text-sm"
+        className="group flex items-center gap-1.5 rounded py-0.5 pr-2 text-sm hover:bg-white/5"
         style={{ paddingLeft: `${indent + 8}px` }}
       >
         {name && (
@@ -113,9 +146,12 @@ export function TreeNode({ name, value, path, depth, searchQuery, forceExpand, o
           )}
         </span>
         <span className="text-muted-foreground ml-auto flex items-center gap-1">
-          {onTestInQuery && <TestInQueryBtn path={path} onTestInQuery={onTestInQuery} />}
-          <CopyBtn text={path} icon={Link2} />
-          <CopyBtn text={displayValue()} icon={Clipboard} />
+          {onTestInQueryAction && (
+            <TestInQueryBtn path={path} onTestInQueryAction={onTestInQueryAction} />
+          )}
+
+          <CopyBtn text={path} icon={LinkSimpleHorizontalIcon} />
+          <CopyBtn text={displayValue()} icon={ClipboardIcon} />
         </span>
       </div>
     );
@@ -127,19 +163,27 @@ export function TreeNode({ name, value, path, depth, searchQuery, forceExpand, o
     : Object.entries(value as Record<string, JsonValue>);
 
   return (
-    <Collapsible open={isOpen} onOpenChange={(v) => { if (forceExpand === null) setOpen(v); }}>
+    <Collapsible
+      open={isOpen}
+      onOpenChange={(v) => {
+        if (forceExpand === null) setOpen(v);
+      }}
+    >
       <div
-        className="group flex items-center gap-1.5 py-0.5 pr-2 hover:bg-white/5 rounded cursor-pointer"
+        className="group flex cursor-pointer items-center gap-1.5 rounded py-0.5 pr-2 hover:bg-white/5"
         style={{ paddingLeft: `${indent + 2}px` }}
       >
         <CollapsibleTrigger
-          className="flex items-center gap-1.5 flex-1 min-w-0 text-left"
-          onClick={() => { if (forceExpand === null) setOpen((o) => !o); }}
+          className="flex min-w-0 flex-1 items-center gap-1.5 text-left"
+          onClick={() => {
+            if (forceExpand === null) setOpen((o) => !o);
+          }}
         >
-          {isOpen
-            ? <ChevronDown size={12} className="text-muted-foreground shrink-0" />
-            : <ChevronRight size={12} className="text-muted-foreground shrink-0" />
-          }
+          {isOpen ? (
+            <CaretDownIcon size={12} className="text-muted-foreground shrink-0" />
+          ) : (
+            <CaretRightIcon size={12} className="text-muted-foreground shrink-0" />
+          )}
           {name && (
             <>
               <span className="text-muted-foreground font-mono text-xs">
@@ -157,8 +201,10 @@ export function TreeNode({ name, value, path, depth, searchQuery, forceExpand, o
           {!isOpen && <span className="text-muted-foreground font-mono text-xs">{bracket[1]}</span>}
         </CollapsibleTrigger>
         <span className="ml-auto flex items-center gap-1 opacity-0 group-hover:opacity-100">
-          {onTestInQuery && <TestInQueryBtn path={path} onTestInQuery={onTestInQuery} />}
-          <CopyBtn text={path} icon={Link2} />
+          {onTestInQueryAction && (
+            <TestInQueryBtn path={path} onTestInQueryAction={onTestInQueryAction} />
+          )}
+          <CopyBtn text={path} icon={LinkSimpleHorizontalIcon} />
         </span>
       </div>
 
@@ -172,11 +218,11 @@ export function TreeNode({ name, value, path, depth, searchQuery, forceExpand, o
             depth={depth + 1}
             searchQuery={searchQuery}
             forceExpand={forceExpand}
-            onTestInQuery={onTestInQuery}
+            onTestInQueryAction={onTestInQueryAction}
           />
         ))}
         <div
-          className="py-0.5 font-mono text-xs text-muted-foreground"
+          className="text-muted-foreground py-0.5 font-mono text-xs"
           style={{ paddingLeft: `${indent + 8}px` }}
         >
           {bracket[1]}

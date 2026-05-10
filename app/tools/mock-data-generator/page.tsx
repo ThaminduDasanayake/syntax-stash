@@ -46,7 +46,7 @@ export default function MockDataPage() {
         <div className="space-y-6">
           <SelectField
             label="Schema"
-            options={SCHEMA_DETAILS.map(({ value, label }) => ({ value: value, label: label }))}
+            options={SCHEMA_DETAILS}
             value={schema}
             onValueChange={(v) => v && setSchema(v as SchemaId)}
           />
@@ -70,7 +70,7 @@ export default function MockDataPage() {
               <ArrowsClockwiseIcon weight="bold" className={cn(isGenerating && "animate-spin")} />
               {isGenerating ? "Regenerating..." : "Regenerate"}
             </Button>
-            <CopyButton className="text-sm" value={json} disabled={!json} />
+            <CopyButton className="text-sm" textToCopy={json} disabled={!json} />
           </div>
         </div>
 

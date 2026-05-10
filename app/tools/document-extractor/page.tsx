@@ -159,7 +159,7 @@ export default function DocumentExtractorPage() {
                     </Label>
                   </div>
                   <div className="flex gap-2">
-                    <CopyButton value={output} disabled={!markdown || isLoading} />
+                    <CopyButton textToCopy={output} disabled={!markdown || isLoading} />
                     <DownloadButton
                       label="Download .md"
                       onClick={() => downloadMarkdown(output, fileName ?? "document")}
@@ -194,7 +194,7 @@ export default function DocumentExtractorPage() {
             rows={18}
             placeholder="Extracted text will appear here..."
             className="resize-none text-sm leading-relaxed"
-            action={<CopyButton value={plainText} disabled={!plainText || isLoading} />}
+            action={<CopyButton textToCopy={plainText} disabled={!plainText || isLoading} />}
           />
         )}
       </div>

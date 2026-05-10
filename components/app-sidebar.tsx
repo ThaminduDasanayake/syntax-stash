@@ -2,7 +2,7 @@
 
 import {
   BookBookmarkIcon,
-  CaretCircleRightIcon,
+  CaretRightIcon,
   FolderIcon,
   FolderOpenIcon,
   HouseIcon,
@@ -84,13 +84,15 @@ const AppSidebar = () => {
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton
+                asChild
                 tooltip="Home"
                 isActive={pathname === "/"}
                 className="h-9 cursor-pointer group-data-[collapsible=icon]:justify-center"
-                render={<Link href={"/"} onClick={() => setOpenMobile(false)} />}
               >
-                <HouseIcon className="text-primary size-5!" />
-                <span className="group-data-[collapsible=icon]:hidden">Home</span>
+                <Link href={"/"} onClick={() => setOpenMobile(false)}>
+                  <HouseIcon className="text-primary size-5!" />
+                  <span className="group-data-[collapsible=icon]:hidden">Home</span>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
@@ -107,13 +109,15 @@ const AppSidebar = () => {
                 return (
                   <SidebarMenuItem key={tool.url}>
                     <SidebarMenuButton
+                      asChild
                       tooltip={tool.title}
                       isActive={pathname === tool.url}
                       className="h-9 cursor-pointer group-data-[collapsible=icon]:justify-center"
-                      render={<Link href={tool.url} onClick={() => setOpenMobile(false)} />}
                     >
-                      <Icon weight="duotone" className="text-primary size-5! shrink-0" />
-                      <span className="group-data-[collapsible=icon]:hidden">{tool.title}</span>
+                      <Link href={tool.url} onClick={() => setOpenMobile(false)}>
+                        <Icon weight="duotone" className="text-primary size-5! shrink-0" />
+                        <span className="group-data-[collapsible=icon]:hidden">{tool.title}</span>
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 );
@@ -139,32 +143,33 @@ const AppSidebar = () => {
               return (
                 <SidebarMenuItem key={cat}>
                   <SidebarMenuButton
+                    asChild
                     tooltip={cat}
                     isActive={isActive}
                     className="group flex h-9 cursor-pointer justify-between group-data-[collapsible=icon]:justify-center"
-                    render={<Link href={href} onClick={() => setOpenMobile(false)} />}
                   >
-                    {isActive ? (
-                      <FolderOpenIcon
-                        weight="duotone"
-                        className="text-secondary size-5! shrink-0"
-                      />
-                    ) : (
-                      <FolderIcon
-                        weight="duotone"
-                        className="text-muted-foreground size-5! shrink-0"
-                      />
-                    )}
+                    <Link href={href} onClick={() => setOpenMobile(false)}>
+                      {isActive ? (
+                        <FolderOpenIcon
+                          weight="duotone"
+                          className="text-secondary size-5! shrink-0"
+                        />
+                      ) : (
+                        <FolderIcon
+                          weight="duotone"
+                          className="text-muted-foreground size-5! shrink-0"
+                        />
+                      )}
 
-                    <div className="sidebar-text-collapse flex w-full items-center justify-between group-data-[collapsible=icon]:hidden">
-                      <span className="truncate">{cat}</span>
-                      <CaretCircleRightIcon
-                        weight="duotone"
-                        className={`size-4.5! shrink-0 transition-all duration-200 ${
-                          isActive ? "rotate-90" : "rotate-0"
-                        }`}
-                      />
-                    </div>
+                      <div className="sidebar-text-collapse flex w-full items-center justify-between group-data-[collapsible=icon]:hidden">
+                        <span className="truncate">{cat}</span>
+                        <CaretRightIcon
+                          className={`shrink-0 transition-all duration-200 ${
+                            isActive ? "rotate-90" : "rotate-0"
+                          }`}
+                        />
+                      </div>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               );

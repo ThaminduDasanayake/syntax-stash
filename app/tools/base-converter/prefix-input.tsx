@@ -32,7 +32,7 @@ const PrefixInput = ({ label, prefix, value, onChange, placeholder }: PrefixInpu
               className={`font-mono text-sm ${prefix ? "pl-8" : ""}`}
             />
           </div>
-          <CopyButton label={false} value={prefix + value} disabled={!value} />
+          <CopyButton label={false} textToCopy={prefix + value} disabled={!value} />
         </div>
       </CardContent>
     </Card>

@@ -323,7 +323,7 @@ export default function BaseConverterPage() {
                         <code className="flex-1 truncate font-mono text-sm">
                           {bitwiseResult[fmt]}
                         </code>
-                        <CopyButton value={bitwiseResult[fmt]} disabled={false} />
+                        <CopyButton textToCopy={bitwiseResult[fmt]} disabled={false} />
                       </div>
                     ))}
                   </div>

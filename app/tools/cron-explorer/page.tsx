@@ -104,7 +104,7 @@ export default function CronExplorerPage() {
               label="Timeline Range"
               value={range}
               onValueChange={(v) => setRange(v as Range)}
-              options={RANGE_OPTIONS.map((range) => ({ value: range.value, label: range.label }))}
+              options={RANGE_OPTIONS}
             />
           </div>
 

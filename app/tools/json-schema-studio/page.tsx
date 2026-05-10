@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card.tsx";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
-import { InputField } from "@/components/ui/input-field.tsx";
+import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -215,7 +215,7 @@ export default function JsonSchemaStudioPage() {
               </TabsTrigger>
             </TabsList>
             <div className="flex justify-end">
-              <CopyButton value={currentOutput} disabled={!result.ok || !currentOutput} />
+              <CopyButton textToCopy={currentOutput} disabled={!result.ok || !currentOutput} />
             </div>
           </div>
 

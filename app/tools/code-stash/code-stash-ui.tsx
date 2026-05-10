@@ -2,14 +2,12 @@
 
 import { useMemo, useState } from "react";
 
-import CodeCopyButton from "@/app/tools/code-stash/components/code-copy-button";
-import FilenameCopyButton from "@/app/tools/code-stash/components/filename-copy-button";
-import SetupCopyButton from "@/app/tools/code-stash/components/setup-copy-button";
 import { LANG_COLORS } from "@/app/tools/code-stash/constants";
 import { Snippet } from "@/app/tools/code-stash/types";
 import { ToolLayout } from "@/components/tool-layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { CopyButton } from "@/components/ui/copy-button";
 import { SearchInput } from "@/components/ui/search-input";
 import { useFuzzySearch } from "@/hooks/use-fuzzy-search";
 import { internalTools } from "@/lib/tools-data";
@@ -46,7 +44,7 @@ export default function CodeStashUi({ initialSnippets }: { initialSnippets: Snip
     <ToolLayout tool={tool}>
       {/* Split layout */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        {/* Left Column: Directory */}
+        {/* Directory */}
         <div className="flex flex-col lg:col-span-1 lg:max-h-[70vh]">
           {/* Sticky header: search + filters */}
           <div className="sticky top-0 z-10 space-y-3 pb-3">
@@ -167,7 +165,7 @@ export default function CodeStashUi({ initialSnippets }: { initialSnippets: Snip
                     <span className="text-muted-foreground/50 mr-3 select-none">$</span>
                     {activeSnippet.setup}
                   </code>
-                  <SetupCopyButton text={activeSnippet.setup} />
+                  <CopyButton textToCopy={activeSnippet.setup} label={false} variant="ghost" />
                 </div>
               )}
 
@@ -186,11 +184,16 @@ export default function CodeStashUi({ initialSnippets }: { initialSnippets: Snip
                           <span className="h-3 w-3 rounded-full bg-green-500/60" />
                         </div>
 
-                        <FilenameCopyButton filename={file.filename} />
+                        <CopyButton
+                          textToCopy={file.filename}
+                          labelName={file.filename}
+                          copiedLabelName={file.filename}
+                          variant="ghost"
+                          size="xs"
+                        />
                       </div>
 
-                      {/* Copy Code Button */}
-                      <CodeCopyButton code={file.code} />
+                      <CopyButton textToCopy={file.code} variant="ghost" size="xs" />
                     </div>
 
                     <div

@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, X } from "lucide-react";
+import { CheckIcon, XIcon } from "@phosphor-icons/react";
 import { useTheme } from "next-themes";
 import { useMemo, useState } from "react";
 
@@ -47,7 +47,7 @@ function evaluateWcag(ratio: number): WcagLevel {
 function PassFail({ pass }: { pass: boolean }) {
   return (
     <Badge variant={pass ? "default" : "destructive"} className="gap-1">
-      {pass ? <Check className="size-3" /> : <X className="size-3" />}
+      {pass ? <CheckIcon weight="bold" /> : <XIcon weight="bold" />}
       {pass ? "Pass" : "Fail"}
     </Badge>
   );
@@ -166,8 +166,8 @@ export function ContrastTab() {
               body text appears at normal size with your chosen color combination.
             </p>
             <p className="text-sm leading-relaxed" style={{ color: fg }}>
-              Small body text example — check readability at smaller sizes. WCAG defines
-              &quot;large text&quot; as 18pt (24px) or 14pt bold (18.66px).
+              Small body text example — check readability at smaller sizes. WCAG defines &quot;large
+              text&quot; as 18pt (24px) or 14pt bold (18.66px).
             </p>
             <div className="flex items-center gap-4">
               <button

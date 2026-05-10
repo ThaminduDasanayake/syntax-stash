@@ -33,7 +33,7 @@ function makePaletteColor(color: chroma.Color): PaletteColor {
 function rotateHue(base: chroma.Color, degrees: number): chroma.Color {
   const [h, s, l] = base.hsl();
   const safeH = Number.isNaN(h) ? 0 : h;
-  return chroma.hsl(((safeH + degrees) % 360 + 360) % 360, s, l);
+  return chroma.hsl((((safeH + degrees) % 360) + 360) % 360, s, l);
 }
 
 export function generatePalettes(baseHex: string): Palette[] {
@@ -66,11 +66,7 @@ export function generatePalettes(baseHex: string): Palette[] {
   const [h, s] = base.hsl();
   const safeH = Number.isNaN(h) ? 0 : h;
   const monoColors = chroma
-    .scale([
-      chroma.hsl(safeH, s, 0.15),
-      base,
-      chroma.hsl(safeH, Math.max(s - 0.1, 0.1), 0.92),
-    ])
+    .scale([chroma.hsl(safeH, s, 0.15), base, chroma.hsl(safeH, Math.max(s - 0.1, 0.1), 0.92)])
     .mode("lab")
     .colors(7)
     .slice(0, 7)

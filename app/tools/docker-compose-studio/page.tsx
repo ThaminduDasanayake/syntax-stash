@@ -394,7 +394,9 @@ export default function DockerComposePage() {
                 ? "Add a service to generate YAML..."
                 : "Generated compose file will appear here…"
             }
-            action={<CopyButton value={currentYaml} disabled={!currentYaml || !!cliResult.error} />}
+            action={
+              <CopyButton textToCopy={currentYaml} disabled={!currentYaml || !!cliResult.error} />
+            }
           />
         </div>
       </div>

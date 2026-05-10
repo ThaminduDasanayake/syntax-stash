@@ -12,13 +12,13 @@ import { internalTools } from "@/lib/tools-data";
 
 type SqlDialect = "sql" | "mysql" | "postgresql" | "sqlite" | "bigquery" | "transactsql";
 
-const DIALECTS: { id: SqlDialect; label: string }[] = [
-  { id: "sql", label: "Standard SQL" },
-  { id: "mysql", label: "MySQL" },
-  { id: "postgresql", label: "PostgreSQL" },
-  { id: "sqlite", label: "SQLite" },
-  { id: "bigquery", label: "BigQuery" },
-  { id: "transactsql", label: "T-SQL (MSSQL)" },
+const DIALECTS: { value: SqlDialect; label: string }[] = [
+  { value: "sql", label: "Standard SQL" },
+  { value: "mysql", label: "MySQL" },
+  { value: "postgresql", label: "PostgreSQL" },
+  { value: "sqlite", label: "SQLite" },
+  { value: "bigquery", label: "BigQuery" },
+  { value: "transactsql", label: "T-SQL (MSSQL)" },
 ];
 
 const PLACEHOLDER =
@@ -70,7 +70,7 @@ export default function SqlFormatterPage() {
           label="SQL Dialect"
           value={dialect}
           onValueChange={(v) => setDialect(v as SqlDialect)}
-          options={DIALECTS.map((d) => ({ value: d.id, label: d.label }))}
+          options={DIALECTS}
         />
       </div>
 
@@ -103,7 +103,7 @@ export default function SqlFormatterPage() {
             value={output}
             rows={20}
             placeholder={!input ? "Paste unformatted SQL on the left to format SQL" : ""}
-            action={<CopyButton value={output} disabled={!!error || !output} />}
+            action={<CopyButton textToCopy={output} disabled={!!error || !output} />}
           />
         </div>
       </div>

@@ -18,7 +18,7 @@ export default function ColorStudioPage() {
         <div className="flex w-full">
           <TabsList className="grid w-full max-w-lg grid-cols-3">
             <TabsTrigger value="converter" className="tab-trigger">
-              <ArrowsClockwiseIcon weight="duotone" className="size-4.5" />
+              <ArrowsClockwiseIcon className="size-4.5" />
               Converter
             </TabsTrigger>
             <TabsTrigger value="palette" className="tab-trigger">

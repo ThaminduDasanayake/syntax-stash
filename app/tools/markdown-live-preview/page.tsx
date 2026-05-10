@@ -126,13 +126,13 @@ ${renderedHtml}
               containerClassName="min-h-[100vh] h-full flex flex-col"
               textClassName="flex-1 resize-none text-sm"
               spellCheck={false}
-              action={<CopyButton value={renderedHtml} disabled={!renderedHtml} />}
+              action={<CopyButton textToCopy={renderedHtml} disabled={!renderedHtml} />}
             />
           ) : (
             <div className="flex h-full flex-col gap-1.5">
               <div className="flex items-center justify-between">
                 <Label>Preview</Label>
-                <CopyButton value={markdown} disabled={!markdown} />
+                <CopyButton textToCopy={markdown} disabled={!markdown} />
               </div>
 
               <div className="bg-card h-full min-h-[70vh] rounded-lg border px-3 py-2 text-sm">

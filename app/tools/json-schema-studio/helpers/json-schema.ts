@@ -1,4 +1,12 @@
-function inferJsonSchema(value: unknown): Record<string, any> {
+interface JsonSchema {
+  type?: "null" | "string" | "number" | "boolean" | "array" | "object";
+  title?: string;
+  items?: JsonSchema | Record<string, never>;
+  properties?: Record<string, JsonSchema>;
+  required?: string[];
+}
+
+function inferJsonSchema(value: unknown): JsonSchema {
   if (value === null) return { type: "null" };
   if (typeof value === "string") return { type: "string" };
   if (typeof value === "number") return { type: "number" };
@@ -8,7 +16,7 @@ function inferJsonSchema(value: unknown): Record<string, any> {
     return { type: "array", items: inferJsonSchema(value[0]) };
   }
   if (typeof value === "object") {
-    const properties: Record<string, any> = {};
+    const properties: Record<string, JsonSchema> = {};
     const required: string[] = [];
     for (const [k, v] of Object.entries(value)) {
       properties[k] = inferJsonSchema(v);

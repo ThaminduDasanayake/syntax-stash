@@ -81,7 +81,7 @@ export default function JsdocGeneratorPage() {
             rows={12}
             className="resize-y font-mono text-xs"
             placeholder="Generated documentation will appear here…"
-            action={<CopyButton value={documented} disabled={!documented} />}
+            action={<CopyButton textToCopy={documented} disabled={!documented} />}
           />
         </div>
 

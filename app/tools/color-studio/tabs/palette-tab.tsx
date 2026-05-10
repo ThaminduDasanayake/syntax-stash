@@ -1,6 +1,5 @@
 "use client";
 
-import { Check, Copy } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import ColorSwatch from "@/app/tools/color-studio/color-swatch";
@@ -10,18 +9,17 @@ import {
   generatePalettes,
   type Palette as PaletteType,
 } from "@/app/tools/color-studio/palette-harmonies";
-import { Button } from "@/components/ui/button";
+import { CopyButton } from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
 function PaletteSection({ palette }: { palette: PaletteType }) {
   return (
     <div className="border-border bg-card rounded-xl border p-4 shadow-sm">
       <p className="text-foreground mb-3 text-sm font-semibold">{palette.name}</p>
       <div
-        className="grid gap-2"
+        className="grid gap-3"
         style={{ gridTemplateColumns: `repeat(${palette.colors.length}, minmax(0, 1fr))` }}
       >
         {palette.colors.map((color, i) => (
@@ -33,29 +31,11 @@ function PaletteSection({ palette }: { palette: PaletteType }) {
 }
 
 function ExportBlock({ title, code }: { title: string; code: string }) {
-  const { copied, copy } = useCopyToClipboard();
   return (
     <div className="border-border bg-card overflow-hidden rounded-xl border shadow-sm">
       <div className="border-border bg-muted/30 flex items-center justify-between border-b px-4 py-2">
         <h4 className="text-foreground font-mono text-sm font-semibold">{title}</h4>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => copy(code)}
-          className="text-muted-foreground hover:text-foreground h-8"
-        >
-          {copied ? (
-            <>
-              <Check size={14} className="mr-2 text-emerald-400" />
-              <span className="text-emerald-400">Copied</span>
-            </>
-          ) : (
-            <>
-              <Copy size={14} className="mr-2" />
-              <span>Copy</span>
-            </>
-          )}
-        </Button>
+        <CopyButton variant="ghost" textToCopy={code} />
       </div>
       <div className="overflow-x-auto p-4">
         <pre className="text-muted-foreground font-mono text-xs leading-relaxed">

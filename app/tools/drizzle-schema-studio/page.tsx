@@ -90,7 +90,7 @@ export default function DrizzleSchemaStudioPage() {
               rows={24}
               className="h-full"
               placeholder="Your Drizzle schema will appear here..."
-              action={<CopyButton value={sqlOutput} disabled={!sqlOutput} />}
+              action={<CopyButton textToCopy={sqlOutput} disabled={!sqlOutput} />}
             />
           </div>
 
@@ -144,7 +144,7 @@ export default function DrizzleSchemaStudioPage() {
               rows={24}
               className="h-full"
               placeholder="Generated Drizzle schema will appear here..."
-              action={<CopyButton value={prismaOutput} disabled={!prismaOutput} />}
+              action={<CopyButton textToCopy={prismaOutput} disabled={!prismaOutput} />}
             />
           </div>
 

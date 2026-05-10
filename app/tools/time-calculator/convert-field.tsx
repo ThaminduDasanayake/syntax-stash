@@ -1,7 +1,6 @@
 import { ConvertFieldProps } from "@/app/tools/time-calculator/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
-
 import { InputField } from "@/components/ui/input-field";
 
 const ConvertField = ({ label, value, placeholder, onChange }: ConvertFieldProps) => {
@@ -14,7 +13,7 @@ const ConvertField = ({ label, value, placeholder, onChange }: ConvertFieldProps
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           className="w-full font-mono text-sm"
-          action={<CopyButton label={false} value={value} disabled={!value} />}
+          action={<CopyButton label={false} textToCopy={value} disabled={!value} />}
         />
       </CardContent>
     </Card>

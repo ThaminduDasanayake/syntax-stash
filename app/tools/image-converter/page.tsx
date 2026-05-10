@@ -3,7 +3,6 @@
 import {
   ArchiveIcon,
   CircleNotchIcon,
-  DownloadIcon,
   ImageIcon,
   LockIcon,
   LockOpenIcon,
@@ -31,6 +30,7 @@ import {
 } from "@/app/tools/image-converter/types";
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
+import { DownloadButton } from "@/components/ui/download-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
@@ -248,6 +248,13 @@ export default function ImageConverterPage() {
         : targetFormat === "avif"
           ? formatOptions.avif.quality
           : 90;
+
+  const handleDownload = (url: string, name: string) => {
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = name;
+    a.click();
+  };
 
   const tool = internalTools.find((t) => t.url === "/tools/image-converter");
 
@@ -516,18 +523,11 @@ export default function ImageConverterPage() {
                         </span>
                       </div>
                     </div>
-                    <Button
-                      size="sm"
-                      variant="secondary"
-                      onClick={() => {
-                        const a = document.createElement("a");
-                        a.href = img.url;
-                        a.download = img.name;
-                        a.click();
-                      }}
-                    >
-                      <DownloadIcon weight="duotone" className="size-4" />
-                    </Button>
+                    <DownloadButton
+                      label=""
+                      variant="outline"
+                      onClick={() => handleDownload(img.url, img.name)}
+                    />
                   </div>
                 ))}
               </div>

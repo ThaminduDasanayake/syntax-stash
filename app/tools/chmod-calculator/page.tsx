@@ -229,7 +229,7 @@ export default function ChmodCalculatorPage() {
                 <p className="text-primary font-mono text-3xl font-bold tracking-widest">
                   {derived.ls}
                 </p>
-                <CopyButton value={derived.ls} disabled={!derived.ls} />
+                <CopyButton textToCopy={derived.ls} disabled={!derived.ls} />
               </div>
             </CardContent>
           </Card>
@@ -242,7 +242,7 @@ export default function ChmodCalculatorPage() {
               </p>
               <div className="flex items-center justify-between gap-3">
                 <p className="text-foreground font-mono text-base">{derived.command}</p>
-                <CopyButton value={derived.command} disabled={!derived.command} />
+                <CopyButton textToCopy={derived.command} disabled={!derived.command} />
               </div>
             </CardContent>
           </Card>

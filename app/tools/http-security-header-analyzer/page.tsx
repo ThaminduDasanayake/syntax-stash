@@ -123,7 +123,7 @@ export default function HeaderAnalyzerPage() {
               value={NEXT_CONFIG_BLOCK}
               rows={12}
               className="text-xs"
-              action={<CopyButton value={NEXT_CONFIG_BLOCK} />}
+              action={<CopyButton textToCopy={NEXT_CONFIG_BLOCK} />}
             />
           </div>
         </div>

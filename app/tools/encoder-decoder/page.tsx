@@ -93,7 +93,7 @@ export default function EncoderPage() {
           value={output}
           placeholder="Run an action to see the result..."
           rows={8}
-          action={<CopyButton value={output} disabled={!output} />}
+          action={<CopyButton textToCopy={output} disabled={!output} />}
         />
       </div>
     </ToolLayout>

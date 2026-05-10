@@ -210,7 +210,7 @@ export function BoxShadowTab() {
 
       <div className="space-y-6">
         <div className="bg-card rounded-lg border p-8">
-          <div className="flex h-64 items-center justify-center rounded-lg bg-gradient-to-br from-slate-100 to-slate-50">
+          <div className="flex h-64 items-center justify-center rounded-lg bg-linear-to-br from-slate-100 to-slate-50">
             <div
               style={{
                 width: "120px",
@@ -229,7 +229,7 @@ export function BoxShadowTab() {
           value={cssCode}
           readOnly
           rows={3}
-          action={<CopyButton value={cssCode} disabled={false} />}
+          action={<CopyButton textToCopy={cssCode} disabled={false} />}
         />
 
         <div className="bg-muted text-muted-foreground space-y-2 rounded-lg p-4 text-sm">

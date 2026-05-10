@@ -1,10 +1,10 @@
 import { FigletFont } from "./types";
 
-export const FIGLET_FONTS: { id: FigletFont; label: string }[] = [
-  { id: "Standard", label: "Standard" },
-  { id: "Slant", label: "Slant" },
-  { id: "Block", label: "Block" },
-  { id: "Money", label: "Money" },
+export const FIGLET_FONTS: { value: FigletFont; label: string }[] = [
+  { value: "Standard", label: "Standard" },
+  { value: "Slant", label: "Slant" },
+  { value: "Block", label: "Block" },
+  { value: "Money", label: "Money" },
 ];
 
 export const ASCII_RAMP = "@%#*+=-:. ";

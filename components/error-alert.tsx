@@ -1,4 +1,4 @@
-import { AlertTriangle } from "lucide-react";
+import { WarningIcon } from "@phosphor-icons/react/ssr";
 
 interface ErrorAlertProps {
   message: string;
@@ -8,8 +8,8 @@ export function ErrorAlert({ message }: ErrorAlertProps) {
   if (!message) return null;
 
   return (
-    <div className="border-destructive/30 bg-destructive/10 text-destructive flex h-full items-center gap-3 rounded-lg border p-4 text-xs">
-      <AlertTriangle size={18} />
+    <div className="border-destructive/30 bg-destructive/10 text-destructive flex items-center gap-3 rounded-lg border p-4 text-xs">
+      <WarningIcon weight="duotone" size={20} />
       <p className="font-mono">{message}</p>
     </div>
   );

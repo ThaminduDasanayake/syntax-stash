@@ -1,25 +1,24 @@
 "use client";
 
-import { ButtonProps } from "@base-ui/react";
 import { CheckIcon, CopyIcon } from "@phosphor-icons/react";
+import { ComponentProps } from "react";
 
 import { Button } from "@/components/ui/button";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { cn } from "@/lib/utils";
 
-interface CopyButtonProps extends Omit<ButtonProps, "value"> {
-  value: string | (() => string);
+interface CopyButtonProps extends ComponentProps<typeof Button> {
+  textToCopy: string | (() => string);
   label?: boolean;
   labelName?: string;
-  className?: string;
-  variant?: "default" | "outline" | "secondary" | "ghost";
-  size?: "default" | "xs" | "sm" | "lg";
+  copiedLabelName?: string;
 }
 
 export const CopyButton = ({
-  value,
+  textToCopy,
   label = true,
   labelName = "Copy",
+  copiedLabelName = "Copied!",
   className,
   variant = "outline",
   size = "default",
@@ -28,9 +27,9 @@ export const CopyButton = ({
   const { copied, copy } = useCopyToClipboard();
 
   const handleCopy = () => {
-    const textToCopy = typeof value === "function" ? value() : value;
-    if (textToCopy) {
-      copy(textToCopy);
+    const finalString = typeof textToCopy === "function" ? textToCopy() : textToCopy;
+    if (finalString) {
+      copy(finalString);
     }
   };
 
@@ -40,15 +39,18 @@ export const CopyButton = ({
       size={size}
       onClick={handleCopy}
       className={cn(
-        "gap-2 px-4 text-xs font-semibold transition-colors duration-200",
-        copied &&
-          "border-emerald-400/30! bg-emerald-400/20! text-emerald-400 hover:bg-emerald-400/20! hover:text-emerald-400!",
+        "gap-2 px-4 transition-colors duration-200",
+        copied && "text-emerald-400 hover:text-emerald-400!",
         className,
       )}
       {...props}
     >
-      {copied ? <CheckIcon weight="bold" /> : <CopyIcon weight="duotone" className="size-4.5" />}
-      {label && labelName}
+      {copied ? (
+        <CheckIcon weight="bold" className="size-4.5" />
+      ) : (
+        <CopyIcon weight="duotone" className="size-4.5 rotate-y-180" />
+      )}
+      {label && <span>{copied ? copiedLabelName : labelName}</span>}
     </Button>
   );
 };

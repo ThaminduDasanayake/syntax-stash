@@ -1,17 +1,12 @@
-import { Button as ButtonPrimitive } from "@base-ui/react/button";
 import { ArrowCounterClockwiseIcon } from "@phosphor-icons/react/ssr";
-import { ReactNode } from "react";
+import { ComponentProps, ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-export interface ClearButtonProps extends ButtonPrimitive.Props {
+interface ClearButtonProps extends ComponentProps<typeof Button> {
   label?: string;
   icon?: ReactNode | null;
-  className?: string;
-  variant?: "default" | "outline" | "secondary" | "ghost" | "destructive";
-  size?: "default" | "xs" | "sm" | "lg";
-  disabled?: boolean;
 }
 
 export const ClearButton = ({
@@ -26,10 +21,10 @@ export const ClearButton = ({
     <Button
       variant={variant}
       size={size}
-      className={cn("gap-2 px-4 text-xs font-semibold transition-colors duration-200", className)}
+      className={cn("gap-2 px-4 transition-colors duration-200", className)}
       {...props}
     >
-      {icon}
+      {icon && icon}
       {label}
     </Button>
   );

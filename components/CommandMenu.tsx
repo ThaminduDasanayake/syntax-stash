@@ -1,10 +1,11 @@
 "use client";
 
-import { BookMarked, Wrench } from "lucide-react";
+import { BookmarksIcon, WrenchIcon } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 import {
+  Command,
   CommandDialog,
   CommandEmpty,
   CommandGroup,
@@ -43,48 +44,50 @@ export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
 
   return (
     <CommandDialog open={open} onOpenChange={setOpenAction}>
-      <CommandInput placeholder="Search tools and resources..." />
-      <CommandList>
-        <CommandEmpty>No results found.</CommandEmpty>
+      <Command>
+        <CommandInput placeholder="Search tools and resources..." />
+        <CommandList>
+          <CommandEmpty>No results found.</CommandEmpty>
 
-        <CommandGroup heading="Inbuilt Tools">
-          {internalTools.map((tool) => (
-            <CommandItem
-              key={tool.url}
-              value={`${tool.title} ${tool.description}`}
-              onSelect={() => handleSelect(tool)}
-              className="gap-2"
-            >
-              <Wrench size={14} className="text-primary shrink-0" />
-              <div className="flex flex-col">
-                <span className="font-medium">{tool.title}</span>
-                <span className="text-muted-foreground text-xs">{tool.description}</span>
-              </div>
-            </CommandItem>
-          ))}
-        </CommandGroup>
+          <CommandGroup heading="Inbuilt Tools">
+            {internalTools.map((tool) => (
+              <CommandItem
+                key={tool.url}
+                value={`${tool.title} ${tool.description}`}
+                onSelect={() => handleSelect(tool)}
+                className="gap-2"
+              >
+                <WrenchIcon weight="duotone" className="size-4.5!" />
+                <div className="flex flex-col">
+                  <span className="font-medium">{tool.title}</span>
+                  <span className="text-muted-foreground text-xs">{tool.description}</span>
+                </div>
+              </CommandItem>
+            ))}
+          </CommandGroup>
 
-        <CommandSeparator />
+          <CommandSeparator />
 
-        <CommandGroup heading="Resources">
-          {resourceLinks.map((tool) => (
-            <CommandItem
-              key={tool.url}
-              value={`${tool.title} ${tool.description} ${tool.category}`}
-              onSelect={() => handleSelect(tool)}
-              className="gap-2"
-            >
-              <BookMarked size={14} className="text-muted-foreground shrink-0" />
-              <div className="flex flex-col">
-                <span className="font-medium">{tool.title}</span>
-                <span className="text-muted-foreground text-xs">
-                  {tool.category} · {tool.description}
-                </span>
-              </div>
-            </CommandItem>
-          ))}
-        </CommandGroup>
-      </CommandList>
+          <CommandGroup heading="Resources">
+            {resourceLinks.map((tool) => (
+              <CommandItem
+                key={tool.url}
+                value={`${tool.title} ${tool.description} ${tool.category}`}
+                onSelect={() => handleSelect(tool)}
+                className="gap-2"
+              >
+                <BookmarksIcon weight="duotone" className="size-4.5!" />
+                <div className="flex flex-col">
+                  <span className="font-medium">{tool.title}</span>
+                  <span className="text-muted-foreground text-xs">
+                    {tool.category} · {tool.description}
+                  </span>
+                </div>
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        </CommandList>
+      </Command>
     </CommandDialog>
   );
 }

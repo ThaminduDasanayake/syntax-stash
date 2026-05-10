@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
 @plugin "@tailwindcss/typography";
 
@@ -275,7 +276,7 @@
 
 @layer components {
     .tab-trigger {
-        @apply data-active:bg-primary! data-active:text-background! data-active:border-card/60! hover:bg-accent! p-1! cursor-pointer data-active:border!;
+        @apply data-active:bg-primary! data-active:text-background! data-active:border-card/60! cursor-pointer data-active:border!;
     }
 
     .sidebar-text-collapse {

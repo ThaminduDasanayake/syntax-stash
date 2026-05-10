@@ -9,10 +9,10 @@ import {
   PRESETS,
   TIMING_FUNCTIONS,
 } from "@/app/tools/css-studio/animation-presets";
+import { InputField } from "@/components/ui//input-field";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
-import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
@@ -261,7 +261,7 @@ export function AnimationTab() {
             value={cssOutput}
             rows={16}
             className="text-xs"
-            action={<CopyButton value={cssOutput} disabled={!cssOutput} />}
+            action={<CopyButton textToCopy={cssOutput} disabled={!cssOutput} />}
           />
         </div>
       </div>

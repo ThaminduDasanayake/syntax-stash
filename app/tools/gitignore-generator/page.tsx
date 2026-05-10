@@ -112,7 +112,7 @@ export default function GitignoreGeneratorPage() {
           rows={24}
           className="h-full resize-none"
           placeholder="Your .gitignore will appear here..."
-          action={<CopyButton value={generatedGitignore} disabled={!generatedGitignore} />}
+          action={<CopyButton textToCopy={generatedGitignore} disabled={!generatedGitignore} />}
         />
       </div>
     </ToolLayout>

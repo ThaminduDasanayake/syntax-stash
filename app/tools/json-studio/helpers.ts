@@ -1,12 +1,17 @@
 // Re-export shared JSON utilities used across tabs
 export type JsonValue =
-  | string | number | boolean | null
+  | string
+  | number
+  | boolean
+  | null
   | JsonValue[]
   | { [key: string]: JsonValue };
 
 export type JsonType = "object" | "array" | "string" | "number" | "boolean" | "null";
 
-export function parseJson(input: string): { ok: true; value: JsonValue } | { ok: false; error: string } {
+export function parseJson(
+  input: string,
+): { ok: true; value: JsonValue } | { ok: false; error: string } {
   try {
     return { ok: true, value: JSON.parse(input) };
   } catch (e) {
@@ -42,8 +47,6 @@ export function subtreeMatches(value: JsonValue, query: string): boolean {
   }
   const entries = Array.isArray(value)
     ? value.map((v, i) => [String(i), v] as [string, JsonValue])
-    : Object.entries(value) as [string, JsonValue][];
-  return entries.some(([k, v]) =>
-    matchesSearch(k, v, query) || subtreeMatches(v, query),
-  );
+    : (Object.entries(value) as [string, JsonValue][]);
+  return entries.some(([k, v]) => matchesSearch(k, v, query) || subtreeMatches(v, query));
 }

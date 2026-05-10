@@ -1,7 +1,7 @@
 "use client";
 
+import { CheckIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { Command as CommandPrimitive } from "cmdk";
-import { CheckIcon,SearchIcon } from "lucide-react";
 import * as React from "react";
 
 import {
@@ -34,12 +34,11 @@ function CommandDialog({
   className,
   showCloseButton = false,
   ...props
-}: Omit<React.ComponentProps<typeof Dialog>, "children"> & {
+}: React.ComponentProps<typeof Dialog> & {
   title?: string;
   description?: string;
   className?: string;
   showCloseButton?: boolean;
-  children: React.ReactNode;
 }) {
   return (
     <Dialog {...props}>
@@ -51,9 +50,7 @@ function CommandDialog({
         className={cn("top-1/3 translate-y-0 overflow-hidden rounded-xl! p-0", className)}
         showCloseButton={showCloseButton}
       >
-        <Command className="**:data-[slot=command-input]:h-10 **:data-[slot=command-input-wrapper]:px-3 **:data-[slot=command-input-wrapper]:pb-1 **:[[default-slot=command-input-wrapper]]:px-3 **:[[default-slot=command-input-wrapper]]:pb-1">
-          {children}
-        </Command>
+        {children}
       </DialogContent>
     </Dialog>
   );
@@ -75,7 +72,7 @@ function CommandInput({
           {...props}
         />
         <InputGroupAddon>
-          <SearchIcon className="size-4 shrink-0 opacity-50" />
+          <MagnifyingGlassIcon weight="duotone" className="size-4 shrink-0 opacity-50" />
         </InputGroupAddon>
       </InputGroup>
     </div>

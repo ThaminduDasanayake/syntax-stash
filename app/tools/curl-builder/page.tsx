@@ -9,13 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { SelectField } from "@/components/ui/select-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
 import { internalTools } from "@/lib/tools-data";
 
@@ -36,6 +30,13 @@ type ParsedCurl = {
 };
 
 const METHODS: HttpMethod[] = ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"];
+
+const AUTH_TYPES = [
+  { value: "none", label: "None" },
+  { value: "bearer", label: "Bearer Token" },
+  { value: "basic", label: "Basic Auth (user:pass)" },
+  { value: "api-key", label: "API Key Header" },
+];
 
 function buildCurl(
   method: HttpMethod,
@@ -204,25 +205,16 @@ export default function CurlBuilderPage() {
 
       {mode === "build" ? (
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-          {/* Left — Inputs */}
+          {/* Inputs */}
           <div className="space-y-6">
             {/* Method + URL */}
             <div className="flex gap-2">
-              <div className="w-36 space-y-2">
-                <Label>Method</Label>
-                <Select value={method} onValueChange={(v) => v && setMethod(v as HttpMethod)}>
-                  <SelectTrigger className="h-10">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {METHODS.map((m) => (
-                      <SelectItem key={m} value={m}>
-                        {m}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <SelectField
+                label="Method"
+                value={method}
+                onValueChange={(v) => v && setMethod(v as HttpMethod)}
+                options={METHODS.map((m) => ({ value: m, label: m }))}
+              />
               <div className="flex-1 space-y-2">
                 <Label>URL</Label>
                 <Input value={url} onChange={(e) => setUrl(e.target.value)} className="font-mono" />
@@ -231,20 +223,12 @@ export default function CurlBuilderPage() {
 
             {/* Auth */}
             <div className="space-y-3">
-              <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
-                Authentication
-              </Label>
-              <Select value={authType} onValueChange={(v) => v && setAuthType(v as AuthType)}>
-                <SelectTrigger className="h-10">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="none">None</SelectItem>
-                  <SelectItem value="bearer">Bearer Token</SelectItem>
-                  <SelectItem value="basic">Basic Auth (user:pass)</SelectItem>
-                  <SelectItem value="api-key">API Key Header</SelectItem>
-                </SelectContent>
-              </Select>
+              <SelectField
+                label="Authentication"
+                value={authType}
+                onValueChange={(v) => v && setAuthType(v as AuthType)}
+                options={AUTH_TYPES.map((type) => type)}
+              />
               {authType !== "none" && (
                 <Input
                   value={authValue}
@@ -341,7 +325,6 @@ export default function CurlBuilderPage() {
                 onChange={(e) => setBody(e.target.value)}
                 rows={4}
                 placeholder='{ "key": "value" }'
-                className="text-xs"
               />
             </div>
 
@@ -368,17 +351,14 @@ export default function CurlBuilderPage() {
             </div>
           </div>
 
-          {/* Right — Output */}
-          <div className="space-y-4">
-            <TextAreaField
-              label="Generated curl Command"
-              readOnly
-              value={generatedCurl}
-              rows={16}
-              className="text-xs"
-              action={<CopyButton value={generatedCurl} disabled={!generatedCurl} />}
-            />
-          </div>
+          <TextAreaField
+            label="Generated curl Command"
+            readOnly
+            value={generatedCurl}
+            rows={16}
+            className="h-full"
+            action={<CopyButton textToCopy={generatedCurl} disabled={!generatedCurl} />}
+          />
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
@@ -391,7 +371,7 @@ export default function CurlBuilderPage() {
               rows={16}
               placeholder={`curl -X POST 'https://api.example.com/users' \\\n  -H 'Authorization: Bearer token' \\\n  -H 'Content-Type: application/json' \\\n  -d '{"name":"Alice"}'`}
               className="text-xs"
-              action={<CopyButton value={rawCurl} disabled={!rawCurl} />}
+              action={<CopyButton textToCopy={rawCurl} disabled={!rawCurl} />}
             />
           </div>
 

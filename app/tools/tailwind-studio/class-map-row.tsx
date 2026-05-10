@@ -30,7 +30,7 @@ const ClassMapRow = ({
             variant="ghost"
             size="sm"
             className="w-7"
-            value={entry.semanticName}
+            textToCopy={entry.semanticName}
             disabled={!entry.semanticName}
           />
         }

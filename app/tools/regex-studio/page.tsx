@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpenIcon, DownloadIcon, FlaskIcon } from "@phosphor-icons/react";
+import { BookOpenIcon, FlaskIcon } from "@phosphor-icons/react";
 import { useMemo, useRef, useState } from "react";
 
 import Diagram from "@/app/tools/regex-studio/components/diagram";
@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
+import { DownloadButton } from "@/components/ui/download-button";
 import { Input } from "@/components/ui/input";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
@@ -266,11 +267,14 @@ export default function RegexStudioPage() {
           </div>
 
           <div className="flex gap-2">
-            <CopyButton value={getSvgString} labelName="Copy SVG" disabled={!parsed.ok} />
-            <Button variant="outline" onClick={downloadSvg} disabled={!parsed.ok}>
-              <DownloadIcon weight="duotone" />
-              Download .svg
-            </Button>
+            <CopyButton textToCopy={getSvgString} labelName="Copy SVG" disabled={!parsed.ok} />
+
+            <DownloadButton
+              label="Download .svg"
+              variant="outline"
+              onClick={downloadSvg}
+              disabled={!parsed.ok}
+            />
           </div>
 
           {parsed.ok && (
@@ -328,7 +332,7 @@ export default function RegexStudioPage() {
                           </span>
                         </div>
                         <div className="flex shrink-0 gap-1">
-                          <CopyButton label={false} value={entry.pattern} className="px-2.5" />
+                          <CopyButton label={false} textToCopy={entry.pattern} className="px-2.5" />
 
                           <Button
                             variant="outline"

@@ -89,7 +89,7 @@ export default function HashGeneratorPage() {
                 readOnly
                 value={value}
                 rows={4}
-                action={<CopyButton value={value} disabled={!value} />}
+                action={<CopyButton textToCopy={value} disabled={!value} />}
               />
             );
           })}

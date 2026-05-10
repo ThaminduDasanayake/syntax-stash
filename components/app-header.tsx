@@ -1,6 +1,6 @@
 "use client";
 
-import { Search } from "lucide-react";
+import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -47,16 +47,14 @@ export default function AppHeader({ onSearchOpenAction }: HeaderProps) {
               {parts.length === 0 ? (
                 <BreadcrumbPage className="text-foreground">Home</BreadcrumbPage>
               ) : (
-                <BreadcrumbLink
-                  render={
-                    <Link
-                      href="/"
-                      className="text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                      Home
-                    </Link>
-                  }
-                />
+                <BreadcrumbLink asChild>
+                  <Link
+                    href="/"
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Home
+                  </Link>
+                </BreadcrumbLink>
               )}
             </BreadcrumbItem>
 
@@ -76,16 +74,14 @@ export default function AppHeader({ onSearchOpenAction }: HeaderProps) {
                         {label}
                       </BreadcrumbPage>
                     ) : (
-                      <BreadcrumbLink
-                        render={
-                          <Link
-                            href={href}
-                            className="text-muted-foreground hover:text-foreground transition-colors"
-                          >
-                            {label}
-                          </Link>
-                        }
-                      />
+                      <BreadcrumbLink asChild>
+                        <Link
+                          href={href}
+                          className="text-muted-foreground hover:text-foreground transition-colors"
+                        >
+                          {label}
+                        </Link>
+                      </BreadcrumbLink>
                     )}
                   </BreadcrumbItem>
                 </span>
@@ -100,7 +96,7 @@ export default function AppHeader({ onSearchOpenAction }: HeaderProps) {
         className="border-border bg-muted/30 hover:bg-muted/60 text-muted-foreground flex h-8 w-45 shrink-0 items-center gap-2 rounded-full border px-3 text-xs font-normal transition-colors sm:w-60 md:w-70"
         aria-label="Search"
       >
-        <Search size={13} className="shrink-0" />
+        <MagnifyingGlassIcon weight="duotone" size={17} className="shrink-0" />
         <span className="hidden truncate sm:inline">Search...</span>
         <kbd className="border-border bg-background text-muted-foreground pointer-events-none ml-auto hidden h-5 items-center gap-0.5 rounded border px-1.5 font-mono text-[10px] select-none md:inline-flex">
           <span className="text-xs">⌘</span>K

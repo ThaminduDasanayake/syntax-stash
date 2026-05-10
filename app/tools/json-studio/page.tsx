@@ -85,11 +85,11 @@ export default function JsonStudioPage() {
           </TabsContent>
 
           <TabsContent value="tree">
-            <TreeTab input={input} onTestInQuery={handleTestInQuery} />
+            <TreeTab input={input} onTestInQueryAction={handleTestInQuery} />
           </TabsContent>
 
           <TabsContent value="query">
-            <QueryTab input={input} query={queryPath} onQueryChange={setQueryPath} />
+            <QueryTab input={input} query={queryPath} onQueryChangeAction={setQueryPath} />
           </TabsContent>
 
           <TabsContent value="organize">

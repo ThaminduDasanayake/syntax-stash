@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Copy } from "lucide-react";
+import { CheckIcon, CopyIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 
 import {
@@ -140,7 +140,11 @@ export function ConverterTab() {
                       {res.label}
                     </span>
                     <div className="text-muted-foreground group-hover:text-foreground transition-colors">
-                      {copiedItem === res.id ? <Check className="text-emerald-400" /> : <Copy />}
+                      {copiedItem === res.id ? (
+                        <CheckIcon weight="bold" className="text-emerald-400" />
+                      ) : (
+                        <CopyIcon weight="bold" />
+                      )}
                     </div>
                   </div>
                   <span className="text-muted-foreground text-start font-mono text-sm break-all">

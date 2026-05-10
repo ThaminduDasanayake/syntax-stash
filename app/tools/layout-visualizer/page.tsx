@@ -55,7 +55,7 @@ export default function LayoutVisualizerPage() {
       <div className="space-y-8">
         {/* Controls and Preview Grid */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-          {/* Left Column: Controls */}
+          {/* Controls */}
           <div className="space-y-6 lg:col-span-1">
             <SelectField
               label="Display"
@@ -119,7 +119,7 @@ export default function LayoutVisualizerPage() {
             <pre className="text-primary overflow-x-auto font-mono text-sm leading-relaxed wrap-break-word whitespace-pre-wrap">
               {tailwindClassString || "(select properties to generate classes)"}
             </pre>
-            <CopyButton value={tailwindClassString} disabled={!tailwindClassString} />
+            <CopyButton textToCopy={tailwindClassString} disabled={!tailwindClassString} />
           </div>
         </div>
 

@@ -50,7 +50,15 @@ function parseParam(raw: string): ParsedParam | null {
       const ch = working[i];
       if (ch === "(" || ch === "[" || ch === "{" || ch === "<") depth++;
       else if (ch === ")" || ch === "]" || ch === "}" || ch === ">") depth--;
-      if (ch === "=" && depth === 0 && working[i + 1] !== ">" && working[i - 1] !== "=" && working[i - 1] !== "!" && working[i - 1] !== "<" && working[i - 1] !== ">") {
+      if (
+        ch === "=" &&
+        depth === 0 &&
+        working[i + 1] !== ">" &&
+        working[i - 1] !== "=" &&
+        working[i - 1] !== "!" &&
+        working[i - 1] !== "<" &&
+        working[i - 1] !== ">"
+      ) {
         return i;
       }
     }
@@ -104,7 +112,10 @@ export function parseFunctionSignature(source: string): ParsedFunction | null {
     working = working.replace(/^async\s+/, "");
   }
   // Strip leading export / public / private / protected modifiers
-  working = working.replace(/^(export\s+(default\s+)?|public\s+|private\s+|protected\s+|static\s+)+/, "");
+  working = working.replace(
+    /^(export\s+(default\s+)?|public\s+|private\s+|protected\s+|static\s+)+/,
+    "",
+  );
   // Handle "async" again after modifier strip
   if (/^async\s+/.test(working)) {
     isAsync = true;
@@ -119,7 +130,9 @@ export function parseFunctionSignature(source: string): ParsedFunction | null {
   let returnType = "void";
 
   // Pattern 1: function declaration  - "function* name<G>(args): Ret"
-  const funcDeclMatch = working.match(/^function(\*?)\s+([A-Za-z_$][\w$]*)\s*(<[^>]+>)?\s*\(([\s\S]*)$/);
+  const funcDeclMatch = working.match(
+    /^function(\*?)\s+([A-Za-z_$][\w$]*)\s*(<[^>]+>)?\s*\(([\s\S]*)$/,
+  );
   // Pattern 2: const/let/var arrow  - "const name = <G>(args): Ret =>"
   const arrowVarMatch = working.match(/^(?:const|let|var)\s+([A-Za-z_$][\w$]*)\s*[:=]/);
   // Pattern 3: method shorthand    - "name<G>(args): Ret"
@@ -187,7 +200,10 @@ export function parseFunctionSignature(source: string): ParsedFunction | null {
   };
 }
 
-function extractParensAndReturn(input: string, isArrow = false): { params: string; returnType: string } | null {
+function extractParensAndReturn(
+  input: string,
+  isArrow = false,
+): { params: string; returnType: string } | null {
   if (!input.startsWith("(")) return null;
   let depth = 0;
   let end = -1;
@@ -238,7 +254,11 @@ function extractParensAndReturn(input: string, isArrow = false): { params: strin
 
 export type DocStyle = "jsdoc" | "tsdoc";
 
-export function generateDoc(parsed: ParsedFunction, style: DocStyle, includeThrows: boolean): string {
+export function generateDoc(
+  parsed: ParsedFunction,
+  style: DocStyle,
+  includeThrows: boolean,
+): string {
   const lines: string[] = ["/**"];
   lines.push(` * ${parsed.description ?? `Description of ${parsed.name}.`}`);
 
@@ -246,9 +266,12 @@ export function generateDoc(parsed: ParsedFunction, style: DocStyle, includeThro
     lines.push(" *");
     for (const p of parsed.params) {
       const typeStr = style === "jsdoc" ? `{${p.type}} ` : "";
-      const nameStr = p.optional && style === "jsdoc"
-        ? p.defaultValue ? `[${p.name}=${p.defaultValue}]` : `[${p.name}]`
-        : p.name;
+      const nameStr =
+        p.optional && style === "jsdoc"
+          ? p.defaultValue
+            ? `[${p.name}=${p.defaultValue}]`
+            : `[${p.name}]`
+          : p.name;
       const desc = `Description of ${p.name}.`;
       lines.push(` * @param ${typeStr}${nameStr} - ${desc}`);
     }

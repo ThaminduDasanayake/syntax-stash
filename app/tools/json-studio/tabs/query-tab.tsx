@@ -1,16 +1,18 @@
 "use client";
 
+import { CaretDownIcon } from "@phosphor-icons/react";
+import { Collapsible } from "@radix-ui/react-collapsible";
 import { JSONPath } from "jsonpath-plus";
 import { useMemo } from "react";
 
 import { ErrorAlert } from "@/components/error-alert";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { CopyButton } from "@/components/ui/copy-button";
-
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { TextAreaField } from "@/components/ui/textarea-field";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown } from "lucide-react";
 
 const EXAMPLES = [
   { label: "All book titles", query: "$.store.book[*].title" },
@@ -49,10 +51,10 @@ type QueryResult =
 type Props = {
   input: string;
   query: string;
-  onQueryChange: (q: string) => void;
+  onQueryChangeAction: (q: string) => void;
 };
 
-export function QueryTab({ input, query, onQueryChange }: Props) {
+export function QueryTab({ input, query, onQueryChangeAction }: Props) {
   const result = useMemo<QueryResult>(() => {
     const trimmedPayload = input.trim();
     const trimmedQuery = query.trim();
@@ -103,7 +105,7 @@ export function QueryTab({ input, query, onQueryChange }: Props) {
         <Label>JSONPath Query</Label>
         <Input
           value={query}
-          onChange={(e) => onQueryChange(e.target.value)}
+          onChange={(e) => onQueryChangeAction(e.target.value)}
           placeholder="$.store.book[*].author"
           className="font-mono text-sm"
           spellCheck={false}
@@ -116,7 +118,7 @@ export function QueryTab({ input, query, onQueryChange }: Props) {
           {EXAMPLES.map(({ label, query: q }) => (
             <button
               key={q}
-              onClick={() => onQueryChange(q)}
+              onClick={() => onQueryChangeAction(q)}
               title={q}
               className="border-border bg-card hover:border-primary/60 hover:bg-primary/5 rounded-full border px-2.5 py-1 text-xs transition-colors"
             >
@@ -139,28 +141,34 @@ export function QueryTab({ input, query, onQueryChange }: Props) {
         readOnly
         rows={16}
         placeholder="Query results will appear here…"
-        action={<CopyButton value={outputValue} disabled={!outputValue} />}
+        action={<CopyButton textToCopy={outputValue} disabled={!outputValue} />}
       />
 
-      <Collapsible>
-        <CollapsibleTrigger className="text-muted-foreground hover:text-foreground flex items-center gap-1.5 text-sm font-semibold transition-colors">
-          <ChevronDown
-            size={14}
-            className="transition-transform [[data-state=open]_&]:rotate-180"
-          />
-          JSONPath Syntax Reference
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <div className="mt-4 grid gap-3 text-xs md:grid-cols-2 lg:grid-cols-3">
-            {CHEATSHEET.map(([syntax, desc]) => (
-              <div key={syntax} className="bg-muted/50 rounded-lg p-3">
-                <code className="text-primary font-mono font-semibold">{syntax}</code>
-                <p className="text-muted-foreground mt-0.5">{desc}</p>
+      <Card className="mx-auto w-full">
+        <CardContent>
+          <Collapsible className="data-[state=open]:bg-muted rounded-md">
+            <CollapsibleTrigger>
+              <Button variant="ghost" className="group w-full">
+                JSONPath Syntax Reference
+                <CaretDownIcon
+                  weight="bold"
+                  className="ml-auto group-data-[state=open]:rotate-180"
+                />
+              </Button>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <div className="mt-4 grid gap-3 text-xs md:grid-cols-2 lg:grid-cols-3">
+                {CHEATSHEET.map(([syntax, desc]) => (
+                  <div key={syntax} className="bg-muted/50 rounded-lg p-3">
+                    <code className="text-primary font-mono font-semibold">{syntax}</code>
+                    <p className="text-muted-foreground mt-0.5">{desc}</p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </CollapsibleContent>
-      </Collapsible>
+            </CollapsibleContent>
+          </Collapsible>
+        </CardContent>
+      </Card>
     </div>
   );
 }

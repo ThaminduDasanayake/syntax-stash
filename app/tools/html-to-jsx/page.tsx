@@ -62,7 +62,7 @@ function HtmlToJsxPage() {
             rows={20}
             className="resize-y text-xs"
             placeholder="JSX will appear here…"
-            action={<CopyButton value={output} disabled={!output} />}
+            action={<CopyButton textToCopy={output} disabled={!output} />}
           />
         </div>
 

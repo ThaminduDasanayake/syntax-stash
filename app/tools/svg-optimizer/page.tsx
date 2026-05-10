@@ -85,7 +85,7 @@ export default function SvgOptimizerPage() {
               readOnly
               placeholder="Optimized SVG will appear here..."
               className="h-120 resize-none text-xs"
-              action={<CopyButton value={hasResult ? result.svg : ""} disabled={!hasResult} />}
+              action={<CopyButton textToCopy={hasResult ? result.svg : ""} disabled={!hasResult} />}
             />
           )}
 

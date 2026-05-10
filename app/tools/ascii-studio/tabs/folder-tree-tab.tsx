@@ -32,7 +32,7 @@ export function FolderTreeTab() {
         value={output}
         rows={18}
         textClassName="font-mono text-sm"
-        action={<CopyButton value={output} disabled={!output} />}
+        action={<CopyButton textToCopy={output} disabled={!output} />}
       />
     </div>
   );

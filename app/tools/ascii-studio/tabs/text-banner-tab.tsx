@@ -68,7 +68,7 @@ export function TextBannerTab() {
           label="Font"
           value={font}
           onValueChange={(v) => setFont(v as FigletFont)}
-          options={FIGLET_FONTS.map((f) => ({ value: f.id, label: f.label }))}
+          options={FIGLET_FONTS}
         />
       </div>
 
@@ -81,7 +81,7 @@ export function TextBannerTab() {
         rows={10}
         className="bg-muted/30! resize-none font-mono text-xs leading-tight"
         placeholder={text ? "Generating…" : "Enter text above to generate a banner."}
-        action={<CopyButton value={output} disabled={!output} />}
+        action={<CopyButton textToCopy={output} disabled={!output} />}
       />
     </div>
   );

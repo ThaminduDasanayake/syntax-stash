@@ -6,7 +6,7 @@ import {
   MagnifyingGlassIcon,
   SpinnerGapIcon,
 } from "@phosphor-icons/react";
-import { KeyboardEvent, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import type { ExtractedData } from "@/app/api/extract/route";
 import { HeadingGroup } from "@/app/tools/web-extractor/heading-group";
@@ -29,7 +29,9 @@ export default function WebExtractorPage() {
   const [data, setData] = useState<ExtractedData | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  async function handleExtract() {
+  async function handleExtract(e?: React.FormEvent) {
+    if (e) e.preventDefault();
+
     const trimmed = url.trim();
     if (!trimmed) {
       setError("Please enter a URL.");
@@ -57,10 +59,6 @@ export default function WebExtractorPage() {
     }
   }
 
-  function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
-    if (e.key === "Enter") handleExtract();
-  }
-
   const rawJSON = data ? JSON.stringify(data, null, 2) : "";
   const totalLinks = data?.links.length ?? 0;
   const totalHeadings =
@@ -79,7 +77,6 @@ export default function WebExtractorPage() {
             label="Target URL"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            onKeyDown={handleKeyDown}
             placeholder="https://example.com"
             className="font-mono text-sm"
             disabled={loading}
@@ -88,7 +85,7 @@ export default function WebExtractorPage() {
           <div className="flex gap-3">
             <Button
               className="flex-1 font-medium"
-              onClick={handleExtract}
+              onClick={() => void handleExtract()}
               disabled={loading || !url.trim()}
             >
               {loading ? (
@@ -222,7 +219,7 @@ export default function WebExtractorPage() {
                   readOnly
                   rows={28}
                   className="font-mono text-xs"
-                  action={<CopyButton value={rawJSON} disabled={!rawJSON} />}
+                  action={<CopyButton textToCopy={rawJSON} disabled={!rawJSON} />}
                 />
               </div>
             </div>

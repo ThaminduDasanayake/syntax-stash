@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import { buildMarkdownTable } from "@/app/tools/ascii-studio/helpers";
 import { CopyButton } from "@/components/ui/copy-button";
@@ -25,18 +25,27 @@ export function MarkdownTableTab() {
   const [headers, setHeaders] = useState<string[]>(makeHeaders(DEFAULT_COLS));
   const [data, setData] = useState<string[][]>(makeData(DEFAULT_ROWS, DEFAULT_COLS));
 
-  // Sync state when dimensions change; preserve overlapping cells
-  useEffect(() => {
+  const handleColsChange = (newCols: number) => {
+    setCols(newCols);
     setHeaders((prev) => {
-      const next = makeHeaders(cols);
+      const next = makeHeaders(newCols);
       return next.map((fallback, i) => prev[i] ?? fallback);
     });
     setData((prev) => {
       return Array.from({ length: rows }, (_, ri) =>
+        Array.from({ length: newCols }, (__, ci) => prev[ri]?.[ci] ?? ""),
+      );
+    });
+  };
+
+  const handleRowsChange = (newRows: number) => {
+    setRows(newRows);
+    setData((prev) => {
+      return Array.from({ length: newRows }, (_, ri) =>
         Array.from({ length: cols }, (__, ci) => prev[ri]?.[ci] ?? ""),
       );
     });
-  }, [rows, cols]);
+  };
 
   const output = useMemo(() => buildMarkdownTable(headers, data), [headers, data]);
 
@@ -44,7 +53,9 @@ export function MarkdownTableTab() {
     setHeaders((prev) => prev.map((h, i) => (i === ci ? val : h)));
   }
   function updateCell(ri: number, ci: number, val: string) {
-    setData((prev) => prev.map((row, r) => row.map((cell, c) => (r === ri && c === ci ? val : cell))));
+    setData((prev) =>
+      prev.map((row, r) => row.map((cell, c) => (r === ri && c === ci ? val : cell))),
+    );
   }
 
   const clamp = (v: number, min: number, max: number) => Math.min(Math.max(v, min), max);
@@ -57,7 +68,7 @@ export function MarkdownTableTab() {
           label="Columns"
           type="number"
           value={cols}
-          onChange={(e) => setCols(clamp(Number(e.target.value), 1, 10))}
+          onChange={(e) => handleColsChange(clamp(Number(e.target.value), 1, 10))}
           min={1}
           max={10}
           containerClassName="w-28"
@@ -66,7 +77,7 @@ export function MarkdownTableTab() {
           label="Rows"
           type="number"
           value={rows}
-          onChange={(e) => setRows(clamp(Number(e.target.value), 1, 20))}
+          onChange={(e) => handleRowsChange(clamp(Number(e.target.value), 1, 20))}
           min={1}
           max={20}
           containerClassName="w-28"
@@ -118,7 +129,7 @@ export function MarkdownTableTab() {
         value={output}
         rows={Math.max(rows + 3, 6)}
         textClassName="font-mono text-sm"
-        action={<CopyButton value={output} disabled={!output} />}
+        action={<CopyButton textToCopy={output} disabled={!output} />}
       />
     </div>
   );

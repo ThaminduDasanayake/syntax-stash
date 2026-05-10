@@ -3,9 +3,11 @@ import {
   BinaryIcon,
   BookOpenTextIcon,
   BracketsCurlyIcon,
+  CalendarBlankIcon,
   ClockIcon,
   CodeIcon,
   DatabaseIcon,
+  FileCodeIcon,
   FileCssIcon,
   FileCsvIcon,
   FileImageIcon,
@@ -21,6 +23,7 @@ import {
   GitBranchIcon,
   GlobeHemisphereEastIcon,
   GlobeIcon,
+  IdentificationCardIcon,
   ImageIcon,
   KeyIcon,
   LayoutIcon,
@@ -129,6 +132,15 @@ export const dataTools: Tool[] = [
     icon: KeyIcon,
   },
   {
+    title: "JSON / CSV Converter",
+    highlight: "Converter",
+    url: "/tools/json-csv-converter",
+    description:
+      "Convert JSON arrays to CSV and back. Supports nested key flattening, custom delimiters, and RFC 4180 quoted fields.",
+    category: CATEGORIES.data,
+    icon: FileCsvIcon,
+  },
+  {
     title: "Universal Decoder",
     highlight: "Decoder",
     url: "/tools/universal-decoder",
@@ -136,6 +148,15 @@ export const dataTools: Tool[] = [
       "Paste any mystery string — JWT, Unix timestamp, UUID, MongoDB ObjectId, ISO date, or Snowflake ID — and decode it instantly.",
     category: CATEGORIES.data,
     icon: ScanIcon,
+  },
+  {
+    title: "YAML / JSON Converter",
+    highlight: "Converter",
+    url: "/tools/yaml-json-converter",
+    description:
+      "Bidirectionally convert between YAML and JSON with configurable indentation and inline error feedback.",
+    category: CATEGORIES.data,
+    icon: FileCodeIcon,
   },
 ];
 
@@ -237,6 +258,15 @@ export const developmentTools: Tool[] = [
     icon: AsteriskIcon,
   },
   {
+    title: "UUID Generator",
+    highlight: "Generator",
+    url: "/tools/uuid-generator",
+    description:
+      "Generate v4 (random) and v7 (time-ordered) UUIDs in bulk, with uppercase and no-hyphens formatting options.",
+    category: CATEGORIES.development,
+    icon: IdentificationCardIcon,
+  },
+  {
     title: "Web Extractor",
     highlight: "Extractor",
     url: "/tools/web-extractor",
@@ -264,6 +294,15 @@ export const devopsTools: Tool[] = [
       "Translate cron expressions to plain English, and visualize upcoming executions on a timeline.",
     category: CATEGORIES.devops,
     icon: PasswordIcon,
+  },
+  {
+    title: "Cron Generator",
+    highlight: "Generator",
+    url: "/tools/cron-generator",
+    description:
+      "Build cron expressions with presets or a custom field-by-field editor. Shows a plain-English description in real time.",
+    category: CATEGORIES.devops,
+    icon: CalendarBlankIcon,
   },
   {
     title: "curl Command Builder",

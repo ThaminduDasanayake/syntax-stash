@@ -58,7 +58,7 @@ export default function JwtDecoderPage() {
             value={token}
             onChange={(e) => setToken(e.target.value)}
             placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-            rows={26}
+            rows={20}
             action={
               <ClearButton
                 onClick={() => {
@@ -78,14 +78,14 @@ export default function JwtDecoderPage() {
             readOnly
             value={decoded.header}
             rows={8}
-            action={<CopyButton value={decoded.header} disabled={!decoded.header} />}
+            action={<CopyButton textToCopy={decoded.header} disabled={!decoded.header} />}
           />
           <TextAreaField
             label="Payload"
             readOnly
             value={decoded.payload}
             rows={10}
-            action={<CopyButton value={decoded.payload} disabled={!decoded.payload} />}
+            action={<CopyButton textToCopy={decoded.payload} disabled={!decoded.payload} />}
           />
 
           <TextAreaField
@@ -93,7 +93,7 @@ export default function JwtDecoderPage() {
             readOnly
             value={decoded.signature}
             rows={2}
-            action={<CopyButton value={decoded.signature} disabled={!decoded.signature} />}
+            action={<CopyButton textToCopy={decoded.signature} disabled={!decoded.signature} />}
           />
         </div>
       </div>

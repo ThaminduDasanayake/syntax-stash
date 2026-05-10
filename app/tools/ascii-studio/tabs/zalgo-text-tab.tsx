@@ -46,7 +46,7 @@ export function ZalgoTextTab() {
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <Label>Output</Label>
-          <CopyButton value={output} disabled={!output} />
+          <CopyButton textToCopy={output} disabled={!output} />
         </div>
         <div className="bg-muted/30 border-border min-h-48 rounded-xl border p-6">
           <p className="text-foreground font-mono text-2xl leading-48 break-all">

@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
-
 import { TextAreaField } from "@/components/ui/textarea-field";
 import { cn } from "@/lib/utils";
 
@@ -58,7 +57,7 @@ export function FormatTab({ input }: { input: string }) {
             ))}
           </div>
           <CopyButton
-            value={result.ok ? result.output : ""}
+            textToCopy={result.ok ? result.output : ""}
             disabled={!result.ok || !result.output}
           />
         </>

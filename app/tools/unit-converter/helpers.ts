@@ -7,26 +7,29 @@ export function linear(factor: number): Pick<UnitDef, "toBase" | "fromBase"> {
   return { toBase: (v) => v * factor, fromBase: (v) => v / factor };
 }
 
-export function formatValue(v: number): string {
+function formatValue(v: number): string {
   if (!isFinite(v)) return "";
   // Use exponential for very large or very small, otherwise fixed
   if (Math.abs(v) !== 0 && (Math.abs(v) >= 1e12 || Math.abs(v) < 1e-6)) {
     return v.toExponential(6);
   }
   // Strip trailing zeros up to DISPLAY_PRECISION sig figs
-  const s = parseFloat(v.toPrecision(DISPLAY_PRECISION)).toString();
-  return s;
+  return parseFloat(v.toPrecision(DISPLAY_PRECISION)).toString();
+}
+
+function getEmptyState(units: UnitDef[]) {
+  return Object.fromEntries(units.map((u) => [u.id, ""]));
 }
 
 export function useConverter(units: UnitDef[]) {
-  const empty = () => Object.fromEntries(units.map((u) => [u.id, ""]));
-  const [values, setValues] = useState<Record<string, string>>(empty);
+  const [values, setValues] = useState<Record<string, string>>(() => getEmptyState(units));
 
   const handleChange = useCallback(
     (changedId: string, raw: string) => {
       if (raw === "" || raw === "-") {
-        setValues(empty());
-        if (raw === "-") setValues((v) => ({ ...v, [changedId]: "-" }));
+        const next = getEmptyState(units);
+        if (raw === "-") next[changedId] = "-";
+        setValues(next);
         return;
       }
 
@@ -47,10 +50,10 @@ export function useConverter(units: UnitDef[]) {
       }
       setValues(next);
     },
-    [units], // eslint-disable-line react-hooks/exhaustive-deps
+    [units],
   );
 
-  const reset = useCallback(() => setValues(empty()), [units]); // eslint-disable-line react-hooks/exhaustive-deps
+  const reset = useCallback(() => setValues(getEmptyState(units)), [units]);
 
   return { values, handleChange, reset };
 }

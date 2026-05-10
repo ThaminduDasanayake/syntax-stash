@@ -1,14 +1,13 @@
 "use client";
 
-import { DownloadIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
 import { ToolLayout } from "@/components/tool-layout";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
+import { DownloadButton } from "@/components/ui/download-button";
 import { Input } from "@/components/ui/input";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
@@ -150,7 +149,10 @@ ${showBackground ? `  <rect width="100%" height="100%" fill="${bgColor}" rx="${b
             <Label>Background</Label>
 
             <div className="flex items-center gap-2">
-              <Checkbox checked={showBackground} onCheckedChange={setShowBackground} />
+              <Checkbox
+                checked={showBackground}
+                onCheckedChange={(checked) => setShowBackground(checked === true)}
+              />
               <Label>Enable background</Label>
             </div>
 
@@ -203,14 +205,14 @@ ${showBackground ? `  <rect width="100%" height="100%" fill="${bgColor}" rx="${b
               label="Stroke Linecap"
               value={strokeLinecap}
               onValueChange={(v) => v && setStrokeLinecap(v as "butt" | "round" | "square")}
-              options={STROKE_LINECAP.map(({ value, label }) => ({ value: value, label: label }))}
+              options={STROKE_LINECAP}
             />
 
             <SelectField
               label="Stroke Linejoin"
               value={strokeLinejoin}
               onValueChange={(v) => v && setStrokeLinejoin(v as "miter" | "round" | "bevel")}
-              options={STROKE_LINEJOIN.map(({ value, label }) => ({ value: value, label: label }))}
+              options={STROKE_LINEJOIN}
             />
           </div>
         </div>
@@ -257,11 +259,13 @@ ${showBackground ? `  <rect width="100%" height="100%" fill="${bgColor}" rx="${b
           </div>
 
           <div className="flex items-center gap-2">
-            <CopyButton value={svgCode} disabled={!svgCode} />
-            <Button variant="outline" onClick={downloadSvg} disabled={!svgCode}>
-              <DownloadIcon weight="duotone" className="size-4.5" />
-              Download .svg
-            </Button>
+            <CopyButton textToCopy={svgCode} disabled={!svgCode} />
+            <DownloadButton
+              label="Download .svg"
+              variant="outline"
+              onClick={downloadSvg}
+              disabled={!svgCode}
+            />
           </div>
         </div>
 

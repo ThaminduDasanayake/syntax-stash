@@ -89,9 +89,7 @@ export function ShadesTab() {
           <Label className="text-foreground">Color Name</Label>
           <Input
             value={colorName}
-            onChange={(e) =>
-              setColorName(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ""))
-            }
+            onChange={(e) => setColorName(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ""))}
             placeholder="primary"
           />
         </div>

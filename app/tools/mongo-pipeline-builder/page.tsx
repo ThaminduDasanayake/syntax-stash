@@ -175,7 +175,7 @@ export default function MongoPipelineBuilderPage() {
             value={pipelineJSON}
             readOnly
             rows={12}
-            action={<CopyButton value={pipelineJSON} disabled={!pipelineJSON} />}
+            action={<CopyButton textToCopy={pipelineJSON} disabled={!pipelineJSON} />}
           />
 
           <TextAreaField
@@ -183,7 +183,7 @@ export default function MongoPipelineBuilderPage() {
             value={nodeSnippet}
             readOnly
             rows={12}
-            action={<CopyButton value={nodeSnippet} disabled={!nodeSnippet} />}
+            action={<CopyButton textToCopy={nodeSnippet} disabled={!nodeSnippet} />}
           />
         </div>
       </div>

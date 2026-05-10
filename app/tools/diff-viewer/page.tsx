@@ -130,7 +130,7 @@ export default function DiffViewerPage() {
                 <span>{stats.unchanged} unchanged</span>
               </div>
             )}
-            <CopyButton value={diffText} disabled={!hasChanges} />
+            <CopyButton textToCopy={diffText} disabled={!hasChanges} />
           </div>
         </div>
 

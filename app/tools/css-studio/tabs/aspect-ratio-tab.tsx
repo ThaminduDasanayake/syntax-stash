@@ -122,7 +122,7 @@ export function AspectRatioTab() {
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <Label className="text-xs">CSS</Label>
-            <CopyButton value={computed.css} />
+            <CopyButton textToCopy={computed.css} />
           </div>
           <div className="bg-muted/40 border-border overflow-x-auto rounded-lg border px-4 py-3">
             <code className="text-primary font-mono text-sm">{computed.css}</code>
@@ -132,7 +132,7 @@ export function AspectRatioTab() {
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <Label className="text-xs">Tailwind CSS</Label>
-            <CopyButton value={computed.tailwind} />
+            <CopyButton textToCopy={computed.tailwind} />
           </div>
           <div className="bg-muted/40 border-border overflow-x-auto rounded-lg border px-4 py-3">
             <code className="text-primary font-mono text-sm">{computed.tailwind}</code>
@@ -142,7 +142,7 @@ export function AspectRatioTab() {
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <Label className="text-xs">Legacy padding-bottom hack</Label>
-            <CopyButton value={computed.legacy} />
+            <CopyButton textToCopy={computed.legacy} />
           </div>
           <pre className="bg-muted/40 border-border overflow-x-auto rounded-lg border px-4 py-3 font-mono text-xs">
             <code className="text-primary">{computed.legacy}</code>

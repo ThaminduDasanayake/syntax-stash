@@ -12,7 +12,6 @@ import { ErrorAlert } from "@/components/error-alert";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
-
 import { InputField } from "@/components/ui/input-field";
 import { SelectField } from "@/components/ui/select-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
@@ -160,7 +159,7 @@ export function OrganizeTab({ input }: { input: string }) {
         readOnly
         rows={28}
         className="font-mono text-sm"
-        action={<CopyButton value={resultJSON} disabled={!resultJSON} />}
+        action={<CopyButton textToCopy={resultJSON} disabled={!resultJSON} />}
       />
     </div>
   );

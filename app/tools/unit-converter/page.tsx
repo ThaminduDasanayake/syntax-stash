@@ -14,11 +14,7 @@ export default function UnitConverterPage() {
       <Tabs defaultValue="length" className="flex w-full flex-col">
         <TabsList className="mb-4 w-full flex-wrap">
           {TABS.map((tab) => (
-            <TabsTrigger
-              key={tab.value}
-              value={tab.value}
-              className="data-active:bg-primary! data-active:text-background! data-active:border-card/60! p-1 font-semibold hover:cursor-pointer data-active:border!"
-            >
+            <TabsTrigger key={tab.value} value={tab.value} className="tab-trigger">
               {tab.label}
             </TabsTrigger>
           ))}

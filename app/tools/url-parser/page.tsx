@@ -12,50 +12,67 @@ import { InputField } from "@/components/ui/input-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
 import { internalTools } from "@/lib/tools-data";
 
-interface ParsedURL {
-  protocol: string;
-  host: string;
-  path: string;
-  port: string;
-  queryParams: Record<string, string>;
-}
+const DEFAULT_URL = "https://example.com/path?key1=value1&key2=value2";
 
 export default function URLParserPage() {
-  const [input, setInput] = useState("https://example.com/path?key1=value1&key2=value2");
-  const [queryParams, setQueryParams] = useState<Record<string, string>>({});
-  const [error, setError] = useState<string>("");
+  const [input, setInput] = useState(DEFAULT_URL);
 
-  const parsed = useMemo<ParsedURL | null>(() => {
+  const [queryParams, setQueryParams] = useState<Record<string, string>>(() => {
+    const url = new URL(DEFAULT_URL);
+    const params: Record<string, string> = {};
+    url.searchParams.forEach((v, k) => {
+      params[k] = v;
+    });
+    return params;
+  });
+
+  const { parsed, error } = useMemo(() => {
     const trimmed = input.trim();
-    if (!trimmed) return null;
+    if (!trimmed) return { parsed: null, error: "" };
+
+    try {
+      const url = new URL(trimmed);
+      return {
+        parsed: {
+          protocol: url.protocol.replace(":", ""),
+          host: url.hostname,
+          path: url.pathname || "/",
+          port: url.port || "",
+        },
+        error: "",
+      };
+    } catch (e) {
+      return {
+        parsed: null,
+        error: e instanceof Error ? e.message : "Invalid URL",
+      };
+    }
+  }, [input]);
+
+  const handleInputChange = (val: string) => {
+    setInput(val);
+    const trimmed = val.trim();
+
+    if (!trimmed) {
+      setQueryParams({});
+      return;
+    }
 
     try {
       const url = new URL(trimmed);
       const params: Record<string, string> = {};
-      url.searchParams.forEach((value, key) => {
-        params[key] = value;
+      url.searchParams.forEach((v, k) => {
+        params[k] = v;
       });
 
       setQueryParams(params);
-      setError("");
-
-      return {
-        protocol: url.protocol.replace(":", ""),
-        host: url.hostname,
-        path: url.pathname || "/",
-        port: url.port || "",
-        queryParams: params,
-      };
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Invalid URL");
-      return null;
-    }
-  }, [input]);
+    } catch {}
+  };
 
   const rebuiltURL = useMemo<string>(() => {
     if (!parsed) return "";
 
-    const { protocol, host, path, port, queryParams: originalParams } = parsed;
+    const { protocol, host, path, port } = parsed;
     const baseURL = `${protocol}://${host}${port ? `:${port}` : ""}${path}`;
 
     const params = new URLSearchParams();
@@ -96,17 +113,17 @@ export default function URLParserPage() {
   return (
     <ToolLayout tool={tool}>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {/* Left: Input */}
+        {/* Input */}
         <TextAreaField
           label="URL Input"
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={(e) => handleInputChange(e.target.value)}
           placeholder="Paste a complete URL here..."
           rows={6}
-          action={<ClearButton onClick={() => setInput("")} disabled={!input} />}
+          action={<ClearButton onClick={() => handleInputChange("")} disabled={!input} />}
         />
 
-        {/* Right: Output and Analysis */}
+        {/* Output and Analysis */}
         <div className="space-y-4">
           {error && <ErrorAlert message={error} />}
 
@@ -170,7 +187,7 @@ export default function URLParserPage() {
             value={rebuiltURL}
             readOnly
             rows={3}
-            action={<CopyButton value={rebuiltURL} disabled={!rebuiltURL} />}
+            action={<CopyButton textToCopy={rebuiltURL} disabled={!rebuiltURL} />}
           />
         </div>
       )}

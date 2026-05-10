@@ -1,11 +1,10 @@
 "use client";
 
-import { DownloadIcon } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
 
 import { ToolLayout } from "@/components/tool-layout";
-import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
+import { DownloadButton } from "@/components/ui/download-button";
 import { Input } from "@/components/ui/input";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
@@ -119,13 +118,11 @@ export default function PlaceholderGeneratorPage() {
           />
 
           <div className="flex gap-3">
-            <Button onClick={handleDownload} className="px-4">
-              <DownloadIcon weight="duotone" className="size-4.5" />
-              Download PNG
-            </Button>
+            <DownloadButton label="Download PNG" variant="outline" onClick={handleDownload} />
+
             <CopyButton
               labelName="Copy Data URL"
-              value={() => {
+              textToCopy={() => {
                 const canvas = canvasRef.current;
                 return canvas ? canvas.toDataURL("image/png") : "";
               }}

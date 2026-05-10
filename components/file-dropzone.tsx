@@ -1,6 +1,6 @@
 "use client";
 
-import { UploadCloud } from "lucide-react";
+import { UploadIcon } from "@phosphor-icons/react";
 import { ChangeEvent, DragEvent, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
@@ -69,7 +69,7 @@ export default function FileDropzone({ onFileDropAction, accept, label }: FileDr
         onChange={handleChange}
         className="hidden"
       />
-      <UploadCloud
+      <UploadIcon
         size={40}
         className={cn(
           "mx-auto mb-4 transition-colors",

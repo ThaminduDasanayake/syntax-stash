@@ -58,7 +58,11 @@ export function ImageToAsciiTab() {
         />
         {preview ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={preview} alt="preview" className="max-h-32 max-w-xs rounded-lg object-contain" />
+          <img
+            src={preview}
+            alt="preview"
+            className="max-h-32 max-w-xs rounded-lg object-contain"
+          />
         ) : (
           <ImageIcon weight="duotone" size={40} className="text-muted-foreground" />
         )}
@@ -92,7 +96,7 @@ export function ImageToAsciiTab() {
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <Label>ASCII Output</Label>
-            <CopyButton value={output} />
+            <CopyButton textToCopy={output} />
           </div>
           <div className="bg-muted/30 border-border overflow-auto rounded-xl border p-4">
             <pre className="text-foreground font-mono text-[5px] leading-[5.5px] whitespace-pre select-all">
