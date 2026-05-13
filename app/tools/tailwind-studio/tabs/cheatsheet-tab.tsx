@@ -3,7 +3,16 @@
 import { useMemo, useState } from "react";
 
 import { CATEGORIES, TAILWIND_CLASSES } from "@/app/tools/tailwind-studio/cheatsheet-data";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { SearchInput } from "@/components/ui/search-input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -37,25 +46,22 @@ export function CheatsheetTab() {
   return (
     <div className="space-y-6">
       <div className="space-y-3">
-        <Input
+        <SearchInput
+          placeholder="Search classes or CSS (e.g. flex, border-radius, gap)..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search classes or CSS (e.g. flex, border-radius, gap)…"
-          className="h-11"
+          containerClassName="mb-4"
         />
         <div className="flex flex-wrap gap-2">
           {CATEGORIES.map((cat) => (
-            <button
+            <Button
+              variant={activeCategory === cat ? "default" : "outline"}
+              size="sm"
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`rounded-full border px-3 py-1 text-xs font-semibold transition-colors ${
-                activeCategory === cat
-                  ? "border-primary bg-primary text-primary-foreground"
-                  : "border-border text-muted-foreground hover:border-primary hover:text-foreground"
-              }`}
             >
               {cat}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
@@ -64,6 +70,29 @@ export function CheatsheetTab() {
         Showing <span className="text-foreground font-semibold">{filtered.length}</span> of{" "}
         {TAILWIND_CLASSES.length} classes
       </p>
+
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Product</TableHead>
+            <TableHead>Price</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell className="font-medium">Wireless Mouse</TableCell>
+            <TableCell>$29.99</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell className="font-medium">Mechanical Keyboard</TableCell>
+            <TableCell>$129.99</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell className="font-medium">USB-C Hub</TableCell>
+            <TableCell>$49.99</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
 
       <div className="border-border overflow-hidden rounded-xl border">
         <div className="border-border bg-muted/50 grid grid-cols-[1fr_2fr_auto] border-b px-4 py-2">

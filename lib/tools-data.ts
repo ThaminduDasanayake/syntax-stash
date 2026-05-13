@@ -3,6 +3,7 @@ import {
   BinaryIcon,
   BookOpenTextIcon,
   BracketsCurlyIcon,
+  BrowsersIcon,
   CalendarBlankIcon,
   ClockIcon,
   CodeIcon,
@@ -342,6 +343,15 @@ export const imageTools: Tool[] = [
       "Generate ASCII banners, folder trees, markdown tables, glitch text, and convert images to ASCII art.",
     category: CATEGORIES.imagesAssets,
     icon: TerminalWindowIcon,
+  },
+  {
+    title: "Favicon Generator",
+    highlight: "Generator",
+    url: "/tools/favicon-generator",
+    description:
+      "Generate the full favicon set (.ico, apple-touch, PWA icons) and HTML/manifest snippets from any source image. Browser-only.",
+    category: CATEGORIES.imagesAssets,
+    icon: BrowsersIcon,
   },
   {
     title: "Image Converter",
