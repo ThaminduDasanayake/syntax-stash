@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { InputField } from "@/components/ui/input-field";
+import { SearchInput } from "@/components/ui/search-input";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { internalTools } from "@/lib/tools-data";
 
@@ -69,11 +70,11 @@ export default function HttpStatusPage() {
     <ToolLayout tool={tool}>
       <div className="space-y-6">
         {/* Search + filter */}
-        <div className="space-y-3">
-          <InputField
+        <div className="space-y-4">
+          <SearchInput
+            placeholder="Search by code, name, or description (e.g. 404, redirect, rate limit)..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search by code, name, or description (e.g. 404, redirect, rate limit)…"
           />
           <div className="flex flex-wrap gap-2">
             {STATUS_CATEGORIES.map((cat) => {

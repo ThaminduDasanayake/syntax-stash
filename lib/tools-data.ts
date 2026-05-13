@@ -3,8 +3,6 @@ import {
   BinaryIcon,
   BookOpenTextIcon,
   BracketsCurlyIcon,
-  BrowsersIcon,
-  CalendarBlankIcon,
   ClockIcon,
   CodeIcon,
   DatabaseIcon,
@@ -41,6 +39,7 @@ import {
   ShieldCheckeredIcon,
   ShieldCheckIcon,
   ShippingContainerIcon,
+  StarIcon,
   SwatchesIcon,
   TerminalWindowIcon,
   TextTIcon,
@@ -288,22 +287,13 @@ export const devopsTools: Tool[] = [
     icon: LockIcon,
   },
   {
-    title: "Cron Explorer",
-    highlight: "Explorer",
-    url: "/tools/cron-explorer",
+    title: "Cron Studio",
+    highlight: "Studio",
+    url: "/tools/cron-studio",
     description:
-      "Translate cron expressions to plain English, and visualize upcoming executions on a timeline.",
+      "Build cron expressions from presets or a field-by-field editor, then translate them to plain English and preview upcoming executions on a timeline.",
     category: CATEGORIES.devops,
     icon: PasswordIcon,
-  },
-  {
-    title: "Cron Generator",
-    highlight: "Generator",
-    url: "/tools/cron-generator",
-    description:
-      "Build cron expressions with presets or a custom field-by-field editor. Shows a plain-English description in real time.",
-    category: CATEGORIES.devops,
-    icon: CalendarBlankIcon,
   },
   {
     title: "curl Command Builder",
@@ -351,7 +341,7 @@ export const imageTools: Tool[] = [
     description:
       "Generate the full favicon set (.ico, apple-touch, PWA icons) and HTML/manifest snippets from any source image. Browser-only.",
     category: CATEGORIES.imagesAssets,
-    icon: BrowsersIcon,
+    icon: StarIcon,
   },
   {
     title: "Image Converter",

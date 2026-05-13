@@ -1,12 +1,7 @@
 "use client";
 
+import { ArrowRightIcon } from "@phosphor-icons/react";
 import { useState } from "react";
-
-import { ToolLayout } from "@/components/tool-layout";
-import { Button } from "@/components/ui/button";
-import { CopyButton } from "@/components/ui/copy-button";
-import { SelectField } from "@/components/ui/select-field";
-import { internalTools } from "@/lib/tools-data";
 
 import {
   CronField,
@@ -19,8 +14,11 @@ import {
   MONTHS,
   PresetKey,
   PRESETS,
-} from "./constants";
-import { buildDescription, buildExpression } from "./helpers";
+} from "@/app/tools/cron-studio/build-constants";
+import { buildDescription, buildExpression } from "@/app/tools/cron-studio/build-helpers";
+import { Button } from "@/components/ui/button";
+import { CopyButton } from "@/components/ui/copy-button";
+import { SelectField } from "@/components/ui/select-field";
 
 function MultiSelect({
   values,
@@ -94,7 +92,6 @@ interface FieldEditorProps {
   min: number;
   max: number;
   options: { value: number; label: string }[];
-  labelWidth?: string;
 }
 
 function FieldEditor({ label, field, onChange, min, max, options }: FieldEditorProps) {
@@ -167,7 +164,11 @@ function FieldEditor({ label, field, onChange, min, max, options }: FieldEditorP
   );
 }
 
-export default function CronGeneratorPage() {
+interface BuildTabProps {
+  onSendToExplore: (expression: string) => void;
+}
+
+export function BuildTab({ onSendToExplore }: BuildTabProps) {
   const [preset, setPreset] = useState<PresetKey>("every-15-minutes");
   const [minute, setMinute] = useState<CronField>(DEFAULT_FIELD(0, 59));
   const [hour, setHour] = useState<CronField>(DEFAULT_FIELD(0, 23));
@@ -189,27 +190,34 @@ export default function CronGeneratorPage() {
   const hourOptions = HOURS.map((v) => ({ value: v, label: String(v) }));
   const domOptions = DOM.map((v) => ({ value: v, label: String(v) }));
 
-  const tool = internalTools.find((t) => t.url === "/tools/cron-generator");
+  const finalExpression = expression || "* * * * *";
 
   return (
-    <ToolLayout tool={tool}>
+    <>
       {/* Expression output */}
       <div className="bg-muted mb-8 rounded-xl p-6">
         <div className="mb-1 flex items-start justify-between gap-4">
           <div className="space-y-1">
-            <p className="font-mono text-3xl font-bold tracking-widest">
-              {expression || "* * * * *"}
-            </p>
+            <p className="font-mono text-3xl font-bold tracking-widest">{finalExpression}</p>
             <p className="text-muted-foreground text-sm">{description}</p>
           </div>
-          <CopyButton textToCopy={expression || "* * * * *"} size="sm" />
+          <div className="flex shrink-0 items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => onSendToExplore(finalExpression)}
+              className="gap-2"
+            >
+              Test in Explore
+              <ArrowRightIcon weight="bold" className="size-4" />
+            </Button>
+            <CopyButton textToCopy={finalExpression} size="sm" />
+          </div>
         </div>
         <div className="mt-4 flex gap-6">
           {["minute", "hour", "day", "month", "weekday"].map((label, i) => (
             <div key={label} className="text-center">
-              <p className="font-mono text-lg font-semibold">
-                {(expression || "* * * * *").split(" ")[i]}
-              </p>
+              <p className="font-mono text-lg font-semibold">{finalExpression.split(" ")[i]}</p>
               <p className="text-muted-foreground text-[10px] tracking-wider uppercase">{label}</p>
             </div>
           ))}
@@ -295,6 +303,6 @@ export default function CronGeneratorPage() {
           ))}
         </div>
       </div>
-    </ToolLayout>
+    </>
   );
 }

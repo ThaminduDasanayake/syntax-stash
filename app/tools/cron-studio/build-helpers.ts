@@ -1,4 +1,4 @@
-import { CronField } from "./constants";
+import { CronField } from "@/app/tools/cron-studio/build-constants";
 
 export function fieldToToken(field: CronField): string {
   switch (field.mode) {
@@ -63,11 +63,6 @@ function describeField(field: CronField, unit: string, labels?: string[]): strin
       }
 
       return field.specific.map(ordinal).join(", ");
-
-      // const names = labels
-      //   ? field.specific.map((v) => labels[v] ?? String(v))
-      //   : field.specific.map(String);
-      // return names.join(", ");
     }
     case "range": {
       const from = labels ? (labels[field.rangeFrom] ?? field.rangeFrom) : field.rangeFrom;

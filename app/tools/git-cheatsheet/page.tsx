@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 
 import { ToolLayout } from "@/components/tool-layout";
-import { Input } from "@/components/ui/input";
+import { SearchInput } from "@/components/ui/search-input";
 import { internalTools } from "@/lib/tools-data";
 
 import { DANGER_LEVELS, DangerLevel, GIT_CATEGORIES, GIT_COMMANDS } from "./data";
@@ -49,11 +49,10 @@ export default function GitCheatsheetPage() {
     <ToolLayout tool={tool}>
       <div className="space-y-6">
         {/* Search */}
-        <Input
+        <SearchInput
+          placeholder="Search commands or descriptions (e.g. stash, undo, rebase)..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search commands or descriptions (e.g. stash, undo, rebase)…"
-          className="h-11"
         />
 
         {/* Category filter */}

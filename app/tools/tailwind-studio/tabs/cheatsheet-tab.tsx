@@ -45,12 +45,11 @@ export function CheatsheetTab() {
 
   return (
     <div className="space-y-6">
-      <div className="space-y-3">
+      <div className="space-y-4">
         <SearchInput
           placeholder="Search classes or CSS (e.g. flex, border-radius, gap)..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          containerClassName="mb-4"
         />
         <div className="flex flex-wrap gap-2">
           {CATEGORIES.map((cat) => (

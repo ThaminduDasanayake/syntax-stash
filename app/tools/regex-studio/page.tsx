@@ -18,6 +18,7 @@ import { DownloadButton } from "@/components/ui/download-button";
 import { Input } from "@/components/ui/input";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
+import { SearchInput } from "@/components/ui/search-input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TextAreaField } from "@/components/ui/textarea-field";
 import { internalTools } from "@/lib/tools-data";
@@ -285,13 +286,13 @@ export default function RegexStudioPage() {
         </TabsContent>
 
         <TabsContent value="library" className="mt-0 space-y-6">
-          <div className="space-y-3">
-            <InputField
-              label="Pattern"
+          <div className="space-y-4">
+            <SearchInput
+              placeholder="Search patterns (e.g. email, UUID, date)..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search patterns (e.g. email, UUID, date)…"
             />
+
             <div className="flex flex-wrap gap-2">
               {REGEX_CATEGORIES.map((cat) => (
                 <Button

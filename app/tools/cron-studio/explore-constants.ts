@@ -1,4 +1,4 @@
-import { Range } from "@/app/tools/cron-explorer/types";
+import { Range } from "@/app/tools/cron-studio/explore-types";
 
 export const COMMON_TIMEZONES = [
   "UTC",
