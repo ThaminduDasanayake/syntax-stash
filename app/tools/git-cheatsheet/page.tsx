@@ -3,7 +3,16 @@
 import { useMemo, useState } from "react";
 
 import { ToolLayout } from "@/components/tool-layout";
+import { Badge } from "@/components/ui/badge";
 import { SearchInput } from "@/components/ui/search-input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { internalTools } from "@/lib/tools-data";
 
 import { DANGER_LEVELS, DangerLevel, GIT_CATEGORIES, GIT_COMMANDS } from "./data";
@@ -115,52 +124,42 @@ export default function GitCheatsheetPage() {
           {GIT_COMMANDS.length} commands
         </p>
 
-        {/* Table */}
-        <div className="border-border overflow-hidden rounded-xl border">
-          <div className="border-border bg-muted/50 grid grid-cols-[2fr_3fr_auto] border-b px-4 py-2">
-            <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
-              Command
-            </span>
-            <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
-              Description
-            </span>
-            <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
-              Level
-            </span>
-          </div>
-
-          <div className="divide-border divide-y">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Command</TableHead>
+              <TableHead>Description</TableHead>
+              <TableHead>Level</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {filtered.length === 0 ? (
-              <div className="text-muted-foreground p-8 text-center text-sm">
-                No commands found for &ldquo;{search}&rdquo;
-              </div>
+              <TableRow>
+                <TableCell colSpan={3} className="text-muted-foreground py-8 text-center text-sm whitespace-normal">
+                  No commands found for &ldquo;{search}&rdquo;
+                </TableCell>
+              </TableRow>
             ) : (
               filtered.map((cmd, i) => (
-                <button
-                  key={i}
-                  onClick={() => copyCmd(cmd.command)}
-                  className="hover:bg-muted/30 grid w-full grid-cols-[2fr_3fr_auto] items-start gap-4 px-4 py-3 text-left transition-colors"
-                >
-                  <span
-                    className={`font-mono text-sm font-semibold transition-colors ${
-                      copiedCmd === cmd.command ? "text-primary" : "text-foreground"
-                    }`}
-                  >
-                    {copiedCmd === cmd.command ? "Copied!" : cmd.command}
-                  </span>
-                  <span className="text-muted-foreground text-sm leading-relaxed">
+                <TableRow key={i} onClick={() => copyCmd(cmd.command)} className="cursor-pointer">
+                  <TableCell className="font-mono text-sm font-semibold">
+                    <span className={copiedCmd === cmd.command ? "text-primary" : "text-foreground"}>
+                      {copiedCmd === cmd.command ? "Copied!" : cmd.command}
+                    </span>
+                  </TableCell>
+                  <TableCell className="text-muted-foreground whitespace-normal text-sm leading-relaxed">
                     {cmd.description}
-                  </span>
-                  <span
-                    className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium ${DANGER_STYLES[cmd.danger]}`}
-                  >
-                    {DANGER_LABELS[cmd.danger]}
-                  </span>
-                </button>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant="outline" className={`rounded-full ${DANGER_STYLES[cmd.danger]}`}>
+                      {DANGER_LABELS[cmd.danger]}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
               ))
             )}
-          </div>
-        </div>
+          </TableBody>
+        </Table>
 
         <p className="text-muted-foreground text-xs">
           Click any row to copy the command. <span className="text-yellow-400">Caution</span>{" "}

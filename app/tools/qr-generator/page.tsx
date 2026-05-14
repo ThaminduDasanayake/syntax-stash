@@ -10,12 +10,12 @@ import { ClearButton } from "@/components/ui/clear-button";
 import { DownloadButton } from "@/components/ui/download-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { SliderField } from "@/components/ui/slider-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
 import { internalTools } from "@/lib/tools-data";
 
 type ErrorCorrectionLevel = "L" | "M" | "Q" | "H";
 
-// Quick templates to pre-fill the text area
 const TEMPLATES = [
   { label: "URL", value: "https://" },
   { label: "Email", value: "mailto:someone@example.com?subject=Hello" },
@@ -28,12 +28,10 @@ export default function QRGeneratorPage() {
   const [fg, setFg] = useState("#000000");
   const [bg, setBg] = useState("#ffffff");
 
-  // New Phase 1 States
   const [margin, setMargin] = useState(2);
   const [errorLevel, setErrorLevel] = useState<ErrorCorrectionLevel>("M");
   const [transparentBg, setTransparentBg] = useState(false);
 
-  // Output States
   const [dataUrl, setDataUrl] = useState<string | null>(null);
   const [svgString, setSvgString] = useState<string | null>(null); // Phase 2
   const [error, setError] = useState<string | null>(null);
@@ -55,18 +53,15 @@ export default function QRGeneratorPage() {
 
         const QRCode = QRCodeModule.default || QRCodeModule;
 
-        // Shared options for both PNG and SVG
         const options = {
           errorCorrectionLevel: errorLevel,
           margin: margin,
           color: {
             dark: fg,
-            // qrcode uses 8-digit hex for alpha. #00000000 is fully transparent.
             light: transparentBg ? "#00000000" : bg,
           },
         };
 
-        // 1. Generate PNG Data URL for the preview
         QRCode.toDataURL(text, { ...options, width: 512 })
           .then((url: string) => {
             if (!cancelled) {
@@ -81,14 +76,11 @@ export default function QRGeneratorPage() {
             }
           });
 
-        // 2. Generate Raw SVG string for Phase 2 downloading
         QRCode.toString(text, { ...options, type: "svg" })
           .then((svg: string) => {
             if (!cancelled) setSvgString(svg);
           })
-          .catch(() => {
-            // Silently fail SVG generation if needed, PNG is priority
-          });
+          .catch(() => {});
       })
       .catch(() => {
         if (!cancelled) setError("Failed to load QR generator module.");
@@ -121,7 +113,6 @@ export default function QRGeneratorPage() {
     a.click();
     document.body.removeChild(a);
 
-    // Clean up memory if we created a Blob
     if (isTempBlob) URL.revokeObjectURL(downloadUrl);
   }
 
@@ -139,7 +130,7 @@ export default function QRGeneratorPage() {
           <div className="space-y-3">
             <div className="flex flex-wrap gap-2">
               {TEMPLATES.map((t) => (
-                <Button key={t.label} variant="outline" size="xs" onClick={() => setText(t.value)}>
+                <Button key={t.label} variant="outline" size="sm" onClick={() => setText(t.value)}>
                   {t.label}
                 </Button>
               ))}
@@ -161,20 +152,14 @@ export default function QRGeneratorPage() {
 
             <div className="space-y-4">
               {/* Padding Slider */}
-              <div className="space-y-2">
-                <div className="flex items-center justify-between text-sm">
-                  <Label>Padding (Margin)</Label>
-                  <span className="text-muted-foreground font-mono text-xs">{margin}px</span>
-                </div>
-                <input
-                  type="range"
-                  min="0"
-                  max="10"
-                  value={margin}
-                  onChange={(e) => setMargin(Number(e.target.value))}
-                  className="accent-primary w-full"
-                />
-              </div>
+              <SliderField
+                label="Padding (Margin)"
+                valueLabel={`${margin}px`}
+                value={[margin]}
+                onValueChange={(vals) => setMargin(vals[0])}
+                min={0}
+                max={10}
+              />
 
               {/* Error Correction */}
               <div className="space-y-2">

@@ -10,13 +10,13 @@ import { parseRegex } from "@/app/tools/regex-studio/helpers";
 import { RegexResult } from "@/app/tools/regex-studio/types";
 import { ErrorAlert } from "@/components/error-alert";
 import { ToolLayout } from "@/components/tool-layout";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { DownloadButton } from "@/components/ui/download-button";
 import { Input } from "@/components/ui/input";
-import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SearchInput } from "@/components/ui/search-input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -324,13 +324,12 @@ export default function RegexStudioPage() {
                       <div className="flex items-start justify-between gap-2">
                         <div className="min-w-0">
                           <p className="text-foreground leading-snug font-semibold">{entry.name}</p>
-                          <span
-                            className={`mt-1 inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium ${
-                              CATEGORY_COLORS[entry.category]
-                            }`}
+                          <Badge
+                            variant="outline"
+                            className={`mt-1 rounded-full ${CATEGORY_COLORS[entry.category]}`}
                           >
                             {entry.category}
-                          </span>
+                          </Badge>
                         </div>
                         <div className="flex shrink-0 gap-1">
                           <CopyButton label={false} textToCopy={entry.pattern} className="px-2.5" />

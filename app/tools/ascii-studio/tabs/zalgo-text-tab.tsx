@@ -6,7 +6,7 @@ import { applyZalgo } from "@/app/tools/ascii-studio/helpers";
 import { CopyButton } from "@/components/ui/copy-button";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
-import { Slider } from "@/components/ui/slider";
+import { SliderField } from "@/components/ui/slider-field";
 
 export function ZalgoTextTab() {
   const [text, setText] = useState("glitch me");
@@ -24,23 +24,16 @@ export function ZalgoTextTab() {
           placeholder="Enter text to glitch..."
         />
 
-        <div className="space-y-3">
-          <Label>
-            Chaos Level — <span className="text-primary font-mono font-semibold">{chaos}</span>
-          </Label>
-          <Slider
-            value={[chaos]}
-            onValueChange={(v) => setChaos(Array.isArray(v) ? v[0] : v)}
-            min={1}
-            max={100}
-            step={1}
-            className="py-1"
-          />
-          <div className="flex justify-between">
-            <span className="text-muted-foreground text-xs">Mild</span>
-            <span className="text-muted-foreground text-xs">Extreme</span>
-          </div>
-        </div>
+        <SliderField
+          label="Chaos Level"
+          valueLabel={chaos}
+          leftLabel="Mild"
+          rightLabel="Extreme"
+          value={[chaos]}
+          onValueChange={(vals) => setChaos(vals[0])}
+          min={1}
+          max={100}
+        />
       </div>
 
       <div className="space-y-2">

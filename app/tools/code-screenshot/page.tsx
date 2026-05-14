@@ -15,7 +15,7 @@ import { DownloadButton } from "@/components/ui/download-button";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
-import { Slider } from "@/components/ui/slider";
+import { SliderField } from "@/components/ui/slider-field";
 import { Switch } from "@/components/ui/switch";
 import { TextAreaField } from "@/components/ui/textarea-field";
 import { internalTools } from "@/lib/tools-data";
@@ -163,28 +163,24 @@ export default function CodeScreenshotPage() {
               spellCheck={false}
             />
 
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-2">
-                <Label className="text-xs">Padding: {padding}px</Label>
-                <Slider
-                  value={[padding]}
-                  onValueChange={(vals) => setPadding(Array.isArray(vals) ? vals[0] : vals)}
-                  min={0}
-                  max={128}
-                  step={4}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label className="text-xs">Font: {fontSize}px</Label>
-                <Slider
-                  value={[fontSize]}
-                  onValueChange={(vals) => setFontSize(Array.isArray(vals) ? vals[0] : vals)}
-                  min={10}
-                  max={24}
-                  step={1}
-                />
-              </div>
-            </div>
+            <SliderField
+              label="Padding"
+              valueLabel={`${padding}px`}
+              value={[padding]}
+              onValueChange={(vals) => setPadding(vals[0])}
+              min={0}
+              max={128}
+              step={4}
+            />
+
+            <SliderField
+              label="Font"
+              valueLabel={`${fontSize}px`}
+              value={[fontSize]}
+              onValueChange={(vals) => setFontSize(vals[0])}
+              min={10}
+              max={24}
+            />
 
             <div className="space-y-3">
               <div className="flex items-center gap-2">

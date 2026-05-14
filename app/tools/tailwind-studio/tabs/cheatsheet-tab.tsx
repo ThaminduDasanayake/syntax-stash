@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 
 import { CATEGORIES, TAILWIND_CLASSES } from "@/app/tools/tailwind-studio/cheatsheet-data";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SearchInput } from "@/components/ui/search-input";
 import {
@@ -73,73 +74,46 @@ export function CheatsheetTab() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Product</TableHead>
-            <TableHead>Price</TableHead>
+            <TableHead>Class</TableHead>
+            <TableHead>CSS Output</TableHead>
+            <TableHead>Category</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell className="font-medium">Wireless Mouse</TableCell>
-            <TableCell>$29.99</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium">Mechanical Keyboard</TableCell>
-            <TableCell>$129.99</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium">USB-C Hub</TableCell>
-            <TableCell>$49.99</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-
-      <div className="border-border overflow-hidden rounded-xl border">
-        <div className="border-border bg-muted/50 grid grid-cols-[1fr_2fr_auto] border-b px-4 py-2">
-          <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
-            Class
-          </span>
-          <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
-            CSS Output
-          </span>
-          <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
-            Category
-          </span>
-        </div>
-
-        <div className="divide-border divide-y">
           {filtered.length === 0 ? (
-            <div className="text-muted-foreground p-8 text-center text-sm">
-              No classes found for &ldquo;{search}&rdquo;
-            </div>
+            <TableRow>
+              <TableCell colSpan={3} className="text-muted-foreground py-8 text-center text-sm whitespace-normal">
+                No classes found for &ldquo;{search}&rdquo;
+              </TableCell>
+            </TableRow>
           ) : (
             filtered.map((entry) => (
-              <button
+              <TableRow
                 key={entry.className}
                 onClick={() => copy(entry.className, entry.className)}
-                className="hover:bg-muted/30 grid w-full grid-cols-[1fr_2fr_auto] items-center gap-4 px-4 py-2.5 text-left transition-colors"
+                className="cursor-pointer"
               >
-                <span
-                  className={`font-mono text-sm font-semibold transition-colors ${
-                    copiedItem === entry.className ? "text-primary" : "text-foreground"
-                  }`}
-                >
-                  {copiedItem === entry.className ? "Copied!" : entry.className}
-                </span>
-                <span className="text-muted-foreground truncate font-mono text-xs">
+                <TableCell className="font-mono text-sm font-semibold">
+                  <span className={copiedItem === entry.className ? "text-primary" : "text-foreground"}>
+                    {copiedItem === entry.className ? "Copied!" : entry.className}
+                  </span>
+                </TableCell>
+                <TableCell className="text-muted-foreground whitespace-normal font-mono text-xs">
                   {entry.css}
-                </span>
-                <span
-                  className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium ${
-                    CATEGORY_COLORS[entry.category] ?? "border-border text-muted-foreground"
-                  }`}
-                >
-                  {entry.category}
-                </span>
-              </button>
+                </TableCell>
+                <TableCell>
+                  <Badge
+                    variant="outline"
+                    className={`rounded-full ${CATEGORY_COLORS[entry.category] ?? "border-border text-muted-foreground"}`}
+                  >
+                    {entry.category}
+                  </Badge>
+                </TableCell>
+              </TableRow>
             ))
           )}
-        </div>
-      </div>
+        </TableBody>
+      </Table>
 
       <p className="text-muted-foreground text-xs">
         Click any row to copy the class name to your clipboard. CSS values are approximate — see{" "}

@@ -20,7 +20,10 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "syntax-stash",
+  title: {
+    template: "%s | syntax-stash",
+    default: "syntax-stash",
+  },
   description: "A curated stash of developer tools, resources, and snippets.",
 };
 

@@ -2,19 +2,24 @@
 
 import { useMemo, useState } from "react";
 
-import { Corners, Mode, PRESETS } from "@/app/tools/css-studio/border-radius-data";
+import { Corners, PRESETS } from "@/app/tools/css-studio/border-radius-data";
 import {
   buildCssBorderRadius,
   buildTailwindClass,
 } from "@/app/tools/css-studio/border-radius-helpers";
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Slider } from "@/components/ui/slider";
+import { SliderField } from "@/components/ui/slider-field";
+import { Switch } from "@/components/ui/switch";
 
 export function BorderRadiusTab() {
-  const [mode, setMode] = useState<Mode>("Simple");
+  const [linked, setLinked] = useState({
+    tl: true,
+    tr: true,
+    br: true,
+    bl: true,
+  });
   const [corners, setCorners] = useState<Corners>({
     tl: { h: 8, v: 8 },
     tr: { h: 8, v: 8 },
@@ -22,17 +27,41 @@ export function BorderRadiusTab() {
     bl: { h: 8, v: 8 },
   });
 
-  const cssValue = useMemo(() => buildCssBorderRadius(corners, mode), [corners, mode]);
-  const twClass = useMemo(() => buildTailwindClass(corners, mode), [corners, mode]);
+  const derivedMode = Object.values(corners).some((c) => c.h !== c.v) ? "Advanced" : "Simple";
+
+  const cssValue = useMemo(
+    () => buildCssBorderRadius(corners, derivedMode),
+    [corners, derivedMode],
+  );
+  const twClass = useMemo(() => buildTailwindClass(corners, derivedMode), [corners, derivedMode]);
 
   function setCorner(key: keyof Corners, axis: "h" | "v", value: number) {
-    setCorners((prev) => ({ ...prev, [key]: { ...prev[key], [axis]: value } }));
+    setCorners((prev) => {
+      if (linked[key]) {
+        return { ...prev, [key]: { h: value, v: value } };
+      }
+      return { ...prev, [key]: { ...prev[key], [axis]: value } };
+    });
+  }
+
+  function toggleLink(key: keyof Corners) {
+    setLinked((prev) => {
+      const isNowLinked = !prev[key];
+      if (isNowLinked) {
+        setCorners((c) => ({ ...c, [key]: { h: c[key].h, v: c[key].h } }));
+      }
+      return { ...prev, [key]: isNowLinked };
+    });
   }
 
   function applyPreset(preset: (typeof PRESETS)[0]) {
     setCorners(preset.corners);
-    const isAdvanced = Object.values(preset.corners).some((c) => c.h !== c.v);
-    if (!isAdvanced && mode === "Advanced") setMode("Simple");
+    setLinked({
+      tl: preset.corners.tl.h === preset.corners.tl.v,
+      tr: preset.corners.tr.h === preset.corners.tr.v,
+      br: preset.corners.br.h === preset.corners.br.v,
+      bl: preset.corners.bl.h === preset.corners.bl.v,
+    });
   }
 
   const cornerKeys: { key: keyof Corners; label: string }[] = [
@@ -42,31 +71,11 @@ export function BorderRadiusTab() {
     { key: "bl", label: "Bottom Left" },
   ];
 
-  const MAX = 200;
+  const MAX = 160;
 
   return (
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
       <div className="space-y-6">
-        <div className="space-y-2">
-          <Label>Mode</Label>
-          <div className="flex gap-2">
-            {(["Simple", "Advanced"] as Mode[]).map((m) => (
-              <Button
-                key={m}
-                onClick={() => setMode(m)}
-                variant={mode === m ? "default" : "secondary"}
-              >
-                {m}
-              </Button>
-            ))}
-          </div>
-          {mode === "Advanced" && (
-            <p className="text-muted-foreground text-xs">
-              Set independent horizontal (H) and vertical (V) radii per corner.
-            </p>
-          )}
-        </div>
-
         <div className="space-y-2">
           <Label>Presets</Label>
           <div className="flex flex-wrap gap-2">
@@ -87,46 +96,36 @@ export function BorderRadiusTab() {
           <Label>Corners</Label>
           {cornerKeys.map(({ key, label }) => (
             <div key={key} className="space-y-2">
-              <p className="text-foreground text-xs font-medium">{label}</p>
-              <div className="grid grid-cols-2 gap-3">
-                {(mode === "Advanced" ? (["h", "v"] as const) : (["h"] as const)).map((axis) => (
-                  <div key={axis} className="space-y-1.5">
-                    {mode === "Advanced" && (
-                      <Label className="text-muted-foreground text-xs">
-                        {axis === "h" ? "Horizontal" : "Vertical"}
-                      </Label>
-                    )}
-                    <div className="flex items-center gap-2">
-                      <Slider
-                        value={[Math.min(corners[key][axis], MAX)]}
-                        onValueChange={(vals) =>
-                          setCorner(key, axis, Array.isArray(vals) ? vals[0] : vals)
-                        }
-                        min={1}
-                        max={MAX}
-                        step={1}
-                        className="w-full"
-                      />
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Label
+                    htmlFor={`link-${key}`}
+                    className="text-muted-foreground cursor-pointer text-xs"
+                  >
+                    {linked[key] ? "Linked" : "Split"}
+                  </Label>
+                  <Switch
+                    id={`link-${key}`}
+                    checked={linked[key]}
+                    onCheckedChange={() => toggleLink(key)}
+                  />
+                </div>
+              </div>
 
-                      <Input
-                        min={0}
-                        max={MAX}
-                        value={corners[key][axis]}
-                        onChange={(e) => {
-                          const rawValue = e.target.value;
-
-                          if (rawValue === "") {
-                            setCorner(key, axis, 0);
-                            return;
-                          }
-
-                          const parsedValue = parseInt(rawValue) || 0;
-                          setCorner(key, axis, Math.min(MAX, parsedValue));
-                        }}
-                        className="w-14 text-center font-mono"
-                      />
-                    </div>
-                  </div>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {(["h", "v"] as const).map((axis) => (
+                  <SliderField
+                    key={axis}
+                    label={label}
+                    labelClassName="text-xs"
+                    valueLabel={axis === "h" ? "Horizontal" : "Vertical"}
+                    valueLabelClassName="text-muted-foreground text-xs font-sans"
+                    value={[Math.min(corners[key][axis], MAX)]}
+                    showInput={true}
+                    onValueChange={(vals) => setCorner(key, axis, vals[0])}
+                    min={0}
+                    max={MAX}
+                  />
                 ))}
               </div>
             </div>
@@ -139,7 +138,7 @@ export function BorderRadiusTab() {
           <Label>Live Preview</Label>
           <div className="border-border bg-muted/20 flex h-64 items-center justify-center rounded-xl border">
             <div
-              className="bg-primary/40 border-primary h-40 w-40 border-2 transition-all duration-150"
+              className="bg-primary/40 border-primary h-40 w-64 border-2 transition-all duration-150"
               style={{ borderRadius: cssValue }}
             />
           </div>
@@ -175,9 +174,7 @@ export function BorderRadiusTab() {
                 <span className="text-muted-foreground">{label}</span>
                 <span className="text-foreground">
                   {corners[key].h}px
-                  {mode === "Advanced" && corners[key].h !== corners[key].v
-                    ? ` / ${corners[key].v}px`
-                    : ""}
+                  {corners[key].h !== corners[key].v ? ` / ${corners[key].v}px` : ""}
                 </span>
               </div>
             ))}

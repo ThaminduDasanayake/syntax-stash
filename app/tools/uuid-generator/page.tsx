@@ -6,7 +6,7 @@ import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { SelectField } from "@/components/ui/select-field";
-import { Slider } from "@/components/ui/slider";
+import { SliderField } from "@/components/ui/slider-field";
 import { Switch } from "@/components/ui/switch";
 import { internalTools } from "@/lib/tools-data";
 
@@ -63,10 +63,14 @@ export default function UUIDGeneratorPage() {
           options={versionOptions}
         />
 
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Count: {count}</label>
-          <Slider min={1} max={100} value={[count]} onValueChange={handleCountChange} />
-        </div>
+        <SliderField
+          label="Count"
+          valueLabel={count}
+          value={[count]}
+          onValueChange={handleCountChange}
+          min={1}
+          max={100}
+        />
 
         <div className="flex flex-col justify-end gap-3">
           <div className="flex items-center gap-2">

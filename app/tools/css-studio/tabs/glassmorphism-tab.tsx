@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";
-import { Slider } from "@/components/ui/slider";
+import { SliderField } from "@/components/ui/slider-field";
 
 function getBlurClass(blur: number): string {
   if (blur <= 5) return "backdrop-blur-sm";
@@ -71,16 +71,13 @@ export function GlassmorphismTab() {
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="space-y-8 lg:col-span-1">
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <Label>Blur Amount</Label>
-              <span className="text-primary font-mono text-sm font-semibold">{blur}px</span>
-            </div>
-            <Slider
+            <SliderField
+              label="Blur Amount"
+              valueLabel={`${blur}px`}
               value={[blur]}
-              onValueChange={(vals) => setBlur(Array.isArray(vals) ? vals[0] : vals)}
+              onValueChange={(vals) => setBlur(vals[0])}
               min={0}
               max={40}
-              step={1}
             />
             <p className="text-muted-foreground text-xs">
               Controls the blur radius of the background
@@ -88,31 +85,25 @@ export function GlassmorphismTab() {
           </div>
 
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <Label>Opacity</Label>
-              <span className="text-primary font-mono text-sm font-semibold">{opacity}%</span>
-            </div>
-            <Slider
+            <SliderField
+              label="Opacity"
+              valueLabel={`${opacity}%`}
               value={[opacity]}
-              onValueChange={(vals) => setOpacity(Array.isArray(vals) ? vals[0] : vals)}
+              onValueChange={(vals) => setOpacity(vals[0])}
               min={0}
               max={100}
-              step={1}
             />
             <p className="text-muted-foreground text-xs">Controls the background transparency</p>
           </div>
 
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <Label>Border Opacity</Label>
-              <span className="text-primary font-mono text-sm font-semibold">{borderOpacity}%</span>
-            </div>
-            <Slider
+            <SliderField
+              label="Border Opacity"
+              valueLabel={`${borderOpacity}%`}
               value={[borderOpacity]}
-              onValueChange={(vals) => setBorderOpacity(Array.isArray(vals) ? vals[0] : vals)}
+              onValueChange={(vals) => setBorderOpacity(vals[0])}
               min={1}
               max={100}
-              step={1}
             />
             <p className="text-muted-foreground text-xs">Controls the border transparency</p>
           </div>

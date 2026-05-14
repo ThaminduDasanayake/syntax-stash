@@ -33,7 +33,7 @@ import { Button } from "@/components/ui/button";
 import { DownloadButton } from "@/components/ui/download-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Slider } from "@/components/ui/slider";
+import { SliderField } from "@/components/ui/slider-field";
 import { Switch } from "@/components/ui/switch";
 import { internalTools } from "@/lib/tools-data";
 
@@ -368,8 +368,8 @@ export default function ImageConverterPage() {
 
           <div className="bg-card border-border space-y-4 rounded-xl border p-4">
             <div className="flex items-center gap-2">
-              <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
-                {targetFormat} Settings
+              <span className="text-muted-foreground text-xs font-semibold tracking-wider">
+                <span className="uppercase">{targetFormat}</span> Settings
               </span>
               <div className="bg-border h-px flex-1" />
             </div>
@@ -385,22 +385,16 @@ export default function ImageConverterPage() {
             )}
 
             {(targetFormat === "jpeg" || targetFormat === "webp" || targetFormat === "avif") && (
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <Label className="text-sm">Quality</Label>
-                  <span className="text-muted-foreground font-mono text-sm">{currentQuality}%</span>
-                </div>
-                <Slider
-                  value={[currentQuality]}
-                  onValueChange={(vals) => {
-                    const val = Array.isArray(vals) ? vals[0] : (vals as number);
-                    updateFormatOption(targetFormat as "jpeg" | "webp" | "avif", "quality", val);
-                  }}
-                  min={1}
-                  max={100}
-                  step={1}
-                />
-              </div>
+              <SliderField
+                label="Quality"
+                valueLabel={`${currentQuality}%`}
+                value={[currentQuality]}
+                onValueChange={(vals) => {
+                  updateFormatOption(targetFormat as "jpeg" | "webp" | "avif", "quality", vals[0]);
+                }}
+                min={1}
+                max={100}
+              />
             )}
 
             {targetFormat === "ico" && (

@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { imageToAscii } from "@/app/tools/ascii-studio/helpers";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";
-import { Slider } from "@/components/ui/slider";
+import { SliderField } from "@/components/ui/slider-field";
 
 export function ImageToAsciiTab() {
   const [file, setFile] = useState<File | null>(null);
@@ -72,24 +72,17 @@ export function ImageToAsciiTab() {
       </label>
 
       {/* Resolution slider */}
-      <div className="space-y-3">
-        <Label>
-          Resolution —{" "}
-          <span className="text-primary font-mono font-semibold">{resolution} chars wide</span>
-        </Label>
-        <Slider
-          value={[resolution]}
-          onValueChange={(v) => setResolution(Array.isArray(v) ? v[0] : v)}
-          min={40}
-          max={200}
-          step={5}
-          className="py-1"
-        />
-        <div className="flex justify-between">
-          <span className="text-muted-foreground text-xs">Low detail</span>
-          <span className="text-muted-foreground text-xs">High detail</span>
-        </div>
-      </div>
+      <SliderField
+        label="Resolution"
+        valueLabel={`${resolution} chars`}
+        leftLabel="Low detail"
+        rightLabel="High detail"
+        value={[resolution]}
+        onValueChange={(vals) => setResolution(vals[0])}
+        min={40}
+        max={200}
+        step={5}
+      />
 
       {/* Output */}
       {output && (

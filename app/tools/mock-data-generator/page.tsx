@@ -9,9 +9,8 @@ import { SchemaId } from "@/app/tools/mock-data-generator/types";
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
-import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
-import { Slider } from "@/components/ui/slider";
+import { SliderField } from "@/components/ui/slider-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
 import { internalTools } from "@/lib/tools-data";
 import { cn } from "@/lib/utils";
@@ -51,19 +50,14 @@ export default function MockDataPage() {
             onValueChange={(v) => v && setSchema(v as SchemaId)}
           />
 
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label>Count (1–50)</Label>
-              <span className="text-muted-foreground font-mono text-sm">{count}</span>
-            </div>
-            <Slider
-              value={[count]}
-              onValueChange={(vals) => setCount(Array.isArray(vals) ? vals[0] : vals)}
-              min={1}
-              max={50}
-              step={1}
-            />
-          </div>
+          <SliderField
+            label="Count (1–50)"
+            valueLabel={count}
+            value={[count]}
+            onValueChange={(vals) => setCount(vals[0])}
+            min={1}
+            max={50}
+          />
 
           <div className="flex flex-col gap-4">
             <Button onClick={handleRegenerate} disabled={isGenerating} className="font-semibold">

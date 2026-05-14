@@ -3,8 +3,8 @@
 import { useMemo, useState } from "react";
 
 import { ToolLayout } from "@/components/tool-layout";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { InputField } from "@/components/ui/input-field";
 import { SearchInput } from "@/components/ui/search-input";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { internalTools } from "@/lib/tools-data";
@@ -124,11 +124,9 @@ export default function HttpStatusPage() {
                     >
                       {isCopied ? "Copied!" : entry.code}
                     </span>
-                    <span
-                      className={`shrink-0 rounded-full border px-2 py-0.5 text-xs font-medium ${styles.badge}`}
-                    >
+                    <Badge variant="outline" className={`rounded-full ${styles.badge}`}>
                       {entry.category}
-                    </span>
+                    </Badge>
                   </div>
 
                   {/* Name */}

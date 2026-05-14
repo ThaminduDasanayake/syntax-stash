@@ -28,7 +28,7 @@ export default function CssStudioPage() {
     <ToolLayout tool={tool}>
       <Tabs defaultValue="border-radius" className="flex flex-col gap-6">
         <div className="flex w-full">
-          <TabsList className="grid w-full max-w-3xl grid-cols-4 sm:grid-cols-7">
+          <TabsList className="grid w-full grid-cols-4 sm:grid-cols-7">
             <TabsTrigger value="border-radius" className="tab-trigger">
               <SquareIcon weight="duotone" className="size-4.5" />
               Radius
