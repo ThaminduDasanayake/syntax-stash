@@ -1,10 +1,12 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { CSSProperties, useRef, useState } from "react";
 
 import FileDropzone from "@/components/file-dropzone";
 import { ToolLayout } from "@/components/tool-layout";
+import { CheckboxField } from "@/components/ui/checkbox-field";
 import { ClearButton } from "@/components/ui/clear-button";
+import { ColorField } from "@/components/ui/color-field";
 import { CopyButton } from "@/components/ui/copy-button";
 import { DownloadButton } from "@/components/ui/download-button";
 import { InputField } from "@/components/ui/input-field";
@@ -18,20 +20,20 @@ import {
   generateAllBlobs,
   loadImage,
   OUTPUT_SIZES,
-  RenderOptions,
   rasterizeSvgToImage,
+  RenderOptions,
 } from "./helpers";
 
 const HTML_SNIPPET = buildHtmlSnippet();
 
-const CHECKERBOARD: React.CSSProperties = {
+const CHECKERBOARD: CSSProperties = {
   background: "repeating-conic-gradient(#404040 0% 25%, #1a1a1a 0% 50%) 0 0 / 8px 8px",
 };
 
 type OutputEntry = { blob: Blob; url: string };
 
 export default function FaviconGeneratorPage() {
-  const tool = internalTools.find((t) => t.url === "/tools/favicon-generator");
+  const tool = internalTools.find((t) => t.slug === "favicon-generator");
 
   const [sourceImg, setSourceImg] = useState<HTMLImageElement | null>(null);
   const [outputs, setOutputs] = useState<Map<string, OutputEntry>>(new Map());
@@ -53,7 +55,9 @@ export default function FaviconGeneratorPage() {
       if (genRef.current !== id) return;
       setOutputs((prev) => {
         prev.forEach(({ url }) => URL.revokeObjectURL(url));
-        return new Map([...blobs].map(([k, blob]) => [k, { blob, url: URL.createObjectURL(blob) }]));
+        return new Map(
+          [...blobs].map(([k, blob]) => [k, { blob, url: URL.createObjectURL(blob) }]),
+        );
       });
     } finally {
       if (genRef.current === id) setGenerating(false);
@@ -82,7 +86,7 @@ export default function FaviconGeneratorPage() {
 
   const applyOpts = (newOpts: RenderOptions) => {
     setOpts(newOpts);
-    if (sourceImg) generate(sourceImg, newOpts);
+    if (sourceImg) generate(sourceImg, newOpts).catch(console.error);
   };
 
   const downloadFile = (filename: string) => {
@@ -152,21 +156,17 @@ export default function FaviconGeneratorPage() {
               <div className="space-y-2">
                 <Label>Background</Label>
                 <div className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    id="fill-bg"
+                  <CheckboxField
+                    label="Fill"
                     checked={opts.fillBackground}
-                    onChange={(e) => applyOpts({ ...opts, fillBackground: e.target.checked })}
-                    className="accent-primary size-4 cursor-pointer"
+                    onCheckedChange={(checked) =>
+                      applyOpts({ ...opts, fillBackground: checked === true })
+                    }
                   />
-                  <label htmlFor="fill-bg" className="cursor-pointer text-sm">
-                    Fill
-                  </label>
-                  <input
-                    type="color"
+
+                  <ColorField
                     value={opts.backgroundColor}
-                    onChange={(e) => applyOpts({ ...opts, backgroundColor: e.target.value })}
-                    className="border-border h-8 w-12 cursor-pointer rounded border bg-transparent"
+                    onValueChange={(val) => applyOpts({ ...opts, backgroundColor: val })}
                   />
                 </div>
               </div>
@@ -185,7 +185,7 @@ export default function FaviconGeneratorPage() {
 
             {hasOutputs && (
               <div>
-                <p className="text-muted-foreground mb-4 text-xs font-semibold uppercase tracking-wider">
+                <p className="text-muted-foreground mb-4 text-xs font-semibold tracking-wider uppercase">
                   Preview &amp; Download
                 </p>
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-8">

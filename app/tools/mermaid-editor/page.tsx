@@ -44,7 +44,7 @@ export default function MermaidEditorPage() {
     URL.revokeObjectURL(url);
   }
 
-  const tool = internalTools.find((t) => t.url === "/tools/mermaid-editor");
+  const tool = internalTools.find((t) => t.slug === "mermaid-editor");
 
   return (
     <ToolLayout tool={tool}>

@@ -78,7 +78,7 @@ export default function Base64ImagePage() {
     document.body.removeChild(link);
   }
 
-  const tool = internalTools.find((t) => t.url === "/tools/base64-image-decoder");
+  const tool = internalTools.find((t) => t.slug === "base64-image-decoder");
 
   return (
     <ToolLayout tool={tool}>

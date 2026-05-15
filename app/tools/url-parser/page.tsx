@@ -108,7 +108,7 @@ export default function URLParserPage() {
     setQueryParams(updated);
   };
 
-  const tool = internalTools.find((t) => t.url === "/tools/url-parser");
+  const tool = internalTools.find((t) => t.slug === "url-parser");
 
   return (
     <ToolLayout tool={tool}>

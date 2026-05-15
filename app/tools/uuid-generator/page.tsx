@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowsClockwiseIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
 import { ToolLayout } from "@/components/tool-layout";
@@ -50,7 +51,7 @@ export default function UUIDGeneratorPage() {
     { value: "nil", label: "NIL — All zeros" },
   ];
 
-  const tool = internalTools.find((t) => t.url === "/tools/uuid-generator");
+  const tool = internalTools.find((t) => t.slug === "uuid-generator");
 
   return (
     <ToolLayout tool={tool}>
@@ -88,8 +89,8 @@ export default function UUIDGeneratorPage() {
         </div>
 
         <div className="flex flex-col justify-end gap-2">
-          <Button onClick={handleRegenerate} className="w-full">
-            Regenerate
+          <Button onClick={handleRegenerate} className="w-full font-semibold">
+            <ArrowsClockwiseIcon weight="bold" /> Regenerate
           </Button>
           <CopyButton
             textToCopy={allText}

@@ -40,7 +40,7 @@ export default function JsonStudioPage() {
     setActiveTab("query");
   }, []);
 
-  const tool = internalTools.find((t) => t.url === "/tools/json-studio");
+  const tool = internalTools.find((t) => t.slug === "json-studio");
 
   return (
     <ToolLayout tool={tool}>

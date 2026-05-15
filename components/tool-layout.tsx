@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ReactNode } from "react";
 
+import { iconMap } from "@/lib/icons";
 import { Tool } from "@/types";
 
 export function ToolLayout({ children, tool }: { children: ReactNode; tool: Tool | undefined }) {
@@ -10,7 +11,8 @@ export function ToolLayout({ children, tool }: { children: ReactNode; tool: Tool
     notFound();
   }
 
-  const { icon: Icon, title, highlight, description } = tool;
+  const { icon, title, highlight, description } = tool;
+  const Icon = icon ? iconMap[icon] : undefined;
 
   return (
     <div className="relative z-10 mx-auto flex min-h-full max-w-7xl flex-col px-4 py-8 md:py-12 md:pb-24">

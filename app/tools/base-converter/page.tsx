@@ -127,7 +127,7 @@ export default function BaseConverterPage() {
 
   const signed = toSigned(value);
 
-  const tool = internalTools.find((t) => t.url === "/tools/base-converter");
+  const tool = internalTools.find((t) => t.slug === "base-converter");
 
   return (
     <ToolLayout tool={tool}>

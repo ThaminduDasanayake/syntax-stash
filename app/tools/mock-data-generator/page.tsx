@@ -37,7 +37,7 @@ export default function MockDataPage() {
     }, 500);
   };
 
-  const tool = internalTools.find((t) => t.url === "/tools/mock-data-generator");
+  const tool = internalTools.find((t) => t.slug === "mock-data-generator");
 
   return (
     <ToolLayout tool={tool}>

@@ -22,7 +22,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { internalTools } from "@/lib/tools-data";
 
 export default function CssStudioPage() {
-  const tool = internalTools.find((t) => t.url === "/tools/css-studio");
+  const tool = internalTools.find((t) => t.slug === "css-studio");
 
   return (
     <ToolLayout tool={tool}>

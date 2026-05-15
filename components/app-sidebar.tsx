@@ -26,6 +26,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { iconMap } from "@/lib/icons";
 import { resourceCategories } from "@/lib/resources-data";
 import { internalTools } from "@/lib/tools-data";
 import { slugify } from "@/lib/utils";
@@ -34,7 +35,7 @@ const AppSidebar = () => {
   const pathname = usePathname();
   const { setOpenMobile } = useSidebar();
 
-  const categorySlug = (cat: string) => `/category/${slugify(cat)}`;
+  const categorySlug = (cat: string) => `/resources/${slugify(cat)}`;
   // Memoize the tool grouping so it only calculates once on mount
   const groupedTools = useMemo(() => {
     const grouped = internalTools.reduce(
@@ -105,16 +106,17 @@ const AppSidebar = () => {
             </SidebarGroupLabel>
             <SidebarMenu>
               {tools.map((tool) => {
-                const Icon = tool.icon || ToolboxIcon;
+                const Icon = (tool.icon && iconMap[tool.icon]) || ToolboxIcon;
+                const href = `/tools/${tool.slug}`;
                 return (
-                  <SidebarMenuItem key={tool.url}>
+                  <SidebarMenuItem key={tool.slug}>
                     <SidebarMenuButton
                       asChild
                       tooltip={tool.title}
-                      isActive={pathname === tool.url}
+                      isActive={pathname === href}
                       className="h-9 cursor-pointer group-data-[collapsible=icon]:justify-center"
                     >
-                      <Link href={tool.url} onClick={() => setOpenMobile(false)}>
+                      <Link href={href} onClick={() => setOpenMobile(false)}>
                         <Icon weight="duotone" className="text-primary size-5! shrink-0" />
                         <span className="group-data-[collapsible=icon]:hidden">{tool.title}</span>
                       </Link>

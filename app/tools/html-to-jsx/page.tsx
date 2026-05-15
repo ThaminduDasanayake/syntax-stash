@@ -30,7 +30,7 @@ function HtmlToJsxPage() {
     }
   }, [input, componentName, asComponent, selfCloseEmpty]);
 
-  const tool = internalTools.find((t) => t.url === "/tools/html-to-jsx");
+  const tool = internalTools.find((t) => t.slug === "html-to-jsx");
 
   return (
     <ToolLayout tool={tool}>

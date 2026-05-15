@@ -256,7 +256,7 @@ export default function ImageConverterPage() {
     a.click();
   };
 
-  const tool = internalTools.find((t) => t.url === "/tools/image-converter");
+  const tool = internalTools.find((t) => t.slug === "image-converter");
 
   return (
     <ToolLayout tool={tool}>
@@ -387,6 +387,7 @@ export default function ImageConverterPage() {
             {(targetFormat === "jpeg" || targetFormat === "webp" || targetFormat === "avif") && (
               <SliderField
                 label="Quality"
+
                 valueLabel={`${currentQuality}%`}
                 value={[currentQuality]}
                 onValueChange={(vals) => {

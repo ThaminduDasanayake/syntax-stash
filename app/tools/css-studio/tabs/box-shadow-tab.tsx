@@ -4,8 +4,8 @@ import { useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
+import { ColorField } from "@/components/ui/color-field";
 import { CopyButton } from "@/components/ui/copy-button";
-import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SliderField } from "@/components/ui/slider-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
@@ -48,71 +48,60 @@ export function BoxShadowTab() {
       <div className="space-y-6">
         <SliderField
           label="X Offset"
-          valueLabel={`${xOffset}px`}
           value={[xOffset]}
           showInput={true}
           onValueChange={(vals) => setXOffset(vals[0])}
           min={-50}
           max={50}
+          suffix="px"
         />
 
         <SliderField
           label="Y Offset"
-          valueLabel={`${yOffset}px`}
           value={[yOffset]}
           showInput={true}
           onValueChange={(vals) => setYOffset(vals[0])}
           min={-50}
           max={50}
+          suffix="px"
         />
 
         <SliderField
           label="Blur Radius"
-          valueLabel={`${blurRadius}px`}
           value={[blurRadius]}
           showInput={true}
           onValueChange={(vals) => setBlurRadius(vals[0])}
           min={0}
           max={50}
+          suffix="px"
         />
 
         <SliderField
           label="Spread Radius"
-          valueLabel={`${spreadRadius}px`}
           value={[spreadRadius]}
           showInput={true}
           onValueChange={(vals) => setSpreadRadius(vals[0])}
           min={-20}
           max={20}
+          suffix="px"
         />
 
-        <div className="space-y-2">
-          <Label>Shadow Color</Label>
-          <div className="flex items-center gap-3">
-            <input
-              type="color"
-              value={shadowColor}
-              onChange={(e) => setShadowColor(e.target.value)}
-              className="h-10 w-10 cursor-pointer rounded border"
-            />
-            <InputField
-              value={shadowColor}
-              onChange={(e) => setShadowColor(e.target.value)}
-              className="font-mono"
-              placeholder="#000000"
-            />
-          </div>
-        </div>
+        <ColorField
+          label="Shadow Color"
+          value={shadowColor}
+          onValueChange={setShadowColor}
+          className="w-fit"
+        />
 
         <SliderField
           label="Opacity"
-          valueLabel={`${shadowOpacity}%`}
           value={[shadowOpacity]}
-          showInput={true}
+          valueLabel={`${shadowOpacity}%`}
           onValueChange={(vals) => setShadowOpacity(vals[0])}
           min={0}
           max={1}
           step={0.05}
+          suffix="%"
         />
 
         <div className="space-y-2">
@@ -161,7 +150,7 @@ export function BoxShadowTab() {
           value={cssCode}
           readOnly
           rows={3}
-          textClassName="resize-none"
+          textClassName="resize-none text-xs!"
           action={<CopyButton textToCopy={cssCode} disabled={false} />}
         />
 

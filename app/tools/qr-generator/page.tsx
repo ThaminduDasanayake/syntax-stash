@@ -6,9 +6,10 @@ import { useEffect, useState } from "react";
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { CheckboxField } from "@/components/ui/checkbox-field";
 import { ClearButton } from "@/components/ui/clear-button";
+import { ColorField } from "@/components/ui/color-field";
 import { DownloadButton } from "@/components/ui/download-button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SliderField } from "@/components/ui/slider-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
@@ -116,10 +117,7 @@ export default function QRGeneratorPage() {
     if (isTempBlob) URL.revokeObjectURL(downloadUrl);
   }
 
-  const inputClass =
-    "h-10 bg-background border-border text-foreground font-mono placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-primary/30";
-
-  const tool = internalTools.find((t) => t.url === "/tools/qr-generator");
+  const tool = internalTools.find((t) => t.slug === "qr-generator");
 
   return (
     <ToolLayout tool={tool}>
@@ -154,11 +152,12 @@ export default function QRGeneratorPage() {
               {/* Padding Slider */}
               <SliderField
                 label="Padding (Margin)"
-                valueLabel={`${margin}px`}
                 value={[margin]}
+                showInput={true}
                 onValueChange={(vals) => setMargin(vals[0])}
                 min={0}
                 max={10}
+                suffix="px"
               />
 
               {/* Error Correction */}
@@ -184,54 +183,17 @@ export default function QRGeneratorPage() {
           <div className="bg-card border-border space-y-6 rounded-xl border p-5">
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-semibold">Colours</h3>
-              <label className="flex cursor-pointer items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={transparentBg}
-                  onChange={(e) => setTransparentBg(e.target.checked)}
-                  className="border-border accent-primary h-4 w-4 rounded"
-                />
-                <span className="text-muted-foreground text-xs">Transparent background</span>
-              </label>
+
+              <CheckboxField
+                label="Transparent background"
+                checked={transparentBg}
+                onCheckedChange={(checked) => setTransparentBg(checked === true)}
+              />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label className="text-muted-foreground text-xs">Foreground</Label>
-                <div className="flex items-center gap-2">
-                  <Input
-                    type="color"
-                    value={fg}
-                    onChange={(e) => setFg(e.target.value)}
-                    className="bg-background border-border h-10 w-14 cursor-pointer rounded-md p-1"
-                  />
-                  <Input
-                    value={fg}
-                    onChange={(e) => setFg(e.target.value)}
-                    className={inputClass}
-                    maxLength={7}
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label className="text-muted-foreground text-xs">Background</Label>
-                <div className="flex items-center gap-2">
-                  <Input
-                    type="color"
-                    value={bg}
-                    onChange={(e) => setBg(e.target.value)}
-                    disabled={transparentBg}
-                    className={`bg-background border-border h-10 w-14 cursor-pointer rounded-md p-1 ${transparentBg ? "opacity-50" : ""}`}
-                  />
-                  <Input
-                    value={bg}
-                    onChange={(e) => setBg(e.target.value)}
-                    disabled={transparentBg}
-                    className={`${inputClass} ${transparentBg ? "opacity-50" : ""}`}
-                    maxLength={7}
-                  />
-                </div>
-              </div>
+              <ColorField label="Foreground" value={fg} onValueChange={setFg} />
+              <ColorField label="Background" value={bg} onValueChange={setBg} />
             </div>
           </div>
 
@@ -271,6 +233,7 @@ export default function QRGeneratorPage() {
                   disabled={!dataUrl}
                   className="flex-1"
                 />
+
                 <DownloadButton
                   label="SVG"
                   onClick={() => handleDownload("svg")}

@@ -144,7 +144,7 @@ export default function DockerComposePage() {
     );
   }
 
-  const tool = internalTools.find((t) => t.url === "/tools/docker-compose-studio");
+  const tool = internalTools.find((t) => t.slug === "docker-compose-studio");
 
   return (
     <ToolLayout tool={tool}>

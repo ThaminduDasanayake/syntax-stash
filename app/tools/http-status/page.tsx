@@ -64,7 +64,7 @@ export default function HttpStatusPage() {
 
   const { copiedItem, copy } = useCopyToClipboard<number>();
 
-  const tool = internalTools.find((t) => t.url === "/tools/http-status");
+  const tool = internalTools.find((t) => t.slug === "http-status");
 
   return (
     <ToolLayout tool={tool}>

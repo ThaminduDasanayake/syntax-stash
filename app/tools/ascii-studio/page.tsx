@@ -18,7 +18,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { internalTools } from "@/lib/tools-data";
 
 export default function AsciiStudioPage() {
-  const tool = internalTools.find((t) => t.url === "/tools/ascii-studio");
+  const tool = internalTools.find((t) => t.slug === "ascii-studio");
 
   return (
     <ToolLayout tool={tool}>

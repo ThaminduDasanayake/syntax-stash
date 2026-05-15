@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { internalTools } from "@/lib/tools-data";
 
 export default function ColorStudioPage() {
-  const tool = internalTools.find((t) => t.url === "/tools/color-studio");
+  const tool = internalTools.find((t) => t.slug === "color-studio");
 
   return (
     <ToolLayout tool={tool}>

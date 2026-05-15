@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { CheckboxField } from "@/components/ui/checkbox-field";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -184,7 +185,7 @@ export default function CurlBuilderPage() {
     setParams(params.map((p, idx) => (idx === i ? { ...p, [field]: val } : p)));
   }
 
-  const tool = internalTools.find((t) => t.url === "/tools/curl-builder");
+  const tool = internalTools.find((t) => t.slug === "curl-builder");
 
   return (
     <ToolLayout tool={tool}>
@@ -251,7 +252,7 @@ export default function CurlBuilderPage() {
                 <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
                   Headers
                 </Label>
-                <Button variant="outline" size="sm" onClick={addHeader} className="rounded-full">
+                <Button variant="outline" size="sm" onClick={addHeader}>
                   <PlusIcon weight="duotone" className="size-3.5" /> Add
                 </Button>
               </div>
@@ -273,7 +274,7 @@ export default function CurlBuilderPage() {
                     variant="outline"
                     size="sm"
                     onClick={() => removeHeader(i)}
-                    className="shrink-0 rounded-full"
+                    className="shrink-0"
                   >
                     <TrashIcon weight="duotone" className="size-3.5" />
                   </Button>
@@ -287,7 +288,7 @@ export default function CurlBuilderPage() {
                 <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
                   Query Params
                 </Label>
-                <Button variant="outline" size="sm" onClick={addParam} className="rounded-full">
+                <Button variant="outline" size="sm" onClick={addParam}>
                   <PlusIcon weight="duotone" className="size-3.5" /> Add
                 </Button>
               </div>
@@ -309,7 +310,7 @@ export default function CurlBuilderPage() {
                     variant="outline"
                     size="sm"
                     onClick={() => removeParam(i)}
-                    className="shrink-0 rounded-full"
+                    className="shrink-0"
                   >
                     <TrashIcon weight="duotone" className="size-3.5" />
                   </Button>
@@ -330,24 +331,16 @@ export default function CurlBuilderPage() {
 
             {/* Flags */}
             <div className="flex items-center gap-6">
-              <label className="flex cursor-pointer items-center gap-2 text-sm">
-                <input
-                  type="checkbox"
-                  checked={followRedirects}
-                  onChange={(e) => setFollowRedirects(e.target.checked)}
-                  className="accent-primary"
-                />
-                <span>Follow redirects (-L)</span>
-              </label>
-              <label className="flex cursor-pointer items-center gap-2 text-sm">
-                <input
-                  type="checkbox"
-                  checked={verbose}
-                  onChange={(e) => setVerbose(e.target.checked)}
-                  className="accent-primary"
-                />
-                <span>Verbose (-v)</span>
-              </label>
+              <CheckboxField
+                label="Follow redirects (-L)"
+                checked={followRedirects}
+                onCheckedChange={(checked) => setFollowRedirects(checked === true)}
+              />
+              <CheckboxField
+                label="Verbose (-v)"
+                checked={verbose}
+                onCheckedChange={(checked) => setVerbose(checked === true)}
+              />
             </div>
           </div>
 

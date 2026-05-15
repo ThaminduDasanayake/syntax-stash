@@ -46,9 +46,9 @@ export const CopyButton = ({
       {...props}
     >
       {copied ? (
-        <CheckIcon weight="bold" className="size-4.5" />
+        <CheckIcon weight="bold" />
       ) : (
-        <CopyIcon weight="duotone" className="size-4.5 rotate-y-180" />
+        <CopyIcon weight="duotone" className="rotate-y-180" />
       )}
       {label && <span>{copied ? copiedLabelName : labelName}</span>}
     </Button>

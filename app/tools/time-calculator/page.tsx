@@ -139,7 +139,7 @@ export default function TimeCalculatorPage() {
 
   if (!mounted) return null;
 
-  const tool = internalTools.find((t) => t.url === "/tools/time-calculator");
+  const tool = internalTools.find((t) => t.slug === "time-calculator");
 
   return (
     <ToolLayout tool={tool}>

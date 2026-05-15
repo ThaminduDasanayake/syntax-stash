@@ -28,7 +28,7 @@ export default function UniversalDecoderPage() {
   const [input, setInput] = useState("");
   const result = useMemo(() => detect(input), [input]);
 
-  const tool = internalTools.find((t) => t.url === "/tools/universal-decoder");
+  const tool = internalTools.find((t) => t.slug === "universal-decoder");
 
   return (
     <ToolLayout tool={tool}>

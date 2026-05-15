@@ -52,7 +52,7 @@ export default function GitCheatsheetPage() {
     setTimeout(() => setCopiedCmd(null), 1500);
   }
 
-  const tool = internalTools.find((t) => t.url === "/tools/git-cheatsheet");
+  const tool = internalTools.find((t) => t.slug === "git-cheatsheet");
 
   return (
     <ToolLayout tool={tool}>

@@ -106,6 +106,7 @@ export function BorderRadiusTab() {
                   </Label>
                   <Switch
                     id={`link-${key}`}
+                    size="sm"
                     checked={linked[key]}
                     onCheckedChange={() => toggleLink(key)}
                   />
@@ -116,15 +117,19 @@ export function BorderRadiusTab() {
                 {(["h", "v"] as const).map((axis) => (
                   <SliderField
                     key={axis}
-                    label={label}
+                    label={
+                      <span>
+                        {label} {axis === "h" ? "Horizontal" : "Vertical"}
+                      </span>
+                    }
                     labelClassName="text-xs"
-                    valueLabel={axis === "h" ? "Horizontal" : "Vertical"}
-                    valueLabelClassName="text-muted-foreground text-xs font-sans"
                     value={[Math.min(corners[key][axis], MAX)]}
                     showInput={true}
                     onValueChange={(vals) => setCorner(key, axis, vals[0])}
+                    inputClassName="min-w-30"
                     min={0}
                     max={MAX}
+                    suffix="px"
                   />
                 ))}
               </div>

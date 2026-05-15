@@ -6,7 +6,7 @@ import { useMemo, useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { ColorField } from "@/components/ui/color-field";
 import { Label } from "@/components/ui/label";
 
 function hexToRgb(hex: string): [number, number, number] | null {
@@ -82,41 +82,8 @@ export function ContrastTab() {
   return (
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
       <div className="space-y-6">
-        <div className="space-y-2">
-          <Label>Foreground Color</Label>
-          <div className="flex items-center gap-2">
-            <Input
-              type="color"
-              value={fg}
-              onChange={(e) => setFg(e.target.value)}
-              className="h-10 w-14 cursor-pointer rounded-md border p-1"
-            />
-            <Input
-              value={fg}
-              onChange={(e) => setFg(e.target.value)}
-              maxLength={7}
-              placeholder="#000000"
-            />
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <Label>Background Color</Label>
-          <div className="flex items-center gap-2">
-            <Input
-              type="color"
-              value={bg}
-              onChange={(e) => setBg(e.target.value)}
-              className="h-10 w-14 cursor-pointer rounded-md border p-1"
-            />
-            <Input
-              value={bg}
-              onChange={(e) => setBg(e.target.value)}
-              maxLength={7}
-              placeholder="#ffffff"
-            />
-          </div>
-        </div>
+        <ColorField label="Foreground Color" value={fg} onValueChange={setFg} />
+        <ColorField label="Background Color" value={bg} onValueChange={setBg} />
 
         {result && (
           <Card>

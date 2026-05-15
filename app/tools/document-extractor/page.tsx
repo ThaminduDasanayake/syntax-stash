@@ -67,7 +67,7 @@ export default function DocumentExtractorPage() {
 
   const output = composeOutput(markdown, withFrontmatter, fileName);
 
-  const tool = internalTools.find((t) => t.url === "/tools/document-extractor");
+  const tool = internalTools.find((t) => t.slug === "document-extractor");
 
   return (
     <ToolLayout tool={tool}>

@@ -78,10 +78,8 @@ export function GlassmorphismTab() {
               onValueChange={(vals) => setBlur(vals[0])}
               min={0}
               max={40}
+              leftLabel="Controls the blur radius of the background"
             />
-            <p className="text-muted-foreground text-xs">
-              Controls the blur radius of the background
-            </p>
           </div>
 
           <div className="space-y-3">
@@ -92,8 +90,8 @@ export function GlassmorphismTab() {
               onValueChange={(vals) => setOpacity(vals[0])}
               min={0}
               max={100}
+              leftLabel="Controls the background transparency"
             />
-            <p className="text-muted-foreground text-xs">Controls the background transparency</p>
           </div>
 
           <div className="space-y-3">
@@ -104,8 +102,8 @@ export function GlassmorphismTab() {
               onValueChange={(vals) => setBorderOpacity(vals[0])}
               min={1}
               max={100}
+              leftLabel="Controls the border transparency"
             />
-            <p className="text-muted-foreground text-xs">Controls the border transparency</p>
           </div>
         </div>
 

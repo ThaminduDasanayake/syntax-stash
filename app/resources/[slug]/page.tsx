@@ -9,7 +9,7 @@ export function generateStaticParams() {
   return resourceCategories.map((cat) => ({ slug: slugify(cat) }));
 }
 
-export default async function CategoryPage(props: PageProps<"/category/[slug]">) {
+export default async function ResourceCategoryPage(props: PageProps<"/resources/[slug]">) {
   const { slug } = await props.params;
 
   // Resolve slug → category label

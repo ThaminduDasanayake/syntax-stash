@@ -54,7 +54,7 @@ export default function EncoderPage() {
     }
   }, [input, actionId]);
 
-  const tool = internalTools.find((t) => t.url === "/tools/encoder-decoder");
+  const tool = internalTools.find((t) => t.slug === "encoder-decoder");
 
   return (
     <ToolLayout tool={tool}>

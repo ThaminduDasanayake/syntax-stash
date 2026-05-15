@@ -108,7 +108,7 @@ Charlie Brown,charlie@example.com,Manager`);
     { value: "pipe", label: "Pipe (|)" },
   ];
 
-  const tool = internalTools.find((t) => t.url === "/tools/csv-to-markdown");
+  const tool = internalTools.find((t) => t.slug === "csv-to-markdown");
 
   return (
     <ToolLayout tool={tool}>

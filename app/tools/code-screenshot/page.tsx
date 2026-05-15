@@ -76,7 +76,7 @@ export default function CodeScreenshotPage() {
   const activeBackgroundValue =
     BACKGROUNDS.find((bg) => bg.value === background)?.color || "transparent";
 
-  const tool = internalTools.find((t) => t.url === "/tools/code-screenshot");
+  const tool = internalTools.find((t) => t.slug === "code-screenshot");
 
   return (
     <ToolLayout tool={tool}>

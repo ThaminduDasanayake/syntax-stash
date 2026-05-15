@@ -86,7 +86,7 @@ export default function PromptStudioPage() {
     }
   }
 
-  const tool = internalTools.find((t) => t.url === "/tools/ai-prompt-studio");
+  const tool = internalTools.find((t) => t.slug === "ai-prompt-studio");
 
   return (
     <ToolLayout tool={tool}>

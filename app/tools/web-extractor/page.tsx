@@ -66,7 +66,7 @@ export default function WebExtractorPage() {
     (data?.headings.h2.length ?? 0) +
     (data?.headings.h3.length ?? 0);
 
-  const tool = internalTools.find((t) => t.url === "/tools/web-extractor");
+  const tool = internalTools.find((t) => t.slug === "web-extractor");
 
   return (
     <ToolLayout tool={tool}>

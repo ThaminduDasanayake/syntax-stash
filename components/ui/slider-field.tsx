@@ -9,28 +9,34 @@ import { cn } from "@/lib/utils";
 
 interface SliderFieldProps extends ComponentProps<typeof Slider> {
   label?: string | ReactNode;
-  valueLabel?: string | ReactNode;
+  showInput?: boolean;
   leftLabel?: string | ReactNode;
   rightLabel?: string | ReactNode;
   containerClassName?: string;
   labelClassName?: string;
+  showStepper?: boolean;
+  suffix?: string;
+  inputClassName?: string;
   valueLabelClassName?: string;
-  showInput?: boolean;
+  valueLabel?: string | ReactNode;
 }
 
 export const SliderField = forwardRef<ComponentRef<typeof Slider>, SliderFieldProps>(
   (
     {
       label,
-      valueLabel,
+      showInput,
       leftLabel,
       rightLabel,
+      valueLabel,
+      valueLabelClassName,
       containerClassName,
       labelClassName,
-      valueLabelClassName,
-      showInput,
       id,
       className,
+      showStepper,
+      suffix,
+      inputClassName,
       ...props
     },
     ref,
@@ -41,7 +47,7 @@ export const SliderField = forwardRef<ComponentRef<typeof Slider>, SliderFieldPr
     return (
       <div className={cn("space-y-3", containerClassName)}>
         {/* Top Header Label and Dynamic Value Display */}
-        {(label || valueLabel) && (
+        {(label || showInput) && (
           <div className="flex items-center justify-between gap-2">
             {label && (
               <Label htmlFor={sliderId} className={labelClassName}>
@@ -53,21 +59,23 @@ export const SliderField = forwardRef<ComponentRef<typeof Slider>, SliderFieldPr
                 {valueLabel}
               </span>
             )}
+            {showInput && (
+              <NumberInput
+                min={props.min}
+                max={props.max}
+                step={props.step}
+                value={props.value?.[0] ?? props.defaultValue?.[0] ?? 0}
+                onValueChange={(val) => props.onValueChange?.([val])}
+                inputGroupClassName={cn("min-w-28", inputClassName)}
+                className="text-center font-mono"
+                suffix={suffix}
+                showStepper={showStepper}
+              />
+            )}
           </div>
         )}
 
-        <div className="flex items-center gap-4">
-          <Slider ref={ref} id={sliderId} className={cn("py-1", className)} {...props} />
-          {showInput && (
-            <NumberInput
-              min={props.min}
-              max={props.max}
-              value={props.value?.[0] ?? props.defaultValue?.[0] ?? 0}
-              onValueChange={(val) => props.onValueChange?.([val])}
-              className="h-7 w-14 text-center font-mono text-xs"
-            />
-          )}
-        </div>
+        <Slider ref={ref} id={sliderId} className={cn("py-1", className)} {...props} />
 
         {/* Bottom Footer Labels */}
         {(leftLabel || rightLabel) && (

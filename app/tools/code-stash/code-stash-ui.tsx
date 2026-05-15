@@ -38,7 +38,7 @@ export default function CodeStashUi({ initialSnippets }: { initialSnippets: Snip
 
   const activeSnippet = initialSnippets.find((s) => s.id === activeId);
 
-  const tool = internalTools.find((t) => t.url === "/tools/code-stash");
+  const tool = internalTools.find((t) => t.slug === "code-stash");
 
   return (
     <ToolLayout tool={tool}>

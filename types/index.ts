@@ -1,12 +1,13 @@
-import { Icon } from "@phosphor-icons/react";
+import type { IconName } from "@/lib/icons";
 
 export type Tool = {
   title: string;
   highlight?: string;
-  url: string;
+  slug?: string;
+  url?: string;
   description: string;
   category: string;
-  icon?: Icon;
+  icon?: IconName;
   favicon?: string;
 };
 

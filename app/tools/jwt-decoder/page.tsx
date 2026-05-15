@@ -47,7 +47,7 @@ export default function JwtDecoderPage() {
     }
   }, [token]);
 
-  const tool = internalTools.find((t) => t.url === "/tools/jwt-decoder");
+  const tool = internalTools.find((t) => t.slug === "jwt-decoder");
 
   return (
     <ToolLayout tool={tool}>

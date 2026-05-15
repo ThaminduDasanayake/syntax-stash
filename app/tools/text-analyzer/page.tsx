@@ -78,7 +78,7 @@ export default function AnalyzerPage() {
     },
   ];
 
-  const tool = internalTools.find((t) => t.url === "/tools/text-analyzer");
+  const tool = internalTools.find((t) => t.slug === "text-analyzer");
 
   return (
     <ToolLayout tool={tool}>

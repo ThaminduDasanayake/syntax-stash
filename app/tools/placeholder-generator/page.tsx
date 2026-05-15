@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 
 import { ToolLayout } from "@/components/tool-layout";
+import { ColorField } from "@/components/ui/color-field";
 import { CopyButton } from "@/components/ui/copy-button";
 import { DownloadButton } from "@/components/ui/download-button";
-import { Input } from "@/components/ui/input";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { internalTools } from "@/lib/tools-data";
@@ -52,7 +52,7 @@ export default function PlaceholderGeneratorPage() {
     a.click();
   }
 
-  const tool = internalTools.find((t) => t.url === "/tools/placeholder-generator");
+  const tool = internalTools.find((t) => t.slug === "placeholder-generator");
 
   return (
     <ToolLayout tool={tool}>
@@ -80,34 +80,8 @@ export default function PlaceholderGeneratorPage() {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label>Background Color</Label>
-              <div className="flex items-center gap-2">
-                <Input
-                  type="color"
-                  value={bgColor}
-                  onChange={(e) => setBgColor(e.target.value)}
-                  className="h-10 w-14 cursor-pointer rounded-md border p-1"
-                />
-                <Input value={bgColor} onChange={(e) => setBgColor(e.target.value)} maxLength={7} />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label>Text Color</Label>
-              <div className="flex items-center gap-2">
-                <Input
-                  type="color"
-                  value={textColor}
-                  onChange={(e) => setTextColor(e.target.value)}
-                  className="h-10 w-14 cursor-pointer rounded-md border p-1"
-                />
-                <Input
-                  value={textColor}
-                  onChange={(e) => setTextColor(e.target.value)}
-                  maxLength={7}
-                />
-              </div>
-            </div>
+            <ColorField label="Background Color" value={bgColor} onValueChange={setBgColor} />
+            <ColorField label="Text Color" value={textColor} onValueChange={setTextColor} />
           </div>
 
           <InputField

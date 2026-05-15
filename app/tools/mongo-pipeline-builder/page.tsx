@@ -73,7 +73,7 @@ export default function MongoPipelineBuilderPage() {
     [stages],
   );
 
-  const tool = internalTools.find((t) => t.url === "/tools/mongo-pipeline-builder");
+  const tool = internalTools.find((t) => t.slug === "mongo-pipeline-builder");
 
   return (
     <ToolLayout tool={tool}>

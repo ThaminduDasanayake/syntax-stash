@@ -49,7 +49,7 @@ export default function LayoutVisualizerPage() {
   const tailwindClassString =
     `${getDisplayClass(display)} ${getFlexDirectionClass(flexDirection)} ${getJustifyContentClass(justifyContent)} ${getAlignItemsClass(alignItems)} ${getGapClass(gap)}`.trim();
 
-  const tool = internalTools.find((t) => t.url === "/tools/layout-visualizer");
+  const tool = internalTools.find((t) => t.slug === "layout-visualizer");
   return (
     <ToolLayout tool={tool}>
       <div className="space-y-8">

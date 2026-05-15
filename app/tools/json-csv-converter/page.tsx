@@ -78,7 +78,7 @@ export default function JSONCSVConverterPage() {
     { value: "semicolon", label: "Semicolon (;)" },
   ];
 
-  const tool = internalTools.find((t) => t.url === "/tools/json-csv-converter");
+  const tool = internalTools.find((t) => t.slug === "json-csv-converter");
 
   return (
     <ToolLayout tool={tool}>

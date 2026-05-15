@@ -48,7 +48,7 @@ export default function HashGeneratorPage() {
     };
   }, [text]);
 
-  const tool = internalTools.find((t) => t.url === "/tools/hash-generator");
+  const tool = internalTools.find((t) => t.slug === "hash-generator");
 
   return (
     <ToolLayout tool={tool}>

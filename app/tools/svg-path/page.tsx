@@ -4,11 +4,11 @@ import { useState } from "react";
 
 import { ToolLayout } from "@/components/tool-layout";
 import { Card, CardContent } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
+import { CheckboxField } from "@/components/ui/checkbox-field";
 import { ClearButton } from "@/components/ui/clear-button";
+import { ColorField } from "@/components/ui/color-field";
 import { CopyButton } from "@/components/ui/copy-button";
 import { DownloadButton } from "@/components/ui/download-button";
-import { Input } from "@/components/ui/input";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
@@ -67,7 +67,7 @@ ${showBackground ? `  <rect width="100%" height="100%" fill="${bgColor}" rx="${b
     URL.revokeObjectURL(url);
   }
 
-  const tool = internalTools.find((t) => t.url === "/tools/svg-path");
+  const tool = internalTools.find((t) => t.slug === "svg-path");
 
   return (
     <ToolLayout tool={tool}>
@@ -108,53 +108,19 @@ ${showBackground ? `  <rect width="100%" height="100%" fill="${bgColor}" rx="${b
 
           {/* Color Controls */}
           <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label>Fill Color</Label>
-              <div className="flex gap-2">
-                <Input
-                  type="color"
-                  value={fillColor}
-                  onChange={(e) => setFillColor(e.target.value)}
-                  className="border-border h-9 w-12 cursor-pointer rounded border p-0"
-                />
-                <Input
-                  value={fillColor}
-                  onChange={(e) => setFillColor(e.target.value)}
-                  className="text-xs"
-                  placeholder="#000000"
-                />
-              </div>
-            </div>
+            <ColorField label="Fill Color" value={fillColor} onValueChange={setFillColor} />
 
-            <div className="space-y-2">
-              <Label>Stroke Color</Label>
-              <div className="flex gap-2">
-                <Input
-                  type="color"
-                  value={strokeColor === "none" ? "#000000" : strokeColor}
-                  onChange={(e) => setStrokeColor(e.target.value)}
-                  className="border-border h-9 w-12 cursor-pointer rounded border p-0"
-                />
-                <InputField
-                  value={strokeColor}
-                  onChange={(e) => setStrokeColor(e.target.value)}
-                  className="text-xs"
-                  placeholder="none"
-                />
-              </div>
-            </div>
+            <ColorField label="Stroke Color" value={strokeColor} onValueChange={setStrokeColor} />
           </div>
 
           <div className="space-y-6">
             <Label>Background</Label>
 
-            <div className="flex items-center gap-2">
-              <Checkbox
-                checked={showBackground}
-                onCheckedChange={(checked) => setShowBackground(checked === true)}
-              />
-              <Label>Enable background</Label>
-            </div>
+            <CheckboxField
+              label="Enable background"
+              checked={showBackground}
+              onCheckedChange={(checked) => setShowBackground(checked === true)}
+            />
 
             {showBackground && (
               <div className="grid grid-cols-2 gap-4">
@@ -165,18 +131,7 @@ ${showBackground ? `  <rect width="100%" height="100%" fill="${bgColor}" rx="${b
                   onChange={(e) => setBgRadius(e.target.value)}
                 />
 
-                <div className="space-y-2">
-                  <Label>Color</Label>
-                  <div className="flex gap-2">
-                    <Input
-                      type="color"
-                      value={bgColor}
-                      onChange={(e) => setBgColor(e.target.value)}
-                      className="h-9 w-12 p-0"
-                    />
-                    <Input value={bgColor} onChange={(e) => setBgColor(e.target.value)} />
-                  </div>
-                </div>
+                <ColorField label="Color" value={bgColor} onValueChange={setBgColor} />
               </div>
             )}
           </div>

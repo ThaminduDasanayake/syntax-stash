@@ -90,7 +90,7 @@ export default function YAMLJSONConverterPage() {
     { value: "4", label: "4 spaces" },
   ];
 
-  const tool = internalTools.find((t) => t.url === "/tools/yaml-json-converter");
+  const tool = internalTools.find((t) => t.slug === "yaml-json-converter");
 
   return (
     <ToolLayout tool={tool}>

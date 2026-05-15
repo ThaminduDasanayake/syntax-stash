@@ -77,7 +77,7 @@ ${renderedHtml}
     URL.revokeObjectURL(url);
   }
 
-  const tool = internalTools.find((t) => t.url === "/tools/markdown-live-preview");
+  const tool = internalTools.find((t) => t.slug === "markdown-live-preview");
 
   return (
     <ToolLayout tool={tool}>

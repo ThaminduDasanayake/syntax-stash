@@ -117,7 +117,7 @@ export default function ChmodCalculatorPage() {
     setSymInput(bitsToSymbolic(presetBits));
   }
 
-  const tool = internalTools.find((t) => t.url === "/tools/chmod-calculator");
+  const tool = internalTools.find((t) => t.slug === "chmod-calculator");
 
   return (
     <ToolLayout tool={tool}>

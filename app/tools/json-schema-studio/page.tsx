@@ -103,7 +103,7 @@ export default function JsonSchemaStudioPage() {
 
   const currentOutput = (result.ok ? result[activeTab] : "") || "";
 
-  const tool = internalTools.find((t) => t.url === "/tools/json-schema-studio");
+  const tool = internalTools.find((t) => t.slug === "json-schema-studio");
 
   return (
     <ToolLayout tool={tool}>

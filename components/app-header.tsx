@@ -26,7 +26,7 @@ function segmentToLabel(segment: string): string {
 
 const sectionLabels: Record<string, string> = {
   tools: "Tools",
-  category: "Resources",
+  resources: "Resources",
 };
 
 export default function AppHeader({ onSearchOpenAction }: HeaderProps) {
@@ -34,7 +34,7 @@ export default function AppHeader({ onSearchOpenAction }: HeaderProps) {
 
   const parts = pathname.split("/").filter(Boolean);
 
-  const toolMap = new Map(internalTools.map((t) => [t.url, t.title]));
+  const toolMap = new Map(internalTools.map((t) => [`/tools/${t.slug}`, t.title]));
 
   return (
     <header className="border-border bg-background/80 sticky top-0 z-30 grid h-12 shrink-0 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-4 border-b px-4 backdrop-blur-sm">

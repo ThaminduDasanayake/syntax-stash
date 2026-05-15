@@ -9,8 +9,9 @@ import {
   generatePalettes,
   type Palette as PaletteType,
 } from "@/app/tools/color-studio/palette-harmonies";
+import { ColorField } from "@/components/ui/color-field";
 import { CopyButton } from "@/components/ui/copy-button";
-import { Input } from "@/components/ui/input";
+import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -69,43 +70,17 @@ export function PaletteTab() {
     [palettes, colorName, isValid],
   );
 
-  function handleHexInput(value: string) {
-    const normalized = value.startsWith("#") ? value : `#${value}`;
-    setBaseColor(normalized);
-  }
-
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-end gap-4">
-        <div className="space-y-2">
-          <Label>Base Color</Label>
-          <div className="flex items-center gap-2">
-            <input
-              type="color"
-              value={baseColor.length === 7 ? baseColor : "#3b82f6"}
-              onChange={(e) => setBaseColor(e.target.value)}
-              className="border-border h-10 w-12 cursor-pointer rounded-lg border bg-transparent p-1"
-            />
-            <Input
-              value={baseColor}
-              onChange={(e) => handleHexInput(e.target.value)}
-              placeholder="#3b82f6"
-              className="w-32 font-mono text-sm"
-              maxLength={7}
-            />
-          </div>
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="color-name">Variable name</Label>
-          <Input
-            id="color-name"
-            value={colorName}
-            onChange={(e) => setColorName(e.target.value)}
-            placeholder="brand"
-            className="w-36 font-mono text-sm"
-          />
-          <p className="text-muted-foreground text-xs">Used in export output</p>
-        </div>
+        <ColorField label="Base Color" value={baseColor} onValueChange={setBaseColor} />
+
+        <InputField
+          label="Variable name"
+          value={colorName}
+          onChange={(e) => setColorName(e.target.value)}
+          placeholder="brand"
+        />
 
         {isValid && (
           <div
@@ -134,9 +109,13 @@ export function PaletteTab() {
         <div className="space-y-3">
           <Label>Export</Label>
           <Tabs defaultValue="css">
-            <TabsList>
-              <TabsTrigger value="css">CSS Variables</TabsTrigger>
-              <TabsTrigger value="tailwind">Tailwind Config</TabsTrigger>
+            <TabsList className="grid min-w-xs grid-cols-2">
+              <TabsTrigger value="css" className="tab-trigger">
+                CSS Variables
+              </TabsTrigger>
+              <TabsTrigger value="tailwind" className="tab-trigger">
+                Tailwind Config
+              </TabsTrigger>
             </TabsList>
             <TabsContent value="css" className="mt-3">
               <ExportBlock title=":root { … }" code={cssCode} />

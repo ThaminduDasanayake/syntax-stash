@@ -50,7 +50,7 @@ export default function DrizzleSchemaStudioPage() {
     { value: "sqlite", label: "SQLite (sqliteTable)" },
   ];
 
-  const tool = internalTools.find((t) => t.url === "/tools/drizzle-schema-studio");
+  const tool = internalTools.find((t) => t.slug === "drizzle-schema-studio");
 
   return (
     <ToolLayout tool={tool}>

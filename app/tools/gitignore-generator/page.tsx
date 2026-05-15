@@ -45,7 +45,7 @@ export default function GitignoreGeneratorPage() {
     setSelectedIds(new Set(GITIGNORE_SNIPPETS.map((s) => s.id)));
   };
 
-  const tool = internalTools.find((t) => t.url === "/tools/gitignore-generator");
+  const tool = internalTools.find((t) => t.slug === "gitignore-generator");
 
   return (
     <ToolLayout tool={tool}>

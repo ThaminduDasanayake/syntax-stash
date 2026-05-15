@@ -98,7 +98,7 @@ export default function StringCaseConverterPage() {
     { key: "uppercase", label: "UPPERCASE", description: "All uppercase" },
   ];
 
-  const tool = internalTools.find((t) => t.url === "/tools/string-case-converter");
+  const tool = internalTools.find((t) => t.slug === "string-case-converter");
 
   return (
     <ToolLayout tool={tool}>

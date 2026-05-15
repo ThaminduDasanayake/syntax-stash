@@ -43,7 +43,7 @@ export default function HeaderAnalyzerPage() {
     return { graded, passCount, failCount, warnCount };
   }, [input]);
 
-  const tool = internalTools.find((t) => t.url === "/tools/http-security-header-analyzer");
+  const tool = internalTools.find((t) => t.slug === "http-security-header-analyzer");
 
   return (
     <ToolLayout tool={tool}>

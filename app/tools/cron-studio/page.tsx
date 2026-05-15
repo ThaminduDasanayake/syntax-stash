@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { internalTools } from "@/lib/tools-data";
 
 export default function CronStudioPage() {
-  const tool = internalTools.find((t) => t.url === "/tools/cron-studio");
+  const tool = internalTools.find((t) => t.slug === "cron-studio");
 
   const [activeTab, setActiveTab] = useState("build");
   const [exploreExpression, setExploreExpression] = useState("*/15 * * * *");

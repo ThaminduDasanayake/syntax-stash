@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { internalTools } from "@/lib/tools-data";
 
 export default function UnitConverterPage() {
-  const tool = internalTools.find((t) => t.url === "/tools/unit-converter");
+  const tool = internalTools.find((t) => t.slug === "unit-converter");
 
   return (
     <ToolLayout tool={tool}>

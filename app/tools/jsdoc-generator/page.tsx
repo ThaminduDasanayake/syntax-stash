@@ -44,7 +44,7 @@ export default function JsdocGeneratorPage() {
     return `${output}\n${input.trim()}`;
   }, [output, input]);
 
-  const tool = internalTools.find((t) => t.url === "/tools/jsdoc-generator");
+  const tool = internalTools.find((t) => t.slug === "jsdoc-generator");
 
   return (
     <ToolLayout tool={tool}>

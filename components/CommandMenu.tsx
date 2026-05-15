@@ -35,9 +35,9 @@ export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
 
   function handleSelect(tool: Tool) {
     setOpenAction(false);
-    if (tool.url.startsWith("/")) {
-      router.push(tool.url);
-    } else {
+    if (tool.slug) {
+      router.push(`/tools/${tool.slug}`);
+    } else if (tool.url) {
       window.open(tool.url, "_blank", "noopener,noreferrer");
     }
   }
@@ -52,7 +52,7 @@ export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
           <CommandGroup heading="Inbuilt Tools">
             {internalTools.map((tool) => (
               <CommandItem
-                key={tool.url}
+                key={tool.slug}
                 value={`${tool.title} ${tool.description}`}
                 onSelect={() => handleSelect(tool)}
                 className="gap-2"

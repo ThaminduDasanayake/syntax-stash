@@ -56,7 +56,7 @@ export default function DiffViewerPage() {
 
   const hasChanges = stats.added > 0 || stats.removed > 0;
 
-  const tool = internalTools.find((t) => t.url === "/tools/diff-viewer");
+  const tool = internalTools.find((t) => t.slug === "diff-viewer");
 
   return (
     <ToolLayout tool={tool}>

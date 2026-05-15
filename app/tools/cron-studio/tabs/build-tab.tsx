@@ -8,7 +8,6 @@ import {
   DEFAULT_FIELD,
   DOM,
   DOW,
-  FieldMode,
   HOURS,
   MINUTES,
   MONTHS,
@@ -16,153 +15,11 @@ import {
   PRESETS,
 } from "@/app/tools/cron-studio/build-constants";
 import { buildDescription, buildExpression } from "@/app/tools/cron-studio/build-helpers";
+import { FieldEditor } from "@/app/tools/cron-studio/components/field-editor";
 import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
+import { Card, CardContent } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
-import { SelectField } from "@/components/ui/select-field";
-
-function MultiSelect({
-  values,
-  selected,
-  onChange,
-  max = 10,
-}: {
-  values: { value: number; label: string }[];
-  selected: number[];
-  onChange: (vals: number[]) => void;
-  max?: number;
-}) {
-  const toggle = (v: number) => {
-    if (selected.includes(v)) {
-      onChange(selected.filter((x) => x !== v));
-    } else {
-      if (selected.length >= max) return;
-      onChange([...selected, v]);
-    }
-  };
-
-  return (
-    <div className="flex flex-wrap gap-1.5">
-      {values.map(({ value, label }) => (
-        <button
-          key={value}
-          onClick={() => toggle(value)}
-          className={`rounded px-2 py-0.5 font-mono text-xs transition-colors ${
-            selected.includes(value)
-              ? "bg-primary text-primary-foreground"
-              : "bg-muted text-muted-foreground hover:bg-muted/60"
-          }`}
-        >
-          {label}
-        </button>
-      ))}
-    </div>
-  );
-}
-
-function NumberInput({
-  value,
-  onChange,
-  min,
-  max,
-}: {
-  value: number;
-  onChange: (v: number) => void;
-  min: number;
-  max: number;
-}) {
-  return (
-    <input
-      type="number"
-      value={value}
-      min={min}
-      max={max}
-      onChange={(e) => {
-        const v = parseInt(e.target.value, 10);
-        if (!isNaN(v) && v >= min && v <= max) onChange(v);
-      }}
-      className="border-input bg-background w-20 rounded-md border px-2 py-1 text-sm"
-    />
-  );
-}
-
-interface FieldEditorProps {
-  label: string;
-  field: CronField;
-  onChange: (f: CronField) => void;
-  min: number;
-  max: number;
-  options: { value: number; label: string }[];
-}
-
-function FieldEditor({ label, field, onChange, min, max, options }: FieldEditorProps) {
-  const modeOptions = [
-    { value: "every", label: "Every" },
-    { value: "specific", label: "Specific values" },
-    { value: "range", label: "Range" },
-    { value: "step", label: "Step" },
-  ];
-
-  return (
-    <div className="space-y-3">
-      <div className="flex items-center gap-3">
-        <span className="text-muted-foreground w-36 text-sm font-medium">{label}</span>
-        <SelectField
-          value={field.mode}
-          onValueChange={(v) => onChange({ ...field, mode: v as FieldMode })}
-          options={modeOptions}
-          triggerClassName="w-44"
-        />
-      </div>
-
-      {field.mode === "specific" && (
-        <div className="pl-38">
-          <MultiSelect
-            values={options}
-            selected={field.specific}
-            onChange={(vals) => onChange({ ...field, specific: vals })}
-          />
-        </div>
-      )}
-
-      {field.mode === "range" && (
-        <div className="flex items-center gap-2 pl-38">
-          <NumberInput
-            value={field.rangeFrom}
-            onChange={(v) => onChange({ ...field, rangeFrom: v })}
-            min={min}
-            max={field.rangeTo}
-          />
-          <span className="text-muted-foreground text-sm">to</span>
-          <NumberInput
-            value={field.rangeTo}
-            onChange={(v) => onChange({ ...field, rangeTo: v })}
-            min={field.rangeFrom}
-            max={max}
-          />
-        </div>
-      )}
-
-      {field.mode === "step" && (
-        <div className="flex items-center gap-2 pl-38">
-          <span className="text-muted-foreground text-sm">from</span>
-          <NumberInput
-            value={field.stepFrom}
-            onChange={(v) => onChange({ ...field, stepFrom: v })}
-            min={min}
-            max={max}
-          />
-          <span className="text-muted-foreground text-sm">every</span>
-          <NumberInput
-            value={field.stepEvery}
-            onChange={(v) => onChange({ ...field, stepEvery: v })}
-            min={1}
-            max={max}
-          />
-        </div>
-      )}
-    </div>
-  );
-}
 
 interface BuildTabProps {
   onSendToExplore: (expression: string) => void;
@@ -193,36 +50,40 @@ export function BuildTab({ onSendToExplore }: BuildTabProps) {
   const finalExpression = expression || "* * * * *";
 
   return (
-    <>
+    <div className="space-y-8">
       {/* Expression output */}
-      <div className="bg-muted mb-8 rounded-xl p-6">
-        <div className="mb-1 flex items-start justify-between gap-4">
-          <div className="space-y-1">
-            <p className="font-mono text-3xl font-bold tracking-widest">{finalExpression}</p>
-            <p className="text-muted-foreground text-sm">{description}</p>
-          </div>
-          <div className="flex shrink-0 items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => onSendToExplore(finalExpression)}
-              className="gap-2"
-            >
-              Test in Explore
-              <ArrowRightIcon weight="bold" className="size-4" />
-            </Button>
-            <CopyButton textToCopy={finalExpression} size="sm" />
-          </div>
-        </div>
-        <div className="mt-4 flex gap-6">
-          {["minute", "hour", "day", "month", "weekday"].map((label, i) => (
-            <div key={label} className="text-center">
-              <p className="font-mono text-lg font-semibold">{finalExpression.split(" ")[i]}</p>
-              <p className="text-muted-foreground text-[10px] tracking-wider uppercase">{label}</p>
+      <Card>
+        <CardContent>
+          <div className="mb-1 flex items-start justify-between gap-4">
+            <div className="space-y-1">
+              <p className="font-mono text-3xl font-bold tracking-widest">{finalExpression}</p>
+              <p className="text-muted-foreground text-sm">{description}</p>
             </div>
-          ))}
-        </div>
-      </div>
+            <ButtonGroup>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => onSendToExplore(finalExpression)}
+                className="gap-2"
+              >
+                Test in Explore
+                <ArrowRightIcon weight="bold" />
+              </Button>
+              <CopyButton textToCopy={finalExpression} size="sm" />
+            </ButtonGroup>
+          </div>
+          <div className="mt-4 flex gap-6">
+            {["minute", "hour", "day", "month", "weekday"].map((label, i) => (
+              <div key={label} className="text-center">
+                <p className="font-mono text-lg font-semibold">{finalExpression.split(" ")[i]}</p>
+                <p className="text-muted-foreground text-[10px] tracking-wider uppercase">
+                  {label}
+                </p>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Preset selector */}
       <div className="mb-8 flex flex-wrap items-center gap-2">
@@ -242,7 +103,7 @@ export function BuildTab({ onSendToExplore }: BuildTabProps) {
       {/* Custom builder */}
       {isCustom && (
         <div className="space-y-5 rounded-xl border p-6">
-          <h3 className="text-sm font-semibold">Custom Expression Builder</h3>
+          <h3 className="text-base font-semibold">Custom Expression Builder</h3>
           <FieldEditor
             label="Minute (0–59)"
             field={minute}
@@ -303,6 +164,6 @@ export function BuildTab({ onSendToExplore }: BuildTabProps) {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }

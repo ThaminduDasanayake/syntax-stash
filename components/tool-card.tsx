@@ -7,6 +7,7 @@ import { useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { iconMap } from "@/lib/icons";
 import { ToolCardProps } from "@/types";
 
 function getFavicon(toolUrl: string, explicitFavicon?: string) {
@@ -58,8 +59,8 @@ function Favicon({
 }
 
 function CardBody({ tool }: ToolCardProps) {
-  const isInternal = tool.url.startsWith("/");
-  const Icon = tool.icon || ToolboxIcon;
+  const isInternal = !!tool.slug;
+  const Icon = (tool.icon && iconMap[tool.icon]) || ToolboxIcon;
 
   return (
     <Card className="h-full w-full">
@@ -70,7 +71,7 @@ function CardBody({ tool }: ToolCardProps) {
               <Icon className="text-primary size-4.5!" />
             </div>
           ) : (
-            <Favicon url={tool.url} alt={tool.title} explicitFavicon={tool.favicon} />
+            <Favicon url={tool.url!} alt={tool.title} explicitFavicon={tool.favicon} />
           )}
 
           <div className="min-w-0 flex-1">
@@ -99,13 +100,12 @@ function CardBody({ tool }: ToolCardProps) {
 }
 
 export default function ToolCard({ tool }: ToolCardProps) {
-  const isInternal = tool.url.startsWith("/");
   const className =
     "block w-full h-full transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_30px_var(--color-primary)] hover:shadow-primary/10";
 
-  if (isInternal) {
+  if (tool.slug) {
     return (
-      <Link href={tool.url} className={className}>
+      <Link href={`/tools/${tool.slug}`} className={className}>
         <CardBody tool={tool} />
       </Link>
     );

@@ -5,7 +5,9 @@ import { useMemo, useState } from "react";
 
 import ExportBlock from "@/app/tools/tailwind-studio/export-block";
 import ShadeButton from "@/app/tools/tailwind-studio/shade-button";
+import { ColorField } from "@/components/ui/color-field";
 import { Input } from "@/components/ui/input";
+import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 
 const SHADES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
@@ -64,35 +66,14 @@ export function ShadesTab() {
   return (
     <div>
       <div className="mb-8 grid max-w-lg grid-cols-1 gap-10 sm:grid-cols-2">
-        <div className="space-y-2">
-          <Label>Base Color</Label>
-          <div className="flex gap-2">
-            <input
-              type="color"
-              value={baseColor}
-              onChange={(e) => setBaseColor(e.target.value)}
-              className="h-9 cursor-pointer"
-            />
-            <Input
-              value={baseColor}
-              onChange={(e) => setBaseColor(e.target.value)}
-              placeholder="hsl(24.6, 95%, 53.1%)"
-              className="pl-10"
-            />
-          </div>
-          {shades.length === 0 && baseColor.trim() && (
-            <p className="text-destructive font-mono text-sm">Invalid hex value</p>
-          )}
-        </div>
+        <ColorField label="Base Color" value={baseColor} onValueChange={setBaseColor} />
 
-        <div className="space-y-2">
-          <Label className="text-foreground">Color Name</Label>
-          <Input
-            value={colorName}
-            onChange={(e) => setColorName(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ""))}
-            placeholder="primary"
-          />
-        </div>
+        <InputField
+          label="Color Name"
+          value={colorName}
+          onChange={(e) => setColorName(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ""))}
+          placeholder="primary"
+        />
       </div>
 
       {shades.length > 0 && (

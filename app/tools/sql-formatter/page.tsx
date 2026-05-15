@@ -61,7 +61,7 @@ export default function SqlFormatterPage() {
     };
   }, [input, dialect]);
 
-  const tool = internalTools.find((t) => t.url === "/tools/sql-formatter");
+  const tool = internalTools.find((t) => t.slug === "sql-formatter");
 
   return (
     <ToolLayout tool={tool}>

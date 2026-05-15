@@ -72,7 +72,7 @@ export default function SubnetCalculatorPage() {
 
   const result = useMemo(() => parseSubnet(input), [input]);
 
-  const tool = internalTools.find((t) => t.url === "/tools/subnet-calculator");
+  const tool = internalTools.find((t) => t.slug === "subnet-calculator");
 
   return (
     <ToolLayout tool={tool}>

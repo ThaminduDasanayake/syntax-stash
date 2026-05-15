@@ -50,7 +50,7 @@ export default function SvgOptimizerPage() {
       ? ((1 - result.optimizedSize / result.originalSize) * 100).toFixed(1)
       : null;
 
-  const tool = internalTools.find((t) => t.url === "/tools/svg-optimizer");
+  const tool = internalTools.find((t) => t.slug === "svg-optimizer");
 
   return (
     <ToolLayout tool={tool}>
