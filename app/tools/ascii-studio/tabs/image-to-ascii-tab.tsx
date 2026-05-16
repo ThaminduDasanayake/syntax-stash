@@ -1,12 +1,15 @@
 "use client";
 
-import { ImageIcon } from "@phosphor-icons/react";
+import { XIcon } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
 
 import { imageToAscii } from "@/app/tools/ascii-studio/helpers";
+import FileDropzone from "@/components/file-dropzone";
+import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";
 import { SliderField } from "@/components/ui/slider-field";
+import { buildAcceptMap } from "@/lib/file-types";
 
 export function ImageToAsciiTab() {
   const [file, setFile] = useState<File | null>(null);
@@ -45,31 +48,38 @@ export function ImageToAsciiTab() {
 
   return (
     <div className="space-y-6">
-      {/* Hidden canvas for pixel processing */}
       <canvas ref={canvasRef} className="hidden" />
 
-      {/* Upload zone */}
-      <label className="border-border bg-muted/20 hover:bg-muted/40 hover:border-primary/50 flex cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed p-10 transition-colors">
-        <input
-          type="file"
-          accept="image/png,image/jpeg,image/webp"
-          className="sr-only"
-          onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+      {/* Upload zone & preview */}
+      {file ? (
+        <div className="border-border bg-muted/10 flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed p-10">
+          {preview && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={preview}
+              alt="preview"
+              className="max-h-32 max-w-xs rounded-lg object-contain"
+            />
+          )}
+          <span className="text-muted-foreground text-sm">{file.name}</span>
+
+          <Button variant="destructive" size="sm" onClick={() => setFile(null)} className="mt-2">
+            <XIcon weight="bold" />
+            Clear image
+          </Button>
+        </div>
+      ) : (
+        <FileDropzone
+          onFileDropAction={setFile}
+          accept={buildAcceptMap([".png", ".jpg", ".jpeg", ".webp"])}
+          label={
+            <>
+              <p className="text-foreground font-medium">Drop an image here</p>
+              <p className="text-muted-foreground mt-1 text-xs">Supports PNG, JPG, JPEG, & WebP</p>
+            </>
+          }
         />
-        {preview ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={preview}
-            alt="preview"
-            className="max-h-32 max-w-xs rounded-lg object-contain"
-          />
-        ) : (
-          <ImageIcon weight="duotone" size={40} className="text-muted-foreground" />
-        )}
-        <span className="text-muted-foreground text-sm">
-          {file ? file.name : "Click or drag a PNG / JPG / WebP image"}
-        </span>
-      </label>
+      )}
 
       {/* Resolution slider */}
       <SliderField

@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TextAreaField } from "@/components/ui/textarea-field";
+import { buildAcceptMap } from "@/lib/file-types";
 import { internalTools } from "@/lib/tools-data";
 
 import { composeOutput, downloadMarkdown } from "./helpers";
@@ -35,13 +36,6 @@ export default function DocumentExtractorPage() {
     setMarkdown("");
     setPlainText("");
     setError(null);
-
-    if (file.size > MAX_BYTES) {
-      setError(
-        "File exceeds 4 MB. Vercel/Next.js serverless limits apply — split or compress the document.",
-      );
-      return;
-    }
 
     setIsLoading(true);
     try {
@@ -77,8 +71,17 @@ export default function DocumentExtractorPage() {
           <div className="space-y-3">
             <FileDropzone
               onFileDropAction={handleFileDrop}
-              accept=".pdf,.docx,.html,.htm,.md,.markdown,.txt,.csv"
-              label="Drop a PDF, DOCX, HTML, MD, TXT, or CSV file (Max size: 4 MB)"
+              maxSize={MAX_BYTES}
+              onReject={(errorMsg) => setError(errorMsg)}
+              accept={buildAcceptMap([".pdf", ".docx", ".html", ".htm", ".md", ".txt", ".csv"])}
+              label={
+                <>
+                  <p className="text-foreground font-medium">Drop a document (Max size: 4 MB)</p>
+                  <p className="text-muted-foreground mt-1 text-xs">
+                    Supports PDF, DOCX, HTML, MD, TXT, or CSV file
+                  </p>
+                </>
+              }
             />
             <div className="space-y-1">
               {fileName && (

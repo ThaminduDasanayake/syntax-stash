@@ -6,10 +6,8 @@ import {
   ImageIcon,
   LockIcon,
   LockOpenIcon,
-  UploadIcon,
   XIcon,
 } from "@phosphor-icons/react";
-import type { ChangeEvent, DragEvent } from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import {
@@ -28,6 +26,7 @@ import {
   ImageFormat,
   ResizeOptions,
 } from "@/app/tools/image-converter/types";
+import FileDropzone from "@/components/file-dropzone";
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { DownloadButton } from "@/components/ui/download-button";
@@ -35,6 +34,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SliderField } from "@/components/ui/slider-field";
 import { Switch } from "@/components/ui/switch";
+import { buildAcceptMap } from "@/lib/file-types";
 import { internalTools } from "@/lib/tools-data";
 
 export default function ImageConverterPage() {
@@ -108,23 +108,12 @@ export default function ImageConverterPage() {
     }
   };
 
-  const handleDrop = useCallback((e: DragEvent) => {
-    e.preventDefault();
-    const files = Array.from(e.dataTransfer.files).filter(
+  const handleDrop = useCallback((droppedFiles: File[]) => {
+    const validFiles = droppedFiles.filter(
       (f) => f.type.startsWith("image/") || f.name.toLowerCase().endsWith(".heic"),
     );
-    void processFiles(files);
+    void processFiles(validFiles);
   }, []);
-
-  const handleFileSelect = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const files = Array.from(e.target.files).filter(
-        (f) => f.type.startsWith("image/") || f.name.toLowerCase().endsWith(".heic"),
-      );
-      // Fixed ignored promise
-      void processFiles(files);
-    }
-  };
 
   const formatSize = (bytes: number) => {
     if (bytes < 1024) return `${bytes} B`;
@@ -271,26 +260,28 @@ export default function ImageConverterPage() {
               </p>
             </div>
           ) : (
-            <div
-              onDrop={handleDrop}
-              onDragOver={(e) => e.preventDefault()}
-              className="border-border bg-muted/10 hover:bg-muted/30 flex h-48 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed transition-colors"
-              onClick={() => document.getElementById("file-input")?.click()}
-            >
-              <input
-                id="file-input"
-                type="file"
-                accept="image/*,.heic,.heif"
-                multiple
-                onChange={handleFileSelect}
-                className="hidden"
-              />
-              <UploadIcon weight="duotone" className="text-muted-foreground mb-4 size-10" />
-              <p className="text-foreground font-medium">Drop images here</p>
-              <p className="text-muted-foreground mt-1 text-xs">
-                Supports PNG, JPEG, WEBP, AVIF, GIF, & HEIC
-              </p>
-            </div>
+            <FileDropzone
+              multiple={true}
+              onFilesDropAction={handleDrop}
+              accept={buildAcceptMap([
+                ".png",
+                ".jpg",
+                ".jpeg",
+                ".webp",
+                ".avif",
+                ".gif",
+                ".heic",
+                ".heif",
+              ])}
+              label={
+                <>
+                  <p className="text-foreground font-medium">Drop images here</p>
+                  <p className="text-muted-foreground mt-1 text-xs">
+                    Supports PNG, JPEG, WEBP, AVIF, GIF, & HEIC
+                  </p>
+                </>
+              }
+            />
           )}
 
           {images.length > 0 && (
@@ -387,7 +378,6 @@ export default function ImageConverterPage() {
             {(targetFormat === "jpeg" || targetFormat === "webp" || targetFormat === "avif") && (
               <SliderField
                 label="Quality"
-
                 valueLabel={`${currentQuality}%`}
                 value={[currentQuality]}
                 onValueChange={(vals) => {

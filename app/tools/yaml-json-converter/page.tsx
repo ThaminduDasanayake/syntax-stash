@@ -9,6 +9,7 @@ import { ToolLayout } from "@/components/tool-layout";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { DownloadButton } from "@/components/ui/download-button";
+import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TextAreaField } from "@/components/ui/textarea-field";
@@ -132,9 +133,7 @@ export default function YAMLJSONConverterPage() {
         <div className="space-y-2">
           {error ? (
             <div className="space-y-2">
-              <label className="text-sm font-medium">
-                {isYamlToJson ? "JSON Output" : "YAML Output"}
-              </label>
+              <Label>{isYamlToJson ? "JSON Output" : "YAML Output"}</Label>
               <ErrorAlert message={error} />
             </div>
           ) : (

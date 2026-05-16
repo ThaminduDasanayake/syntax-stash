@@ -8,8 +8,9 @@ import { ToolLayout } from "@/components/tool-layout";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { DownloadButton } from "@/components/ui/download-button";
+import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
-import { Switch } from "@/components/ui/switch";
+import { SwitchField } from "@/components/ui/switch-field";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TextAreaField } from "@/components/ui/textarea-field";
 import { internalTools } from "@/lib/tools-data";
@@ -107,18 +108,16 @@ export default function JSONCSVConverterPage() {
 
         {isJsonToCsv && (
           <div className="flex items-end justify-start gap-5">
-            <div className="flex items-center gap-2">
-              <Switch checked={includeHeader} onCheckedChange={setIncludeHeader} id="header-row" />
-              <label htmlFor="header-row" className="cursor-pointer text-sm">
-                Include header row
-              </label>
-            </div>
-            <div className="flex items-center gap-2">
-              <Switch checked={flatten} onCheckedChange={setFlatten} id="flatten" />
-              <label htmlFor="flatten" className="cursor-pointer text-sm">
-                Flatten nested keys
-              </label>
-            </div>
+            <SwitchField
+              label="Include header row"
+              checked={includeHeader}
+              onCheckedChange={setIncludeHeader}
+            />
+            <SwitchField
+              label="Flatten nested keys"
+              checked={flatten}
+              onCheckedChange={setFlatten}
+            />
           </div>
         )}
       </div>
@@ -139,9 +138,9 @@ export default function JSONCSVConverterPage() {
         <div className="space-y-2">
           {error ? (
             <div className="space-y-2">
-              <label className="text-sm font-medium">
+              <Label className="text-sm font-medium">
                 {isJsonToCsv ? "CSV Output" : "JSON Output"}
-              </label>
+              </Label>
               <ErrorAlert message={error} />
             </div>
           ) : (

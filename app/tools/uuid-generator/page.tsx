@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { SelectField } from "@/components/ui/select-field";
 import { SliderField } from "@/components/ui/slider-field";
-import { Switch } from "@/components/ui/switch";
+import { SwitchField } from "@/components/ui/switch-field";
 import { internalTools } from "@/lib/tools-data";
 
 import { formatUUID, generateV4, generateV7, NIL_UUID } from "./helpers";
@@ -74,18 +74,8 @@ export default function UUIDGeneratorPage() {
         />
 
         <div className="flex flex-col justify-end gap-3">
-          <div className="flex items-center gap-2">
-            <Switch checked={uppercase} onCheckedChange={setUppercase} id="uppercase" />
-            <label htmlFor="uppercase" className="cursor-pointer text-sm">
-              Uppercase
-            </label>
-          </div>
-          <div className="flex items-center gap-2">
-            <Switch checked={noHyphens} onCheckedChange={setNoHyphens} id="no-hyphens" />
-            <label htmlFor="no-hyphens" className="cursor-pointer text-sm">
-              No hyphens
-            </label>
-          </div>
+          <SwitchField label="Uppercase" checked={uppercase} onCheckedChange={setUppercase} />
+          <SwitchField label="No hyphens" checked={noHyphens} onCheckedChange={setNoHyphens} />
         </div>
 
         <div className="flex flex-col justify-end gap-2">

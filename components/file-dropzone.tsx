@@ -1,83 +1,76 @@
 "use client";
 
 import { UploadIcon } from "@phosphor-icons/react";
-import { ChangeEvent, DragEvent, useRef, useState } from "react";
+import { ReactNode } from "react";
+import { Accept, useDropzone } from "react-dropzone";
 
 import { cn } from "@/lib/utils";
-import { FileDropzoneProps } from "@/types";
 
-export default function FileDropzone({ onFileDropAction, accept, label }: FileDropzoneProps) {
-  const [isDragging, setIsDragging] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+interface FileDropzoneProps {
+  onFileDropAction?: (file: File) => void;
+  onFilesDropAction?: (files: File[]) => void;
+  accept?: Accept;
+  label: string | ReactNode;
+  multiple?: boolean;
+  maxSize?: number;
+  onReject?: (errorMessage: string) => void;
+}
 
-  function handleDragOver(e: DragEvent<HTMLDivElement>) {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(true);
-  }
+export default function FileDropzone({
+  onFileDropAction,
+  onFilesDropAction,
+  accept,
+  label,
+  multiple = false,
+  maxSize,
+  onReject,
+}: FileDropzoneProps) {
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    accept,
+    multiple,
+    maxSize,
+    maxFiles: multiple ? 0 : 1,
 
-  function handleDragEnter(e: DragEvent<HTMLDivElement>) {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(true);
-  }
+    onDrop: (acceptedFiles) => {
+      if (acceptedFiles.length === 0) return;
 
-  function handleDragLeave(e: DragEvent<HTMLDivElement>) {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
-  }
+      if (multiple && onFilesDropAction) {
+        onFilesDropAction(acceptedFiles);
+      } else if (!multiple && onFileDropAction) {
+        onFileDropAction(acceptedFiles[0]);
+      }
+    },
 
-  function handleDrop(e: DragEvent<HTMLDivElement>) {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
-    const file = e.dataTransfer.files?.[0];
-    if (file) onFileDropAction(file);
-  }
+    onDropRejected: (fileRejections) => {
+      if (!onReject) return;
 
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (file) onFileDropAction(file);
-    // Reset so the same file can be re-selected
-    e.target.value = "";
-  }
+      const rejection = fileRejections[0];
+      const error = rejection.errors[0];
+
+      if (error.code === "file-too-large") {
+        const sizeMb = (maxSize! / (1024 * 1024)).toFixed(1);
+        onReject(`File is too large. Maximum size is ${sizeMb} MB.`);
+      } else if (error.code === "file-invalid-type") {
+        onReject("Invalid file type. Please check the allowed formats.");
+      } else {
+        onReject(error.message);
+      }
+    },
+  });
 
   return (
     <div
-      role="button"
-      tabIndex={0}
-      onDragOver={handleDragOver}
-      onDragEnter={handleDragEnter}
-      onDragLeave={handleDragLeave}
-      onDrop={handleDrop}
-      onClick={() => inputRef.current?.click()}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") inputRef.current?.click();
-      }}
+      {...getRootProps()}
       className={cn(
-        "cursor-pointer rounded-xl border-2 border-dashed p-12 text-center transition-all duration-200",
-        isDragging
+        "flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-12 transition-all",
+        isDragActive
           ? "border-primary bg-primary/10"
-          : "border-border bg-background hover:border-muted-foreground",
+          : "border-border bg-muted/10 hover:bg-muted/30 hover:border-muted-foreground",
       )}
     >
-      <input
-        ref={inputRef}
-        type="file"
-        accept={accept}
-        onChange={handleChange}
-        className="hidden"
-      />
-      <UploadIcon
-        size={40}
-        className={cn(
-          "mx-auto mb-4 transition-colors",
-          isDragging ? "text-primary" : "text-muted-foreground",
-        )}
-      />
-      <p className="text-foreground">{label}</p>
-      <p className="text-muted-foreground mt-2 text-xs">Drag and drop or click to browse</p>
+      <input {...getInputProps()} />
+      <UploadIcon size={40} className="text-muted-foreground mb-4" />
+      <div className="text-center">{label}</div>
     </div>
   );
 }

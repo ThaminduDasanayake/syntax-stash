@@ -11,6 +11,7 @@ import { CopyButton } from "@/components/ui/copy-button";
 import { DownloadButton } from "@/components/ui/download-button";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
+import { buildAcceptMap } from "@/lib/file-types";
 import { internalTools } from "@/lib/tools-data";
 
 import {
@@ -132,8 +133,15 @@ export default function FaviconGeneratorPage() {
       <div className="space-y-8">
         <FileDropzone
           onFileDropAction={handleFile}
-          accept="image/png,image/jpeg,image/svg+xml,image/webp"
-          label="Drop a PNG, SVG, JPG, or WebP — square sources work best"
+          accept={buildAcceptMap([".png", ".jpg", ".jpeg", ".svg", ".webp"])}
+          label={
+            <>
+              <p className="text-foreground font-medium">
+                Drop an image here (Square sources work best)
+              </p>
+              <p className="text-muted-foreground mt-1 text-xs">Supports PNG, SVG, JPG, or WebP</p>
+            </>
+          }
         />
 
         {sourceImg && (
