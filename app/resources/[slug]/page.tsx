@@ -4,7 +4,6 @@ import ToolCard from "@/components/tool-card";
 import { resourceCategories, resourceLinks } from "@/lib/resources-data";
 import { slugify } from "@/lib/utils";
 
-// Tell Next.js which slugs are valid at build time
 export function generateStaticParams() {
   return resourceCategories.map((cat) => ({ slug: slugify(cat) }));
 }
@@ -12,7 +11,6 @@ export function generateStaticParams() {
 export default async function ResourceCategoryPage(props: PageProps<"/resources/[slug]">) {
   const { slug } = await props.params;
 
-  // Resolve slug → category label
   const category = resourceCategories.find((c) => slugify(c) === slug);
   if (!category) notFound();
 

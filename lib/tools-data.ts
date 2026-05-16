@@ -69,6 +69,15 @@ export const dataTools: Tool[] = [
     icon: "fingerprint",
   },
   {
+    title: "JSON / CSV Converter",
+    highlight: "Converter",
+    slug: "json-csv-converter",
+    description:
+      "Convert JSON arrays to CSV and back. Supports nested key flattening, custom delimiters, and RFC 4180 quoted fields.",
+    category: CATEGORIES.data,
+    icon: "file-csv",
+  },
+  {
     title: "JSON Studio",
     highlight: "Studio",
     slug: "json-studio",
@@ -83,15 +92,6 @@ export const dataTools: Tool[] = [
     description: "Decode and inspect JSON Web Tokens locally in your browser.",
     category: CATEGORIES.data,
     icon: "key",
-  },
-  {
-    title: "JSON / CSV Converter",
-    highlight: "Converter",
-    slug: "json-csv-converter",
-    description:
-      "Convert JSON arrays to CSV and back. Supports nested key flattening, custom delimiters, and RFC 4180 quoted fields.",
-    category: CATEGORIES.data,
-    icon: "file-csv",
   },
   {
     title: "Universal Decoder",
