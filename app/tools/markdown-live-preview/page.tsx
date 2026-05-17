@@ -1,17 +1,20 @@
 "use client";
 
+import { ColumnsIcon, SquareIcon } from "@phosphor-icons/react";
 import { marked } from "marked";
 import { useMemo, useState } from "react";
 
 import { DEFAULT_MARKDOWN } from "@/app/tools/markdown-live-preview/data";
 import { Header } from "@/app/tools/markdown-live-preview/header";
-import RichMarkdownEditor from "@/components/rich-markdown-editor";
+import { PlateEditor } from "@/blocks/editor/plate-editor";
 import { ToolLayout } from "@/components/tool-layout";
+import { Button } from "@/components/ui/button";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";
 import { TextAreaField } from "@/components/ui/textarea-field";
 import { internalTools } from "@/lib/tools-data";
+import { cn } from "@/lib/utils";
 
 type EditorMode = "raw" | "rich";
 
@@ -19,6 +22,7 @@ export default function MarkdownLivePreviewPage() {
   const [markdown, setMarkdown] = useState(DEFAULT_MARKDOWN);
   const [showHtml, setShowHtml] = useState(false);
   const [editorMode, setEditorMode] = useState<EditorMode>("raw");
+  const [showPreview, setShowPreview] = useState(true);
 
   const renderedHtml = useMemo(() => {
     if (!markdown.trim()) return "";
@@ -77,6 +81,8 @@ ${renderedHtml}
     URL.revokeObjectURL(url);
   }
 
+  const isSplitView = editorMode === "raw" && showPreview;
+
   const tool = internalTools.find((t) => t.slug === "markdown-live-preview");
 
   return (
@@ -95,9 +101,14 @@ ${renderedHtml}
           handleDownloadHtml={handleDownloadHtml}
         />
 
-        {/* Editor + Preview */}
-        <div className="grid h-full grid-cols-1 gap-4 lg:grid-cols-2">
-          {/* Editor */}
+        {/* Dynamic Layout Grid */}
+        <div
+          className={cn(
+            "grid h-full gap-4",
+            isSplitView ? "grid-cols-1 lg:grid-cols-2" : "grid-cols-1",
+          )}
+        >
+          {/* Left Column (or Full Width Column) - The Editor */}
           {editorMode === "raw" ? (
             <TextAreaField
               label="Editor"
@@ -105,46 +116,74 @@ ${renderedHtml}
               onChange={(e) => setMarkdown(e.target.value)}
               placeholder="Start writing markdown…"
               containerClassName="flex flex-col"
-              textClassName="flex-1 resize-none"
+              textClassName="flex-1 resize-none font-mono"
               spellCheck={false}
-              action={<ClearButton onClick={() => setMarkdown("")} disabled={!markdown} />}
+              action={
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-8 text-xs"
+                    onClick={() => setShowPreview(!showPreview)}
+                  >
+                    {showPreview ? (
+                      <>
+                        <SquareIcon weight="duotone" className="mr-2 size-4" />
+                        Full Width
+                      </>
+                    ) : (
+                      <>
+                        <ColumnsIcon weight="duotone" className="mr-2 size-4" />
+                        Split View
+                      </>
+                    )}
+                  </Button>
+                  <ClearButton onClick={() => setMarkdown("")} disabled={!markdown} />
+                </div>
+              }
             />
           ) : (
             <div className="flex flex-col gap-3">
-              <Label className="pt-1.5 text-sm font-semibold">Editor</Label>
-              <RichMarkdownEditor initialMarkdown={markdown} onChange={setMarkdown} />
+              <Label className="pt-1.5 text-sm font-semibold">Rich Text Editor</Label>
+              <div className="bg-card h-full max-h-180 overflow-hidden rounded-lg border">
+                <PlateEditor initialMarkdown={markdown} onMarkdownChange={setMarkdown} />
+              </div>
             </div>
           )}
 
-          {/* Preview / HTML */}
-          {showHtml ? (
-            <TextAreaField
-              label="HTML Output"
-              readOnly
-              value={renderedHtml}
-              placeholder="Generated HTML will appear here…"
-              containerClassName="min-h-[100vh] h-full flex flex-col"
-              textClassName="flex-1 resize-none text-sm"
-              spellCheck={false}
-              action={<CopyButton textToCopy={renderedHtml} disabled={!renderedHtml} />}
-            />
-          ) : (
-            <div className="flex h-full flex-col gap-1.5">
-              <div className="flex items-center justify-between">
-                <Label>Preview</Label>
-                <CopyButton textToCopy={markdown} disabled={!markdown} />
-              </div>
+          {/* Right Column - The Preview (Only renders in Raw Mode + Split View) */}
+          {isSplitView && (
+            <>
+              {showHtml ? (
+                <TextAreaField
+                  label="HTML Output"
+                  readOnly
+                  value={renderedHtml}
+                  placeholder="Generated HTML will appear here…"
+                  containerClassName="min-h-[70vh] h-full flex flex-col"
+                  textClassName="flex-1 resize-none font-mono text-sm"
+                  spellCheck={false}
+                  action={<CopyButton textToCopy={renderedHtml} disabled={!renderedHtml} />}
+                />
+              ) : (
+                <div className="flex h-full flex-col gap-1.5">
+                  <div className="flex items-center justify-between">
+                    <Label className="pt-1.5 text-sm font-semibold">Preview</Label>
+                    <CopyButton textToCopy={markdown} disabled={!markdown} />
+                  </div>
 
-              <div className="bg-card h-full min-h-[70vh] rounded-lg border px-3 py-2 text-sm">
-                <div className="prose prose-sm dark:prose-invert max-w-none">
-                  {renderedHtml ? (
-                    <div dangerouslySetInnerHTML={{ __html: renderedHtml }} />
-                  ) : (
-                    <p className="text-muted-foreground">Preview will appear here…</p>
-                  )}
+                  <div className="bg-card h-full min-h-[70vh] rounded-lg border px-4 py-3 text-sm">
+                    <div className="prose prose-sm dark:prose-invert max-w-none">
+                      {renderedHtml ? (
+                        <div dangerouslySetInnerHTML={{ __html: renderedHtml }} />
+                      ) : (
+                        <p className="text-muted-foreground">Preview will appear here…</p>
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              )}
+            </>
           )}
         </div>
       </div>

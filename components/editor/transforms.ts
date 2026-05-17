@@ -86,7 +86,6 @@ export const insertBlock = (
       editor.tf.insertNodes(createBlockquote(editor), { at: insertPath });
 
       if (!isSameBlockType && isCurrentBlockEmpty) {
-        // FIXED: Removed SuggestionPlugin dependency
         editor.tf.removeNodes({ at: path });
       }
 
@@ -104,7 +103,6 @@ export const insertBlock = (
     }
 
     if (!isSameBlockType) {
-      // FIXED: Removed SuggestionPlugin dependency
       editor.tf.removeNodes({ previousEmptyBlock: true });
     }
   });

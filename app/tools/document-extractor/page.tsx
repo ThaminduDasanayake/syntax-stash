@@ -3,9 +3,9 @@
 import { FileMdIcon, LightbulbIcon, PenNibIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
+import { PlateEditor } from "@/blocks/editor/plate-editor";
 import { ErrorAlert } from "@/components/error-alert";
 import FileDropzone from "@/components/file-dropzone";
-import RichMarkdownEditor from "@/components/rich-markdown-editor";
 import { ToolLayout } from "@/components/tool-layout";
 import { CopyButton } from "@/components/ui/copy-button";
 import { DownloadButton } from "@/components/ui/download-button";
@@ -172,7 +172,9 @@ export default function DocumentExtractorPage() {
               </div>
 
               <TabsContent value="rich">
-                <RichMarkdownEditor initialMarkdown={parsedMarkdown} onChange={setMarkdown} />
+                <div className="bg-card flex h-full max-h-180 flex-col overflow-hidden rounded-lg border">
+                  <PlateEditor initialMarkdown={parsedMarkdown} onMarkdownChange={setMarkdown} />
+                </div>
               </TabsContent>
 
               <TabsContent value="raw">

@@ -20,38 +20,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { ToolbarButton } from "@/components/ui/toolbar";
 
-// import {
-//   ToolbarSplitButton,
-//   ToolbarSplitButtonPrimary,
-//   ToolbarSplitButtonSecondary,
-// } from "./toolbar";
-//
-// const MEDIA_CONFIG: Record<
-//   string,
-//   {
-//     accept: string[];
-//     icon: React.ReactNode;
-//     title: string;
-//     tooltip: string;
-//   }
-// > = {
-//   [KEYS.img]: {
-//     accept: ["image/*"],
-//     icon: <ImageIcon className="size-4" />,
-//     title: "Insert Image",
-//     tooltip: "Image",
-//   },
-// };
-
 export function MediaToolbarButton() {
-  //   {
-  //   nodeType,
-  //   ...props
-  // }: DropdownMenuProps & { nodeType: string }
-  // const currentConfig = MEDIA_CONFIG[nodeType];
-
   const editor = useEditorRef();
-  // const [open, setOpen] = React.useState(false);
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [url, setUrl] = React.useState("");
 
@@ -68,14 +38,6 @@ export function MediaToolbarButton() {
 
     setUrl("");
   }, [url, editor]);
-
-  // const { openFilePicker } = useFilePicker({
-  //   accept: currentConfig.accept,
-  //   multiple: true,
-  //   onFilesSelected: ({ plainFiles: updatedFiles }) => {
-  //     editor.getTransforms(PlaceholderPlugin).insert.media(updatedFiles);
-  //   },
-  // });
 
   return (
     <AlertDialog

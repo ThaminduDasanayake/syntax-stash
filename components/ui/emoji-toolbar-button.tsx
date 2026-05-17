@@ -13,6 +13,7 @@ import {
   OrangeSliceIcon,
   SmileyIcon,
   StarIcon,
+  TennisBallIcon,
   XIcon,
 } from "@phosphor-icons/react";
 import {
@@ -112,7 +113,7 @@ export function EmojiPicker({
     <div
       className={cn(
         "bg-popover text-popover-foreground flex flex-col rounded-xl",
-        "h-[23rem] w-80 border shadow-md",
+        "h-92 w-80 border shadow-md",
       )}
     >
       <EmojiPickerNavigation
@@ -499,40 +500,8 @@ const emojiCategoryIcons: Record<
   }
 > = {
   activity: {
-    outline: (
-      <svg
-        className="size-full"
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <circle cx="12" cy="12" r="10" />
-        <path d="M2.1 13.4A10.1 10.1 0 0 0 13.4 2.1" />
-        <path d="m5 4.9 14 14.2" />
-        <path d="M21.9 10.6a10.1 10.1 0 0 0-11.3 11.3" />
-      </svg>
-    ),
-    solid: (
-      <svg
-        className="size-full"
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <circle cx="12" cy="12" r="10" />
-        <path d="M2.1 13.4A10.1 10.1 0 0 0 13.4 2.1" />
-        <path d="m5 4.9 14 14.2" />
-        <path d="M21.9 10.6a10.1 10.1 0 0 0-11.3 11.3" />
-      </svg>
-    ),
+    outline: <TennisBallIcon className="size-full" />,
+    solid: <TennisBallIcon className="size-full" />,
   },
 
   custom: {
@@ -583,5 +552,5 @@ const emojiCategoryIcons: Record<
 
 const emojiSearchIcons = {
   delete: <XIcon className="size-4 text-current" />,
-  loupe: <MagnifyingGlassIcon className="size-4 text-current" />,
+  loupe: <MagnifyingGlassIcon weight="duotone" className="size-4 text-current" />,
 };
