@@ -1,0 +1,168 @@
+"use client";
+
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  DownloadIcon,
+  MinusIcon,
+  PlusIcon,
+  XIcon,
+} from "@phosphor-icons/react";
+import {
+  PreviewImage,
+  useImagePreview,
+  useImagePreviewValue,
+  useScaleInput,
+} from "@platejs/media/react";
+import { cva } from "class-variance-authority";
+import { useEditorRef } from "platejs/react";
+import * as React from "react";
+
+import { cn } from "@/lib/utils";
+
+const buttonVariants = cva("rounded bg-[rgba(0,0,0,0.5)] px-1", {
+  defaultVariants: {
+    variant: "default",
+  },
+  variants: {
+    variant: {
+      default: "text-white",
+      disabled: "cursor-not-allowed text-gray-400",
+    },
+  },
+});
+
+const SCROLL_SPEED = 4;
+
+export function MediaPreviewDialog() {
+  const editor = useEditorRef();
+  const isOpen = useImagePreviewValue("isOpen", editor.id);
+  const scale = useImagePreviewValue("scale");
+  const isEditingScale = useImagePreviewValue("isEditingScale");
+
+  const {
+    closeProps,
+    currentUrlIndex,
+    maskLayerProps,
+    nextDisabled,
+    nextProps,
+    prevDisabled,
+    prevProps,
+    scaleTextProps,
+    zommOutProps,
+    zoomInDisabled,
+    zoomInProps,
+    zoomOutDisabled,
+  } = useImagePreview({ scrollSpeed: SCROLL_SPEED });
+
+  // Helper to open the image in a new tab for downloading/viewing
+  const handleDownload = React.useCallback(() => {
+    const previewImage = document.querySelector(".plate-preview-image") as HTMLImageElement;
+    if (previewImage?.src) {
+      window.open(previewImage.src, "_blank");
+    }
+  }, []);
+
+  return (
+    <div
+      className={cn("fixed top-0 left-0 z-50 h-screen w-screen select-none", !isOpen && "hidden")}
+      onContextMenu={(e) => e.stopPropagation()}
+      {...maskLayerProps}
+    >
+      <div className="absolute inset-0 size-full bg-black opacity-30" />
+      <div className="absolute inset-0 size-full bg-black opacity-30" />
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="relative flex max-h-screen w-full items-center">
+          <PreviewImage
+            className={cn(
+              "plate-preview-image mx-auto block max-h-[calc(100vh-4rem)] w-auto object-contain transition-transform",
+            )}
+          />
+          <div
+            className="absolute bottom-0 left-1/2 z-40 flex w-fit -translate-x-1/2 justify-center gap-4 p-2 text-center text-white"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex gap-1">
+              <button
+                {...prevProps}
+                className={cn(
+                  buttonVariants({
+                    variant: prevDisabled ? "disabled" : "default",
+                  }),
+                )}
+                type="button"
+              >
+                <ArrowLeftIcon weight="bold" />
+              </button>
+              {(currentUrlIndex ?? 0) + 1}
+              <button
+                {...nextProps}
+                className={cn(
+                  buttonVariants({
+                    variant: nextDisabled ? "disabled" : "default",
+                  }),
+                )}
+                type="button"
+              >
+                <ArrowRightIcon weight="bold" />
+              </button>
+            </div>
+            <div className="flex">
+              <button
+                className={cn(
+                  buttonVariants({
+                    variant: zoomOutDisabled ? "disabled" : "default",
+                  }),
+                )}
+                {...zommOutProps}
+                type="button"
+              >
+                <MinusIcon weight="bold" className="size-4" />
+              </button>
+              <div className="mx-px">
+                {isEditingScale ? (
+                  <>
+                    <ScaleInput className="w-10 rounded px-1 text-slate-500 outline" />{" "}
+                    <span>%</span>
+                  </>
+                ) : (
+                  <span {...scaleTextProps}>{`${scale * 100}%`}</span>
+                )}
+              </div>
+              <button
+                className={cn(
+                  buttonVariants({
+                    variant: zoomInDisabled ? "disabled" : "default",
+                  }),
+                )}
+                {...zoomInProps}
+                type="button"
+              >
+                <PlusIcon weight="bold" className="size-4" />
+              </button>
+            </div>
+
+            <button
+              className={cn(buttonVariants())}
+              type="button"
+              onClick={handleDownload}
+              title="Open in new tab"
+            >
+              <DownloadIcon weight="bold" className="size-4" />
+            </button>
+
+            <button {...closeProps} className={cn(buttonVariants())} type="button">
+              <XIcon weight="bold" className="size-4" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ScaleInput(props: React.ComponentProps<"input">) {
+  const { props: scaleInputProps, ref } = useScaleInput();
+
+  return <input {...scaleInputProps} {...props} ref={ref} />;
+}
