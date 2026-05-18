@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 
+import { ErrorAlert } from "@/components/error-alert";
 import { ToolLayout } from "@/components/tool-layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -94,9 +95,7 @@ export default function SubnetCalculatorPage() {
           </div>
 
           {!result && input.trim() && (
-            <p className="text-destructive font-mono text-sm">
-              Invalid CIDR — use format: 192.168.1.0/24
-            </p>
+            <ErrorAlert message="Invalid CIDR — use format: 192.168.1.0/24" />
           )}
 
           {result && (

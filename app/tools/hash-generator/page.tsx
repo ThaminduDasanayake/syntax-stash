@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { HashAlgo } from "@/app/tools/hash-generator/types";
+import { ErrorAlert } from "@/components/error-alert";
 import { ToolLayout } from "@/components/tool-layout";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
@@ -27,6 +28,7 @@ async function hashText(subtleName: string, text: string): Promise<string> {
 export default function HashGeneratorPage() {
   const [text, setText] = useState("Hello, syntax-stash!");
   const [hashes, setHashes] = useState<Record<string, string>>({});
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -37,11 +39,12 @@ export default function HashGeneratorPage() {
       );
       if (!cancelled) {
         setHashes(Object.fromEntries(entries));
+        setError(null);
       }
     }
 
-    run().catch((error) => {
-      console.error("Failed to compute hashes: ", error);
+    run().catch((err) => {
+      if (!cancelled) setError(err instanceof Error ? err.message : "Failed to compute hashes.");
     });
     return () => {
       cancelled = true;
@@ -69,6 +72,8 @@ export default function HashGeneratorPage() {
             />
           }
         />
+
+        {error && <ErrorAlert message={error} />}
 
         {/* Hash outputs */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">

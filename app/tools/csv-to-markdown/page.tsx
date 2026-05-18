@@ -112,7 +112,7 @@ Charlie Brown,charlie@example.com,Manager`);
 
   return (
     <ToolLayout tool={tool}>
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      <div className="flex flex-col gap-8">
         {/* Input */}
         <div className="space-y-4">
           <SelectField
@@ -120,6 +120,7 @@ Charlie Brown,charlie@example.com,Manager`);
             value={delimiter}
             onValueChange={(value) => setDelimiter(value as DelimiterType)}
             options={delimiterOptions}
+            triggerClassName="max-w-xs"
           />
 
           <TextAreaField

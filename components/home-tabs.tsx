@@ -1,5 +1,3 @@
-"use client";
-
 import { LinkIcon, WrenchIcon } from "@phosphor-icons/react/ssr";
 
 import ToolCard from "@/components/tool-card";
@@ -30,7 +28,7 @@ const groupedResources = resourceLinks.reduce(
 export function HomeTabs() {
   return (
     <Tabs defaultValue="tools" className="flex w-full flex-col">
-      <TabsList className="mb-8 h-10 min-w-xs">
+      <TabsList className="mb-8 grid min-w-sm grid-cols-2">
         <TabsTrigger value="tools" className="tab-trigger">
           <WrenchIcon weight="duotone" /> Tools
         </TabsTrigger>

@@ -1,6 +1,6 @@
 "use client";
 
-import { ShuffleIcon } from "@phosphor-icons/react";
+import { ArrowsClockwiseIcon, ShuffleIcon } from "@phosphor-icons/react";
 import { useCallback, useState } from "react";
 
 import { CURVES, FONTS, LOOK, THEMES } from "@/app/tools/mermaid-editor/data";
@@ -10,6 +10,7 @@ import {
   DIAGRAM_TEMPLATES,
   type DiagramType,
 } from "@/app/tools/mermaid-editor/templates";
+import { ErrorAlert } from "@/components/error-alert";
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { ClearButton } from "@/components/ui/clear-button";
@@ -139,6 +140,8 @@ export default function MermaidEditorPage() {
               action={
                 <div className="flex gap-2">
                   <ClearButton
+                    icon={<ArrowsClockwiseIcon />}
+                    label="Reset"
                     onClick={() => {
                       setCode(DIAGRAM_TEMPLATES[diagramType]);
                       setError(null);
@@ -148,11 +151,7 @@ export default function MermaidEditorPage() {
                 </div>
               }
             />
-            {error && (
-              <p className="text-destructive bg-destructive/10 rounded-lg px-3 py-2 text-xs">
-                {error}
-              </p>
-            )}
+            {error && <ErrorAlert message={error} />}
           </div>
 
           <div className="grid grid-cols-6 items-center gap-4">

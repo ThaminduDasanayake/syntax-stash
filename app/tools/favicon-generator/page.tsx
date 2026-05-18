@@ -2,7 +2,9 @@
 
 import { CSSProperties, useRef, useState } from "react";
 
+import { ErrorAlert } from "@/components/error-alert";
 import FileDropzone from "@/components/file-dropzone";
+import { LoadingSpinner } from "@/components/loading-spinner";
 import { ToolLayout } from "@/components/tool-layout";
 import { CheckboxField } from "@/components/ui/checkbox-field";
 import { ClearButton } from "@/components/ui/clear-button";
@@ -39,6 +41,7 @@ export default function FaviconGeneratorPage() {
   const [sourceImg, setSourceImg] = useState<HTMLImageElement | null>(null);
   const [outputs, setOutputs] = useState<Map<string, OutputEntry>>(new Map());
   const [generating, setGenerating] = useState(false);
+  const [genError, setGenError] = useState<string | null>(null);
   const [appName, setAppName] = useState("My App");
   const [opts, setOpts] = useState<RenderOptions>({
     padding: 0,
@@ -51,6 +54,7 @@ export default function FaviconGeneratorPage() {
   const generate = async (img: HTMLImageElement, currentOpts: RenderOptions) => {
     const id = ++genRef.current;
     setGenerating(true);
+    setGenError(null);
     try {
       const blobs = await generateAllBlobs(img, currentOpts);
       if (genRef.current !== id) return;
@@ -60,6 +64,9 @@ export default function FaviconGeneratorPage() {
           [...blobs].map(([k, blob]) => [k, { blob, url: URL.createObjectURL(blob) }]),
         );
       });
+    } catch (e) {
+      if (genRef.current === id)
+        setGenError(e instanceof Error ? e.message : "Generation failed.");
     } finally {
       if (genRef.current === id) setGenerating(false);
     }
@@ -87,7 +94,7 @@ export default function FaviconGeneratorPage() {
 
   const applyOpts = (newOpts: RenderOptions) => {
     setOpts(newOpts);
-    if (sourceImg) generate(sourceImg, newOpts).catch(console.error);
+    if (sourceImg) void generate(sourceImg, newOpts);
   };
 
   const downloadFile = (filename: string) => {
@@ -187,9 +194,8 @@ export default function FaviconGeneratorPage() {
               <ClearButton onClick={reset} />
             </div>
 
-            {generating && !hasOutputs && (
-              <p className="text-muted-foreground text-sm">Generating...</p>
-            )}
+            {generating && <LoadingSpinner label="Generating..." />}
+            {genError && <ErrorAlert message={genError} />}
 
             {hasOutputs && (
               <div>

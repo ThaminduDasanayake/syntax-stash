@@ -1,11 +1,11 @@
 "use client";
 
 import {
-  ArchiveIcon,
   CircleNotchIcon,
   ImageIcon,
   LockIcon,
   LockOpenIcon,
+  TrashIcon,
   XIcon,
 } from "@phosphor-icons/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -26,16 +26,20 @@ import {
   ImageFormat,
   ResizeOptions,
 } from "@/app/tools/image-converter/types";
+import { ErrorAlert } from "@/components/error-alert";
 import FileDropzone from "@/components/file-dropzone";
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
+import { ClearButton } from "@/components/ui/clear-button";
 import { DownloadButton } from "@/components/ui/download-button";
-import { Input } from "@/components/ui/input";
+import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SliderField } from "@/components/ui/slider-field";
 import { Switch } from "@/components/ui/switch";
 import { buildAcceptMap } from "@/lib/file-types";
 import { internalTools } from "@/lib/tools-data";
+import { cn } from "@/lib/utils";
 
 export default function ImageConverterPage() {
   const [images, setImages] = useState<File[]>([]);
@@ -43,6 +47,7 @@ export default function ImageConverterPage() {
   const [converted, setConverted] = useState<ConvertedImage[]>([]);
   const [converting, setConverting] = useState(false);
   const [isReading, setIsReading] = useState(false);
+  const [failedFiles, setFailedFiles] = useState<string[]>([]);
   const [avifSupported, setAvifSupported] = useState<boolean | null>(null);
 
   const [resize, setResize] = useState<ResizeOptions>({
@@ -80,6 +85,7 @@ export default function ImageConverterPage() {
   // HEIC Interception & File Processing
   const processFiles = async (files: File[]) => {
     setIsReading(true);
+    const heicErrors: string[] = [];
     try {
       const processed = await Promise.all(
         files.map(async (f) => {
@@ -93,9 +99,9 @@ export default function ImageConverterPage() {
             return new File([validBlob], f.name.replace(/\.heic$/i, ".jpg"), {
               type: "image/jpeg",
             });
-          } catch (e) {
-            console.error("Failed to decode HEIC:", e);
-            return null; // Skip corrupted files
+          } catch {
+            heicErrors.push(f.name);
+            return null;
           }
         }),
       );
@@ -103,6 +109,7 @@ export default function ImageConverterPage() {
       const validFiles = processed.filter((f): f is File => f !== null);
       setImages((prev) => [...prev, ...validFiles]);
       setConverted([]);
+      if (heicErrors.length) setFailedFiles(heicErrors);
     } finally {
       setIsReading(false);
     }
@@ -130,8 +137,10 @@ export default function ImageConverterPage() {
   // Conversion Engine
   const convertImages = async () => {
     setConverting(true);
+    setFailedFiles([]);
     converted.forEach((img) => URL.revokeObjectURL(img.url));
     const results: ConvertedImage[] = [];
+    const errors: string[] = [];
 
     for (const file of images) {
       try {
@@ -201,11 +210,12 @@ export default function ImageConverterPage() {
           url: URL.createObjectURL(blob),
         });
         URL.revokeObjectURL(objectUrl);
-      } catch (err) {
-        console.error(`Failed to convert ${file.name}:`, err);
+      } catch {
+        errors.push(file.name);
       }
     }
     setConverted(results);
+    if (errors.length) setFailedFiles(errors);
     setConverting(false);
   };
 
@@ -244,6 +254,8 @@ export default function ImageConverterPage() {
     a.download = name;
     a.click();
   };
+
+  const formatsWithSettings = ["jpeg", "webp", "avif", "png", "ico"];
 
   const tool = internalTools.find((t) => t.slug === "image-converter");
 
@@ -290,9 +302,12 @@ export default function ImageConverterPage() {
                 <h3 className="text-sm font-semibold">
                   {images.length} file{images.length !== 1 ? "s" : ""} selected
                 </h3>
-                <Button variant="ghost" size="sm" className="h-8 text-xs" onClick={clearAll}>
-                  Clear all
-                </Button>
+                <ClearButton
+                  icon={<TrashIcon weight="duotone" />}
+                  label="Clear All"
+                  size="sm"
+                  onClick={clearAll}
+                />
               </div>
               <div className="grid max-h-100 gap-2 overflow-y-auto pr-2">
                 {images.map((file, i) => (
@@ -313,10 +328,9 @@ export default function ImageConverterPage() {
                     <Button
                       variant="destructive"
                       size="icon"
-                      className="size-8"
                       onClick={() => setImages((p) => p.filter((_, idx) => idx !== i))}
                     >
-                      <XIcon weight="duotone" className="size-4" />
+                      <XIcon weight="bold" />
                     </Button>
                   </div>
                 ))}
@@ -328,7 +342,7 @@ export default function ImageConverterPage() {
         {/* Settings & Convert */}
         <div className="space-y-6">
           <div className="space-y-3">
-            <Label className="font-bold">Target Format</Label>
+            <Label>Target Format</Label>
             <div className="flex flex-wrap gap-2">
               {(
                 [
@@ -347,7 +361,7 @@ export default function ImageConverterPage() {
                   key={fmt}
                   variant={targetFormat === fmt ? "default" : "outline"}
                   onClick={() => setTargetFormat(fmt)}
-                  className="font-bold uppercase"
+                  className="uppercase"
                   size="sm"
                   disabled={fmt === "avif" && avifSupported === false}
                 >
@@ -356,49 +370,53 @@ export default function ImageConverterPage() {
               ))}
             </div>
           </div>
+          {formatsWithSettings.includes(targetFormat) && (
+            <div className="bg-card border-border space-y-4 rounded-xl border p-4">
+              <div className="flex items-center gap-2">
+                <span className="text-muted-foreground text-xs font-semibold tracking-wider">
+                  <span className="uppercase">{targetFormat}</span> Settings
+                </span>
+                <div className="bg-border h-px flex-1" />
+              </div>
 
-          <div className="bg-card border-border space-y-4 rounded-xl border p-4">
-            <div className="flex items-center gap-2">
-              <span className="text-muted-foreground text-xs font-semibold tracking-wider">
-                <span className="uppercase">{targetFormat}</span> Settings
-              </span>
-              <div className="bg-border h-px flex-1" />
+              {targetFormat === "png" && (
+                <div className="flex items-center justify-between">
+                  <Label className="text-sm">Preserve transparency</Label>
+                  <Switch
+                    checked={formatOptions.png.transparency}
+                    onCheckedChange={(v) => updateFormatOption("png", "transparency", v)}
+                  />
+                </div>
+              )}
+
+              {(targetFormat === "jpeg" || targetFormat === "webp" || targetFormat === "avif") && (
+                <SliderField
+                  label="Quality"
+                  valueLabel={`${currentQuality}%`}
+                  value={[currentQuality]}
+                  onValueChange={(vals) => {
+                    updateFormatOption(
+                      targetFormat as "jpeg" | "webp" | "avif",
+                      "quality",
+                      vals[0],
+                    );
+                  }}
+                  min={1}
+                  max={100}
+                />
+              )}
+
+              {targetFormat === "ico" && (
+                <div className="flex items-center justify-between">
+                  <Label className="text-sm">Embed multi-size</Label>
+                  <Switch
+                    checked={formatOptions.ico.multiSize}
+                    onCheckedChange={(v) => updateFormatOption("ico", "multiSize", v)}
+                  />
+                </div>
+              )}
             </div>
-
-            {targetFormat === "png" && (
-              <div className="flex items-center justify-between">
-                <Label className="text-sm">Preserve transparency</Label>
-                <Switch
-                  checked={formatOptions.png.transparency}
-                  onCheckedChange={(v) => updateFormatOption("png", "transparency", v)}
-                />
-              </div>
-            )}
-
-            {(targetFormat === "jpeg" || targetFormat === "webp" || targetFormat === "avif") && (
-              <SliderField
-                label="Quality"
-                valueLabel={`${currentQuality}%`}
-                value={[currentQuality]}
-                onValueChange={(vals) => {
-                  updateFormatOption(targetFormat as "jpeg" | "webp" | "avif", "quality", vals[0]);
-                }}
-                min={1}
-                max={100}
-              />
-            )}
-
-            {targetFormat === "ico" && (
-              <div className="flex items-center justify-between">
-                <Label className="text-sm">Embed multi-size</Label>
-                <Switch
-                  checked={formatOptions.ico.multiSize}
-                  onCheckedChange={(v) => updateFormatOption("ico", "multiSize", v)}
-                />
-              </div>
-            )}
-          </div>
-
+          )}
           {/* Resize Settings */}
           <div className="bg-card border-border space-y-4 rounded-xl border p-4">
             <div className="flex items-center gap-2">
@@ -408,7 +426,7 @@ export default function ImageConverterPage() {
               <div className="bg-border h-px flex-1" />
             </div>
 
-            <div className="flex overflow-hidden rounded-lg border">
+            <ButtonGroup className="grid w-full grid-cols-3">
               {(
                 [
                   { v: "original", l: "Original" },
@@ -416,60 +434,63 @@ export default function ImageConverterPage() {
                   { v: "percentage", l: "Scale" },
                 ] as const
               ).map((mode) => (
-                <button
+                <Button
                   key={mode.v}
                   onClick={() => setResize((p) => ({ ...p, mode: mode.v }))}
-                  className={`flex-1 px-3 py-2 text-xs font-medium transition-colors hover:cursor-pointer ${resize.mode === mode.v ? "bg-primary text-primary-foreground" : "hover:bg-accent"}`}
+                  variant={resize.mode === mode.v ? "default" : "outline"}
+                  className="w-full"
                 >
                   {mode.l}
-                </button>
+                </Button>
               ))}
-            </div>
+            </ButtonGroup>
 
             {resize.mode === "custom" && (
               <div className="flex items-center gap-3">
-                <div className="flex-1 space-y-1.5">
-                  <Label className="text-muted-foreground text-xs">Width</Label>
-                  <Input
-                    type="number"
-                    placeholder="Auto"
-                    value={resize.width || ""}
-                    onChange={(e) => setResize((p) => ({ ...p, width: Number(e.target.value) }))}
-                  />
-                </div>
-                <button
+                <InputField
+                  label="Width"
+                  type="number"
+                  placeholder="Auto"
+                  value={resize.width || ""}
+                  onChange={(e) => setResize((p) => ({ ...p, width: Number(e.target.value) }))}
+                />
+                <Button
                   onClick={() => setResize((p) => ({ ...p, lockAspectRatio: !p.lockAspectRatio }))}
-                  className={`mt-5 rounded-lg border p-2 ${resize.lockAspectRatio ? "bg-primary/10 border-primary text-primary" : "text-muted-foreground"}`}
+                  size="icon"
+                  variant={resize.lockAspectRatio ? "default" : "outline"}
+                  className={cn(
+                    resize.lockAspectRatio && "bg-primary/10 text-primary border-primary",
+                    "mt-5",
+                  )}
                 >
                   {resize.lockAspectRatio ? (
                     <LockIcon weight="duotone" className="size-4" />
                   ) : (
                     <LockOpenIcon weight="duotone" className="size-4" />
                   )}
-                </button>
-                <div className="flex-1 space-y-1.5">
-                  <Label className="text-muted-foreground text-xs">Height</Label>
-                  <Input
-                    type="number"
-                    placeholder="Auto"
-                    value={resize.height || ""}
-                    onChange={(e) => setResize((p) => ({ ...p, height: Number(e.target.value) }))}
-                  />
-                </div>
+                </Button>
+                <InputField
+                  label="Height"
+                  type="number"
+                  placeholder="Auto"
+                  value={resize.height || ""}
+                  onChange={(e) => setResize((p) => ({ ...p, height: Number(e.target.value) }))}
+                />
               </div>
             )}
           </div>
-
+          {failedFiles.length > 0 && (
+            <ErrorAlert message={`Failed to process: ${failedFiles.join(", ")}`} />
+          )}
           <Button
-            size="lg"
-            className="w-full font-bold"
+            className="w-full font-semibold"
             onClick={convertImages}
             disabled={converting || images.length === 0}
           >
             {converting ? (
               <CircleNotchIcon className="mr-2 size-5 animate-spin" />
             ) : (
-              <ImageIcon className="mr-2 size-5" />
+              <ImageIcon weight="duotone" className="mr-2 size-5" />
             )}
             {converting
               ? "Processing..."
@@ -477,21 +498,17 @@ export default function ImageConverterPage() {
                 ? "Convert Images"
                 : `Convert ${images.length} Image${images.length === 1 ? "" : "s"}`}
           </Button>
-
           {/* Converted Results */}
           {converted.length > 0 && (
             <div className="space-y-4 pt-4">
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-bold">Converted Files</h3>
                 {converted.length > 1 && (
-                  <Button
+                  <DownloadButton
+                    label="Download ZIP"
                     variant="outline"
-                    size="sm"
                     onClick={downloadAllAsZip}
-                    className="h-8 text-xs"
-                  >
-                    <ArchiveIcon weight="duotone" className="mr-2 size-3.5" /> Download ZIP
-                  </Button>
+                  />
                 )}
               </div>
               <div className="grid gap-2">
@@ -510,7 +527,7 @@ export default function ImageConverterPage() {
                     </div>
                     <DownloadButton
                       label=""
-                      variant="outline"
+                      variant="default"
                       onClick={() => handleDownload(img.url, img.name)}
                     />
                   </div>

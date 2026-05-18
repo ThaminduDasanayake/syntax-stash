@@ -1,4 +1,6 @@
-import { DownloadIcon } from "@phosphor-icons/react/ssr";
+"use client";
+
+import { DownloadIcon } from "@phosphor-icons/react";
 import { ComponentProps, ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";

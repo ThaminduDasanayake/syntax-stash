@@ -7,6 +7,7 @@ import { useMemo, useState } from "react";
 import { DEFAULT_MARKDOWN } from "@/app/tools/markdown-live-preview/data";
 import { Header } from "@/app/tools/markdown-live-preview/header";
 import { PlateEditor } from "@/blocks/editor/plate-editor";
+import { ErrorAlert } from "@/components/error-alert";
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { ClearButton } from "@/components/ui/clear-button";
@@ -24,12 +25,18 @@ export default function MarkdownLivePreviewPage() {
   const [editorMode, setEditorMode] = useState<EditorMode>("raw");
   const [showPreview, setShowPreview] = useState(true);
 
-  const renderedHtml = useMemo(() => {
-    if (!markdown.trim()) return "";
+  const { renderedHtml, parseError } = useMemo(() => {
+    if (!markdown.trim()) return { renderedHtml: "", parseError: null };
     try {
-      return marked.parse(markdown, { async: false, gfm: true, breaks: false }) as string;
-    } catch {
-      return "<p>Error parsing markdown.</p>";
+      return {
+        renderedHtml: marked.parse(markdown, { async: false, gfm: true, breaks: false }) as string,
+        parseError: null,
+      };
+    } catch (e) {
+      return {
+        renderedHtml: "",
+        parseError: e instanceof Error ? e.message : "Error parsing markdown.",
+      };
     }
   }, [markdown]);
 
@@ -172,15 +179,19 @@ ${renderedHtml}
                     <CopyButton textToCopy={markdown} disabled={!markdown} />
                   </div>
 
-                  <div className="bg-card h-full min-h-[70vh] rounded-lg border px-4 py-3 text-sm">
-                    <div className="prose prose-sm dark:prose-invert max-w-none">
-                      {renderedHtml ? (
-                        <div dangerouslySetInnerHTML={{ __html: renderedHtml }} />
-                      ) : (
-                        <p className="text-muted-foreground">Preview will appear here...</p>
-                      )}
+                  {parseError ? (
+                    <ErrorAlert message={parseError} />
+                  ) : (
+                    <div className="bg-card h-full min-h-[70vh] rounded-lg border px-4 py-3 text-sm">
+                      <div className="prose prose-sm dark:prose-invert max-w-none">
+                        {renderedHtml ? (
+                          <div dangerouslySetInnerHTML={{ __html: renderedHtml }} />
+                        ) : (
+                          <p className="text-muted-foreground">Preview will appear here...</p>
+                        )}
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               )}
             </>
