@@ -6,6 +6,7 @@ import { useEditorRef } from "platejs/react";
 import * as React from "react";
 import { toast } from "sonner";
 
+import { ToolbarButton } from "@/components/plate-ui/toolbar";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,7 +19,6 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
-import { ToolbarButton } from "@/components/ui/toolbar";
 
 export function MediaToolbarButton() {
   const editor = useEditorRef();

@@ -3,7 +3,7 @@
 import { MathRules } from "@platejs/math";
 import { EquationPlugin, InlineEquationPlugin } from "@platejs/math/react";
 
-import { EquationElement, InlineEquationElement } from "@/components/ui/equation-node";
+import { EquationElement, InlineEquationElement } from "@/components/plate-ui/equation-node";
 
 export const MathKit = [
   InlineEquationPlugin.configure({

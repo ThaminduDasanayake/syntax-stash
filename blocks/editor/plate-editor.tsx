@@ -4,7 +4,7 @@ import { Plate, usePlateEditor } from "platejs/react";
 import * as React from "react";
 
 import { EditorKit } from "@/blocks/editor/editor-kit";
-import { Editor, EditorContainer } from "@/components/ui/editor";
+import { Editor, EditorContainer } from "@/components/plate-ui/editor";
 
 export function PlateEditor({
   initialMarkdown,
