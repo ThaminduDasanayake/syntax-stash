@@ -77,13 +77,13 @@ export function Header({
           )}
         </Button>
         <DownloadButton
-          label=".md"
+          label="MD"
           variant="outline"
           onClick={handleDownloadMd}
           disabled={!markdown}
         />
         <DownloadButton
-          label=".html"
+          label="HTML"
           variant="outline"
           onClick={handleDownloadHtml}
           disabled={!renderedHtml}

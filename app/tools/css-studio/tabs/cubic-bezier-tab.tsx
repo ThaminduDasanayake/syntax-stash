@@ -148,7 +148,7 @@ export function CubicBezierTab() {
               }}
             >
               <SelectTrigger className="flex-1">
-                <SelectValue placeholder="Choose a preset…" />
+                <SelectValue placeholder="Choose a preset..." />
               </SelectTrigger>
               <SelectContent>
                 {PRESETS.map((p) => (

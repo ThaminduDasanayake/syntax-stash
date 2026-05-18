@@ -164,7 +164,7 @@ export default function DocumentExtractorPage() {
                   <div className="flex gap-2">
                     <CopyButton textToCopy={output} disabled={!markdown || isLoading} />
                     <DownloadButton
-                      label="Download .md"
+                      label="Download MD"
                       onClick={() => downloadMarkdown(output, fileName ?? "document")}
                     />
                   </div>

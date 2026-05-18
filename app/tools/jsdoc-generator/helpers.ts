@@ -162,7 +162,7 @@ export function parseFunctionSignature(source: string): ParsedFunction | null {
       body = body.slice(genMatch[1].length).trim();
     }
     if (!body.startsWith("(")) {
-      // single-arg arrow without parens: "x => …"
+      // single-arg arrow without parens: "x => ..."
       const singleMatch = body.match(/^([A-Za-z_$][\w$]*)\s*=>/);
       if (!singleMatch) return null;
       paramsRaw = singleMatch[1];

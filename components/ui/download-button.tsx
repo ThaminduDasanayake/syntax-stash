@@ -21,7 +21,7 @@ export function DownloadButton({
     <Button
       variant={variant}
       size={size}
-      className={cn("gap-2 px-4 transition-colors duration-200", className)}
+      className={cn("gap-2 px-4 font-semibold transition-colors duration-200", className)}
       {...props}
     >
       {icon && icon}

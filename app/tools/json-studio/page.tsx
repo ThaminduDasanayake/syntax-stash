@@ -59,7 +59,7 @@ export default function JsonStudioPage() {
             label="JSON Input"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Paste JSON here…"
+            placeholder="Paste JSON here..."
             rows={28}
             className="text-sm"
             action={<ClearButton onClick={() => setInput("")} disabled={!input} />}

@@ -114,7 +114,7 @@ ${renderedHtml}
               label="Editor"
               value={markdown}
               onChange={(e) => setMarkdown(e.target.value)}
-              placeholder="Start writing markdown…"
+              placeholder="Start writing markdown..."
               containerClassName="flex flex-col"
               textClassName="flex-1 resize-none font-mono"
               spellCheck={false}
@@ -159,7 +159,7 @@ ${renderedHtml}
                   label="HTML Output"
                   readOnly
                   value={renderedHtml}
-                  placeholder="Generated HTML will appear here…"
+                  placeholder="Generated HTML will appear here..."
                   containerClassName="min-h-[70vh] h-full flex flex-col"
                   textClassName="flex-1 resize-none font-mono text-sm"
                   spellCheck={false}
@@ -177,7 +177,7 @@ ${renderedHtml}
                       {renderedHtml ? (
                         <div dangerouslySetInnerHTML={{ __html: renderedHtml }} />
                       ) : (
-                        <p className="text-muted-foreground">Preview will appear here…</p>
+                        <p className="text-muted-foreground">Preview will appear here...</p>
                       )}
                     </div>
                   </div>

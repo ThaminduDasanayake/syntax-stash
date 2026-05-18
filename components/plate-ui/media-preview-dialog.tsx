@@ -148,7 +148,7 @@ export function MediaPreviewDialog() {
               onClick={handleDownload}
               title="Open in new tab"
             >
-              <DownloadIcon weight="bold" className="size-4" />
+              <DownloadIcon weight="duotone" className="size-4" />
             </button>
 
             <button {...closeProps} className={cn(buttonVariants())} type="button">

@@ -188,7 +188,7 @@ export default function FaviconGeneratorPage() {
             </div>
 
             {generating && !hasOutputs && (
-              <p className="text-muted-foreground text-sm">Generating…</p>
+              <p className="text-muted-foreground text-sm">Generating...</p>
             )}
 
             {hasOutputs && (
@@ -241,7 +241,7 @@ export default function FaviconGeneratorPage() {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium">HTML &lt;head&gt; tags</span>
-                    <CopyButton textToCopy={HTML_SNIPPET} size="sm" />
+                    <CopyButton textToCopy={HTML_SNIPPET} />
                   </div>
                   <pre className="border-border bg-muted overflow-x-auto rounded-lg border p-4 text-xs">
                     {HTML_SNIPPET}
@@ -250,7 +250,7 @@ export default function FaviconGeneratorPage() {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium">site.webmanifest</span>
-                    <CopyButton textToCopy={manifestJson} size="sm" />
+                    <CopyButton textToCopy={manifestJson} />
                   </div>
                   <pre className="border-border bg-muted overflow-x-auto rounded-lg border p-4 text-xs">
                     {manifestJson}
@@ -261,7 +261,7 @@ export default function FaviconGeneratorPage() {
 
             {hasOutputs && (
               <div className="flex justify-center">
-                <DownloadButton label="Download all (.zip)" onClick={downloadAll} />
+                <DownloadButton label="Download all (ZIP)" onClick={downloadAll} />
               </div>
             )}
           </>

@@ -80,7 +80,7 @@ export function TextBannerTab() {
         value={output}
         rows={10}
         className="bg-muted/30! resize-none font-mono text-xs leading-tight"
-        placeholder={text ? "Generating…" : "Enter text above to generate a banner."}
+        placeholder={text ? "Generating..." : "Enter text above to generate a banner."}
         action={<CopyButton textToCopy={output} disabled={!output} />}
       />
     </div>

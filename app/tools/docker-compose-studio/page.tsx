@@ -392,7 +392,7 @@ export default function DockerComposePage() {
             placeholder={
               activeTab === "builder"
                 ? "Add a service to generate YAML..."
-                : "Generated compose file will appear here…"
+                : "Generated compose file will appear here..."
             }
             action={
               <CopyButton textToCopy={currentYaml} disabled={!currentYaml || !!cliResult.error} />

@@ -271,7 +271,7 @@ export default function RegexStudioPage() {
             <CopyButton textToCopy={getSvgString} labelName="Copy SVG" disabled={!parsed.ok} />
 
             <DownloadButton
-              label="Download .svg"
+              label="Download SVG"
               variant="outline"
               onClick={downloadSvg}
               disabled={!parsed.ok}

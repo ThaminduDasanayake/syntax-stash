@@ -76,7 +76,7 @@ export default function SvgOptimizerPage() {
                   Optimized SVG
                   {isPending && (
                     <span className="text-muted-foreground ml-2 font-mono text-[10px] normal-case">
-                      optimizing…
+                      optimizing...
                     </span>
                   )}
                 </>

@@ -69,7 +69,7 @@ export default function DiffViewerPage() {
             onChange={(e) => setOriginal(e.target.value)}
             rows={10}
             className="resize-y font-mono text-xs"
-            placeholder="Paste original text here…"
+            placeholder="Paste original text here..."
             action={
               <ClearButton
                 onClick={() => {
@@ -86,7 +86,7 @@ export default function DiffViewerPage() {
             onChange={(e) => setModified(e.target.value)}
             rows={10}
             className="resize-y font-mono text-xs"
-            placeholder="Paste modified text here…"
+            placeholder="Paste modified text here..."
             action={
               <ClearButton
                 onClick={() => {

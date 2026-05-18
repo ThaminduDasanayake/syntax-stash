@@ -149,7 +149,7 @@ export default function YAMLJSONConverterPage() {
                   <DownloadButton
                     onClick={handleDownload}
                     disabled={!output}
-                    label={`Download .${ext}`}
+                    label={`Download ${ext.toUpperCase()}`}
                   />
                 </div>
               }

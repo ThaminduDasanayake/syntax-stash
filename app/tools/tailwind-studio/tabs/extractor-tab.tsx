@@ -47,7 +47,7 @@ export function ExtractorTab() {
           }}
           rows={22}
           className="resize-y text-xs"
-          placeholder="Paste your JSX here…"
+          placeholder="Paste your JSX here..."
           spellCheck={false}
           action={
             <ClearButton
@@ -62,8 +62,8 @@ export function ExtractorTab() {
 
         <p className="text-muted-foreground flex items-center gap-1.5 text-xs">
           <WarningCircleIcon className="size-4 shrink-0" />
-          Handles <code className="bg-muted rounded px-1">className=&quot;…&quot;</code> and{" "}
-          <code className="bg-muted rounded px-1">{`className={'…'}`}</code>. Dynamic expressions
+          Handles <code className="bg-muted rounded px-1">{`className="..."`}</code> and{" "}
+          <code className="bg-muted rounded px-1">{`className={'...'}`}</code>. Dynamic expressions
           like <code className="bg-muted rounded px-1">cn()</code> are left as-is.
         </p>
       </div>

@@ -216,7 +216,7 @@ ${showBackground ? `  <rect width="100%" height="100%" fill="${bgColor}" rx="${b
           <div className="flex items-center gap-2">
             <CopyButton textToCopy={svgCode} disabled={!svgCode} />
             <DownloadButton
-              label="Download .svg"
+              label="Download SVG"
               variant="outline"
               onClick={downloadSvg}
               disabled={!svgCode}

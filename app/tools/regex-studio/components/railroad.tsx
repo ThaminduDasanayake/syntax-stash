@@ -263,9 +263,9 @@ function formatCharClassBody(body: CharacterClassBody[]): string {
           return `${from}-${to}`;
         }
         if (n.type === "characterClassEscape") return `\\${n.value}`;
-        return "…";
+        return "...";
       })
-      .join("") + (body.length > 4 ? "…" : "")
+      .join("") + (body.length > 4 ? "..." : "")
   );
 }
 
@@ -311,11 +311,11 @@ export function renderNode(node: RootNode): Rendered {
         return wrapGroup(body, "group", COLORS.group);
       }
       const labels: Record<string, string> = {
-        lookahead: "(?=…)",
-        negativeLookahead: "(?!…)",
-        lookbehind: "(?<=…)",
-        negativeLookbehind: "(?<!…)",
-        ignore: "(?:…)",
+        lookahead: "(?=...)",
+        negativeLookahead: "(?!...)",
+        lookbehind: "(?<=...)",
+        negativeLookbehind: "(?<!...)",
+        ignore: "(?:...)",
       };
       return wrapGroup(body, labels[behavior] ?? behavior, COLORS.anchor);
     }

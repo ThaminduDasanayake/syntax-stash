@@ -140,7 +140,7 @@ export function QueryTab({ input, query, onQueryChangeAction }: Props) {
         value={outputValue}
         readOnly
         rows={16}
-        placeholder="Query results will appear here…"
+        placeholder="Query results will appear here..."
         action={<CopyButton textToCopy={outputValue} disabled={!outputValue} />}
       />
 

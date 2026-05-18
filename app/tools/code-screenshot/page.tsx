@@ -204,7 +204,7 @@ export default function CodeScreenshotPage() {
             <DownloadButton
               onClick={handleExport}
               disabled={isExporting || !highlighted}
-              label={isExporting ? "Exporting…" : "Download PNG"}
+              label={isExporting ? "Exporting..." : "Download PNG"}
               className="w-full"
             />
           </div>
@@ -228,7 +228,7 @@ function ShikiRender({
   lineCount: number;
 }) {
   if (!html) {
-    return <div className="p-6 font-mono text-sm text-neutral-400">Loading…</div>;
+    return <div className="p-6 font-mono text-sm text-neutral-400">Loading...</div>;
   }
 
   if (!showLineNumbers) {
