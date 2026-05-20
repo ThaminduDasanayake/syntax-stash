@@ -3,11 +3,13 @@
 import { useMemo, useState } from "react";
 
 import { LANG_COLORS } from "@/app/tools/code-stash/constants";
+import { FileCard } from "@/app/tools/code-stash/file-card";
+import { InstructionCard } from "@/app/tools/code-stash/instruction-card";
+import { SetupCard } from "@/app/tools/code-stash/setup-card";
 import { Snippet } from "@/app/tools/code-stash/types";
 import { ToolLayout } from "@/components/tool-layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { CopyButton } from "@/components/ui/copy-button";
 import { SearchInput } from "@/components/ui/search-input";
 import { useFuzzySearch } from "@/hooks/use-fuzzy-search";
 import { internalTools } from "@/lib/tools-data";
@@ -46,8 +48,7 @@ export default function CodeStashUi({ initialSnippets }: { initialSnippets: Snip
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Directory */}
         <div className="flex flex-col lg:col-span-1 lg:max-h-[70vh]">
-          {/* Sticky header: search + filters */}
-          <div className="sticky top-0 z-10 space-y-3 pb-3">
+          <div className="space-y-3 pb-3">
             {/* Search bar */}
             <SearchInput
               placeholder="Search snippets..."
@@ -78,7 +79,7 @@ export default function CodeStashUi({ initialSnippets }: { initialSnippets: Snip
           </div>
 
           {/* Scrollable snippet list */}
-          <div className="flex-1 space-y-0.5 overflow-y-auto pr-2">
+          <div className="flex-1 space-y-1 overflow-y-auto pr-2">
             {filteredSnippets.length === 0 ? (
               <p className="text-muted-foreground py-8 text-center text-sm">
                 No snippets match your search.
@@ -87,14 +88,14 @@ export default function CodeStashUi({ initialSnippets }: { initialSnippets: Snip
               filteredSnippets.map((snippet) => {
                 const isActive = snippet.id === activeId;
                 return (
-                  <button
+                  <Button
                     key={snippet.id}
-                    type="button"
+                    variant="ghost"
                     className={cn(
-                      "flex w-full cursor-pointer items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-left transition-colors duration-150",
+                      "h-auto w-full justify-between gap-3 rounded-lg border-l-6 px-3 py-2.5 text-left transition-colors duration-150",
                       isActive
-                        ? "bg-muted border-primary border-l-2"
-                        : "hover:bg-muted/50 border-l-2 border-transparent",
+                        ? "border-primary bg-muted"
+                        : "hover:bg-muted/50 hover:text-foreground border-transparent",
                     )}
                     onClick={() => setActiveId(snippet.id)}
                   >
@@ -121,7 +122,7 @@ export default function CodeStashUi({ initialSnippets }: { initialSnippets: Snip
                         </Badge>
                       ))}
                     </div>
-                  </button>
+                  </Button>
                 );
               })
             )}
@@ -131,76 +132,20 @@ export default function CodeStashUi({ initialSnippets }: { initialSnippets: Snip
         {/* Right Column: Code Viewer */}
         <div className="lg:col-span-2">
           {activeSnippet ? (
-            <div className="relative">
+            <div className="flex flex-col space-y-6">
               <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
                 {activeSnippet.description}
               </p>
 
               {activeSnippet.instructions && activeSnippet.instructions.length > 0 && (
-                <div className="mb-6 rounded-lg border border-sky-500/20 bg-sky-500/10 p-4 text-xs">
-                  <h4 className="mb-2.5 flex items-center gap-2 font-bold tracking-wider text-sky-400 uppercase">
-                    Instructions
-                  </h4>
-                  <div className="space-y-3 text-sky-200/80">
-                    {activeSnippet.instructions.map(({ text, code }, idx) => (
-                      <div key={idx}>
-                        <p>{text}</p>
-
-                        {code && (
-                          <ul className="ml-5 rounded-md px-3 py-2 font-mono">
-                            {code.map((line, i) => (
-                              <li key={i}>{line}</li>
-                            ))}
-                          </ul>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                <InstructionCard instructions={activeSnippet.instructions} />
               )}
 
-              {activeSnippet.setup && (
-                <div className="bg-background mb-6 flex items-center justify-between rounded-lg border px-4 py-2.5">
-                  <code className="font-mono text-sm text-teal-500">
-                    <span className="text-muted-foreground/50 mr-3 select-none">$</span>
-                    {activeSnippet.setup}
-                  </code>
-                  <CopyButton textToCopy={activeSnippet.setup} label={false} variant="ghost" />
-                </div>
-              )}
+              {activeSnippet.setup && <SetupCard setup={activeSnippet.setup} />}
 
               <div className="space-y-6">
                 {activeSnippet.files.map((file) => (
-                  <div
-                    key={file.filename}
-                    className="border-border bg-muted overflow-hidden rounded-xl border shadow-2xl"
-                  >
-                    {/* Title bar */}
-                    <div className="border-accent bg-muted flex items-center justify-between border-b px-4 py-3">
-                      <div className="flex items-center gap-2">
-                        <div className="mr-2 flex gap-1.5">
-                          <span className="h-3 w-3 rounded-full bg-red-500/60" />
-                          <span className="h-3 w-3 rounded-full bg-yellow-500/60" />
-                          <span className="h-3 w-3 rounded-full bg-green-500/60" />
-                        </div>
-
-                        <CopyButton
-                          textToCopy={file.filename}
-                          labelName={file.filename}
-                          copiedLabelName={file.filename}
-                          variant="ghost"
-                          size="xs"
-                        />
-                      </div>
-
-                      <CopyButton textToCopy={file.code} variant="ghost" size="xs" />
-                    </div>
-
-                    <div
-                      className="overflow-x-auto p-4 text-sm [&>pre]:m-0! [&>pre]:bg-transparent! [&>pre]:p-0!"
-                      dangerouslySetInnerHTML={{ __html: file.html }}
-                    />
-                  </div>
+                  <FileCard file={file} key={file.filename} />
                 ))}
               </div>
             </div>
