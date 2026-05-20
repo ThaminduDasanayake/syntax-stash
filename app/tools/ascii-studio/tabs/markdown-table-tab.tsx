@@ -5,8 +5,8 @@ import { useMemo, useState } from "react";
 import { buildMarkdownTable } from "@/app/tools/ascii-studio/helpers";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
-import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
+import { StepperField } from "@/components/ui/stepper-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
 
 const DEFAULT_COLS = 3;
@@ -64,24 +64,42 @@ export function MarkdownTableTab() {
     <div className="space-y-6">
       {/* Dimensions */}
       <div className="flex flex-wrap gap-4">
-        <InputField
+        <StepperField
           label="Columns"
-          type="number"
           value={cols}
-          onChange={(e) => handleColsChange(clamp(Number(e.target.value), 1, 10))}
+          onValueChange={(value) => handleColsChange(clamp(value, 1, 10))}
           min={1}
           max={10}
-          containerClassName="w-28"
+          step={1}
+          containerClassName="w-32"
         />
-        <InputField
+        <StepperField
           label="Rows"
-          type="number"
           value={rows}
-          onChange={(e) => handleRowsChange(clamp(Number(e.target.value), 1, 20))}
+          onValueChange={(value) => handleRowsChange(clamp(value, 1, 20))}
           min={1}
           max={20}
-          containerClassName="w-28"
+          step={1}
+          containerClassName="w-32"
         />
+        {/*<InputField*/}
+        {/*  label="Columns"*/}
+        {/*  type="number"*/}
+        {/*  value={cols}*/}
+        {/*  onChange={(e) => handleColsChange(clamp(Number(e.target.value), 1, 10))}*/}
+        {/*  min={1}*/}
+        {/*  max={10}*/}
+        {/*  containerClassName="w-28"*/}
+        {/*/>*/}
+        {/*<InputField*/}
+        {/*  label="Rows"*/}
+        {/*  type="number"*/}
+        {/*  value={rows}*/}
+        {/*  onChange={(e) => handleRowsChange(clamp(Number(e.target.value), 1, 20))}*/}
+        {/*  min={1}*/}
+        {/*  max={20}*/}
+        {/*  containerClassName="w-28"*/}
+        {/*/>*/}
       </div>
 
       {/* Grid editor */}

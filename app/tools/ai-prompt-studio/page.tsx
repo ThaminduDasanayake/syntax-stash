@@ -1,60 +1,73 @@
 "use client";
 
 import { SparkleIcon } from "@phosphor-icons/react";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import { toast } from "sonner";
 
-import {
-  injectVariables,
-  minifyPrompt,
-  parseVariables,
-} from "@/app/tools/ai-prompt-studio/helpers";
-import { PLACEHOLDER, promptTemplates } from "@/app/tools/ai-prompt-studio/prompt-templates";
+import { EnhanceModal } from "@/app/tools/ai-prompt-studio/enhance-modal";
+import { injectVariables, parseVariables } from "@/app/tools/ai-prompt-studio/helpers";
+import { PLACEHOLDER } from "@/app/tools/ai-prompt-studio/prompt-templates";
+import { QuickStarters } from "@/app/tools/ai-prompt-studio/quick-starters";
+import { StarterGuardDialog } from "@/app/tools/ai-prompt-studio/starter-guard-dialog";
 import { TokenBadge } from "@/app/tools/ai-prompt-studio/token-badge";
+import { VariableCard } from "@/app/tools/ai-prompt-studio/variable-card";
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
-import { InputField } from "@/components/ui/input-field";
-import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
-import { cn } from "@/lib/utils";
 
 export default function PromptStudioPage() {
   const [rawPrompt, setRawPrompt] = useState(PLACEHOLDER);
   const [varValues, setVarValues] = useState<Record<string, string>>({});
 
-  // AI Enhancement State
   const [enhancedOutput, setEnhancedOutput] = useState("");
   const [isEnhancing, setIsEnhancing] = useState(false);
-  const [activeTab, setActiveTab] = useState("injected");
+  const [showEnhanceModal, setShowEnhanceModal] = useState(false);
 
-  // Memos
+  const [pendingStarter, setPendingStarter] = useState<string | null>(null);
+  const [hasMadeEdit, setHasMadeEdit] = useState(false);
+
+  const previousDraftRef = useRef<string>("");
+
   const variables = useMemo(() => parseVariables(rawPrompt), [rawPrompt]);
   const injectedOutput = useMemo(
     () => injectVariables(rawPrompt, varValues),
     [rawPrompt, varValues],
   );
-  const minifiedOutput = useMemo(() => minifyPrompt(injectedOutput), [injectedOutput]);
 
-  // Handlers
-  function setVar(name: string, value: string) {
-    setVarValues((prev) => ({ ...prev, [name]: value }));
+  function isDirty() {
+    return (hasMadeEdit && rawPrompt.trim() !== "") || Object.values(varValues).some(Boolean);
   }
 
   function handleClear() {
     setRawPrompt("");
     setVarValues({});
     setEnhancedOutput("");
+    setHasMadeEdit(false);
   }
 
-  function handleTemplateClick(starter: string) {
+  function applyStarter(starter: string) {
     setRawPrompt(starter);
     setVarValues({});
     setEnhancedOutput("");
-    setActiveTab("injected");
+    setHasMadeEdit(false);
+  }
+
+  function handleStarterSelect(starter: string) {
+    if (isDirty()) {
+      setPendingStarter(starter);
+    } else {
+      applyStarter(starter);
+    }
+  }
+
+  function handleConfirmStarter() {
+    if (pendingStarter) {
+      applyStarter(pendingStarter);
+      setPendingStarter(null);
+    }
   }
 
   async function handleEnhance() {
@@ -64,172 +77,121 @@ export default function PromptStudioPage() {
       const res = await fetch("/api/enhance", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // Send the fully injected prompt to the AI, not the raw one with {{brackets}}
         body: JSON.stringify({ prompt: injectedOutput }),
       });
 
       if (!res.ok) {
-        setEnhancedOutput(`Error: Failed with status ${res.status}`);
+        toast.error(`Enhancement failed with status ${res.status}`);
         return;
       }
 
       const data = await res.json();
       if (data.text) {
         setEnhancedOutput(data.text);
+        setShowEnhanceModal(true);
       } else if (data.error) {
-        setEnhancedOutput(`Error: ${data.error}`);
+        toast.error(data.error);
       }
     } catch {
-      setEnhancedOutput("Error: Failed to connect to the enhancement API.");
+      toast.error("Failed to connect to the enhancement API.");
     } finally {
       setIsEnhancing(false);
     }
+  }
+
+  function handleReplaceDraft() {
+    previousDraftRef.current = rawPrompt;
+    setRawPrompt(enhancedOutput);
+    setShowEnhanceModal(false);
+    toast.success("Draft replaced with enhanced version.", {
+      duration: 10000,
+      action: {
+        label: "Undo",
+        onClick: () => setRawPrompt(previousDraftRef.current),
+      },
+    });
   }
 
   const tool = internalTools.find((t) => t.slug === "ai-prompt-studio");
 
   return (
     <ToolLayout tool={tool}>
-      {/* Quick Starters */}
-      <div className="mb-8 space-y-3">
-        <Label>Quick Starters</Label>
-        <div className="flex flex-wrap gap-2">
-          {promptTemplates?.map((t) => (
-            <Button
-              key={t.id}
-              variant="secondary"
-              onClick={() => handleTemplateClick(t.starter)}
-              className="px-4 font-semibold"
-            >
-              {t.title}
-            </Button>
-          ))}
-        </div>
-      </div>
+      <QuickStarters onSelect={handleStarterSelect} />
 
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {/* Draft & Variables */}
-        <div className="flex h-fit flex-col space-y-4">
-          <TextAreaField
-            label="Draft Prompt"
-            value={rawPrompt}
-            onChange={(e) => {
-              setRawPrompt(e.target.value);
-              setEnhancedOutput("");
-            }}
-            rows={16}
-            placeholder={`Write your prompt here.\nUse {{variable}} syntax for dynamic values.`}
-            action={
-              <ClearButton
-                onClick={handleClear}
-                disabled={!rawPrompt && !Object.keys(varValues).length}
-              />
-            }
-          />
-
-          {variables.length > 0 && (
-            <Card>
-              <CardContent className="space-y-3 pt-4">
-                <p className="text-muted-foreground font-mono text-[11px] font-semibold tracking-wider uppercase">
-                  Variable Injection · {variables.length} detected
-                </p>
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  {variables.map((name) => (
-                    <div key={name} className="space-y-1.5">
-                      <InputField
-                        label={`{{${name}}}`}
-                        value={varValues[name] ?? ""}
-                        onChange={(e) => setVar(name, e.target.value)}
-                        placeholder={name.replace(/_/g, " ")}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          )}
-        </div>
-
-        {/* Output Tabs */}
-        <Tabs
-          value={activeTab}
-          onValueChange={setActiveTab}
-          className="flex h-full min-h-0 flex-col"
-        >
-          <TabsList className="grid w-full shrink-0 grid-cols-3">
-            <TabsTrigger value="injected" className="tab-trigger">
-              Injected
-            </TabsTrigger>
-            <TabsTrigger value="minified" className="tab-trigger">
-              Minified
-            </TabsTrigger>
-            <TabsTrigger value="ai" className="tab-trigger">
-              <SparkleIcon weight="duotone" className="mr-2" />
-              AI Enhanced
-            </TabsTrigger>
-          </TabsList>
-
-          {/* Injected */}
-          <TabsContent value="injected">
-            <TextAreaField
-              label={<TokenBadge text={injectedOutput} />}
-              value={injectedOutput}
-              readOnly
-              action={<CopyButton textToCopy={injectedOutput} disabled={!injectedOutput} />}
-              containerClassName="flex flex-col"
-              textClassName="flex-1 resize-none"
-            />
-          </TabsContent>
-
-          {/* Minified */}
-          <TabsContent value="minified">
-            <TextAreaField
-              label={<TokenBadge text={minifiedOutput} />}
-              value={minifiedOutput}
-              readOnly
-              action={<CopyButton textToCopy={minifiedOutput} disabled={!minifiedOutput} />}
-              containerClassName="flex flex-col"
-              textClassName="flex-1 resize-none"
-            />
-          </TabsContent>
-
-          {/* AI Enhanced */}
-          <TabsContent value="ai" className="space-y-4">
-            <TextAreaField
-              label={
-                <TokenBadge
-                  text={enhancedOutput || injectedOutput}
-                  label={enhancedOutput ? "Enhanced Tokens" : "Input Tokens"}
+      <div className="flex h-full flex-col gap-8 lg:flex-row">
+        {/* Left Column */}
+        <div className="flex min-h-0 flex-1 flex-col space-y-4">
+          <div className="flex min-h-0 flex-1 flex-col">
+            <TextareaGroup
+              label="Draft Prompt"
+              value={rawPrompt}
+              onChange={(e) => {
+                setRawPrompt(e.target.value);
+                setEnhancedOutput("");
+                setHasMadeEdit(true);
+              }}
+              placeholder={`Write your prompt here.\nUse {{variable}} syntax for dynamic values.`}
+              action={
+                <ClearButton
+                  size="sm"
+                  onClick={handleClear}
+                  disabled={!rawPrompt && !Object.keys(varValues).length}
                 />
               }
-              value={enhancedOutput}
-              readOnly
-              placeholder={
-                isEnhancing
-                  ? "✨ AI is rewriting and strengthening your prompt..."
-                  : "Click the button below to generate a professionally enhanced version of your injected prompt."
-              }
-              action={<CopyButton textToCopy={enhancedOutput} disabled={!enhancedOutput} />}
-              containerClassName="flex flex-col"
-              textClassName={cn("flex-1 resize-none", isEnhancing && "bg-muted/20 animate-pulse")}
+              containerClassName="flex-1 min-h-[300px]"
             />
+          </div>
 
-            <Button
-              size="lg"
-              className="w-full shrink-0 font-bold"
-              onClick={handleEnhance}
-              disabled={isEnhancing || !injectedOutput.trim()}
-            >
-              <SparkleIcon weight="duotone" className="mr-2 size-5" />
-              {isEnhancing
-                ? "Enhancing..."
-                : enhancedOutput
-                  ? "Regenerate Enhancement"
-                  : "Enhance with Gemini"}
-            </Button>
-          </TabsContent>
-        </Tabs>
+          <Button
+            size="lg"
+            className="w-full shrink-0 font-bold"
+            onClick={handleEnhance}
+            disabled={isEnhancing || !injectedOutput.trim()}
+          >
+            <SparkleIcon weight="duotone" className="mr-2 size-5" />
+            {isEnhancing ? "Enhancing…" : "Enhance with Gemini"}
+          </Button>
+
+          <VariableCard
+            variables={variables}
+            varValues={varValues}
+            onVarChange={(name, value) => setVarValues((prev) => ({ ...prev, [name]: value }))}
+          />
+        </div>
+
+        {/* Output */}
+        <div className="flex min-h-0 flex-1 flex-col">
+          <TextareaGroup
+            label={<TokenBadge text={injectedOutput} />}
+            value={injectedOutput}
+            readOnly
+            action={
+              <CopyButton
+                size="icon-sm"
+                variant="ghost"
+                label={false}
+                textToCopy={injectedOutput}
+                disabled={!injectedOutput}
+              />
+            }
+            containerClassName="flex-1 min-h-[300px]"
+          />
+        </div>
       </div>
+
+      <StarterGuardDialog
+        open={pendingStarter !== null}
+        onOpenChange={(open) => !open && setPendingStarter(null)}
+        onConfirm={handleConfirmStarter}
+      />
+
+      <EnhanceModal
+        open={showEnhanceModal}
+        onOpenChange={setShowEnhanceModal}
+        rawPrompt={rawPrompt}
+        enhancedOutput={enhancedOutput}
+        onReplace={handleReplaceDraft}
+      />
     </ToolLayout>
   );
 }

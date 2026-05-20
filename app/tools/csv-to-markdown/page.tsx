@@ -6,7 +6,7 @@ import { ToolLayout } from "@/components/tool-layout";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { SelectField } from "@/components/ui/select-field";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 type DelimiterType = "auto" | "comma" | "tab" | "pipe";
@@ -123,24 +123,30 @@ Charlie Brown,charlie@example.com,Manager`);
             triggerClassName="max-w-xs"
           />
 
-          <TextAreaField
+          <TextareaGroup
             label="CSV / Spreadsheet Data"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Paste your CSV or spreadsheet data here..."
             rows={20}
-            action={<ClearButton onClick={() => setInput("")} disabled={!input} />}
+            action={<ClearButton size="sm" onClick={() => setInput("")} disabled={!input} />}
           />
         </div>
 
-        {/* Output */}
-        <TextAreaField
+        <TextareaGroup
           label="Markdown Table"
           value={markdownTable}
           readOnly
           rows={22}
           placeholder="Your Markdown table will appear here..."
-          action={<CopyButton textToCopy={markdownTable} disabled={!markdownTable} />}
+          action={
+            <CopyButton
+              variant="outline"
+              size="sm"
+              textToCopy={markdownTable}
+              disabled={!markdownTable}
+            />
+          }
         />
       </div>
 

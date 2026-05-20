@@ -6,6 +6,7 @@ import { ReactNode } from "react";
 
 import AppLayout from "@/components/app-layout";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
@@ -47,6 +48,7 @@ export default function RootLayout({
         >
           <TooltipProvider>
             <AppLayout>{children}</AppLayout>
+            <Toaster />
           </TooltipProvider>
         </ThemeProvider>
       </body>

@@ -95,3 +95,15 @@ export const PRESETS: Preset[] = [
     iterations: "1",
   },
 ];
+
+export const COMMON_PROPERTIES = [
+  "opacity",
+  "transform",
+  "filter",
+  "background-color",
+  "border-radius",
+  "box-shadow",
+  "color",
+  "width",
+  "height",
+];

@@ -5,44 +5,19 @@ import { useMemo, useState } from "react";
 import { ToolLayout } from "@/components/tool-layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { CopyButton } from "@/components/ui/copy-button";
 import { SearchInput } from "@/components/ui/search-input";
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { internalTools } from "@/lib/tools-data";
+import { cn } from "@/lib/utils";
 
 import {
+  CATEGORY_STYLES,
   HTTP_STATUS_CODES,
   STATUS_CATEGORIES,
   STATUS_CATEGORY_LABELS,
   StatusCategory,
 } from "./data";
-
-const CATEGORY_STYLES: Record<StatusCategory, { card: string; code: string; badge: string }> = {
-  "1xx": {
-    card: "border-border hover:border-border/80",
-    code: "text-muted-foreground",
-    badge: "border-border/50 bg-muted/50 text-muted-foreground",
-  },
-  "2xx": {
-    card: "border-green-500/20 hover:border-green-500/40",
-    code: "text-green-400",
-    badge: "border-green-500/20 bg-green-500/10 text-green-400",
-  },
-  "3xx": {
-    card: "border-blue-500/20 hover:border-blue-500/40",
-    code: "text-blue-400",
-    badge: "border-blue-500/20 bg-blue-500/10 text-blue-400",
-  },
-  "4xx": {
-    card: "border-yellow-500/20 hover:border-yellow-500/40",
-    code: "text-yellow-400",
-    badge: "border-yellow-500/20 bg-yellow-500/10 text-yellow-400",
-  },
-  "5xx": {
-    card: "border-red-500/20 hover:border-red-500/40",
-    code: "text-red-400",
-    badge: "border-red-500/20 bg-red-500/10 text-red-400",
-  },
-};
 
 export default function HttpStatusPage() {
   const [search, setSearch] = useState("");
@@ -61,8 +36,6 @@ export default function HttpStatusPage() {
       return matchesCategory && matchesSearch;
     });
   }, [search, activeCategory]);
-
-  const { copiedItem, copy } = useCopyToClipboard<number>();
 
   const tool = internalTools.find((t) => t.slug === "http-status");
 
@@ -110,50 +83,56 @@ export default function HttpStatusPage() {
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {filtered.map((entry) => {
               const styles = CATEGORY_STYLES[entry.category];
-              const isCopied = copiedItem === entry.code;
               return (
-                <button
+                <Card
                   key={entry.code}
-                  onClick={() => copy(String(entry.code), entry.code)}
-                  className={`bg-card rounded-xl border p-4 text-left transition-all hover:shadow-sm ${styles.card}`}
+                  className={cn(
+                    "flex h-full flex-col text-left transition-all hover:shadow-sm",
+                    styles.card,
+                  )}
                 >
                   {/* Code + badge */}
-                  <div className="mb-2 flex items-start justify-between gap-2">
-                    <span
-                      className={`font-mono text-2xl font-bold tabular-nums ${isCopied ? "text-primary" : styles.code}`}
-                    >
-                      {isCopied ? "Copied!" : entry.code}
-                    </span>
-                    <Badge variant="outline" className={`rounded-full ${styles.badge}`}>
-                      {entry.category}
-                    </Badge>
-                  </div>
+                  <CardHeader className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span
+                        className={cn("font-mono text-2xl font-bold tabular-nums", styles.code)}
+                      >
+                        {entry.code}
+                      </span>
+                      <Badge variant="outline" className={styles.badge}>
+                        {entry.category}
+                      </Badge>
+                    </div>
+                    <CopyButton
+                      textToCopy={String(entry.code)}
+                      label={false}
+                      variant="ghost"
+                      size="icon-sm"
+                    />
+                  </CardHeader>
 
-                  {/* Name */}
-                  <p className="text-foreground mb-1 text-sm leading-snug font-semibold">
-                    {entry.name}
-                  </p>
+                  <CardContent className="flex-1">
+                    <p className="text-foreground mb-1 text-sm leading-snug font-semibold">
+                      {entry.name}
+                    </p>
+                    <p className="text-muted-foreground mb-3 line-clamp-4 text-xs leading-relaxed">
+                      {entry.description}
+                    </p>
+                  </CardContent>
 
-                  {/* Description */}
-                  <p className="text-muted-foreground mb-3 line-clamp-3 text-xs leading-relaxed">
-                    {entry.description}
-                  </p>
-
-                  {/* Use case */}
-                  <div className="border-border border-t pt-2">
+                  <CardFooter>
                     <p className="text-muted-foreground/70 line-clamp-2 text-xs leading-relaxed">
                       {entry.useCase}
                     </p>
-                  </div>
-                </button>
+                  </CardFooter>
+                </Card>
               );
             })}
           </div>
         )}
 
         <p className="text-muted-foreground text-xs">
-          Click any card to copy the status code. Descriptions based on RFC 7231 and related
-          standards.
+          Descriptions based on RFC 7231 and related standards.
         </p>
       </div>
     </ToolLayout>

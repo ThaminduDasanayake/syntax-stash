@@ -4,17 +4,27 @@ import { ArrowCounterClockwiseIcon, MinusIcon, PlusIcon } from "@phosphor-icons/
 import { useId, useMemo, useState } from "react";
 
 import {
+  COMMON_PROPERTIES,
   type Keyframe,
   type Preset,
   PRESETS,
   TIMING_FUNCTIONS,
-} from "@/app/tools/css-studio/animation-presets";
+} from "@/app/tools/css-studio/animation-data";
 import { InputField } from "@/components/ui//input-field";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+} from "@/components/ui/combobox";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
+import { StepperField } from "@/components/ui/stepper-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
 
 export function AnimationTab() {
@@ -148,18 +158,13 @@ export function AnimationTab() {
               <Card key={stopIdx}>
                 <CardContent className="space-y-3">
                   <div className="flex items-center gap-3">
-                    <div className="flex-1 space-y-1">
-                      <InputField
-                        label="Percent"
-                        type="number"
-                        min={0}
-                        max={100}
-                        value={kf.percent}
-                        onChange={(e) =>
-                          updateStop(stopIdx, "percent", parseInt(e.target.value) || 0)
-                        }
-                      />
-                    </div>
+                    <StepperField
+                      label="Percent"
+                      min={0}
+                      max={100}
+                      value={kf.percent}
+                      onValueChange={(val) => updateStop(stopIdx, "percent", val)}
+                    />
                     <Button
                       variant="outline"
                       size="sm"
@@ -174,17 +179,34 @@ export function AnimationTab() {
                   <div className="space-y-2">
                     {kf.properties.map((prop, propIdx) => (
                       <div key={propIdx} className="flex w-full items-center gap-2">
-                        <InputField
-                          value={prop.key}
-                          onChange={(e) => updateProp(stopIdx, propIdx, "key", e.target.value)}
-                          placeholder="property"
-                          inputClassName="w-full! flex-1 text-xs"
-                        />
+                        <div className="w-50 shrink-0">
+                          <Combobox
+                            items={COMMON_PROPERTIES}
+                            value={prop.key || null}
+                            onValueChange={(val) => {
+                              updateProp(stopIdx, propIdx, "key", val || "");
+                            }}
+                            autoHighlight
+                          >
+                            <ComboboxInput placeholder="property" showClear />
+
+                            <ComboboxContent className="w-50">
+                              <ComboboxEmpty>No items found.</ComboboxEmpty>
+                              <ComboboxList>
+                                {(item) => (
+                                  <ComboboxItem key={item} value={item}>
+                                    {item}
+                                  </ComboboxItem>
+                                )}
+                              </ComboboxList>
+                            </ComboboxContent>
+                          </Combobox>
+                        </div>
+
                         <InputField
                           value={prop.value}
                           onChange={(e) => updateProp(stopIdx, propIdx, "value", e.target.value)}
                           placeholder="value"
-                          inputClassName="flex-1 w-full! text-xs"
                         />
                         <Button
                           variant="outline"
@@ -211,13 +233,14 @@ export function AnimationTab() {
             ))}
           </div>
 
-          <div className="grid grid-cols-3 gap-3">
-            <InputField
+          <div className="grid grid-cols-2 gap-3">
+            <StepperField
               label="Duration (ms)"
-              type="number"
               min={50}
+              max={10000}
+              step={50}
               value={duration}
-              onChange={(e) => setDuration(parseInt(e.target.value) || 300)}
+              onValueChange={setDuration}
             />
 
             <SelectField
@@ -226,13 +249,24 @@ export function AnimationTab() {
               onValueChange={(v) => v && setTiming(v)}
               options={TIMING_FUNCTIONS.map((timing) => ({ value: timing, label: timing }))}
             />
+          </div>
 
-            <InputField
+          <div className="grid grid-cols-2 gap-3">
+            <StepperField
               label="Iterations"
-              value={iterations}
-              onChange={(e) => setIterations(e.target.value)}
-              placeholder="1 or infinite"
+              min={1}
+              step={1}
+              value={iterations === "infinite" ? 1 : Number(iterations)}
+              onValueChange={(val) => setIterations(val.toString())}
+              disabled={iterations === "infinite"}
             />
+            <Button
+              variant={iterations === "infinite" ? "default" : "outline"}
+              className="mt-5.5"
+              onClick={() => setIterations(iterations === "infinite" ? "1" : "infinite")}
+            >
+              Infinite
+            </Button>
           </div>
         </div>
 
