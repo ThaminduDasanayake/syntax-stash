@@ -70,9 +70,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
         {showCopy && (
           <InputGroupAddon align="inline-end">
             <CopyButton
-              label={false}
-              variant="ghost"
-              size="icon-sm"
+              iconOnly
               className="text-muted-foreground"
               textToCopy={textToCopy}
               disabled={!value}

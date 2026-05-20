@@ -17,13 +17,20 @@ export const ClearButton = ({
   className,
   variant = "outline",
   size = "default",
+  disabled,
   ...props
 }: ClearButtonProps) => {
   return (
     <Button
       variant={variant}
       size={size}
-      className={cn("gap-2 px-4 transition-colors duration-200", className)}
+      aria-disabled={disabled}
+      tabIndex={disabled ? -1 : undefined}
+      className={cn(
+        "gap-2 px-4 transition-colors duration-200",
+        disabled && "pointer-events-none opacity-50",
+        className,
+      )}
       {...props}
     >
       {icon && icon}

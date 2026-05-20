@@ -45,7 +45,7 @@ export function ToolLayout({ children, tool }: { children: ReactNode; tool: Tool
       </div>
 
       {/* Tool Content */}
-      {children}
+      <div className="flex min-h-0 flex-1 flex-col">{children}</div>
     </div>
   );
 }

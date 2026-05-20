@@ -10,9 +10,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { CopyButton } from "@/components/ui/copy-button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { InputField } from "@/components/ui/input-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 
 const EXAMPLES = [
   { label: "All book titles", query: "$.store.book[*].title" },
@@ -101,29 +100,28 @@ export function QueryTab({ input, query, onQueryChangeAction }: Props) {
 
   return (
     <div className="space-y-4">
-      <div className="space-y-2">
-        <Label>JSONPath Query</Label>
-        <Input
-          value={query}
-          onChange={(e) => onQueryChangeAction(e.target.value)}
-          placeholder="$.store.book[*].author"
-          className="font-mono text-sm"
-          spellCheck={false}
-        />
-      </div>
+      <InputField
+        label="JSONPath Query"
+        value={query}
+        onChange={(e) => onQueryChangeAction(e.target.value)}
+        placeholder="$.store.book[*].author"
+        showCopy
+        spellCheck={false}
+      />
 
       <div>
         <p className="text-muted-foreground mb-2 text-xs font-medium">Quick examples</p>
         <div className="flex flex-wrap gap-1.5">
           {EXAMPLES.map(({ label, query: q }) => (
-            <button
+            <Button
               key={q}
+              variant={q === query ? "default" : "outline"}
+              size="sm"
               onClick={() => onQueryChangeAction(q)}
               title={q}
-              className="border-border bg-card hover:border-primary/60 hover:bg-primary/5 rounded-full border px-2.5 py-1 text-xs transition-colors"
             >
               {label}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
@@ -135,13 +133,12 @@ export function QueryTab({ input, query, onQueryChangeAction }: Props) {
         <ErrorAlert message={`Invalid JSONPath — ${result.message}`} />
       )}
 
-      <TextAreaField
+      <TextareaGroup
         label={resultLabel}
         value={outputValue}
         readOnly
-        rows={16}
         placeholder="Query results will appear here..."
-        action={<CopyButton textToCopy={outputValue} disabled={!outputValue} />}
+        action={<CopyButton iconOnly textToCopy={outputValue} disabled={!outputValue} />}
       />
 
       <Card className="mx-auto w-full">

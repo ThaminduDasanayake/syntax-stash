@@ -165,15 +165,7 @@ export default function PromptStudioPage() {
             label={<TokenBadge text={injectedOutput} />}
             value={injectedOutput}
             readOnly
-            action={
-              <CopyButton
-                size="icon-sm"
-                variant="ghost"
-                label={false}
-                textToCopy={injectedOutput}
-                disabled={!injectedOutput}
-              />
-            }
+            action={<CopyButton iconOnly textToCopy={injectedOutput} disabled={!injectedOutput} />}
             containerClassName="flex-1 min-h-[300px]"
           />
         </div>
