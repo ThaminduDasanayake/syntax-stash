@@ -14,7 +14,7 @@ import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 const ACTIONS: EncoderAction[] = [
@@ -58,19 +58,21 @@ export default function EncoderPage() {
 
   return (
     <ToolLayout tool={tool}>
-      <div className="space-y-6">
+      <div className="flex h-full min-h-0 w-full flex-1 flex-col space-y-4">
         {/* Input */}
-        <TextAreaField
-          label="Input"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Paste text or encoded string here..."
-          rows={8}
-          action={<ClearButton onClick={() => setInput("")} disabled={!input} />}
-        />
+        <div className="flex min-h-0 flex-1 flex-col">
+          <TextareaGroup
+            variant="fill"
+            label="Input"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Paste text or encoded string here..."
+            action={<ClearButton size="sm" onClick={() => setInput("")} disabled={!input} />}
+          />
+        </div>
 
         {/* Action buttons */}
-        <div className="flex flex-wrap gap-2">
+        <div className="flex shrink-0 flex-wrap gap-2">
           {ACTIONS.map((a) => (
             <Button
               key={a.id}
@@ -87,14 +89,16 @@ export default function EncoderPage() {
         {error && <ErrorAlert message={error} />}
 
         {/* Output */}
-        <TextAreaField
-          label="Output"
-          readOnly
-          value={output}
-          placeholder="Run an action to see the result..."
-          rows={8}
-          action={<CopyButton textToCopy={output} disabled={!output} />}
-        />
+        <div className="flex min-h-0 flex-1 flex-col">
+          <TextareaGroup
+            variant="fill"
+            label="Output"
+            readOnly
+            value={output}
+            placeholder="Run an action to see the result..."
+            action={<CopyButton iconOnly textToCopy={output} disabled={!output} />}
+          />
+        </div>
       </div>
     </ToolLayout>
   );

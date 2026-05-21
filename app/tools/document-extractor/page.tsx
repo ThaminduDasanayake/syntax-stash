@@ -173,7 +173,10 @@ export default function DocumentExtractorPage() {
 
               <TabsContent value="rich">
                 <div className="bg-card flex h-full max-h-180 flex-col overflow-hidden rounded-lg border">
-                  <PlateEditor initialMarkdown={parsedMarkdown} onMarkdownChange={setMarkdown} />
+                  <PlateEditor
+                    initialMarkdown={parsedMarkdown}
+                    onMarkdownChangeAction={setMarkdown}
+                  />
                 </div>
               </TabsContent>
 

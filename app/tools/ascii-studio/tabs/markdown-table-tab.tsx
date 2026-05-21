@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { StepperField } from "@/components/ui/stepper-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 
 const DEFAULT_COLS = 3;
 const DEFAULT_ROWS = 3;
@@ -141,13 +142,13 @@ export function MarkdownTableTab() {
         </div>
       </div>
 
-      <TextAreaField
+      <TextareaGroup
+        autoGrow
         label="Markdown Output"
         readOnly
         value={output}
         rows={Math.max(rows + 3, 6)}
-        textClassName="font-mono text-sm"
-        action={<CopyButton textToCopy={output} disabled={!output} />}
+        action={<CopyButton iconOnly textToCopy={output} disabled={!output} />}
       />
     </div>
   );

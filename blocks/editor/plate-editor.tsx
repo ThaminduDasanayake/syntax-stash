@@ -8,10 +8,10 @@ import { Editor, EditorContainer } from "@/components/plate-ui/editor";
 
 export function PlateEditor({
   initialMarkdown,
-  onMarkdownChange,
+  onMarkdownChangeAction,
 }: {
   initialMarkdown: string;
-  onMarkdownChange: (md: string) => void;
+  onMarkdownChangeAction: (md: string) => void;
 }) {
   const editor = usePlateEditor({
     plugins: EditorKit,
@@ -23,14 +23,14 @@ export function PlateEditor({
 
       editor.tf.setValue(parsedNodes);
     }
-  }, []);
+  }, [editor, initialMarkdown]);
 
   return (
     <Plate
       editor={editor}
       onChange={() => {
         const currentMarkdown = editor.api.markdown.serialize();
-        onMarkdownChange(currentMarkdown);
+        onMarkdownChangeAction(currentMarkdown);
       }}
     >
       <EditorContainer>

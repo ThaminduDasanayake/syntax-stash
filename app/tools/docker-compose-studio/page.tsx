@@ -1,6 +1,6 @@
 "use client";
 
-import { MinusIcon, PlusIcon, TrashIcon } from "@phosphor-icons/react";
+import { ArrowRightIcon, MinusIcon, PlusIcon, TrashIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 
 import {
@@ -13,7 +13,7 @@ import { EnvVar, Port, Service, TabType, Volume } from "@/app/tools/docker-compo
 import { ErrorAlert } from "@/components/error-alert";
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { InputField } from "@/components/ui/input-field";
@@ -21,6 +21,7 @@ import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 import { SERVICE_TEMPLATES } from "./templates";
@@ -176,7 +177,7 @@ export default function DockerComposePage() {
                     options={SERVICE_TEMPLATES.map((tpl) => ({ value: tpl.id, label: tpl.name }))}
                   />
                   <Button onClick={addService} className="font-semibold">
-                    <PlusIcon className="mr-1 size-4" /> Add
+                    <PlusIcon weight="bold" /> Add
                   </Button>
                 </div>
               </div>
@@ -215,14 +216,12 @@ export default function DockerComposePage() {
                         <div className="grid grid-cols-2 gap-4">
                           <InputField
                             label="Service Name"
-                            labelClassName="text-xs"
                             value={svc.name}
                             onChange={(e) => updateService(svc.id, "name", e.target.value)}
                             placeholder="service-name"
                           />
                           <InputField
                             label="Image"
-                            labelClassName="text-xs"
                             value={svc.image}
                             onChange={(e) => updateService(svc.id, "image", e.target.value)}
                             placeholder="image:tag"
@@ -233,8 +232,8 @@ export default function DockerComposePage() {
                         <div className="space-y-2">
                           <div className="flex items-center justify-between">
                             <Label className="text-xs">Ports</Label>
-                            <Button size="sm" variant="ghost" onClick={() => addPort(svc.id)}>
-                              <PlusIcon /> Add
+                            <Button size="sm" variant="outline" onClick={() => addPort(svc.id)}>
+                              <PlusIcon weight="bold" /> Add
                             </Button>
                           </div>
                           {svc.ports.map((p, idx) => (
@@ -253,11 +252,11 @@ export default function DockerComposePage() {
                                 placeholder="container"
                               />
                               <Button
-                                size="icon"
-                                variant="ghost"
+                                size="icon-sm"
+                                variant="destructive"
                                 onClick={() => removePort(svc.id, idx)}
                               >
-                                <MinusIcon />
+                                <MinusIcon weight="bold" />
                               </Button>
                             </div>
                           ))}
@@ -267,8 +266,8 @@ export default function DockerComposePage() {
                         <div className="space-y-2">
                           <div className="flex items-center justify-between">
                             <Label className="text-xs">Environment</Label>
-                            <Button size="sm" variant="ghost" onClick={() => addEnv(svc.id)}>
-                              <PlusIcon /> Add
+                            <Button size="sm" variant="outline" onClick={() => addEnv(svc.id)}>
+                              <PlusIcon weight="bold" /> Add
                             </Button>
                           </div>
                           {svc.env.map((e, idx) => (
@@ -285,11 +284,11 @@ export default function DockerComposePage() {
                                 placeholder="value"
                               />
                               <Button
-                                size="icon"
-                                variant="ghost"
+                                size="icon-sm"
+                                variant="destructive"
                                 onClick={() => removeEnv(svc.id, idx)}
                               >
-                                <MinusIcon />
+                                <MinusIcon weight="bold" />
                               </Button>
                             </div>
                           ))}
@@ -299,8 +298,8 @@ export default function DockerComposePage() {
                         <div className="space-y-2">
                           <div className="flex items-center justify-between">
                             <Label className="text-xs">Volumes</Label>
-                            <Button size="sm" variant="ghost" onClick={() => addVolume(svc.id)}>
-                              <PlusIcon /> Add
+                            <Button size="sm" variant="outline" onClick={() => addVolume(svc.id)}>
+                              <PlusIcon weight="bold" /> Add
                             </Button>
                           </div>
                           {svc.volumes.map((v, idx) => (
@@ -319,11 +318,11 @@ export default function DockerComposePage() {
                                 placeholder="/container/path"
                               />
                               <Button
-                                size="icon"
-                                variant="ghost"
+                                size="icon-sm"
+                                variant="destructive"
                                 onClick={() => removeVolume(svc.id, idx)}
                               >
-                                <MinusIcon />
+                                <MinusIcon weight="bold" />
                               </Button>
                             </div>
                           ))}
@@ -336,48 +335,52 @@ export default function DockerComposePage() {
             </TabsContent>
 
             <TabsContent value="cli" className="mt-0 space-y-4">
-              <TextAreaField
+              <TextareaGroup
+                autoGrow
                 label="Docker Run Command"
                 value={cliInput}
                 onChange={(e) => setCliInput(e.target.value)}
                 placeholder={`docker run -d --name my-app -p 8080:80 nginx`}
-                rows={16}
-                action={<ClearButton onClick={() => setCliInput("")} disabled={!cliInput} />}
+                action={
+                  <ClearButton size="sm" onClick={() => setCliInput("")} disabled={!cliInput} />
+                }
               />
               {cliResult.error && <ErrorAlert message={cliResult.error} />}
 
-              <div className="border-border bg-card rounded-xl border p-4">
-                <h3 className="text-muted-foreground mb-3 text-xs font-semibold tracking-wider uppercase">
+              <Card>
+                <CardHeader className="text-xs font-semibold tracking-wider uppercase">
                   Supported Flags Mapping
-                </h3>
-                <div className="grid gap-2 text-xs sm:grid-cols-2">
-                  {[
-                    ["--name", "container_name"],
-                    ["-p / --publish", "ports"],
-                    ["-v / --volume", "volumes"],
-                    ["-e / --env", "environment"],
-                    ["--network", "networks"],
-                    ["--restart", "restart"],
-                    ["-u / -w / -h", "user / dir / host"],
-                    ["--entrypoint", "entrypoint"],
-                    ["-l / --label", "labels"],
-                    ["--cap-add / drop", "cap_add / drop"],
-                    ["-m / --memory", "mem_limit"],
-                    ["--cpu-shares", "cpu_shares"],
-                    ["-d / -t / --priv", "tty / privileged"],
-                  ].map(([flag, output]) => (
-                    <div
-                      key={flag}
-                      className="bg-muted/50 flex flex-col justify-center rounded p-2"
-                    >
-                      <span className="text-primary font-mono font-medium">{flag}</span>
-                      <span className="text-muted-foreground mt-0.5 text-[10px] tracking-wider uppercase">
-                        → {output}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid gap-2 text-xs sm:grid-cols-2">
+                    {[
+                      ["--name", "container_name"],
+                      ["-p / --publish", "ports"],
+                      ["-v / --volume", "volumes"],
+                      ["-e / --env", "environment"],
+                      ["--network", "networks"],
+                      ["--restart", "restart"],
+                      ["-u / -w / -h", "user / dir / host"],
+                      ["--entrypoint", "entrypoint"],
+                      ["-l / --label", "labels"],
+                      ["--cap-add / drop", "cap_add / drop"],
+                      ["-m / --memory", "mem_limit"],
+                      ["--cpu-shares", "cpu_shares"],
+                      ["-d / -t / --priv", "tty / privileged"],
+                    ].map(([flag, output]) => (
+                      <div
+                        key={flag}
+                        className="bg-muted/50 flex flex-col justify-center rounded-lg p-2"
+                      >
+                        <span className="text-primary font-mono font-medium">{flag}</span>
+                        <span className="text-muted-foreground mt-0.5 flex items-center gap-2 uppercase">
+                          <ArrowRightIcon /> {output}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
             </TabsContent>
           </Tabs>
         </div>

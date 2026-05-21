@@ -118,33 +118,31 @@ export default function PromptStudioPage() {
     <ToolLayout tool={tool}>
       <QuickStarters onSelect={handleStarterSelect} />
 
-      <div className="flex h-full flex-col gap-8 lg:flex-row">
-        {/* Left Column */}
-        <div className="flex min-h-0 flex-1 flex-col space-y-4">
-          <div className="flex min-h-0 flex-1 flex-col">
-            <TextareaGroup
-              label="Draft Prompt"
-              value={rawPrompt}
-              onChange={(e) => {
-                setRawPrompt(e.target.value);
-                setEnhancedOutput("");
-                setHasMadeEdit(true);
-              }}
-              placeholder={`Write your prompt here.\nUse {{variable}} syntax for dynamic values.`}
-              action={
-                <ClearButton
-                  size="sm"
-                  onClick={handleClear}
-                  disabled={!rawPrompt && !Object.keys(varValues).length}
-                />
-              }
-              containerClassName="flex-1 min-h-[300px]"
-            />
-          </div>
+      <div className="flex flex-col gap-8 lg:flex-row">
+        {/* Left column */}
+        <div className="flex flex-1 flex-col gap-4">
+          <TextareaGroup
+            autoGrow
+            label="Draft Prompt"
+            value={rawPrompt}
+            onChange={(e) => {
+              setRawPrompt(e.target.value);
+              setEnhancedOutput("");
+              setHasMadeEdit(true);
+            }}
+            placeholder={`Write your prompt here.\nUse {{variable}} syntax for dynamic values.`}
+            action={
+              <ClearButton
+                size="sm"
+                onClick={handleClear}
+                disabled={!rawPrompt && !Object.keys(varValues).length}
+              />
+            }
+          />
 
           <Button
             size="lg"
-            className="w-full shrink-0 font-bold"
+            className="w-full font-bold"
             onClick={handleEnhance}
             disabled={isEnhancing || !injectedOutput.trim()}
           >
@@ -159,14 +157,14 @@ export default function PromptStudioPage() {
           />
         </div>
 
-        {/* Output */}
-        <div className="flex min-h-0 flex-1 flex-col">
+        {/* Right column */}
+        <div className="flex flex-1 flex-col">
           <TextareaGroup
+            variant="fill"
             label={<TokenBadge text={injectedOutput} />}
             value={injectedOutput}
             readOnly
             action={<CopyButton iconOnly textToCopy={injectedOutput} disabled={!injectedOutput} />}
-            containerClassName="flex-1 min-h-[300px]"
           />
         </div>
       </div>

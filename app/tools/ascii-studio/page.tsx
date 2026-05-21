@@ -24,7 +24,7 @@ export default function AsciiStudioPage() {
     <ToolLayout tool={tool}>
       <Tabs defaultValue="banner" className="flex min-h-0 flex-1 flex-col gap-6">
         <div className="flex w-full">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full shrink-0 grid-cols-5">
             <TabsTrigger value="banner" className="tab-trigger">
               <TextTIcon weight="duotone" className="size-4.5" />
               Banner
@@ -48,19 +48,34 @@ export default function AsciiStudioPage() {
           </TabsList>
         </div>
 
-        <TabsContent value="banner" className="min-h-0 flex-1 data-[state=inactive]:hidden">
+        <TabsContent
+          value="banner"
+          className="flex min-h-0 flex-1 flex-col data-[state=inactive]:hidden"
+        >
           <TextBannerTab />
         </TabsContent>
-        <TabsContent value="tree" className="min-h-0 flex-1 data-[state=inactive]:hidden">
+        <TabsContent
+          value="tree"
+          className="flex min-h-0 flex-1 flex-col data-[state=inactive]:hidden"
+        >
           <FolderTreeTab />
         </TabsContent>
-        <TabsContent value="table" className="min-h-0 flex-1 data-[state=inactive]:hidden">
+        <TabsContent
+          value="table"
+          className="flex min-h-0 flex-1 flex-col data-[state=inactive]:hidden"
+        >
           <MarkdownTableTab />
         </TabsContent>
-        <TabsContent value="zalgo" className="min-h-0 flex-1 data-[state=inactive]:hidden">
+        <TabsContent
+          value="zalgo"
+          className="flex min-h-0 flex-1 flex-col data-[state=inactive]:hidden"
+        >
           <ZalgoTextTab />
         </TabsContent>
-        <TabsContent value="image" className="min-h-0 flex-1 data-[state=inactive]:hidden">
+        <TabsContent
+          value="image"
+          className="flex min-h-0 flex-1 flex-col data-[state=inactive]:hidden"
+        >
           <ImageToAsciiTab />
         </TabsContent>
       </Tabs>

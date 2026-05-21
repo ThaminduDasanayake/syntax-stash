@@ -41,7 +41,7 @@ export function ZalgoTextTab() {
           <Label>Output</Label>
           <CopyButton textToCopy={output} disabled={!output} />
         </div>
-        <div className="bg-muted/30 border-border min-h-48 rounded-xl border p-6">
+        <div className="bg-muted/30 border-border min-h-56 rounded-xl border p-6">
           <p className="text-foreground font-mono text-2xl leading-48 break-all">
             {output || <span className="text-muted-foreground text-sm">Enter text above...</span>}
           </p>

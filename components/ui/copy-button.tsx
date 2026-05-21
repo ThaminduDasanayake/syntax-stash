@@ -22,6 +22,7 @@ export const CopyButton = ({
   className,
   variant,
   size,
+  disabled,
   ...props
 }: CopyButtonProps) => {
   const { copied, copy } = useCopyToClipboard();
@@ -41,10 +42,13 @@ export const CopyButton = ({
     <Button
       variant={finalVariant}
       size={finalSize}
+      aria-disabled={disabled}
+      tabIndex={disabled ? -1 : undefined}
       onClick={handleCopy}
       className={cn(
         "transition-colors duration-200",
         !iconOnly && "gap-2 px-4",
+        disabled && "pointer-events-none opacity-50",
         copied && "text-emerald-500 hover:bg-emerald-500/10! hover:text-emerald-500!",
         className,
       )}

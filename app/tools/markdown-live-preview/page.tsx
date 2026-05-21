@@ -153,7 +153,7 @@ ${renderedHtml}
             <div className="flex flex-col gap-3">
               <Label className="pt-1.5 text-sm font-semibold">Rich Text Editor</Label>
               <div className="bg-card h-full max-h-180 overflow-hidden rounded-lg border">
-                <PlateEditor initialMarkdown={markdown} onMarkdownChange={setMarkdown} />
+                <PlateEditor initialMarkdown={markdown} onMarkdownChangeAction={setMarkdown} />
               </div>
             </div>
           )}

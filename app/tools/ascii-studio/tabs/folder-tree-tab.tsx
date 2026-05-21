@@ -17,7 +17,7 @@ export function FolderTreeTab() {
   }, [input]);
 
   return (
-    <div className="grid h-full! min-h-0 w-full flex-1! grid-cols-1 gap-6 lg:grid-cols-2">
+    <div className="flex min-h-0 w-full flex-1 flex-col gap-6 lg:flex-row">
       <TextareaGroup
         label="Indented List"
         value={input}
@@ -32,7 +32,6 @@ export function FolderTreeTab() {
             disabled={!input}
           />
         }
-        containerClassName="h-full min-h-0"
       />
 
       <TextareaGroup
@@ -40,7 +39,6 @@ export function FolderTreeTab() {
         readOnly
         value={output}
         action={<CopyButton iconOnly textToCopy={output} disabled={!output} />}
-        containerClassName="h-full min-h-0"
       />
     </div>
   );

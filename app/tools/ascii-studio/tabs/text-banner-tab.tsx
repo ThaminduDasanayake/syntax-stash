@@ -58,8 +58,8 @@ export function TextBannerTab() {
   }, [text, font]);
 
   return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div className="flex min-h-0 w-full flex-1 flex-col gap-6">
+      <div className="grid shrink-0 grid-cols-1 gap-4 sm:grid-cols-2">
         <InputField
           label="Text"
           value={text}
@@ -79,6 +79,7 @@ export function TextBannerTab() {
 
       <TextareaGroup
         label="Output"
+        variant="fill"
         readOnly
         value={output}
         className="leading-tight"

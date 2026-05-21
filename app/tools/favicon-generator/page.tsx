@@ -1,5 +1,6 @@
 "use client";
 
+import { XIcon } from "@phosphor-icons/react";
 import { CSSProperties, useRef, useState } from "react";
 
 import { ErrorAlert } from "@/components/error-alert";
@@ -13,6 +14,7 @@ import { CopyButton } from "@/components/ui/copy-button";
 import { DownloadButton } from "@/components/ui/download-button";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
+import { StepperField } from "@/components/ui/stepper-field";
 import { buildAcceptMap } from "@/lib/file-types";
 import { internalTools } from "@/lib/tools-data";
 
@@ -65,8 +67,7 @@ export default function FaviconGeneratorPage() {
         );
       });
     } catch (e) {
-      if (genRef.current === id)
-        setGenError(e instanceof Error ? e.message : "Generation failed.");
+      if (genRef.current === id) setGenError(e instanceof Error ? e.message : "Generation failed.");
     } finally {
       if (genRef.current === id) setGenerating(false);
     }
@@ -137,7 +138,7 @@ export default function FaviconGeneratorPage() {
 
   return (
     <ToolLayout tool={tool}>
-      <div className="space-y-8">
+      <div className="space-y-6">
         <FileDropzone
           onFileDropAction={handleFile}
           accept={buildAcceptMap([".png", ".jpg", ".jpeg", ".svg", ".webp"])}
@@ -153,20 +154,27 @@ export default function FaviconGeneratorPage() {
 
         {sourceImg && (
           <>
-            <div className="flex flex-wrap items-end gap-4">
-              <InputField
+            <div className="flex justify-center">
+              <ClearButton
+                variant="destructive"
+                label="Clear All"
+                icon={<XIcon weight="bold" />}
+                onClick={reset}
+              />
+            </div>
+            <div className="grid grid-cols-3 items-center justify-between gap-6">
+              <StepperField
                 label="Padding %"
-                type="number"
                 min={0}
                 max={25}
+                // containerClassName="w-32"
                 value={opts.padding}
-                onChange={(e) =>
+                onValueChange={(val) =>
                   applyOpts({
                     ...opts,
-                    padding: Math.min(25, Math.max(0, Number(e.target.value))),
+                    padding: Math.min(25, Math.max(0, Number(val))),
                   })
                 }
-                inputClassName="w-20"
               />
               <div className="space-y-2">
                 <Label>Background</Label>
@@ -189,9 +197,7 @@ export default function FaviconGeneratorPage() {
                 label="App name (manifest)"
                 value={appName}
                 onChange={(e) => setAppName(e.target.value)}
-                inputClassName="w-48"
               />
-              <ClearButton onClick={reset} />
             </div>
 
             {generating && <LoadingSpinner label="Generating..." />}
@@ -243,6 +249,12 @@ export default function FaviconGeneratorPage() {
             )}
 
             {hasOutputs && (
+              <div className="flex justify-center">
+                <DownloadButton label="Download all (ZIP)" onClick={downloadAll} />
+              </div>
+            )}
+
+            {hasOutputs && (
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
@@ -262,12 +274,6 @@ export default function FaviconGeneratorPage() {
                     {manifestJson}
                   </pre>
                 </div>
-              </div>
-            )}
-
-            {hasOutputs && (
-              <div className="flex justify-center">
-                <DownloadButton label="Download all (ZIP)" onClick={downloadAll} />
               </div>
             )}
           </>
