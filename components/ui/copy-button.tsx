@@ -9,19 +9,20 @@ import { cn } from "@/lib/utils";
 
 interface CopyButtonProps extends ComponentProps<typeof Button> {
   textToCopy: string | (() => string);
-  label?: boolean;
+  iconOnly?: boolean;
   labelName?: string;
   copiedLabelName?: string;
 }
 
 export const CopyButton = ({
   textToCopy,
-  label = true,
+  iconOnly = false,
   labelName = "Copy",
   copiedLabelName = "Copied!",
   className,
-  variant = "outline",
-  size = "default",
+  variant,
+  size,
+  disabled,
   ...props
 }: CopyButtonProps) => {
   const { copied, copy } = useCopyToClipboard();
@@ -33,14 +34,22 @@ export const CopyButton = ({
     }
   };
 
+  const finalVariant = variant || (iconOnly ? "ghost" : "outline");
+
+  const finalSize = size || (iconOnly ? "icon-sm" : "default");
+
   return (
     <Button
-      variant={variant}
-      size={size}
+      variant={finalVariant}
+      size={finalSize}
+      aria-disabled={disabled}
+      tabIndex={disabled ? -1 : undefined}
       onClick={handleCopy}
       className={cn(
-        "gap-2 px-4 transition-colors duration-200",
-        copied && "text-emerald-400 hover:text-emerald-400!",
+        "transition-colors duration-200",
+        !iconOnly && "gap-2 px-4",
+        disabled && "pointer-events-none opacity-50",
+        copied && "text-emerald-500 hover:bg-emerald-500/10! hover:text-emerald-500!",
         className,
       )}
       {...props}
@@ -50,7 +59,7 @@ export const CopyButton = ({
       ) : (
         <CopyIcon weight="duotone" className="rotate-y-180" />
       )}
-      {label && <span>{copied ? copiedLabelName : labelName}</span>}
+      {!iconOnly && <span>{copied ? copiedLabelName : labelName}</span>}
     </Button>
   );
 };

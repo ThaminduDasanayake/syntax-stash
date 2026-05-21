@@ -5,6 +5,7 @@ import { useTheme } from "next-themes";
 import { useMemo, useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ColorField } from "@/components/ui/color-field";
 import { Label } from "@/components/ui/label";
@@ -137,12 +138,9 @@ export function ContrastTab() {
               text&quot; as 18pt (24px) or 14pt bold (18.66px).
             </p>
             <div className="flex items-center gap-4">
-              <button
-                className="rounded-lg px-4 py-2 text-sm font-semibold"
-                style={{ backgroundColor: fg, color: bg }}
-              >
+              <Button className="p-4 font-semibold" style={{ backgroundColor: fg, color: bg }}>
                 Button
-              </button>
+              </Button>
               <a className="text-sm font-medium underline" style={{ color: fg }}>
                 Link text example
               </a>

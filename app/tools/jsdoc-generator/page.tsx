@@ -19,7 +19,7 @@ import { internalTools } from "@/lib/tools-data";
 
 // language=text
 const PLACEHOLDER = `async function fetchUser<T extends { id: string }>(id: string, options?: { signal?: AbortSignal }): Promise<T> {
-  // …
+  // ...
 }`;
 
 export default function JsdocGeneratorPage() {
@@ -57,7 +57,7 @@ export default function JsdocGeneratorPage() {
               onChange={(e) => setInput(e.target.value)}
               rows={12}
               className="resize-y font-mono text-xs"
-              placeholder="Paste a function declaration, arrow function, or method signature…"
+              placeholder="Paste a function declaration, arrow function, or method signature..."
               spellCheck={false}
               action={<ClearButton onClick={() => setInput("")} />}
             />
@@ -80,7 +80,7 @@ export default function JsdocGeneratorPage() {
             value={documented}
             rows={12}
             className="resize-y font-mono text-xs"
-            placeholder="Generated documentation will appear here…"
+            placeholder="Generated documentation will appear here..."
             action={<CopyButton textToCopy={documented} disabled={!documented} />}
           />
         </div>

@@ -20,7 +20,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SearchInput } from "@/components/ui/search-input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 export default function RegexStudioPage() {
@@ -175,6 +175,7 @@ export default function RegexStudioPage() {
 
                 {/* Flags Input */}
                 <Input
+                  readOnly
                   value={flags}
                   onChange={(e) => setFlags(e.target.value)}
                   placeholder="g"
@@ -210,13 +211,14 @@ export default function RegexStudioPage() {
 
           {!result.ok && <ErrorAlert message={result.error} />}
 
-          <TextAreaField
+          <TextareaGroup
             label="Test String"
             value={testString}
             onChange={(e) => setTestString(e.target.value)}
             placeholder="Paste text to test against..."
-            rows={8}
-            action={<ClearButton onClick={() => setTestString("")} disabled={!testString} />}
+            action={
+              <ClearButton size="sm" onClick={() => setTestString("")} disabled={!testString} />
+            }
           />
 
           <div className="space-y-3 pt-4">
@@ -271,7 +273,7 @@ export default function RegexStudioPage() {
             <CopyButton textToCopy={getSvgString} labelName="Copy SVG" disabled={!parsed.ok} />
 
             <DownloadButton
-              label="Download .svg"
+              label="Download SVG"
               variant="outline"
               onClick={downloadSvg}
               disabled={!parsed.ok}
@@ -331,15 +333,16 @@ export default function RegexStudioPage() {
                             {entry.category}
                           </Badge>
                         </div>
-                        <div className="flex shrink-0 gap-1">
-                          <CopyButton label={false} textToCopy={entry.pattern} className="px-2.5" />
+                        <div className="flex shrink-0 gap-2">
+                          <CopyButton iconOnly variant="outline" textToCopy={entry.pattern} />
 
                           <Button
                             variant="outline"
+                            size="icon-sm"
                             onClick={() => handleUsePattern(entry)}
                             title="Use in Tester"
                           >
-                            <FlaskIcon weight="duotone" className="size-4.5" />
+                            <FlaskIcon weight="duotone" />
                           </Button>
                         </div>
                       </div>

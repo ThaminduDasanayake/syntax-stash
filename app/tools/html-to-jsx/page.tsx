@@ -42,7 +42,7 @@ function HtmlToJsxPage() {
             onChange={(e) => setInput(e.target.value)}
             rows={20}
             className="resize-y text-xs"
-            placeholder="Paste HTML here…"
+            placeholder="Paste HTML here..."
             spellCheck={false}
             action={
               <ClearButton
@@ -61,7 +61,7 @@ function HtmlToJsxPage() {
             value={output}
             rows={20}
             className="resize-y text-xs"
-            placeholder="JSX will appear here…"
+            placeholder="JSX will appear here..."
             action={<CopyButton textToCopy={output} disabled={!output} />}
           />
         </div>

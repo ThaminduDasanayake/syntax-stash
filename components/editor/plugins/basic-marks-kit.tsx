@@ -14,7 +14,7 @@ import {
   StrikethroughPlugin,
 } from "@platejs/basic-nodes/react";
 
-import { CodeLeaf } from "@/components/ui/code-node";
+import { CodeLeaf } from "@/components/plate-ui/code-node";
 
 export const BasicMarksKit = [
   BoldPlugin.configure({

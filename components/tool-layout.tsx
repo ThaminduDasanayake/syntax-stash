@@ -15,18 +15,18 @@ export function ToolLayout({ children, tool }: { children: ReactNode; tool: Tool
   const Icon = icon ? iconMap[icon] : undefined;
 
   return (
-    <div className="relative z-10 mx-auto flex min-h-full max-w-7xl flex-col px-4 py-8 md:py-12 md:pb-24">
+    <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col pt-8 pb-12 md:pt-12 md:pb-24">
       {/* Back link */}
       <Link
         href={"/"}
-        className="text-muted-foreground hover:text-foreground mb-8 inline-flex items-center gap-2 text-sm transition-colors"
+        className="text-muted-foreground hover:text-foreground mb-8 inline-flex shrink-0 items-center gap-2 text-sm transition-colors"
       >
         <ArrowLeftIcon weight="bold" size={20} />
         Back
       </Link>
 
       {/* Heading */}
-      <div className="mb-10">
+      <div className="mb-10 shrink-0">
         <h1 className="text-foreground mb-3 flex items-center gap-3 text-4xl font-bold tracking-tighter md:text-5xl">
           {Icon && <Icon className="text-primary" size={44} weight="duotone" />}
           <span>
@@ -45,7 +45,7 @@ export function ToolLayout({ children, tool }: { children: ReactNode; tool: Tool
       </div>
 
       {/* Tool Content */}
-      {children}
+      <div className="flex min-h-0 flex-1 flex-col">{children}</div>
     </div>
   );
 }

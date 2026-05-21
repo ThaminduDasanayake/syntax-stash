@@ -6,7 +6,7 @@ import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
-import { Input } from "@/components/ui/input";
+import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { internalTools } from "@/lib/tools-data";
 
@@ -133,10 +133,10 @@ export default function ChmodCalculatorPage() {
               {PRESETS.map((p) => (
                 <Button
                   key={p.label}
-                  variant="outline"
+                  variant={p.bits === bits ? "default" : "outline"}
                   size="sm"
                   onClick={() => applyPreset(p.bits)}
-                  className="rounded-full font-mono font-semibold"
+                  className="font-mono font-semibold"
                 >
                   {p.label}
                 </Button>
@@ -156,7 +156,7 @@ export default function ChmodCalculatorPage() {
                 {PERMS.map((p) => (
                   <div
                     key={p}
-                    className="bg-muted/50 text-muted-foreground p-2 text-center text-xs font-semibold"
+                    className="bg-muted/50 text-muted-foreground border-l p-2 text-center text-xs font-semibold"
                   >
                     {p}
                   </div>
@@ -174,17 +174,14 @@ export default function ChmodCalculatorPage() {
                   {PERMS.map((_, pi) => {
                     const isActive = Boolean((bits >> bitIndex(gi, pi)) & 1);
                     return (
-                      <button
+                      <Button
                         key={pi}
                         onClick={() => toggleBit(gi, pi)}
-                        className={`border-border border-l py-3 text-center font-mono text-xs font-bold transition-colors ${
-                          isActive
-                            ? "bg-primary/15 text-primary"
-                            : "text-muted-foreground hover:bg-muted/50"
-                        }`}
+                        variant={isActive ? "default" : "outline"}
+                        className="rounded-none border-y-0 border-r-0 border-l py-5! font-mono"
                       >
                         {isActive ? PERM_CHARS[pi] : "–"}
-                      </button>
+                      </Button>
                     );
                   })}
                 </div>
@@ -194,26 +191,21 @@ export default function ChmodCalculatorPage() {
 
           {/* Octal + Symbolic inputs */}
           <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label>Octal</Label>
-              <Input
-                value={octalInput}
-                onChange={(e) => handleOctalChange(e.target.value)}
-                placeholder="755"
-                className="font-mono"
-                maxLength={3}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label>Symbolic</Label>
-              <Input
-                value={symInput}
-                onChange={(e) => handleSymbolicChange(e.target.value)}
-                placeholder="rwxr-xr-x"
-                className="font-mono"
-                maxLength={9}
-              />
-            </div>
+            <InputField
+              label="Octal"
+              value={octalInput}
+              onChange={(e) => handleOctalChange(e.target.value)}
+              placeholder="755"
+              maxLength={3}
+            />
+
+            <InputField
+              label="Symbolic"
+              value={symInput}
+              onChange={(e) => handleSymbolicChange(e.target.value)}
+              placeholder="rwxr-xr-x"
+              maxLength={9}
+            />
           </div>
         </div>
 

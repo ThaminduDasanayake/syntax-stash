@@ -11,7 +11,7 @@ import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { ClearButton } from "@/components/ui/clear-button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 type TabId = "format" | "tree" | "query" | "organize";
@@ -44,25 +44,24 @@ export default function JsonStudioPage() {
 
   return (
     <ToolLayout tool={tool}>
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <div className="grid h-full min-h-0 flex-1 grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Input pane */}
-        <div className="space-y-2">
-          <div className="flex flex-wrap gap-1.5">
+        <div className="flex h-full min-h-0 flex-col space-y-4">
+          <div className="flex shrink-0 flex-wrap gap-1.5">
             {SAMPLE_LABELS.map(({ key, label }) => (
-              <Button key={key} size="sm" variant="outline" onClick={() => setInput(SAMPLES[key])}>
+              <Button key={key} variant="outline" onClick={() => setInput(SAMPLES[key])}>
                 {label}
               </Button>
             ))}
           </div>
 
-          <TextAreaField
+          <TextareaGroup
             label="JSON Input"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Paste JSON here…"
-            rows={28}
-            className="text-sm"
-            action={<ClearButton onClick={() => setInput("")} disabled={!input} />}
+            placeholder="Paste JSON here..."
+            action={<ClearButton size="sm" onClick={() => setInput("")} disabled={!input} />}
+            containerClassName="flex-1 min-h-0"
           />
         </div>
 
@@ -70,9 +69,9 @@ export default function JsonStudioPage() {
         <Tabs
           value={activeTab}
           onValueChange={(v) => setActiveTab(v as TabId)}
-          className="flex flex-col gap-4"
+          className="flex h-full min-h-0 flex-1 flex-col gap-4"
         >
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full shrink-0 grid-cols-4">
             {TABS.map((tab) => (
               <TabsTrigger className="tab-trigger" key={tab.id} value={tab.id}>
                 {tab.label}
@@ -80,19 +79,31 @@ export default function JsonStudioPage() {
             ))}
           </TabsList>
 
-          <TabsContent value="format">
+          <TabsContent
+            value="format"
+            className="flex min-h-0 flex-1 flex-col data-[state=inactive]:hidden"
+          >
             <FormatTab input={input} />
           </TabsContent>
 
-          <TabsContent value="tree">
+          <TabsContent
+            value="tree"
+            className="flex min-h-0 flex-1 flex-col data-[state=inactive]:hidden"
+          >
             <TreeTab input={input} onTestInQueryAction={handleTestInQuery} />
           </TabsContent>
 
-          <TabsContent value="query">
+          <TabsContent
+            value="query"
+            className="flex min-h-0 flex-1 flex-col data-[state=inactive]:hidden"
+          >
             <QueryTab input={input} query={queryPath} onQueryChangeAction={setQueryPath} />
           </TabsContent>
 
-          <TabsContent value="organize">
+          <TabsContent
+            value="organize"
+            className="flex min-h-0 flex-1 flex-col data-[state=inactive]:hidden"
+          >
             <OrganizeTab input={input} />
           </TabsContent>
         </Tabs>

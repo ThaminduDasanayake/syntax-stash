@@ -156,7 +156,7 @@ export default function JSONCSVConverterPage() {
                   <DownloadButton
                     onClick={handleDownload}
                     disabled={!output}
-                    label={`Download .${ext}`}
+                    label={`Download ${ext.toUpperCase()}`}
                   />
                 </div>
               }

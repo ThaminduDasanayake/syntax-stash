@@ -10,6 +10,8 @@ import {
   PLACEHOLDER_CODE,
   THEMES,
 } from "@/app/tools/code-screenshot/constants";
+import { ErrorAlert } from "@/components/error-alert";
+import { LoadingSpinner } from "@/components/loading-spinner";
 import { ToolLayout } from "@/components/tool-layout";
 import { DownloadButton } from "@/components/ui/download-button";
 import { InputField } from "@/components/ui/input-field";
@@ -32,6 +34,7 @@ export default function CodeScreenshotPage() {
   const [fileName, setFileName] = useState("example.ts");
   const [highlighted, setHighlighted] = useState("");
   const [isExporting, setIsExporting] = useState(false);
+  const [exportError, setExportError] = useState<string | null>(null);
   const exportRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -57,6 +60,7 @@ export default function CodeScreenshotPage() {
   async function handleExport() {
     if (!exportRef.current) return;
     setIsExporting(true);
+    setExportError(null);
     try {
       const dataUrl = await toPng(exportRef.current, {
         pixelRatio: 2,
@@ -67,7 +71,7 @@ export default function CodeScreenshotPage() {
       a.download = `${fileName.replace(/\.[^.]+$/, "") || "code"}.png`;
       a.click();
     } catch (e) {
-      console.error(e);
+      setExportError(e instanceof Error ? e.message : "Export failed.");
     } finally {
       setIsExporting(false);
     }
@@ -201,10 +205,12 @@ export default function CodeScreenshotPage() {
               </div>
             </div>
 
+            {exportError && <ErrorAlert message={exportError} />}
+
             <DownloadButton
               onClick={handleExport}
               disabled={isExporting || !highlighted}
-              label={isExporting ? "Exporting…" : "Download PNG"}
+              label={isExporting ? "Exporting..." : "Download PNG"}
               className="w-full"
             />
           </div>
@@ -228,7 +234,14 @@ function ShikiRender({
   lineCount: number;
 }) {
   if (!html) {
-    return <div className="p-6 font-mono text-sm text-neutral-400">Loading…</div>;
+    return (
+      <div
+        className="flex min-h-24 items-center justify-center p-6"
+        style={{ background: "var(--shiki-bg, #282c34)" }}
+      >
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   if (!showLineNumbers) {

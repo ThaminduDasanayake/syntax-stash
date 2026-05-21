@@ -3,7 +3,7 @@ import { BaseFootnoteDefinitionPlugin, BaseFootnoteReferencePlugin } from "@plat
 import {
   FootnoteDefinitionElementStatic,
   FootnoteReferenceElementStatic,
-} from "@/components/ui/footnote-node-static";
+} from "@/components/plate-ui/footnote-node-static";
 
 export const BaseFootnoteKit = [
   BaseFootnoteReferencePlugin.withComponent(FootnoteReferenceElementStatic),

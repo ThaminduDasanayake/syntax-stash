@@ -1,4 +1,6 @@
-import { DownloadIcon } from "@phosphor-icons/react/ssr";
+"use client";
+
+import { DownloadIcon } from "@phosphor-icons/react";
 import { ComponentProps, ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -21,7 +23,7 @@ export function DownloadButton({
     <Button
       variant={variant}
       size={size}
-      className={cn("gap-2 px-4 transition-colors duration-200", className)}
+      className={cn("gap-2 px-4 font-semibold transition-colors duration-200", className)}
       {...props}
     >
       {icon && icon}

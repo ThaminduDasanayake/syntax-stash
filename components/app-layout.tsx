@@ -15,9 +15,9 @@ export default function AppLayout({ children }: { children: ReactNode }) {
       <AppSidebar />
       <main className="relative z-10 flex h-full min-w-0 flex-1 flex-col overflow-hidden">
         <AppHeader onSearchOpenAction={() => setCommandMenuOpen(true)} />
-        <div className="h-full flex-1 overflow-y-auto">
-          <div className="h-full p-2 md:p-8">{children}</div>
-        </div>
+        {/*<div className="min-h-0 flex-1 overflow-y-auto">*/}
+        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto p-2 md:p-8">{children}</div>
+        {/*</div>*/}
         <CommandMenu open={commandMenuOpen} setOpenAction={setCommandMenuOpen} />
       </main>
     </SidebarProvider>

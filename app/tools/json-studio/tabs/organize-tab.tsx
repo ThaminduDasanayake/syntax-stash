@@ -14,7 +14,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
 import { InputField } from "@/components/ui/input-field";
 import { SelectField } from "@/components/ui/select-field";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 
 export function OrganizeTab({ input }: { input: string }) {
   const [sortKey, setSortKey] = useState("");
@@ -82,16 +82,16 @@ export function OrganizeTab({ input }: { input: string }) {
   ];
 
   return (
-    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[280px_1fr]">
-      <div className="space-y-4">
+    <div className="flex flex-col gap-6">
+      <div className="grid grid-cols-2 gap-3">
         {input && !hasValidData && (
           <ErrorAlert message="Not a valid array of objects. This tab accepts lenient JS-literal syntax (e.g. unquoted identifiers like icon: Scale)." />
         )}
 
         {hasValidData && (
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm">Sort</CardTitle>
+          <Card size="sm">
+            <CardHeader className="border-b">
+              <CardTitle>Sort</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               <SelectField
@@ -112,9 +112,9 @@ export function OrganizeTab({ input }: { input: string }) {
         )}
 
         {hasValidData && (
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm">Filter (Optional)</CardTitle>
+          <Card size="sm">
+            <CardHeader className="border-b">
+              <CardTitle>Filter (Optional)</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               <SelectField
@@ -141,7 +141,7 @@ export function OrganizeTab({ input }: { input: string }) {
         )}
       </div>
 
-      <TextAreaField
+      <TextareaGroup
         label={
           hasValidData ? (
             <div className="flex items-center gap-2">
@@ -157,9 +157,7 @@ export function OrganizeTab({ input }: { input: string }) {
         }
         value={resultJSON}
         readOnly
-        rows={28}
-        className="font-mono text-sm"
-        action={<CopyButton textToCopy={resultJSON} disabled={!resultJSON} />}
+        action={<CopyButton iconOnly textToCopy={resultJSON} disabled={!resultJSON} />}
       />
     </div>
   );

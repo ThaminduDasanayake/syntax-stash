@@ -123,15 +123,15 @@ export const TAILWIND_CLASSES: TailwindEntry[] = [
   { className: "font-black", css: "font-weight: 900", category: "Typography" },
   {
     className: "font-mono",
-    css: "font-family: ui-monospace, SFMono-Regular, …",
+    css: "font-family: ui-monospace, SFMono-Regular, ...",
     category: "Typography",
   },
   {
     className: "font-sans",
-    css: "font-family: ui-sans-serif, system-ui, …",
+    css: "font-family: ui-sans-serif, system-ui, ...",
     category: "Typography",
   },
-  { className: "font-serif", css: "font-family: ui-serif, Georgia, …", category: "Typography" },
+  { className: "font-serif", css: "font-family: ui-serif, Georgia, ...", category: "Typography" },
   { className: "tracking-tighter", css: "letter-spacing: -0.05em", category: "Typography" },
   { className: "tracking-tight", css: "letter-spacing: -0.025em", category: "Typography" },
   { className: "tracking-normal", css: "letter-spacing: 0em", category: "Typography" },
@@ -364,12 +364,12 @@ export const TAILWIND_CLASSES: TailwindEntry[] = [
   },
   {
     className: "sr-only",
-    css: "position: absolute; width: 1px; height: 1px; …",
+    css: "position: absolute; width: 1px; height: 1px; ...",
     category: "Layout",
   },
   {
     className: "not-sr-only",
-    css: "position: static; width: auto; height: auto; …",
+    css: "position: static; width: auto; height: auto; ...",
     category: "Layout",
   },
   { className: "visible", css: "visibility: visible", category: "Layout" },
@@ -477,7 +477,7 @@ export const TAILWIND_CLASSES: TailwindEntry[] = [
   // Transitions
   {
     className: "transition",
-    css: "transition-property: color, background-color, border-color, …; duration: 150ms; timing: cubic-bezier(0.4, 0, 0.2, 1)",
+    css: "transition-property: color, background-color, border-color, ...; duration: 150ms; timing: cubic-bezier(0.4, 0, 0.2, 1)",
     category: "Transitions",
   },
   {
@@ -487,7 +487,7 @@ export const TAILWIND_CLASSES: TailwindEntry[] = [
   },
   {
     className: "transition-colors",
-    css: "transition-property: color, background-color, border-color, …; duration: 150ms",
+    css: "transition-property: color, background-color, border-color, ...; duration: 150ms",
     category: "Transitions",
   },
   {

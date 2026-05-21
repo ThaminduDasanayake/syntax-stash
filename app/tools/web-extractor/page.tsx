@@ -13,13 +13,13 @@ import { HeadingGroup } from "@/app/tools/web-extractor/heading-group";
 import { MetaRow } from "@/app/tools/web-extractor/meta-row";
 import { Section } from "@/app/tools/web-extractor/section";
 import { ErrorAlert } from "@/components/error-alert";
+import { EmptyState } from "@/components/plate-ui/empty-state";
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
-import { EmptyState } from "@/components/ui/empty-state";
 import { InputField } from "@/components/ui/input-field";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 export default function WebExtractorPage() {
@@ -213,13 +213,11 @@ export default function WebExtractorPage() {
 
             <div className="relative">
               <div className="sticky top-6">
-                <TextAreaField
+                <TextareaGroup
                   label="Raw JSON Response"
                   value={rawJSON}
                   readOnly
-                  rows={28}
-                  className="font-mono text-xs"
-                  action={<CopyButton textToCopy={rawJSON} disabled={!rawJSON} />}
+                  action={<CopyButton iconOnly textToCopy={rawJSON} disabled={!rawJSON} />}
                 />
               </div>
             </div>

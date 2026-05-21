@@ -85,7 +85,6 @@ export default function UUIDGeneratorPage() {
           <CopyButton
             textToCopy={allText}
             disabled={!allText}
-            label={true}
             labelName="Copy All"
             className="w-full"
           />
@@ -101,7 +100,7 @@ export default function UUIDGeneratorPage() {
           >
             <span className="font-mono text-sm">{uuid}</span>
 
-            <CopyButton size="sm" variant="ghost" label={false} textToCopy={uuid} />
+            <CopyButton iconOnly textToCopy={uuid} />
           </div>
         ))}
       </div>

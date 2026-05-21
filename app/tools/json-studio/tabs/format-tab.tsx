@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { cn } from "@/lib/utils";
 
 type Mode = "format" | "minify";
@@ -34,34 +34,38 @@ export function FormatTab({ input }: { input: string }) {
   ];
 
   return (
-    <TextAreaField
-      label={result.ok ? "Output" : <span className="text-destructive">Invalid JSON</span>}
-      readOnly
-      value={result.ok ? result.output : result.error}
-      rows={22}
-      className={cn(
-        !result.ok && "text-destructive border-destructive/50 focus-visible:ring-destructive/30",
-      )}
-      action={
-        <>
-          <div className="flex gap-2">
-            {modes.map((m) => (
-              <Button
-                key={m.id}
-                onClick={() => setMode(m.id)}
-                variant={mode === m.id ? "default" : "outline"}
-                className="px-4 text-xs font-semibold transition-colors"
-              >
-                {m.label}
-              </Button>
-            ))}
-          </div>
-          <CopyButton
-            textToCopy={result.ok ? result.output : ""}
-            disabled={!result.ok || !result.output}
-          />
-        </>
-      }
-    />
+    <div className="flex h-full min-h-0 w-full flex-1 flex-col">
+      <TextareaGroup
+        label={result.ok ? "Output" : <span className="text-destructive">Invalid JSON</span>}
+        value={result.ok ? result.output : result.error}
+        readOnly
+        className={cn(
+          !result.ok && "text-destructive border-destructive/50 focus-visible:ring-destructive/30",
+        )}
+        containerClassName="h-full flex-1 min-h-0"
+        action={
+          <>
+            <div className="flex gap-2">
+              {modes.map((m) => (
+                <Button
+                  key={m.id}
+                  size="sm"
+                  onClick={() => setMode(m.id)}
+                  variant={mode === m.id ? "default" : "outline"}
+                  className="px-4 text-xs font-semibold transition-colors"
+                >
+                  {m.label}
+                </Button>
+              ))}
+            </div>
+            <CopyButton
+              iconOnly
+              textToCopy={result.ok ? result.output : ""}
+              disabled={!result.ok || !result.output}
+            />
+          </>
+        }
+      />
+    </div>
   );
 }

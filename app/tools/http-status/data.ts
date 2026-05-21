@@ -25,6 +25,37 @@ export const STATUS_CATEGORY_LABELS: Record<StatusCategory, string> = {
   "5xx": "5xx Server Error",
 };
 
+export const CATEGORY_STYLES: Record<
+  StatusCategory,
+  { card: string; code: string; badge: string }
+> = {
+  "1xx": {
+    card: "ring-2 ring-border hover:ring-border/80",
+    code: "text-muted-foreground",
+    badge: "border-border/50 bg-muted/50 text-muted-foreground",
+  },
+  "2xx": {
+    card: "ring-2 ring-green-500/20 hover:ring-green-500/40",
+    code: "text-green-400",
+    badge: "border-green-500/20 bg-green-500/10 text-green-400",
+  },
+  "3xx": {
+    card: "ring-2 ring-blue-500/20 hover:ring-blue-500/40",
+    code: "text-blue-400",
+    badge: "border-blue-500/20 bg-blue-500/10 text-blue-400",
+  },
+  "4xx": {
+    card: "ring-2 ring-yellow-500/20 hover:ring-yellow-500/40",
+    code: "text-yellow-400",
+    badge: "border-yellow-500/20 bg-yellow-500/10 text-yellow-400",
+  },
+  "5xx": {
+    card: "ring-2 ring-red-500/20 hover:ring-red-500/40",
+    code: "text-red-400",
+    badge: "border-red-500/20 bg-red-500/10 text-red-400",
+  },
+};
+
 export const HTTP_STATUS_CODES: HttpStatus[] = [
   // 1xx Informational
   {

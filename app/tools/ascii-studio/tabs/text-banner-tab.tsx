@@ -8,9 +8,8 @@ import { ErrorAlert } from "@/components/error-alert";
 import { CopyButton } from "@/components/ui/copy-button";
 import { InputField } from "@/components/ui/input-field";
 import { SelectField } from "@/components/ui/select-field";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 
-// Module-scope cache — fonts are fetched once per session
 const loadedFonts = new Set<FigletFont>();
 
 export function TextBannerTab() {
@@ -34,7 +33,11 @@ export function TextBannerTab() {
 
         if (!loadedFonts.has(font)) {
           const res = await fetch(`/figlet-fonts/${font}.flf`);
-          if (!res.ok) throw new Error(`Failed to load font "${font}"`);
+
+          if (!res.ok) {
+            if (isMounted) setError(`Failed to load font "${font}"`);
+            return;
+          }
           figlet.parseFont(font, await res.text());
           loadedFonts.add(font);
         }
@@ -55,8 +58,8 @@ export function TextBannerTab() {
   }, [text, font]);
 
   return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div className="flex min-h-0 w-full flex-1 flex-col gap-6">
+      <div className="grid shrink-0 grid-cols-1 gap-4 sm:grid-cols-2">
         <InputField
           label="Text"
           value={text}
@@ -74,14 +77,14 @@ export function TextBannerTab() {
 
       {error && <ErrorAlert message={error} />}
 
-      <TextAreaField
+      <TextareaGroup
         label="Output"
+        variant="fill"
         readOnly
         value={output}
-        rows={10}
-        className="bg-muted/30! resize-none font-mono text-xs leading-tight"
-        placeholder={text ? "Generating…" : "Enter text above to generate a banner."}
-        action={<CopyButton textToCopy={output} disabled={!output} />}
+        className="leading-tight"
+        placeholder={text ? "Generating..." : "Enter text above to generate a banner."}
+        action={<CopyButton iconOnly textToCopy={output} disabled={!output} />}
       />
     </div>
   );

@@ -5,7 +5,9 @@ import { JetBrains_Mono, Manrope } from "next/font/google";
 import { ReactNode } from "react";
 
 import AppLayout from "@/components/app-layout";
+import AppLayout2 from "@/components/app-layout2";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
@@ -36,7 +38,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn(manrope.variable, jetbrainsMono.variable)}
+      className={cn(manrope.variable, jetbrainsMono.variable, "h-full")}
     >
       <body className="bg-background text-foreground flex h-screen overflow-hidden antialiased">
         <ThemeProvider
@@ -46,7 +48,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <TooltipProvider>
-            <AppLayout>{children}</AppLayout>
+            <AppLayout2>{children}</AppLayout2>
+            <Toaster />
           </TooltipProvider>
         </ThemeProvider>
       </body>

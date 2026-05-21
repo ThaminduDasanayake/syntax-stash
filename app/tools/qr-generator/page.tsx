@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
+import { ErrorAlert } from "@/components/error-alert";
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -197,7 +198,7 @@ export default function QRGeneratorPage() {
             </div>
           </div>
 
-          {error && <p className="text-destructive font-mono text-sm">{error}</p>}
+          {error && <ErrorAlert message={error} />}
         </div>
 
         {/* Right — Preview */}

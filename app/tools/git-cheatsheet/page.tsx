@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 
 import { ToolLayout } from "@/components/tool-layout";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { SearchInput } from "@/components/ui/search-input";
 import {
   Table,
@@ -14,6 +15,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { internalTools } from "@/lib/tools-data";
+import { cn } from "@/lib/utils";
 
 import { DANGER_LEVELS, DangerLevel, GIT_CATEGORIES, GIT_COMMANDS } from "./data";
 
@@ -71,17 +73,13 @@ export default function GitCheatsheetPage() {
           </p>
           <div className="flex flex-wrap gap-2">
             {GIT_CATEGORIES.map((cat) => (
-              <button
+              <Button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`rounded-full border px-3 py-1 text-xs font-semibold transition-colors ${
-                  activeCategory === cat
-                    ? "border-primary bg-primary text-primary-foreground"
-                    : "border-border text-muted-foreground hover:border-primary hover:text-foreground"
-                }`}
+                variant={activeCategory === cat ? "default" : "outline"}
               >
                 {cat}
-              </button>
+              </Button>
             ))}
           </div>
         </div>
@@ -92,28 +90,21 @@ export default function GitCheatsheetPage() {
             Danger Level
           </p>
           <div className="flex flex-wrap gap-2">
-            <button
+            <Button
               onClick={() => setActiveDanger("All")}
-              className={`rounded-full border px-3 py-1 text-xs font-semibold transition-colors ${
-                activeDanger === "All"
-                  ? "border-primary bg-primary text-primary-foreground"
-                  : "border-border text-muted-foreground hover:border-primary hover:text-foreground"
-              }`}
+              variant={activeDanger === "All" ? "default" : "outline"}
             >
               All
-            </button>
+            </Button>
             {DANGER_LEVELS.map((d) => (
-              <button
+              <Button
                 key={d}
                 onClick={() => setActiveDanger(d)}
-                className={`rounded-full border px-3 py-1 text-xs font-semibold transition-colors ${
-                  activeDanger === d
-                    ? DANGER_STYLES[d]
-                    : "border-border text-muted-foreground hover:border-primary hover:text-foreground"
-                }`}
+                variant={activeDanger === d ? "default" : "outline"}
+                className={cn(activeDanger === d && DANGER_STYLES[d])}
               >
                 {DANGER_LABELS[d]}
-              </button>
+              </Button>
             ))}
           </div>
         </div>
@@ -135,7 +126,10 @@ export default function GitCheatsheetPage() {
           <TableBody>
             {filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={3} className="text-muted-foreground py-8 text-center text-sm whitespace-normal">
+                <TableCell
+                  colSpan={3}
+                  className="text-muted-foreground py-8 text-center text-sm whitespace-normal"
+                >
                   No commands found for &ldquo;{search}&rdquo;
                 </TableCell>
               </TableRow>
@@ -143,15 +137,20 @@ export default function GitCheatsheetPage() {
               filtered.map((cmd, i) => (
                 <TableRow key={i} onClick={() => copyCmd(cmd.command)} className="cursor-pointer">
                   <TableCell className="font-mono text-sm font-semibold">
-                    <span className={copiedCmd === cmd.command ? "text-primary" : "text-foreground"}>
+                    <span
+                      className={copiedCmd === cmd.command ? "text-primary" : "text-foreground"}
+                    >
                       {copiedCmd === cmd.command ? "Copied!" : cmd.command}
                     </span>
                   </TableCell>
-                  <TableCell className="text-muted-foreground whitespace-normal text-sm leading-relaxed">
+                  <TableCell className="text-muted-foreground text-sm leading-relaxed whitespace-normal">
                     {cmd.description}
                   </TableCell>
                   <TableCell>
-                    <Badge variant="outline" className={`rounded-full ${DANGER_STYLES[cmd.danger]}`}>
+                    <Badge
+                      variant="outline"
+                      className={`rounded-full ${DANGER_STYLES[cmd.danger]}`}
+                    >
                       {DANGER_LABELS[cmd.danger]}
                     </Badge>
                   </TableCell>

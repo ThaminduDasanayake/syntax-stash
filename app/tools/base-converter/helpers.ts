@@ -7,9 +7,14 @@ interface BitwiseOp {
 }
 
 export const BITS = 16;
-export const MAX = (1 << BITS) - 1; // 65535  (unsigned 16-bit)
-export const SIGNED_MIN = -(1 << (BITS - 1)); // -32768
-export const SIGNED_MAX = (1 << (BITS - 1)) - 1; // 32767
+export const MAX = (1 << BITS) - 1; // 65535
+
+export const BASE_LIST = [
+  { value: "2", label: "BIN" },
+  { value: "8", label: "OCT" },
+  { value: "10", label: "DEC" },
+  { value: "16", label: "HEX" },
+];
 
 export const BITWISE_OPS: BitwiseOp[] = [
   { id: "and", label: "AND", symbol: "&", fn: (a, b) => a & b },
@@ -22,11 +27,12 @@ export const BITWISE_OPS: BitwiseOp[] = [
 
 export function clamp(n: number): number {
   if (!isFinite(n) || isNaN(n)) return 0;
-  return Math.max(0, Math.min(MAX, Math.floor(n)));
+
+  return Math.max(0, Math.min(Number.MAX_SAFE_INTEGER, Math.floor(n)));
 }
 
 export function toBin(n: number): string {
-  return n.toString(2).padStart(BITS, "0");
+  return n.toString(2);
 }
 export function toHex(n: number): string {
   return n.toString(16).toUpperCase();

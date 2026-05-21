@@ -30,8 +30,8 @@ import {
 import * as Popover from "@radix-ui/react-popover";
 import * as React from "react";
 
+import { ToolbarButton } from "@/components/plate-ui/toolbar";
 import { Button } from "@/components/ui/button";
-import { ToolbarButton } from "@/components/ui/toolbar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 

@@ -3,7 +3,7 @@
 import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { forwardRef, InputHTMLAttributes } from "react";
 
-import { InputField } from "@/components/ui/input-field.tsx";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import { cn } from "@/lib/utils";
 
 interface SearchInputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -13,18 +13,23 @@ interface SearchInputProps extends InputHTMLAttributes<HTMLInputElement> {
 export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
   ({ className, containerClassName, placeholder = "Search...", ...props }, ref) => {
     return (
-      <div className={cn("relative w-full", containerClassName)}>
-        <MagnifyingGlassIcon
-          weight="duotone"
-          className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 -translate-y-1/2"
-        />
-        <InputField
-          ref={ref}
-          type="search"
-          placeholder={placeholder}
-          className={cn("pl-9", className)}
-          {...props}
-        />
+      <div className={cn("w-full", containerClassName)}>
+        <InputGroup>
+          <InputGroupInput
+            id="inline-start-input"
+            type="search"
+            ref={ref}
+            className={className}
+            placeholder={placeholder}
+            {...props}
+          />
+          <InputGroupAddon align="inline-start">
+            <MagnifyingGlassIcon
+              weight="duotone"
+              className="text-muted-foreground pointer-events-none"
+            />
+          </InputGroupAddon>
+        </InputGroup>
       </div>
     );
   },

@@ -2,8 +2,8 @@
 
 import { ImagePlugin } from "@platejs/media/react";
 
-import { ImageElement } from "@/components/ui/media-image-node";
-import { MediaPreviewDialog } from "@/components/ui/media-preview-dialog";
+import { ImageElement } from "@/components/plate-ui/media-image-node";
+import { MediaPreviewDialog } from "@/components/plate-ui/media-preview-dialog";
 
 export const MediaKit = [
   ImagePlugin.configure({

@@ -1,8 +1,11 @@
 "use client";
 
+import { XIcon } from "@phosphor-icons/react";
 import { CSSProperties, useRef, useState } from "react";
 
+import { ErrorAlert } from "@/components/error-alert";
 import FileDropzone from "@/components/file-dropzone";
+import { LoadingSpinner } from "@/components/loading-spinner";
 import { ToolLayout } from "@/components/tool-layout";
 import { CheckboxField } from "@/components/ui/checkbox-field";
 import { ClearButton } from "@/components/ui/clear-button";
@@ -11,6 +14,7 @@ import { CopyButton } from "@/components/ui/copy-button";
 import { DownloadButton } from "@/components/ui/download-button";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
+import { StepperField } from "@/components/ui/stepper-field";
 import { buildAcceptMap } from "@/lib/file-types";
 import { internalTools } from "@/lib/tools-data";
 
@@ -39,6 +43,7 @@ export default function FaviconGeneratorPage() {
   const [sourceImg, setSourceImg] = useState<HTMLImageElement | null>(null);
   const [outputs, setOutputs] = useState<Map<string, OutputEntry>>(new Map());
   const [generating, setGenerating] = useState(false);
+  const [genError, setGenError] = useState<string | null>(null);
   const [appName, setAppName] = useState("My App");
   const [opts, setOpts] = useState<RenderOptions>({
     padding: 0,
@@ -51,6 +56,7 @@ export default function FaviconGeneratorPage() {
   const generate = async (img: HTMLImageElement, currentOpts: RenderOptions) => {
     const id = ++genRef.current;
     setGenerating(true);
+    setGenError(null);
     try {
       const blobs = await generateAllBlobs(img, currentOpts);
       if (genRef.current !== id) return;
@@ -60,6 +66,8 @@ export default function FaviconGeneratorPage() {
           [...blobs].map(([k, blob]) => [k, { blob, url: URL.createObjectURL(blob) }]),
         );
       });
+    } catch (e) {
+      if (genRef.current === id) setGenError(e instanceof Error ? e.message : "Generation failed.");
     } finally {
       if (genRef.current === id) setGenerating(false);
     }
@@ -87,7 +95,7 @@ export default function FaviconGeneratorPage() {
 
   const applyOpts = (newOpts: RenderOptions) => {
     setOpts(newOpts);
-    if (sourceImg) generate(sourceImg, newOpts).catch(console.error);
+    if (sourceImg) void generate(sourceImg, newOpts);
   };
 
   const downloadFile = (filename: string) => {
@@ -130,7 +138,7 @@ export default function FaviconGeneratorPage() {
 
   return (
     <ToolLayout tool={tool}>
-      <div className="space-y-8">
+      <div className="space-y-6">
         <FileDropzone
           onFileDropAction={handleFile}
           accept={buildAcceptMap([".png", ".jpg", ".jpeg", ".svg", ".webp"])}
@@ -146,20 +154,27 @@ export default function FaviconGeneratorPage() {
 
         {sourceImg && (
           <>
-            <div className="flex flex-wrap items-end gap-4">
-              <InputField
+            <div className="flex justify-center">
+              <ClearButton
+                variant="destructive"
+                label="Clear All"
+                icon={<XIcon weight="bold" />}
+                onClick={reset}
+              />
+            </div>
+            <div className="grid grid-cols-3 items-center justify-between gap-6">
+              <StepperField
                 label="Padding %"
-                type="number"
                 min={0}
                 max={25}
+                // containerClassName="w-32"
                 value={opts.padding}
-                onChange={(e) =>
+                onValueChange={(val) =>
                   applyOpts({
                     ...opts,
-                    padding: Math.min(25, Math.max(0, Number(e.target.value))),
+                    padding: Math.min(25, Math.max(0, Number(val))),
                   })
                 }
-                inputClassName="w-20"
               />
               <div className="space-y-2">
                 <Label>Background</Label>
@@ -182,14 +197,11 @@ export default function FaviconGeneratorPage() {
                 label="App name (manifest)"
                 value={appName}
                 onChange={(e) => setAppName(e.target.value)}
-                inputClassName="w-48"
               />
-              <ClearButton onClick={reset} />
             </div>
 
-            {generating && !hasOutputs && (
-              <p className="text-muted-foreground text-sm">Generating…</p>
-            )}
+            {generating && <LoadingSpinner label="Generating..." />}
+            {genError && <ErrorAlert message={genError} />}
 
             {hasOutputs && (
               <div>
@@ -237,11 +249,17 @@ export default function FaviconGeneratorPage() {
             )}
 
             {hasOutputs && (
+              <div className="flex justify-center">
+                <DownloadButton label="Download all (ZIP)" onClick={downloadAll} />
+              </div>
+            )}
+
+            {hasOutputs && (
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium">HTML &lt;head&gt; tags</span>
-                    <CopyButton textToCopy={HTML_SNIPPET} size="sm" />
+                    <CopyButton textToCopy={HTML_SNIPPET} />
                   </div>
                   <pre className="border-border bg-muted overflow-x-auto rounded-lg border p-4 text-xs">
                     {HTML_SNIPPET}
@@ -250,18 +268,12 @@ export default function FaviconGeneratorPage() {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium">site.webmanifest</span>
-                    <CopyButton textToCopy={manifestJson} size="sm" />
+                    <CopyButton textToCopy={manifestJson} />
                   </div>
                   <pre className="border-border bg-muted overflow-x-auto rounded-lg border p-4 text-xs">
                     {manifestJson}
                   </pre>
                 </div>
-              </div>
-            )}
-
-            {hasOutputs && (
-              <div className="flex justify-center">
-                <DownloadButton label="Download all (.zip)" onClick={downloadAll} />
               </div>
             )}
           </>

@@ -1,17 +1,23 @@
 "use client";
 
+import { ArrowsClockwiseIcon, ShuffleIcon } from "@phosphor-icons/react";
 import { useCallback, useState } from "react";
 
+import { CURVES, FONTS, LOOK, THEMES } from "@/app/tools/mermaid-editor/data";
 import { MermaidPreview } from "@/app/tools/mermaid-editor/mermaid-preview";
 import {
   DIAGRAM_LABELS,
   DIAGRAM_TEMPLATES,
   type DiagramType,
 } from "@/app/tools/mermaid-editor/templates";
+import { ErrorAlert } from "@/components/error-alert";
 import { ToolLayout } from "@/components/tool-layout";
+import { Button } from "@/components/ui/button";
 import { ClearButton } from "@/components/ui/clear-button";
+import { ColorField } from "@/components/ui/color-field";
 import { CopyButton } from "@/components/ui/copy-button";
 import { DownloadButton } from "@/components/ui/download-button";
+import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
@@ -22,6 +28,15 @@ export default function MermaidEditorPage() {
   const [code, setCode] = useState(DIAGRAM_TEMPLATES.flowchart);
   const [error, setError] = useState<string | null>(null);
   const [lastSvg, setLastSvg] = useState<string>("");
+  const [theme, setTheme] = useState<string>("default");
+  const [look, setLook] = useState<string>("classic");
+  const [fontFamily, setFontFamily] = useState<string>("sans-serif");
+  const [handDrawnSeed, setHandDrawnSeed] = useState<number>(0);
+  const [fontSize, setFontSize] = useState<number>(16);
+  const [backgroundColor, setBackgroundColor] = useState<string>("#ffffff");
+  const [primaryColor, setPrimaryColor] = useState<string>("#ececff");
+  const [fontColor, setFontColor] = useState<string>("#1f2937");
+  const [curve, setCurve] = useState<string>("basis");
 
   const handleDiagramTypeChange = (type: string) => {
     const t = type as DiagramType;
@@ -44,6 +59,54 @@ export default function MermaidEditorPage() {
     URL.revokeObjectURL(url);
   }
 
+  function downloadPng() {
+    if (!lastSvg) return;
+
+    const parser = new DOMParser();
+    const svgDoc = parser.parseFromString(lastSvg, "image/svg+xml");
+    const svgEl = svgDoc.documentElement;
+
+    const viewBox = svgEl.getAttribute("viewBox");
+    let svgW = 800;
+    let svgH = 600;
+    if (viewBox) {
+      const parts = viewBox.split(/[\s,]+/).map(Number);
+      if (parts.length === 4) {
+        svgW = parts[2];
+        svgH = parts[3];
+      }
+    }
+
+    svgEl.setAttribute("width", String(svgW));
+    svgEl.setAttribute("height", String(svgH));
+
+    const serialized = new XMLSerializer().serializeToString(svgDoc);
+    const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(serialized)}`;
+
+    const img = new Image();
+    img.onload = () => {
+      const scale = 2;
+      const canvas = document.createElement("canvas");
+      canvas.width = svgW * scale;
+      canvas.height = svgH * scale;
+
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.scale(scale, scale);
+        ctx.fillStyle = backgroundColor;
+        ctx.fillRect(0, 0, svgW, svgH);
+        ctx.drawImage(img, 0, 0, svgW, svgH);
+
+        const pngUrl = canvas.toDataURL("image/png");
+        const a = document.createElement("a");
+        a.href = pngUrl;
+        a.download = `${diagramType}-diagram.png`;
+        a.click();
+      }
+    };
+    img.src = svgUrl;
+  }
+
   const tool = internalTools.find((t) => t.slug === "mermaid-editor");
 
   return (
@@ -63,7 +126,7 @@ export default function MermaidEditorPage() {
         />
 
         {/* Editor + Preview */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-6">
           {/* Editor */}
           <div className="flex flex-col gap-1.5">
             <TextAreaField
@@ -71,12 +134,14 @@ export default function MermaidEditorPage() {
               value={code}
               onChange={(e) => setCode(e.target.value)}
               className="resize-none"
-              placeholder="Write mermaid diagram here…"
+              placeholder="Write mermaid diagram here..."
               rows={20}
               spellCheck={false}
               action={
                 <div className="flex gap-2">
                   <ClearButton
+                    icon={<ArrowsClockwiseIcon />}
+                    label="Reset"
                     onClick={() => {
                       setCode(DIAGRAM_TEMPLATES[diagramType]);
                       setError(null);
@@ -86,27 +151,120 @@ export default function MermaidEditorPage() {
                 </div>
               }
             />
-            {error && (
-              <p className="text-destructive bg-destructive/10 rounded-lg px-3 py-2 text-xs">
-                {error}
-              </p>
+            {error && <ErrorAlert message={error} />}
+          </div>
+
+          <div className="grid grid-cols-6 items-center gap-4">
+            <SelectField
+              label="Theme"
+              value={theme}
+              onValueChange={(v) => {
+                if (!v) return;
+                setTheme(v);
+                if (v !== "base") {
+                  setBackgroundColor("#ffffff");
+                  setPrimaryColor("#ececff");
+                  setFontColor("#1f2937");
+                }
+              }}
+              options={THEMES}
+              triggerClassName="max-w-xs"
+            />
+            <SelectField
+              label="Style"
+              value={look}
+              onValueChange={(v) => v && setLook(v)}
+              options={LOOK}
+              triggerClassName="max-w-xs"
+            />
+
+            <SelectField
+              label="Font Family"
+              value={fontFamily}
+              onValueChange={(v) => v && setFontFamily(v)}
+              options={FONTS}
+            />
+
+            <InputField
+              label="Font Size (px)"
+              type="number"
+              min={10}
+              max={24}
+              value={fontSize}
+              onChange={(e) => setFontSize(Math.max(10, Math.min(24, Number(e.target.value))))}
+            />
+
+            <SelectField
+              label="Edge Curve"
+              value={curve}
+              onValueChange={(v) => v && setCurve(v)}
+              options={CURVES}
+            />
+
+            {look === "handDrawn" && (
+              <div className="space-y-2">
+                <Label>Hand Drawn Seed</Label>
+                <Button
+                  variant="secondary"
+                  className="w-full"
+                  onClick={() => setHandDrawnSeed(Math.floor(Math.random() * 100000))}
+                >
+                  Shuffle Canvas <ShuffleIcon />
+                </Button>
+              </div>
             )}
+          </div>
+
+          <div className="flex items-center gap-4">
+            <div className="space-y-2">
+              <Label className="text-xs">Background Color</Label>
+              <ColorField
+                value={backgroundColor}
+                onValueChange={setBackgroundColor}
+                disabled={theme != "base"}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-xs">Node Color</Label>
+              <ColorField
+                value={primaryColor}
+                onValueChange={setPrimaryColor}
+                disabled={theme != "base"}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-xs">Font Color</Label>
+              <ColorField
+                value={fontColor}
+                onValueChange={setFontColor}
+                disabled={theme != "base"}
+              />
+            </div>
           </div>
 
           {/* Preview */}
           <div className="flex flex-col gap-1.5">
             <div className="flex items-center justify-between">
               <Label>Preview</Label>
-              <DownloadButton
-                label="Download .svg"
-                variant="outline"
-                onClick={downloadSvg}
-                disabled={!lastSvg}
-              />
+              <div className="flex gap-2">
+                <DownloadButton label="SVG" onClick={downloadSvg} disabled={!lastSvg} />
+                <DownloadButton label="PNG" onClick={downloadPng} disabled={!lastSvg} />
+              </div>
             </div>
             <div className="border-border bg-card flex-1 overflow-hidden rounded-xl border">
               <MermaidPreview
                 code={code}
+                theme={theme}
+                look={look}
+                fontFamily={fontFamily}
+                handDrawnSeed={handDrawnSeed}
+                fontSize={fontSize}
+                backgroundColor={backgroundColor}
+                primaryColor={primaryColor}
+                fontColor={fontColor}
+                curve={curve}
                 onErrorAction={handleError}
                 onRenderAction={handleRender}
               />

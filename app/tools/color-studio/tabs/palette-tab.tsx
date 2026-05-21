@@ -118,7 +118,7 @@ export function PaletteTab() {
               </TabsTrigger>
             </TabsList>
             <TabsContent value="css" className="mt-3">
-              <ExportBlock title=":root { … }" code={cssCode} />
+              <ExportBlock title=":root { ... }" code={cssCode} />
             </TabsContent>
             <TabsContent value="tailwind" className="mt-3">
               <ExportBlock title="tailwind.config.js" code={tailwindCode} />
