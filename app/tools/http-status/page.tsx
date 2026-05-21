@@ -103,12 +103,7 @@ export default function HttpStatusPage() {
                         {entry.category}
                       </Badge>
                     </div>
-                    <CopyButton
-                      textToCopy={String(entry.code)}
-                      label={false}
-                      variant="ghost"
-                      size="icon-sm"
-                    />
+                    <CopyButton iconOnly textToCopy={String(entry.code)} />
                   </CardHeader>
 
                   <CardContent className="flex-1">

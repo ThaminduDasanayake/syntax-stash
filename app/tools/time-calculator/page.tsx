@@ -250,7 +250,7 @@ export default function TimeCalculatorPage() {
                         {/* Formatted Time */}
                         <p className="text-foreground font-mono text-sm">{formatted}</p>
                       </div>
-                      <CopyButton label={false} textToCopy={formatted} disabled={!formatted} />
+                      <CopyButton iconOnly textToCopy={formatted} disabled={!formatted} />
                     </CardContent>
                   </Card>
                 );

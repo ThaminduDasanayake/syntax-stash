@@ -22,7 +22,7 @@ export default function AsciiStudioPage() {
 
   return (
     <ToolLayout tool={tool}>
-      <Tabs defaultValue="banner" className="flex flex-col gap-6">
+      <Tabs defaultValue="banner" className="flex min-h-0 flex-1 flex-col gap-6">
         <div className="flex w-full">
           <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="banner" className="tab-trigger">
@@ -48,19 +48,19 @@ export default function AsciiStudioPage() {
           </TabsList>
         </div>
 
-        <TabsContent value="banner" className="mt-0">
+        <TabsContent value="banner" className="min-h-0 flex-1 data-[state=inactive]:hidden">
           <TextBannerTab />
         </TabsContent>
-        <TabsContent value="tree" className="mt-0">
+        <TabsContent value="tree" className="min-h-0 flex-1 data-[state=inactive]:hidden">
           <FolderTreeTab />
         </TabsContent>
-        <TabsContent value="table" className="mt-0">
+        <TabsContent value="table" className="min-h-0 flex-1 data-[state=inactive]:hidden">
           <MarkdownTableTab />
         </TabsContent>
-        <TabsContent value="zalgo" className="mt-0">
+        <TabsContent value="zalgo" className="min-h-0 flex-1 data-[state=inactive]:hidden">
           <ZalgoTextTab />
         </TabsContent>
-        <TabsContent value="image" className="mt-0">
+        <TabsContent value="image" className="min-h-0 flex-1 data-[state=inactive]:hidden">
           <ImageToAsciiTab />
         </TabsContent>
       </Tabs>

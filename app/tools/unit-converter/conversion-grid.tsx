@@ -1,7 +1,6 @@
 import { useConverter } from "@/app/tools/unit-converter/helpers";
 import { UnitDef } from "@/app/tools/unit-converter/types";
 import { Card, CardContent } from "@/components/ui/card";
-import { CopyButton } from "@/components/ui/copy-button";
 import { InputField } from "@/components/ui/input-field";
 
 const ConversionGrid = ({ units }: { units: UnitDef[] }) => {
@@ -24,8 +23,8 @@ const ConversionGrid = ({ units }: { units: UnitDef[] }) => {
                 value={values[unit.id]}
                 onChange={(e) => handleChange(unit.id, e.target.value)}
                 placeholder="0"
+                showCopy
               />
-              <CopyButton label={false} textToCopy={values[unit.id]} disabled={!values[unit.id]} />
             </div>
           </CardContent>
         </Card>

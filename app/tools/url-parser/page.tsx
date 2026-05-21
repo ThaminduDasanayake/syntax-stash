@@ -1,6 +1,6 @@
 "use client";
 
-import { TrashIcon } from "@phosphor-icons/react";
+import { PlusIcon, TrashIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 
 import { ErrorAlert } from "@/components/error-alert";
@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { InputField } from "@/components/ui/input-field";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 const DEFAULT_URL = "https://example.com/path?key1=value1&key2=value2";
@@ -114,13 +114,12 @@ export default function URLParserPage() {
     <ToolLayout tool={tool}>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Input */}
-        <TextAreaField
+        <TextareaGroup
           label="URL Input"
           value={input}
           onChange={(e) => handleInputChange(e.target.value)}
           placeholder="Paste a complete URL here..."
-          rows={6}
-          action={<ClearButton onClick={() => handleInputChange("")} disabled={!input} />}
+          action={<ClearButton size="sm" onClick={() => handleInputChange("")} disabled={!input} />}
         />
 
         {/* Output and Analysis */}
@@ -165,7 +164,11 @@ export default function URLParserPage() {
                     className="flex-1"
                     containerClassName=""
                   />
-                  <Button variant="outline" size="sm" onClick={() => handleRemoveQueryParam(key)}>
+                  <Button
+                    variant="destructive"
+                    size="icon"
+                    onClick={() => handleRemoveQueryParam(key)}
+                  >
                     <TrashIcon weight="duotone" />
                   </Button>
                 </div>
@@ -174,7 +177,7 @@ export default function URLParserPage() {
           </div>
 
           <Button variant="outline" size="sm" onClick={handleAddQueryParam} className="mt-4">
-            + Add Parameter
+            <PlusIcon weight="bold" /> Add Parameter
           </Button>
         </div>
       )}
@@ -182,12 +185,11 @@ export default function URLParserPage() {
       {/* Rebuilt URL Output */}
       {parsed && rebuiltURL && (
         <div className="mt-8 border-t pt-8">
-          <TextAreaField
+          <TextareaGroup
             label="Rebuilt URL"
             value={rebuiltURL}
             readOnly
-            rows={3}
-            action={<CopyButton textToCopy={rebuiltURL} disabled={!rebuiltURL} />}
+            action={<CopyButton iconOnly textToCopy={rebuiltURL} disabled={!rebuiltURL} />}
           />
         </div>
       )}
