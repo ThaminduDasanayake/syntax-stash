@@ -154,11 +154,10 @@ export default function QRGeneratorPage() {
               <SliderField
                 label="Padding (Margin)"
                 value={[margin]}
-                showInput={true}
+                valueLabel={`${margin} px`}
                 onValueChange={(vals) => setMargin(vals[0])}
                 min={0}
                 max={10}
-                suffix="px"
               />
 
               {/* Error Correction */}

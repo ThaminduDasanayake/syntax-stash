@@ -2,8 +2,8 @@
 
 import { CronField, FieldMode } from "@/app/tools/cron-studio/build-constants";
 import { MultiSelect } from "@/app/tools/cron-studio/components/multi-select";
-import { NumberInput } from "@/components/ui/number-input";
 import { SelectField } from "@/components/ui/select-field";
+import { StepperField } from "@/components/ui/stepper-field";
 
 interface FieldEditorProps {
   label: string;
@@ -42,44 +42,41 @@ export function FieldEditor({ label, field, onChange, min, max, options }: Field
 
       {field.mode === "range" && (
         <div className="flex w-full items-center gap-2">
-          <NumberInput
+          <StepperField
             value={field.rangeFrom}
             onValueChange={(v) => onChange({ ...field, rangeFrom: v })}
             min={min}
             max={field.rangeTo}
-            className="text-center font-mono"
+            containerClassName="w-32"
           />
           <span className="text-muted-foreground text-sm">to</span>
-          <NumberInput
+          <StepperField
             value={field.rangeTo}
             onValueChange={(v) => onChange({ ...field, rangeTo: v })}
             min={field.rangeFrom}
             max={max}
-            className="text-center font-mono"
+            containerClassName="w-32"
           />
         </div>
       )}
 
       {field.mode === "step" && (
         <div className="flex items-center gap-2">
-          <NumberInput
+          <span className="text-muted-foreground text-sm">from</span>
+          <StepperField
             value={field.stepFrom}
             onValueChange={(v) => onChange({ ...field, stepFrom: v })}
             min={min}
             max={max}
-            prefix="from"
-            inputGroupClassName="w-40"
-            className="text-center font-mono"
+            containerClassName="w-32"
           />
-
-          <NumberInput
+          <span className="text-muted-foreground text-sm">every</span>
+          <StepperField
             value={field.stepEvery}
             onValueChange={(v) => onChange({ ...field, stepEvery: v })}
             min={1}
             max={max}
-            prefix="every"
-            inputGroupClassName="w-40"
-            className="text-center font-mono"
+            containerClassName="w-32"
           />
         </div>
       )}

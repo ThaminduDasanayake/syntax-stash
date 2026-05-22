@@ -15,10 +15,9 @@ import { LoadingSpinner } from "@/components/loading-spinner";
 import { ToolLayout } from "@/components/tool-layout";
 import { DownloadButton } from "@/components/ui/download-button";
 import { InputField } from "@/components/ui/input-field";
-import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { SliderField } from "@/components/ui/slider-field";
-import { Switch } from "@/components/ui/switch";
+import { SwitchField } from "@/components/ui/switch-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
 import { internalTools } from "@/lib/tools-data";
 
@@ -187,22 +186,16 @@ export default function CodeScreenshotPage() {
             />
 
             <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <Switch id="window" checked={showWindow} onCheckedChange={setShowWindow} />
-                <Label htmlFor="window" className="cursor-pointer text-sm">
-                  Window controls
-                </Label>
-              </div>
-              <div className="flex items-center gap-2">
-                <Switch
-                  id="line-nums"
-                  checked={showLineNumbers}
-                  onCheckedChange={setShowLineNumbers}
-                />
-                <Label htmlFor="line-nums" className="cursor-pointer text-sm">
-                  Line numbers
-                </Label>
-              </div>
+              <SwitchField
+                label="Window controls"
+                checked={showWindow}
+                onCheckedChange={setShowWindow}
+              />
+              <SwitchField
+                label="Line numbers"
+                checked={showLineNumbers}
+                onCheckedChange={setShowLineNumbers}
+              />
             </div>
 
             {exportError && <ErrorAlert message={exportError} />}

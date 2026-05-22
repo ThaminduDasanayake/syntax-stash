@@ -11,12 +11,13 @@ import {
   formatUnifiedDiff,
 } from "@/app/tools/diff-viewer/helpers";
 import { ToolLayout } from "@/components/tool-layout";
+import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { SwitchField } from "@/components/ui/switch-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 function SideBySideLineRow({
@@ -63,15 +64,15 @@ export default function DiffViewerPage() {
       <div className="space-y-6">
         {/* Inputs */}
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          <TextAreaField
+          <TextareaGroup
+            containerClassName="min-h-[450px]"
             label="Original"
             value={original}
             onChange={(e) => setOriginal(e.target.value)}
-            rows={10}
-            className="resize-y font-mono text-xs"
             placeholder="Paste original text here..."
             action={
               <ClearButton
+                size="sm"
                 onClick={() => {
                   setOriginal("");
                 }}
@@ -80,15 +81,15 @@ export default function DiffViewerPage() {
             }
           />
 
-          <TextAreaField
+          <TextareaGroup
+            containerClassName="min-h-[450px]"
             label="Modified"
             value={modified}
             onChange={(e) => setModified(e.target.value)}
-            rows={10}
-            className="resize-y font-mono text-xs"
             placeholder="Paste modified text here..."
             action={
               <ClearButton
+                size="sm"
                 onClick={() => {
                   setModified("");
                 }}
@@ -99,44 +100,47 @@ export default function DiffViewerPage() {
         </div>
 
         {/* Controls */}
-        <div className="flex flex-wrap items-center gap-3">
-          <Tabs value={viewMode} onValueChange={(v) => setViewMode(v as typeof viewMode)}>
-            <TabsList className="grid grid-cols-2">
-              <TabsTrigger className="tab-trigger" value="unified">
-                Unified
-              </TabsTrigger>
-              <TabsTrigger className="tab-trigger" value="side-by-side">
-                Side by side
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
-
-          <div className="flex items-center gap-2">
-            <Switch
-              id="ignore-ws"
-              checked={ignoreWhitespace}
-              onCheckedChange={setIgnoreWhitespace}
-            />
-            <Label htmlFor="ignore-ws" className="cursor-pointer text-sm">
-              Ignore whitespace
-            </Label>
-          </div>
-
-          <div className="ml-auto flex items-center gap-2">
-            {hasChanges && (
-              <div className="flex gap-3 text-xs">
-                <span className="text-green-400">+{stats.added}</span>
-                <span className="text-red-400">−{stats.removed}</span>
-                <span>{stats.unchanged} unchanged</span>
-              </div>
-            )}
-            <CopyButton textToCopy={diffText} disabled={!hasChanges} />
-          </div>
-        </div>
 
         {/* Diff output */}
         {diffLines.length > 0 && (
-          <div className="border-border bg-card overflow-hidden rounded-xl border shadow-sm">
+          <Card className="gap-0 pb-0">
+            <CardHeader className="flex flex-wrap items-center gap-3 border-b">
+              <ButtonGroup className="grid grid-cols-2">
+                <Button
+                  size="sm"
+                  variant={viewMode === "unified" ? "default" : "outline"}
+                  onClick={() => setViewMode("unified")}
+                  className="font-semibold"
+                >
+                  Unified
+                </Button>
+                <Button
+                  size="sm"
+                  variant={viewMode === "side-by-side" ? "default" : "outline"}
+                  onClick={() => setViewMode("side-by-side")}
+                  className="font-semibold"
+                >
+                  Side by side
+                </Button>
+              </ButtonGroup>
+
+              <SwitchField
+                label="Ignore whitespace"
+                checked={ignoreWhitespace}
+                onCheckedChange={setIgnoreWhitespace}
+              />
+
+              <div className="ml-auto flex items-center gap-2">
+                {hasChanges && (
+                  <div className="flex gap-3 text-xs">
+                    <span className="text-green-400">+{stats.added}</span>
+                    <span className="text-red-400">−{stats.removed}</span>
+                    <span>{stats.unchanged} unchanged</span>
+                  </div>
+                )}
+                <CopyButton size="sm" textToCopy={diffText} disabled={!hasChanges} />
+              </div>
+            </CardHeader>
             {!hasChanges && (
               <div className="text-muted-foreground p-4 text-center text-sm">
                 Files are identical.
@@ -151,31 +155,33 @@ export default function DiffViewerPage() {
               </div>
             )}
 
-            {hasChanges && viewMode === "side-by-side" && (
-              <div className="grid grid-cols-2 overflow-x-auto">
-                <div className="border-border border-r">
-                  <div className="border-border bg-muted/30 border-b px-3 py-1.5">
-                    <span className="text-muted-foreground font-mono text-xs font-semibold">
-                      Original
-                    </span>
+            <CardContent className="p-0">
+              {hasChanges && viewMode === "side-by-side" && (
+                <div className="grid grid-cols-2 overflow-x-auto">
+                  <div className="border-border border-r">
+                    <div className="border-border bg-muted/30 border-b px-3 py-1.5">
+                      <span className="text-muted-foreground font-mono text-xs font-semibold">
+                        Original
+                      </span>
+                    </div>
+                    {left.map((item) => (
+                      <SideBySideLineRow key={item.key} line={item.line} showOld showNew={false} />
+                    ))}
                   </div>
-                  {left.map((item) => (
-                    <SideBySideLineRow key={item.key} line={item.line} showOld showNew={false} />
-                  ))}
-                </div>
-                <div>
-                  <div className="border-border bg-muted/30 border-b px-3 py-1.5">
-                    <span className="text-muted-foreground font-mono text-xs font-semibold">
-                      Modified
-                    </span>
+                  <div>
+                    <div className="border-border bg-muted/30 border-b px-3 py-1.5">
+                      <span className="text-muted-foreground font-mono text-xs font-semibold">
+                        Modified
+                      </span>
+                    </div>
+                    {right.map((item) => (
+                      <SideBySideLineRow key={item.key} line={item.line} showOld={false} showNew />
+                    ))}
                   </div>
-                  {right.map((item) => (
-                    <SideBySideLineRow key={item.key} line={item.line} showOld={false} showNew />
-                  ))}
                 </div>
-              </div>
-            )}
-          </div>
+              )}
+            </CardContent>
+          </Card>
         )}
       </div>
     </ToolLayout>

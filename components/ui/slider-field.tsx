@@ -3,20 +3,15 @@
 import { ComponentProps, ComponentRef, forwardRef, ReactNode, useId } from "react";
 
 import { Label } from "@/components/ui/label";
-import { NumberInput } from "@/components/ui/number-input";
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
 
 interface SliderFieldProps extends ComponentProps<typeof Slider> {
   label?: string | ReactNode;
-  showInput?: boolean;
   leftLabel?: string | ReactNode;
   rightLabel?: string | ReactNode;
   containerClassName?: string;
   labelClassName?: string;
-  showStepper?: boolean;
-  suffix?: string;
-  inputClassName?: string;
   valueLabelClassName?: string;
   valueLabel?: string | ReactNode;
 }
@@ -25,7 +20,6 @@ export const SliderField = forwardRef<ComponentRef<typeof Slider>, SliderFieldPr
   (
     {
       label,
-      showInput,
       leftLabel,
       rightLabel,
       valueLabel,
@@ -34,9 +28,6 @@ export const SliderField = forwardRef<ComponentRef<typeof Slider>, SliderFieldPr
       labelClassName,
       id,
       className,
-      showStepper,
-      suffix,
-      inputClassName,
       ...props
     },
     ref,
@@ -47,7 +38,7 @@ export const SliderField = forwardRef<ComponentRef<typeof Slider>, SliderFieldPr
     return (
       <div className={cn("space-y-3", containerClassName)}>
         {/* Top Header Label and Dynamic Value Display */}
-        {(label || showInput) && (
+        {label && (
           <div className="flex items-center justify-between gap-2">
             {label && (
               <Label htmlFor={sliderId} className={labelClassName}>
@@ -58,19 +49,6 @@ export const SliderField = forwardRef<ComponentRef<typeof Slider>, SliderFieldPr
               <span className={cn("text-muted-foreground font-mono text-sm", valueLabelClassName)}>
                 {valueLabel}
               </span>
-            )}
-            {showInput && (
-              <NumberInput
-                min={props.min}
-                max={props.max}
-                step={props.step}
-                value={props.value?.[0] ?? props.defaultValue?.[0] ?? 0}
-                onValueChange={(val) => props.onValueChange?.([val])}
-                inputGroupClassName={cn("min-w-28", inputClassName)}
-                className="text-center font-mono"
-                suffix={suffix}
-                showStepper={showStepper}
-              />
             )}
           </div>
         )}

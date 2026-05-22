@@ -36,7 +36,7 @@ import { DownloadButton } from "@/components/ui/download-button";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SliderField } from "@/components/ui/slider-field";
-import { Switch } from "@/components/ui/switch";
+import { SwitchField } from "@/components/ui/switch-field";
 import { buildAcceptMap } from "@/lib/file-types";
 import { internalTools } from "@/lib/tools-data";
 import { cn } from "@/lib/utils";
@@ -380,13 +380,11 @@ export default function ImageConverterPage() {
               </div>
 
               {targetFormat === "png" && (
-                <div className="flex items-center justify-between">
-                  <Label className="text-sm">Preserve transparency</Label>
-                  <Switch
-                    checked={formatOptions.png.transparency}
-                    onCheckedChange={(v) => updateFormatOption("png", "transparency", v)}
-                  />
-                </div>
+                <SwitchField
+                  label="Preserve transparency"
+                  checked={formatOptions.png.transparency}
+                  onCheckedChange={(v) => updateFormatOption("png", "transparency", v)}
+                />
               )}
 
               {(targetFormat === "jpeg" || targetFormat === "webp" || targetFormat === "avif") && (
@@ -407,13 +405,11 @@ export default function ImageConverterPage() {
               )}
 
               {targetFormat === "ico" && (
-                <div className="flex items-center justify-between">
-                  <Label className="text-sm">Embed multi-size</Label>
-                  <Switch
-                    checked={formatOptions.ico.multiSize}
-                    onCheckedChange={(v) => updateFormatOption("ico", "multiSize", v)}
-                  />
-                </div>
+                <SwitchField
+                  label="Embed multi-size"
+                  checked={formatOptions.ico.multiSize}
+                  onCheckedChange={(v) => updateFormatOption("ico", "multiSize", v)}
+                />
               )}
             </div>
           )}

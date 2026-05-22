@@ -9,10 +9,9 @@ import FileDropzone from "@/components/file-dropzone";
 import { ToolLayout } from "@/components/tool-layout";
 import { CopyButton } from "@/components/ui/copy-button";
 import { DownloadButton } from "@/components/ui/download-button";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
+import { SwitchField } from "@/components/ui/switch-field";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { buildAcceptMap } from "@/lib/file-types";
 import { internalTools } from "@/lib/tools-data";
 
@@ -94,20 +93,12 @@ export default function DocumentExtractorPage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <Switch
-              id="llm-ready-toggle"
-              checked={llmReady}
-              onCheckedChange={setLlmReady}
-              disabled={isLoading}
-            />
-            <Label htmlFor="llm-ready-toggle" className="text-foreground cursor-pointer">
-              LLM-ready Markdown
-            </Label>
-            <span className="text-muted-foreground text-xs">
-              — rich editor, YAML frontmatter, and .md download
-            </span>
-          </div>
+          <SwitchField
+            label="LLM-ready Markdown"
+            checked={llmReady}
+            onCheckedChange={setLlmReady}
+            disabled={isLoading}
+          />
 
           <p className="text-muted-foreground text-xs">
             Note: PDF output is flat text — structural headings and tables are not reconstructed.
@@ -116,7 +107,7 @@ export default function DocumentExtractorPage() {
 
         {/* Output */}
         {llmReady ? (
-          <div className="space-y-4">
+          <div className="space-y-8">
             <div className="bg-muted/70 text-muted-foreground flex items-center gap-3 rounded-lg border px-4 py-3 text-sm">
               <LightbulbIcon weight="duotone" className="size-4.5 text-yellow-500" />
               <p>
@@ -137,7 +128,7 @@ export default function DocumentExtractorPage() {
                 }
               }}
             >
-              <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex flex-wrap items-center justify-between gap-3 pb-3">
                 <TabsList className="w-xs">
                   <TabsTrigger value="rich" className="tab-trigger">
                     <PenNibIcon weight="duotone" className="size-4.5" />
@@ -150,17 +141,13 @@ export default function DocumentExtractorPage() {
                 </TabsList>
 
                 <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2">
-                    <Switch
-                      id="frontmatter-toggle"
-                      checked={withFrontmatter}
-                      onCheckedChange={setWithFrontmatter}
-                      disabled={isLoading}
-                    />
-                    <Label htmlFor="frontmatter-toggle" className="text-foreground cursor-pointer">
-                      Add YAML frontmatter
-                    </Label>
-                  </div>
+                  <SwitchField
+                    label="Add YAML frontmatter"
+                    checked={withFrontmatter}
+                    onCheckedChange={setWithFrontmatter}
+                    disabled={isLoading}
+                  />
+
                   <div className="flex gap-2">
                     <CopyButton textToCopy={output} disabled={!markdown || isLoading} />
                     <DownloadButton
@@ -181,27 +168,29 @@ export default function DocumentExtractorPage() {
               </TabsContent>
 
               <TabsContent value="raw">
-                <TextAreaField
+                <TextareaGroup
+                  autoGrow
+                  label="Raw Markdown"
                   value={markdown}
                   onChange={(e) => {
                     const newValue = e.target.value;
                     setMarkdown(newValue);
                     setParsedMarkdown(newValue);
                   }}
-                  className="field-sizing-content min-h-[18lh]"
+                  className="min-h-[18lh]"
                   placeholder="Raw markdown will appear here..."
                 />
               </TabsContent>
             </Tabs>
           </div>
         ) : (
-          <TextAreaField
+          <TextareaGroup
+            autoGrow
             label="Extracted Text"
             readOnly
             value={plainText}
-            rows={18}
             placeholder="Extracted text will appear here..."
-            className="resize-none text-sm leading-relaxed"
+            className="min-h-50 leading-relaxed"
             action={<CopyButton textToCopy={plainText} disabled={!plainText || isLoading} />}
           />
         )}

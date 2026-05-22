@@ -10,7 +10,7 @@ import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
+import { SwitchField } from "@/components/ui/switch-field";
 import { TextAreaField } from "@/components/ui/textarea-field";
 import { internalTools } from "@/lib/tools-data";
 
@@ -69,22 +69,17 @@ function HtmlToJsxPage() {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <div className="space-y-3">
             <Label>Output mode</Label>
-            <div className="flex items-center gap-2">
-              <Switch id="as-component" checked={asComponent} onCheckedChange={setAsComponent} />
-              <Label htmlFor="as-component" className="cursor-pointer text-sm">
-                Wrap in React component
-              </Label>
-            </div>
-            <div className="flex items-center gap-2">
-              <Switch
-                id="self-close"
-                checked={selfCloseEmpty}
-                onCheckedChange={setSelfCloseEmpty}
-              />
-              <Label htmlFor="self-close" className="cursor-pointer text-sm">
-                Self-close empty elements
-              </Label>
-            </div>
+            <SwitchField
+              label="Wrap in React component"
+              checked={asComponent}
+              onCheckedChange={setAsComponent}
+            />
+
+            <SwitchField
+              label="Self-close empty elements"
+              checked={selfCloseEmpty}
+              onCheckedChange={setSelfCloseEmpty}
+            />
           </div>
 
           <InputField

@@ -49,41 +49,37 @@ export function BoxShadowTab() {
         <SliderField
           label="X Offset"
           value={[xOffset]}
-          showInput={true}
           onValueChange={(vals) => setXOffset(vals[0])}
           min={-50}
           max={50}
-          suffix="px"
+          valueLabel={`${xOffset} px`}
         />
 
         <SliderField
           label="Y Offset"
           value={[yOffset]}
-          showInput={true}
           onValueChange={(vals) => setYOffset(vals[0])}
           min={-50}
           max={50}
-          suffix="px"
+          valueLabel={`${yOffset} px`}
         />
 
         <SliderField
           label="Blur Radius"
           value={[blurRadius]}
-          showInput={true}
           onValueChange={(vals) => setBlurRadius(vals[0])}
           min={0}
           max={50}
-          suffix="px"
+          valueLabel={`${blurRadius} px`}
         />
 
         <SliderField
           label="Spread Radius"
           value={[spreadRadius]}
-          showInput={true}
           onValueChange={(vals) => setSpreadRadius(vals[0])}
           min={-20}
           max={20}
-          suffix="px"
+          valueLabel={`${spreadRadius} px`}
         />
 
         <ColorField
@@ -96,18 +92,17 @@ export function BoxShadowTab() {
         <SliderField
           label="Opacity"
           value={[shadowOpacity]}
-          valueLabel={`${shadowOpacity}%`}
+          valueLabel={`${shadowOpacity} %`}
           onValueChange={(vals) => setShadowOpacity(vals[0])}
           min={0}
           max={1}
           step={0.05}
-          suffix="%"
         />
 
         <div className="space-y-2">
           <Label>Shadow Type</Label>
           <div className="flex justify-between space-y-2">
-            <ButtonGroup>
+            <ButtonGroup className="grid grid-cols-2">
               <Button
                 variant={shadowType === "outset" ? "default" : "outline"}
                 onClick={() => setShadowType("outset")}

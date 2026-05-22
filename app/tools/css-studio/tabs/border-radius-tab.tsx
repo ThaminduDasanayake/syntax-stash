@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";
 import { SliderField } from "@/components/ui/slider-field";
-import { Switch } from "@/components/ui/switch";
+import { SwitchField } from "@/components/ui/switch-field";
 
 export function BorderRadiusTab() {
   const [linked, setLinked] = useState({
@@ -97,20 +97,12 @@ export function BorderRadiusTab() {
           {cornerKeys.map(({ key, label }) => (
             <div key={key} className="space-y-2">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Label
-                    htmlFor={`link-${key}`}
-                    className="text-muted-foreground cursor-pointer text-xs"
-                  >
-                    {linked[key] ? "Linked" : "Split"}
-                  </Label>
-                  <Switch
-                    id={`link-${key}`}
-                    size="sm"
-                    checked={linked[key]}
-                    onCheckedChange={() => toggleLink(key)}
-                  />
-                </div>
+                <SwitchField
+                  size="sm"
+                  label={linked[key] ? "Linked" : "Split"}
+                  checked={linked[key]}
+                  onCheckedChange={() => toggleLink(key)}
+                />
               </div>
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -124,12 +116,10 @@ export function BorderRadiusTab() {
                     }
                     labelClassName="text-xs"
                     value={[Math.min(corners[key][axis], MAX)]}
-                    showInput={true}
                     onValueChange={(vals) => setCorner(key, axis, vals[0])}
-                    inputClassName="min-w-30"
                     min={0}
                     max={MAX}
-                    suffix="px"
+                    valueLabel={`${Math.min(corners[key][axis], MAX)} px`}
                   />
                 ))}
               </div>

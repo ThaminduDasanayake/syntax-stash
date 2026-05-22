@@ -9,12 +9,12 @@ import {
 } from "@/app/tools/jsdoc-generator/helpers";
 import { ErrorAlert } from "@/components/error-alert";
 import { ToolLayout } from "@/components/tool-layout";
+import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { SwitchField } from "@/components/ui/switch-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 // language=text
@@ -48,21 +48,19 @@ export default function JsdocGeneratorPage() {
 
   return (
     <ToolLayout tool={tool}>
-      <div className="space-y-6">
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          <div className="space-y-2">
-            <TextAreaField
-              label="Function signature"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              rows={12}
-              className="resize-y font-mono text-xs"
-              placeholder="Paste a function declaration, arrow function, or method signature..."
-              spellCheck={false}
-              action={<ClearButton onClick={() => setInput("")} />}
-            />
+      <div className="flex h-full min-h-0 flex-1 flex-col space-y-6">
+        <div className="flex min-h-0 flex-1 flex-col space-y-2">
+          <TextareaGroup
+            containerClassName="flex-1 min-h-[300px]"
+            label="Function signature"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Paste a function declaration, arrow function, or method signature..."
+            action={<ClearButton size="sm" onClick={() => setInput("")} />}
+          />
+          <div className="flex shrink-0 items-center justify-between gap-4">
             {parsed && (
-              <p className="text-muted-foreground text-xs">
+              <p className="text-muted-foreground shrink-0 text-xs">
                 Parsed <span className="text-foreground font-mono">{parsed.name}</span>
                 {parsed.params.length > 0 &&
                   ` — ${parsed.params.length} parameter${parsed.params.length === 1 ? "" : "s"}`}
@@ -71,41 +69,49 @@ export default function JsdocGeneratorPage() {
                 {parsed.isGenerator && ", generator"}
               </p>
             )}
-            {error && <ErrorAlert message={error} />}
+          </div>
+          {error && <ErrorAlert message={error} />}
+        </div>
+
+        <div className="flex shrink-0 flex-wrap items-center gap-6 py-1">
+          <div className="flex flex-col space-y-2">
+            <ButtonGroup aria-label="Documentation style selection">
+              <Button
+                variant={style === "jsdoc" ? "default" : "outline"}
+                onClick={() => setStyle("jsdoc")}
+                className="w-20 font-semibold"
+              >
+                JSDoc
+              </Button>
+              <Button
+                variant={style === "tsdoc" ? "default" : "outline"}
+                onClick={() => setStyle("tsdoc")}
+                className="w-20 font-semibold"
+              >
+                TSDoc
+              </Button>
+            </ButtonGroup>
           </div>
 
-          <TextAreaField
-            label="Generated comment"
-            readOnly
-            value={documented}
-            rows={12}
-            className="resize-y font-mono text-xs"
-            placeholder="Generated documentation will appear here..."
-            action={<CopyButton textToCopy={documented} disabled={!documented} />}
+          <SwitchField
+            label="Include @throws"
+            checked={includeThrows}
+            onCheckedChange={setIncludeThrows}
           />
         </div>
 
-        <div className="flex flex-wrap items-center gap-4">
-          <Tabs value={style} onValueChange={(v) => setStyle(v as DocStyle)}>
-            <TabsList className="grid w-40 grid-cols-2">
-              <TabsTrigger value="jsdoc" className="tab-trigger">
-                JSDoc
-              </TabsTrigger>
-              <TabsTrigger value="tsdoc" className="tab-trigger">
-                TSDoc
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
-
-          <div className="flex items-center gap-2">
-            <Switch id="throws" checked={includeThrows} onCheckedChange={setIncludeThrows} />
-            <Label htmlFor="throws" className="cursor-pointer text-sm">
-              Include @throws
-            </Label>
-          </div>
+        <div className="flex min-h-0 flex-1 flex-col">
+          <TextareaGroup
+            label="Generated comment"
+            readOnly
+            value={documented}
+            containerClassName="flex-1 min-h-[300px]"
+            placeholder="Generated documentation will appear here..."
+            action={<CopyButton iconOnly textToCopy={documented} disabled={!documented} />}
+          />
         </div>
 
-        <div className="border-border bg-muted/30 rounded-xl border p-4 text-xs">
+        <div className="border-border bg-muted/30 shrink-0 rounded-xl border p-4 text-xs">
           <p className="text-foreground mb-2 font-semibold">Style differences</p>
           <ul className="text-muted-foreground space-y-1">
             <li>
