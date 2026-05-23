@@ -14,11 +14,10 @@ import {
 } from "@/app/tools/mongo-pipeline-builder/helpers";
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 export default function MongoPipelineBuilderPage() {
@@ -77,10 +76,10 @@ export default function MongoPipelineBuilderPage() {
 
   return (
     <ToolLayout tool={tool}>
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        <div className="space-y-4">
+      <div className="grid h-full min-h-0 flex-1 grid-cols-1 gap-6 lg:grid-cols-2">
+        <div className="flex h-full min-h-0 flex-col space-y-4">
           {/* Add-stage buttons */}
-          <div className="space-y-2">
+          <div className="shrink-0 space-y-2">
             <Label>Add a stage</Label>
             <div className="flex flex-wrap gap-2">
               {ALL_STAGES.map((type) => (
@@ -100,66 +99,53 @@ export default function MongoPipelineBuilderPage() {
 
           {/* Stage cards */}
           {stages.length === 0 ? (
-            <div className="rounded-lg border border-dashed p-8 text-center">
+            <div className="shrink-0 rounded-lg border border-dashed p-8 text-center">
               <p className="text-muted-foreground text-sm">No stages yet. Add one above.</p>
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="flex flex-col space-y-4">
               {stages.map((stage, idx) => {
                 const isValid = validStageIds.has(stage.id);
                 return (
-                  <Card
-                    key={stage.id}
-                    className={`transition-colors ${!isValid ? "border-destructive/50" : ""}`}
-                  >
-                    <CardContent className="space-y-2 p-3">
-                      {/* Card header row */}
-
-                      {/* Stage JSON editor */}
-                      <TextAreaField
-                        label={
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <span className="bg-primary text-primary-foreground flex h-5 w-5 items-center justify-center rounded-full text-xs font-bold">
-                                {idx + 1}
-                              </span>
-                              <span className="font-mono font-semibold">{stage.type}</span>
-                              <span className="text-muted-foreground text-xs">
-                                — {STAGE_DESCRIPTIONS[stage.type]}
-                              </span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              {!isValid && (
-                                <span className="text-destructive text-xs">invalid JSON</span>
-                              )}
-                            </div>
-                          </div>
-                        }
-                        value={stage.value}
-                        onChange={(e) => updateStage(stage.id, e.target.value)}
-                        rows={4}
-                        textClassName="text-xs"
-                        action={
-                          <ClearButton
-                            onClick={() => removeStage(stage.id)}
-                            disabled={!stage.value}
-                            label=""
-                            variant="destructive"
-                            className="w-5"
-                            icon={<TrashIcon />}
-                          />
-                        }
-                      />
-                    </CardContent>
-                  </Card>
+                  <div key={stage.id} className="shrink-0">
+                    <TextareaGroup
+                      autoGrow
+                      label={
+                        <div className="flex items-center gap-2">
+                          <span className="bg-primary text-primary-foreground flex h-5 w-5 items-center justify-center rounded-full text-xs font-bold">
+                            {idx + 1}
+                          </span>
+                          <span className="text-foreground font-mono font-semibold">
+                            {stage.type}
+                          </span>
+                          <span>-</span>
+                          <span className="text-xs">{STAGE_DESCRIPTIONS[stage.type]}</span>
+                          {!isValid && (
+                            <span className="text-destructive text-xs">invalid JSON</span>
+                          )}
+                        </div>
+                      }
+                      value={stage.value}
+                      onChange={(e) => updateStage(stage.id, e.target.value)}
+                      action={
+                        <ClearButton
+                          iconOnly
+                          onClick={() => removeStage(stage.id)}
+                          disabled={!stage.value}
+                          variant="destructive"
+                          icon={<TrashIcon />}
+                        />
+                      }
+                    />
+                  </div>
                 );
               })}
             </div>
           )}
         </div>
 
-        <div className="flex flex-col space-y-4">
-          <TextAreaField
+        <div className="flex h-full min-h-0 w-full flex-col space-y-4">
+          <TextareaGroup
             label={
               hasErrors ? (
                 <span>
@@ -173,17 +159,17 @@ export default function MongoPipelineBuilderPage() {
               )
             }
             value={pipelineJSON}
+            containerClassName="min-h-70"
             readOnly
-            rows={12}
-            action={<CopyButton textToCopy={pipelineJSON} disabled={!pipelineJSON} />}
+            action={<CopyButton iconOnly textToCopy={pipelineJSON} disabled={!pipelineJSON} />}
           />
 
-          <TextAreaField
+          <TextareaGroup
             label="Node.js / Mongoose Snippet"
             value={nodeSnippet}
+            containerClassName="min-h-70"
             readOnly
-            rows={12}
-            action={<CopyButton textToCopy={nodeSnippet} disabled={!nodeSnippet} />}
+            action={<CopyButton iconOnly textToCopy={nodeSnippet} disabled={!nodeSnippet} />}
           />
         </div>
       </div>

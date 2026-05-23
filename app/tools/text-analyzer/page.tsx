@@ -6,7 +6,7 @@ import { AnalyzerMetrics, AnalyzerStat } from "@/app/tools/text-analyzer/types";
 import { ToolLayout } from "@/components/tool-layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { ClearButton } from "@/components/ui/clear-button";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 function analyze(text: string): AnalyzerMetrics {
@@ -82,41 +82,38 @@ export default function AnalyzerPage() {
 
   return (
     <ToolLayout tool={tool}>
-      <div className="space-y-8">
-        <TextAreaField
+      <div className="flex h-full min-h-0 w-full flex-1 flex-col space-y-4">
+        <TextareaGroup
           label="Input Text"
           value={text}
+          containerClassName="flex-1 min-h-[400px]"
           onChange={(e) => setText(e.target.value)}
           placeholder="Type or paste text to analyze..."
-          rows={12}
-          className="resize-none"
           action={<ClearButton onClick={() => setText("")} disabled={!text} />}
         />
 
         {/* Metric cards */}
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
+        <div className="grid shrink-0 grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
           {stats.map((s) => (
             <Card key={s.label} className="bg-background">
               <CardContent>
-                <p className="text-muted-foreground mb-2 text-[10px] font-semibold tracking-wider uppercase">
+                <p className="text-muted-foreground mb-2 text-xs font-semibold tracking-wider uppercase">
                   {s.label}
                 </p>
                 <p className="text-primary font-mono text-3xl tabular-nums">
                   {s.value.toLocaleString()}
                 </p>
-                {s.hint && (
-                  <p className="text-muted-foreground mt-1 font-mono text-[10px]">{s.hint}</p>
-                )}
+                {s.hint && <p className="text-muted-foreground mt-1 font-mono text-xs">{s.hint}</p>}
               </CardContent>
             </Card>
           ))}
         </div>
 
         {/* Additional metrics */}
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+        <div className="grid shrink-0 grid-cols-2 gap-4 md:grid-cols-3">
           <Card className="bg-background">
             <CardContent>
-              <p className="text-muted-foreground mb-2 text-[10px] font-semibold tracking-wider uppercase">
+              <p className="text-muted-foreground mb-2 text-xs font-semibold tracking-wider uppercase">
                 Paragraphs
               </p>
               <p className="text-primary font-mono text-3xl tabular-nums">{paragraphs}</p>
@@ -124,20 +121,20 @@ export default function AnalyzerPage() {
           </Card>
           <Card className="bg-background">
             <CardContent>
-              <p className="text-muted-foreground mb-2 text-[10px] font-semibold tracking-wider uppercase">
+              <p className="text-muted-foreground mb-2 text-xs font-semibold tracking-wider uppercase">
                 Reading Time
               </p>
               <p className="text-primary font-mono text-2xl tabular-nums">{readingTime}</p>
-              <p className="text-muted-foreground mt-1 font-mono text-[10px]">@200 WPM</p>
+              <p className="text-muted-foreground mt-1 font-mono text-xs">@200 WPM</p>
             </CardContent>
           </Card>
           <Card className="bg-background">
             <CardContent>
-              <p className="text-muted-foreground mb-2 text-[10px] font-semibold tracking-wider uppercase">
+              <p className="text-muted-foreground mb-2 text-xs font-semibold tracking-wider uppercase">
                 Speaking Time
               </p>
               <p className="text-primary font-mono text-2xl tabular-nums">{speakingTime}</p>
-              <p className="text-muted-foreground mt-1 font-mono text-[10px]">@130 WPM</p>
+              <p className="text-muted-foreground mt-1 font-mono text-xs">@130 WPM</p>
             </CardContent>
           </Card>
         </div>

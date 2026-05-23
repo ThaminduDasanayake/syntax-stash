@@ -9,21 +9,29 @@ import { cn } from "@/lib/utils";
 interface ClearButtonProps extends ComponentProps<typeof Button> {
   label?: string;
   icon?: ReactNode | null;
+  iconOnly?: boolean;
 }
 
 export const ClearButton = ({
   label = "Clear",
   icon = <EraserIcon className="size-4.5" />,
+  iconOnly = false,
   className,
-  variant = "outline",
-  size = "default",
+  variant,
+  size,
   disabled,
   ...props
 }: ClearButtonProps) => {
+
+  const finalVariant = variant || (iconOnly ? "ghost" : "outline");
+
+  const finalSize = size || (iconOnly ? "icon-sm" : "default");
+
   return (
+
     <Button
-      variant={variant}
-      size={size}
+      variant={finalVariant}
+      size={finalSize}
       aria-disabled={disabled}
       tabIndex={disabled ? -1 : undefined}
       className={cn(
@@ -34,7 +42,7 @@ export const ClearButton = ({
       {...props}
     >
       {icon && icon}
-      {label}
+      {!iconOnly && label}
     </Button>
   );
 };

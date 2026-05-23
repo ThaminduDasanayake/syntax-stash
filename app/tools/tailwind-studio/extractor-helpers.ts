@@ -102,9 +102,8 @@ export function guessSemanticName(classString: string): string {
   return "ui-element";
 }
 
-export const SAMPLE_JSX = `
-
-export function ProductCard({ product, onAddToCart }) {
+// language=text
+export const SAMPLE_JSX = `export function ProductCard({ product, onAddToCart }) {
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/20">
       <div className="relative aspect-square overflow-hidden bg-zinc-800">

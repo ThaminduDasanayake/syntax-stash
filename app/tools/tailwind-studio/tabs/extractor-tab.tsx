@@ -16,7 +16,7 @@ import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 
 export function ExtractorTab() {
   const [source, setSource] = useState(SAMPLE_JSX);
@@ -35,22 +35,21 @@ export function ExtractorTab() {
   const activeValue = tab === "css" ? generatedCss : refactoredJsx;
 
   return (
-    <div className="space-y-10">
-      <div className="space-y-2">
-        <TextAreaField
+    <div className="flex h-full min-h-0 w-full flex-1 flex-col space-y-8">
+      <div className="flex h-full min-h-0 w-full flex-1 flex-col space-y-4">
+        <TextareaGroup
           label="React / JSX input"
           value={source}
+          containerClassName="flex-1 min-h-[400px]"
           onChange={(e) => {
             const newSource = e.target.value;
             setSource(newSource);
             setEntries((prev) => reconcileEntries(prev, extractClasses(newSource)));
           }}
-          rows={22}
-          className="resize-y text-xs"
           placeholder="Paste your JSX here..."
-          spellCheck={false}
           action={
             <ClearButton
+              size="sm"
               onClick={() => {
                 setSource("");
                 setEntries((prev) => reconcileEntries(prev, extractClasses("")));
@@ -68,41 +67,40 @@ export function ExtractorTab() {
         </p>
       </div>
 
-      <div className="space-y-2">
+      <div className="flex h-full min-h-0 w-full flex-1 flex-col">
         <Tabs
           value={tab}
           onValueChange={(v) => setTab(v as "css" | "jsx")}
           className="flex flex-col"
         >
-          <div className="gap- flex items-center justify-between">
-            <TabsList>
-              <TabsTrigger value="css" className="tab-trigger w-36">
-                Generated CSS
-              </TabsTrigger>
-              <TabsTrigger value="jsx" className="tab-trigger w-36">
-                Refactored JSX
-              </TabsTrigger>
-            </TabsList>
-            <CopyButton textToCopy={activeValue} disabled={!activeValue} />
-          </div>
+          <TabsList>
+            <TabsTrigger value="css" className="tab-trigger w-36">
+              Generated CSS
+            </TabsTrigger>
+            <TabsTrigger value="jsx" className="tab-trigger w-36">
+              Refactored JSX
+            </TabsTrigger>
+          </TabsList>
 
           <TabsContent value="css">
-            <TextAreaField
+            <TextareaGroup
+              label="Generated CSS"
               readOnly
+              containerClassName="flex-1 min-h-[400px]"
               value={generatedCss}
-              rows={22}
-              className="resize-y text-xs"
               placeholder={`Generated @layer components { ... } will appear here.\nPaste some JSX in the input pane to get started.`}
+              action={<CopyButton iconOnly textToCopy={activeValue} disabled={!activeValue} />}
             />
           </TabsContent>
 
           <TabsContent value="jsx">
-            <TextAreaField
+            <TextareaGroup
+              label="Refactored JSX"
               readOnly
+              containerClassName="flex-1 min-h-[400px]"
               value={refactoredJsx}
-              rows={22}
-              className="resize-y text-xs"
-              placeholder="Refactored JSX - with semantic class names replacing the long inline strings — will appear here."
+              placeholder="Refactored JSX - with semantic class names replacing the long inline strings - will appear here."
+              action={<CopyButton iconOnly textToCopy={activeValue} disabled={!activeValue} />}
             />
           </TabsContent>
         </Tabs>

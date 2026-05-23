@@ -7,7 +7,7 @@ import { ErrorAlert } from "@/components/error-alert";
 import { ToolLayout } from "@/components/tool-layout";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 import { optimizeSvg } from "./actions";
@@ -55,13 +55,13 @@ export default function SvgOptimizerPage() {
   return (
     <ToolLayout tool={tool}>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        <TextAreaField
+        <TextareaGroup
           label="Input SVG"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder={PLACEHOLDER}
-          className="h-120 resize-none text-xs"
-          action={<ClearButton onClick={() => setInput("")} disabled={!input} />}
+          containerClassName="h-120"
+          action={<ClearButton size="sm" onClick={() => setInput("")} disabled={!input} />}
         />
 
         <div className="flex flex-col gap-2">
@@ -70,7 +70,7 @@ export default function SvgOptimizerPage() {
               message={result.error || "An unknown error occurred during optimization."}
             />
           ) : (
-            <TextAreaField
+            <TextareaGroup
               label={
                 <>
                   Optimized SVG
@@ -84,8 +84,14 @@ export default function SvgOptimizerPage() {
               value={hasResult ? result.svg : ""}
               readOnly
               placeholder="Optimized SVG will appear here..."
-              className="h-120 resize-none text-xs"
-              action={<CopyButton textToCopy={hasResult ? result.svg : ""} disabled={!hasResult} />}
+              containerClassName="h-120"
+              action={
+                <CopyButton
+                  iconOnly
+                  textToCopy={hasResult ? result.svg : ""}
+                  disabled={!hasResult}
+                />
+              }
             />
           )}
 

@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { SelectField } from "@/components/ui/select-field";
 import { SliderField } from "@/components/ui/slider-field";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 import { cn } from "@/lib/utils";
 
@@ -41,34 +41,44 @@ export default function MockDataPage() {
 
   return (
     <ToolLayout tool={tool}>
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[260px_1fr]">
-        <div className="space-y-6">
-          <SelectField
-            label="Schema"
-            options={SCHEMA_DETAILS}
-            value={schema}
-            onValueChange={(v) => v && setSchema(v as SchemaId)}
-          />
-
-          <SliderField
-            label="Count (1–50)"
-            valueLabel={count}
-            value={[count]}
-            onValueChange={(vals) => setCount(vals[0])}
-            min={1}
-            max={50}
-          />
-
-          <div className="flex flex-col gap-4">
-            <Button onClick={handleRegenerate} disabled={isGenerating} className="font-semibold">
-              <ArrowsClockwiseIcon weight="bold" className={cn(isGenerating && "animate-spin")} />
-              {isGenerating ? "Regenerating..." : "Regenerate"}
-            </Button>
-            <CopyButton className="text-sm" textToCopy={json} disabled={!json} />
+      <div className="flex h-full min-h-0 w-full flex-1 flex-col space-y-4">
+        <div className="flex shrink-0 flex-col space-y-4">
+          <div className="flex w-full flex-col items-center justify-between gap-4 sm:flex-row sm:gap-6">
+            <SelectField
+              label="Schema"
+              options={SCHEMA_DETAILS}
+              value={schema}
+              containerClassName="w-full"
+              onValueChange={(v) => v && setSchema(v as SchemaId)}
+            />
+            <SliderField
+              label="Count (1–50)"
+              valueLabel={count}
+              value={[count]}
+              containerClassName="w-full"
+              onValueChange={(vals) => setCount(vals[0])}
+              min={1}
+              max={50}
+            />
           </div>
+          <Button
+            onClick={handleRegenerate}
+            disabled={isGenerating}
+            className="max-w-48 font-semibold"
+          >
+            <ArrowsClockwiseIcon weight="bold" className={cn(isGenerating && "animate-spin")} />
+            {isGenerating ? "Regenerating..." : "Regenerate"}
+          </Button>
         </div>
 
-        <TextAreaField label="Output" readOnly value={json} rows={20} />
+        <div className="flex min-h-0 flex-1 flex-col">
+          <TextareaGroup
+            label="Output"
+            readOnly
+            value={json}
+            action={<CopyButton iconOnly textToCopy={json} disabled={!json} />}
+          />
+        </div>
       </div>
     </ToolLayout>
   );

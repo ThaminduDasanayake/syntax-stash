@@ -6,14 +6,14 @@ import { useEffect, useState } from "react";
 import { ErrorAlert } from "@/components/error-alert";
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { CheckboxField } from "@/components/ui/checkbox-field";
 import { ClearButton } from "@/components/ui/clear-button";
 import { ColorField } from "@/components/ui/color-field";
 import { DownloadButton } from "@/components/ui/download-button";
 import { Label } from "@/components/ui/label";
 import { SliderField } from "@/components/ui/slider-field";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 type ErrorCorrectionLevel = "L" | "M" | "Q" | "H";
@@ -124,24 +124,29 @@ export default function QRGeneratorPage() {
     <ToolLayout tool={tool}>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/*  Inputs & Options */}
-        <div className="space-y-8">
+        <div className="flex h-full min-h-0 w-full flex-1 flex-col space-y-4">
           {/* Content Section */}
-          <div className="space-y-3">
+          <div className="flex min-h-0 flex-1 flex-col space-y-3">
             <div className="flex flex-wrap gap-2">
               {TEMPLATES.map((t) => (
-                <Button key={t.label} variant="outline" size="sm" onClick={() => setText(t.value)}>
+                <Button
+                  key={t.label}
+                  variant={t.value === text ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setText(t.value)}
+                >
                   {t.label}
                 </Button>
               ))}
             </div>
 
-            <TextAreaField
+            <TextareaGroup
               label="Content"
               value={text}
+              containerClassName="flex-1 min-h-[150px]"
               onChange={(e) => setText(e.target.value)}
               placeholder="https://example.com"
-              rows={6}
-              action={<ClearButton onClick={() => setText("")} disabled={!text} />}
+              action={<ClearButton size="sm" onClick={() => setText("")} disabled={!text} />}
             />
           </div>
 
@@ -166,10 +171,11 @@ export default function QRGeneratorPage() {
                 <div className="flex gap-2">
                   {(["L", "M", "Q", "H"] as const).map((level) => (
                     <Button
+                      size="icon"
                       key={level}
                       variant={errorLevel === level ? "default" : "outline"}
                       onClick={() => setErrorLevel(level)}
-                      className="h-8 w-12 font-mono text-xs"
+                      className="font-mono"
                     >
                       {level}
                     </Button>
@@ -201,9 +207,9 @@ export default function QRGeneratorPage() {
         </div>
 
         {/* Right — Preview */}
-        <div className="space-y-4">
-          <Label className="text-foreground">Preview</Label>
-          <Card className="flex min-h-80 items-center justify-center">
+        <div>
+          <Card>
+            <CardHeader>Preview</CardHeader>
             <CardContent className="flex w-full flex-col items-center gap-6 p-6">
               {dataUrl ? (
                 <div

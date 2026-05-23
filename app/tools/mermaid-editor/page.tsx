@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowsClockwiseIcon, ShuffleIcon } from "@phosphor-icons/react";
+import { ShuffleIcon } from "@phosphor-icons/react";
 import { useCallback, useState } from "react";
 
 import { CURVES, FONTS, LOOK, THEMES } from "@/app/tools/mermaid-editor/data";
@@ -17,10 +17,10 @@ import { ClearButton } from "@/components/ui/clear-button";
 import { ColorField } from "@/components/ui/color-field";
 import { CopyButton } from "@/components/ui/copy-button";
 import { DownloadButton } from "@/components/ui/download-button";
-import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { StepperField } from "@/components/ui/stepper-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 export default function MermaidEditorPage() {
@@ -129,25 +129,22 @@ export default function MermaidEditorPage() {
         <div className="flex flex-col gap-6">
           {/* Editor */}
           <div className="flex flex-col gap-1.5">
-            <TextAreaField
+            <TextareaGroup
+              autoGrow
               label="Mermaid source"
               value={code}
               onChange={(e) => setCode(e.target.value)}
-              className="resize-none"
               placeholder="Write mermaid diagram here..."
-              rows={20}
-              spellCheck={false}
               action={
                 <div className="flex gap-2">
                   <ClearButton
-                    icon={<ArrowsClockwiseIcon />}
-                    label="Reset"
+                    size="sm"
                     onClick={() => {
-                      setCode(DIAGRAM_TEMPLATES[diagramType]);
+                      setCode("");
                       setError(null);
                     }}
                   />
-                  <CopyButton textToCopy={code} />
+                  <CopyButton size="sm" textToCopy={code} disabled={!code} />
                 </div>
               }
             />
@@ -185,13 +182,12 @@ export default function MermaidEditorPage() {
               options={FONTS}
             />
 
-            <InputField
+            <StepperField
               label="Font Size (px)"
-              type="number"
               min={10}
               max={24}
               value={fontSize}
-              onChange={(e) => setFontSize(Math.max(10, Math.min(24, Number(e.target.value))))}
+              onValueChange={(val) => setFontSize(Math.max(10, Math.min(24, Number(val))))}
             />
 
             <SelectField
@@ -216,32 +212,26 @@ export default function MermaidEditorPage() {
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="space-y-2">
-              <Label className="text-xs">Background Color</Label>
-              <ColorField
-                value={backgroundColor}
-                onValueChange={setBackgroundColor}
-                disabled={theme != "base"}
-              />
-            </div>
+            <ColorField
+              label="Background Color (Base Theme)"
+              value={backgroundColor}
+              onValueChange={setBackgroundColor}
+              disabled={theme != "base"}
+            />
 
-            <div className="space-y-2">
-              <Label className="text-xs">Node Color</Label>
-              <ColorField
-                value={primaryColor}
-                onValueChange={setPrimaryColor}
-                disabled={theme != "base"}
-              />
-            </div>
+            <ColorField
+              label="Node Color (Base Theme)"
+              value={primaryColor}
+              onValueChange={setPrimaryColor}
+              disabled={theme != "base"}
+            />
 
-            <div className="space-y-2">
-              <Label className="text-xs">Font Color</Label>
-              <ColorField
-                value={fontColor}
-                onValueChange={setFontColor}
-                disabled={theme != "base"}
-              />
-            </div>
+            <ColorField
+              label="Font Color (Base Theme)"
+              value={fontColor}
+              onValueChange={setFontColor}
+              disabled={theme != "base"}
+            />
           </div>
 
           {/* Preview */}

@@ -25,6 +25,7 @@ export const ColorField = forwardRef<HTMLInputElement, ColorFieldProps>(
       value,
       onValueChange,
       id,
+      disabled,
       ...props
     },
     ref,
@@ -40,6 +41,7 @@ export const ColorField = forwardRef<HTMLInputElement, ColorFieldProps>(
           <Input
             type="color"
             value={safeColor}
+            disabled={disabled}
             onChange={(e) => onValueChange(e.target.value)}
             className="absolute -top-2 -left-2 h-14 w-14 cursor-pointer border-0 p-0"
           />
@@ -49,6 +51,7 @@ export const ColorField = forwardRef<HTMLInputElement, ColorFieldProps>(
           ref={ref}
           id={inputId}
           value={value}
+          disabled={disabled}
           onChange={(e) => {
             let val = e.target.value;
             if (!val.startsWith("#")) val = "#" + val;

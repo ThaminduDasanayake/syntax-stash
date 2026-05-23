@@ -2,6 +2,7 @@ import { CodeIcon, EyeIcon, FileHtmlIcon, PenIcon } from "@phosphor-icons/react"
 import { Dispatch, SetStateAction } from "react";
 
 import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { DownloadButton } from "@/components/ui/download-button";
 
 type EditorMode = "raw" | "rich";
@@ -34,35 +35,35 @@ export function Header({
   handleDownloadHtml,
 }: HeaderProps) {
   return (
-    <div className="flex flex-wrap items-center gap-2">
-      <div className="bg-card divide-border flex h-8 divide-x rounded-lg border text-xs">
-        <span className="flex items-center px-4">{stats.words} words</span>
-        <span className="flex items-center px-4">{stats.chars} chars</span>
-        <span className="flex items-center px-4">{stats.lines} lines</span>
-      </div>
+    <div className="grid grid-cols-2 items-center gap-4">
+      <div className="flex items-center justify-between">
+        <div className="bg-card divide-border flex h-8 divide-x rounded-lg border text-xs">
+          <span className="flex items-center px-4">{stats.words} words</span>
+          <span className="flex items-center px-4">{stats.chars} chars</span>
+          <span className="flex items-center px-4">{stats.lines} lines</span>
+        </div>
 
-      <div className="flex items-center rounded-lg">
-        <Button
-          variant={editorMode === "raw" ? "default" : "secondary"}
-          className="border-ring rounded-r-none border-r"
-          onClick={() => setEditorMode("raw")}
-        >
-          <CodeIcon weight="duotone" />
-          Raw
-        </Button>
-        <Button
-          variant={editorMode === "rich" ? "default" : "secondary"}
-          className="border-ring rounded-l-none"
-          onClick={() => setEditorMode("rich")}
-        >
-          <PenIcon weight="duotone" />
-          Rich
-        </Button>
+        <ButtonGroup className="grid w-48 grid-cols-2">
+          <Button
+            variant={editorMode === "raw" ? "default" : "secondary"}
+            className="border-ring rounded-r-none border-r"
+            onClick={() => setEditorMode("raw")}
+          >
+            <CodeIcon weight="duotone" />
+            Raw
+          </Button>
+          <Button
+            variant={editorMode === "rich" ? "default" : "secondary"}
+            className="border-ring rounded-l-none"
+            onClick={() => setEditorMode("rich")}
+          >
+            <PenIcon weight="duotone" />
+            Rich
+          </Button>
+        </ButtonGroup>
       </div>
 
       <div className="ml-auto flex items-center gap-2">
-        {/* Editor mode toggle */}
-
         <Button variant="outline" className="w-36" onClick={() => setShowHtml((v) => !v)}>
           {showHtml ? (
             <>

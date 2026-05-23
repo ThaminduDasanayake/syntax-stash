@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import { ToolLayout } from "@/components/tool-layout";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { CheckboxField } from "@/components/ui/checkbox-field";
 import { ClearButton } from "@/components/ui/clear-button";
 import { ColorField } from "@/components/ui/color-field";
@@ -12,7 +12,7 @@ import { DownloadButton } from "@/components/ui/download-button";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 export default function SvgPathViewerPage() {
@@ -72,16 +72,17 @@ ${showBackground ? `  <rect width="100%" height="100%" fill="${bgColor}" rx="${b
   return (
     <ToolLayout tool={tool}>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        <div className="space-y-6">
+        <div className="flex h-full min-h-0 w-full flex-1 flex-col space-y-6">
           {/* SVG Path Input */}
-          <div className="space-y-2">
-            <TextAreaField
+          <div className="flex h-full min-h-0 w-full flex-1 flex-col space-y-2">
+            <TextareaGroup
               label="SVG Path (d attribute)"
               value={pathData}
               onChange={(e) => setPathData(e.target.value)}
               placeholder={"M10 10 H 90 V 90 H 10 Z\n\nExample path data..."}
-              rows={12}
-              action={<ClearButton onClick={() => setPathData("")} disabled={!pathData} />}
+              action={
+                <ClearButton size="sm" onClick={() => setPathData("")} disabled={!pathData} />
+              }
             />
             <p className="text-muted-foreground text-xs">
               Paste the content from the SVG&apos;s d attribute. Supports all SVG path commands (M,
@@ -208,26 +209,21 @@ ${showBackground ? `  <rect width="100%" height="100%" fill="${bgColor}" rx="${b
           {/* SVG Code Export */}
           <div className="space-y-2">
             <Label className="text-foreground text-sm font-medium">SVG Code</Label>
-            <div className="bg-background border-border text-foreground max-h-32 overflow-x-auto rounded border p-3 font-mono text-xs">
+            <div className="bg-card border-border text-foreground max-h-32 overflow-x-auto rounded-lg border p-3 font-mono text-xs">
               <pre className="wrap-break-word whitespace-pre-wrap">{svgCode}</pre>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
             <CopyButton textToCopy={svgCode} disabled={!svgCode} />
-            <DownloadButton
-              label="Download SVG"
-              variant="outline"
-              onClick={downloadSvg}
-              disabled={!svgCode}
-            />
+            <DownloadButton label="Download SVG" onClick={downloadSvg} disabled={!svgCode} />
           </div>
         </div>
 
         {/* Reference Section */}
-        <div className="bg-muted/30 border-border col-span-2 mt-8 mb-8 space-y-3 rounded-lg border p-4">
-          <h4 className="text-foreground text-sm font-semibold">SVG Path Commands Reference</h4>
-          <div className="text-muted-foreground grid grid-cols-1 gap-4 font-mono text-xs md:grid-cols-2 lg:grid-cols-4">
+        <Card className="col-span-2">
+          <CardHeader>SVG Path Commands Reference</CardHeader>
+          <CardContent className="text-muted-foreground grid grid-cols-1 gap-4 font-mono text-xs md:grid-cols-2 lg:grid-cols-4">
             <div className="space-y-1">
               <p>
                 <span className="text-foreground font-semibold">M/m</span> Move to
@@ -276,8 +272,8 @@ ${showBackground ? `  <rect width="100%" height="100%" fill="${bgColor}" rx="${b
               </p>
               <p>Line to 20,20</p>
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </div>
     </ToolLayout>
   );

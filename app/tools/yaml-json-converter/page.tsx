@@ -6,13 +6,14 @@ import YAML from "yaml";
 
 import { ErrorAlert } from "@/components/error-alert";
 import { ToolLayout } from "@/components/tool-layout";
+import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { DownloadButton } from "@/components/ui/download-button";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 import { downloadStringAsFile } from "@/lib/utils";
 
@@ -97,16 +98,22 @@ export default function YAMLJSONConverterPage() {
     <ToolLayout tool={tool}>
       {/* Controls */}
       <div className="mb-6 flex flex-wrap items-end gap-8">
-        <Tabs value={direction} onValueChange={handleDirectionChange}>
-          <TabsList className="grid w-full min-w-xs grid-cols-2">
-            <TabsTrigger value="yaml-to-json" className="tab-trigger">
-              YAML <ArrowRightIcon weight="bold" /> JSON
-            </TabsTrigger>
-            <TabsTrigger value="json-to-yaml" className="tab-trigger">
-              JSON <ArrowRightIcon weight="bold" /> YAML
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
+        <ButtonGroup className="grid grid-cols-2">
+          <Button
+            variant={direction === "yaml-to-json" ? "default" : "outline"}
+            onClick={() => handleDirectionChange("yaml-to-json")}
+            className="font-semibold"
+          >
+            YAML <ArrowRightIcon weight="bold" /> JSON
+          </Button>
+          <Button
+            variant={direction === "json-to-yaml" ? "default" : "outline"}
+            onClick={() => handleDirectionChange("json-to-yaml")}
+            className="font-semibold"
+          >
+            JSON <ArrowRightIcon weight="bold" /> YAML
+          </Button>
+        </ButtonGroup>
 
         <SelectField
           label="Indentation"
@@ -119,14 +126,13 @@ export default function YAMLJSONConverterPage() {
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Input */}
-        <TextAreaField
+        <TextareaGroup
           label={isYamlToJson ? "YAML Input" : "JSON Input"}
           value={input}
+          containerClassName="flex-1 min-h-[250px]"
           onChange={(e) => setInput(e.target.value)}
           placeholder={`Paste your ${isYamlToJson ? "YAML" : "JSON"} here...`}
-          rows={22}
-          action={<ClearButton onClick={() => setInput("")} disabled={!input} />}
-          className="font-mono text-xs"
+          action={<ClearButton size="sm" onClick={() => setInput("")} disabled={!input} />}
         />
 
         {/* Output */}
@@ -137,23 +143,18 @@ export default function YAMLJSONConverterPage() {
               <ErrorAlert message={error} />
             </div>
           ) : (
-            <TextAreaField
+            <TextareaGroup
               label={isYamlToJson ? "JSON Output" : "YAML Output"}
               value={output}
               readOnly
-              rows={22}
+              containerClassName="flex-1 min-h-[400px]"
               placeholder="Output will appear here..."
               action={
                 <div className="flex gap-2">
-                  <CopyButton textToCopy={output} disabled={!output} />
-                  <DownloadButton
-                    onClick={handleDownload}
-                    disabled={!output}
-                    label={`Download ${ext.toUpperCase()}`}
-                  />
+                  <DownloadButton iconOnly onClick={handleDownload} disabled={!output} />
+                  <CopyButton iconOnly textToCopy={output} disabled={!output} />
                 </div>
               }
-              className="font-mono text-xs"
             />
           )}
         </div>

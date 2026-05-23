@@ -7,7 +7,7 @@ import { ToolLayout } from "@/components/tool-layout";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { SelectField } from "@/components/ui/select-field";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 type SqlDialect = "sql" | "mysql" | "postgresql" | "sqlite" | "bigquery" | "transactsql";
@@ -65,46 +65,47 @@ export default function SqlFormatterPage() {
 
   return (
     <ToolLayout tool={tool}>
-      <div className="mb-4 grid grid-cols-1 gap-8 lg:grid-cols-2">
-        <SelectField
-          label="SQL Dialect"
-          value={dialect}
-          onValueChange={(v) => setDialect(v as SqlDialect)}
-          options={DIALECTS}
-        />
-      </div>
-
-      {/* Editor Grid */}
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {/* Left — Input */}
-        <TextAreaField
-          label="Raw SQL"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Paste your unformatted SQL here..."
-          rows={20}
-          action={
-            <ClearButton
-              onClick={() => {
-                setInput("");
-              }}
-              disabled={!input}
-            />
-          }
-        />
-
-        {/* Right — Output */}
-        <div className="space-y-4">
-          {error && <ErrorAlert message={error} />}
-
-          <TextAreaField
-            label="Formatted SQL"
-            readOnly
-            value={output}
-            rows={20}
-            placeholder={!input ? "Paste unformatted SQL on the left to format SQL" : ""}
-            action={<CopyButton textToCopy={output} disabled={!!error || !output} />}
+      <div className="flex h-full min-h-0 w-full flex-1 flex-col space-y-4">
+        <div className="grid shrink-0 grid-cols-1 gap-8 lg:grid-cols-2">
+          <SelectField
+            label="SQL Dialect"
+            value={dialect}
+            onValueChange={(v) => setDialect(v as SqlDialect)}
+            options={DIALECTS}
           />
+        </div>
+
+        {/* Editor Grid */}
+
+        <div className="grid min-h-0 flex-1 grid-cols-1 gap-6 lg:grid-cols-2">
+          <TextareaGroup
+            label="Raw SQL"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Paste your unformatted SQL here..."
+            action={
+              <ClearButton
+                size="sm"
+                onClick={() => {
+                  setInput("");
+                }}
+                disabled={!input}
+              />
+            }
+          />
+
+          {/* Right — Output */}
+          <div className="space-y-4">
+            {error && <ErrorAlert message={error} />}
+
+            <TextareaGroup
+              label="Formatted SQL"
+              readOnly
+              value={output}
+              placeholder={!input ? "Paste unformatted SQL on the left to format SQL" : ""}
+              action={<CopyButton iconOnly textToCopy={output} disabled={!!error || !output} />}
+            />
+          </div>
         </div>
       </div>
     </ToolLayout>

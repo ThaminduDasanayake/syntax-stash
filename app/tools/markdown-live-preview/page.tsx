@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 import { cn } from "@/lib/utils";
 
@@ -117,22 +117,15 @@ ${renderedHtml}
         >
           {/* Left Column (or Full Width Column) - The Editor */}
           {editorMode === "raw" ? (
-            <TextAreaField
+            <TextareaGroup
+              autoGrow
               label="Editor"
               value={markdown}
               onChange={(e) => setMarkdown(e.target.value)}
               placeholder="Start writing markdown..."
-              containerClassName="flex flex-col"
-              textClassName="flex-1 resize-none font-mono"
-              spellCheck={false}
               action={
                 <div className="flex items-center gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="h-8 text-xs"
-                    onClick={() => setShowPreview(!showPreview)}
-                  >
+                  <Button variant="outline" size="sm" onClick={() => setShowPreview(!showPreview)}>
                     {showPreview ? (
                       <>
                         <SquareIcon weight="duotone" className="mr-2 size-4" />
@@ -145,7 +138,7 @@ ${renderedHtml}
                       </>
                     )}
                   </Button>
-                  <ClearButton onClick={() => setMarkdown("")} disabled={!markdown} />
+                  <ClearButton size="sm" onClick={() => setMarkdown("")} disabled={!markdown} />
                 </div>
               }
             />
@@ -162,15 +155,16 @@ ${renderedHtml}
           {isSplitView && (
             <>
               {showHtml ? (
-                <TextAreaField
+                <TextareaGroup
+                  autoGrow
                   label="HTML Output"
                   readOnly
                   value={renderedHtml}
                   placeholder="Generated HTML will appear here..."
                   containerClassName="min-h-[70vh] h-full flex flex-col"
-                  textClassName="flex-1 resize-none font-mono text-sm"
-                  spellCheck={false}
-                  action={<CopyButton textToCopy={renderedHtml} disabled={!renderedHtml} />}
+                  action={
+                    <CopyButton iconOnly textToCopy={renderedHtml} disabled={!renderedHtml} />
+                  }
                 />
               ) : (
                 <div className="flex h-full flex-col gap-1.5">

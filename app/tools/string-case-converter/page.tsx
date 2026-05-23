@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import { ToolLayout } from "@/components/tool-layout";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 interface CaseOutputs {
@@ -102,32 +102,33 @@ export default function StringCaseConverterPage() {
 
   return (
     <ToolLayout tool={tool}>
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      <div className="flex h-full min-h-0 w-full flex-1 flex-col space-y-6">
         {/* Input */}
-        <TextAreaField
-          label="Text Input"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Paste text to convert (e.g., hello World, this is a TEST!)"
-          rows={22}
-          action={<ClearButton onClick={() => setInput("")} disabled={!input} />}
-        />
-
+        <div className="shrink-0">
+          <TextareaGroup
+            label="Text Input"
+            value={input}
+            containerClassName="min-h-[150px]"
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Paste text to convert (e.g., hello World)"
+            action={<ClearButton size="sm" onClick={() => setInput("")} disabled={!input} />}
+          />
+        </div>
         {/* Outputs */}
-        <div className="space-y-3">
+        <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 overflow-y-auto sm:grid-cols-2 lg:grid-cols-3">
           {cases.map(({ key, label, description }) => (
-            <div key={key}>
-              <TextAreaField
+            <div key={key} className="shrink-0">
+              <TextareaGroup
                 label={
-                  <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-baseline gap-2">
                     <span>{label}</span>
-                    <span className="text-muted-foreground text-xs font-normal">{description}</span>
+                    <span className="text-xs">{description}</span>
                   </div>
                 }
                 value={outputs[key]}
+                containerClassName="min-h-[150px]"
                 readOnly
-                rows={2}
-                action={<CopyButton textToCopy={outputs[key]} disabled={!outputs[key]} />}
+                action={<CopyButton iconOnly textToCopy={outputs[key]} disabled={!outputs[key]} />}
               />
             </div>
           ))}
