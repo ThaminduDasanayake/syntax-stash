@@ -1,4 +1,4 @@
-import { CodeIcon, EyeIcon, FileHtmlIcon, PenIcon } from "@phosphor-icons/react";
+import { FileHtmlIcon, FileMagnifyingGlassIcon, FileMdIcon, PenIcon } from "@phosphor-icons/react";
 import { Dispatch, SetStateAction } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -43,14 +43,14 @@ export function Header({
           <span className="flex items-center px-4">{stats.lines} lines</span>
         </div>
 
-        <ButtonGroup className="grid w-48 grid-cols-2">
+        <ButtonGroup className="grid grid-cols-2">
           <Button
             variant={editorMode === "raw" ? "default" : "secondary"}
             className="border-ring rounded-r-none border-r"
             onClick={() => setEditorMode("raw")}
           >
-            <CodeIcon weight="duotone" />
-            Raw
+            <FileMdIcon weight="duotone" />
+            Markdown
           </Button>
           <Button
             variant={editorMode === "rich" ? "default" : "secondary"}
@@ -58,7 +58,7 @@ export function Header({
             onClick={() => setEditorMode("rich")}
           >
             <PenIcon weight="duotone" />
-            Rich
+            Editor
           </Button>
         </ButtonGroup>
       </div>
@@ -67,7 +67,7 @@ export function Header({
         <Button variant="outline" className="w-36" onClick={() => setShowHtml((v) => !v)}>
           {showHtml ? (
             <>
-              <EyeIcon weight="duotone" />
+              <FileMagnifyingGlassIcon weight="duotone" />
               Show preview
             </>
           ) : (

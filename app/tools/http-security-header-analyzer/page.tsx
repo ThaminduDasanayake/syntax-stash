@@ -14,7 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 // language=text
@@ -47,25 +47,23 @@ export default function HeaderAnalyzerPage() {
 
   return (
     <ToolLayout tool={tool}>
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      <div className="grid h-full min-h-0 flex-1 grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Left — Input */}
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <TextAreaField
+        <div className="flex flex-col space-y-4">
+          <div className="flex shrink-0 flex-col space-y-2">
+            <TextareaGroup
               label="Raw HTTP Response Headers"
               value={input}
+              containerClassName="flex-1 min-h-[350px]"
               onChange={(e) => setInput(e.target.value.slice(0, 10_000))}
               placeholder={PLACEHOLDER}
-              rows={14}
-              className="text-xs"
-              action={<ClearButton onClick={() => setInput("")} />}
+              action={<ClearButton size="sm" onClick={() => setInput("")} />}
             />
             <p className="text-muted-foreground text-xs">
               Paste the output of <code className="text-primary">curl -I https://yoursite.com</code>{" "}
               or your DevTools response headers.
             </p>
           </div>
-
           {/* Score summary */}
           {input.trim() && (
             <Card>
@@ -91,10 +89,9 @@ export default function HeaderAnalyzerPage() {
             </Card>
           )}
         </div>
-
         {/* Right — Scorecard + Config */}
-        <div className="space-y-4">
-          <div className="space-y-3">
+        <div className="flex h-full min-h-0 flex-col space-y-4">
+          <div className="shrink-0 space-y-3">
             {graded.map(({ rule, grade, value }) => (
               <div key={rule.key} className="border-border rounded-lg border p-3">
                 <div className="mb-1 flex items-center justify-between gap-2">
@@ -115,15 +112,13 @@ export default function HeaderAnalyzerPage() {
               </div>
             ))}
           </div>
-
-          <div className="space-y-2 pt-2">
-            <TextAreaField
+          <div className="flex min-h-75 flex-1 flex-col pt-1">
+            <TextareaGroup
+              autoGrow
               label="Generated next.config.ts"
               readOnly
               value={NEXT_CONFIG_BLOCK}
-              rows={12}
-              className="text-xs"
-              action={<CopyButton textToCopy={NEXT_CONFIG_BLOCK} />}
+              action={<CopyButton iconOnly textToCopy={NEXT_CONFIG_BLOCK} />}
             />
           </div>
         </div>

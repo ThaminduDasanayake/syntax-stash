@@ -5,14 +5,15 @@ import { useMemo, useState } from "react";
 
 import { ErrorAlert } from "@/components/error-alert";
 import { ToolLayout } from "@/components/tool-layout";
+import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { DownloadButton } from "@/components/ui/download-button";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { SwitchField } from "@/components/ui/switch-field";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 import { downloadStringAsFile } from "@/lib/utils";
 
@@ -84,18 +85,24 @@ export default function JSONCSVConverterPage() {
   return (
     <ToolLayout tool={tool}>
       {/* Controls */}
-      <div className="mb-6 grid grid-cols-2 items-end justify-between gap-8">
-        <div className="flex items-end justify-between">
-          <Tabs value={direction} onValueChange={handleDirectionChange}>
-            <TabsList className="grid w-full min-w-xs grid-cols-2">
-              <TabsTrigger value="json-to-csv" className="tab-trigger">
-                JSON <ArrowRightIcon weight="bold" /> CSV
-              </TabsTrigger>
-              <TabsTrigger value="csv-to-json" className="tab-trigger">
-                CSV <ArrowRightIcon weight="bold" /> JSON
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
+      <div className="mb-6 grid grid-cols-2 items-end justify-between gap-6">
+        <div className="flex flex-wrap items-end justify-between">
+          <ButtonGroup className="grid grid-cols-2">
+            <Button
+              variant={direction === "json-to-csv" ? "default" : "outline"}
+              onClick={() => handleDirectionChange("json-to-csv")}
+              className="font-semibold"
+            >
+              JSON <ArrowRightIcon weight="bold" /> CSV
+            </Button>
+            <Button
+              variant={direction === "csv-to-json" ? "default" : "outline"}
+              onClick={() => handleDirectionChange("csv-to-json")}
+              className="font-semibold"
+            >
+              CSV <ArrowRightIcon weight="bold" /> JSON
+            </Button>
+          </ButtonGroup>
 
           <SelectField
             label="Delimiter"
@@ -122,16 +129,14 @@ export default function JSONCSVConverterPage() {
         )}
       </div>
 
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Input */}
-        <TextAreaField
+        <TextareaGroup
           label={isJsonToCsv ? "JSON Input" : "CSV Input"}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder={`Paste your ${isJsonToCsv ? "JSON array" : "CSV"} here...`}
-          rows={22}
-          action={<ClearButton onClick={() => setInput("")} disabled={!input} />}
-          className="font-mono text-xs"
+          action={<ClearButton size="sm" onClick={() => setInput("")} disabled={!input} />}
         />
 
         {/* Output */}
@@ -144,23 +149,18 @@ export default function JSONCSVConverterPage() {
               <ErrorAlert message={error} />
             </div>
           ) : (
-            <TextAreaField
+            <TextareaGroup
               label={isJsonToCsv ? "CSV Output" : "JSON Output"}
               value={output}
               readOnly
-              rows={22}
+              containerClassName="flex-1 min-h-[400px]"
               placeholder="Output will appear here..."
               action={
                 <div className="flex gap-2">
-                  <CopyButton textToCopy={output} disabled={!output} />
-                  <DownloadButton
-                    onClick={handleDownload}
-                    disabled={!output}
-                    label={`Download ${ext.toUpperCase()}`}
-                  />
+                  <DownloadButton iconOnly onClick={handleDownload} disabled={!output} />
+                  <CopyButton iconOnly textToCopy={output} disabled={!output} />
                 </div>
               }
-              className="font-mono text-xs"
             />
           )}
         </div>

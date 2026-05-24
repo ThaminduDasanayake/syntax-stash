@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowsClockwiseIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 
 import { GITIGNORE_SNIPPETS } from "@/app/tools/gitignore-generator/data";
@@ -8,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { SearchInput } from "@/components/ui/search-input";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 export default function GitignoreGeneratorPage() {
@@ -65,11 +66,12 @@ export default function GitignoreGeneratorPage() {
 
           {/* Action buttons */}
           <div className="flex gap-2">
-            <Button variant="outline" onClick={selectAll} className="text-xs">
+            <Button variant="outline" onClick={selectAll}>
               Select All
             </Button>
             <ClearButton
-              label="Clear All"
+              icon={<ArrowsClockwiseIcon />}
+              label="Reset"
               onClick={() => setSelectedIds(new Set())}
               disabled={selectedIds.size === 0}
             />
@@ -84,7 +86,7 @@ export default function GitignoreGeneratorPage() {
                 <Button
                   key={snippet.id}
                   size="lg"
-                  variant={selectedIds.has(snippet.id) ? "secondary" : "outline"}
+                  variant={selectedIds.has(snippet.id) ? "default" : "outline"}
                   onClick={() => toggleSelection(snippet.id)}
                   className="flex h-15 flex-col items-start transition-all"
                 >
@@ -105,14 +107,14 @@ export default function GitignoreGeneratorPage() {
         </div>
 
         {/* Right: Output */}
-        <TextAreaField
+        <TextareaGroup
           label={generatedGitignore ? "Generated .gitignore" : "Select stacks to generate"}
           value={generatedGitignore}
           readOnly
-          rows={24}
-          className="h-full resize-none"
           placeholder="Your .gitignore will appear here..."
-          action={<CopyButton textToCopy={generatedGitignore} disabled={!generatedGitignore} />}
+          action={
+            <CopyButton iconOnly textToCopy={generatedGitignore} disabled={!generatedGitignore} />
+          }
         />
       </div>
     </ToolLayout>

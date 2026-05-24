@@ -7,7 +7,7 @@ import { ErrorAlert } from "@/components/error-alert";
 import { ToolLayout } from "@/components/tool-layout";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 const ALGOS: HashAlgo[] = [
@@ -55,16 +55,16 @@ export default function HashGeneratorPage() {
 
   return (
     <ToolLayout tool={tool}>
-      <div className="space-y-8">
+      <div className="flex h-full min-h-0 w-full flex-1 flex-col space-y-4">
         {/* Input */}
-        <TextAreaField
+        <TextareaGroup
           label="Input Text"
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Type or paste text to hash..."
-          rows={6}
           action={
             <ClearButton
+              size="sm"
               onClick={() => {
                 setText("");
               }}
@@ -76,25 +76,24 @@ export default function HashGeneratorPage() {
         {error && <ErrorAlert message={error} />}
 
         {/* Hash outputs */}
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+        <div className="grid h-full min-h-0 flex-1 grid-cols-1 gap-4 lg:grid-cols-2">
           {ALGOS.map((algo) => {
             const value = hashes[algo.id] ?? "";
 
             return (
-              <TextAreaField
+              <TextareaGroup
                 key={algo.id}
                 label={
-                  <div className="flex gap-4">
-                    <span className="">{algo.name}</span>
-                    <span className="text-muted-foreground font-mono text-xs">
+                  <div className="flex items-baseline gap-4">
+                    <span>{algo.name}</span>
+                    <span className="font-mono text-xs">
                       {value.length ? `${value.length / 2} bytes` : ""}
                     </span>
                   </div>
                 }
                 readOnly
                 value={value}
-                rows={4}
-                action={<CopyButton textToCopy={value} disabled={!value} />}
+                action={<CopyButton iconOnly textToCopy={value} disabled={!value} />}
               />
             );
           })}

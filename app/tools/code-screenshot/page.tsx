@@ -18,7 +18,7 @@ import { InputField } from "@/components/ui/input-field";
 import { SelectField } from "@/components/ui/select-field";
 import { SliderField } from "@/components/ui/slider-field";
 import { SwitchField } from "@/components/ui/switch-field";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 export default function CodeScreenshotPage() {
@@ -127,14 +127,7 @@ export default function CodeScreenshotPage() {
         {/* Code + Controls */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <div className="h-full space-y-2 lg:col-span-2">
-            <TextAreaField
-              label="Code"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              rows={20}
-              className="h-full resize-none text-xs"
-              spellCheck={false}
-            />
+            <TextareaGroup label="Code" value={code} onChange={(e) => setCode(e.target.value)} />
           </div>
 
           <div className="space-y-4">

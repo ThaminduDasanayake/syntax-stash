@@ -7,7 +7,7 @@ import { ErrorAlert } from "@/components/error-alert";
 import { ToolLayout } from "@/components/tool-layout";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 function base64UrlDecode(input: string): string {
@@ -51,16 +51,17 @@ export default function JwtDecoderPage() {
 
   return (
     <ToolLayout tool={tool}>
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        <div className="flex flex-col space-y-4">
-          <TextAreaField
+      <div className="grid h-full min-h-0 flex-1 grid-cols-1 gap-6 lg:grid-cols-2">
+        <div className="flex h-full min-h-0 flex-col space-y-4">
+          <TextareaGroup
             label="Encoded Token"
             value={token}
+            containerClassName="flex-1 min-h-[300px]"
             onChange={(e) => setToken(e.target.value)}
             placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-            rows={20}
             action={
               <ClearButton
+                size="sm"
                 onClick={() => {
                   setToken("");
                 }}
@@ -70,31 +71,40 @@ export default function JwtDecoderPage() {
           />
           {decoded.error && <ErrorAlert message={decoded.error} />}
         </div>
-
         {/* Decoded output */}
-        <div className="flex flex-col space-y-3">
-          <TextAreaField
-            label="Header"
-            readOnly
-            value={decoded.header}
-            rows={8}
-            action={<CopyButton textToCopy={decoded.header} disabled={!decoded.header} />}
-          />
-          <TextAreaField
-            label="Payload"
-            readOnly
-            value={decoded.payload}
-            rows={10}
-            action={<CopyButton textToCopy={decoded.payload} disabled={!decoded.payload} />}
-          />
-
-          <TextAreaField
-            label="Signature"
-            readOnly
-            value={decoded.signature}
-            rows={2}
-            action={<CopyButton textToCopy={decoded.signature} disabled={!decoded.signature} />}
-          />
+        <div className="flex h-full min-h-0 flex-col space-y-4">
+          <div className="flex min-h-40 flex-1 flex-col">
+            <TextareaGroup
+              label="Header"
+              readOnly
+              containerClassName="flex-1 min-h-0"
+              value={decoded.header}
+              action={
+                <CopyButton iconOnly textToCopy={decoded.header} disabled={!decoded.header} />
+              }
+            />
+          </div>
+          <div className="flex min-h-45 flex-2 flex-col">
+            <TextareaGroup
+              label="Payload"
+              readOnly
+              containerClassName="flex-1 min-h-0"
+              value={decoded.payload}
+              action={
+                <CopyButton iconOnly textToCopy={decoded.payload} disabled={!decoded.payload} />
+              }
+            />
+          </div>
+          <div className="flex min-h-20 flex-1 flex-col">
+            <TextareaGroup
+              label="Signature"
+              readOnly
+              value={decoded.signature}
+              action={
+                <CopyButton iconOnly textToCopy={decoded.signature} disabled={!decoded.signature} />
+              }
+            />
+          </div>
         </div>
       </div>
     </ToolLayout>

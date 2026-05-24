@@ -20,7 +20,6 @@ import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TextAreaField } from "@/components/ui/textarea-field";
 import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
@@ -387,18 +386,21 @@ export default function DockerComposePage() {
 
         {/* YAML output */}
         <div className="h-full">
-          <TextAreaField
+          <TextareaGroup
             label="docker-compose.yml"
             readOnly
             value={currentYaml}
-            rows={35}
             placeholder={
               activeTab === "builder"
                 ? "Add a service to generate YAML..."
                 : "Generated compose file will appear here..."
             }
             action={
-              <CopyButton textToCopy={currentYaml} disabled={!currentYaml || !!cliResult.error} />
+              <CopyButton
+                iconOnly
+                textToCopy={currentYaml}
+                disabled={!currentYaml || !!cliResult.error}
+              />
             }
           />
         </div>

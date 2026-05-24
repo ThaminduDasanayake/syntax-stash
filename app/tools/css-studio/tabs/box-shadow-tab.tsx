@@ -8,7 +8,7 @@ import { ColorField } from "@/components/ui/color-field";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";
 import { SliderField } from "@/components/ui/slider-field";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 
 export function BoxShadowTab() {
   const [xOffset, setXOffset] = useState(10);
@@ -140,13 +140,11 @@ export function BoxShadowTab() {
           </div>
         </div>
 
-        <TextAreaField
+        <TextareaGroup
           label="CSS Code"
           value={cssCode}
           readOnly
-          rows={3}
-          textClassName="resize-none text-xs!"
-          action={<CopyButton textToCopy={cssCode} disabled={false} />}
+          action={<CopyButton iconOnly textToCopy={cssCode} disabled={false} />}
         />
 
         <div className="bg-muted text-muted-foreground space-y-2 rounded-lg p-4 text-sm">

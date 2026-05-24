@@ -1,17 +1,18 @@
 "use client";
 
+import { ArrowRightIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 
 import { PLACEHOLDER } from "@/app/tools/html-to-jsx/data";
 import { convertHtmlToJsx, type ConvertOptions } from "@/app/tools/html-to-jsx/helpers";
 import { ToolLayout } from "@/components/tool-layout";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SwitchField } from "@/components/ui/switch-field";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 function HtmlToJsxPage() {
@@ -34,37 +35,24 @@ function HtmlToJsxPage() {
 
   return (
     <ToolLayout tool={tool}>
-      <div className="space-y-6">
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          <TextAreaField
-            label="HTML input"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            rows={20}
-            className="resize-y text-xs"
-            placeholder="Paste HTML here..."
-            spellCheck={false}
-            action={
-              <ClearButton
-                onClick={() => {
-                  setInput("");
-                }}
-                disabled={!input}
-              />
-            }
-          />
-          {error && <p className="text-destructive text-xs">{error}</p>}
-
-          <TextAreaField
-            label="JSX output"
-            readOnly
-            value={output}
-            rows={20}
-            className="resize-y text-xs"
-            placeholder="JSX will appear here..."
-            action={<CopyButton textToCopy={output} disabled={!output} />}
-          />
-        </div>
+      <div className="flex h-full min-h-0 w-full flex-1 flex-col space-y-6">
+        <TextareaGroup
+          label="HTML input"
+          value={input}
+          containerClassName="flex-1 min-h-[400px]"
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Paste HTML here..."
+          action={
+            <ClearButton
+              size="sm"
+              onClick={() => {
+                setInput("");
+              }}
+              disabled={!input}
+            />
+          }
+        />
+        {error && <p className="text-destructive text-xs">{error}</p>}
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <div className="space-y-3">
@@ -92,34 +80,49 @@ function HtmlToJsxPage() {
           />
         </div>
 
-        <Card className="p-4 text-xs">
+        <TextareaGroup
+          label="JSX output"
+          readOnly
+          value={output}
+          containerClassName="flex-1 min-h-[400px]"
+          placeholder="JSX will appear here..."
+          action={<CopyButton iconOnly textToCopy={output} disabled={!output} />}
+        />
+
+        <Card>
+          <CardHeader className="font-semibold">What this does</CardHeader>
           <CardContent>
-            <p className="text-foreground mb-2 font-semibold">What this does</p>
-            <ul className="text-muted-foreground space-y-1">
+            <ul className="text-muted-foreground list-disc space-y-1 text-xs">
               <li>
-                • Renames reserved attributes: <code className="bg-card rounded px-1">class</code> →{" "}
-                <code className="bg-card rounded px-1">className</code>,{" "}
-                <code className="bg-card rounded px-1">for</code> →{" "}
-                <code className="bg-card rounded px-1">htmlFor</code>,{" "}
-                <code className="bg-card rounded px-1">tabindex</code> →{" "}
-                <code className="bg-card rounded px-1">tabIndex</code>, etc.
+                <span className="inline-flex flex-wrap items-center gap-0.5">
+                  Renames reserved attributes:<span className="font-mono"> class</span>
+                  <ArrowRightIcon /> <span className="font-mono">className</span>,
+                  <span className="font-mono">for</span> <ArrowRightIcon />
+                  <span className="font-mono">htmlFor</span>,
+                  <span className="font-mono">tabindex</span> <ArrowRightIcon />
+                  <span className="font-mono">tabIndex</span>, etc.
+                </span>
               </li>
               <li>
-                • Converts event handlers to camelCase (
-                <code className="bg-card rounded px-1">onclick</code> →{" "}
-                <code className="bg-card rounded px-1">onClick</code>)
+                <span className="inline-flex items-center gap-0.5">
+                  Converts event handlers to camelCase (<span className="font-mono">onclick</span>
+                  <ArrowRightIcon />
+                  <span className="font-mono">onClick</span>).
+                </span>
               </li>
               <li>
-                • Converts inline <code className="bg-card rounded px-1">style</code> strings into
-                JSX style objects with camelCase properties.
+                Converts inline <span className="font-mono">style</span> strings into JSX style
+                objects with camelCase properties.
               </li>
               <li>
-                • Self-closes void elements like{" "}
-                <code className="bg-card rounded px-1">&lt;br&gt;</code>,{" "}
-                <code className="bg-card rounded px-1">&lt;img&gt;</code>,{" "}
-                <code className="bg-card rounded px-1">&lt;input&gt;</code>.
+                <span className="inline-flex flex-wrap items-center gap-0.5">
+                  Self-closes void elements like
+                  <span className="font-mono">&lt;br&gt;</span>,
+                  <span className="font-mono">&lt;img&gt;</span>,
+                  <span className="font-mono">&lt;input&gt;</span>.
+                </span>
               </li>
-              <li>• Wraps multiple root elements in a fragment when generating a component.</li>
+              <li>Wraps multiple root elements in a fragment when generating a component.</li>
             </ul>
           </CardContent>
         </Card>

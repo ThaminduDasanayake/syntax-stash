@@ -3,11 +3,11 @@
 import { useMemo, useState } from "react";
 
 import { ToolLayout } from "@/components/tool-layout";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ClearButton } from "@/components/ui/clear-button";
 import { DownloadButton } from "@/components/ui/download-button";
 import { Label } from "@/components/ui/label";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 function getImageDataUri(base64String: string): string | null {
@@ -82,20 +82,19 @@ export default function Base64ImagePage() {
 
   return (
     <ToolLayout tool={tool}>
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      <div className="grid h-full min-h-0 flex-1 grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Input */}
-
-        <div className="space-y-3">
-          <TextAreaField
+        <div className="flex h-full min-h-0 w-full flex-1 flex-col space-y-3">
+          <TextareaGroup
             label="Base64 String"
             value={base64Input}
             onChange={(e) => setBase64Input(e.target.value)}
             placeholder={
               'Paste your Base64 string here...\n\nWith or without the "data:image/png;base64," prefix.\n\nSupports: PNG, JPEG, GIF, WebP, SVG'
             }
-            className="min-h-108"
             action={
               <ClearButton
+                size="sm"
                 onClick={() => {
                   setBase64Input("");
                 }}
@@ -146,9 +145,11 @@ export default function Base64ImagePage() {
       </div>
 
       {/* Info Section */}
-      <div className="bg-muted/30 border-border mt-8 space-y-3 rounded-lg border p-4">
-        <h4 className="text-foreground text-sm font-semibold">About Base64 Images</h4>
-        <div className="text-muted-foreground grid grid-cols-1 gap-4 text-xs md:grid-cols-2">
+      <Card className="mt-8">
+        <CardHeader className="text-foreground text-sm font-semibold">
+          About Base64 Images
+        </CardHeader>
+        <CardContent className="grid grid-cols-1 text-xs md:grid-cols-2">
           <div className="space-y-2">
             <p>
               <span className="text-foreground font-semibold">Data URI Scheme:</span> Base64 images
@@ -172,8 +173,8 @@ export default function Base64ImagePage() {
               happens in your browser with zero server requests.
             </p>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </ToolLayout>
   );
 }

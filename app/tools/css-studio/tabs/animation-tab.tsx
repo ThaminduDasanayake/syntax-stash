@@ -25,7 +25,7 @@ import { CopyButton } from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { StepperField } from "@/components/ui/stepper-field";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 
 export function AnimationTab() {
   const animId = useId().replace(/:/g, "");
@@ -270,7 +270,7 @@ export function AnimationTab() {
           </div>
         </div>
 
-        <div className="space-y-6">
+        <div className="flex h-full min-h-0 w-full flex-1 flex-col space-y-6">
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label>Live Preview</Label>
@@ -289,13 +289,11 @@ export function AnimationTab() {
             </div>
           </div>
 
-          <TextAreaField
+          <TextareaGroup
             label="Generated CSS"
             readOnly
             value={cssOutput}
-            rows={16}
-            className="text-xs"
-            action={<CopyButton textToCopy={cssOutput} disabled={!cssOutput} />}
+            action={<CopyButton iconOnly textToCopy={cssOutput} disabled={!cssOutput} />}
           />
         </div>
       </div>

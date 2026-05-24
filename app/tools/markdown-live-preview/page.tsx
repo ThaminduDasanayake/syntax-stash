@@ -119,7 +119,7 @@ ${renderedHtml}
           {editorMode === "raw" ? (
             <TextareaGroup
               autoGrow
-              label="Editor"
+              label="Markdown"
               value={markdown}
               onChange={(e) => setMarkdown(e.target.value)}
               placeholder="Start writing markdown..."
@@ -129,7 +129,7 @@ ${renderedHtml}
                     {showPreview ? (
                       <>
                         <SquareIcon weight="duotone" className="mr-2 size-4" />
-                        Full Width
+                        Single View
                       </>
                     ) : (
                       <>
@@ -143,11 +143,8 @@ ${renderedHtml}
               }
             />
           ) : (
-            <div className="flex flex-col gap-3">
-              <Label className="pt-1.5 text-sm font-semibold">Rich Text Editor</Label>
-              <div className="bg-card h-full max-h-180 overflow-hidden rounded-lg border">
-                <PlateEditor initialMarkdown={markdown} onMarkdownChangeAction={setMarkdown} />
-              </div>
+            <div className="bg-card h-full max-h-180 overflow-hidden rounded-lg border">
+              <PlateEditor initialMarkdown={markdown} onMarkdownChangeAction={setMarkdown} />
             </div>
           )}
 

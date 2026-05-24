@@ -17,6 +17,7 @@ import { CopyButton } from "@/components/ui/copy-button";
 import { SelectField } from "@/components/ui/select-field";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 export default function DrizzleSchemaStudioPage() {
@@ -73,24 +74,22 @@ export default function DrizzleSchemaStudioPage() {
                 onValueChange={(v) => setSqlDialect(v as SQLDialect)}
                 options={sqlDialectOptions}
               />
-              <TextAreaField
+              <TextareaGroup
                 label="SQL CREATE TABLE Statements"
                 value={sqlInput}
                 onChange={(e) => setSqlInput(e.target.value)}
                 placeholder="Paste your SQL CREATE TABLE statements here..."
-                rows={20}
-                className="h-full"
-                action={<ClearButton onClick={() => setSqlInput("")} disabled={!sqlInput} />}
+                action={
+                  <ClearButton size="sm" onClick={() => setSqlInput("")} disabled={!sqlInput} />
+                }
               />
             </div>
-            <TextAreaField
+            <TextareaGroup
               label="Drizzle ORM Schema"
               value={sqlOutput}
               readOnly
-              rows={24}
-              className="h-full"
               placeholder="Your Drizzle schema will appear here..."
-              action={<CopyButton textToCopy={sqlOutput} disabled={!sqlOutput} />}
+              action={<CopyButton iconOnly textToCopy={sqlOutput} disabled={!sqlOutput} />}
             />
           </div>
 
@@ -127,7 +126,7 @@ export default function DrizzleSchemaStudioPage() {
                 onValueChange={(v) => setPrismaDialect(v as PrismaDialect)}
                 options={prismaDialectOptions}
               />
-              <TextAreaField
+              <TextareaGroup
                 label="Prisma Schema Input"
                 value={prismaInput}
                 onChange={(e) => setPrismaInput(e.target.value)}
@@ -137,12 +136,10 @@ export default function DrizzleSchemaStudioPage() {
                 action={<ClearButton onClick={() => setPrismaInput("")} disabled={!prismaInput} />}
               />
             </div>
-            <TextAreaField
+            <TextareaGroup
               label="Drizzle ORM Schema"
               value={prismaOutput}
               readOnly
-              rows={24}
-              className="h-full"
               placeholder="Generated Drizzle schema will appear here..."
               action={<CopyButton textToCopy={prismaOutput} disabled={!prismaOutput} />}
             />

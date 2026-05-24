@@ -7,11 +7,12 @@ import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckboxField } from "@/components/ui/checkbox-field";
+import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
-import { TextAreaField } from "@/components/ui/textarea-field";
+import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD" | "OPTIONS";
@@ -320,11 +321,10 @@ export default function CurlBuilderPage() {
 
             {/* Body */}
             <div className="space-y-2">
-              <TextAreaField
+              <TextareaGroup
                 label="Request Body"
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
-                rows={4}
                 placeholder='{ "key": "value" }'
               />
             </div>
@@ -344,27 +344,24 @@ export default function CurlBuilderPage() {
             </div>
           </div>
 
-          <TextAreaField
+          <TextareaGroup
             label="Generated curl Command"
             readOnly
             value={generatedCurl}
-            rows={16}
             className="h-full"
-            action={<CopyButton textToCopy={generatedCurl} disabled={!generatedCurl} />}
+            action={<CopyButton iconOnly textToCopy={generatedCurl} disabled={!generatedCurl} />}
           />
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
           {/* Left — Raw input */}
           <div className="space-y-4">
-            <TextAreaField
+            <TextareaGroup
               label="Paste curl Command"
               value={rawCurl}
               onChange={(e) => setRawCurl(e.target.value)}
-              rows={16}
               placeholder={`curl -X POST 'https://api.example.com/users' \\\n  -H 'Authorization: Bearer token' \\\n  -H 'Content-Type: application/json' \\\n  -d '{"name":"Alice"}'`}
-              className="text-xs"
-              action={<CopyButton textToCopy={rawCurl} disabled={!rawCurl} />}
+              action={<ClearButton size="sm" onClick={() => setRawCurl("")} disabled={!rawCurl} />}
             />
           </div>
 
