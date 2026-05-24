@@ -7,7 +7,6 @@ import { CopyButton } from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { StepperField } from "@/components/ui/stepper-field";
-import { TextAreaField } from "@/components/ui/textarea-field";
 import { TextareaGroup } from "@/components/ui/textarea-group";
 
 const DEFAULT_COLS = 3;
