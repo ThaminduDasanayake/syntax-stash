@@ -71,7 +71,7 @@ const AppSidebar = () => {
             <span className="font-mono text-base font-semibold tracking-tight">
               syntax<span className="text-primary">-</span>stash
             </span>
-            <span className="text-muted-foreground truncate text-[11px]">
+            <span className="text-muted-foreground truncate text-xs">
               Developer swiss army knife
             </span>
           </div>
@@ -101,7 +101,7 @@ const AppSidebar = () => {
 
         {groupedTools.map(([category, tools]) => (
           <SidebarGroup key={category} className="p-0 pb-4">
-            <SidebarGroupLabel className="text-muted-foreground mb-2 flex h-auto items-center gap-1.5 px-2 text-[10px] font-semibold tracking-wider uppercase">
+            <SidebarGroupLabel className="text-muted-foreground mb-2 flex h-auto items-center gap-1.5 px-2 text-xs font-semibold tracking-wider uppercase">
               <span className="sidebar-text-collapse">{category}</span>
             </SidebarGroupLabel>
             <SidebarMenu>
@@ -133,8 +133,8 @@ const AppSidebar = () => {
 
         {/*  Resource Stash */}
         <SidebarGroup className="p-0">
-          <SidebarGroupLabel className="text-muted-foreground mb-2 flex h-auto items-center gap-1.5 px-2 text-[10px] font-semibold tracking-wider uppercase">
-            <BookBookmarkIcon weight="duotone" className="text-secondary size-5! shrink-0" />
+          <SidebarGroupLabel className="text-muted-foreground mb-2 flex h-auto items-center gap-1.5 px-2 text-xs font-semibold tracking-wider uppercase">
+            <BookBookmarkIcon weight="duotone" className="text-primary size-5! shrink-0" />
             <span className="sidebar-text-collapse">Resource Stash</span>
           </SidebarGroupLabel>
           <SidebarMenu>
@@ -182,7 +182,7 @@ const AppSidebar = () => {
 
       {/* Footer */}
       <SidebarFooter className="border-sidebar-border sidebar-text-collapse border-t p-3">
-        <p className="text-muted-foreground text-center font-mono text-[10px]">
+        <p className="text-muted-foreground text-center font-mono text-xs">
           syntax-stash · handmade
         </p>
       </SidebarFooter>

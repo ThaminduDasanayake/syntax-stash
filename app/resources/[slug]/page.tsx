@@ -17,7 +17,7 @@ export default async function ResourceCategoryPage(props: PageProps<"/resources/
   const links = resourceLinks.filter((t) => t.category === category);
 
   return (
-    <div className="mx-auto max-w-6xl">
+    <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 p-6">
       {/* Page header */}
       <div className="mb-8">
         <h1 className="text-foreground text-2xl font-semibold tracking-tight">{category}</h1>

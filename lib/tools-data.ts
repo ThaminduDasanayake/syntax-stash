@@ -111,6 +111,24 @@ export const dataTools: Tool[] = [
     category: CATEGORIES.data,
     icon: "file-code",
   },
+  {
+    title: "XML Studio",
+    highlight: "Studio",
+    slug: "xml-studio",
+    description:
+      "Format and prettify XML, and bidirectionally convert between XML and JSON with configurable indentation.",
+    category: CATEGORIES.data,
+    icon: "file-code",
+  },
+  {
+    title: "JWT Generator",
+    highlight: "Generator",
+    slug: "jwt-generator",
+    description:
+      "Sign JSON Web Tokens locally in your browser using HS256, HS384, or HS512. Pairs with JWT Decoder.",
+    category: CATEGORIES.data,
+    icon: "seal",
+  },
 ];
 
 export const developmentTools: Tool[] = [
@@ -375,6 +393,24 @@ export const networkTools: Tool[] = [
     category: CATEGORIES.network,
     icon: "link",
   },
+  {
+    title: "Secret Generator",
+    highlight: "Generator",
+    slug: "secret-generator",
+    description:
+      "Generate cryptographically secure secrets for JWT, API keys, env vars, and more. Presets for Next.js, Laravel, Django, Rails, and others.",
+    category: CATEGORIES.network,
+    icon: "lock-key",
+  },
+  {
+    title: "Password Generator",
+    highlight: "Generator",
+    slug: "password-generator",
+    description:
+      "Generate secure passwords with configurable length, charset toggles, and entropy meter. Includes diceware passphrase mode.",
+    category: CATEGORIES.network,
+    icon: "shield-plus",
+  },
 ];
 
 export const schemaTools: Tool[] = [
@@ -423,6 +459,15 @@ export const typographyTools: Tool[] = [
     description: "Convert CSV and spreadsheet data into beautifully formatted Markdown tables.",
     category: CATEGORIES.typography,
     icon: "file-csv",
+  },
+  {
+    title: "Lorem Ipsum Generator",
+    highlight: "Generator",
+    slug: "lorem-ipsum-generator",
+    description:
+      "Generate placeholder text by paragraphs, sentences, or words. Choose from classic Latin, hipster, or corporate variants.",
+    category: CATEGORIES.typography,
+    icon: "article",
   },
   {
     title: "String Case Converter",
@@ -487,6 +532,24 @@ export const uiStyling: Tool[] = [
       "Search Tailwind utilities, extract JSX classes into @apply CSS, and generate 50–950 color scales — all in one tabbed studio.",
     category: CATEGORIES.uiStyling,
     icon: "swatches",
+  },
+  {
+    title: "CSS to Tailwind",
+    highlight: "Tailwind",
+    slug: "css-to-tailwind",
+    description:
+      "Paste CSS rules and get the equivalent Tailwind utility classes instantly. Supports spacing, colors, typography, and layout.",
+    category: CATEGORIES.uiStyling,
+    icon: "shuffle",
+  },
+  {
+    title: "Gradient Generator",
+    highlight: "Generator",
+    slug: "gradient-generator",
+    description:
+      "Build linear, radial, and conic gradients with a multi-stop editor. Exports plain CSS and Tailwind arbitrary values.",
+    category: CATEGORIES.uiStyling,
+    icon: "gradient",
   },
 ];
 

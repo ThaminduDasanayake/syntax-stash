@@ -39,9 +39,9 @@ export function ThemeToggle() {
 
   return (
     <Button
-      variant="secondary"
+      variant="outline"
       size="icon"
-      className="text-muted-foreground hover:text-foreground relative h-9 w-9 overflow-hidden"
+      className="relative h-9 w-9 overflow-hidden"
       onClick={handleToggle}
       title="Toggle theme"
     >
