@@ -29,9 +29,7 @@ export default function WebExtractorPage() {
   const [data, setData] = useState<ExtractedData | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  async function handleExtract(e?: React.FormEvent) {
-    if (e) e.preventDefault();
-
+  async function handleExtract() {
     const trimmed = url.trim();
     if (!trimmed) {
       setError("Please enter a URL.");
@@ -70,44 +68,55 @@ export default function WebExtractorPage() {
 
   return (
     <ToolLayout tool={tool}>
-      <div className="flex flex-col gap-8">
-        <div className="mx-auto w-full max-w-2xl space-y-4">
+      <div className="flex h-full min-h-0 w-full flex-1 flex-col space-y-6">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            void handleExtract();
+          }}
+          className="mx-auto w-full max-w-2xl shrink-0 space-y-4"
+        >
           <InputField
             ref={inputRef}
             label="Target URL"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="https://example.com"
-            className="font-mono text-sm"
             disabled={loading}
+            suffix={
+              <ClearButton
+                type="button"
+                iconOnly
+                onClick={() => {
+                  setUrl("");
+                  setData(null);
+                  setError(null);
+                }}
+                disabled={loading || (!url && !data)}
+              />
+            }
           />
 
-          <div className="flex gap-3">
-            <Button
-              className="flex-1 font-medium"
-              onClick={() => void handleExtract()}
-              disabled={loading || !url.trim()}
-            >
-              {loading ? (
-                <SpinnerGapIcon className="mr-2 size-4.5 animate-spin" />
-              ) : (
-                <MagnifyingGlassIcon weight="bold" className="mr-2 size-4.5" />
-              )}
-              {loading ? "Extracting..." : "Extract Data"}
-            </Button>
-            <ClearButton
-              onClick={() => {
-                setUrl("");
-                setData(null);
-                setError(null);
-                inputRef.current?.focus();
-              }}
-              disabled={loading || (!url && !data)}
-            />
-          </div>
+          <Button type="submit" className="w-full font-semibold" disabled={loading}>
+            {loading ? (
+              <>
+                <SpinnerGapIcon weight="bold" className="animate-spin" />
+                Extracting...
+              </>
+            ) : (
+              <>
+                <MagnifyingGlassIcon weight="bold" />
+                Extract Data
+              </>
+            )}
+          </Button>
+        </form>
 
-          {error && <ErrorAlert message={error} />}
-        </div>
+        {error && (
+          <div className="mx-auto w-full max-w-2xl shrink-0">
+            <ErrorAlert message={error} />
+          </div>
+        )}
 
         {!data && !loading && !error && (
           <EmptyState
@@ -128,7 +137,7 @@ export default function WebExtractorPage() {
 
         {/* Results Grid */}
         {data && (
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_350px] xl:grid-cols-[1fr_400px]">
+          <div className="flex flex-col gap-6">
             {/* Visual Data */}
             <div className="flex flex-col gap-6">
               {/* Page Link Banner */}
@@ -211,16 +220,14 @@ export default function WebExtractorPage() {
               </Section>
             </div>
 
-            <div className="relative">
-              <div className="sticky top-6">
-                <TextareaGroup
-                  label="Raw JSON Response"
-                  value={rawJSON}
-                  readOnly
-                  action={<CopyButton iconOnly textToCopy={rawJSON} disabled={!rawJSON} />}
-                />
-              </div>
-            </div>
+            <TextareaGroup
+              autoGrow
+              className="break-all whitespace-pre-wrap"
+              label="Raw JSON Response"
+              value={rawJSON}
+              readOnly
+              action={<CopyButton iconOnly textToCopy={rawJSON} disabled={!rawJSON} />}
+            />
           </div>
         )}
       </div>

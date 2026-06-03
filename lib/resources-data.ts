@@ -1,21 +1,220 @@
 import { Tool } from "@/types";
 
 export const CATEGORIES = {
+  animations: "Animations & Effects",
+  colors: "Colors & Gradients",
+  components: "UI Components",
   data: "Data",
   dataViz: "Data Visualization",
   development: "Development & Code",
   devops: "DevOps",
   education: "Education",
   imagesAssets: "Images & Assets",
+  mapResources: "Map Resources",
   network: "Network & Security",
+  react: "React Resources",
   system: "System & OS",
   typography: "Typography & Text",
-  components: "UI Components",
-  colors: "Colors & Gradients",
-  animations: "Animations & Effects",
+  unknown: "Unknown",
 } as const;
 
 export const resourceCategories: string[] = Object.values(CATEGORIES);
+
+export const animationsLinks: Tool[] = [
+  {
+    title: "Animejs",
+    url: "https://animejs.com/",
+    description: "A fast, multipurpose and lightweight JavaScript animation library",
+    category: CATEGORIES.animations,
+  },
+  {
+    title: "Animista",
+    url: "https://animista.net/",
+    description:
+      "Animista is a CSS animation library and a place where you can play with a collection of ready-made CSS animations and download only those you will use.",
+    category: CATEGORIES.animations,
+  },
+  {
+    title: "CSS Loaders",
+    url: "https://cssloaders.github.io/",
+    description:
+      "CSS Loader is a collection of different types of loaders, spinners and their source code. There are no image dependencies in this. It's is done using pure CSS. Hence it is easily customization too.",
+    category: CATEGORIES.animations,
+  },
+  {
+    title: "Smooothy",
+    url: "https://smooothy.vercel.app/",
+    description: "Smooth configurable extendable slider made for animation.",
+    category: CATEGORIES.animations,
+  },
+  {
+    title: "Swishy",
+    url: "https://www.swishy.ai/",
+    description:
+      "Swishy is the leading AI motion designer and AI animator platform. Create professional motion graphics, animated typefaces, and stunning video animations without After Effects. Export to MP4, MOV, and GIF instantly.",
+    category: CATEGORIES.animations,
+  },
+];
+
+export const colorsLinks: Tool[] = [
+  {
+    title: "Colorize",
+    url: "https://colorize.design/",
+    description:
+      "Generate color palettes instantly from any website effortlessly. Enter a URL to explore color schemes and combinations directly from the site's design. No sign-up required. Try it now!",
+    category: CATEGORIES.colors,
+  },
+  {
+    title: "CSS Gradient",
+    url: "https://cssgradient.io/",
+    description:
+      "As a free CSS gradient generator tool, this website lets you create a colorful gradient background for your website, blog, or social media profile.",
+    category: CATEGORIES.colors,
+  },
+  {
+    title: "Gradienty",
+    url: "https://gradienty.codes/",
+    description:
+      "Easily create beautiful Tailwind CSS gradients with Gradienty - a CSS generator. Choose from ready-made gradients or customize your own for eye-catching backgrounds, text effects, and glassmorphism designs. Perfect for websites, apps, and more. Try it for free now!",
+    category: CATEGORIES.colors,
+  },
+  {
+    title: "Hypercolor",
+    url: "https://hypercolor.dev/",
+    favicon: "https://hypercolor.dev/favicon.png",
+    description:
+      "A curated collection of beautiful Tailwind CSS gradients using the full range of Tailwind CSS colors. Easily copy and paste the class names, CSS or even save the gradients as an image.",
+    category: CATEGORIES.colors,
+  },
+  {
+    title: "Liquid Glass JS",
+    url: "https://dashersw.github.io/liquid-glass-js/",
+    description:
+      "A WebGL-powered JavaScript library bringing sophisticated Apple Liquid Glass effects to the web with real-time refraction, blur, and masking systems.",
+    category: CATEGORIES.colors,
+  },
+  {
+    title: "Palette Maker",
+    url: "https://palettemaker.com/",
+    description:
+      "Free color tool for creatives and color lovers. Create color palettes and preview them on UI/UX, Illustrations, Web, Apps, Branding and other designs.",
+    category: CATEGORIES.colors,
+  },
+  {
+    title: "Picular",
+    url: "https://picular.co/",
+    favicon: "https://picular.co/images/favicon-base.png",
+    description:
+      "Picular is a rocket fast primary color generator using Google’s image search. If you ever needed the perfect yellow hex code from a banana, this is the tool for you.",
+    category: CATEGORIES.colors,
+  },
+  {
+    title: "Shader Gradient",
+    url: "https://shadergradient.co/",
+    description: "Create beautiful moving gradients on Framer, Figma and React",
+    category: CATEGORIES.colors,
+  },
+  {
+    title: "WebGradients",
+    url: "https://webgradients.com/",
+    description:
+      "Browse 180 free CSS gradients for backgrounds, UI, websites, and design systems. Copy CSS code, explore color palettes, and find gradient inspiration fast.",
+    category: CATEGORIES.colors,
+  },
+  {
+    title: "UV Canvas",
+    url: "https://uvcanvas.com/",
+    favicon: "https://uvcanvas.com/favicon-32x32.png",
+    description: "An open source React.js component library for beautifully shaded canvas.",
+    category: CATEGORIES.colors,
+  },
+];
+
+export const componentsLinks: Tool[] = [
+  {
+    title: "Ark UI",
+    url: "https://ark-ui.com/",
+    favicon: "https://ark-ui.com/icon.svg?3e91f991fe6d39a3",
+    description:
+      "A headless UI library with over 45+ components designed to build reusable, scalable Design Systems that works for a wide range of JS frameworks.",
+    category: CATEGORIES.components,
+  },
+  {
+    title: "Mage UI",
+    url: "https://www.mageui.in/",
+    description:
+      "Hand-crafted animated components that you can copy and paste into your apps. Free & Open Source.",
+    category: CATEGORIES.components,
+  },
+  {
+    title: "ThemeCN",
+    url: "https://tweakcn.com/",
+    description:
+      "Customize theme for shadcn/ui with tweakcn's interactive editor. Supports Tailwind CSS v4, Shadcn UI, and custom styles. Modify properties, preview changes, and get the code in real time.",
+    category: CATEGORIES.components,
+  },
+  {
+    title: "Smooth UI",
+    url: "https://www.smoothui.dev/",
+    description:
+      "Animated React components with smooth Motion animations. Drop-in shadcn/ui compatible, fully customizable with Tailwind CSS.",
+    category: CATEGORIES.components,
+  },
+  {
+    title: "Spectrum UI",
+    url: "https://ui.spectrumhq.in/",
+    description:
+      "Copy-paste beautiful UI components built with React, Next.js, Tailwind CSS, and shadcn/ui. 250+ production-ready components, blocks, and templates. Free and open source.",
+    category: CATEGORIES.components,
+  },
+  {
+    title: "Intent UI",
+    url: "https://intentui.com/",
+    description:
+      "Copy and paste accessible React components built on React Aria and Tailwind CSS. 87+ production-ready components for Next.js and Laravel.",
+    category: CATEGORIES.components,
+  },
+  {
+    title: "Park UI",
+    url: "https://park-ui.com/",
+    description:
+      "Beautifully designed components built with Ark UI and Panda CSS that work with a variety of JS frameworks.",
+    category: CATEGORIES.components,
+  },
+  {
+    title: "React Bits",
+    url: "https://www.reactbits.dev/",
+    description:
+      "An open source collection of high quality, animated, interactive & fully customizable React components for building stunning, memorable user interfaces.",
+    category: CATEGORIES.components,
+  },
+  {
+    title: "Magic UI",
+    url: "https://magicui.design/",
+    description: "Beautiful UI components and templates to make your landing page look stunning.",
+    category: CATEGORIES.components,
+  },
+  {
+    title: "Cult UI",
+    url: "https://www.cult-ui.com/",
+    description:
+      "Open-source Shadcn UI components, animated blocks, and full templates you can copy-paste into any TypeScript/Next.js project.",
+    category: CATEGORIES.components,
+  },
+  {
+    title: "VisGL Google Maps",
+    url: "https://visgl.github.io/react-google-maps/",
+    description: "React components and hooks for the Google Maps JavaScript API",
+    category: CATEGORIES.components,
+  },
+  {
+    title: "CSS Grid Generator",
+    url: "https://cssgridgenerator.io/",
+    description:
+      "A user-friendly tool designed for web developers to effortlessly create customizable CSS grids for seamless web development.",
+    category: CATEGORIES.components,
+  },
+];
 
 export const dataLinks: Tool[] = [
   {
@@ -45,7 +244,8 @@ export const dataLinks: Tool[] = [
   {
     title: "MCP Servers",
     url: "https://github.com/modelcontextprotocol/servers",
-    description: "Official and community Model Context Protocol server implementations for AI tool integrations.",
+    description:
+      "Official and community Model Context Protocol server implementations for AI tool integrations.",
     category: CATEGORIES.data,
   },
 ];
@@ -54,13 +254,14 @@ export const dataVizLinks: Tool[] = [
   {
     title: "Apache ECharts",
     url: "https://echarts.apache.org/en/index.html",
-    description: "Powerful, interactive charting library with a declarative API and broad chart type support.",
+    description: "A powerful, interactive charting and visualization library for browser",
     category: CATEGORIES.dataViz,
   },
   {
     title: "CSV Vis Tool",
     url: "https://csvistool.com/",
-    description: "Upload a CSV and instantly visualize it as charts or tables in the browser.",
+    description:
+      "Official data structures and algorithms visualization tool for CS 1332 at Georgia Tech.",
     category: CATEGORIES.dataViz,
   },
 ];
@@ -69,7 +270,8 @@ export const developmentLinks: Tool[] = [
   {
     title: "DhiWise",
     url: "https://www.dhiwise.com/",
-    description: "Programming automation platform that generates React and Flutter code from Figma designs.",
+    description:
+      "Programming automation platform that generates React and Flutter code from Figma designs.",
     category: CATEGORIES.development,
   },
   {
@@ -81,13 +283,15 @@ export const developmentLinks: Tool[] = [
   {
     title: "Omatsuri",
     url: "https://omatsuri.app/",
-    description: "Open source collection of browser tools — triangle generator, gradients, symbols, and more.",
+    description:
+      "Open source collection of browser tools — triangle generator, gradients, symbols, and more.",
     category: CATEGORIES.development,
   },
   {
     title: "Database.build",
     url: "https://database.build/",
-    description: "Run Postgres in the browser — design schemas, run queries, and share databases instantly (by Supabase).",
+    description:
+      "Run Postgres in the browser — design schemas, run queries, and share databases instantly (by Supabase).",
     category: CATEGORIES.development,
   },
   {
@@ -99,7 +303,8 @@ export const developmentLinks: Tool[] = [
   {
     title: "Liam ERD",
     url: "https://liambx.com/",
-    description: "Generate interactive, shareable ER diagrams from your database schema automatically.",
+    description:
+      "Generate interactive, shareable ER diagrams from your database schema automatically.",
     category: CATEGORIES.development,
   },
   {
@@ -111,7 +316,8 @@ export const developmentLinks: Tool[] = [
   {
     title: "Frimousse",
     url: "https://frimousse.liveblocks.io/",
-    description: "Lightweight, unstyled emoji picker component for React — composable and framework-agnostic styling.",
+    description:
+      "Lightweight, unstyled emoji picker component for React — composable and framework-agnostic styling.",
     category: CATEGORIES.development,
   },
 ];
@@ -257,161 +463,114 @@ export const educationLinks: Tool[] = [
   },
 ];
 
-export const componentsLinks: Tool[] = [
-  {
-    title: "Ark UI",
-    favicon: "https://ark-ui.com/icon.svg?3e91f991fe6d39a3",
-    url: "https://ark-ui.com/",
-    description: "Unstyled, accessible component primitives for building design systems in React, Solid, and Vue.",
-    category: CATEGORIES.components,
-  },
-  {
-    title: "Mage UI",
-    url: "https://www.mageui.in/",
-    description: "Copy-paste animated React components and blocks with Tailwind CSS.",
-    category: CATEGORIES.components,
-  },
-  {
-    title: "ThemeCN",
-    url: "https://tweakcn.com/",
-    description: "Visual theme editor for shadcn/ui — tweak tokens and preview changes live.",
-    category: CATEGORIES.components,
-  },
-  {
-    title: "Smooth UI",
-    url: "https://www.smoothui.dev/",
-    description: "Framer Motion-powered React components with fluid transition animations.",
-    category: CATEGORIES.components,
-  },
-  {
-    title: "Spectrum UI",
-    url: "https://ui.spectrumhq.in/",
-    description: "Dark-mode-first component collection built with Tailwind CSS and Radix primitives.",
-    category: CATEGORIES.components,
-  },
-  {
-    title: "Intent UI",
-    url: "https://intentui.com/",
-    description: "Accessible component library built on React Aria with Tailwind CSS styling.",
-    category: CATEGORIES.components,
-  },
-  {
-    title: "Park UI",
-    url: "https://park-ui.com/",
-    description: "Themeable components built on top of Ark UI and Panda CSS.",
-    category: CATEGORIES.components,
-  },
-  {
-    title: "React Bits",
-    url: "https://www.reactbits.dev/",
-    description: "Animated React components, interaction patterns, and copy-paste snippets.",
-    category: CATEGORIES.components,
-  },
-  {
-    title: "Magic UI",
-    url: "https://magicui.design/",
-    description: "Animated UI components powered by Framer Motion for React and Next.js.",
-    category: CATEGORIES.components,
-  },
-  {
-    title: "Cult UI",
-    url: "https://www.cult-ui.com/",
-    description: "Opinionated, animated copy-paste components with a distinctive dark aesthetic.",
-    category: CATEGORIES.components,
-  },
-  {
-    title: "VisGL Google Maps",
-    url: "https://visgl.github.io/react-google-maps/",
-    description: "React components and hooks for embedding and controlling Google Maps.",
-    category: CATEGORIES.components,
-  },
-  {
-    title: "CSS Grid Generator",
-    url: "https://cssgridgenerator.io/",
-    description: "Drag-and-drop tool to build and export CSS grid layouts.",
-    category: CATEGORIES.components,
-  },
-];
-
-export const colorsLinks: Tool[] = [
-  {
-    title: "Picular",
-    url: "https://picular.co/",
-    favicon: "https://picular.co/images/favicon-base.png",
-    description: "Search any word to get an AI-matched color palette inspired by it.",
-    category: CATEGORIES.colors,
-  },
-  {
-    title: "Colorize",
-    url: "https://colorize.design/",
-    description: "AI-powered color palette generator with accessible contrast checking.",
-    category: CATEGORIES.colors,
-  },
-  {
-    title: "Palette Maker",
-    url: "https://palettemaker.com/",
-    description: "Create color palettes and preview them instantly on real UI patterns.",
-    category: CATEGORIES.colors,
-  },
-  {
-    title: "Gradienty",
-    url: "https://gradienty.codes/",
-    description: "Browse and copy Tailwind CSS gradient classes across thousands of combinations.",
-    category: CATEGORIES.colors,
-  },
-  {
-    title: "Hypercolor",
-    url: "https://hypercolor.dev/",
-    favicon: "https://hypercolor.dev/favicon.png",
-    description: "Curated Tailwind CSS gradient presets — click to copy the class string.",
-    category: CATEGORIES.colors,
-  },
-  {
-    title: "WebGradients",
-    url: "https://webgradients.com/",
-    description: "180 linear CSS gradients with one-click copy of the CSS code.",
-    category: CATEGORIES.colors,
-  },
-  {
-    title: "UV Canvas",
-    url: "https://uvcanvas.com/",
-    favicon: "https://uvcanvas.com/favicon-32x32.png",
-    description: "React components for animated mesh and canvas gradient backgrounds.",
-    category: CATEGORIES.colors,
-  },
-];
-
-export const animationsLinks: Tool[] = [
-  {
-    title: "CSS Loaders",
-    url: "https://cssloaders.github.io/",
-    description: "Pure CSS loading spinners and skeleton animations — no JavaScript required.",
-    category: CATEGORIES.animations,
-  },
-  {
-    title: "Smooothy",
-    url: "https://smooothy.vercel.app/",
-    description: "Smooth scroll-driven animations and UI transition effects for React.",
-    category: CATEGORIES.animations,
-  },
-];
-
 export const imagesAssetsLinks: Tool[] = [
+  {
+    title: "Logo Lattice",
+    url: "https://logolattice.com/",
+    description: "Draw logos quickly with snapped square and isometric grids.",
+    category: CATEGORIES.imagesAssets,
+  },
   {
     title: "unDraw",
     url: "https://undraw.co/",
-    description: "Open-source SVG illustrations for any idea — customizable accent color.",
+    description:
+      "Open-source illustrations for any idea you can imagine and create. Build beautiful websites, products and applications with your color, for free.",
     category: CATEGORIES.imagesAssets,
   },
 ];
 
+export const mapLinks: Tool[] = [
+  {
+    title: "Arnis",
+    url: "https://arnismc.com/",
+    description:
+      "Generate Minecraft worlds from real-world locations. Free, open-source tool to recreate your hometown, city, or any place on Earth in Minecraft.",
+    category: CATEGORIES.mapResources,
+  },
+  {
+    title: "Cityweft",
+    url: "https://cityweft.com/",
+    description:
+      "Generate clean, editable 3D site context for any location on Earth — ready for your CAD, BIM, or generative-design workflow.",
+    category: CATEGORIES.mapResources,
+  },
+  {
+    title: "shadcnmaps",
+    url: "https://www.shadcnmaps.com/",
+    description:
+      "170+ interactive SVG map components for React. Countries, continents, and US states. No dependencies — install via shadcn CLI with pure Tailwind CSS styling.",
+    category: CATEGORIES.mapResources,
+  },
+  {
+    title: "Terraink: Free Map Poster & Wallpaper Creator",
+    url: "https://terraink.app/",
+    description:
+      "Free online map poster and wallpaper generator. Design custom, print-ready map art for any city or location — export as PNG, PDF, or SVG. No sign-up required.",
+    category: CATEGORIES.mapResources,
+  },
+];
+
+export const reactLinks: Tool[] = [
+  {
+    title: "React Three Fiber",
+    url: "https://r3f.docs.pmnd.rs/getting-started/introduction",
+    description: "React-three-fiber is a React renderer for three.js.",
+    category: CATEGORIES.react,
+  },
+];
+
+export const unknownLinks: Tool[] = [
+  {
+    title: "Refero Styles",
+    url: "https://styles.refero.design/",
+    description:
+      "Search a curated DESIGN.md library for AI agents: colors, typography, spacing, and component patterns from top websites. Part of Refero.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "OpenFlowKit",
+    url: "https://openflowkit.com/",
+    description:
+      "Open-source, local-first AI diagramming for architecture diagrams, flowcharts, system design, and editable exports. No signup required.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Web Apps by 123apps",
+    url: "https://123apps.com/",
+    description: "Online Tools for Video, Audio, PDF, and File Conversion",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "freemediaheckyeah",
+    url: "https://fmhy.net/",
+    description: "The largest collection of free stuff on the internet!",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "PaperMe - Custom Paper Generator",
+    url: "https://paperme.pixzens.com/",
+    description:
+      "Free online tool to create and print custom papers. Design lined paper, grid paper, dot paper, music paper, and more. Adjust size, color, and spacing to meet all your needs.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Footer — The only footer gallery on earth.",
+    url: "https://www.footer.design/",
+    description:
+      "Footer is a curated gallery of the top website footer inspiration on earth. Find the footers you need and sort by type and style.",
+    category: CATEGORIES.unknown,
+  },
+];
+
 export const resourceLinks: Tool[] = [
+  ...animationsLinks,
+  ...colorsLinks,
+  ...componentsLinks,
   ...dataLinks,
   ...dataVizLinks,
   ...developmentLinks,
   ...educationLinks,
-  ...componentsLinks,
-  ...colorsLinks,
-  ...animationsLinks,
   ...imagesAssetsLinks,
+  ...mapLinks,
+  ...reactLinks,
 ];

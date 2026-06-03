@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 interface InputFieldProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "prefix"> {
   label?: string | ReactNode;
   prefix?: string | ReactNode;
+  suffix?: string | ReactNode;
   showCopy?: boolean;
   showSeparator?: boolean;
   copyPrefix?: boolean;
@@ -27,6 +28,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
     {
       label,
       prefix,
+      suffix,
       showCopy,
       showSeparator = false,
       copyPrefix = false,
@@ -75,6 +77,16 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
               textToCopy={textToCopy}
               disabled={!value}
             />
+          </InputGroupAddon>
+        )}
+
+        {suffix && (
+          <InputGroupAddon align="inline-end">
+            {typeof suffix === "string" ? (
+              <InputGroupText className="font-mono">{suffix}</InputGroupText>
+            ) : (
+              suffix
+            )}
           </InputGroupAddon>
         )}
       </InputGroup>

@@ -17,7 +17,7 @@ export function Section({ title, count, defaultOpen = true, children }: SectionP
   const [open, setOpen] = useState(defaultOpen);
 
   return (
-    <Card className="mx-auto w-full">
+    <Card className="mx-auto flex w-full flex-col gap-6">
       <CardContent className="p-2.5">
         <Collapsible
           open={open}
