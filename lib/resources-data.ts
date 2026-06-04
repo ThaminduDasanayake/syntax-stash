@@ -220,25 +220,28 @@ export const dataLinks: Tool[] = [
   {
     title: "Public APIs",
     url: "https://github.com/public-apis/public-apis",
-    description: "A collective list of free APIs for use in software and web development.",
+    description: "A collective list of free APIs.",
     category: CATEGORIES.data,
   },
   {
     title: "Free Public APIs",
     url: "https://www.freepublicapis.com/",
-    description: "Curated list of free public APIs with status indicators.",
+    description:
+      "A collection of Free Public APIs for Students and Developers. Tested every single day.",
     category: CATEGORIES.data,
   },
   {
     title: "PublicAPIs.dev",
     url: "https://publicapis.dev/",
-    description: "Searchable directory of public APIs organized by category.",
+    description:
+      "A collection of public APIs for developers, categorized and crowdsourced. Animals, books, cryptocurrencies, development, music, weather and much more.",
     category: CATEGORIES.data,
   },
   {
     title: "Apify",
-    url: "https://apify.com/?fpr=i6ouv&gad_campaignid=22544677876&gbraid=0AAAAADGdQwxm_XhH9hQNusnyQy48tjNqd",
-    description: "Platform for building, running, and sharing web scraping and automation actors.",
+    url: "https://apify.com/",
+    description:
+      "Cloud platform for web scraping, browser automation, AI agents, and data for AI. Use 35,000+ ready-made tools, code templates, or order a custom solution.",
     category: CATEGORIES.data,
   },
   {
@@ -268,56 +271,48 @@ export const dataVizLinks: Tool[] = [
 
 export const developmentLinks: Tool[] = [
   {
-    title: "DhiWise",
-    url: "https://www.dhiwise.com/",
-    description:
-      "Programming automation platform that generates React and Flutter code from Figma designs.",
-    category: CATEGORIES.development,
-  },
-  {
     title: "GitDocify",
-    url: "https://gitdocify.com/readme/Coding-Challenge-Generator#top",
-    description: "AI-powered README and documentation generator for GitHub repositories.",
+    url: "https://gitdocify.com/",
+    description:
+      "Turn any GitHub repository into structured, source-grounded documentation with GitDocify..",
     category: CATEGORIES.development,
   },
   {
     title: "Omatsuri",
     url: "https://omatsuri.app/",
-    description:
-      "Open source collection of browser tools — triangle generator, gradients, symbols, and more.",
+    description: "Progressive Web Application with 12 open source frontend focused tools",
     category: CATEGORIES.development,
   },
   {
-    title: "Database.build",
+    title: "Postgres Sandbox",
     url: "https://database.build/",
-    description:
-      "Run Postgres in the browser — design schemas, run queries, and share databases instantly (by Supabase).",
+    description: "In-browser Postgres sandbox with AI assistance",
     category: CATEGORIES.development,
   },
   {
     title: "TinyWow",
     url: "https://tinywow.com/",
-    description: "Free in-browser file tools for PDF, video, image, and document conversion.",
+    description: "Free AI Writing, PDF, Image, and other Online Tools",
     category: CATEGORIES.development,
   },
   {
     title: "Liam ERD",
     url: "https://liambx.com/",
     description:
-      "Generate interactive, shareable ER diagrams from your database schema automatically.",
+      "Automatically generates beautiful and easy-to-read ER diagrams from your database.",
     category: CATEGORIES.development,
   },
   {
     title: "React Haiku",
     url: "https://www.reacthaiku.dev/",
-    description: "Lightweight collection of React hooks for common browser and UI interactions.",
+    description: "A minimal React Hooks library that saves you time and lines of code.",
     category: CATEGORIES.development,
   },
   {
     title: "Frimousse",
     url: "https://frimousse.liveblocks.io/",
     description:
-      "Lightweight, unstyled emoji picker component for React — composable and framework-agnostic styling.",
+      "Open-source, lightweight, unstyled, and composable emoji picker for React—originally created for Liveblocks Comments. Styles can be applied with CSS, Tailwind CSS, CSS-in-JS, and more.",
     category: CATEGORIES.development,
   },
 ];
@@ -326,139 +321,138 @@ export const educationLinks: Tool[] = [
   {
     title: "Coddy",
     url: "https://coddy.tech/",
-    description: "Gamified coding challenges and courses.",
+    description: "Interactive lessons in Python, JavaScript, SQL, and 15+ languages.",
     category: CATEGORIES.education,
   },
   {
     title: "Codecademy",
     url: "https://www.codecademy.com/",
-    description: "Interactive coding tutorials and courses.",
+    description:
+      "Learn the technical skills to get the job you want. Join over 50 million people choosing Codecademy to start a new career (or advance in their current one).",
     category: CATEGORIES.education,
   },
   {
     title: "Codédex",
     url: "https://www.codedex.io/",
-    description: "Learn to code in a fantasy RPG environment.",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "Code with Mosh",
-    url: "https://codewithmosh.com/p/learning-paths",
-    description: "Clear, concise programming courses by Mosh Hamedani.",
+    description:
+      "Journey through the fantasy land of Python, HTML, CSS, or JavaScript, earn experience points (XP) to unlock new regions, and collect all the badges at your own pace. Start your adventure today.",
     category: CATEGORIES.education,
   },
   {
     title: "DeepWiki",
     url: "https://deepwiki.com/",
-    description: "Deep tech and software engineering wiki.",
+    description:
+      "DeepWiki provides up-to-date documentation you can talk to, for every repo in the world. Think Deep Research for GitHub - powered by Devin.",
     category: CATEGORIES.education,
   },
   {
-    title: "Dev Quizzes",
+    title: "devQuizzes",
     url: "https://quizzes.madza.dev/",
-    description: "Test your programming knowledge.",
+    description:
+      "devQuizzes is the platform where you can test your knowledge on various DEV topics.",
     category: CATEGORIES.education,
   },
   {
     title: "Learn Anything",
     url: "https://learn-anything.xyz/",
-    description: "Organize knowledge and discover resources.",
+    description:
+      "Discover and learn about any topic with Learn-Anything. Our free, comprehensive platform connects you to the best resources for every subject. Start learning today!",
     category: CATEGORIES.education,
   },
   {
-    title: "MindLuster",
+    title: "Mind Luster",
     url: "https://www.mindluster.com/",
-    description: "Free online courses with certificates.",
+    description:
+      " Discover Free Online Certified Courses - Programming - Graphic - Accounting - Languages - English - Computer - Technology designed by experts and universities ",
     category: CATEGORIES.education,
   },
   {
-    title: "Roadmap.sh",
+    title: "Developer Roadmaps",
     url: "https://roadmap.sh/",
-    description: "Step-by-step developer roadmaps and guides.",
+    description:
+      "Community driven roadmaps, articles and guides for developers to grow in their career.",
     category: CATEGORIES.education,
   },
   {
     title: "QuickRef",
-    url: "https://quickref.me/index.html",
-    description: "Cheat sheets for programming languages and tools.",
+    url: "https://quickref.me/",
+    description: "Share quick reference and cheat sheet for developers",
     category: CATEGORIES.education,
   },
   {
     title: "Web Skills",
     url: "https://andreasbm.github.io/web-skills/",
-    description: "A visual overview of useful skills to learn as a web developer.",
+    description: "A visual overview of useful skills to learn as a web developer",
     category: CATEGORIES.education,
   },
   {
     title: "App Ideas",
     url: "https://github.com/florinpop17/app-ideas",
-    description: "A Collection of application ideas to improve your coding skills.",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "Simple ML Examples",
-    url: "https://github.com/chribsen/simple-machine-learning-examples/tree/master",
-    description: "Basic implementations of ML algorithms.",
+    description:
+      "A Collection of application ideas which can be used to improve your coding skills.",
     category: CATEGORIES.education,
   },
   {
     title: "33 JS Concepts",
     url: "https://github.com/leonardomso/33-js-concepts",
-    description: "33 Concepts Every JavaScript Developer Should Know.",
+    description: "33 JavaScript concepts every developer should know.",
     category: CATEGORIES.education,
   },
   {
     title: "JavaScript Questions",
     url: "https://github.com/lydiahallie/javascript-questions",
-    description: "A long list of (advanced) JavaScript questions.",
+    description: "A long list of advanced JavaScript questions, and their explanations.",
     category: CATEGORIES.education,
   },
   {
     title: "You Don't Know JS",
     url: "https://github.com/getify/You-Dont-Know-JS",
-    description: "Book series diving deep into the core mechanisms of JavaScript.",
+    description: "A book series (2 published editions) on the JS language.",
     category: CATEGORIES.education,
   },
   {
     title: "Airbnb JS Guide",
-    url: "https://github.com/airbnb/javascript",
+    url: "https://javascript.airbnb.tech/",
     description: "A mostly reasonable approach to JavaScript.",
     category: CATEGORIES.education,
   },
   {
     title: "Awesome JavaScript",
     url: "https://github.com/sorrycc/awesome-javascript",
-    description: "A collection of awesome browser-side JS libraries and resources.",
+    description:
+      "A collection of awesome browser-side JavaScript libraries, resources and shiny things.",
     category: CATEGORIES.education,
   },
   {
     title: "Build Your Own X",
     url: "https://github.com/codecrafters-io/build-your-own-x",
-    description: "Recreate popular technologies from scratch.",
+    description: "Master programming by recreating your favorite technologies from scratch.",
+    category: CATEGORIES.education,
+  },
+  {
+    title: "Code Crafters",
+    url: "https://app.codecrafters.io/",
+    description:
+      "Advanced programming challenges for experienced engineers. Rebuild real production tools like Redis, Git, and SQLite from scratch in your IDE.",
     category: CATEGORIES.education,
   },
   {
     title: "Project Based Learning",
     url: "https://github.com/practical-tutorials/project-based-learning",
-    description: "Learn to code by building projects.",
+    description: "Curated list of project-based tutorials.",
     category: CATEGORIES.education,
   },
   {
     title: "Awesome LeetCode",
     url: "https://github.com/ashishps1/awesome-leetcode-resources",
-    description: "Resources for mastering LeetCode and DSA.",
+    description:
+      "Awesome LeetCode resources to learn Data Structures and Algorithms and prepare for Coding Interviews.",
     category: CATEGORIES.education,
   },
   {
     title: "Awesome Lists",
     url: "https://github.com/sindresorhus/awesome",
     description: "Awesome lists about all kinds of interesting topics.",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "Idealist",
-    url: "https://github.com/yoheinakajima/idealist",
-    description: "Open source projects and ideas.",
     category: CATEGORIES.education,
   },
 ];
@@ -535,9 +529,85 @@ export const unknownLinks: Tool[] = [
     category: CATEGORIES.unknown,
   },
   {
+    title: "Picture Palette",
+    url: "https://picture-palette.web.app/",
+    description: "Aesthetically pleasing color palettes based on aesthetically pleasing pictures.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Loot Drop",
+    url: "https://www.loot-drop.io/",
+    description:
+      "Explore 1100+ failed startups and learn from $40B+ in burned venture capital. Discover why they failed, their market potential, and how to rebuild them with today's tech",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "FlipOff.",
+    url: "https://github.com/magnum6actual/flipoff",
+    description:
+      "Free split-flap display emulator for any TV. The classic flip-board look, without the $3,500 hardware.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Microlink",
+    url: "https://microlink.io/",
+    description:
+      "Turn any URL into structured data. The all-in-one API for browser automation: screenshots, PDFs, scraping, and link previews. No infrastructure to manage.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Planner 5D",
+    url: "https://planner5d.com/",
+    description:
+      "An advanced and easy-to-use 2D/3D house design tool. Create your dream home design with powerful but easy software by Planner 5D.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Replit",
+    url: "https://replit.com/",
+    description:
+      "Build and deploy software collaboratively with the power of AI without spending a second on setup.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Storyboard Maker",
+    url: "https://storytribeapp.com/",
+    description:
+      "Free online storyboard software for film, education, UX, and marketing. Create professional storyboards — no drawing skills needed.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Powerful Websites",
+    url: "https://powerfulwebsites.io/",
+    description:
+      "Discover 125+ powerful websites and free tools that most people don't know about. Curated directory of useful apps, AI tools, design resources, and hidden gems built by indie developers.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Endless Tools",
+    url: "https://endlesstools.io/",
+    description:
+      "No-coding tool to create 3D assets, key visual for social media, identity elements and other marketing and design need.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Plate rich-text editor",
+    url: "https://platejs.org/",
+    description:
+      "A set of beautifully-designed, customizable plugins and components to help you build your rich-text editor. Open Source.",
+    category: CATEGORIES.unknown,
+  },
+  {
     title: "Web Apps by 123apps",
     url: "https://123apps.com/",
-    description: "Online Tools for Video, Audio, PDF, and File Conversion",
+    description: "Online Tools for Video, Audio, PDF, and File Conversion.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Maket | AI-Powered Floor Plan Creation",
+    url: "https://www.maket.ai/",
+    description:
+      "Maket uses generative AI so homeowners, architects, and builders can quickly design, plan, and visualize residential projects in just a few simple steps.",
     category: CATEGORIES.unknown,
   },
   {
