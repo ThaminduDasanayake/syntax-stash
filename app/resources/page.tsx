@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import ToolCard from "@/components/tool-card";
-import { resourceLinks } from "@/lib/resources-data";
+import { resourceLinks } from "@/lib/resource-data";
 
 export const metadata: Metadata = {
   title: "Resources",

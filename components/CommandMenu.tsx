@@ -14,7 +14,7 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
-import { resourceLinks } from "@/lib/resources-data";
+import { resourceLinks } from "@/lib/resource-data";
 import { internalTools } from "@/lib/tools-data";
 import { CommandMenuProps, Tool } from "@/types";
 

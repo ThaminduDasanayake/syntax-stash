@@ -27,7 +27,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { iconMap } from "@/lib/icons";
-import { resourceCategories } from "@/lib/resources-data";
+import { resourceCategories } from "@/lib/resource-data";
 import { internalTools } from "@/lib/tools-data";
 import { slugify } from "@/lib/utils";
 

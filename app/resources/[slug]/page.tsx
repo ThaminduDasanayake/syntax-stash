@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import ToolCard from "@/components/tool-card";
-import { resourceCategories, resourceLinks } from "@/lib/resources-data";
+import { resourceCategories, resourceLinks } from "@/lib/resource-data";
 import { slugify } from "@/lib/utils";
 
 export function generateStaticParams() {

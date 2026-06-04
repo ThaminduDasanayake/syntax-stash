@@ -2,7 +2,7 @@ import { LinkIcon, WrenchIcon } from "@phosphor-icons/react/ssr";
 
 import ToolCard from "@/components/tool-card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { resourceLinks } from "@/lib/resources-data";
+import { resourceLinks } from "@/lib/resource-data";
 import { internalTools } from "@/lib/tools-data";
 
 const groupedTools = internalTools.reduce(
