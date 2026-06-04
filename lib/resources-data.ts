@@ -6,16 +6,12 @@ export const CATEGORIES = {
   components: "UI Components",
   data: "Data",
   dataViz: "Data Visualization",
+  designTools: "Design & Creative Tools",
   development: "Development & Code",
-  devops: "DevOps",
   education: "Education",
   imagesAssets: "Images & Assets",
   mapResources: "Map Resources",
-  network: "Network & Security",
   react: "React Resources",
-  system: "System & OS",
-  typography: "Typography & Text",
-  unknown: "Unknown",
 } as const;
 
 export const resourceCategories: string[] = Object.values(CATEGORIES);
@@ -52,6 +48,13 @@ export const animationsLinks: Tool[] = [
     url: "https://www.swishy.ai/",
     description:
       "Swishy is the leading AI motion designer and AI animator platform. Create professional motion graphics, animated typefaces, and stunning video animations without After Effects. Export to MP4, MOV, and GIF instantly.",
+    category: CATEGORIES.animations,
+  },
+  {
+    title: "FlipOff.",
+    url: "https://github.com/magnum6actual/flipoff",
+    description:
+      "Free split-flap display emulator for any TV. The classic flip-board look, without the $3,500 hardware.",
     category: CATEGORIES.animations,
   },
 ];
@@ -122,10 +125,9 @@ export const colorsLinks: Tool[] = [
     category: CATEGORIES.colors,
   },
   {
-    title: "UV Canvas",
-    url: "https://uvcanvas.com/",
-    favicon: "https://uvcanvas.com/favicon-32x32.png",
-    description: "An open source React.js component library for beautifully shaded canvas.",
+    title: "Picture Palette",
+    url: "https://picture-palette.web.app/",
+    description: "Aesthetically pleasing color palettes based on aesthetically pleasing pictures.",
     category: CATEGORIES.colors,
   },
 ];
@@ -202,16 +204,31 @@ export const componentsLinks: Tool[] = [
     category: CATEGORIES.components,
   },
   {
-    title: "VisGL Google Maps",
-    url: "https://visgl.github.io/react-google-maps/",
-    description: "React components and hooks for the Google Maps JavaScript API",
+    title: "Refero Styles",
+    url: "https://styles.refero.design/",
+    description:
+      "Search a curated DESIGN.md library for AI agents: colors, typography, spacing, and component patterns from top websites. Part of Refero.",
     category: CATEGORIES.components,
   },
   {
-    title: "CSS Grid Generator",
-    url: "https://cssgridgenerator.io/",
+    title: "Plate rich-text editor",
+    url: "https://platejs.org/",
     description:
-      "A user-friendly tool designed for web developers to effortlessly create customizable CSS grids for seamless web development.",
+      "A set of beautifully-designed, customizable plugins and components to help you build your rich-text editor. Open Source.",
+    category: CATEGORIES.components,
+  },
+  {
+    title: "Dot Matrix",
+    url: "https://dotmatrix.zzzzshawn.cloud/",
+    description:
+      "React component library of dot matrix loaders—expressive loading primitives you install via the shadcn registry and own as local code.",
+    category: CATEGORIES.components,
+  },
+  {
+    title: "Footer — The only footer gallery on earth.",
+    url: "https://www.footer.design/",
+    description:
+      "Footer is a curated gallery of the top website footer inspiration on earth. Find the footers you need and sort by type and style.",
     category: CATEGORIES.components,
   },
 ];
@@ -251,6 +268,13 @@ export const dataLinks: Tool[] = [
       "Official and community Model Context Protocol server implementations for AI tool integrations.",
     category: CATEGORIES.data,
   },
+  {
+    title: "Microlink",
+    url: "https://microlink.io/",
+    description:
+      "Turn any URL into structured data. The all-in-one API for browser automation: screenshots, PDFs, scraping, and link previews. No infrastructure to manage.",
+    category: CATEGORIES.data,
+  },
 ];
 
 export const dataVizLinks: Tool[] = [
@@ -260,12 +284,61 @@ export const dataVizLinks: Tool[] = [
     description: "A powerful, interactive charting and visualization library for browser",
     category: CATEGORIES.dataViz,
   },
+];
+
+export const designToolsLinks: Tool[] = [
   {
-    title: "CSV Vis Tool",
-    url: "https://csvistool.com/",
+    title: "Logo Lattice",
+    url: "https://logolattice.com/",
+    description: "Draw logos quickly with snapped square and isometric grids.",
+    category: CATEGORIES.designTools,
+  },
+  {
+    title: "Planner 5D",
+    url: "https://planner5d.com/",
     description:
-      "Official data structures and algorithms visualization tool for CS 1332 at Georgia Tech.",
-    category: CATEGORIES.dataViz,
+      "An advanced and easy-to-use 2D/3D house design tool. Create your dream home design with powerful but easy software by Planner 5D.",
+    category: CATEGORIES.designTools,
+  },
+  {
+    title: "Omma",
+    url: "https://omma.build/",
+    description: "Build interactive experiences, websites, 3d, and apps using natural language.",
+    category: CATEGORIES.designTools,
+  },
+  {
+    title: "OS Design Directory",
+    url: "https://design-directory-blue.vercel.app/",
+    description: "Curated design resources, tools, and inspiration for designers and developers.",
+    category: CATEGORIES.designTools,
+  },
+  {
+    title: "Storyboard Maker",
+    url: "https://storytribeapp.com/",
+    description:
+      "Free online storyboard software for film, education, UX, and marketing. Create professional storyboards — no drawing skills needed.",
+    category: CATEGORIES.designTools,
+  },
+  {
+    title: "Endless Tools",
+    url: "https://endlesstools.io/",
+    description:
+      "No-coding tool to create 3D assets, key visual for social media, identity elements and other marketing and design need.",
+    category: CATEGORIES.designTools,
+  },
+  {
+    title: "Maket | AI-Powered Floor Plan Creation",
+    url: "https://www.maket.ai/",
+    description:
+      "Maket uses generative AI so homeowners, architects, and builders can quickly design, plan, and visualize residential projects in just a few simple steps.",
+    category: CATEGORIES.designTools,
+  },
+  {
+    title: "PaperMe - Custom Paper Generator",
+    url: "https://paperme.pixzens.com/",
+    description:
+      "Free online tool to create and print custom papers. Design lined paper, grid paper, dot paper, music paper, and more. Adjust size, color, and spacing to meet all your needs.",
+    category: CATEGORIES.designTools,
   },
 ];
 
@@ -303,16 +376,30 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.development,
   },
   {
-    title: "React Haiku",
-    url: "https://www.reacthaiku.dev/",
-    description: "A minimal React Hooks library that saves you time and lines of code.",
+    title: "CSS Grid Generator",
+    url: "https://cssgridgenerator.io/",
+    description:
+      "A user-friendly tool designed for web developers to effortlessly create customizable CSS grids for seamless web development.",
     category: CATEGORIES.development,
   },
   {
-    title: "Frimousse",
-    url: "https://frimousse.liveblocks.io/",
+    title: "OpenFlowKit",
+    url: "https://openflowkit.com/",
     description:
-      "Open-source, lightweight, unstyled, and composable emoji picker for React—originally created for Liveblocks Comments. Styles can be applied with CSS, Tailwind CSS, CSS-in-JS, and more.",
+      "Open-source, local-first AI diagramming for architecture diagrams, flowcharts, system design, and editable exports. No signup required.",
+    category: CATEGORIES.development,
+  },
+  {
+    title: "Replit",
+    url: "https://replit.com/",
+    description:
+      "Build and deploy software collaboratively with the power of AI without spending a second on setup.",
+    category: CATEGORIES.development,
+  },
+  {
+    title: "Web Apps by 123apps",
+    url: "https://123apps.com/",
+    description: "Online Tools for Video, Audio, PDF, and File Conversion.",
     category: CATEGORIES.development,
   },
 ];
@@ -455,20 +542,62 @@ export const educationLinks: Tool[] = [
     description: "Awesome lists about all kinds of interesting topics.",
     category: CATEGORIES.education,
   },
+  {
+    title: "CSV Vis Tool",
+    url: "https://csvistool.com/",
+    description:
+      "Official data structures and algorithms visualization tool for CS 1332 at Georgia Tech.",
+    category: CATEGORIES.education,
+  },
+  {
+    title: "Loot Drop",
+    url: "https://www.loot-drop.io/",
+    description:
+      "Explore 1100+ failed startups and learn from $40B+ in burned venture capital. Discover why they failed, their market potential, and how to rebuild them with today's tech",
+    category: CATEGORIES.education,
+  },
+  {
+    title: "Powerful Websites",
+    url: "https://powerfulwebsites.io/",
+    description:
+      "Discover 125+ powerful websites and free tools that most people don't know about. Curated directory of useful apps, AI tools, design resources, and hidden gems built by indie developers.",
+    category: CATEGORIES.education,
+  },
+  {
+    title: "freemediaheckyeah",
+    url: "https://fmhy.net/",
+    description: "The largest collection of free stuff on the internet!",
+    category: CATEGORIES.education,
+  },
+  {
+    title: "HF Viewer",
+    url: "https://hfviewer.com/",
+    description:
+      "View any Hugging Face model. We believe good understanding of AI models unlocks innovative ideas.",
+    category: CATEGORIES.education,
+  },
+  {
+    title: "The Odin Project",
+    url: "https://www.theodinproject.com/",
+    description:
+      "The Odin Project empowers aspiring web developers to learn together for free. Our full stack curriculum is free and supported by a passionate open source community.",
+    category: CATEGORIES.education,
+  },
 ];
 
 export const imagesAssetsLinks: Tool[] = [
-  {
-    title: "Logo Lattice",
-    url: "https://logolattice.com/",
-    description: "Draw logos quickly with snapped square and isometric grids.",
-    category: CATEGORIES.imagesAssets,
-  },
   {
     title: "unDraw",
     url: "https://undraw.co/",
     description:
       "Open-source illustrations for any idea you can imagine and create. Build beautiful websites, products and applications with your color, for free.",
+    category: CATEGORIES.imagesAssets,
+  },
+  {
+    title: "Newt",
+    url: "https://newt.sh/",
+    description:
+      "A code-native pixel art tool. Paint like a normal raster editor; underneath, every pixel is a color token in clean, editable code. Export SVG, CSS, React, PNG, and GIF.",
     category: CATEGORIES.imagesAssets,
   },
 ];
@@ -489,6 +618,13 @@ export const mapLinks: Tool[] = [
     category: CATEGORIES.mapResources,
   },
   {
+    title: "mapcn",
+    url: "https://www.mapcn.dev/",
+    description:
+      "A collection of beautifully designed, accessible, and customizable map components. Built on MapLibre GL. Styled with Tailwind CSS. Works with shadcn/ui.",
+    category: CATEGORIES.mapResources,
+  },
+  {
     title: "shadcnmaps",
     url: "https://www.shadcnmaps.com/",
     description:
@@ -502,6 +638,12 @@ export const mapLinks: Tool[] = [
       "Free online map poster and wallpaper generator. Design custom, print-ready map art for any city or location — export as PNG, PDF, or SVG. No sign-up required.",
     category: CATEGORIES.mapResources,
   },
+  {
+    title: "VisGL Google Maps",
+    url: "https://visgl.github.io/react-google-maps/",
+    description: "React components and hooks for the Google Maps JavaScript API",
+    category: CATEGORIES.mapResources,
+  },
 ];
 
 export const reactLinks: Tool[] = [
@@ -511,124 +653,25 @@ export const reactLinks: Tool[] = [
     description: "React-three-fiber is a React renderer for three.js.",
     category: CATEGORIES.react,
   },
-];
-
-export const unknownLinks: Tool[] = [
   {
-    title: "Refero Styles",
-    url: "https://styles.refero.design/",
+    title: "UV Canvas",
+    url: "https://uvcanvas.com/",
+    favicon: "https://uvcanvas.com/favicon-32x32.png",
+    description: "An open source React.js component library for beautifully shaded canvas.",
+    category: CATEGORIES.react,
+  },
+  {
+    title: "React Haiku",
+    url: "https://www.reacthaiku.dev/",
+    description: "A minimal React Hooks library that saves you time and lines of code.",
+    category: CATEGORIES.react,
+  },
+  {
+    title: "Frimousse",
+    url: "https://frimousse.liveblocks.io/",
     description:
-      "Search a curated DESIGN.md library for AI agents: colors, typography, spacing, and component patterns from top websites. Part of Refero.",
-    category: CATEGORIES.unknown,
-  },
-  {
-    title: "OpenFlowKit",
-    url: "https://openflowkit.com/",
-    description:
-      "Open-source, local-first AI diagramming for architecture diagrams, flowcharts, system design, and editable exports. No signup required.",
-    category: CATEGORIES.unknown,
-  },
-  {
-    title: "Picture Palette",
-    url: "https://picture-palette.web.app/",
-    description: "Aesthetically pleasing color palettes based on aesthetically pleasing pictures.",
-    category: CATEGORIES.unknown,
-  },
-  {
-    title: "Loot Drop",
-    url: "https://www.loot-drop.io/",
-    description:
-      "Explore 1100+ failed startups and learn from $40B+ in burned venture capital. Discover why they failed, their market potential, and how to rebuild them with today's tech",
-    category: CATEGORIES.unknown,
-  },
-  {
-    title: "FlipOff.",
-    url: "https://github.com/magnum6actual/flipoff",
-    description:
-      "Free split-flap display emulator for any TV. The classic flip-board look, without the $3,500 hardware.",
-    category: CATEGORIES.unknown,
-  },
-  {
-    title: "Microlink",
-    url: "https://microlink.io/",
-    description:
-      "Turn any URL into structured data. The all-in-one API for browser automation: screenshots, PDFs, scraping, and link previews. No infrastructure to manage.",
-    category: CATEGORIES.unknown,
-  },
-  {
-    title: "Planner 5D",
-    url: "https://planner5d.com/",
-    description:
-      "An advanced and easy-to-use 2D/3D house design tool. Create your dream home design with powerful but easy software by Planner 5D.",
-    category: CATEGORIES.unknown,
-  },
-  {
-    title: "Replit",
-    url: "https://replit.com/",
-    description:
-      "Build and deploy software collaboratively with the power of AI without spending a second on setup.",
-    category: CATEGORIES.unknown,
-  },
-  {
-    title: "Storyboard Maker",
-    url: "https://storytribeapp.com/",
-    description:
-      "Free online storyboard software for film, education, UX, and marketing. Create professional storyboards — no drawing skills needed.",
-    category: CATEGORIES.unknown,
-  },
-  {
-    title: "Powerful Websites",
-    url: "https://powerfulwebsites.io/",
-    description:
-      "Discover 125+ powerful websites and free tools that most people don't know about. Curated directory of useful apps, AI tools, design resources, and hidden gems built by indie developers.",
-    category: CATEGORIES.unknown,
-  },
-  {
-    title: "Endless Tools",
-    url: "https://endlesstools.io/",
-    description:
-      "No-coding tool to create 3D assets, key visual for social media, identity elements and other marketing and design need.",
-    category: CATEGORIES.unknown,
-  },
-  {
-    title: "Plate rich-text editor",
-    url: "https://platejs.org/",
-    description:
-      "A set of beautifully-designed, customizable plugins and components to help you build your rich-text editor. Open Source.",
-    category: CATEGORIES.unknown,
-  },
-  {
-    title: "Web Apps by 123apps",
-    url: "https://123apps.com/",
-    description: "Online Tools for Video, Audio, PDF, and File Conversion.",
-    category: CATEGORIES.unknown,
-  },
-  {
-    title: "Maket | AI-Powered Floor Plan Creation",
-    url: "https://www.maket.ai/",
-    description:
-      "Maket uses generative AI so homeowners, architects, and builders can quickly design, plan, and visualize residential projects in just a few simple steps.",
-    category: CATEGORIES.unknown,
-  },
-  {
-    title: "freemediaheckyeah",
-    url: "https://fmhy.net/",
-    description: "The largest collection of free stuff on the internet!",
-    category: CATEGORIES.unknown,
-  },
-  {
-    title: "PaperMe - Custom Paper Generator",
-    url: "https://paperme.pixzens.com/",
-    description:
-      "Free online tool to create and print custom papers. Design lined paper, grid paper, dot paper, music paper, and more. Adjust size, color, and spacing to meet all your needs.",
-    category: CATEGORIES.unknown,
-  },
-  {
-    title: "Footer — The only footer gallery on earth.",
-    url: "https://www.footer.design/",
-    description:
-      "Footer is a curated gallery of the top website footer inspiration on earth. Find the footers you need and sort by type and style.",
-    category: CATEGORIES.unknown,
+      "Open-source, lightweight, unstyled, and composable emoji picker for React—originally created for Liveblocks Comments. Styles can be applied with CSS, Tailwind CSS, CSS-in-JS, and more.",
+    category: CATEGORIES.react,
   },
 ];
 
@@ -638,6 +681,7 @@ export const resourceLinks: Tool[] = [
   ...componentsLinks,
   ...dataLinks,
   ...dataVizLinks,
+  ...designToolsLinks,
   ...developmentLinks,
   ...educationLinks,
   ...imagesAssetsLinks,
