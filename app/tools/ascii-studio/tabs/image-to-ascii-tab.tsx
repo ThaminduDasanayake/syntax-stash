@@ -52,14 +52,10 @@ export function ImageToAsciiTab() {
 
       {/* Upload zone & preview */}
       {file ? (
-        <div className="border-border bg-muted/10 flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed p-10">
+        <div className="border-border bg-muted/10 flex flex-col items-center justify-center gap-3 border-2 border-dashed p-10">
           {preview && (
             // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={preview}
-              alt="preview"
-              className="max-h-32 max-w-xs rounded-lg object-contain"
-            />
+            <img src={preview} alt="preview" className="max-h-32 max-w-xs object-contain" />
           )}
           <span className="text-muted-foreground text-sm">{file.name}</span>
 
@@ -101,7 +97,7 @@ export function ImageToAsciiTab() {
             <Label>ASCII Output</Label>
             <CopyButton textToCopy={output} />
           </div>
-          <div className="bg-muted/30 border-border overflow-auto rounded-xl border p-4">
+          <div className="bg-muted/30 border-border overflow-auto border p-4">
             <pre className="text-foreground font-mono text-[5px] leading-[5.5px] whitespace-pre select-all">
               {output}
             </pre>
