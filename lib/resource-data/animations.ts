@@ -39,6 +39,7 @@ export const animationsLinks: Tool[] = [
   {
     title: "FlipOff.",
     url: "https://github.com/magnum6actual/flipoff",
+    favicon: "/github.svg",
     description:
       "Free split-flap display emulator for any TV. The classic flip-board look, without the $3,500 hardware.",
     category: CATEGORIES.animations,

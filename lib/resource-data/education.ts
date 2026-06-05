@@ -73,6 +73,7 @@ export const educationLinks: Tool[] = [
   {
     title: "App Ideas",
     url: "https://github.com/florinpop17/app-ideas",
+    favicon: "/github.svg",
     description:
       "A Collection of application ideas which can be used to improve your coding skills.",
     category: CATEGORIES.education,
@@ -80,30 +81,28 @@ export const educationLinks: Tool[] = [
   {
     title: "33 JS Concepts",
     url: "https://github.com/leonardomso/33-js-concepts",
+    favicon: "/github.svg",
     description: "33 JavaScript concepts every developer should know.",
     category: CATEGORIES.education,
   },
   {
     title: "JavaScript Questions",
     url: "https://github.com/lydiahallie/javascript-questions",
+    favicon: "/github.svg",
     description: "A long list of advanced JavaScript questions, and their explanations.",
     category: CATEGORIES.education,
   },
   {
     title: "You Don't Know JS",
     url: "https://github.com/getify/You-Dont-Know-JS",
+    favicon: "/github.svg",
     description: "A book series (2 published editions) on the JS language.",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "Airbnb JS Guide",
-    url: "https://javascript.airbnb.tech/",
-    description: "A mostly reasonable approach to JavaScript.",
     category: CATEGORIES.education,
   },
   {
     title: "Awesome JavaScript",
     url: "https://github.com/sorrycc/awesome-javascript",
+    favicon: "/github.svg",
     description:
       "A collection of awesome browser-side JavaScript libraries, resources and shiny things.",
     category: CATEGORIES.education,
@@ -111,6 +110,7 @@ export const educationLinks: Tool[] = [
   {
     title: "Build Your Own X",
     url: "https://github.com/codecrafters-io/build-your-own-x",
+    favicon: "/github.svg",
     description: "Master programming by recreating your favorite technologies from scratch.",
     category: CATEGORIES.education,
   },
@@ -124,12 +124,14 @@ export const educationLinks: Tool[] = [
   {
     title: "Project Based Learning",
     url: "https://github.com/practical-tutorials/project-based-learning",
+    favicon: "/github.svg",
     description: "Curated list of project-based tutorials.",
     category: CATEGORIES.education,
   },
   {
     title: "Awesome LeetCode",
     url: "https://github.com/ashishps1/awesome-leetcode-resources",
+    favicon: "/github.svg",
     description:
       "Awesome LeetCode resources to learn Data Structures and Algorithms and prepare for Coding Interviews.",
     category: CATEGORIES.education,
@@ -137,6 +139,7 @@ export const educationLinks: Tool[] = [
   {
     title: "Awesome Lists",
     url: "https://github.com/sindresorhus/awesome",
+    favicon: "/github.svg",
     description: "Awesome lists about all kinds of interesting topics.",
     category: CATEGORIES.education,
   },
@@ -162,8 +165,9 @@ export const educationLinks: Tool[] = [
     category: CATEGORIES.education,
   },
   {
-    title: "freemediaheckyeah",
+    title: "free media heck yeah",
     url: "https://fmhy.net/",
+    favicon: "https://fmhy.net/june_icon.webp",
     description: "The largest collection of free stuff on the internet!",
     category: CATEGORIES.education,
   },

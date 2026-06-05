@@ -1,118 +1,79 @@
 "use client";
 
 import { ArrowSquareOutIcon, ToolboxIcon } from "@phosphor-icons/react";
-import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardIcon } from "@/components/card-icon";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { iconMap } from "@/lib/icons";
 import { ToolCardProps } from "@/types";
-
-function getFavicon(toolUrl: string, explicitFavicon?: string) {
-  const url = new URL(toolUrl);
-  const domain = url.hostname;
-  const origin = url.origin;
-
-  const sources: string[] = [];
-
-  if (explicitFavicon) {
-    sources.push(explicitFavicon);
-  }
-
-  sources.push(`${origin}/favicon.ico`);
-  sources.push(`https://www.google.com/s2/favicons?domain=${domain}&sz=128`);
-
-  return sources;
-}
-
-function Favicon({
-  url,
-  alt,
-  explicitFavicon,
-}: {
-  url: string;
-  alt: string;
-  explicitFavicon?: string;
-}) {
-  const sources = getFavicon(url, explicitFavicon);
-  const [index, setIndex] = useState(0);
-
-  return (
-    <div className="border-border/50 bg-foreground/60 dark:bg-primary/40 flex h-8 w-8 shrink-0 items-center justify-center rounded-md border p-1 shadow-sm">
-      <Image
-        src={sources[index]}
-        alt={alt}
-        width={24}
-        height={24}
-        unoptimized
-        className="h-full w-full object-contain"
-        onError={() => {
-          if (index < sources.length - 1) {
-            setIndex(index + 1);
-          }
-        }}
-      />
-    </div>
-  );
-}
 
 function CardBody({ tool }: ToolCardProps) {
   const isInternal = !!tool.slug;
   const Icon = (tool.icon && iconMap[tool.icon]) || ToolboxIcon;
 
   return (
-    <Card className="h-full w-full">
-      <CardHeader>
-        <div className="flex flex-row items-center gap-3">
+    <Card className="group/card border-border bg-blueprint-card hover:border-primary relative flex h-full w-full flex-col overflow-hidden rounded-sm border-2 transition-all duration-200 hover:-translate-y-1">
+      <div className="border-border bg-background/50 flex items-center justify-between border-b-2 px-4 py-2 backdrop-blur-sm">
+        <span className="text-muted-foreground group-hover/card:text-primary font-mono text-[10px] font-bold tracking-widest uppercase transition-colors">
+          &gt; {tool.category}
+        </span>
+        {isInternal && (
+          <span className="text-muted-foreground font-mono text-[10px] font-bold">INT</span>
+        )}
+      </div>
+
+      <CardHeader className="relative z-10 flex-1 p-5">
+        <div className="flex flex-row items-start gap-4">
           {isInternal ? (
-            <div className="bg-primary/10 border-ring/30 flex h-8 w-8 shrink-0 items-center justify-center rounded-md border">
-              <Icon className="text-primary size-4.5!" />
+            <div className="border-border bg-background group-hover/card:border-primary group-hover/card:text-primary flex h-10 w-10 shrink-0 items-center justify-center rounded-none border-2 transition-colors">
+              <Icon className="size-5 transition-colors" />
             </div>
           ) : (
-            <Favicon url={tool.url!} alt={tool.title} explicitFavicon={tool.favicon} />
+            <CardIcon
+              url={tool.url!}
+              alt={tool.title}
+              className={tool.className}
+              explicitFavicon={tool.favicon}
+            />
           )}
 
           <div className="min-w-0 flex-1">
             <div className="flex items-start justify-between gap-2">
-              <CardTitle className="text-foreground font-semibold">{tool.title}</CardTitle>
+              <CardTitle className="text-foreground group-hover/card:text-primary font-sans text-lg font-bold tracking-tight transition-colors">
+                {tool.title}
+              </CardTitle>
               {!isInternal && (
                 <ArrowSquareOutIcon
                   weight="duotone"
-                  className="text-muted-foreground mt-0.5 shrink-0"
+                  className="text-muted-foreground group-hover/card:text-primary mt-1 size-4 shrink-0 transition-all group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5"
                 />
               )}
             </div>
           </div>
         </div>
-        <CardDescription className="mt-2 line-clamp-3 leading-relaxed">
+        <CardDescription className="mt-4 line-clamp-3 font-mono text-xs leading-relaxed opacity-80">
           {tool.description}
         </CardDescription>
       </CardHeader>
-      <CardContent className="mt-auto pt-4">
-        <Badge className="bg-primary/10 text-primary hover:bg-primary/20 text-[11px] tracking-wider uppercase">
-          {tool.category}
-        </Badge>
-      </CardContent>
     </Card>
   );
 }
 
 export default function ToolCard({ tool }: ToolCardProps) {
-  const className =
-    "block w-full h-full transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_30px_var(--color-primary)] hover:shadow-primary/10";
+  const linkWrapperClass =
+    "block w-full h-full outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl";
 
   if (tool.slug) {
     return (
-      <Link href={`/tools/${tool.slug}`} className={className}>
+      <Link href={`/tools/${tool.slug}`} className={linkWrapperClass}>
         <CardBody tool={tool} />
       </Link>
     );
   }
 
   return (
-    <a href={tool.url} target="_blank" rel="noopener noreferrer" className={className}>
+    <a href={tool.url} target="_blank" rel="noopener noreferrer" className={linkWrapperClass}>
       <CardBody tool={tool} />
     </a>
   );

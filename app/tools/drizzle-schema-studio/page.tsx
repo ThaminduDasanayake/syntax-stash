@@ -18,12 +18,12 @@ export default function DrizzleSchemaStudioPage() {
   return (
     <ToolLayout tool={tool}>
       <Tabs value={mode} onValueChange={(v) => setMode(v as Mode)} className="flex w-full flex-col">
-        <TabsList className="mb-6 grid w-full max-w-sm grid-cols-2">
+        <TabsList className="tab-list mb-6 grid max-w-sm grid-cols-2">
           <TabsTrigger value="sql" className="tab-trigger">
-            SQL <ArrowRightIcon /> Drizzle
+            SQL <ArrowRightIcon weight="bold" /> Drizzle
           </TabsTrigger>
           <TabsTrigger value="prisma" className="tab-trigger">
-            Prisma <ArrowRightIcon /> Drizzle
+            Prisma <ArrowRightIcon weight="bold" /> Drizzle
           </TabsTrigger>
         </TabsList>
 

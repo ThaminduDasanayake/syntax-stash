@@ -20,6 +20,7 @@ export const developmentLinks: Tool[] = [
     title: "Postgres Sandbox",
     url: "https://database.build/",
     description: "In-browser Postgres sandbox with AI assistance",
+    className: "invert",
     category: CATEGORIES.development,
   },
   {

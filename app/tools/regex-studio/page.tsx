@@ -140,18 +140,16 @@ export default function RegexStudioPage() {
   return (
     <ToolLayout tool={tool}>
       <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col gap-6">
-        <div className="flex w-full">
-          <TabsList className="grid w-full max-w-md grid-cols-2">
-            <TabsTrigger value="tester" className="tab-trigger">
-              <FlaskIcon weight="duotone" className="size-4.5" />
-              Live Tester
-            </TabsTrigger>
-            <TabsTrigger value="library" className="tab-trigger">
-              <BookOpenIcon weight="duotone" className="size-4.5" />
-              Pattern Library
-            </TabsTrigger>
-          </TabsList>
-        </div>
+        <TabsList className="tab-list grid max-w-md grid-cols-2">
+          <TabsTrigger value="tester" className="tab-trigger">
+            <FlaskIcon weight="duotone" className="size-4.5" />
+            Live Tester
+          </TabsTrigger>
+          <TabsTrigger value="library" className="tab-trigger">
+            <BookOpenIcon weight="duotone" className="size-4.5" />
+            Pattern Library
+          </TabsTrigger>
+        </TabsList>
 
         <TabsContent value="tester" className="mt-0 space-y-6">
           <div className="space-y-4">

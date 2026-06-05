@@ -199,7 +199,7 @@ export default function JsonSchemaStudioPage() {
           className="flex h-full min-h-0 w-full flex-col gap-3"
         >
           <div className="flex shrink-0 flex-col justify-between gap-3 sm:flex-row">
-            <TabsList className="grid w-full grid-cols-4 sm:w-auto">
+            <TabsList className="tab-list grid grid-cols-4 sm:w-auto">
               <TabsTrigger value="ts" className="tab-trigger">
                 TS
               </TabsTrigger>
@@ -213,9 +213,6 @@ export default function JsonSchemaStudioPage() {
                 Schema
               </TabsTrigger>
             </TabsList>
-            <div className="flex justify-end">
-              <CopyButton textToCopy={currentOutput} disabled={!result.ok || !currentOutput} />
-            </div>
           </div>
 
           <div className="border-border bg-muted/10 flex min-h-0 flex-1 flex-col overflow-hidden rounded-md border">
@@ -225,6 +222,13 @@ export default function JsonSchemaStudioPage() {
                 value={result.ok ? result.ts : ""}
                 readOnly
                 placeholder="TypeScript interfaces will appear here..."
+                action={
+                  <CopyButton
+                    iconOnly
+                    textToCopy={currentOutput}
+                    disabled={!result.ok || !currentOutput}
+                  />
+                }
               />
             </TabsContent>
 
@@ -234,6 +238,13 @@ export default function JsonSchemaStudioPage() {
                 value={result.ok ? result.zod : ""}
                 readOnly
                 placeholder="Zod schemas will appear here..."
+                action={
+                  <CopyButton
+                    iconOnly
+                    textToCopy={currentOutput}
+                    disabled={!result.ok || !currentOutput}
+                  />
+                }
               />
             </TabsContent>
 
@@ -243,6 +254,13 @@ export default function JsonSchemaStudioPage() {
                 value={result.ok ? result.pydantic : ""}
                 readOnly
                 placeholder="Pydantic models will appear here..."
+                action={
+                  <CopyButton
+                    iconOnly
+                    textToCopy={currentOutput}
+                    disabled={!result.ok || !currentOutput}
+                  />
+                }
               />
             </TabsContent>
 
@@ -252,6 +270,13 @@ export default function JsonSchemaStudioPage() {
                 value={result.ok ? result.jsonSchema : ""}
                 readOnly
                 placeholder="JSON Schema will appear here..."
+                action={
+                  <CopyButton
+                    iconOnly
+                    textToCopy={currentOutput}
+                    disabled={!result.ok || !currentOutput}
+                  />
+                }
               />
             </TabsContent>
           </div>

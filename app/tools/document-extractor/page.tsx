@@ -128,8 +128,8 @@ export default function DocumentExtractorPage() {
                 }
               }}
             >
-              <div className="flex flex-wrap items-center justify-between gap-3 pb-3">
-                <TabsList className="w-xs">
+              <div className="flex items-center justify-between gap-3 pb-3">
+                <TabsList className="tab-list grid w-fit grid-cols-2">
                   <TabsTrigger value="rich" className="tab-trigger">
                     <PenNibIcon weight="duotone" className="size-4.5" />
                     Rich Editor
@@ -140,7 +140,7 @@ export default function DocumentExtractorPage() {
                   </TabsTrigger>
                 </TabsList>
 
-                <div className="flex items-center gap-4">
+                <div className="flex w-full items-center justify-end gap-4">
                   <SwitchField
                     label="Add YAML frontmatter"
                     checked={withFrontmatter}

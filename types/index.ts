@@ -9,6 +9,7 @@ export type Tool = {
   category: string;
   icon?: IconName;
   favicon?: string;
+  className?: string;
 };
 
 export type ToolCardProps = {

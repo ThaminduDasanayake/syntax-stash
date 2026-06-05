@@ -5,7 +5,7 @@ import { ReactNode, useState } from "react";
 import AppHeader from "@/components/app-header";
 import AppSidebar from "@/components/app-sidebar";
 import CommandMenu from "@/components/CommandMenu";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 export default function AppLayout({ children }: { children: ReactNode }) {
   const [commandMenuOpen, setCommandMenuOpen] = useState(false);
@@ -13,13 +13,11 @@ export default function AppLayout({ children }: { children: ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main className="relative z-10 flex h-full min-w-0 flex-1 flex-col overflow-hidden">
+      <SidebarInset>
         <AppHeader onSearchOpenAction={() => setCommandMenuOpen(true)} />
-        {/*<div className="min-h-0 flex-1 overflow-y-auto">*/}
-        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto p-2 md:p-8">{children}</div>
-        {/*</div>*/}
+        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">{children}</div>
         <CommandMenu open={commandMenuOpen} setOpenAction={setCommandMenuOpen} />
-      </main>
+      </SidebarInset>
     </SidebarProvider>
   );
 }

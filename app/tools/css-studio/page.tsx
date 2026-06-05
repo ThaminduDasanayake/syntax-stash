@@ -27,38 +27,36 @@ export default function CssStudioPage() {
   return (
     <ToolLayout tool={tool}>
       <Tabs defaultValue="border-radius" className="flex flex-col gap-6">
-        <div className="flex w-full">
-          <TabsList className="grid w-full grid-cols-4 sm:grid-cols-7">
-            <TabsTrigger value="border-radius" className="tab-trigger">
-              <SquareIcon weight="duotone" className="size-4.5" />
-              Radius
-            </TabsTrigger>
-            <TabsTrigger value="aspect-ratio" className="tab-trigger">
-              <FrameCornersIcon weight="duotone" className="size-4.5" />
-              Ratio
-            </TabsTrigger>
-            <TabsTrigger value="box-shadow" className="tab-trigger">
-              <DropIcon weight="duotone" className="size-4.5" />
-              Shadow
-            </TabsTrigger>
-            <TabsTrigger value="glassmorphism" className="tab-trigger">
-              <CardsIcon weight="duotone" className="size-4.5" />
-              Glass
-            </TabsTrigger>
-            <TabsTrigger value="cubic-bezier" className="tab-trigger">
-              <PenNibIcon weight="duotone" className="size-4.5" />
-              Bezier
-            </TabsTrigger>
-            <TabsTrigger value="animation" className="tab-trigger">
-              <PlayIcon weight="duotone" className="size-4.5" />
-              Animate
-            </TabsTrigger>
-            <TabsTrigger value="gsap" className="tab-trigger">
-              <SparkleIcon weight="duotone" className="size-4.5" />
-              GSAP
-            </TabsTrigger>
-          </TabsList>
-        </div>
+        <TabsList className="tab-list grid grid-cols-4 sm:grid-cols-7">
+          <TabsTrigger value="border-radius" className="tab-trigger">
+            <SquareIcon weight="duotone" className="size-4.5" />
+            Radius
+          </TabsTrigger>
+          <TabsTrigger value="aspect-ratio" className="tab-trigger">
+            <FrameCornersIcon weight="duotone" className="size-4.5" />
+            Ratio
+          </TabsTrigger>
+          <TabsTrigger value="box-shadow" className="tab-trigger">
+            <DropIcon weight="duotone" className="size-4.5" />
+            Shadow
+          </TabsTrigger>
+          <TabsTrigger value="glassmorphism" className="tab-trigger">
+            <CardsIcon weight="duotone" className="size-4.5" />
+            Glass
+          </TabsTrigger>
+          <TabsTrigger value="cubic-bezier" className="tab-trigger">
+            <PenNibIcon weight="duotone" className="size-4.5" />
+            Bezier
+          </TabsTrigger>
+          <TabsTrigger value="animation" className="tab-trigger">
+            <PlayIcon weight="duotone" className="size-4.5" />
+            Animate
+          </TabsTrigger>
+          <TabsTrigger value="gsap" className="tab-trigger">
+            <SparkleIcon weight="duotone" className="size-4.5" />
+            GSAP
+          </TabsTrigger>
+        </TabsList>
 
         <TabsContent value="border-radius" className="mt-0">
           <BorderRadiusTab />

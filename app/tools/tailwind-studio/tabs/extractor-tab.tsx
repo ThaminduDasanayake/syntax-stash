@@ -73,7 +73,7 @@ export function ExtractorTab() {
           onValueChange={(v) => setTab(v as "css" | "jsx")}
           className="flex flex-col"
         >
-          <TabsList>
+          <TabsList className="tab-list grid max-w-xs grid-cols-2">
             <TabsTrigger value="css" className="tab-trigger w-36">
               Generated CSS
             </TabsTrigger>

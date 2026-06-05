@@ -71,7 +71,7 @@ export default function JsonStudioPage() {
           onValueChange={(v) => setActiveTab(v as TabId)}
           className="flex h-full min-h-0 flex-1 flex-col gap-4"
         >
-          <TabsList className="grid w-full shrink-0 grid-cols-4">
+          <TabsList className="tab-list grid shrink-0 grid-cols-4">
             {TABS.map((tab) => (
               <TabsTrigger className="tab-trigger" key={tab.id} value={tab.id}>
                 {tab.label}

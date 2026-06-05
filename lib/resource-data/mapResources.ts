@@ -27,12 +27,13 @@ export const mapResourcesLinks: Tool[] = [
   {
     title: "shadcnmaps",
     url: "https://www.shadcnmaps.com/",
+    className: "invert",
     description:
       "170+ interactive SVG map components for React. Countries, continents, and US states. No dependencies — install via shadcn CLI with pure Tailwind CSS styling.",
     category: CATEGORIES.mapResources,
   },
   {
-    title: "Terraink: Free Map Poster & Wallpaper Creator",
+    title: "Terraink",
     url: "https://terraink.app/",
     description:
       "Free online map poster and wallpaper generator. Design custom, print-ready map art for any city or location — export as PNG, PDF, or SVG. No sign-up required.",
@@ -41,6 +42,7 @@ export const mapResourcesLinks: Tool[] = [
   {
     title: "VisGL Google Maps",
     url: "https://visgl.github.io/react-google-maps/",
+    favicon: "https://visgl.github.io/react-google-maps/images/visgl-logo-light.png",
     description: "React components and hooks for the Google Maps JavaScript API",
     category: CATEGORIES.mapResources,
   },

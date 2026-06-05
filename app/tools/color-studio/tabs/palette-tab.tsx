@@ -109,7 +109,7 @@ export function PaletteTab() {
         <div className="space-y-3">
           <Label>Export</Label>
           <Tabs defaultValue="css">
-            <TabsList className="grid min-w-xs grid-cols-2">
+            <TabsList className="tab-list grid grid-cols-2">
               <TabsTrigger value="css" className="tab-trigger">
                 CSS Variables
               </TabsTrigger>

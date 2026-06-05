@@ -156,7 +156,7 @@ export default function DockerComposePage() {
             onValueChange={(v) => setActiveTab(v as TabType)}
             className="flex w-full flex-col"
           >
-            <TabsList className="mb-4 grid w-full grid-cols-2">
+            <TabsList className="tab-list mb-4 grid grid-cols-2">
               <TabsTrigger value="builder" className="tab-trigger">
                 Visual Builder
               </TabsTrigger>

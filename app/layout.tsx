@@ -5,7 +5,6 @@ import { JetBrains_Mono, Manrope } from "next/font/google";
 import { ReactNode } from "react";
 
 import AppLayout from "@/components/app-layout";
-import AppLayout2 from "@/components/app-layout2";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -43,12 +42,12 @@ export default function RootLayout({
       <body className="bg-background text-foreground flex h-screen overflow-hidden antialiased">
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="dark"
+          forcedTheme="dark"
           disableTransitionOnChange
         >
           <TooltipProvider>
-            <AppLayout2>{children}</AppLayout2>
+            <AppLayout>{children}</AppLayout>
             <Toaster />
           </TooltipProvider>
         </ThemeProvider>

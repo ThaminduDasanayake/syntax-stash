@@ -1,5 +1,6 @@
-import { CATEGORIES } from "@/lib/resource-data/categories";
 import { Tool } from "@/types";
+
+import { CATEGORIES } from "./categories";
 
 export const uiComponentsLinks: Tool[] = [
   {
@@ -20,6 +21,7 @@ export const uiComponentsLinks: Tool[] = [
   {
     title: "ThemeCN",
     url: "https://tweakcn.com/",
+    className: "invert",
     description:
       "Customize theme for shadcn/ui with tweakcn's interactive editor. Supports Tailwind CSS v4, Shadcn UI, and custom styles. Modify properties, preview changes, and get the code in real time.",
     category: CATEGORIES.uiComponents,

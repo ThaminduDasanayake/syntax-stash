@@ -145,7 +145,7 @@ export default function TimeCalculatorPage() {
     <ToolLayout tool={tool}>
       <div className="space-y-6">
         <Card className="mb-6">
-          <CardContent className="flex flex-row items-center justify-between py-4">
+          <CardContent className="flex items-center justify-between p-4">
             <div className="flex flex-col space-y-1">
               <p className="text-muted-foreground font-mono text-sm">Current Time</p>
               <p className="font-mono text-2xl font-semibold tracking-tight">{headerUTCTime}</p>
@@ -154,19 +154,12 @@ export default function TimeCalculatorPage() {
             <Tabs
               value={use12Hour ? "12h" : "24h"}
               onValueChange={(v) => setUse12Hour(v === "12h")}
-              className="w-30"
             >
-              <TabsList className="flex w-full">
-                <TabsTrigger
-                  value="24h"
-                  className="data-active:bg-primary! data-active:text-background! data-active:border-card/60! p-1 font-semibold hover:cursor-pointer data-active:border!"
-                >
+              <TabsList className="tab-list">
+                <TabsTrigger value="24h" className="tab-trigger">
                   24h
                 </TabsTrigger>
-                <TabsTrigger
-                  value="12h"
-                  className="data-active:bg-primary! data-active:text-background! data-active:border-card/60! p-1 font-semibold hover:cursor-pointer data-active:border!"
-                >
+                <TabsTrigger value="12h" className="tab-trigger">
                   12h
                 </TabsTrigger>
               </TabsList>
@@ -175,23 +168,14 @@ export default function TimeCalculatorPage() {
         </Card>
 
         <Tabs defaultValue="convert" className="flex w-full flex-col">
-          <TabsList className="mb-4 w-full flex-wrap">
-            <TabsTrigger
-              value="convert"
-              className="data-active:bg-primary! data-active:text-background! data-active:border-card/60! p-1 font-semibold hover:cursor-pointer data-active:border!"
-            >
+          <TabsList className="tab-list mb-4">
+            <TabsTrigger value="convert" className="tab-trigger">
               Convert
             </TabsTrigger>
-            <TabsTrigger
-              value="timezones"
-              className="data-active:bg-primary! data-active:text-background! data-active:border-card/60! p-1 font-semibold hover:cursor-pointer data-active:border!"
-            >
+            <TabsTrigger value="timezones" className="tab-trigger">
               Timezones
             </TabsTrigger>
-            <TabsTrigger
-              value="math"
-              className="data-active:bg-primary! data-active:text-background! data-active:border-card/60! p-1 font-semibold hover:cursor-pointer data-active:border!"
-            >
+            <TabsTrigger value="math" className="tab-trigger">
               Date Math
             </TabsTrigger>
           </TabsList>

@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  BookBookmarkIcon,
   CaretRightIcon,
   FolderIcon,
   FolderOpenIcon,
@@ -53,23 +52,20 @@ const AppSidebar = () => {
   }, []);
 
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar collapsible="icon" className="border-border border-r-2!">
       {/* Branding */}
-      <SidebarHeader className="border-sidebar-border border-b transition-all duration-300 ease-in-out">
+      <SidebarHeader className="border-sidebar-border border-b-2 transition-all duration-300 ease-in-out">
         <Link
           href="/"
           onClick={() => setOpenMobile(false)}
-          className="flex items-center gap-2 overflow-hidden p-3 transition-all duration-300 ease-in-out group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:py-3"
+          className="flex items-center gap-3 overflow-hidden p-3 transition-all duration-300 ease-in-out group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:py-3"
         >
-          <Image
-            src={logo}
-            unoptimized
-            className="h-9 w-9 max-w-none shrink-0"
-            alt="syntax-stash"
-          />
+          <div className="bg-muted flex shrink-0 items-center justify-center p-0.5">
+            <Image src={logo} unoptimized className="h-7 w-7" alt="syntax-stash" />
+          </div>
           <div className="sidebar-text-collapse grid flex-1 text-left leading-tight group-data-[collapsible=icon]:hidden">
-            <span className="font-mono text-base font-semibold tracking-tight">
-              syntax<span className="text-primary">-</span>stash
+            <span className="font-mono text-lg font-bold tracking-tighter uppercase">
+              syntax<span className="text-primary">_</span>stash
             </span>
             <span className="text-muted-foreground truncate text-xs">
               Developer swiss army knife
@@ -79,7 +75,7 @@ const AppSidebar = () => {
       </SidebarHeader>
 
       {/* Navigation */}
-      <SidebarContent className="space-y-6 px-2 py-4">
+      <SidebarContent className="space-y-6 px-4 py-6">
         {/* Home */}
         <SidebarGroup className="p-0">
           <SidebarMenu>
@@ -88,11 +84,13 @@ const AppSidebar = () => {
                 asChild
                 tooltip="Home"
                 isActive={pathname === "/"}
-                className="h-9 cursor-pointer group-data-[collapsible=icon]:justify-center"
+                className="data-[active=true]:bg-primary hover:bg-muted h-10 cursor-pointer rounded-none font-mono text-sm tracking-wide group-data-[collapsible=icon]:justify-center data-[active=true]:text-black"
               >
                 <Link href={"/"} onClick={() => setOpenMobile(false)}>
-                  <HouseIcon className="text-primary size-5!" />
-                  <span className="group-data-[collapsible=icon]:hidden">Home</span>
+                  <HouseIcon className="size-5! shrink-0" weight="bold" />
+                  <span className="font-bold uppercase group-data-[collapsible=icon]:hidden">
+                    Main Dashboard
+                  </span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -101,9 +99,12 @@ const AppSidebar = () => {
 
         {groupedTools.map(([category, tools]) => (
           <SidebarGroup key={category} className="p-0 pb-4">
-            <SidebarGroupLabel className="text-muted-foreground mb-2 flex h-auto items-center gap-1.5 px-2 text-xs font-semibold tracking-wider uppercase">
-              <span className="sidebar-text-collapse">{category}</span>
+            <SidebarGroupLabel className="text-muted-foreground mb-3 flex h-auto items-center gap-1.5 px-2 font-mono text-[10px] font-bold tracking-[0.2em] uppercase">
+              <span className="sidebar-text-collapse">
+                {"//"} {category}
+              </span>
             </SidebarGroupLabel>
+
             <SidebarMenu>
               {tools.map((tool) => {
                 const Icon = (tool.icon && iconMap[tool.icon]) || ToolboxIcon;
@@ -114,10 +115,10 @@ const AppSidebar = () => {
                       asChild
                       tooltip={tool.title}
                       isActive={pathname === href}
-                      className="h-9 cursor-pointer group-data-[collapsible=icon]:justify-center"
+                      className="data-[active=true]:border-primary data-[active=true]:bg-muted data-[active=true]:text-primary hover:bg-muted h-9 cursor-pointer rounded-none font-mono text-xs tracking-wide group-data-[collapsible=icon]:justify-center data-[active=true]:border-l-4"
                     >
                       <Link href={href} onClick={() => setOpenMobile(false)}>
-                        <Icon weight="duotone" className="text-primary size-5! shrink-0" />
+                        <Icon className="size-5! shrink-0 opacity-70" />
                         <span className="group-data-[collapsible=icon]:hidden">{tool.title}</span>
                       </Link>
                     </SidebarMenuButton>
@@ -129,13 +130,12 @@ const AppSidebar = () => {
         ))}
 
         {/* Divider */}
-        <div className="border-sidebar-border mx-4 border-t" />
+        <div className="border-sidebar-border mx-2 border-t-2 border-dashed opacity-50" />
 
         {/*  Resource Stash */}
         <SidebarGroup className="p-0">
-          <SidebarGroupLabel className="text-muted-foreground mb-2 flex h-auto items-center gap-1.5 px-2 text-xs font-semibold tracking-wider uppercase">
-            <BookBookmarkIcon weight="duotone" className="text-primary size-5! shrink-0" />
-            <span className="sidebar-text-collapse">Resource Stash</span>
+          <SidebarGroupLabel className="text-muted-foreground mb-3 flex h-auto items-center gap-1.5 px-2 font-mono text-[10px] font-bold tracking-[0.2em] uppercase">
+            <span className="sidebar-text-collapse">{"//"} RESOURCE STASH</span>
           </SidebarGroupLabel>
           <SidebarMenu>
             {resourceCategories.map((cat) => {
@@ -148,25 +148,19 @@ const AppSidebar = () => {
                     asChild
                     tooltip={cat}
                     isActive={isActive}
-                    className="group flex h-9 cursor-pointer justify-between group-data-[collapsible=icon]:justify-center"
+                    className="group data-[active=true]:bg-primary hover:bg-muted flex h-9 cursor-pointer justify-between rounded-none font-mono text-xs tracking-wide group-data-[collapsible=icon]:justify-center data-[active=true]:text-black"
                   >
                     <Link href={href} onClick={() => setOpenMobile(false)}>
                       {isActive ? (
-                        <FolderOpenIcon
-                          weight="duotone"
-                          className="text-secondary size-5! shrink-0"
-                        />
+                        <FolderOpenIcon weight="duotone" className="size-5! shrink-0" />
                       ) : (
-                        <FolderIcon
-                          weight="duotone"
-                          className="text-muted-foreground size-5! shrink-0"
-                        />
+                        <FolderIcon weight="duotone" className="size-5! shrink-0 opacity-70" />
                       )}
 
                       <div className="sidebar-text-collapse flex w-full items-center justify-between group-data-[collapsible=icon]:hidden">
-                        <span className="truncate">{cat}</span>
+                        <span className="truncate uppercase">{cat}</span>
                         <CaretRightIcon
-                          className={`shrink-0 transition-all duration-200 ${
+                          className={`shrink-0 transition-transform duration-200 ${
                             isActive ? "rotate-90" : "rotate-0"
                           }`}
                         />
@@ -181,9 +175,9 @@ const AppSidebar = () => {
       </SidebarContent>
 
       {/* Footer */}
-      <SidebarFooter className="border-sidebar-border sidebar-text-collapse border-t p-3">
-        <p className="text-muted-foreground text-center font-mono text-xs">
-          syntax-stash · handmade
+      <SidebarFooter className="sidebar-text-collapse bg-muted/50 border-t-2 p-4">
+        <p className="text-muted-foreground text-center font-mono text-[10px] font-bold tracking-widest uppercase">
+          V1.0.0 // ONLINE
         </p>
       </SidebarFooter>
     </Sidebar>

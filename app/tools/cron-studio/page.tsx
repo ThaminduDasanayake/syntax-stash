@@ -23,18 +23,16 @@ export default function CronStudioPage() {
   return (
     <ToolLayout tool={tool}>
       <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col gap-6">
-        <div className="flex w-full">
-          <TabsList className="grid w-full max-w-md grid-cols-2">
-            <TabsTrigger value="build" className="tab-trigger">
-              <HammerIcon weight="duotone" className="size-4.5" />
-              Build
-            </TabsTrigger>
-            <TabsTrigger value="explore" className="tab-trigger">
-              <MagnifyingGlassIcon weight="duotone" className="size-4.5" />
-              Explore
-            </TabsTrigger>
-          </TabsList>
-        </div>
+        <TabsList className="tab-list grid grid-cols-2">
+          <TabsTrigger value="build" className="tab-trigger">
+            <HammerIcon weight="duotone" className="size-4.5" />
+            Build
+          </TabsTrigger>
+          <TabsTrigger value="explore" className="tab-trigger">
+            <MagnifyingGlassIcon weight="duotone" className="size-4.5" />
+            Explore
+          </TabsTrigger>
+        </TabsList>
 
         <TabsContent value="build" className="mt-0">
           <BuildTab onSendToExplore={sendToExplore} />

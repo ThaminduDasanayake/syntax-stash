@@ -15,22 +15,20 @@ export default function TailwindStudioPage() {
   return (
     <ToolLayout tool={tool}>
       <Tabs defaultValue="cheatsheet" className="flex flex-col gap-6">
-        <div className="flex w-full">
-          <TabsList className="grid w-full max-w-lg grid-cols-3">
-            <TabsTrigger value="cheatsheet" className="tab-trigger">
-              <SwatchesIcon weight="duotone" className="size-4.5" />
-              Cheatsheet
-            </TabsTrigger>
-            <TabsTrigger value="extractor" className="tab-trigger">
-              <ScissorsIcon weight="duotone" className="size-4.5" />
-              Extractor
-            </TabsTrigger>
-            <TabsTrigger value="shades" className="tab-trigger">
-              <EyedropperIcon weight="duotone" className="size-4.5" />
-              Shades
-            </TabsTrigger>
-          </TabsList>
-        </div>
+        <TabsList className="tab-list grid max-w-lg grid-cols-3">
+          <TabsTrigger value="cheatsheet" className="tab-trigger">
+            <SwatchesIcon weight="duotone" className="size-4.5" />
+            Cheatsheet
+          </TabsTrigger>
+          <TabsTrigger value="extractor" className="tab-trigger">
+            <ScissorsIcon weight="duotone" className="size-4.5" />
+            Extractor
+          </TabsTrigger>
+          <TabsTrigger value="shades" className="tab-trigger">
+            <EyedropperIcon weight="duotone" className="size-4.5" />
+            Shades
+          </TabsTrigger>
+        </TabsList>
 
         <TabsContent value="cheatsheet" className="mt-0">
           <CheatsheetTab />

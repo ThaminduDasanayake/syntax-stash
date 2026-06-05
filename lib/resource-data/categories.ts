@@ -4,7 +4,7 @@ export const CATEGORIES = {
   uiComponents: "UI Components",
   data: "Data",
   dataViz: "Data Visualization",
-  designTools: "Design & Creative Tools",
+  design: "Design & Creative",
   development: "Development & Code",
   education: "Education",
   imagesAssets: "Images & Assets",

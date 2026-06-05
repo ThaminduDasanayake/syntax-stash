@@ -268,17 +268,103 @@
         background-image: linear-gradient(0deg, transparent 24%, rgba(200, 200, 200, 0.05) 25%, rgba(200, 200, 200, 0.05) 26%, transparent 27%, transparent 74%, rgba(200, 200, 200, 0.05) 75%, rgba(200, 200, 200, 0.05) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(200, 200, 200, 0.05) 25%, rgba(200, 200, 200, 0.05) 26%, transparent 27%, transparent 74%, rgba(200, 200, 200, 0.05) 75%, rgba(200, 200, 200, 0.05) 76%, transparent 77%, transparent);
         background-size: 50px 50px;
     }
-}
 
-@layer components {
+    .bg-blueprint {
+        background-size: 40px 40px;
+        background-image:
+                linear-gradient(to right, theme(colors.border) 1px, transparent 1px),
+                linear-gradient(to bottom, theme(colors.border) 1px, transparent 1px);
+    }
+
+    .bg-blueprint-card {
+        background-color: #0A0A0A;
+        background-size: 15px 15px;
+        background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    }
+
+    .tab-list {
+        @apply flex w-full bg-transparent gap-2 p-0;
+    }
+
     .tab-trigger {
-        @apply data-active:bg-primary! data-active:text-background! data-active:border-card/60! cursor-pointer data-active:border!;
+        @apply rounded-none border-2 border-border bg-transparent cursor-pointer  px-8 py-2 font-mono text-xs font-bold uppercase tracking-widest text-muted-foreground transition-all hover:bg-muted/50 data-[state=active]:border-primary data-[state=active]:bg-primary data-[state=active]:text-black!;
     }
 
     .sidebar-text-collapse {
         @apply overflow-hidden whitespace-nowrap transition-all duration-600 ease-in-out group-data-[collapsible=icon]:w-0 group-data-[collapsible=icon]:opacity-0;
     }
+
+    .btn-caps-stripe-primary {
+        @apply bg-transparent text-foreground isolate transition-colors duration-200 delay-150;
+
+        background-image: repeating-linear-gradient(
+                119deg,
+                color-mix(in srgb, var(--foreground) 20%, transparent) 0px,
+                color-mix(in srgb, var(--foreground) 20%, transparent) 1px,
+                transparent 1px,
+                transparent 5px
+        );
+    }
+
+    .btn-caps-stripe-primary:before {
+        content: "";
+        position: absolute;
+        top: -1px;
+        right: -1px;
+        bottom: -1px;
+        left: -1px;
+        background-image: linear-gradient(to right, var(--foreground) 8px, transparent 8px, transparent calc(100% - 8px), var(--foreground) calc(100% - 8px)), linear-gradient(to right, var(--foreground) 8px, transparent 8px, transparent calc(100% - 8px), var(--foreground) calc(100% - 8px)), linear-gradient(to bottom, var(--foreground) 8px, transparent 8px, transparent calc(100% - 8px), var(--foreground) calc(100% - 8px)), linear-gradient(to bottom, var(--foreground) 8px, transparent 8px, transparent calc(100% - 8px), var(--foreground) calc(100% - 8px));
+        background-size: 100% 1px, 100% 1px, 1px 100%, 1px 100%;
+        background-position: 0 0, 0 100%, 0 0, 100% 0;
+        background-repeat: no-repeat;
+        pointer-events: none;
+        z-index: 2;
+        transition: inset .25s cubic-bezier(.25, 0, 0, 1), opacity .3s ease;
+    }
+
+    .btn-caps-stripe-primary:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: var(--foreground);
+        clip-path: polygon(-1% 0%, -1% 0%, -100% 100%, -1% 100%);
+        transition: clip-path .4s cubic-bezier(.25, 0, 0, 1);
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    .btn-caps-stripe {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 20px;
+        font-family: var(--font-mono), serif;
+        font-size: 11px;
+        font-variation-settings: "wght" 560;
+        letter-spacing: var(--tracking-normal);
+        text-transform: uppercase;
+        border-radius: 0;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        white-space: nowrap;
+        line-height: 1;
+        position: relative;
+        transition: opacity .15s;
+    }
 }
+
+/*@layer components {*/
+/*    !*.tab-trigger {*!*/
+/*    !*    @apply data-active:bg-primary! data-active:text-background! data-active:border-card/60! cursor-pointer data-active:border!;*!*/
+/*    !*}*!*/
+
+/*}*/
 
 ::view-transition-old(root),
 ::view-transition-new(root) {

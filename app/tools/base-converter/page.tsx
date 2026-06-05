@@ -12,17 +12,11 @@ export default function BaseConverterPage() {
   return (
     <ToolLayout tool={tool}>
       <Tabs defaultValue="converter" className="flex w-full flex-col">
-        <TabsList className="mb-4 w-full flex-wrap">
-          <TabsTrigger
-            value="converter"
-            className="data-active:bg-primary! data-active:text-background! data-active:border-card/60! p-1 font-semibold hover:cursor-pointer data-active:border!"
-          >
+        <TabsList className="tab-list mb-4 flex-wrap">
+          <TabsTrigger value="converter" className="tab-trigger">
             Converter
           </TabsTrigger>
-          <TabsTrigger
-            value="bitwise"
-            className="data-active:bg-primary! data-active:text-background! data-active:border-card/60! p-1 font-semibold hover:cursor-pointer data-active:border!"
-          >
+          <TabsTrigger value="bitwise" className="tab-trigger">
             Bitwise Ops
           </TabsTrigger>
         </TabsList>

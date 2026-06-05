@@ -5,7 +5,7 @@ export { type CategoryValue, resourceCategories } from "./categories";
 export { colorsLinks } from "./colors";
 export { dataLinks } from "./data";
 export { dataVizLinks } from "./dataViz";
-export { designToolsLinks } from "./designTools";
+export { designLinks } from "./design";
 export { developmentLinks } from "./development";
 export { educationLinks } from "./education";
 export { imagesAssetsLinks } from "./imagesAssets";
@@ -17,7 +17,7 @@ import { animationsLinks } from "./animations";
 import { colorsLinks } from "./colors";
 import { dataLinks } from "./data";
 import { dataVizLinks } from "./dataViz";
-import { designToolsLinks } from "./designTools";
+import { designLinks } from "./design";
 import { developmentLinks } from "./development";
 import { educationLinks } from "./education";
 import { imagesAssetsLinks } from "./imagesAssets";
@@ -30,7 +30,7 @@ export const resourceLinks: Tool[] = [
   ...colorsLinks,
   ...dataLinks,
   ...dataVizLinks,
-  ...designToolsLinks,
+  ...designLinks,
   ...developmentLinks,
   ...educationLinks,
   ...imagesAssetsLinks,

@@ -15,22 +15,20 @@ export default function ColorStudioPage() {
   return (
     <ToolLayout tool={tool}>
       <Tabs defaultValue="converter" className="flex flex-col gap-6">
-        <div className="flex w-full">
-          <TabsList className="grid w-full max-w-lg grid-cols-3">
-            <TabsTrigger value="converter" className="tab-trigger">
-              <ArrowsClockwiseIcon className="size-4.5" />
-              Converter
-            </TabsTrigger>
-            <TabsTrigger value="palette" className="tab-trigger">
-              <PaletteIcon weight="duotone" className="size-4.5" />
-              Palette
-            </TabsTrigger>
-            <TabsTrigger value="contrast" className="tab-trigger">
-              <EyeIcon weight="duotone" className="size-4.5" />
-              Contrast
-            </TabsTrigger>
-          </TabsList>
-        </div>
+        <TabsList className="tab-list grid grid-cols-3">
+          <TabsTrigger value="converter" className="tab-trigger">
+            <ArrowsClockwiseIcon className="size-4.5" />
+            Converter
+          </TabsTrigger>
+          <TabsTrigger value="palette" className="tab-trigger">
+            <PaletteIcon weight="duotone" className="size-4.5" />
+            Palette
+          </TabsTrigger>
+          <TabsTrigger value="contrast" className="tab-trigger">
+            <EyeIcon weight="duotone" className="size-4.5" />
+            Contrast
+          </TabsTrigger>
+        </TabsList>
 
         <TabsContent value="converter" className="mt-0">
           <ConverterTab />

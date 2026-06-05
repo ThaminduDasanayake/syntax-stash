@@ -24,7 +24,7 @@ export default function AsciiStudioPage() {
     <ToolLayout tool={tool}>
       <Tabs defaultValue="banner" className="flex min-h-0 flex-1 flex-col gap-6">
         <div className="flex w-full">
-          <TabsList className="grid w-full shrink-0 grid-cols-5">
+          <TabsList className="tab-list grid shrink-0 grid-cols-5">
             <TabsTrigger value="banner" className="tab-trigger">
               <TextTIcon weight="duotone" className="size-4.5" />
               Banner

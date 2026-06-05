@@ -33,13 +33,6 @@ export const colorsLinks: Tool[] = [
     category: CATEGORIES.colors,
   },
   {
-    title: "Liquid Glass JS",
-    url: "https://dashersw.github.io/liquid-glass-js/",
-    description:
-      "A WebGL-powered JavaScript library bringing sophisticated Apple Liquid Glass effects to the web with real-time refraction, blur, and masking systems.",
-    category: CATEGORIES.colors,
-  },
-  {
     title: "Palette Maker",
     url: "https://palettemaker.com/",
     description:

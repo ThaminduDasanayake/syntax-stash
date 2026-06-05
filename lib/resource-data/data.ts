@@ -6,6 +6,7 @@ export const dataLinks: Tool[] = [
   {
     title: "Public APIs",
     url: "https://github.com/public-apis/public-apis",
+    favicon: "/github.svg",
     description: "A collective list of free APIs.",
     category: CATEGORIES.data,
   },
@@ -33,6 +34,7 @@ export const dataLinks: Tool[] = [
   {
     title: "Product Hunt",
     url: "https://github.com/modelcontextprotocol/servers",
+    favicon: "/github.svg",
     description:
       "Product Hunt is a curation of the best new products, every day. Discover the latest mobile apps, websites, and technology products that everyone's talking about.",
     category: CATEGORIES.data,
