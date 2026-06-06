@@ -11,11 +11,11 @@ interface InstructionCardProps {
 
 export function InstructionCard({ instructions }: InstructionCardProps) {
   return (
-    <Card className="border border-sky-500/20 bg-sky-500/10">
+    <Card className="bg-sky-500/10 ring-sky-500/30">
       <CardHeader className="font-bold tracking-wider text-sky-400 uppercase">
         Instructions
       </CardHeader>
-      <CardContent className="text-sky-200/80">
+      <CardContent className="text-sky-200">
         {instructions.map(({ text, code }, idx) => (
           <div key={idx}>
             <p>{text}</p>

@@ -84,7 +84,7 @@ export function ConverterTab() {
     <div className="space-y-10">
       <div className="flex flex-col gap-6 md:flex-row md:items-start">
         <div
-          className="border-border/50 h-12 w-12 shrink-0 rounded-xl border-2 shadow-sm transition-colors duration-200 md:h-20 md:w-20"
+          className="h-12 w-12 shrink-0 border transition-colors duration-200 md:h-20 md:w-20"
           style={{ backgroundColor: preview }}
         />
 
@@ -155,7 +155,7 @@ export function ConverterTab() {
             ))}
           </div>
         ) : (
-          <div className="border-border text-muted-foreground rounded-lg border border-dashed py-12 text-center text-sm">
+          <div className="border-border text-muted-foreground border border-dashed py-12 text-center text-sm">
             Enter a valid colour to see format conversions.
           </div>
         )}

@@ -102,19 +102,19 @@ export function ContrastTab() {
 
         {result && (
           <div className="space-y-3">
-            <div className="border-border flex items-center justify-between rounded-lg border p-3">
+            <div className="border-border flex items-center justify-between border p-3">
               <span className="text-foreground text-sm font-medium">AA Normal Text</span>
               <PassFail pass={result.wcag.normalAA} />
             </div>
-            <div className="border-border flex items-center justify-between rounded-lg border p-3">
+            <div className="border-border flex items-center justify-between border p-3">
               <span className="text-foreground text-sm font-medium">AA Large Text</span>
               <PassFail pass={result.wcag.largeAA} />
             </div>
-            <div className="border-border flex items-center justify-between rounded-lg border p-3">
+            <div className="border-border flex items-center justify-between border p-3">
               <span className="text-foreground text-sm font-medium">AAA Normal Text</span>
               <PassFail pass={result.wcag.normalAAA} />
             </div>
-            <div className="border-border flex items-center justify-between rounded-lg border p-3">
+            <div className="border-border flex items-center justify-between border p-3">
               <span className="text-foreground text-sm font-medium">AAA Large Text</span>
               <PassFail pass={result.wcag.largeAAA} />
             </div>
@@ -124,7 +124,7 @@ export function ContrastTab() {
 
       <div className="space-y-4">
         <Label>Live Preview</Label>
-        <div className="overflow-hidden rounded-lg border" style={{ backgroundColor: bg }}>
+        <div className="overflow-hidden border" style={{ backgroundColor: bg }}>
           <div className="space-y-6 p-8">
             <h2 className="text-4xl font-bold tracking-tight" style={{ color: fg }}>
               Heading Text

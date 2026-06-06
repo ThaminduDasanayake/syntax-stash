@@ -17,7 +17,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 function PaletteSection({ palette }: { palette: PaletteType }) {
   return (
-    <div className="border-border bg-card rounded-xl border p-4 shadow-sm">
+    <div className="bg-card border p-4">
       <p className="text-foreground mb-3 text-sm font-semibold">{palette.name}</p>
       <div
         className="grid gap-3"
@@ -33,8 +33,8 @@ function PaletteSection({ palette }: { palette: PaletteType }) {
 
 function ExportBlock({ title, code }: { title: string; code: string }) {
   return (
-    <div className="border-border bg-card overflow-hidden rounded-xl border shadow-sm">
-      <div className="border-border bg-muted/30 flex items-center justify-between border-b px-4 py-2">
+    <div className="bg-card overflow-hidden border">
+      <div className="bg-muted/30 flex items-center justify-between border-b px-4 py-2">
         <h4 className="text-foreground font-mono text-sm font-semibold">{title}</h4>
         <CopyButton variant="ghost" textToCopy={code} />
       </div>
@@ -84,7 +84,7 @@ export function PaletteTab() {
 
         {isValid && (
           <div
-            className="ml-auto h-10 w-20 rounded-xl border shadow-sm"
+            className="ml-auto h-10 w-20 border"
             style={{ backgroundColor: baseColor }}
             title={baseColor}
           />

@@ -102,7 +102,7 @@ export function BuildTab({ onSendToExplore }: BuildTabProps) {
 
       {/* Custom builder */}
       {isCustom && (
-        <div className="space-y-5 rounded-xl border p-6">
+        <div className="space-y-5 border p-6">
           <h3 className="text-base font-semibold">Custom Expression Builder</h3>
           <FieldEditor
             label="Minute (0–59)"
@@ -157,7 +157,7 @@ export function BuildTab({ onSendToExplore }: BuildTabProps) {
             { token: "1-5", desc: "Range" },
             { token: "*/15", desc: "Every Nth value" },
           ].map(({ token, desc }) => (
-            <div key={token} className="bg-muted rounded-lg p-3">
+            <div key={token} className="bg-muted p-3">
               <p className="font-mono text-sm font-semibold">{token}</p>
               <p className="text-muted-foreground text-xs">{desc}</p>
             </div>

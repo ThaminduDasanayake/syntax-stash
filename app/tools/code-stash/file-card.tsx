@@ -12,9 +12,9 @@ interface FileCardProps {
 
 export function FileCard({ file }: FileCardProps) {
   return (
-    <div className="border-border bg-card overflow-hidden rounded-xl border shadow-2xl">
+    <div className="bg-card overflow-hidden border">
       {/* Title bar */}
-      <div className="border-accent flex items-center justify-between border-b px-4 py-3">
+      <div className="flex items-center justify-between border-b px-4 py-3">
         <div className="flex items-center gap-2">
           <div className="mr-2 flex gap-1.5">
             <span className="h-3 w-3 rounded-full bg-red-500/60" />

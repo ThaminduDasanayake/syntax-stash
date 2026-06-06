@@ -99,7 +99,7 @@ export function ExploreTab({ expression, setExpression }: ExploreTabProps) {
         </div>
 
         {parsed.ok ? (
-          <div className="border-border bg-background rounded-xl border p-6 shadow-sm">
+          <div className="border-border bg-background border p-6">
             <p className="text-muted-foreground mb-3 text-xs font-semibold tracking-wider uppercase">
               Translation
             </p>
@@ -116,7 +116,7 @@ export function ExploreTab({ expression, setExpression }: ExploreTabProps) {
             </p>
 
             <TooltipProvider>
-              <div className="bg-muted border-accent relative h-12 overflow-hidden rounded-lg border">
+              <div className="bg-muted border-accent relative h-12 overflow-hidden border">
                 {[25, 50, 75].map((pct) => (
                   <div
                     key={pct}
@@ -137,7 +137,7 @@ export function ExploreTab({ expression, setExpression }: ExploreTabProps) {
                         className="absolute top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-transform hover:scale-150"
                         style={{ left: `${Math.min(98, Math.max(2, pct))}%` }}
                       >
-                        <div className="bg-primary ring-background size-2.5 rounded-full shadow-sm ring-2" />
+                        <div className="bg-primary ring-accent size-2.5 rounded-full ring" />
                       </TooltipTrigger>
                       <TooltipContent
                         side="top"
@@ -175,7 +175,7 @@ export function ExploreTab({ expression, setExpression }: ExploreTabProps) {
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <Label>Next 20 Executions</Label>
-          <span className="bg-muted rounded px-2 py-0.5 font-mono text-xs font-semibold tracking-wider uppercase">
+          <span className="bg-muted px-2 py-0.5 font-mono text-xs font-semibold tracking-wider uppercase">
             {timezone}
           </span>
         </div>
@@ -185,7 +185,7 @@ export function ExploreTab({ expression, setExpression }: ExploreTabProps) {
             {parsed.dates.map((d, i) => (
               <div
                 key={i}
-                className="bg-background border-border flex items-center justify-between rounded-lg border px-4 py-3 shadow-sm"
+                className="bg-background border-border flex items-center justify-between border px-4 py-3"
               >
                 <div className="flex items-center gap-4">
                   <span className="text-muted-foreground w-6 font-mono text-xs">#{i + 1}</span>
@@ -207,7 +207,7 @@ export function ExploreTab({ expression, setExpression }: ExploreTabProps) {
             ))}
           </div>
         ) : (
-          <div className="border-border bg-muted flex min-h-full items-center justify-center rounded-lg border border-dashed">
+          <div className="border-border bg-muted flex min-h-full items-center justify-center border border-dashed">
             <p className="text-muted-foreground text-sm">
               Enter a valid expression to generate schedule.
             </p>
