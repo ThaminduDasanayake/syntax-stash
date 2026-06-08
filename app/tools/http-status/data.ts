@@ -30,29 +30,29 @@ export const CATEGORY_STYLES: Record<
   { card: string; code: string; badge: string }
 > = {
   "1xx": {
-    card: "ring-2 ring-border hover:ring-border/80",
+    card: "border-border hover:border-foreground hover:shadow-border",
     code: "text-muted-foreground",
-    badge: "border-border/50 bg-muted/50 text-muted-foreground",
+    badge: "border-border bg-muted/20 text-muted-foreground",
   },
   "2xx": {
-    card: "ring-2 ring-green-500/20 hover:ring-green-500/40",
-    code: "text-green-400",
-    badge: "border-green-500/20 bg-green-500/10 text-green-400",
+    card: "border-emerald-500/30 hover:border-emerald-400 hover:shadow hover:shadow-emerald-500",
+    code: "text-emerald-400",
+    badge: "border-emerald-500/30 bg-emerald-500/5 text-emerald-400",
   },
   "3xx": {
-    card: "ring-2 ring-blue-500/20 hover:ring-blue-500/40",
+    card: "border-blue-500/30 hover:border-blue-400 hover:shadow-[4px_4px_0px_0px_#3b82f6]",
     code: "text-blue-400",
-    badge: "border-blue-500/20 bg-blue-500/10 text-blue-400",
+    badge: "border-blue-500/30 bg-blue-500/5 text-blue-400",
   },
   "4xx": {
-    card: "ring-2 ring-yellow-500/20 hover:ring-yellow-500/40",
-    code: "text-yellow-400",
-    badge: "border-yellow-500/20 bg-yellow-500/10 text-yellow-400",
+    card: "border-amber-500/30 hover:border-amber-400 hover:shadow-[4px_4px_0px_0px_#f59e0b]",
+    code: "text-amber-400",
+    badge: "border-amber-500/30 bg-amber-500/5 text-amber-400",
   },
   "5xx": {
-    card: "ring-2 ring-red-500/20 hover:ring-red-500/40",
-    code: "text-red-400",
-    badge: "border-red-500/20 bg-red-500/10 text-red-400",
+    card: "border-rose-500/30 hover:border-rose-400 hover:shadow-[4px_4px_0px_0px_#f43f5e]",
+    code: "text-rose-400",
+    badge: "border-rose-500/30 bg-rose-500/5 text-rose-400",
   },
 };
 

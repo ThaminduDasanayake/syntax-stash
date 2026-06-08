@@ -17,6 +17,7 @@ import {
   generateCode,
   PositionType,
 } from "@/app/tools/css-studio/gsap-helpers";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
@@ -159,11 +160,11 @@ export function GsapTab() {
         </div>
 
         <div className="flex flex-col space-y-4">
-          <div className="bg-background dark:bg-foreground relative flex min-h-120 overflow-hidden rounded-xl border">
+          <div className="bg-background dark:bg-foreground relative flex min-h-120 overflow-hidden border">
             <div ref={containerRef} className="relative h-full w-full">
               <div
                 className={cn(
-                  "gsap-preview-box bg-secondary dark:bg-primary border-foreground dark:border-border absolute h-16 w-16 rounded-xl border shadow-lg",
+                  "gsap-preview-box bg-secondary dark:bg-primary border-foreground dark:border-border absolute h-16 w-16 border",
                   positionClasses[startPosition],
                 )}
               />
@@ -183,12 +184,9 @@ export function GsapTab() {
             ]
               .filter((item): item is [string, string] => item !== null)
               .map(([label], i) => (
-                <span
-                  key={i}
-                  className="bg-primary/10 text-primary rounded-full px-2 py-0.5 font-mono"
-                >
+                <Badge key={i} variant="secondary" className="font-mono">
                   {label}
-                </span>
+                </Badge>
               ))}
           </div>
         </div>

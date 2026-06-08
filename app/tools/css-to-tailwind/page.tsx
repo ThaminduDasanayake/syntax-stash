@@ -45,94 +45,110 @@ export default function CssToTailwindPage() {
   const classString = classes.join(" ");
   const tool = internalTools.find((t) => t.slug === "css-to-tailwind");
 
+  const totalDeclarations = classes.length + unhandled.length;
+  const coveragePercent =
+    totalDeclarations > 0 ? Math.round((classes.length / totalDeclarations) * 100) : 0;
+
   return (
     <ToolLayout tool={tool}>
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {/* Input */}
-        <TextareaGroup
-          label="CSS Input"
-          value={input}
-          containerClassName="flex-1 min-h-[300px]"
-          onChange={(e) => setInput(e.target.value)}
-          placeholder={`Paste CSS rules here…\n\n.button {\n  font-size: 16px;\n  padding: 8px 16px;\n}`}
-          action={<ClearButton size="sm" onClick={() => setInput("")} disabled={!input} />}
-        />
+      <div className="flex w-full min-w-0 flex-col gap-8">
+        <div className="grid w-full min-w-0 grid-cols-1 gap-8 lg:grid-cols-2">
+          <div className="w-full min-w-0">
+            <TextareaGroup
+              label="CSS Input"
+              value={input}
+              containerClassName="flex-1 min-h-[500px]"
+              onChange={(e) => setInput(e.target.value)}
+              placeholder={`Paste CSS rules here…\n\n.button {\n  font-size: 16px;\n  padding: 8px 16px;\n}`}
+              action={<ClearButton size="sm" onClick={() => setInput("")} disabled={!input} />}
+            />
+          </div>
 
-        {/* Output */}
-        <div className="space-y-4">
-          <TextareaGroup
-            label="Tailwind Classes"
-            value={classString}
-            readOnly
-            containerClassName="min-h-[140px]"
-            placeholder="Tailwind classes will appear here…"
-            action={<CopyButton iconOnly textToCopy={classString} disabled={!classString} />}
-          />
+          <div className="flex w-full min-w-0 flex-col gap-6">
+            <TextareaGroup
+              label="Tailwind Classes"
+              value={classString}
+              readOnly
+              containerClassName="min-h-[140px]"
+              placeholder="Tailwind classes will appear here…"
+              action={<CopyButton iconOnly textToCopy={classString} disabled={!classString} />}
+            />
 
-          {/* Individual badges */}
-          {classes.length > 0 && (
-            <div className="space-y-2">
-              <p className="text-sm font-medium">
-                {classes.length} class{classes.length !== 1 ? "es" : ""}
-              </p>
-              <div className="flex flex-wrap gap-1.5">
-                {classes.map((c, i) => (
-                  <Badge
-                    key={i}
-                    variant="secondary"
-                    className="cursor-pointer font-mono text-xs"
-                    onClick={() => navigator.clipboard.writeText(c)}
-                    title="Click to copy"
-                  >
-                    {c}
-                  </Badge>
-                ))}
+            {/* Individual badges */}
+            {classes.length > 0 && (
+              <div className="flex min-w-0 flex-col gap-3">
+                <p className="text-muted-foreground font-mono text-[11px] font-bold tracking-widest uppercase">
+                  {"//"} {classes.length} class{classes.length !== 1 ? "es" : ""}
+                </p>
+                <div className="custom-scrollbar flex max-h-35 min-w-0 flex-wrap gap-2 overflow-y-auto pr-2">
+                  {classes.map((c, i) => (
+                    <Badge
+                      key={i}
+                      variant="secondary"
+                      className="cursor-pointer font-mono text-xs"
+                      onClick={() => navigator.clipboard.writeText(c)}
+                      title="Click to copy"
+                    >
+                      {c}
+                    </Badge>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Unhandled declarations */}
-          {unhandled.length > 0 && (
-            <div className="space-y-2">
-              <p className="text-muted-foreground text-sm font-medium">
-                {unhandled.length} unmapped (kept as-is reference)
-              </p>
-              <div className="bg-muted rounded-lg p-3 space-y-1">
-                {unhandled.map((d, i) => (
-                  <p key={i} className="font-mono text-xs text-orange-600 dark:text-orange-400">
-                    {d}
-                  </p>
-                ))}
+            {/* Unhandled declarations */}
+            {unhandled.length > 0 && (
+              <div className="flex min-w-0 flex-col gap-3">
+                <p className="text-destructive font-mono text-[11px] font-bold tracking-widest uppercase">
+                  {"//"} {unhandled.length} UNMAPPED DECLARATIONS
+                </p>
+                <div className="border-destructive/20 bg-destructive/5 custom-scrollbar text-destructive max-h-25 space-y-1 overflow-y-auto border-2 p-3 font-mono text-xs">
+                  {unhandled.map((d, i) => (
+                    <p key={i}>&gt; {d}</p>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Stats */}
-      {classes.length > 0 && (
-        <div className="mt-8 border-t pt-6">
-          <div className="grid gap-4 sm:grid-cols-3">
-            <div className="bg-muted rounded-lg p-3">
-              <p className="text-muted-foreground text-xs">Mapped</p>
-              <p className="text-lg font-semibold">{classes.length}</p>
-            </div>
-            <div className="bg-muted rounded-lg p-3">
-              <p className="text-muted-foreground text-xs">Unmapped</p>
-              <p className="text-lg font-semibold">{unhandled.length}</p>
-            </div>
-            <div className="bg-muted rounded-lg p-3">
-              <p className="text-muted-foreground text-xs">Coverage</p>
-              <p className="text-lg font-semibold">
-                {classes.length + unhandled.length > 0
-                  ? Math.round((classes.length / (classes.length + unhandled.length)) * 100)
-                  : 0}
-                %
-              </p>
-            </div>
+            )}
           </div>
         </div>
-      )}
+
+        {/* Stats */}
+        {classes.length > 0 && (
+          <div className="border-border w-full min-w-0 border-t-2 border-dashed pt-8">
+            <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-3">
+              {/* Statistic Card: Mapped Items */}
+              <div className="border-border bg-blueprint-card flex flex-col gap-1.5 border-2 p-4 shadow-sm">
+                <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-widest uppercase">
+                  {"//"} MAPPED
+                </span>
+                <span className="text-foreground font-mono text-2xl font-bold tracking-tight">
+                  {classes.length}
+                </span>
+              </div>
+
+              {/* Statistic Card: Unmapped Items */}
+              <div className="border-border bg-blueprint-card flex flex-col gap-1.5 border-2 p-4 shadow-sm">
+                <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-widest uppercase">
+                  {"//"} UNMAPPED
+                </span>
+                <span className="text-foreground font-mono text-2xl font-bold tracking-tight">
+                  {unhandled.length}
+                </span>
+              </div>
+
+              {/* Statistic Card: System Yield Coverage */}
+              <div className="border-border bg-blueprint-card flex flex-col gap-1.5 border-2 p-4 shadow-sm">
+                <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-widest uppercase">
+                  {"//"} COVERAGE YIELD
+                </span>
+                <span className="text-primary font-mono text-2xl font-bold tracking-tight">
+                  {coveragePercent}%
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </ToolLayout>
   );
 }

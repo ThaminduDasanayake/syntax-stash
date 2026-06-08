@@ -124,7 +124,7 @@ export function GlassmorphismTab() {
             <CardContent className="flex min-h-125 items-center justify-center p-8">
               <div
                 style={glassStyle}
-                className="flex h-64 w-72 flex-col items-center justify-center rounded-lg text-center shadow-2xl transition-all duration-300"
+                className="flex h-64 w-72 flex-col items-center justify-center text-center transition-all duration-300"
               >
                 <div className="space-y-2">
                   <p className="text-muted text-lg font-semibold">Glass Card</p>
@@ -146,7 +146,7 @@ export function GlassmorphismTab() {
             <p className="text-foreground text-xs font-medium">CSS</p>
             <CopyButton labelName="Copy CSS" textToCopy={cssCode} />
           </div>
-          <div className="bg-background border-border overflow-x-auto rounded-lg border p-4">
+          <div className="bg-background border-border overflow-x-auto border p-4">
             <pre className="text-primary font-mono text-xs wrap-break-word whitespace-pre-wrap">
               {cssCode}
             </pre>
@@ -158,14 +158,14 @@ export function GlassmorphismTab() {
             <p className="text-foreground text-xs font-medium">Tailwind Classes</p>
             <CopyButton labelName="Copy Tailwind CSS" textToCopy={tailwindClasses} />
           </div>
-          <div className="bg-background border-border space-y-3 rounded-lg border p-4">
+          <div className="bg-background border-border space-y-3 border p-4">
             <pre className="text-primary font-mono text-xs wrap-break-word whitespace-pre-wrap">
               {tailwindClasses}
             </pre>
-            <div className="bg-muted/50 space-y-1 rounded p-3">
+            <div className="bg-muted/50 space-y-1 p-3">
               <p className="text-foreground text-xs font-semibold">HTML Example:</p>
               <pre className="text-muted-foreground font-mono text-xs wrap-break-word whitespace-pre-wrap">
-                {`<div class="${tailwindClasses} rounded-2xl shadow-2xl p-8">
+                {`<div class="${tailwindClasses} p-8">
   Your content here
 </div>`}
               </pre>
@@ -174,7 +174,7 @@ export function GlassmorphismTab() {
         </div>
       </div>
 
-      <div className="bg-muted/30 border-border mt-8 space-y-3 rounded-lg border p-4">
+      <div className="bg-muted/30 border-border mt-8 space-y-3 border p-4">
         <h4 className="text-foreground text-sm font-semibold">Glassmorphism Tips</h4>
         <div className="text-muted-foreground grid grid-cols-1 gap-4 text-xs md:grid-cols-2">
           <div className="space-y-2">

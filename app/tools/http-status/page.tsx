@@ -41,7 +41,7 @@ export default function HttpStatusPage() {
 
   return (
     <ToolLayout tool={tool}>
-      <div className="space-y-6">
+      <div className="w-full min-w-0 space-y-8">
         {/* Search + filter */}
         <div className="space-y-4">
           <SearchInput
@@ -58,8 +58,9 @@ export default function HttpStatusPage() {
                 <Button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  variant={isActive ? "default" : "secondary"}
-                  className="px-3 text-xs"
+                  variant={isActive ? "default" : "outline"}
+                  size="xs"
+                  className="font-mono font-bold tracking-wider"
                 >
                   {label}
                 </Button>
@@ -69,55 +70,60 @@ export default function HttpStatusPage() {
         </div>
 
         {/* Result count */}
-        <p className="text-muted-foreground text-xs">
-          Showing <span className="text-foreground font-semibold">{filtered.length}</span> of{" "}
-          {HTTP_STATUS_CODES.length} codes
+        <p className="text-muted-foreground font-mono text-[11px] font-bold tracking-widest uppercase">
+          {"//"} SHOWING {filtered.length} OF {HTTP_STATUS_CODES.length} CODES AVAILABLE
         </p>
-
         {/* Cards grid */}
         {filtered.length === 0 ? (
-          <div className="text-muted-foreground py-12 text-center text-sm">
-            No codes found for &ldquo;{search}&rdquo;
+          <div className="border-border text-muted-foreground border-2 border-dashed py-16 text-center font-mono text-xs">
+            &gt; SYSTEM WARNING: ZERO REGISTRY ENTRIES MATCHING &ldquo;{search}&rdquo;
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {filtered.map((entry) => {
               const styles = CATEGORY_STYLES[entry.category];
               return (
                 <Card
                   key={entry.code}
                   className={cn(
-                    "flex h-full flex-col text-left transition-all hover:shadow-sm",
+                    "bg-blueprint-card flex h-full flex-col border-2 text-left transition-all duration-150",
                     styles.card,
                   )}
                 >
                   {/* Code + badge */}
-                  <CardHeader className="flex items-center justify-between">
+                  <CardHeader className="bg-background/40 flex flex-row items-center justify-between border-b-2 border-inherit py-2.5">
                     <div className="flex items-center gap-2">
                       <span
-                        className={cn("font-mono text-2xl font-bold tabular-nums", styles.code)}
+                        className={cn(
+                          "font-mono text-2xl font-bold tracking-tighter tabular-nums",
+                          styles.code,
+                        )}
                       >
                         {entry.code}
                       </span>
-                      <Badge variant="outline" className={styles.badge}>
+                      <Badge
+                        variant="outline"
+                        className={cn("px-1.5 font-mono text-[10px] font-bold", styles.badge)}
+                      >
                         {entry.category}
                       </Badge>
                     </div>
                     <CopyButton iconOnly textToCopy={String(entry.code)} />
                   </CardHeader>
 
-                  <CardContent className="flex-1">
-                    <p className="text-foreground mb-1 text-sm leading-snug font-semibold">
+                  <CardContent className="flex-1 p-4">
+                    <p className="text-foreground mb-1.5 text-sm font-bold tracking-tight">
                       {entry.name}
                     </p>
-                    <p className="text-muted-foreground mb-3 line-clamp-4 text-xs leading-relaxed">
+                    <p className="text-muted-foreground line-clamp-4 font-mono text-xs leading-relaxed">
                       {entry.description}
                     </p>
                   </CardContent>
 
-                  <CardFooter>
-                    <p className="text-muted-foreground/70 line-clamp-2 text-xs leading-relaxed">
-                      {entry.useCase}
+                  <CardFooter className="flex flex-col items-start">
+                    <p className="text-muted-foreground/70 font-mono text-[11px] leading-normal">
+                      <span className="text-foreground/40 font-bold">&gt; USE CASE: </span>
+                      <span>{entry.useCase}</span>
                     </p>
                   </CardFooter>
                 </Card>
@@ -125,7 +131,6 @@ export default function HttpStatusPage() {
             })}
           </div>
         )}
-
         <p className="text-muted-foreground text-xs">
           Descriptions based on RFC 7231 and related standards.
         </p>
