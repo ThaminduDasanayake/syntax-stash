@@ -30,27 +30,27 @@ export const CATEGORY_STYLES: Record<
   { card: string; code: string; badge: string }
 > = {
   "1xx": {
-    card: "border-border hover:border-foreground hover:shadow-border",
+    card: "border-muted-foreground/30 hover:border-muted-foreground hover:shadow hover:shadow-muted-foreground",
     code: "text-muted-foreground",
     badge: "border-border bg-muted/20 text-muted-foreground",
   },
   "2xx": {
-    card: "border-emerald-500/30 hover:border-emerald-400 hover:shadow hover:shadow-emerald-500",
+    card: "border-emerald-500/30 hover:border-emerald-400 hover:shadow hover:shadow-emerald-400",
     code: "text-emerald-400",
     badge: "border-emerald-500/30 bg-emerald-500/5 text-emerald-400",
   },
   "3xx": {
-    card: "border-blue-500/30 hover:border-blue-400 hover:shadow-[4px_4px_0px_0px_#3b82f6]",
+    card: "border-blue-500/30 hover:border-blue-400 hover:shadow hover:shadow-blue-400",
     code: "text-blue-400",
     badge: "border-blue-500/30 bg-blue-500/5 text-blue-400",
   },
   "4xx": {
-    card: "border-amber-500/30 hover:border-amber-400 hover:shadow-[4px_4px_0px_0px_#f59e0b]",
+    card: "border-amber-500/30 hover:border-amber-400 hover:shadow hover:shadow-amber-400",
     code: "text-amber-400",
     badge: "border-amber-500/30 bg-amber-500/5 text-amber-400",
   },
   "5xx": {
-    card: "border-rose-500/30 hover:border-rose-400 hover:shadow-[4px_4px_0px_0px_#f43f5e]",
+    card: "border-rose-500/30 hover:border-rose-400 hover:shadow hover:shadow-rose-400",
     code: "text-rose-400",
     badge: "border-rose-500/30 bg-rose-500/5 text-rose-400",
   },

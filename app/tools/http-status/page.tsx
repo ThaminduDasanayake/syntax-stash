@@ -131,8 +131,8 @@ export default function HttpStatusPage() {
             })}
           </div>
         )}
-        <p className="text-muted-foreground text-xs">
-          Descriptions based on RFC 7231 and related standards.
+        <p className="text-muted-foreground/50 pt-4 text-center font-mono text-[10px] tracking-wider uppercase">
+          {"//"} Reference standard source core engine derived from RFC 7231 specifications.
         </p>
       </div>
     </ToolLayout>

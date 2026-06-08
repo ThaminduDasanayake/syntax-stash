@@ -106,28 +106,6 @@
     --sidebar-border: oklch(0.3351 0.0253 120.8545);
     --sidebar-ring: oklch(0.8686 0.1697 120.8545);
     --radius: 0rem;
-    --shadow-x: 4px;
-    --shadow-y: 4px;
-    --shadow-blur: 0px;
-    --shadow-spread: 0px;
-    /*--shadow-color: var(--tw-shadow-color, var(--primary));*/
-    /*--shadow-2xs: 1px 1px 0px 0px var(--border);*/
-    /*--shadow-xs: 2px 2px 0px 0px var(--border);*/
-    /*--shadow-sm: 2px 2px 0px 0px var(--shadow-color);*/
-    /*--shadow: 4px 4px 0px 0px var(--shadow-color);*/
-    /*--shadow-md: 6px 6px 0px 0px var(--shadow-color);*/
-    /*--shadow-lg: 8px 8px 0px 0px var(--shadow-color);*/
-    /*--shadow-xl: 12px 12px 0px 0px var(--shadow-color);*/
-    /*--shadow-2xl: 16px 16px 0px 0px var(--shadow-color);*/
-    --shadow-2xs: 1px 1px 0px 0px var(--border);
-    --shadow-xs: 2px 2px 0px 0px var(--border);
-
-    --shadow-sm: 2px 2px 0px 0px var(--tw-shadow-color, var(--primary));
-    --shadow: 4px 4px 0px 0px var(--tw-shadow-color, var(--primary));
-    --shadow-md: 6px 6px 0px 0px var(--tw-shadow-color, var(--primary));
-    --shadow-lg: 8px 8px 0px 0px var(--tw-shadow-color, var(--primary));
-    --shadow-xl: 12px 12px 0px 0px var(--tw-shadow-color, var(--primary));
-    --shadow-2xl: 16px 16px 0px 0px var(--tw-shadow-color, var(--primary));
     --highlight: oklch(0.852 0.199 91.936);
     --brand: oklch(0.707 0.165 254.624);
 }
@@ -172,14 +150,14 @@
     --radius-md: calc(var(--radius) - 2px);
     --radius-lg: var(--radius);
     --radius-xl: calc(var(--radius) + 4px);
-    --shadow-2xs: var(--shadow-2xs);
-    --shadow-xs: var(--shadow-xs);
-    --shadow-sm: var(--shadow-sm);
-    --shadow: var(--shadow);
-    --shadow-md: var(--shadow-md);
-    --shadow-lg: var(--shadow-lg);
-    --shadow-xl: var(--shadow-xl);
-    --shadow-2xl: var(--shadow-2xl);
+    --shadow-2xs: 1px 1px 0px 0px var(--color-border);
+    --shadow-xs: 2px 2px 0px 0px var(--color-border);
+    --shadow-sm: 2px 2px 0px 0px var(--tw-shadow-color, var(--color-primary));
+    --shadow: 4px 4px 0px 0px var(--tw-shadow-color, var(--color-primary));
+    --shadow-md: 6px 6px 0px 0px var(--tw-shadow-color, var(--color-primary));
+    --shadow-lg: 8px 8px 0px 0px var(--tw-shadow-color, var(--color-primary));
+    --shadow-xl: 12px 12px 0px 0px var(--tw-shadow-color, var(--color-primary));
+    --shadow-2xl: 16px 16px 0px 0px var(--tw-shadow-color, var(--color-primary));
     --color-brand: var(--brand);
     --color-highlight: var(--highlight);
 }
