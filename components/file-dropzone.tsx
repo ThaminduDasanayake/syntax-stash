@@ -70,7 +70,7 @@ export default function FileDropzone({
     >
       <input {...getInputProps()} />
       <UploadIcon size={40} className="text-muted-foreground mb-4" />
-      <div className="text-center">{label}</div>
+      <div className="text-center font-mono">{label}</div>
     </div>
   );
 }

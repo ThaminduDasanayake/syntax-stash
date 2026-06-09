@@ -261,14 +261,14 @@ export default function ImageConverterPage() {
 
   return (
     <ToolLayout tool={tool}>
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      <div className="grid w-full min-w-0 grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Dropzone & Image List */}
-        <div className="space-y-6">
+        <div className="w-full min-w-0 space-y-6">
           {isReading ? (
-            <div className="border-border bg-muted/30 flex h-48 flex-col items-center justify-center gap-3 rounded-xl border border-dashed">
-              <CircleNotchIcon className="text-muted-foreground size-8 animate-spin" />
+            <div className="bg-blueprint-card flex h-48 flex-col items-center justify-center gap-3 border-2 border-dashed">
+              <CircleNotchIcon className="text-primary size-8 animate-spin" />
               <p className="text-muted-foreground animate-pulse text-sm font-medium">
-                Decoding HEIC images...
+                &gt; DECODING HEIC IMAGES...
               </p>
             </div>
           ) : (
@@ -287,7 +287,9 @@ export default function ImageConverterPage() {
               ])}
               label={
                 <>
-                  <p className="text-foreground font-medium">Drop images here</p>
+                  <p className="text-foreground text-sm font-bold tracking-wider uppercase">
+                    Drop images here
+                  </p>
                   <p className="text-muted-foreground mt-1 text-xs">
                     Supports PNG, JPEG, WEBP, AVIF, GIF, & HEIC
                   </p>
@@ -297,33 +299,38 @@ export default function ImageConverterPage() {
           )}
 
           {images.length > 0 && (
-            <div className="space-y-4">
+            <div className="w-full min-w-0 space-y-3">
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-semibold">
-                  {images.length} file{images.length !== 1 ? "s" : ""} selected
+                <h3 className="text-muted-foreground font-mono text-[11px] font-bold tracking-widest uppercase">
+                  {"//"} {images.length} FILE{images.length !== 1 ? "S" : ""} SELECTED
                 </h3>
                 <ClearButton
-                  icon={<TrashIcon weight="duotone" />}
+                  icon={<TrashIcon weight="bold" />}
                   label="Clear All"
+                  variant="destructive"
                   size="sm"
                   onClick={clearAll}
                 />
               </div>
-              <div className="grid max-h-100 gap-2 overflow-y-auto pr-2">
+
+              {/* Scrollable File Queue Deck */}
+              <div className="bg-blueprint-card grid max-h-100 min-w-0 gap-3 overflow-y-auto border-2 p-3">
                 {images.map((file, i) => (
                   <div
                     key={i}
-                    className="bg-card border-border flex items-center gap-3 rounded-lg border p-2 shadow-sm"
+                    className="bg-card flex min-w-0 items-center gap-3 border-2 p-2 hover:shadow-sm"
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={previewUrls[i]}
                       alt={file.name}
-                      className="bg-muted size-10 rounded object-cover"
+                      className="bg-muted size-10 object-cover"
                     />
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-medium">{file.name}</p>
-                      <p className="text-muted-foreground text-xs">{formatSize(file.size)}</p>
+                      <p className="text-muted-foreground font-mono text-[10px] tracking-wider uppercase">
+                        {formatSize(file.size)}
+                      </p>
                     </div>
                     <Button
                       variant="destructive"
@@ -340,9 +347,11 @@ export default function ImageConverterPage() {
         </div>
 
         {/* Settings & Convert */}
-        <div className="space-y-6">
+        <div className="w-full min-w-0 space-y-6">
           <div className="space-y-3">
-            <Label>Target Format</Label>
+            <Label className="text-muted-foreground font-mono text-[11px] font-bold tracking-widest uppercase">
+              {"//"} TARGET FORMAT
+            </Label>
             <div className="flex flex-wrap gap-2">
               {(
                 [
@@ -361,7 +370,7 @@ export default function ImageConverterPage() {
                   key={fmt}
                   variant={targetFormat === fmt ? "default" : "outline"}
                   onClick={() => setTargetFormat(fmt)}
-                  className="uppercase"
+                  className="text-xs font-bold uppercase"
                   size="sm"
                   disabled={fmt === "avif" && avifSupported === false}
                 >
@@ -371,12 +380,12 @@ export default function ImageConverterPage() {
             </div>
           </div>
           {formatsWithSettings.includes(targetFormat) && (
-            <div className="bg-card border-border space-y-4 rounded-xl border p-4">
+            <div className="bg-card space-y-4 border p-4">
               <div className="flex items-center gap-2">
-                <span className="text-muted-foreground text-xs font-semibold tracking-wider">
-                  <span className="uppercase">{targetFormat}</span> Settings
+                <span className="text-primary font-mono text-[11px] font-bold tracking-widest uppercase">
+                  {"//"} {targetFormat} CONTEXT OPTIMIZATION
                 </span>
-                <div className="bg-border h-px flex-1" />
+                <div className="flex-1 border-t" />
               </div>
 
               {targetFormat === "png" && (
@@ -414,14 +423,13 @@ export default function ImageConverterPage() {
             </div>
           )}
           {/* Resize Settings */}
-          <div className="bg-card border-border space-y-4 rounded-xl border p-4">
+          <div className="bg-card space-y-4 border p-4">
             <div className="flex items-center gap-2">
-              <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
-                Resizing
+              <span className="text-primary font-mono text-[11px] font-bold tracking-widest uppercase">
+                {"//"} RESIZING
               </span>
-              <div className="bg-border h-px flex-1" />
+              <div className="flex-1 border-t" />
             </div>
-
             <ButtonGroup className="grid w-full grid-cols-3">
               {(
                 [
@@ -440,7 +448,6 @@ export default function ImageConverterPage() {
                 </Button>
               ))}
             </ButtonGroup>
-
             {resize.mode === "custom" && (
               <div className="flex items-center gap-3">
                 <InputField
@@ -460,9 +467,9 @@ export default function ImageConverterPage() {
                   )}
                 >
                   {resize.lockAspectRatio ? (
-                    <LockIcon weight="duotone" className="size-4" />
+                    <LockIcon weight="duotone" />
                   ) : (
-                    <LockOpenIcon weight="duotone" className="size-4" />
+                    <LockOpenIcon weight="duotone" />
                   )}
                 </Button>
                 <InputField
@@ -495,10 +502,13 @@ export default function ImageConverterPage() {
                 : `Convert ${images.length} Image${images.length === 1 ? "" : "s"}`}
           </Button>
           {/* Converted Results */}
+
           {converted.length > 0 && (
-            <div className="space-y-4 pt-4">
+            <div className="space-y-4 border-t pt-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-bold">Converted Files</h3>
+                <h3 className="text-primary font-mono text-[11px] font-bold tracking-widest uppercase">
+                  {"//"} Converted Files
+                </h3>
                 {converted.length > 1 && (
                   <DownloadButton
                     label="Download ZIP"
@@ -507,23 +517,23 @@ export default function ImageConverterPage() {
                   />
                 )}
               </div>
-              <div className="grid gap-2">
+              <div className="grid gap-3">
                 {converted.map((img, i) => (
                   <div
                     key={i}
-                    className="bg-card border-border flex items-center justify-between rounded-lg border p-3 shadow-sm"
+                    className="bg-card flex items-center justify-between border p-3 hover:shadow-sm"
                   >
                     <div className="flex min-w-0 items-center gap-3">
                       <div className="flex flex-col">
                         <span className="truncate text-sm font-medium">{img.name}</span>
-                        <span className="text-muted-foreground text-xs">
+                        <span className="text-muted-foreground font-mono text-[10px] tracking-wider uppercase">
                           {formatSize(img.size)}
                         </span>
                       </div>
                     </div>
                     <DownloadButton
-                      label=""
-                      variant="default"
+                      iconOnly
+                      variant="outline"
                       onClick={() => handleDownload(img.url, img.name)}
                     />
                   </div>
