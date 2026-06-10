@@ -126,7 +126,7 @@ export default function WebExtractorPage() {
         )}
 
         {loading && (
-          <div className="border-border bg-card mx-auto flex w-full max-w-2xl flex-col items-center justify-center rounded-xl border border-dashed py-16 text-center shadow-sm">
+          <div className="border-border bg-card mx-auto flex w-full max-w-2xl flex-col items-center justify-center border border-dashed py-16 text-center">
             <SpinnerGapIcon size={32} className="text-primary mb-4 animate-spin" />
             <p className="text-sm font-semibold">Parsing Website...</p>
             <p className="text-muted-foreground mt-1 max-w-[80%] truncate font-mono text-xs">
@@ -141,7 +141,7 @@ export default function WebExtractorPage() {
             {/* Visual Data */}
             <div className="flex flex-col gap-6">
               {/* Page Link Banner */}
-              <div className="border-border bg-card flex items-center gap-3 rounded-lg border px-4 py-3 shadow-sm">
+              <div className="border-border bg-card flex items-center gap-3 border px-4 py-3">
                 <GlobeIcon size={20} className="text-primary shrink-0" />
                 <a
                   href={data.url}
@@ -198,7 +198,7 @@ export default function WebExtractorPage() {
                     {data?.links.map((href, i) => (
                       <li
                         key={i}
-                        className="hover:bg-muted/50 flex items-start gap-2 rounded-md p-1.5 transition-colors"
+                        className="hover:bg-muted/50 flex items-start gap-2 p-1.5 transition-colors"
                       >
                         <ArrowSquareOutIcon
                           weight="duotone"

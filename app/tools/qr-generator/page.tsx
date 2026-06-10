@@ -213,7 +213,7 @@ export default function QRGeneratorPage() {
             <CardContent className="flex w-full flex-col items-center gap-6 p-6">
               {dataUrl ? (
                 <div
-                  className={`${transparentBg ? "[background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAAXNSR0IArs4c6QAAACVJREFUKFNjZCASMDKgAnv37v3PwkCKYdRAxgw0fCBMdDSEg08BAF8eEQG6B/uYAAAAAElFTkSuQmCC)]" : "bg-white"} overflow-hidden rounded shadow-sm`}
+                  className={`${transparentBg ? "[background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAAXNSR0IArs4c6QAAACVJREFUKFNjZCASMDKgAnv37v3PwkCKYdRAxgw0fCBMdDSEg08BAF8eEQG6B/uYAAAAAElFTkSuQmCC)]" : "bg-white"} overflow-hidden`}
                 >
                   <Image
                     src={dataUrl}
@@ -225,7 +225,7 @@ export default function QRGeneratorPage() {
                   />
                 </div>
               ) : (
-                <div className="border-border flex h-64 w-64 items-center justify-center rounded-xl border border-dashed">
+                <div className="border-border flex h-64 w-64 items-center justify-center border border-dashed">
                   <p className="text-muted-foreground px-4 text-center font-mono text-xs">
                     Enter text to generate a QR code
                   </p>
