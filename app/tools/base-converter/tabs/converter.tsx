@@ -119,7 +119,7 @@ export function Converter() {
   return (
     <>
       {/* Signed / unsigned info bar */}
-      <div className="bg-muted/50 flex flex-wrap gap-4 rounded-lg px-4 py-3 font-mono text-xs">
+      <div className="bg-muted/50 flex flex-wrap gap-4 px-4 py-3 font-mono text-xs">
         <span>
           <span className="text-muted-foreground">unsigned </span>
           {value}
@@ -194,7 +194,7 @@ export function Converter() {
                     <Button
                       onClick={() => toggleBit(i)}
                       data-on={bit === 1}
-                      className={`border-border bg- bg-card text-foreground/40 hover:text-foreground h-9 w-9 rounded border-2 font-mono text-sm font-bold transition-all data-[on=true]:text-white ${nibbleColor}`}
+                      className={`border-border bg- bg-card text-foreground/40 hover:text-foreground h-9 w-9 border-2 font-mono text-sm font-bold transition-all data-[on=true]:text-white ${nibbleColor}`}
                     >
                       {bit}
                     </Button>
@@ -213,7 +213,7 @@ export function Converter() {
               { label: "bits 3–0", color: "bg-green-500" },
             ].map(({ label, color }) => (
               <span key={label} className="text-muted-foreground flex items-center gap-1">
-                <span className={`inline-block h-2 w-2 rounded-sm ${color}`} />
+                <span className={`inline-block h-2 w-2 ${color}`} />
                 {label}
               </span>
             ))}

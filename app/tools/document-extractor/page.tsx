@@ -108,11 +108,11 @@ export default function DocumentExtractorPage() {
         {/* Output */}
         {llmReady ? (
           <div className="space-y-8">
-            <div className="bg-muted/70 text-muted-foreground flex items-center gap-3 rounded-lg border px-4 py-3 text-sm">
+            <div className="bg-muted/70 text-muted-foreground flex items-center gap-3 border px-4 py-3 text-sm">
               <LightbulbIcon weight="duotone" className="size-4.5 text-yellow-500" />
               <p>
                 <strong>Pro tip:</strong> The Rich Editor supports Notion-style commands! Type{" "}
-                <kbd className="bg-background border-border rounded border px-1.5 py-0.5 font-mono text-xs font-semibold">
+                <kbd className="bg-background border px-1.5 py-0.5 font-mono text-xs font-semibold">
                   /
                 </kbd>{" "}
                 on any new line to quickly add headings, lists, and formatting.
@@ -159,7 +159,7 @@ export default function DocumentExtractorPage() {
               </div>
 
               <TabsContent value="rich">
-                <div className="bg-card flex h-full max-h-180 flex-col overflow-hidden rounded-lg border">
+                <div className="bg-card flex h-full max-h-180 flex-col overflow-hidden border">
                   <PlateEditor
                     initialMarkdown={parsedMarkdown}
                     onMarkdownChangeAction={setMarkdown}

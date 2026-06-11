@@ -91,7 +91,7 @@ export default function CodeScreenshotPage() {
             style={{ background: activeBackgroundValue, padding: `${padding}px` }}
             className="flex min-h-70 items-center justify-center"
           >
-            <div className="w-full max-w-3xl overflow-hidden rounded-xl shadow-2xl">
+            <div className="w-full max-w-3xl overflow-hidden">
               {showWindow && (
                 <div
                   className="flex items-center gap-2 px-4 py-3"

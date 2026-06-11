@@ -149,9 +149,9 @@ export default function ChmodCalculatorPage() {
             <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
               Permission Grid
             </Label>
-            <div className="border-border overflow-hidden rounded-lg border">
+            <div className="overflow-hidden border">
               {/* Header row */}
-              <div className="border-border grid grid-cols-4 border-b">
+              <div className="grid grid-cols-4 border-b">
                 <div className="bg-muted/50 p-2" />
                 {PERMS.map((p) => (
                   <div
@@ -164,10 +164,7 @@ export default function ChmodCalculatorPage() {
               </div>
               {/* Data rows */}
               {GROUPS.map((group, gi) => (
-                <div
-                  key={group}
-                  className={`grid grid-cols-4 ${gi < 2 ? "border-border border-b" : ""}`}
-                >
+                <div key={group} className={`grid grid-cols-4 ${gi < 2 ? "border-b" : ""}`}>
                   <div className="text-muted-foreground flex items-center px-3 py-2 text-xs font-semibold">
                     {group}
                   </div>
@@ -178,7 +175,7 @@ export default function ChmodCalculatorPage() {
                         key={pi}
                         onClick={() => toggleBit(gi, pi)}
                         variant={isActive ? "default" : "outline"}
-                        className="rounded-none border-y-0 border-r-0 border-l py-5! font-mono"
+                        className="border-y-0 border-r-0 border-l py-5! font-mono"
                       >
                         {isActive ? PERM_CHARS[pi] : "–"}
                       </Button>

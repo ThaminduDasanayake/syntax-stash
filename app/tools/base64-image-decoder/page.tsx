@@ -122,7 +122,7 @@ export default function Base64ImagePage() {
                 <img
                   src={imageDataUri}
                   alt="Decoded Base64 Image"
-                  className="max-h-125 max-w-full rounded-lg object-contain"
+                  className="max-h-125 max-w-full object-contain"
                 />
               ) : (
                 <div className="space-y-2 text-center">
