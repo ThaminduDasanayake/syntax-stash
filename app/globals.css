@@ -15,63 +15,6 @@
     height: 0;
 }
 
-/*:root {*/
-/*    --background: oklch(0.9706 0.0057 84.5662);*/
-/*    --foreground: oklch(0.25 0.03 120.8545);*/
-/*    --card: oklch(1.0000 0 0);*/
-/*    --card-foreground: oklch(0.25 0.03 120.8545);*/
-/*    --popover: oklch(1.0000 0 0);*/
-/*    --popover-foreground: oklch(0.25 0.03 120.8545);*/
-/*    --primary: oklch(0.4335 0.0754 120.8545);*/
-/*    --primary-foreground: oklch(1.0000 0 0);*/
-/*    --secondary: oklch(0.9644 0.0208 120.8545);*/
-/*    --secondary-foreground: oklch(0.4335 0.0754 120.8545);*/
-/*    --muted: oklch(0.95 0.01 120.8545);*/
-/*    --muted-foreground: oklch(0.55 0.03 120.8545);*/
-/*    --accent: oklch(0.8686 0.1697 120.8545);*/
-/*    --accent-foreground: oklch(0.25 0.03 120.8545);*/
-/*    --destructive: oklch(0.6257 0.2058 29.0773);*/
-/*    --destructive-foreground: oklch(1.0000 0 0);*/
-/*    --border: oklch(0.90 0.01 120.8545);*/
-/*    --input: oklch(0.90 0.01 120.8545);*/
-/*    --ring: oklch(0.8686 0.1697 120.8545);*/
-/*    --chart-1: oklch(0.8686 0.1697 120.8545);*/
-/*    --chart-2: oklch(0.4335 0.0754 120.8545);*/
-/*    --chart-3: oklch(0.6509 0.1283 120.8545);*/
-/*    --chart-4: oklch(0.7583 0.1562 120.8545);*/
-/*    --chart-5: oklch(0.55 0.09 120.8545);*/
-/*    --sidebar: oklch(1.0000 0 0);*/
-/*    --sidebar-foreground: oklch(0.2153 0.0187 120.8545);*/
-/*    --sidebar-primary: oklch(0.4335 0.0754 120.8545);*/
-/*    --sidebar-primary-foreground: oklch(1.0000 0 0);*/
-/*    --sidebar-accent: oklch(0.9644 0.0208 120.8545);*/
-/*    --sidebar-accent-foreground: oklch(0.4335 0.0754 120.8545);*/
-/*    --sidebar-border: oklch(0.9436 0.0051 120.8545);*/
-/*    --sidebar-ring: oklch(0.8686 0.1697 120.8545);*/
-/*    --font-sans: Manrope, ui-sans-serif, sans-serif, system-ui;*/
-/*    --font-serif: serif;*/
-/*    --font-mono: JetBrains Mono, ui-monospace, monospace;*/
-/*    --radius: 0rem;*/
-/*    --shadow-x: 0;*/
-/*    --shadow-y: 1px;*/
-/*    --shadow-blur: 3px;*/
-/*    --shadow-spread: 0px;*/
-/*    --shadow-opacity: 0.1;*/
-/*    --shadow-color: oklch(0 0 0);*/
-/*    --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);*/
-/*    --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);*/
-/*    --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);*/
-/*    --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);*/
-/*    --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10);*/
-/*    --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10);*/
-/*    --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10);*/
-/*    --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);*/
-/*    --tracking-normal: 0em;*/
-/*    --spacing: 0.25rem;*/
-/*    --highlight: oklch(0.852 0.199 91.936);*/
-/*    --brand: oklch(0.623 0.214 259.815);*/
-/*}*/
-
 :root {
     --background: oklch(0.1448 0.0000 0);
     --foreground: oklch(0.9706 0.0057 84.5662);
@@ -251,6 +194,14 @@
                 linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
     }
 
+    .text-terminal-label {
+        @apply font-mono text-[10px] font-bold tracking-widest uppercase;
+    }
+
+    .text-terminal-label-md {
+        @apply font-mono text-xs font-bold tracking-widest uppercase;
+    }
+
     .tab-list {
         @apply flex w-full bg-transparent gap-2 p-0;
     }
@@ -264,83 +215,3 @@
     }
 }
 
-
-/*@layer components {*/
-/*    .btn-brutalist {*/
-/*        border: none;*/
-/*        position: relative;*/
-/*        isolation: isolate;*/
-/*        background-color: transparent;*/
-/*        !* Dynamic color text flip tracking curves *!*/
-/*        color: var(--primary);*/
-/*        transition: color 0.1s ease 0.15s, opacity 0.15s;*/
-/*    }*/
-
-/*    !* THE STRIPES: Placed seamlessly onto the background track canvas *!*/
-/*    .btn-brutalist-stripes {*/
-/*        position: absolute;*/
-/*        inset: 0;*/
-/*        z-index: -2;*/
-/*        background-image: repeating-linear-gradient(*/
-/*                119deg,*/
-/*                color-mix(in srgb, var(--primary) 25%, transparent) 0px,*/
-/*                color-mix(in srgb, var(--primary) 25%, transparent) 1px,*/
-/*                transparent 1px,*/
-/*                transparent 5px*/
-/*        );*/
-/*    }*/
-
-/*    !* THE BRACKETS: Drawn using the advanced multi-gradient layout frame technique *!*/
-/*    .btn-brutalist::before {*/
-/*        content: "";*/
-/*        position: absolute;*/
-/*        top: -1px;*/
-/*        right: -1px;*/
-/*        bottom: -1px;*/
-/*        left: -1px;*/
-/*        z-index: 2;*/
-/*        pointer-events: none;*/
-/*        background-image:*/
-/*                linear-gradient(to right, var(--primary) 8px, transparent 8px, transparent calc(100% - 8px), var(--primary) calc(100% - 8px)),*/
-/*                linear-gradient(to right, var(--primary) 8px, transparent 8px, transparent calc(100% - 8px), var(--primary) calc(100% - 8px)),*/
-/*                linear-gradient(to bottom, var(--primary) 8px, transparent 8px, transparent calc(100% - 8px), var(--primary) calc(100% - 8px)),*/
-/*                linear-gradient(to bottom, var(--primary) 8px, transparent 8px, transparent calc(100% - 8px), var(--primary) calc(100% - 8px));*/
-/*        background-size: 100% 1px, 100% 1px, 1px 100%, 1px 100%;*/
-/*        background-position: 0 0, 0 100%, 0 0, 100% 0;*/
-/*        background-repeat: no-repeat;*/
-/*        transition: inset 0.25s cubic-bezier(0.25, 0, 0, 1), opacity 0.3s ease;*/
-/*    }*/
-
-/*    !* THE HOVER CANVAS WIPE: Solid block hidden off-canvas via polygon clipping *!*/
-/*    .btn-brutalist::after {*/
-/*        content: "";*/
-/*        position: absolute;*/
-/*        inset: 0;*/
-/*        z-index: -1;*/
-/*        pointer-events: none;*/
-/*        background: var(--primary);*/
-/*        !* Angled polygon pushed completely to the left side bounds *!*/
-/*        clip-path: polygon(-1% 0%, -1% 0%, -100% 100%, -1% 100%);*/
-/*        transition: clip-path 0.4s cubic-bezier(0.25, 0, 0, 1);*/
-/*    }*/
-
-/*    !* --- HOVER INTERACTION STATES --- *!*/
-
-/*    .btn-brutalist:hover {*/
-/*        color: var(--background);*/
-/*        transition: color 0.2s ease 0.1s;*/
-/*    }*/
-
-/*    !* Bracket inward snap effect on hover *!*/
-/*    .btn-brutalist:hover::before {*/
-/*        top: 2px;*/
-/*        right: 2px;*/
-/*        bottom: 2px;*/
-/*        left: 2px;*/
-/*    }*/
-
-/*    !* Sweeps the solid canvas wipe from left-to-right across the button *!*/
-/*    .btn-brutalist:hover::after {*/
-/*        clip-path: polygon(0% 0%, 101% 0%, 101% 101%, 0% 101%);*/
-/*    }*/
-/*}*/
