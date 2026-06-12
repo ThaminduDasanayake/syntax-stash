@@ -156,62 +156,55 @@
         background-color: var(--accent);
     }
 
-    .dark ::selection {
-        color: var(--accent-foreground);
-        background-color: var(--accent);
-    }
+
 }
 
-@layer utilities {
-    .scrollbar-hide {
-        -ms-overflow-style: none !important;
-        scrollbar-width: none !important;
-    }
+@utility scrollbar-hide {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
 
-    .scrollbar-hide::-webkit-scrollbar {
+    &::-webkit-scrollbar {
         display: none !important;
         width: 0 !important;
         height: 0 !important;
     }
-
-    .bg-grid-slate {
-        background-image: linear-gradient(0deg, transparent 24%, rgba(200, 200, 200, 0.05) 25%, rgba(200, 200, 200, 0.05) 26%, transparent 27%, transparent 74%, rgba(200, 200, 200, 0.05) 75%, rgba(200, 200, 200, 0.05) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(200, 200, 200, 0.05) 25%, rgba(200, 200, 200, 0.05) 26%, transparent 27%, transparent 74%, rgba(200, 200, 200, 0.05) 75%, rgba(200, 200, 200, 0.05) 76%, transparent 77%, transparent);
-        background-size: 50px 50px;
-    }
-
-    .bg-blueprint {
-        background-size: 40px 40px;
-        background-image:
-                linear-gradient(to right, theme(colors.border) 1px, transparent 1px),
-                linear-gradient(to bottom, theme(colors.border) 1px, transparent 1px);
-    }
-
-    .bg-blueprint-card {
-        background-color: #0A0A0A;
-        background-size: 16px 16px;
-        background-image:
-                linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-    }
-
-    .text-terminal-label {
-        @apply font-mono text-[10px] font-bold tracking-widest uppercase;
-    }
-
-    .text-terminal-label-md {
-        @apply font-mono text-xs font-bold tracking-widest uppercase;
-    }
-
-    .tab-list {
-        @apply flex w-full bg-transparent gap-2 p-0;
-    }
-
-    .tab-trigger {
-        @apply rounded-none border-2 border-border bg-transparent cursor-pointer  px-8 py-2 font-mono text-xs font-bold uppercase tracking-widest text-muted-foreground transition-all hover:bg-muted/50 data-[state=active]:border-primary data-[state=active]:bg-primary data-[state=active]:text-black!;
-    }
-
-    .sidebar-text-collapse {
-        @apply overflow-hidden whitespace-nowrap transition-all duration-600 ease-in-out group-data-[collapsible=icon]:w-0 group-data-[collapsible=icon]:opacity-0;
-    }
 }
 
+@utility bg-grid-slate {
+    background-image: linear-gradient(0deg, transparent 24%, rgba(200, 200, 200, 0.05) 25%, rgba(200, 200, 200, 0.05) 26%, transparent 27%, transparent 74%, rgba(200, 200, 200, 0.05) 75%, rgba(200, 200, 200, 0.05) 76%, transparent 77%, transparent),
+    linear-gradient(90deg, transparent 24%, rgba(200, 200, 200, 0.05) 25%, rgba(200, 200, 200, 0.05) 26%, transparent 27%, transparent 74%, rgba(200, 200, 200, 0.05) 75%, rgba(200, 200, 200, 0.05) 76%, transparent 77%, transparent);
+    background-size: 50px 50px;
+}
+
+@utility bg-blueprint {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, var(--color-border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-border) 1px, transparent 1px);
+}
+
+@utility bg-blueprint-card {
+    background-color: #0A0A0A;
+    background-size: 16px 16px;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+}
+
+@utility tab-list {
+    @apply flex w-full! bg-transparent! gap-2! p-0!;
+}
+
+@utility tab-trigger {
+    @apply rounded-none! border-2! border-border! bg-transparent! cursor-pointer px-8 py-2 font-mono text-xs font-bold uppercase tracking-widest text-muted-foreground transition-all hover:bg-muted/50! data-[state=active]:border-primary! data-[state=active]:bg-primary! data-[state=active]:text-background!;
+}
+
+@utility sidebar-text-collapse {
+    @apply overflow-hidden whitespace-nowrap transition-all duration-600 ease-in-out group-data-[collapsible=icon]:w-0 group-data-[collapsible=icon]:opacity-0;
+}
+
+@utility text-telemetry {
+    @apply font-mono text-[10px] font-bold tracking-widest uppercase;
+}
+
+@utility text-console {
+    @apply font-mono text-xs font-bold tracking-widest uppercase;
+}

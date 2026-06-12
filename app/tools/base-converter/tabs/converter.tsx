@@ -172,7 +172,7 @@ export function Converter() {
       {/* Bit toggle grid */}
       {value <= MAX && (
         <div>
-          <p className="mb-3 text-sm font-semibold">Bit Toggle (16-bit)</p>
+          <p className="text-console mb-3">{"//"} Bit Toggle (16-bit)</p>
           <div className="overflow-x-auto pb-2">
             <div className="flex min-w-max gap-1">
               {bits.map((bit, i) => {
@@ -194,11 +194,11 @@ export function Converter() {
                     <Button
                       onClick={() => toggleBit(i)}
                       data-on={bit === 1}
-                      className={`border-border bg- bg-card text-foreground/40 hover:text-foreground h-9 w-9 border-2 font-mono text-sm font-bold transition-all data-[on=true]:text-white ${nibbleColor}`}
+                      className={`border-border bg-card text-foreground/40 hover:text-foreground h-9 w-9 border-2 font-mono text-sm font-bold transition-all data-[on=true]:text-white ${nibbleColor}`}
                     >
                       {bit}
                     </Button>
-                    <span className="text-muted-foreground font-mono text-[10px]">{bitIndex}</span>
+                    <span className="text-muted-foreground text-telemetry">{bitIndex}</span>
                   </div>
                 );
               })}

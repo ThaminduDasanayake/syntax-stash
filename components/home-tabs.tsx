@@ -42,12 +42,12 @@ export function HomeTabs() {
         {Object.entries(groupedTools).map(([category, tools]) => (
           <div key={category} className="space-y-6 pt-4">
             <div className="flex w-full items-center gap-4">
-              <span className="text-foreground shrink-0 font-mono text-xs font-bold tracking-[0.2em] uppercase">
+              <span className="text-foreground text-console shrink-0 tracking-[0.2em]">
                 {category}
               </span>
 
               <div className="border-border h-0 flex-1 border-b-2 border-dashed" />
-              <span className="text-muted-foreground shrink-0 font-mono text-[10px] font-bold">
+              <span className="text-muted-foreground text-telemetry shrink-0">
                 {"//"} {tools.length} ITEMS
               </span>
             </div>
@@ -66,12 +66,12 @@ export function HomeTabs() {
         {Object.entries(groupedResources).map(([category, items]) => (
           <div key={category} className="space-y-6 pt-4">
             <div className="flex w-full items-center gap-4">
-              <span className="text-foreground shrink-0 font-mono text-xs font-bold tracking-[0.2em] uppercase">
+              <span className="text-foreground text-console shrink-0 tracking-[0.2em]">
                 {category}
               </span>
 
               <div className="border-border h-0 flex-1 border-b-2 border-dashed" />
-              <span className="text-muted-foreground shrink-0 font-mono text-[10px] font-bold">
+              <span className="text-muted-foreground text-telemetry shrink-0">
                 {"//"} {items.length} ITEMS
               </span>
             </div>

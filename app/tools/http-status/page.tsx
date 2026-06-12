@@ -70,7 +70,7 @@ export default function HttpStatusPage() {
         </div>
 
         {/* Result count */}
-        <p className="text-muted-foreground font-mono text-[11px] font-bold tracking-widest uppercase">
+        <p className="text-muted-foreground text-console">
           {"//"} SHOWING {filtered.length} OF {HTTP_STATUS_CODES.length} CODES AVAILABLE
         </p>
         {/* Cards grid */}
@@ -131,7 +131,7 @@ export default function HttpStatusPage() {
             })}
           </div>
         )}
-        <p className="text-muted-foreground/50 pt-4 text-center font-mono text-[10px] tracking-wider uppercase">
+        <p className="text-muted-foreground/50 text-telemetry pt-4 text-center">
           {"//"} Reference standard source core engine derived from RFC 7231 specifications.
         </p>
       </div>

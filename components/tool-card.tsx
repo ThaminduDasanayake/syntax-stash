@@ -13,14 +13,12 @@ function CardBody({ tool }: ToolCardProps) {
   const Icon = (tool.icon && iconMap[tool.icon]) || ToolboxIcon;
 
   return (
-    <Card className="group/card border-border bg-blueprint-card hover:border-primary relative flex h-full w-full flex-col overflow-hidden rounded-sm border-2 transition-all duration-200 hover:-translate-y-1">
+    <Card className="group/card border-border bg-blueprint-card hover:border-primary hover:shadow-border relative flex h-full w-full flex-col overflow-hidden border-2 transition-all duration-200 hover:-translate-y-1 hover:shadow">
       <div className="border-border bg-background/50 flex items-center justify-between border-b-2 px-4 py-2 backdrop-blur-sm">
-        <span className="text-muted-foreground group-hover/card:text-primary font-mono text-[10px] font-bold tracking-widest uppercase transition-colors">
+        <span className="text-muted-foreground group-hover/card:text-primary text-telemetry transition-colors">
           &gt; {tool.category}
         </span>
-        {isInternal && (
-          <span className="text-muted-foreground font-mono text-[10px] font-bold">INT</span>
-        )}
+        {isInternal && <span className="text-muted-foreground text-telemetry">INT</span>}
       </div>
 
       <CardHeader className="relative z-10 flex-1 p-5">
@@ -62,7 +60,7 @@ function CardBody({ tool }: ToolCardProps) {
 
 export default function ToolCard({ tool }: ToolCardProps) {
   const linkWrapperClass =
-    "block w-full h-full outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl";
+    "block w-full h-full outline-none focus-visible:ring-2 focus-visible:ring-primary";
 
   if (tool.slug) {
     return (
