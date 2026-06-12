@@ -57,7 +57,7 @@ export function BuildTab({ onSendToExplore }: BuildTabProps) {
           <div className="mb-1 flex items-start justify-between gap-4">
             <div className="space-y-1">
               <p className="font-mono text-3xl font-bold tracking-widest">{finalExpression}</p>
-              <p className="text-muted-foreground text-sm">{description}</p>
+              <p className="text-muted-foreground text-sm font-semibold">{description}</p>
             </div>
             <ButtonGroup>
               <Button
@@ -76,7 +76,7 @@ export function BuildTab({ onSendToExplore }: BuildTabProps) {
             {["minute", "hour", "day", "month", "weekday"].map((label, i) => (
               <div key={label} className="text-center">
                 <p className="font-mono text-lg font-semibold">{finalExpression.split(" ")[i]}</p>
-                <p className="text-muted-foreground text-[10px] tracking-wider uppercase">
+                <p className="text-muted-foreground text-[10px] font-bold tracking-widest uppercase">
                   {label}
                 </p>
               </div>
@@ -93,7 +93,6 @@ export function BuildTab({ onSendToExplore }: BuildTabProps) {
             variant={preset === k ? "default" : "outline"}
             size="sm"
             onClick={() => setPreset(k as PresetKey)}
-            className="text-xs"
           >
             {v.label}
           </Button>
@@ -149,7 +148,7 @@ export function BuildTab({ onSendToExplore }: BuildTabProps) {
 
       {/* Reference */}
       <div className="mt-8 border-t pt-6">
-        <h3 className="mb-3 text-sm font-semibold">Cron Format Reference</h3>
+        <h3 className="text-console mb-3">{"//"} Cron Format Reference</h3>
         <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
           {[
             { token: "*", desc: "Every value" },
@@ -158,8 +157,8 @@ export function BuildTab({ onSendToExplore }: BuildTabProps) {
             { token: "*/15", desc: "Every Nth value" },
           ].map(({ token, desc }) => (
             <div key={token} className="bg-muted p-3">
-              <p className="font-mono text-sm font-semibold">{token}</p>
-              <p className="text-muted-foreground text-xs">{desc}</p>
+              <p className="font-mono text-sm font-bold">{token}</p>
+              <p className="text-muted-foreground text-xs font-semibold">{desc}</p>
             </div>
           ))}
         </div>

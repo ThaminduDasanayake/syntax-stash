@@ -159,10 +159,10 @@ export function ExploreTab({ expression, setExpression }: ExploreTabProps) {
                   );
                 })}
 
-                <span className="text-foreground pointer-events-none absolute bottom-1 left-2 z-10 text-[10px] font-medium uppercase">
+                <span className="text-foreground text-telemetry pointer-events-none absolute bottom-1 left-2 z-10">
                   Now
                 </span>
-                <span className="text-foreground pointer-events-none absolute right-2 bottom-1 z-10 text-[10px] font-medium uppercase">
+                <span className="text-foreground text-telemetry pointer-events-none absolute right-2 bottom-1 z-10">
                   +{RANGE_OPTIONS.find((r) => r.value === range)!.label.replace("Next ", "")}
                 </span>
               </div>
@@ -175,9 +175,7 @@ export function ExploreTab({ expression, setExpression }: ExploreTabProps) {
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <Label>Next 20 Executions</Label>
-          <span className="bg-muted px-2 py-0.5 font-mono text-xs font-semibold tracking-wider uppercase">
-            {timezone}
-          </span>
+          <span className="bg-muted text-console px-2 py-0.5">{timezone}</span>
         </div>
 
         {parsed.ok ? (
