@@ -90,7 +90,7 @@ export function ConverterTab() {
 
         <div className="flex w-full justify-between gap-6">
           <div className="w-2/5 space-y-2">
-            <Label className="text-foreground font-semibold">Input Format</Label>
+            <Label className="text-foreground text-console">[ Input Format ]</Label>
             <Select value={inputFormat} onValueChange={handleFormatChange}>
               <SelectTrigger className="bg-background focus:ring-primary w-full font-mono">
                 <SelectValue placeholder="Select format" />

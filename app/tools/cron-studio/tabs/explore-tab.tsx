@@ -137,7 +137,7 @@ export function ExploreTab({ expression, setExpression }: ExploreTabProps) {
                         className="absolute top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-transform hover:scale-150"
                         style={{ left: `${Math.min(98, Math.max(2, pct))}%` }}
                       >
-                        <div className="bg-primary ring-accent size-2.5 rounded-full ring" />
+                        <div className="bg-primary ring-background size-2.5 rounded-full ring" />
                       </TooltipTrigger>
                       <TooltipContent
                         side="top"
