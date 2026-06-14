@@ -202,9 +202,17 @@
 }
 
 @utility text-telemetry {
-    @apply font-mono text-[10px] font-bold tracking-widest uppercase;
+    @apply font-mono text-[10px]! font-bold tracking-widest uppercase;
 }
 
 @utility text-console {
-    @apply font-mono text-xs font-bold tracking-widest uppercase;
+    @apply font-mono text-xs! font-bold tracking-widest uppercase;
+}
+
+@utility text-console-md {
+    @apply font-mono text-sm! font-bold tracking-wider uppercase;
+}
+
+@utility text-console-lg {
+    @apply font-mono text-base! font-bold tracking-wide uppercase;
 }
