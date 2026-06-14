@@ -14,7 +14,7 @@ import {
   parseColor,
 } from "@/app/tools/color-studio/converter-formatters";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -92,7 +92,7 @@ export function ConverterTab() {
 
         <div className="flex w-full justify-between gap-6">
           <div className="w-2/5 space-y-2">
-            <Label className="text-console-md">[ Input Format ]</Label>
+            <Label className="text-console">[ Input Format ]</Label>
             <Select value={inputFormat} onValueChange={handleFormatChange}>
               <SelectTrigger className="bg-background focus:ring-primary w-full font-mono">
                 <SelectValue placeholder="Select format" />
@@ -108,7 +108,7 @@ export function ConverterTab() {
           </div>
 
           <div className="w-full space-y-2">
-            <Label className="text-console-md">[ Value ]</Label>
+            <Label className="text-console">[ Value ]</Label>
             <Input
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
@@ -130,30 +130,16 @@ export function ConverterTab() {
         {isValid ? (
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {results.map((res) => (
-              <Card
-                // size="lg"
-                key={res.id}
-                // onClick={() => copy(res.value, res.id)}
-                className="group bg-card flex h-20 w-full flex-col items-center justify-between gap-2 border px-8 py-4 hover:shadow"
-              >
-                <div className="flex w-full flex-col gap-2">
+              <Card key={res.id} className="w-full px-4">
+                <CardContent>
                   <div className="flex items-center justify-between">
-                    <span className="text-foreground text-xs font-bold tracking-wider uppercase">
-                      {res.label}
-                    </span>
-                    <CopyButton iconOnly textToCopy={(res.value, res.id)} />
-                    {/*<div className="text-muted-foreground group-hover:text-foreground transition-colors">*/}
-                    {/*  {copiedItem === res.id ? (*/}
-                    {/*    <CheckIcon weight="bold" className="text-emerald-400" />*/}
-                    {/*  ) : (*/}
-                    {/*    <CopyIcon weight="bold" />*/}
-                    {/*  )}*/}
-                    {/*</div>*/}
+                    <span className="text-console">{res.label}</span>
+                    <CopyButton iconOnly textToCopy={res.value} />
                   </div>
                   <span className="text-muted-foreground text-start font-mono text-sm break-all">
                     {res.value}
                   </span>
-                </div>
+                </CardContent>
               </Card>
             ))}
           </div>

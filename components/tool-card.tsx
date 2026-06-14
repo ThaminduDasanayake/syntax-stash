@@ -13,8 +13,8 @@ function CardBody({ tool }: ToolCardProps) {
   const Icon = (tool.icon && iconMap[tool.icon]) || ToolboxIcon;
 
   return (
-    <Card className="group/card border-border bg-blueprint-card hover:border-primary hover:shadow-border relative flex h-full w-full flex-col overflow-hidden border-2 transition-all duration-200 hover:-translate-y-1 hover:shadow">
-      <div className="border-border bg-background/50 flex items-center justify-between border-b-2 px-4 py-2 backdrop-blur-sm">
+    <Card className="group/card bg-blueprint-card hover:border-primary hover:shadow-border relative flex h-full w-full flex-col overflow-hidden border-2 transition-all duration-200 hover:-translate-y-1 hover:shadow">
+      <div className="bg-background/50 flex items-center justify-between border-b-2 px-4 py-2 backdrop-blur-sm">
         <span className="text-muted-foreground group-hover/card:text-primary text-telemetry transition-colors">
           &gt; {tool.category}
         </span>
@@ -24,7 +24,7 @@ function CardBody({ tool }: ToolCardProps) {
       <CardHeader className="relative z-10 flex-1 p-5">
         <div className="flex flex-row items-start gap-4">
           {isInternal ? (
-            <div className="border-border bg-background group-hover/card:border-primary group-hover/card:text-primary flex h-10 w-10 shrink-0 items-center justify-center rounded-none border-2 transition-colors">
+            <div className="bg-background group-hover/card:border-primary group-hover/card:text-primary flex h-10 w-10 shrink-0 items-center justify-center border-2 transition-colors">
               <Icon className="size-5 transition-colors" />
             </div>
           ) : (

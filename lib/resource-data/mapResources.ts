@@ -46,4 +46,10 @@ export const mapResourcesLinks: Tool[] = [
     description: "React components and hooks for the Google Maps JavaScript API",
     category: CATEGORIES.mapResources,
   },
+  {
+    title: "MAKE MY DRIVE FUN",
+    url: "https://makemydrivefun.com/",
+    description: "Enter in two locations to make the drive fun.\n",
+    category: CATEGORIES.mapResources,
+  },
 ];
