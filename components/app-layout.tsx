@@ -4,7 +4,7 @@ import { ReactNode, useState } from "react";
 
 import AppHeader from "@/components/app-header";
 import AppSidebar from "@/components/app-sidebar";
-import CommandMenu from "@/components/CommandMenu";
+import CommandMenu from "@/components/command-menu";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 export default function AppLayout({ children }: { children: ReactNode }) {
