@@ -133,15 +133,6 @@ export const dataTools: Tool[] = [
 
 export const developmentTools: Tool[] = [
   {
-    title: "AI Prompt Studio",
-    highlight: "Studio",
-    slug: "ai-prompt-studio",
-    description:
-      "Write, inject variables, minify, and enhance LLM prompts with real-time token tracking.",
-    category: CATEGORIES.development,
-    icon: "flask",
-  },
-  {
     title: "Code Screenshot",
     highlight: "Screenshot",
     slug: "code-screenshot",
