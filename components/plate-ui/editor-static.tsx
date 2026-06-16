@@ -9,7 +9,7 @@ export const editorVariants = cva(
   cn(
     "group/editor",
     "relative w-full cursor-text overflow-x-hidden break-words whitespace-pre-wrap select-text",
-    "ring-offset-background rounded-md focus-visible:outline-none",
+    "ring-offset-background rounded-none focus-visible:outline-none",
     "placeholder:text-muted-foreground/80 **:data-slate-placeholder:text-muted-foreground/80 **:data-slate-placeholder:top-[auto_!important] **:data-slate-placeholder:opacity-100!",
     "[&_strong]:font-bold",
   ),

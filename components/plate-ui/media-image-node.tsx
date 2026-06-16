@@ -21,7 +21,7 @@ export function ImageElement(props: PlateElementProps<TImageElement>) {
             <Image
               className={cn(
                 "block w-full max-w-full cursor-pointer object-cover px-0",
-                "rounded-sm",
+                "rounded-none",
                 focused && selected && "ring-ring ring-2 ring-offset-2",
               )}
               alt={(props.attributes?.alt as string) || "Image"}

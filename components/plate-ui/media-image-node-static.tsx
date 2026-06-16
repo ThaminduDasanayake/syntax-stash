@@ -17,7 +17,7 @@ export function ImageElementStatic(
         <div className="relative max-w-full min-w-[92px]" style={{ textAlign: align }}>
           <div>
             <img
-              className={cn("w-full max-w-full cursor-default object-cover px-0", "rounded-sm")}
+              className={cn("w-full max-w-full cursor-default object-cover px-0", "rounded-none")}
               alt={(props.attributes as any).alt}
               src={url}
             />

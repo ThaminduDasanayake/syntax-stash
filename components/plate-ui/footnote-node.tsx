@@ -220,8 +220,8 @@ export function FootnoteDefinitionElement(props: PlateElementProps<TFootnoteElem
     <PlateElement
       {...props}
       className={cn(
-        "mt-1.5 flex items-start gap-1.5 data-[nav-target=true]:rounded-md data-[nav-target=true]:bg-(--color-highlight)",
-        isDuplicateDefinition && "rounded-md border border-amber-500/30 bg-amber-500/5 px-2 py-2",
+        "mt-1.5 flex items-start gap-1.5 data-[nav-target=true]:rounded-none data-[nav-target=true]:bg-(--color-highlight)",
+        isDuplicateDefinition && "rounded-none border border-amber-500/30 bg-amber-500/5 px-2 py-2",
       )}
       attributes={getNavigationAttributes(props.attributes, navigationHighlight)}
     >

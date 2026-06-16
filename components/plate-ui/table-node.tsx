@@ -83,7 +83,7 @@ function CollapsedTableFloatingToolbarContent(props: React.ComponentProps<typeof
       {...props}
     >
       <Toolbar
-        className="scrollbar-hide bg-popover flex w-auto flex-row overflow-x-auto rounded-md border p-1 shadow-md print:hidden"
+        className="scrollbar-hide bg-popover flex w-auto flex-row overflow-x-auto rounded-none border p-1 shadow-md print:hidden"
         contentEditable={false}
       >
         <ToolbarGroup>

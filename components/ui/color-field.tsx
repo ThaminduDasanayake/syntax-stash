@@ -37,7 +37,7 @@ export const ColorField = forwardRef<HTMLInputElement, ColorFieldProps>(
 
     const content = (
       <div className="flex items-center gap-2">
-        <div className="border-border relative h-8 w-10 shrink-0 overflow-hidden rounded-md border">
+        <div className="border-border relative h-8 w-10 shrink-0 overflow-hidden rounded-none border">
           <Input
             type="color"
             value={safeColor}
