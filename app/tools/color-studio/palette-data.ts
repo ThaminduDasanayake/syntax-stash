@@ -87,13 +87,133 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Luxury",
+    name: "Palace Library",
     colors: [
-      { name: "Col", hex: "182350", colSpan: "col-span-3", textColor: "white" },
-      { name: "Col", hex: "AFD2FA", colSpan: "col-span-1", textColor: "white" },
-      { name: "col", hex: "FEFAEF", colSpan: "col-span-2", textColor: "white" },
-      { name: "col", hex: "B9915E", colSpan: "col-span-2", textColor: "black" },
-      { name: "col", hex: "B9915E", colSpan: "col-span-1", textColor: "black" },
+      { name: "Col", hex: "#5A1616", colSpan: "col-span-3", textColor: "white" },
+      { name: "Col", hex: "#B9A674", colSpan: "col-span-1", textColor: "black" },
+      { name: "col", hex: "#EAE6DB", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#DCD4B9", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#2E5064", colSpan: "col-span-1", textColor: "white" },
+    ],
+  },
+  {
+    name: "Old Bordeaux",
+    colors: [
+      { name: "Col", hex: "#4E0B0C", colSpan: "col-span-3", textColor: "white" },
+      { name: "Col", hex: "#6A494A", colSpan: "col-span-1", textColor: "white" },
+      { name: "col", hex: "#D1C6B0", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#F0EDE7", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#C7D4DF", colSpan: "col-span-1", textColor: "black" },
+    ],
+  },
+  {
+    name: "Forest Study",
+    colors: [
+      { name: "Col", hex: "#16191D", colSpan: "col-span-3", textColor: "white" },
+      { name: "Col", hex: "#224141", colSpan: "col-span-1", textColor: "white" },
+      { name: "col", hex: "#486664", colSpan: "col-span-2", textColor: "white" },
+      { name: "col", hex: "#E9E5DD", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#C3B388", colSpan: "col-span-1", textColor: "black" },
+    ],
+  },
+  {
+    name: "Sunday Wool",
+    colors: [
+      { name: "Col", hex: "#2D211E", colSpan: "col-span-3", textColor: "white" },
+      { name: "Col", hex: "#584A49", colSpan: "col-span-1", textColor: "white" },
+      { name: "col", hex: "#8D867C", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#C8BEB3", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#F4F1EA", colSpan: "col-span-1", textColor: "black" },
+    ],
+  },
+  {
+    name: "The Vienna Cafe",
+    colors: [
+      { name: "Col", hex: "#2D1925", colSpan: "col-span-3", textColor: "white" },
+      { name: "Col", hex: "#592C39", colSpan: "col-span-1", textColor: "white" },
+      { name: "col", hex: "#C8C4AE", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#ECE9E2", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#2C5760", colSpan: "col-span-1", textColor: "white" },
+    ],
+  },
+  {
+    name: "The Library",
+    colors: [
+      { name: "Col", hex: "#4E0B0C", colSpan: "col-span-3", textColor: "white" },
+      { name: "Col", hex: "#6A494A", colSpan: "col-span-1", textColor: "white" },
+      { name: "col", hex: "#D1C6B0", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#F0EDE7", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#C7D4DF", colSpan: "col-span-1", textColor: "black" },
+    ],
+  },
+  {
+    name: "Grand Hotel",
+    colors: [
+      { name: "Col", hex: "#4F0402", colSpan: "col-span-3", textColor: "white" },
+      { name: "Col", hex: "#6B4D4E", colSpan: "col-span-1", textColor: "white" },
+      { name: "col", hex: "#DEE6E8", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#B1C5C8", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#7992A2", colSpan: "col-span-1", textColor: "black" },
+    ],
+  },
+  {
+    name: "English Garden",
+    colors: [
+      { name: "Col", hex: "#21362D", colSpan: "col-span-3", textColor: "white" },
+      { name: "Col", hex: "#83887B", colSpan: "col-span-1", textColor: "black" },
+      { name: "col", hex: "#C4C5AF", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#EAE8DD", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#842B37", colSpan: "col-span-1", textColor: "white" },
+    ],
+  },
+  {
+    name: "Wine & Leather",
+    colors: [
+      { name: "Col", hex: "#251111", colSpan: "col-span-3", textColor: "white" },
+      { name: "Col", hex: "#720D1A", colSpan: "col-span-1", textColor: "white" },
+      { name: "col", hex: "#B08C48", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#C3B7A5", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#E6E2D7", colSpan: "col-span-1", textColor: "black" },
+    ],
+  },
+  {
+    name: "Royal Academy",
+    colors: [
+      { name: "Col", hex: "#0E1625", colSpan: "col-span-3", textColor: "white" },
+      { name: "Col", hex: "#303E64", colSpan: "col-span-1", textColor: "white" },
+      { name: "col", hex: "#EEECE0", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#DCD3A8", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#B9A14E", colSpan: "col-span-1", textColor: "black" },
+    ],
+  },
+  {
+    name: "The Yacht",
+    colors: [
+      { name: "Col", hex: "#0D0807", colSpan: "col-span-3", textColor: "white" },
+      { name: "Col", hex: "#122256", colSpan: "col-span-1", textColor: "white" },
+      { name: "col", hex: "#8EA0B5", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#F2F1EB", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#DCDACC", colSpan: "col-span-1", textColor: "black" },
+    ],
+  },
+  {
+    name: "North Sea",
+    colors: [
+      { name: "Col", hex: "#0D2D4B", colSpan: "col-span-3", textColor: "white" },
+      { name: "Col", hex: "#A38F70", colSpan: "col-span-1", textColor: "black" },
+      { name: "col", hex: "#EAEBEC", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#B6C7C7", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#3E787C", colSpan: "col-span-1", textColor: "white" },
+    ],
+  },
+  {
+    name: "colo",
+    colors: [
+      { name: "Col", hex: "#102B1E", colSpan: "col-span-3", textColor: "white" },
+      { name: "Col", hex: "#375D4B", colSpan: "col-span-1", textColor: "white" },
+      { name: "col", hex: "#E8E5D8", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#D7C8A5", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "#B1975C", colSpan: "col-span-1", textColor: "black" },
     ],
   },
   {
