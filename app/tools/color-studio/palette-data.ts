@@ -15,9 +15,9 @@ export const COLOR_PALETTES: Palette[] = [
     name: "Luxury Color 1",
     colors: [
       { name: "Cotton", hex: "#EDEBDE", colSpan: "col-span-3", textColor: "black" },
-      { name: "Cherry Red", hex: "#810100", colSpan: "col-span-1", textColor: "white" },
-      { name: "Maroon", hex: "#630102", colSpan: "col-span-2", textColor: "white" },
-      { name: "Noir Black", hex: "#1B1716", colSpan: "col-span-3", textColor: "white" },
+      { name: "Maroon", hex: "#810100", colSpan: "col-span-1", textColor: "white" },
+      { name: "Blood Red", hex: "#630102", colSpan: "col-span-2", textColor: "white" },
+      { name: "Black Chocolate", hex: "#1B1716", colSpan: "col-span-3", textColor: "white" },
     ],
   },
   {
@@ -57,12 +57,43 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Luxury Color 4",
+    name: "After the Show",
     colors: [
-      { name: "Deep", hex: "182350", colSpan: "col-span-3", textColor: "white" },
-      { name: "Powder", hex: "AFD2FA", colSpan: "col-span-1", textColor: "white" },
-      { name: "Floral", hex: "FEFAEF", colSpan: "col-span-2", textColor: "white" },
-      { name: "Pale", hex: "B9915E", colSpan: "col-span-3", textColor: "black" },
+      { name: "Deep Claret", hex: "#4E0420", colSpan: "col-span-3", textColor: "white" },
+      { name: "Burgundy", hex: "#870E32", colSpan: "col-span-1", textColor: "white" },
+      { name: "Platinum", hex: "#E8E7E6", colSpan: "col-span-2", textColor: "black" },
+      { name: "Timberwolf", hex: "#C7BEBA", colSpan: "col-span-2", textColor: "black" },
+      { name: "Taupe Gray", hex: "#90898A", colSpan: "col-span-1", textColor: "black" },
+    ],
+  },
+  {
+    name: "Dried Roses",
+    colors: [
+      { name: "Dark Plum", hex: "#1E0B10", colSpan: "col-span-3", textColor: "white" },
+      { name: "Old Rose", hex: "#50212B", colSpan: "col-span-1", textColor: "white" },
+      { name: "Dusty Rose", hex: "#755058", colSpan: "col-span-2", textColor: "white" },
+      { name: "Silver Chalice", hex: "#C4C1B9", colSpan: "col-span-2", textColor: "black" },
+      { name: "Alabaster", hex: "#ECE9E1", colSpan: "col-span-1", textColor: "black" },
+    ],
+  },
+  {
+    name: "Opera",
+    colors: [
+      { name: "Midnight Violet", hex: "#140C22", colSpan: "col-span-3", textColor: "white" },
+      { name: "Deep Indigo", hex: "#242150", colSpan: "col-span-1", textColor: "white" },
+      { name: "Slate Blue", hex: "#494F76", colSpan: "col-span-2", textColor: "white" },
+      { name: "Parchment", hex: "#E6E1D4", colSpan: "col-span-2", textColor: "black" },
+      { name: "Carmine Red", hex: "#790713", colSpan: "col-span-1", textColor: "white" },
+    ],
+  },
+  {
+    name: "Luxury",
+    colors: [
+      { name: "Col", hex: "182350", colSpan: "col-span-3", textColor: "white" },
+      { name: "Col", hex: "AFD2FA", colSpan: "col-span-1", textColor: "white" },
+      { name: "col", hex: "FEFAEF", colSpan: "col-span-2", textColor: "white" },
+      { name: "col", hex: "B9915E", colSpan: "col-span-2", textColor: "black" },
+      { name: "col", hex: "B9915E", colSpan: "col-span-1", textColor: "black" },
     ],
   },
   {

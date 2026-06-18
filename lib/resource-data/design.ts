@@ -23,6 +23,34 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
   },
   {
+    title: "Supahero - Website hero section library",
+    url: "https://supahero.io/",
+    description:
+      "A handpicked library of stunning website hero sections designed to captivate and engage.",
+    category: CATEGORIES.design,
+  },
+  {
+    title: "CallToInspiration – Small details for very exacting ideas!",
+    url: "https://calltoinspiration.com/",
+    description:
+      "Call for inspiration using the purple hat for when you have inspiration blocks or need fresh new ideas. A great tool created by a designer for web professionals.",
+    category: CATEGORIES.design,
+  },
+  {
+    title: "Durves - Design Pattern Tool",
+    url: "https://www.durves.com/",
+    description:
+      "A tool for creating and exporting dot patterns for graphic designers, UI/UX, and other visual professionals.",
+    category: CATEGORIES.design,
+  },
+  {
+    title: "Dark Themed Web Design Inspiration",
+    url: "https://www.dark.design/",
+    description:
+      "The best hand-picked dark themed websites on the internet. From designers for designers. Curated with love.",
+    category: CATEGORIES.design,
+  },
+  {
     title: "RapidRAW",
     url: "https://www.getrapidraw.com/",
     description:

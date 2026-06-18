@@ -2,7 +2,7 @@
 
 import { BracketsCurlyIcon } from "@phosphor-icons/react";
 
-import { COLOR_PALETTES, Colors } from "@/app/tools/color-studio/palette-data";
+import { COLOR_PALETTES } from "@/app/tools/color-studio/palette-data";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
@@ -15,43 +15,6 @@ import {
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
-function BentoColorBlock({ color }: { color: Colors }) {
-  return (
-    <div
-      className={cn(
-        color.hex,
-        color.textColor === "black" && "text-background",
-        "flex min-h-20 flex-col justify-between p-3",
-        color.colSpan,
-      )}
-      style={{
-        backgroundColor: color.hex,
-      }}
-    >
-      <div className="text-sm font-bold tracking-tight">{color.name}</div>
-      <div className="mt-6 font-mono text-xs font-bold opacity-80">{color.hex}</div>
-    </div>
-  );
-}
-
-function ExportBlock({ title, code }: { title: string; code: string }) {
-  return (
-    <div className="bg-card overflow-hidden border-2">
-      <div className="bg-muted/30 flex items-center justify-between border-b-2 px-4 py-2">
-        <h4 className="text-console">
-          {"//"} {title}
-        </h4>
-        <CopyButton iconOnly textToCopy={code} />
-      </div>
-      <div className="max-h-[50vh] overflow-x-auto p-4">
-        <pre className="text-foreground font-mono text-xs leading-relaxed">
-          <code>{code}</code>
-        </pre>
-      </div>
-    </div>
-  );
-}
-
 export function PaletteTab() {
   return (
     <div className="space-y-12">
@@ -59,17 +22,11 @@ export function PaletteTab() {
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
         {COLOR_PALETTES.map((palette, idx) => {
           const cssLines = palette.colors
-            .map((c) => {
-              const varName = c.name.toLowerCase().replace(/\s+/g, "-");
-              return `  --${varName}: ${c.hex};`;
-            })
+            .map((c) => `  --${c.name.toLowerCase().replace(/\s+/g, "-")}: ${c.hex};`)
             .join("\n");
 
           const tailwindLines = palette.colors
-            .map((c) => {
-              const varName = c.name.toLowerCase().replace(/\s+/g, "-");
-              return `  --color-${varName}: ${c.hex};`;
-            })
+            .map((c) => `  --color-${c.name.toLowerCase().replace(/\s+/g, "-")}: ${c.hex};`)
             .join("\n");
 
           const combinedCode = `:root {\n${cssLines}\n}\n\n@theme inline {\n${tailwindLines}\n}`;
@@ -96,15 +53,38 @@ export function PaletteTab() {
                         Palette name: &quot;{palette.name}&quot;
                       </DialogTitle>
                     </DialogHeader>
-                    <ExportBlock title="Combined CSS Properties" code={combinedCode} />
+                    <div className="bg-card overflow-hidden border-2">
+                      <div className="bg-muted/30 flex items-center justify-between border-b-2 px-4 py-2">
+                        <h4 className="text-console">{"//"} Combined CSS Properties</h4>
+                        <CopyButton iconOnly textToCopy={combinedCode} />
+                      </div>
+                      <div className="max-h-[50vh] overflow-x-auto p-4">
+                        <pre className="text-foreground font-mono text-xs leading-relaxed">
+                          <code>{combinedCode}</code>
+                        </pre>
+                      </div>
+                    </div>
                   </DialogContent>
                 </Dialog>
               </CardHeader>
 
               {/* Dynamic Bento Box Layout inside the Card */}
-              <CardContent className="grid flex-1 grid-cols-3 gap-2">
+              <CardContent className="grid flex-1 grid-cols-3 gap-1.5">
                 {palette.colors.map((color, i) => (
-                  <BentoColorBlock key={i} color={color} />
+                  <div
+                    key={i}
+                    className={cn(
+                      "border-border/30 flex min-h-24 flex-col justify-between rounded-none border p-3 font-mono transition-all duration-100",
+                      color.textColor === "black" ? "text-black" : "text-white",
+                      color.colSpan,
+                    )}
+                    style={{
+                      backgroundColor: color.hex,
+                    }}
+                  >
+                    <div className="text-sm font-bold tracking-tight">{color.name}</div>
+                    <div className="mt-6 font-mono text-xs font-bold opacity-80">{color.hex}</div>
+                  </div>
                 ))}
               </CardContent>
             </Card>

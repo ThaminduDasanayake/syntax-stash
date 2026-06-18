@@ -18,6 +18,20 @@ export const mapResourcesLinks: Tool[] = [
     category: CATEGORIES.mapResources,
   },
   {
+    title: "RayonMaps",
+    url: "https://maps.rayon.design/",
+    description:
+      "Export OpenStreetMap Data to DXF. Get the CAD geometry of any site on Earth — in just 3 steps.",
+    category: CATEGORIES.mapResources,
+  },
+  {
+    title: "Draw all roads in a city at once",
+    url: "https://anvaka.github.io/city-roads/",
+    description:
+      "This website allows you to select a city and then draws every single road on a screen.",
+    category: CATEGORIES.mapResources,
+  },
+  {
     title: "mapcn",
     url: "https://www.mapcn.dev/",
     description:
