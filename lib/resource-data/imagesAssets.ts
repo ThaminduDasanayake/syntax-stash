@@ -18,4 +18,11 @@ export const imagesAssetsLinks: Tool[] = [
       "A code-native pixel art tool. Paint like a normal raster editor; underneath, every pixel is a color token in clean, editable code. Export SVG, CSS, React, PNG, and GIF.",
     category: CATEGORIES.imagesAssets,
   },
+  {
+    title: "fffuel",
+    url: "https://www.fffuel.co/",
+    description:
+      "A fun collection of free SVG generators for gradients, patterns, shapes, textures & cool backgrounds. Plus, some more color tools for web designers.",
+    category: CATEGORIES.unknown,
+  },
 ];

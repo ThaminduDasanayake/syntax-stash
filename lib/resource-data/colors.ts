@@ -4,10 +4,23 @@ import { CATEGORIES } from "./categories";
 
 export const colorsLinks: Tool[] = [
   {
+    title: "Mesh Gradient",
+    url: "https://meshgradient.com/",
+    description: "MESH is a simple way to create beautiful, unique gradients using shaders.",
+    category: CATEGORIES.unknown,
+  },
+  {
     title: "Colorize",
     url: "https://colorize.design/",
     description:
       "Generate color palettes instantly from any website effortlessly. Enter a URL to explore color schemes and combinations directly from the site's design. No sign-up required. Try it now!",
+    category: CATEGORIES.colors,
+  },
+  {
+    title: "Super Color Palette",
+    url: "https://supercolorpalette.com/",
+    description:
+      "Generate super awesome color palettes by shifting hue, saturation, lightness, and more. 100% free without ads.",
     category: CATEGORIES.colors,
   },
   {

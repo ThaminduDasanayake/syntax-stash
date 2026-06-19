@@ -4,6 +4,34 @@ import { CATEGORIES } from "./categories";
 
 export const designLinks: Tool[] = [
   {
+    title: "Savee",
+    url: "https://savee.com/",
+    description:
+      "Savee is a curated place for visual inspiration. Discover references chosen by designers, collect what matters, and build a sharper eye without ads or clutter.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Efecto — Where Humans & Robots Design Together",
+    url: "https://efecto.app/",
+    description:
+      "The design tool where AI agents are first-class. Artboards, layers, auto-layout, 66 MCP tools. Free.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Toolfolio",
+    url: "https://toolfolio.com/",
+    description:
+      "Toolfolio helps you find the best tools for productivity, creativity, and design. Explore top solutions for startups, social media, AI, and more to optimize your workflow.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "AutoDraw",
+    url: "https://autodraw.com/",
+    description:
+      "Fast drawing for everyone. AutoDraw pairs machine learning with drawings from talented artists to help you draw stuff fast.",
+    category: CATEGORIES.design,
+  },
+  {
     title: "Logo Lattice",
     url: "https://logolattice.com/",
     description: "Draw logos quickly with snapped square and isometric grids.",

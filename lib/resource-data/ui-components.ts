@@ -4,6 +4,13 @@ import { CATEGORIES } from "./categories";
 
 export const uiComponentsLinks: Tool[] = [
   {
+    title: "Uiverse",
+    url: "https://uiverse.io/",
+    description:
+      "Community-made library of free and customizable UI elements made with CSS or Tailwind. It's all free to copy and use in your projects. Uiverse can save you many hours spent on building & customizing UI components for your next project.",
+    category: CATEGORIES.unknown,
+  },
+  {
     title: "Ark UI",
     url: "https://ark-ui.com/",
     favicon: "https://ark-ui.com/icon.svg?3e91f991fe6d39a3",

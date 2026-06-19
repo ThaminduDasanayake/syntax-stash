@@ -10,6 +10,13 @@ export const animationsLinks: Tool[] = [
     category: CATEGORIES.animations,
   },
   {
+    title: "LottieFiles",
+    url: "https://lottiefiles.com/",
+    description:
+      "Effortlessly bring the smallest, free, ready-to-use motion graphics for the web, app, social, and designs. Create, edit, test, collaborate, and ship Lottie animations in no time!",
+    category: CATEGORIES.unknown,
+  },
+  {
     title: "Animista",
     url: "https://animista.net/",
     description:

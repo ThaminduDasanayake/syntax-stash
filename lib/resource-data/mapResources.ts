@@ -18,6 +18,13 @@ export const mapResourcesLinks: Tool[] = [
     category: CATEGORIES.mapResources,
   },
   {
+    title: "Cadmapper",
+    url: "https://cadmapper.com/",
+    description:
+      "Cadmapper lets anyone create 3D CAD files of any area in the world within minutes. Worldwide map files for any design program.",
+    category: CATEGORIES.mapResources,
+  },
+  {
     title: "RayonMaps",
     url: "https://maps.rayon.design/",
     description:
@@ -25,7 +32,7 @@ export const mapResourcesLinks: Tool[] = [
     category: CATEGORIES.mapResources,
   },
   {
-    title: "Draw all roads in a city at once",
+    title: "City Roads",
     url: "https://anvaka.github.io/city-roads/",
     description:
       "This website allows you to select a city and then draws every single road on a screen.",
