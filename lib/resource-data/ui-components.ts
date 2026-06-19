@@ -11,6 +11,19 @@ export const uiComponentsLinks: Tool[] = [
     category: CATEGORIES.unknown,
   },
   {
+    title: "Trees, from Pierre",
+    url: "https://trees.software/",
+    description:
+      "@pierre/trees is an open source file tree rendering library. It's built for performance and flexibility, is super customizable, and comes packed with features.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Blossom Carousel",
+    url: "https://www.blossom-carousel.com/",
+    description: "Enhance native scrolling with dragging instead of replacing it.",
+    category: CATEGORIES.unknown,
+  },
+  {
     title: "Ark UI",
     url: "https://ark-ui.com/",
     favicon: "https://ark-ui.com/icon.svg?3e91f991fe6d39a3",

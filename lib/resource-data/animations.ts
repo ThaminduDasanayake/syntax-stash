@@ -10,6 +10,13 @@ export const animationsLinks: Tool[] = [
     category: CATEGORIES.animations,
   },
   {
+    title: "Flicker - Spinner Library",
+    url: "https://flicker.laurie.fyi/",
+    description:
+      "A loading spinner library inspired by flip-dot displays. Browse the collection, build your own, export to SVG, React, or Flutter.",
+    category: CATEGORIES.unknown,
+  },
+  {
     title: "LottieFiles",
     url: "https://lottiefiles.com/",
     description:

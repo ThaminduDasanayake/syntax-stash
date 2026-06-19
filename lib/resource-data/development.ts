@@ -11,6 +11,33 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.development,
   },
   {
+    title: "Responsively App",
+    url: "https://responsively.app/",
+    description: "A dev-tool that aids faster and precise responsive web development.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "SEOStudio - 100% Free Online Tools Collection",
+    url: "https://seostudio.tools/",
+    description:
+      "SEOStudio is a cutting-edge, user-friendly online platform that offers comprehensive suite of free SEO, YouTube, Text, Programming, Webmaster, and Miscellaneous tools.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "10x - App Builder",
+    url: "https://www.10x.app/",
+    description:
+      "10x is an AI-powered iOS app builder for macOS. Describe the app you want, and 10x generates SwiftUI code, an Xcode project, and a simulator preview.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "comimi",
+    url: "https://yui540.com/comimi",
+    description:
+      "comimi is a TypeScript/JavaScript library that allows you to embed a manga viewer into websites.",
+    category: CATEGORIES.unknown,
+  },
+  {
     title: "Omatsuri",
     url: "https://omatsuri.app/",
     description: "Progressive Web Application with 12 open source frontend focused tools",

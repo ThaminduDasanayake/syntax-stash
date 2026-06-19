@@ -10,6 +10,13 @@ export const reactLinks: Tool[] = [
     category: CATEGORIES.react,
   },
   {
+    title: "21st Dev",
+    url: "https://21st.dev/",
+    description:
+      "Explore, copy, and remix thousands of high-quality React components published to the 21st.dev Community by designers and developers.",
+    category: CATEGORIES.unknown,
+  },
+  {
     title: "UV Canvas",
     url: "https://uvcanvas.com/",
     favicon: "https://uvcanvas.com/favicon-32x32.png",

@@ -11,6 +11,51 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.unknown,
   },
   {
+    title: "Emil Kowalski",
+    url: "https://emilkowal.ski/",
+    description: "Design engineer working at Linear.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Interface Craft",
+    url: "https://www.interfacecraft.dev/",
+    description: "A working library for those committed to designing with uncommon care.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Devouring Details",
+    url: "https://devouringdetails.com/",
+    description: "An interactive reference manual for interaction-curious designers.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Layers",
+    url: "https://layers.to/",
+    description: "Explore the latest design layers from the community.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "javiitools — tiny tools for big visuals",
+    url: "https://javii.tools/",
+    description:
+      "Pixel-accurate generators in one place. TextLab for messaging mockups, StampLab for postage stamps, Instatag for Instagram tags, PopLab for animated overlays, plus MineTag and LocationLab on premium early access. One subscription unlocks pro exports across the suite.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Awwwards",
+    url: "https://www.awwwards.com/",
+    description:
+      "Awwwards are the Website Awards that recognize and promote the talent and effort of the best developers, designers and web agencies in the world.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Juddesk — Free Desk Setup Planner & Visualizer",
+    url: "https://www.juddesk.com/",
+    description:
+      "Plan your desk setup in 3D with 100+ real products at true-to-life scale. Drag, recolor and arrange your battlestation, then share or shop it — free, no signup.",
+    category: CATEGORIES.unknown,
+  },
+  {
     title: "Efecto — Where Humans & Robots Design Together",
     url: "https://efecto.app/",
     description:

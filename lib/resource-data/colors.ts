@@ -10,6 +10,12 @@ export const colorsLinks: Tool[] = [
     category: CATEGORIES.unknown,
   },
   {
+    title: "Realtime Colors",
+    url: "https://www.realtimecolors.com/",
+    description: "Visualize your colors and fonts on a real website.",
+    category: CATEGORIES.unknown,
+  },
+  {
     title: "Colorize",
     url: "https://colorize.design/",
     description:
