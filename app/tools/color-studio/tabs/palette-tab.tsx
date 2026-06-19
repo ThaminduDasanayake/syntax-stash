@@ -37,7 +37,7 @@ export function PaletteTab() {
               className="hover:ring-muted-foreground transform ring-2 duration-200 hover:-translate-y-1 hover:scale-100"
             >
               <CardHeader className="flex items-center justify-between">
-                <h3 className="text-lg font-bold tracking-tight">{palette.name}</h3>
+                <h3 className="text-lg font-bold">{palette.name}</h3>
 
                 {/* Export Dialog */}
                 <Dialog>
