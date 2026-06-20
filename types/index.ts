@@ -10,6 +10,7 @@ export type Tool = {
   icon?: IconName;
   favicon?: string;
   className?: string;
+  tags?: string[];
 };
 
 export type ToolCardProps = {

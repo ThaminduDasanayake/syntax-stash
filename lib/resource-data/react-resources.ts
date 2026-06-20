@@ -8,6 +8,7 @@ export const reactLinks: Tool[] = [
     url: "https://r3f.docs.pmnd.rs/getting-started/introduction",
     description: "React-three-fiber is a React renderer for three.js.",
     category: CATEGORIES.react,
+    tags: ["React"],
   },
   {
     title: "21st Dev",

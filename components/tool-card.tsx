@@ -21,7 +21,7 @@ function CardBody({ tool }: ToolCardProps) {
         {isInternal && <span className="text-muted-foreground text-telemetry">INT</span>}
       </div>
 
-      <CardHeader className="relative z-10 flex-1 p-5">
+      <CardHeader className="relative z-10 flex-1 flex flex-col p-5">
         <div className="flex flex-row items-start gap-4">
           {isInternal ? (
             <div className="bg-background group-hover/card:border-primary group-hover/card:text-primary flex h-10 w-10 shrink-0 items-center justify-center border-2 transition-colors">
@@ -50,9 +50,23 @@ function CardBody({ tool }: ToolCardProps) {
             </div>
           </div>
         </div>
-        <CardDescription className="mt-4 line-clamp-3 font-mono text-xs leading-relaxed opacity-80">
+        
+        <CardDescription className="mt-4 line-clamp-3 font-mono text-xs leading-relaxed opacity-80 flex-1">
           {tool.description}
         </CardDescription>
+
+        {tool.tags && tool.tags.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {tool.tags.map((tag) => (
+              <span
+                key={tag}
+                className="bg-muted text-muted-foreground border-border border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
       </CardHeader>
     </Card>
   );
