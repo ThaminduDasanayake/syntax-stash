@@ -3,6 +3,7 @@
 import { ReactNode, useState } from "react";
 
 import AppHeader from "@/components/app-header";
+import AppFooter from "@/components/app-footer";
 import CommandMenu from "@/components/command-menu";
 
 export default function AppLayout({ children }: { children: ReactNode }) {
@@ -11,7 +12,10 @@ export default function AppLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex h-full w-full flex-col bg-background">
       <AppHeader onSearchOpenAction={() => setCommandMenuOpen(true)} />
-      <main className="flex min-h-0 flex-1 flex-col overflow-y-auto">{children}</main>
+      <main className="flex min-h-0 flex-1 flex-col overflow-y-auto">
+        {children}
+        <AppFooter />
+      </main>
       <CommandMenu open={commandMenuOpen} setOpenAction={setCommandMenuOpen} />
     </div>
   );

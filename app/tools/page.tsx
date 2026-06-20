@@ -21,13 +21,19 @@ const groupedTools = internalTools.reduce(
 
 export default function ToolsPage() {
   return (
-    <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 p-6">
-      <div>
-        <h1 className="text-foreground text-2xl font-semibold tracking-tight">All Tools</h1>
-        <p className="text-muted-foreground mt-1 text-sm">
-          {internalTools.length} tools across {Object.keys(groupedTools).length} categories
+    <div className="flex w-full flex-col">
+      {/* Mini-Hero */}
+      <div className="border-border bg-background relative w-full border-b-2 px-6 py-12 md:px-12">
+        <h1 className="text-4xl tracking-tighter sm:text-5xl flex flex-col gap-1">
+          <span className="font-display font-black uppercase">THE TOOLS</span>
+          <span className="font-serif italic lowercase tracking-normal">stash.</span>
+        </h1>
+        <p className="text-muted-foreground mt-4 font-mono text-sm leading-relaxed tracking-wider uppercase opacity-80">
+          {internalTools.length} curated generators, formatters, and utilities.
         </p>
       </div>
+
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 p-6">
 
       <div className="space-y-12 pb-8">
         {Object.entries(groupedTools).map(([category, tools]) => (
@@ -44,6 +50,7 @@ export default function ToolsPage() {
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 }

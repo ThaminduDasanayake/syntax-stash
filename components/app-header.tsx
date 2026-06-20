@@ -39,14 +39,18 @@ export default function AppHeader({ onSearchOpenAction }: HeaderProps) {
           Home
         </Link>
         <Link
-          href="/#directory"
-          className="font-mono text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors"
+          href="/tools"
+          className={`font-mono text-sm font-bold uppercase tracking-widest transition-colors ${
+            pathname.startsWith("/tools") ? "text-foreground underline underline-offset-8 decoration-2" : "text-muted-foreground hover:text-foreground"
+          }`}
         >
           Tools
         </Link>
         <Link
-          href="/#directory"
-          className="font-mono text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors"
+          href="/resources"
+          className={`font-mono text-sm font-bold uppercase tracking-widest transition-colors ${
+            pathname.startsWith("/resources") ? "text-foreground underline underline-offset-8 decoration-2" : "text-muted-foreground hover:text-foreground"
+          }`}
         >
           Resources
         </Link>
