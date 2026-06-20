@@ -2,7 +2,7 @@ import { Tool } from "@/types";
 
 import { CATEGORIES } from "./categories";
 
-export const colorsLinks: Tool[] = [
+export const colorLinks: Tool[] = [
   {
     title: "Mesh Gradient",
     url: "https://meshgradient.com/",
@@ -13,6 +13,27 @@ export const colorsLinks: Tool[] = [
     title: "Realtime Colors",
     url: "https://www.realtimecolors.com/",
     description: "Visualize your colors and fonts on a real website.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Happy Hues - Curated colors in context.",
+    url: "https://www.happyhues.co/",
+    description:
+      "See color palette inspiration on a real example website. As you click on different palettes every color on this site updates to give you context of how that color could be used for your design or illustration projects.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Chromatic Profiles: Pixel Symphony",
+    url: "https://meditationsincolor.com/colorists",
+    description:
+      "Colorists in the Colorist Archive: browse chromatic profiles, artwork palettes, and generative color studies across artists, periods, and collections.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Khroma",
+    url: "https://www.khroma.co/",
+    description:
+      "Khroma is the fastest way to discover, search, and save color combos and palettes you'll love. Discover a personalized AI-powered color tool for designers to find the perfect color scheme.",
     category: CATEGORIES.unknown,
   },
   {

@@ -2,7 +2,67 @@ import { Tool } from "@/types";
 
 import { CATEGORIES } from "./categories";
 
-export const uiComponentsLinks: Tool[] = [
+export const uiComponentLinks: Tool[] = [
+  {
+    title: "Aceternity UI",
+    url: "https://ui.aceternity.com/",
+    description:
+      "Copy-paste beautiful UI components built with React, Next.js, Tailwind CSS, and Framer Motion. 200+ free components, blocks, and templates.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Efferd - Beautiful Shadcn blocks for Busy & Smart devs.",
+    url: "https://efferd.com/",
+    description:
+      "Save hours of design time with clean, ready-to-use shadcn blocks that just work — modern, responsive, and built for speed.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "phantom-ui",
+    url: "https://aejkatappaja.github.io/phantom-ui/",
+    description: "Structure-aware skeleton loader. One Web Component. Every framework.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Open Props: sub-atomic styles",
+    url: "https://open-props.style/",
+    description:
+      "Open source CSS custom properties to help accelerate adaptive and consistent design. Available from a CDN or NPM, as CSS or Javascript.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Componentry",
+    url: "https://www.componentry.fun/",
+    description:
+      "Componentry is a free, open-source React UI component library by Harsh Jadhav. Beautiful, animated, copy-paste components built with Tailwind CSS, TypeScript, and Framer Motion. The best UI components for modern web applications.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "SyntaxUI - Free React, Tailwind CSS & Framer UI Components",
+    url: "https://syntaxui.com/",
+    description:
+      "Get free-to-use Prebuilt React components powered by Tailwind CSS & Framer Motion. Modern, Minimal and customizable. Just copy, paste and you're ready to go!",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Lukacho UI",
+    url: "https://ui.lukacho.com/",
+    description: "Animated UI component Collection made with Next.js | TailwindCSS | Framer Motion",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Skiper UI",
+    url: "https://skiper-ui.com/",
+    description:
+      "Brand new uncommon components for your Next.js project. Use with ease through shadcn CLI 3.0, featuring fast-growing components and collections that are easy to edit and use.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Shoogle",
+    url: "https://shoogle.dev/",
+    description: "Search shadcn components.",
+    category: CATEGORIES.unknown,
+  },
   {
     title: "Uiverse",
     url: "https://uiverse.io/",

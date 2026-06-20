@@ -24,4 +24,17 @@ export const typographyLinks: Tool[] = [
       "Create custom fonts in minutes with Fontself Maker, a powerful font maker easy to use and made for all creatives.",
     category: CATEGORIES.unknown,
   },
+  {
+    title: "SPACE TYPE GENERATOR",
+    url: "https://spacetypegenerator.com/",
+    description: "A kinetic type generator from kielm",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "UNCUT.wtf",
+    url: "https://uncut.wtf/",
+    description:
+      "UNCUT.wtf is a free typeface catalogue, focusing on somewhat contemporary type. There are currently 163 typefaces featured.",
+    category: CATEGORIES.unknown,
+  },
 ];

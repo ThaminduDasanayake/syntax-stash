@@ -2,12 +2,33 @@ import { Tool } from "@/types";
 
 import { CATEGORIES } from "./categories";
 
-export const animationsLinks: Tool[] = [
+export const animationLinks: Tool[] = [
   {
     title: "Animejs",
     url: "https://animejs.com/",
     description: "A fast, multipurpose and lightweight JavaScript animation library",
     category: CATEGORIES.animations,
+  },
+  {
+    title: "Atropos",
+    url: "https://atroposjs.com/",
+    description:
+      "Atropos is a lightweight, free and open-source JavaScript library to create stunning touch-friendly 3D parallax hover effects.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "driver.js",
+    url: "https://driverjs.com/",
+    description:
+      "A light-weight, no-dependency, vanilla JavaScript library to drive user's focus across the page.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Animmaster Lib",
+    url: "https://animmasterlib.dev/",
+    description:
+      "Animmaster Lib — a modern frontend library of 300 PRO-level animated UI components with live video previews. Scroll animations, WebGL shaders, hero sections, sliders, menus and more — copy, paste, ship.",
+    category: CATEGORIES.unknown,
   },
   {
     title: "Flicker - Spinner Library",
@@ -51,11 +72,31 @@ export const animationsLinks: Tool[] = [
     category: CATEGORIES.animations,
   },
   {
+    title: "Grainrad",
+    url: "https://grainrad.com/",
+    description: "Grainrad - Free WebGPU-powered ASCII, dithering, and retro effects at 60fps",
+    category: CATEGORIES.unknown,
+  },
+  {
     title: "FlipOff.",
     url: "https://github.com/magnum6actual/flipoff",
     favicon: "/github.svg",
     description:
       "Free split-flap display emulator for any TV. The classic flip-board look, without the $3,500 hardware.",
     category: CATEGORIES.animations,
+  },
+  {
+    title: "Transitions.dev — Essential transitions for web apps",
+    url: "https://transitions.dev/",
+    description:
+      "Collection of the most essential transitions for web apps that you can just copy and paste into any project.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "AutoAnimate - Add motion to your apps with a single line of code",
+    url: "https://auto-animate.formkit.com/",
+    description:
+      "A zero-config, drop-in animation utility that automatically adds smooth transitions to your web app. Use it with React, Solid, Vue, Svelte, or any other JavaScript application.",
+    category: CATEGORIES.unknown,
   },
 ];

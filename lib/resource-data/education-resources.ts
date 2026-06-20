@@ -17,6 +17,106 @@ export const educationLinks: Tool[] = [
     category: CATEGORIES.education,
   },
   {
+    title: "microsoft/ML-For-Beginners",
+    url: "https://github.com/microsoft/ml-for-beginners",
+    description: "12 weeks, 26 lessons, 52 quizzes, classic Machine Learning for all.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title:
+      "ashishpatel26/500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code",
+    url: "https://github.com/ashishpatel26/500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code",
+    description: "500 AI Machine learning Deep learning Computer vision NLP Projects with code.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "UI Skills for Design Engineers | Curated Skill Directory",
+    url: "https://www.ui-skills.com/",
+    description:
+      "Discover curated UI Skills for design engineers, including accessibility, motion, frontend craft, and interface quality guides with copy-ready install commands.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "The-Cool-Coders/Project-Ideas-And-Resources",
+    url: "https://github.com/The-Cool-Coders/Project-Ideas-And-Resources",
+    description:
+      "A Collection of application ideas that can be used to improve your coding skills ❤.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "darkdevil3610/100-AI-Machine-learning-Deep-learning-Computer-vision-NLP",
+    url: "https://github.com/darkdevil3610/100-AI-Machine-learning-Deep-learning-Computer-vision-NLP",
+    description: "100+ AI Machine learning Deep learning Computer vision NLP Projects with code.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "NotHarshhaa/DevOps-Projects",
+    url: "https://github.com/NotHarshhaa/DevOps-Projects",
+    description:
+      "🚀 Real-world DevOps projects for aspiring engineers — Beginner to Advanced. Covers AWS, Kubernetes, Docker, CI/CD, Terraform, Jenkins, and more. Hands-on learning with step-by-step guides.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Ayushparikh-code/Web-dev-mini-projects",
+    url: "https://github.com/Ayushparikh-code/Web-dev-mini-projects",
+    description:
+      "The repository contains the list of awesome✨ & cool web development beginner-friendly✌️ projects!",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "ShortcutFoo - Keyboard Shortcut Training for Figma, VSCode, Notion & 30+ Tools",
+    url: "https://www.shortcutfoo.com/",
+    description:
+      "Build real muscle memory for keyboard shortcuts with interactive drills and spaced repetition. Free for 30+ tools including Figma, Slack, VSCode, and Notion.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Asabeneh/30-Days-Of-Python",
+    url: "https://github.com/asabeneh/30-days-of-python",
+    description:
+      "The 30 Days of Python programming challenge is a step-by-step guide to learn the Python programming language in 30 days. This challenge may take more than 100 days. Follow your own pace. These videos may help too: https://www.youtube.com/channel/UC7PNRuno1rzYPb1xLa4yktw.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "josephmisiti/awesome-machine-learning",
+    url: "https://github.com/josephmisiti/awesome-machine-learning",
+    description: "A curated list of awesome Machine Learning frameworks, libraries and software.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "GokuMohandas/Made-With-ML",
+    url: "https://github.com/GokuMohandas/Made-With-ML",
+    description: "Learn how to develop, deploy and iterate on production-grade ML applications.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Exercism",
+    url: "https://exercism.org/",
+    description: "Learn, practice and get world-class mentoring in over 50 languages. 100% free.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "LeetCode",
+    url: "https://leetcode.com/",
+    description:
+      "LeetCode is the best platform to help you enhance your skills, expand your knowledge and prepare for technical interviews.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "donnemartin/system-design-primer",
+    url: "https://github.com/donnemartin/system-design-primer",
+    description:
+      "Learn how to design large-scale systems. Prep for the system design interview. Includes Anki flashcards.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "NeetCode | Coding Interview Prep, Courses, Versus Mode",
+    url: "https://neetcode.io/",
+    description:
+      "Practice coding interviews with structured courses, AI-driven interviews, head-to-head Versus mode, and 800+ problems. Free and Pro tiers.",
+    category: CATEGORIES.unknown,
+  },
+  {
     title: "Codédex",
     url: "https://www.codedex.io/",
     description:

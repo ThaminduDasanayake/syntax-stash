@@ -31,6 +31,13 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.unknown,
   },
   {
+    title: "Coolify",
+    url: "https://coolify.io/",
+    description:
+      "Self-hosting platform with superpowers. Deploy apps, databases & 280+ services to your server. Open-source alternative to Heroku.",
+    category: CATEGORIES.unknown,
+  },
+  {
     title: "comimi",
     url: "https://yui540.com/comimi",
     description:

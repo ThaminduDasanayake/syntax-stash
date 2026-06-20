@@ -117,6 +117,156 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
   },
   {
+    title: "DESIGN.md",
+    url: "https://designmd.app/",
+    description:
+      "Open-source DESIGN.md library: 454+ ready-to-use design system files for Claude Code, Cursor, Kiro, Windsurf & Stitch. Copy one file, ship consistent UI.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Blank: Figma UI kit and Design system",
+    url: "https://useblank.design/",
+    description: "The fastest Figma UI kit and Design system for your projects.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "DESIGN.md - Design Systems for AI Coding",
+    url: "https://designmd.ai/",
+    description:
+      "100s of free design systems your AI coding tools actually read. Browse community-made DESIGN.md files for Cursor, Claude Code, and more.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Design.dev - Web Dev Newsletter, CSS Tools & AI Generators",
+    url: "https://design.dev/",
+    description:
+      "Web Design & Development Resources. Code generators, cheat sheets, and resources to boost productivity.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Cognitive Bias Index",
+    url: "https://cognitivebiasindex.com/",
+    description:
+      "A tool for identifying and overcoming the cognitive biases that distort human judgment and decision-making.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Nudges, Biases & Heuristics for the Age of AI",
+    url: "https://www.nudges.fyi/",
+    description:
+      "45 interactive field cards covering nudges, biases, heuristics, and AI phenomena. A practical reference for designers, researchers, and product teams building with AI.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "getdesign.md — DESIGN.md collection for AI coding agents",
+    url: "https://getdesign.md/",
+    description:
+      "Browse independent design system analyses from popular websites. Drop one into your project as design reference for your coding agent.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Neuform",
+    url: "https://neuform.ai/",
+    description:
+      "Neuform turns prompts into AI HTML landing pages, remix templates, and reusable DESIGN.md files for agent-ready design systems.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Microcopy - Short Text for Your Website | UX Writing & Copy Library",
+    url: "https://www.microcopy.me/",
+    description:
+      "Discover 500+ carefully curated microcopies for your website. Find perfect UX writing examples for headlines, CTAs, error messages, account flows, and slogans. Improve user experience with better microcopy.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Khalidabdi1/design-ai",
+    url: "https://github.com/Khalidabdi1/design-ai",
+    description:
+      "This repository is a curated library of DESIGN.md files extracted from real public websites so AI agents can generate UI that matches a known visual style, design system, and interaction language.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Aura – AI Website Builder",
+    url: "https://www.aura.build/",
+    description:
+      "AI landing page builder that creates stunning designs in seconds. No design skills needed. Export to HTML & Figma. Trusted by 177,000+ users worldwide.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Superdesign - AI Product Design Agent | UI from a Prompt",
+    url: "https://app.superdesign.dev/",
+    description:
+      "Superdesign is an AI product design agent that turns natural-language prompts into UI mockups, components and full designs on an infinite canvas. Free to start.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "VoltAgent/awesome-design-md",
+    url: "https://github.com/voltagent/awesome-design-md",
+    description:
+      "A collection of DESIGN.md files analysis by popular brand design systems. Drop one into your project and let coding agents generate a matching UI.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "The Design Project - UI/UX Design Subscription for Startups",
+    url: "https://designproject.io/",
+    description:
+      "Transform your website with The Design Project. Unlimited UX/UI design services with 24-48h turnaround. Elevate your user experience and boost conversions.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "penpot/penpot",
+    url: "https://github.com/penpot/penpot",
+    description: "Penpot: The open-source design tool for design and code collaboration",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "ASCIIFlow",
+    url: "https://asciiflow.com/",
+    description:
+      "Infinite ASCII diagrams, save to Google Drive, resize, freeform draw, and export straight to text/html.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Artkit - Creative Design Tools",
+    url: "https://artkit.cc/",
+    description: "A collection of creative, browser-based tools for images, motion, and graphics.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "InkField",
+    url: "https://ileivoivm.github.io/inkField/",
+    description:
+      "A system that preserves the act of drawing itself, where every gesture is remembered and every image continues to evolve.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Sprrrint - Framer and  Figma Templates, Component Library",
+    url: "https://sprrrint.com/",
+    description:
+      "Discover the best free Framer and Figma components and templates and UI design tools at Sprrrint. Streamline your design process with our curated library of top-notch Figma resources.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Mobbin — UI & UX design inspiration for mobile & web apps",
+    url: "https://mobbin.com/",
+    description:
+      "Save hours of UI & UX research with our library of 400,000+ fully searchable mobile & web app screenshots.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Recent — Design Inspiration",
+    url: "https://recent.design/",
+    description: "The best of recent design found on the Internet updated daily.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Wiretext — Unicode Wireframe Design Tool",
+    url: "https://wiretext.app/",
+    description:
+      "A Unicode wireframe design tool where everything renders as box-drawing characters. Create wireframes, diagrams, and mockups. Share as text.",
+    category: CATEGORIES.unknown,
+  },
+  {
     title: "Dark Themed Web Design Inspiration",
     url: "https://www.dark.design/",
     description:

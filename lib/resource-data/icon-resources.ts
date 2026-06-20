@@ -2,7 +2,7 @@ import { Tool } from "@/types";
 
 import { CATEGORIES } from "./categories";
 
-export const iconResources: Tool[] = [
+export const iconLinks: Tool[] = [
   {
     title: "Iconify Design",
     url: "https://iconify.design/",
@@ -20,6 +20,12 @@ export const iconResources: Tool[] = [
     url: "https://logos.lndev.me/",
     description:
       "15,015 free SVG logos for apps, dev tools and tech brands. Search, filter by category, download or copy in one click.",
+    category: CATEGORIES.unknown,
+  },
+  {
+    title: "Its Hover",
+    url: "https://www.itshover.com/",
+    description: "Animated icons that move with intent.",
     category: CATEGORIES.unknown,
   },
 ];
