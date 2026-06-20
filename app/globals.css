@@ -121,15 +121,14 @@
     --radius-md: calc(var(--radius) - 2px);
     --radius-lg: var(--radius);
     --radius-xl: calc(var(--radius) + 4px);
-    --shadow-2xs: 1px 1px 0px 0px var(--color-border);
-    --shadow-xs: 2px 2px 0px 0px var(--color-border);
-    --shadow-sm: 2px 2px 0px 0px var(--color-ink);
-    --shadow: 4px 4px 0px 0px var(--color-ink);
-    --shadow-md: 6px 6px 0px 0px var(--color-ink);
-    --shadow-hard: 6px 6px 0px 0px var(--color-ink);
-    --shadow-lg: 8px 8px 0px 0px var(--color-ink);
-    --shadow-xl: 12px 12px 0px 0px var(--color-ink);
-    --shadow-2xl: 16px 16px 0px 0px var(--color-ink);
+    --shadow-2xs: 1px 1px 0px 0px var(--border);
+    --shadow-xs: 2px 2px 0px 0px var(--border);
+    --shadow-sm: 2px 2px 0px 0px var(--ink);
+    --shadow: 4px 4px 0px 0px var(--ink);
+    --shadow-md: 6px 6px 0px 0px var(--ink);
+    --shadow-lg: 8px 8px 0px 0px var(--ink);
+    --shadow-xl: 12px 12px 0px 0px var(--ink);
+    --shadow-2xl: 16px 16px 0px 0px var(--ink);
 }
 
 @layer base {
@@ -179,8 +178,8 @@
     }
 
     ::selection {
-        color: var(--accent-foreground);
-        background-color: var(--accent);
+        color: var(--background);
+        background-color: var(--foreground);
     }
 
 
