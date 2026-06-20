@@ -37,8 +37,8 @@ export default function ResourcesPage() {
               <span className="bg-primary h-px flex-1" />
             </h2>
             <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {items.map((resource) => (
-                <ToolCard key={resource.url} tool={resource} />
+              {items.map((resource, index) => (
+                <ToolCard key={resource.url} tool={resource} index={index} />
               ))}
             </div>
           </div>

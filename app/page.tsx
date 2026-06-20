@@ -19,10 +19,9 @@ export default function Home() {
 
         {/* Main Typography */}
         <div className="mx-auto mt-12 max-w-7xl">
-          <h1 className="text-6xl font-extrabold tracking-tighter sm:text-7xl lg:text-8xl">
-            Syntax<span className="opacity-60">.</span>
-            <br />
-            Stash<span className="opacity-60">_</span>
+          <h1 className="text-6xl tracking-tighter sm:text-7xl lg:text-8xl flex flex-col gap-1">
+            <span className="font-display font-black uppercase">THE FRONTEND</span>
+            <span className="font-serif italic lowercase tracking-normal">stash.</span>
           </h1>
           <p className="mt-6 max-w-xl font-mono text-sm leading-relaxed tracking-wider uppercase opacity-80">
             A curated command center for modern web development. <br />
@@ -39,7 +38,7 @@ export default function Home() {
       </div>
 
       {/* Main Content Area */}
-      <div className="mx-auto w-full max-w-7xl px-6 py-12 sm:px-12">
+      <div id="directory" className="mx-auto w-full max-w-7xl px-6 py-12 sm:px-12">
         <HomeTabs />
       </div>
     </div>

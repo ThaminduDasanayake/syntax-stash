@@ -8,59 +8,74 @@ import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/ca
 import { iconMap } from "@/lib/icons";
 import { ToolCardProps } from "@/types";
 
-function CardBody({ tool }: ToolCardProps) {
+function getAlternatingColor(title: string, index?: number) {
+  const colorOptions = [
+    "bg-c-heur text-on-heur",   // Yellow (matches 01 / 04 HEURISTIC)
+    "bg-c-bias text-on-bias",   // Blue   (matches 02 / 04 BIAS)
+    "bg-c-nudge text-on-nudge", // Purple (matches 03 / 04 NUDGE)
+    "bg-c-ai text-on-ai"        // Green  (matches 04 / 04 AI PHENOMENA)
+  ];
+  
+  if (index !== undefined) {
+    return colorOptions[index % colorOptions.length];
+  }
+  
+  // Fallback if no index provided
+  const hash = title.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return colorOptions[hash % colorOptions.length];
+}
+
+function CardBody({ tool, index }: ToolCardProps & { index?: number }) {
   const isInternal = !!tool.slug;
   const Icon = (tool.icon && iconMap[tool.icon]) || ToolboxIcon;
+  const colorClasses = getAlternatingColor(tool.title, index);
 
   return (
-    <Card className="group/card bg-blueprint-card hover:border-primary hover:shadow-border relative flex h-full w-full flex-col overflow-hidden border-2 transition-all duration-200 hover:-translate-y-1 hover:shadow">
-      <div className="bg-background/50 flex items-center justify-between border-b-2 px-4 py-2 backdrop-blur-sm">
-        <span className="text-muted-foreground group-hover/card:text-primary text-telemetry transition-colors">
-          &gt; {tool.category}
+    <Card className={`group/card relative flex h-full w-full flex-col overflow-hidden border-2 border-primary transition-all duration-200 hover:shadow-[6px_6px_0px_0px_var(--ink)] hover:-translate-y-1 hover:-translate-x-1 ${colorClasses}`}>
+      <div className="flex items-center justify-between px-5 pt-4 pb-2">
+        <span className="opacity-70 group-hover/card:opacity-100 text-telemetry transition-colors">
+          {tool.category}
         </span>
-        {isInternal && <span className="text-muted-foreground text-telemetry">INT</span>}
+        {isInternal && <span className="opacity-70 text-telemetry">INT</span>}
       </div>
 
-      <CardHeader className="relative z-10 flex-1 flex flex-col p-5">
-        <div className="flex flex-row items-start gap-4">
-          {isInternal ? (
-            <div className="bg-background group-hover/card:border-primary group-hover/card:text-primary flex h-10 w-10 shrink-0 items-center justify-center border-2 transition-colors">
-              <Icon className="size-5 transition-colors" />
-            </div>
-          ) : (
-            <CardIcon
-              url={tool.url!}
-              alt={tool.title}
-              className={tool.className}
-              explicitFavicon={tool.favicon}
-            />
-          )}
-
-          <div className="min-w-0 flex-1">
-            <div className="flex items-start justify-between gap-2">
-              <CardTitle className="text-foreground group-hover/card:text-primary font-sans text-lg font-bold tracking-tight transition-colors">
-                {tool.title}
-              </CardTitle>
-              {!isInternal && (
-                <ArrowSquareOutIcon
-                  weight="duotone"
-                  className="text-muted-foreground group-hover/card:text-primary mt-1 size-4 shrink-0 transition-all group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5"
+      <CardHeader className="relative z-10 flex-1 flex flex-col px-5 pb-5 pt-0">
+        <div className="flex flex-col items-start gap-3">
+          <div className="flex w-full items-start justify-between gap-2">
+            <div className="flex items-center gap-3">
+              {isInternal ? (
+                <Icon className="size-6 shrink-0 transition-transform group-hover/card:scale-110" />
+              ) : (
+                <CardIcon
+                  url={tool.url!}
+                  alt={tool.title}
+                  className={tool.className}
+                  explicitFavicon={tool.favicon}
                 />
               )}
+              <CardTitle className="font-display text-2xl uppercase font-black tracking-tight transition-colors">
+                {tool.title}
+              </CardTitle>
             </div>
+            {!isInternal && (
+              <ArrowSquareOutIcon
+                weight="bold"
+                className="mt-1 size-5 shrink-0 transition-all group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5"
+              />
+            )}
           </div>
         </div>
         
-        <CardDescription className="mt-4 line-clamp-3 font-mono text-xs leading-relaxed opacity-80 flex-1">
+        <CardDescription className="mt-4 text-inherit font-mono text-sm leading-relaxed opacity-90 flex-1">
           {tool.description}
         </CardDescription>
 
         {tool.tags && tool.tags.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-2">
+          <div className="mt-6 flex flex-wrap gap-2">
             {tool.tags.map((tag) => (
               <span
                 key={tag}
-                className="bg-muted text-muted-foreground border-border border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider"
+                className="bg-background/10 border-primary/20 border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider"
               >
                 {tag}
               </span>
@@ -72,21 +87,21 @@ function CardBody({ tool }: ToolCardProps) {
   );
 }
 
-export default function ToolCard({ tool }: ToolCardProps) {
+export default function ToolCard({ tool, index }: ToolCardProps & { index?: number }) {
   const linkWrapperClass =
-    "block w-full h-full outline-none focus-visible:ring-2 focus-visible:ring-primary";
+    "block w-full h-full outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
 
   if (tool.slug) {
     return (
       <Link href={`/tools/${tool.slug}`} className={linkWrapperClass}>
-        <CardBody tool={tool} />
+        <CardBody tool={tool} index={index} />
       </Link>
     );
   }
 
   return (
     <a href={tool.url} target="_blank" rel="noopener noreferrer" className={linkWrapperClass}>
-      <CardBody tool={tool} />
+      <CardBody tool={tool} index={index} />
     </a>
   );
 }
