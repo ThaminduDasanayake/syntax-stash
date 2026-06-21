@@ -20,36 +20,39 @@
     --bg-2: #E5E0D2;
     --bg-3: #DAD3C1;
     --paper: #F5F1E5;
+
     --line: #CFC8B5;
     --line-2: #B8AF98;
+
     --ink: #14110B;
     --ink-2: #1A150D;
     --ink-mute: #6B6354;
     --ink-faint: #9A927F;
-    --c-heur: #E8A52B;
-    --c-bias: #2A47B8;
-    --c-nudge: #C9A4F0;
-    --c-ai: #5DAA2E;
+
+    --orange: #E8A52B;
+    --blue: #2A47B8;
+    --pink: #C9A4F0;
+    --green: #5DAA2E;
     --on-heur: #14110B;
     --on-bias: #F5F1E5;
     --on-nudge: #14110B;
     --on-ai: #14110B;
-    --c-heur-tint: #F4DDA5;
-    --c-bias-tint: #C8D2EE;
-    --c-nudge-tint: #ECDDF8;
-    --c-ai-tint: #CFE4B7;
-    --c-heur-tint-2: #EBC568;
-    --c-bias-tint-2: #94A4DC;
-    --c-nudge-tint-2: #D9BEEC;
-    --c-ai-tint-2: #A8CD86;
-    --c-heur-deep: #B87E00;
-    --c-heur-soft: #EBC568;
-    --c-bias-deep: #2A47B8;
-    --c-bias-soft: #94A4DC;
-    --c-nudge-deep: #6B35B8;
-    --c-nudge-soft: #E4D1F8;
-    --c-ai-deep: #3D8A1A;
-    --c-ai-soft: #C4E4A8;
+    --orange-tint: #F4DDA5;
+    --blue-tint: #C8D2EE;
+    --pink-tint: #ECDDF8;
+    --green-tint: #CFE4B7;
+    --orange-tint-2: #EBC568;
+    --blue-tint-2: #94A4DC;
+    --pink-tint-2: #D9BEEC;
+    --green-tint-2: #A8CD86;
+    --orange-deep: #B87E00;
+    --orange-soft: #EBC568;
+    --blue-deep: #2A47B8;
+    --blue-soft: #94A4DC;
+    --pink-deep: #6B35B8;
+    --pink-soft: #E4D1F8;
+    --green-deep: #3D8A1A;
+    --green-soft: #C4E4A8;
     --sec-1: #F1ECDF;
     --sec-2: #E7E1D1;
     --sec-3: #DCD4BE;
@@ -69,14 +72,14 @@
     --muted-foreground: var(--ink-mute);
     --accent: var(--bg-3);
     --accent-foreground: var(--ink);
-    --destructive: var(--c-heur-deep);
+    --destructive: #EA4335FF;
     --destructive-foreground: var(--paper);
-    --border: var(--line);
-    --input: var(--line);
+    --border: var(--ink);
+    --input: var(--paper);
     --ring: var(--ink);
     --radius: 0rem;
-    --highlight: var(--c-heur);
-    --brand: var(--c-bias);
+    --highlight: var(--orange);
+    --brand: var(--blue);
 }
 
 @theme inline {
@@ -101,10 +104,12 @@
     --color-ring: var(--ring);
 
     /* Custom Color variables */
-    --color-c-heur: var(--c-heur);
-    --color-c-bias: var(--c-bias);
-    --color-c-nudge: var(--c-nudge);
-    --color-c-ai: var(--c-ai);
+    --color-line: var(--line);
+    --color-line-2: var(--line-2);
+    --color-c-orange: var(--orange);
+    --color-c-blue: var(--blue);
+    --color-c-pink: var(--pink);
+    --color-c-green: var(--green);
     --color-on-heur: var(--on-heur);
     --color-on-bias: var(--on-bias);
     --color-on-nudge: var(--on-nudge);
@@ -150,26 +155,18 @@
 
     /* WebKit Rules */
     ::-webkit-scrollbar {
-        width: 12px;
-        height: 12px;
+        width: 8px;
+        height: 8px;
     }
 
     ::-webkit-scrollbar-track,
     ::-webkit-scrollbar-track:hover {
-        background-color: transparent;
+        background-color: var(--bg-2);
     }
 
     ::-webkit-scrollbar-thumb {
-        background: color-mix(in oklab, var(--primary) 60%, transparent);
-        border-radius: 9999px;
-        border: 3px solid transparent;
-        background-clip: content-box;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-        background: color-mix(in oklab, var(--primary) 80%, transparent);
-        border-radius: 9999px;
-        border: 3px solid transparent;
+        background: var(--line-2);
+        border: 0;
         background-clip: content-box;
     }
 
@@ -181,8 +178,6 @@
         color: var(--background);
         background-color: var(--foreground);
     }
-
-
 }
 
 @utility scrollbar-hide {

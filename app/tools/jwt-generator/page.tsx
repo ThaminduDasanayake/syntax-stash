@@ -132,6 +132,7 @@ export default function JwtGeneratorPage() {
           <TextareaGroup
             label="Payload (JSON)"
             value={payload}
+            autoGrow
             containerClassName="min-h-[200px]"
             onChange={(e) => setPayload(e.target.value)}
             placeholder='{ "sub": "123", "name": "Alice" }'
@@ -154,6 +155,7 @@ export default function JwtGeneratorPage() {
           <TextareaGroup
             label="Signed JWT"
             value={token}
+            autoGrow
             readOnly
             containerClassName="min-h-[140px]"
             placeholder="Token will appear here…"
