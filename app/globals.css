@@ -265,18 +265,18 @@
 }
 
 @utility tab-trigger {
-    @apply rounded-none! border border-border! cursor-pointer px-8 py-2 font-mono text-xs font-bold uppercase tracking-widest transition-all;
+    @apply rounded-none! border! border-border! cursor-pointer px-8 py-2 font-mono text-xs font-bold uppercase tracking-widest transition-all;
 }
 
 @utility tab-trigger-orange {
-    @apply tab-trigger hover:bg-orange-soft data-[state=active]:bg-c-orange!;
+    @apply tab-trigger hover:bg-orange-soft! data-[state=active]:bg-c-orange!;
 }
 @utility tab-trigger-blue {
-    @apply tab-trigger hover:bg-blue-soft data-active:text-paper! data-[state=active]:bg-c-blue!;
+    @apply tab-trigger hover:bg-blue-soft! data-active:text-paper! data-[state=active]:bg-c-blue!;
 }
 @utility tab-trigger-pink {
-    @apply tab-trigger hover:bg-pink-soft data-[state=active]:bg-c-pink!;
+    @apply tab-trigger hover:bg-pink-soft! data-[state=active]:bg-c-pink!;
 }
 @utility tab-trigger-green {
-    @apply tab-trigger hover:bg-green-soft data-[state=active]:bg-c-green!;
+    @apply tab-trigger hover:bg-green-soft! data-[state=active]:bg-c-green!;
 }
