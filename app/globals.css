@@ -49,7 +49,7 @@
     --green-tint-2: #A8CD86;
     --orange-deep: #B87E00;
     --orange-soft: #EBC568;
-    --blue-deep: #2A47B8;
+    --blue-deep: #2A47D3;
     --blue-soft: #94A4DC;
     --pink-deep: #6B35B8;
     --pink-soft: #E4D1F8;
@@ -117,10 +117,24 @@
     --color-c-blue: var(--blue);
     --color-c-pink: var(--pink);
     --color-c-green: var(--green);
-    /*--color-on-heur: var(--on-heur);*/
-    /*--color-on-bias: var(--on-bias);*/
-    /*--color-on-nudge: var(--on-nudge);*/
-    /*--color-on-ai: var(--on-ai);*/
+    --color-orange-tint: var(--orange-tint);
+    --color-orange-tint-2: var(--orange-tint-2);
+    --color-orange-soft: var(--orange-soft);
+    --color-orange-deep: var(--orange-deep);
+    --color-blue-tint: var(--blue-tint);
+    --color-blue-tint-2: var(--blue-tint-2);
+    --color-blue-soft: var(--blue-soft);
+    --color-blue-deep: var(--blue-deep);
+    --color-pink-tint: var(--pink-tint);
+    --color-pink-tint-2: var(--pink-tint-2);
+    --color-pink-soft: var(--pink-soft);
+    --color-pink-deep: var(--pink-deep);
+    --color-green-tint: var(--green-tint);
+    --color-green-tint-2: var(--green-tint-2);
+    --color-green-soft: var(--green-soft);
+    --color-green-deep: var(--green-deep);
+
+
 
     /* Typography */
     --font-sans: var(--font-sans);
@@ -198,25 +212,6 @@
     }
 }
 
-/*@utility bg-grid-slate {*/
-/*    background-image: linear-gradient(0deg, transparent 24%, rgba(200, 200, 200, 0.05) 25%, rgba(200, 200, 200, 0.05) 26%, transparent 27%, transparent 74%, rgba(200, 200, 200, 0.05) 75%, rgba(200, 200, 200, 0.05) 76%, transparent 77%, transparent),*/
-/*    linear-gradient(90deg, transparent 24%, rgba(200, 200, 200, 0.05) 25%, rgba(200, 200, 200, 0.05) 26%, transparent 27%, transparent 74%, rgba(200, 200, 200, 0.05) 75%, rgba(200, 200, 200, 0.05) 76%, transparent 77%, transparent);*/
-/*    background-size: 50px 50px;*/
-/*}*/
-
-/*@utility bg-blueprint {*/
-/*    background-size: 40px 40px;*/
-/*    background-image: linear-gradient(to right, var(--color-border) 1px, transparent 1px),*/
-/*    linear-gradient(to bottom, var(--color-border) 1px, transparent 1px);*/
-/*}*/
-
-/*@utility bg-blueprint-card {*/
-/*    background-color: #0A0A0A;*/
-/*    background-size: 16px 16px;*/
-/*    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),*/
-/*    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);*/
-/*}*/
-
 @utility flex-center {
     @apply flex items-center justify-center;
 }
@@ -225,13 +220,6 @@
     @apply flex flex-col items-center justify-center;
 }
 
-@utility tab-list {
-    @apply flex w-full! bg-transparent! gap-2! p-0!;
-}
-
-@utility tab-trigger {
-    @apply rounded-none! border-2! border-border! bg-transparent! cursor-pointer px-8 py-2 font-mono text-xs font-bold uppercase tracking-widest text-muted-foreground transition-all hover:bg-muted/50! data-[state=active]:border-primary! data-[state=active]:bg-primary! data-[state=active]:text-background!;
-}
 
 @utility sidebar-text-collapse {
     @apply overflow-hidden whitespace-nowrap transition-all duration-600 ease-in-out group-data-[collapsible=icon]:w-0 group-data-[collapsible=icon]:opacity-0;
@@ -259,7 +247,7 @@
 }
 
 @utility text-display-sm {
-    @apply font-display text-sm! font-bold! tracking-wide uppercase;
+    @apply font-display text-sm! font-bold! tracking-wider uppercase;
 }
 
 @utility border {
@@ -271,18 +259,24 @@
     @apply flex gap-3 flex-wrap;
 }
 
-/*@utility btn {*/
-/*    @apply flex-center border text-xs font-bold tracking-widest uppercase transition-colors px-5.5 py-3.5 cursor-pointer font-display gap-2.5;*/
-/*}*/
+/* Tabs */
+@utility tab-list {
+    @apply flex w-full! bg-transparent! gap-2! p-0!;
+}
 
-/*@utility btn--primary {*/
-/*    @apply btn bg-ink text-paper hover:bg-paper hover:text-ink  ;*/
-/*}*/
+@utility tab-trigger {
+    @apply rounded-none! border border-border! cursor-pointer px-8 py-2 font-mono text-xs font-bold uppercase tracking-widest transition-all;
+}
 
-/*@utility btn--ghost {*/
-/*    @apply btn bg-transparent text-ink hover:bg-ink hover:text-paper  ;*/
-/*}*/
-
-/*@utility btn--lg {*/
-/*    @apply px-6.5 py-4 text-sm;*/
-/*}*/
+@utility tab-trigger-orange {
+    @apply tab-trigger hover:bg-orange-soft data-[state=active]:bg-c-orange!;
+}
+@utility tab-trigger-blue {
+    @apply tab-trigger hover:bg-blue-soft data-active:text-paper! data-[state=active]:bg-c-blue!;
+}
+@utility tab-trigger-pink {
+    @apply tab-trigger hover:bg-pink-soft data-[state=active]:bg-c-pink!;
+}
+@utility tab-trigger-green {
+    @apply tab-trigger hover:bg-green-soft data-[state=active]:bg-c-green!;
+}

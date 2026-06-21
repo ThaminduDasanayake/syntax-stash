@@ -1,8 +1,9 @@
-import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
+import { ArrowLeftIcon, ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 
 import ToolCard from "@/components/tool-card";
 import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { resourceLinks } from "@/lib/resource-data";
 import { internalTools } from "@/lib/tools-data";
 
@@ -181,14 +182,14 @@ export default function Home() {
               </Link>
             </Button>
 
-            <div className="hidden gap-2 sm:flex">
-              <button className="border-border hover:bg-border/20 border-2 p-3 transition-colors">
-                <ArrowRightIcon weight="bold" className="rotate-180" />
-              </button>
-              <button className="border-ink hover:bg-border/20 border-2 p-3 transition-colors">
+            <ButtonGroup className="hidden sm:flex">
+              <Button size="icon" variant="secondary" className="h-10 w-10">
+                <ArrowLeftIcon weight="bold" />
+              </Button>
+              <Button size="icon" variant="secondary" className="h-10 w-10 border-l-0!">
                 <ArrowRightIcon weight="bold" />
-              </button>
-            </div>
+              </Button>
+            </ButtonGroup>
           </div>
         </div>
       </section>

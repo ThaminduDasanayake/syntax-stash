@@ -27,7 +27,7 @@ function CardBody({ tool, index }: ToolCardProps & { index?: number }) {
 
   return (
     <Card
-      className={`group/card relative flex h-full w-full flex-col overflow-hidden border-2 transition-all duration-200 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-md ${colorClasses}`}
+      className={`group/card relative flex h-full w-full flex-col overflow-hidden border ring-0 transition-all duration-200 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-md ${colorClasses}`}
     >
       <div className="flex items-center justify-between px-5 pt-4 pb-2">
         <span className="text-telemetry opacity-70 transition-colors group-hover/card:opacity-100">

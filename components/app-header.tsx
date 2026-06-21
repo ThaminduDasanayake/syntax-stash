@@ -8,11 +8,16 @@ import { Button } from "@/components/ui/button";
 import { Kbd } from "@/components/ui/kbd";
 import { HeaderProps } from "@/types";
 
-export default function AppHeader({ onSearchOpenAction, isScrolled }: HeaderProps & { isScrolled?: boolean }) {
+export default function AppHeader({
+  onSearchOpenAction,
+  isScrolled,
+}: HeaderProps & { isScrolled?: boolean }) {
   const pathname = usePathname();
 
   return (
-    <header className={`sticky top-0 z-50 flex h-20 shrink-0 items-center justify-between bg-[#ede9dd]/85 px-6 backdrop-blur-md transition-colors duration-200 ease-out md:px-12 ${isScrolled ? "border-b border-border" : "border-b border-transparent"}`}>
+    <header
+      className={`sticky top-0 z-50 flex h-20 shrink-0 items-center justify-between bg-[#ede9dd]/85 px-6 backdrop-blur-md transition-colors duration-200 ease-out md:px-12 ${isScrolled ? "border-border border-b" : "border-b border-transparent"}`}
+    >
       {/* Left: Logo */}
       <div className="flex items-center gap-2">
         <Link
@@ -74,15 +79,10 @@ export default function AppHeader({ onSearchOpenAction, isScrolled }: HeaderProp
 
       {/* Right: Search / CTA */}
       <div className="flex items-center gap-4">
-        <Button
-          onClick={onSearchOpenAction}
-          variant="outline"
-          className="border-border text-foreground hover:bg-foreground hover:text-background flex shrink-0 rounded-none border-2 bg-transparent font-mono text-xs font-bold tracking-widest uppercase transition-colors"
-          aria-label="Search"
-        >
+        <Button onClick={onSearchOpenAction} size="sm" aria-label="Search">
           <MagnifyingGlassIcon weight="bold" className="shrink-0" />
           <span className="ml-2 hidden sm:inline">EXPLORE LIBRARY</span>
-          <Kbd className="border-border bg-background text-foreground group-hover:bg-background group-hover:text-foreground ml-4 rounded-none border-none px-2 font-mono">
+          <Kbd className="bg-background text-foreground group-hover:bg-background group-hover:text-foreground ml-4 rounded-none border-none px-2 font-mono">
             ⌘K
           </Kbd>
         </Button>
