@@ -11,7 +11,6 @@ export type Tool = {
   favicon?: string;
   className?: string;
   tags?: string[];
-  themeColor?: "c-orange" | "c-blue" | "c-pink" | "c-green";
 };
 
 export type ToolCardProps = {

@@ -27,59 +27,56 @@ function CardBody({ tool, index }: ToolCardProps & { index?: number }) {
 
   return (
     <Card
-      className={`group/card relative flex h-full w-full flex-col overflow-hidden border ring-0 transition-all duration-200 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-md ${colorClasses}`}
+      className={`group/card relative flex h-full w-full flex-col justify-between overflow-hidden border ring-0 transition-all duration-200 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-md ${colorClasses}`}
     >
-      <div className="flex items-center justify-between px-5 pt-4 pb-2">
-        <span className="text-telemetry opacity-70 transition-colors group-hover/card:opacity-100">
-          {tool.category}
-        </span>
-        {isInternal && <span className="text-telemetry opacity-70">INT</span>}
-      </div>
-
-      <CardHeader className="relative z-10 flex flex-1 flex-col px-5 pt-0 pb-5">
-        <div className="flex flex-col items-start gap-3">
-          <div className="flex w-full items-start justify-between gap-2">
-            <div className="flex items-center gap-3">
-              {isInternal ? (
-                <Icon className="size-6 shrink-0 transition-transform group-hover/card:scale-110" />
-              ) : (
-                <CardIcon
-                  url={tool.url!}
-                  alt={tool.title}
-                  className={tool.className}
-                  explicitFavicon={tool.favicon}
-                />
-              )}
-              <CardTitle className="font-display text-2xl font-black tracking-tight uppercase transition-colors">
-                {tool.title}
-              </CardTitle>
-            </div>
-            {!isInternal && (
-              <ArrowSquareOutIcon
-                weight="bold"
-                className="mt-1 size-5 shrink-0 transition-all group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5"
+      <div className="flex flex-1 flex-col">
+        <div className="flex items-start justify-between px-5 pt-5 pb-4">
+          <span className="text-telemetry mt-2 opacity-70 transition-colors group-hover/card:opacity-100">
+            {tool.category}
+          </span>
+          <div className="flex items-center gap-2">
+            {isInternal ? (
+              <Icon className="size-7 shrink-0 transition-transform group-hover/card:scale-110" />
+            ) : (
+              <CardIcon
+                url={tool.url!}
+                alt={tool.title}
+                className={tool.className}
+                explicitFavicon={tool.favicon}
               />
             )}
           </div>
         </div>
 
-        <CardDescription className="mt-4 flex-1 font-mono text-sm leading-relaxed text-inherit opacity-90">
-          {tool.description}
-        </CardDescription>
+        <CardHeader className="relative z-10 flex flex-col px-5 pt-2 pb-6">
+          <CardTitle className="font-display flex items-start gap-3 text-[clamp(20px,1.8vw,26px)] leading-[0.9] font-black tracking-tighter uppercase transition-colors">
+            {tool.title}
+            {!isInternal && (
+              <ArrowSquareOutIcon
+                weight="bold"
+                className="mt-1 size-6 shrink-0 opacity-70 transition-all group-hover/card:translate-x-1 group-hover/card:-translate-y-1"
+              />
+            )}
+          </CardTitle>
 
-        {tool.tags && tool.tags.length > 0 && (
-          <div className="mt-6 flex flex-wrap gap-2">
-            {tool.tags.map((tag) => (
-              <span
-                key={tag}
-                className="bg-background/10 border-primary/20 border px-2 py-0.5 font-mono text-[10px] tracking-wider uppercase"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
-      </CardHeader>
+          <CardDescription className="mt-5 text-sm font-medium text-inherit opacity-90">
+            {tool.description}
+          </CardDescription>
+        </CardHeader>
+      </div>
+
+      {tool.tags && tool.tags.length > 0 && (
+        <div className="flex flex-wrap gap-2 border-t border-current/20 px-5 py-4 opacity-90 transition-opacity group-hover/card:opacity-100">
+          {tool.tags.map((tag) => (
+            <span
+              key={tag}
+              className="border border-current/20 bg-current/5 px-2 py-0.5 font-mono text-[10px] font-bold tracking-widest uppercase"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
     </Card>
   );
 }

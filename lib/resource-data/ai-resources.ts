@@ -9,6 +9,7 @@ export const aiLinks: Tool[] = [
     description:
       "Low-code AI builder for agentic and RAG applications. Build AI applications with ease",
     category: CATEGORIES.unknown,
+    tags: ["low-code", "rag", "agents", "builder"],
   },
   {
     title: "Open WebUI: Self-Hosted AI Platform",
@@ -16,12 +17,14 @@ export const aiLinks: Tool[] = [
     description:
       "Run AI on your own terms. Connect any model, extend with code, protect what matters—without compromise.",
     category: CATEGORIES.unknown,
+    tags: ["self-hosted", "llm", "ui", "platform"],
   },
   {
     title: "Crawl4AI",
     url: "https://docs.crawl4ai.com/",
     description: "Open-source LLM-Friendly Web Crawler & Scraper",
     category: CATEGORIES.unknown,
+    tags: ["crawler", "scraper", "open-source", "llm"],
   },
   {
     title: "OpenHands | The Open Platform for Cloud Coding Agents",
