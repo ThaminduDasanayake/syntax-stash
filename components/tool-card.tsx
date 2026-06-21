@@ -9,19 +9,14 @@ import { iconMap } from "@/lib/icons";
 import { ToolCardProps } from "@/types";
 
 function getAlternatingColor(title: string, index?: number) {
-  const colorOptions = [
-    "bg-c-heur text-on-heur",   // Yellow (matches 01 / 04 HEURISTIC)
-    "bg-c-bias text-on-bias",   // Blue   (matches 02 / 04 BIAS)
-    "bg-c-nudge text-on-nudge", // Purple (matches 03 / 04 NUDGE)
-    "bg-c-ai text-on-ai"        // Green  (matches 04 / 04 AI PHENOMENA)
-  ];
-  
+  const colorOptions = ["bg-c-orange", "bg-c-blue text-paper", "bg-c-pink", "bg-c-green"];
+
   if (index !== undefined) {
     return colorOptions[index % colorOptions.length];
   }
-  
+
   // Fallback if no index provided
-  const hash = title.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const hash = title.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
   return colorOptions[hash % colorOptions.length];
 }
 
@@ -31,15 +26,17 @@ function CardBody({ tool, index }: ToolCardProps & { index?: number }) {
   const colorClasses = getAlternatingColor(tool.title, index);
 
   return (
-    <Card className={`group/card relative flex h-full w-full flex-col overflow-hidden border-2 border-primary transition-all duration-200 hover:shadow-[6px_6px_0px_0px_var(--ink)] hover:-translate-y-1 hover:-translate-x-1 ${colorClasses}`}>
+    <Card
+      className={`group/card relative flex h-full w-full flex-col overflow-hidden border-2 transition-all duration-200 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-md ${colorClasses}`}
+    >
       <div className="flex items-center justify-between px-5 pt-4 pb-2">
-        <span className="opacity-70 group-hover/card:opacity-100 text-telemetry transition-colors">
+        <span className="text-telemetry opacity-70 transition-colors group-hover/card:opacity-100">
           {tool.category}
         </span>
-        {isInternal && <span className="opacity-70 text-telemetry">INT</span>}
+        {isInternal && <span className="text-telemetry opacity-70">INT</span>}
       </div>
 
-      <CardHeader className="relative z-10 flex-1 flex flex-col px-5 pb-5 pt-0">
+      <CardHeader className="relative z-10 flex flex-1 flex-col px-5 pt-0 pb-5">
         <div className="flex flex-col items-start gap-3">
           <div className="flex w-full items-start justify-between gap-2">
             <div className="flex items-center gap-3">
@@ -53,7 +50,7 @@ function CardBody({ tool, index }: ToolCardProps & { index?: number }) {
                   explicitFavicon={tool.favicon}
                 />
               )}
-              <CardTitle className="font-display text-2xl uppercase font-black tracking-tight transition-colors">
+              <CardTitle className="font-display text-2xl font-black tracking-tight uppercase transition-colors">
                 {tool.title}
               </CardTitle>
             </div>
@@ -65,8 +62,8 @@ function CardBody({ tool, index }: ToolCardProps & { index?: number }) {
             )}
           </div>
         </div>
-        
-        <CardDescription className="mt-4 text-inherit font-mono text-sm leading-relaxed opacity-90 flex-1">
+
+        <CardDescription className="mt-4 flex-1 font-mono text-sm leading-relaxed text-inherit opacity-90">
           {tool.description}
         </CardDescription>
 
@@ -75,7 +72,7 @@ function CardBody({ tool, index }: ToolCardProps & { index?: number }) {
             {tool.tags.map((tag) => (
               <span
                 key={tag}
-                className="bg-background/10 border-primary/20 border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider"
+                className="bg-background/10 border-primary/20 border px-2 py-0.5 font-mono text-[10px] tracking-wider uppercase"
               >
                 {tag}
               </span>

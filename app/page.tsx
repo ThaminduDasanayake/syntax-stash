@@ -10,17 +10,17 @@ export default function Home() {
 
   return (
     <div className="bg-background flex w-full flex-col">
-      {/* 1. Hero Section */}
-      <section className="border-border relative flex min-h-[80vh] w-full items-center overflow-hidden border-b-2 px-6 py-20 sm:px-12 lg:px-24">
+      {/* Hero Section */}
+      <section className="relative flex min-h-[80vh] w-full items-center overflow-hidden border-b-2 px-6 py-20 sm:px-12 lg:px-24">
         <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-16 lg:flex-row">
           {/* Hero Left: Typography & CTAs */}
           <div className="z-10 w-full flex-1 lg:w-1/2">
-            <div className="mb-8 flex items-center gap-4 font-mono text-xs font-bold tracking-widest">
-              <span className="flex items-center gap-1">
-                <span className="bg-c-heur border-ink h-4 w-4 border-2"></span>
-                <span className="bg-c-bias border-ink h-4 w-4 border-2 border-l-0"></span>
-                <span className="bg-c-nudge border-ink h-4 w-4 border-2 border-l-0"></span>
-                <span className="bg-c-ai border-ink h-4 w-4 border-2 border-l-0"></span>
+            <div className="text-ink-mute mb-8 flex items-center gap-4 font-mono text-xs font-bold tracking-widest">
+              <span className="flex items-center border">
+                <span className="bg-c-orange h-3.5 w-3.5"></span>
+                <span className="bg-c-blue h-3.5 w-3.5"></span>
+                <span className="bg-c-pink h-3.5 w-3.5"></span>
+                <span className="bg-c-green h-3.5 w-3.5"></span>
               </span>
               A REFERENCE FOR MODERN WEB DEVELOPMENT
             </div>
@@ -51,17 +51,27 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Hero Right: The Fan */}
-          <div className="relative hidden h-125 w-full flex-1 lg:block">
-            {/* We position 3 ToolCards absolutely, rotated */}
-            <div className="absolute top-1/2 left-1/2 z-10 hover:z-50 w-75 origin-bottom -translate-x-1/2 -translate-y-1/2 rotate-[-8deg] transition-all duration-500 hover:-translate-y-10 hover:rotate-0">
-              <ToolCard tool={internalTools[0]} index={0} />
+          {/* Hero Stack */}
+          <div className="relative hidden h-150 w-full lg:block">
+            <div className="absolute top-10 left-10 z-10 w-75">
+              <div className="h-full w-full origin-center -rotate-3 transition-all duration-300 ease-out hover:z-100 hover:-translate-y-4 hover:rotate-0">
+                <ToolCard tool={internalTools[0]} index={0} />
+              </div>
             </div>
-            <div className="absolute top-[calc(50%-1rem)] left-[calc(50%+3rem)] z-20 hover:z-50 w-75 origin-bottom -translate-x-1/2 -translate-y-1/2 rotate-[5deg] transition-all duration-500 hover:-translate-y-14 hover:rotate-0">
-              <ToolCard tool={internalTools[1]} index={1} />
+            <div className="absolute top-30 left-60 z-20 w-75">
+              <div className="h-full w-full origin-center rotate-6 transition-all duration-300 ease-out hover:z-50 hover:-translate-y-4 hover:rotate-0">
+                <ToolCard tool={internalTools[1]} index={1} />
+              </div>
             </div>
-            <div className="absolute top-[calc(50%+2rem)] left-[calc(50%+6rem)] z-30 hover:z-50 w-75 origin-bottom -translate-x-1/2 -translate-y-1/2 rotate-18 transition-all duration-500 hover:-translate-y-16 hover:rotate-0">
-              <ToolCard tool={internalTools[2]} index={2} />
+            <div className="absolute top-45 left-15 z-30 w-75">
+              <div className="h-full w-full origin-center -rotate-4 transition-all duration-300 ease-out hover:z-50 hover:-translate-y-4 hover:rotate-0">
+                <ToolCard tool={internalTools[2]} index={2} />
+              </div>
+            </div>
+            <div className="absolute top-60 left-55 z-40 w-75">
+              <div className="h-full w-full origin-center rotate-8 transition-all duration-300 ease-out hover:z-50 hover:-translate-y-4 hover:rotate-0">
+                <ToolCard tool={internalTools[3]} index={3} />
+              </div>
             </div>
           </div>
         </div>

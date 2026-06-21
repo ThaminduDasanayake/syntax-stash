@@ -132,7 +132,7 @@ export function LiveTester({
               value={flags}
               onChange={(e) => setFlags(e.target.value)}
               placeholder="g"
-              className="text-primary w-20 text-center font-mono text-sm"
+              className="w-20 text-center font-mono text-sm"
             />
           </div>
         </div>
@@ -155,7 +155,7 @@ export function LiveTester({
               >
                 <span
                   className={cn(
-                    "h-2.5 w-2.5 rounded-full border-[1.5px]",
+                    "h-2.5 w-2.5 rounded-full border",
                     f.fill && isActive ? "bg-background border-background" : "bg-foreground",
                     !isActive && f.className,
                   )}

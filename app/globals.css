@@ -4,7 +4,7 @@
 
 @plugin "@tailwindcss/typography";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:is(.never-activate-dark-mode *));
 
 .ProseMirror .is-empty::before {
     content: attr(data-placeholder);
@@ -33,10 +33,12 @@
     --blue: #2A47B8;
     --pink: #C9A4F0;
     --green: #5DAA2E;
-    --on-heur: #14110B;
-    --on-bias: #F5F1E5;
-    --on-nudge: #14110B;
-    --on-ai: #14110B;
+
+    /*--on-heur: #14110B;*/
+    /*--on-bias: #F5F1E5;*/
+    /*--on-nudge: #14110B;*/
+    /*--on-ai: #14110B;*/
+
     --orange-tint: #F4DDA5;
     --blue-tint: #C8D2EE;
     --pink-tint: #ECDDF8;
@@ -104,16 +106,21 @@
     --color-ring: var(--ring);
 
     /* Custom Color variables */
+    --color-paper: var(--paper);
     --color-line: var(--line);
     --color-line-2: var(--line-2);
+    --color-ink: var(--ink);
+    --color-ink-2: var(--ink-2);
+    --colo--ink-mute: var(--ink-mute);
+    --colo--ink-faint: var(--ink-faint);
     --color-c-orange: var(--orange);
     --color-c-blue: var(--blue);
     --color-c-pink: var(--pink);
     --color-c-green: var(--green);
-    --color-on-heur: var(--on-heur);
-    --color-on-bias: var(--on-bias);
-    --color-on-nudge: var(--on-nudge);
-    --color-on-ai: var(--on-ai);
+    /*--color-on-heur: var(--on-heur);*/
+    /*--color-on-bias: var(--on-bias);*/
+    /*--color-on-nudge: var(--on-nudge);*/
+    /*--color-on-ai: var(--on-ai);*/
     
     /* Typography */
     --font-sans: var(--font-sans);
@@ -236,4 +243,8 @@
 
 @utility text-console-lg {
     @apply font-mono text-base! font-bold tracking-wide uppercase;
+}
+
+@utility border {
+    border-width: 1.5px !important;
 }
