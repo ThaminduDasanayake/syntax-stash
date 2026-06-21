@@ -2,6 +2,7 @@ import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 
 import ToolCard from "@/components/tool-card";
+import { Button } from "@/components/ui/button";
 import { resourceLinks } from "@/lib/resource-data";
 import { internalTools } from "@/lib/tools-data";
 
@@ -35,41 +36,39 @@ export default function Home() {
               utility or reference. The stash is a manual you can play with.
             </p>
 
-            <div className="flex flex-col gap-4 sm:flex-row">
-              <Link
-                href="/tools"
-                className="border-ink bg-ink text-background hover:bg-ink/80 flex items-center justify-center border-2 px-8 py-4 font-mono text-xs font-bold tracking-widest uppercase transition-colors"
-              >
-                EXPLORE TOOLS <ArrowRightIcon weight="bold" className="ml-2" />
-              </Link>
-              <Link
-                href="/resources"
-                className="border-ink bg-background text-foreground hover:bg-ink/5 flex items-center justify-center border-2 px-8 py-4 font-mono text-xs font-bold tracking-widest uppercase transition-colors"
-              >
-                BROWSE RESOURCES
-              </Link>
+            <div className="hero-cta-row">
+              <Button asChild size="lg" variant="default">
+                <Link href="/tools" className="text-display-sm">
+                  EXPLORE TOOLS <ArrowRightIcon weight="bold" className="" />
+                </Link>
+              </Button>
+              <Button asChild size="lg" variant="secondary">
+                <Link href="/resources" className="text-display-sm">
+                  BROWSE RESOURCES
+                </Link>
+              </Button>
             </div>
           </div>
 
           {/* Hero Stack */}
           <div className="relative hidden h-150 w-full lg:block">
-            <div className="absolute top-10 left-10 z-10 w-75">
-              <div className="h-full w-full origin-center -rotate-3 transition-all duration-300 ease-out hover:z-100 hover:-translate-y-4 hover:rotate-0">
+            <div className="absolute top-10 left-10 z-10 w-75 hover:z-50">
+              <div className="h-full w-full origin-center -rotate-3 transition-all duration-300 ease-out hover:-translate-y-4 hover:rotate-0">
                 <ToolCard tool={internalTools[0]} index={0} />
               </div>
             </div>
-            <div className="absolute top-30 left-60 z-20 w-75">
-              <div className="h-full w-full origin-center rotate-6 transition-all duration-300 ease-out hover:z-50 hover:-translate-y-4 hover:rotate-0">
+            <div className="absolute top-35 left-75 z-20 w-75 hover:z-50">
+              <div className="h-full w-full origin-center rotate-6 transition-all duration-300 ease-out hover:-translate-y-4 hover:rotate-0">
                 <ToolCard tool={internalTools[1]} index={1} />
               </div>
             </div>
-            <div className="absolute top-45 left-15 z-30 w-75">
-              <div className="h-full w-full origin-center -rotate-4 transition-all duration-300 ease-out hover:z-50 hover:-translate-y-4 hover:rotate-0">
+            <div className="absolute top-45 left-15 z-30 w-75 hover:z-50">
+              <div className="h-full w-full origin-center -rotate-4 transition-all duration-300 ease-out hover:-translate-y-4 hover:rotate-0">
                 <ToolCard tool={internalTools[2]} index={2} />
               </div>
             </div>
-            <div className="absolute top-60 left-55 z-40 w-75">
-              <div className="h-full w-full origin-center rotate-8 transition-all duration-300 ease-out hover:z-50 hover:-translate-y-4 hover:rotate-0">
+            <div className="absolute top-75 left-50 z-40 w-75 hover:z-50">
+              <div className="h-full w-full origin-center rotate-8 transition-all duration-300 ease-out hover:-translate-y-4 hover:rotate-0">
                 <ToolCard tool={internalTools[3]} index={3} />
               </div>
             </div>
@@ -175,13 +174,12 @@ export default function Home() {
           </div>
 
           <div className="border-border flex items-center justify-between border-t-2 pt-8">
-            <Link
-              href="/tools"
-              className="border-ink bg-ink text-background hover:bg-ink/80 flex items-center justify-center border-2 px-6 py-3 font-mono text-[10px] font-bold tracking-widest uppercase transition-colors"
-            >
-              BROWSE ALL {internalTools.length} TOOLS{" "}
-              <ArrowRightIcon weight="bold" className="ml-2" />
-            </Link>
+            <Button asChild size="sm" variant="default">
+              <Link href="/tools" className="text-display-xs">
+                BROWSE ALL {internalTools.length} TOOLS{" "}
+                <ArrowRightIcon weight="bold" className="ml-2" />
+              </Link>
+            </Button>
 
             <div className="hidden gap-2 sm:flex">
               <button className="border-border hover:bg-border/20 border-2 p-3 transition-colors">
