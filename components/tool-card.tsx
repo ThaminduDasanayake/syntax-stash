@@ -4,7 +4,6 @@ import { ArrowSquareOutIcon, ToolboxIcon, XIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 
 import { CardIcon } from "@/components/card-icon";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   Dialog,
   DialogClose,
@@ -15,24 +14,8 @@ import {
 } from "@/components/ui/dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { iconMap } from "@/lib/icons";
-import { cn } from "@/lib/utils";
+import { cn, getAlternatingColor } from "@/lib/utils";
 import { ToolCardProps } from "@/types";
-
-function getAlternatingColor(title: string, index?: number) {
-  const colorOptions = [
-    "bg-c-orange text-ink",
-    "bg-c-blue text-paper",
-    "bg-c-pink text-ink",
-    "bg-c-green text-ink",
-  ];
-
-  if (index !== undefined) {
-    return colorOptions[index % colorOptions.length];
-  }
-
-  const hash = title.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  return colorOptions[hash % colorOptions.length];
-}
 
 function CardBody({ tool, index }: ToolCardProps & { index?: number }) {
   const isInternal = !!tool.slug;
@@ -47,7 +30,9 @@ function CardBody({ tool, index }: ToolCardProps & { index?: number }) {
             <span className="card-meta">{tool.category}</span>
 
             {isInternal ? (
-              <Icon className="card-icon" />
+              <div className="bg-background text-foreground card-icon-box">
+                <Icon className="card-icon" />
+              </div>
             ) : (
               <CardIcon
                 url={tool.url!}
@@ -84,7 +69,7 @@ function CardBody({ tool, index }: ToolCardProps & { index?: number }) {
                       </a>
                     </TooltipTrigger>
                     <TooltipContent>
-                      <p>Open</p>
+                      <p>Open in new tab</p>
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>

@@ -273,7 +273,7 @@
 }
 
 @utility card-face {
-    @apply col-start-1 row-start-1 w-full h-105 overflow-hidden flex flex-col px-4.5 pt-4.5 pb-3.5 gap-2.5;
+    @apply col-start-1 row-start-1 w-full h-80 overflow-hidden flex flex-col px-4.5 pt-4.5 pb-3.5 gap-2.5;
 }
 
 @utility card-header {
@@ -281,11 +281,15 @@
 }
 
 @utility card-meta {
-    @apply text-telemetry mt-2 opacity-80 transition-colors group-hover/card:opacity-100
+    @apply text-telemetry mt-2 opacity-80 transition-colors group-hover:opacity-100
+}
+
+@utility card-icon-box {
+    @apply flex h-12 w-12 shrink-0 items-center justify-center border
 }
 
 @utility card-icon {
-    @apply size-7 shrink-0 transition-transform group-hover/card:scale-110
+    @apply size-7 shrink-0 transition-transform group-hover:scale-110
 }
 
 @utility card-title {

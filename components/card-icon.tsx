@@ -35,12 +35,7 @@ export function CardIcon({
   const [index, setIndex] = useState(0);
 
   return (
-    <div
-      className={cn(
-        className,
-        "group-hover/card:border-primary relative flex h-12 w-12 shrink-0 items-center justify-center border p-1",
-      )}
-    >
+    <div className={cn(className, "card-icon-box p-1")}>
       <Image
         src={sources[index]}
         alt={alt}

@@ -23,3 +23,26 @@ export function downloadStringAsFile(content: string, filename: string, mimeType
 
   URL.revokeObjectURL(url);
 }
+
+export function getAlternatingColor(title: string, index?: number) {
+  const colorOptions = [
+    "bg-c-orange text-ink",
+    "bg-c-blue text-paper",
+    "bg-c-pink text-ink",
+    "bg-c-green text-ink",
+  ];
+
+  if (index !== undefined) {
+    return colorOptions[index % colorOptions.length];
+  }
+
+  const hash = title.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return colorOptions[hash % colorOptions.length];
+}
+
+export const tabStyles = [
+  "tab-trigger-orange",
+  "tab-trigger-blue",
+  "tab-trigger-pink",
+  "tab-trigger-green",
+];

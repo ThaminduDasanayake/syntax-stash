@@ -4,9 +4,8 @@ import { TABS } from "@/app/tools/unit-converter/constants";
 import ConversionGrid from "@/app/tools/unit-converter/conversion-grid";
 import { ToolLayout } from "@/components/tool-layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { tabStyles } from "@/lib/styles";
 import { internalTools } from "@/lib/tools-data";
-import { cn } from "@/lib/utils";
+import { cn, tabStyles } from "@/lib/utils";
 
 export default function UnitConverterPage() {
   const tool = internalTools.find((t) => t.slug === "unit-converter");
