@@ -60,21 +60,26 @@ function CardBody({ tool, index }: ToolCardProps & { index?: number }) {
       </div>
 
       {tool.tags?.length || !isInternal ? (
-        <div className="flex items-end justify-between gap-4 border-t border-current/20 px-5 py-4 opacity-90 transition-opacity group-hover/card:opacity-100">
+        <div className="flex items-end justify-between gap-4 border-t border-current/20 px-5 py-4 opacity-80 transition-opacity group-hover/card:opacity-100">
           <div className="flex flex-wrap gap-2">
-            {tool.tags?.map((tag) => (
-              <span
-                key={tag}
-                className="border border-current/20 bg-current/5 px-2 py-0.5 font-mono text-[10px] font-bold tracking-wider uppercase"
-              >
-                {tag}
+            {/*{tool.tags?.map((tag) => (*/}
+            {/*  <span*/}
+            {/*    key={tag}*/}
+            {/*    className="border border-current/20 bg-current/5 px-2 py-0.5 font-mono text-[10px] font-bold tracking-wider uppercase"*/}
+            {/*  >*/}
+            {/*    {tag}*/}
+            {/*  </span>*/}
+            {/*))}*/}
+            {tool.author && (
+              <span className="text-[10px] font-medium tracking-wider group-hover/card:opacity-100">
+                {tool.author}
               </span>
-            ))}
+            )}
           </div>
           {!isInternal && (
             <ArrowSquareOutIcon
               weight="bold"
-              className="shrink-0 opacity-70 transition-all duration-200 group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5 group-hover/card:opacity-100"
+              className="shrink-0 transition-all duration-200 group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5 group-hover/card:opacity-100"
             />
           )}
         </div>

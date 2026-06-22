@@ -23,33 +23,34 @@ export default function ResourcesPage() {
     <div className="flex w-full flex-col">
       {/* Mini-Hero */}
       <div className="border-border bg-background relative w-full border-b-2 px-6 py-12 md:px-12">
-        <h1 className="text-4xl tracking-tighter sm:text-5xl flex flex-col gap-1">
+        <h1 className="flex flex-col gap-1 text-4xl tracking-tighter sm:text-5xl">
           <span className="font-display font-black uppercase">THE RESOURCES</span>
-          <span className="font-serif italic lowercase tracking-normal">stash.</span>
+          <span className="font-serif tracking-normal lowercase italic">stash.</span>
         </h1>
         <p className="text-muted-foreground mt-4 font-mono text-sm leading-relaxed tracking-wider uppercase opacity-80">
-          {resourceLinks.length} curated links across {Object.keys(groupedResources).length} categories.
+          {resourceLinks.length} curated links across {Object.keys(groupedResources).length}{" "}
+          categories.
         </p>
       </div>
 
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 p-6">
-
-      <div className="space-y-12 pb-8">
-        {Object.entries(groupedResources).map(([category, items]) => (
-          <div key={category} className="space-y-6">
-            <h2 className="text-primary flex items-center gap-4 font-mono text-sm font-semibold tracking-wider uppercase">
-              {category}
-              <span className="bg-primary h-px flex-1" />
-            </h2>
-            <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {items.map((resource, index) => (
-                <ToolCard key={resource.url} tool={resource} index={index} />
-              ))}
+        <div className="space-y-12 pb-8">
+          {Object.entries(groupedResources).map(([category, items]) => (
+            <div key={category} className="space-y-6">
+              <h2 className="text-primary flex items-center gap-4 font-mono text-sm font-semibold tracking-wider uppercase">
+                {category}
+                <span className="bg-primary h-px flex-1" />
+                <span>{items.length} Resources</span>
+              </h2>
+              <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {items.map((resource, index) => (
+                  <ToolCard key={resource.url} tool={resource} index={index} />
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
     </div>
   );
 }

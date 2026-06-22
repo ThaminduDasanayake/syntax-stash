@@ -11,6 +11,7 @@ export type Tool = {
   favicon?: string;
   className?: string;
   tags?: string[];
+  author?: string;
 };
 
 export type ToolCardProps = {

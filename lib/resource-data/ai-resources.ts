@@ -69,27 +69,31 @@ export const aiLinks: Tool[] = [
     category: CATEGORIES.ai,
   },
   {
-    title: "The-Swarm-Corporation/AutoHedge",
+    title: "AutoHedge",
+    author: "The Swarm Corporation",
     url: "https://github.com/The-Swarm-Corporation/AutoHedge",
     description:
       "Build your autonomous hedge fund in minutes. AutoHedge harnesses the power of swarm intelligence and AI agents to automate market analysis, risk management, and trade execution.",
     category: CATEGORIES.ai,
   },
   {
-    title: "HKUDS/Vibe-Trading",
+    title: "Vibe-Trading",
+    author: "HKUDS",
     url: "https://github.com/HKUDS/Vibe-Trading",
     description: "Vibe-Trading: Your Personal Trading Agent",
     category: CATEGORIES.ai,
   },
   {
-    title: "Fincept-Corporation/FinceptTerminal",
+    title: "Fincept Terminal",
+    author: "Fincept Corporation",
     url: "https://github.com/Fincept-Corporation/FinceptTerminal",
     description:
       "FinceptTerminal is a modern finance application offering advanced market analytics, investment research, and economic data tools, designed for interactive exploration and data-driven decision-making in a user-friendly environment.",
     category: CATEGORIES.ai,
   },
   {
-    title: "AgriciDaniel/claude-ads",
+    title: "claude-ads",
+    author: "AgriciDaniel",
     url: "https://github.com/AgriciDaniel/claude-ads",
     description:
       "Comprehensive paid advertising audit & optimization skill for Claude Code. 250+ checks across Google, Meta, YouTube, LinkedIn, TikTok, Microsoft & Apple Ads with weighted scoring, parallel agents, industry templates, and AI creative generation.",
