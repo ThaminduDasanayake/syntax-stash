@@ -49,34 +49,36 @@ function CardBody({ tool, index }: ToolCardProps & { index?: number }) {
         </div>
 
         <CardHeader className="relative z-10 flex flex-col px-5 pt-2 pb-6">
-          <CardTitle className="font-display flex items-start gap-3 text-[clamp(20px,1.8vw,26px)] leading-[0.9] font-black tracking-tighter uppercase transition-colors">
+          <CardTitle className="font-display text-2xl font-black tracking-tight uppercase transition-colors">
             {tool.title}
-            {!isInternal && (
-              <ArrowSquareOutIcon
-                weight="bold"
-                className="mt-1 size-6 shrink-0 opacity-70 transition-all group-hover/card:translate-x-1 group-hover/card:-translate-y-1"
-              />
-            )}
           </CardTitle>
 
-          <CardDescription className="mt-5 text-sm font-medium text-inherit opacity-90">
+          <CardDescription className="mt-4 text-sm font-medium text-inherit opacity-90">
             {tool.description}
           </CardDescription>
         </CardHeader>
       </div>
 
-      {tool.tags && tool.tags.length > 0 && (
-        <div className="flex flex-wrap gap-2 border-t border-current/20 px-5 py-4 opacity-90 transition-opacity group-hover/card:opacity-100">
-          {tool.tags.map((tag) => (
-            <span
-              key={tag}
-              className="border border-current/20 bg-current/5 px-2 py-0.5 font-mono text-[10px] font-bold tracking-widest uppercase"
-            >
-              {tag}
-            </span>
-          ))}
+      {tool.tags?.length || !isInternal ? (
+        <div className="flex items-end justify-between gap-4 border-t border-current/20 px-5 py-4 opacity-90 transition-opacity group-hover/card:opacity-100">
+          <div className="flex flex-wrap gap-2">
+            {tool.tags?.map((tag) => (
+              <span
+                key={tag}
+                className="border border-current/20 bg-current/5 px-2 py-0.5 font-mono text-[10px] font-bold tracking-wider uppercase"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+          {!isInternal && (
+            <ArrowSquareOutIcon
+              weight="bold"
+              className="shrink-0 opacity-70 transition-all duration-200 group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5 group-hover/card:opacity-100"
+            />
+          )}
         </div>
-      )}
+      ) : null}
     </Card>
   );
 }
