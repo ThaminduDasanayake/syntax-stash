@@ -62,9 +62,13 @@ function CardBody({ tool, index }: ToolCardProps & { index?: number }) {
 
           <p className="card-description">{tool.description}</p>
 
-          {tool.author || !isInternal ? (
+          {!isInternal && (
             <div className="card-footer">
-              {tool.author && <span className="card-author">{tool.author}</span>}
+              {tool.author ? (
+                <span className="card-author">{tool.author}</span>
+              ) : (
+                <div aria-hidden="true" />
+              )}
               {!isInternal && (
                 <TooltipProvider>
                   <Tooltip>
@@ -86,7 +90,7 @@ function CardBody({ tool, index }: ToolCardProps & { index?: number }) {
                 </TooltipProvider>
               )}
             </div>
-          ) : null}
+          )}
         </div>
       </div>
     </article>
