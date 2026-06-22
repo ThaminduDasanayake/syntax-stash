@@ -225,19 +225,19 @@
     @apply overflow-hidden whitespace-nowrap transition-all duration-600 ease-in-out group-data-[collapsible=icon]:w-0 group-data-[collapsible=icon]:opacity-0;
 }
 
-@utility text-telemetry {
+@utility text-mono-2xs {
     @apply font-mono text-[10px]! font-bold tracking-widest uppercase;
 }
 
-@utility text-console {
+@utility text-mono-xs {
     @apply font-mono text-xs! font-bold tracking-widest uppercase;
 }
 
-@utility text-console-md {
+@utility text-mono-sm {
     @apply font-mono text-sm! font-bold tracking-wider uppercase;
 }
 
-@utility text-console-lg {
+@utility text-mono-base {
     @apply font-mono text-base! font-bold tracking-wide uppercase;
 }
 
@@ -281,7 +281,7 @@
 }
 
 @utility card-meta {
-    @apply text-telemetry mt-2 opacity-80 transition-colors group-hover:opacity-100
+    @apply text-mono-2xs mt-2 opacity-80 transition-colors group-hover:opacity-100
 }
 
 @utility card-icon-box {
@@ -330,7 +330,7 @@
 }
 
 @utility modal-cat-label {
-    @apply flex items-center gap-2 mb-6
+    @apply flex items-center justify-between mb-6
 }
 
 @utility modal-cat-dot {
@@ -338,11 +338,11 @@
 }
 
 @utility modal-cat-name {
-    @apply text-telemetry font-mono text-[10px] font-bold tracking-widest uppercase opacity-90
+    @apply text-mono-2xs opacity-90
 }
 
 @utility modal-cat-link {
-    @apply text-inherit transition-opacity duration-150 ease-out hover:underline
+    @apply text-inherit transition-opacity duration-150 ease-out hover:underline underline-offset-2
 }
 
 @utility modal-title {
@@ -354,7 +354,7 @@
 }
 
 @utility modal-author {
-    @apply mt-auto pt-6 text-[10px] font-bold font-mono tracking-wider uppercase opacity-75
+    @apply mt-auto pt-6 text-mono-2xs opacity-75
 }
 
 @utility modal-author-link {

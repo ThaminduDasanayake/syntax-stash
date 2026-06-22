@@ -4,9 +4,10 @@ import { ArrowSquareOutIcon, CaretLeftIcon, CaretRightIcon, XIcon } from "@phosp
 import Link from "next/link";
 import * as React from "react";
 
+import { CardIcon } from "@/components/card-icon";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
-import { DialogClose, DialogContent, DialogTitle as UIDialogTitle } from "@/components/ui/dialog";
+import { DialogClose, DialogContent } from "@/components/ui/dialog";
 import { cn, getAlternatingColor } from "@/lib/utils";
 import { ToolCardProps } from "@/types";
 
@@ -15,7 +16,6 @@ export function ResourceDialog({ tool, index }: ToolCardProps & { index?: number
 
   return (
     <DialogContent showCloseButton={false} className="modal-panel">
-      {/* flex flex-col gap-0 overflow-hidden border-2 p-0 ring-0 sm:max-w-4xl md:flex-row */}
       <div className="modal-top-actions">
         <DialogClose asChild>
           <Button variant="secondary" size="icon">
@@ -23,18 +23,27 @@ export function ResourceDialog({ tool, index }: ToolCardProps & { index?: number
           </Button>
         </DialogClose>
       </div>
+
       <div className="modal-body">
         {/* Left Side */}
-        {/* flex flex-col justify-between p-8 md:w-1/2 md:shrink-0 */}
         <div className={cn("modal-left", colorClasses)}>
           <div className="modal-cat-label">
-            <span className="modal-cat-dot"></span>
-            <Link href="/" className="modal-cat-name modal-cat-link">
-              {tool.category}
-            </Link>
+            <div className="flex items-center gap-2">
+              <span className="modal-cat-dot"></span>
+              <Link href={`/resources/${tool.category}`} className="modal-cat-name modal-cat-link">
+                {tool.category}
+              </Link>
+            </div>
+
+            <CardIcon
+              url={tool.url!}
+              alt={tool.title}
+              className={tool.className}
+              explicitFavicon={tool.favicon}
+            />
           </div>
 
-          <UIDialogTitle className="modal-title">{tool.title}</UIDialogTitle>
+          <h2 className="modal-title">{tool.title}</h2>
 
           <p className="modal-description">{tool.subtitle}</p>
           <p className="modal-author">
@@ -50,10 +59,16 @@ export function ResourceDialog({ tool, index }: ToolCardProps & { index?: number
         </div>
 
         {/* Right Side */}
-        {/* bg-paper relative flex flex-col p-8 md:w-1/2 */}
         <div className="modal-right">
           <div className="modal-content">
             <p>{tool.description}</p>
+            <div className="flex gap-2">
+              {tool.tags?.map((tag) => (
+                <div key={tag} className="text-mono-2xs border px-1 py-0.5 hover:shadow-sm">
+                  # {tag}
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="modal-launch">
@@ -62,7 +77,7 @@ export function ResourceDialog({ tool, index }: ToolCardProps & { index?: number
                 href={tool.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-console w-full"
+                className="text-mono-xs w-full"
               >
                 Open resource <ArrowSquareOutIcon weight="bold" />
               </a>
@@ -82,23 +97,7 @@ export function ResourceDialog({ tool, index }: ToolCardProps & { index?: number
         </div>
       </div>
       {/*<div>*/}
-      {/*  <div className="mb-8 flex items-center justify-between">*/}
-      {/*    <span className="text-telemetry font-mono text-[10px] font-bold tracking-widest uppercase opacity-70">*/}
-      {/*      {tool.category}*/}
-      {/*    </span>*/}
-      {/*    <CardIcon*/}
-      {/*      url={tool.url!}*/}
-      {/*      alt={tool.title}*/}
-      {/*      className={tool.className}*/}
-      {/*      explicitFavicon={tool.favicon}*/}
-      {/*    />*/}
-      {/*  </div>*/}
-      {/*  <UIDialogTitle className="font-display mb-6 text-4xl leading-[0.9] font-black tracking-tighter uppercase sm:text-5xl">*/}
-      {/*    {tool.title}*/}
-      {/*  </UIDialogTitle>*/}
-      {/*  <UIDialogDescription className="font-sans text-base leading-relaxed font-medium text-inherit opacity-90">*/}
-      {/*    {tool.description}*/}
-      {/*  </UIDialogDescription>*/}
+
       {/*</div>*/}
       {/*{tool.author && (*/}
       {/*  <div className="mt-12 font-mono text-[10px] font-bold tracking-widest uppercase opacity-70">*/}

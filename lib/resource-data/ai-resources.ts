@@ -25,7 +25,8 @@ export const aiLinks: Tool[] = [
     ],
   },
   {
-    title: "Open WebUI: Self-Hosted AI Platform",
+    title: "Open WebUI",
+    subtitle: "Self-Hosted AI Platform",
     url: "https://openwebui.com/",
     description:
       "Run AI on your own terms. Connect any model, extend with code, protect what matters—without compromise.",

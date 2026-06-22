@@ -49,13 +49,13 @@ export function PaletteTab() {
                   </DialogTrigger>
                   <DialogContent className="sm:max-w-xl">
                     <DialogHeader>
-                      <DialogTitle className="text-console-md">
+                      <DialogTitle className="text-mono-sm">
                         Palette name: &quot;{palette.name}&quot;
                       </DialogTitle>
                     </DialogHeader>
                     <div className="bg-card overflow-hidden border-2">
                       <div className="bg-muted/30 flex items-center justify-between border-b-2 px-4 py-2">
-                        <h4 className="text-console">{"//"} Combined CSS Properties</h4>
+                        <h4 className="text-mono-xs">{"//"} Combined CSS Properties</h4>
                         <CopyButton iconOnly textToCopy={combinedCode} />
                       </div>
                       <div className="max-h-[50vh] overflow-x-auto p-4">
