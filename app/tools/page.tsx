@@ -42,7 +42,7 @@ export default function ToolsPage() {
                 <span className="bg-primary h-px flex-1" />
                 <span>{tools.length} Tools</span>
               </h2>
-              <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              <div className="card-grid">
                 {tools.map((tool, index) => (
                   <ToolCard key={tool.slug} tool={tool} index={index} />
                 ))}

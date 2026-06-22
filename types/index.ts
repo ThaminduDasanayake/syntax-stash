@@ -12,6 +12,7 @@ export type Tool = {
   className?: string;
   tags?: string[];
   author?: string;
+  details?: { title: string; content: string }[];
 };
 
 export type ToolCardProps = {
