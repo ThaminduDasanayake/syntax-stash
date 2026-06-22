@@ -29,7 +29,7 @@ export const dataLinks: Tool[] = [
     url: "https://behindtheemail.com/",
     description:
       "Instantly find career history, education, and public profile signals from any email address. Professional OSINT for lead research and verification.",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.data,
   },
   {
     title: "Apify",

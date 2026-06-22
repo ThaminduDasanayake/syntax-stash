@@ -15,7 +15,7 @@ export const reactLinks: Tool[] = [
     url: "https://21st.dev/",
     description:
       "Explore, copy, and remix thousands of high-quality React components published to the 21st.dev Community by designers and developers.",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.react,
   },
   {
     title: "UV Canvas",

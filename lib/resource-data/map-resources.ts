@@ -48,7 +48,6 @@ export const mapLinks: Tool[] = [
   {
     title: "shadcnmaps",
     url: "https://www.shadcnmaps.com/",
-    className: "invert",
     description:
       "170+ interactive SVG map components for React. Countries, continents, and US states. No dependencies — install via shadcn CLI with pure Tailwind CSS styling.",
     category: CATEGORIES.maps,

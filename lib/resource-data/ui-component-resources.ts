@@ -8,80 +8,80 @@ export const uiComponentLinks: Tool[] = [
     url: "https://ui.aceternity.com/",
     description:
       "Copy-paste beautiful UI components built with React, Next.js, Tailwind CSS, and Framer Motion. 200+ free components, blocks, and templates.",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.uiComponents,
   },
   {
     title: "Efferd - Beautiful Shadcn blocks for Busy & Smart devs.",
     url: "https://efferd.com/",
     description:
       "Save hours of design time with clean, ready-to-use shadcn blocks that just work — modern, responsive, and built for speed.",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.uiComponents,
   },
   {
     title: "phantom-ui",
     url: "https://aejkatappaja.github.io/phantom-ui/",
     description: "Structure-aware skeleton loader. One Web Component. Every framework.",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.uiComponents,
   },
   {
     title: "Open Props: sub-atomic styles",
     url: "https://open-props.style/",
     description:
       "Open source CSS custom properties to help accelerate adaptive and consistent design. Available from a CDN or NPM, as CSS or Javascript.",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.uiComponents,
   },
   {
     title: "Componentry",
     url: "https://www.componentry.fun/",
     description:
       "Componentry is a free, open-source React UI component library by Harsh Jadhav. Beautiful, animated, copy-paste components built with Tailwind CSS, TypeScript, and Framer Motion. The best UI components for modern web applications.",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.uiComponents,
   },
   {
     title: "SyntaxUI - Free React, Tailwind CSS & Framer UI Components",
     url: "https://syntaxui.com/",
     description:
       "Get free-to-use Prebuilt React components powered by Tailwind CSS & Framer Motion. Modern, Minimal and customizable. Just copy, paste and you're ready to go!",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.uiComponents,
   },
   {
     title: "Lukacho UI",
     url: "https://ui.lukacho.com/",
     description: "Animated UI component Collection made with Next.js | TailwindCSS | Framer Motion",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.uiComponents,
   },
   {
     title: "Skiper UI",
     url: "https://skiper-ui.com/",
     description:
       "Brand new uncommon components for your Next.js project. Use with ease through shadcn CLI 3.0, featuring fast-growing components and collections that are easy to edit and use.",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.uiComponents,
   },
   {
     title: "Shoogle",
     url: "https://shoogle.dev/",
     description: "Search shadcn components.",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.uiComponents,
   },
   {
     title: "Uiverse",
     url: "https://uiverse.io/",
     description:
       "Community-made library of free and customizable UI elements made with CSS or Tailwind. It's all free to copy and use in your projects. Uiverse can save you many hours spent on building & customizing UI components for your next project.",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.uiComponents,
   },
   {
     title: "Trees, from Pierre",
     url: "https://trees.software/",
     description:
       "@pierre/trees is an open source file tree rendering library. It's built for performance and flexibility, is super customizable, and comes packed with features.",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.uiComponents,
   },
   {
     title: "Blossom Carousel",
     url: "https://www.blossom-carousel.com/",
     description: "Enhance native scrolling with dragging instead of replacing it.",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.uiComponents,
   },
   {
     title: "Ark UI",
@@ -101,7 +101,6 @@ export const uiComponentLinks: Tool[] = [
   {
     title: "ThemeCN",
     url: "https://tweakcn.com/",
-    className: "invert",
     description:
       "Customize theme for shadcn/ui with tweakcn's interactive editor. Supports Tailwind CSS v4, Shadcn UI, and custom styles. Modify properties, preview changes, and get the code in real time.",
     category: CATEGORIES.uiComponents,
@@ -109,6 +108,7 @@ export const uiComponentLinks: Tool[] = [
   {
     title: "Smooth UI",
     url: "https://www.smoothui.dev/",
+    className: "bg-foreground border-paper",
     description:
       "Animated React components with smooth Motion animations. Drop-in shadcn/ui compatible, fully customizable with Tailwind CSS.",
     category: CATEGORIES.uiComponents,

@@ -14,35 +14,35 @@ export const developmentLinks: Tool[] = [
     title: "Responsively App",
     url: "https://responsively.app/",
     description: "A dev-tool that aids faster and precise responsive web development.",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.development,
   },
   {
     title: "SEOStudio - 100% Free Online Tools Collection",
     url: "https://seostudio.tools/",
     description:
       "SEOStudio is a cutting-edge, user-friendly online platform that offers comprehensive suite of free SEO, YouTube, Text, Programming, Webmaster, and Miscellaneous tools.",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.development,
   },
   {
     title: "10x - App Builder",
     url: "https://www.10x.app/",
     description:
       "10x is an AI-powered iOS app builder for macOS. Describe the app you want, and 10x generates SwiftUI code, an Xcode project, and a simulator preview.",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.development,
   },
   {
     title: "Coolify",
     url: "https://coolify.io/",
     description:
       "Self-hosting platform with superpowers. Deploy apps, databases & 280+ services to your server. Open-source alternative to Heroku.",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.development,
   },
   {
     title: "comimi",
     url: "https://yui540.com/comimi",
     description:
       "comimi is a TypeScript/JavaScript library that allows you to embed a manga viewer into websites.",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.development,
   },
   {
     title: "Omatsuri",
@@ -54,7 +54,6 @@ export const developmentLinks: Tool[] = [
     title: "Postgres Sandbox",
     url: "https://database.build/",
     description: "In-browser Postgres sandbox with AI assistance",
-    className: "invert",
     category: CATEGORIES.development,
   },
   {

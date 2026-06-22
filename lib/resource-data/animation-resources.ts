@@ -14,35 +14,35 @@ export const animationLinks: Tool[] = [
     url: "https://atroposjs.com/",
     description:
       "Atropos is a lightweight, free and open-source JavaScript library to create stunning touch-friendly 3D parallax hover effects.",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.animations,
   },
   {
     title: "driver.js",
     url: "https://driverjs.com/",
     description:
       "A light-weight, no-dependency, vanilla JavaScript library to drive user's focus across the page.",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.animations,
   },
   {
     title: "Animmaster Lib",
     url: "https://animmasterlib.dev/",
     description:
       "Animmaster Lib — a modern frontend library of 300 PRO-level animated UI components with live video previews. Scroll animations, WebGL shaders, hero sections, sliders, menus and more — copy, paste, ship.",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.animations,
   },
   {
     title: "Flicker - Spinner Library",
     url: "https://flicker.laurie.fyi/",
     description:
       "A loading spinner library inspired by flip-dot displays. Browse the collection, build your own, export to SVG, React, or Flutter.",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.animations,
   },
   {
     title: "LottieFiles",
     url: "https://lottiefiles.com/",
     description:
       "Effortlessly bring the smallest, free, ready-to-use motion graphics for the web, app, social, and designs. Create, edit, test, collaborate, and ship Lottie animations in no time!",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.animations,
   },
   {
     title: "Animista",
@@ -75,7 +75,7 @@ export const animationLinks: Tool[] = [
     title: "Grainrad",
     url: "https://grainrad.com/",
     description: "Grainrad - Free WebGPU-powered ASCII, dithering, and retro effects at 60fps",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.animations,
   },
   {
     title: "FlipOff.",
@@ -90,13 +90,13 @@ export const animationLinks: Tool[] = [
     url: "https://transitions.dev/",
     description:
       "Collection of the most essential transitions for web apps that you can just copy and paste into any project.",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.animations,
   },
   {
     title: "AutoAnimate - Add motion to your apps with a single line of code",
     url: "https://auto-animate.formkit.com/",
     description:
       "A zero-config, drop-in animation utility that automatically adds smooth transitions to your web app. Use it with React, Solid, Vue, Svelte, or any other JavaScript application.",
-    category: CATEGORIES.unknown,
+    category: CATEGORIES.animations,
   },
 ];
