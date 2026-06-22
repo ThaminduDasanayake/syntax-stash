@@ -2,6 +2,7 @@ import type { IconName } from "@/lib/icons";
 
 export type Tool = {
   title: string;
+  subtitle?: string;
   highlight?: string;
   slug?: string;
   url?: string;
@@ -12,6 +13,7 @@ export type Tool = {
   className?: string;
   tags?: string[];
   author?: string;
+  authorLink?: string;
   details?: { title: string; content: string }[];
 };
 

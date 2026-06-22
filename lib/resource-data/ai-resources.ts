@@ -14,13 +14,15 @@ export const aiLinks: Tool[] = [
     details: [
       {
         title: "WHAT IT IS",
-        content: "A visual framework for building multi-agent and RAG applications. It’s open-source and provides a drag-and-drop UI to compose LLMs, vector stores, and prompt templates easily."
+        content:
+          "A visual framework for building multi-agent and RAG applications. It’s open-source and provides a drag-and-drop UI to compose LLMs, vector stores, and prompt templates easily.",
       },
       {
         title: "IN THE AGE OF AI",
-        content: "Building custom ChatGPT-like bots and AI workflows typically requires heavy Python scripting (LangChain/LlamaIndex). Langflow reduces this to a visual node-based experience, drastically speeding up prototyping and deployment for teams."
-      }
-    ]
+        content:
+          "Building custom ChatGPT-like bots and AI workflows typically requires heavy Python scripting (LangChain/LlamaIndex). Langflow reduces this to a visual node-based experience, drastically speeding up prototyping and deployment for teams.",
+      },
+    ],
   },
   {
     title: "Open WebUI: Self-Hosted AI Platform",
@@ -33,13 +35,15 @@ export const aiLinks: Tool[] = [
     details: [
       {
         title: "WHY USE THIS",
-        content: "If you want the ChatGPT Plus experience but fully offline or pointing to your own local models (like Llama 3 via Ollama), this is the definitive UI. It supports multiple users, RAG document uploading, and full API integrations."
+        content:
+          "If you want the ChatGPT Plus experience but fully offline or pointing to your own local models (like Llama 3 via Ollama), this is the definitive UI. It supports multiple users, RAG document uploading, and full API integrations.",
       },
       {
         title: "PRIVACY FOCUS",
-        content: "By self-hosting your AI stack, no corporate entity can use your chats for training data. Your local documents and conversations remain strictly on your own hardware."
-      }
-    ]
+        content:
+          "By self-hosting your AI stack, no corporate entity can use your chats for training data. Your local documents and conversations remain strictly on your own hardware.",
+      },
+    ],
   },
   {
     title: "Crawl4AI",
@@ -49,14 +53,18 @@ export const aiLinks: Tool[] = [
     tags: ["crawler", "scraper", "open-source", "llm"],
   },
   {
-    title: "OpenHands | The Open Platform for Cloud Coding Agents",
+    title: "OpenHands",
+    subtitle: "The Open Platform for Cloud Coding Agents",
+    author: "OpenHands",
+    authorLink: "https://github.com/OpenHands",
     url: "https://www.openhands.dev/",
     description:
       "Meet OpenHands, the open-source, model-agnostic platform for cloud coding agents. Automate real engineering work securely and transparently. Build faster with full control.",
     category: CATEGORIES.ai,
   },
   {
-    title: "Maxun • Scrape, Extract, Crawl, Search Web Data With No-Code",
+    title: "Maxun",
+    subtitle: "Scrape, Extract, Crawl, Search Web Data With No-Code",
     url: "https://www.maxun.dev/",
     description:
       "The easiest AI-powered  web scraping, crawling, extraction, search platform. The best open-source Browse AI alternative.",

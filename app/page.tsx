@@ -186,7 +186,7 @@ export default function Home() {
               <Button size="icon" variant="secondary" className="h-10 w-10">
                 <ArrowLeftIcon weight="bold" />
               </Button>
-              <Button size="icon" variant="secondary" className="h-10 w-10 border-l-0!">
+              <Button size="icon" variant="secondary" className="h-10 w-10">
                 <ArrowRightIcon weight="bold" />
               </Button>
             </ButtonGroup>
