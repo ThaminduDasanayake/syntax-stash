@@ -33,11 +33,10 @@
     --blue: #2A47B8;
     --pink: #C9A4F0;
     --green: #5DAA2E;
-
-    /*--on-heur: #14110B;*/
-    /*--on-bias: #F5F1E5;*/
-    /*--on-nudge: #14110B;*/
-    /*--on-ai: #14110B;*/
+    --yellow: #FFE600;
+    --purple: #8B5CF6;
+    --cyan: #00F0FF;
+    --red: #EF4444;
 
     --orange-tint: #F4DDA5;
     --blue-tint: #C8D2EE;
@@ -117,6 +116,10 @@
     --color-c-blue: var(--blue);
     --color-c-pink: var(--pink);
     --color-c-green: var(--green);
+    --color-c-yellow: var(--yellow);
+    --color-c-purple: var(--purple);
+    --color-c-cyan: var(--cyan);
+    --color-c-red: var(--red);
     --color-orange-tint: var(--orange-tint);
     --color-orange-tint-2: var(--orange-tint-2);
     --color-orange-soft: var(--orange-soft);

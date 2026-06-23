@@ -9,15 +9,15 @@ import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { resourceLinks } from "@/lib/resource-data";
-import { cn, getAlternatingColor } from "@/lib/utils";
+import { cn, getResourceColorByKey, getResourceKeyFromValue } from "@/lib/utils";
 import { ToolCardProps } from "@/types";
 
-export function ResourceDialog({ tool: initialTool, index }: ToolCardProps & { index?: number }) {
-  const [activeTool, setActiveTool] = React.useState(initialTool);
+export function ResourceDialog({ tool }: ToolCardProps) {
+  const [activeTool, setActiveTool] = React.useState(tool);
 
   React.useEffect(() => {
-    setActiveTool(initialTool);
-  }, [initialTool]);
+    setActiveTool(tool);
+  }, [tool]);
 
   const currentIndex = React.useMemo(() => {
     return resourceLinks.findIndex((r) => r.title === activeTool.title);
@@ -35,10 +35,8 @@ export function ResourceDialog({ tool: initialTool, index }: ToolCardProps & { i
     setActiveTool(resourceLinks[prevIndex]);
   };
 
-  const colorClasses = getAlternatingColor(
-    activeTool.title,
-    currentIndex !== -1 ? currentIndex : index,
-  );
+  const key = getResourceKeyFromValue(tool.category);
+  const colorClasses = getResourceColorByKey(key);
 
   const relatedResources = React.useMemo(() => {
     if (activeTool.related && activeTool.related.length > 0) {
@@ -70,7 +68,10 @@ export function ResourceDialog({ tool: initialTool, index }: ToolCardProps & { i
           <div className="modal-cat-label">
             <div className="flex items-center gap-2">
               <span className="modal-cat-dot"></span>
-              <Link href={`/resources/${activeTool.category}`} className="modal-cat-name modal-cat-link">
+              <Link
+                href={`/resources/${activeTool.category}`}
+                className="modal-cat-name modal-cat-link"
+              >
                 {activeTool.category}
               </Link>
             </div>

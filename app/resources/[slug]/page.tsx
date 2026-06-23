@@ -28,8 +28,8 @@ export default async function ResourceCategoryPage(props: PageProps<"/resources/
 
       {/* Resource grid */}
       <div className="card-grid">
-        {links.map((tool, index) => (
-          <ToolCard key={tool.url} tool={tool} index={index} />
+        {links.map((tool) => (
+          <ToolCard key={tool.url} tool={tool} />
         ))}
       </div>
     </div>

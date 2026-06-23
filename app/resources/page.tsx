@@ -43,8 +43,8 @@ export default function ResourcesPage() {
                 <span>{items.length} Resources</span>
               </h2>
               <div className="card-grid">
-                {items.map((resource, index) => (
-                  <ToolCard key={resource.url} tool={resource} index={index} />
+                {items.map((resource) => (
+                  <ToolCard key={resource.url} tool={resource} />
                 ))}
               </div>
             </div>

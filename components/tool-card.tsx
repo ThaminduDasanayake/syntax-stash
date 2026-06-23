@@ -8,13 +8,22 @@ import { ResourceDialog } from "@/components/resource-dialog";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { iconMap } from "@/lib/icons";
-import { cn, getAlternatingColor } from "@/lib/utils";
+import {
+  cn,
+  getResourceColorByKey,
+  getResourceKeyFromValue,
+  getToolColorByKey,
+  getToolKeyFromValue,
+} from "@/lib/utils";
 import { ToolCardProps } from "@/types";
 
-function CardBody({ tool, index }: ToolCardProps & { index?: number }) {
+function CardBody({ tool }: ToolCardProps) {
   const isInternal = !!tool.slug;
   const Icon = (tool.icon && iconMap[tool.icon]) || ToolboxIcon;
-  const colorClasses = getAlternatingColor(tool.title, index);
+  const key = isInternal
+    ? getToolKeyFromValue(tool.category)
+    : getResourceKeyFromValue(tool.category);
+  const colorClasses = isInternal ? getToolColorByKey(key) : getResourceColorByKey(key);
 
   return (
     <article className={cn("card group", colorClasses)} role="button" tabIndex={0}>
@@ -76,14 +85,14 @@ function CardBody({ tool, index }: ToolCardProps & { index?: number }) {
   );
 }
 
-export default function ToolCard({ tool, index }: ToolCardProps & { index?: number }) {
+export default function ToolCard({ tool }: ToolCardProps) {
   const linkWrapperClass =
     "block w-full h-full outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary text-left";
 
   if (tool.slug) {
     return (
       <Link href={`/tools/${tool.slug}`} className={linkWrapperClass}>
-        <CardBody tool={tool} index={index} />
+        <CardBody tool={tool} />
       </Link>
     );
   }
@@ -92,10 +101,10 @@ export default function ToolCard({ tool, index }: ToolCardProps & { index?: numb
     <Dialog>
       <DialogTrigger asChild>
         <div className={linkWrapperClass}>
-          <CardBody tool={tool} index={index} />
+          <CardBody tool={tool} />
         </div>
       </DialogTrigger>
-      <ResourceDialog tool={tool} index={index} />
+      <ResourceDialog tool={tool} />
     </Dialog>
   );
 }

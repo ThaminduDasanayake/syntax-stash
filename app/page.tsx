@@ -55,22 +55,22 @@ export default function Home() {
           <div className="relative hidden h-150 w-full lg:block">
             <div className="absolute top-10 left-10 z-10 w-75 hover:z-50">
               <div className="h-full w-full origin-center -rotate-3 transition-all duration-300 ease-out hover:-translate-y-4 hover:rotate-0">
-                <ToolCard tool={internalTools[0]} index={0} />
+                <ToolCard tool={internalTools[52]} />
               </div>
             </div>
             <div className="absolute top-35 left-75 z-20 w-75 hover:z-50">
               <div className="h-full w-full origin-center rotate-6 transition-all duration-300 ease-out hover:-translate-y-4 hover:rotate-0">
-                <ToolCard tool={internalTools[1]} index={1} />
+                <ToolCard tool={internalTools[38]} />
               </div>
             </div>
             <div className="absolute top-45 left-15 z-30 w-75 hover:z-50">
               <div className="h-full w-full origin-center -rotate-4 transition-all duration-300 ease-out hover:-translate-y-4 hover:rotate-0">
-                <ToolCard tool={internalTools[2]} index={2} />
+                <ToolCard tool={internalTools[22]} />
               </div>
             </div>
             <div className="absolute top-75 left-50 z-40 w-75 hover:z-50">
               <div className="h-full w-full origin-center rotate-8 transition-all duration-300 ease-out hover:-translate-y-4 hover:rotate-0">
-                <ToolCard tool={internalTools[3]} index={3} />
+                <ToolCard tool={internalTools[28]} />
               </div>
             </div>
           </div>
@@ -169,8 +169,8 @@ export default function Home() {
           </div>
 
           <div className="mb-12 grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {topTools.map((tool, index) => (
-              <ToolCard key={tool.slug} tool={tool} index={index} />
+            {topTools.map((tool) => (
+              <ToolCard key={tool.slug} tool={tool} />
             ))}
           </div>
 

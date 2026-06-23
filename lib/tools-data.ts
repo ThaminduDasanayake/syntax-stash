@@ -12,6 +12,10 @@ export const CATEGORIES = {
   uiStyling: "UI & Styling",
 } as const;
 
+export type ToolCategoryValue = (typeof CATEGORIES)[keyof typeof CATEGORIES];
+
+export const toolCategories: ToolCategoryValue[] = Object.values(CATEGORIES);
+
 export const calculatorTools: Tool[] = [
   {
     title: "Unit Converter",
