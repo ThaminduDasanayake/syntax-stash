@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import ToolCard from "@/components/tool-card";
+import { ResourceFilterSection } from "@/components/resource-filter-section";
 import { resourceCategories, resourceLinks } from "@/lib/resource-data";
 import { slugify } from "@/lib/utils";
 
@@ -14,24 +14,25 @@ export default async function ResourceCategoryPage(props: PageProps<"/resources/
   const category = resourceCategories.find((c) => slugify(c) === slug);
   if (!category) notFound();
 
-  const links = resourceLinks.filter((t) => t.category === category);
-
   return (
-    <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 p-6">
-      {/* Page header */}
-      <div className="mb-8">
-        <h1 className="text-foreground text-2xl font-semibold tracking-tight">{category}</h1>
-        <p className="text-muted-foreground mt-1 text-sm">
-          {links.length} curated resource{links.length !== 1 ? "s" : ""}
-        </p>
-      </div>
+    <div className="res-page">
+      {/* Header */}
+      <header className="res-header">
+        <div className="section-inner">
+          <h1 className="res-headline">
+            {category}
+          </h1>
+          <p className="res-sub">
+            Curated resources for {category.toLowerCase()}.
+          </p>
+        </div>
+      </header>
 
-      {/* Resource grid */}
-      <div className="card-grid">
-        {links.map((tool) => (
-          <ToolCard key={tool.url} tool={tool} />
-        ))}
-      </div>
+      <ResourceFilterSection
+        initialCategory={category}
+        resourceLinks={resourceLinks}
+        resourceCategories={resourceCategories}
+      />
     </div>
   );
 }

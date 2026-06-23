@@ -1,11 +1,6 @@
-import { MagnifyingGlassIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 
-import { DotButton } from "@/components/dot-button";
-import ToolCard from "@/components/tool-card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { SearchInput } from "@/components/ui/search-input";
+import { ResourceFilterSection } from "@/components/resource-filter-section";
 import { resourceCategories, resourceLinks } from "@/lib/resource-data";
 
 export const metadata: Metadata = {
@@ -13,15 +8,6 @@ export const metadata: Metadata = {
   description: "A curated list of developer resources — frameworks, tools, and references.",
   title: "Resources",
 };
-
-const groupedResources = resourceLinks.reduce(
-  (acc, resource) => {
-    if (!acc[resource.category]) acc[resource.category] = [];
-    acc[resource.category].push(resource);
-    return acc;
-  },
-  {} as Record<string, typeof resourceLinks>,
-);
 
 export default function ResourcesPage() {
   return (
@@ -36,44 +22,15 @@ export default function ResourcesPage() {
             <em>stash.</em>
           </h1>
           <p className="res-sub">
-            {resourceLinks.length} curated links across {Object.keys(groupedResources).length}{" "}
-            categories.
+            {resourceLinks.length} curated links across {resourceCategories.length} categories.
           </p>
         </div>
       </header>
 
-      <div className="filter-bar">
-        <div className="filter-bar-inner">
-          <div className="filter-search-wrap">
-            <MagnifyingGlassIcon weight="bold" className="filter-search-icon" />
-            <Input className="filter-search" placeholder="Search resources..." />
-          </div>
-          <div className="filter-pills"></div>
-          <div className="filter-count">
-            <span className="filter-count-num">{resourceLinks.length}</span>
-            <span> of {resourceLinks.length}</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 p-6">
-        <div className="space-y-12 pb-8">
-          {Object.entries(groupedResources).map(([category, items]) => (
-            <div key={category} className="space-y-6">
-              <h2 className="text-primary flex items-center gap-4 font-mono text-sm font-semibold tracking-wider uppercase">
-                {category}
-                <span className="bg-primary h-px flex-1" />
-                <span>{items.length} Resources</span>
-              </h2>
-              <div className="card-grid">
-                {items.map((resource) => (
-                  <ToolCard key={resource.url} tool={resource} />
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      <ResourceFilterSection
+        resourceLinks={resourceLinks}
+        resourceCategories={resourceCategories}
+      />
     </div>
   );
 }
