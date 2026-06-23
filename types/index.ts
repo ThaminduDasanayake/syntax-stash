@@ -1,21 +1,21 @@
 import type { IconName } from "@/lib/icons";
 
 export type Tool = {
-  title: string;
-  subtitle?: string;
-  highlight?: string;
-  slug?: string;
-  url?: string;
-  description: string;
-  category: string;
-  icon?: IconName;
-  favicon?: string;
-  className?: string;
-  tags?: string[];
   author?: string;
   authorLink?: string;
+  category: string;
+  className?: string;
+  description: string;
   details?: { title: string; content: string }[];
+  favicon?: string;
+  highlight?: string;
+  icon?: IconName;
   related?: string[];
+  slug?: string;
+  subtitle?: string;
+  tags?: string[];
+  title: string;
+  url?: string;
 };
 
 export type ToolCardProps = {

@@ -16,7 +16,7 @@ export default function AppHeader({
 
   return (
     <header
-      className={`sticky top-0 z-50 flex h-20 shrink-0 items-center justify-between bg-[#ede9dd]/85 px-6 backdrop-blur-md transition-colors duration-200 ease-out md:px-12 ${isScrolled ? "border-border border-b" : "border-b border-transparent"}`}
+      className={`sticky top-0 z-50 flex h-20 shrink-0 items-center justify-between bg-[#ede9ddf0] px-6 backdrop-blur-md transition-colors duration-200 ease-out md:px-12 ${isScrolled ? "border-line border-b" : "border-b border-transparent"}`}
     >
       {/* Left: Logo */}
       <div className="flex items-center gap-2">

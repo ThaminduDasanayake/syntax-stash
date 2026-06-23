@@ -105,7 +105,13 @@
     --color-ring: var(--ring);
 
     /* Custom Color variables */
+    --color-bg: var(--bg);
+    --colo-bg-2: var(--bg-2);
+    --color-bg-3: var(--bg-3);
     --color-paper: var(--paper);
+    --color-sec-1: var(--sec-1);
+    --color-sec-2: var(--sec-2);
+    --color-sec-3: var(--sec-3);
     --color-line: var(--line);
     --color-line-2: var(--line-2);
     --color-ink: var(--ink);
@@ -223,7 +229,6 @@
     @apply flex flex-col items-center justify-center;
 }
 
-
 @utility sidebar-text-collapse {
     @apply overflow-hidden whitespace-nowrap transition-all duration-600 ease-in-out group-data-[collapsible=icon]:w-0 group-data-[collapsible=icon]:opacity-0;
 }
@@ -257,6 +262,12 @@
     @apply font-display text-sm! font-bold! tracking-wider uppercase;
 }
 
+@utility headline {
+    @apply font-display text-[clamp(40px,5.8vw,80px)] font-extrabold tracking-tighter leading-none uppercase;
+
+    @apply [&_em]:font-serif [&_em]:italic [&_em]:lowercase [&_em]:font-normal [&_em]:tracking-tight;
+}
+
 @utility border {
     border-width: 1.5px !important;
 }
@@ -266,9 +277,58 @@
     @apply flex gap-3 flex-wrap;
 }
 
+/* Resource Stash*/
+@utility res-page {
+    @apply flex w-full flex-col;
+}
+
+@utility res-header {
+    @apply pt-33 pb-12 bg-sec-1 border-b border-b-line;
+}
+
+@utility section-inner {
+    @apply mx-auto px-8 max-w-7xl;
+}
+
+@utility res-headline {
+    @apply headline mb-5 text-balance;
+}
+
+@utility res-sub {
+    @apply text-ink-2 mb-7 font-mono text-lg leading-relaxed;
+}
+
+@utility filter-bar {
+    @apply bg-[#ede9ddf0] sticky top-16 z-80 backdrop-blur-md border-y-[1.5px] border-y-ink py-5.5
+}
+
+@utility filter-bar-inner {
+    @apply max-w-7xl mx-auto px-8 flex-wrap gap-3 items-center flex;
+}
+
+@utility filter-search-wrap {
+    @apply relative min-w-45 max-w-70 flex-1;
+}
+
+@utility filter-search-icon {
+    @apply absolute left-3 top-1/2 pointer-events-none w-3.5 h-3.5;
+}
+
+@utility filter-search {
+    @apply h-10! w-full pr-8 pl-8.5 outline-none transition-colors duration-200 bg-paper focus-visible:bg-bg!;
+}
+
+@utility filter-pills {
+    @apply flex gap-1.5 flex-wrap
+}
+
+@utility filter-pill {
+    @apply gap-4 h-10!
+}
+
 /* Card */
 @utility card-grid {
-    @apply grid w-full grid-cols-1 gap-4.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4
+    @apply grid w-full grid-cols-1 gap-4.5 sm:grid-cols-2 lg:grid-cols-4
 }
 
 @utility card {
@@ -416,12 +476,15 @@
 @utility tab-trigger-orange {
     @apply tab-trigger hover:bg-orange-soft! data-[state=active]:bg-c-orange!;
 }
+
 @utility tab-trigger-blue {
     @apply tab-trigger hover:bg-blue-soft! data-active:text-paper! data-[state=active]:bg-c-blue!;
 }
+
 @utility tab-trigger-pink {
     @apply tab-trigger hover:bg-pink-soft! data-[state=active]:bg-c-pink!;
 }
+
 @utility tab-trigger-green {
     @apply tab-trigger hover:bg-green-soft! data-[state=active]:bg-c-green!;
 }

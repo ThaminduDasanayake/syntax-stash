@@ -1,12 +1,15 @@
+import { MagnifyingGlassIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 
 import ToolCard from "@/components/tool-card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { resourceLinks } from "@/lib/resource-data";
 
 export const metadata: Metadata = {
-  title: "Resources",
-  description: "A curated list of developer resources — frameworks, tools, and references.",
   alternates: { canonical: "/resources" },
+  description: "A curated list of developer resources — frameworks, tools, and references.",
+  title: "Resources",
 };
 
 const groupedResources = resourceLinks.reduce(
@@ -20,17 +23,33 @@ const groupedResources = resourceLinks.reduce(
 
 export default function ResourcesPage() {
   return (
-    <div className="flex w-full flex-col">
-      {/* Mini-Hero */}
-      <div className="border-border bg-background relative w-full border-b-2 px-6 py-12 md:px-12">
-        <h1 className="flex flex-col gap-1 text-4xl tracking-tighter sm:text-5xl">
-          <span className="font-display font-black uppercase">THE RESOURCES</span>
-          <span className="font-serif tracking-normal lowercase italic">stash.</span>
-        </h1>
-        <p className="text-muted-foreground mt-4 font-mono text-sm leading-relaxed tracking-wider uppercase opacity-80">
-          {resourceLinks.length} curated links across {Object.keys(groupedResources).length}{" "}
-          categories.
-        </p>
+    <div className="res-page">
+      {/* Header */}
+      <header className="res-header">
+        <div className="section-inner">
+          <div>----------Eyebrow---------</div>
+          <h1 className="res-headline">
+            THE RESOURCES
+            <br />
+            <em>stash.</em>
+          </h1>
+          <p className="res-sub">
+            {resourceLinks.length} curated links across {Object.keys(groupedResources).length}{" "}
+            categories.
+          </p>
+        </div>
+      </header>
+
+      <div className="filter-bar">
+        <div className="filter-bar-inner">
+          <div className="filter-search-wrap">
+            <MagnifyingGlassIcon weight="bold" className="filter-search-icon" />
+            <Input className="filter-search" />
+          </div>
+          <div className="filter-pills">
+            <Button className="filter-pill">Cat</Button>
+          </div>
+        </div>
       </div>
 
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 p-6">
