@@ -1,7 +1,7 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
-import { JetBrains_Mono, Manrope } from "next/font/google";
+import { Bricolage_Grotesque, Instrument_Serif, Inter, JetBrains_Mono } from "next/font/google";
 import { ReactNode } from "react";
 
 import AppLayout from "@/components/app-layout";
@@ -10,9 +10,21 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
-const manrope = Manrope({
+const bricolage = Bricolage_Grotesque({
+  subsets: ["latin"],
+  variable: "--font-display",
+});
+
+const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
+});
+
+const instrumentSerif = Instrument_Serif({
+  weight: ["400", "400"],
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  variable: "--font-serif",
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -37,13 +49,18 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn(manrope.variable, jetbrainsMono.variable, "h-full")}
+      className={cn(
+        bricolage.variable,
+        inter.variable,
+        instrumentSerif.variable,
+        jetbrainsMono.variable,
+        "h-full"
+      )}
     >
       <body className="bg-background text-foreground flex h-screen overflow-hidden antialiased">
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          forcedTheme="dark"
+          defaultTheme="light"
           disableTransitionOnChange
         >
           <TooltipProvider>

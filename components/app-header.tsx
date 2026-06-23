@@ -4,111 +4,89 @@ import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Kbd } from "@/components/ui/kbd";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import { internalTools } from "@/lib/tools-data";
 import { HeaderProps } from "@/types";
 
-function segmentToLabel(segment: string): string {
-  return segment
-    .split("-")
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(" ");
-}
-
-const sectionLabels: Record<string, string> = {
-  tools: "Tools",
-  resources: "Resources",
-};
-
-export default function AppHeader({ onSearchOpenAction }: HeaderProps) {
+export default function AppHeader({
+  onSearchOpenAction,
+  isScrolled,
+}: HeaderProps & { isScrolled?: boolean }) {
   const pathname = usePathname();
 
-  const parts = pathname.split("/").filter(Boolean);
-
-  const toolMap = new Map(internalTools.map((t) => [`/tools/${t.slug}`, t.title]));
-
   return (
-    <header className="border-border bg-background sticky top-0 z-30 flex h-14 shrink-0 items-center justify-between border-b-2 px-4 md:px-6">
-      <div className="flex min-w-0 items-center gap-4">
-        <SidebarTrigger
-        // className="btn-caps-stripe-primary btn-caps-stripe rounded-none transition-colors"
-        />
-
-        <Breadcrumb className="hidden min-w-0 sm:flex">
-          <BreadcrumbList className="min-w-0 flex-nowrap font-mono text-xs font-bold tracking-widest">
-            <BreadcrumbItem className="shrink-0">
-              {parts.length === 0 ? (
-                <BreadcrumbPage className="text-primary font-bold">&gt; ROOT</BreadcrumbPage>
-              ) : (
-                <BreadcrumbLink asChild>
-                  <Link
-                    href="/"
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    ROOT
-                  </Link>
-                </BreadcrumbLink>
-              )}
-            </BreadcrumbItem>
-
-            {parts.map((part, idx) => {
-              const isLast = idx === parts.length - 1;
-              const href = "/" + parts.slice(0, idx + 1).join("/");
-              const label =
-                toolMap.get(href) ??
-                (idx === 0 ? (sectionLabels[part] ?? segmentToLabel(part)) : segmentToLabel(part));
-
-              return (
-                <span key={href} className="flex min-w-0 shrink-0 items-center gap-2 last:shrink">
-                  <BreadcrumbSeparator className="text-muted-foreground shrink-0 opacity-50">
-                    /
-                  </BreadcrumbSeparator>
-                  <BreadcrumbItem className="min-w-0">
-                    {isLast ? (
-                      <BreadcrumbPage className="text-primary block truncate font-bold">
-                        {label}
-                      </BreadcrumbPage>
-                    ) : (
-                      <BreadcrumbLink asChild>
-                        <Link
-                          href={href}
-                          className="text-muted-foreground hover:text-primary transition-colors"
-                        >
-                          {label}
-                        </Link>
-                      </BreadcrumbLink>
-                    )}
-                  </BreadcrumbItem>
-                </span>
-              );
-            })}
-          </BreadcrumbList>
-        </Breadcrumb>
+    <header
+      className={`sticky top-0 z-50 flex h-20 shrink-0 items-center justify-between bg-[#ede9ddf0] px-6 backdrop-blur-md transition-colors duration-200 ease-out md:px-12 ${isScrolled ? "border-line border-b" : "border-b border-transparent"}`}
+    >
+      {/* Left: Logo */}
+      <div className="flex items-center gap-2">
+        <Link
+          href="/"
+          className="text-foreground flex items-center gap-2 transition-opacity hover:opacity-80"
+        >
+          <div className="bg-foreground text-background font-display flex h-8 w-8 items-center justify-center text-xl leading-none font-black tracking-tighter">
+            S
+          </div>
+          <span className="font-display text-2xl font-black tracking-tight uppercase">
+            SYNTAX<span className="font-serif tracking-normal lowercase italic">.stash</span>
+          </span>
+        </Link>
       </div>
 
-      {/* Center: spotlight search */}
-      <Button
-        onClick={onSearchOpenAction}
-        variant="outline"
-        className="border-border text-muted-foreground hover:border-primary hover:text-primary flex shrink-0 rounded-none border-2 bg-transparent font-mono text-xs font-bold tracking-widest uppercase transition-colors sm:w-64 md:w-80"
-        aria-label="Search"
-      >
-        <MagnifyingGlassIcon weight="duotone" className="shrink-0" />
-        <span className="hidden truncate sm:inline">Search Registry...</span>
-        <Kbd className="border-border bg-foreground text-background ml-auto rounded-none border-none px-2 font-mono">
-          ⌘ K
-        </Kbd>
-      </Button>
+      {/* Center: Navigation Links */}
+      <nav className="hidden items-center gap-8 md:flex">
+        <Link
+          href="/"
+          className={`font-mono text-sm font-bold tracking-widest uppercase transition-colors ${
+            pathname === "/"
+              ? "text-foreground underline decoration-2 underline-offset-8"
+              : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          Home
+        </Link>
+        <Link
+          href="/tools"
+          className={`font-mono text-sm font-bold tracking-widest uppercase transition-colors ${
+            pathname.startsWith("/tools")
+              ? "text-foreground underline decoration-2 underline-offset-8"
+              : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          Tools
+        </Link>
+        <Link
+          href="/resources"
+          className={`font-mono text-sm font-bold tracking-widest uppercase transition-colors ${
+            pathname.startsWith("/resources")
+              ? "text-foreground underline decoration-2 underline-offset-8"
+              : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          Resources
+        </Link>
+        <Link
+          href="/about"
+          className={`font-mono text-sm font-bold tracking-widest uppercase transition-colors ${
+            pathname === "/about"
+              ? "text-foreground underline decoration-2 underline-offset-8"
+              : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          About
+        </Link>
+      </nav>
+
+      {/* Right: Search / CTA */}
+      <div className="flex items-center gap-4">
+        <Button onClick={onSearchOpenAction} size="sm" aria-label="Search">
+          <MagnifyingGlassIcon weight="bold" className="shrink-0" />
+          <span className="ml-2 hidden sm:inline">EXPLORE LIBRARY</span>
+          <Kbd className="bg-background text-foreground group-hover:bg-background group-hover:text-foreground ml-4 rounded-none border-none px-2 font-mono">
+            ⌘K
+          </Kbd>
+        </Button>
+      </div>
     </header>
   );
 }

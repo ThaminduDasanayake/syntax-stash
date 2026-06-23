@@ -148,7 +148,7 @@ export function BuildTab({ onSendToExplore }: BuildTabProps) {
 
       {/* Reference */}
       <div className="mt-8 border-t pt-6">
-        <h3 className="text-console mb-3">{"//"} Cron Format Reference</h3>
+        <h3 className="text-mono-xs mb-3">{"//"} Cron Format Reference</h3>
         <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
           {[
             { token: "*", desc: "Every value" },

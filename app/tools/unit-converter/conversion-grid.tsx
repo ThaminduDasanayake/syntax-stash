@@ -9,7 +9,7 @@ const ConversionGrid = ({ units }: { units: UnitDef[] }) => {
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
       {units.map((unit) => (
-        <Card key={unit.id} className="focus-within:border-primary/50 transition-colors">
+        <Card key={unit.id} className="border ring-0">
           <CardContent>
             <div className="flex items-end gap-2">
               <InputField

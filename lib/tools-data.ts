@@ -12,6 +12,10 @@ export const CATEGORIES = {
   uiStyling: "UI & Styling",
 } as const;
 
+export type ToolCategoryValue = (typeof CATEGORIES)[keyof typeof CATEGORIES];
+
+export const toolCategories: ToolCategoryValue[] = Object.values(CATEGORIES);
+
 export const calculatorTools: Tool[] = [
   {
     title: "Unit Converter",
@@ -21,6 +25,7 @@ export const calculatorTools: Tool[] = [
       "Convert between units of length, weight, data, temperature, speed, area and volume.",
     category: CATEGORIES.calculators,
     icon: "scales",
+    tags: ["math", "conversion", "units", "metrics"],
   },
   {
     title: "Time Calculator",
@@ -30,6 +35,7 @@ export const calculatorTools: Tool[] = [
       "Convert Unix timestamps, ISO dates, and local time. Timezone viewer and date arithmetic.",
     category: CATEGORIES.calculators,
     icon: "clock",
+    tags: ["time", "date", "timezone", "timestamp"],
   },
   {
     title: "Base Converter",
@@ -39,6 +45,7 @@ export const calculatorTools: Tool[] = [
       "Convert between decimal, hex, binary, and octal with a 16-bit toggle grid and bitwise ops.",
     category: CATEGORIES.calculators,
     icon: "binary",
+    tags: ["hex", "binary", "decimal", "bitwise"],
   },
 ];
 

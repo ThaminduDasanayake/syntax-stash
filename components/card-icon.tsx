@@ -23,7 +23,7 @@ function getFavicon(toolUrl: string, explicitFavicon?: string) {
 export function CardIcon({
   url,
   alt,
-  className = "",
+  className = "bg-background",
   explicitFavicon,
 }: {
   url: string;
@@ -35,14 +35,14 @@ export function CardIcon({
   const [index, setIndex] = useState(0);
 
   return (
-    <div className="bg-background group-hover/card:border-primary relative flex h-12 w-12 shrink-0 items-center justify-center border-2 p-1">
+    <div className={cn(className, "card-icon-box p-1")}>
       <Image
         src={sources[index]}
         alt={alt}
         width={24}
         height={24}
         unoptimized
-        className={cn("h-full w-full object-contain", className)}
+        className="h-full w-full object-contain"
         onError={() => {
           if (index < sources.length - 1) {
             setIndex(index + 1);

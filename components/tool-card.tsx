@@ -4,77 +4,90 @@ import { ArrowSquareOutIcon, ToolboxIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 
 import { CardIcon } from "@/components/card-icon";
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ResourceDialog } from "@/components/resource-dialog";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { iconMap } from "@/lib/icons";
+import {
+  cn,
+  getResourceColorByKey,
+  getResourceKeyFromValue,
+  getToolColorByKey,
+  getToolKeyFromValue,
+} from "@/lib/utils";
 import { ToolCardProps } from "@/types";
 
 function CardBody({ tool }: ToolCardProps) {
   const isInternal = !!tool.slug;
   const Icon = (tool.icon && iconMap[tool.icon]) || ToolboxIcon;
+  const key = isInternal
+    ? getToolKeyFromValue(tool.category)
+    : getResourceKeyFromValue(tool.category);
+  const colorClasses = isInternal ? getToolColorByKey(key) : getResourceColorByKey(key);
 
   return (
-    <Card className="group/card bg-blueprint-card hover:border-primary hover:shadow-border relative flex h-full w-full flex-col overflow-hidden border-2 transition-all duration-200 hover:-translate-y-1 hover:shadow">
-      <div className="bg-background/50 flex items-center justify-between border-b-2 px-4 py-2 backdrop-blur-sm">
-        <span className="text-muted-foreground group-hover/card:text-primary text-telemetry transition-colors">
-          &gt; {tool.category}
-        </span>
-        {isInternal && <span className="text-muted-foreground text-telemetry">INT</span>}
-      </div>
+    <article className={cn("card group", colorClasses)} role="button" tabIndex={0}>
+      <div className="card-inner">
+        <div className="card-face">
+          <div className="card-header">
+            <span className="card-meta">{tool.category}</span>
 
-      <CardHeader className="relative z-10 flex-1 flex flex-col p-5">
-        <div className="flex flex-row items-start gap-4">
-          {isInternal ? (
-            <div className="bg-background group-hover/card:border-primary group-hover/card:text-primary flex h-10 w-10 shrink-0 items-center justify-center border-2 transition-colors">
-              <Icon className="size-5 transition-colors" />
-            </div>
-          ) : (
-            <CardIcon
-              url={tool.url!}
-              alt={tool.title}
-              className={tool.className}
-              explicitFavicon={tool.favicon}
-            />
-          )}
+            {isInternal ? (
+              <div className="bg-background text-foreground card-icon-box">
+                <Icon className="card-icon" />
+              </div>
+            ) : (
+              <CardIcon
+                url={tool.url!}
+                alt={tool.title}
+                className={tool.className}
+                explicitFavicon={tool.favicon}
+              />
+            )}
+          </div>
 
-          <div className="min-w-0 flex-1">
-            <div className="flex items-start justify-between gap-2">
-              <CardTitle className="text-foreground group-hover/card:text-primary font-sans text-lg font-bold tracking-tight transition-colors">
-                {tool.title}
-              </CardTitle>
+          <h3 className="card-title">{tool.title}</h3>
+
+          <p className="card-description">{tool.description}</p>
+
+          {!isInternal && (
+            <div className="card-footer">
+              {tool.author ? (
+                <span className="card-author">{tool.author}</span>
+              ) : (
+                <div aria-hidden="true" />
+              )}
               {!isInternal && (
-                <ArrowSquareOutIcon
-                  weight="duotone"
-                  className="text-muted-foreground group-hover/card:text-primary mt-1 size-4 shrink-0 transition-all group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5"
-                />
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <a
+                        href={tool.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group/arrow"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <ArrowSquareOutIcon weight="bold" className="card-link-icon" />
+                      </a>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Open in new tab</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               )}
             </div>
-          </div>
+          )}
         </div>
-        
-        <CardDescription className="mt-4 line-clamp-3 font-mono text-xs leading-relaxed opacity-80 flex-1">
-          {tool.description}
-        </CardDescription>
-
-        {tool.tags && tool.tags.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-2">
-            {tool.tags.map((tag) => (
-              <span
-                key={tag}
-                className="bg-muted text-muted-foreground border-border border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
-      </CardHeader>
-    </Card>
+      </div>
+    </article>
   );
 }
 
 export default function ToolCard({ tool }: ToolCardProps) {
   const linkWrapperClass =
-    "block w-full h-full outline-none focus-visible:ring-2 focus-visible:ring-primary";
+    "block w-full h-full outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary text-left";
 
   if (tool.slug) {
     return (
@@ -85,8 +98,13 @@ export default function ToolCard({ tool }: ToolCardProps) {
   }
 
   return (
-    <a href={tool.url} target="_blank" rel="noopener noreferrer" className={linkWrapperClass}>
-      <CardBody tool={tool} />
-    </a>
+    <Dialog>
+      <DialogTrigger asChild>
+        <div className={linkWrapperClass}>
+          <CardBody tool={tool} />
+        </div>
+      </DialogTrigger>
+      <ResourceDialog tool={tool} />
+    </Dialog>
   );
 }

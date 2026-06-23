@@ -92,7 +92,7 @@ export function ConverterTab() {
 
         <div className="flex w-full justify-between gap-6">
           <div className="w-2/5 space-y-2">
-            <Label className="text-console">[ Input Format ]</Label>
+            <Label className="text-mono-xs">[ Input Format ]</Label>
             <Select value={inputFormat} onValueChange={handleFormatChange}>
               <SelectTrigger className="bg-background focus:ring-primary w-full font-mono">
                 <SelectValue placeholder="Select format" />
@@ -108,7 +108,7 @@ export function ConverterTab() {
           </div>
 
           <div className="w-full space-y-2">
-            <Label className="text-console">[ Value ]</Label>
+            <Label className="text-mono-xs">[ Value ]</Label>
             <Input
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
@@ -133,7 +133,7 @@ export function ConverterTab() {
               <Card key={res.id} className="w-full px-4">
                 <CardContent>
                   <div className="flex items-center justify-between">
-                    <span className="text-console">{res.label}</span>
+                    <span className="text-mono-xs">{res.label}</span>
                     <CopyButton iconOnly textToCopy={res.value} />
                   </div>
                   <span className="text-muted-foreground text-start font-mono text-sm break-all">
