@@ -12,18 +12,43 @@ import { resourceLinks } from "@/lib/resource-data";
 import { cn, getAlternatingColor } from "@/lib/utils";
 import { ToolCardProps } from "@/types";
 
-export function ResourceDialog({ tool, index }: ToolCardProps & { index?: number }) {
-  const colorClasses = getAlternatingColor(tool.title, index);
+export function ResourceDialog({ tool: initialTool, index }: ToolCardProps & { index?: number }) {
+  const [activeTool, setActiveTool] = React.useState(initialTool);
+
+  React.useEffect(() => {
+    setActiveTool(initialTool);
+  }, [initialTool]);
+
+  const currentIndex = React.useMemo(() => {
+    return resourceLinks.findIndex((r) => r.title === activeTool.title);
+  }, [activeTool]);
+
+  const handleNext = () => {
+    if (currentIndex === -1) return;
+    const nextIndex = (currentIndex + 1) % resourceLinks.length;
+    setActiveTool(resourceLinks[nextIndex]);
+  };
+
+  const handlePrev = () => {
+    if (currentIndex === -1) return;
+    const prevIndex = (currentIndex - 1 + resourceLinks.length) % resourceLinks.length;
+    setActiveTool(resourceLinks[prevIndex]);
+  };
+
+  const colorClasses = getAlternatingColor(
+    activeTool.title,
+    currentIndex !== -1 ? currentIndex : index,
+  );
 
   const relatedResources = React.useMemo(() => {
-    if (tool.related && tool.related.length > 0) {
-      return resourceLinks.filter((r) => tool.related!.includes(r.title));
+    if (activeTool.related && activeTool.related.length > 0) {
+      return resourceLinks.filter((r) => activeTool.related!.includes(r.title));
     }
 
     return resourceLinks
-      .filter((r) => r.category === tool.category && r.title !== tool.title)
+      .filter((r) => r.category === activeTool.category && r.title !== activeTool.title)
       .slice(0, 3);
-  }, [tool]);
+  }, [activeTool]);
 
   return (
     <DialogContent showCloseButton={false} className="modal-panel">
@@ -36,7 +61,7 @@ export function ResourceDialog({ tool, index }: ToolCardProps & { index?: number
       </div>
 
       <DialogDescription className="sr-only">
-        Details and documentation for {tool.title} — categorized under {tool.category}.
+        Details and documentation for {activeTool.title} — categorized under {activeTool.category}.
       </DialogDescription>
 
       <div className="modal-body">
@@ -45,31 +70,31 @@ export function ResourceDialog({ tool, index }: ToolCardProps & { index?: number
           <div className="modal-cat-label">
             <div className="flex items-center gap-2">
               <span className="modal-cat-dot"></span>
-              <Link href={`/resources/${tool.category}`} className="modal-cat-name modal-cat-link">
-                {tool.category}
+              <Link href={`/resources/${activeTool.category}`} className="modal-cat-name modal-cat-link">
+                {activeTool.category}
               </Link>
             </div>
 
             <CardIcon
-              url={tool.url!}
-              alt={tool.title}
-              className={tool.className}
-              explicitFavicon={tool.favicon}
+              url={activeTool.url!}
+              alt={activeTool.title}
+              className={activeTool.className}
+              explicitFavicon={activeTool.favicon}
             />
           </div>
 
-          <DialogTitle className="modal-title">{tool.title}</DialogTitle>
+          <DialogTitle className="modal-title">{activeTool.title}</DialogTitle>
 
-          {tool.subtitle && <p className="modal-subtitle">{tool.subtitle}</p>}
-          <p className="modal-description">{tool.description}</p>
+          {activeTool.subtitle && <p className="modal-subtitle">{activeTool.subtitle}</p>}
+          <p className="modal-description">{activeTool.description}</p>
           <p className="modal-author">
             <a
-              href={tool.authorLink}
+              href={activeTool.authorLink}
               target="_blank"
               rel="noopener noreferrer"
               className="modal-author-link"
             >
-              {tool.author}
+              {activeTool.author}
             </a>
           </p>
         </div>
@@ -78,14 +103,14 @@ export function ResourceDialog({ tool, index }: ToolCardProps & { index?: number
         <div className="modal-right">
           <div className="modal-content">
             <div className="modal-sections">
-              {tool.details?.map(({ title, content }, index) => (
+              {activeTool.details?.map(({ title, content }, index) => (
                 <div key={index} className="modal-section">
                   <h3 className="modal-section-heading">{title}</h3>
                   <p className="modal-section-body">{content}</p>
                 </div>
               ))}
               <div className="flex gap-2">
-                {tool.tags?.map((tag) => (
+                {activeTool.tags?.map((tag) => (
                   <div key={tag} className="text-mono-2xs border px-1 py-0.5 hover:shadow-sm">
                     # {tag}
                   </div>
@@ -104,6 +129,7 @@ export function ResourceDialog({ tool, index }: ToolCardProps & { index?: number
                     return (
                       <div
                         key={res.title}
+                        onClick={() => setActiveTool(res)}
                         className="border-ink text-mono-xs bg-paper flex cursor-pointer items-center gap-2 border px-3 py-2 font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-transform hover:-translate-y-0.5"
                       >
                         <span className={`h-2 w-2 rounded-full ${dotColor}`}></span>
@@ -119,7 +145,7 @@ export function ResourceDialog({ tool, index }: ToolCardProps & { index?: number
           <div className="modal-launch">
             <Button asChild>
               <a
-                href={tool.url}
+                href={activeTool.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-mono-xs w-full"
@@ -131,10 +157,10 @@ export function ResourceDialog({ tool, index }: ToolCardProps & { index?: number
 
           <div className="modal-nav-row">
             <ButtonGroup>
-              <Button variant="secondary" size="icon">
+              <Button variant="secondary" size="icon" onClick={handlePrev}>
                 <CaretLeftIcon />
               </Button>
-              <Button variant="secondary" size="icon">
+              <Button variant="secondary" size="icon" onClick={handleNext}>
                 <CaretRightIcon />
               </Button>
             </ButtonGroup>
