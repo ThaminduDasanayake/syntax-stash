@@ -1,10 +1,12 @@
 import { MagnifyingGlassIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 
+import { DotButton } from "@/components/dot-button";
 import ToolCard from "@/components/tool-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { resourceLinks } from "@/lib/resource-data";
+import { SearchInput } from "@/components/ui/search-input";
+import { resourceCategories, resourceLinks } from "@/lib/resource-data";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/resources" },
@@ -44,10 +46,12 @@ export default function ResourcesPage() {
         <div className="filter-bar-inner">
           <div className="filter-search-wrap">
             <MagnifyingGlassIcon weight="bold" className="filter-search-icon" />
-            <Input className="filter-search" />
+            <Input className="filter-search" placeholder="Search resources..." />
           </div>
-          <div className="filter-pills">
-            <Button className="filter-pill">Cat</Button>
+          <div className="filter-pills"></div>
+          <div className="filter-count">
+            <span className="filter-count-num">{resourceLinks.length}</span>
+            <span> of {resourceLinks.length}</span>
           </div>
         </div>
       </div>

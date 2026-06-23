@@ -6,6 +6,7 @@ import { useMemo, useRef } from "react";
 import Diagram from "@/app/tools/regex-studio/components/diagram";
 import { parseRegex } from "@/app/tools/regex-studio/helpers";
 import { RegexResult } from "@/app/tools/regex-studio/types";
+import { DotButton } from "@/components/dot-button";
 import { ErrorAlert } from "@/components/error-alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -39,7 +40,7 @@ export function LiveTester({
   const parsed = useMemo(() => parseRegex(pattern, flags), [pattern, flags]);
 
   const result = useMemo<RegexResult>(() => {
-    if (!pattern) return { ok: true, matches: [] };
+    if (!pattern) return { matches: [], ok: true };
 
     try {
       const re = new RegExp(pattern, flags);
@@ -47,31 +48,31 @@ export function LiveTester({
       if (flags.includes("g")) {
         const all = Array.from(testString.matchAll(re));
         return {
-          ok: true,
           matches: all.map((m) => ({
-            value: m[0],
-            index: m.index ?? 0,
             groups: m.slice(1),
+            index: m.index ?? 0,
+            value: m[0],
           })),
+          ok: true,
         };
       }
 
       const m = testString.match(re);
-      if (!m) return { ok: true, matches: [] };
+      if (!m) return { matches: [], ok: true };
       return {
-        ok: true,
         matches: [
           {
-            value: m[0],
-            index: m.index ?? 0,
             groups: m.slice(1),
+            index: m.index ?? 0,
+            value: m[0],
           },
         ],
+        ok: true,
       };
     } catch (e) {
       return {
-        ok: false,
         error: e instanceof Error ? e.message : "Invalid regular expression",
+        ok: false,
       };
     }
   }, [pattern, flags, testString]);
@@ -104,6 +105,13 @@ export function LiveTester({
     a.click();
     URL.revokeObjectURL(url);
   }
+
+  const flagsConfig = [
+    { id: "g", label: "Global" },
+    { id: "i", label: "Case insensitive" },
+    { id: "m", label: "Multiline" },
+    { id: "s", label: "Dotall" },
+  ];
 
   return (
     <div className="mt-0 space-y-6">
@@ -139,32 +147,42 @@ export function LiveTester({
 
         {/* Interactive Flag Toggles */}
         <div className="flex flex-wrap gap-2">
-          {[
-            { id: "g", label: "Global", className: "bg-c-orange text-foreground" },
-            { id: "i", label: "Case insensitive", className: "bg-c-blue", fill: true },
-            { id: "m", label: "Multiline", className: "bg-c-pink text-foreground" },
-            { id: "s", label: "Dotall", className: "bg-c-green text-foreground" },
-          ].map((f) => {
-            const isActive = flags.includes(f.id);
-            return (
-              <Button
-                key={f.id}
-                className={cn("h-10 gap-2 px-3.5 font-semibold", isActive && f.className)}
-                onClick={() => toggleFlag(f.id)}
-                variant={isActive ? "default" : "outline"}
-              >
-                <span
-                  className={cn(
-                    "h-2.5 w-2.5 rounded-full border",
-                    f.fill && isActive ? "bg-background border-background" : "bg-foreground",
-                    !isActive && f.className,
-                  )}
-                />
-                <span className="font-mono">{f.id}</span>
-                <span>{f.label}</span>
-              </Button>
-            );
-          })}
+          {flagsConfig.map((f, index) => (
+            <DotButton
+              key={f.id}
+              isActive={flags.includes(f.id)}
+              index={index}
+              badgeText={f.id}
+              label={f.label}
+              onClick={() => toggleFlag(f.id)}
+            />
+          ))}
+          {/*{[*/}
+          {/*  { className: "bg-c-orange text-foreground", id: "g", label: "Global" },*/}
+          {/*  { className: "bg-c-blue", fill: true, id: "i", label: "Case insensitive" },*/}
+          {/*  { className: "bg-c-pink text-foreground", id: "m", label: "Multiline" },*/}
+          {/*  { className: "bg-c-green text-foreground", id: "s", label: "Dotall" },*/}
+          {/*].map((f) => {*/}
+          {/*  const isActive = flags.includes(f.id);*/}
+          {/*  return (*/}
+          {/*    <Button*/}
+          {/*      key={f.id}*/}
+          {/*      className={cn("h-10 gap-2 px-3.5 font-semibold", isActive && f.className)}*/}
+          {/*      onClick={() => toggleFlag(f.id)}*/}
+          {/*      variant={isActive ? "default" : "outline"}*/}
+          {/*    >*/}
+          {/*      <span*/}
+          {/*        className={cn(*/}
+          {/*          "h-2.5 w-2.5 rounded-full border",*/}
+          {/*          f.fill && isActive ? "bg-background border-background" : "bg-foreground",*/}
+          {/*          !isActive && f.className,*/}
+          {/*        )}*/}
+          {/*      />*/}
+          {/*      <span className="font-mono">{f.id}</span>*/}
+          {/*      <span>{f.label}</span>*/}
+          {/*    </Button>*/}
+          {/*  );*/}
+          {/*})}*/}
         </div>
       </div>
 
