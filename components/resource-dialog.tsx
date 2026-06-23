@@ -7,12 +7,23 @@ import * as React from "react";
 import { CardIcon } from "@/components/card-icon";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
-import { DialogClose, DialogContent } from "@/components/ui/dialog";
+import { DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import { resourceLinks } from "@/lib/resource-data";
 import { cn, getAlternatingColor } from "@/lib/utils";
 import { ToolCardProps } from "@/types";
 
 export function ResourceDialog({ tool, index }: ToolCardProps & { index?: number }) {
   const colorClasses = getAlternatingColor(tool.title, index);
+
+  const relatedResources = React.useMemo(() => {
+    if (tool.related && tool.related.length > 0) {
+      return resourceLinks.filter((r) => tool.related!.includes(r.title));
+    }
+
+    return resourceLinks
+      .filter((r) => r.category === tool.category && r.title !== tool.title)
+      .slice(0, 3);
+  }, [tool]);
 
   return (
     <DialogContent showCloseButton={false} className="modal-panel">
@@ -23,6 +34,10 @@ export function ResourceDialog({ tool, index }: ToolCardProps & { index?: number
           </Button>
         </DialogClose>
       </div>
+
+      <DialogDescription className="sr-only">
+        Details and documentation for {tool.title} — categorized under {tool.category}.
+      </DialogDescription>
 
       <div className="modal-body">
         {/* Left Side */}
@@ -43,9 +58,10 @@ export function ResourceDialog({ tool, index }: ToolCardProps & { index?: number
             />
           </div>
 
-          <h2 className="modal-title">{tool.title}</h2>
+          <DialogTitle className="modal-title">{tool.title}</DialogTitle>
 
-          <p className="modal-description">{tool.subtitle}</p>
+          {tool.subtitle && <p className="modal-subtitle">{tool.subtitle}</p>}
+          <p className="modal-description">{tool.description}</p>
           <p className="modal-author">
             <a
               href={tool.authorLink}
@@ -61,14 +77,43 @@ export function ResourceDialog({ tool, index }: ToolCardProps & { index?: number
         {/* Right Side */}
         <div className="modal-right">
           <div className="modal-content">
-            <p>{tool.description}</p>
-            <div className="flex gap-2">
-              {tool.tags?.map((tag) => (
-                <div key={tag} className="text-mono-2xs border px-1 py-0.5 hover:shadow-sm">
-                  # {tag}
+            <div className="modal-sections">
+              {tool.details?.map(({ title, content }, index) => (
+                <div key={index} className="modal-section">
+                  <h3 className="modal-section-heading">{title}</h3>
+                  <p className="modal-section-body">{content}</p>
                 </div>
               ))}
+              <div className="flex gap-2">
+                {tool.tags?.map((tag) => (
+                  <div key={tag} className="text-mono-2xs border px-1 py-0.5 hover:shadow-sm">
+                    # {tag}
+                  </div>
+                ))}
+              </div>
             </div>
+
+            {/* Related Section */}
+            {relatedResources.length > 0 && (
+              <div className="mt-12">
+                <h4 className="text-mono-2xs text-c-green mb-4">RELATED</h4>
+                <div className="flex flex-wrap gap-3">
+                  {relatedResources.map((res, i) => {
+                    const colors = ["bg-c-blue", "bg-c-orange", "bg-c-pink", "bg-c-green"];
+                    const dotColor = colors[i % colors.length];
+                    return (
+                      <div
+                        key={res.title}
+                        className="border-ink text-mono-xs bg-paper flex cursor-pointer items-center gap-2 border px-3 py-2 font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-transform hover:-translate-y-0.5"
+                      >
+                        <span className={`h-2 w-2 rounded-full ${dotColor}`}></span>
+                        {res.title}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="modal-launch">
@@ -96,48 +141,6 @@ export function ResourceDialog({ tool, index }: ToolCardProps & { index?: number
           </div>
         </div>
       </div>
-      {/*<div>*/}
-
-      {/*</div>*/}
-      {/*{tool.author && (*/}
-      {/*  <div className="mt-12 font-mono text-[10px] font-bold tracking-widest uppercase opacity-70">*/}
-      {/*    {tool.author}*/}
-      {/*  </div>*/}
-      {/*)}*/}
-      {/*<div className="min-h-[300px] flex-1 overflow-y-auto">*/}
-      {/*  {tool.details && tool.details.length > 0 ? (*/}
-      {/*    <div className="flex flex-col gap-8 pt-4">*/}
-      {/*      {tool.details.map((detail, i) => (*/}
-      {/*        <div key={i}>*/}
-      {/*          <h4 className="text-c-orange mb-3 font-mono text-[10px] font-bold tracking-widest uppercase">*/}
-      {/*            {detail.title}*/}
-      {/*          </h4>*/}
-      {/*          <p className="text-ink font-sans text-sm leading-relaxed font-medium opacity-90">*/}
-      {/*            {detail.content}*/}
-      {/*          </p>*/}
-      {/*        </div>*/}
-      {/*      ))}*/}
-      {/*    </div>*/}
-      {/*  ) : (*/}
-      {/*    <div className="flex h-full items-center justify-center opacity-50">*/}
-      {/*      <p className="font-mono text-sm tracking-widest uppercase">No additional details</p>*/}
-      {/*    </div>*/}
-      {/*  )}*/}
-      {/*</div>*/}
-      {/*/!* Footer of the right side *!/*/}
-      {/*<div className="border-ink/10 mt-8 flex items-center justify-between border-t-2 pt-6">*/}
-      {/*  <div className="flex flex-wrap gap-2">*/}
-      {/*    {tool.tags?.map((tag) => (*/}
-      {/*      <span*/}
-      {/*        key={tag}*/}
-      {/*        className="text-ink border border-current/20 bg-current/5 px-2 py-0.5 font-mono text-[10px] font-bold tracking-widest uppercase"*/}
-      {/*      >*/}
-      {/*        {tag}*/}
-      {/*      </span>*/}
-      {/*    ))}*/}
-      {/*  </div>*/}
-
-      {/*</div>*/}
     </DialogContent>
   );
 }

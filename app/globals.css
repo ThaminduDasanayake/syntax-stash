@@ -242,6 +242,10 @@
 }
 
 /* Font display Typography */
+@utility text-display-2xs {
+    @apply font-display text-[10px]! font-bold! tracking-widest uppercase;
+}
+
 @utility text-display-xs {
     @apply font-display text-xs! font-bold! tracking-wider uppercase;
 }
@@ -314,7 +318,7 @@
 
 /* Resource Modal */
 @utility modal-panel {
-    @apply relative w-full! max-w-235! h-[calc(100vh-80px)]! max-h-[calc(100vh-80px)]! overflow-hidden border-2 flex flex-col p-0!
+    @apply relative w-full! max-w-235! h-[calc(100vh-120px)]! max-h-[calc(100vh-80px)]! overflow-hidden border-2 flex flex-col p-0!
 }
 
 @utility modal-top-actions {
@@ -349,8 +353,12 @@
     @apply font-display! text-[clamp(32px,2.5vw,40px)]! font-extrabold! tracking-tight wrap-break-word text-balance uppercase mb-4.5 leading-none!;
 }
 
+@utility modal-subtitle {
+    @apply font-medium opacity-90 leading-6 mb-6
+}
+
 @utility modal-description {
-    @apply flex-1 font-medium opacity-90 leading-6
+    @apply flex-1 font-medium opacity-90 leading-6.5 border-t border-t-current pt-2
 }
 
 @utility modal-author {
@@ -366,7 +374,23 @@
 }
 
 @utility modal-content {
-    @apply flex-1 min-h-0 overflow-y-auto pt-13.5 pb-5 px-8 overscroll-contain
+    @apply flex-1 min-h-0 overflow-y-auto pt-20 pb-5 px-8 overscroll-contain
+}
+
+@utility modal-sections {
+    @apply flex flex-col gap-5.5 mb-5.5
+}
+
+@utility modal-section {
+    @apply flex flex-col
+}
+
+@utility modal-section-heading {
+    @apply text-display-2xs mb-2
+}
+
+@utility modal-section-body {
+    @apply text-base leading-relaxed
 }
 
 @utility modal-launch {

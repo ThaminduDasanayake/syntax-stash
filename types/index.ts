@@ -15,6 +15,7 @@ export type Tool = {
   author?: string;
   authorLink?: string;
   details?: { title: string; content: string }[];
+  related?: string[];
 };
 
 export type ToolCardProps = {
