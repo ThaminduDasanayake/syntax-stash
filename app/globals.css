@@ -106,7 +106,7 @@
 
     /* Custom Color variables */
     --color-bg: var(--bg);
-    --colo-bg-2: var(--bg-2);
+    --color-bg-2: var(--bg-2);
     --color-bg-3: var(--bg-3);
     --color-paper: var(--paper);
     --color-sec-1: var(--sec-1);
@@ -116,8 +116,8 @@
     --color-line-2: var(--line-2);
     --color-ink: var(--ink);
     --color-ink-2: var(--ink-2);
-    --colo--ink-mute: var(--ink-mute);
-    --colo--ink-faint: var(--ink-faint);
+    --color-ink-mute: var(--ink-mute);
+    --color-ink-faint: var(--ink-faint);
     --color-c-orange: var(--orange);
     --color-c-blue: var(--blue);
     --color-c-pink: var(--pink);
@@ -299,7 +299,7 @@
 }
 
 @utility filter-bar {
-    @apply bg-[#ede9ddf0] sticky top-16 z-80 backdrop-blur-md border-y-[1.5px] border-y-ink py-5.5
+    @apply bg-[#ede9ddf0] sticky top-16 z-40 backdrop-blur-md border-y-[1.5px] border-y-ink py-5.5
 }
 
 @utility filter-bar-inner {
@@ -311,11 +311,11 @@
 }
 
 @utility filter-search-icon {
-    @apply absolute left-3 top-1/2 pointer-events-none w-3.5 h-3.5;
+    @apply absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none w-3.5 h-3.5;
 }
 
 @utility filter-search {
-    @apply h-10! w-full pr-8 pl-8.5 outline-none transition-colors duration-200 bg-paper focus-visible:bg-bg!;
+    @apply h-10! w-full pr-8! pl-8.5! outline-none transition-colors duration-200;
 }
 
 @utility filter-pills {
@@ -323,8 +323,22 @@
 }
 
 @utility filter-pill {
-    @apply gap-4 h-10!
+    @apply bg-transparent text-ink h-10 gap-2 px-3.5 font-semibold duration-200;
 }
+
+@utility filter-pill-dot {
+    @apply shrink-0 h-2.25 w-2.25 border-[1.5px] rounded-full;
+}
+
+@utility filter-count {
+    @apply ml-auto text-mono-xs whitespace-nowrap text-ink-mute
+}
+
+@utility filter-count-num {
+    @apply font-extrabold! text-ink tabular-nums
+}
+
+
 
 /* Card */
 @utility card-grid {

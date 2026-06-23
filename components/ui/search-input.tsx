@@ -24,7 +24,10 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
             {...props}
           />
           <InputGroupAddon align="inline-start">
-            <MagnifyingGlassIcon weight="bold" className="pointer-events-none" />
+            <MagnifyingGlassIcon
+              weight="bold"
+              className="text-muted-foreground pointer-events-none"
+            />
           </InputGroupAddon>
         </InputGroup>
       </div>
