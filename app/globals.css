@@ -272,7 +272,7 @@
 
 /* Hero */
 @utility hero {
-  @apply border-b-line pt-33 pb-12;
+  @apply border-line border-b pt-33 pb-12;
 }
 
 @utility hero-inner {
@@ -345,6 +345,26 @@
   .hero-card:nth-child(4) & {
     @apply rotate-8;
   }
+}
+
+@utility stats-bar {
+  @apply border-line border-b;
+}
+
+@utility stats-inner {
+  @apply mx-auto grid max-w-7xl grid-cols-4 px-8;
+}
+
+@utility stat-item {
+  @apply border-line flex flex-col gap-1.5 border-r px-7 py-9;
+}
+
+@utility stat-num {
+  @apply font-display text-[56px] leading-none font-extrabold tracking-tighter;
+}
+
+@utility stat-label {
+  @apply text-mono-xs text-ink-mute;
 }
 
 /* Resource Stash*/

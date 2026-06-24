@@ -72,39 +72,29 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 2. Stats Bar */}
-      <section className="border-border divide-border bg-background grid grid-cols-2 divide-x-0 divide-y-2 border-b-2 md:grid-cols-4 md:divide-x-2 md:divide-y-0">
-        <div className="p-8 lg:p-12">
-          <h2 className="font-display text-5xl font-black tracking-tighter">04</h2>
-          <p className="mt-2 font-mono text-[10px] font-bold tracking-widest uppercase opacity-70">
-            CATEGORIES
-          </p>
-        </div>
-        <div className="p-8 lg:p-12">
-          <h2 className="font-display text-5xl font-black tracking-tighter">
-            {internalTools.length}
-          </h2>
-          <p className="mt-2 font-mono text-[10px] font-bold tracking-widest uppercase opacity-70">
-            FIELD TOOLS
-          </p>
-        </div>
-        <div className="p-8 lg:p-12">
-          <h2 className="font-display text-5xl font-black tracking-tighter">
-            {resourceLinks.length}
-          </h2>
-          <p className="mt-2 font-mono text-[10px] font-bold tracking-widest uppercase opacity-70">
-            CURATED LINKS
-          </p>
-        </div>
-        <div className="p-8 lg:p-12">
-          <h2 className="font-display text-5xl font-black tracking-tighter">100%</h2>
-          <p className="mt-2 font-mono text-[10px] font-bold tracking-widest uppercase opacity-70">
-            OPEN SOURCE
-          </p>
+      {/* Stats Bar */}
+      <section className="stats-bar">
+        <div className="stats-inner">
+          <div className="stat-item">
+            <h2 className="stat-num">04</h2>
+            <p className="stat-label">CATEGORIES</p>
+          </div>
+          <div className="stat-item">
+            <h2 className="stat-num">{internalTools.length}</h2>
+            <p className="stat-label">Inbuilt Tools</p>
+          </div>
+          <div className="stat-item">
+            <h2 className="stat-num">{resourceLinks.length}</h2>
+            <p className="stat-label">Curated Resources</p>
+          </div>
+          <div className="stat-item">
+            <h2 className="stat-num">100%</h2>
+            <p className="stat-label">OPEN SOURCE</p>
+          </div>
         </div>
       </section>
 
-      {/* 3. Why this matters */}
+      {/* Why this matters */}
       <section className="border-border bg-background border-b-2 px-6 py-24 sm:px-12 lg:px-24">
         <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-24">
           <div>
@@ -146,7 +136,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4. Top Tools */}
+      {/* Top Tools */}
       <section className="bg-background px-6 py-24 sm:px-12 lg:px-24">
         <div className="mx-auto w-full max-w-7xl">
           <div className="mb-16 flex flex-col justify-between gap-8 md:flex-row md:items-end">
