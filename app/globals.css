@@ -296,6 +296,19 @@
   @apply text-ink-2 mb-7 font-mono text-lg leading-relaxed;
 }
 
+@utility card-body {
+  @apply pt-14 pb-24;
+}
+
+@utility cat-section {
+  @apply mb-14;
+}
+
+@utility cat-divider {
+  @apply relative mb-5 flex items-center gap-4 overflow-hidden pt-5.5 pb-4.5;
+}
+
+/* Filter Bar*/
 @utility filter-bar {
   @apply border-y-ink sticky top-16 z-40 border-y-[1.5px] bg-[#ede9ddf0] py-2 backdrop-blur-md sm:py-5.5;
 }
@@ -317,13 +330,11 @@
 }
 
 @utility filter-pills {
-  @apply flex min-w-0 touch-pan-x flex-nowrap gap-1.5 overflow-x-auto overscroll-x-contain pr-6;
+  @apply flex min-w-0 touch-pan-x flex-nowrap gap-1.5 overflow-x-auto overscroll-x-contain pr-6 sm:pr-20;
 
   @apply scrollbar-hide;
 
-  @apply mask-[linear-gradient(to_right,black_80%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_right,black_80%,transparent_100%)];
-
-  /*@apply sm:flex-wrap sm:overflow-x-visible sm:mask-none sm:pr-0 sm:[-webkit-mask-image:none];*/
+  @apply mask-[linear-gradient(to_right,black_90%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_right,black_90%,transparent_100%)];
 }
 
 @utility filter-pill {
@@ -344,7 +355,7 @@
 
 /* Card */
 @utility card-grid {
-  @apply grid w-full grid-cols-1 gap-4.5 sm:grid-cols-2 lg:grid-cols-4;
+  @apply grid w-full grid-cols-1 gap-3.5 sm:grid-cols-2 sm:gap-4.5 md:grid-cols-3 lg:grid-cols-4;
 }
 
 @utility card {
