@@ -1,6 +1,7 @@
 import { ArrowLeftIcon, ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 
+import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
 import ToolCard from "@/components/tool-card";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
@@ -18,13 +19,7 @@ export default function Home() {
           {/* Hero Left: Typography & CTAs */}
           <div className="z-10 w-full flex-1 lg:w-1/2">
             <div className="text-ink-mute mb-8 flex items-center gap-4 font-mono text-xs font-bold tracking-widest">
-              <span className="flex items-center border">
-                <span className="bg-c-orange h-3.5 w-3.5"></span>
-                <span className="bg-c-blue h-3.5 w-3.5"></span>
-                <span className="bg-c-pink h-3.5 w-3.5"></span>
-                <span className="bg-c-green h-3.5 w-3.5"></span>
-              </span>
-              A REFERENCE FOR MODERN WEB DEVELOPMENT
+              <HeroEyebrowDots />A REFERENCE FOR MODERN WEB DEVELOPMENT
             </div>
 
             <h1 className="mb-8 flex flex-col gap-0 text-6xl leading-[0.9] tracking-tighter sm:text-7xl lg:text-[100px]">
