@@ -1,7 +1,7 @@
 "use client";
 
 import { MagnifyingGlassIcon } from "@phosphor-icons/react";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import * as React from "react";
 
 import { DotButton } from "@/components/dot-button";
@@ -22,14 +22,12 @@ export function ResourceFilterSection({
   resourceCategories,
 }: ResourceFilterSectionProps) {
   const router = useRouter();
-  const pathname = usePathname();
 
   const [selectedCategory, setSelectedCategory] = React.useState<string | null>(
-    initialCategory || null
+    initialCategory || null,
   );
   const [searchQuery, setSearchQuery] = React.useState("");
 
-  // Sync state if initialCategory prop changes (e.g. from page transitions or browser back/forward)
   React.useEffect(() => {
     setSelectedCategory(initialCategory || null);
   }, [initialCategory]);
