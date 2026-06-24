@@ -391,7 +391,7 @@
 }
 
 @utility card-description {
-  @apply text-left text-sm leading-relaxed font-medium opacity-90;
+  @apply line-clamp-6 text-left text-sm leading-relaxed font-medium opacity-90;
 }
 
 @utility card-footer {
@@ -444,11 +444,11 @@
 }
 
 @utility modal-subtitle {
-  @apply mb-6 leading-6 font-medium opacity-90;
+  @apply mb-6 leading-6 font-medium wrap-break-word opacity-90;
 }
 
 @utility modal-description {
-  @apply flex-1 border-t border-t-current pt-2 leading-6.5 font-medium opacity-90;
+  @apply flex-1 border-t border-t-current pt-2 leading-6.5 font-medium wrap-break-word opacity-90;
 }
 
 @utility modal-author {

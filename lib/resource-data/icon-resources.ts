@@ -5,27 +5,27 @@ import { CATEGORIES } from "./categories";
 export const iconLinks: Tool[] = [
   {
     title: "Iconify Design",
-    url: "https://iconify.design/",
-    description: "All popular icon sets, one framework",
     category: CATEGORIES.icons,
+    description: "All popular icon sets, one framework",
+    url: "https://iconify.design/",
   },
   {
     title: "iOS Icon Gallery",
-    url: "https://www.iosicongallery.com/",
-    description: "Showcasing beautiful icon designs from the iOS App Store.",
     category: CATEGORIES.icons,
+    description: "Showcasing beautiful icon designs from the iOS App Store.",
+    url: "https://www.iosicongallery.com/",
   },
   {
     title: "Logos",
-    url: "https://logos.lndev.me/",
+    category: CATEGORIES.icons,
     description:
       "15,015 free SVG logos for apps, dev tools and tech brands. Search, filter by category, download or copy in one click.",
-    category: CATEGORIES.icons,
+    url: "https://logos.lndev.me/",
   },
   {
     title: "Its Hover",
-    url: "https://www.itshover.com/",
-    description: "Animated icons that move with intent.",
     category: CATEGORIES.icons,
+    description: "Animated icons that move with intent.",
+    url: "https://www.itshover.com/",
   },
 ];
