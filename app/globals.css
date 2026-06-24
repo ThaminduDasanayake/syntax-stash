@@ -271,12 +271,80 @@
 }
 
 /* Hero */
+@utility hero {
+  @apply border-b-line pt-33 pb-12;
+}
+
+@utility hero-inner {
+  @apply mx-auto grid max-w-7xl grid-cols-[1.05fr_1fr] items-start gap-16 px-8;
+}
+
+@utility hero-copy {
+  @apply flex flex-col;
+}
+
+@utility hero-eyebrow {
+  @apply text-mono-xs text-ink-mute mb-5.5 inline-flex items-center gap-3;
+}
+
 @utility hero-eyebrow-dots {
   @apply inline-flex gap-0 border-[1.5px];
 }
 
+@utility hero-headline {
+  @apply headline mb-5 max-w-[14ch] text-balance;
+}
+
+@utility hero-sub {
+  @apply text-ink-2 mb-7 font-mono text-lg leading-relaxed;
+}
+
 @utility hero-cta-row {
   @apply flex flex-wrap gap-3;
+}
+
+@utility hero-stack {
+  @apply relative h-150 w-full;
+}
+
+@utility hero-card {
+  @apply absolute h-80 w-75;
+
+  @apply hover:z-10!;
+
+  &:hover .hero-card-wrap {
+    @apply -translate-y-4 rotate-0!;
+  }
+
+  &:nth-child(1) {
+    @apply top-10 left-10 z-1;
+  }
+  &:nth-child(2) {
+    @apply top-35 left-75 z-2;
+  }
+  &:nth-child(3) {
+    @apply top-45 left-15 z-3;
+  }
+  &:nth-child(4) {
+    @apply top-75 left-50 z-4;
+  }
+}
+
+@utility hero-card-wrap {
+  @apply w-full origin-center transition-all duration-300 ease-out;
+
+  .hero-card:nth-child(1) & {
+    @apply -rotate-3;
+  }
+  .hero-card:nth-child(2) & {
+    @apply rotate-6;
+  }
+  .hero-card:nth-child(3) & {
+    @apply -rotate-4;
+  }
+  .hero-card:nth-child(4) & {
+    @apply rotate-8;
+  }
 }
 
 /* Resource Stash*/
