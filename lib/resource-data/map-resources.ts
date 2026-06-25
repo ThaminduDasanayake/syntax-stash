@@ -5,71 +5,71 @@ import { CATEGORIES } from "./categories";
 export const mapLinks: Tool[] = [
   {
     title: "Arnis",
-    url: "https://arnismc.com/",
+    category: CATEGORIES.maps,
     description:
       "Generate Minecraft worlds from real-world locations. Free, open-source tool to recreate your hometown, city, or any place on Earth in Minecraft.",
-    category: CATEGORIES.maps,
-  },
-  {
-    title: "Cityweft",
-    url: "https://cityweft.com/",
-    description:
-      "Generate clean, editable 3D site context for any location on Earth — ready for your CAD, BIM, or generative-design workflow.",
-    category: CATEGORIES.maps,
+    url: "https://arnismc.com/",
   },
   {
     title: "Cadmapper",
-    url: "https://cadmapper.com/",
+    category: CATEGORIES.maps,
     description:
       "Cadmapper lets anyone create 3D CAD files of any area in the world within minutes. Worldwide map files for any design program.",
-    category: CATEGORIES.maps,
-  },
-  {
-    title: "RayonMaps",
-    url: "https://maps.rayon.design/",
-    description:
-      "Export OpenStreetMap Data to DXF. Get the CAD geometry of any site on Earth — in just 3 steps.",
-    category: CATEGORIES.maps,
+    url: "https://cadmapper.com/",
   },
   {
     title: "City Roads",
-    url: "https://anvaka.github.io/city-roads/",
+    category: CATEGORIES.maps,
     description:
       "This website allows you to select a city and then draws every single road on a screen.",
-    category: CATEGORIES.maps,
+    url: "https://anvaka.github.io/city-roads/",
   },
   {
-    title: "mapcn",
-    url: "https://www.mapcn.dev/",
+    title: "Cityweft",
+    category: CATEGORIES.maps,
     description:
-      "A collection of beautifully designed, accessible, and customizable map components. Built on MapLibre GL. Styled with Tailwind CSS. Works with shadcn/ui.",
-    category: CATEGORIES.maps,
-  },
-  {
-    title: "shadcnmaps",
-    url: "https://www.shadcnmaps.com/",
-    description:
-      "170+ interactive SVG map components for React. Countries, continents, and US states. No dependencies — install via shadcn CLI with pure Tailwind CSS styling.",
-    category: CATEGORIES.maps,
-  },
-  {
-    title: "Terraink",
-    url: "https://terraink.app/",
-    description:
-      "Free online map poster and wallpaper generator. Design custom, print-ready map art for any city or location — export as PNG, PDF, or SVG. No sign-up required.",
-    category: CATEGORIES.maps,
-  },
-  {
-    title: "VisGL Google Maps",
-    url: "https://visgl.github.io/react-google-maps/",
-    favicon: "https://visgl.github.io/react-google-maps/images/visgl-logo-light.png",
-    description: "React components and hooks for the Google Maps JavaScript API",
-    category: CATEGORIES.maps,
+      "Generate clean, editable 3D site context for any location on Earth — ready for your CAD, BIM, or generative-design workflow.",
+    url: "https://cityweft.com/",
   },
   {
     title: "MAKE MY DRIVE FUN",
-    url: "https://makemydrivefun.com/",
-    description: "Enter in two locations to make the drive fun.\n",
     category: CATEGORIES.maps,
+    description: "Enter in two locations to make the drive fun.\n",
+    url: "https://makemydrivefun.com/",
+  },
+  {
+    title: "mapcn",
+    category: CATEGORIES.maps,
+    description:
+      "A collection of beautifully designed, accessible, and customizable map components. Built on MapLibre GL. Styled with Tailwind CSS. Works with shadcn/ui.",
+    url: "https://www.mapcn.dev/",
+  },
+  {
+    title: "RayonMaps",
+    category: CATEGORIES.maps,
+    description:
+      "Export OpenStreetMap Data to DXF. Get the CAD geometry of any site on Earth — in just 3 steps.",
+    url: "https://maps.rayon.design/",
+  },
+  {
+    title: "shadcnmaps",
+    category: CATEGORIES.maps,
+    description:
+      "170+ interactive SVG map components for React. Countries, continents, and US states. No dependencies — install via shadcn CLI with pure Tailwind CSS styling.",
+    url: "https://www.shadcnmaps.com/",
+  },
+  {
+    title: "Terraink",
+    category: CATEGORIES.maps,
+    description:
+      "Free online map poster and wallpaper generator. Design custom, print-ready map art for any city or location — export as PNG, PDF, or SVG. No sign-up required.",
+    url: "https://terraink.app/",
+  },
+  {
+    title: "VisGL Google Maps",
+    category: CATEGORIES.maps,
+    description: "React components and hooks for the Google Maps JavaScript API",
+    favicon: "https://visgl.github.io/react-google-maps/images/visgl-logo-dark.png",
+    url: "https://visgl.github.io/react-google-maps/",
   },
 ];

@@ -4,292 +4,331 @@ import { CATEGORIES } from "./categories";
 
 export const educationLinks: Tool[] = [
   {
-    title: "Coddy",
-    url: "https://coddy.tech/",
-    description: "Interactive lessons in Python, JavaScript, SQL, and 15+ languages.",
+    title: "100-AI-Machine-learning-Deep-learning-Computer-vision-NLP",
+    author: "darkdevil3610",
     category: CATEGORIES.education,
-  },
-  {
-    title: "Codecademy",
-    url: "https://www.codecademy.com/",
-    description:
-      "Learn the technical skills to get the job you want. Join over 50 million people choosing Codecademy to start a new career (or advance in their current one).",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "microsoft/ML-For-Beginners",
-    url: "https://github.com/microsoft/ml-for-beginners",
-    description: "12 weeks, 26 lessons, 52 quizzes, classic Machine Learning for all.",
-    category: CATEGORIES.education,
-  },
-  {
-    title:
-      "ashishpatel26/500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code",
-    url: "https://github.com/ashishpatel26/500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code",
-    description: "500 AI Machine learning Deep learning Computer vision NLP Projects with code.",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "UI Skills for Design Engineers | Curated Skill Directory",
-    url: "https://www.ui-skills.com/",
-    description:
-      "Discover curated UI Skills for design engineers, including accessibility, motion, frontend craft, and interface quality guides with copy-ready install commands.",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "The-Cool-Coders/Project-Ideas-And-Resources",
-    url: "https://github.com/The-Cool-Coders/Project-Ideas-And-Resources",
-    description:
-      "A Collection of application ideas that can be used to improve your coding skills ❤.",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "darkdevil3610/100-AI-Machine-learning-Deep-learning-Computer-vision-NLP",
-    url: "https://github.com/darkdevil3610/100-AI-Machine-learning-Deep-learning-Computer-vision-NLP",
     description: "100+ AI Machine learning Deep learning Computer vision NLP Projects with code.",
-    category: CATEGORIES.education,
+    favicon: "/github.svg",
+    url: "https://github.com/darkdevil3610/100-AI-Machine-learning-Deep-learning-Computer-vision-NLP",
   },
   {
-    title: "NotHarshhaa/DevOps-Projects",
-    url: "https://github.com/NotHarshhaa/DevOps-Projects",
-    description:
-      "🚀 Real-world DevOps projects for aspiring engineers — Beginner to Advanced. Covers AWS, Kubernetes, Docker, CI/CD, Terraform, Jenkins, and more. Hands-on learning with step-by-step guides.",
+    title: "30-Days-Of-Python",
+    author: "Asabeneh",
     category: CATEGORIES.education,
-  },
-  {
-    title: "Ayushparikh-code/Web-dev-mini-projects",
-    url: "https://github.com/Ayushparikh-code/Web-dev-mini-projects",
-    description:
-      "The repository contains the list of awesome✨ & cool web development beginner-friendly✌️ projects!",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "ShortcutFoo - Keyboard Shortcut Training for Figma, VSCode, Notion & 30+ Tools",
-    url: "https://www.shortcutfoo.com/",
-    description:
-      "Build real muscle memory for keyboard shortcuts with interactive drills and spaced repetition. Free for 30+ tools including Figma, Slack, VSCode, and Notion.",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "Asabeneh/30-Days-Of-Python",
-    url: "https://github.com/asabeneh/30-days-of-python",
     description:
       "The 30 Days of Python programming challenge is a step-by-step guide to learn the Python programming language in 30 days. This challenge may take more than 100 days. Follow your own pace. These videos may help too: https://www.youtube.com/channel/UC7PNRuno1rzYPb1xLa4yktw.",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "josephmisiti/awesome-machine-learning",
-    url: "https://github.com/josephmisiti/awesome-machine-learning",
-    description: "A curated list of awesome Machine Learning frameworks, libraries and software.",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "GokuMohandas/Made-With-ML",
-    url: "https://github.com/GokuMohandas/Made-With-ML",
-    description: "Learn how to develop, deploy and iterate on production-grade ML applications.",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "Exercism",
-    url: "https://exercism.org/",
-    description: "Learn, practice and get world-class mentoring in over 50 languages. 100% free.",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "LeetCode",
-    url: "https://leetcode.com/",
-    description:
-      "LeetCode is the best platform to help you enhance your skills, expand your knowledge and prepare for technical interviews.",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "donnemartin/system-design-primer",
-    url: "https://github.com/donnemartin/system-design-primer",
-    description:
-      "Learn how to design large-scale systems. Prep for the system design interview. Includes Anki flashcards.",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "NeetCode | Coding Interview Prep, Courses, Versus Mode",
-    url: "https://neetcode.io/",
-    description:
-      "Practice coding interviews with structured courses, AI-driven interviews, head-to-head Versus mode, and 800+ problems. Free and Pro tiers.",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "Codédex",
-    url: "https://www.codedex.io/",
-    description:
-      "Journey through the fantasy land of Python, HTML, CSS, or JavaScript, earn experience points (XP) to unlock new regions, and collect all the badges at your own pace. Start your adventure today.",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "DeepWiki",
-    url: "https://deepwiki.com/",
-    description:
-      "DeepWiki provides up-to-date documentation you can talk to, for every repo in the world. Think Deep Research for GitHub - powered by Devin.",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "devQuizzes",
-    url: "https://quizzes.madza.dev/",
-    description:
-      "devQuizzes is the platform where you can test your knowledge on various DEV topics.",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "Learn Anything",
-    url: "https://learn-anything.xyz/",
-    description:
-      "Discover and learn about any topic with Learn-Anything. Our free, comprehensive platform connects you to the best resources for every subject. Start learning today!",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "Mind Luster",
-    url: "https://www.mindluster.com/",
-    description:
-      " Discover Free Online Certified Courses - Programming - Graphic - Accounting - Languages - English - Computer - Technology designed by experts and universities ",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "Developer Roadmaps",
-    url: "https://roadmap.sh/",
-    description:
-      "Community driven roadmaps, articles and guides for developers to grow in their career.",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "QuickRef",
-    url: "https://quickref.me/",
-    description: "Share quick reference and cheat sheet for developers",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "Web Skills",
-    url: "https://andreasbm.github.io/web-skills/",
-    description: "A visual overview of useful skills to learn as a web developer",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "App Ideas",
-    url: "https://github.com/florinpop17/app-ideas",
     favicon: "/github.svg",
-    description:
-      "A Collection of application ideas which can be used to improve your coding skills.",
-    category: CATEGORIES.education,
+    url: "https://github.com/asabeneh/30-days-of-python",
   },
   {
     title: "33 JS Concepts",
-    url: "https://github.com/leonardomso/33-js-concepts",
-    favicon: "/github.svg",
+    author: "leonardomso",
+    category: CATEGORIES.education,
     description: "33 JavaScript concepts every developer should know.",
-    category: CATEGORIES.education,
+    favicon: "/github.svg",
+    url: "https://github.com/leonardomso/33-js-concepts",
   },
   {
-    title: "JavaScript Questions",
-    url: "https://github.com/lydiahallie/javascript-questions",
-    favicon: "/github.svg",
-    description: "A long list of advanced JavaScript questions, and their explanations.",
+    title: "500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code",
+    author: "ashishpatel26",
     category: CATEGORIES.education,
+    description: "500 AI Machine learning Deep learning Computer vision NLP Projects with code.",
+    favicon: "/github.svg",
+    url: "https://github.com/ashishpatel26/500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code",
   },
   {
-    title: "You Don't Know JS",
-    url: "https://github.com/getify/You-Dont-Know-JS",
-    favicon: "/github.svg",
-    description: "A book series (2 published editions) on the JS language.",
+    title: "App Ideas",
+    author: "florinpop17",
     category: CATEGORIES.education,
+    description:
+      "A Collection of application ideas which can be used to improve your coding skills.",
+    favicon: "/github.svg",
+    url: "https://github.com/florinpop17/app-ideas",
   },
   {
     title: "Awesome JavaScript",
-    url: "https://github.com/sorrycc/awesome-javascript",
-    favicon: "/github.svg",
+    author: "sorrycc",
+    category: CATEGORIES.education,
     description:
       "A collection of awesome browser-side JavaScript libraries, resources and shiny things.",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "Build Your Own X",
-    url: "https://github.com/codecrafters-io/build-your-own-x",
     favicon: "/github.svg",
-    description: "Master programming by recreating your favorite technologies from scratch.",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "Code Crafters",
-    url: "https://app.codecrafters.io/",
-    description:
-      "Advanced programming challenges for experienced engineers. Rebuild real production tools like Redis, Git, and SQLite from scratch in your IDE.",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "Project Based Learning",
-    url: "https://github.com/practical-tutorials/project-based-learning",
-    favicon: "/github.svg",
-    description: "Curated list of project-based tutorials.",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "Awesome LeetCode",
-    url: "https://github.com/ashishps1/awesome-leetcode-resources",
-    favicon: "/github.svg",
-    description:
-      "Awesome LeetCode resources to learn Data Structures and Algorithms and prepare for Coding Interviews.",
-    category: CATEGORIES.education,
+    url: "https://github.com/sorrycc/awesome-javascript",
   },
   {
     title: "Awesome Lists",
-    url: "https://github.com/sindresorhus/awesome",
-    favicon: "/github.svg",
-    description: "Awesome lists about all kinds of interesting topics.",
+    author: "sindresorhus",
     category: CATEGORIES.education,
+    description: "Awesome lists about all kinds of interesting topics.",
+    favicon: "/github.svg",
+    url: "https://github.com/sindresorhus/awesome",
+  },
+  {
+    title: "Awesome LeetCode",
+    author: "ashishps1",
+    category: CATEGORIES.education,
+    description:
+      "Awesome LeetCode resources to learn Data Structures and Algorithms and prepare for Coding Interviews.",
+    favicon: "/github.svg",
+    url: "https://github.com/ashishps1/awesome-leetcode-resources",
+  },
+  {
+    title: "awesome-machine-learning",
+    author: "josephmisiti",
+    category: CATEGORIES.education,
+    description: "A curated list of awesome Machine Learning frameworks, libraries and software.",
+    favicon: "/github.svg",
+    url: "https://github.com/josephmisiti/awesome-machine-learning",
+  },
+  {
+    title: "Build Your Own X",
+    author: "codecrafters-io",
+    category: CATEGORIES.education,
+    description: "Master programming by recreating your favorite technologies from scratch.",
+    favicon: "/github.svg",
+    url: "https://github.com/codecrafters-io/build-your-own-x",
+  },
+  {
+    title: "Coddy",
+    category: CATEGORIES.education,
+    description: "Interactive lessons in Python, JavaScript, SQL, and 15+ languages.",
+    url: "https://coddy.tech/",
+  },
+  {
+    title: "Codecademy",
+    category: CATEGORIES.education,
+    description:
+      "Learn the technical skills to get the job you want. Join over 50 million people choosing Codecademy to start a new career (or advance in their current one).",
+    url: "https://www.codecademy.com/",
+  },
+  {
+    title: "Code Crafters",
+    category: CATEGORIES.education,
+    description:
+      "Advanced programming challenges for experienced engineers. Rebuild real production tools like Redis, Git, and SQLite from scratch in your IDE.",
+    url: "https://app.codecrafters.io/",
+  },
+  {
+    title: "Codédex",
+    category: CATEGORIES.education,
+    description:
+      "Journey through the fantasy land of Python, HTML, CSS, or JavaScript, earn experience points (XP) to unlock new regions, and collect all the badges at your own pace. Start your adventure today.",
+    url: "https://www.codedex.io/",
   },
   {
     title: "CSV Vis Tool",
-    url: "https://csvistool.com/",
+    category: CATEGORIES.education,
     description:
       "Official data structures and algorithms visualization tool for CS 1332 at Georgia Tech.",
-    category: CATEGORIES.education,
+    url: "https://csvistool.com/",
   },
   {
-    title: "Loot Drop",
-    url: "https://www.loot-drop.io/",
-    description:
-      "Explore 1100+ failed startups and learn from $40B+ in burned venture capital. Discover why they failed, their market potential, and how to rebuild them with today's tech",
+    title: "DeepWiki",
     category: CATEGORIES.education,
+    description:
+      "DeepWiki provides up-to-date documentation you can talk to, for every repo in the world. Think Deep Research for GitHub - powered by Devin.",
+    url: "https://deepwiki.com/",
   },
   {
-    title: "Powerful Websites",
-    url: "https://powerfulwebsites.io/",
-    description:
-      "Discover 125+ powerful websites and free tools that most people don't know about. Curated directory of useful apps, AI tools, design resources, and hidden gems built by indie developers.",
+    title: "Developer Roadmaps",
     category: CATEGORIES.education,
+    description:
+      "Community driven roadmaps, articles and guides for developers to grow in their career.",
+    url: "https://roadmap.sh/",
+  },
+  {
+    title: "DevOps-Projects",
+    author: "NotHarshhaa",
+    category: CATEGORIES.education,
+    description:
+      "🚀 Real-world DevOps projects for aspiring engineers — Beginner to Advanced. Covers AWS, Kubernetes, Docker, CI/CD, Terraform, Jenkins, and more. Hands-on learning with step-by-step guides.",
+    favicon: "/github.svg",
+    url: "https://github.com/NotHarshhaa/DevOps-Projects",
+  },
+  {
+    title: "devQuizzes",
+    category: CATEGORIES.education,
+    description:
+      "devQuizzes is the platform where you can test your knowledge on various DEV topics.",
+    url: "https://quizzes.madza.dev/",
+  },
+
+  {
+    title: "Exercism",
+    category: CATEGORIES.education,
+    description: "Learn, practice and get world-class mentoring in over 50 languages. 100% free.",
+    url: "https://exercism.org/",
   },
   {
     title: "free media heck yeah",
-    url: "https://fmhy.net/",
-    favicon: "https://fmhy.net/june_icon.webp",
+    category: CATEGORIES.education,
     description: "The largest collection of free stuff on the internet!",
-    category: CATEGORIES.education,
-  },
-  {
-    title: "Oh Shit, Git!?!",
-    url: "https://ohshitgit.com/",
-    description:
-      "Fix your Git mistakes fast with plain English solutions every developer needs at least once.",
-    category: CATEGORIES.education,
+    favicon: "https://fmhy.net/june_icon.webp",
+    url: "https://fmhy.net/",
   },
   {
     title: "HF Viewer",
-    url: "https://hfviewer.com/",
+    category: CATEGORIES.education,
     description:
       "View any Hugging Face model. We believe good understanding of AI models unlocks innovative ideas.",
-    category: CATEGORIES.education,
+    url: "https://hfviewer.com/",
   },
   {
+    title: "JavaScript Questions",
+    author: "lydiahallie",
+    category: CATEGORIES.education,
+    description: "A long list of advanced JavaScript questions, and their explanations.",
+    favicon: "/github.svg",
+    url: "https://github.com/lydiahallie/javascript-questions",
+  },
+  {
+    title: "Learn Anything",
+    category: CATEGORIES.education,
+    description:
+      "Discover and learn about any topic with Learn-Anything. Our free, comprehensive platform connects you to the best resources for every subject. Start learning today!",
+    url: "https://learn-anything.xyz/",
+  },
+  {
+    title: "LeetCode",
+    category: CATEGORIES.education,
+    description:
+      "LeetCode is the best platform to help you enhance your skills, expand your knowledge and prepare for technical interviews.",
+    url: "https://leetcode.com/",
+  },
+
+  {
+    title: "Loot Drop",
+    category: CATEGORIES.education,
+    description:
+      "Explore 1100+ failed startups and learn from $40B+ in burned venture capital. Discover why they failed, their market potential, and how to rebuild them with today's tech",
+    url: "https://www.loot-drop.io/",
+  },
+
+  {
+    title: "Made-With-ML",
+    author: "GokuMohandas",
+    category: CATEGORIES.education,
+    description: "Learn how to develop, deploy and iterate on production-grade ML applications.",
+    favicon: "/github.svg",
+    url: "https://github.com/GokuMohandas/Made-With-ML",
+  },
+  {
+    title: "Mind Luster",
+    category: CATEGORIES.education,
+    description:
+      " Discover Free Online Certified Courses - Programming - Graphic - Accounting - Languages - English - Computer - Technology designed by experts and universities ",
+    url: "https://www.mindluster.com/",
+  },
+  {
+    title: "ML-For-Beginners",
+    author: "Microsoft",
+    category: CATEGORIES.education,
+    description: "12 weeks, 26 lessons, 52 quizzes, classic Machine Learning for all.",
+    favicon: "/github.svg",
+    url: "https://github.com/microsoft/ml-for-beginners",
+  },
+
+  {
+    title: "NeetCode",
+    category: CATEGORIES.education,
+    description:
+      "Practice coding interviews with structured courses, AI-driven interviews, head-to-head Versus mode, and 800+ problems. Free and Pro tiers.",
+    subtitle: "Coding Interview Prep, Courses, Versus Mode",
+    url: "https://neetcode.io/",
+  },
+  {
+    title: "Oh Shit, Git!?!",
+    category: CATEGORIES.education,
+    description:
+      "Fix your Git mistakes fast with plain English solutions every developer needs at least once.",
+    url: "https://ohshitgit.com/",
+  },
+  {
+    title: "Powerful Websites",
+    category: CATEGORIES.education,
+    description:
+      "Discover 125+ powerful websites and free tools that most people don't know about. Curated directory of useful apps, AI tools, design resources, and hidden gems built by indie developers.",
+    url: "https://powerfulwebsites.io/",
+  },
+  {
+    title: "Project Based Learning",
+    author: "practical-tutorials",
+    category: CATEGORIES.education,
+    description: "Curated list of project-based tutorials.",
+    favicon: "/github.svg",
+    url: "https://github.com/practical-tutorials/project-based-learning",
+  },
+  {
+    title: "Project-Ideas-And-Resources",
+    author: "The Cool Coders",
+    category: CATEGORIES.education,
+    description:
+      "A Collection of application ideas that can be used to improve your coding skills ❤.",
+    favicon: "/github.svg",
+    url: "https://github.com/The-Cool-Coders/Project-Ideas-And-Resources",
+  },
+  {
+    title: "QuickRef",
+    category: CATEGORIES.education,
+    description: "Share quick reference and cheat sheet for developers",
+    url: "https://quickref.me/",
+  },
+
+  {
+    title: "ShortcutFoo",
+    category: CATEGORIES.education,
+    description:
+      "Build real muscle memory for keyboard shortcuts with interactive drills and spaced repetition. Free for 30+ tools including Figma, Slack, VSCode, and Notion.",
+    subtitle: "Keyboard Shortcut Training for Figma, VSCode, Notion & 30+ Tools",
+    url: "https://www.shortcutfoo.com/",
+  },
+  {
+    title: "system-design-primer",
+    author: "donnemartin",
+    category: CATEGORIES.education,
+    description:
+      "Learn how to design large-scale systems. Prep for the system design interview. Includes Anki flashcards.",
+    favicon: "/github.svg",
+    url: "https://github.com/donnemartin/system-design-primer",
+  },
+
+  {
     title: "The Odin Project",
-    url: "https://www.theodinproject.com/",
+    category: CATEGORIES.education,
     description:
       "The Odin Project empowers aspiring web developers to learn together for free. Our full stack curriculum is free and supported by a passionate open source community.",
+    url: "https://www.theodinproject.com/",
+  },
+
+  {
+    title: "UI Skills for Design Engineers | Curated Skill Directory",
     category: CATEGORIES.education,
+    description:
+      "Discover curated UI Skills for design engineers, including accessibility, motion, frontend craft, and interface quality guides with copy-ready install commands.",
+    url: "https://www.ui-skills.com/",
+  },
+
+  {
+    title: "Web-dev-mini-projects",
+    author: "Ayushparikh-code",
+    category: CATEGORIES.education,
+    description:
+      "The repository contains the list of awesome✨ & cool web development beginner-friendly✌️ projects!",
+    favicon: "/github.svg",
+    url: "https://github.com/Ayushparikh-code/Web-dev-mini-projects",
+  },
+  {
+    title: "Web Skills",
+    category: CATEGORIES.education,
+    description: "A visual overview of useful skills to learn as a web developer",
+    url: "https://andreasbm.github.io/web-skills/",
+  },
+
+  {
+    title: "You Don't Know JS",
+    author: "getify",
+    category: CATEGORIES.education,
+    description: "A book series (2 published editions) on the JS language.",
+    favicon: "/github.svg",
+    url: "https://github.com/getify/You-Dont-Know-JS",
   },
 ];

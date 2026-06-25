@@ -4,96 +4,100 @@ import { CATEGORIES } from "./categories";
 
 export const developmentLinks: Tool[] = [
   {
-    title: "GitDocify",
-    url: "https://gitdocify.com/",
-    description:
-      "Turn any GitHub repository into structured, source-grounded documentation with GitDocify..",
+    title: "10x",
     category: CATEGORIES.development,
-  },
-  {
-    title: "Responsively App",
-    url: "https://responsively.app/",
-    description: "A dev-tool that aids faster and precise responsive web development.",
-    category: CATEGORIES.development,
-  },
-  {
-    title: "SEOStudio - 100% Free Online Tools Collection",
-    url: "https://seostudio.tools/",
-    description:
-      "SEOStudio is a cutting-edge, user-friendly online platform that offers comprehensive suite of free SEO, YouTube, Text, Programming, Webmaster, and Miscellaneous tools.",
-    category: CATEGORIES.development,
-  },
-  {
-    title: "10x - App Builder",
-    url: "https://www.10x.app/",
     description:
       "10x is an AI-powered iOS app builder for macOS. Describe the app you want, and 10x generates SwiftUI code, an Xcode project, and a simulator preview.",
-    category: CATEGORIES.development,
-  },
-  {
-    title: "Coolify",
-    url: "https://coolify.io/",
-    description:
-      "Self-hosting platform with superpowers. Deploy apps, databases & 280+ services to your server. Open-source alternative to Heroku.",
-    category: CATEGORIES.development,
+    subtitle: "App Builder",
+    url: "https://www.10x.app/",
   },
   {
     title: "comimi",
-    url: "https://yui540.com/comimi",
+    category: CATEGORIES.development,
     description:
       "comimi is a TypeScript/JavaScript library that allows you to embed a manga viewer into websites.",
-    category: CATEGORIES.development,
+    url: "https://yui540.com/comimi",
   },
   {
-    title: "Omatsuri",
-    url: "https://omatsuri.app/",
-    description: "Progressive Web Application with 12 open source frontend focused tools",
+    title: "Coolify",
     category: CATEGORIES.development,
-  },
-  {
-    title: "Postgres Sandbox",
-    url: "https://database.build/",
-    description: "In-browser Postgres sandbox with AI assistance",
-    category: CATEGORIES.development,
-  },
-  {
-    title: "TinyWow",
-    url: "https://tinywow.com/",
-    description: "Free AI Writing, PDF, Image, and other Online Tools",
-    category: CATEGORIES.development,
-  },
-  {
-    title: "Liam ERD",
-    url: "https://liambx.com/",
     description:
-      "Automatically generates beautiful and easy-to-read ER diagrams from your database.",
-    category: CATEGORIES.development,
+      "Self-hosting platform with superpowers. Deploy apps, databases & 280+ services to your server. Open-source alternative to Heroku.",
+    url: "https://coolify.io/",
   },
   {
     title: "CSS Grid Generator",
-    url: "https://cssgridgenerator.io/",
+    category: CATEGORIES.development,
     description:
       "A user-friendly tool designed for web developers to effortlessly create customizable CSS grids for seamless web development.",
+    url: "https://cssgridgenerator.io/",
+  },
+  {
+    title: "GitDocify",
     category: CATEGORIES.development,
+    description:
+      "Turn any GitHub repository into structured, source-grounded documentation with GitDocify..",
+    url: "https://gitdocify.com/",
+  },
+  {
+    title: "Liam ERD",
+    category: CATEGORIES.development,
+    description:
+      "Automatically generates beautiful and easy-to-read ER diagrams from your database.",
+    url: "https://liambx.com/",
+  },
+  {
+    title: "Omatsuri",
+    category: CATEGORIES.development,
+    description: "Progressive Web Application with 12 open source frontend focused tools",
+    url: "https://omatsuri.app/",
   },
   {
     title: "OpenFlowKit",
-    url: "https://openflowkit.com/",
+    category: CATEGORIES.development,
     description:
       "Open-source, local-first AI diagramming for architecture diagrams, flowcharts, system design, and editable exports. No signup required.",
+    url: "https://openflowkit.com/",
+  },
+  {
+    title: "Postgres Sandbox",
     category: CATEGORIES.development,
+    description: "In-browser Postgres sandbox with AI assistance",
+    url: "https://database.build/",
   },
   {
     title: "Replit",
-    url: "https://replit.com/",
+    category: CATEGORIES.development,
     description:
       "Build and deploy software collaboratively with the power of AI without spending a second on setup.",
-    category: CATEGORIES.development,
+    url: "https://replit.com/",
   },
   {
-    title: "Web Apps by 123apps",
-    url: "https://123apps.com/",
-    description: "Online Tools for Video, Audio, PDF, and File Conversion.",
+    title: "Responsively App",
     category: CATEGORIES.development,
+    description: "A dev-tool that aids faster and precise responsive web development.",
+    url: "https://responsively.app/",
+  },
+  {
+    title: "SEOStudio",
+    category: CATEGORIES.development,
+    description:
+      "SEOStudio is a cutting-edge, user-friendly online platform that offers comprehensive suite of free SEO, YouTube, Text, Programming, Webmaster, and Miscellaneous tools.",
+    subtitle: "100% Free Online Tools Collection",
+    url: "https://seostudio.tools/",
+  },
+
+  {
+    title: "TinyWow",
+    category: CATEGORIES.development,
+    description: "Free AI Writing, PDF, Image, and other Online Tools",
+    url: "https://tinywow.com/",
+  },
+
+  {
+    title: "Web Apps by 123apps",
+    category: CATEGORIES.development,
+    description: "Online Tools for Video, Audio, PDF, and File Conversion.",
+    url: "https://123apps.com/",
   },
 ];

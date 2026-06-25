@@ -157,32 +157,6 @@ export function LiveTester({
               onClick={() => toggleFlag(f.id)}
             />
           ))}
-          {/*{[*/}
-          {/*  { className: "bg-c-orange text-foreground", id: "g", label: "Global" },*/}
-          {/*  { className: "bg-c-blue", fill: true, id: "i", label: "Case insensitive" },*/}
-          {/*  { className: "bg-c-pink text-foreground", id: "m", label: "Multiline" },*/}
-          {/*  { className: "bg-c-green text-foreground", id: "s", label: "Dotall" },*/}
-          {/*].map((f) => {*/}
-          {/*  const isActive = flags.includes(f.id);*/}
-          {/*  return (*/}
-          {/*    <Button*/}
-          {/*      key={f.id}*/}
-          {/*      className={cn("h-10 gap-2 px-3.5 font-semibold", isActive && f.className)}*/}
-          {/*      onClick={() => toggleFlag(f.id)}*/}
-          {/*      variant={isActive ? "default" : "outline"}*/}
-          {/*    >*/}
-          {/*      <span*/}
-          {/*        className={cn(*/}
-          {/*          "h-2.5 w-2.5 rounded-full border",*/}
-          {/*          f.fill && isActive ? "bg-background border-background" : "bg-foreground",*/}
-          {/*          !isActive && f.className,*/}
-          {/*        )}*/}
-          {/*      />*/}
-          {/*      <span className="font-mono">{f.id}</span>*/}
-          {/*      <span>{f.label}</span>*/}
-          {/*    </Button>*/}
-          {/*  );*/}
-          {/*})}*/}
         </div>
       </div>
 

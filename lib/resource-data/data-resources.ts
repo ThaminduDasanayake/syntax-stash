@@ -4,60 +4,63 @@ import { CATEGORIES } from "./categories";
 
 export const dataLinks: Tool[] = [
   {
-    title: "Public APIs",
-    url: "https://github.com/public-apis/public-apis",
-    favicon: "/github.svg",
-    description: "A collective list of free APIs.",
+    title: "Apify",
     category: CATEGORIES.data,
+    description:
+      "Cloud platform for web scraping, browser automation, AI agents, and data for AI. Use 35,000+ ready-made tools, code templates, or order a custom solution.",
+    url: "https://apify.com/",
+  },
+  {
+    title: "Behind the Email",
+    category: CATEGORIES.data,
+    description:
+      "Instantly find career history, education, and public profile signals from any email address. Professional OSINT for lead research and verification.",
+    subtitle: "Public Profile & Career Search",
+    url: "https://behindtheemail.com/",
   },
   {
     title: "Free Public APIs",
-    url: "https://www.freepublicapis.com/",
+    category: CATEGORIES.data,
     description:
       "A collection of Free Public APIs for Students and Developers. Tested every single day.",
-    category: CATEGORIES.data,
-  },
-  {
-    title: "PublicAPIs.dev",
-    url: "https://publicapis.dev/",
-    description:
-      "A collection of public APIs for developers, categorized and crowdsourced. Animals, books, cryptocurrencies, development, music, weather and much more.",
-    category: CATEGORIES.data,
-  },
-  {
-    title: "Behind the Email | Public Profile & Career Search",
-    url: "https://behindtheemail.com/",
-    description:
-      "Instantly find career history, education, and public profile signals from any email address. Professional OSINT for lead research and verification.",
-    category: CATEGORIES.data,
-  },
-  {
-    title: "Apify",
-    url: "https://apify.com/",
-    description:
-      "Cloud platform for web scraping, browser automation, AI agents, and data for AI. Use 35,000+ ready-made tools, code templates, or order a custom solution.",
-    category: CATEGORIES.data,
-  },
-  {
-    title: "Product Hunt",
-    url: "https://github.com/modelcontextprotocol/servers",
-    favicon: "/github.svg",
-    description:
-      "Product Hunt is a curation of the best new products, every day. Discover the latest mobile apps, websites, and technology products that everyone's talking about.",
-    category: CATEGORIES.data,
+    url: "https://www.freepublicapis.com/",
   },
   {
     title: "MCP Servers",
-    url: "https://www.producthunt.com/",
+    category: CATEGORIES.data,
     description:
       "Official and community Model Context Protocol server implementations for AI tool integrations.",
-    category: CATEGORIES.data,
+    url: "https://www.producthunt.com/",
   },
   {
     title: "Microlink",
-    url: "https://microlink.io/",
+    category: CATEGORIES.data,
     description:
       "Turn any URL into structured data. The all-in-one API for browser automation: screenshots, PDFs, scraping, and link previews. No infrastructure to manage.",
+    url: "https://microlink.io/",
+  },
+  {
+    title: "Product Hunt",
     category: CATEGORIES.data,
+    description:
+      "Product Hunt is a curation of the best new products, every day. Discover the latest mobile apps, websites, and technology products that everyone's talking about.",
+    favicon: "/github.svg",
+    url: "https://github.com/modelcontextprotocol/servers",
+  },
+
+  {
+    title: "Public APIs",
+    category: CATEGORIES.data,
+    description: "A collective list of free APIs.",
+    favicon: "/github.svg",
+    url: "https://github.com/public-apis/public-apis",
+  },
+
+  {
+    title: "PublicAPIs.dev",
+    category: CATEGORIES.data,
+    description:
+      "A collection of public APIs for developers, categorized and crowdsourced. Animals, books, cryptocurrencies, development, music, weather and much more.",
+    url: "https://publicapis.dev/",
   },
 ];

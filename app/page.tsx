@@ -1,38 +1,38 @@
 import { ArrowLeftIcon, ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 
+import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
 import ToolCard from "@/components/tool-card";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
-import { resourceLinks } from "@/lib/resource-data";
-import { internalTools } from "@/lib/tools-data";
+import { resourceCategories, resourceLinks } from "@/lib/resource-data";
+import { internalTools, toolCategories } from "@/lib/tools-data";
 
 export default function Home() {
   const topTools = internalTools.slice(0, 4);
+  const totalCategories = new Set([
+    ...toolCategories,
+    ...resourceCategories.filter((c) => c !== "Unknown"),
+  ]).size;
+  const formattedCategories = String(totalCategories).padStart(2, "0");
 
   return (
-    <div className="bg-background flex w-full flex-col">
+    <>
       {/* Hero Section */}
-      <section className="relative flex min-h-[80vh] w-full items-center overflow-hidden border-b-2 px-6 py-20 sm:px-12 lg:px-24">
-        <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-16 lg:flex-row">
-          {/* Hero Left: Typography & CTAs */}
-          <div className="z-10 w-full flex-1 lg:w-1/2">
-            <div className="text-ink-mute mb-8 flex items-center gap-4 font-mono text-xs font-bold tracking-widest">
-              <span className="flex items-center border">
-                <span className="bg-c-orange h-3.5 w-3.5"></span>
-                <span className="bg-c-blue h-3.5 w-3.5"></span>
-                <span className="bg-c-pink h-3.5 w-3.5"></span>
-                <span className="bg-c-green h-3.5 w-3.5"></span>
-              </span>
-              A REFERENCE FOR MODERN WEB DEVELOPMENT
+      <section className="hero">
+        <div className="hero-inner">
+          <div className="hero-copy">
+            <div className="hero-eyebrow">
+              <HeroEyebrowDots />A REFERENCE FOR MODERN WEB DEVELOPMENT
             </div>
 
-            <h1 className="mb-8 flex flex-col gap-0 text-6xl leading-[0.9] tracking-tighter sm:text-7xl lg:text-[100px]">
-              <span className="font-display font-black uppercase">THE FRONTEND</span>
-              <span className="-mt-2 font-serif tracking-normal lowercase italic">stash.</span>
+            <h1 className="hero-headline">
+              THE FRONTEND
+              <br />
+              <em>stash</em>.
             </h1>
 
-            <p className="mb-10 max-w-md font-mono text-base leading-relaxed opacity-90">
+            <p className="hero-sub">
               {internalTools.length} field tools across curated categories. Each one is a working
               utility or reference. The stash is a manual you can play with.
             </p>
@@ -52,24 +52,24 @@ export default function Home() {
           </div>
 
           {/* Hero Stack */}
-          <div className="relative hidden h-150 w-full lg:block">
-            <div className="absolute top-10 left-10 z-10 w-75 hover:z-50">
-              <div className="h-full w-full origin-center -rotate-3 transition-all duration-300 ease-out hover:-translate-y-4 hover:rotate-0">
+          <div className="hero-stack">
+            <div className="hero-card">
+              <div className="hero-card-wrap">
                 <ToolCard tool={internalTools[52]} />
               </div>
             </div>
-            <div className="absolute top-35 left-75 z-20 w-75 hover:z-50">
-              <div className="h-full w-full origin-center rotate-6 transition-all duration-300 ease-out hover:-translate-y-4 hover:rotate-0">
+            <div className="hero-card">
+              <div className="hero-card-wrap">
                 <ToolCard tool={internalTools[38]} />
               </div>
             </div>
-            <div className="absolute top-45 left-15 z-30 w-75 hover:z-50">
-              <div className="h-full w-full origin-center -rotate-4 transition-all duration-300 ease-out hover:-translate-y-4 hover:rotate-0">
+            <div className="hero-card">
+              <div className="hero-card-wrap">
                 <ToolCard tool={internalTools[22]} />
               </div>
             </div>
-            <div className="absolute top-75 left-50 z-40 w-75 hover:z-50">
-              <div className="h-full w-full origin-center rotate-8 transition-all duration-300 ease-out hover:-translate-y-4 hover:rotate-0">
+            <div className="hero-card">
+              <div className="hero-card-wrap">
                 <ToolCard tool={internalTools[28]} />
               </div>
             </div>
@@ -77,39 +77,29 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 2. Stats Bar */}
-      <section className="border-border divide-border bg-background grid grid-cols-2 divide-x-0 divide-y-2 border-b-2 md:grid-cols-4 md:divide-x-2 md:divide-y-0">
-        <div className="p-8 lg:p-12">
-          <h2 className="font-display text-5xl font-black tracking-tighter">04</h2>
-          <p className="mt-2 font-mono text-[10px] font-bold tracking-widest uppercase opacity-70">
-            CATEGORIES
-          </p>
-        </div>
-        <div className="p-8 lg:p-12">
-          <h2 className="font-display text-5xl font-black tracking-tighter">
-            {internalTools.length}
-          </h2>
-          <p className="mt-2 font-mono text-[10px] font-bold tracking-widest uppercase opacity-70">
-            FIELD TOOLS
-          </p>
-        </div>
-        <div className="p-8 lg:p-12">
-          <h2 className="font-display text-5xl font-black tracking-tighter">
-            {resourceLinks.length}
-          </h2>
-          <p className="mt-2 font-mono text-[10px] font-bold tracking-widest uppercase opacity-70">
-            CURATED LINKS
-          </p>
-        </div>
-        <div className="p-8 lg:p-12">
-          <h2 className="font-display text-5xl font-black tracking-tighter">100%</h2>
-          <p className="mt-2 font-mono text-[10px] font-bold tracking-widest uppercase opacity-70">
-            OPEN SOURCE
-          </p>
+      {/* Stats Bar */}
+      <section className="stats-bar">
+        <div className="stats-inner">
+          <div className="stat-item">
+            <h2 className="stat-num">{formattedCategories}</h2>
+            <p className="stat-label">CATEGORIES</p>
+          </div>
+          <div className="stat-item">
+            <h2 className="stat-num">{internalTools.length}</h2>
+            <p className="stat-label">Inbuilt Tools</p>
+          </div>
+          <div className="stat-item">
+            <h2 className="stat-num">{resourceLinks.length}</h2>
+            <p className="stat-label">Curated Resources</p>
+          </div>
+          <div className="stat-item">
+            <h2 className="stat-num">100%</h2>
+            <p className="stat-label">OPEN SOURCE</p>
+          </div>
         </div>
       </section>
 
-      {/* 3. Why this matters */}
+      {/* Why this matters */}
       <section className="border-border bg-background border-b-2 px-6 py-24 sm:px-12 lg:px-24">
         <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-24">
           <div>
@@ -151,7 +141,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4. Top Tools */}
+      {/* Top Tools */}
       <section className="bg-background px-6 py-24 sm:px-12 lg:px-24">
         <div className="mx-auto w-full max-w-7xl">
           <div className="mb-16 flex flex-col justify-between gap-8 md:flex-row md:items-end">
@@ -193,6 +183,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

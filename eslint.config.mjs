@@ -2,22 +2,35 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 import eslintConfigPrettier from "eslint-config-prettier";
+import perfectionist from "eslint-plugin-perfectionist";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
-import sortKeysFix from "eslint-plugin-sort-keys-fix";
 
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   {
     plugins: {
+      perfectionist: perfectionist,
       "simple-import-sort": simpleImportSort,
-      "sort-keys-fix": sortKeysFix,
     },
     rules: {
       "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+      "perfectionist/sort-objects": [
+        "warn",
+        {
+          customGroups: [
+            {
+              elementNamePattern: "^(id|title)$",
+              groupName: "priority",
+            },
+          ],
+          groups: ["priority", "unknown"],
+          order: "asc",
+          type: "natural",
+        },
+      ],
       "simple-import-sort/exports": "error",
       "simple-import-sort/imports": "error",
-      "sort-keys-fix/sort-keys-fix": "warn",
     },
   },
   eslintConfigPrettier,
