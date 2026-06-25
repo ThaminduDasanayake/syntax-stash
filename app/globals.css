@@ -166,6 +166,8 @@
   --shadow-lg: 8px 8px 0px 0px var(--ink);
   --shadow-xl: 12px 12px 0px 0px var(--ink);
   --shadow-2xl: 16px 16px 0px 0px var(--ink);
+
+  --breakpoint-xs: 480px;
 }
 
 @layer base {
@@ -173,9 +175,19 @@
     @apply border-border outline-ring/50;
   }
 
+  html,
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
     letter-spacing: var(--tracking-normal);
+    text-rendering: optimizeLegibility;
+  }
+
+  html {
+    @apply overflow-x-clip;
+  }
+
+  body {
+    @apply min-h-screen overflow-x-clip;
   }
 
   @supports (-moz-appearance: none) {
@@ -301,11 +313,11 @@
 
 /* Hero */
 @utility hero {
-  @apply border-line border-b pt-33 pb-12;
+  @apply border-line bg-sec-1 border-b pt-33 pb-12;
 }
 
 @utility hero-inner {
-  @apply mx-auto grid max-w-7xl grid-cols-[1.05fr_1fr] items-start gap-16 px-8;
+  @apply mx-auto grid max-w-7xl grid-cols-1 items-start gap-14 px-5 md:px-8 lg:grid-cols-[1.05fr_1fr] lg:gap-16;
 }
 
 @utility hero-copy {
@@ -321,19 +333,19 @@
 }
 
 @utility hero-headline {
-  @apply headline mb-5 max-w-[14ch] text-balance;
+  @apply headline mb-3.5 max-w-[14ch] text-balance sm:mb-5;
 }
 
 @utility hero-sub {
-  @apply text-ink-2 mb-7 font-mono text-lg leading-relaxed;
+  @apply text-ink-2 mb-5 max-w-[52ch] font-mono text-lg leading-relaxed sm:mb-7;
 }
 
 @utility hero-cta-row {
-  @apply flex flex-wrap gap-3;
+  @apply flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center;
 }
 
 @utility hero-stack {
-  @apply relative h-135 w-full;
+  @apply xs:block relative hidden h-135 w-full lg:mx-auto lg:max-w-135;
 }
 
 @utility hero-card {
@@ -376,24 +388,34 @@
   }
 }
 
+/* Stats Bar*/
 @utility stats-bar {
-  @apply border-line border-b;
+  @apply border-line bg-bg border-b;
 }
 
 @utility stats-inner {
-  @apply mx-auto grid max-w-7xl grid-cols-4 px-8;
+  @apply mx-auto grid max-w-7xl grid-cols-2 gap-x-0 px-5 sm:grid-cols-4 md:px-8;
 }
 
 @utility stat-item {
-  @apply border-line flex flex-col gap-1.5 border-r px-7 py-9;
+  @apply sm:border-line flex flex-col gap-1.5 px-5 py-6 sm:border-r sm:border-b-0 sm:px-7 sm:py-9;
+
+  &:nth-child(odd) {
+    @apply border-line border-r;
+  }
+
+  &:nth-child(1),
+  &:nth-child(2) {
+    @apply border-line border-b sm:border-b-0;
+  }
 
   &:last-child {
-    @apply border-r-0;
+    @apply sm:border-r-0;
   }
 }
 
 @utility stat-num {
-  @apply font-display text-[56px] leading-none font-extrabold tracking-tighter;
+  @apply font-display text-ink text-[40px] leading-none font-extrabold tracking-tighter sm:text-[56px];
 }
 
 @utility stat-label {

@@ -21,10 +21,10 @@ const inter = Inter({
 });
 
 const instrumentSerif = Instrument_Serif({
-  weight: ["400", "400"],
-  subsets: ["latin"],
   style: ["normal", "italic"],
+  subsets: ["latin"],
   variable: "--font-serif",
+  weight: ["400", "400"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -34,8 +34,8 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | syntax-stash",
     default: "syntax-stash",
+    template: "%s | syntax-stash",
   },
   description: "A curated stash of developer tools, resources, and snippets.",
 };
@@ -54,15 +54,10 @@ export default function RootLayout({
         inter.variable,
         instrumentSerif.variable,
         jetbrainsMono.variable,
-        "h-full"
       )}
     >
-      <body className="bg-background text-foreground flex h-screen overflow-hidden antialiased">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          disableTransitionOnChange
-        >
+      <body className="antialiased">
+        <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
           <TooltipProvider>
             <AppLayout>{children}</AppLayout>
             <Toaster />

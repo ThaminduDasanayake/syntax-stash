@@ -1,25 +1,33 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
-import AppHeader from "@/components/app-header";
 import AppFooter from "@/components/app-footer";
+import AppHeader from "@/components/app-header";
 import CommandMenu from "@/components/command-menu";
 
 export default function AppLayout({ children }: { children: ReactNode }) {
   const [commandMenuOpen, setCommandMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <div className="flex h-full w-full flex-col bg-background">
-      <main 
-        onScroll={(e) => setIsScrolled(e.currentTarget.scrollTop > 10)} 
-        className="flex min-h-0 flex-1 flex-col overflow-y-auto"
+    <div className="flex min-h-screen flex-col">
+      <AppHeader isScrolled={isScrolled} onSearchOpenAction={() => setCommandMenuOpen(true)} />
+      <main
+        // onScroll={(e) => setIsScrolled(e.currentTarget.scrollTop > 10)}
+        className="flex-1"
       >
-        <AppHeader isScrolled={isScrolled} onSearchOpenAction={() => setCommandMenuOpen(true)} />
         {children}
-        <AppFooter />
       </main>
+      <AppFooter />
       <CommandMenu open={commandMenuOpen} setOpenAction={setCommandMenuOpen} />
     </div>
   );
