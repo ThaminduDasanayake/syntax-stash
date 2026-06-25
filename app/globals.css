@@ -415,7 +415,7 @@
 }
 
 @utility stat-num {
-  @apply font-display text-[56px] leading-none font-extrabold tracking-tighter;
+  @apply font-display text-ink text-[40px] leading-none font-extrabold tracking-tighter sm:text-[56px];
 }
 
 @utility stat-label {
