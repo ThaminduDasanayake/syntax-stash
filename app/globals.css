@@ -54,6 +54,10 @@
   --pink-soft: #e4d1f8;
   --green-deep: #3d8a1a;
   --green-soft: #c4e4a8;
+  --yellow-deep: #a38400;
+  --purple-deep: #5b21b6;
+  --cyan-deep: #007a87;
+  --red-deep: #991b1b;
   --sec-1: #f1ecdf;
   --sec-2: #e7e1d1;
   --sec-3: #dcd4be;
@@ -219,6 +223,35 @@
   }
 }
 
+@utility theme-orange {
+  --theme: var(--orange);
+  --theme-deep: var(--orange-deep);
+  --theme-text: var(--ink);
+  --theme-tint: var(--orange-tint);
+  --theme-tint2: var(--orange-tint-2);
+}
+@utility theme-blue {
+  --theme: var(--blue);
+  --theme-deep: var(--blue-deep);
+  --theme-text: var(--paper);
+  --theme-tint: var(--blue-tint);
+  --theme-tint2: var(--blue-tint-2);
+}
+@utility theme-pink {
+  --theme: var(--pink);
+  --theme-deep: var(--pink-deep);
+  --theme-text: var(--ink);
+  --theme-tint: var(--pink-tint);
+  --theme-tint2: var(--pink-tint-2);
+}
+@utility theme-green {
+  --theme: var(--green);
+  --theme-deep: var(--green-deep);
+  --theme-text: var(--ink);
+  --theme-tint: var(--green-tint);
+  --theme-tint2: var(--green-tint-2);
+}
+
 @utility flex-center {
   @apply flex items-center justify-center;
 }
@@ -266,10 +299,6 @@
   @apply [&_em]:font-serif [&_em]:font-normal [&_em]:tracking-tight [&_em]:lowercase [&_em]:italic;
 }
 
-@utility border {
-  border-width: 1.5px !important;
-}
-
 /* Hero */
 @utility hero {
   @apply border-line border-b pt-33 pb-12;
@@ -304,7 +333,7 @@
 }
 
 @utility hero-stack {
-  @apply relative h-150 w-full;
+  @apply relative h-135 w-full;
 }
 
 @utility hero-card {
@@ -317,16 +346,16 @@
   }
 
   &:nth-child(1) {
-    @apply top-10 left-10 z-1;
+    @apply top-0 left-10 z-1;
   }
   &:nth-child(2) {
-    @apply top-35 left-75 z-2;
+    @apply top-25 left-75 z-2;
   }
   &:nth-child(3) {
-    @apply top-45 left-15 z-3;
+    @apply top-35 left-15 z-3;
   }
   &:nth-child(4) {
-    @apply top-75 left-50 z-4;
+    @apply top-65 left-50 z-4;
   }
 }
 
@@ -357,6 +386,10 @@
 
 @utility stat-item {
   @apply border-line flex flex-col gap-1.5 border-r px-7 py-9;
+
+  &:last-child {
+    @apply border-r-0;
+  }
 }
 
 @utility stat-num {
@@ -377,7 +410,7 @@
 }
 
 @utility section-inner {
-  @apply mx-auto max-w-7xl px-8;
+  @apply mx-auto flex max-w-7xl flex-col items-start px-8;
 }
 
 @utility res-headline {
@@ -468,6 +501,10 @@
 
 @utility card-meta {
   @apply text-mono-2xs mt-2 opacity-80 transition-colors group-hover:opacity-100;
+}
+
+@utility card-meta-sep {
+  @apply mx-0.5 opacity-50;
 }
 
 @utility card-icon-box {
@@ -568,11 +605,16 @@
 }
 
 @utility modal-section-heading {
-  @apply text-display-2xs mb-2;
+  @apply text-mono-2xs mb-2;
+  color: var(--theme-deep);
 }
 
 @utility modal-section-body {
   @apply text-base leading-relaxed;
+}
+
+@utility modal-link {
+  @apply border-line mx-8 mt-6 flex flex-col border-t pt-4;
 }
 
 @utility modal-launch {

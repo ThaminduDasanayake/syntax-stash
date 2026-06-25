@@ -8,6 +8,7 @@ import { ResourceDialog } from "@/components/resource-dialog";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { iconMap } from "@/lib/icons";
+import { internalTools } from "@/lib/tools-data";
 import {
   cn,
   getResourceColorByKey,
@@ -25,12 +26,31 @@ function CardBody({ tool }: ToolCardProps) {
     : getResourceKeyFromValue(tool.category);
   const colorClasses = isInternal ? getToolColorByKey(key) : getResourceColorByKey(key);
 
+  let toolNumber = "";
+  if (isInternal) {
+    const totalTools = internalTools.length;
+    const toolIndex = internalTools.findIndex((t) => t.slug === tool.slug);
+    if (toolIndex !== -1) {
+      const currentNumber = String(toolIndex + 1).padStart(2, "0");
+      const totalFormatted = String(totalTools).padStart(2, "0");
+      toolNumber = `${currentNumber}/${totalFormatted}`;
+    }
+  }
+
   return (
     <article className={cn("card group", colorClasses)} role="button" tabIndex={0}>
       <div className="card-inner">
         <div className="card-face">
           <div className="card-header">
-            <span className="card-meta">{tool.category}</span>
+            <span className="card-meta">
+              {tool.category}
+              {isInternal && (
+                <>
+                  <span className="card-meta-sep">·</span>
+                  <span>{toolNumber}</span>
+                </>
+              )}
+            </span>
 
             {isInternal ? (
               <div className="bg-background text-foreground card-icon-box">

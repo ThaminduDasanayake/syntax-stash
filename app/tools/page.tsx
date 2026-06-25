@@ -26,7 +26,9 @@ export default function ToolsPage() {
       {/* Mini-Hero */}
       <header className="res-header">
         <div className="section-inner">
-          <HeroEyebrowDots />
+          <div className="hero-eyebrow">
+            <HeroEyebrowDots />
+          </div>
           <h1 className="res-headline">
             THE TOOLS
             <br />

@@ -5,11 +5,16 @@ import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
 import ToolCard from "@/components/tool-card";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
-import { resourceLinks } from "@/lib/resource-data";
-import { internalTools } from "@/lib/tools-data";
+import { resourceCategories, resourceLinks } from "@/lib/resource-data";
+import { internalTools, toolCategories } from "@/lib/tools-data";
 
 export default function Home() {
   const topTools = internalTools.slice(0, 4);
+  const totalCategories = new Set([
+    ...toolCategories,
+    ...resourceCategories.filter((c) => c !== "Unknown"),
+  ]).size;
+  const formattedCategories = String(totalCategories).padStart(2, "0");
 
   return (
     <>
@@ -76,7 +81,7 @@ export default function Home() {
       <section className="stats-bar">
         <div className="stats-inner">
           <div className="stat-item">
-            <h2 className="stat-num">04</h2>
+            <h2 className="stat-num">{formattedCategories}</h2>
             <p className="stat-label">CATEGORIES</p>
           </div>
           <div className="stat-item">

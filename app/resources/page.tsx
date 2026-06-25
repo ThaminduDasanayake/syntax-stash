@@ -16,7 +16,9 @@ export default function ResourcesPage() {
       {/* Header */}
       <header className="res-header">
         <div className="section-inner">
-          <HeroEyebrowDots />
+          <div className="hero-eyebrow">
+            <HeroEyebrowDots />
+          </div>
           <h1 className="res-headline">
             THE RESOURCES
             <br />
