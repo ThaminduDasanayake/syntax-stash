@@ -79,7 +79,7 @@ export const designLinks: Tool[] = [
   },
   {
     title: "Colorize",
-    category: CATEGORIES.frontend,
+    category: CATEGORIES.design,
     description:
       "Generate color palettes instantly from any website effortlessly. Enter a URL to explore color schemes and combinations directly from the site's design. No sign-up required. Try it now!",
     tags: ["color"],
@@ -185,7 +185,7 @@ export const designLinks: Tool[] = [
   },
   {
     title: "Fontself",
-    category: CATEGORIES.frontend,
+    category: CATEGORIES.design,
     description:
       "Create custom fonts in minutes with Fontself Maker, a powerful font maker easy to use and made for all creatives.",
     subtitle: "The Easiest Way to Make Fonts",
@@ -194,7 +194,7 @@ export const designLinks: Tool[] = [
   },
   {
     title: "Fontshare",
-    category: CATEGORIES.frontend,
+    category: CATEGORIES.design,
     description:
       "Fontshare is a free fonts service from the Indian Type Foundry (ITF), making quality fonts accessible to all.",
     subtitle: "Quality Fonts. Free.",
@@ -212,7 +212,7 @@ export const designLinks: Tool[] = [
   },
   {
     title: "Happy Hues",
-    category: CATEGORIES.frontend,
+    category: CATEGORIES.design,
     description:
       "See color palette inspiration on a real example website. As you click on different palettes every color on this site updates to give you context of how that color could be used for your design or illustration projects.",
     subtitle: "Curated colors in context",
@@ -262,7 +262,7 @@ export const designLinks: Tool[] = [
   },
   {
     title: "Khroma",
-    category: CATEGORIES.frontend,
+    category: CATEGORIES.design,
     description:
       "Khroma is the fastest way to discover, search, and save color combos and palettes you'll love. Discover a personalized AI-powered color tool for designers to find the perfect color scheme.",
     tags: ["color"],
@@ -294,7 +294,7 @@ export const designLinks: Tool[] = [
   {
     title: "Meditations in Color",
     author: "Pixel Symphony",
-    category: CATEGORIES.frontend,
+    category: CATEGORIES.design,
     description:
       "Colorists in the Colorist Archive: browse chromatic profiles, artwork palettes, and generative color studies across artists, periods, and collections.",
     subtitle: "Chromatic Profiles",
@@ -352,7 +352,7 @@ export const designLinks: Tool[] = [
   },
   {
     title: "Palette Maker",
-    category: CATEGORIES.frontend,
+    category: CATEGORIES.design,
     description:
       "Free color tool for creatives and color lovers. Create color palettes and preview them on UI/UX, Illustrations, Web, Apps, Branding and other designs.",
     tags: ["color"],
@@ -376,14 +376,14 @@ export const designLinks: Tool[] = [
   },
   {
     title: "Picture Palette",
-    category: CATEGORIES.frontend,
+    category: CATEGORIES.design,
     description: "Aesthetically pleasing color palettes based on aesthetically pleasing pictures.",
     tags: ["color"],
     url: "https://picture-palette.web.app/",
   },
   {
     title: "Picular",
-    category: CATEGORIES.frontend,
+    category: CATEGORIES.design,
     description:
       "Picular is a rocket fast primary color generator using Google’s image search. If you ever needed the perfect yellow hex code from a banana, this is the tool for you.",
     favicon: "https://picular.co/images/favicon-base.png",
@@ -408,7 +408,7 @@ export const designLinks: Tool[] = [
   },
   {
     title: "Realtime Colors",
-    category: CATEGORIES.frontend,
+    category: CATEGORIES.design,
     description: "Visualize your colors and fonts on a real website.",
     tags: ["color"],
     url: "https://www.realtimecolors.com/",
@@ -431,7 +431,7 @@ export const designLinks: Tool[] = [
   },
   {
     title: "SPACE TYPE GENERATOR",
-    category: CATEGORIES.frontend,
+    category: CATEGORIES.design,
     description: "A kinetic type generator from kielm",
     tags: ["typography"],
     url: "https://spacetypegenerator.com/",
@@ -464,7 +464,7 @@ export const designLinks: Tool[] = [
   },
   {
     title: "Super Color Palette",
-    category: CATEGORIES.frontend,
+    category: CATEGORIES.design,
     description:
       "Generate super awesome color palettes by shifting hue, saturation, lightness, and more. 100% free without ads.",
     tags: ["color"],
@@ -498,7 +498,7 @@ export const designLinks: Tool[] = [
   },
   {
     title: "Typeface App",
-    category: CATEGORIES.frontend,
+    category: CATEGORIES.design,
     description:
       "Typeface is a wonderful font manager for macOS that helps you pick the perfect type for your designs. With a minimal interface and total focus on your fonts browsing your collection becomes a delightful experience. And new powerful font management features let you effortlessly organize even the largest libraries.",
     tags: ["typography"],
@@ -506,7 +506,7 @@ export const designLinks: Tool[] = [
   },
   {
     title: "UNCUT.wtf",
-    category: CATEGORIES.frontend,
+    category: CATEGORIES.design,
     description:
       "UNCUT.wtf is a free typeface catalogue, focusing on somewhat contemporary type. There are currently 163 typefaces featured.",
     tags: ["typography"],

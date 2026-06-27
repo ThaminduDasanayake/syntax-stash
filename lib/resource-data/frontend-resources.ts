@@ -53,7 +53,7 @@ export const frontendLinks: Tool[] = [
   },
   {
     title: "Apache ECharts",
-    category: CATEGORIES.data,
+    category: CATEGORIES.frontend,
     description: "A powerful, interactive charting and visualization library for browser",
     tags: ["data-viz"],
     url: "https://echarts.apache.org/en/index.html",
@@ -369,7 +369,7 @@ export const frontendLinks: Tool[] = [
   },
   {
     title: "mapcn",
-    category: CATEGORIES.data,
+    category: CATEGORIES.frontend,
     description:
       "A collection of beautifully designed, accessible, and customizable map components. Built on MapLibre GL. Styled with Tailwind CSS. Works with shadcn/ui.",
     tags: ["map"],
@@ -474,7 +474,7 @@ export const frontendLinks: Tool[] = [
   },
   {
     title: "shadcnmaps",
-    category: CATEGORIES.data,
+    category: CATEGORIES.frontend,
     description:
       "170+ interactive SVG map components for React. Countries, continents, and US states. No dependencies — install via shadcn CLI with pure Tailwind CSS styling.",
     tags: ["map"],
@@ -665,7 +665,7 @@ export const frontendLinks: Tool[] = [
   },
   {
     title: "VisGL Google Maps",
-    category: CATEGORIES.data,
+    category: CATEGORIES.frontend,
     description: "React components and hooks for the Google Maps JavaScript API",
     favicon: "https://visgl.github.io/react-google-maps/images/visgl-logo-dark.png",
     tags: ["map"],

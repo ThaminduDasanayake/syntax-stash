@@ -23,7 +23,7 @@ export const developmentLinks: Tool[] = [
   },
   {
     title: "Arnis",
-    category: CATEGORIES.data,
+    category: CATEGORIES.dev,
     description:
       "Generate Minecraft worlds from real-world locations. Free, open-source tool to recreate your hometown, city, or any place on Earth in Minecraft.",
     tags: ["map"],
@@ -58,7 +58,7 @@ export const developmentLinks: Tool[] = [
   },
   {
     title: "Cadmapper",
-    category: CATEGORIES.data,
+    category: CATEGORIES.dev,
     description:
       "Cadmapper lets anyone create 3D CAD files of any area in the world within minutes. Worldwide map files for any design program.",
     tags: ["map"],
@@ -75,7 +75,7 @@ export const developmentLinks: Tool[] = [
   },
   {
     title: "City Roads",
-    category: CATEGORIES.data,
+    category: CATEGORIES.dev,
     description:
       "This website allows you to select a city and then draws every single road on a screen.",
     tags: ["map"],
@@ -83,7 +83,7 @@ export const developmentLinks: Tool[] = [
   },
   {
     title: "Cityweft",
-    category: CATEGORIES.data,
+    category: CATEGORIES.dev,
     description:
       "Generate clean, editable 3D site context for any location on Earth — ready for your CAD, BIM, or generative-design workflow.",
     tags: ["map"],
@@ -271,7 +271,7 @@ export const developmentLinks: Tool[] = [
   },
   {
     title: "MAKE MY DRIVE FUN",
-    category: CATEGORIES.data,
+    category: CATEGORIES.dev,
     description: "Enter in two locations to make the drive fun.\n",
     tags: ["map"],
     url: "https://makemydrivefun.com/",
@@ -367,7 +367,7 @@ export const developmentLinks: Tool[] = [
   },
   {
     title: "RayonMaps",
-    category: CATEGORIES.data,
+    category: CATEGORIES.dev,
     description:
       "Export OpenStreetMap Data to DXF. Get the CAD geometry of any site on Earth — in just 3 steps.",
     tags: ["map"],
@@ -438,7 +438,7 @@ export const developmentLinks: Tool[] = [
   },
   {
     title: "Terraink",
-    category: CATEGORIES.data,
+    category: CATEGORIES.dev,
     description:
       "Free online map poster and wallpaper generator. Design custom, print-ready map art for any city or location — export as PNG, PDF, or SVG. No sign-up required.",
     tags: ["map"],
