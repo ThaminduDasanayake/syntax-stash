@@ -176,6 +176,24 @@ export const designLinks: Tool[] = [
     url: "https://endlesstools.io/",
   },
   {
+    title: "Fontself",
+    category: CATEGORIES.frontend,
+    description:
+      "Create custom fonts in minutes with Fontself Maker, a powerful font maker easy to use and made for all creatives.",
+    subtitle: "The Easiest Way to Make Fonts",
+    tags: ["typography"],
+    url: "https://www.fontself.com/",
+  },
+  {
+    title: "Fontshare",
+    category: CATEGORIES.frontend,
+    description:
+      "Fontshare is a free fonts service from the Indian Type Foundry (ITF), making quality fonts accessible to all.",
+    subtitle: "Quality Fonts. Free.",
+    tags: ["typography"],
+    url: "https://fontshare.com/",
+  },
+  {
     title: "getdesign.md",
     category: CATEGORIES.design,
     description:
@@ -346,6 +364,13 @@ export const designLinks: Tool[] = [
     url: "https://savee.com/",
   },
   {
+    title: "SPACE TYPE GENERATOR",
+    category: CATEGORIES.frontend,
+    description: "A kinetic type generator from kielm",
+    tags: ["typography"],
+    url: "https://spacetypegenerator.com/",
+  },
+  {
     title: "Sprrrint",
     category: CATEGORIES.design,
     description:
@@ -396,6 +421,22 @@ export const designLinks: Tool[] = [
       "Toolfolio helps you find the best tools for productivity, creativity, and design. Explore top solutions for startups, social media, AI, and more to optimize your workflow.",
     tags: ["design"],
     url: "https://toolfolio.com/",
+  },
+  {
+    title: "Typeface App",
+    category: CATEGORIES.frontend,
+    description:
+      "Typeface is a wonderful font manager for macOS that helps you pick the perfect type for your designs. With a minimal interface and total focus on your fonts browsing your collection becomes a delightful experience. And new powerful font management features let you effortlessly organize even the largest libraries.",
+    tags: ["typography"],
+    url: "https://typefaceapp.com/",
+  },
+  {
+    title: "UNCUT.wtf",
+    category: CATEGORIES.frontend,
+    description:
+      "UNCUT.wtf is a free typeface catalogue, focusing on somewhat contemporary type. There are currently 163 typefaces featured.",
+    tags: ["typography"],
+    url: "https://uncut.wtf/",
   },
   {
     title: "Unicorn Studio",

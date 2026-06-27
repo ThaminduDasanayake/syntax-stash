@@ -7,9 +7,7 @@ import { designLinks } from "./design-resources";
 import { developmentLinks } from "./development-resources";
 import { educationLinks } from "./education-resources";
 import { frontendLinks } from "./frontend-resources";
-import { mapLinks } from "./map-resources";
 import { mediaLinks } from "./media-resources";
-import { typographyLinks } from "./typography-resources";
 
 export { aiLinks } from "./ai-resources";
 export { type CategoryValue, resourceCategories } from "./categories";
@@ -19,9 +17,7 @@ export { designLinks } from "./design-resources";
 export { developmentLinks } from "./development-resources";
 export { educationLinks } from "./education-resources";
 export { frontendLinks } from "./frontend-resources";
-export { mapLinks } from "./map-resources";
 export { mediaLinks } from "./media-resources";
-export { typographyLinks } from "./typography-resources";
 
 export const resourceLinks: Tool[] = [
   ...aiLinks,
@@ -32,6 +28,4 @@ export const resourceLinks: Tool[] = [
   ...developmentLinks,
   ...educationLinks,
   ...mediaLinks,
-  ...mapLinks,
-  ...typographyLinks,
 ];

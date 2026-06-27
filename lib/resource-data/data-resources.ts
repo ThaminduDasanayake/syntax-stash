@@ -4,13 +4,6 @@ import { CATEGORIES } from "./categories";
 
 export const dataLinks: Tool[] = [
   {
-    title: "Apache ECharts",
-    category: CATEGORIES.data,
-    description: "A powerful, interactive charting and visualization library for browser",
-    tags: ["data-viz"],
-    url: "https://echarts.apache.org/en/index.html",
-  },
-  {
     title: "Apify",
     category: CATEGORIES.data,
     description:
@@ -60,7 +53,6 @@ export const dataLinks: Tool[] = [
     tags: ["data"],
     url: "https://github.com/modelcontextprotocol/servers",
   },
-
   {
     title: "Public APIs",
     category: CATEGORIES.data,
@@ -69,7 +61,6 @@ export const dataLinks: Tool[] = [
     tags: ["data"],
     url: "https://github.com/public-apis/public-apis",
   },
-
   {
     title: "PublicAPIs.dev",
     category: CATEGORIES.data,

@@ -22,6 +22,14 @@ export const developmentLinks: Tool[] = [
     url: "https://www.talater.com/annyang/",
   },
   {
+    title: "Arnis",
+    category: CATEGORIES.data,
+    description:
+      "Generate Minecraft worlds from real-world locations. Free, open-source tool to recreate your hometown, city, or any place on Earth in Minecraft.",
+    tags: ["map"],
+    url: "https://arnismc.com/",
+  },
+  {
     title: "BestAlternative",
     category: CATEGORIES.dev,
     description:
@@ -49,6 +57,14 @@ export const developmentLinks: Tool[] = [
     url: "https://bytes.dev/",
   },
   {
+    title: "Cadmapper",
+    category: CATEGORIES.data,
+    description:
+      "Cadmapper lets anyone create 3D CAD files of any area in the world within minutes. Worldwide map files for any design program.",
+    tags: ["map"],
+    url: "https://cadmapper.com/",
+  },
+  {
     title: "Cal.com",
     category: CATEGORIES.dev,
     description:
@@ -56,6 +72,22 @@ export const developmentLinks: Tool[] = [
     subtitle: "Scheduling Software for Online Bookings",
     tags: ["dev-tool"],
     url: "https://cal.com/",
+  },
+  {
+    title: "City Roads",
+    category: CATEGORIES.data,
+    description:
+      "This website allows you to select a city and then draws every single road on a screen.",
+    tags: ["map"],
+    url: "https://anvaka.github.io/city-roads/",
+  },
+  {
+    title: "Cityweft",
+    category: CATEGORIES.data,
+    description:
+      "Generate clean, editable 3D site context for any location on Earth — ready for your CAD, BIM, or generative-design workflow.",
+    tags: ["map"],
+    url: "https://cityweft.com/",
   },
   {
     title: "Coddy",
@@ -238,6 +270,13 @@ export const developmentLinks: Tool[] = [
     url: "https://liambx.com/",
   },
   {
+    title: "MAKE MY DRIVE FUN",
+    category: CATEGORIES.data,
+    description: "Enter in two locations to make the drive fun.\n",
+    tags: ["map"],
+    url: "https://makemydrivefun.com/",
+  },
+  {
     title: "Mockaroo",
     category: CATEGORIES.dev,
     description:
@@ -327,6 +366,14 @@ export const developmentLinks: Tool[] = [
     url: "https://database.build/",
   },
   {
+    title: "RayonMaps",
+    category: CATEGORIES.data,
+    description:
+      "Export OpenStreetMap Data to DXF. Get the CAD geometry of any site on Earth — in just 3 steps.",
+    tags: ["map"],
+    url: "https://maps.rayon.design/",
+  },
+  {
     title: "Replit",
     category: CATEGORIES.dev,
     description:
@@ -388,6 +435,14 @@ export const developmentLinks: Tool[] = [
     subtitle: "Open-Source TypeScript Headless CMS for Next.js, Astro, Tanstack Start, and Nuxt.js",
     tags: ["backend"],
     url: "https://strapi.io/",
+  },
+  {
+    title: "Terraink",
+    category: CATEGORIES.data,
+    description:
+      "Free online map poster and wallpaper generator. Design custom, print-ready map art for any city or location — export as PNG, PDF, or SVG. No sign-up required.",
+    tags: ["map"],
+    url: "https://terraink.app/",
   },
   {
     title: "TinaCMS",

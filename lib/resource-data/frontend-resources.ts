@@ -52,6 +52,13 @@ export const frontendLinks: Tool[] = [
     url: "https://animmasterlib.dev/",
   },
   {
+    title: "Apache ECharts",
+    category: CATEGORIES.data,
+    description: "A powerful, interactive charting and visualization library for browser",
+    tags: ["data-viz"],
+    url: "https://echarts.apache.org/en/index.html",
+  },
+  {
     title: "Ark UI",
     category: CATEGORIES.frontend,
     description:
@@ -230,7 +237,6 @@ export const frontendLinks: Tool[] = [
     tags: ["ui-component"],
     url: "https://www.footer.design/",
   },
-
   {
     title: "ForgeUI",
     category: CATEGORIES.frontend,
@@ -256,6 +262,7 @@ export const frontendLinks: Tool[] = [
     tags: ["react"],
     url: "https://frimousse.liveblocks.io/",
   },
+
   {
     title: "Grainrad",
     category: CATEGORIES.frontend,
@@ -334,6 +341,14 @@ export const frontendLinks: Tool[] = [
     description: "Beautiful UI components and templates to make your landing page look stunning.",
     tags: ["ui-component"],
     url: "https://magicui.design/",
+  },
+  {
+    title: "mapcn",
+    category: CATEGORIES.data,
+    description:
+      "A collection of beautifully designed, accessible, and customizable map components. Built on MapLibre GL. Styled with Tailwind CSS. Works with shadcn/ui.",
+    tags: ["map"],
+    url: "https://www.mapcn.dev/",
   },
   {
     title: "Motion",
@@ -423,6 +438,14 @@ export const frontendLinks: Tool[] = [
     subtitle: "The interactive experience engine",
     tags: ["animation"],
     url: "https://rive.app/",
+  },
+  {
+    title: "shadcnmaps",
+    category: CATEGORIES.data,
+    description:
+      "170+ interactive SVG map components for React. Countries, continents, and US states. No dependencies — install via shadcn CLI with pure Tailwind CSS styling.",
+    tags: ["map"],
+    url: "https://www.shadcnmaps.com/",
   },
   {
     title: "Shaders",
@@ -590,5 +613,13 @@ export const frontendLinks: Tool[] = [
     subtitle: "Animated React Components",
     tags: ["ui-component"],
     url: "https://www.vengenceui.com/",
+  },
+  {
+    title: "VisGL Google Maps",
+    category: CATEGORIES.data,
+    description: "React components and hooks for the Google Maps JavaScript API",
+    favicon: "https://visgl.github.io/react-google-maps/images/visgl-logo-dark.png",
+    tags: ["map"],
+    url: "https://visgl.github.io/react-google-maps/",
   },
 ];
