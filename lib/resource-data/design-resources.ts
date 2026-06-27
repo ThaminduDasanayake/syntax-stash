@@ -78,6 +78,14 @@ export const designLinks: Tool[] = [
     url: "https://cognitivebiasindex.com/",
   },
   {
+    title: "Colorize",
+    category: CATEGORIES.frontend,
+    description:
+      "Generate color palettes instantly from any website effortlessly. Enter a URL to explore color schemes and combinations directly from the site's design. No sign-up required. Try it now!",
+    tags: ["color"],
+    url: "https://colorize.design/",
+  },
+  {
     title: "ContentCore",
     category: CATEGORIES.design,
     description: "Create content in one place. Incredibly fast. Save as images or videos.",
@@ -203,6 +211,15 @@ export const designLinks: Tool[] = [
     url: "https://getdesign.md/",
   },
   {
+    title: "Happy Hues",
+    category: CATEGORIES.frontend,
+    description:
+      "See color palette inspiration on a real example website. As you click on different palettes every color on this site updates to give you context of how that color could be used for your design or illustration projects.",
+    subtitle: "Curated colors in context",
+    tags: ["color"],
+    url: "https://www.happyhues.co/",
+  },
+  {
     title: "InkField",
     category: CATEGORIES.design,
     description:
@@ -244,6 +261,14 @@ export const designLinks: Tool[] = [
     url: "https://github.com/Khalidabdi1/design-ai",
   },
   {
+    title: "Khroma",
+    category: CATEGORIES.frontend,
+    description:
+      "Khroma is the fastest way to discover, search, and save color combos and palettes you'll love. Discover a personalized AI-powered color tool for designers to find the perfect color scheme.",
+    tags: ["color"],
+    url: "https://www.khroma.co/",
+  },
+  {
     title: "Layers",
     category: CATEGORIES.design,
     description: "Explore the latest design layers from the community.",
@@ -265,6 +290,16 @@ export const designLinks: Tool[] = [
     subtitle: "AI-Powered Floor Plan Creation",
     tags: ["design"],
     url: "https://www.maket.ai/",
+  },
+  {
+    title: "Meditations in Color",
+    author: "Pixel Symphony",
+    category: CATEGORIES.frontend,
+    description:
+      "Colorists in the Colorist Archive: browse chromatic profiles, artwork palettes, and generative color studies across artists, periods, and collections.",
+    subtitle: "Chromatic Profiles",
+    tags: ["color"],
+    url: "https://meditationsincolor.com/colorists",
   },
   {
     title: "Microcopy",
@@ -316,6 +351,14 @@ export const designLinks: Tool[] = [
     url: "https://design-directory-blue.vercel.app/",
   },
   {
+    title: "Palette Maker",
+    category: CATEGORIES.frontend,
+    description:
+      "Free color tool for creatives and color lovers. Create color palettes and preview them on UI/UX, Illustrations, Web, Apps, Branding and other designs.",
+    tags: ["color"],
+    url: "https://palettemaker.com/",
+  },
+  {
     title: "PaperMe",
     category: CATEGORIES.design,
     description:
@@ -332,6 +375,22 @@ export const designLinks: Tool[] = [
     url: "https://github.com/penpot/penpot",
   },
   {
+    title: "Picture Palette",
+    category: CATEGORIES.frontend,
+    description: "Aesthetically pleasing color palettes based on aesthetically pleasing pictures.",
+    tags: ["color"],
+    url: "https://picture-palette.web.app/",
+  },
+  {
+    title: "Picular",
+    category: CATEGORIES.frontend,
+    description:
+      "Picular is a rocket fast primary color generator using Google’s image search. If you ever needed the perfect yellow hex code from a banana, this is the tool for you.",
+    favicon: "https://picular.co/images/favicon-base.png",
+    tags: ["color"],
+    url: "https://picular.co/",
+  },
+  {
     title: "Planner 5D",
     category: CATEGORIES.design,
     description:
@@ -346,6 +405,13 @@ export const designLinks: Tool[] = [
       "Discover RapidRAW, a modern, high-performance Lightroom® alternative. Get a simple, beautiful, and GPU-accelerated RAW editing experience for Windows, macOS, and Linux.",
     tags: ["design"],
     url: "https://www.getrapidraw.com/",
+  },
+  {
+    title: "Realtime Colors",
+    category: CATEGORIES.frontend,
+    description: "Visualize your colors and fonts on a real website.",
+    tags: ["color"],
+    url: "https://www.realtimecolors.com/",
   },
   {
     title: "Recent",
@@ -395,6 +461,14 @@ export const designLinks: Tool[] = [
     subtitle: "Website hero section library",
     tags: ["design"],
     url: "https://supahero.io/",
+  },
+  {
+    title: "Super Color Palette",
+    category: CATEGORIES.frontend,
+    description:
+      "Generate super awesome color palettes by shifting hue, saturation, lightness, and more. 100% free without ads.",
+    tags: ["color"],
+    url: "https://supercolorpalette.com/",
   },
   {
     title: "Superdesign",

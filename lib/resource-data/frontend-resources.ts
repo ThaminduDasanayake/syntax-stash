@@ -133,6 +133,14 @@ export const frontendLinks: Tool[] = [
     url: "https://coverflow.ashishgogula.in/",
   },
   {
+    title: "CSS Gradient",
+    category: CATEGORIES.frontend,
+    description:
+      "As a free CSS gradient generator tool, this website lets you create a colorful gradient background for your website, blog, or social media profile.",
+    tags: ["color"],
+    url: "https://cssgradient.io/",
+  },
+  {
     title: "CSS Loaders",
     author: "Temani Afif",
     category: CATEGORIES.frontend,
@@ -262,7 +270,14 @@ export const frontendLinks: Tool[] = [
     tags: ["react"],
     url: "https://frimousse.liveblocks.io/",
   },
-
+  {
+    title: "Gradienty",
+    category: CATEGORIES.frontend,
+    description:
+      "Easily create beautiful Tailwind CSS gradients with Gradienty - a CSS generator. Choose from ready-made gradients or customize your own for eye-catching backgrounds, text effects, and glassmorphism designs. Perfect for websites, apps, and more. Try it for free now!",
+    tags: ["color"],
+    url: "https://gradienty.codes/",
+  },
   {
     title: "Grainrad",
     category: CATEGORIES.frontend,
@@ -287,6 +302,15 @@ export const frontendLinks: Tool[] = [
     url: "https://htmlrev.com/",
   },
   {
+    title: "Hypercolor",
+    category: CATEGORIES.frontend,
+    description:
+      "A curated collection of beautiful Tailwind CSS gradients using the full range of Tailwind CSS colors. Easily copy and paste the class names, CSS or even save the gradients as an image.",
+    favicon: "https://hypercolor.dev/favicon.png",
+    tags: ["color"],
+    url: "https://hypercolor.dev/",
+  },
+  {
     title: "Intent UI",
     category: CATEGORIES.frontend,
     description:
@@ -294,6 +318,7 @@ export const frontendLinks: Tool[] = [
     tags: ["ui-component"],
     url: "https://intentui.com/",
   },
+
   {
     title: "Jitter",
     category: CATEGORIES.frontend,
@@ -349,6 +374,14 @@ export const frontendLinks: Tool[] = [
       "A collection of beautifully designed, accessible, and customizable map components. Built on MapLibre GL. Styled with Tailwind CSS. Works with shadcn/ui.",
     tags: ["map"],
     url: "https://www.mapcn.dev/",
+  },
+  {
+    title: "Mesh Gradient",
+    category: CATEGORIES.frontend,
+    description: "MESH is a simple way to create beautiful, unique gradients using shaders.",
+    favicon: "https://meshgradient.com/logo-sm.svg",
+    tags: ["color"],
+    url: "https://meshgradient.com/",
   },
   {
     title: "Motion",
@@ -446,6 +479,13 @@ export const frontendLinks: Tool[] = [
       "170+ interactive SVG map components for React. Countries, continents, and US states. No dependencies — install via shadcn CLI with pure Tailwind CSS styling.",
     tags: ["map"],
     url: "https://www.shadcnmaps.com/",
+  },
+  {
+    title: "Shader Gradient",
+    category: CATEGORIES.frontend,
+    description: "Create beautiful moving gradients on Framer, Figma and React",
+    tags: ["color"],
+    url: "https://shadergradient.co/",
   },
   {
     title: "Shaders",
@@ -572,6 +612,15 @@ export const frontendLinks: Tool[] = [
     url: "https://trees.software/",
   },
   {
+    title: "UI Colors",
+    category: CATEGORIES.frontend,
+    description:
+      "Create and customize beautiful Tailwind CSS color palettes. Generate, edit, and export colors for your design with our intuitive color generator tool.",
+    subtitle: "Tailwind CSS Colors - All colors + Custom color generator",
+    tags: ["color"],
+    url: "https://uicolors.app/",
+  },
+  {
     title: "Uilora",
     category: CATEGORIES.frontend,
     description:
@@ -621,5 +670,13 @@ export const frontendLinks: Tool[] = [
     favicon: "https://visgl.github.io/react-google-maps/images/visgl-logo-dark.png",
     tags: ["map"],
     url: "https://visgl.github.io/react-google-maps/",
+  },
+  {
+    title: "WebGradients",
+    category: CATEGORIES.frontend,
+    description:
+      "Browse 180 free CSS gradients for backgrounds, UI, websites, and design systems. Copy CSS code, explore color palettes, and find gradient inspiration fast.",
+    tags: ["color"],
+    url: "https://webgradients.com/",
   },
 ];
