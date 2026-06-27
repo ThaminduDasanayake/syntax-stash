@@ -7,6 +7,7 @@ export const designLinks: Tool[] = [
     title: "Artkit - Creative Design Tools",
     category: CATEGORIES.design,
     description: "A collection of creative, browser-based tools for images, motion, and graphics.",
+    tags: ["design"],
     url: "https://artkit.cc/",
   },
   {
@@ -14,13 +15,16 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "Infinite ASCII diagrams, save to Google Drive, resize, freeform draw, and export straight to text/html.",
+    tags: ["design"],
     url: "https://asciiflow.com/",
   },
   {
-    title: "Aura – AI Website Builder",
+    title: "Aura",
     category: CATEGORIES.design,
     description:
       "AI landing page builder that creates stunning designs in seconds. No design skills needed. Export to HTML & Figma. Trusted by 177,000+ users worldwide.",
+    subtitle: "AI Website Builder",
+    tags: ["design"],
     url: "https://www.aura.build/",
   },
   {
@@ -28,26 +32,41 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "Fast drawing for everyone. AutoDraw pairs machine learning with drawings from talented artists to help you draw stuff fast.",
+    tags: ["design"],
     url: "https://autodraw.com/",
+  },
+  {
+    title: "Awesome Design MD",
+    author: "VoltAgent",
+    category: CATEGORIES.design,
+    description:
+      "A collection of DESIGN.md files analysis by popular brand design systems. Drop one into your project and let coding agents generate a matching UI.",
+    tags: ["design"],
+    url: "https://github.com/voltagent/awesome-design-md",
   },
   {
     title: "Awwwards",
     category: CATEGORIES.design,
     description:
       "Awwwards are the Website Awards that recognize and promote the talent and effort of the best developers, designers and web agencies in the world.",
+    tags: ["design"],
     url: "https://www.awwwards.com/",
   },
   {
-    title: "Blank: Figma UI kit and Design system",
+    title: "Blank",
     category: CATEGORIES.design,
     description: "The fastest Figma UI kit and Design system for your projects.",
+    subtitle: "Figma UI kit and Design system",
+    tags: ["design"],
     url: "https://useblank.design/",
   },
   {
-    title: "CallToInspiration – Small details for very exacting ideas!",
+    title: "CallToInspiration",
     category: CATEGORIES.design,
     description:
       "Call for inspiration using the purple hat for when you have inspiration blocks or need fresh new ideas. A great tool created by a designer for web professionals.",
+    subtitle: "Small details for very exacting ideas!",
+    tags: ["design"],
     url: "https://calltoinspiration.com/",
   },
   {
@@ -55,12 +74,14 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "A tool for identifying and overcoming the cognitive biases that distort human judgment and decision-making.",
+    tags: ["design"],
     url: "https://cognitivebiasindex.com/",
   },
   {
     title: "ContentCore",
     category: CATEGORIES.design,
     description: "Create content in one place. Incredibly fast. Save as images or videos.",
+    tags: ["design"],
     url: "https://contentcore.xyz/",
   },
   {
@@ -68,33 +89,40 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "The best hand-picked dark themed websites on the internet. From designers for designers. Curated with love.",
+    tags: ["design"],
     url: "https://www.dark.design/",
   },
   {
-    title: "Design.dev - Web Dev Newsletter, CSS Tools & AI Generators",
+    title: "Design.dev",
     category: CATEGORIES.design,
     description:
       "Web Design & Development Resources. Code generators, cheat sheets, and resources to boost productivity.",
+    subtitle: "Web Dev Newsletter, CSS Tools & AI Generators",
+    tags: ["design"],
     url: "https://design.dev/",
   },
   {
     title: "DESIGN.md",
     category: CATEGORIES.design,
     description:
-      "Open-source DESIGN.md library: 454+ ready-to-use design system files for Claude Code, Cursor, Kiro, Windsurf & Stitch. Copy one file, ship consistent UI.",
-    url: "https://designmd.app/",
+      "100s of free design systems your AI coding tools actually read. Browse community-made DESIGN.md files for Cursor, Claude Code, and more.",
+    subtitle: "Design Systems for AI Coding",
+    tags: ["design"],
+    url: "https://designmd.ai/",
   },
   {
-    title: "DESIGN.md - Design Systems for AI Coding",
+    title: "DESIGN.md",
     category: CATEGORIES.design,
     description:
-      "100s of free design systems your AI coding tools actually read. Browse community-made DESIGN.md files for Cursor, Claude Code, and more.",
-    url: "https://designmd.ai/",
+      "Open-source DESIGN.md library: 454+ ready-to-use design system files for Claude Code, Cursor, Kiro, Windsurf & Stitch. Copy one file, ship consistent UI.",
+    tags: ["design"],
+    url: "https://designmd.app/",
   },
   {
     title: "Devouring Details",
     category: CATEGORIES.design,
     description: "An interactive reference manual for interaction-curious designers.",
+    tags: ["design"],
     url: "https://devouringdetails.com/",
   },
   {
@@ -102,6 +130,7 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "Elevate your designs with our high-quality mockups of digital devices, stationary, and more. Our easy to use PSD files will make your work standout.",
+    tags: ["design"],
     url: "https://mockups.directory/",
   },
   {
@@ -110,26 +139,32 @@ export const designLinks: Tool[] = [
     description:
       "Find Top Designers & Creative Professionals on Dribbble. We are where designers gain inspiration, feedback, community, and jobs. Your best resource to discover and connect with designers worldwide.",
     subtitle: "Discover the World’s Top Designers & Creative Professionals",
+    tags: ["design"],
     url: "https://dribbble.com/",
   },
   {
-    title: "Durves - Design Pattern Tool",
+    title: "Durves",
     category: CATEGORIES.design,
     description:
       "A tool for creating and exporting dot patterns for graphic designers, UI/UX, and other visual professionals.",
+    subtitle: "Design Pattern Tool",
+    tags: ["design"],
     url: "https://www.durves.com/",
   },
   {
-    title: "Efecto — Where Humans & Robots Design Together",
+    title: "Efecto",
     category: CATEGORIES.design,
     description:
       "The design tool where AI agents are first-class. Artboards, layers, auto-layout, 66 MCP tools. Free.",
+    subtitle: "Where Humans & Robots Design Together",
+    tags: ["design"],
     url: "https://efecto.app/",
   },
   {
     title: "Emil Kowalski",
     category: CATEGORIES.design,
     description: "Design engineer working at Linear.",
+    tags: ["design"],
     url: "https://emilkowal.ski/",
   },
   {
@@ -137,13 +172,16 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "No-coding tool to create 3D assets, key visual for social media, identity elements and other marketing and design need.",
+    tags: ["design"],
     url: "https://endlesstools.io/",
   },
   {
-    title: "getdesign.md — DESIGN.md collection for AI coding agents",
+    title: "getdesign.md",
     category: CATEGORIES.design,
     description:
       "Browse independent design system analyses from popular websites. Drop one into your project as design reference for your coding agent.",
+    subtitle: "DESIGN.md collection for AI coding agents",
+    tags: ["design"],
     url: "https://getdesign.md/",
   },
   {
@@ -151,26 +189,32 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "A system that preserves the act of drawing itself, where every gesture is remembered and every image continues to evolve.",
+    tags: ["design"],
     url: "https://ileivoivm.github.io/inkField/",
   },
   {
     title: "Interface Craft",
     category: CATEGORIES.design,
     description: "A working library for those committed to designing with uncommon care.",
+    tags: ["design"],
     url: "https://www.interfacecraft.dev/",
   },
   {
-    title: "javiitools — tiny tools for big visuals",
+    title: "javiitools",
     category: CATEGORIES.design,
     description:
       "Pixel-accurate generators in one place. TextLab for messaging mockups, StampLab for postage stamps, Instatag for Instagram tags, PopLab for animated overlays, plus MineTag and LocationLab on premium early access. One subscription unlocks pro exports across the suite.",
+    subtitle: "Tiny tools for big visuals",
+    tags: ["design"],
     url: "https://javii.tools/",
   },
   {
-    title: "Juddesk — Free Desk Setup Planner & Visualizer",
+    title: "Juddesk",
     category: CATEGORIES.design,
     description:
       "Plan your desk setup in 3D with 100+ real products at true-to-life scale. Drag, recolor and arrange your battlestation, then share or shop it — free, no signup.",
+    subtitle: "Free Desk Setup Planner & Visualizer",
+    tags: ["design"],
     url: "https://www.juddesk.com/",
   },
   {
@@ -178,39 +222,48 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "This repository is a curated library of DESIGN.md files extracted from real public websites so AI agents can generate UI that matches a known visual style, design system, and interaction language.",
+    tags: ["design"],
     url: "https://github.com/Khalidabdi1/design-ai",
   },
   {
     title: "Layers",
     category: CATEGORIES.design,
     description: "Explore the latest design layers from the community.",
+    tags: ["design"],
     url: "https://layers.to/",
   },
   {
     title: "Logo Lattice",
     category: CATEGORIES.design,
     description: "Draw logos quickly with snapped square and isometric grids.",
+    tags: ["design"],
     url: "https://logolattice.com/",
   },
   {
-    title: "Maket | AI-Powered Floor Plan Creation",
+    title: "Maket",
     category: CATEGORIES.design,
     description:
       "Maket uses generative AI so homeowners, architects, and builders can quickly design, plan, and visualize residential projects in just a few simple steps.",
+    subtitle: "AI-Powered Floor Plan Creation",
+    tags: ["design"],
     url: "https://www.maket.ai/",
   },
   {
-    title: "Microcopy - Short Text for Your Website | UX Writing & Copy Library",
+    title: "Microcopy",
     category: CATEGORIES.design,
     description:
       "Discover 500+ carefully curated microcopies for your website. Find perfect UX writing examples for headlines, CTAs, error messages, account flows, and slogans. Improve user experience with better microcopy.",
+    subtitle: "Short Text for Your Website | UX Writing & Copy Library",
+    tags: ["design"],
     url: "https://www.microcopy.me/",
   },
   {
-    title: "Mobbin — UI & UX design inspiration for mobile & web apps",
+    title: "Mobbin",
     category: CATEGORIES.design,
     description:
       "Save hours of UI & UX research with our library of 400,000+ fully searchable mobile & web app screenshots.",
+    subtitle: "UI & UX design inspiration for mobile & web apps",
+    tags: ["design"],
     url: "https://mobbin.com/",
   },
   {
@@ -218,6 +271,7 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "Neuform turns prompts into AI HTML landing pages, remix templates, and reusable DESIGN.md files for agent-ready design systems.",
+    tags: ["design"],
     url: "https://neuform.ai/",
   },
   {
@@ -225,31 +279,38 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "45 interactive field cards covering nudges, biases, heuristics, and AI phenomena. A practical reference for designers, researchers, and product teams building with AI.",
+    favicon: "https://www.nudges.fyi/favicon.svg",
+    tags: ["design"],
     url: "https://www.nudges.fyi/",
   },
   {
     title: "Omma",
     category: CATEGORIES.design,
     description: "Build interactive experiences, websites, 3d, and apps using natural language.",
+    tags: ["design"],
     url: "https://omma.build/",
   },
   {
     title: "OS Design Directory",
     category: CATEGORIES.design,
     description: "Curated design resources, tools, and inspiration for designers and developers.",
+    tags: ["design"],
     url: "https://design-directory-blue.vercel.app/",
   },
   {
-    title: "PaperMe - Custom Paper Generator",
+    title: "PaperMe",
     category: CATEGORIES.design,
     description:
       "Free online tool to create and print custom papers. Design lined paper, grid paper, dot paper, music paper, and more. Adjust size, color, and spacing to meet all your needs.",
+    subtitle: "Custom Paper Generator",
+    tags: ["design"],
     url: "https://paperme.pixzens.com/",
   },
   {
     title: "penpot/penpot",
     category: CATEGORIES.design,
     description: "Penpot: The open-source design tool for design and code collaboration",
+    tags: ["design"],
     url: "https://github.com/penpot/penpot",
   },
   {
@@ -257,6 +318,7 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "An advanced and easy-to-use 2D/3D house design tool. Create your dream home design with powerful but easy software by Planner 5D.",
+    tags: ["design"],
     url: "https://planner5d.com/",
   },
   {
@@ -264,12 +326,15 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "Discover RapidRAW, a modern, high-performance Lightroom® alternative. Get a simple, beautiful, and GPU-accelerated RAW editing experience for Windows, macOS, and Linux.",
+    tags: ["design"],
     url: "https://www.getrapidraw.com/",
   },
   {
-    title: "Recent — Design Inspiration",
+    title: "Recent",
     category: CATEGORIES.design,
     description: "The best of recent design found on the Internet updated daily.",
+    subtitle: "Design Inspiration",
+    tags: ["design"],
     url: "https://recent.design/",
   },
   {
@@ -277,13 +342,16 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "Savee is a curated place for visual inspiration. Discover references chosen by designers, collect what matters, and build a sharper eye without ads or clutter.",
+    tags: ["design"],
     url: "https://savee.com/",
   },
   {
-    title: "Sprrrint - Framer and  Figma Templates, Component Library",
+    title: "Sprrrint",
     category: CATEGORIES.design,
     description:
       "Discover the best free Framer and Figma components and templates and UI design tools at Sprrrint. Streamline your design process with our curated library of top-notch Figma resources.",
+    subtitle: "Framer and  Figma Templates, Component Library",
+    tags: ["design"],
     url: "https://sprrrint.com/",
   },
   {
@@ -291,27 +359,34 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "Free online storyboard software for film, education, UX, and marketing. Create professional storyboards — no drawing skills needed.",
+    tags: ["design"],
     url: "https://storytribeapp.com/",
   },
   {
-    title: "Supahero - Website hero section library",
+    title: "Supahero",
     category: CATEGORIES.design,
     description:
       "A handpicked library of stunning website hero sections designed to captivate and engage.",
+    subtitle: "Website hero section library",
+    tags: ["design"],
     url: "https://supahero.io/",
   },
   {
-    title: "Superdesign - AI Product Design Agent | UI from a Prompt",
+    title: "Superdesign",
     category: CATEGORIES.design,
     description:
       "Superdesign is an AI product design agent that turns natural-language prompts into UI mockups, components and full designs on an infinite canvas. Free to start.",
+    subtitle: "AI Product Design Agent | UI from a Prompt",
+    tags: ["design"],
     url: "https://app.superdesign.dev/",
   },
   {
-    title: "The Design Project - UI/UX Design Subscription for Startups",
+    title: "The Design Project",
     category: CATEGORIES.design,
     description:
       "Transform your website with The Design Project. Unlimited UX/UI design services with 24-48h turnaround. Elevate your user experience and boost conversions.",
+    subtitle: "UI/UX Design Subscription for Startups",
+    tags: ["design"],
     url: "https://designproject.io/",
   },
   {
@@ -319,6 +394,7 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "Toolfolio helps you find the best tools for productivity, creativity, and design. Explore top solutions for startups, social media, AI, and more to optimize your workflow.",
+    tags: ["design"],
     url: "https://toolfolio.com/",
   },
   {
@@ -326,20 +402,16 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "Create enchanting WebGL effects, motion, and interactivity — in minutes, not hours. Unicorn Studio makes WebGL easy for designers to embed in Framer, Webflow, or any website.",
+    tags: ["design"],
     url: "https://www.unicorn.studio/",
   },
   {
-    title: "VoltAgent/awesome-design-md",
-    category: CATEGORIES.design,
-    description:
-      "A collection of DESIGN.md files analysis by popular brand design systems. Drop one into your project and let coding agents generate a matching UI.",
-    url: "https://github.com/voltagent/awesome-design-md",
-  },
-  {
-    title: "Wiretext — Unicode Wireframe Design Tool",
+    title: "Wiretext",
     category: CATEGORIES.design,
     description:
       "A Unicode wireframe design tool where everything renders as box-drawing characters. Create wireframes, diagrams, and mockups. Share as text.",
+    subtitle: "Unicode Wireframe Design Tool",
+    tags: ["design"],
     url: "https://wiretext.app/",
   },
 ];

@@ -18,8 +18,8 @@ interface ResourceFilterSectionProps {
 
 export function ResourceFilterSection({
   initialCategory,
-  resourceLinks,
   resourceCategories,
+  resourceLinks,
 }: ResourceFilterSectionProps) {
   const router = useRouter();
 
@@ -59,7 +59,7 @@ export function ResourceFilterSection({
         tool.category.toLowerCase().includes(query)
       );
     });
-  }, [resourceLinks, selectedCategory, searchQuery]);
+  }, [resourceLinks, searchQuery, selectedCategory]);
 
   // Group the filtered links by category
   const groupedResources = React.useMemo(() => {

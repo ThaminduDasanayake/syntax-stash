@@ -12,7 +12,7 @@ export default function Home() {
   const topTools = internalTools.slice(0, 4);
   const totalCategories = new Set([
     ...toolCategories,
-    ...resourceCategories.filter((c) => c !== "Unknown"),
+    ...resourceCategories,
   ]).size;
   const formattedCategories = String(totalCategories).padStart(2, "0");
 

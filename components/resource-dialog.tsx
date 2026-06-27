@@ -46,15 +46,47 @@ export function ResourceDialog({ tool }: ToolCardProps) {
   }, [activeTool]);
 
   const relatedResources = React.useMemo(() => {
-    let baseRelated = [];
+    // 1. Explicitly Defined Related Resources
     if (activeTool.related && activeTool.related.length > 0) {
-      baseRelated = resourceLinks.filter((r) => activeTool.related!.includes(r.title));
-    } else {
-      baseRelated = resourceLinks
-        .filter((r) => r.category === activeTool.category && r.title !== activeTool.title)
+      const explicitRelated = resourceLinks.filter((r) => activeTool.related!.includes(r.title));
+      return explicitRelated.filter((r) => !authorResources.some((ar) => ar.title === r.title));
+    }
+
+    // 2. Tag Intersection Algorithm
+    const activeTags = activeTool.tags || [];
+    const scoredResources = resourceLinks
+      .filter(
+        (r) =>
+          r.title !== activeTool.title && !authorResources.some((ar) => ar.title === r.title),
+      )
+      .map((r) => {
+        const resourceTags = r.tags || [];
+        const intersection = resourceTags.filter((tag) => activeTags.includes(tag));
+        // Add a slight boost if they share the same category
+        const categoryBoost = r.category === activeTool.category ? 0.5 : 0;
+        return {
+          resource: r,
+          score: intersection.length + categoryBoost,
+        };
+      })
+      .filter((item) => item.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 3)
+      .map((item) => item.resource);
+
+    // 3. Fallback (if no tags match, pick 3 from same category)
+    if (scoredResources.length === 0) {
+      return resourceLinks
+        .filter(
+          (r) =>
+            r.category === activeTool.category &&
+            r.title !== activeTool.title &&
+            !authorResources.some((ar) => ar.title === r.title),
+        )
         .slice(0, 3);
     }
-    return baseRelated.filter((r) => !authorResources.some((ar) => ar.title === r.title));
+
+    return scoredResources;
   }, [activeTool, authorResources]);
 
   return (
