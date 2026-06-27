@@ -4,20 +4,13 @@ import { CATEGORIES } from "./categories";
 
 export const jobLinks: Tool[] = [
   {
-    title: "Wellfound",
+    title: "remote-jobs",
+    author: "remoteintech",
     category: CATEGORIES.jobs,
     description:
-      "Apply privately to 130,000+ remote jobs and startup jobs near you with one application. See salary and equity upfront. Find the latest tech jobs, company overviews, benefits and more at Wellfound.",
-    subtitle: "Startup Job Search",
-    url: "https://wellfound.com/",
-  },
-  {
-    title: "We Work Remotely",
-    category: CATEGORIES.jobs,
-    description:
-      "Advanced job search for We Work Remotely, allowing you to search and refine jobs across programming, marketing, customer service, etc. Find your next remote career.",
-    subtitle: "Advanced Remote Job Search",
-    url: "https://weworkremotely.com/",
+      "Source for remoteintech.company — a community-maintained directory of remote-friendly tech companies.",
+    favicon: "/github.svg",
+    url: "https://github.com/remoteintech/remote-jobs",
   },
   {
     title: "Remote OK",
@@ -35,12 +28,19 @@ export const jobLinks: Tool[] = [
     url: "https://www.turing.com/",
   },
   {
-    title: "remote-jobs",
-    author: "remoteintech",
+    title: "Wellfound",
     category: CATEGORIES.jobs,
     description:
-      "Source for remoteintech.company — a community-maintained directory of remote-friendly tech companies.",
-    favicon: "/github.svg",
-    url: "https://github.com/remoteintech/remote-jobs",
+      "Apply privately to 130,000+ remote jobs and startup jobs near you with one application. See salary and equity upfront. Find the latest tech jobs, company overviews, benefits and more at Wellfound.",
+    subtitle: "Startup Job Search",
+    url: "https://wellfound.com/",
+  },
+  {
+    title: "We Work Remotely",
+    category: CATEGORIES.jobs,
+    description:
+      "Advanced job search for We Work Remotely, allowing you to search and refine jobs across programming, marketing, customer service, etc. Find your next remote career.",
+    subtitle: "Advanced Remote Job Search",
+    url: "https://weworkremotely.com/",
   },
 ];

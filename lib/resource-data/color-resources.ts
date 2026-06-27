@@ -17,7 +17,6 @@ export const colorLinks: Tool[] = [
       "As a free CSS gradient generator tool, this website lets you create a colorful gradient background for your website, blog, or social media profile.",
     url: "https://cssgradient.io/",
   },
-
   {
     title: "Gradienty",
     category: CATEGORIES.colors,
@@ -25,7 +24,6 @@ export const colorLinks: Tool[] = [
       "Easily create beautiful Tailwind CSS gradients with Gradienty - a CSS generator. Choose from ready-made gradients or customize your own for eye-catching backgrounds, text effects, and glassmorphism designs. Perfect for websites, apps, and more. Try it for free now!",
     url: "https://gradienty.codes/",
   },
-
   {
     title: "Happy Hues",
     category: CATEGORIES.colors,
@@ -49,7 +47,6 @@ export const colorLinks: Tool[] = [
       "Khroma is the fastest way to discover, search, and save color combos and palettes you'll love. Discover a personalized AI-powered color tool for designers to find the perfect color scheme.",
     url: "https://www.khroma.co/",
   },
-
   {
     title: "Meditations in Color",
     author: "Pixel Symphony",
@@ -59,7 +56,6 @@ export const colorLinks: Tool[] = [
     subtitle: "Chromatic Profiles",
     url: "https://meditationsincolor.com/colorists",
   },
-
   {
     title: "Mesh Gradient",
     category: CATEGORIES.colors,
@@ -68,20 +64,12 @@ export const colorLinks: Tool[] = [
     url: "https://meshgradient.com/",
   },
   {
-    title: "Realtime Colors",
-    category: CATEGORIES.colors,
-    description: "Visualize your colors and fonts on a real website.",
-    url: "https://www.realtimecolors.com/",
-  },
-
-  {
     title: "Palette Maker",
     category: CATEGORIES.colors,
     description:
       "Free color tool for creatives and color lovers. Create color palettes and preview them on UI/UX, Illustrations, Web, Apps, Branding and other designs.",
     url: "https://palettemaker.com/",
   },
-
   {
     title: "Picture Palette",
     category: CATEGORIES.colors,
@@ -97,6 +85,12 @@ export const colorLinks: Tool[] = [
     url: "https://picular.co/",
   },
   {
+    title: "Realtime Colors",
+    category: CATEGORIES.colors,
+    description: "Visualize your colors and fonts on a real website.",
+    url: "https://www.realtimecolors.com/",
+  },
+  {
     title: "Shader Gradient",
     category: CATEGORIES.colors,
     description: "Create beautiful moving gradients on Framer, Figma and React",
@@ -108,6 +102,14 @@ export const colorLinks: Tool[] = [
     description:
       "Generate super awesome color palettes by shifting hue, saturation, lightness, and more. 100% free without ads.",
     url: "https://supercolorpalette.com/",
+  },
+  {
+    title: "UI Colors",
+    category: CATEGORIES.colors,
+    description:
+      "Create and customize beautiful Tailwind CSS color palettes. Generate, edit, and export colors for your design with our intuitive color generator tool.",
+    subtitle: "Tailwind CSS Colors - All colors + Custom color generator",
+    url: "https://uicolors.app/",
   },
   {
     title: "WebGradients",

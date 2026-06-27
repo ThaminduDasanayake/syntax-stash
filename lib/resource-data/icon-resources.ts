@@ -10,6 +10,12 @@ export const iconLinks: Tool[] = [
     url: "https://iconify.design/",
   },
   {
+    title: "Iconsax",
+    category: CATEGORIES.icons,
+    description: "Iconsax is a collection of icons for designers and developers",
+    url: "https://iconsax.io/",
+  },
+  {
     title: "iOS Icon Gallery",
     category: CATEGORIES.icons,
     description: "Showcasing beautiful icon designs from the iOS App Store.",

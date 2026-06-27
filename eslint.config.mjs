@@ -8,6 +8,16 @@ import simpleImportSort from "eslint-plugin-simple-import-sort";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  eslintConfigPrettier,
+  // Override default ignores of eslint-config-next.
+  globalIgnores([
+    // Default ignores of eslint-config-next:
+    ".next/**",
+    "build/**",
+    "content/**",
+    "next-env.d.ts",
+    "out/**",
+  ]),
   {
     plugins: {
       perfectionist: perfectionist,
@@ -15,6 +25,14 @@ const eslintConfig = defineConfig([
     },
     rules: {
       "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+      "perfectionist/sort-arrays": [
+        "warn",
+        {
+          order: "asc",
+          type: "natural",
+          useConfigurationIf: {},
+        },
+      ],
       "perfectionist/sort-objects": [
         "warn",
         {
@@ -33,16 +51,6 @@ const eslintConfig = defineConfig([
       "simple-import-sort/imports": "error",
     },
   },
-  eslintConfigPrettier,
-  // Override default ignores of eslint-config-next.
-  globalIgnores([
-    // Default ignores of eslint-config-next:
-    ".next/**",
-    "out/**",
-    "build/**",
-    "next-env.d.ts",
-    "content/**",
-  ]),
 ]);
 
 export default eslintConfig;

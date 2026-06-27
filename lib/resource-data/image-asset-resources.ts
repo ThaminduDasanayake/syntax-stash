@@ -11,6 +11,14 @@ export const imageAssetLinks: Tool[] = [
     url: "https://asciinator.app/",
   },
   {
+    title: "CleanPNG",
+    category: CATEGORIES.imagesAssets,
+    description:
+      "Discover transparent background images and illustrations. Best quality, free unlimited download.",
+    subtitle: "HD png images and illustrations. Free unlimited download. - CleanPNG",
+    url: "https://www.cleanpng.com/",
+  },
+  {
     title: "fffuel",
     category: CATEGORIES.imagesAssets,
     description:
@@ -38,6 +46,14 @@ export const imageAssetLinks: Tool[] = [
     description:
       "A simple online pattern generator to create repeatable SVG patterns. Perfect for website backgrounds, apparel, branding, packaging design and more.",
     url: "https://pattern.monster/",
+  },
+  {
+    title: "theSVG",
+    category: CATEGORIES.imagesAssets,
+    description:
+      "Search, copy, and ship 6,149+ brand SVG icons. Open-source library with npm, React, Vue, Svelte, CLI, CDN, and MCP server support.",
+    subtitle: "6,149+ Free Brand SVG Icons for Developers and Designers",
+    url: "https://thesvg.org/",
   },
   {
     title: "unDraw",

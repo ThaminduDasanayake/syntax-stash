@@ -86,14 +86,12 @@ export const developmentLinks: Tool[] = [
     subtitle: "100% Free Online Tools Collection",
     url: "https://seostudio.tools/",
   },
-
   {
     title: "TinyWow",
     category: CATEGORIES.development,
     description: "Free AI Writing, PDF, Image, and other Online Tools",
     url: "https://tinywow.com/",
   },
-
   {
     title: "Web Apps by 123apps",
     category: CATEGORIES.development,

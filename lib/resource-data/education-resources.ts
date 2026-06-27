@@ -4,15 +4,7 @@ import { CATEGORIES } from "./categories";
 
 export const educationLinks: Tool[] = [
   {
-    title: "100-AI-Machine-learning-Deep-learning-Computer-vision-NLP",
-    author: "darkdevil3610",
-    category: CATEGORIES.education,
-    description: "100+ AI Machine learning Deep learning Computer vision NLP Projects with code.",
-    favicon: "/github.svg",
-    url: "https://github.com/darkdevil3610/100-AI-Machine-learning-Deep-learning-Computer-vision-NLP",
-  },
-  {
-    title: "30-Days-Of-Python",
+    title: "30 Days Of Python",
     author: "Asabeneh",
     category: CATEGORIES.education,
     description:
@@ -29,7 +21,15 @@ export const educationLinks: Tool[] = [
     url: "https://github.com/leonardomso/33-js-concepts",
   },
   {
-    title: "500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code",
+    title: "100 AI Machine learning Deep learning Computer vision NLP",
+    author: "darkdevil3610",
+    category: CATEGORIES.education,
+    description: "100+ AI Machine learning Deep learning Computer vision NLP Projects with code.",
+    favicon: "/github.svg",
+    url: "https://github.com/darkdevil3610/100-AI-Machine-learning-Deep-learning-Computer-vision-NLP",
+  },
+  {
+    title: "500 AI Machine learning Deep learning Computer vision NLP Projects with code",
     author: "ashishpatel26",
     category: CATEGORIES.education,
     description: "500 AI Machine learning Deep learning Computer vision NLP Projects with code.",
@@ -55,14 +55,6 @@ export const educationLinks: Tool[] = [
     url: "https://github.com/sorrycc/awesome-javascript",
   },
   {
-    title: "Awesome Lists",
-    author: "sindresorhus",
-    category: CATEGORIES.education,
-    description: "Awesome lists about all kinds of interesting topics.",
-    favicon: "/github.svg",
-    url: "https://github.com/sindresorhus/awesome",
-  },
-  {
     title: "Awesome LeetCode",
     author: "ashishps1",
     category: CATEGORIES.education,
@@ -72,7 +64,15 @@ export const educationLinks: Tool[] = [
     url: "https://github.com/ashishps1/awesome-leetcode-resources",
   },
   {
-    title: "awesome-machine-learning",
+    title: "Awesome Lists",
+    author: "sindresorhus",
+    category: CATEGORIES.education,
+    description: "Awesome lists about all kinds of interesting topics.",
+    favicon: "/github.svg",
+    url: "https://github.com/sindresorhus/awesome",
+  },
+  {
+    title: "Awesome Machine Learning",
     author: "josephmisiti",
     category: CATEGORIES.education,
     description: "A curated list of awesome Machine Learning frameworks, libraries and software.",
@@ -136,7 +136,7 @@ export const educationLinks: Tool[] = [
     url: "https://roadmap.sh/",
   },
   {
-    title: "DevOps-Projects",
+    title: "DevOps Projects",
     author: "NotHarshhaa",
     category: CATEGORIES.education,
     description:
@@ -151,7 +151,6 @@ export const educationLinks: Tool[] = [
       "devQuizzes is the platform where you can test your knowledge on various DEV topics.",
     url: "https://quizzes.madza.dev/",
   },
-
   {
     title: "Exercism",
     category: CATEGORIES.education,
@@ -164,6 +163,20 @@ export const educationLinks: Tool[] = [
     description: "The largest collection of free stuff on the internet!",
     favicon: "https://fmhy.net/june_icon.webp",
     url: "https://fmhy.net/",
+  },
+  {
+    title: "Free Programming Books",
+    category: CATEGORIES.education,
+    description:
+      "Free Programming Books on Android development, C, C#, CSS, HTML5, iOS development, Java, JavaScript, PowerShell, PHP, Python, SQL Sever and more",
+    url: "https://books.goalkicker.com/",
+  },
+  {
+    title: "Full stack open",
+    category: CATEGORIES.education,
+    description:
+      "Open online course on JavaScript based modern web development by University of Helsinki and Houston Inc..",
+    url: "https://fullstackopen.com/en/",
   },
   {
     title: "HF Viewer",
@@ -194,7 +207,6 @@ export const educationLinks: Tool[] = [
       "LeetCode is the best platform to help you enhance your skills, expand your knowledge and prepare for technical interviews.",
     url: "https://leetcode.com/",
   },
-
   {
     title: "Loot Drop",
     category: CATEGORIES.education,
@@ -202,9 +214,8 @@ export const educationLinks: Tool[] = [
       "Explore 1100+ failed startups and learn from $40B+ in burned venture capital. Discover why they failed, their market potential, and how to rebuild them with today's tech",
     url: "https://www.loot-drop.io/",
   },
-
   {
-    title: "Made-With-ML",
+    title: "Made With ML",
     author: "GokuMohandas",
     category: CATEGORIES.education,
     description: "Learn how to develop, deploy and iterate on production-grade ML applications.",
@@ -219,14 +230,21 @@ export const educationLinks: Tool[] = [
     url: "https://www.mindluster.com/",
   },
   {
-    title: "ML-For-Beginners",
+    title: "MIT OpenCourseWare",
+    category: CATEGORIES.education,
+    description:
+      "MIT OpenCourseWare is a web based publication of virtually all MIT course content. OCW is open and available to the world and is a permanent MIT activity",
+    subtitle: "Free Online Course Materials",
+    url: "https://ocw.mit.edu/",
+  },
+  {
+    title: "ML For Beginners",
     author: "Microsoft",
     category: CATEGORIES.education,
     description: "12 weeks, 26 lessons, 52 quizzes, classic Machine Learning for all.",
     favicon: "/github.svg",
     url: "https://github.com/microsoft/ml-for-beginners",
   },
-
   {
     title: "NeetCode",
     category: CATEGORIES.education,
@@ -258,7 +276,7 @@ export const educationLinks: Tool[] = [
     url: "https://github.com/practical-tutorials/project-based-learning",
   },
   {
-    title: "Project-Ideas-And-Resources",
+    title: "Project Ideas And Resources",
     author: "The Cool Coders",
     category: CATEGORIES.education,
     description:
@@ -272,7 +290,6 @@ export const educationLinks: Tool[] = [
     description: "Share quick reference and cheat sheet for developers",
     url: "https://quickref.me/",
   },
-
   {
     title: "ShortcutFoo",
     category: CATEGORIES.education,
@@ -282,7 +299,15 @@ export const educationLinks: Tool[] = [
     url: "https://www.shortcutfoo.com/",
   },
   {
-    title: "system-design-primer",
+    title: "Staying Code Visualization Platform",
+    category: CATEGORIES.education,
+    description:
+      "Visualize Python, JavaScript, and C++ code execution in real-time with Staying Code Visualization Platform. Step-by-step debugging, algorithm animation, and memory monitoring tools for effective learning. Ideal for educators and developers. Start tracing variables now!",
+    subtitle: "Real-time Code Visualization for Python/JS/C++",
+    url: "https://staying.fun/en",
+  },
+  {
+    title: "System Design Primer",
     author: "donnemartin",
     category: CATEGORIES.education,
     description:
@@ -290,7 +315,6 @@ export const educationLinks: Tool[] = [
     favicon: "/github.svg",
     url: "https://github.com/donnemartin/system-design-primer",
   },
-
   {
     title: "The Odin Project",
     category: CATEGORIES.education,
@@ -298,17 +322,16 @@ export const educationLinks: Tool[] = [
       "The Odin Project empowers aspiring web developers to learn together for free. Our full stack curriculum is free and supported by a passionate open source community.",
     url: "https://www.theodinproject.com/",
   },
-
   {
-    title: "UI Skills for Design Engineers | Curated Skill Directory",
+    title: "UI Skills",
     category: CATEGORIES.education,
     description:
       "Discover curated UI Skills for design engineers, including accessibility, motion, frontend craft, and interface quality guides with copy-ready install commands.",
+    subtitle: "UI Skills for Design Engineers",
     url: "https://www.ui-skills.com/",
   },
-
   {
-    title: "Web-dev-mini-projects",
+    title: "Web dev mini projects",
     author: "Ayushparikh-code",
     category: CATEGORIES.education,
     description:
@@ -322,7 +345,6 @@ export const educationLinks: Tool[] = [
     description: "A visual overview of useful skills to learn as a web developer",
     url: "https://andreasbm.github.io/web-skills/",
   },
-
   {
     title: "You Don't Know JS",
     author: "getify",
