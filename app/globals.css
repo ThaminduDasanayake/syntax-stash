@@ -457,27 +457,33 @@
 
 /* Filter Bar*/
 @utility filter-bar {
-  @apply border-y-ink sticky top-16 z-40 border-y-[1.5px] bg-[#ede9ddf0] py-2 backdrop-blur-md sm:py-5.5;
+  @apply border-y-ink sticky top-16 z-80 border-y-[1.5px] bg-[#ede9ddf0] py-2 backdrop-blur-md sm:py-5.5;
 }
 
 @utility filter-bar-inner {
-  @apply mx-auto flex max-w-7xl flex-col items-stretch gap-3 px-8 sm:flex-row sm:flex-nowrap sm:items-center;
+  @apply mx-auto flex max-w-7xl flex-col items-stretch gap-1.5 px-5 sm:flex-row sm:items-center sm:gap-3 md:px-8;
 }
 
 @utility filter-search-wrap {
-  @apply relative max-w-70 min-w-70 flex-1;
+  @apply relative max-w-none min-w-0 flex-1 sm:max-w-70 sm:min-w-70;
 }
 
 @utility filter-search-icon {
-  @apply pointer-events-none absolute top-1/2 left-3 h-3.5 w-3.5 -translate-y-1/2;
+  @apply text-ink pointer-events-none absolute top-1/2 left-3 h-3.5 w-3.5 -translate-y-1/2;
 }
 
 @utility filter-search {
-  @apply h-10! w-full border-[1.5px]! pr-8! pl-8.5! transition-colors duration-200 outline-none;
+  @apply h-10! w-full border-[1.5px]! pr-8! pl-8.5! font-medium transition-colors duration-200 outline-none;
+
+  @apply [&::-webkit-search-cancel-button]:hidden;
+}
+
+@utility filter-search-clear {
+  @apply text-ink-faint hover:pointer-fine:text-ink absolute top-1/2 right-0 -translate-y-1/2 cursor-pointer border-none bg-transparent px-3 py-2 leading-none transition-colors duration-200;
 }
 
 @utility filter-pills {
-  @apply flex min-w-0 touch-pan-x flex-nowrap gap-1.5 overflow-x-auto overscroll-x-contain pr-6 sm:pr-20;
+  @apply flex min-w-0 touch-pan-x scroll-pl-1 flex-nowrap gap-1.5 overflow-x-auto overscroll-x-contain pr-6 [-webkit-overflow-scrolling:touch];
 
   @apply scrollbar-hide;
 
@@ -485,7 +491,7 @@
 }
 
 @utility filter-pill {
-  @apply text-ink border-ink h-10 gap-2 border-[1.5px]! bg-transparent px-3.5 font-semibold duration-200;
+  @apply text-display-xs text-ink border-ink h-10 gap-2 border-[1.5px]! bg-transparent px-3! transition-all duration-200 ease-out sm:px-3.5!;
 }
 
 @utility filter-pill-dot {

@@ -1,10 +1,11 @@
 "use client";
 
-import { MagnifyingGlassIcon } from "@phosphor-icons/react";
+import { MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 
 import { DotButton } from "@/components/dot-button";
 import ToolCard from "@/components/tool-card";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tool } from "@/types";
 
@@ -77,6 +78,9 @@ export function FilterSection({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
+            <button className="filter-search-clear">
+              <XIcon weight="bold" />
+            </button>
           </div>
           <div className="filter-pills">
             {categories.map((item, i) => {
