@@ -19,12 +19,8 @@ export default async function ResourceCategoryPage(props: PageProps<"/resources/
       {/* Header */}
       <header className="res-header">
         <div className="section-inner">
-          <h1 className="res-headline">
-            {category}
-          </h1>
-          <p className="res-sub">
-            Curated resources for {category.toLowerCase()}.
-          </p>
+          <h1 className="res-headline">{category}</h1>
+          <p className="res-sub">Curated resources for {category.toLowerCase()}.</p>
         </div>
       </header>
 

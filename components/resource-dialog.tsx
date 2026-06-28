@@ -56,8 +56,7 @@ export function ResourceDialog({ tool }: ToolCardProps) {
     const activeTags = activeTool.tags || [];
     const scoredResources = resourceLinks
       .filter(
-        (r) =>
-          r.title !== activeTool.title && !authorResources.some((ar) => ar.title === r.title),
+        (r) => r.title !== activeTool.title && !authorResources.some((ar) => ar.title === r.title),
       )
       .map((r) => {
         const resourceTags = r.tags || [];

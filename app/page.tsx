@@ -10,10 +10,7 @@ import { internalTools, toolCategories } from "@/lib/tools-data";
 
 export default function Home() {
   const topTools = internalTools.slice(0, 4);
-  const totalCategories = new Set([
-    ...toolCategories,
-    ...resourceCategories,
-  ]).size;
+  const totalCategories = new Set([...toolCategories, ...resourceCategories]).size;
   const formattedCategories = String(totalCategories).padStart(2, "0");
 
   return (

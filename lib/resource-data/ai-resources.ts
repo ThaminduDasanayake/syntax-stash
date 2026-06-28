@@ -1,6 +1,7 @@
 import { Tool } from "@/types";
 
 import { CATEGORIES } from "./categories";
+import { TAGS } from "./tags";
 
 export const aiLinks: Tool[] = [
   {
@@ -11,7 +12,7 @@ export const aiLinks: Tool[] = [
       "A self-hosted email client with an AI agent, running entirely on Cloudflare Workers.",
     favicon: "/github.svg",
     related: ["Open WebUI"],
-    tags: ["ai"],
+    tags: [TAGS.ai],
     url: "https://github.com/cloudflare/agentic-inbox",
   },
   {
@@ -22,7 +23,7 @@ export const aiLinks: Tool[] = [
       "Build your autonomous hedge fund in minutes. AutoHedge harnesses the power of swarm intelligence and AI agents to automate market analysis, risk management, and trade execution.",
     favicon: "/github.svg",
     related: ["Fincept Terminal", "Vibe-Trading"],
-    tags: ["ai"],
+    tags: [TAGS.ai],
     url: "https://github.com/The-Swarm-Corporation/AutoHedge",
   },
   {
@@ -32,7 +33,7 @@ export const aiLinks: Tool[] = [
     description: "100+ AI Agent & RAG apps you can actually run — clone, customize, ship.",
     favicon: "/github.svg",
     related: ["Langflow", "ollama/ollama"],
-    tags: ["ai"],
+    tags: [TAGS.ai],
     url: "https://github.com/Shubhamsaboo/awesome-llm-apps",
   },
   {
@@ -42,7 +43,7 @@ export const aiLinks: Tool[] = [
       "The curated directory of Claude AI resources: the Claude Code 2.1 cheatsheet, agent skills, top MCP servers, plugins, SDKs and integrations for developers.",
     related: ["claude-ads", "OpenHands"],
     subtitle: "Claude AI Tools, Cheatsheet, Skills & MCP Servers",
-    tags: ["ai"],
+    tags: [TAGS.ai],
     url: "https://awesomeclaude.ai/",
   },
   {
@@ -52,7 +53,7 @@ export const aiLinks: Tool[] = [
       "78,000+ GitHub stars. Trusted by Fortune 500. The #1 open-source browser automation platform.",
     related: ["Crawl4AI", "jo-inc/camofox-browser"],
     subtitle: "The way AI uses the internet",
-    tags: ["ai"],
+    tags: [TAGS.ai],
     url: "https://browser-use.com/",
   },
   {
@@ -63,7 +64,7 @@ export const aiLinks: Tool[] = [
       "Stealth headless browser for AI agents — bypass Cloudflare, bot detection, and anti-scraping. Drop-in Puppeteer/Playwright replacement.",
     favicon: "/github.svg",
     related: ["Browser Use - The way AI uses the internet", "Crawl4AI"],
-    tags: ["ai"],
+    tags: [TAGS.ai],
     url: "https://github.com/jo-inc/camofox-browser",
   },
   {
@@ -74,7 +75,7 @@ export const aiLinks: Tool[] = [
       "Comprehensive paid advertising audit & optimization skill for Claude Code. 250+ checks across Google, Meta, YouTube, LinkedIn, TikTok, Microsoft & Apple Ads with weighted scoring, parallel agents, industry templates, and AI creative generation.",
     favicon: "/github.svg",
     related: ["Awesome Claude"],
-    tags: ["ai"],
+    tags: [TAGS.ai],
     url: "https://github.com/AgriciDaniel/claude-ads",
   },
   {
@@ -82,7 +83,7 @@ export const aiLinks: Tool[] = [
     category: CATEGORIES.ai,
     description: "Open-source LLM-Friendly Web Crawler & Scraper",
     related: ["Browser Use - The way AI uses the internet", "jo-inc/camofox-browser", "Maxun"],
-    tags: ["crawler", "llm", "open-source", "scraper"],
+    tags: [TAGS.crawler, TAGS.llm, TAGS.scraper, TAGS["open-source"]],
     url: "https://docs.crawl4ai.com/",
   },
   {
@@ -92,7 +93,7 @@ export const aiLinks: Tool[] = [
       "Unlock agentic workflow with Dify. Develop, deploy, and manage autonomous agents, RAG pipelines, and more for teams at any scale, effortlessly.",
     related: ["Langflow", "Unstructured - Unstructured Data Platform for GenAI"],
     subtitle: "Leading Agentic Workflow Builder",
-    tags: ["ai"],
+    tags: [TAGS.ai],
     url: "https://dify.ai/",
   },
   {
@@ -101,7 +102,7 @@ export const aiLinks: Tool[] = [
     description:
       "Like Next.js for web apps, but for agents. Markdown for instructions and skills, TypeScript for tools. Durable by default.",
     subtitle: "The Agent Framework - Vercel",
-    tags: ["ai"],
+    tags: [TAGS.ai],
     url: "https://vercel.com/eve",
   },
   {
@@ -112,7 +113,7 @@ export const aiLinks: Tool[] = [
       "FinceptTerminal is a modern finance application offering advanced market analytics, investment research, and economic data tools, designed for interactive exploration and data-driven decision-making in a user-friendly environment.",
     favicon: "/github.svg",
     related: ["AutoHedge", "Vibe-Trading"],
-    tags: ["ai"],
+    tags: [TAGS.ai],
     url: "https://github.com/Fincept-Corporation/FinceptTerminal",
   },
   {
@@ -121,7 +122,7 @@ export const aiLinks: Tool[] = [
     description:
       "Build durable AI agents and workflows with Flue's programmable TypeScript harness. Write once, deploy anywhere, use any LLM.",
     subtitle: "The Open Agent Framework",
-    tags: ["ai"],
+    tags: [TAGS.ai],
     url: "https://flueframework.com/",
   },
   {
@@ -131,7 +132,7 @@ export const aiLinks: Tool[] = [
     description: "Write HTML. Render video. Built for agents.",
     favicon: "/github.svg",
     related: ["Anil-matcha/Open-Generative-AI"],
-    tags: ["ai"],
+    tags: [TAGS.ai],
     url: "https://github.com/heygen-com/hyperframes",
   },
   {
@@ -153,7 +154,7 @@ export const aiLinks: Tool[] = [
       },
     ],
     related: ["Dify", "OpenHands"],
-    tags: ["agents", "builder", "low-code", "rag"],
+    tags: [TAGS.agents, TAGS.builder, TAGS.rag, TAGS["low-code"]],
     url: "https://www.langflow.org/",
   },
   {
@@ -163,7 +164,7 @@ export const aiLinks: Tool[] = [
       "The easiest AI-powered  web scraping, crawling, extraction, search platform. The best open-source Browse AI alternative.",
     related: ["Crawl4AI", "jo-inc/camofox-browser"],
     subtitle: "Scrape, Extract, Crawl, Search Web Data With No-Code",
-    tags: ["ai"],
+    tags: [TAGS.ai],
     url: "https://www.maxun.dev/",
   },
   {
@@ -174,7 +175,7 @@ export const aiLinks: Tool[] = [
       "Get up and running with Kimi-K2.6, GLM-5.1, MiniMax, DeepSeek, gpt-oss, Qwen, Gemma and other models.",
     favicon: "/github.svg",
     related: ["Open WebUI", "Shubhamsaboo/awesome-llm-apps"],
-    tags: ["ai"],
+    tags: [TAGS.ai],
     url: "https://github.com/ollama/ollama",
   },
   {
@@ -185,7 +186,7 @@ export const aiLinks: Tool[] = [
       "Open-source alternative to AI video platforms — Free AI image & video generation studio with 200+ models (Flux, Midjourney, Kling, Sora, Veo). No content filters. Self-hosted, MIT licensed.",
     favicon: "/github.svg",
     related: ["heygen-com/hyperframes", "Open-LLM-VTuber/Open-LLM-VTuber"],
-    tags: ["ai"],
+    tags: [TAGS.ai],
     url: "https://github.com/Anil-matcha/Open-Generative-AI",
   },
   {
@@ -196,7 +197,7 @@ export const aiLinks: Tool[] = [
       "Talk to any LLM with hands-free voice interaction, voice interruption, and Live2D taking face running locally across platforms.",
     favicon: "/github.svg",
     related: ["Anil-matcha/Open-Generative-AI", "openai/whisper"],
-    tags: ["ai"],
+    tags: [TAGS.ai],
     url: "https://github.com/Open-LLM-VTuber/Open-LLM-VTuber",
   },
   {
@@ -209,7 +210,7 @@ export const aiLinks: Tool[] = [
     favicon: "/github.svg",
     related: ["Awesome Claude", "Langflow"],
     subtitle: "The Open Platform for Cloud Coding Agents",
-    tags: ["ai"],
+    tags: [TAGS.ai],
     url: "https://www.openhands.dev/",
   },
   {
@@ -232,7 +233,7 @@ export const aiLinks: Tool[] = [
     ],
     related: ["ollama/ollama", "Unstructured - Unstructured Data Platform for GenAI"],
     subtitle: "Self-Hosted AI Platform",
-    tags: ["llm", "platform", "self-hosted", "ui"],
+    tags: [TAGS.llm, TAGS.platform, TAGS.ui, TAGS["self-hosted"]],
     url: "https://openwebui.com/",
   },
   {
@@ -241,7 +242,7 @@ export const aiLinks: Tool[] = [
     description:
       "Taste Skill gives your AI coding agent good taste. Open-source skill files that stop Cursor, Claude Code, Codex & more from generating generic, boring frontends. Install in one command.",
     subtitle: "The Anti-Slop Frontend Framework for AI Agents",
-    tags: ["ai"],
+    tags: [TAGS.ai],
     url: "https://www.tasteskill.dev/",
   },
   {
@@ -251,7 +252,7 @@ export const aiLinks: Tool[] = [
       "Transform complex, unstructured data into clean, AI-ready inputs. Connect to any source, process 64+ file types, and power your GenAI projects. Start now.",
     related: ["Dify", "Open WebUI"],
     subtitle: "Unstructured Data Platform for GenAI",
-    tags: ["ai"],
+    tags: [TAGS.ai],
     url: "https://unstructured.io/",
   },
   {
@@ -261,7 +262,7 @@ export const aiLinks: Tool[] = [
     description: "Vibe-Trading: Your Personal Trading Agent",
     favicon: "/github.svg",
     related: ["AutoHedge", "Fincept Terminal"],
-    tags: ["ai"],
+    tags: [TAGS.ai],
     url: "https://github.com/HKUDS/Vibe-Trading",
   },
   {
@@ -271,7 +272,7 @@ export const aiLinks: Tool[] = [
     description: "Robust Speech Recognition via Large-Scale Weak Supervision",
     favicon: "/github.svg",
     related: ["Open-LLM-VTuber/Open-LLM-VTuber"],
-    tags: ["ai"],
+    tags: [TAGS.ai],
     url: "https://github.com/openai/whisper",
   },
 ];

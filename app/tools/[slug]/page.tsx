@@ -6,16 +6,10 @@ import { internalTools } from "@/lib/tools-data";
 type Params = { slug: string };
 
 export function generateStaticParams(): Params[] {
-  return internalTools
-    .filter((tool) => tool.slug)
-    .map((tool) => ({ slug: tool.slug as string }));
+  return internalTools.filter((tool) => tool.slug).map((tool) => ({ slug: tool.slug as string }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<Params>;
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { slug } = await params;
   const tool = internalTools.find((t) => t.slug === slug);
 
@@ -47,8 +41,8 @@ export default async function ToolPage({ params }: { params: Promise<Params> }) 
         <p className="text-muted-foreground mt-2 text-sm">{tool.description}</p>
       </header>
       <div className="text-muted-foreground rounded-xl border border-dashed p-12 text-center text-sm">
-        This tool is being migrated to the new dynamic route. The interactive UI is currently
-        served by the static route at <code className="font-mono">app/tools/{slug}/page.tsx</code>.
+        This tool is being migrated to the new dynamic route. The interactive UI is currently served
+        by the static route at <code className="font-mono">app/tools/{slug}/page.tsx</code>.
       </div>
     </div>
   );

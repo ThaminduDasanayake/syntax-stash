@@ -154,8 +154,7 @@ const PRESETS: Preset[] = [
 
 // ─── Crypto helpers ───────────────────────────────────────────────────────────
 
-const ALPHANUM_CHARS =
-  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*-_=+";
+const ALPHANUM_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*-_=+";
 
 function generateSecret(bytes: number, encoding: Encoding): string {
   if (encoding === "alphanum") {
@@ -257,14 +256,12 @@ export default function SecretGeneratorPage() {
 
   // Regenerate secrets
   const generate = useCallback(() => {
-    setSecrets(
-      Array.from({ length: count }, () => prefix + generateSecret(bytes, encoding)),
-    );
+    setSecrets(Array.from({ length: count }, () => prefix + generateSecret(bytes, encoding)));
   }, [bytes, encoding, prefix, count]);
 
   useEffect(() => {
     generate();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [seed, bytes, encoding, prefix, count]);
 
   const bits = entropyBits(bytes);
@@ -287,12 +284,12 @@ export default function SecretGeneratorPage() {
               className={cn(
                 "group flex flex-col gap-1 rounded-lg border px-3 py-2.5 text-left transition-all",
                 selectedPreset === p.id
-                  ? "border-primary bg-primary/5 ring-1 ring-primary/30"
+                  ? "border-primary bg-primary/5 ring-primary/30 ring-1"
                   : "hover:border-border/80 hover:bg-muted/50",
               )}
             >
               <div className="flex items-center justify-between gap-2">
-                <span className="text-sm font-medium leading-tight">{p.label}</span>
+                <span className="text-sm leading-tight font-medium">{p.label}</span>
                 <span
                   className={cn(
                     "shrink-0 rounded px-1.5 py-0.5 text-[10px] font-semibold",
@@ -302,7 +299,7 @@ export default function SecretGeneratorPage() {
                   {p.tag}
                 </span>
               </div>
-              <span className="text-muted-foreground text-xs leading-snug line-clamp-2">
+              <span className="text-muted-foreground line-clamp-2 text-xs leading-snug">
                 {p.description}
               </span>
             </button>
@@ -417,7 +414,7 @@ export default function SecretGeneratorPage() {
                 <div key={i} className="bg-muted rounded-lg border">
                   {/* Secret value row */}
                   <div className="flex items-center gap-2 px-3 py-2.5">
-                    <span className="flex-1 break-all font-mono text-sm leading-relaxed">
+                    <span className="flex-1 font-mono text-sm leading-relaxed break-all">
                       {secret}
                     </span>
                     <button
@@ -440,7 +437,9 @@ export default function SecretGeneratorPage() {
 
                   {/* .env line row */}
                   <div className="flex items-center gap-2 border-t px-3 py-1.5">
-                    <span className="text-muted-foreground mr-1 shrink-0 font-mono text-xs">.env</span>
+                    <span className="text-muted-foreground mr-1 shrink-0 font-mono text-xs">
+                      .env
+                    </span>
                     <span className="flex-1 truncate font-mono text-xs opacity-70">{envLine}</span>
                     <button
                       onClick={() => copy(`env-${i}`, envLine)}
@@ -452,11 +451,7 @@ export default function SecretGeneratorPage() {
                           : "text-muted-foreground hover:text-foreground",
                       )}
                     >
-                      {isCopiedEnv ? (
-                        <CheckIcon weight="bold" size={13} />
-                      ) : (
-                        <CopyIcon size={13} />
-                      )}
+                      {isCopiedEnv ? <CheckIcon weight="bold" size={13} /> : <CopyIcon size={13} />}
                     </button>
                   </div>
                 </div>
@@ -470,9 +465,7 @@ export default function SecretGeneratorPage() {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() =>
-                  copy("all-env", secrets.map((s) => `${envKey}=${s}`).join("\n"))
-                }
+                onClick={() => copy("all-env", secrets.map((s) => `${envKey}=${s}`).join("\n"))}
                 className="gap-2"
               >
                 {copiedKey === "all-env" ? (
@@ -515,7 +508,7 @@ export default function SecretGeneratorPage() {
           {/* Preset description callout */}
           {selectedPreset !== "custom" && (
             <p className="text-muted-foreground border-l-2 pl-3 text-xs leading-relaxed">
-              <span className="font-semibold text-foreground">{preset.label}:</span>{" "}
+              <span className="text-foreground font-semibold">{preset.label}:</span>{" "}
               {preset.description}
             </p>
           )}

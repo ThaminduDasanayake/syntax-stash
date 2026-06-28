@@ -188,7 +188,9 @@ function jsonToXmlNode(tag: string, value: unknown, depth: number, indentSize: n
 function jsonToXml(json: string, indent: number): string {
   const obj = JSON.parse(json);
   if (typeof obj !== "object" || obj === null || Array.isArray(obj)) {
-    throw new Error("JSON root must be an object with a single root key representing the XML element.");
+    throw new Error(
+      "JSON root must be an object with a single root key representing the XML element.",
+    );
   }
   const entries = Object.entries(obj);
   if (entries.length !== 1) {
@@ -318,7 +320,11 @@ export default function XmlStudioPage() {
             <div className="bg-muted rounded-lg p-3">
               <p className="text-muted-foreground text-xs">Mode</p>
               <p className="text-lg font-semibold">
-                {mode === "format" ? "Format" : mode === "xml-to-json" ? "XML → JSON" : "JSON → XML"}
+                {mode === "format"
+                  ? "Format"
+                  : mode === "xml-to-json"
+                    ? "XML → JSON"
+                    : "JSON → XML"}
               </p>
             </div>
           </div>

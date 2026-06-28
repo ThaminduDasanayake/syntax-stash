@@ -22,13 +22,11 @@ export const ClearButton = ({
   disabled,
   ...props
 }: ClearButtonProps) => {
-
   const finalVariant = variant || (iconOnly ? "ghost" : "outline");
 
   const finalSize = size || (iconOnly ? "icon-sm" : "default");
 
   return (
-
     <Button
       variant={finalVariant}
       size={finalSize}

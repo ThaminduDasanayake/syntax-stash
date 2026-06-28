@@ -42,16 +42,13 @@ export function TextareaGroup({
     <div
       className={cn(
         "relative flex w-full flex-col",
-        isFill ? "flex-1 h-full min-h-0" : "",
+        isFill ? "h-full min-h-0 flex-1" : "",
         maxHeightClass,
         containerClassName,
       )}
     >
       <InputGroup
-        className={cn(
-          "flex flex-col overflow-hidden",
-          isFill ? "h-full! min-h-0" : "h-auto!",
-        )}
+        className={cn("flex flex-col overflow-hidden", isFill ? "h-full! min-h-0" : "h-auto!")}
       >
         {/* Header */}
         <InputGroupAddon align="block-start" className="shrink-0 border-b">

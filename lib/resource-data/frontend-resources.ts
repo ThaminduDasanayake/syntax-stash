@@ -1,6 +1,7 @@
 import { Tool } from "@/types";
 
 import { CATEGORIES } from "./categories";
+import { TAGS } from "./tags";
 
 export const frontendLinks: Tool[] = [
   {
@@ -8,7 +9,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Explore, copy, and remix thousands of high-quality React components published to the 21st.dev Community by designers and developers.",
-    tags: ["react"],
+    tags: [TAGS.react],
     url: "https://21st.dev/",
   },
   {
@@ -16,7 +17,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Copy-paste beautiful UI components built with React, Next.js, Tailwind CSS, and Framer Motion. 200+ free components, blocks, and templates.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://ui.aceternity.com/",
   },
   {
@@ -25,14 +26,14 @@ export const frontendLinks: Tool[] = [
     description:
       "Fully animated, open-source component distribution built with React, TypeScript, Tailwind CSS, Motion and Shadcn CLI. Browse a list of components you can install, modify, and use in your projects.",
     subtitle: "Animated React Components",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://animate-ui.com/",
   },
   {
     title: "Animejs",
     category: CATEGORIES.frontend,
     description: "A fast, multipurpose and lightweight JavaScript animation library",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://animejs.com/",
   },
   {
@@ -40,7 +41,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Animista is a CSS animation library and a place where you can play with a collection of ready-made CSS animations and download only those you will use.",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://animista.net/",
   },
   {
@@ -48,14 +49,14 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Animmaster Lib — a modern frontend library of 300 PRO-level animated UI components with live video previews. Scroll animations, WebGL shaders, hero sections, sliders, menus and more — copy, paste, ship.",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://animmasterlib.dev/",
   },
   {
     title: "Apache ECharts",
     category: CATEGORIES.frontend,
     description: "A powerful, interactive charting and visualization library for browser",
-    tags: ["data-viz"],
+    tags: [TAGS["data-viz"]],
     url: "https://echarts.apache.org/en/index.html",
   },
   {
@@ -64,7 +65,7 @@ export const frontendLinks: Tool[] = [
     description:
       "A headless UI library with over 45+ components designed to build reusable, scalable Design Systems that works for a wide range of JS frameworks.",
     favicon: "https://ark-ui.com/icon.svg?3e91f991fe6d39a3",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://ark-ui.com/",
   },
   {
@@ -72,7 +73,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Atropos is a lightweight, free and open-source JavaScript library to create stunning touch-friendly 3D parallax hover effects.",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://atroposjs.com/",
   },
   {
@@ -81,7 +82,7 @@ export const frontendLinks: Tool[] = [
     description:
       "A zero-config, drop-in animation utility that automatically adds smooth transitions to your web app. Use it with React, Solid, Vue, Svelte, or any other JavaScript application.",
     subtitle: "Add motion to your apps with a single line of code",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://auto-animate.formkit.com/",
   },
   {
@@ -90,14 +91,14 @@ export const frontendLinks: Tool[] = [
     description:
       "Bklit UI is a component library built on top of shadcn/ui to help you build charts and data visualizations more easily.",
     subtitle: "Charts & Data Visualization Components",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://bklit.com/",
   },
   {
     title: "Blossom Carousel",
     category: CATEGORIES.frontend,
     description: "Enhance native scrolling with dragging instead of replacing it.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://www.blossom-carousel.com/",
   },
   {
@@ -105,7 +106,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Build your tailor-made stack of AI-powered design tools for animations, 2D & 3D visuals, text effects, and images. Remix, share, export, and scale.",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://brik.space/",
   },
   {
@@ -114,7 +115,7 @@ export const frontendLinks: Tool[] = [
     description:
       "Speed up your site builds with 1K+ ready-made Framer and Figma assets — sections, wireframes, templates, and UI kits all in one place.",
     subtitle: "Your All-in-One Framer & Figma UI Library",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://clonify.io/",
   },
   {
@@ -122,14 +123,14 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Componentry is a free, open-source React UI component library by Harsh Jadhav. Beautiful, animated, copy-paste components built with Tailwind CSS, TypeScript, and Framer Motion. The best UI components for modern web applications.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://www.componentry.fun/",
   },
   {
     title: "Cover Flow",
     category: CATEGORIES.frontend,
     description: "iOS-like Cover Flow for React.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://coverflow.ashishgogula.in/",
   },
   {
@@ -137,7 +138,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "As a free CSS gradient generator tool, this website lets you create a colorful gradient background for your website, blog, or social media profile.",
-    tags: ["color"],
+    tags: [TAGS.color],
     url: "https://cssgradient.io/",
   },
   {
@@ -147,7 +148,7 @@ export const frontendLinks: Tool[] = [
     description:
       "The biggest collection of CSS-only loaders. More than 600 loading animations made by Temani Afif using a single element.",
     subtitle: "A collection of more than 600 loading animations",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://css-loaders.com/",
   },
   {
@@ -156,7 +157,7 @@ export const frontendLinks: Tool[] = [
     className: "bg-foreground border-paper",
     description:
       "CSS Loader is a collection of different types of loaders, spinners and their source code. There are no image dependencies in this. It's is done using pure CSS. Hence it is easily customization too.",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://cssloaders.github.io/",
   },
   {
@@ -164,7 +165,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Open-source Shadcn UI components, animated blocks, and full templates you can copy-paste into any TypeScript/Next.js project.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://www.cult-ui.com/",
   },
   {
@@ -173,7 +174,7 @@ export const frontendLinks: Tool[] = [
     description:
       "Desktop visual effects software for video, images and 3D. Pixel sorting, dithering, blob tracking and more with real‑time previews and a smooth workflow.",
     subtitle: "Real-Time Visual Effects for Image/Video/3D",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://dasca.studio/",
   },
   {
@@ -182,7 +183,7 @@ export const frontendLinks: Tool[] = [
     description:
       "Two years of UI experiments. 159+ components built on coss-ui, all on the shadcn registry. Press 'c' on any design to copy the source.",
     subtitle: "UI experiments built on coss-ui",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://www.devl.dev/",
   },
   {
@@ -190,7 +191,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "React component library of dot matrix loaders—expressive loading primitives you install via the shadcn registry and own as local code.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://dotmatrix.zzzzshawn.cloud/",
   },
   {
@@ -198,7 +199,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "A light-weight, no-dependency, vanilla JavaScript library to drive user's focus across the page.",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://driverjs.com/",
   },
   {
@@ -207,7 +208,7 @@ export const frontendLinks: Tool[] = [
     description:
       "Generate and customize CSS easing functions with ease and magical precision using Easing Wizard 🧙",
     subtitle: "CSS Easing Editor and Generator",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://easingwizard.com/",
   },
   {
@@ -215,7 +216,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Save hours of design time with clean, ready-to-use shadcn blocks that just work — modern, responsive, and built for speed.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://efferd.com/",
   },
   {
@@ -224,7 +225,7 @@ export const frontendLinks: Tool[] = [
     description:
       "A loading spinner library inspired by flip-dot displays. Browse the collection, build your own, export to SVG, React, or Flutter.",
     subtitle: "Spinner Library",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://flicker.laurie.fyi/",
   },
   {
@@ -234,7 +235,7 @@ export const frontendLinks: Tool[] = [
     description:
       "Free split-flap display emulator for any TV. The classic flip-board look, without the $3,500 hardware.",
     favicon: "/github.svg",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://github.com/magnum6actual/flipoff",
   },
   {
@@ -242,7 +243,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Footer is a curated gallery of the top website footer inspiration on earth. Find the footers you need and sort by type and style.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://www.footer.design/",
   },
   {
@@ -250,7 +251,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Beautifully designed components that you can copy and paste into your apps. Accessible. Customizable. Open Source.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://forgeui.in/",
   },
   {
@@ -259,7 +260,7 @@ export const frontendLinks: Tool[] = [
     description:
       "Visual form builder for shadcn/ui and React. Build production-ready forms with React Hook Form or TanStack Form, add Better Auth in one click, and export clean TypeScript code for Next.js, Remix, or Vite.",
     subtitle: "shadcn/ui Form Builder with Better Auth Integration",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://www.formscn.space/",
   },
   {
@@ -267,7 +268,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Open-source, lightweight, unstyled, and composable emoji picker for React—originally created for Liveblocks Comments. Styles can be applied with CSS, Tailwind CSS, CSS-in-JS, and more.",
-    tags: ["react"],
+    tags: [TAGS.react],
     url: "https://frimousse.liveblocks.io/",
   },
   {
@@ -275,14 +276,14 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Easily create beautiful Tailwind CSS gradients with Gradienty - a CSS generator. Choose from ready-made gradients or customize your own for eye-catching backgrounds, text effects, and glassmorphism designs. Perfect for websites, apps, and more. Try it for free now!",
-    tags: ["color"],
+    tags: [TAGS.color],
     url: "https://gradienty.codes/",
   },
   {
     title: "Grainrad",
     category: CATEGORIES.frontend,
     description: "Grainrad - Free WebGPU-powered ASCII, dithering, and retro effects at 60fps",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://grainrad.com/",
   },
   {
@@ -290,7 +291,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Supported by Webflow. Animate Anything - A wildly robust JavaScript animation library built for professionals.",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://gsap.com/",
   },
   {
@@ -298,7 +299,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Free HTML CSS templates and themes for websites, landing pages, blogs, portfolios, ecommerce and admin dashboards.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://htmlrev.com/",
   },
   {
@@ -307,7 +308,7 @@ export const frontendLinks: Tool[] = [
     description:
       "A curated collection of beautiful Tailwind CSS gradients using the full range of Tailwind CSS colors. Easily copy and paste the class names, CSS or even save the gradients as an image.",
     favicon: "https://hypercolor.dev/favicon.png",
-    tags: ["color"],
+    tags: [TAGS.color],
     url: "https://hypercolor.dev/",
   },
   {
@@ -315,7 +316,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Copy and paste accessible React components built on React Aria and Tailwind CSS. 87+ production-ready components for Next.js and Laravel.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://intentui.com/",
   },
 
@@ -325,7 +326,7 @@ export const frontendLinks: Tool[] = [
     description:
       "Jitter is a collaborative motion design tool that lets you create professional animations in minutes, no matter your experience with motion.",
     subtitle: "A fast and simple motion design tool on the web",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://jitter.video/",
   },
   {
@@ -333,7 +334,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Effortlessly bring the smallest, free, ready-to-use motion graphics for the web, app, social, and designs. Create, edit, test, collaborate, and ship Lottie animations in no time!",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://lottiefiles.com/",
   },
   {
@@ -342,14 +343,14 @@ export const frontendLinks: Tool[] = [
     description:
       "Create and ship animations to your products faster. Bring your websites and apps to life with the simplest editor for Lottie animations.",
     subtitle: "Create & edit Lottie animations",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://www.lottielab.com/",
   },
   {
     title: "Lukacho UI",
     category: CATEGORIES.frontend,
     description: "Animated UI component Collection made with Next.js | TailwindCSS | Framer Motion",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://ui.lukacho.com/",
   },
   {
@@ -357,14 +358,14 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Hand-crafted animated components that you can copy and paste into your apps. Free & Open Source.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://www.mageui.in/",
   },
   {
     title: "Magic UI",
     category: CATEGORIES.frontend,
     description: "Beautiful UI components and templates to make your landing page look stunning.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://magicui.design/",
   },
   {
@@ -372,7 +373,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "A collection of beautifully designed, accessible, and customizable map components. Built on MapLibre GL. Styled with Tailwind CSS. Works with shadcn/ui.",
-    tags: ["map"],
+    tags: [TAGS.map],
     url: "https://www.mapcn.dev/",
   },
   {
@@ -380,7 +381,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description: "MESH is a simple way to create beautiful, unique gradients using shaders.",
     favicon: "https://meshgradient.com/logo-sm.svg",
-    tags: ["color"],
+    tags: [TAGS.color],
     url: "https://meshgradient.com/",
   },
   {
@@ -389,7 +390,7 @@ export const frontendLinks: Tool[] = [
     description:
       "Motion (prev Framer Motion) is a fast, production-grade animation library for React, JavaScript and Vue. Build smooth UI animations at a tiny footprint.",
     subtitle: "JavaScript & React animation library",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://motion.dev/",
   },
   {
@@ -398,7 +399,7 @@ export const frontendLinks: Tool[] = [
     description:
       "Nova UI is a complete solution for Framer & Figma, offering all the resources needed from concept to launch. Packed with a UI kit, templates, design systems, components, and custom code, it's the ultimate toolkit for creating and monetizing your websites.",
     subtitle: "Framer UI Kit & Design System",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://novaui.design/",
   },
   {
@@ -406,7 +407,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Open source CSS custom properties to help accelerate adaptive and consistent design. Available from a CDN or NPM, as CSS or Javascript.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://open-props.style/",
   },
   {
@@ -414,7 +415,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Beautifully designed components built with Ark UI and Panda CSS that work with a variety of JS frameworks.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://park-ui.com/",
   },
   {
@@ -422,7 +423,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description: "Structure-aware skeleton loader. One Web Component. Every framework.",
     favicon: "https://aejkatappaja.github.io/phantom-ui/favicon.svg",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://aejkatappaja.github.io/phantom-ui/",
   },
   {
@@ -430,7 +431,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "A set of beautifully-designed, customizable plugins and components to help you build your rich-text editor. Open Source.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://platejs.org/",
   },
   {
@@ -438,21 +439,21 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "An open source collection of high quality, animated, interactive & fully customizable React components for building stunning, memorable user interfaces.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://www.reactbits.dev/",
   },
   {
     title: "React Haiku",
     category: CATEGORIES.frontend,
     description: "A minimal React Hooks library that saves you time and lines of code.",
-    tags: ["react"],
+    tags: [TAGS.react],
     url: "https://www.reacthaiku.dev/",
   },
   {
     title: "React Three Fiber",
     category: CATEGORIES.frontend,
     description: "React-three-fiber is a React renderer for three.js.",
-    tags: ["react"],
+    tags: [TAGS.react],
     url: "https://r3f.docs.pmnd.rs/getting-started/introduction",
   },
   {
@@ -460,7 +461,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Search a curated DESIGN.md library for AI agents: colors, typography, spacing, and component patterns from top websites. Part of Refero.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://styles.refero.design/",
   },
   {
@@ -469,7 +470,7 @@ export const frontendLinks: Tool[] = [
     description:
       "Behind Spotify Wrapped, Duolingo, and products reaching 2 billion users. Design, animate, and code in one place. Ship everywhere.",
     subtitle: "The interactive experience engine",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://rive.app/",
   },
   {
@@ -477,14 +478,14 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "170+ interactive SVG map components for React. Countries, continents, and US states. No dependencies — install via shadcn CLI with pure Tailwind CSS styling.",
-    tags: ["map"],
+    tags: [TAGS.map],
     url: "https://www.shadcnmaps.com/",
   },
   {
     title: "Shader Gradient",
     category: CATEGORIES.frontend,
     description: "Create beautiful moving gradients on Framer, Figma and React",
-    tags: ["color"],
+    tags: [TAGS.color],
     url: "https://shadergradient.co/",
   },
   {
@@ -492,14 +493,14 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Component library for creative WebGPU effects in modern frontend frameworks. Compose interactive visuals for Vue, React, Svelte, Solid & JS.",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://shaders.com/",
   },
   {
     title: "Shoogle",
     category: CATEGORIES.frontend,
     description: "Search shadcn components.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://shoogle.dev/",
   },
   {
@@ -507,7 +508,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Brand new uncommon components for your Next.js project. Use with ease through shadcn CLI 3.0, featuring fast-growing components and collections that are easy to edit and use.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://skiper-ui.com/",
   },
   {
@@ -516,14 +517,14 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Minimal snippets for modern CSS layouts and components, created by Stephanie Eckles of ModernCSS.dev",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://smolcss.dev/",
   },
   {
     title: "Smooothy",
     category: CATEGORIES.frontend,
     description: "Smooth configurable extendable slider made for animation.",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://smooothy.vercel.app/",
   },
   {
@@ -532,7 +533,7 @@ export const frontendLinks: Tool[] = [
     className: "bg-foreground border-paper",
     description:
       "Animated React components with smooth Motion animations. Drop-in shadcn/ui compatible, fully customizable with Tailwind CSS.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://www.smoothui.dev/",
   },
   {
@@ -540,7 +541,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Copy-paste beautiful UI components built with React, Next.js, Tailwind CSS, and shadcn/ui. 250+ production-ready components, blocks, and templates. Free and open source.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://ui.spectrumhq.in/",
   },
   {
@@ -549,7 +550,7 @@ export const frontendLinks: Tool[] = [
     description:
       "Spline is a free 3D design software with real-time collaboration to create web interactive experiences in the browser. Easy 3d modeling, animation, textures, and more.",
     subtitle: "3D Design tool in the browser with real-time collaboration",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://spline.design/",
   },
   {
@@ -558,7 +559,7 @@ export const frontendLinks: Tool[] = [
     description:
       "Create impressive SVG animations and more. Add them easily to your website or app. Get started for free!",
     subtitle: "Free Animation Maker Online",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://www.svgator.com/",
   },
   {
@@ -567,7 +568,7 @@ export const frontendLinks: Tool[] = [
     description:
       "SVG Studio — a free, browser-based SVG animation editor. No sign-up, no telemetry, no subscription.",
     subtitle: "Animate Everything",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://www.svgstudio.org/",
   },
   {
@@ -575,7 +576,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Swishy is the leading AI motion designer and AI animator platform. Create professional motion graphics, animated typefaces, and stunning video animations without After Effects. Export to MP4, MOV, and GIF instantly.",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://www.swishy.ai/",
   },
   {
@@ -583,7 +584,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Get free-to-use Prebuilt React components powered by Tailwind CSS & Framer Motion. Modern, Minimal and customizable. Just copy, paste and you're ready to go!",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://syntaxui.com/",
   },
   {
@@ -591,7 +592,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Customize theme for shadcn/ui with tweakcn's interactive editor. Supports Tailwind CSS v4, Shadcn UI, and custom styles. Modify properties, preview changes, and get the code in real time.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://tweakcn.com/",
   },
   {
@@ -600,7 +601,7 @@ export const frontendLinks: Tool[] = [
     description:
       "Collection of the most essential transitions for web apps that you can just copy and paste into any project.",
     subtitle: "Essential transitions for web apps",
-    tags: ["animation"],
+    tags: [TAGS.animation],
     url: "https://transitions.dev/",
   },
   {
@@ -608,7 +609,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "@pierre/trees is an open source file tree rendering library. It's built for performance and flexibility, is super customizable, and comes packed with features.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://trees.software/",
   },
   {
@@ -617,7 +618,7 @@ export const frontendLinks: Tool[] = [
     description:
       "Create and customize beautiful Tailwind CSS color palettes. Generate, edit, and export colors for your design with our intuitive color generator tool.",
     subtitle: "Tailwind CSS Colors - All colors + Custom color generator",
-    tags: ["color"],
+    tags: [TAGS.color],
     url: "https://uicolors.app/",
   },
   {
@@ -626,7 +627,7 @@ export const frontendLinks: Tool[] = [
     description:
       "Build stunning interfaces with 700+ premium animated components for Next.js & React Native. Copy-paste ready, production-grade UI library.",
     subtitle: "Premium UI Components for Next.js & React Native",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://www.uilora.com/",
   },
   {
@@ -634,7 +635,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Community-made library of free and customizable UI elements made with CSS or Tailwind. It's all free to copy and use in your projects. Uiverse can save you many hours spent on building & customizing UI components for your next project.",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://uiverse.io/",
   },
   {
@@ -643,7 +644,7 @@ export const frontendLinks: Tool[] = [
     description:
       "A curated registry of beautifully designed React components built with TypeScript, Tailwind CSS and Motion. Install with the shadcn CLI, customize freely, and ship production-ready interfaces faster.",
     subtitle: "Beautifully Designed React Components",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://ui.unlumen.com/",
   },
   {
@@ -651,7 +652,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description: "An open source React.js component library for beautifully shaded canvas.",
     favicon: "https://uvcanvas.com/favicon-32x32.png",
-    tags: ["react"],
+    tags: [TAGS.react],
     url: "https://uvcanvas.com/",
   },
   {
@@ -660,7 +661,7 @@ export const frontendLinks: Tool[] = [
     description:
       "Animated React components and next-generation UI interactions for modern landing pages.",
     subtitle: "Animated React Components",
-    tags: ["ui-component"],
+    tags: [TAGS["ui-component"]],
     url: "https://www.vengenceui.com/",
   },
   {
@@ -668,7 +669,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description: "React components and hooks for the Google Maps JavaScript API",
     favicon: "https://visgl.github.io/react-google-maps/images/visgl-logo-dark.png",
-    tags: ["map"],
+    tags: [TAGS.map],
     url: "https://visgl.github.io/react-google-maps/",
   },
   {
@@ -676,7 +677,7 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Browse 180 free CSS gradients for backgrounds, UI, websites, and design systems. Copy CSS code, explore color palettes, and find gradient inspiration fast.",
-    tags: ["color"],
+    tags: [TAGS.color],
     url: "https://webgradients.com/",
   },
 ];
