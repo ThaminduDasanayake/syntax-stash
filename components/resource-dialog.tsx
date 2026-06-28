@@ -92,7 +92,7 @@ export function ResourceDialog({ tool }: ToolCardProps) {
     <DialogContent showCloseButton={false} className="modal-panel">
       <div className="modal-top-actions">
         <DialogClose asChild>
-          <Button variant="secondary" size="icon">
+          <Button variant="secondary" size="icon" className="border-[1.5px]">
             <XIcon weight="bold" />
           </Button>
         </DialogClose>
@@ -170,7 +170,7 @@ export function ResourceDialog({ tool }: ToolCardProps) {
                 </h4>
                 <div className="flex flex-wrap gap-3">
                   {authorResources.map((res, i) => {
-                    const colors = ["bg-c-blue", "bg-c-orange", "bg-c-pink", "bg-c-green"];
+                    const colors = ["bg-c-blue", "bg-c-green", "bg-c-orange", "bg-c-pink"];
                     const dotColor = colors[i % colors.length];
                     return (
                       <div
@@ -193,7 +193,7 @@ export function ResourceDialog({ tool }: ToolCardProps) {
                 <h4 className="text-mono-2xs text-c-green mb-4">RELATED</h4>
                 <div className="flex flex-wrap gap-3">
                   {relatedResources.map((res, i) => {
-                    const colors = ["bg-c-blue", "bg-c-orange", "bg-c-pink", "bg-c-green"];
+                    const colors = ["bg-c-blue", "bg-c-green", "bg-c-orange", "bg-c-pink"];
                     const dotColor = colors[i % colors.length];
                     return (
                       <div

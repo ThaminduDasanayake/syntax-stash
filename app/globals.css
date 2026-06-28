@@ -423,11 +423,11 @@
 }
 
 /* Resource Stash*/
-@utility res-page {
+@utility lib-page {
   @apply flex w-full flex-col;
 }
 
-@utility res-header {
+@utility lib-header {
   @apply bg-sec-1 border-b-line border-b pt-33 pb-12;
 }
 
@@ -435,11 +435,11 @@
   @apply mx-auto flex max-w-7xl flex-col items-start px-8;
 }
 
-@utility res-headline {
+@utility lib-headline {
   @apply headline mb-5 text-balance;
 }
 
-@utility res-sub {
+@utility lib-sub {
   @apply text-ink-2 mb-7 font-mono text-lg leading-relaxed;
 }
 
@@ -473,7 +473,7 @@
 }
 
 @utility filter-search {
-  @apply h-10! w-full pr-8! pl-8.5! transition-colors duration-200 outline-none;
+  @apply h-10! w-full border-[1.5px]! pr-8! pl-8.5! transition-colors duration-200 outline-none;
 }
 
 @utility filter-pills {
@@ -485,7 +485,7 @@
 }
 
 @utility filter-pill {
-  @apply text-ink h-10 gap-2 bg-transparent px-3.5 font-semibold duration-200;
+  @apply text-ink border-ink h-10 gap-2 border-[1.5px]! bg-transparent px-3.5 font-semibold duration-200;
 }
 
 @utility filter-pill-dot {

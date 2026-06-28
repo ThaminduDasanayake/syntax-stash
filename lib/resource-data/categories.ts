@@ -1,8 +1,8 @@
 export const CATEGORIES = {
   ai: "AI & Machine Learning",
-  data: "Data & Maps",
+  data: "Data & APIs",
   design: "Design & UX",
-  dev: "Development & Backend",
+  dev: "Developer Tools & Utilities",
   education: "Education & Community",
   frontend: "Frontend & UI",
   media: "Media & Assets",
