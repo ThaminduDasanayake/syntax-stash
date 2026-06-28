@@ -82,7 +82,10 @@ export function CheatsheetTab() {
         <TableBody>
           {filtered.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={3} className="text-muted-foreground py-8 text-center text-sm whitespace-normal">
+              <TableCell
+                colSpan={3}
+                className="text-muted-foreground py-8 text-center text-sm whitespace-normal"
+              >
                 No classes found for &ldquo;{search}&rdquo;
               </TableCell>
             </TableRow>
@@ -94,11 +97,13 @@ export function CheatsheetTab() {
                 className="cursor-pointer"
               >
                 <TableCell className="font-mono text-sm font-semibold">
-                  <span className={copiedItem === entry.className ? "text-primary" : "text-foreground"}>
+                  <span
+                    className={copiedItem === entry.className ? "text-primary" : "text-foreground"}
+                  >
                     {copiedItem === entry.className ? "Copied!" : entry.className}
                   </span>
                 </TableCell>
-                <TableCell className="text-muted-foreground whitespace-normal font-mono text-xs">
+                <TableCell className="text-muted-foreground font-mono text-xs whitespace-normal">
                   {entry.css}
                 </TableCell>
                 <TableCell>

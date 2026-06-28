@@ -51,13 +51,9 @@ async function signJWT(algo: Algorithm, secret: string, payload: string): Promis
   const signingInput = `${headerEncoded}.${payloadEncoded}`;
 
   const keyData = encodeUtf8(secret);
-  const key = await crypto.subtle.importKey(
-    "raw",
-    keyData,
-    { name: subtleName, hash },
-    false,
-    ["sign"],
-  );
+  const key = await crypto.subtle.importKey("raw", keyData, { name: subtleName, hash }, false, [
+    "sign",
+  ]);
 
   const sig = await crypto.subtle.sign(subtleName, key, encodeUtf8(signingInput));
   return `${signingInput}.${base64UrlEncode(sig)}`;
@@ -104,7 +100,14 @@ export default function JwtGeneratorPage() {
   }, [generate]);
 
   const parts = token.split(".");
-  const headerDecoded = parts[0] ? atob(parts[0].replace(/-/g, "+").replace(/_/g, "/").padEnd(Math.ceil(parts[0].length / 4) * 4, "=")) : "";
+  const headerDecoded = parts[0]
+    ? atob(
+        parts[0]
+          .replace(/-/g, "+")
+          .replace(/_/g, "/")
+          .padEnd(Math.ceil(parts[0].length / 4) * 4, "="),
+      )
+    : "";
 
   const tool = internalTools.find((t) => t.slug === "jwt-generator");
 
@@ -140,7 +143,7 @@ export default function JwtGeneratorPage() {
           />
 
           {/* Header preview */}
-          <div className="bg-muted rounded-lg p-4 space-y-1">
+          <div className="bg-muted space-y-1 rounded-lg p-4">
             <p className="text-muted-foreground text-xs font-medium">Header (auto-generated)</p>
             <p className="font-mono text-sm break-all">
               {headerDecoded || `{"alg":"${algo}","typ":"JWT"}`}
@@ -164,9 +167,9 @@ export default function JwtGeneratorPage() {
 
           {/* Coloured token breakdown */}
           {token && (
-            <div className="bg-muted rounded-lg p-4 space-y-2">
+            <div className="bg-muted space-y-2 rounded-lg p-4">
               <p className="text-muted-foreground text-xs font-medium">Token breakdown</p>
-              <p className="font-mono text-sm break-all leading-relaxed">
+              <p className="font-mono text-sm leading-relaxed break-all">
                 <span className="text-pink-500">{parts[0]}</span>
                 <span className="text-muted-foreground">.</span>
                 <span className="text-purple-500">{parts[1]}</span>
@@ -174,9 +177,9 @@ export default function JwtGeneratorPage() {
                 <span className="text-sky-500">{parts[2]}</span>
               </p>
               <div className="flex flex-wrap gap-4 pt-1 text-xs">
-                <span className="text-pink-500 font-medium">Header</span>
-                <span className="text-purple-500 font-medium">Payload</span>
-                <span className="text-sky-500 font-medium">Signature</span>
+                <span className="font-medium text-pink-500">Header</span>
+                <span className="font-medium text-purple-500">Payload</span>
+                <span className="font-medium text-sky-500">Signature</span>
               </div>
             </div>
           )}

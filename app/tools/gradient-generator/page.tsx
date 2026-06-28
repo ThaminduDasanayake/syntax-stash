@@ -63,14 +63,9 @@ export default function GradientGeneratorPage() {
   const [conicAngle, setConicAngle] = useState(0);
   const [stops, setStops] = useState<ColorStop[]>(DEFAULT_STOPS);
 
-  const sortedStops = useMemo(
-    () => [...stops].sort((a, b) => a.position - b.position),
-    [stops],
-  );
+  const sortedStops = useMemo(() => [...stops].sort((a, b) => a.position - b.position), [stops]);
 
-  const stopString = sortedStops
-    .map((s) => `${s.color} ${s.position}%`)
-    .join(", ");
+  const stopString = sortedStops.map((s) => `${s.color} ${s.position}%`).join(", ");
 
   const cssValue = useMemo(() => {
     if (type === "linear") {
@@ -96,7 +91,9 @@ export default function GradientGeneratorPage() {
   }, [type, direction, stops, sortedStops, cssValue]);
 
   const addStop = () => {
-    const mid = Math.round((sortedStops[0].position + sortedStops[sortedStops.length - 1].position) / 2);
+    const mid = Math.round(
+      (sortedStops[0].position + sortedStops[sortedStops.length - 1].position) / 2,
+    );
     setStops((s) => [...s, { id: nextId++, color: "#a855f7", position: mid }]);
   };
 
@@ -126,7 +123,7 @@ export default function GradientGeneratorPage() {
                   size="sm"
                   variant={type === t ? "default" : "outline"}
                   onClick={() => setType(t)}
-                  className="capitalize flex-1"
+                  className="flex-1 capitalize"
                 >
                   {t}
                 </Button>
@@ -207,7 +204,7 @@ export default function GradientGeneratorPage() {
                 <button
                   onClick={() => removeStop(stop.id)}
                   disabled={stops.length <= 2}
-                  className="text-muted-foreground hover:text-destructive disabled:opacity-30 transition-colors"
+                  className="text-muted-foreground hover:text-destructive transition-colors disabled:opacity-30"
                   title="Remove stop"
                 >
                   <TrashIcon size={14} />
@@ -220,10 +217,7 @@ export default function GradientGeneratorPage() {
         {/* Preview + output */}
         <div className="space-y-6 lg:col-span-2">
           {/* Preview */}
-          <div
-            className="rounded-xl border"
-            style={{ background: cssValue, height: 220 }}
-          />
+          <div className="rounded-xl border" style={{ background: cssValue, height: 220 }} />
 
           {/* CSS output */}
           <div className="space-y-2">
@@ -233,7 +227,7 @@ export default function GradientGeneratorPage() {
                 Copy CSS
               </CopyButton>
             </div>
-            <pre className="bg-muted rounded-lg p-3 text-sm font-mono break-all whitespace-pre-wrap">
+            <pre className="bg-muted rounded-lg p-3 font-mono text-sm break-all whitespace-pre-wrap">
               {cssRule}
             </pre>
           </div>
@@ -246,16 +240,13 @@ export default function GradientGeneratorPage() {
                 Copy Tailwind
               </CopyButton>
             </div>
-            <pre className="bg-muted rounded-lg p-3 text-sm font-mono break-all whitespace-pre-wrap">
+            <pre className="bg-muted rounded-lg p-3 font-mono text-sm break-all whitespace-pre-wrap">
               {tailwindClass}
             </pre>
           </div>
 
           {/* Color stop strip */}
-          <div
-            className="h-3 rounded-full border"
-            style={{ background: cssValue }}
-          />
+          <div className="h-3 rounded-full border" style={{ background: cssValue }} />
         </div>
       </div>
     </ToolLayout>

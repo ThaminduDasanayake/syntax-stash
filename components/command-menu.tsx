@@ -20,21 +20,21 @@ import { CommandMenuProps, Tool } from "@/types";
 
 function Highlight({ text, query }: { text: string; query: string }) {
   if (!query || query.trim() === "") return <>{text}</>;
-  
+
   // Escape special regex characters to prevent runtime crashes if a user types strings like "/" or "["
-  const escapedQuery = query.trim().replace(/[/\-\\^$*+?.()|[\]{}]/g, '\\$&');
-  
+  const escapedQuery = query.trim().replace(/[/\-\\^$*+?.()|[\]{}]/g, "\\$&");
+
   // Tokenize the query into individual words to support multi-word, out-of-order highlighting
   const words = escapedQuery.split(/\s+/).filter(Boolean);
   if (words.length === 0) return <>{text}</>;
-  
-  const searchPattern = words.join('|');
-  
+
+  const searchPattern = words.join("|");
+
   // Split on boundaries while retaining the original text fragments
   const parts = text.split(new RegExp(`(${searchPattern})`, "gi"));
-  
-  const queryWordsLower = words.map(w => w.toLowerCase());
-  
+
+  const queryWordsLower = words.map((w) => w.toLowerCase());
+
   return (
     <>
       {parts.map((part, i) =>
@@ -45,7 +45,7 @@ function Highlight({ text, query }: { text: string; query: string }) {
           </span>
         ) : (
           part
-        )
+        ),
       )}
     </>
   );
@@ -78,18 +78,20 @@ export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
 
   return (
     <CommandDialog open={open} onOpenChange={setOpenAction}>
-      <Command filter={(value, search) => {
-        if (!search) return 1;
-        
-        // Normalize and tokenize the search input into distinct words
-        const searchWords = search.toLowerCase().trim().split(/\s+/);
-        const itemTargetText = value.toLowerCase();
+      <Command
+        filter={(value, search) => {
+          if (!search) return 1;
 
-        // EVERY single typed word must be present as a continuous chunk somewhere in the item value
-        const isMatch = searchWords.every((word) => itemTargetText.includes(word));
+          // Normalize and tokenize the search input into distinct words
+          const searchWords = search.toLowerCase().trim().split(/\s+/);
+          const itemTargetText = value.toLowerCase();
 
-        return isMatch ? 1 : 0;
-      }}>
+          // EVERY single typed word must be present as a continuous chunk somewhere in the item value
+          const isMatch = searchWords.every((word) => itemTargetText.includes(word));
+
+          return isMatch ? 1 : 0;
+        }}
+      >
         <CommandInput placeholder="> Search Registry..." value={search} onValueChange={setSearch} />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
@@ -102,20 +104,20 @@ export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
                 onSelect={() => handleSelect(tool)}
               >
                 {/* Structural Level Indentation Logic */}
-                {'isSubItem' in tool && tool.isSubItem ? (
-                  <div className="border border-dashed border-muted-foreground/40 h-8 w-8 ml-4 flex items-center justify-center shrink-0 bg-background text-muted-foreground font-mono text-xs">
+                {"isSubItem" in tool && tool.isSubItem ? (
+                  <div className="border-muted-foreground/40 bg-background text-muted-foreground ml-4 flex h-8 w-8 shrink-0 items-center justify-center border border-dashed font-mono text-xs">
                     &gt;
                   </div>
                 ) : (
-                  <div className="border-2 border-border h-10 w-10 flex items-center justify-center shrink-0 bg-background">
+                  <div className="border-border bg-background flex h-10 w-10 shrink-0 items-center justify-center border-2">
                     <WrenchIcon weight="bold" className="size-5!" />
                   </div>
                 )}
-                <div className="flex flex-col ml-1 min-w-0 flex-1">
-                  <span className="text-sm font-bold tracking-tight text-foreground block mb-1 uppercase">
+                <div className="ml-1 flex min-w-0 flex-1 flex-col">
+                  <span className="text-foreground mb-1 block text-sm font-bold tracking-tight uppercase">
                     <Highlight text={tool.title} query={search} />
                   </span>
-                  <span className="text-xs font-mono font-medium text-muted-foreground/80 leading-relaxed block whitespace-normal">
+                  <span className="text-muted-foreground/80 block font-mono text-xs leading-relaxed font-medium whitespace-normal">
                     <Highlight text={tool.description} query={search} />
                   </span>
                 </div>
@@ -133,21 +135,24 @@ export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
                 onSelect={() => handleSelect(tool)}
               >
                 {/* Structural Level Indentation Logic */}
-                {'isSubItem' in tool && tool.isSubItem ? (
-                  <div className="border border-dashed border-muted-foreground/40 h-8 w-8 ml-4 flex items-center justify-center shrink-0 bg-background text-muted-foreground font-mono text-xs">
+                {"isSubItem" in tool && tool.isSubItem ? (
+                  <div className="border-muted-foreground/40 bg-background text-muted-foreground ml-4 flex h-8 w-8 shrink-0 items-center justify-center border border-dashed font-mono text-xs">
                     &gt;
                   </div>
                 ) : (
-                  <div className="border-2 border-border h-10 w-10 flex items-center justify-center shrink-0 bg-background">
+                  <div className="border-border bg-background flex h-10 w-10 shrink-0 items-center justify-center border-2">
                     <BookmarksIcon weight="bold" className="size-5!" />
                   </div>
                 )}
-                <div className="flex flex-col ml-1 min-w-0 flex-1">
-                  <span className="text-sm font-bold tracking-tight text-foreground block mb-1 uppercase">
+                <div className="ml-1 flex min-w-0 flex-1 flex-col">
+                  <span className="text-foreground mb-1 block text-sm font-bold tracking-tight uppercase">
                     <Highlight text={tool.title} query={search} />
                   </span>
-                  <span className="text-xs font-mono font-medium text-muted-foreground/80 leading-relaxed block whitespace-normal">
-                    <Highlight text={`[ ${tool.category} ] // ${tool.description}`} query={search} />
+                  <span className="text-muted-foreground/80 block font-mono text-xs leading-relaxed font-medium whitespace-normal">
+                    <Highlight
+                      text={`[ ${tool.category} ] // ${tool.description}`}
+                      query={search}
+                    />
                   </span>
                 </div>
               </CommandItem>

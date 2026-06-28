@@ -5,7 +5,14 @@ import { cn } from "@/lib/utils";
 
 export type Theme = "orange" | "blue" | "pink" | "green";
 
-const THEME_LOOP_ORDER: Theme[] = ["orange", "blue", "pink", "green"];
+export const THEMES = {
+  0: "orange",
+  1: "blue",
+  2: "pink",
+  3: "green",
+} as const;
+
+const THEME_LOOP_ORDER = Object.values(THEMES);
 
 const THEME_STYLES = {
   blue: {
@@ -46,12 +53,12 @@ interface DotButtonProps extends ComponentProps<typeof Button> {
 }
 
 export function DotButton({
-  isActive,
-  index = 0,
-  theme,
   badgeText,
-  label,
   className,
+  index = 0,
+  isActive,
+  label,
+  theme,
   ...props
 }: DotButtonProps) {
   const activeTheme: Theme = theme ?? THEME_LOOP_ORDER[index % THEME_LOOP_ORDER.length];

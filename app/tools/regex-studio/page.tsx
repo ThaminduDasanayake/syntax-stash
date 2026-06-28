@@ -15,7 +15,7 @@ export default function RegexStudioPage() {
   const [pattern, setPattern] = useState("[a-z]+");
   const [flags, setFlags] = useState("g");
   const [testString, setTestString] = useState(
-    "Hello world 123\nThe quick brown fox jumps over the lazy dog."
+    "Hello world 123\nThe quick brown fox jumps over the lazy dog.",
   );
 
   const tool = internalTools.find((t) => t.slug === "regex-studio");

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { ResourceFilterSection } from "@/components/resource-filter-section";
+import { FilterSection } from "@/components/filter-section";
 import { resourceCategories, resourceLinks } from "@/lib/resource-data";
 import { slugify } from "@/lib/utils";
 
@@ -19,19 +19,17 @@ export default async function ResourceCategoryPage(props: PageProps<"/resources/
       {/* Header */}
       <header className="res-header">
         <div className="section-inner">
-          <h1 className="res-headline">
-            {category}
-          </h1>
-          <p className="res-sub">
-            Curated resources for {category.toLowerCase()}.
-          </p>
+          <h1 className="res-headline">{category}</h1>
+          <p className="res-sub">Curated resources for {category.toLowerCase()}.</p>
         </div>
       </header>
 
-      <ResourceFilterSection
+      <FilterSection
         initialCategory={category}
-        resourceLinks={resourceLinks}
-        resourceCategories={resourceCategories}
+        items={resourceLinks}
+        categories={resourceCategories}
+        searchPlaceholder="Search resources..."
+        itemLabel="Resources"
       />
     </div>
   );

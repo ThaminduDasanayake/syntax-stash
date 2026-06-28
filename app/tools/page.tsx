@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
+import { FilterSection } from "@/components/filter-section";
 import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
-import ToolCard from "@/components/tool-card";
-import { internalTools } from "@/lib/tools-data";
+import { internalTools, toolCategories } from "@/lib/tools-data";
 
 export const metadata: Metadata = {
   title: "All Tools",
@@ -11,53 +11,32 @@ export const metadata: Metadata = {
     "Browse all developer tools in syntax-stash — converters, generators, formatters, and more.",
 };
 
-const groupedTools = internalTools.reduce(
-  (acc, tool) => {
-    if (!acc[tool.category]) acc[tool.category] = [];
-    acc[tool.category].push(tool);
-    return acc;
-  },
-  {} as Record<string, typeof internalTools>,
-);
-
 export default function ToolsPage() {
   return (
-    <div className="res-page">
+    <div className="lib-page">
       {/* Mini-Hero */}
-      <header className="res-header">
+      <header className="lib-header">
         <div className="section-inner">
           <div className="hero-eyebrow">
             <HeroEyebrowDots />
           </div>
-          <h1 className="res-headline">
+          <h1 className="lib-headline">
             THE TOOLS
             <br />
             <em>stash.</em>
           </h1>
-          <p className="res-sub">
+          <p className="lib-sub">
             {internalTools.length} curated generators, formatters, and utilities.
           </p>
         </div>
       </header>
 
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 p-6">
-        <div className="space-y-12 pb-8">
-          {Object.entries(groupedTools).map(([category, tools]) => (
-            <div key={category} className="space-y-6">
-              <h2 className="text-primary flex items-center gap-4 font-mono text-sm font-semibold tracking-wider uppercase">
-                {category}
-                <span className="bg-primary h-px flex-1" />
-                <span>{tools.length} Tools</span>
-              </h2>
-              <div className="card-grid">
-                {tools.map((tool) => (
-                  <ToolCard key={tool.slug} tool={tool} />
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      <FilterSection
+        items={internalTools}
+        categories={toolCategories}
+        searchPlaceholder="Search tools..."
+        itemLabel="Tools"
+      />
     </div>
   );
 }

@@ -45,23 +45,12 @@ const TOOL_COLOR_MAP: Record<ToolCategoryKey, string> = {
 
 const RESOURCE_COLOR_MAP: Record<ResourceCategoryKey, string> = {
   ai: "bg-c-orange text-ink",
-  animations: "bg-c-blue text-paper",
-  backend: "bg-c-pink text-ink",
-  colors: "bg-c-green text-ink",
-  data: "bg-c-orange text-ink",
-  dataViz: "bg-c-blue text-paper",
+  data: "bg-c-blue text-paper",
   design: "bg-c-pink text-ink",
-  development: "bg-c-green text-ink",
-  devTools: "bg-c-orange text-ink",
-  education: "bg-c-blue text-paper",
-  icons: "bg-c-pink text-ink",
-  imagesAssets: "bg-c-green text-ink",
-  jobs: "bg-c-orange text-ink",
-  maps: "bg-c-blue text-paper",
-  react: "bg-c-pink text-ink",
-  typography: "bg-c-green text-ink",
-  uiComponents: "bg-c-orange text-ink",
-  unknown: "bg-[var(--paper)] text-[var(--ink)]",
+  dev: "bg-c-green text-ink",
+  education: "bg-c-orange text-ink",
+  frontend: "bg-c-blue text-paper",
+  media: "bg-c-pink text-ink",
 };
 
 export function getToolKeyFromValue(value: string): string {
@@ -88,8 +77,8 @@ export function getResourceColorByKey(key: string): string {
 // "bg-c-red text-paper",
 
 export const tabStyles = [
-  "tab-trigger-orange",
   "tab-trigger-blue",
-  "tab-trigger-pink",
   "tab-trigger-green",
+  "tab-trigger-orange",
+  "tab-trigger-pink",
 ];

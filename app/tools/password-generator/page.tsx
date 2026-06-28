@@ -20,43 +20,298 @@ const CHARS = {
 
 // EFF Long Word List (subset of ~200 words for diceware-style passphrases)
 const WORD_LIST = [
-  "abacus", "abandon", "ability", "absence", "abstract", "academy", "accent", "access",
-  "account", "achieve", "acquire", "across", "action", "active", "actual", "address",
-  "advance", "advice", "affect", "afford", "against", "agency", "agenda", "agree",
-  "almost", "already", "always", "amount", "animal", "answer", "appeal", "appear",
-  "around", "aspect", "assume", "attach", "attack", "attempt", "attend", "attract",
-  "auction", "author", "balance", "ballot", "basket", "battle", "beauty", "before",
-  "behave", "belong", "better", "beyond", "bishop", "blanket", "border", "bottle",
-  "bounce", "branch", "bridge", "bright", "brother", "budget", "button", "camera",
-  "candle", "canvas", "capital", "castle", "caught", "center", "change", "charge",
-  "choose", "circle", "classic", "client", "closed", "coffee", "column", "common",
-  "connect", "copper", "corner", "cotton", "course", "create", "crisis", "cross",
-  "custom", "danger", "debate", "define", "degree", "detail", "device", "direct",
-  "dollar", "double", "dragon", "driven", "during", "either", "elegant", "enable",
-  "energy", "engine", "enough", "entire", "escape", "estate", "evolve", "except",
-  "expect", "expert", "factor", "fallen", "family", "famous", "flight", "flower",
-  "follow", "forest", "forget", "format", "foster", "friend", "frozen", "galaxy",
-  "garden", "gather", "gentle", "giving", "global", "golden", "govern", "ground",
-  "growth", "guitar", "handle", "harbor", "hidden", "history", "honest", "hosted",
-  "hunter", "impact", "import", "income", "inside", "island", "issue", "jacket",
-  "jungle", "junior", "kernel", "kitten", "ladder", "latest", "launch", "leader",
-  "lemon", "letter", "lights", "limit", "liquid", "listen", "locked", "logical",
-  "manage", "market", "master", "medium", "melody", "method", "mirror", "moment",
-  "morning", "motion", "muscle", "museum", "mutual", "narrow", "native", "nearby",
-  "needle", "never", "normal", "notice", "number", "object", "obtain", "office",
-  "online", "orange", "origin", "outside", "output", "owner", "packet", "palace",
-  "parent", "particle", "patent", "patrol", "pencil", "perfect", "permit", "phrase",
-  "planet", "player", "pocket", "policy", "portal", "potato", "power", "prefer",
-  "pretty", "prince", "prison", "produce", "profit", "prompt", "proper", "protect",
-  "public", "purple", "puzzle", "python", "rabbit", "random", "recent", "record",
-  "reduce", "reform", "region", "render", "repair", "repeat", "report", "result",
-  "reveal", "river", "rocket", "rotate", "router", "safety", "sample", "school",
-  "second", "secure", "select", "sensor", "server", "silver", "simple", "single",
-  "sister", "sketch", "source", "spring", "stable", "street", "string", "strong",
-  "studio", "subject", "supply", "switch", "system", "target", "temple", "ticket",
-  "timber", "toggle", "travel", "triple", "tunnel", "update", "upload", "value",
-  "vector", "verify", "vision", "visual", "volume", "wallet", "window", "winter",
-  "wooden", "worker", "yellow", "zebra",
+  "abacus",
+  "abandon",
+  "ability",
+  "absence",
+  "abstract",
+  "academy",
+  "accent",
+  "access",
+  "account",
+  "achieve",
+  "acquire",
+  "across",
+  "action",
+  "active",
+  "actual",
+  "address",
+  "advance",
+  "advice",
+  "affect",
+  "afford",
+  "against",
+  "agency",
+  "agenda",
+  "agree",
+  "almost",
+  "already",
+  "always",
+  "amount",
+  "animal",
+  "answer",
+  "appeal",
+  "appear",
+  "around",
+  "aspect",
+  "assume",
+  "attach",
+  "attack",
+  "attempt",
+  "attend",
+  "attract",
+  "auction",
+  "author",
+  "balance",
+  "ballot",
+  "basket",
+  "battle",
+  "beauty",
+  "before",
+  "behave",
+  "belong",
+  "better",
+  "beyond",
+  "bishop",
+  "blanket",
+  "border",
+  "bottle",
+  "bounce",
+  "branch",
+  "bridge",
+  "bright",
+  "brother",
+  "budget",
+  "button",
+  "camera",
+  "candle",
+  "canvas",
+  "capital",
+  "castle",
+  "caught",
+  "center",
+  "change",
+  "charge",
+  "choose",
+  "circle",
+  "classic",
+  "client",
+  "closed",
+  "coffee",
+  "column",
+  "common",
+  "connect",
+  "copper",
+  "corner",
+  "cotton",
+  "course",
+  "create",
+  "crisis",
+  "cross",
+  "custom",
+  "danger",
+  "debate",
+  "define",
+  "degree",
+  "detail",
+  "device",
+  "direct",
+  "dollar",
+  "double",
+  "dragon",
+  "driven",
+  "during",
+  "either",
+  "elegant",
+  "enable",
+  "energy",
+  "engine",
+  "enough",
+  "entire",
+  "escape",
+  "estate",
+  "evolve",
+  "except",
+  "expect",
+  "expert",
+  "factor",
+  "fallen",
+  "family",
+  "famous",
+  "flight",
+  "flower",
+  "follow",
+  "forest",
+  "forget",
+  "format",
+  "foster",
+  "friend",
+  "frozen",
+  "galaxy",
+  "garden",
+  "gather",
+  "gentle",
+  "giving",
+  "global",
+  "golden",
+  "govern",
+  "ground",
+  "growth",
+  "guitar",
+  "handle",
+  "harbor",
+  "hidden",
+  "history",
+  "honest",
+  "hosted",
+  "hunter",
+  "impact",
+  "import",
+  "income",
+  "inside",
+  "island",
+  "issue",
+  "jacket",
+  "jungle",
+  "junior",
+  "kernel",
+  "kitten",
+  "ladder",
+  "latest",
+  "launch",
+  "leader",
+  "lemon",
+  "letter",
+  "lights",
+  "limit",
+  "liquid",
+  "listen",
+  "locked",
+  "logical",
+  "manage",
+  "market",
+  "master",
+  "medium",
+  "melody",
+  "method",
+  "mirror",
+  "moment",
+  "morning",
+  "motion",
+  "muscle",
+  "museum",
+  "mutual",
+  "narrow",
+  "native",
+  "nearby",
+  "needle",
+  "never",
+  "normal",
+  "notice",
+  "number",
+  "object",
+  "obtain",
+  "office",
+  "online",
+  "orange",
+  "origin",
+  "outside",
+  "output",
+  "owner",
+  "packet",
+  "palace",
+  "parent",
+  "particle",
+  "patent",
+  "patrol",
+  "pencil",
+  "perfect",
+  "permit",
+  "phrase",
+  "planet",
+  "player",
+  "pocket",
+  "policy",
+  "portal",
+  "potato",
+  "power",
+  "prefer",
+  "pretty",
+  "prince",
+  "prison",
+  "produce",
+  "profit",
+  "prompt",
+  "proper",
+  "protect",
+  "public",
+  "purple",
+  "puzzle",
+  "python",
+  "rabbit",
+  "random",
+  "recent",
+  "record",
+  "reduce",
+  "reform",
+  "region",
+  "render",
+  "repair",
+  "repeat",
+  "report",
+  "result",
+  "reveal",
+  "river",
+  "rocket",
+  "rotate",
+  "router",
+  "safety",
+  "sample",
+  "school",
+  "second",
+  "secure",
+  "select",
+  "sensor",
+  "server",
+  "silver",
+  "simple",
+  "single",
+  "sister",
+  "sketch",
+  "source",
+  "spring",
+  "stable",
+  "street",
+  "string",
+  "strong",
+  "studio",
+  "subject",
+  "supply",
+  "switch",
+  "system",
+  "target",
+  "temple",
+  "ticket",
+  "timber",
+  "toggle",
+  "travel",
+  "triple",
+  "tunnel",
+  "update",
+  "upload",
+  "value",
+  "vector",
+  "verify",
+  "vision",
+  "visual",
+  "volume",
+  "wallet",
+  "window",
+  "winter",
+  "wooden",
+  "worker",
+  "yellow",
+  "zebra",
 ];
 
 function randomInt(max: number): number {
@@ -89,7 +344,10 @@ function generatePassword(opts: PasswordOptions): string {
   if (opts.symbols) required.push(CHARS.symbols[randomInt(CHARS.symbols.length)]);
 
   const remaining = opts.length - required.length;
-  const rest = Array.from({ length: Math.max(0, remaining) }, () => charset[randomInt(charset.length)]);
+  const rest = Array.from(
+    { length: Math.max(0, remaining) },
+    () => charset[randomInt(charset.length)],
+  );
 
   const all = [...required, ...rest];
   // Fisher-Yates shuffle
@@ -101,7 +359,9 @@ function generatePassword(opts: PasswordOptions): string {
 }
 
 function generatePassphrase(wordCount: number, separator: string): string {
-  return Array.from({ length: wordCount }, () => WORD_LIST[randomInt(WORD_LIST.length)]).join(separator);
+  return Array.from({ length: wordCount }, () => WORD_LIST[randomInt(WORD_LIST.length)]).join(
+    separator,
+  );
 }
 
 function entropy(charset: number, length: number): number {
@@ -149,9 +409,7 @@ export default function PasswordGeneratorPage() {
         ),
       );
     } else {
-      setPasswords(
-        Array.from({ length: count }, () => generatePassphrase(wordCount, separator)),
-      );
+      setPasswords(Array.from({ length: count }, () => generatePassphrase(wordCount, separator)));
     }
     setCopied(null);
   }, [mode, length, upper, lower, digits, symbols, wordCount, separator, count]);
@@ -161,7 +419,8 @@ export default function PasswordGeneratorPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [seed, mode, length, upper, lower, digits, symbols, wordCount, separator, count]);
 
-  const entropyBits = mode === "password" ? entropy(charsetSize, length) : entropy(WORD_LIST.length, wordCount);
+  const entropyBits =
+    mode === "password" ? entropy(charsetSize, length) : entropy(WORD_LIST.length, wordCount);
   const strength = strengthLabel(entropyBits);
 
   const handleCopy = (idx: number) => {
@@ -191,11 +450,7 @@ export default function PasswordGeneratorPage() {
 
         <StepperField label="Quantity" value={count} min={1} max={20} onValueChange={setCount} />
 
-        <Button
-          variant="outline"
-          className="gap-2"
-          onClick={() => setSeed((s) => s + 1)}
-        >
+        <Button variant="outline" className="gap-2" onClick={() => setSeed((s) => s + 1)}>
           <ArrowsClockwiseIcon weight="bold" />
           Regenerate
         </Button>
@@ -215,15 +470,37 @@ export default function PasswordGeneratorPage() {
                 onValueChange={([v]) => setLength(v)}
               />
               <div className="space-y-3">
-                <CheckboxField label="Uppercase (A–Z)" checked={upper} onCheckedChange={(v) => setUpper(!!v)} />
-                <CheckboxField label="Lowercase (a–z)" checked={lower} onCheckedChange={(v) => setLower(!!v)} />
-                <CheckboxField label="Digits (0–9)" checked={digits} onCheckedChange={(v) => setDigits(!!v)} />
-                <CheckboxField label="Symbols (!@#…)" checked={symbols} onCheckedChange={(v) => setSymbols(!!v)} />
+                <CheckboxField
+                  label="Uppercase (A–Z)"
+                  checked={upper}
+                  onCheckedChange={(v) => setUpper(!!v)}
+                />
+                <CheckboxField
+                  label="Lowercase (a–z)"
+                  checked={lower}
+                  onCheckedChange={(v) => setLower(!!v)}
+                />
+                <CheckboxField
+                  label="Digits (0–9)"
+                  checked={digits}
+                  onCheckedChange={(v) => setDigits(!!v)}
+                />
+                <CheckboxField
+                  label="Symbols (!@#…)"
+                  checked={symbols}
+                  onCheckedChange={(v) => setSymbols(!!v)}
+                />
               </div>
             </>
           ) : (
             <>
-              <StepperField label="Words per passphrase" value={wordCount} min={3} max={10} onValueChange={setWordCount} />
+              <StepperField
+                label="Words per passphrase"
+                value={wordCount}
+                min={3}
+                max={10}
+                onValueChange={setWordCount}
+              />
               <div className="space-y-1">
                 <p className="text-sm font-medium">Separator</p>
                 <div className="flex gap-2">
@@ -244,7 +521,7 @@ export default function PasswordGeneratorPage() {
           )}
 
           {/* Entropy */}
-          <div className="bg-muted rounded-lg p-4 space-y-1">
+          <div className="bg-muted space-y-1 rounded-lg p-4">
             <p className="text-muted-foreground text-xs">Entropy</p>
             <p className="text-2xl font-semibold">{entropyBits.toFixed(1)} bits</p>
             <p className={`text-sm font-medium ${strength.color}`}>{strength.label}</p>
@@ -252,7 +529,7 @@ export default function PasswordGeneratorPage() {
         </div>
 
         {/* Password list */}
-        <div className="lg:col-span-2 space-y-2">
+        <div className="space-y-2 lg:col-span-2">
           {passwords.map((pw, i) => (
             <div
               key={i}
@@ -270,11 +547,7 @@ export default function PasswordGeneratorPage() {
           ))}
           {passwords.length > 1 && (
             <div className="flex justify-end pt-1">
-              <CopyButton
-                textToCopy={passwords.join("\n")}
-                size="sm"
-                variant="outline"
-              >
+              <CopyButton textToCopy={passwords.join("\n")} size="sm" variant="outline">
                 Copy all
               </CopyButton>
             </div>

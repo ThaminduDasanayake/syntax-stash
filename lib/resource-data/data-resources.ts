@@ -1,6 +1,7 @@
 import { Tool } from "@/types";
 
 import { CATEGORIES } from "./categories";
+import { TAGS } from "./tags";
 
 export const dataLinks: Tool[] = [
   {
@@ -8,6 +9,7 @@ export const dataLinks: Tool[] = [
     category: CATEGORIES.data,
     description:
       "Cloud platform for web scraping, browser automation, AI agents, and data for AI. Use 35,000+ ready-made tools, code templates, or order a custom solution.",
+    tags: [TAGS.data],
     url: "https://apify.com/",
   },
   {
@@ -16,6 +18,7 @@ export const dataLinks: Tool[] = [
     description:
       "Instantly find career history, education, and public profile signals from any email address. Professional OSINT for lead research and verification.",
     subtitle: "Public Profile & Career Search",
+    tags: [TAGS.data],
     url: "https://behindtheemail.com/",
   },
   {
@@ -23,6 +26,7 @@ export const dataLinks: Tool[] = [
     category: CATEGORIES.data,
     description:
       "A collection of Free Public APIs for Students and Developers. Tested every single day.",
+    tags: [TAGS.data],
     url: "https://www.freepublicapis.com/",
   },
   {
@@ -30,6 +34,7 @@ export const dataLinks: Tool[] = [
     category: CATEGORIES.data,
     description:
       "Official and community Model Context Protocol server implementations for AI tool integrations.",
+    tags: [TAGS.data],
     url: "https://www.producthunt.com/",
   },
   {
@@ -37,6 +42,7 @@ export const dataLinks: Tool[] = [
     category: CATEGORIES.data,
     description:
       "Turn any URL into structured data. The all-in-one API for browser automation: screenshots, PDFs, scraping, and link previews. No infrastructure to manage.",
+    tags: [TAGS.data],
     url: "https://microlink.io/",
   },
   {
@@ -45,22 +51,23 @@ export const dataLinks: Tool[] = [
     description:
       "Product Hunt is a curation of the best new products, every day. Discover the latest mobile apps, websites, and technology products that everyone's talking about.",
     favicon: "/github.svg",
+    tags: [TAGS.data],
     url: "https://github.com/modelcontextprotocol/servers",
   },
-
   {
     title: "Public APIs",
     category: CATEGORIES.data,
     description: "A collective list of free APIs.",
     favicon: "/github.svg",
+    tags: [TAGS.data],
     url: "https://github.com/public-apis/public-apis",
   },
-
   {
     title: "PublicAPIs.dev",
     category: CATEGORIES.data,
     description:
       "A collection of public APIs for developers, categorized and crowdsourced. Animals, books, cryptocurrencies, development, music, weather and much more.",
+    tags: [TAGS.data],
     url: "https://publicapis.dev/",
   },
 ];

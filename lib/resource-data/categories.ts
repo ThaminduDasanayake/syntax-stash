@@ -1,22 +1,11 @@
 export const CATEGORIES = {
   ai: "AI & Machine Learning",
-  animations: "Animations & Effects",
-  backend: "Backend & CMS",
-  colors: "Colors & Gradients",
-  data: "Data",
-  dataViz: "Data Visualization",
-  design: "Design & Creative",
-  devTools: "Developer Tools & Utilities",
-  development: "Development & Code",
-  education: "Education",
-  icons: "Icons & Logos",
-  imagesAssets: "Images & Assets",
-  jobs: "Jobs & Careers",
-  maps: "Map Resources",
-  react: "React Resources",
-  typography: "Typography & Fonts",
-  uiComponents: "UI Components",
-  unknown: "Unknown",
+  data: "Data & APIs",
+  design: "Design & UX",
+  dev: "Developer Tools & Utilities",
+  education: "Education & Community",
+  frontend: "Frontend & UI",
+  media: "Media & Assets",
 } as const;
 
 export type CategoryValue = (typeof CATEGORIES)[keyof typeof CATEGORIES];
