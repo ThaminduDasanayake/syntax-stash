@@ -386,6 +386,18 @@
   @apply xs:grid-cols-2 mx-auto mb-15 grid max-w-7xl grid-cols-1 gap-8 px-5 md:grid-cols-[1.4fr_auto_auto_1fr] md:gap-10 md:px-8;
 }
 
+@utility footer-wordmark-link {
+  @apply mb-4 flex text-inherit transition-opacity duration-200 ease-out hover:opacity-80;
+}
+
+@utility footer-brand {
+  @apply text-ink font-display mb-3 text-xl font-extrabold tracking-tight uppercase;
+}
+
+@utility footer-paragraph {
+  @apply text-ink-mute text-sm leading-7;
+}
+
 @utility footer-bottom {
   @apply border-t-line mx-auto flex max-w-7xl flex-wrap justify-between gap-2 border-t px-5 pt-5 md:px-8 md:pt-6;
 }

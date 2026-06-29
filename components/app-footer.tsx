@@ -1,35 +1,26 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function AppFooter() {
   return (
     <footer className="site-footer">
       <div className="footer-grid">
-        <div className="mb-24 grid grid-cols-1 gap-12 md:grid-cols-4">
+        <div>
+          <Link href="/" className="footer-wordmark-link">
+            {/*<Image width={36} height={36} src="/logo.svg" alt="logo" priority />*/}
+            <span className="nav-wordmark">
+              SYNTAX<em>.stash</em>
+            </span>
+          </Link>
+          <div className="footer-brand">TOOLS, RESOURCES, & FRONTEND KNOWLEDGE.</div>
+          <p className="footer-paragraph">
+            A curated command center for modern web development. Tools and resources built to scale.
+            Updated as the ecosystem evolves.
+          </p>
+        </div>
+        <div>
           {/* Logo & Description */}
-          <div className="col-span-1 flex flex-col gap-6 md:col-span-1">
-            <Link
-              href="/"
-              className="text-foreground flex items-center gap-2 transition-opacity hover:opacity-80"
-            >
-              <div className="bg-foreground text-background font-display flex h-8 w-8 items-center justify-center text-xl leading-none font-black tracking-tighter">
-                S
-              </div>
-              <span className="font-display text-2xl font-black tracking-tight uppercase">
-                SYNTAX<span className="font-serif tracking-normal lowercase italic">.stash</span>
-              </span>
-            </Link>
-            <div>
-              <h3 className="font-display text-xl font-black tracking-tight uppercase">
-                TOOLS, RESOURCES, &<br />
-                FRONTEND KNOWLEDGE.
-              </h3>
-              <p className="mt-4 font-mono text-xs leading-relaxed opacity-70">
-                A curated command center for modern web development. Tools and resources built to
-                scale. Updated as the ecosystem evolves.
-              </p>
-            </div>
-          </div>
 
           {/* Library Links */}
           <div className="col-span-1 flex flex-col gap-6 md:col-span-1">
