@@ -398,6 +398,14 @@
   @apply text-ink-mute text-sm leading-7;
 }
 
+@utility footer-nav-heading {
+  @apply text-ink font-display mb-3.5 block text-xs font-bold tracking-widest uppercase;
+}
+
+@utility footer-nav-link {
+  @apply text-ink-mute hover:text-ink hover:decoration-ink block text-sm leading-7 underline decoration-transparent underline-offset-2 transition-colors duration-200 ease-out;
+}
+
 @utility footer-bottom {
   @apply border-t-line mx-auto flex max-w-7xl flex-wrap justify-between gap-2 border-t px-5 pt-5 md:px-8 md:pt-6;
 }
