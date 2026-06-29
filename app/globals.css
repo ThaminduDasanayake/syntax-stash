@@ -328,6 +328,12 @@
   @apply flex items-center gap-2;
 }
 
+@utility nav-wordmark {
+  @apply font-display text-2xl font-black tracking-tight uppercase;
+
+  @apply [&_em]:font-serif [&_em]:tracking-normal [&_em]:lowercase [&_em]:italic;
+}
+
 @utility nav-links {
   @apply bg-bg border-ink fixed top-16 right-0 left-0 z-100 hidden flex-col items-start gap-1 border-b-[1.5px] px-5 pt-5 pb-7;
 
@@ -347,7 +353,7 @@
 }
 
 @utility nav-cta {
-  @apply mt-3 ml-0 w-full justify-center px-4.5 py-3 md:ml-3 md:w-auto md:px-4! md:py-2.25!;
+  @apply mt-3 ml-0 w-full justify-center gap-2 px-4.5 py-3 md:ml-3 md:w-auto md:px-4! md:py-2.25!;
 }
 
 @utility nav-mobile-actions {
@@ -371,6 +377,26 @@
   }
 }
 
+/* Footer*/
+@utility site-footer {
+  @apply bg-bg-2 border-t-line border-t pt-20 pb-10;
+}
+
+@utility footer-grid {
+  @apply xs:grid-cols-2 mx-auto mb-15 grid max-w-7xl grid-cols-1 gap-8 px-5 md:grid-cols-[1.4fr_auto_auto_1fr] md:gap-10 md:px-8;
+}
+
+@utility footer-bottom {
+  @apply border-t-line mx-auto flex max-w-7xl flex-wrap justify-between gap-2 border-t px-5 pt-5 md:px-8 md:pt-6;
+}
+
+@utility footer-copy {
+  @apply text-ink-mute text-sm;
+}
+
+@utility footer-link {
+  @apply hover:text-ink hover:decoration-ink underline decoration-transparent underline-offset-2 transition-colors duration-200;
+}
 /* Hero */
 @utility hero {
   @apply border-line bg-sec-1 border-b pt-33 pb-12;

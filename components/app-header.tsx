@@ -4,7 +4,7 @@ import { ListIcon, MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Kbd } from "@/components/ui/kbd";
@@ -33,8 +33,8 @@ export default function AppHeader({
           <Link href="/" className="nav-logo">
             {/* Brand name*/}
             <Image width={36} height={36} src="/logo.svg" alt="logo" priority />
-            <span className="font-display text-2xl font-black tracking-tight uppercase">
-              SYNTAX<em className="font-serif tracking-normal lowercase italic">.stash</em>
+            <span className="nav-wordmark">
+              SYNTAX<em>.stash</em>
             </span>
           </Link>
 
@@ -57,8 +57,8 @@ export default function AppHeader({
 
             <Button onClick={onSearchOpenAction} size="sm" aria-label="Search" className="nav-cta">
               <MagnifyingGlassIcon weight="bold" className="shrink-0" />
-              <span className="text-display-xs ml-2">EXPLORE LIBRARY</span>
-              <Kbd className="bg-background text-foreground group-hover:bg-background group-hover:text-foreground ml-4 hidden rounded-none border-none px-2 font-mono sm:block">
+              <span className="text-display-xs">EXPLORE LIBRARY</span>
+              <Kbd className="bg-bg-2 text-foreground group-hover:bg-background group-hover:text-foreground hidden border-none px-2 font-mono sm:flex">
                 ⌘K
               </Kbd>
             </Button>

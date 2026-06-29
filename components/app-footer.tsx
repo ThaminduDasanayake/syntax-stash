@@ -3,8 +3,8 @@ import Link from "next/link";
 
 export default function AppFooter() {
   return (
-    <footer className="border-line bg-secondary mt-24 w-full border-t-2 px-6 pt-16 pb-8 md:px-12">
-      <div className="mx-auto w-full max-w-7xl">
+    <footer className="site-footer">
+      <div className="footer-grid">
         <div className="mb-24 grid grid-cols-1 gap-12 md:grid-cols-4">
           {/* Logo & Description */}
           <div className="col-span-1 flex flex-col gap-6 md:col-span-1">
@@ -92,12 +92,15 @@ export default function AppFooter() {
             </div>
           </div>
         </div>
-
-        {/* Bottom Bar */}
-        <div className="border-border flex flex-col items-center justify-between border-t-2 pt-8 font-mono text-xs opacity-60 md:flex-row">
-          <p>© {new Date().getFullYear()} SYNTAX.stash</p>
-          <p className="mt-2 md:mt-0">Last update June 2026</p>
-        </div>
+      </div>
+      <div className="footer-bottom">
+        <span className="footer-copy">
+          © {new Date().getFullYear()} ·{" "}
+          <a href="https://github.com/ThaminduDasanayake" className="footer-link">
+            Thamindu Dasanayake
+          </a>
+        </span>
+        <span className="footer-copy">Last update June 2026</span>
       </div>
     </footer>
   );
