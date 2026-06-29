@@ -1,13 +1,13 @@
 import { canvasToBlob, encodeIco } from "@/app/tools/image-converter/helpers";
 
 export const OUTPUT_SIZES = [
-  { size: 16, filename: "favicon-16x16.png", label: "16×16 PNG" },
-  { size: 32, filename: "favicon-32x32.png", label: "32×32 PNG" },
-  { size: 48, filename: "favicon-48x48.png", label: "48×48 PNG" },
-  { size: 96, filename: "favicon-96x96.png", label: "96×96 PNG" },
-  { size: 180, filename: "apple-touch-icon.png", label: "180×180 (Apple Touch)" },
-  { size: 192, filename: "android-chrome-192x192.png", label: "192×192 (Android)" },
-  { size: 512, filename: "android-chrome-512x512.png", label: "512×512 (Android)" },
+  { filename: "android-chrome-192x192.png", label: "192×192 (Android)", size: 192 },
+  { filename: "android-chrome-512x512.png", label: "512×512 (Android)", size: 512 },
+  { filename: "apple-touch-icon.png", label: "180×180 (Apple Touch)", size: 180 },
+  { filename: "favicon-16x16.png", label: "16×16 PNG", size: 16 },
+  { filename: "favicon-32x32.png", label: "32×32 PNG", size: 32 },
+  { filename: "favicon-48x48.png", label: "48×48 PNG", size: 48 },
+  { filename: "favicon-96x96.png", label: "96×96 PNG", size: 96 },
 ];
 
 export interface RenderOptions {
@@ -91,14 +91,14 @@ export async function generateAllBlobs(
 ): Promise<Map<string, Blob>> {
   const result = new Map<string, Blob>();
 
-  for (const { size, filename } of OUTPUT_SIZES) {
+  for (const { filename, size } of OUTPUT_SIZES) {
     const forceOpaque = filename === "apple-touch-icon.png";
     const canvas = renderSizeToCanvas(source, size, opts, forceOpaque);
     result.set(filename, await canvasToBlob(canvas, "image/png"));
   }
 
   const bigCanvas = renderSizeToCanvas(source, 512, opts);
-  result.set("favicon.ico", await encodeIco(bigCanvas, { sizes: [16, 32, 48], multiSize: true }));
+  result.set("favicon.ico", await encodeIco(bigCanvas, { multiSize: true, sizes: [16, 32, 48] }));
 
   return result;
 }
@@ -115,15 +115,15 @@ export function buildHtmlSnippet(): string {
 export function buildWebmanifest(name: string): string {
   return JSON.stringify(
     {
-      name,
-      short_name: name,
-      icons: [
-        { src: "/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
-        { src: "/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
-      ],
-      theme_color: "#ffffff",
       background_color: "#ffffff",
       display: "standalone",
+      icons: [
+        { sizes: "192x192", src: "/android-chrome-192x192.png", type: "image/png" },
+        { sizes: "512x512", src: "/android-chrome-512x512.png", type: "image/png" },
+      ],
+      name,
+      short_name: name,
+      theme_color: "#ffffff",
     },
     null,
     2,

@@ -325,19 +325,50 @@
 }
 
 @utility nav-logo {
-  @apply flex items-center gap-4;
-}
-
-@utility nav-logo-img {
-  @apply block h-9 w-auto;
+  @apply flex items-center gap-2;
 }
 
 @utility nav-links {
-  @apply flex items-center gap-6;
+  @apply bg-bg border-ink fixed top-16 right-0 left-0 z-100 hidden flex-col items-start gap-1 border-b-[1.5px] px-5 pt-5 pb-7;
+
+  @apply md:static md:z-auto md:flex md:flex-row md:items-center md:gap-6 md:border-none md:bg-transparent md:p-0;
+}
+
+@utility nav-links--open {
+  @apply flex;
 }
 
 @utility nav-link {
-  @apply text-ink-mute text-display-sm transition-colors duration-200 ease-out;
+  @apply text-ink-mute text-display-sm hover:pointer-fine:text-ink w-full py-3 transition-colors duration-200 ease-out md:w-auto md:py-0;
+}
+
+@utility nav-link--active {
+  @apply text-ink decoration-ink underline decoration-2 underline-offset-[6px];
+}
+
+@utility nav-cta {
+  @apply mt-3 ml-0 w-full justify-center px-4.5 py-3 md:ml-3 md:w-auto md:px-4! md:py-2.25!;
+}
+
+@utility nav-mobile-actions {
+  @apply mr-1 ml-auto flex items-center gap-2;
+}
+
+@utility nav-hamburger {
+  @apply cursor-pointer md:hidden;
+}
+
+@utility nav-backdrop {
+  @apply fixed top-16 right-0 bottom-0 left-0 z-90 block animate-[nav-backdrop-in_180ms_ease-out] bg-[#14110b6b] md:hidden;
+}
+
+@keyframes nav-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Hero */
