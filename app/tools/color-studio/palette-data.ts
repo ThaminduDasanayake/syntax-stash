@@ -359,6 +359,26 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
+    name: "Cosmic Carnival",
+    colors: [
+      { name: "Grape Violet", hex: "#38194C", colSpan: "col-span-3", textColor: "white" },
+      { name: "Dark Raspberry", hex: "#941E43", colSpan: "col-span-1", textColor: "white" },
+      { name: "Cinnabar", hex: "#E54F29", colSpan: "col-span-2", textColor: "black" },
+      { name: "Pizazz", hex: "#F88F05", colSpan: "col-span-2", textColor: "black" },
+      { name: "Bright Sun", hex: "#FFD03B", colSpan: "col-span-1", textColor: "black" },
+    ],
+  },
+  {
+    name: "Midnight Terracotta",
+    colors: [
+      { name: "Stygian", hex: "#191E23", colSpan: "col-span-3", textColor: "white" },
+      { name: "Smalt Blue", hex: "#5A838F", colSpan: "col-span-1", textColor: "white" },
+      { name: "Virgin Lace", hex: "#F0EDDC", colSpan: "col-span-2", textColor: "black" },
+      { name: "Cute Brown", hex: "#C6A498", colSpan: "col-span-2", textColor: "black" },
+      { name: "Fiery Coral", hex: "#E85C2D", colSpan: "col-span-1", textColor: "black" },
+    ],
+  },
+  {
     name: "Fresh Color 1",
     colors: [
       {
@@ -561,6 +581,514 @@ export const COLOR_PALETTES: Palette[] = [
         colSpan: "col-span-1 row-span-1",
         textColor: "white",
       },
+    ],
+  },
+  {
+    name: "Dual Colors 1",
+    colors: [
+      {
+        name: "Raisin Black",
+        hex: "#202322",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "white",
+      },
+      { name: "Fire Opal", hex: "#EF6448", colSpan: "col-span-3 row-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Dual Colors 2",
+    colors: [
+      { name: "Ferrari Red", hex: "#EA2E00", colSpan: "col-span-3 row-span-3", textColor: "white" },
+      {
+        name: "Chenille Spread",
+        hex: "#F0E7D6",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "black",
+      },
+    ],
+  },
+  {
+    name: "Dual Colors 3",
+    colors: [
+      {
+        name: "Princess Blue",
+        hex: "#015AA0",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "white",
+      },
+      {
+        name: "American Silver",
+        hex: "#ECECFF",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "black",
+      },
+    ],
+  },
+  {
+    name: "Dual Colors 4",
+    colors: [
+      {
+        name: "Daintree Green",
+        hex: "#052A30",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "white",
+      },
+      {
+        name: "Neo Mint Green",
+        hex: "#A7FFDC",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "black",
+      },
+    ],
+  },
+  {
+    name: "Dual Colors 5",
+    colors: [
+      { name: "Steel Gray", hex: "#282433", colSpan: "col-span-3 row-span-3", textColor: "white" },
+      {
+        name: "White Chocolate",
+        hex: "#F3E0D9",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "black",
+      },
+    ],
+  },
+  {
+    name: "Dual Colors 6",
+    colors: [
+      {
+        name: "Chinese Black",
+        hex: "#0E0928",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "white",
+      },
+      {
+        name: "Watermelon Pink",
+        hex: "#FF7E9E",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "black",
+      },
+    ],
+  },
+  {
+    name: "Dual Colors 7",
+    colors: [
+      { name: "Beyond Navy", hex: "#0F0E49", colSpan: "col-span-3 row-span-3", textColor: "white" },
+      {
+        name: "Sweet Memories",
+        hex: "#D5A5E3",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "black",
+      },
+    ],
+  },
+  {
+    name: "Dual Colors 8",
+    colors: [
+      { name: "Blue Zodiac", hex: "#14305F", colSpan: "col-span-3 row-span-3", textColor: "white" },
+      { name: "Tea Green", hex: "#D6FEC3", colSpan: "col-span-3 row-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Dual Colors 9",
+    colors: [
+      { name: "Ochre", hex: "#D08327", colSpan: "col-span-3 row-span-3", textColor: "white" },
+      {
+        name: "Floral White",
+        hex: "#FEFBF2",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "black",
+      },
+    ],
+  },
+  {
+    name: "Dual Colors 10",
+    colors: [
+      { name: "Cornsilk", hex: "#FFF8DC", colSpan: "col-span-3 row-span-3", textColor: "black" },
+      { name: "Rose Ebony", hex: "#674846", colSpan: "col-span-3 row-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "Dual Colors 11",
+    colors: [
+      {
+        name: "Midnight Green",
+        hex: "#194342",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "white",
+      },
+      { name: "Tea Green", hex: "#DAE8B3", colSpan: "col-span-3 row-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Dual Colors 12",
+    colors: [
+      {
+        name: "Lavender Blush",
+        hex: "#FFF0F5",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "black",
+      },
+      { name: "Claret", hex: "#7F1635", colSpan: "col-span-3 row-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "Dual Colors 13",
+    colors: [
+      { name: "Night Sky", hex: "#40415D", colSpan: "col-span-3 row-span-3", textColor: "white" },
+      { name: "Blue Sky", hex: "#DDDFEE", colSpan: "col-span-3 row-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Dual Colors 14",
+    colors: [
+      { name: "Ghost White", hex: "#F8F9FE", colSpan: "col-span-3 row-span-3", textColor: "black" },
+      { name: "Amethyst", hex: "#A371D0", colSpan: "col-span-3 row-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Dual Colors 15",
+    colors: [
+      { name: "Mint", hex: "#66D0BC", colSpan: "col-span-3 row-span-3", textColor: "black" },
+      { name: "Flamingo", hex: "#FF3E9B", colSpan: "col-span-3 row-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Dual Colors 16",
+    colors: [
+      { name: "Côte d'Azur", hex: "#98D2EB", colSpan: "col-span-3 row-span-3", textColor: "black" },
+      { name: "Matador", hex: "#E12826", colSpan: "col-span-3 row-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "Dual Colors 17",
+    colors: [
+      { name: "Warm Orange", hex: "#B95712", colSpan: "col-span-3 row-span-3", textColor: "white" },
+      {
+        name: "Dusty Yellow",
+        hex: "#F9D190",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "black",
+      },
+    ],
+  },
+  {
+    name: "Dual Colors 18",
+    colors: [
+      {
+        name: "Obsidian Black",
+        hex: "#0F0F0F",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "white",
+      },
+      {
+        name: "Dream Lavender",
+        hex: "#8F9AE8",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "black",
+      },
+    ],
+  },
+  {
+    name: "Dual Colors 19",
+    colors: [
+      {
+        name: "Espresso Noir",
+        hex: "#1E1415",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "white",
+      },
+      {
+        name: "Terracotta Clay",
+        hex: "#D8735E",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "black",
+      },
+    ],
+  },
+  {
+    name: "Dual Colors 20",
+    colors: [
+      { name: "Forest Moss", hex: "#1C2814", colSpan: "col-span-3 row-span-3", textColor: "white" },
+      {
+        name: "Golden Ochre",
+        hex: "#BF8E34",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "black",
+      },
+    ],
+  },
+  {
+    name: "Dual Colors 21",
+    colors: [
+      { name: "Deep Ocean", hex: "#011B4C", colSpan: "col-span-3 row-span-3", textColor: "white" },
+      {
+        name: "Glacier Gray",
+        hex: "#B3BDD6",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "black",
+      },
+    ],
+  },
+  {
+    name: "Dual Colors 22",
+    colors: [
+      { name: "Rust Ember", hex: "#96351E", colSpan: "col-span-3 row-span-3", textColor: "white" },
+      { name: "Desert Sand", hex: "#DBB98F", colSpan: "col-span-3 row-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Dual Colors 23",
+    colors: [
+      { name: "Jet Black", hex: "#1D1D1D", colSpan: "col-span-3 row-span-3", textColor: "white" },
+      { name: "Orchid", hex: "#E5BDDF", colSpan: "col-span-3 row-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Dual Colors 24",
+    colors: [
+      { name: "Wine Ash", hex: "#32292F", colSpan: "col-span-3 row-span-3", textColor: "white" },
+      { name: "Turquoise", hex: "#99E1D9", colSpan: "col-span-3 row-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Dual Colors 25",
+    colors: [
+      { name: "Tiffany", hex: "#21F1A8", colSpan: "col-span-3 row-span-3", textColor: "black" },
+      { name: "Dark Gray", hex: "#171717", colSpan: "col-span-3 row-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "Dual Colors 26",
+    colors: [
+      { name: "True Pink", hex: "#FD1843", colSpan: "col-span-3 row-span-3", textColor: "black" },
+      { name: "Chill White", hex: "#FFF9FA", colSpan: "col-span-3 row-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Dual Colors 27",
+    colors: [
+      {
+        name: "Charcoal Violet",
+        hex: "#3C1A47",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "white",
+      },
+      { name: "Cyber Line", hex: "#B6FF00", colSpan: "col-span-3 row-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Dual Colors 28",
+    colors: [
+      { name: "Cyprus", hex: "#004741", colSpan: "col-span-3 row-span-3", textColor: "white" },
+      { name: "Sand", hex: "#F0EDE4", colSpan: "col-span-3 row-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Dual Colors 29",
+    colors: [
+      { name: "Lime Sprout", hex: "#E4FD97", colSpan: "col-span-3 row-span-3", textColor: "black" },
+      {
+        name: "Fresh Canopy",
+        hex: "#2D3E2C",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "white",
+      },
+    ],
+  },
+  {
+    name: "Dual Colors 30",
+    colors: [
+      { name: "Milky", hex: "#FFFDF1", colSpan: "col-span-3 row-span-3", textColor: "black" },
+      { name: "Mantis", hex: "#59C749", colSpan: "col-span-3 row-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Dual Colors 31",
+    colors: [
+      { name: "Turmeric", hex: "#FFBE0B", colSpan: "col-span-3 row-span-3", textColor: "black" },
+      { name: "Malt", hex: "#2A2312", colSpan: "col-span-3 row-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "Dual Colors 32",
+    colors: [
+      { name: "Sport Black", hex: "#141414", colSpan: "col-span-3 row-span-3", textColor: "white" },
+      {
+        name: "Luminous Moss",
+        hex: "#2BEE34",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "black",
+      },
+    ],
+  },
+  {
+    name: "Dual Colors 33",
+    colors: [
+      { name: "Vulcanico", hex: "#FF4103", colSpan: "col-span-3 row-span-3", textColor: "black" },
+      { name: "Noturno", hex: "#001621", colSpan: "col-span-3 row-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "Dual Colors 34",
+    colors: [
+      { name: "Skin Tone", hex: "#FFC6A8", colSpan: "col-span-3 row-span-3", textColor: "black" },
+      { name: "Bridal", hex: "#741A2F", colSpan: "col-span-3 row-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "Dual Colors 35",
+    colors: [
+      { name: "Arctic Teal", hex: "#0E7490", colSpan: "col-span-3 row-span-3", textColor: "white" },
+      { name: "Cloud Pearl", hex: "#F2F5F7", colSpan: "col-span-3 row-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Dual Colors 36",
+    colors: [
+      {
+        name: "Terracotta Bloom",
+        hex: "#C96A4A",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "white",
+      },
+      { name: "Sand Dune", hex: "#EEDCC8", colSpan: "col-span-3 row-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Dual Colors 37",
+    colors: [
+      { name: "Forest Moss", hex: "#4E6B45", colSpan: "col-span-3 row-span-3", textColor: "white" },
+      {
+        name: "Vanilla Silk",
+        hex: "#F4E8D0",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "black",
+      },
+    ],
+  },
+  {
+    name: "Dual Colors 38",
+    colors: [
+      {
+        name: "Indigo Night",
+        hex: "#2D4275",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "white",
+      },
+      {
+        name: "Wisteria Glow",
+        hex: "#D6C6F7",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "black",
+      },
+    ],
+  },
+  {
+    name: "Dual Colors 39",
+    colors: [
+      { name: "Berry Plum", hex: "#683557", colSpan: "col-span-3 row-span-3", textColor: "white" },
+      { name: "Blush Clay", hex: "#E9C1B7", colSpan: "col-span-3 row-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Dual Colors 40",
+    colors: [
+      { name: "Onyx", hex: "#020202", colSpan: "col-span-3 row-span-3", textColor: "white" },
+      { name: "Candy Blue", hex: "#B2D5E5", colSpan: "col-span-3 row-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Tri Colors 1",
+    colors: [
+      { name: "Tangerine", hex: "#F58F20", colSpan: "col-span-3", textColor: "black" },
+      { name: "Leaf Green", hex: "#467434", colSpan: "col-span-3", textColor: "white" },
+      { name: "Sea Gray", hex: "#363636", colSpan: "col-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "Tri Colors 2",
+    colors: [
+      { name: "Ice White", hex: "#F4FEFF", colSpan: "col-span-3", textColor: "black" },
+      { name: "Powder Blue", hex: "#A9C0E0", colSpan: "col-span-3", textColor: "black" },
+      { name: "Royal Blue", hex: "#0E2F76", colSpan: "col-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "Tri Colors 3",
+    colors: [
+      { name: "Aqua", hex: "#95D9C0", colSpan: "col-span-3", textColor: "black" },
+      { name: "Blanc", hex: "#FFFFFF", colSpan: "col-span-3", textColor: "black" },
+      { name: "Carmin", hex: "#D41F26", colSpan: "col-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "Tri Colors 4",
+    colors: [
+      { name: "Midnight Blue", hex: "#001A4B", colSpan: "col-span-3", textColor: "white" },
+      { name: "Cobalt Blue", hex: "#04326D", colSpan: "col-span-3", textColor: "white" },
+      { name: "Mist Blue", hex: "#B2BED6", colSpan: "col-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Tri Colors 5",
+    colors: [
+      { name: "Charcoal Navy", hex: "#27262E", colSpan: "col-span-3", textColor: "white" },
+      { name: "Sandy Tan", hex: "#E19C63", colSpan: "col-span-3", textColor: "black" },
+      { name: "Dusty Steel Blue", hex: "#8BA5BE", colSpan: "col-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Tri Colors 6",
+    colors: [
+      { name: "Moss Green", hex: "#8F9D68", colSpan: "col-span-3", textColor: "white" },
+      { name: "Old Lace", hex: "#FFF8EB", colSpan: "col-span-3", textColor: "black" },
+      { name: "Iris", hex: "#7A57CD", colSpan: "col-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "Quad Colors 1",
+    colors: [
+      { name: "Deep Teal", hex: "#0F506D", colSpan: "col-span-3", textColor: "white" },
+      { name: "Ocean Blue", hex: "#1E7F98", colSpan: "row-span-2", textColor: "white" },
+      { name: "Lemon Glow", hex: "#F2D24B", colSpan: "col-span-2", textColor: "black" },
+      { name: "Citrus Orange", hex: "#F39A1E", colSpan: "col-span-2", textColor: "black" },
+    ],
+  },
+  {
+    name: "Quad Colors 2",
+    colors: [
+      { name: "Soft Pink", hex: "#F6B7C8", colSpan: "col-span-3", textColor: "black" },
+      { name: "Light Cream", hex: "#FFE6EE", colSpan: "row-span-2", textColor: "black" },
+      { name: "Berry Red", hex: "#C81D4F", colSpan: "col-span-2", textColor: "white" },
+      { name: "Cone Beige", hex: "#C98A57", colSpan: "col-span-2", textColor: "black" },
+    ],
+  },
+  {
+    name: "Quad Colors 3",
+    colors: [
+      { name: "Sunflower Yellow", hex: "#F2C400", colSpan: "col-span-3", textColor: "black" },
+      { name: "Aegean Blue", hex: "#0077C8", colSpan: "row-span-2", textColor: "white" },
+      { name: "Olive Green", hex: "#48681F", colSpan: "col-span-2", textColor: "white" },
+      { name: "Santorini White", hex: "#F7F4EC", colSpan: "col-span-2", textColor: "black" },
+    ],
+  },
+  {
+    name: "Quad Colors 4",
+    colors: [
+      { name: "Matcha Lime", hex: "#A9C632", colSpan: "col-span-3", textColor: "black" },
+      { name: "Forest Brew", hex: "#1D2E1B", colSpan: "row-span-2", textColor: "white" },
+      { name: "Tea Mist", hex: "#C8D2A6", colSpan: "col-span-2", textColor: "black" },
+      { name: "Bamboo Beige", hex: "#E6D4A6", colSpan: "col-span-2", textColor: "black" },
+    ],
+  },
+  {
+    name: "Quad Colors 5",
+    colors: [
+      { name: "Bubblegum Pink", hex: "#E7B9C8", colSpan: "col-span-3", textColor: "black" },
+      { name: "Berry Jam", hex: "#B8365A", colSpan: "row-span-2", textColor: "white" },
+      { name: "Skyline Blue", hex: "#A8CBE5", colSpan: "col-span-2", textColor: "black" },
+      { name: "Cream Oat", hex: "#EAD9BF", colSpan: "col-span-2", textColor: "black" },
     ],
   },
 ];

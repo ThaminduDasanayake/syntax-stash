@@ -19,7 +19,7 @@ export function PaletteTab() {
   return (
     <div className="space-y-12">
       {/* Palette Gallery Grid */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {COLOR_PALETTES.map((palette, idx) => {
           const cssLines = palette.colors
             .map((c) => `  --${c.name.toLowerCase().replace(/\s+/g, "-")}: ${c.hex};`)
