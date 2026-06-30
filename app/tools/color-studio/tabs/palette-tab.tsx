@@ -69,7 +69,7 @@ export function PaletteTab() {
               </CardHeader>
 
               {/* Dynamic Bento Box Layout inside the Card */}
-              <CardContent className="grid flex-1 grid-cols-3 gap-1.5">
+              <CardContent className="grid flex-1 grid-cols-3 grid-rows-3 gap-1.5">
                 {palette.colors.map((color, i) => (
                   <div
                     key={i}
