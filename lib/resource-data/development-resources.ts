@@ -360,6 +360,14 @@ export const developmentLinks: Tool[] = [
     url: "https://www.photoroom.com/tools",
   },
   {
+    title: "Physically Based",
+    category: CATEGORIES.dev,
+    description: "A database of physically based values for CG artists",
+    subtitle: "The PBR values database",
+    tags: [TAGS.color, TAGS.tool],
+    url: "https://physicallybased.info/",
+  },
+  {
     title: "Postgres Sandbox",
     category: CATEGORIES.dev,
     description: "In-browser Postgres sandbox with AI assistance",
@@ -429,6 +437,15 @@ export const developmentLinks: Tool[] = [
     description: "Create fully responsive shape dividers for your next web project",
     tags: [TAGS["tool"]],
     url: "https://www.shapedivider.app/",
+  },
+  {
+    title: "SHRTCTS",
+    category: CATEGORIES.dev,
+    description:
+      "Know your shortcuts. An interactive 3D keyboard for learning the keyboard shortcuts of the apps you use every day. Pick a tool, hover a shortcut, watch the keys light up.",
+    subtitle: "Know your shortcuts",
+    tags: [TAGS.tool],
+    url: "https://shrtcts.click/",
   },
   {
     title: "Squoosh",

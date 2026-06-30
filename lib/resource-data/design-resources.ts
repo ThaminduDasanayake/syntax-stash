@@ -86,6 +86,15 @@ export const designLinks: Tool[] = [
     url: "https://cognitivebiasindex.com/",
   },
   {
+    title: "Colir",
+    category: CATEGORIES.design,
+    description:
+      "Create unique, professional gradients with curve-based control. Real-time WebGL rendering, 12 blend modes, and advanced visual effects.",
+    subtitle: "Gradients",
+    tags: [TAGS.color],
+    url: "https://colir.space/",
+  },
+  {
     title: "ColorFlow",
     category: CATEGORIES.design,
     description:
@@ -157,6 +166,15 @@ export const designLinks: Tool[] = [
       "Elevate your designs with our high-quality mockups of digital devices, stationary, and more. Our easy to use PSD files will make your work standout.",
     tags: [TAGS.design],
     url: "https://mockups.directory/",
+  },
+  {
+    title: "Ditther",
+    category: CATEGORIES.design,
+    description:
+      "Turn any image into dithered art, halftone, ASCII, Bayer matrix, Lego or dot effects. Free browser-based tool. No install, no account needed.",
+    subtitle: "Free Dither, Halftone & Pixel Effects Tool",
+    tags: [TAGS.ascii],
+    url: "https://www.ditther.com/",
   },
   {
     title: "Dribbble",
@@ -570,5 +588,13 @@ export const designLinks: Tool[] = [
     subtitle: "Unicode Wireframe Design Tool",
     tags: [TAGS.design],
     url: "https://wiretext.app/",
+  },
+  {
+    title: "Words of Type",
+    category: CATEGORIES.design,
+    description: "Multilingual encyclopedia of typographic terms.",
+    subtitle: "Encyclopedia",
+    tags: [TAGS.typography],
+    url: "https://wiki.wordsoftype.com/",
   },
 ];
