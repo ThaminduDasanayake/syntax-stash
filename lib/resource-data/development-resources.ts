@@ -367,12 +367,30 @@ export const developmentLinks: Tool[] = [
     url: "https://database.build/",
   },
   {
+    title: "Quarkdown",
+    category: CATEGORIES.dev,
+    description:
+      "Quarkdown is a modern, open-source, Markdown-based typesetting system for creating papers, presentations, knowledge bases and static websites. ",
+    subtitle: "Markdown with superpowers",
+    tags: [TAGS.development],
+    url: "https://quarkdown.com/",
+  },
+  {
     title: "RayonMaps",
     category: CATEGORIES.dev,
     description:
       "Export OpenStreetMap Data to DXF. Get the CAD geometry of any site on Earth — in just 3 steps.",
     tags: [TAGS.map],
     url: "https://maps.rayon.design/",
+  },
+  {
+    title: "replacements.fyi",
+    category: CATEGORIES.dev,
+    description:
+      "Find more performant and safer replacements for outdated or unnecessary npm packages.",
+    subtitle: "performant, safer npm package alternatives",
+    tags: [TAGS.development],
+    url: "https://replacements.fyi/",
   },
   {
     title: "Replit",

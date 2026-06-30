@@ -5,6 +5,13 @@ import { TAGS } from "./tags";
 
 export const designLinks: Tool[] = [
   {
+    title: "[ graph ] ~~> [ easy ]",
+    category: CATEGORIES.design,
+    description: "Convert Graph::Easy and DOT notation to ASCII art, box art, and more.",
+    tags: [TAGS.ascii],
+    url: "https://graph-easy.online/",
+  },
+  {
     title: "Artkit - Creative Design Tools",
     category: CATEGORIES.design,
     description: "A collection of creative, browser-based tools for images, motion, and graphics.",
@@ -77,6 +84,15 @@ export const designLinks: Tool[] = [
       "A tool for identifying and overcoming the cognitive biases that distort human judgment and decision-making.",
     tags: [TAGS.design],
     url: "https://cognitivebiasindex.com/",
+  },
+  {
+    title: "ColorFlow",
+    category: CATEGORIES.design,
+    description:
+      "Create stunning mesh gradients with ColorFlow. Professional gradient editor with real-time preview, customizable control points, and export options. Perfect for designers and developers.",
+    subtitle: "Advanced Mesh Gradient Generator & Editor",
+    tags: [TAGS.design],
+    url: "https://colorflow.ls.graphics/",
   },
   {
     title: "Colorize",
@@ -447,6 +463,15 @@ export const designLinks: Tool[] = [
     url: "https://sprrrint.com/",
   },
   {
+    title: "SSGOI",
+    category: CATEGORIES.design,
+    description:
+      "Router-agnostic page transitions for React, Svelte, Vue, Solid, Angular, and Qwik. Built on the Web Animations API with spring physics and state preservation.",
+    subtitle: "Native page transitions on the web",
+    tags: [TAGS.design],
+    url: "https://ssgoi.dev/",
+  },
+  {
     title: "Storyboard Maker",
     category: CATEGORIES.design,
     description:
@@ -479,6 +504,22 @@ export const designLinks: Tool[] = [
     subtitle: "AI Product Design Agent | UI from a Prompt",
     tags: [TAGS.design],
     url: "https://app.superdesign.dev/",
+  },
+  {
+    title: "Text Diagram",
+    category: CATEGORIES.design,
+    description: "Text Diagram is a web tool for drawing UML sequence diagram in pure text.",
+    tags: [TAGS.ascii],
+    url: "https://weidagang.github.io/text-diagram/",
+  },
+  {
+    title: "TextPaint",
+    category: CATEGORIES.design,
+    description:
+      "Text Paint is an online tool for drawing with text. You can draw, shape, and decorate your canvas using ASCII, Unicode, emojis, or any characters you like. It's a bit like pixel art, but made entirely out of symbols.",
+    subtitle: "Create ASCII Art with Characters Online",
+    tags: [TAGS.ascii],
+    url: "https://textpaint.com/",
   },
   {
     title: "The Design Project",

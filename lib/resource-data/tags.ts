@@ -2,6 +2,7 @@ export const TAGS = {
   agents: "agents",
   ai: "ai",
   animation: "animation",
+  ascii: "ASCII",
   backend: "backend",
   builder: "builder",
   color: "color",

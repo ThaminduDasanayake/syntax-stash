@@ -665,6 +665,15 @@ export const frontendLinks: Tool[] = [
     url: "https://www.vengenceui.com/",
   },
   {
+    title: "VibeUI",
+    category: CATEGORIES.frontend,
+    description:
+      "92 ready-to-copy layout prompts for vibe coding and AI UI generation. Auth, pricing, hero, bento, dashboards & more — paste into any AI tool.",
+    subtitle: "92 Free UI Prompts for Vibe Coders (Auth, Pricing, Hero, Bento)",
+    tags: [TAGS["ui-component"]],
+    url: "https://vibeui.online/",
+  },
+  {
     title: "VisGL Google Maps",
     category: CATEGORIES.frontend,
     description: "React components and hooks for the Google Maps JavaScript API",
