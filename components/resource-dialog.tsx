@@ -2,7 +2,7 @@
 
 import { ArrowSquareOutIcon, CaretLeftIcon, CaretRightIcon, XIcon } from "@phosphor-icons/react";
 import Link from "next/link";
-import * as React from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { CardIcon } from "@/components/card-icon";
 import { Button } from "@/components/ui/button";
@@ -13,13 +13,13 @@ import { cn, getResourceColorByKey, getResourceKeyFromValue } from "@/lib/utils"
 import { ToolCardProps } from "@/types";
 
 export function ResourceDialog({ tool }: ToolCardProps) {
-  const [activeTool, setActiveTool] = React.useState(tool);
+  const [activeTool, setActiveTool] = useState(tool);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setActiveTool(tool);
   }, [tool]);
 
-  const currentIndex = React.useMemo(() => {
+  const currentIndex = useMemo(() => {
     return resourceLinks.findIndex((r) => r.title === activeTool.title);
   }, [activeTool]);
 
@@ -38,14 +38,14 @@ export function ResourceDialog({ tool }: ToolCardProps) {
   const key = getResourceKeyFromValue(activeTool.category);
   const colorClasses = getResourceColorByKey(key);
 
-  const authorResources = React.useMemo(() => {
+  const authorResources = useMemo(() => {
     if (!activeTool.author) return [];
     return resourceLinks.filter(
       (r) => r.author === activeTool.author && r.title !== activeTool.title,
     );
   }, [activeTool]);
 
-  const relatedResources = React.useMemo(() => {
+  const relatedResources = useMemo(() => {
     // 1. Explicitly Defined Related Resources
     if (activeTool.related && activeTool.related.length > 0) {
       const explicitRelated = resourceLinks.filter((r) => activeTool.related!.includes(r.title));

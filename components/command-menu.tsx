@@ -1,9 +1,10 @@
 "use client";
 
-import { BookmarksIcon, WrenchIcon } from "@phosphor-icons/react";
+import { ToolboxIcon } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { CardIcon } from "@/components/card-icon";
 import {
   Command,
   CommandDialog,
@@ -14,11 +15,21 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
+import { iconMap } from "@/lib/icons";
 import { resourceLinks } from "@/lib/resource-data";
 import { internalTools } from "@/lib/tools-data";
 import { CommandMenuProps, Tool } from "@/types";
 
-function Highlight({ text, query }: { text: string; query: string }) {
+function truncateWords(text: string, maxWords: number = 15) {
+  if (!text) return "";
+  const words = text.split(/\s+/);
+  if (words.length > maxWords) {
+    return words.slice(0, maxWords).join(" ") + "...";
+  }
+  return text;
+}
+
+function Highlight({ query, text }: { text: string; query: string }) {
   if (!query || query.trim() === "") return <>{text}</>;
 
   // Escape special regex characters to prevent runtime crashes if a user types strings like "/" or "["
@@ -97,32 +108,35 @@ export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
           <CommandEmpty>No results found.</CommandEmpty>
 
           <CommandGroup heading="Inbuilt Tools">
-            {internalTools.map((tool) => (
-              <CommandItem
-                key={tool.slug}
-                value={`${tool.title} ${tool.description}`}
-                onSelect={() => handleSelect(tool)}
-              >
-                {/* Structural Level Indentation Logic */}
-                {"isSubItem" in tool && tool.isSubItem ? (
-                  <div className="border-muted-foreground/40 bg-background text-muted-foreground ml-4 flex h-8 w-8 shrink-0 items-center justify-center border border-dashed font-mono text-xs">
-                    &gt;
+            {internalTools.map((tool) => {
+              const Icon = (tool.icon && iconMap[tool.icon]) || ToolboxIcon;
+              return (
+                <CommandItem
+                  key={tool.slug}
+                  value={`${tool.title} ${tool.description}`}
+                  onSelect={() => handleSelect(tool)}
+                >
+                  {/* Structural Level Indentation Logic */}
+                  {"isSubItem" in tool && tool.isSubItem ? (
+                    <div className="border-muted-foreground/40 bg-background text-muted-foreground ml-4 flex h-8 w-8 shrink-0 items-center justify-center border border-dashed font-mono text-xs">
+                      &gt;
+                    </div>
+                  ) : (
+                    <div className="border-border bg-background flex h-10 w-10 shrink-0 items-center justify-center border-2">
+                      <Icon weight="bold" className="size-5!" />
+                    </div>
+                  )}
+                  <div className="ml-1 flex min-w-0 flex-1 flex-col">
+                    <span className="text-foreground mb-1 block text-sm font-bold tracking-tight uppercase">
+                      <Highlight text={tool.title} query={search} />
+                    </span>
+                    <span className="text-muted-foreground/80 block font-mono text-xs leading-relaxed font-medium whitespace-normal">
+                      <Highlight text={truncateWords(tool.description, 15)} query={search} />
+                    </span>
                   </div>
-                ) : (
-                  <div className="border-border bg-background flex h-10 w-10 shrink-0 items-center justify-center border-2">
-                    <WrenchIcon weight="bold" className="size-5!" />
-                  </div>
-                )}
-                <div className="ml-1 flex min-w-0 flex-1 flex-col">
-                  <span className="text-foreground mb-1 block text-sm font-bold tracking-tight uppercase">
-                    <Highlight text={tool.title} query={search} />
-                  </span>
-                  <span className="text-muted-foreground/80 block font-mono text-xs leading-relaxed font-medium whitespace-normal">
-                    <Highlight text={tool.description} query={search} />
-                  </span>
-                </div>
-              </CommandItem>
-            ))}
+                </CommandItem>
+              );
+            })}
           </CommandGroup>
 
           <CommandSeparator />
@@ -140,17 +154,25 @@ export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
                     &gt;
                   </div>
                 ) : (
-                  <div className="border-border bg-background flex h-10 w-10 shrink-0 items-center justify-center border-2">
-                    <BookmarksIcon weight="bold" className="size-5!" />
-                  </div>
+                  <CardIcon
+                    url={tool.url!}
+                    alt={tool.title}
+                    explicitFavicon={tool.favicon}
+                    className="border-border bg-background flex h-10 w-10 shrink-0 items-center justify-center border-2! p-[2px]!"
+                  />
                 )}
                 <div className="ml-1 flex min-w-0 flex-1 flex-col">
                   <span className="text-foreground mb-1 block text-sm font-bold tracking-tight uppercase">
                     <Highlight text={tool.title} query={search} />
                   </span>
-                  <span className="text-muted-foreground/80 block font-mono text-xs leading-relaxed font-medium whitespace-normal">
+                  {tool.url && (
+                    <span className="block truncate font-mono text-[10px] font-semibold">
+                      {tool.url}
+                    </span>
+                  )}
+                  <span className="text-muted-foreground/80 mt-1 block font-mono text-xs leading-relaxed font-medium whitespace-normal">
                     <Highlight
-                      text={`[ ${tool.category} ] // ${tool.description}`}
+                      text={truncateWords(`[ ${tool.category} ] // ${tool.description}`, 15)}
                       query={search}
                     />
                   </span>
