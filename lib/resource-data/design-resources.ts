@@ -119,6 +119,13 @@ export const designLinks: Tool[] = [
     url: "https://contentcore.xyz/",
   },
   {
+    title: "Cosmos",
+    category: CATEGORIES.design,
+    description: "Your space for inspiration",
+    tags: [TAGS.inspiration],
+    url: "https://www.cosmos.so/",
+  },
+  {
     title: "Dark Themed Web Design Inspiration",
     category: CATEGORIES.design,
     description:
@@ -158,6 +165,13 @@ export const designLinks: Tool[] = [
     description: "An interactive reference manual for interaction-curious designers.",
     tags: [TAGS.design],
     url: "https://devouringdetails.com/",
+  },
+  {
+    title: "DIELINE",
+    category: CATEGORIES.design,
+    description: "The Leading Source for Packaging Innovation and Insight",
+    tags: [TAGS.inspiration],
+    url: "https://thedieline.com/",
   },
   {
     title: "Directory Mockups",
@@ -318,6 +332,15 @@ export const designLinks: Tool[] = [
     url: "https://logolattice.com/",
   },
   {
+    title: "Lummi",
+    category: CATEGORIES.design,
+    description:
+      "Browse our collection of unique, royalty-free AI stock photos, illustrations, and 3D. Perfect for all your creative projects, each image is crafted by global digital artists.",
+    subtitle: "Free AI Stock Images, Illustrations & 3D",
+    tags: [TAGS.inspiration],
+    url: "https://www.lummi.ai/",
+  },
+  {
     title: "Maket",
     category: CATEGORIES.design,
     description:
@@ -344,6 +367,15 @@ export const designLinks: Tool[] = [
     subtitle: "Short Text for Your Website | UX Writing & Copy Library",
     tags: [TAGS.design],
     url: "https://www.microcopy.me/",
+  },
+  {
+    title: "Mindsparkle Mag",
+    category: CATEGORIES.design,
+    description:
+      "Mindsparkle Mag showcases the best of branding, web design, graphic and packaging projects through in-depth case studies and behind-the-scenes with deep insights—revealing how standout work is actually made.",
+    subtitle: "Design Inspiration",
+    tags: [TAGS.inspiration],
+    url: "https://mindsparklemag.com/",
   },
   {
     title: "Mobbin",
@@ -440,6 +472,14 @@ export const designLinks: Tool[] = [
       "Discover RapidRAW, a modern, high-performance Lightroom® alternative. Get a simple, beautiful, and GPU-accelerated RAW editing experience for Windows, macOS, and Linux.",
     tags: [TAGS.design],
     url: "https://www.getrapidraw.com/",
+  },
+  {
+    title: "Really Good Emails",
+    category: CATEGORIES.design,
+    description:
+      "With 19,000+ curated emails and counting, discover the best examples to help build your next campaign. Get inspiration and join millions of marketers.",
+    tags: [TAGS.inspiration],
+    url: "https://reallygoodemails.com/",
   },
   {
     title: "Realtime Colors",

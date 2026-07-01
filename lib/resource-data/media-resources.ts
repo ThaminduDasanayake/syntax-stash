@@ -91,6 +91,14 @@ export const mediaLinks: Tool[] = [
     url: "https://pattern.monster/",
   },
   {
+    title: "TechIcons",
+    category: CATEGORIES.media,
+    description: "Download, copy and paste tech icons in SVG and PNG format for your projects.",
+    subtitle: "SVG and PNG tech icons",
+    tags: [TAGS.icon],
+    url: "https://techicons.dev/",
+  },
+  {
     title: "theSVG",
     category: CATEGORIES.media,
     description:

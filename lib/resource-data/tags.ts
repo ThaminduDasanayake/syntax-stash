@@ -14,6 +14,7 @@ export const TAGS = {
   education: "education",
   icon: "icon",
   image: "image",
+  inspiration: "inspiration",
   job: "job",
   llm: "llm",
   "low-code": "low-code",

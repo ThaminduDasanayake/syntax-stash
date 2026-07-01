@@ -33,6 +33,16 @@ export const educationLinks: Tool[] = [
     url: "https://github.com/darkdevil3610/100-AI-Machine-learning-Deep-learning-Computer-vision-NLP",
   },
   {
+    title: "500 AI Agents Projects",
+    author: "ashishpatel26",
+    category: CATEGORIES.education,
+    description:
+      "The 30 Days of Python programming challenge is a step-by-step guide to learn the Python programming language in 30 days. This challenge may take more than 100 days. Follow your own pace. These videos may help too: https://www.youtube.com/channel/UC7PNRuno1rzYPb1xLa4yktw.",
+    favicon: "/github.svg",
+    tags: [TAGS.education],
+    url: "https://github.com/ashishpatel26/500-AI-Agents-Projects",
+  },
+  {
     title: "500 AI Machine learning Deep learning Computer vision NLP Projects with code",
     author: "ashishpatel26",
     category: CATEGORIES.education,
@@ -40,6 +50,16 @@ export const educationLinks: Tool[] = [
     favicon: "/github.svg",
     tags: [TAGS.education],
     url: "https://github.com/ashishpatel26/500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code",
+  },
+  {
+    title: "AI Project Gallery",
+    author: "KalyanM45",
+    category: CATEGORIES.education,
+    description:
+      "This Repository Contain All the Artificial Intelligence Projects such as Machine Learning, Deep Learning and Generative AI that I have done while understanding Advanced Techniques & Concepts.",
+    favicon: "/github.svg",
+    tags: [TAGS.education],
+    url: "https://github.com/KalyanM45/AI-Project-Gallery",
   },
   {
     title: "App Ideas",
@@ -128,6 +148,15 @@ export const educationLinks: Tool[] = [
       "Journey through the fantasy land of Python, HTML, CSS, or JavaScript, earn experience points (XP) to unlock new regions, and collect all the badges at your own pace. Start your adventure today.",
     tags: [TAGS.education],
     url: "https://www.codedex.io/",
+  },
+  {
+    title: "CS50: Introduction to Computer Science",
+    author: "Harvard University",
+    category: CATEGORIES.education,
+    description:
+      "An introduction to the intellectual enterprises of computer science and the art of programming.",
+    tags: [TAGS.education],
+    url: "https://pll.harvard.edu/course/cs50-introduction-computer-science",
   },
   {
     title: "CSV Vis Tool",
@@ -236,6 +265,15 @@ export const educationLinks: Tool[] = [
     url: "https://leetcode.com/",
   },
   {
+    title: "LLMs from scratch",
+    author: "rasbt",
+    category: CATEGORIES.education,
+    description: "Implement a ChatGPT-like LLM in PyTorch from scratch, step by step.",
+    favicon: "/github.svg",
+    tags: [TAGS.education],
+    url: "https://github.com/rasbt/LLMs-from-scratch",
+  },
+  {
     title: "Loot Drop",
     category: CATEGORIES.education,
     description:
@@ -328,6 +366,16 @@ export const educationLinks: Tool[] = [
     description: "Share quick reference and cheat sheet for developers",
     tags: [TAGS.education],
     url: "https://quickref.me/",
+  },
+  {
+    title: "realworld",
+    author: "realworld apps",
+    category: CATEGORIES.education,
+    description:
+      '"The mother of all demo apps" — Exemplary fullstack Medium.com clone powered by React, Angular, Node, Django, and many more - realworld-apps/realworld',
+    favicon: "/github.svg",
+    tags: [TAGS.education],
+    url: "https://github.com/realworld-apps/realworld",
   },
   {
     title: "remote-jobs",
