@@ -107,7 +107,12 @@ export function ResourceDialog({ tool }: ToolCardProps) {
         <div className={cn("modal-left", colorClasses)}>
           <div className="modal-cat-label">
             <div className="flex items-center gap-2">
-              <span className="modal-cat-dot"></span>
+              <span
+                className={cn(
+                  "modal-cat-dot",
+                  colorClasses.includes("bg-c-blue") ? "bg-background" : "bg-foreground",
+                )}
+              ></span>
               <Link
                 href={`/resources/${activeTool.category}`}
                 className="modal-cat-name modal-cat-link"

@@ -563,7 +563,7 @@
 
 /* Filter Bar*/
 @utility filter-bar {
-  @apply border-y-ink sticky top-16 z-80 border-y-[1.5px] bg-[#ede9ddf0] py-2 backdrop-blur-md sm:py-5.5;
+  @apply border-y-ink sticky top-16 z-40 border-y-[1.5px] bg-[#ede9ddf0] py-2 backdrop-blur-md sm:py-5.5;
 }
 
 @utility filter-bar-inner {
@@ -654,11 +654,11 @@
 }
 
 @utility card-description {
-  @apply line-clamp-6 text-left text-sm leading-relaxed font-medium opacity-90;
+  @apply m-0 line-clamp-6 flex-none text-sm leading-relaxed font-medium text-pretty opacity-90;
 }
 
 @utility card-footer {
-  @apply mt-auto flex w-full items-center justify-between gap-4 border-t border-current/20 pt-2 opacity-80 transition-all group-hover:border-current/80 group-hover:opacity-100;
+  @apply mt-auto flex w-full flex-none items-center justify-between gap-4 border-t border-current/20 pt-2 opacity-80 transition-all duration-200 ease-out group-hover:border-current/80 group-hover:opacity-100;
 }
 
 @utility card-author {
@@ -671,7 +671,7 @@
 
 /* Resource Modal */
 @utility modal-panel {
-  @apply relative flex h-[calc(100vh-120px)]! max-h-[calc(100vh-80px)]! w-full! max-w-235! flex-col overflow-hidden border-2 p-0! shadow-md;
+  @apply relative flex h-[calc(100vh-120px)]! max-h-[calc(100vh-80px)]! w-full! max-w-235! flex-col overflow-hidden border-2 p-0! shadow-[0_40px_80px_-20px_#00000059];
 }
 
 @utility modal-top-actions {
@@ -687,11 +687,11 @@
 }
 
 @utility modal-cat-label {
-  @apply mb-6 flex items-center justify-between;
+  @apply mb-6 flex items-center justify-between gap-2;
 }
 
 @utility modal-cat-dot {
-  @apply bg-foreground h-2 w-2 shrink-0 rounded-full opacity-70;
+  @apply h-2 w-2 shrink-0 rounded-full opacity-70;
 }
 
 @utility modal-cat-name {
@@ -703,7 +703,7 @@
 }
 
 @utility modal-title {
-  @apply font-display! mb-4.5 text-[clamp(32px,2.5vw,40px)]! leading-none! font-extrabold! tracking-tight text-balance wrap-break-word uppercase;
+  @apply font-display! mb-4.5 text-[clamp(32px,2.5vw,40px)]! leading-none! font-extrabold! tracking-tight text-balance wrap-break-word hyphens-auto uppercase;
 }
 
 @utility modal-subtitle {
