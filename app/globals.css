@@ -618,7 +618,7 @@
 }
 
 @utility card {
-  @apply block w-full cursor-pointer border outline-hidden transition-all duration-200 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-md;
+  @apply block w-full cursor-pointer transition-all duration-200 outline-none hover:-translate-x-1 hover:-translate-y-1 hover:shadow-md;
 }
 
 @utility card-inner {
@@ -626,11 +626,11 @@
 }
 
 @utility card-face {
-  @apply col-start-1 row-start-1 flex h-80 w-full flex-col gap-2.5 overflow-hidden px-4.5 pt-4.5 pb-3.5;
+  @apply col-start-1 row-start-1 flex h-80 w-full flex-col gap-2.5 overflow-hidden border-2 px-4.5 pt-4.5 pb-3.5;
 }
 
 @utility card-header {
-  @apply flex justify-between;
+  @apply flex flex-none items-center justify-between gap-3;
 }
 
 @utility card-meta {
@@ -650,7 +650,7 @@
 }
 
 @utility card-title {
-  @apply font-display m-0 flex-none text-left text-[clamp(20px,1.8vw,26px)] leading-none font-extrabold tracking-tight text-wrap hyphens-auto uppercase;
+  @apply font-display m-0 flex-none text-left text-[clamp(20px,1.8vw,26px)] leading-none font-extrabold tracking-tight text-balance hyphens-auto uppercase;
 }
 
 @utility card-description {
