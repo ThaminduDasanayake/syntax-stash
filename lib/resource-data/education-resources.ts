@@ -257,6 +257,14 @@ export const educationLinks: Tool[] = [
     url: "https://learn-anything.xyz/",
   },
   {
+    title: "Learn X in Y Minutes",
+    author: "Adam Bard",
+    category: CATEGORIES.education,
+    description: "Scenic Programming Language Tours",
+    tags: [TAGS.education],
+    url: "https://learnxinyminutes.com/",
+  },
+  {
     title: "LeetCode",
     category: CATEGORIES.education,
     description:

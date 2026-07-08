@@ -147,6 +147,15 @@ export const developmentLinks: Tool[] = [
     url: "https://devdocs.io/",
   },
   {
+    title: "Devhints",
+    author: "Rico Sta. Cruz",
+    category: CATEGORIES.dev,
+    description: "A ridiculous collection of web development cheatsheets",
+    subtitle: "TL;DR for developer documentation",
+    tags: [TAGS["tool"]],
+    url: "https://devhints.io/",
+  },
+  {
     title: "DigitalPlat Domain",
     category: CATEGORIES.dev,
     description:
@@ -204,6 +213,14 @@ export const developmentLinks: Tool[] = [
       "Turn any GitHub repository into structured, source-grounded documentation with GitDocify..",
     tags: [TAGS.development],
     url: "https://gitdocify.com/",
+  },
+  {
+    title: "Git Explorer",
+    author: "summitech",
+    category: CATEGORIES.dev,
+    description: "Find the right git commands without digging through the web.",
+    tags: [TAGS.color, TAGS.tool],
+    url: "https://git.gaozih.com/",
   },
   {
     title: "here.now | Instant web hosting for agents",
@@ -335,6 +352,14 @@ export const developmentLinks: Tool[] = [
     url: "https://oualator.com/",
   },
   {
+    title: "OverAPI.com",
+    category: CATEGORIES.dev,
+    description: "OverAPI.com is a site collecting all the cheatsheets,all!",
+    subtitle: "Collecting all the cheat sheets",
+    tags: [TAGS["tool"]],
+    url: "https://overapi.com/",
+  },
+  {
     title: "patorjk.com",
     category: CATEGORIES.dev,
     description:
@@ -448,6 +473,15 @@ export const developmentLinks: Tool[] = [
     url: "https://shrtcts.click/",
   },
   {
+    title: "SitePoint",
+    category: CATEGORIES.dev,
+    description:
+      "Learn Web Design & Development with SitePoint tutorials, courses and books - HTML5, CSS3, JavaScript, PHP, mobile app development, Responsive Web Design",
+    subtitle: "Learn HTML, CSS, JavaScript, PHP, Ruby & Responsive Design",
+    tags: [TAGS.tool],
+    url: "https://www.sitepoint.com/",
+  },
+  {
     title: "Squoosh",
     category: CATEGORIES.dev,
     description:
@@ -529,13 +563,19 @@ export const developmentLinks: Tool[] = [
     url: "https://www.vid2ascii.com/",
   },
   {
+    title: "web.dev",
+    category: CATEGORIES.dev,
+    description: "Guidance to build modern web experiences that work on any browser.",
+    tags: [TAGS.development],
+    url: "https://web.dev/",
+  },
+  {
     title: "Web Apps by 123apps",
     category: CATEGORIES.dev,
     description: "Online Tools for Video, Audio, PDF, and File Conversion.",
     tags: [TAGS.development],
     url: "https://123apps.com/",
   },
-
   {
     title: "WinWinKit",
     category: CATEGORIES.dev,
