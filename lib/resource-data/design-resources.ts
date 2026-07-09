@@ -29,9 +29,10 @@ export const designLinks: Tool[] = [
     url: "https://animos.app/",
   },
   {
-    title: "Artkit - Creative Design Tools",
+    title: "Artkit",
     category: CATEGORIES.design,
     description: "A collection of creative, browser-based tools for images, motion, and graphics.",
+    subtitle: "Creative Design Tools",
     tags: [TAGS.design],
     url: "https://artkit.cc/",
   },

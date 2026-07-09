@@ -16,6 +16,15 @@ export const aiLinks: Tool[] = [
     url: "https://github.com/cloudflare/agentic-inbox",
   },
   {
+    title: "AI Engineering Hub",
+    author: "patchy631",
+    category: CATEGORIES.ai,
+    description: "In-depth tutorials on LLMs, RAGs and real-world AI agent applications.",
+    favicon: "/github.svg",
+    tags: [TAGS.ai],
+    url: "https://github.com/patchy631/ai-engineering-hub",
+  },
+  {
     title: "AutoHedge",
     author: "The Swarm Corporation",
     category: CATEGORIES.ai,
@@ -45,6 +54,16 @@ export const aiLinks: Tool[] = [
     subtitle: "Claude AI Tools, Cheatsheet, Skills & MCP Servers",
     tags: [TAGS.ai],
     url: "https://awesomeclaude.ai/",
+  },
+  {
+    title: "Awesome Generative AI",
+    author: "steven2358",
+    category: CATEGORIES.ai,
+    description:
+      "A curated list of modern Generative Artificial Intelligence projects and services.",
+    favicon: "/github.svg",
+    tags: [TAGS.ai],
+    url: "https://github.com/steven2358/awesome-generative-ai",
   },
   {
     title: "Browser Use",
@@ -140,6 +159,25 @@ export const aiLinks: Tool[] = [
     subtitle: "The Open Agent Framework",
     tags: [TAGS.ai],
     url: "https://flueframework.com/",
+  },
+  {
+    title: "Hands-On Large Language Models",
+    author: "HandsOnLLM",
+    category: CATEGORIES.ai,
+    description: 'Official code repo for the O\'Reilly Book - "Hands-On Large Language Models"',
+    favicon: "/github.svg",
+    tags: [TAGS.ai, TAGS.llm],
+    url: "https://github.com/handsOnLLM/Hands-On-Large-Language-Models",
+  },
+  {
+    title: "handson-ml3",
+    author: "ageron",
+    category: CATEGORIES.ai,
+    description:
+      "A series of Jupyter notebooks that walk you through the fundamentals of Machine Learning and Deep Learning in Python using Scikit-Learn, Keras and TensorFlow 2.",
+    favicon: "/github.svg",
+    tags: [TAGS.ai],
+    url: "https://github.com/ageron/handson-ml3",
   },
   {
     title: "hyperframes",
