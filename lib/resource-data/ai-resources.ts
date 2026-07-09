@@ -91,6 +91,7 @@ export const aiLinks: Tool[] = [
     category: CATEGORIES.ai,
     description:
       "This course aims to provide an iterative framework for developing real-world machine learning systems that are deployable, reliable, and scalable.",
+    tags: [TAGS.ai, TAGS.education],
     url: "https://stanford-cs329s.github.io/syllabus.html",
   },
   {
@@ -108,6 +109,7 @@ export const aiLinks: Tool[] = [
     category: CATEGORIES.ai,
     description: "Articles about Machine Learning",
     subtitle: "Latest articles about machine learning",
+    tags: [TAGS.ai, TAGS.education],
     url: "https://distill.pub/",
   },
   {
@@ -186,6 +188,7 @@ export const aiLinks: Tool[] = [
     author: "Andrej Karpathy",
     category: CATEGORIES.ai,
     description: "A course by Andrej Karpathy on building neural networks, from scratch, in code.",
+    tags: [TAGS.ai, TAGS.education],
     url: "https://karpathy.ai/zero-to-hero.html",
   },
   {

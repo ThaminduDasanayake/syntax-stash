@@ -18,6 +18,7 @@ export const educationLinks: Tool[] = [
     title: "30 seconds of code",
     category: CATEGORIES.education,
     description: "Browse 694 coding articles to level up your coding skills on 30 seconds of code.",
+    tags: [TAGS.development, TAGS.education],
     url: "https://www.30secondsofcode.org/",
   },
   {
@@ -259,6 +260,7 @@ export const educationLinks: Tool[] = [
     author: "Karl Koch",
     category: CATEGORIES.education,
     description: "Thoughts on design, development and career progression",
+    tags: [TAGS.design, TAGS.education],
     url: "https://karlkoch.me/writing",
   },
   {
@@ -317,6 +319,7 @@ export const educationLinks: Tool[] = [
     description:
       "Major League Hacking empowers students through hackathons, developer programs, and global community events for the next generation of engineers.",
     subtitle: "Hackathons and Developer Programs",
+    tags: [TAGS.development, TAGS.education],
     url: "https://www.mlh.com/",
   },
   {
@@ -440,6 +443,7 @@ export const educationLinks: Tool[] = [
     description:
       "Trusted by 8100+ Learners. Become a Confident UX/UI Designer. Learn what truly matters—real UX/UI skills, real projects, no wasted time.",
     subtitle: "Build job-ready design skills",
+    tags: [TAGS.design, TAGS.education],
     url: "https://startuxdesign.com/",
   },
   {

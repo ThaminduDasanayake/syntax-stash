@@ -91,6 +91,7 @@ export const frontendLinks: Tool[] = [
     description:
       "The motion toolkit for React and Next.js. Free, open-source, shadcn-compatible components built on Framer Motion and Tailwind CSS. Copy-paste the source or install with the shadcn CLI.",
     subtitle: "The motion toolkit for React & Next.js",
+    tags: [TAGS.animation, TAGS.react, TAGS["ui-component"]],
     url: "https://beui.dev/",
   },
   {
@@ -293,6 +294,7 @@ export const frontendLinks: Tool[] = [
     description:
       "Take your frontend skills to the next level by recreating real websites from real companies.",
     subtitle: "Become a better frontend developer.",
+    tags: [TAGS.development, TAGS.education, TAGS.ui],
     url: "https://www.frontendpractice.com/",
   },
   {
@@ -324,6 +326,7 @@ export const frontendLinks: Tool[] = [
     author: "Steve Schoger",
     category: CATEGORIES.frontend,
     description: "Free repeatable SVG background patterns for your web projects",
+    tags: [TAGS.image, TAGS.ui],
     url: "https://heropatterns.com/",
   },
   {
@@ -454,6 +457,7 @@ export const frontendLinks: Tool[] = [
     author: "Vancho Stojkov",
     category: CATEGORIES.frontend,
     description: "View and Interact with PDFs in React, SolidJS, Svelte and JavaScript apps.",
+    tags: [TAGS.development, TAGS.react],
     url: "https://pdfslick.dev/",
   },
   {
@@ -597,6 +601,7 @@ export const frontendLinks: Tool[] = [
     description:
       "Design engine for vibe coding — it teaches Claude Code, Codex, and Cursor design judgment (74 rules), not just components. A drop-in React design system with 7 brand skins and a named motion system. MIT licensed.",
     subtitle: "Design engine for vibe coding",
+    tags: [TAGS.ai, TAGS.development, TAGS.ui],
     url: "https://styleseed-demo.vercel.app/",
   },
   {
@@ -639,6 +644,7 @@ export const frontendLinks: Tool[] = [
     description:
       "A collection of beautifully designed, accessible, and customizable terminal UI components. Built on Ink and OpenTUI. Works with shadcn/ui.",
     subtitle: "Beautiful terminal UIs, made simple",
+    tags: [TAGS.development, TAGS.ui],
     url: "https://www.termcn.dev/",
   },
   {

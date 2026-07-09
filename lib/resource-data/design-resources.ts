@@ -16,6 +16,7 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "The second annual report by Designer Fund and Foundation Capital on how design teams are adapting to AI across tooling, craft, and org.",
+    tags: [TAGS.ai, TAGS.design],
     url: "https://stateofaidesign.com/",
   },
   {
@@ -24,6 +25,7 @@ export const designLinks: Tool[] = [
     description:
       "Ready-made animation templates for showcasing your designs. Drop in images or videos, tweak, and export MP4/WebM in your browser.",
     subtitle: "Motion templates for design showcases",
+    tags: [TAGS.animation, TAGS.design],
     url: "https://animos.app/",
   },
   {
@@ -146,6 +148,7 @@ export const designLinks: Tool[] = [
     description:
       "Design resources for everyone. Freebies and premium web design products, custom illustrations and graphics on one marketplace.",
     subtitle: "UX/UI kits, illustrations, mockups, fonts and more",
+    tags: [TAGS.design, TAGS.ui],
     url: "https://craftwork.design/",
   },
   {
@@ -154,6 +157,7 @@ export const designLinks: Tool[] = [
     description:
       "✨ Big collection of premium and free mockups psd for branding, advertising and graphic design! You can get unlimited access to all mockup templates on our site ⭐",
     subtitle: "ASCIPremium and free mockups psd",
+    tags: [TAGS.design, TAGS.image],
     url: "https://creatoom.com/",
   },
   {
@@ -162,6 +166,7 @@ export const designLinks: Tool[] = [
     description:
       "Explore CTA.gallery for the web's best Call-to-Actions. Perfect for designers, UI/UX experts, and creatives looking for inspiration to craft CTAs that convert.",
     subtitle: "The Best Call-to-Action Inspiration for Designers",
+    tags: [TAGS.design, TAGS.inspiration, TAGS.ui],
     url: "https://www.cta.gallery/",
   },
   {
@@ -234,6 +239,7 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "Create, customize, and export personalized fonts by drawing each character with versatile design tools, saving and editing projects with or without login.",
+    tags: [TAGS.design, TAGS.typography],
     url: "https://doodlefonts.app/",
   },
   {
@@ -311,6 +317,7 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "Words and messages that provide context and set expectations — that's good microcopy. Curated by @richardsison.",
+    tags: [TAGS.design, TAGS.typography],
     url: "https://goodmicrocopy.com/",
   },
   {
@@ -377,6 +384,7 @@ export const designLinks: Tool[] = [
     description:
       "Get inspired by an amazing collection of over 2107 animation website designs. With a full-page video recording showcasing the best designs out there.",
     subtitle: "Showcase of the best 2107 Animation Websites",
+    tags: [TAGS.animation, TAGS.design, TAGS.inspiration],
     url: "https://www.landing.love/",
   },
   {
@@ -399,6 +407,7 @@ export const designLinks: Tool[] = [
     description:
       "The biggest logo design library for inspiration. Explore 1,200+ logos, wordmarks, symbols and animated logos by top designers — filter by color, style, shape and background to find the logo inspiration you're looking for.",
     subtitle: "Logo Inspiration — 1,200+ Logos & Animated Logos",
+    tags: [TAGS.design, TAGS.inspiration],
     url: "https://logosystem.co/",
   },
   {
@@ -471,6 +480,7 @@ export const designLinks: Tool[] = [
     description:
       "Create 3D mockups and motion graphics directly in your browser - devices, clothing, branding and abstract visuals. Export up to 4K. No installs.",
     subtitle: "3D Mockups & Motion in Your Browser",
+    tags: [TAGS.animation, TAGS.design, TAGS.image],
     url: "https://studio.morflax.com/",
   },
   {
@@ -479,6 +489,7 @@ export const designLinks: Tool[] = [
     description:
       "Navbar Gallery is a collection of the best website navbar inspiration designs on the web. Find the ideal navigation example for your design from our collection.",
     subtitle: "Navigation Design Inspiration",
+    tags: [TAGS.design, TAGS.inspiration, TAGS.ui],
     url: "https://www.navbar.gallery/",
   },
   {
@@ -526,6 +537,7 @@ export const designLinks: Tool[] = [
     description:
       "Apply paper effect to any photo in seconds. Customize paper animation and export with green screen background.",
     subtitle: "Turn your images into paper animations",
+    tags: [TAGS.animation, TAGS.design, TAGS.image],
     url: "https://paperanimator.com/",
   },
   {
@@ -613,6 +625,7 @@ export const designLinks: Tool[] = [
     description:
       "Live ranking of the best Framer marketplace templates. Discover top free and premium Framer templates, creators and categories — updated daily.",
     subtitle: "Framer Templates Ranking & Marketplace Directory",
+    tags: [TAGS.design, TAGS.inspiration, TAGS.ui],
     url: "https://selected.site/",
   },
   {
@@ -745,6 +758,7 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "A dialog overlay that interrupts the current flow to capture attention and require an explicit action before returning to the main interface.",
+    tags: [TAGS.design, TAGS.education],
     url: "https://ux-dictionary.vercel.app/",
   },
   {

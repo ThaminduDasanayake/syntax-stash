@@ -45,6 +45,7 @@ export const developmentLinks: Tool[] = [
     description:
       "Discover the most fun, interesting and cool websites on the internet. Hundreds of hand-picked funny sites, free games, educational resources and things to do when you're bored.",
     subtitle: "Fun, interesting & cool websites to explore when bored",
+    tags: [TAGS.inspiration],
     url: "https://www.bored.com/",
   },
   {
@@ -188,6 +189,7 @@ export const developmentLinks: Tool[] = [
       "Dub is the modern link attribution platform for short links, conversion tracking, and affiliate programs. Loved by world-class marketing teams like Framer, Perplexity, Superhuman, Twilio, Buffer and more.",
     favicon: "/github.svg",
     subtitle: "The Modern Link Attribution Platform",
+    tags: [TAGS.development, TAGS.tool],
     url: "https://github.com/dubinc/dub",
   },
   {
@@ -245,6 +247,7 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description:
       "Steal any code and make it your own. Paste a GitHub URL and get a plain-language coding agent prompt you can build from.",
+    tags: [TAGS.ai, TAGS.development],
     url: "https://www.gitreverse.com/",
   },
   {
@@ -259,6 +262,7 @@ export const developmentLinks: Tool[] = [
     title: "High Scalability",
     category: CATEGORIES.dev,
     description: "Building bigger, faster, more reliable websites.",
+    tags: [TAGS.development, TAGS.education],
     url: "https://highscalability.com/",
   },
   {
@@ -274,6 +278,7 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description:
       "The Digital Trade School for Slashies looking to stack their creative skills alongside a good vibes community. Take an online course, connect with creatives, find creative jobs and events.",
+    tags: [TAGS.design, TAGS.education],
     url: "https://ilovecreatives.com/",
   },
   {
@@ -331,6 +336,7 @@ export const developmentLinks: Tool[] = [
     description:
       "Discover the best software, hardware, workspace setups, books, videos, and posts for the Mac ecosystem.",
     subtitle: "Curated Mac Discoveries",
+    tags: [TAGS.development, TAGS.inspiration],
     url: "https://macfolio.com/",
   },
   {
@@ -444,6 +450,7 @@ export const developmentLinks: Tool[] = [
     description:
       "Open Source backend in 1 file with realtime database, authentication, file storage and admin dashboard",
     subtitle: "Open Source backend in 1 file",
+    tags: [TAGS.backend, TAGS.development, TAGS["open-source"]],
     url: "https://pocketbase.io/",
   },
   {
@@ -476,6 +483,7 @@ export const developmentLinks: Tool[] = [
     description:
       "Manage and share secrets. Encrypted on your device, never exposed to anyone else. Not even us.",
     subtitle: "The secrets layer developers actually trust",
+    tags: [TAGS.development, TAGS.tool],
     url: "https://relic.so/",
   },
   {
@@ -613,6 +621,7 @@ export const developmentLinks: Tool[] = [
     description:
       "Trigger.dev is the open source platform for building AI workflows in TypeScript. Long-running tasks with retries, queues, observability, and elastic scaling.",
     subtitle: "Build and deploy fully-managed AI agents and workflows.",
+    tags: [TAGS.ai, TAGS.backend, TAGS.development],
     url: "https://trigger.dev/",
   },
   {
@@ -661,6 +670,7 @@ export const developmentLinks: Tool[] = [
     description:
       "Create free workout routines with our comprehensive exercise database. Track your progress and achieve your fitness goals. 🏋️",
     subtitle: "Build Your Perfect Workout",
+    tags: [TAGS.inspiration],
     url: "https://www.workout.cool/en",
   },
   {

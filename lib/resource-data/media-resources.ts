@@ -95,6 +95,7 @@ export const mediaLinks: Tool[] = [
     category: CATEGORIES.media,
     description:
       "Download 100% free PNG images with transparent backgrounds! Browse thousands of high-resolution PNGs for designers, marketers & content creators. No attribution required!.",
+    tags: [TAGS.design, TAGS.image],
     url: "https://pngfile.net/",
   },
   {
@@ -120,6 +121,7 @@ export const mediaLinks: Tool[] = [
     description:
       "TopPng Contain Millions of high quality free png images, icons, vectors and background images, enjoy with free download for all design needs.",
     subtitle: "Download Free PNG images, icons and backgrounds",
+    tags: [TAGS.design, TAGS.image],
     url: "https://toppng.com/",
   },
   {
@@ -136,6 +138,7 @@ export const mediaLinks: Tool[] = [
     description:
       "Explore millions of royalty free vectors, images, stock photos and videos! Get the perfect background, graphic, clipart, picture or drawing for your design.",
     subtitle: "Download Free Vectors, Images, Photos & Videos",
+    tags: [TAGS.design, TAGS.image],
     url: "https://www.vecteezy.com/",
   },
   {
