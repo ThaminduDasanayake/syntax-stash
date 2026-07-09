@@ -19,6 +19,7 @@ export const TAGS = {
   llm: "llm",
   "low-code": "low-code",
   map: "map",
+  mockup: "mockup",
   "open-source": "open-source",
   platform: "platform",
   rag: "rag",

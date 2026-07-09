@@ -644,7 +644,7 @@ export const frontendLinks: Tool[] = [
     description:
       "A curated registry of beautifully designed React components built with TypeScript, Tailwind CSS and Motion. Install with the shadcn CLI, customize freely, and ship production-ready interfaces faster.",
     subtitle: "Beautifully Designed React Components",
-    tags: [TAGS["ui-component"]],
+    tags: [TAGS.animation, TAGS["ui-component"]],
     url: "https://ui.unlumen.com/",
   },
   {

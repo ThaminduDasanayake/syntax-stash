@@ -152,7 +152,7 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description: "A ridiculous collection of web development cheatsheets",
     subtitle: "TL;DR for developer documentation",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.development, TAGS.education],
     url: "https://devhints.io/",
   },
   {
@@ -219,7 +219,7 @@ export const developmentLinks: Tool[] = [
     author: "summitech",
     category: CATEGORIES.dev,
     description: "Find the right git commands without digging through the web.",
-    tags: [TAGS.color, TAGS.tool],
+    tags: [TAGS.development, TAGS.tool],
     url: "https://git.gaozih.com/",
   },
   {
@@ -356,7 +356,7 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description: "OverAPI.com is a site collecting all the cheatsheets,all!",
     subtitle: "Collecting all the cheat sheets",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.development, TAGS.education],
     url: "https://overapi.com/",
   },
   {
@@ -478,7 +478,7 @@ export const developmentLinks: Tool[] = [
     description:
       "Learn Web Design & Development with SitePoint tutorials, courses and books - HTML5, CSS3, JavaScript, PHP, mobile app development, Responsive Web Design",
     subtitle: "Learn HTML, CSS, JavaScript, PHP, Ruby & Responsive Design",
-    tags: [TAGS.tool],
+    tags: [TAGS.design, TAGS.development, TAGS.education],
     url: "https://www.sitepoint.com/",
   },
   {

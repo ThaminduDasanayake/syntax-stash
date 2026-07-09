@@ -289,7 +289,7 @@ export const designLinks: Tool[] = [
     description:
       "Pixel-accurate generators in one place. TextLab for messaging mockups, StampLab for postage stamps, Instatag for Instagram tags, PopLab for animated overlays, plus MineTag and LocationLab on premium early access. One subscription unlocks pro exports across the suite.",
     subtitle: "Tiny tools for big visuals",
-    tags: [TAGS.design],
+    tags: [TAGS.design, TAGS.tool],
     url: "https://javii.tools/",
   },
   {
