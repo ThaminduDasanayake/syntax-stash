@@ -16,7 +16,7 @@ export const educationLinks: Tool[] = [
   },
   {
     title: "30 seconds of code",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.education,
     description: "Browse 694 coding articles to level up your coding skills on 30 seconds of code.",
     url: "https://www.30secondsofcode.org/",
   },
@@ -257,7 +257,7 @@ export const educationLinks: Tool[] = [
   {
     title: "Karl Koch | Writing",
     author: "Karl Koch",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.education,
     description: "Thoughts on design, development and career progression",
     url: "https://karlkoch.me/writing",
   },
@@ -313,7 +313,7 @@ export const educationLinks: Tool[] = [
   },
   {
     title: "Major League Hacking",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.education,
     description:
       "Major League Hacking empowers students through hackathons, developer programs, and global community events for the next generation of engineers.",
     subtitle: "Hackathons and Developer Programs",
@@ -436,7 +436,7 @@ export const educationLinks: Tool[] = [
   },
   {
     title: "Start UX Design",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.education,
     description:
       "Trusted by 8100+ Learners. Become a Confident UX/UI Designer. Learn what truly matters—real UX/UI skills, real projects, no wasted time.",
     subtitle: "Build job-ready design skills",

@@ -87,7 +87,7 @@ export const frontendLinks: Tool[] = [
   },
   {
     title: "beUI",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.frontend,
     description:
       "The motion toolkit for React and Next.js. Free, open-source, shadcn-compatible components built on Framer Motion and Tailwind CSS. Copy-paste the source or install with the shadcn CLI.",
     subtitle: "The motion toolkit for React & Next.js",
@@ -137,7 +137,7 @@ export const frontendLinks: Tool[] = [
   {
     title: "Components – Chánh Đại",
     author: "Chánh Đại",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.frontend,
     description: "Pixel-perfect, uniquely crafted.",
     tags: [TAGS.animation, TAGS["ui-component"]],
     url: "https://chanhdai.com/components",
@@ -288,6 +288,14 @@ export const frontendLinks: Tool[] = [
     url: "https://frimousse.liveblocks.io/",
   },
   {
+    title: "Frontend Practice",
+    category: CATEGORIES.frontend,
+    description:
+      "Take your frontend skills to the next level by recreating real websites from real companies.",
+    subtitle: "Become a better frontend developer.",
+    url: "https://www.frontendpractice.com/",
+  },
+  {
     title: "Gradienty",
     category: CATEGORIES.frontend,
     description:
@@ -310,14 +318,14 @@ export const frontendLinks: Tool[] = [
     tags: [TAGS.animation],
     url: "https://gsap.com/",
   },
+
   {
     title: "Hero Patterns",
     author: "Steve Schoger",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.frontend,
     description: "Free repeatable SVG background patterns for your web projects",
     url: "https://heropatterns.com/",
   },
-
   {
     title: "HTMLrev",
     category: CATEGORIES.frontend,
@@ -440,6 +448,13 @@ export const frontendLinks: Tool[] = [
       "Beautifully designed components built with Ark UI and Panda CSS that work with a variety of JS frameworks.",
     tags: [TAGS["ui-component"]],
     url: "https://park-ui.com/",
+  },
+  {
+    title: "PDFSlick",
+    author: "Vancho Stojkov",
+    category: CATEGORIES.frontend,
+    description: "View and Interact with PDFs in React, SolidJS, Svelte and JavaScript apps.",
+    url: "https://pdfslick.dev/",
   },
   {
     title: "phantom-ui",
@@ -577,6 +592,14 @@ export const frontendLinks: Tool[] = [
     url: "https://spline.design/",
   },
   {
+    title: "StyleSeed",
+    category: CATEGORIES.frontend,
+    description:
+      "Design engine for vibe coding — it teaches Claude Code, Codex, and Cursor design judgment (74 rules), not just components. A drop-in React design system with 7 brand skins and a named motion system. MIT licensed.",
+    subtitle: "Design engine for vibe coding",
+    url: "https://styleseed-demo.vercel.app/",
+  },
+  {
     title: "SVGator",
     category: CATEGORIES.frontend,
     description:
@@ -609,6 +632,14 @@ export const frontendLinks: Tool[] = [
       "Get free-to-use Prebuilt React components powered by Tailwind CSS & Framer Motion. Modern, Minimal and customizable. Just copy, paste and you're ready to go!",
     tags: [TAGS["ui-component"]],
     url: "https://syntaxui.com/",
+  },
+  {
+    title: "termcn",
+    category: CATEGORIES.frontend,
+    description:
+      "A collection of beautifully designed, accessible, and customizable terminal UI components. Built on Ink and OpenTUI. Works with shadcn/ui.",
+    subtitle: "Beautiful terminal UIs, made simple",
+    url: "https://www.termcn.dev/",
   },
   {
     title: "ThemeCN",
@@ -706,7 +737,7 @@ export const frontendLinks: Tool[] = [
   },
   {
     title: "Watermelon UI",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.frontend,
     description:
       "A collection of high-quality React components, dashboards, and UI blocks. Copy and paste production-ready UI with ease.",
     subtitle: "Premium React Components, Dashboards & Blocks",

@@ -12,6 +12,21 @@ export const designLinks: Tool[] = [
     url: "https://graph-easy.online/",
   },
   {
+    title: "AI in Design Report 2026",
+    category: CATEGORIES.design,
+    description:
+      "The second annual report by Designer Fund and Foundation Capital on how design teams are adapting to AI across tooling, craft, and org.",
+    url: "https://stateofaidesign.com/",
+  },
+  {
+    title: "animos",
+    category: CATEGORIES.design,
+    description:
+      "Ready-made animation templates for showcasing your designs. Drop in images or videos, tweak, and export MP4/WebM in your browser.",
+    subtitle: "Motion templates for design showcases",
+    url: "https://animos.app/",
+  },
+  {
     title: "Artkit - Creative Design Tools",
     category: CATEGORIES.design,
     description: "A collection of creative, browser-based tools for images, motion, and graphics.",
@@ -126,6 +141,30 @@ export const designLinks: Tool[] = [
     url: "https://www.cosmos.so/",
   },
   {
+    title: "Craftwork",
+    category: CATEGORIES.design,
+    description:
+      "Design resources for everyone. Freebies and premium web design products, custom illustrations and graphics on one marketplace.",
+    subtitle: "UX/UI kits, illustrations, mockups, fonts and more",
+    url: "https://craftwork.design/",
+  },
+  {
+    title: "CreatoomIFlow",
+    category: CATEGORIES.design,
+    description:
+      "✨ Big collection of premium and free mockups psd for branding, advertising and graphic design! You can get unlimited access to all mockup templates on our site ⭐",
+    subtitle: "ASCIPremium and free mockups psd",
+    url: "https://creatoom.com/",
+  },
+  {
+    title: "CTA.gallery",
+    category: CATEGORIES.design,
+    description:
+      "Explore CTA.gallery for the web's best Call-to-Actions. Perfect for designers, UI/UX experts, and creatives looking for inspiration to craft CTAs that convert.",
+    subtitle: "The Best Call-to-Action Inspiration for Designers",
+    url: "https://www.cta.gallery/",
+  },
+  {
     title: "Dark Themed Web Design Inspiration",
     category: CATEGORIES.design,
     description:
@@ -189,6 +228,13 @@ export const designLinks: Tool[] = [
     subtitle: "Free Dither, Halftone & Pixel Effects Tool",
     tags: [TAGS.ascii],
     url: "https://www.ditther.com/",
+  },
+  {
+    title: "Doodle Fonts",
+    category: CATEGORIES.design,
+    description:
+      "Create, customize, and export personalized fonts by drawing each character with versatile design tools, saving and editing projects with or without login.",
+    url: "https://doodlefonts.app/",
   },
   {
     title: "Dribbble",
@@ -260,6 +306,14 @@ export const designLinks: Tool[] = [
     url: "https://getdesign.md/",
   },
   {
+    title: "Good Microcopy",
+    author: "Richard Sison",
+    category: CATEGORIES.design,
+    description:
+      "Words and messages that provide context and set expectations — that's good microcopy. Curated by @richardsison.",
+    url: "https://goodmicrocopy.com/",
+  },
+  {
     title: "Happy Hues",
     category: CATEGORIES.design,
     description:
@@ -318,6 +372,14 @@ export const designLinks: Tool[] = [
     url: "https://www.khroma.co/",
   },
   {
+    title: "landing.love",
+    category: CATEGORIES.design,
+    description:
+      "Get inspired by an amazing collection of over 2107 animation website designs. With a full-page video recording showcasing the best designs out there.",
+    subtitle: "Showcase of the best 2107 Animation Websites",
+    url: "https://www.landing.love/",
+  },
+  {
     title: "Layers",
     category: CATEGORIES.design,
     description: "Explore the latest design layers from the community.",
@@ -330,6 +392,23 @@ export const designLinks: Tool[] = [
     description: "Draw logos quickly with snapped square and isometric grids.",
     tags: [TAGS.design],
     url: "https://logolattice.com/",
+  },
+  {
+    title: "Logosystem",
+    category: CATEGORIES.design,
+    description:
+      "The biggest logo design library for inspiration. Explore 1,200+ logos, wordmarks, symbols and animated logos by top designers — filter by color, style, shape and background to find the logo inspiration you're looking for.",
+    subtitle: "Logo Inspiration — 1,200+ Logos & Animated Logos",
+    url: "https://logosystem.co/",
+  },
+  {
+    title: "ls.graphics",
+    category: CATEGORIES.design,
+    description:
+      "Discover a vast collection of free and premium mockups for Photoshop and Figma. Enhance your design projects with high-quality device and packaging mockups",
+    subtitle: "Highest quality mockups for graphic and UI designers",
+    tags: [TAGS.mockup],
+    url: "https://www.ls.graphics/",
   },
   {
     title: "Lummi",
@@ -387,8 +466,16 @@ export const designLinks: Tool[] = [
     url: "https://mobbin.com/",
   },
   {
+    title: "Morflax Studio",
+    category: CATEGORIES.design,
+    description:
+      "Create 3D mockups and motion graphics directly in your browser - devices, clothing, branding and abstract visuals. Export up to 4K. No installs.",
+    subtitle: "3D Mockups & Motion in Your Browser",
+    url: "https://studio.morflax.com/",
+  },
+  {
     title: "Navbar Gallery",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.design,
     description:
       "Navbar Gallery is a collection of the best website navbar inspiration designs on the web. Find the ideal navigation example for your design from our collection.",
     subtitle: "Navigation Design Inspiration",
@@ -432,6 +519,14 @@ export const designLinks: Tool[] = [
       "Free color tool for creatives and color lovers. Create color palettes and preview them on UI/UX, Illustrations, Web, Apps, Branding and other designs.",
     tags: [TAGS.color],
     url: "https://palettemaker.com/",
+  },
+  {
+    title: "PaperAnimator.com",
+    category: CATEGORIES.design,
+    description:
+      "Apply paper effect to any photo in seconds. Customize paper animation and export with green screen background.",
+    subtitle: "Turn your images into paper animations",
+    url: "https://paperanimator.com/",
   },
   {
     title: "PaperMe",
@@ -514,7 +609,7 @@ export const designLinks: Tool[] = [
   },
   {
     title: "Selected",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.design,
     description:
       "Live ranking of the best Framer marketplace templates. Discover top free and premium Framer templates, creators and categories — updated daily.",
     subtitle: "Framer Templates Ranking & Marketplace Directory",
@@ -622,7 +717,7 @@ export const designLinks: Tool[] = [
   },
   {
     title: "Ultramock",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.design,
     description:
       "Create premium, highly customizable videos, visuals and 3D mockups that showcase UI designs, websites and apps – for free!",
     subtitle: "Turn product screens into premium visuals",
@@ -647,7 +742,7 @@ export const designLinks: Tool[] = [
   },
   {
     title: "ux dictionary",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.design,
     description:
       "A dialog overlay that interrupts the current flow to capture attention and require an explicit action before returning to the main interface.",
     url: "https://ux-dictionary.vercel.app/",

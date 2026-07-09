@@ -92,7 +92,7 @@ export const mediaLinks: Tool[] = [
   },
   {
     title: "Pngfile",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.media,
     description:
       "Download 100% free PNG images with transparent backgrounds! Browse thousands of high-resolution PNGs for designers, marketers & content creators. No attribution required!.",
     url: "https://pngfile.net/",
@@ -116,7 +116,7 @@ export const mediaLinks: Tool[] = [
   },
   {
     title: "TopPNG",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.media,
     description:
       "TopPng Contain Millions of high quality free png images, icons, vectors and background images, enjoy with free download for all design needs.",
     subtitle: "Download Free PNG images, icons and backgrounds",
@@ -132,7 +132,7 @@ export const mediaLinks: Tool[] = [
   },
   {
     title: "Vecteezy",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.media,
     description:
       "Explore millions of royalty free vectors, images, stock photos and videos! Get the perfect background, graphic, clipart, picture or drawing for your design.",
     subtitle: "Download Free Vectors, Images, Photos & Videos",
@@ -140,7 +140,7 @@ export const mediaLinks: Tool[] = [
   },
   {
     title: "wannathis.one",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.media,
     description:
       "High-quality mockups and 3d illustrations for digital products. Free and premium assets to help creators work faster and make projects standout.",
     subtitle: "High Quality Mockups and 3D Illustrations for Design Projects",

@@ -40,6 +40,14 @@ export const developmentLinks: Tool[] = [
     url: "https://www.bestalternative.dev/en",
   },
   {
+    title: "BORED",
+    category: CATEGORIES.dev,
+    description:
+      "Discover the most fun, interesting and cool websites on the internet. Hundreds of hand-picked funny sites, free games, educational resources and things to do when you're bored.",
+    subtitle: "Fun, interesting & cool websites to explore when bored",
+    url: "https://www.bored.com/",
+  },
+  {
     title: "Bundlephobia",
     category: CATEGORIES.dev,
     description:
@@ -173,6 +181,16 @@ export const developmentLinks: Tool[] = [
     url: "https://directus.com/",
   },
   {
+    title: "Dub",
+    author: "Dub Inc",
+    category: CATEGORIES.dev,
+    description:
+      "Dub is the modern link attribution platform for short links, conversion tracking, and affiliate programs. Loved by world-class marketing teams like Framer, Perplexity, Superhuman, Twilio, Buffer and more.",
+    favicon: "/github.svg",
+    subtitle: "The Modern Link Attribution Platform",
+    url: "https://github.com/dubinc/dub",
+  },
+  {
     title: "explainx.ai Tools",
     category: CATEGORIES.dev,
     description:
@@ -223,12 +241,25 @@ export const developmentLinks: Tool[] = [
     url: "https://git.gaozih.com/",
   },
   {
+    title: "GitReverse",
+    category: CATEGORIES.dev,
+    description:
+      "Steal any code and make it your own. Paste a GitHub URL and get a plain-language coding agent prompt you can build from.",
+    url: "https://www.gitreverse.com/",
+  },
+  {
     title: "here.now | Instant web hosting for agents",
     category: CATEGORIES.dev,
     description:
       "Publish any file or folder to the web in seconds from your AI agent. Free, no sign-up required. Just tell your agent to publish to here.now and get a live URL back instantly.",
     tags: [TAGS["tool"]],
     url: "https://here.now/",
+  },
+  {
+    title: "High Scalability",
+    category: CATEGORIES.dev,
+    description: "Building bigger, faster, more reliable websites.",
+    url: "https://highscalability.com/",
   },
   {
     title: "Hoppscotch",
@@ -293,6 +324,14 @@ export const developmentLinks: Tool[] = [
       "Automatically generates beautiful and easy-to-read ER diagrams from your database.",
     tags: [TAGS.development],
     url: "https://liambx.com/",
+  },
+  {
+    title: "Macfolio",
+    category: CATEGORIES.dev,
+    description:
+      "Discover the best software, hardware, workspace setups, books, videos, and posts for the Mac ecosystem.",
+    subtitle: "Curated Mac Discoveries",
+    url: "https://macfolio.com/",
   },
   {
     title: "MAKE MY DRIVE FUN",
@@ -400,6 +439,14 @@ export const developmentLinks: Tool[] = [
     url: "https://physicallybased.info/",
   },
   {
+    title: "PocketBase",
+    category: CATEGORIES.dev,
+    description:
+      "Open Source backend in 1 file with realtime database, authentication, file storage and admin dashboard",
+    subtitle: "Open Source backend in 1 file",
+    url: "https://pocketbase.io/",
+  },
+  {
     title: "Postgres Sandbox",
     category: CATEGORIES.dev,
     description: "In-browser Postgres sandbox with AI assistance",
@@ -422,6 +469,14 @@ export const developmentLinks: Tool[] = [
       "Export OpenStreetMap Data to DXF. Get the CAD geometry of any site on Earth — in just 3 steps.",
     tags: [TAGS.map],
     url: "https://maps.rayon.design/",
+  },
+  {
+    title: "relic",
+    category: CATEGORIES.dev,
+    description:
+      "Manage and share secrets. Encrypted on your device, never exposed to anyone else. Not even us.",
+    subtitle: "The secrets layer developers actually trust",
+    url: "https://relic.so/",
   },
   {
     title: "replacements.fyi",
@@ -569,7 +624,6 @@ export const developmentLinks: Tool[] = [
     tags: [TAGS["tool"]],
     url: "https://vaultandzn.com/pages/all-tools",
   },
-
   {
     title: "vid2ascii",
     category: CATEGORIES.dev,
@@ -577,6 +631,7 @@ export const developmentLinks: Tool[] = [
     tags: [TAGS["tool"]],
     url: "https://www.vid2ascii.com/",
   },
+
   {
     title: "web.dev",
     category: CATEGORIES.dev,
@@ -599,6 +654,14 @@ export const developmentLinks: Tool[] = [
     subtitle: "Grow your app on Autopilot",
     tags: [TAGS["tool"]],
     url: "https://winwinkit.com/",
+  },
+  {
+    title: "Workout Cool",
+    category: CATEGORIES.dev,
+    description:
+      "Create free workout routines with our comprehensive exercise database. Track your progress and achieve your fitness goals. 🏋️",
+    subtitle: "Build Your Perfect Workout",
+    url: "https://www.workout.cool/en",
   },
   {
     title: "yt-dlp/yt-dlp",

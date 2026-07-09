@@ -88,7 +88,7 @@ export const aiLinks: Tool[] = [
   },
   {
     title: "CS 329S: Machine Learning Systems Design",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.ai,
     description:
       "This course aims to provide an iterative framework for developing real-world machine learning systems that are deployable, reliable, and scalable.",
     url: "https://stanford-cs329s.github.io/syllabus.html",
@@ -102,6 +102,13 @@ export const aiLinks: Tool[] = [
     subtitle: "Leading Agentic Workflow Builder",
     tags: [TAGS.ai],
     url: "https://dify.ai/",
+  },
+  {
+    title: "Distill",
+    category: CATEGORIES.ai,
+    description: "Articles about Machine Learning",
+    subtitle: "Latest articles about machine learning",
+    url: "https://distill.pub/",
   },
   {
     title: "eve",
@@ -173,6 +180,13 @@ export const aiLinks: Tool[] = [
     subtitle: "Scrape, Extract, Crawl, Search Web Data With No-Code",
     tags: [TAGS.ai],
     url: "https://www.maxun.dev/",
+  },
+  {
+    title: "Neural Networks: Zero To Hero",
+    author: "Andrej Karpathy",
+    category: CATEGORIES.ai,
+    description: "A course by Andrej Karpathy on building neural networks, from scratch, in code.",
+    url: "https://karpathy.ai/zero-to-hero.html",
   },
   {
     title: "ollama",
