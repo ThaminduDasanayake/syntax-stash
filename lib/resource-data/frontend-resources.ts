@@ -86,6 +86,14 @@ export const frontendLinks: Tool[] = [
     url: "https://auto-animate.formkit.com/",
   },
   {
+    title: "beUI",
+    category: CATEGORIES.dev,
+    description:
+      "The motion toolkit for React and Next.js. Free, open-source, shadcn-compatible components built on Framer Motion and Tailwind CSS. Copy-paste the source or install with the shadcn CLI.",
+    subtitle: "The motion toolkit for React & Next.js",
+    url: "https://beui.dev/",
+  },
+  {
     title: "Bklit UI",
     category: CATEGORIES.frontend,
     description:
@@ -125,6 +133,14 @@ export const frontendLinks: Tool[] = [
       "Componentry is a free, open-source React UI component library by Harsh Jadhav. Beautiful, animated, copy-paste components built with Tailwind CSS, TypeScript, and Framer Motion. The best UI components for modern web applications.",
     tags: [TAGS["ui-component"]],
     url: "https://www.componentry.fun/",
+  },
+  {
+    title: "Components – Chánh Đại",
+    author: "Chánh Đại",
+    category: CATEGORIES.dev,
+    description: "Pixel-perfect, uniquely crafted.",
+    tags: [TAGS.animation, TAGS["ui-component"]],
+    url: "https://chanhdai.com/components",
   },
   {
     title: "Cover Flow",
@@ -295,6 +311,14 @@ export const frontendLinks: Tool[] = [
     url: "https://gsap.com/",
   },
   {
+    title: "Hero Patterns",
+    author: "Steve Schoger",
+    category: CATEGORIES.dev,
+    description: "Free repeatable SVG background patterns for your web projects",
+    url: "https://heropatterns.com/",
+  },
+
+  {
     title: "HTMLrev",
     category: CATEGORIES.frontend,
     description:
@@ -319,7 +343,6 @@ export const frontendLinks: Tool[] = [
     tags: [TAGS["ui-component"]],
     url: "https://intentui.com/",
   },
-
   {
     title: "Jitter",
     category: CATEGORIES.frontend,
@@ -680,6 +703,15 @@ export const frontendLinks: Tool[] = [
     favicon: "https://visgl.github.io/react-google-maps/images/visgl-logo-dark.png",
     tags: [TAGS.map],
     url: "https://visgl.github.io/react-google-maps/",
+  },
+  {
+    title: "Watermelon UI",
+    category: CATEGORIES.dev,
+    description:
+      "A collection of high-quality React components, dashboards, and UI blocks. Copy and paste production-ready UI with ease.",
+    subtitle: "Premium React Components, Dashboards & Blocks",
+    tags: [TAGS.animation, TAGS["ui-component"]],
+    url: "https://ui.watermelon.sh/",
   },
   {
     title: "WebGradients",

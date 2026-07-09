@@ -387,6 +387,14 @@ export const designLinks: Tool[] = [
     url: "https://mobbin.com/",
   },
   {
+    title: "Navbar Gallery",
+    category: CATEGORIES.dev,
+    description:
+      "Navbar Gallery is a collection of the best website navbar inspiration designs on the web. Find the ideal navigation example for your design from our collection.",
+    subtitle: "Navigation Design Inspiration",
+    url: "https://www.navbar.gallery/",
+  },
+  {
     title: "Neuform",
     category: CATEGORIES.design,
     description:
@@ -505,6 +513,14 @@ export const designLinks: Tool[] = [
     url: "https://savee.com/",
   },
   {
+    title: "Selected",
+    category: CATEGORIES.dev,
+    description:
+      "Live ranking of the best Framer marketplace templates. Discover top free and premium Framer templates, creators and categories — updated daily.",
+    subtitle: "Framer Templates Ranking & Marketplace Directory",
+    url: "https://selected.site/",
+  },
+  {
     title: "SPACE TYPE GENERATOR",
     category: CATEGORIES.design,
     description: "A kinetic type generator from kielm",
@@ -605,6 +621,15 @@ export const designLinks: Tool[] = [
     url: "https://typefaceapp.com/",
   },
   {
+    title: "Ultramock",
+    category: CATEGORIES.dev,
+    description:
+      "Create premium, highly customizable videos, visuals and 3D mockups that showcase UI designs, websites and apps – for free!",
+    subtitle: "Turn product screens into premium visuals",
+    tags: [TAGS.mockup],
+    url: "https://www.ultramock.io/",
+  },
+  {
     title: "UNCUT.wtf",
     category: CATEGORIES.design,
     description:
@@ -619,6 +644,13 @@ export const designLinks: Tool[] = [
       "Create enchanting WebGL effects, motion, and interactivity — in minutes, not hours. Unicorn Studio makes WebGL easy for designers to embed in Framer, Webflow, or any website.",
     tags: [TAGS.design],
     url: "https://www.unicorn.studio/",
+  },
+  {
+    title: "ux dictionary",
+    category: CATEGORIES.dev,
+    description:
+      "A dialog overlay that interrupts the current flow to capture attention and require an explicit action before returning to the main interface.",
+    url: "https://ux-dictionary.vercel.app/",
   },
   {
     title: "Wiretext",

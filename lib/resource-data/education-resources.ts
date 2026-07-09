@@ -15,6 +15,12 @@ export const educationLinks: Tool[] = [
     url: "https://github.com/asabeneh/30-days-of-python",
   },
   {
+    title: "30 seconds of code",
+    category: CATEGORIES.dev,
+    description: "Browse 694 coding articles to level up your coding skills on 30 seconds of code.",
+    url: "https://www.30secondsofcode.org/",
+  },
+  {
     title: "33 JS Concepts",
     author: "leonardomso",
     category: CATEGORIES.education,
@@ -249,6 +255,13 @@ export const educationLinks: Tool[] = [
     url: "https://github.com/lydiahallie/javascript-questions",
   },
   {
+    title: "Karl Koch | Writing",
+    author: "Karl Koch",
+    category: CATEGORIES.dev,
+    description: "Thoughts on design, development and career progression",
+    url: "https://karlkoch.me/writing",
+  },
+  {
     title: "Learn Anything",
     category: CATEGORIES.education,
     description:
@@ -297,6 +310,14 @@ export const educationLinks: Tool[] = [
     favicon: "/github.svg",
     tags: [TAGS.education],
     url: "https://github.com/GokuMohandas/Made-With-ML",
+  },
+  {
+    title: "Major League Hacking",
+    category: CATEGORIES.dev,
+    description:
+      "Major League Hacking empowers students through hackathons, developer programs, and global community events for the next generation of engineers.",
+    subtitle: "Hackathons and Developer Programs",
+    url: "https://www.mlh.com/",
   },
   {
     title: "Mind Luster",
@@ -412,6 +433,14 @@ export const educationLinks: Tool[] = [
     subtitle: "Keyboard Shortcut Training for Figma, VSCode, Notion & 30+ Tools",
     tags: [TAGS.education],
     url: "https://www.shortcutfoo.com/",
+  },
+  {
+    title: "Start UX Design",
+    category: CATEGORIES.dev,
+    description:
+      "Trusted by 8100+ Learners. Become a Confident UX/UI Designer. Learn what truly matters—real UX/UI skills, real projects, no wasted time.",
+    subtitle: "Build job-ready design skills",
+    url: "https://startuxdesign.com/",
   },
   {
     title: "Staying Code Visualization Platform",

@@ -91,6 +91,13 @@ export const mediaLinks: Tool[] = [
     url: "https://pattern.monster/",
   },
   {
+    title: "Pngfile",
+    category: CATEGORIES.dev,
+    description:
+      "Download 100% free PNG images with transparent backgrounds! Browse thousands of high-resolution PNGs for designers, marketers & content creators. No attribution required!.",
+    url: "https://pngfile.net/",
+  },
+  {
     title: "TechIcons",
     category: CATEGORIES.media,
     description: "Download, copy and paste tech icons in SVG and PNG format for your projects.",
@@ -108,11 +115,36 @@ export const mediaLinks: Tool[] = [
     url: "https://thesvg.org/",
   },
   {
+    title: "TopPNG",
+    category: CATEGORIES.dev,
+    description:
+      "TopPng Contain Millions of high quality free png images, icons, vectors and background images, enjoy with free download for all design needs.",
+    subtitle: "Download Free PNG images, icons and backgrounds",
+    url: "https://toppng.com/",
+  },
+  {
     title: "unDraw",
     category: CATEGORIES.media,
     description:
       "Open-source illustrations for any idea you can imagine and create. Build beautiful websites, products and applications with your color, for free.",
     tags: [TAGS.image],
     url: "https://undraw.co/",
+  },
+  {
+    title: "Vecteezy",
+    category: CATEGORIES.dev,
+    description:
+      "Explore millions of royalty free vectors, images, stock photos and videos! Get the perfect background, graphic, clipart, picture or drawing for your design.",
+    subtitle: "Download Free Vectors, Images, Photos & Videos",
+    url: "https://www.vecteezy.com/",
+  },
+  {
+    title: "wannathis.one",
+    category: CATEGORIES.dev,
+    description:
+      "High-quality mockups and 3d illustrations for digital products. Free and premium assets to help creators work faster and make projects standout.",
+    subtitle: "High Quality Mockups and 3D Illustrations for Design Projects",
+    tags: [TAGS.mockup],
+    url: "https://wannathis.one/",
   },
 ];

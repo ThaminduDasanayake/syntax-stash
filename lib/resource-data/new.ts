@@ -4,12 +4,7 @@ import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
 export const newLinks: Tool[] = [
-  {
-    title: "30 seconds of code",
-    category: CATEGORIES.dev,
-    description: "Browse 694 coding articles to level up your coding skills on 30 seconds of code.",
-    url: "https://www.30secondsofcode.org/",
-  },
+
   {
     title: "AI in Design Report 2026",
     category: CATEGORIES.dev,
@@ -25,20 +20,7 @@ export const newLinks: Tool[] = [
     subtitle: "Motion templates for design showcases",
     url: "https://animos.app/",
   },
-  {
-    title: "ASCIIFlow",
-    category: CATEGORIES.dev,
-    description: "Infinite",
-    url: "https",
-  },
-  {
-    title: "beUI",
-    category: CATEGORIES.dev,
-    description:
-      "The motion toolkit for React and Next.js. Free, open-source, shadcn-compatible components built on Framer Motion and Tailwind CSS. Copy-paste the source or install with the shadcn CLI.",
-    subtitle: "The motion toolkit for React & Next.js",
-    url: "https://beui.dev/",
-  },
+
   {
     title: "BORED",
     category: CATEGORIES.dev,
@@ -47,14 +29,7 @@ export const newLinks: Tool[] = [
     subtitle: "Fun, interesting & cool websites to explore when bored",
     url: "https://www.bored.com/",
   },
-  {
-    title: "Components – Chánh Đại",
-    author: "Chánh Đại",
-    category: CATEGORIES.dev,
-    description: "Pixel-perfect, uniquely crafted.",
-    tags: [TAGS.animation, TAGS["ui-component"]],
-    url: "https://chanhdai.com/components",
-  },
+
   {
     title: "Cooldock",
     category: CATEGORIES.dev,
@@ -79,13 +54,7 @@ export const newLinks: Tool[] = [
     subtitle: "ASCIPremium and free mockups psd",
     url: "https://creatoom.com/",
   },
-  {
-    title: "CS 329S: Machine Learning Systems Design",
-    category: CATEGORIES.dev,
-    description:
-      "This course aims to provide an iterative framework for developing real-world machine learning systems that are deployable, reliable, and scalable.",
-    url: "https://stanford-cs329s.github.io/syllabus.html",
-  },
+
   {
     title: "CTA.gallery",
     category: CATEGORIES.dev,
@@ -150,33 +119,15 @@ export const newLinks: Tool[] = [
       "Words and messages that provide context and set expectations — that's good microcopy. Curated by @richardsison.",
     url: "https://goodmicrocopy.com/",
   },
-  {
-    title: "Hero Patterns",
-    author: "Steve Schoger",
-    category: CATEGORIES.dev,
-    description: "Free repeatable SVG background patterns for your web projects",
-    url: "https://heropatterns.com/",
-  },
+
   {
     title: "High Scalability",
     category: CATEGORIES.dev,
     description: "Building bigger, faster, more reliable websites.",
     url: "https://highscalability.com/",
   },
-  {
-    title: "ilovecreatives",
-    category: CATEGORIES.dev,
-    description:
-      "The Digital Trade School for Slashies looking to stack their creative skills alongside a good vibes community. Take an online course, connect with creatives, find creative jobs and events.",
-    url: "https://ilovecreatives.com/",
-  },
-  {
-    title: "Karl Koch | Writing",
-    author: "Karl Koch",
-    category: CATEGORIES.dev,
-    description: "Thoughts on design, development and career progression",
-    url: "https://karlkoch.me/writing",
-  },
+
+
   {
     title: "landing.love",
     category: CATEGORIES.dev,
@@ -210,14 +161,7 @@ export const newLinks: Tool[] = [
     subtitle: "Curated Mac Discoveries",
     url: "https://macfolio.com/",
   },
-  {
-    title: "Major League Hacking",
-    category: CATEGORIES.dev,
-    description:
-      "Major League Hacking empowers students through hackathons, developer programs, and global community events for the next generation of engineers.",
-    subtitle: "Hackathons and Developer Programs",
-    url: "https://www.mlh.com/",
-  },
+
   {
     title: "Morflax Studio",
     category: CATEGORIES.dev,
@@ -226,14 +170,7 @@ export const newLinks: Tool[] = [
     subtitle: "3D Mockups & Motion in Your Browser",
     url: "https://studio.morflax.com/",
   },
-  {
-    title: "Navbar Gallery",
-    category: CATEGORIES.dev,
-    description:
-      "Navbar Gallery is a collection of the best website navbar inspiration designs on the web. Find the ideal navigation example for your design from our collection.",
-    subtitle: "Navigation Design Inspiration",
-    url: "https://www.navbar.gallery/",
-  },
+
   {
     title: "Neural Networks: Zero To Hero",
     author: "Andrej Karpathy",
@@ -256,13 +193,7 @@ export const newLinks: Tool[] = [
     description: "View and Interact with PDFs in React, SolidJS, Svelte and JavaScript apps.",
     url: "https://pdfslick.dev/",
   },
-  {
-    title: "Pngfile",
-    category: CATEGORIES.dev,
-    description:
-      "Download 100% free PNG images with transparent backgrounds! Browse thousands of high-resolution PNGs for designers, marketers & content creators. No attribution required!.",
-    url: "https://pngfile.net/",
-  },
+
   {
     title: "PocketBase",
     category: CATEGORIES.dev,
@@ -279,22 +210,8 @@ export const newLinks: Tool[] = [
     subtitle: "The secrets layer developers actually trust",
     url: "https://relic.so/",
   },
-  {
-    title: "Selected",
-    category: CATEGORIES.dev,
-    description:
-      "Live ranking of the best Framer marketplace templates. Discover top free and premium Framer templates, creators and categories — updated daily.",
-    subtitle: "Framer Templates Ranking & Marketplace Directory",
-    url: "https://selected.site/",
-  },
-  {
-    title: "Start UX Design",
-    category: CATEGORIES.dev,
-    description:
-      "Trusted by 8100+ Learners. Become a Confident UX/UI Designer. Learn what truly matters—real UX/UI skills, real projects, no wasted time.",
-    subtitle: "Build job-ready design skills",
-    url: "https://startuxdesign.com/",
-  },
+
+
   {
     title: "StyleSeed",
     category: CATEGORIES.dev,
@@ -311,64 +228,12 @@ export const newLinks: Tool[] = [
     subtitle: "Beautiful terminal UIs, made simple",
     url: "https://www.termcn.dev/",
   },
-  {
-    title: "TopPNG",
-    category: CATEGORIES.dev,
-    description:
-      "TopPng Contain Millions of high quality free png images, icons, vectors and background images, enjoy with free download for all design needs.",
-    subtitle: "Download Free PNG images, icons and backgrounds",
-    url: "https://toppng.com/",
-  },
-  {
-    title: "Trigger.dev",
-    category: CATEGORIES.dev,
-    description:
-      "Trigger.dev is the open source platform for building AI workflows in TypeScript. Long-running tasks with retries, queues, observability, and elastic scaling.",
-    subtitle: "Build and deploy fully-managed AI agents and workflows.",
-    url: "https://trigger.dev/",
-  },
-  {
-    title: "Ultramock",
-    category: CATEGORIES.dev,
-    description:
-      "Create premium, highly customizable videos, visuals and 3D mockups that showcase UI designs, websites and apps – for free!",
-    subtitle: "Turn product screens into premium visuals",
-    tags: [TAGS.mockup],
-    url: "https://www.ultramock.io/",
-  },
-  {
-    title: "ux dictionary",
-    category: CATEGORIES.dev,
-    description:
-      "A dialog overlay that interrupts the current flow to capture attention and require an explicit action before returning to the main interface.",
-    url: "https://ux-dictionary.vercel.app/",
-  },
-  {
-    title: "Vecteezy",
-    category: CATEGORIES.dev,
-    description:
-      "Explore millions of royalty free vectors, images, stock photos and videos! Get the perfect background, graphic, clipart, picture or drawing for your design.",
-    subtitle: "Download Free Vectors, Images, Photos & Videos",
-    url: "https://www.vecteezy.com/",
-  },
-  {
-    title: "wannathis.one",
-    category: CATEGORIES.dev,
-    description:
-      "High-quality mockups and 3d illustrations for digital products. Free and premium assets to help creators work faster and make projects standout.",
-    subtitle: "High Quality Mockups and 3D Illustrations for Design Projects",
-    tags: [TAGS.mockup],
-    url: "https://wannathis.one/",
-  },
-  {
-    title: "Watermelon UI",
-    category: CATEGORIES.dev,
-    description:
-      "A collection of high-quality React components, dashboards, and UI blocks. Copy and paste production-ready UI with ease.",
-    subtitle: "Premium React Components, Dashboards & Blocks",
-    tags: [TAGS.animation, TAGS["ui-component"]],
-    url: "https://ui.watermelon.sh/",
-  },
+
+
+
+
+
+
   {
     title: "Workout Cool",
     category: CATEGORIES.dev,

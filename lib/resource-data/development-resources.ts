@@ -239,6 +239,13 @@ export const developmentLinks: Tool[] = [
     url: "https://hoppscotch.io/",
   },
   {
+    title: "ilovecreatives",
+    category: CATEGORIES.dev,
+    description:
+      "The Digital Trade School for Slashies looking to stack their creative skills alongside a good vibes community. Take an online course, connect with creatives, find creative jobs and events.",
+    url: "https://ilovecreatives.com/",
+  },
+  {
     title: "IMG.LY SDK",
     category: CATEGORIES.dev,
     description:
@@ -544,6 +551,14 @@ export const developmentLinks: Tool[] = [
       "Free sharing of photos, videos and documents. Send large files instantly with a link or email. Simple, fast and secure file sharing with Transfer.zip.",
     tags: [TAGS["tool"]],
     url: "https://transfer.zip/",
+  },
+  {
+    title: "Trigger.dev",
+    category: CATEGORIES.dev,
+    description:
+      "Trigger.dev is the open source platform for building AI workflows in TypeScript. Long-running tasks with retries, queues, observability, and elastic scaling.",
+    subtitle: "Build and deploy fully-managed AI agents and workflows.",
+    url: "https://trigger.dev/",
   },
   {
     title: "Vault andzn",
