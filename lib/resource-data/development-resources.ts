@@ -23,6 +23,17 @@ export const developmentLinks: Tool[] = [
     url: "https://www.talater.com/annyang/",
   },
   {
+    title: "Appwrite",
+    author: "Appwrite",
+    category: CATEGORIES.dev,
+    description:
+      "Build like a team of hundreds with Appwrite's all-in-one, open-source infrastructure. Launch in minutes, use any framework, and scale affordably with Auth, Database, Storage, Functions, Realtime, Messaging, and Sites for static sites, SSR, and CSR frontends.",
+    favicon: "/github.svg",
+    subtitle: "Build faster and scale bigger than ever",
+    tags: [TAGS.backend, TAGS.development],
+    url: "https://appwrite.io/",
+  },
+  {
     title: "Arnis",
     category: CATEGORIES.dev,
     description:
