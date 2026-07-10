@@ -5,6 +5,14 @@ import { CATEGORIES } from "./categories";
 
 export const newLinks: Tool[] = [
   {
+    title: "3dsvg",
+    category: CATEGORIES.dev,
+    description:
+      "Turn any SVG into interactive 3D objects. Animate and export as 4K image or video. 100% free, no account or subscription needed.",
+    subtitle: "The easiest way to turn SVGs into 3D",
+    url: "https://3dsvg.design/",
+  },
+  {
     title: "actuallyEXPLAIN",
     category: CATEGORIES.dev,
     description:
@@ -13,12 +21,27 @@ export const newLinks: Tool[] = [
     url: "https://actuallyexplain.vercel.app/",
   },
   {
+    title: "AI Particle Simulator",
+    category: CATEGORIES.dev,
+    description:
+      "AI Particle Simulator by Casberry India: A high-performance WebGL simulation platform for creative computational artists. Generate, save, and publish massive 3D particle swarms using neural navigation and custom AI logic.",
+    subtitle: "Professional 3D Swarm Simulator",
+    url: "https://particles.casberry.in/",
+  },
+  {
     title: "Anytype",
     category: CATEGORIES.dev,
     description:
       "Create notes, tasks, databases, and chats that only you can access. Your data stays on your device — fully owned, secure, and private. Free to start.",
     subtitle: "A safe haven for digital collaboration",
     url: "https://anytype.io/",
+  },
+  {
+    title: "Brand Assets Generator",
+    category: CATEGORIES.dev,
+    description:
+      "Personal tool by Yordan Stoyanov for generating composed brand asset imagery — circle-mapping experiments, drawing studio, geo-generator, and hero compositions.",
+    url: "https://brand-generator.stoyanov.works/",
   },
   {
     title: "Caveman",
@@ -35,6 +58,21 @@ export const newLinks: Tool[] = [
     url: "https://pages.cloudflare.com/",
   },
   {
+    title: "CodeFlow",
+    category: CATEGORIES.dev,
+    description:
+      "Visualize any GitHub repository's architecture in seconds. See dependencies, blast radius, code ownership, security issues, and design patterns. No installation required.",
+    subtitle: "Open Source Architecture Intelligence",
+    url: "https://codeflow-five.vercel.app/",
+  },
+  {
+    title: "CodePen",
+    category: CATEGORIES.dev,
+    description: "Build, share, and learn JavaScript, CSS, and HTML with our online code editor.",
+    subtitle: "Online Code Editor and Front End Web Developer Community",
+    url: "https://codepen.io/",
+  },
+  {
     title: "Convert to it!",
     category: CATEGORIES.dev,
     description:
@@ -42,10 +80,40 @@ export const newLinks: Tool[] = [
     url: "https://p2r3.github.io/convert/",
   },
   {
+    title: "CSS-Tricks",
+    category: CATEGORIES.dev,
+    description: "A Website About Making Websites",
+    url: "https://css-tricks.com/",
+  },
+  {
+    title: "CSS Battle",
+    category: CATEGORIES.dev,
+    description:
+      "Compete in fun CSS games and challenges. Recreate target images in the shortest CSS code possible — daily CSS practice, real-time CSS battles, and shape/layout challenges. Free to play.",
+    subtitle: "Daily CSS Challenges, Games & Practice for Web Developers",
+    url: "https://cssbattle.dev/",
+  },
+  {
     title: "Deno Deploy",
     category: CATEGORIES.dev,
     description: "One simple platform for anything that runs with JavaScript or Typescript.",
     url: "https://deno.com/deploy",
+  },
+  {
+    title: "designdotmd.directory",
+    category: CATEGORIES.dev,
+    description:
+      "Browse, preview, and install visual identities any coding agent can read. Tokens next to rationale.",
+    subtitle: "The directory of DESIGN.md files for coding agents",
+    url: "https://designdotmd.directory/",
+  },
+  {
+    title: "DesignMD",
+    category: CATEGORIES.dev,
+    description:
+      "Paste a URL. Get a complete DESIGN.md file in seconds. Extract design tokens, typography & component styles — ready for AI coding agents.",
+    subtitle: "Generate DESIGN.md Files with AI",
+    url: "https://designmd.me/",
   },
   {
     title: "Developer Portfolios",
@@ -72,10 +140,26 @@ export const newLinks: Tool[] = [
     url: "https://everythingmoe.com/",
   },
   {
+    title: "Framer University",
+    category: CATEGORIES.dev,
+    description:
+      "Discover the best free Framer resources for your next project, including Framer components, code overrides, animations, and effects. Elevate your Framer website with a curated selection of top-quality Framer assets.",
+    subtitle: "Best Free Framer Resources",
+    url: "https://framer.university/resources",
+  },
+  {
     title: "Gingham Maker",
     category: CATEGORIES.dev,
     description: "A CSS generator for custom gingham patterns",
     url: "https://gingham.laney.tech/",
+  },
+  {
+    title: "GitMastery",
+    category: CATEGORIES.dev,
+    description:
+      "Learn Git commands and concepts through fun, interactive challenges. Practice Git in a safe environment with visual feedback and structured learning paths.",
+    subtitle: "Master Git Through Play | Interactive Git Learning Platform",
+    url: "https://gitmastery.me/",
   },
   {
     title: "Grid Paper",
@@ -114,6 +198,14 @@ export const newLinks: Tool[] = [
     url: "https://www.magicpattern.design/",
   },
   {
+    title: "MotionSites",
+    category: CATEGORIES.dev,
+    description:
+      "MotionSites is the premium library of AI beatiful website prompts, apps and animations for Lovable, Bolt, Cursor, and Claude",
+    subtitle: "Premium Website Prompts",
+    url: "https://motionsites.ai/",
+  },
+  {
     title: "Nokia 3310 Cam",
     category: CATEGORIES.dev,
     description:
@@ -135,6 +227,14 @@ export const newLinks: Tool[] = [
       "Innovative organizations across industries use Micro-Internships to identify, engage, assess and hire high-potential college students and recent graduates.",
     subtitle: "Micro-Internships Connect College Talent and Employers",
     url: "https://www.parkerdewey.com/",
+  },
+  {
+    title: "Pixelbuddha",
+    category: CATEGORIES.dev,
+    description:
+      "We’re Pixelbuddha! And we do design things here: create premium resources, supply the rare stuff, and share freebies with the pro community.",
+    subtitle: "Free Graphic Design Resources",
+    url: "https://pixelbuddha.net/",
   },
   {
     title: "Pixel Pattern Generator",
@@ -159,12 +259,35 @@ export const newLinks: Tool[] = [
     url: "https://render.com/",
   },
   {
+    title: "Scrapling",
+    author: "D4Vinci",
+    category: CATEGORIES.dev,
+    description:
+      "🕷️ An adaptive Web Scraping framework that handles everything from a single request to a full-scale crawl!",
+    favicon: "/github.svg",
+    url: "https://github.com/d4vinci/Scrapling",
+  },
+  {
+    title: "Sharpen",
+    category: CATEGORIES.dev,
+    description: "Millions of practice design prompts to challenge you to think outside the box.",
+    subtitle: "Design Challenge Generator",
+    url: "https://sharpen.design/",
+  },
+  {
     title: "SkySend",
     category: CATEGORIES.dev,
     description:
       "Minimalist, end-to-end encrypted, self-hostable file and note sharing. Zero-knowledge server - files and notes are encrypted in the browser before upload. No accounts, no telemetry, built for speed and security.",
     subtitle: "Encrypted File & Note Sharing",
     url: "https://skysend.app/",
+  },
+  {
+    title: "SQL Squid Game",
+    category: CATEGORIES.dev,
+    description:
+      "As a Data Scientist analyzing Squid Games data, write SQL queries to pass 9 SQL challenges posed to you be the Front Man.",
+    url: "https://datalemur.com/sql-game",
   },
   {
     title: "Super Designer",

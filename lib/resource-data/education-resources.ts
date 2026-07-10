@@ -117,6 +117,16 @@ export const educationLinks: Tool[] = [
     url: "https://github.com/josephmisiti/awesome-machine-learning",
   },
   {
+    title: "Awesome Remote Job",
+    author: "Lukasz Madon",
+    category: CATEGORIES.education,
+    description:
+      "A curated list of awesome remote jobs and resources. Inspired by https://github.com/vinta/awesome-python",
+    favicon: "/github.svg",
+    tags: [TAGS.job],
+    url: "https://github.com/lukasz-madon/awesome-remote-job",
+  },
+  {
     title: "Build Your Own X",
     author: "codecrafters-io",
     category: CATEGORIES.education,
@@ -254,6 +264,16 @@ export const educationLinks: Tool[] = [
     favicon: "/github.svg",
     tags: [TAGS.education],
     url: "https://github.com/lydiahallie/javascript-questions",
+  },
+  {
+    title: "JobList",
+    author: "Roger Oba",
+    category: CATEGORIES.education,
+    description:
+      "A list of websites to find and apply for remote jobs, both freelancing and full-time.",
+    favicon: "/github.svg",
+    tags: [TAGS.job],
+    url: "https://github.com/rogerluan/JobList",
   },
   {
     title: "Karl Koch | Writing",
