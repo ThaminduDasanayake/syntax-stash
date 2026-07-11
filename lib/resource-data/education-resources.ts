@@ -486,6 +486,16 @@ export const educationLinks: Tool[] = [
     url: "https://github.com/donnemartin/system-design-primer",
   },
   {
+    title: "The Algorithms",
+    author: "The Algorithms",
+    category: CATEGORIES.education,
+    description:
+      "Open Source resource for learning Data Structures & Algorithms and their implementation in any Programming Language",
+    favicon: "/github.svg",
+    tags: [TAGS.education],
+    url: "https://github.com/thealgorithms",
+  },
+  {
     title: "The Odin Project",
     category: CATEGORIES.education,
     description:

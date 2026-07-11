@@ -161,6 +161,15 @@ export const aiLinks: Tool[] = [
     url: "https://flueframework.com/",
   },
   {
+    title: "Fooocus",
+    author: "lllyasviel",
+    category: CATEGORIES.ai,
+    description: "Focus on prompting and generating.",
+    favicon: "/github.svg",
+    tags: [TAGS.ai],
+    url: "https://github.com/lllyasviel/Fooocus",
+  },
+  {
     title: "Hands-On Large Language Models",
     author: "HandsOnLLM",
     category: CATEGORIES.ai,
@@ -297,6 +306,16 @@ export const aiLinks: Tool[] = [
     subtitle: "Self-Hosted AI Platform",
     tags: [TAGS.llm, TAGS.platform, TAGS.ui, TAGS["self-hosted"]],
     url: "https://openwebui.com/",
+  },
+  {
+    title: "OpenWiki",
+    author: "LangChain",
+    category: CATEGORIES.ai,
+    description:
+      "OpenWiki is a CLI that writes and maintains agent documentation for your codebase.",
+    favicon: "/github.svg",
+    tags: [TAGS.ai],
+    url: "https://github.com/langchain-ai/openwiki",
   },
   {
     title: "Taste Skill",
