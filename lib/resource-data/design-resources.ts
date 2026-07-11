@@ -79,6 +79,14 @@ export const designLinks: Tool[] = [
     url: "https://www.awwwards.com/",
   },
   {
+    title: "before.click",
+    category: CATEGORIES.design,
+    description:
+      "Curated gallery of the best App Store screenshot designs. Real examples from top iOS apps to help you design screenshots that convert downloads.",
+    subtitle: "App Store Screenshot Design Inspiration",
+    url: "https://before.click/",
+  },
+  {
     title: "Blank",
     category: CATEGORIES.design,
     description: "The fastest Figma UI kit and Design system for your projects.",
@@ -205,6 +213,30 @@ export const designLinks: Tool[] = [
     url: "https://designmd.app/",
   },
   {
+    title: "DesignBookmark",
+    category: CATEGORIES.design,
+    description:
+      "A hand-picked directory of 2,000+ design tools, websites, icons, fonts, mockups and resources, all in one place. Search the whole catalog in seconds.",
+    subtitle: "All-in-one design resources for designers",
+    url: "https://designbookmark.com/",
+  },
+  {
+    title: "DesignMD",
+    category: CATEGORIES.design,
+    description:
+      "Paste a URL. Get a complete DESIGN.md file in seconds. Extract design tokens, typography & component styles — ready for AI coding agents.",
+    subtitle: "Generate DESIGN.md Files with AI",
+    url: "https://designmd.me/",
+  },
+  {
+    title: "Developer Portfolios",
+    author: "emmabostian",
+    category: CATEGORIES.design,
+    description: "A list of developer portfolios for your inspiration",
+    favicon: "/github.svg",
+    url: "https://github.com/emmabostian/developer-portfolios",
+  },
+  {
     title: "Devouring Details",
     category: CATEGORIES.design,
     description: "An interactive reference manual for interaction-curious designers.",
@@ -251,6 +283,13 @@ export const designLinks: Tool[] = [
     subtitle: "Discover the World’s Top Designers & Creative Professionals",
     tags: [TAGS.design],
     url: "https://dribbble.com/",
+  },
+  {
+    title: "dump",
+    category: CATEGORIES.design,
+    description:
+      "Dump your stuff onto a canvas — TextLab bubbles, Pinterest pins, cutouts, mockups.",
+    url: "https://dump.cam/",
   },
   {
     title: "Durves",
@@ -320,6 +359,12 @@ export const designLinks: Tool[] = [
       "Words and messages that provide context and set expectations — that's good microcopy. Curated by @richardsison.",
     tags: [TAGS.design, TAGS.typography],
     url: "https://goodmicrocopy.com/",
+  },
+  {
+    title: "Grid Paper",
+    category: CATEGORIES.design,
+    description: "Printable Grid Paper",
+    url: "https://grid-paper.daverupert.com/",
   },
   {
     title: "Happy Hues",
@@ -396,6 +441,14 @@ export const designLinks: Tool[] = [
     url: "https://layers.to/",
   },
   {
+    title: "loadmo.re",
+    category: CATEGORIES.design,
+    description:
+      "A curated archive of distinctive mobile websites and unconventional digital experiences, by Kim Boutin (Kim Lê Boutin). Exploring alternative approaches to mobile-first interface design since 2021.",
+    subtitle: "Mobile Web Design Archive by Kim Boutin",
+    url: "https://loadmo.re/",
+  },
+  {
     title: "Logo Lattice",
     category: CATEGORIES.design,
     description: "Draw logos quickly with snapped square and isometric grids.",
@@ -428,6 +481,14 @@ export const designLinks: Tool[] = [
     subtitle: "Free AI Stock Images, Illustrations & 3D",
     tags: [TAGS.inspiration],
     url: "https://www.lummi.ai/",
+  },
+  {
+    title: "MagicPattern",
+    category: CATEGORIES.design,
+    description:
+      "Create beautiful background patterns, gradients, blobs and more with a toolbox of 30+ online design tools. Export as SVG, CSS, PNG or JPG. Used by 100,000+ designers & developers.",
+    subtitle: "Beautiful backgrounds, patterns, gradients with 30+ Tools",
+    url: "https://www.magicpattern.design/",
   },
   {
     title: "Maket",
@@ -574,6 +635,13 @@ export const designLinks: Tool[] = [
     url: "https://picular.co/",
   },
   {
+    title: "Pixel Pattern Generator",
+    category: CATEGORIES.design,
+    description:
+      "Create and customize seamless geometric textile patterns inspired by Quechua and Mayan designs with real-time controls and export options.",
+    url: "https://pixel-pattern-generator.figma.site/",
+  },
+  {
     title: "Planner 5D",
     category: CATEGORIES.design,
     description:
@@ -628,6 +696,13 @@ export const designLinks: Tool[] = [
     subtitle: "Framer Templates Ranking & Marketplace Directory",
     tags: [TAGS.design, TAGS.inspiration, TAGS.ui],
     url: "https://selected.site/",
+  },
+  {
+    title: "Sharpen",
+    category: CATEGORIES.design,
+    description: "Millions of practice design prompts to challenge you to think outside the box.",
+    subtitle: "Design Challenge Generator",
+    url: "https://sharpen.design/",
   },
   {
     title: "SPACE TYPE GENERATOR",
@@ -687,6 +762,14 @@ export const designLinks: Tool[] = [
     subtitle: "AI Product Design Agent | UI from a Prompt",
     tags: [TAGS.design],
     url: "https://app.superdesign.dev/",
+  },
+  {
+    title: "Super Designer",
+    category: CATEGORIES.design,
+    description:
+      "30+ free online design tools — generate backgrounds, gradients, CSS patterns, 3D shapes, color palettes & more. No signup, instant PNG/SVG/CSS export.",
+    subtitle: "Free Online Design Tools for Developers & Designers",
+    url: "https://superdesigner.co/",
   },
   {
     title: "Text Diagram",

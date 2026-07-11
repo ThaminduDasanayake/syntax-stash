@@ -272,6 +272,15 @@ export const aiLinks: Tool[] = [
     url: "https://github.com/Open-LLM-VTuber/Open-LLM-VTuber",
   },
   {
+    title: "OpenDataLoader PDF",
+    author: "OpenDataLoader",
+    category: CATEGORIES.ai,
+    description:
+      "Convert PDFs to LLM-ready Markdown and JSON. #1 in benchmarks (0.90 overall). Bounding boxes for citations. Auto-tag untagged PDFs into Tagged PDFs as foundation for PDF/UA workflows. 100% local, open source (Apache-2.0).",
+    subtitle: "PDF Parser for AI-Ready Data | Auto-Tag PDFs for Accessibility",
+    url: "https://opendataloader.org/",
+  },
+  {
     title: "OpenHands",
     author: "OpenHands",
     authorLink: "https://github.com/OpenHands",

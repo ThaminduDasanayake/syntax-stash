@@ -69,6 +69,14 @@ export const educationLinks: Tool[] = [
     url: "https://github.com/KalyanM45/AI-Project-Gallery",
   },
   {
+    title: "alg0.dev",
+    category: CATEGORIES.education,
+    description:
+      "A modern, interactive algorithm visualizer. Learn algorithms through beautiful step-by-step visualizations.",
+    subtitle: "Algorithm Visualizer",
+    url: "https://www.alg0.dev/",
+  },
+  {
     title: "App Ideas",
     author: "florinpop17",
     category: CATEGORIES.education,
@@ -176,6 +184,14 @@ export const educationLinks: Tool[] = [
     url: "https://pll.harvard.edu/course/cs50-introduction-computer-science",
   },
   {
+    title: "CSS Battle",
+    category: CATEGORIES.education,
+    description:
+      "Compete in fun CSS games and challenges. Recreate target images in the shortest CSS code possible — daily CSS practice, real-time CSS battles, and shape/layout challenges. Free to play.",
+    subtitle: "Daily CSS Challenges, Games & Practice for Web Developers",
+    url: "https://cssbattle.dev/",
+  },
+  {
     title: "CSV Vis Tool",
     category: CATEGORIES.education,
     description:
@@ -247,6 +263,22 @@ export const educationLinks: Tool[] = [
       "Open online course on JavaScript based modern web development by University of Helsinki and Houston Inc..",
     tags: [TAGS.education],
     url: "https://fullstackopen.com/en/",
+  },
+  {
+    title: "GitMastery",
+    category: CATEGORIES.education,
+    description:
+      "Learn Git commands and concepts through fun, interactive challenges. Practice Git in a safe environment with visual feedback and structured learning paths.",
+    subtitle: "Master Git Through Play | Interactive Git Learning Platform",
+    url: "https://gitmastery.me/",
+  },
+  {
+    title: "Handshake",
+    category: CATEGORIES.education,
+    description:
+      "The largest expert network for learning, earning, and growing careers in the AI economy, giving everyone an accessible first step into an AI-powered career.",
+    subtitle: "The career network for the AI economy",
+    url: "https://joinhandshake.com/",
   },
   {
     title: "HF Viewer",
@@ -386,6 +418,14 @@ export const educationLinks: Tool[] = [
     url: "https://ohshitgit.com/",
   },
   {
+    title: "Parker Dewey",
+    category: CATEGORIES.education,
+    description:
+      "Innovative organizations across industries use Micro-Internships to identify, engage, assess and hire high-potential college students and recent graduates.",
+    subtitle: "Micro-Internships Connect College Talent and Employers",
+    url: "https://www.parkerdewey.com/",
+  },
+  {
     title: "Powerful Websites",
     category: CATEGORIES.education,
     description:
@@ -456,6 +496,13 @@ export const educationLinks: Tool[] = [
     subtitle: "Keyboard Shortcut Training for Figma, VSCode, Notion & 30+ Tools",
     tags: [TAGS.education],
     url: "https://www.shortcutfoo.com/",
+  },
+  {
+    title: "SQL Squid Game",
+    category: CATEGORIES.education,
+    description:
+      "As a Data Scientist analyzing Squid Games data, write SQL queries to pass 9 SQL challenges posed to you be the Front Man.",
+    url: "https://datalemur.com/sql-game",
   },
   {
     title: "Start UX Design",

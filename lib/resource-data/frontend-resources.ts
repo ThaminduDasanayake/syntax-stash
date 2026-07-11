@@ -128,6 +128,13 @@ export const frontendLinks: Tool[] = [
     url: "https://clonify.io/",
   },
   {
+    title: "CodePen",
+    category: CATEGORIES.frontend,
+    description: "Build, share, and learn JavaScript, CSS, and HTML with our online code editor.",
+    subtitle: "Online Code Editor and Front End Web Developer Community",
+    url: "https://codepen.io/",
+  },
+  {
     title: "Componentry",
     category: CATEGORIES.frontend,
     description:
@@ -149,6 +156,12 @@ export const frontendLinks: Tool[] = [
     description: "iOS-like Cover Flow for React.",
     tags: [TAGS["ui-component"]],
     url: "https://coverflow.ashishgogula.in/",
+  },
+  {
+    title: "CSS-Tricks",
+    category: CATEGORIES.frontend,
+    description: "A Website About Making Websites",
+    url: "https://css-tricks.com/",
   },
   {
     title: "CSS Gradient",
@@ -281,6 +294,14 @@ export const frontendLinks: Tool[] = [
     url: "https://www.formscn.space/",
   },
   {
+    title: "Framer University",
+    category: CATEGORIES.frontend,
+    description:
+      "Discover the best free Framer resources for your next project, including Framer components, code overrides, animations, and effects. Elevate your Framer website with a curated selection of top-quality Framer assets.",
+    subtitle: "Best Free Framer Resources",
+    url: "https://framer.university/resources",
+  },
+  {
     title: "Frimousse",
     category: CATEGORIES.frontend,
     description:
@@ -296,6 +317,12 @@ export const frontendLinks: Tool[] = [
     subtitle: "Become a better frontend developer.",
     tags: [TAGS.development, TAGS.education, TAGS.ui],
     url: "https://www.frontendpractice.com/",
+  },
+  {
+    title: "Gingham Maker",
+    category: CATEGORIES.frontend,
+    description: "A CSS generator for custom gingham patterns",
+    url: "https://gingham.laney.tech/",
   },
   {
     title: "Gradienty",
@@ -320,7 +347,6 @@ export const frontendLinks: Tool[] = [
     tags: [TAGS.animation],
     url: "https://gsap.com/",
   },
-
   {
     title: "Hero Patterns",
     author: "Steve Schoger",
@@ -347,6 +373,14 @@ export const frontendLinks: Tool[] = [
     url: "https://hypercolor.dev/",
   },
   {
+    title: "Impeccable",
+    category: CATEGORIES.frontend,
+    description:
+      "1 skill, 23 commands, and curated anti-patterns for impeccable frontend design. Works with Cursor, Claude Code, GitHub Copilot, Gemini CLI, and Codex CLI.",
+    subtitle: "The missing upgrade to Anthropic's impeccable skill",
+    url: "https://impeccable.style/",
+  },
+  {
     title: "Intent UI",
     category: CATEGORIES.frontend,
     description:
@@ -364,6 +398,22 @@ export const frontendLinks: Tool[] = [
     url: "https://jitter.video/",
   },
   {
+    title: "Lightswind UI",
+    category: CATEGORIES.frontend,
+    description:
+      "Accelerate your workflow with Lightswind UI. A library of 151+ high-performance,  accessible, and beautifully animated React components and UI kits crafted for Modern Developers.",
+    subtitle: "Beautifully Animated React Components & Modern UI Kits",
+    url: "https://lightswind.com/",
+  },
+  {
+    title: "Loading UI",
+    category: CATEGORIES.frontend,
+    description:
+      "Free and open source CSS and React loaders, spinners, and animations to create polished, accessible loading states for modern web apps.",
+    subtitle: "Spinners, loaders, and loading animations for the web",
+    url: "https://loading-ui.com/",
+  },
+  {
     title: "LottieFiles",
     category: CATEGORIES.frontend,
     description:
@@ -371,6 +421,7 @@ export const frontendLinks: Tool[] = [
     tags: [TAGS.animation],
     url: "https://lottiefiles.com/",
   },
+
   {
     title: "Lottielab",
     category: CATEGORIES.frontend,
@@ -411,12 +462,27 @@ export const frontendLinks: Tool[] = [
     url: "https://www.mapcn.dev/",
   },
   {
+    title: "Matter.js",
+    author: "liabru",
+    category: CATEGORIES.frontend,
+    description: "Matter.js is 2D rigid body JavaScript physics engine for the web",
+    url: "https://brm.io/matter-js/",
+  },
+  {
     title: "Mesh Gradient",
     category: CATEGORIES.frontend,
     description: "MESH is a simple way to create beautiful, unique gradients using shaders.",
     favicon: "https://meshgradient.com/logo-sm.svg",
     tags: [TAGS.color],
     url: "https://meshgradient.com/",
+  },
+  {
+    title: "MiroMiro",
+    category: CATEGORIES.frontend,
+    description:
+      "The design-to-code tool that turns any website into clean HTML, Tailwind, and design tokens in one click. Paste real code straight into Cursor, Claude,...",
+    subtitle: "Website to Code: Copy Real HTML & Tailwind",
+    url: "https://miromiro.app/",
   },
   {
     title: "Motion",
@@ -443,6 +509,14 @@ export const frontendLinks: Tool[] = [
       "Open source CSS custom properties to help accelerate adaptive and consistent design. Available from a CDN or NPM, as CSS or Javascript.",
     tags: [TAGS["ui-component"]],
     url: "https://open-props.style/",
+  },
+  {
+    title: "Originkit",
+    category: CATEGORIES.frontend,
+    description:
+      "The largest free animated component library for building modern websites. Copy code, use in Framer, or connect through MCP.",
+    subtitle: "Free Animated component library for modern websites",
+    url: "https://www.originkit.dev/",
   },
   {
     title: "Park UI",
@@ -475,6 +549,14 @@ export const frontendLinks: Tool[] = [
       "A set of beautifully-designed, customizable plugins and components to help you build your rich-text editor. Open Source.",
     tags: [TAGS["ui-component"]],
     url: "https://platejs.org/",
+  },
+  {
+    title: "Prime UI",
+    category: CATEGORIES.frontend,
+    description:
+      "Prime UI is the missing foundation for AI-generated websites. Go from sitemaps and wireframes to production-ready Next.js and Tailwind CSS code in minutes.",
+    subtitle: "Build sites fast. Fear no code.",
+    url: "https://primeui.com/",
   },
   {
     title: "React Bits",
@@ -656,6 +738,14 @@ export const frontendLinks: Tool[] = [
     url: "https://tweakcn.com/",
   },
   {
+    title: "tldraw SDK",
+    category: CATEGORIES.frontend,
+    description:
+      "The tldraw SDK provides tools, services, and APIs to build beautiful whiteboards and infinite canvas applications with real-time collaboration and a powerful React-based canvas.",
+    subtitle: "Infinite Canvas SDK for React",
+    url: "https://tldraw.dev/",
+  },
+  {
     title: "Transitions.dev",
     category: CATEGORIES.frontend,
     description:
@@ -706,6 +796,13 @@ export const frontendLinks: Tool[] = [
     subtitle: "Beautifully Designed React Components",
     tags: [TAGS.animation, TAGS["ui-component"]],
     url: "https://ui.unlumen.com/",
+  },
+  {
+    title: "Utility Hub",
+    category: CATEGORIES.frontend,
+    description: "30 useful web apps, one place. Everything you need, one link.",
+    subtitle: "30 tools in one place",
+    url: "https://utility-hub-navy-six.vercel.app/",
   },
   {
     title: "UV Canvas",

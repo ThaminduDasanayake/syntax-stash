@@ -12,14 +12,7 @@ export const newLinks: Tool[] = [
     subtitle: "The easiest way to turn SVGs into 3D",
     url: "https://3dsvg.design/",
   },
-  {
-    title: "actuallyEXPLAIN",
-    category: CATEGORIES.dev,
-    description:
-      "A visualizer that helps you understand complex PostgreSQL queries in a diagram and dictionarized form. Paste your code and check.",
-    subtitle: "Visual SQL Logic Mapper",
-    url: "https://actuallyexplain.vercel.app/",
-  },
+
   {
     title: "AI Particle Simulator",
     category: CATEGORIES.dev,
@@ -28,14 +21,7 @@ export const newLinks: Tool[] = [
     subtitle: "Professional 3D Swarm Simulator",
     url: "https://particles.casberry.in/",
   },
-  {
-    title: "alg0.dev",
-    category: CATEGORIES.dev,
-    description:
-      "A modern, interactive algorithm visualizer. Learn algorithms through beautiful step-by-step visualizations.",
-    subtitle: "Algorithm Visualizer",
-    url: "https://www.alg0.dev/",
-  },
+
   {
     title: "Anytype",
     category: CATEGORIES.dev,
@@ -60,14 +46,7 @@ export const newLinks: Tool[] = [
     subtitle: "Jaw-Dropping Backgrounds for Your Projects",
     url: "https://www.backgrounds.supply/",
   },
-  {
-    title: "before.click",
-    category: CATEGORIES.dev,
-    description:
-      "Curated gallery of the best App Store screenshot designs. Real examples from top iOS apps to help you design screenshots that convert downloads.",
-    subtitle: "App Store Screenshot Design Inspiration",
-    url: "https://before.click/",
-  },
+
   {
     title: "Bookmarkify",
     category: CATEGORIES.dev,
@@ -120,13 +99,7 @@ export const newLinks: Tool[] = [
     subtitle: "Open Source Architecture Intelligence",
     url: "https://codeflow-five.vercel.app/",
   },
-  {
-    title: "CodePen",
-    category: CATEGORIES.dev,
-    description: "Build, share, and learn JavaScript, CSS, and HTML with our online code editor.",
-    subtitle: "Online Code Editor and Front End Web Developer Community",
-    url: "https://codepen.io/",
-  },
+
   {
     title: "Convert to it!",
     category: CATEGORIES.dev,
@@ -142,34 +115,15 @@ export const newLinks: Tool[] = [
     subtitle: "FREE HD Background Remover | Remove Bg Online",
     url: "https://www.craiyon.com/en/background-remover",
   },
-  {
-    title: "CSS-Tricks",
-    category: CATEGORIES.dev,
-    description: "A Website About Making Websites",
-    url: "https://css-tricks.com/",
-  },
-  {
-    title: "CSS Battle",
-    category: CATEGORIES.dev,
-    description:
-      "Compete in fun CSS games and challenges. Recreate target images in the shortest CSS code possible — daily CSS practice, real-time CSS battles, and shape/layout challenges. Free to play.",
-    subtitle: "Daily CSS Challenges, Games & Practice for Web Developers",
-    url: "https://cssbattle.dev/",
-  },
+
+
   {
     title: "Deno Deploy",
     category: CATEGORIES.dev,
     description: "One simple platform for anything that runs with JavaScript or Typescript.",
     url: "https://deno.com/deploy",
   },
-  {
-    title: "DesignBookmark",
-    category: CATEGORIES.dev,
-    description:
-      "A hand-picked directory of 2,000+ design tools, websites, icons, fonts, mockups and resources, all in one place. Search the whole catalog in seconds.",
-    subtitle: "All-in-one design resources for designers",
-    url: "https://designbookmark.com/",
-  },
+
   {
     title: "designdotmd.directory",
     category: CATEGORIES.dev,
@@ -178,29 +132,9 @@ export const newLinks: Tool[] = [
     subtitle: "The directory of DESIGN.md files for coding agents",
     url: "https://designdotmd.directory/",
   },
-  {
-    title: "DesignMD",
-    category: CATEGORIES.dev,
-    description:
-      "Paste a URL. Get a complete DESIGN.md file in seconds. Extract design tokens, typography & component styles — ready for AI coding agents.",
-    subtitle: "Generate DESIGN.md Files with AI",
-    url: "https://designmd.me/",
-  },
-  {
-    title: "Developer Portfolios",
-    author: "emmabostian",
-    category: CATEGORIES.ai,
-    description: "A list of developer portfolios for your inspiration",
-    favicon: "/github.svg",
-    url: "https://github.com/emmabostian/developer-portfolios",
-  },
-  {
-    title: "dump",
-    category: CATEGORIES.dev,
-    description:
-      "Dump your stuff onto a canvas — TextLab bubbles, Pinterest pins, cutouts, mockups.",
-    url: "https://dump.cam/",
-  },
+
+
+
   {
     title: "earth",
     category: CATEGORIES.dev,
@@ -225,42 +159,11 @@ export const newLinks: Tool[] = [
     subtitle: "Index of best Anime/Manga sites",
     url: "https://everythingmoe.com/",
   },
-  {
-    title: "Framer University",
-    category: CATEGORIES.dev,
-    description:
-      "Discover the best free Framer resources for your next project, including Framer components, code overrides, animations, and effects. Elevate your Framer website with a curated selection of top-quality Framer assets.",
-    subtitle: "Best Free Framer Resources",
-    url: "https://framer.university/resources",
-  },
-  {
-    title: "Gingham Maker",
-    category: CATEGORIES.dev,
-    description: "A CSS generator for custom gingham patterns",
-    url: "https://gingham.laney.tech/",
-  },
-  {
-    title: "GitMastery",
-    category: CATEGORIES.dev,
-    description:
-      "Learn Git commands and concepts through fun, interactive challenges. Practice Git in a safe environment with visual feedback and structured learning paths.",
-    subtitle: "Master Git Through Play | Interactive Git Learning Platform",
-    url: "https://gitmastery.me/",
-  },
-  {
-    title: "Grid Paper",
-    category: CATEGORIES.dev,
-    description: "Printable Grid Paper",
-    url: "https://grid-paper.daverupert.com/",
-  },
-  {
-    title: "Handshake",
-    category: CATEGORIES.dev,
-    description:
-      "The largest expert network for learning, earning, and growing careers in the AI economy, giving everyone an accessible first step into an AI-powered career.",
-    subtitle: "The career network for the AI economy",
-    url: "https://joinhandshake.com/",
-  },
+
+
+
+
+
   {
     title: "HeyForm",
     category: CATEGORIES.dev,
@@ -276,14 +179,7 @@ export const newLinks: Tool[] = [
       "Self-hosted photo and video management solution. Easily back up, organize, and manage your photos on your own server. Immich helps you browse, search and organize your photos and videos with ease, without sacrificing your privacy.",
     url: "https://immich.app/",
   },
-  {
-    title: "Impeccable",
-    category: CATEGORIES.dev,
-    description:
-      "1 skill, 23 commands, and curated anti-patterns for impeccable frontend design. Works with Cursor, Claude Code, GitHub Copilot, Gemini CLI, and Codex CLI.",
-    subtitle: "The missing upgrade to Anthropic's impeccable skill",
-    url: "https://impeccable.style/",
-  },
+
   {
     title: "Information is Beautiful",
     category: CATEGORIES.dev,
@@ -297,53 +193,10 @@ export const newLinks: Tool[] = [
     description: "A directory of direct links to delete your account from web services.",
     url: "https://justdeleteme.xyz/",
   },
-  {
-    title: "Lightswind UI",
-    category: CATEGORIES.dev,
-    description:
-      "Accelerate your workflow with Lightswind UI. A library of 151+ high-performance,  accessible, and beautifully animated React components and UI kits crafted for Modern Developers.",
-    subtitle: "Beautifully Animated React Components & Modern UI Kits",
-    url: "https://lightswind.com/",
-  },
-  {
-    title: "Loading UI",
-    category: CATEGORIES.dev,
-    description:
-      "Free and open source CSS and React loaders, spinners, and animations to create polished, accessible loading states for modern web apps.",
-    subtitle: "Spinners, loaders, and loading animations for the web",
-    url: "https://loading-ui.com/",
-  },
-  {
-    title: "loadmo.re",
-    category: CATEGORIES.dev,
-    description:
-      "A curated archive of distinctive mobile websites and unconventional digital experiences, by Kim Boutin (Kim Lê Boutin). Exploring alternative approaches to mobile-first interface design since 2021.",
-    subtitle: "Mobile Web Design Archive by Kim Boutin",
-    url: "https://loadmo.re/",
-  },
-  {
-    title: "MagicPattern",
-    category: CATEGORIES.dev,
-    description:
-      "Create beautiful background patterns, gradients, blobs and more with a toolbox of 30+ online design tools. Export as SVG, CSS, PNG or JPG. Used by 100,000+ designers & developers.",
-    subtitle: "Beautiful backgrounds, patterns, gradients with 30+ Tools",
-    url: "https://www.magicpattern.design/",
-  },
-  {
-    title: "Matter.js",
-    author: "liabru",
-    category: CATEGORIES.dev,
-    description: "Matter.js is 2D rigid body JavaScript physics engine for the web",
-    url: "https://brm.io/matter-js/",
-  },
-  {
-    title: "MiroMiro",
-    category: CATEGORIES.dev,
-    description:
-      "The design-to-code tool that turns any website into clean HTML, Tailwind, and design tokens in one click. Paste real code straight into Cursor, Claude,...",
-    subtitle: "Website to Code: Copy Real HTML & Tailwind",
-    url: "https://miromiro.app/",
-  },
+
+
+
+
   {
     title: "Models",
     category: CATEGORIES.dev,
@@ -372,15 +225,7 @@ export const newLinks: Tool[] = [
       "Transform live webcam feeds into striking black and background color dithered visuals, enhancing subject visibility for creative projects.",
     url: "https://nokia-cam.figma.site/",
   },
-  {
-    title: "OpenDataLoader PDF",
-    author: "OpenDataLoader",
-    category: CATEGORIES.dev,
-    description:
-      "Convert PDFs to LLM-ready Markdown and JSON. #1 in benchmarks (0.90 overall). Bounding boxes for citations. Auto-tag untagged PDFs into Tagged PDFs as foundation for PDF/UA workflows. 100% local, open source (Apache-2.0).",
-    subtitle: "PDF Parser for AI-Ready Data | Auto-Tag PDFs for Accessibility",
-    url: "https://opendataloader.org/",
-  },
+
   {
     title: "OpenTUI",
     category: CATEGORIES.dev,
@@ -389,22 +234,8 @@ export const newLinks: Tool[] = [
     subtitle: "Terminal UIs",
     url: "https://opentui.com/",
   },
-  {
-    title: "Originkit",
-    category: CATEGORIES.dev,
-    description:
-      "The largest free animated component library for building modern websites. Copy code, use in Framer, or connect through MCP.",
-    subtitle: "Free Animated component library for modern websites",
-    url: "https://www.originkit.dev/",
-  },
-  {
-    title: "Parker Dewey",
-    category: CATEGORIES.dev,
-    description:
-      "Innovative organizations across industries use Micro-Internships to identify, engage, assess and hire high-potential college students and recent graduates.",
-    subtitle: "Micro-Internships Connect College Talent and Employers",
-    url: "https://www.parkerdewey.com/",
-  },
+
+
   {
     title: "Pixelbuddha",
     category: CATEGORIES.dev,
@@ -413,21 +244,8 @@ export const newLinks: Tool[] = [
     subtitle: "Free Graphic Design Resources",
     url: "https://pixelbuddha.net/",
   },
-  {
-    title: "Pixel Pattern Generator",
-    category: CATEGORIES.dev,
-    description:
-      "Create and customize seamless geometric textile patterns inspired by Quechua and Mayan designs with real-time controls and export options.",
-    url: "https://pixel-pattern-generator.figma.site/",
-  },
-  {
-    title: "Prime UI",
-    category: CATEGORIES.dev,
-    description:
-      "Prime UI is the missing foundation for AI-generated websites. Go from sitemaps and wireframes to production-ready Next.js and Tailwind CSS code in minutes.",
-    subtitle: "Build sites fast. Fear no code.",
-    url: "https://primeui.com/",
-  },
+
+
   {
     title: "Real-time Shader Effects App",
     category: CATEGORIES.dev,
@@ -467,13 +285,7 @@ export const newLinks: Tool[] = [
     favicon: "/github.svg",
     url: "https://github.com/d4vinci/Scrapling",
   },
-  {
-    title: "Sharpen",
-    category: CATEGORIES.dev,
-    description: "Millions of practice design prompts to challenge you to think outside the box.",
-    subtitle: "Design Challenge Generator",
-    url: "https://sharpen.design/",
-  },
+
   {
     title: "Ship Studio",
     category: CATEGORIES.dev,
@@ -490,21 +302,8 @@ export const newLinks: Tool[] = [
     subtitle: "Encrypted File & Note Sharing",
     url: "https://skysend.app/",
   },
-  {
-    title: "SQL Squid Game",
-    category: CATEGORIES.dev,
-    description:
-      "As a Data Scientist analyzing Squid Games data, write SQL queries to pass 9 SQL challenges posed to you be the Front Man.",
-    url: "https://datalemur.com/sql-game",
-  },
-  {
-    title: "Super Designer",
-    category: CATEGORIES.dev,
-    description:
-      "30+ free online design tools — generate backgrounds, gradients, CSS patterns, 3D shapes, color palettes & more. No signup, instant PNG/SVG/CSS export.",
-    subtitle: "Free Online Design Tools for Developers & Designers",
-    url: "https://superdesigner.co/",
-  },
+
+
   {
     title: "Surge",
     category: CATEGORIES.dev,
@@ -540,14 +339,7 @@ export const newLinks: Tool[] = [
     subtitle: "Very good free whiteboard",
     url: "https://www.tldraw.com/",
   },
-  {
-    title: "tldraw",
-    category: CATEGORIES.dev,
-    description:
-      "The tldraw SDK provides tools, services, and APIs to build beautiful whiteboards and infinite canvas applications with real-time collaboration and a powerful React-based canvas.",
-    subtitle: "Infinite Canvas SDK for React",
-    url: "https://tldraw.dev/",
-  },
+
   {
     title: "Tolgee",
     category: CATEGORIES.dev,
@@ -563,13 +355,7 @@ export const newLinks: Tool[] = [
     subtitle: "Useful things for devs",
     url: "https://uiball.com/",
   },
-  {
-    title: "Utility Hub",
-    category: CATEGORIES.dev,
-    description: "30 useful web apps, one place. Everything you need, one link.",
-    subtitle: "30 tools in one place",
-    url: "https://utility-hub-navy-six.vercel.app/",
-  },
+
   {
     title: "Voicebox",
     category: CATEGORIES.dev,

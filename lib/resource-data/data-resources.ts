@@ -5,6 +5,14 @@ import { TAGS } from "./tags";
 
 export const dataLinks: Tool[] = [
   {
+    title: "actuallyEXPLAIN",
+    category: CATEGORIES.data,
+    description:
+      "A visualizer that helps you understand complex PostgreSQL queries in a diagram and dictionarized form. Paste your code and check.",
+    subtitle: "Visual SQL Logic Mapper",
+    url: "https://actuallyexplain.vercel.app/",
+  },
+  {
     title: "Apify",
     category: CATEGORIES.data,
     description:
