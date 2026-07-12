@@ -37,16 +37,6 @@ export const calculatorTools: Tool[] = [
     slug: "time-calculator",
     tags: ["date", "time", "timestamp", "timezone"],
   },
-  {
-    title: "Unit Converter",
-    category: CATEGORIES.calculators,
-    description:
-      "Convert between units of length, weight, data, temperature, speed, area and volume.",
-    highlight: "Converter",
-    icon: "scales",
-    slug: "unit-converter",
-    tags: ["conversion", "math", "metrics", "units"],
-  },
 ];
 
 export const dataTools: Tool[] = [
@@ -295,15 +285,6 @@ export const devopsTools: Tool[] = [
 
 export const imageTools: Tool[] = [
   {
-    title: "ASCII Studio",
-    category: CATEGORIES.imagesAssets,
-    description:
-      "Generate ASCII banners, folder trees, markdown tables, glitch text, and convert images to ASCII art.",
-    highlight: "Studio",
-    icon: "terminal-window",
-    slug: "ascii-studio",
-  },
-  {
     title: "Favicon Generator",
     category: CATEGORIES.imagesAssets,
     description:
@@ -373,15 +354,6 @@ export const networkTools: Tool[] = [
     highlight: "Reference",
     icon: "globe-hemisphere-east",
     slug: "http-status",
-  },
-  {
-    title: "Password Generator",
-    category: CATEGORIES.network,
-    description:
-      "Generate secure passwords with configurable length, charset toggles, and entropy meter. Includes diceware passphrase mode.",
-    highlight: "Generator",
-    icon: "shield-plus",
-    slug: "password-generator",
   },
   {
     title: "Secret Generator",
@@ -466,15 +438,6 @@ export const typographyTools: Tool[] = [
     highlight: "Extractor",
     icon: "book-open-text",
     slug: "document-extractor",
-  },
-  {
-    title: "Lorem Ipsum Generator",
-    category: CATEGORIES.typography,
-    description:
-      "Generate placeholder text by paragraphs, sentences, or words. Choose from classic Latin, hipster, or corporate variants.",
-    highlight: "Generator",
-    icon: "article",
-    slug: "lorem-ipsum-generator",
   },
   {
     title: "String Case Converter",
