@@ -116,7 +116,6 @@ export const newLinks: Tool[] = [
     url: "https://www.craiyon.com/en/background-remover",
   },
 
-
   {
     title: "Deno Deploy",
     category: CATEGORIES.dev,
@@ -132,8 +131,6 @@ export const newLinks: Tool[] = [
     subtitle: "The directory of DESIGN.md files for coding agents",
     url: "https://designdotmd.directory/",
   },
-
-
 
   {
     title: "earth",
@@ -159,10 +156,6 @@ export const newLinks: Tool[] = [
     subtitle: "Index of best Anime/Manga sites",
     url: "https://everythingmoe.com/",
   },
-
-
-
-
 
   {
     title: "HeyForm",
@@ -193,9 +186,6 @@ export const newLinks: Tool[] = [
     description: "A directory of direct links to delete your account from web services.",
     url: "https://justdeleteme.xyz/",
   },
-
-
-
 
   {
     title: "Models",
@@ -235,7 +225,6 @@ export const newLinks: Tool[] = [
     url: "https://opentui.com/",
   },
 
-
   {
     title: "Pixelbuddha",
     category: CATEGORIES.dev,
@@ -244,7 +233,6 @@ export const newLinks: Tool[] = [
     subtitle: "Free Graphic Design Resources",
     url: "https://pixelbuddha.net/",
   },
-
 
   {
     title: "Real-time Shader Effects App",
@@ -303,7 +291,6 @@ export const newLinks: Tool[] = [
     url: "https://skysend.app/",
   },
 
-
   {
     title: "Surge",
     category: CATEGORIES.dev,
@@ -349,13 +336,21 @@ export const newLinks: Tool[] = [
     url: "https://tolgee.io/",
   },
   {
+    title: "Trove",
+    category: CATEGORIES.dev,
+    description:
+      "Play immersive scenarios that reveal your personality across relationships, work, and life. Discover your patterns through what you do, not what you say.",
+    subtitle: "A New Way to Understand Yourself Through Play",
+    url: "https://trove.is/",
+  },
+
+  {
     title: "UI Ball",
     category: CATEGORIES.dev,
     description: "Useful things for web developers.",
     subtitle: "Useful things for devs",
     url: "https://uiball.com/",
   },
-
   {
     title: "Voicebox",
     category: CATEGORIES.dev,
@@ -370,12 +365,6 @@ export const newLinks: Tool[] = [
     description:
       "This interactive web app transforms your webcam feed by overlaying customizable text on bright areas, encouraging creativity and mindfulness in real-time.",
     url: "https://text-over-video.figma.site/",
-  },
-  {
-    title: "zzzz",
-    category: CATEGORIES.dev,
-    description: "zzzz",
-    url: "zzzz",
   },
   {
     title: "zzzz",
