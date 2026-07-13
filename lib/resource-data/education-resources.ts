@@ -234,6 +234,14 @@ export const educationLinks: Tool[] = [
     url: "https://quizzes.madza.dev/",
   },
   {
+    title: "earth",
+    category: CATEGORIES.education,
+    description:
+      "See current wind, weather, ocean, and pollution conditions, as forecast by supercomputers, on an interactive animated map. Updated every three hours.",
+    subtitle: "A global map of wind, weather, and ocean condition",
+    url: "https://earth.nullschool.net/",
+  },
+  {
     title: "Exercism",
     category: CATEGORIES.education,
     description: "Learn, practice and get world-class mentoring in over 50 languages. 100% free.",

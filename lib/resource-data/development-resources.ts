@@ -111,6 +111,19 @@ export const developmentLinks: Tool[] = [
     url: "https://cityweft.com/",
   },
   {
+    title: "Cloudflare Pages",
+    category: CATEGORIES.dev,
+    description: "Build your next application with Cloudflare Pages",
+    url: "https://pages.cloudflare.com/",
+  },
+  {
+    title: "cobalt",
+    category: CATEGORIES.dev,
+    description:
+      "cobalt lets you save what you love without ads, tracking, paywalls or other nonsense. just paste the link and you're ready to rock!",
+    url: "https://cobalt.tools/",
+  },
+  {
     title: "Coddy",
     category: CATEGORIES.dev,
     description:
@@ -149,6 +162,12 @@ export const developmentLinks: Tool[] = [
       "A user-friendly tool designed for web developers to effortlessly create customizable CSS grids for seamless web development.",
     tags: [TAGS.development],
     url: "https://cssgridgenerator.io/",
+  },
+  {
+    title: "Deno Deploy",
+    category: CATEGORIES.dev,
+    description: "One simple platform for anything that runs with JavaScript or Typescript.",
+    url: "https://deno.com/deploy",
   },
   {
     title: "DEV Community",

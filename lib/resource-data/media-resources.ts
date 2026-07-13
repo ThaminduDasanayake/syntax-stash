@@ -5,6 +5,14 @@ import { TAGS } from "./tags";
 
 export const mediaLinks: Tool[] = [
   {
+    title: "3dsvg",
+    category: CATEGORIES.media,
+    description:
+      "Turn any SVG into interactive 3D objects. Animate and export as 4K image or video. 100% free, no account or subscription needed.",
+    subtitle: "The easiest way to turn SVGs into 3D",
+    url: "https://3dsvg.design/",
+  },
+  {
     title: "ASCIInator",
     category: CATEGORIES.media,
     description:

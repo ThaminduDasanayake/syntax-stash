@@ -4,14 +4,7 @@ import { Tool } from "@/types";
 import { CATEGORIES } from "./categories";
 
 export const newLinks: Tool[] = [
-  {
-    title: "3dsvg",
-    category: CATEGORIES.dev,
-    description:
-      "Turn any SVG into interactive 3D objects. Animate and export as 4K image or video. 100% free, no account or subscription needed.",
-    subtitle: "The easiest way to turn SVGs into 3D",
-    url: "https://3dsvg.design/",
-  },
+
 
   {
     title: "AI Particle Simulator",
@@ -30,14 +23,7 @@ export const newLinks: Tool[] = [
     subtitle: "A safe haven for digital collaboration",
     url: "https://anytype.io/",
   },
-  {
-    title: "ASCII Magic",
-    category: CATEGORIES.dev,
-    description:
-      "Free ASCII art generator. Turn any photo or video into ASCII, pixel art, voxel, mosaic, halftone, glitch or LEGO, in your browser, no signup, no upload.",
-    subtitle: "Free ASCII Art Generator, Image & Video to ASCII",
-    url: "https://www.ascii-magic.com/",
-  },
+
   {
     title: "Backgrounds Supply",
     category: CATEGORIES.dev,
@@ -78,19 +64,8 @@ export const newLinks: Tool[] = [
     subtitle: "Open source infrastructure monitoring",
     url: "https://checkmate.so/",
   },
-  {
-    title: "Cloudflare Pages",
-    category: CATEGORIES.dev,
-    description: "Build your next application with Cloudflare Pages",
-    url: "https://pages.cloudflare.com/",
-  },
-  {
-    title: "cobalt",
-    category: CATEGORIES.dev,
-    description:
-      "cobalt lets you save what you love without ads, tracking, paywalls or other nonsense. just paste the link and you're ready to rock!",
-    url: "https://cobalt.tools/",
-  },
+
+
   {
     title: "CodeFlow",
     category: CATEGORIES.dev,
@@ -116,12 +91,7 @@ export const newLinks: Tool[] = [
     url: "https://www.craiyon.com/en/background-remover",
   },
 
-  {
-    title: "Deno Deploy",
-    category: CATEGORIES.dev,
-    description: "One simple platform for anything that runs with JavaScript or Typescript.",
-    url: "https://deno.com/deploy",
-  },
+
 
   {
     title: "designdotmd.directory",
@@ -132,14 +102,7 @@ export const newLinks: Tool[] = [
     url: "https://designdotmd.directory/",
   },
 
-  {
-    title: "earth",
-    category: CATEGORIES.dev,
-    description:
-      "See current wind, weather, ocean, and pollution conditions, as forecast by supercomputers, on an interactive animated map. Updated every three hours.",
-    subtitle: "A global map of wind, weather, and ocean condition",
-    url: "https://earth.nullschool.net/",
-  },
+
   {
     title: "ECC Tools",
     category: CATEGORIES.dev,
@@ -208,13 +171,7 @@ export const newLinks: Tool[] = [
     description: "Games, visualizations, interactives and other weird stuff.",
     url: "https://neal.fun/",
   },
-  {
-    title: "Nokia 3310 Cam",
-    category: CATEGORIES.dev,
-    description:
-      "Transform live webcam feeds into striking black and background color dithered visuals, enhancing subject visibility for creative projects.",
-    url: "https://nokia-cam.figma.site/",
-  },
+
 
   {
     title: "OpenTUI",

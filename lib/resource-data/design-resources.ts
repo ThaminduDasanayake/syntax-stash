@@ -45,6 +45,14 @@ export const designLinks: Tool[] = [
     url: "https://asciiflow.com/",
   },
   {
+    title: "ASCII Magic",
+    category: CATEGORIES.design,
+    description:
+      "Free ASCII art generator. Turn any photo or video into ASCII, pixel art, voxel, mosaic, halftone, glitch or LEGO, in your browser, no signup, no upload.",
+    subtitle: "Free ASCII Art Generator, Image & Video to ASCII",
+    url: "https://www.ascii-magic.com/",
+  },
+  {
     title: "Aura",
     category: CATEGORIES.design,
     description:
@@ -561,6 +569,13 @@ export const designLinks: Tool[] = [
       "Neuform turns prompts into AI HTML landing pages, remix templates, and reusable DESIGN.md files for agent-ready design systems.",
     tags: [TAGS.design],
     url: "https://neuform.ai/",
+  },
+  {
+    title: "Nokia 3310 Cam",
+    category: CATEGORIES.design,
+    description:
+      "Transform live webcam feeds into striking black and background color dithered visuals, enhancing subject visibility for creative projects.",
+    url: "https://nokia-cam.figma.site/",
   },
   {
     title: "Nudges, Biases & Heuristics for the Age of AI",
