@@ -30,6 +30,14 @@ export const mediaLinks: Tool[] = [
     url: "https://www.cleanpng.com/",
   },
   {
+    title: "Craiyon",
+    category: CATEGORIES.dev,
+    description:
+      "Remove background from image - unlimited, HD, fast, free & no sign up! Remove Bg & add white background, black background or transparent background.",
+    subtitle: "FREE HD Background Remover | Remove Bg Online",
+    url: "https://www.craiyon.com/en/background-remover",
+  },
+  {
     title: "fffuel",
     category: CATEGORIES.media,
     description:
@@ -165,5 +173,12 @@ export const mediaLinks: Tool[] = [
     subtitle: "High Quality Mockups and 3D Illustrations for Design Projects",
     tags: [TAGS.mockup],
     url: "https://wannathis.one/",
+  },
+  {
+    title: "Webcam Text Overlay App",
+    category: CATEGORIES.media,
+    description:
+      "This interactive web app transforms your webcam feed by overlaying customizable text on bright areas, encouraging creativity and mindfulness in real-time.",
+    url: "https://text-over-video.figma.site/",
   },
 ];

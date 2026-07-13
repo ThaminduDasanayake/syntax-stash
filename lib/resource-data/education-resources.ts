@@ -416,6 +416,12 @@ export const educationLinks: Tool[] = [
     url: "https://github.com/microsoft/ml-for-beginners",
   },
   {
+    title: "Neal.fun",
+    category: CATEGORIES.education,
+    description: "Games, visualizations, interactives and other weird stuff.",
+    url: "https://neal.fun/",
+  },
+  {
     title: "NeetCode",
     category: CATEGORIES.education,
     description:
@@ -483,6 +489,13 @@ export const educationLinks: Tool[] = [
     favicon: "/github.svg",
     tags: [TAGS.education],
     url: "https://github.com/realworld-apps/realworld",
+  },
+  {
+    title: "Refactoring and Design Patterns",
+    category: CATEGORIES.education,
+    description:
+      "Refactoring is a controllable process of improving code without creating new functionality. Design Patterns are typical solutions to the commonly occurring problems in software design.",
+    url: "https://refactoring.guru/",
   },
   {
     title: "remote-jobs",
@@ -572,6 +585,14 @@ export const educationLinks: Tool[] = [
       "Turing develops large-scale RL environments and data generation systems that train multimodal agents to improve model performance in coding, real-world, economically valuable tasks, and advanced STEM reasoning.",
     tags: [TAGS.job],
     url: "https://www.turing.com/",
+  },
+  {
+    title: "Trove",
+    category: CATEGORIES.education,
+    description:
+      "Play immersive scenarios that reveal your personality across relationships, work, and life. Discover your patterns through what you do, not what you say.",
+    subtitle: "A New Way to Understand Yourself Through Play",
+    url: "https://trove.is/",
   },
   {
     title: "UI Skills",

@@ -20,6 +20,14 @@ export const designLinks: Tool[] = [
     url: "https://stateofaidesign.com/",
   },
   {
+    title: "AI Particle Simulator",
+    category: CATEGORIES.design,
+    description:
+      "AI Particle Simulator by Casberry India: A high-performance WebGL simulation platform for creative computational artists. Generate, save, and publish massive 3D particle swarms using neural navigation and custom AI logic.",
+    subtitle: "Professional 3D Swarm Simulator",
+    url: "https://particles.casberry.in/",
+  },
+  {
     title: "animos",
     category: CATEGORIES.design,
     description:
@@ -87,6 +95,14 @@ export const designLinks: Tool[] = [
     url: "https://www.awwwards.com/",
   },
   {
+    title: "Backgrounds Supply",
+    category: CATEGORIES.design,
+    description:
+      "A huge collection of handcrafted and AI-generated backgrounds, wallpapers, and gradients to elevate your designs, apps, and client projects.",
+    subtitle: "Jaw-Dropping Backgrounds for Your Projects",
+    url: "https://www.backgrounds.supply/",
+  },
+  {
     title: "before.click",
     category: CATEGORIES.design,
     description:
@@ -101,6 +117,21 @@ export const designLinks: Tool[] = [
     subtitle: "Figma UI kit and Design system",
     tags: [TAGS.design],
     url: "https://useblank.design/",
+  },
+  {
+    title: "Bookmarkify",
+    category: CATEGORIES.design,
+    description:
+      "Experience a Bookmark Manager like never before. Find all your design inspiration in one place. Bookmarkify, the all-in-one bookmark manager",
+    subtitle: "All in one bookmark manager",
+    url: "https://www.bookmarkify.io/",
+  },
+  {
+    title: "Brand Assets Generator",
+    category: CATEGORIES.design,
+    description:
+      "Personal tool by Yordan Stoyanov for generating composed brand asset imagery — circle-mapping experiments, drawing studio, geo-generator, and hero compositions.",
+    url: "https://brand-generator.stoyanov.works/",
   },
   {
     title: "CallToInspiration",
@@ -227,6 +258,14 @@ export const designLinks: Tool[] = [
       "A hand-picked directory of 2,000+ design tools, websites, icons, fonts, mockups and resources, all in one place. Search the whole catalog in seconds.",
     subtitle: "All-in-one design resources for designers",
     url: "https://designbookmark.com/",
+  },
+  {
+    title: "designdotmd.directory",
+    category: CATEGORIES.design,
+    description:
+      "Browse, preview, and install visual identities any coding agent can read. Tokens next to rationale.",
+    subtitle: "The directory of DESIGN.md files for coding agents",
+    url: "https://designdotmd.directory/",
   },
   {
     title: "DesignMD",
@@ -679,6 +718,13 @@ export const designLinks: Tool[] = [
       "Discover RapidRAW, a modern, high-performance Lightroom® alternative. Get a simple, beautiful, and GPU-accelerated RAW editing experience for Windows, macOS, and Linux.",
     tags: [TAGS.design],
     url: "https://www.getrapidraw.com/",
+  },
+  {
+    title: "Real-time Shader Effects App",
+    category: CATEGORIES.design,
+    description:
+      "Transform your images and videos with real-time visual shader effects, offering customizable options for unique artistic creations.",
+    url: "https://image-video-shader.figma.site/",
   },
   {
     title: "Really Good Emails",

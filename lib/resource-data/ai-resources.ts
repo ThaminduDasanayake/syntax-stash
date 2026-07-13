@@ -87,6 +87,14 @@ export const aiLinks: Tool[] = [
     url: "https://github.com/jo-inc/camofox-browser",
   },
   {
+    title: "Caveman",
+    category: CATEGORIES.ai,
+    description:
+      "A compression primitive, a coding agent, and a managed efficiency layer for internal AI agents. From the team behind the 72.8k★ caveman.",
+    subtitle: "The token-efficient stack for agent-native development",
+    url: "https://caveman.so/",
+  },
+  {
     title: "claude-ads",
     author: "AgriciDaniel",
     category: CATEGORIES.ai,
@@ -130,6 +138,14 @@ export const aiLinks: Tool[] = [
     subtitle: "Latest articles about machine learning",
     tags: [TAGS.ai, TAGS.education],
     url: "https://distill.pub/",
+  },
+  {
+    title: "ECC Tools",
+    category: CATEGORIES.ai,
+    description:
+      "ECC is the open agent harness system behind a 210K+ stars OSS ecosystem: start with the repo, install the GitHub App for repo-native guidance, and add AgentShield and rollout layers when coordination gets harder.",
+    subtitle: "Open Agent Harness System for GitHub App Automation and Security",
+    url: "https://ecc.tools/",
   },
   {
     title: "eve",
@@ -238,6 +254,14 @@ export const aiLinks: Tool[] = [
     url: "https://build.nvidia.com/models",
   },
   {
+    title: "MotionSites",
+    category: CATEGORIES.ai,
+    description:
+      "MotionSites is the premium library of AI beautiful website prompts, apps and animations for Lovable, Bolt, Cursor, and Claude",
+    subtitle: "Premium Website Prompts",
+    url: "https://motionsites.ai/",
+  },
+  {
     title: "Neural Networks: Zero To Hero",
     author: "Andrej Karpathy",
     category: CATEGORIES.ai,
@@ -332,6 +356,14 @@ export const aiLinks: Tool[] = [
     favicon: "/github.svg",
     tags: [TAGS.ai],
     url: "https://github.com/langchain-ai/openwiki",
+  },
+  {
+    title: "Ship Studio",
+    category: CATEGORIES.ai,
+    description:
+      "A free desktop app that runs on your machine and plugs into the subscriptions, GitHub account, and hosting you already pay for — agent, repo, and deploys in one window.",
+    subtitle: "Build it, ship it, host it without leaving the app",
+    url: "https://www.ship.studio/",
   },
   {
     title: "Taste Skill",

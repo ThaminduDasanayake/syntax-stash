@@ -23,6 +23,14 @@ export const developmentLinks: Tool[] = [
     url: "https://www.talater.com/annyang/",
   },
   {
+    title: "Anytype",
+    category: CATEGORIES.dev,
+    description:
+      "Create notes, tasks, databases, and chats that only you can access. Your data stays on your device — fully owned, secure, and private. Free to start.",
+    subtitle: "A safe haven for digital collaboration",
+    url: "https://anytype.io/",
+  },
+  {
     title: "Appwrite",
     author: "Appwrite",
     category: CATEGORIES.dev,
@@ -95,6 +103,14 @@ export const developmentLinks: Tool[] = [
     url: "https://cal.com/",
   },
   {
+    title: "Checkmate",
+    category: CATEGORIES.dev,
+    description:
+      "Monitor your servers, websites, Docker containers, and infrastructure with Checkmate. Open-source, self-hosted, and built for teams who value control.",
+    subtitle: "Open source infrastructure monitoring",
+    url: "https://checkmate.so/",
+  },
+  {
     title: "City Roads",
     category: CATEGORIES.dev,
     description:
@@ -133,6 +149,14 @@ export const developmentLinks: Tool[] = [
     url: "https://coddy.tech/tools",
   },
   {
+    title: "CodeFlow",
+    category: CATEGORIES.dev,
+    description:
+      "Visualize any GitHub repository's architecture in seconds. See dependencies, blast radius, code ownership, security issues, and design patterns. No installation required.",
+    subtitle: "Open Source Architecture Intelligence",
+    url: "https://codeflow-five.vercel.app/",
+  },
+  {
     title: "comimi",
     category: CATEGORIES.dev,
     description:
@@ -146,6 +170,13 @@ export const developmentLinks: Tool[] = [
     description: "Free tools for developers and SEOs",
     tags: [TAGS["tool"]],
     url: "https://www.context.dev/free-tools",
+  },
+  {
+    title: "Convert to it!",
+    category: CATEGORIES.dev,
+    description:
+      "Truly universal online file converter. Private, on-device conversion across mediums.",
+    url: "https://p2r3.github.io/convert/",
   },
   {
     title: "Coolify",
@@ -319,6 +350,13 @@ export const developmentLinks: Tool[] = [
     subtitle: "Bring Photo, Video, and Design Editing into Your App",
     tags: [TAGS["tool"]],
     url: "https://img.ly/",
+  },
+  {
+    title: "Immich",
+    category: CATEGORIES.dev,
+    description:
+      "Self-hosted photo and video management solution. Easily back up, organize, and manage your photos on your own server. Immich helps you browse, search and organize your photos and videos with ease, without sacrificing your privacy.",
+    url: "https://immich.app/",
   },
   {
     title: "IT Tools - Handy online tools for developers",
@@ -605,6 +643,14 @@ export const developmentLinks: Tool[] = [
     url: "https://www.sitepoint.com/",
   },
   {
+    title: "SkySend",
+    category: CATEGORIES.dev,
+    description:
+      "Minimalist, end-to-end encrypted, self-hostable file and note sharing. Zero-knowledge server - files and notes are encrypted in the browser before upload. No accounts, no telemetry, built for speed and security.",
+    subtitle: "Encrypted File & Note Sharing",
+    url: "https://skysend.app/",
+  },
+  {
     title: "Squoosh",
     category: CATEGORIES.dev,
     description:
@@ -630,12 +676,25 @@ export const developmentLinks: Tool[] = [
     url: "https://strapi.io/",
   },
   {
+    title: "Surge",
+    category: CATEGORIES.dev,
+    description:
+      "Shipping web projects should be fast, easy, and low risk. Surge is static web publishing for Front-End Developers, right from the CLI.",
+    url: "https://surge.sh/",
+  },
+  {
     title: "Terraink",
     category: CATEGORIES.dev,
     description:
       "Free online map poster and wallpaper generator. Design custom, print-ready map art for any city or location — export as PNG, PDF, or SVG. No sign-up required.",
     tags: [TAGS.map],
     url: "https://terraink.app/",
+  },
+  {
+    title: "tiiny.host",
+    category: CATEGORIES.dev,
+    description: "Tiiny Host is the simplest way to share your work online.",
+    url: "https://tiiny.host/",
   },
   {
     title: "TinaCMS",
@@ -651,6 +710,22 @@ export const developmentLinks: Tool[] = [
     description: "Free AI Writing, PDF, Image, and other Online Tools",
     tags: [TAGS.development],
     url: "https://tinywow.com/",
+  },
+  {
+    title: "tldraw",
+    category: CATEGORIES.dev,
+    description:
+      "A free and instant virtual whiteboarding with online collaboration. No signup required. Works on all devices: mobile, tablets, and desktop.",
+    subtitle: "Very good free whiteboard",
+    url: "https://www.tldraw.com/",
+  },
+  {
+    title: "Tolgee",
+    category: CATEGORIES.dev,
+    description:
+      "Open-source localization platform developers enjoy working with. With in-app translation, seamless integrations, and collaborative tools, scaling multilingual apps becomes easy. Sign up for free. ",
+    subtitle: "Translate your app",
+    url: "https://tolgee.io/",
   },
   {
     title: "ToS;DR",
