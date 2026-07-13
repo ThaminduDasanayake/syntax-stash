@@ -338,6 +338,12 @@ export const developmentLinks: Tool[] = [
     url: "https://jsonhero.io/",
   },
   {
+    title: "Just Delete Me",
+    category: CATEGORIES.dev,
+    description: "A directory of direct links to delete your account from web services.",
+    url: "https://justdeleteme.xyz/",
+  },
+  {
     title: "KeystoneJS",
     category: CATEGORIES.dev,
     description:
@@ -517,6 +523,14 @@ export const developmentLinks: Tool[] = [
     url: "https://relic.so/",
   },
   {
+    title: "Render",
+    category: CATEGORIES.dev,
+    description:
+      "Deploy and scale any app or agent from your first user to your billionth. Build faster on intuitive cloud infrastructure for the modern web.",
+    subtitle: "The cloud for builders",
+    url: "https://render.com/",
+  },
+  {
     title: "replacements.fyi",
     category: CATEGORIES.dev,
     description:
@@ -546,6 +560,15 @@ export const developmentLinks: Tool[] = [
     description: "Awesome list of open-source startup alternatives to well-known SaaS products 🚀.",
     tags: [TAGS["tool"]],
     url: "https://github.com/RunaCapital/awesome-oss-alternatives",
+  },
+  {
+    title: "Scrapling",
+    author: "D4Vinci",
+    category: CATEGORIES.dev,
+    description:
+      "🕷️ An adaptive Web Scraping framework that handles everything from a single request to a full-scale crawl!",
+    favicon: "/github.svg",
+    url: "https://github.com/d4vinci/Scrapling",
   },
   {
     title: "SEOStudio",
@@ -669,6 +692,14 @@ export const developmentLinks: Tool[] = [
     description: "Convert videos to ASCII.",
     tags: [TAGS["tool"]],
     url: "https://www.vid2ascii.com/",
+  },
+  {
+    title: "Voicebox",
+    category: CATEGORIES.dev,
+    description:
+      "Near-perfect voice cloning with multiple TTS engines. Desktop app for Mac, Windows, and Linux. Multi-sample support, smart caching, local or remote inference.",
+    subtitle: "Open Source Voice Cloning Desktop App",
+    url: "https://voicebox.sh/",
   },
 
   {

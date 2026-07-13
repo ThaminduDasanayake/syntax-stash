@@ -107,6 +107,14 @@ export const mediaLinks: Tool[] = [
     url: "https://pngfile.net/",
   },
   {
+    title: "remove.bg",
+    category: CATEGORIES.media,
+    description:
+      "Remove image backgrounds automatically in 5 seconds with just one click. Don't spend hours manually picking pixels. Upload your photo now & see the magic.",
+    subtitle: "Remove Background from Image for Free",
+    url: "https://www.remove.bg/",
+  },
+  {
     title: "TechIcons",
     category: CATEGORIES.media,
     description: "Download, copy and paste tech icons in SVG and PNG format for your projects.",

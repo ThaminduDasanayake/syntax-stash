@@ -136,32 +136,15 @@ export const newLinks: Tool[] = [
     url: "https://immich.app/",
   },
 
-  {
-    title: "Information is Beautiful",
-    category: CATEGORIES.dev,
-    description:
-      "Distilling the world's data, information & knowledge into beautiful infographics & visualizations",
-    url: "https://informationisbeautiful.net/",
-  },
-  {
-    title: "Just Delete Me",
-    category: CATEGORIES.dev,
-    description: "A directory of direct links to delete your account from web services.",
-    url: "https://justdeleteme.xyz/",
-  },
 
-  {
-    title: "Models",
-    category: CATEGORIES.dev,
-    description: "Experience the leading models to build enterprise generative AI apps now.",
-    subtitle: "Try NVIDIA NIM APIs",
-    url: "https://build.nvidia.com/models",
-  },
+
+
+
   {
     title: "MotionSites",
     category: CATEGORIES.dev,
     description:
-      "MotionSites is the premium library of AI beatiful website prompts, apps and animations for Lovable, Bolt, Cursor, and Claude",
+      "MotionSites is the premium library of AI beautiful website prompts, apps and animations for Lovable, Bolt, Cursor, and Claude",
     subtitle: "Premium Website Prompts",
     url: "https://motionsites.ai/",
   },
@@ -173,23 +156,9 @@ export const newLinks: Tool[] = [
   },
 
 
-  {
-    title: "OpenTUI",
-    category: CATEGORIES.dev,
-    description:
-      "OpenTUI is a TypeScript library on a native Zig core for building terminal user interfaces (TUIs)",
-    subtitle: "Terminal UIs",
-    url: "https://opentui.com/",
-  },
 
-  {
-    title: "Pixelbuddha",
-    category: CATEGORIES.dev,
-    description:
-      "We’re Pixelbuddha! And we do design things here: create premium resources, supply the rare stuff, and share freebies with the pro community.",
-    subtitle: "Free Graphic Design Resources",
-    url: "https://pixelbuddha.net/",
-  },
+
+
 
   {
     title: "Real-time Shader Effects App",
@@ -205,31 +174,9 @@ export const newLinks: Tool[] = [
       "Refactoring is a controllable process of improving code without creating new functionality. Design Patterns are typical solutions to the commonly occurring problems in software design.",
     url: "https://refactoring.guru/",
   },
-  {
-    title: "remove.bg",
-    category: CATEGORIES.dev,
-    description:
-      "Remove image backgrounds automatically in 5 seconds with just one click. Don't spend hours manually picking pixels. Upload your photo now & see the magic.",
-    subtitle: "Remove Background from Image for Free",
-    url: "https://www.remove.bg/",
-  },
-  {
-    title: "Render",
-    category: CATEGORIES.dev,
-    description:
-      "Deploy and scale any app or agent from your first user to your billionth. Build faster on intuitive cloud infrastructure for the modern web.",
-    subtitle: "The cloud for builders",
-    url: "https://render.com/",
-  },
-  {
-    title: "Scrapling",
-    author: "D4Vinci",
-    category: CATEGORIES.dev,
-    description:
-      "🕷️ An adaptive Web Scraping framework that handles everything from a single request to a full-scale crawl!",
-    favicon: "/github.svg",
-    url: "https://github.com/d4vinci/Scrapling",
-  },
+
+
+
 
   {
     title: "Ship Studio",
@@ -263,12 +210,7 @@ export const newLinks: Tool[] = [
     subtitle: "AI Spreadsheet for Business",
     url: "https://teable.ai/",
   },
-  {
-    title: "The Agent Skills Directory",
-    category: CATEGORIES.dev,
-    description: "Discover and install skills for AI agents.",
-    url: "https://www.skills.sh/",
-  },
+
   {
     title: "tiiny.host",
     category: CATEGORIES.dev,
@@ -301,21 +243,8 @@ export const newLinks: Tool[] = [
     url: "https://trove.is/",
   },
 
-  {
-    title: "UI Ball",
-    category: CATEGORIES.dev,
-    description: "Useful things for web developers.",
-    subtitle: "Useful things for devs",
-    url: "https://uiball.com/",
-  },
-  {
-    title: "Voicebox",
-    category: CATEGORIES.dev,
-    description:
-      "Near-perfect voice cloning with multiple TTS engines. Desktop app for Mac, Windows, and Linux. Multi-sample support, smart caching, local or remote inference.",
-    subtitle: "Open Source Voice Cloning Desktop App",
-    url: "https://voicebox.sh/",
-  },
+
+
   {
     title: "Webcam Text Overlay App",
     category: CATEGORIES.dev,

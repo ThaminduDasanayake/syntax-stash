@@ -297,6 +297,13 @@ export const educationLinks: Tool[] = [
     url: "https://hfviewer.com/",
   },
   {
+    title: "Information is Beautiful",
+    category: CATEGORIES.education,
+    description:
+      "Distilling the world's data, information & knowledge into beautiful infographics & visualizations",
+    url: "https://informationisbeautiful.net/",
+  },
+  {
     title: "JavaScript Questions",
     author: "lydiahallie",
     category: CATEGORIES.education,

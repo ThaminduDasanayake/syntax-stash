@@ -421,7 +421,6 @@ export const frontendLinks: Tool[] = [
     tags: [TAGS.animation],
     url: "https://lottiefiles.com/",
   },
-
   {
     title: "Lottielab",
     category: CATEGORIES.frontend,
@@ -438,6 +437,7 @@ export const frontendLinks: Tool[] = [
     tags: [TAGS["ui-component"]],
     url: "https://ui.lukacho.com/",
   },
+
   {
     title: "Mage UI",
     category: CATEGORIES.frontend,
@@ -509,6 +509,14 @@ export const frontendLinks: Tool[] = [
       "Open source CSS custom properties to help accelerate adaptive and consistent design. Available from a CDN or NPM, as CSS or Javascript.",
     tags: [TAGS["ui-component"]],
     url: "https://open-props.style/",
+  },
+  {
+    title: "OpenTUI",
+    category: CATEGORIES.frontend,
+    description:
+      "OpenTUI is a TypeScript library on a native Zig core for building terminal user interfaces (TUIs)",
+    subtitle: "Terminal UIs",
+    url: "https://opentui.com/",
   },
   {
     title: "Originkit",
@@ -761,6 +769,13 @@ export const frontendLinks: Tool[] = [
       "@pierre/trees is an open source file tree rendering library. It's built for performance and flexibility, is super customizable, and comes packed with features.",
     tags: [TAGS["ui-component"]],
     url: "https://trees.software/",
+  },
+  {
+    title: "UI Ball",
+    category: CATEGORIES.frontend,
+    description: "Useful things for web developers.",
+    subtitle: "Useful things for devs",
+    url: "https://uiball.com/",
   },
   {
     title: "UI Colors",

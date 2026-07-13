@@ -231,6 +231,13 @@ export const aiLinks: Tool[] = [
     url: "https://www.maxun.dev/",
   },
   {
+    title: "Models",
+    category: CATEGORIES.ai,
+    description: "Experience the leading models to build enterprise generative AI apps now.",
+    subtitle: "Try NVIDIA NIM APIs",
+    url: "https://build.nvidia.com/models",
+  },
+  {
     title: "Neural Networks: Zero To Hero",
     author: "Andrej Karpathy",
     category: CATEGORIES.ai,
@@ -334,6 +341,12 @@ export const aiLinks: Tool[] = [
     subtitle: "The Anti-Slop Frontend Framework for AI Agents",
     tags: [TAGS.ai],
     url: "https://www.tasteskill.dev/",
+  },
+  {
+    title: "The Agent Skills Directory",
+    category: CATEGORIES.ai,
+    description: "Discover and install skills for AI agents.",
+    url: "https://www.skills.sh/",
   },
   {
     title: "Unstructured",

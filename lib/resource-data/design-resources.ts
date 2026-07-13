@@ -650,6 +650,14 @@ export const designLinks: Tool[] = [
     url: "https://picular.co/",
   },
   {
+    title: "Pixelbuddha",
+    category: CATEGORIES.design,
+    description:
+      "We’re Pixelbuddha! And we do design things here: create premium resources, supply the rare stuff, and share freebies with the pro community.",
+    subtitle: "Free Graphic Design Resources",
+    url: "https://pixelbuddha.net/",
+  },
+  {
     title: "Pixel Pattern Generator",
     category: CATEGORIES.design,
     description:
