@@ -680,6 +680,13 @@ export const designLinks: Tool[] = [
     url: "https://picture-palette.web.app/",
   },
   {
+    title: "Picture Palette",
+    category: CATEGORIES.design,
+    description: "Aesthetically pleasing color palettes based on aesthetically pleasing pictures.",
+    tags: [TAGS.color],
+    url: "https://picture-palette.web.app/",
+  },
+  {
     title: "Picular",
     category: CATEGORIES.design,
     description:
@@ -889,6 +896,15 @@ export const designLinks: Tool[] = [
     subtitle: "Turn product screens into premium visuals",
     tags: [TAGS.mockup],
     url: "https://www.ultramock.io/",
+  },
+  {
+    title: "Unblast",
+    category: CATEGORIES.design,
+    description:
+      "Download free mockups, fonts, templates, textures, icons, and other graphics for everyday use.",
+    subtitle: "A Selective Library of High-Quality Creative Assets",
+    tags: [TAGS.mockup],
+    url: "https://unblast.com/",
   },
   {
     title: "UNCUT.wtf",

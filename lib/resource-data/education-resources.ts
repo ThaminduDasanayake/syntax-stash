@@ -339,6 +339,13 @@ export const educationLinks: Tool[] = [
     url: "https://learn-anything.xyz/",
   },
   {
+    title: "Learn Git Branching",
+    category: CATEGORIES.education,
+    description: "An interactive Git visualization tool to educate and challenge!",
+    tags: [TAGS.education],
+    url: "https://learngitbranching.js.org/",
+  },
+  {
     title: "Learn X in Y Minutes",
     author: "Adam Bard",
     category: CATEGORIES.education,
@@ -414,6 +421,13 @@ export const educationLinks: Tool[] = [
     favicon: "/github.svg",
     tags: [TAGS.education],
     url: "https://github.com/microsoft/ml-for-beginners",
+  },
+  {
+    title: "MLU-Explain",
+    category: CATEGORIES.education,
+    description: "Visual explanations of core machine learning concepts.",
+    tags: [TAGS.education],
+    url: "https://mlu-explain.github.io/",
   },
   {
     title: "Neal.fun",

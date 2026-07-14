@@ -195,6 +195,15 @@ export const developmentLinks: Tool[] = [
     url: "https://cssgridgenerator.io/",
   },
   {
+    title: "delphitools",
+    category: CATEGORIES.dev,
+    description:
+      "A collection of small, low stakes and low effort tools. No logins, no registration, no data collection. Everything runs locally in your browser.",
+    subtitle: "privacy-first browser tools",
+    tags: [TAGS["tool"]],
+    url: "https://delphi.tools/",
+  },
+  {
     title: "Deno Deploy",
     category: CATEGORIES.dev,
     description: "One simple platform for anything that runs with JavaScript or Typescript.",
@@ -310,6 +319,14 @@ export const developmentLinks: Tool[] = [
       "Steal any code and make it your own. Paste a GitHub URL and get a plain-language coding agent prompt you can build from.",
     tags: [TAGS.ai, TAGS.development],
     url: "https://www.gitreverse.com/",
+  },
+  {
+    title: "GitToSkill",
+    category: CATEGORIES.dev,
+    description:
+      "Turn any GitHub profile into an installable coding skill by analyzing the profile, repo lineup, and real code style.",
+    subtitle: "Visualize Any GitHub Repository",
+    url: "https://www.gittoskill.com/",
   },
   {
     title: "here.now | Instant web hosting for agents",
@@ -751,6 +768,23 @@ export const developmentLinks: Tool[] = [
     subtitle: "Build and deploy fully-managed AI agents and workflows.",
     tags: [TAGS.ai, TAGS.backend, TAGS.development],
     url: "https://trigger.dev/",
+  },
+  {
+    title: "Typesense",
+    category: CATEGORIES.dev,
+    description:
+      "Typesense is a fast, typo-tolerant search engine optimized for instant search-as-you-type experiences and ease of use.",
+    subtitle: "Open Source Alternative to Algolia + Pinecone",
+    url: "https://typesense.org/",
+  },
+  {
+    title: "URL to Any",
+    category: CATEGORIES.dev,
+    description:
+      "URL to Any provides free URL conversion tools to transform web content into Markdown, PDF, images, text, JSON, XML, QR codes, extracted metadata, IP records, and AI summaries.",
+    subtitle: "All-in-one URL Conversion Tool",
+    tags: [TAGS["tool"]],
+    url: "https://urltoany.com/",
   },
   {
     title: "Vault andzn",

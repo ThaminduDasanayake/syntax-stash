@@ -111,6 +111,15 @@ export const frontendLinks: Tool[] = [
     url: "https://www.blossom-carousel.com/",
   },
   {
+    title: "boneyard",
+    category: CATEGORIES.frontend,
+    description:
+      "Pixel-perfect skeleton loading screens auto-extracted from your real DOM. Zero configuration, zero layout shift.",
+    subtitle: "skeleton screens for your UI",
+    tags: [TAGS["ui-component"]],
+    url: "https://boneyard.vercel.app/",
+  },
+  {
     title: "Brik",
     category: CATEGORIES.frontend,
     description:
@@ -340,6 +349,13 @@ export const frontendLinks: Tool[] = [
     url: "https://grainrad.com/",
   },
   {
+    title: "Gravity UI",
+    category: CATEGORIES.frontend,
+    description: "Build modern interfaces with the Gravity design system and libraries",
+    tags: [TAGS["ui-component"]],
+    url: "https://gravity-ui.com/",
+  },
+  {
     title: "GSAP",
     category: CATEGORIES.frontend,
     description:
@@ -373,6 +389,13 @@ export const frontendLinks: Tool[] = [
     url: "https://hypercolor.dev/",
   },
   {
+    title: "Icônes",
+    category: CATEGORIES.frontend,
+    description: "Icon Explorer with Instant searching, powered by Iconify",
+    tags: [TAGS.icon],
+    url: "https://icones.js.org/",
+  },
+  {
     title: "Impeccable",
     category: CATEGORIES.frontend,
     description:
@@ -396,6 +419,15 @@ export const frontendLinks: Tool[] = [
     subtitle: "A fast and simple motion design tool on the web",
     tags: [TAGS.animation],
     url: "https://jitter.video/",
+  },
+  {
+    title: "Kokonut UI",
+    category: CATEGORIES.frontend,
+    description:
+      "Collection of 100+ stunning UI components free and open source built with Next.js, React, Tailwind CSS, and Motion.",
+    subtitle: "Open Source Components",
+    tags: [TAGS["ui-component"]],
+    url: "https://kokonutui.com/",
   },
   {
     title: "Lightswind UI",
@@ -437,7 +469,6 @@ export const frontendLinks: Tool[] = [
     tags: [TAGS["ui-component"]],
     url: "https://ui.lukacho.com/",
   },
-
   {
     title: "Mage UI",
     category: CATEGORIES.frontend,
@@ -492,6 +523,14 @@ export const frontendLinks: Tool[] = [
     subtitle: "JavaScript & React animation library",
     tags: [TAGS.animation],
     url: "https://motion.dev/",
+  },
+  {
+    title: "Neobrutalism components",
+    category: CATEGORIES.frontend,
+    description: "A collection of neobrutalism-styled components based on shadcn/ui.",
+    subtitle: "Start making neobrutalism layouts today",
+    tags: [TAGS["ui-component"]],
+    url: "https://www.neobrutalism.dev/",
   },
   {
     title: "Nova UI",
@@ -684,6 +723,15 @@ export const frontendLinks: Tool[] = [
     subtitle: "3D Design tool in the browser with real-time collaboration",
     tags: [TAGS.animation],
     url: "https://spline.design/",
+  },
+  {
+    title: "SSGOI",
+    category: CATEGORIES.frontend,
+    description:
+      "Router-agnostic page transitions for React, Svelte, Vue, Solid, Angular, and Qwik. Built on the Web Animations API with spring physics and state preservation.",
+    subtitle: "Native page transitions on the web",
+    tags: [TAGS.animation],
+    url: "https://ssgoi.dev/",
   },
   {
     title: "StyleSeed",

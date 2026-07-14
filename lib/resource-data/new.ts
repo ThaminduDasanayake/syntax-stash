@@ -5,10 +5,10 @@ import { CATEGORIES } from "./categories";
 
 export const newLinks: Tool[] = [
   {
-    title: "zzzz",
+    title: "GitMCP",
     category: CATEGORIES.dev,
-    description: "zzzz",
-    url: "zzzz",
+    description: "Instantly create an MCP server for any GitHub project",
+    url: "https://gitmcp.io/",
   },
   {
     title: "zzzz",

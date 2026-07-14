@@ -205,6 +205,15 @@ export const aiLinks: Tool[] = [
     url: "https://github.com/ageron/handson-ml3",
   },
   {
+    title: "Hugging Bay",
+    category: CATEGORIES.ai,
+    description:
+      "Hugging Bay publishes open AI catalog metadata, source provenance, license records, neutral hosted-file inventory, answer packs, and recorded hashes. Canonical bundle verification and runtime readiness remain unknown.",
+    subtitle: "Open AI Artifact Metadata",
+    tags: [TAGS.ai],
+    url: "https://huggingbay.xyz/",
+  },
+  {
     title: "hyperframes",
     author: "heygen-com",
     category: CATEGORIES.ai,
