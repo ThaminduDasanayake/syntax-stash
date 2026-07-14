@@ -144,6 +144,100 @@ function deduplicate(arr: string[]): string[] {
   return Array.from(new Set(arr));
 }
 
+/** Recursively extract author from parsed JSON-LD structures. */
+function extractAuthorFromJsonLd(jsonLd: unknown[]): string {
+  function search(obj: unknown): string | null {
+    if (!obj || typeof obj !== "object") return null;
+
+    const record = obj as Record<string, unknown>;
+
+    if ("author" in record) {
+      const authorVal = record.author;
+      if (typeof authorVal === "string" && authorVal.trim()) {
+        return authorVal.trim();
+      }
+      if (authorVal && typeof authorVal === "object") {
+        if (Array.isArray(authorVal)) {
+          for (const item of authorVal) {
+            if (typeof item === "string" && item.trim()) {
+              return item.trim();
+            }
+            if (item && typeof item === "object") {
+              const itemRec = item as Record<string, unknown>;
+              if ("name" in itemRec && typeof itemRec.name === "string" && itemRec.name.trim()) {
+                return itemRec.name.trim();
+              }
+            }
+          }
+        } else {
+          const authorRec = authorVal as Record<string, unknown>;
+          if ("name" in authorRec && typeof authorRec.name === "string" && authorRec.name.trim()) {
+            return authorRec.name.trim();
+          }
+        }
+      }
+    }
+
+    for (const key of Object.keys(record)) {
+      const val = record[key];
+      if (val && typeof val === "object") {
+        const found = search(val);
+        if (found) return found;
+      }
+    }
+
+    return null;
+  }
+
+  for (const item of jsonLd) {
+    const found = search(item);
+    if (found) return cleanText(found);
+  }
+
+  return "";
+}
+
+/** Recursively extract keywords from parsed JSON-LD structures. */
+function extractKeywordsFromJsonLd(jsonLd: unknown[]): string[] {
+  function search(obj: unknown): string[] | null {
+    if (!obj || typeof obj !== "object") return null;
+
+    const record = obj as Record<string, unknown>;
+
+    if ("keywords" in record) {
+      const kwVal = record.keywords;
+      if (typeof kwVal === "string" && kwVal.trim()) {
+        return kwVal
+          .split(",")
+          .map((k) => k.trim())
+          .filter((k) => k.length > 0);
+      }
+      if (Array.isArray(kwVal)) {
+        return kwVal
+          .map((k) => (typeof k === "string" ? k.trim() : ""))
+          .filter((k) => k.length > 0);
+      }
+    }
+
+    for (const key of Object.keys(record)) {
+      const val = record[key];
+      if (val && typeof val === "object") {
+        const found = search(val);
+        if (found && found.length > 0) return found;
+      }
+    }
+
+    return null;
+  }
+
+  for (const item of jsonLd) {
+    const found = search(item);
+    if (found && found.length > 0) return found;
+  }
+
+  return [];
+}
+
 /** Fetch with retry logic for transient failures, respecting Retry-After header for rate limits. */
 async function fetchWithRetry(
   url: string,
@@ -309,26 +403,58 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const head = $("head");
   const body = $("body");
 
+  // JSON-LD parsing (flatten arrays if found)
+  const jsonLd: unknown[] = [];
+  head.find('script[type="application/ld+json"]').each((_, el) => {
+    try {
+      const content = $(el).text().trim();
+      if (content) {
+        const parsed = JSON.parse(content);
+        if (Array.isArray(parsed)) {
+          jsonLd.push(...parsed);
+        } else {
+          jsonLd.push(parsed);
+        }
+      }
+    } catch {
+      // Ignore malformed JSON-LD
+    }
+  });
+
   // Title & Description & Author & Language & Charset
   const title = cleanText(head.find("title").first().text()) || getMeta(head, ["og:title"]) || "";
   const description = getMeta(head, ["description", "og:description"]) || "";
-  const author = getMeta(head, [
+  
+  let author = getMeta(head, [
     "article:author",
     "author",
     "og:article:author",
     "twitter:creator",
   ]);
+  if (!author) {
+    author = extractAuthorFromJsonLd(jsonLd);
+  }
+
   const language = cleanText($("html").attr("lang") ?? "");
   const charset = cleanText(head.find("meta[charset]").attr("charset") ?? "");
 
   // Keywords
   const rawKeywords = getMeta(head, ["keyword", "keywords"]);
-  const keywords = rawKeywords
+  let keywords = rawKeywords
     ? rawKeywords
         .split(",")
         .map((k) => k.trim())
         .filter((k) => k.length > 0)
     : [];
+
+  if (keywords.length === 0) {
+    keywords = extractKeywordsFromJsonLd(jsonLd);
+  }
+
+  // Enforce max limit of 15 keywords
+  if (keywords.length > 15) {
+    keywords = keywords.slice(0, 15);
+  }
 
   // Generic metadata extraction
   const meta: MetaTag[] = [];
@@ -357,23 +483,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     xUaCompatible: findHttpEquiv("X-UA-Compatible"),
   };
 
-  // JSON-LD parsing (flatten arrays if found)
-  const jsonLd: unknown[] = [];
-  head.find('script[type="application/ld+json"]').each((_, el) => {
-    try {
-      const content = $(el).text().trim();
-      if (content) {
-        const parsed = JSON.parse(content);
-        if (Array.isArray(parsed)) {
-          jsonLd.push(...parsed);
-        } else {
-          jsonLd.push(parsed);
-        }
-      }
-    } catch {
-      // Ignore malformed JSON-LD
-    }
-  });
+
 
   // Link Classification & Deduplication
   const canonicalHref = head.find('link[rel="canonical" i]').attr("href");

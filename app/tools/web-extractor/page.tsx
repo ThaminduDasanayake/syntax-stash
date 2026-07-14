@@ -166,11 +166,50 @@ export default function WebExtractorPage() {
                   <MetaRow label="Author" value={data.author} />
                   <MetaRow label="Keywords" value={data.keywords?.join(", ") ?? ""} />
                   <MetaRow label="Canonical" value={data.canonicalUrl} />
-                  <MetaRow label="OG Title" value={data.openGraph.title} />
-                  <MetaRow label="OG Desc." value={data.openGraph.description} />
-                  <MetaRow label="OG Image" value={data.openGraph.image} />
-                  <MetaRow label="OG Type" value={data.openGraph.type} />
-                  <MetaRow label="OG Site" value={data.openGraph.siteName} />
+                  
+                  {/* Basic page setup */}
+                  <MetaRow label="Charset" value={data.charset} />
+                  <MetaRow label="Lang" value={data.language} />
+                  <MetaRow label="Viewport" value={data.viewport} />
+                  <MetaRow label="Generator" value={data.generator} />
+                  
+                  {/* Robots directives */}
+                  <MetaRow label="Robots" value={data.robots?.robots} />
+                  <MetaRow label="Googlebot" value={data.robots?.googlebot} />
+                  <MetaRow label="Bingbot" value={data.robots?.bingbot} />
+                  
+                  {/* Design/Theme */}
+                  <MetaRow label="Theme Color" value={data.themeColor?.themeColor} />
+                  <MetaRow label="Color Scheme" value={data.themeColor?.colorScheme} />
+                  
+                  {/* Open Graph extensions */}
+                  <MetaRow label="OG Title" value={data.openGraph?.title} />
+                  <MetaRow label="OG Desc." value={data.openGraph?.description} />
+                  <MetaRow label="OG Image" value={data.openGraph?.image} />
+                  <MetaRow label="OG Type" value={data.openGraph?.type} />
+                  <MetaRow label="OG Site" value={data.openGraph?.siteName} />
+                  <MetaRow label="OG Locale" value={data.openGraph?.locale} />
+                  <MetaRow label="OG Locale Alt" value={data.openGraph?.localeAlternate?.join(", ") ?? ""} />
+                  
+                  {/* Twitter Cards */}
+                  <MetaRow label="Twitter Title" value={data.twitter?.title} />
+                  <MetaRow label="Twitter Desc." value={data.twitter?.description} />
+                  <MetaRow label="Twitter Card" value={data.twitter?.card} />
+                  <MetaRow label="Twitter Image" value={data.twitter?.image} />
+                  <MetaRow label="Twitter Site" value={data.twitter?.site} />
+                  <MetaRow label="Twitter Creator" value={data.twitter?.creator} />
+
+                  {/* Verification */}
+                  <MetaRow label="Google Verify" value={data.verification?.google} />
+                  <MetaRow label="Bing Verify" value={data.verification?.bing} />
+                  <MetaRow label="Pinterest Verify" value={data.verification?.pinterest} />
+                  <MetaRow label="Yandex Verify" value={data.verification?.yandex} />
+                  <MetaRow label="Facebook Verify" value={data.verification?.facebook} />
+
+                  {/* Security meta headers */}
+                  <MetaRow label="CSP" value={data.securityHeaders?.contentSecurityPolicy} />
+                  <MetaRow label="Refresh" value={data.securityHeaders?.refresh} />
+                  <MetaRow label="X-UA-Compatible" value={data.securityHeaders?.xUaCompatible} />
                 </div>
                 {!data.title && !data.description && !data.openGraph.title && (
                   <p className="text-muted-foreground py-4 text-center text-sm">
