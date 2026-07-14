@@ -802,6 +802,14 @@ export const frontendLinks: Tool[] = [
     url: "https://tldraw.dev/",
   },
   {
+    title: "Torph",
+    category: CATEGORIES.frontend,
+    description: "Dependency-free animated text component.",
+    subtitle: "Dependency-Free Text Morphing",
+    tags: [TAGS.animation, TAGS.typography],
+    url: "https://torph.lochie.me/",
+  },
+  {
     title: "Transitions.dev",
     category: CATEGORIES.frontend,
     description:

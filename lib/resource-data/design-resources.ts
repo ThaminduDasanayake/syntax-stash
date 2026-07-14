@@ -45,6 +45,15 @@ export const designLinks: Tool[] = [
     url: "https://artkit.cc/",
   },
   {
+    title: "ASCII Art Generator",
+    category: CATEGORIES.design,
+    description:
+      "High-def online color ascii art generator! Easily convert pictures to text art and share easier than ever! Supports many character sets...",
+    subtitle: 'Online "HD" Color Image to Text Converter ▄▀▄▀█▓▒░',
+    tags: [TAGS.design],
+    url: "https://asciiart.club/",
+  },
+  {
     title: "ASCIIFlow",
     category: CATEGORIES.design,
     description:
@@ -388,6 +397,15 @@ export const designLinks: Tool[] = [
     subtitle: "Quality Fonts. Free.",
     tags: [TAGS.typography],
     url: "https://fontshare.com/",
+  },
+  {
+    title: "Free ASCII Art Tools & Unicode Symbols",
+    author: "EZASCII",
+    category: CATEGORIES.design,
+    description:
+      "Free ASCII art tools and Unicode resources. Convert images to ASCII, generate gamertags, convert video to ASCII, copy symbols and emojis. One-click copy and paste.",
+    tags: [TAGS.ascii, TAGS.design, TAGS.tool],
+    url: "https://ezascii.com/",
   },
   {
     title: "getdesign.md",

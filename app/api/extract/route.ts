@@ -78,13 +78,13 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     const response = await fetch(targetUrl.href, {
       // Identify as a browser so servers don't reject the request outright
       headers: {
-        "User-Agent": "Mozilla/5.0 (compatible; SyntaxStash/1.0; +https://syntax-stash.dev)",
         Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         "Accept-Language": "en-US,en;q=0.5",
+        "User-Agent": "Mozilla/5.0 (compatible; SyntaxStash/1.0; +https://syntax-stash.dev)",
       },
+      redirect: "follow",
       // Abort after 10 s so slow/stalled pages don't block the runtime
       signal: AbortSignal.timeout(10_000),
-      redirect: "follow",
     });
 
     if (!response.ok) {
@@ -132,9 +132,9 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     title: meta($, "og:title"),
     description: meta($, "og:description"),
     image: meta($, "og:image"),
-    url: meta($, "og:url"),
-    type: meta($, "og:type"),
     siteName: meta($, "og:site_name"),
+    type: meta($, "og:type"),
+    url: meta($, "og:url"),
   };
 
   // Headings
@@ -159,19 +159,19 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   // Return structured result
 
   const payload: ExtractedData = {
-    url: targetUrl.href,
     title,
     description,
-    openGraph,
     headings,
     links,
+    openGraph,
+    url: targetUrl.href,
   };
 
   return NextResponse.json(payload, {
-    status: 200,
     headers: {
       // Allow the client-side tool to call this from the browser
       "Access-Control-Allow-Origin": "*",
     },
+    status: 200,
   });
 }

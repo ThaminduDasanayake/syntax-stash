@@ -242,6 +242,14 @@ export const educationLinks: Tool[] = [
     url: "https://earth.nullschool.net/",
   },
   {
+    title: "Enki",
+    category: CATEGORIES.education,
+    description:
+      "Enki is your AI-powered coach in coding and productivity tools. Python, SQL, Spreadsheets, PowerBI, Tableau, Looker.",
+    subtitle: "Learn 10x faster: coding, no-code, data",
+    url: "https://www.enki.com/",
+  },
+  {
     title: "Exercism",
     category: CATEGORIES.education,
     description: "Learn, practice and get world-class mentoring in over 50 languages. 100% free.",
@@ -395,6 +403,14 @@ export const educationLinks: Tool[] = [
     subtitle: "Hackathons and Developer Programs",
     tags: [TAGS.development, TAGS.education],
     url: "https://www.mlh.com/",
+  },
+  {
+    title: "Mimo",
+    category: CATEGORIES.education,
+    description:
+      "Learn to code at your own pace. Start for free with our comprehensive courses in Python, JavaScript, HTML, CSS and more. Build practical, real-world skills.",
+    subtitle: "Learn to Code in Python, JavaScript, HTML, CSS, & more",
+    url: "https://mimo.org/",
   },
   {
     title: "Mind Luster",
