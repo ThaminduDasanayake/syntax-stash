@@ -58,7 +58,7 @@ export default function WebExtractorPage() {
   }
 
   const rawJSON = data ? JSON.stringify(data, null, 2) : "";
-  const totalLinks = data?.links.length ?? 0;
+  const totalLinks = data?.anchors.length ?? 0;
   const totalHeadings =
     (data?.headings.h1.length ?? 0) +
     (data?.headings.h2.length ?? 0) +
@@ -163,6 +163,9 @@ export default function WebExtractorPage() {
                 <div className="flex flex-col">
                   <MetaRow label="Title" value={data.title} />
                   <MetaRow label="Description" value={data.description} />
+                  <MetaRow label="Author" value={data.author} />
+                  <MetaRow label="Keywords" value={data.keywords?.join(", ") ?? ""} />
+                  <MetaRow label="Canonical" value={data.canonicalUrl} />
                   <MetaRow label="OG Title" value={data.openGraph.title} />
                   <MetaRow label="OG Desc." value={data.openGraph.description} />
                   <MetaRow label="OG Image" value={data.openGraph.image} />
@@ -195,7 +198,7 @@ export default function WebExtractorPage() {
                   <p className="text-muted-foreground py-4 text-center text-sm">No links found.</p>
                 ) : (
                   <ul className="flex flex-col gap-2 pt-1">
-                    {data?.links.map((href, i) => (
+                    {data?.anchors.map((href, i) => (
                       <li
                         key={i}
                         className="hover:bg-muted/50 flex items-start gap-2 p-1.5 transition-colors"

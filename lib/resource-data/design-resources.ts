@@ -698,13 +698,6 @@ export const designLinks: Tool[] = [
     url: "https://picture-palette.web.app/",
   },
   {
-    title: "Picture Palette",
-    category: CATEGORIES.design,
-    description: "Aesthetically pleasing color palettes based on aesthetically pleasing pictures.",
-    tags: [TAGS.color],
-    url: "https://picture-palette.web.app/",
-  },
-  {
     title: "Picular",
     category: CATEGORIES.design,
     description:
