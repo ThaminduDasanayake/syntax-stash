@@ -42,6 +42,8 @@ export interface ExtractedData {
   openGraph: {
     description: string;
     image: string;
+    locale: string;
+    localeAlternate: string[];
     siteName: string;
     title: string;
     type: string;
@@ -60,6 +62,11 @@ export interface ExtractedData {
     src?: string;
     type?: string;
   }[];
+  securityHeaders: {
+    contentSecurityPolicy: string;
+    refresh: string;
+    xUaCompatible: string;
+  };
   themeColor: {
     colorScheme: string;
     themeColor: string;
@@ -96,7 +103,7 @@ function resolveHref(href: string, base: string): string | null {
 
 /** Resolve relative metadata URLs (OpenGraph image, Twitter image, etc.). */
 function resolveMetaUrl(urlStr: string, base: string): string {
-  if (!urlStr) return "";
+  if (!urlStr.trim()) return "";
   return resolveHref(urlStr, base) ?? urlStr;
 }
 
@@ -106,12 +113,14 @@ function cleanText(text: string): string {
 }
 
 /** Collect non-empty text from all matched elements. */
-function texts($: cheerio.Cheerio<AnyNode>, selector: string): string[] {
+function texts($: cheerio.CheerioAPI, selector: string): string[] {
   const results: string[] = [];
-  $.find(selector).each((_, el) => {
-    const text = cleanText(cheerio.load(el).text());
+
+  $(selector).each((_, el) => {
+    const text = cleanText($(el).text());
     if (text) results.push(text);
   });
+
   return results;
 }
 
@@ -140,7 +149,7 @@ async function fetchWithRetry(
   url: string,
   options: Omit<RequestInit, "signal">,
   retries = 2,
-  delay = 1000
+  delay = 1000,
 ): Promise<Response> {
   let lastError: Error | null = null;
 
@@ -229,17 +238,14 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       headers: {
         Accept:
           "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-        "Accept-Encoding": "gzip, deflate, br",
         "Accept-Language": "en-US,en;q=0.9",
         "Cache-Control": "no-cache",
-        Pragma: "no-cache",
         "Sec-Ch-Ua": '"Not A(Brand";v="8", "Chromium";v="132", "Google Chrome";v="132"',
         "Sec-Ch-Ua-Mobile": "?0",
         "Sec-Ch-Ua-Platform": '"Windows"',
         "Sec-Fetch-Dest": "document",
         "Sec-Fetch-Mode": "navigate",
         "Sec-Fetch-Site": "none",
-        "Sec-Fetch-User": "?1",
         "Upgrade-Insecure-Requests": "1",
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36",
@@ -251,7 +257,10 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     if (contentLength) {
       const size = Number(contentLength);
       if (!isNaN(size) && size > 10_000_000) {
-        return NextResponse.json({ error: "Response size exceeds the 10 MB limit." }, { status: 413 });
+        return NextResponse.json(
+          { error: "Response size exceeds the 10 MB limit." },
+          { status: 413 },
+        );
       }
     }
 
@@ -274,12 +283,17 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
     html = await response.text();
     if (html.length > 10_000_000) {
-      return NextResponse.json({ error: "Response content exceeds the 10 MB limit." }, { status: 413 });
+      return NextResponse.json(
+        { error: "Response content exceeds the 10 MB limit." },
+        { status: 413 },
+      );
     }
   } catch (e) {
+    const isTimeout = e instanceof Error && (e.name === "TimeoutError" || e.name === "AbortError");
+
     const message =
       e instanceof Error
-        ? e.name === "AbortError" || e.name === "TimeoutError"
+        ? isTimeout
           ? "Request timed out after 10 seconds."
           : e.message
         : "Unknown fetch error.";
@@ -334,6 +348,15 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     }
   });
 
+  const findHttpEquiv = (value: string) =>
+    meta.find((m) => m.httpEquiv?.toLowerCase() === value.toLowerCase())?.content ?? "";
+
+  const securityHeaders = {
+    contentSecurityPolicy: findHttpEquiv("Content-Security-Policy"),
+    refresh: findHttpEquiv("refresh"),
+    xUaCompatible: findHttpEquiv("X-UA-Compatible"),
+  };
+
   // JSON-LD parsing (flatten arrays if found)
   const jsonLd: unknown[] = [];
   head.find('script[type="application/ld+json"]').each((_, el) => {
@@ -354,7 +377,9 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
   // Link Classification & Deduplication
   const canonicalHref = head.find('link[rel="canonical" i]').attr("href");
-  const canonical = canonicalHref ? resolveMetaUrl(canonicalHref, base) : base;
+  const resolvedCanonical = canonicalHref ? resolveMetaUrl(canonicalHref, base) : "";
+
+  const canonical = resolvedCanonical || base;
 
   const alternates: string[] = [];
   const appleTouchIcons: string[] = [];
@@ -369,26 +394,28 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   head.find("link[href]").each((_, el) => {
     const href = $(el).attr("href");
     if (!href) return;
-    const resolved = resolveHref(href, base) ?? href;
-    const rel = ($(el).attr("rel") ?? "").toLowerCase().trim();
 
-    if (rel === "apple-touch-icon") {
+    const resolved = resolveHref(href, base) ?? href;
+
+    const rels = ($(el).attr("rel") ?? "").toLowerCase().trim().split(/\s+/);
+
+    if (rels.includes("apple-touch-icon")) {
       appleTouchIcons.push(resolved);
-    } else if (rel === "mask-icon") {
+    } else if (rels.includes("mask-icon")) {
       maskIcons.push(resolved);
-    } else if (rel.includes("icon")) {
+    } else if (rels.includes("icon")) {
       icons.push(resolved);
-    } else if (rel === "preload") {
+    } else if (rels.includes("preload")) {
       preloads.push(resolved);
-    } else if (rel === "preconnect") {
+    } else if (rels.includes("preconnect")) {
       preconnects.push(resolved);
-    } else if (rel === "dns-prefetch") {
+    } else if (rels.includes("dns-prefetch")) {
       dnsPrefetch.push(resolved);
-    } else if (rel === "modulepreload") {
+    } else if (rels.includes("modulepreload")) {
       modulepreloads.push(resolved);
-    } else if (rel === "manifest") {
+    } else if (rels.includes("manifest")) {
       manifests.push(resolved);
-    } else if (rel.includes("alternate")) {
+    } else if (rels.includes("alternate")) {
       alternates.push(resolved);
     }
   });
@@ -445,9 +472,9 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
   // Headings & Anchors (Body Elements)
   const headings = {
-    h1: texts(body, "h1"),
-    h2: texts(body, "h2"),
-    h3: texts(body, "h3"),
+    h1: texts($, "h1"),
+    h2: texts($, "h2"),
+    h3: texts($, "h3"),
   };
 
   const seenAnchors = new Set<string>();
@@ -461,24 +488,37 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     }
   });
 
+  const locale = getMeta(head, ["og:locale"]) || "en_US";
+
+  const localeAlternate: string[] = [];
+  head.find('meta[property="og:locale:alternate" i]').each((_, el) => {
+    // Use raw Cheerio context reference node lookup
+    const content = head.find(el).attr("content")?.trim();
+    if (content) {
+      localeAlternate.push(cleanText(content));
+    }
+  });
+
   // Open Graph
   const openGraph = {
+    title: getMeta(head, ["og:title"]),
     description: getMeta(head, ["og:description"]),
     image: resolveMetaUrl(getMeta(head, ["og:image"]), base),
+    locale,
+    localeAlternate,
     siteName: getMeta(head, ["og:site_name"]),
-    title: getMeta(head, ["og:title"]),
     type: getMeta(head, ["og:type"]),
     url: resolveMetaUrl(getMeta(head, ["og:url"]), base),
   };
 
   // Twitter cards
   const twitter = {
+    title: getMeta(head, ["twitter:title"]),
     card: getMeta(head, ["twitter:card"]),
     creator: getMeta(head, ["twitter:creator"]),
     description: getMeta(head, ["twitter:description"]),
     image: resolveMetaUrl(getMeta(head, ["twitter:image"]), base),
     site: getMeta(head, ["twitter:site"]),
-    title: getMeta(head, ["twitter:title"]),
   };
 
   // Robots
@@ -512,6 +552,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   // Return structured result
 
   const payload: ExtractedData = {
+    title,
     anchors,
     author,
     canonicalUrl: canonical,
@@ -528,8 +569,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     rawHead,
     robots,
     scripts,
+    securityHeaders,
     themeColor,
-    title,
     twitter,
     url: targetUrl.href,
     verification,
