@@ -792,6 +792,15 @@ export const designLinks: Tool[] = [
     url: "https://recent.design/",
   },
   {
+    title: "Redaction",
+    category: CATEGORIES.design,
+    description:
+      "Redaction is a bespoke typeface commissioned by Titus Kaphar and Reginald Dwayne Betts’ for The Redaction exhibition at MoMA PS1.",
+    subtitle: "Typeface from Titus Kaphar / Reginald Dwayne Betts’ show at MoMA PS1",
+    tags: [TAGS.typography],
+    url: "https://www.redaction.us/",
+  },
+  {
     title: "Savee",
     category: CATEGORIES.design,
     description:

@@ -5,6 +5,21 @@ import { CATEGORIES } from "./categories";
 
 export const newLinks: Tool[] = [
   {
+    title: "191 Social Proof Examples",
+    category: CATEGORIES.dev,
+    description:
+      "Browse social proof examples grounded in psychology, with real-life applications in business and marketing to build trust on your website and in advertising.",
+    url: "https://socialproofexamples.com/",
+  },
+  {
+    title: "DesignMeter",
+    category: CATEGORIES.dev,
+    description:
+      "Get objective UI/UX scores with actionable insights. Analyze visual hierarchy, usability, and user experience. Free AI-powered design analysis tool.",
+    subtitle: "How good is your design, really?",
+    url: "https://designmeter.ai/",
+  },
+  {
     title: "digibouquet",
     category: CATEGORIES.dev,
     description:

@@ -59,7 +59,16 @@ export const educationLinks: Tool[] = [
     url: "https://github.com/ashishpatel26/500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code",
   },
   {
-    title: "AI ForBeginners",
+    title: "AI Agents For Beginners",
+    author: "Microsoft",
+    category: CATEGORIES.education,
+    description: "18 Lessons to Get Started Building AI Agents.",
+    favicon: "/github.svg",
+    tags: [TAGS.education],
+    url: "https://github.com/microsoft/ai-agents-for-beginners",
+  },
+  {
+    title: "AI For Beginners",
     author: "Microsoft",
     category: CATEGORIES.education,
     description: "12 Weeks, 24 Lessons, AI for All!",
@@ -624,6 +633,13 @@ export const educationLinks: Tool[] = [
     url: "https://staying.fun/en",
   },
   {
+    title: "System Design",
+    category: CATEGORIES.education,
+    description: "Building the best system design resource in the world",
+    tags: [TAGS.newsletter],
+    url: "https://systemdesign.one/",
+  },
+  {
     title: "System Design Primer",
     author: "donnemartin",
     category: CATEGORIES.education,
@@ -675,6 +691,16 @@ export const educationLinks: Tool[] = [
     subtitle: "UI Skills for Design Engineers",
     tags: [TAGS.education],
     url: "https://www.ui-skills.com/",
+  },
+  {
+    title: "Web-Development",
+    author: "keshavgbpecdelhi",
+    category: CATEGORIES.education,
+    description:
+      "Here you will find different web development mini projects which are made up of HTML, CSS & little bit of JavaScript. Do you have any such small project which is not already in the List!? 😄",
+    favicon: "/github.svg",
+    tags: [TAGS.education],
+    url: "https://github.com/keshavgbpecdelhi/Web-Development",
   },
   {
     title: "web.dev",

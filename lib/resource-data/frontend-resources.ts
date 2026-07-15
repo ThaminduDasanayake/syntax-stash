@@ -278,10 +278,18 @@ export const frontendLinks: Tool[] = [
     url: "https://github.com/magnum6actual/flipoff",
   },
   {
-    title: "Footer — The only footer gallery on earth.",
+    title: "Fluid Functionalism.",
+    category: CATEGORIES.frontend,
+    description: "Open Source UI components created by @micka_design",
+    tags: [TAGS["ui-component"]],
+    url: "https://www.fluidfunctionalism.com/",
+  },
+  {
+    title: "Footer",
     category: CATEGORIES.frontend,
     description:
       "Footer is a curated gallery of the top website footer inspiration on earth. Find the footers you need and sort by type and style.",
+    subtitle: "The only footer gallery on earth.",
     tags: [TAGS["ui-component"]],
     url: "https://www.footer.design/",
   },
@@ -525,6 +533,15 @@ export const frontendLinks: Tool[] = [
     url: "https://motion.dev/",
   },
   {
+    title: "Motion-Primitives",
+    category: CATEGORIES.frontend,
+    description:
+      "Motion-Primitives is an open-source UI kit to make beautiful, animated interfaces, faster. Built for React, Next.js, and Tailwind CSS.",
+    subtitle: "UI kit to make beautiful, animated interfaces, faster.",
+    tags: [TAGS.animation, TAGS["ui-component"]],
+    url: "https://motion-primitives.com/",
+  },
+  {
     title: "Neobrutalism components",
     category: CATEGORIES.frontend,
     description: "A collection of neobrutalism-styled components based on shadcn/ui.",
@@ -588,6 +605,13 @@ export const frontendLinks: Tool[] = [
     favicon: "https://aejkatappaja.github.io/phantom-ui/favicon.svg",
     tags: [TAGS["ui-component"]],
     url: "https://aejkatappaja.github.io/phantom-ui/",
+  },
+  {
+    title: "Phosphor Icons",
+    category: CATEGORIES.frontend,
+    description:
+      "A flexible icon family for interfaces, diagrams, presentations — whatever, really.",
+    url: "https://phosphoricons.com/",
   },
   {
     title: "Plate rich-text editor",

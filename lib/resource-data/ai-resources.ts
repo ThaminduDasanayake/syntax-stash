@@ -36,16 +36,6 @@ export const aiLinks: Tool[] = [
     url: "https://github.com/The-Swarm-Corporation/AutoHedge",
   },
   {
-    title: "awesome-llm-apps",
-    author: "Shubhamsaboo",
-    category: CATEGORIES.ai,
-    description: "100+ AI Agent & RAG apps you can actually run — clone, customize, ship.",
-    favicon: "/github.svg",
-    related: ["Langflow", "ollama/ollama"],
-    tags: [TAGS.ai],
-    url: "https://github.com/Shubhamsaboo/awesome-llm-apps",
-  },
-  {
     title: "Awesome Claude",
     category: CATEGORIES.ai,
     description:
@@ -64,6 +54,16 @@ export const aiLinks: Tool[] = [
     favicon: "/github.svg",
     tags: [TAGS.ai],
     url: "https://github.com/steven2358/awesome-generative-ai",
+  },
+  {
+    title: "Awesome LLM Apps",
+    author: "Shubham Saboo",
+    category: CATEGORIES.ai,
+    description: "100+ AI Agent & RAG apps you can actually run — clone, customize, ship.",
+    favicon: "/github.svg",
+    related: ["Langflow", "ollama/ollama"],
+    tags: [TAGS.ai],
+    url: "https://github.com/Shubhamsaboo/awesome-llm-apps",
   },
   {
     title: "Browser Use",
@@ -365,6 +365,14 @@ export const aiLinks: Tool[] = [
     favicon: "/github.svg",
     tags: [TAGS.ai],
     url: "https://github.com/langchain-ai/openwiki",
+  },
+  {
+    title: "RAG-Anything",
+    author: "HKUDS",
+    category: CATEGORIES.ai,
+    description: "RAG-Anything: All-in-One RAG Framework",
+    favicon: "/github.svg",
+    url: "https://github.com/hkuds/rag-anything",
   },
   {
     title: "Ship Studio",

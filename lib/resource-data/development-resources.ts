@@ -455,6 +455,14 @@ export const developmentLinks: Tool[] = [
     url: "https://github.com/n8n-io/n8n",
   },
   {
+    title: "NoSignups",
+    category: CATEGORIES.dev,
+    description:
+      "NoSignups (formerly FckSignups) is an open-source directory of no-signup, in-browser, open-source tools.",
+    subtitle: "Open Source Tools. Zero Bullsh*t. (formerly FckSignups)",
+    url: "https://nosignups.net/",
+  },
+  {
     title: "Nub — an all-in-one toolkit for Node.js",
     category: CATEGORIES.dev,
     description:
@@ -468,6 +476,15 @@ export const developmentLinks: Tool[] = [
     description: "Progressive Web Application with 12 open source frontend focused tools",
     tags: [TAGS.development],
     url: "https://omatsuri.app/",
+  },
+  {
+    title: "OmniVoice Studio",
+    author: "Palash Debnath",
+    category: CATEGORIES.dev,
+    description:
+      "A cinematic audio dubbing, cloning and voice generation studio. Enterprise-grade processing with AI-powered voice synthesis, 600+ language support, and self-hosted deployment.",
+    subtitle: "Cinematic audio dubbing, cloning & voice generation | palash.dev",
+    url: "https://palash.dev/omnivoice/",
   },
   {
     title: "OpenFlowKit",
@@ -555,7 +572,7 @@ export const developmentLinks: Tool[] = [
     title: "Quarkdown",
     category: CATEGORIES.dev,
     description:
-      "Quarkdown is a modern, open-source, Markdown-based typesetting system for creating papers, presentations, knowledge bases and static websites. ",
+      "Quarkdown is a modern, open-source, Markdown-based typesetting system for creating papers, presentations, knowledge bases and static websites.",
     subtitle: "Markdown with superpowers",
     tags: [TAGS.development],
     url: "https://quarkdown.com/",

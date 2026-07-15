@@ -107,6 +107,14 @@ export const mediaLinks: Tool[] = [
     url: "https://pattern.monster/",
   },
   {
+    title: "Pexels",
+    category: CATEGORIES.media,
+    description:
+      "Free stock photos & videos you can use everywhere. Browse millions of high-quality royalty free stock images & copyright free pictures. No attribution required.",
+    subtitle: "Free Stock Photos, Royalty Free Stock Images & Copyright Free Pictures",
+    url: "https://www.pexels.com/",
+  },
+  {
     title: "Pngfile",
     category: CATEGORIES.media,
     description:
@@ -129,6 +137,14 @@ export const mediaLinks: Tool[] = [
       "Browse a curated collection of free, customizable SVG doodles and icons to use in your websites, apps, slides, and prints.",
     subtitle: "Free, editable SVGs to spice up your designs",
     url: "https://svgdoodles.com/",
+  },
+  {
+    title: "SVG Repo",
+    category: CATEGORIES.media,
+    description:
+      "Free Vectors and Icons in SVG format. ✅ Download free mono or multi color vectors for commercial use. Search in 500.000+ Free SVG Vectors and Icons.",
+    subtitle: "Free SVG Vectors and Icons",
+    url: "https://www.svgrepo.com/",
   },
   {
     title: "TechIcons",
