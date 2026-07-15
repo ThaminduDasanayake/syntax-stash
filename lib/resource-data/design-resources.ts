@@ -12,6 +12,15 @@ export const designLinks: Tool[] = [
     url: "https://graph-easy.online/",
   },
   {
+    title: "Adfolio",
+    category: CATEGORIES.design,
+    description:
+      "Curated B2B SaaS ads for design & copy inspiration. Hand-picked Meta & LinkedIn ads explained.",
+    subtitle: "Impactful B2B SaaS ads, explained",
+    tags: [TAGS.design, TAGS.inspiration],
+    url: "https://www.adfolio.design/",
+  },
+  {
     title: "AI in Design Report 2026",
     category: CATEGORIES.design,
     description:
@@ -425,6 +434,15 @@ export const designLinks: Tool[] = [
     url: "https://fontshare.com/",
   },
   {
+    title: "Framer",
+    category: CATEGORIES.design,
+    description:
+      "Create a professional website with Framer’s no-code AI website builder. Design freely, manage CMS content, optimize SEO, collaborate, and publish fast.",
+    subtitle: "AI website builder for professional sites",
+    tags: [TAGS.design],
+    url: "https://www.framer.com/",
+  },
+  {
     title: "Free ASCII Art Tools & Unicode Symbols",
     author: "EZASCII",
     category: CATEGORIES.design,
@@ -796,6 +814,16 @@ export const designLinks: Tool[] = [
     url: "https://planner5d.com/",
   },
   {
+    title: "Precise Type",
+    author: "Adonis Raul Raduca",
+    category: CATEGORIES.design,
+    description:
+      "Create precise, harmonious typography with Precise Type. Explore Type Scales, Font Sizes, Line Heights, and Letter Spacing – then export the CSS.",
+    subtitle: "Type Scale Tool – Craft Precise Typography, Get CSS Fast",
+    tags: [TAGS.design, TAGS.typography],
+    url: "https://precise-type.com/",
+  },
+  {
     title: "RapidRAW",
     category: CATEGORIES.design,
     description:
@@ -843,11 +871,19 @@ export const designLinks: Tool[] = [
     url: "https://www.redaction.us/",
   },
   {
+    title: "Saaspo",
+    category: CATEGORIES.design,
+    description: "A curated collection of the best SaaS websites on the web.",
+    subtitle: "The best SaaS Web Design Inspiration",
+    tags: [TAGS.design, TAGS.inspiration],
+    url: "https://saaspo.com/",
+  },
+  {
     title: "Savee",
     category: CATEGORIES.design,
     description:
       "Savee is a curated place for visual inspiration. Discover references chosen by designers, collect what matters, and build a sharper eye without ads or clutter.",
-    tags: [TAGS.design],
+    tags: [TAGS.design, TAGS.inspiration],
     url: "https://savee.com/",
   },
   {

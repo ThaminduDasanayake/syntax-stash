@@ -77,6 +77,15 @@ export const educationLinks: Tool[] = [
     url: "https://github.com/microsoft/ai-for-beginners",
   },
   {
+    title: "aijobs.net",
+    category: CATEGORIES.education,
+    description:
+      "The go-to, no-nonsense, fast and lean job site in AI, ML, Data Science and Big Data.",
+    subtitle: "45,324 jobs in AI/ML, Data Science and Big Data",
+    tags: [TAGS.job],
+    url: "https://aijobs.net/",
+  },
+  {
     title: "AI Project Gallery",
     author: "KalyanM45",
     category: CATEGORIES.education,
@@ -103,6 +112,15 @@ export const educationLinks: Tool[] = [
     favicon: "/github.svg",
     tags: [TAGS.education],
     url: "https://github.com/florinpop17/app-ideas",
+  },
+  {
+    title: "Arc",
+    category: CATEGORIES.education,
+    description:
+      "Arc is a global marketplace of vetted remote talent. Hire developers, designers, marketers, PMs, PJMs, assistants, and more for freelance or full-time roles.",
+    subtitle: "Hire the Top 2% of Talent",
+    tags: [TAGS.job],
+    url: "https://arc.dev/",
   },
   {
     title: "Awesome JavaScript",
@@ -207,6 +225,41 @@ export const educationLinks: Tool[] = [
       "Journey through the fantasy land of Python, HTML, CSS, or JavaScript, earn experience points (XP) to unlock new regions, and collect all the badges at your own pace. Start your adventure today.",
     tags: [TAGS.education],
     url: "https://www.codedex.io/",
+  },
+  {
+    title: "CS50's Introduction to Artificial Intelligence with Python",
+    author: "Harvard University",
+    category: CATEGORIES.education,
+    description:
+      "Learn to use machine learning in Python in this introductory course on artificial intelligence.",
+    tags: [TAGS.ai, TAGS.education, TAGS.python],
+    url: "https://pll.harvard.edu/course/cs50s-introduction-artificial-intelligence-python",
+  },
+  {
+    title: "CS50's Introduction to Databases with SQL",
+    author: "Harvard University",
+    category: CATEGORIES.education,
+    description: "Learn how to create, read, update, and delete data with relational databases.",
+    tags: [TAGS.education, TAGS.sql],
+    url: "https://pll.harvard.edu/course/cs50s-introduction-databases-sql",
+  },
+  {
+    title: "CS50's Introduction to Programming with Python",
+    author: "Harvard University",
+    category: CATEGORIES.education,
+    description:
+      "An introduction to programming using Python, a popular language for general-purpose programming, data science, web programming, and more.",
+    tags: [TAGS.education, TAGS.python],
+    url: "https://pll.harvard.edu/course/cs50s-introduction-programming-python",
+  },
+  {
+    title: "CS50's Web Programming with Python and JavaScript",
+    author: "Harvard University",
+    category: CATEGORIES.education,
+    description:
+      "This course picks up where CS50 leaves off, diving more deeply into the design and implementation of web apps with Python, JavaScript, and SQL using frameworks like Django, React, and Bootstrap.",
+    tags: [TAGS.education, TAGS.javascript, TAGS.python],
+    url: "https://pll.harvard.edu/course/cs50s-web-programming-python-and-javascript",
   },
   {
     title: "CS50: Introduction to Computer Science",
@@ -349,11 +402,28 @@ export const educationLinks: Tool[] = [
     url: "https://hfviewer.com/",
   },
   {
+    title: "Himalayas",
+    category: CATEGORIES.education,
+    description:
+      "Himalayas is the leading remote job board. Find a remote job, research remote companies, and generate job-specific resumes, cover letters, and mock interviews in seconds.",
+    subtitle: "Remote Job Board and Free AI Job Search Tools",
+    tags: [TAGS.education],
+    url: "https://himalayas.app/",
+  },
+  {
     title: "Information is Beautiful",
     category: CATEGORIES.education,
     description:
       "Distilling the world's data, information & knowledge into beautiful infographics & visualizations",
     url: "https://informationisbeautiful.net/",
+  },
+  {
+    title: "JavaScript Jobs",
+    category: CATEGORIES.education,
+    description:
+      "Javascript Jobs helps you find the perfect job programming in Javascript, whether it be React, Angular, Node, vanilla JS or more. We’ve also got the biggest range of remote Javascript jobs.",
+    tags: [TAGS.job],
+    url: "https://javascript.jobs/",
   },
   {
     title: "JavaScript Questions",
@@ -373,6 +443,24 @@ export const educationLinks: Tool[] = [
     favicon: "/github.svg",
     tags: [TAGS.job],
     url: "https://github.com/rogerluan/JobList",
+  },
+  {
+    title: "Jobspresso",
+    category: CATEGORIES.education,
+    description:
+      "Jobspresso is the easiest way to find remote jobs, careers and other remote work opportunities at interesting and innovative companies.",
+    subtitle: "Remote Jobs: 1,000+ Job Openings for Remote Work",
+    tags: [TAGS.job],
+    url: "https://jobspresso.co/",
+  },
+  {
+    title: "JustRemote",
+    category: CATEGORIES.education,
+    description:
+      "Discover Remote Jobs from around the world. Give up the commute, work remotely and do what you love, daily, from anywhere. Find your perfect remote development, design, sales or marketing job today.",
+    subtitle: "Remote Jobs: Design, Marketing, Programming, Writing & More",
+    tags: [TAGS.job],
+    url: "https://justremote.co/",
   },
   {
     title: "K8s Games",
@@ -580,6 +668,15 @@ export const educationLinks: Tool[] = [
     url: "https://refactoring.guru/",
   },
   {
+    title: "Remote100K",
+    category: CATEGORIES.education,
+    description:
+      "Find remote jobs paying $100K+ at top companies, from engineering to marketing and design. Apply directly, no account required.",
+    subtitle: "Remote Jobs Paying $100K+",
+    tags: [TAGS.job],
+    url: "https://remote100k.com/",
+  },
+  {
     title: "remote-jobs",
     author: "remoteintech",
     category: CATEGORIES.education,
@@ -597,6 +694,24 @@ export const educationLinks: Tool[] = [
     subtitle: "Remote Jobs in Programming, Design, Sales and more #OpenSalaries",
     tags: [TAGS.job],
     url: "https://remoteok.com/",
+  },
+  {
+    title: "Remote Week",
+    category: CATEGORIES.education,
+    description:
+      "Discover thousands of remote jobs from top companies worldwide. Find work from home opportunities in tech, marketing, sales, and more. Updated daily.",
+    subtitle: "Remote Jobs at Top Rated Companies (3.5+ Glassdoor)",
+    tags: [TAGS.job],
+    url: "https://www.remoteweek.io/",
+  },
+  {
+    title: "Remotive",
+    category: CATEGORIES.education,
+    description:
+      "Find the best remote job, working as a developer, customer support rep, product or sales professional... See openings in our categories. All our 138,532 jobs are curated and fully remote. Click, apply, and get hired!",
+    subtitle: "Remote Jobs in Programming, Support, Design and more",
+    tags: [TAGS.job],
+    url: "https://remotive.com/",
   },
   {
     title: "ShortcutFoo",
@@ -650,6 +765,14 @@ export const educationLinks: Tool[] = [
     url: "https://github.com/donnemartin/system-design-primer",
   },
   {
+    title: "Tech Interview Handbook",
+    category: CATEGORIES.education,
+    description: "Free curated interview preparation materials for busy people",
+    subtitle: "Technical Interview Guide for Busy Engineers",
+    tags: [TAGS.education],
+    url: "https://www.techinterviewhandbook.org/",
+  },
+  {
     title: "The Algorithms",
     author: "The Algorithms",
     category: CATEGORIES.education,
@@ -664,6 +787,7 @@ export const educationLinks: Tool[] = [
     category: CATEGORIES.education,
     description:
       "The Odin Project empowers aspiring web developers to learn together for free. Our full stack curriculum is free and supported by a passionate open source community.",
+    subtitle: "Your Career in Web Development Starts Here",
     tags: [TAGS.education],
     url: "https://www.theodinproject.com/",
   },
@@ -754,6 +878,15 @@ export const educationLinks: Tool[] = [
     url: "https://weworkremotely.com/",
   },
   {
+    title: "Working Nomads",
+    category: CATEGORIES.education,
+    description:
+      "Discover fully remote jobs worldwide for digital nomads and remote workers. Find full-time, part-time, and contract roles that let you work from anywhere.",
+    subtitle: "Remote Jobs",
+    tags: [TAGS.job],
+    url: "https://www.workingnomads.com/jobs",
+  },
+  {
     title: "You Don't Know JS",
     author: "getify",
     category: CATEGORIES.education,
@@ -761,5 +894,15 @@ export const educationLinks: Tool[] = [
     favicon: "/github.svg",
     tags: [TAGS.education],
     url: "https://github.com/getify/You-Dont-Know-JS",
+  },
+  {
+    title: "Zero to Mastery Machine Learning",
+    author: "Daniel Bourke",
+    category: CATEGORIES.education,
+    description:
+      "All course materials for the Zero to Mastery Machine Learning and Data Science course.",
+    favicon: "/github.svg",
+    tags: [TAGS.education],
+    url: "https://github.com/mrdbourke/zero-to-mastery-ml",
   },
 ];

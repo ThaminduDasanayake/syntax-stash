@@ -128,6 +128,15 @@ export const frontendLinks: Tool[] = [
     url: "https://brik.space/",
   },
   {
+    title: "Cascade",
+    category: CATEGORIES.frontend,
+    description:
+      "An open-source icon set where every icon represents a CSS property–value pair. Copy as SVG or React component. Built for design tools, inspectors, and documentation.",
+    subtitle: "Icons for CSS Properties",
+    tags: [TAGS.icon],
+    url: "https://designsurface.dev/cascade",
+  },
+  {
     title: "Clonify",
     category: CATEGORIES.frontend,
     description:
@@ -628,6 +637,14 @@ export const frontendLinks: Tool[] = [
       "A set of beautifully-designed, customizable plugins and components to help you build your rich-text editor. Open Source.",
     tags: [TAGS["ui-component"]],
     url: "https://platejs.org/",
+  },
+  {
+    title: "Pretext",
+    category: CATEGORIES.frontend,
+    description:
+      "Pretext is a pure TypeScript text layout library by ex-React core member Cheng Lou. It bypasses browser layout reflow and measures text 300-600x faster than DOM methods.",
+    subtitle: "JavaScript Text Measurement Without DOM Reflow",
+    url: "https://pretextjs.net/",
   },
   {
     title: "Prime UI",

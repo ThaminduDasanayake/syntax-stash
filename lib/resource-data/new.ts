@@ -20,6 +20,14 @@ export const newLinks: Tool[] = [
     url: "https://designmeter.ai/",
   },
   {
+    title: "Design Spells",
+    category: CATEGORIES.dev,
+    description:
+      "Discover micro-interactions, easter eggs, and other seemingly extra design details that infuse life, personality, and fun back into the web.",
+    subtitle: "Design details that feel like magic",
+    url: "https://designspells.com/",
+  },
+  {
     title: "digibouquet",
     category: CATEGORIES.dev,
     description:
@@ -40,6 +48,13 @@ export const newLinks: Tool[] = [
       "Gun.io connects companies with elite freelance software developers. Vetted engineers, automated compliance, and guaranteed delivery for high-stakes projects.",
     subtitle: "The Technical Standard for High Stakes Engineering",
     url: "https://gun.io/",
+  },
+  {
+    title: "StackShare",
+    category: CATEGORIES.dev,
+    description:
+      "Discover and share the technology stacks used by top companies. Compare tools, read reviews, and make informed decisions about your tech stack.",
+    url: "https://stackshare.io/",
   },
   {
     title: "Templates - Vercel",

@@ -19,7 +19,7 @@ export const developmentLinks: Tool[] = [
     description:
       "annyang is a JavaScript SpeechRecognition library that makes adding voice commands to your site super-easy. Let your users control your site with their voice.",
     subtitle: "Easily add speech recognition to your site",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://www.talater.com/annyang/",
   },
   {
@@ -55,7 +55,7 @@ export const developmentLinks: Tool[] = [
     description:
       "Find the best self-hosted, privacy-friendly, free, and local-first open-source alternatives to popular software, with migration guidance and practical evaluation details.",
     subtitle: "Best Open Source Alternatives",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://www.bestalternative.dev/en",
   },
   {
@@ -73,7 +73,7 @@ export const developmentLinks: Tool[] = [
     description:
       "Bundlephobia helps you find the performance impact of npm packages. Find the size of any javascript package and its effect on your frontend bundle.",
     subtitle: "Size of npm dependencies",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://bundlephobia.com/",
   },
   {
@@ -82,7 +82,7 @@ export const developmentLinks: Tool[] = [
     description:
       "The most entertaining (and informative) JavaScript newsletter. Delivered twice a week, for free.",
     subtitle: "The Best JavaScript Newsletter",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://bytes.dev/",
   },
   {
@@ -99,7 +99,7 @@ export const developmentLinks: Tool[] = [
     description:
       "A fully customizable scheduling software for individuals, businesses taking calls and developers building scheduling platforms where users meet users.",
     subtitle: "Scheduling Software for Online Bookings",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://cal.com/",
   },
   {
@@ -153,7 +153,7 @@ export const developmentLinks: Tool[] = [
     description:
       "A growing collection of free online developer tools. Format JSON and SQL, test regex, decode JWT and Base64, generate UUIDs and passwords, compare text,.",
     subtitle: "Free Online Developer Tools",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://coddy.tech/tools",
   },
   {
@@ -176,7 +176,7 @@ export const developmentLinks: Tool[] = [
     title: "Context.dev Free Tools",
     category: CATEGORIES.dev,
     description: "Free tools for developers and SEOs",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://www.context.dev/free-tools",
   },
   {
@@ -208,7 +208,7 @@ export const developmentLinks: Tool[] = [
     description:
       "A collection of small, low stakes and low effort tools. No logins, no registration, no data collection. Everything runs locally in your browser.",
     subtitle: "privacy-first browser tools",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://delphi.tools/",
   },
   {
@@ -222,7 +222,7 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description:
       "A space to discuss and keep up software development and manage your software career",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://dev.to/",
   },
   {
@@ -230,7 +230,7 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description:
       "Fast, offline, and free documentation browser for developers. Search 100+ docs in one web app: HTML, CSS, JavaScript, PHP, Ruby, Python, Go, C, C++…",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://devdocs.io/",
   },
   {
@@ -247,7 +247,7 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description:
       "DigitalPlat Domain is a nonprofit stewarding free, public-benefit namespaces for people and organizations everywhere.",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://domain.digitalplat.org/",
   },
   {
@@ -271,11 +271,21 @@ export const developmentLinks: Tool[] = [
     url: "https://github.com/dubinc/dub",
   },
   {
+    title: "emailmd",
+    category: CATEGORIES.dev,
+    description:
+      "Turn markdown into responsive, email-safe HTML that renders perfectly across every client.",
+    subtitle: "Responsive Emails, Written in Markdown",
+    tags: [TAGS.markdown, TAGS.tool],
+
+    url: "https://www.emailmd.dev/",
+  },
+  {
     title: "explainx.ai Tools",
     category: CATEGORIES.dev,
     description:
       "Discover and compare AI tools — search by task, filter by category, and read community reviews.",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://explainx.ai/tools",
   },
   {
@@ -285,12 +295,20 @@ export const developmentLinks: Tool[] = [
     url: "https://flority.digital/",
   },
   {
+    title: "FluidCAD",
+    category: CATEGORIES.dev,
+    description: "FluidCAD — write CAD models in JavaScript. See the result in real time.",
+    subtitle: "Parametric CAD for everyone",
+    tags: [TAGS.cad, TAGS.tool, TAGS["3d"]],
+    url: "https://fluidcad.io/",
+  },
+  {
     title:
       "Free ASCII Webcam — Live Camera to ASCII Art in Real-Time | No Upload | jasperbernaers.com",
     category: CATEGORIES.dev,
     description:
       "Turn your webcam into live ASCII art — real-time camera to text conversion in your browser. Multiple character sets (Blocks, Braille, Detailed, Binary), color mode, adjustable FPS & resolution. Record GIFs, take snapshots. 100% private, no upload, no sign-up.",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://jasperbernaers.com/ascii-webcam/",
   },
   {
@@ -298,7 +316,7 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description:
       "Developers and Open Source authors now have a massive amount of services offering free tiers, but it can be hard to find them all to make informed decisions.",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://free-for.dev/",
   },
   {
@@ -307,7 +325,7 @@ export const developmentLinks: Tool[] = [
     description:
       "Turn any GitHub repository into an interactive architecture diagram for quick codebase understanding.",
     subtitle: "Visualize Any GitHub Repository",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://gitdiagram.com/",
   },
   {
@@ -347,7 +365,7 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description:
       "Publish any file or folder to the web in seconds from your AI agent. Free, no sign-up required. Just tell your agent to publish to here.now and get a live URL back instantly.",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://here.now/",
   },
   {
@@ -362,7 +380,7 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description: "Helps you create requests faster, saving precious time on development.",
     subtitle: "Open source API development ecosystem",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://hoppscotch.io/",
   },
   {
@@ -379,7 +397,7 @@ export const developmentLinks: Tool[] = [
     description:
       "IMG.LY's video, photo and creative SDK brings beautiful creative editing to your applications. Powering 500+ million creations per month.",
     subtitle: "Bring Photo, Video, and Design Editing into Your App",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://img.ly/",
   },
   {
@@ -394,7 +412,7 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description:
       "Collection of handy online tools for developers, with great UX. IT Tools is a free and open-source collection of handy online tools for developers & people working in IT.",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://it-tools.tech/",
   },
   {
@@ -403,7 +421,7 @@ export const developmentLinks: Tool[] = [
     description:
       "JSON Hero makes reading and understand JSON files easy by giving you a clean and beautiful UI packed with extra features.",
     subtitle: "A beautiful JSON viewer for the web",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://jsonhero.io/",
   },
   {
@@ -424,7 +442,7 @@ export const developmentLinks: Tool[] = [
     title: "Koefo",
     category: CATEGORIES.dev,
     description: "Instagram Carousel Splitter",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://www.koefo.com/",
   },
   {
@@ -457,7 +475,7 @@ export const developmentLinks: Tool[] = [
     description:
       "A free test data generator and API mocking tool - Mockaroo lets you create custom CSV, JSON, SQL, and Excel datasets to test and demo your software.",
     subtitle: "Random Data Generator and API Mocking Tool | JSON / CSV / SQL / Excel",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://www.mockaroo.com/",
   },
   {
@@ -465,7 +483,7 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description:
       "Fair-code workflow automation platform with native AI capabilities. Combine visual building with custom code, self-host or cloud, 400+ integrations.",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://github.com/n8n-io/n8n",
   },
   {
@@ -481,7 +499,7 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description:
       "Nub is a TypeScript-first toolkit for Node.js: run TypeScript files on stock Node, a faster npm run, a pnpm-compatible package manager, and a built-in Node version manager. No lock-in.",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://nubjs.com/",
   },
   {
@@ -513,7 +531,7 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description:
       "A curated collection of the best open source alternatives to everyday SaaS products. Save money with reliable tools hand-picked for you.",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://openalternative.co/",
   },
   {
@@ -522,7 +540,7 @@ export const developmentLinks: Tool[] = [
     description:
       "Oualator - A collection of needful generators, converters, unit exchangers, measuring tools, and many more. Use our online tools to increase your productivity.",
     subtitle: "Convert, Measure & Generate in Seconds",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://oualator.com/",
   },
   {
@@ -538,7 +556,7 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description:
       "Welcome! My name is Pat. I am a software developer and amateur photographer. Here you'll find an array of web apps, programming tutorials, and random projects.",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://patorjk.com/",
   },
   {
@@ -551,11 +569,19 @@ export const developmentLinks: Tool[] = [
     url: "https://payloadcms.com/",
   },
   {
+    title: "PDFCraft",
+    category: CATEGORIES.dev,
+    description:
+      "Free, Private & Browser-Based. Merge, edit, and edit PDF files online without uploading to servers.",
+    subtitle: "Professional PDF Tools",
+    url: "https://pdfcraft.devtoolcafe.com/en/",
+  },
+  {
     title: "Photoroom - AI Photo Editor",
     category: CATEGORIES.dev,
     description:
       "Enhance your photos with our AI photo editor. Create stunning images in seconds with AI-powered technology and our powerful tools.",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://www.photoroom.com/tools",
   },
   {
@@ -651,7 +677,7 @@ export const developmentLinks: Tool[] = [
     title: "RunaCapital/awesome-oss-alternatives",
     category: CATEGORIES.dev,
     description: "Awesome list of open-source startup alternatives to well-known SaaS products 🚀.",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://github.com/RunaCapital/awesome-oss-alternatives",
   },
   {
@@ -676,7 +702,7 @@ export const developmentLinks: Tool[] = [
     title: "Shape Divider App",
     category: CATEGORIES.dev,
     description: "Create fully responsive shape dividers for your next web project",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://www.shapedivider.app/",
   },
   {
@@ -710,7 +736,7 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description:
       "Squoosh is the ultimate image optimizer that allows you to compress and compare images with different codecs in your browser.",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://squoosh.app/",
   },
   {
@@ -718,7 +744,7 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description:
       "GitHub's #1 PDF application with 30M+ downloads. The next generation of the PDF Editor - private, open-source, and built to scale.",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://stirling.com/",
   },
   {
@@ -787,7 +813,7 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description:
       "'I have read and agree to the Terms' is the biggest lie on the web. Together, we can fix that.",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://tosdr.org/en",
   },
   {
@@ -796,7 +822,7 @@ export const developmentLinks: Tool[] = [
     description:
       "Free sharing of photos, videos and documents. Send large files instantly with a link or email. Simple, fast and secure file sharing with Transfer.zip.",
     subtitle: "Quick & Easy File Transfer - Send Files",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://transfer.zip/",
   },
   {
@@ -822,7 +848,7 @@ export const developmentLinks: Tool[] = [
     description:
       "URL to Any provides free URL conversion tools to transform web content into Markdown, PDF, images, text, JSON, XML, QR codes, extracted metadata, IP records, and AI summaries.",
     subtitle: "All-in-one URL Conversion Tool",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://urltoany.com/",
   },
   {
@@ -831,14 +857,14 @@ export const developmentLinks: Tool[] = [
     description:
       "Explore Vault andzn’s collection of free online design tools, including an ASCII art generator, color palette generator and more. Fast, browser-based, no downloads or sign-ups required.",
     subtitle: "Free Online Design Tools — ASCII Generator, Color Palette Maker & More",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://vaultandzn.com/pages/all-tools",
   },
   {
     title: "vid2ascii",
     category: CATEGORIES.dev,
     description: "Convert videos to ASCII.",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://www.vid2ascii.com/",
   },
   {
@@ -857,7 +883,6 @@ export const developmentLinks: Tool[] = [
     subtitle: "Open Source Voice Cloning Desktop App",
     url: "https://voicebox.sh/",
   },
-
   {
     title: "web.dev",
     category: CATEGORIES.dev,
@@ -873,12 +898,20 @@ export const developmentLinks: Tool[] = [
     url: "https://123apps.com/",
   },
   {
+    title: "Web Check",
+    category: CATEGORIES.dev,
+    description:
+      "Web Check is the all-in-one OSINT and security tool, for revealing the inner workings of any website",
+    tags: [TAGS.tool],
+    url: "https://web-check.xyz",
+  },
+  {
     title: "WinWinKit",
     category: CATEGORIES.dev,
     description:
       "A purpose-built tool for running powerful affiliate, referral and promo campaigns. Designed for iOS, Android and desktop apps.",
     subtitle: "Grow your app on Autopilot",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://winwinkit.com/",
   },
   {
@@ -894,7 +927,7 @@ export const developmentLinks: Tool[] = [
     title: "yt-dlp/yt-dlp",
     category: CATEGORIES.dev,
     description: "A feature-rich command-line audio/video downloader.",
-    tags: [TAGS["tool"]],
+    tags: [TAGS.tool],
     url: "https://github.com/yt-dlp/yt-dlp",
   },
 ];
