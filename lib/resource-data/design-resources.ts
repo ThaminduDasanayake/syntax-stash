@@ -45,6 +45,14 @@ export const designLinks: Tool[] = [
     url: "https://particles.casberry.in/",
   },
   {
+    title: "A MONO",
+    author: "falk schröter",
+    category: CATEGORIES.design,
+    description: "an open-source variable monospace typeface with a full IPA character set.",
+    tags: [TAGS.typography],
+    url: "https://klotter.supply/a-mono",
+  },
+  {
     title: "animos",
     category: CATEGORIES.design,
     description:
@@ -405,6 +413,15 @@ export const designLinks: Tool[] = [
       "No-coding tool to create 3D assets, key visual for social media, identity elements and other marketing and design need.",
     tags: [TAGS.design],
     url: "https://endlesstools.io/",
+  },
+  {
+    title: "fixelPont",
+    author: "falk schröter",
+    category: CATEGORIES.design,
+    description:
+      "fixelPont is a chaotic pixel font. it comes in two styles, regular and rounded, and includes ByeByeBinary's post-binary ligatures for the french language. it's licensed under the CUTE license.",
+    tags: [TAGS.typography],
+    url: "https://klotter.supply/fixelpont",
   },
   {
     title: "Fontjoy",

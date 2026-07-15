@@ -361,10 +361,11 @@ export const developmentLinks: Tool[] = [
     url: "https://www.gittoskill.com/",
   },
   {
-    title: "here.now | Instant web hosting for agents",
+    title: "here.now",
     category: CATEGORIES.dev,
     description:
       "Publish any file or folder to the web in seconds from your AI agent. Free, no sign-up required. Just tell your agent to publish to here.now and get a live URL back instantly.",
+    subtitle: "Instant web hosting for agents",
     tags: [TAGS.tool],
     url: "https://here.now/",
   },

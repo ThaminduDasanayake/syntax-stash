@@ -1,4 +1,3 @@
-import { TAGS } from "@/lib/resource-data/tags";
 import { Tool } from "@/types";
 
 import { CATEGORIES } from "./categories";
@@ -10,6 +9,14 @@ export const newLinks: Tool[] = [
     description:
       "Browse social proof examples grounded in psychology, with real-life applications in business and marketing to build trust on your website and in advertising.",
     url: "https://socialproofexamples.com/",
+  },
+  {
+    title: "DesignMD",
+    category: CATEGORIES.dev,
+    description:
+      "Design context your AI can read. 70+ brand design systems as plain-text DESIGN.md files. Drop one in your prompt and ship UI that looks like it cost six figures.",
+    subtitle: "DESIGN.md catalog for AI agents",
+    url: "https://www.designmd.co/",
   },
   {
     title: "DesignMeter",
