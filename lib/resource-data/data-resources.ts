@@ -21,6 +21,14 @@ export const dataLinks: Tool[] = [
     url: "https://apify.com/",
   },
   {
+    title: "Awesome Public Datasets",
+    category: CATEGORIES.data,
+    description: "A topic-centric list of HQ open datasets.",
+    favicon: "/github.svg",
+    tags: [TAGS.data],
+    url: "https://github.com/awesomedata/awesome-public-datasets",
+  },
+  {
     title: "Behind the Email",
     category: CATEGORIES.data,
     description:
@@ -28,6 +36,13 @@ export const dataLinks: Tool[] = [
     subtitle: "Public Profile & Career Search",
     tags: [TAGS.data],
     url: "https://behindtheemail.com/",
+  },
+  {
+    title: "ByteByteGo",
+    category: CATEGORIES.data,
+    description: "Everything you need to take your system design skill to the next level",
+    subtitle: "Technical Interview Prep",
+    url: "https://bytebytego.com/",
   },
   {
     title: "Free Public APIs",

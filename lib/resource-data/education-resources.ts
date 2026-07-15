@@ -59,6 +59,15 @@ export const educationLinks: Tool[] = [
     url: "https://github.com/ashishpatel26/500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code",
   },
   {
+    title: "AI ForBeginners",
+    author: "Microsoft",
+    category: CATEGORIES.education,
+    description: "12 Weeks, 24 Lessons, AI for All!",
+    favicon: "/github.svg",
+    tags: [TAGS.education],
+    url: "https://github.com/microsoft/ai-for-beginners",
+  },
+  {
     title: "AI Project Gallery",
     author: "KalyanM45",
     category: CATEGORIES.education,
@@ -125,6 +134,14 @@ export const educationLinks: Tool[] = [
     url: "https://github.com/josephmisiti/awesome-machine-learning",
   },
   {
+    title: "Awesome Python",
+    category: CATEGORIES.education,
+    description:
+      "An opinionated guide to the best Python frameworks, libraries, and tools. Explore 557 curated projects across 72 categories, from AI and agents to data science and web development.",
+    tags: [TAGS.education],
+    url: "https://awesome-python.com/",
+  },
+  {
     title: "Awesome Remote Job",
     author: "Lukasz Madon",
     category: CATEGORIES.education,
@@ -133,6 +150,14 @@ export const educationLinks: Tool[] = [
     favicon: "/github.svg",
     tags: [TAGS.job],
     url: "https://github.com/lukasz-madon/awesome-remote-job",
+  },
+  {
+    title: "BFE.dev",
+    category: CATEGORIES.education,
+    description:
+      "BFE.dev is a place to practice Front-End dev skills, discuss with others, get ready for interviews and get your dream offer.",
+    subtitle: "Prepare for Front-End job interviews.",
+    url: "https://bigfrontend.dev/",
   },
   {
     title: "Build Your Own X",
@@ -198,6 +223,16 @@ export const educationLinks: Tool[] = [
       "Official data structures and algorithms visualization tool for CS 1332 at Georgia Tech.",
     tags: [TAGS.education],
     url: "https://csvistool.com/",
+  },
+  {
+    title: "Data Engineering Zoomcamp",
+    author: "DataTalksClub",
+    category: CATEGORIES.education,
+    description:
+      "Data Engineering Zoomcamp is a free 9-week course on building production-ready data pipelines.",
+    favicon: "/github.svg",
+    tags: [TAGS.education],
+    url: "https://github.com/DataTalksClub/data-engineering-zoomcamp",
   },
   {
     title: "DeepWiki",
@@ -329,6 +364,14 @@ export const educationLinks: Tool[] = [
     favicon: "/github.svg",
     tags: [TAGS.job],
     url: "https://github.com/rogerluan/JobList",
+  },
+  {
+    title: "K8s Games",
+    category: CATEGORIES.education,
+    description:
+      "Learn Kubernetes through interactive gameplay. Deploy pods, handle incidents, master kubectl commands.",
+    subtitle: "Kubernetes Cluster Management Simulation",
+    url: "https://www.k8sgames.com/",
   },
   {
     title: "Karl Koch | Writing",
@@ -632,6 +675,13 @@ export const educationLinks: Tool[] = [
     subtitle: "UI Skills for Design Engineers",
     tags: [TAGS.education],
     url: "https://www.ui-skills.com/",
+  },
+  {
+    title: "web.dev",
+    category: CATEGORIES.education,
+    description: "Guidance to build modern web experiences that work on any browser.",
+    tags: [TAGS.education],
+    url: "https://web.dev/",
   },
   {
     title: "Web dev mini projects",

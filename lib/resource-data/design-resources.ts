@@ -381,6 +381,15 @@ export const designLinks: Tool[] = [
     url: "https://endlesstools.io/",
   },
   {
+    title: "Fontjoy",
+    category: CATEGORIES.design,
+    description:
+      "Fontjoy helps designers choose the best font combinations. Mix and match different fonts for the perfect pairing.",
+    subtitle: "Generate font pairings in one click",
+    tags: [TAGS.typography],
+    url: "https://fontjoy.com/",
+  },
+  {
     title: "Fontself",
     category: CATEGORIES.design,
     description:
@@ -430,6 +439,14 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description: "Printable Grid Paper",
     url: "https://grid-paper.daverupert.com/",
+  },
+  {
+    title: "Haikei",
+    category: CATEGORIES.design,
+    description:
+      "A web-based design tool to generate unique SVG design assets for websites, social media, blog posts, desktop and mobile wallpapers, posters, and more! Our generators let you discover, customize, randomize, and export generative SVG design assets ready to use with your favorite design tools.",
+    subtitle: "Generate unique SVG design assets",
+    url: "https://haikei.app/",
   },
   {
     title: "Happy Hues",
@@ -591,6 +608,13 @@ export const designLinks: Tool[] = [
     subtitle: "Design Inspiration",
     tags: [TAGS.inspiration],
     url: "https://mindsparklemag.com/",
+  },
+  {
+    title: "Minimal Gallery",
+    category: CATEGORIES.design,
+    description: "For the love of beautiful, clean and functional websites",
+    subtitle: "Hand-picked website inspiration, templates, tools and more",
+    url: "https://minimal.gallery/",
   },
   {
     title: "Mobbin",
@@ -940,6 +964,20 @@ export const designLinks: Tool[] = [
       "A dialog overlay that interrupts the current flow to capture attention and require an explicit action before returning to the main interface.",
     tags: [TAGS.design, TAGS.education],
     url: "https://ux-dictionary.vercel.app/",
+  },
+  {
+    title: "Visual Journal",
+    category: CATEGORIES.design,
+    description: "The best in Branding, Editorial and Graphic Design",
+    subtitle: "Branding, Editorial and Graphic Design",
+    url: "https://visualjournal.it/",
+  },
+  {
+    title: "Website Headlines (dotcom)",
+    category: CATEGORIES.design,
+    description:
+      "Browse hundreds of the best website headlines and explore creative, real-world examples from SaaS, B2B, and DTC brands to inspire your website marketing copy.",
+    url: "https://websiteheadlines.com/",
   },
   {
     title: "Wiretext",

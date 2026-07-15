@@ -569,6 +569,13 @@ export const developmentLinks: Tool[] = [
     url: "https://maps.rayon.design/",
   },
   {
+    title: "readme.so",
+    category: CATEGORIES.dev,
+    description:
+      "Use readme.so's markdown editor and templates to easily create a ReadMe for your projects",
+    url: "https://readme.so/",
+  },
+  {
     title: "relic",
     category: CATEGORIES.dev,
     description:
@@ -753,10 +760,11 @@ export const developmentLinks: Tool[] = [
     url: "https://tosdr.org/en",
   },
   {
-    title: "Transfer.zip | Quick & Easy File Transfer - Send Files",
+    title: "Transfer.zip",
     category: CATEGORIES.dev,
     description:
       "Free sharing of photos, videos and documents. Send large files instantly with a link or email. Simple, fast and secure file sharing with Transfer.zip.",
+    subtitle: "Quick & Easy File Transfer - Send Files",
     tags: [TAGS["tool"]],
     url: "https://transfer.zip/",
   },

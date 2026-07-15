@@ -614,6 +614,13 @@ export const frontendLinks: Tool[] = [
     url: "https://www.reactbits.dev/",
   },
   {
+    title: "React Doctor",
+    category: CATEGORIES.frontend,
+    description:
+      "Let coding agents diagnose and fix React codebases with deterministic static analysis.",
+    url: "https://www.react.doctor/",
+  },
+  {
     title: "React Haiku",
     category: CATEGORIES.frontend,
     description: "A minimal React Hooks library that saves you time and lines of code.",
@@ -882,6 +889,15 @@ export const frontendLinks: Tool[] = [
     favicon: "https://uvcanvas.com/favicon-32x32.png",
     tags: [TAGS.react],
     url: "https://uvcanvas.com/",
+  },
+  {
+    title: "VCI Components",
+    category: CATEGORIES.frontend,
+    description:
+      "200+ copy-paste UI component prompts for AI-powered vibe coding. Elevate your Lovable, Cursor, and Bolt projects with premium components. Ship faster, stand out.",
+    subtitle: "Premium UI Prompts for Vibe Coding | React Components",
+    tags: [TAGS["ui-component"]],
+    url: "https://vibecodecomponents.com/",
   },
   {
     title: "Vengeance UI",

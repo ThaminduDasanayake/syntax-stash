@@ -123,6 +123,14 @@ export const mediaLinks: Tool[] = [
     url: "https://www.remove.bg/",
   },
   {
+    title: "SVG Doodles",
+    category: CATEGORIES.media,
+    description:
+      "Browse a curated collection of free, customizable SVG doodles and icons to use in your websites, apps, slides, and prints.",
+    subtitle: "Free, editable SVGs to spice up your designs",
+    url: "https://svgdoodles.com/",
+  },
+  {
     title: "TechIcons",
     category: CATEGORIES.media,
     description: "Download, copy and paste tech icons in SVG and PNG format for your projects.",
