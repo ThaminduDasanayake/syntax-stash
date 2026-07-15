@@ -13,6 +13,14 @@ export const mediaLinks: Tool[] = [
     url: "https://3dsvg.design/",
   },
   {
+    title: "AI Background Remover",
+    category: CATEGORIES.media,
+    description:
+      "Erase image backgrounds and make a transparent background, using AI. Remove backgrounds from any photo online for free",
+    subtitle: "Remove Background From Image",
+    url: "https://www.remove.bg/",
+  },
+  {
     title: "ASCIInator",
     category: CATEGORIES.media,
     description:
@@ -128,7 +136,7 @@ export const mediaLinks: Tool[] = [
     description:
       "Remove image backgrounds automatically in 5 seconds with just one click. Don't spend hours manually picking pixels. Upload your photo now & see the magic.",
     subtitle: "Remove Background from Image for Free",
-    url: "https://www.remove.bg/",
+    url: "https://icons8.com/bgremover",
   },
   {
     title: "SVG Doodles",
@@ -179,6 +187,14 @@ export const mediaLinks: Tool[] = [
       "Open-source illustrations for any idea you can imagine and create. Build beautiful websites, products and applications with your color, for free.",
     tags: [TAGS.image],
     url: "https://undraw.co/",
+  },
+  {
+    title: "Unsplash",
+    category: CATEGORIES.media,
+    description:
+      "Beautiful, free images and photos that you can download and use for any project. Better than any royalty free or stock photos.",
+    subtitle: "Beautiful Free Images & Pictures",
+    url: "https://unsplash.com/",
   },
   {
     title: "Vecteezy",

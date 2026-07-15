@@ -224,6 +224,14 @@ export const aiLinks: Tool[] = [
     url: "https://github.com/heygen-com/hyperframes",
   },
   {
+    title: "Kickbacks.ai",
+    category: CATEGORIES.ai,
+    description:
+      "Kickbacks.ai helps developers get paid for AI-agent wait states. Advertisers bid for a tiny sponsored status line; users get 50% of ad revenue.",
+    subtitle: "Get paid for waiting",
+    url: "https://kickbacks.ai/",
+  },
+  {
     title: "Langflow",
     author: "Langflow",
     category: CATEGORIES.ai,
@@ -381,6 +389,12 @@ export const aiLinks: Tool[] = [
       "A free desktop app that runs on your machine and plugs into the subscriptions, GitHub account, and hosting you already pay for — agent, repo, and deploys in one window.",
     subtitle: "Build it, ship it, host it without leaving the app",
     url: "https://www.ship.studio/",
+  },
+  {
+    title: "Sinceerly",
+    category: CATEGORIES.ai,
+    description: "Make your emails sound human",
+    url: "https://sinceerly.com/",
   },
   {
     title: "Taste Skill",

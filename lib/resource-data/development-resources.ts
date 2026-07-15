@@ -127,6 +127,14 @@ export const developmentLinks: Tool[] = [
     url: "https://cityweft.com/",
   },
   {
+    title: "Cloudflare",
+    category: CATEGORIES.dev,
+    description: "Welcome to Cloudflare - Powering the next generation of applications",
+    subtitle: "Build for the agent era",
+    tags: [TAGS.hosting],
+    url: "https://www.cloudflare.com/",
+  },
+  {
     title: "Cloudflare Pages",
     category: CATEGORIES.dev,
     description: "Build your next application with Cloudflare Pages",
@@ -269,6 +277,12 @@ export const developmentLinks: Tool[] = [
       "Discover and compare AI tools — search by task, filter by category, and read community reviews.",
     tags: [TAGS["tool"]],
     url: "https://explainx.ai/tools",
+  },
+  {
+    title: "Flority",
+    category: CATEGORIES.dev,
+    description: "Your Online Flower Arrangement App",
+    url: "https://flority.digital/",
   },
   {
     title:
@@ -826,6 +840,14 @@ export const developmentLinks: Tool[] = [
     description: "Convert videos to ASCII.",
     tags: [TAGS["tool"]],
     url: "https://www.vid2ascii.com/",
+  },
+  {
+    title: "VisuAlgo",
+    category: CATEGORIES.dev,
+    description:
+      "VisuAlgo was conceptualised in 2011 by Associate Professor Steven Halim (NUS School of Computing) as a tool to help his students better understand data structures and algorithms, by allowing them to learn the basics on their own and at their own pace. Together with his students from the National University of Singapore, a series of visualizations were developed and consolidated, from simple sorting algorithms to complex graph data structures. Though specifically designed for the use of NUS students taking various data structure and algorithm classes (CS1010/equivalent, CS2040/equivalent (inclusive of IT5003)), CS3230, CS3233, and CS4234), as advocators of online learning, we hope that curious minds around the world will find these visualizations useful as well.",
+    subtitle: "Visualising data structures and algorithms through animation",
+    url: "https://visualgo.net/en",
   },
   {
     title: "Voicebox",

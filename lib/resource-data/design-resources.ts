@@ -20,6 +20,14 @@ export const designLinks: Tool[] = [
     url: "https://stateofaidesign.com/",
   },
   {
+    title: "AI INDEX",
+    category: CATEGORIES.design,
+    description:
+      "AI INDEX is a platform that collects and showcases graphic design-related projects created with the use of AI tools. Our primary objective is to spark a conversation about how AI can be implemented in the field of graphic design and art direction.",
+    tags: [TAGS.ai, TAGS.design],
+    url: "https://ai-index.eu/",
+  },
+  {
     title: "AI Particle Simulator",
     category: CATEGORIES.design,
     description:
@@ -176,6 +184,15 @@ export const designLinks: Tool[] = [
     subtitle: "Advanced Mesh Gradient Generator & Editor",
     tags: [TAGS.design],
     url: "https://colorflow.ls.graphics/",
+  },
+  {
+    title: "Color Hunt",
+    category: CATEGORIES.design,
+    description:
+      "Discover the newest hand-picked color palettes of Color Hunt. Get color inspiration for your design and art projects.",
+    subtitle: "Color Palettes for Designers and Artists",
+    tags: [TAGS.color],
+    url: "https://colorhunt.co/",
   },
   {
     title: "Colorize",
@@ -435,6 +452,14 @@ export const designLinks: Tool[] = [
     url: "https://goodmicrocopy.com/",
   },
   {
+    title: "Google Fonts",
+    category: CATEGORIES.design,
+    description: "Making the web more beautiful, fast, and open through great typography",
+    subtitle: "Browse Fonts",
+    tags: [TAGS.design, TAGS.typography],
+    url: "https://fonts.google.com/",
+  },
+  {
     title: "Grid Paper",
     category: CATEGORIES.design,
     description: "Printable Grid Paper",
@@ -521,6 +546,14 @@ export const designLinks: Tool[] = [
     description: "Explore the latest design layers from the community.",
     tags: [TAGS.design],
     url: "https://layers.to/",
+  },
+  {
+    title: "Linearity",
+    category: CATEGORIES.design,
+    description:
+      "Linearity’s AI design generator turns one prompt into a full set of editable, on-brand campaign assets. Every format, every channel, ready to ship.",
+    subtitle: "AI Design Generator: Editable, On-Brand Campaigns",
+    url: "https://www.linearity.io/",
   },
   {
     title: "loadmo.re",
@@ -624,6 +657,15 @@ export const designLinks: Tool[] = [
     subtitle: "UI & UX design inspiration for mobile & web apps",
     tags: [TAGS.design],
     url: "https://mobbin.com/",
+  },
+  {
+    title: "Mockuuups Studio",
+    category: CATEGORIES.design,
+    description:
+      "Drag-and-drop tool for creating beautiful app previews or any marketing materials. Easily insert your screenshot into device and print mockups for free.",
+    subtitle: "Mockup Generator [5000+ Mockups]",
+    tags: [TAGS.mockup],
+    url: "https://mockuuups.studio/",
   },
   {
     title: "Morflax Studio",

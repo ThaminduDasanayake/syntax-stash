@@ -404,6 +404,14 @@ export const frontendLinks: Tool[] = [
     url: "https://icones.js.org/",
   },
   {
+    title: "Icons8",
+    category: CATEGORIES.frontend,
+    description:
+      "A flexible icon family for interfaces, diagrams, presentations — whatever, really.",
+    subtitle: "Download 1,509,000 free icons (SVG, PNG)",
+    url: "https://icons8.com/icons",
+  },
+  {
     title: "Impeccable",
     category: CATEGORIES.frontend,
     description:

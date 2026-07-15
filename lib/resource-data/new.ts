@@ -34,6 +34,30 @@ export const newLinks: Tool[] = [
     url: "https://gitmcp.io/",
   },
   {
+    title: "Gun.io",
+    category: CATEGORIES.dev,
+    description:
+      "Gun.io connects companies with elite freelance software developers. Vetted engineers, automated compliance, and guaranteed delivery for high-stakes projects.",
+    subtitle: "The Technical Standard for High Stakes Engineering",
+    url: "https://gun.io/",
+  },
+  {
+    title: "Templates - Vercel",
+    author: "Vercel",
+    category: CATEGORIES.dev,
+    description:
+      "Jumpstart your app development process with pre-built solutions from Vercel and our community.",
+    url: "https://vercel.com/templates",
+  },
+  {
+    title: "Vibe Coder Blog",
+    category: CATEGORIES.dev,
+    description:
+      "The practical guide to finishing what AI starts. Tutorials, tool reviews, and honest guides for founders, developers, and creators shipping with AI.",
+    subtitle: "The Missing Manual for AI-Assisted Development",
+    url: "https://blog.vibecoder.me/",
+  },
+  {
     title: "zzzz",
     category: CATEGORIES.dev,
     description: "zzzz",

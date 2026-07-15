@@ -668,6 +668,15 @@ export const educationLinks: Tool[] = [
     url: "https://www.theodinproject.com/",
   },
   {
+    title: "The Pragmatic Engineer",
+    author: "Gergely Orosz",
+    category: CATEGORIES.education,
+    description:
+      "I write a newsletter, a blog and published a few books. The Pragmatic Engineer is the #1 newsletter for engineering managers and senior engineers.",
+    tags: [TAGS.newsletter],
+    url: "https://www.pragmaticengineer.com/",
+  },
+  {
     title: "Training Superintelligence",
     category: CATEGORIES.education,
     description:
