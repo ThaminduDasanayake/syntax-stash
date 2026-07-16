@@ -271,6 +271,14 @@ export const educationLinks: Tool[] = [
     url: "https://pll.harvard.edu/course/cs50-introduction-computer-science",
   },
   {
+    title: "CS 329S: Machine Learning Systems Design",
+    category: CATEGORIES.education,
+    description:
+      "This course aims to provide an iterative framework for developing real-world machine learning systems that are deployable, reliable, and scalable.",
+    tags: [TAGS.ai, TAGS.education],
+    url: "https://stanford-cs329s.github.io/syllabus.html",
+  },
+  {
     title: "CSS Battle",
     category: CATEGORIES.education,
     description:

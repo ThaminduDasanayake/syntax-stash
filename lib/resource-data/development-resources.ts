@@ -50,6 +50,15 @@ export const developmentLinks: Tool[] = [
     url: "https://arnismc.com/",
   },
   {
+    title: "Awesome OSS Alternatives",
+    author: "RunaCapital",
+    category: CATEGORIES.dev,
+    description: "Awesome list of open-source startup alternatives to well-known SaaS products 🚀.",
+    favicon: "/github.svg",
+    tags: [TAGS.tool],
+    url: "https://github.com/RunaCapital/awesome-oss-alternatives",
+  },
+  {
     title: "BestAlternative",
     category: CATEGORIES.dev,
     description:
@@ -496,10 +505,11 @@ export const developmentLinks: Tool[] = [
     url: "https://nosignups.net/",
   },
   {
-    title: "Nub — an all-in-one toolkit for Node.js",
+    title: "Nub",
     category: CATEGORIES.dev,
     description:
       "Nub is a TypeScript-first toolkit for Node.js: run TypeScript files on stock Node, a faster npm run, a pnpm-compatible package manager, and a built-in Node version manager. No lock-in.",
+    subtitle: "An all-in-one toolkit for Node.js",
     tags: [TAGS.tool],
     url: "https://nubjs.com/",
   },
@@ -673,13 +683,6 @@ export const developmentLinks: Tool[] = [
     description: "A dev-tool that aids faster and precise responsive web development.",
     tags: [TAGS.development],
     url: "https://responsively.app/",
-  },
-  {
-    title: "RunaCapital/awesome-oss-alternatives",
-    category: CATEGORIES.dev,
-    description: "Awesome list of open-source startup alternatives to well-known SaaS products 🚀.",
-    tags: [TAGS.tool],
-    url: "https://github.com/RunaCapital/awesome-oss-alternatives",
   },
   {
     title: "Scrapling",

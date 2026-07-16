@@ -114,14 +114,6 @@ export const aiLinks: Tool[] = [
     url: "https://docs.crawl4ai.com/",
   },
   {
-    title: "CS 329S: Machine Learning Systems Design",
-    category: CATEGORIES.ai,
-    description:
-      "This course aims to provide an iterative framework for developing real-world machine learning systems that are deployable, reliable, and scalable.",
-    tags: [TAGS.ai, TAGS.education],
-    url: "https://stanford-cs329s.github.io/syllabus.html",
-  },
-  {
     title: "Dify",
     category: CATEGORIES.ai,
     description:
