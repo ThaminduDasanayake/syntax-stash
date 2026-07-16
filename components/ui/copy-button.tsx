@@ -15,14 +15,14 @@ interface CopyButtonProps extends ComponentProps<typeof Button> {
 }
 
 export const CopyButton = ({
-  textToCopy,
+  className,
+  copiedLabelName = "Copied!",
+  disabled,
   iconOnly = false,
   labelName = "Copy",
-  copiedLabelName = "Copied!",
-  className,
-  variant,
   size,
-  disabled,
+  textToCopy,
+  variant,
   ...props
 }: CopyButtonProps) => {
   const { copied, copy } = useCopyToClipboard();

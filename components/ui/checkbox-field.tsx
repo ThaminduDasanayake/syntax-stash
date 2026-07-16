@@ -13,7 +13,7 @@ interface CheckboxFieldProps extends ComponentProps<typeof Checkbox> {
 }
 
 export const CheckboxField = forwardRef<ComponentRef<typeof Checkbox>, CheckboxFieldProps>(
-  ({ label, containerClassName, labelClassName, id, className, ...props }, ref) => {
+  ({ id, className, containerClassName, label, labelClassName, ...props }, ref) => {
     const generatedId = useId();
     const checkboxId = id ?? generatedId;
 

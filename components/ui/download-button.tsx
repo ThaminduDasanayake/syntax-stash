@@ -13,12 +13,12 @@ interface DownloadButtonProps extends ComponentProps<typeof Button> {
 }
 
 export function DownloadButton({
-  label = "Download",
+  className,
   icon = <DownloadIcon weight="duotone" className="size-4.5" />,
   iconOnly = false,
-  className,
-  variant,
+  label = "Download",
   size,
+  variant,
   ...props
 }: DownloadButtonProps) {
   const finalVariant = variant || (iconOnly ? "ghost" : "default");

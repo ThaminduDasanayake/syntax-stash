@@ -25,14 +25,14 @@ interface StepperFieldProps extends Omit<
 export const StepperField = forwardRef<HTMLInputElement, StepperFieldProps>(
   (
     {
-      label,
-      value,
-      onValueChange,
-      min = -Infinity,
-      max = Infinity,
-      step = 1,
-      containerClassName,
       className,
+      containerClassName,
+      label,
+      max = Infinity,
+      min = -Infinity,
+      onValueChange,
+      step = 1,
+      value,
       ...props
     },
     ref,

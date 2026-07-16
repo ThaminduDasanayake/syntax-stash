@@ -26,14 +26,14 @@ interface InputFieldProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "p
 export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
   (
     {
+      className,
+      containerClassName,
+      copyPrefix = false,
       label,
       prefix,
-      suffix,
       showCopy,
       showSeparator = false,
-      copyPrefix = false,
-      containerClassName,
-      className,
+      suffix,
       type = "text",
       value,
       ...props

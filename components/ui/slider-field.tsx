@@ -19,15 +19,15 @@ interface SliderFieldProps extends ComponentProps<typeof Slider> {
 export const SliderField = forwardRef<ComponentRef<typeof Slider>, SliderFieldProps>(
   (
     {
+      id,
+      className,
+      containerClassName,
       label,
+      labelClassName,
       leftLabel,
       rightLabel,
       valueLabel,
       valueLabelClassName,
-      containerClassName,
-      labelClassName,
-      id,
-      className,
       ...props
     },
     ref,

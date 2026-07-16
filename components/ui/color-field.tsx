@@ -18,14 +18,14 @@ interface ColorFieldProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "t
 export const ColorField = forwardRef<HTMLInputElement, ColorFieldProps>(
   (
     {
-      label,
-      containerClassName,
-      labelClassName,
-      inputClassName,
-      value,
-      onValueChange,
       id,
+      containerClassName,
       disabled,
+      inputClassName,
+      label,
+      labelClassName,
+      onValueChange,
+      value,
       ...props
     },
     ref,

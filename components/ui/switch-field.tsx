@@ -13,7 +13,7 @@ interface SwitchFieldProps extends ComponentProps<typeof Switch> {
 }
 
 export const SwitchField = forwardRef<ComponentRef<typeof Switch>, SwitchFieldProps>(
-  ({ label, containerClassName, labelClassName, id, className, ...props }, ref) => {
+  ({ id, className, containerClassName, label, labelClassName, ...props }, ref) => {
     const generatedId = useId();
     const switchId = id ?? generatedId;
 

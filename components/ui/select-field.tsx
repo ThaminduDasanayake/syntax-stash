@@ -28,15 +28,15 @@ interface SelectFieldProps {
 }
 
 export function SelectField({
-  value,
+  containerClassName,
+  disabled,
+  label,
+  labelClassName,
   onValueChange,
   options,
-  label,
   placeholder,
-  disabled,
-  containerClassName,
-  labelClassName,
   triggerClassName,
+  value,
 }: SelectFieldProps) {
   const selectedLabel = options.find((opt) => opt.value === value)?.label;
 

@@ -13,13 +13,13 @@ interface ClearButtonProps extends ComponentProps<typeof Button> {
 }
 
 export const ClearButton = ({
-  label = "Clear",
+  className,
+  disabled,
   icon = <EraserIcon className="size-4.5" />,
   iconOnly = false,
-  className,
-  variant,
+  label = "Clear",
   size,
-  disabled,
+  variant,
   ...props
 }: ClearButtonProps) => {
   const finalVariant = variant || (iconOnly ? "ghost" : "outline");
