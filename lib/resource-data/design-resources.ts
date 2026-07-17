@@ -220,6 +220,16 @@ export const designLinks: Tool[] = [
     url: "https://colorize.design/",
   },
   {
+    title: "Color Name Finder",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.design,
+    description:
+      "Free color name finder — identify any HTML color by name, HEX, RGB or HSL. Browse all 140+ CSS named colours, search by hue, and copy values instantly. No signup.",
+    subtitle: "HTML Colour Names, HEX, RGB, HSL | jasperbernaers.com",
+    tags: [TAGS.color],
+    url: "https://jasperbernaers.com/colours/",
+  },
+  {
     title: "ContentCore",
     category: CATEGORIES.design,
     description: "Create content in one place. Incredibly fast. Save as images or videos.",
@@ -259,6 +269,15 @@ export const designLinks: Tool[] = [
     subtitle: "The Best Call-to-Action Inspiration for Designers",
     tags: [TAGS.design, TAGS.inspiration, TAGS.ui],
     url: "https://www.cta.gallery/",
+  },
+  {
+    title: "DaFont",
+    category: CATEGORIES.design,
+    description:
+      "Archive of freely downloadable fonts. Browse by alphabetical listing, by style, by author or by popularity.",
+    subtitle: "Download fonts",
+    tags: [TAGS.design, TAGS.typography],
+    url: "https://www.dafont.com/",
   },
   {
     title: "Dark Themed Web Design Inspiration",
@@ -794,6 +813,16 @@ export const designLinks: Tool[] = [
     url: "https://paperme.pixzens.com/",
   },
   {
+    title: "Pascal Editor",
+    author: "Pascal",
+    category: CATEGORIES.design,
+    description:
+      "Design, build, and share 3D home projects in your browser. Free and open-source 3D building editor for walls, rooms, levels, roofs, furniture, and interior planning.",
+    subtitle: "Free Open-Source 3D Building Editor",
+    tags: [TAGS.design],
+    url: "https://editor.pascal.app/",
+  },
+  {
     title: "penpot/penpot",
     category: CATEGORIES.design,
     description: "Penpot: The open-source design tool for design and code collaboration",
@@ -895,6 +924,14 @@ export const designLinks: Tool[] = [
     subtitle: "Typeface from Titus Kaphar / Reginald Dwayne Betts’ show at MoMA PS1",
     tags: [TAGS.typography],
     url: "https://www.redaction.us/",
+  },
+  {
+    title: "Resource Boy",
+    category: CATEGORIES.design,
+    description:
+      "Download free, best graphic design resource & creative assets: fonts, mockups, textures, templates, and Photoshop add-ons.",
+    subtitle: "Free Graphic Design Resources / Assets",
+    url: "https://resourceboy.com/",
   },
   {
     title: "Saaspo",
@@ -1039,7 +1076,7 @@ export const designLinks: Tool[] = [
   {
     title: "Typograph Studio",
     category: CATEGORIES.design,
-    description: "",
+    description: "Generate typefaces in seconds. No licenses, no limits.",
     tags: [TAGS.design, TAGS.typography],
     url: "https://typograph.studio/en",
   },

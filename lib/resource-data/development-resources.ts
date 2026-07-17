@@ -50,6 +50,26 @@ export const developmentLinks: Tool[] = [
     url: "https://arnismc.com/",
   },
   {
+    title: "ASCII Art Generator",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.dev,
+    description:
+      "Free ASCII art generator — the easiest ascii pictures generator and ascii text maker online. Convert any image or photo to ASCII art, or transform text into ASCII art fonts (like Patorjk TAAG). 50+ FIGlet fonts, color mode, multiple character sets. Download as TXT or PNG. No upload, no sign-up, 100% private.",
+    subtitle: "Text to ASCII Art Maker & Braille Art | No Upload | Patorjk Alternative",
+    tags: [TAGS.ascii, TAGS.tool],
+    url: "https://jasperbernaers.com/ASCII-generator/",
+  },
+  {
+    title: "ASCII Webcam",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.dev,
+    description:
+      "Turn your webcam into live ASCII art — real-time camera to text conversion in your browser. Multiple character sets (Blocks, Braille, Detailed, Binary), color mode, adjustable FPS & resolution. Record GIFs, take snapshots. 100% private, no upload, no sign-up.",
+    subtitle: "Live Camera to ASCII Art in Real-Time | No Upload | jasperbernaers.com",
+    tags: [TAGS.ascii, TAGS.tool],
+    url: "https://jasperbernaers.com/ascii-webcam/",
+  },
+  {
     title: "Awesome OSS Alternatives",
     author: "RunaCapital",
     category: CATEGORIES.dev,
@@ -312,15 +332,6 @@ export const developmentLinks: Tool[] = [
     url: "https://fluidcad.io/",
   },
   {
-    title:
-      "Free ASCII Webcam — Live Camera to ASCII Art in Real-Time | No Upload | jasperbernaers.com",
-    category: CATEGORIES.dev,
-    description:
-      "Turn your webcam into live ASCII art — real-time camera to text conversion in your browser. Multiple character sets (Blocks, Braille, Detailed, Binary), color mode, adjustable FPS & resolution. Record GIFs, take snapshots. 100% private, no upload, no sign-up.",
-    tags: [TAGS.tool],
-    url: "https://jasperbernaers.com/ascii-webcam/",
-  },
-  {
     title: "Free for Developers",
     category: CATEGORIES.dev,
     description:
@@ -370,6 +381,16 @@ export const developmentLinks: Tool[] = [
     url: "https://www.gittoskill.com/",
   },
   {
+    title: "HEIC to JPG Converter",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.dev,
+    description:
+      "Convert HEIC to JPG online for free — drop your iPhone photos and they convert instantly, in batch, right in your browser. No upload to any server, no watermark, no signup, no limits. Also HEIC to PNG and WebP, quality control and ZIP download. Works on Windows 10/11, Android, Mac and Linux.",
+    subtitle: "Free, Batch, No Upload (Windows, Android, Mac) | jasperbernaers.com",
+    tags: [TAGS.tool],
+    url: "https://jasperbernaers.com/free-heic-to-jpg-converter/",
+  },
+  {
     title: "here.now",
     category: CATEGORIES.dev,
     description:
@@ -400,6 +421,16 @@ export const developmentLinks: Tool[] = [
       "The Digital Trade School for Slashies looking to stack their creative skills alongside a good vibes community. Take an online course, connect with creatives, find creative jobs and events.",
     tags: [TAGS.design, TAGS.education],
     url: "https://ilovecreatives.com/",
+  },
+  {
+    title: "Image to ASCII Converter",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.dev,
+    description:
+      "Free image to ASCII converter — turn any PNG, JPG or WebP photo into ASCII art instantly. One-tap styles, braille dot art, color ASCII, dithering. Copy, share, download TXT or PNG. No upload, no signup, 100% in your browser.",
+    subtitle: "PNG, JPG & SVG to ASCII Art Online Free | jasperbernaers.com",
+    tags: [TAGS.ascii, TAGS.tool],
+    url: "https://jasperbernaers.com/image-to-ascii/",
   },
   {
     title: "IMG.LY SDK",
@@ -478,6 +509,16 @@ export const developmentLinks: Tool[] = [
     description: "Enter in two locations to make the drive fun.\n",
     tags: [TAGS.map],
     url: "https://makemydrivefun.com/",
+  },
+  {
+    title: "Markdown Editor Online",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.dev,
+    description:
+      "Free online Markdown editor with instant live preview — GitHub-style preview, README & blog templates, visual table generator, Mermaid diagrams, math, share links, export to HTML/MD/PDF. Auto-saves in your browser. No sign-up, no upload.",
+    subtitle: "Live Preview, GitHub Style, Templates & HTML/PDF Export | jasperbernaers.com",
+    tags: [TAGS.markdown, TAGS.tool],
+    url: "https://jasperbernaers.com/markdown-live-editor/",
   },
   {
     title: "Mockaroo",
@@ -586,6 +627,16 @@ export const developmentLinks: Tool[] = [
       "Free, Private & Browser-Based. Merge, edit, and edit PDF files online without uploading to servers.",
     subtitle: "Professional PDF Tools",
     url: "https://pdfcraft.devtoolcafe.com/en/",
+  },
+  {
+    title: "PDF Tools Online",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.dev,
+    description:
+      "Free online PDF tools — merge PDF files into one, split PDF by pages, compress PDF size by 80%, convert PDF to JPG images, convert JPG to PDF, rotate and organize pages. 100% browser-based with no file upload to any server. No watermarks, no daily limits, no registration. Best free alternative to SmallPDF, iLovePDF, PDF24, Sejda and Adobe Acrobat online. Works on Windows, Mac, Linux, iPhone and Android.",
+    subtitle: "Merge, Split, Compress, Convert PDF to JPG | No Upload, No Watermark, No Sign‑Up",
+    tags: [TAGS.pdf, TAGS.tool],
+    url: "https://jasperbernaers.com/pdf/",
   },
   {
     title: "Photoroom - AI Photo Editor",

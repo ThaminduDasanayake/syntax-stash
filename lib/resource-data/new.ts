@@ -1,3 +1,4 @@
+import { TAGS } from "@/lib/resource-data/tags";
 import { Tool } from "@/types";
 
 import { CATEGORIES } from "./categories";
@@ -9,6 +10,16 @@ export const newLinks: Tool[] = [
     description:
       "Browse social proof examples grounded in psychology, with real-life applications in business and marketing to build trust on your website and in advertising.",
     url: "https://socialproofexamples.com/",
+  },
+  {
+    title: "Barcode Generator Online",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.design,
+    description:
+      "Create barcodes online free — Code 128, EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, GS1-128, Code 39, MSI, Codabar & Pharmacode. Live preview, custom size & colors, download PNG or SVG. No signup, no watermark, 100% in your browser.",
+    subtitle: "EAN-13, UPC-A, Code 128 & 15+ Formats (PNG/SVG)",
+    tags: [TAGS.color],
+    url: "https://jasperbernaers.com/online-free-barcode-generator/",
   },
   {
     title: "DesignMD",

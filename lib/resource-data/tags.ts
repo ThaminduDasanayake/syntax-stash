@@ -27,6 +27,7 @@ export const TAGS = {
   mockup: "mockup",
   newsletter: "newsletter",
   "open-source": "open-source",
+  pdf: "pdf",
   platform: "platform",
   python: "python",
   rag: "rag",

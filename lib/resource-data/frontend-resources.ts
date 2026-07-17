@@ -320,6 +320,15 @@ export const frontendLinks: Tool[] = [
     url: "https://www.formscn.space/",
   },
   {
+    title: "framecn",
+    category: CATEGORIES.frontend,
+    description:
+      "A collection of beautifully designed, and customizable video components. Built on Editframe. Works with shadcn/ui.",
+    subtitle: "Beautiful videos, made simple",
+    tags: [TAGS["ui-component"]],
+    url: "https://www.framecn.dev/",
+  },
+  {
     title: "Framer University",
     category: CATEGORIES.frontend,
     description:
@@ -343,6 +352,14 @@ export const frontendLinks: Tool[] = [
     subtitle: "Become a better frontend developer.",
     tags: [TAGS.development, TAGS.education, TAGS.ui],
     url: "https://www.frontendpractice.com/",
+  },
+  {
+    title: "Gamification UI Kit by Trophy",
+    category: CATEGORIES.frontend,
+    description:
+      "Trophy's Gamification UI Kit is an open-source library of gamification UI components built on shadcn/ui and Tailwind CSS. Drop-in React components for streaks, achievements, leaderboards, points, and more — ready to copy and customize.",
+    tags: [TAGS["ui-component"]],
+    url: "https://ui.trophy.so/",
   },
   {
     title: "Gingham Maker",
@@ -856,6 +873,13 @@ export const frontendLinks: Tool[] = [
       "The tldraw SDK provides tools, services, and APIs to build beautiful whiteboards and infinite canvas applications with real-time collaboration and a powerful React-based canvas.",
     subtitle: "Infinite Canvas SDK for React",
     url: "https://tldraw.dev/",
+  },
+  {
+    title: "toc-cn",
+    category: CATEGORIES.frontend,
+    description: "A shadcn component registry for documentation-style table of contents.",
+    tags: [TAGS["ui-component"]],
+    url: "https://tocn.vercel.app/",
   },
   {
     title: "Torph",
