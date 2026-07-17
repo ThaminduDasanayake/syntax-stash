@@ -694,6 +694,15 @@ export const designLinks: Tool[] = [
     url: "https://mobbin.com/",
   },
   {
+    title: "Mockdown",
+    category: CATEGORIES.design,
+    description:
+      "Free browser-based ASCII wireframe editor. Design UI mockups, lo-fi prototypes, and text diagrams with drag-and-drop components — no signup required.",
+    subtitle: "ASCII Wireframe Editor",
+    tags: [TAGS.ascii],
+    url: "https://www.mockdown.design/",
+  },
+  {
     title: "Mockuuups Studio",
     category: CATEGORIES.design,
     description:
@@ -1026,6 +1035,13 @@ export const designLinks: Tool[] = [
       "Typeface is a wonderful font manager for macOS that helps you pick the perfect type for your designs. With a minimal interface and total focus on your fonts browsing your collection becomes a delightful experience. And new powerful font management features let you effortlessly organize even the largest libraries.",
     tags: [TAGS.typography],
     url: "https://typefaceapp.com/",
+  },
+  {
+    title: "Typograph Studio",
+    category: CATEGORIES.design,
+    description: "",
+    tags: [TAGS.design, TAGS.typography],
+    url: "https://typograph.studio/en",
   },
   {
     title: "Ultramock",
