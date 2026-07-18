@@ -633,6 +633,15 @@ export const frontendLinks: Tool[] = [
     url: "https://pdfslick.dev/",
   },
   {
+    title: "PDFx",
+    category: CATEGORIES.frontend,
+    description:
+      "Copy-paste React PDF components like shadcn/ui. Run `npx pdfx-cli add table` and own the code. 24 components, theme system, CLI, invoice & report blocks. MIT licensed.",
+    subtitle: "shadcn/ui for React PDFs | Copy-Paste PDF Components",
+    tags: [TAGS.development, TAGS.pdf],
+    url: "https://pdfx.akashpise.dev/",
+  },
+  {
     title: "phantom-ui",
     category: CATEGORIES.frontend,
     description: "Structure-aware skeleton loader. One Web Component. Every framework.",

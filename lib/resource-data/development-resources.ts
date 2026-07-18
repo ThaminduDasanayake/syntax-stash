@@ -14,6 +14,15 @@ export const developmentLinks: Tool[] = [
     url: "https://www.10x.app/",
   },
   {
+    title: "Accept: text/markdown",
+    category: CATEGORIES.dev,
+    description:
+      "Serve Markdown to AI agents and LLMs via the Accept: text/markdown header. Browsers get HTML, agents get clean Markdown.",
+    subtitle: "Serve Markdown to AI Agents with Accept Headers",
+    tags: [TAGS.markdown, TAGS.tool],
+    url: "https://acceptmarkdown.com/",
+  },
+  {
     title: "annyang!",
     category: CATEGORIES.dev,
     description:
@@ -289,6 +298,15 @@ export const developmentLinks: Tool[] = [
     url: "https://directus.com/",
   },
   {
+    title: "Domainstack",
+    category: CATEGORIES.dev,
+    description:
+      "Instant lookups for WHOIS, DNS, hosting, certificates, SEO and more, plus free domain tracking and change alerts.",
+    subtitle: "Domain Intelligence Made Easy",
+    tags: [TAGS.tool],
+    url: "https://domainstack.io/",
+  },
+  {
     title: "Dub",
     author: "Dub Inc",
     category: CATEGORIES.dev,
@@ -340,6 +358,14 @@ export const developmentLinks: Tool[] = [
     url: "https://free-for.dev/",
   },
   {
+    title: "GalaxyBrain",
+    category: CATEGORIES.dev,
+    description: "An information operating system powered by local files.",
+    subtitle: "An information operating system powered by local files",
+    tags: [TAGS.tool],
+    url: "https://galaxybrain.com/",
+  },
+  {
     title: "GitDiagram",
     category: CATEGORIES.dev,
     description:
@@ -363,6 +389,14 @@ export const developmentLinks: Tool[] = [
     description: "Find the right git commands without digging through the web.",
     tags: [TAGS.development, TAGS.tool],
     url: "https://git.gaozih.com/",
+  },
+  {
+    title: "gitinspect.com",
+    author: "Jeremy Osih",
+    category: CATEGORIES.dev,
+    description: "Chat with any github repo",
+    tags: [TAGS.git, TAGS.tool, TAGS["ai-agent"]],
+    url: "https://www.gitinspect.com/",
   },
   {
     title: "GitReverse",
@@ -897,6 +931,15 @@ export const developmentLinks: Tool[] = [
     subtitle: "Quick & Easy File Transfer - Send Files",
     tags: [TAGS.tool],
     url: "https://transfer.zip/",
+  },
+  {
+    title: "Transmute",
+    category: CATEGORIES.dev,
+    description:
+      "Transmute is a free, open-source, self-hosted file converter and compressor. Convert and compress images, video, audio, data, documents, and 3D models on your own hardware with no file size limits, no watermarks, and full privacy.",
+    subtitle: "Self-Hosted File Converter & Compressor for Images, Video, Audio & More",
+    tags: [TAGS.selfHosted, TAGS.tool],
+    url: "https://transmute.sh/",
   },
   {
     title: "Trigger.dev",

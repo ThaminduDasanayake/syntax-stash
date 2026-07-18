@@ -21,6 +21,23 @@ export const newLinks: Tool[] = [
     url: "https://alexandrie-hub.fr/",
   },
   {
+    title: "almostnode",
+    author: "Macaly",
+    category: CATEGORIES.dev,
+    description:
+      "zA lightweight JavaScript library that runs Node.js, Next.js, Vite, and Express entirely in the browser. ~250KB gzipped, instant startup, no server required.",
+    subtitle: "Node.js in your browser",
+    url: "https://almostnode.dev/",
+  },
+  {
+    title: "Avatune",
+    category: CATEGORIES.dev,
+    description:
+      "A typed, SSR-first avatar primitive for the web — seven frameworks, eleven themes, zero dependencies. Compose by hand or let the predictor draft from a photo.",
+    subtitle: "Avatars that feel like people",
+    url: "https://www.avatune.dev/",
+  },
+  {
     title: "Barcode Generator Online",
     author: "Jasper Bernaers",
     category: CATEGORIES.design,
@@ -126,6 +143,14 @@ export const newLinks: Tool[] = [
     url: "https://gun.io/",
   },
   {
+    title: "MonoSketch",
+    category: CATEGORIES.dev,
+    description:
+      "MonoSketch is a powerful ASCII sketching and diagramming app that lets you effortlessly transform your ideas into visually stunning designs.",
+    subtitle: "Unleash your ideas with ASCII",
+    url: "https://monosketch.io/",
+  },
+  {
     title: "nomnoml",
     category: CATEGORIES.dev,
     description:
@@ -180,6 +205,14 @@ export const newLinks: Tool[] = [
     url: "https://yqnn.github.io/svg-path-editor/",
   },
   {
+    title: "Takumi",
+    author: "Kane Wang",
+    category: CATEGORIES.dev,
+    description: "JSX to pixels in Rust. Node, Workers, browser. No headless Chrome.",
+    subtitle: "Render JSX to images. Skip the browser.",
+    url: "https://takumi.kane.tw/",
+  },
+  {
     title: "Templates - Vercel",
     author: "Vercel",
     category: CATEGORIES.dev,
@@ -204,24 +237,20 @@ export const newLinks: Tool[] = [
     url: "https://www.shapeof.ai/",
   },
   {
+    title: "Ultracite",
+    category: CATEGORIES.dev,
+    description:
+      "Ultracite is a zero-config preset for ESLint, Biome, and Oxlint that helps teams and AI write consistent, type-safe code.",
+    subtitle: "Zero-Config Linting for Biome, ESLint, and Oxlint",
+    url: "https://www.ultracite.ai/",
+  },
+  {
     title: "Vibe Coder Blog",
     category: CATEGORIES.dev,
     description:
       "The practical guide to finishing what AI starts. Tutorials, tool reviews, and honest guides for founders, developers, and creators shipping with AI.",
     subtitle: "The Missing Manual for AI-Assisted Development",
     url: "https://blog.vibecoder.me/",
-  },
-  {
-    title: "zzzz",
-    category: CATEGORIES.dev,
-    description: "zzzz",
-    url: "zzzz",
-  },
-  {
-    title: "zzzz",
-    category: CATEGORIES.dev,
-    description: "zzzz",
-    url: "zzzz",
   },
   {
     title: "zzzz",

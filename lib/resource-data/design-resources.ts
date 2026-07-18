@@ -488,6 +488,14 @@ export const designLinks: Tool[] = [
     url: "https://ezascii.com/",
   },
   {
+    title: "Free Font Library",
+    category: CATEGORIES.design,
+    description: "Free OpenSource font library",
+    subtitle: "Letters made of letters",
+    tags: [TAGS.design, TAGS.typography],
+    url: "https://typotheque.luuse.io/",
+  },
+  {
     title: "getdesign.md",
     category: CATEGORIES.design,
     description:
@@ -495,6 +503,16 @@ export const designLinks: Tool[] = [
     subtitle: "DESIGN.md collection for AI coding agents",
     tags: [TAGS.design],
     url: "https://getdesign.md/",
+  },
+  {
+    title: "GoodCart",
+    author: "GoodCart",
+    category: CATEGORIES.design,
+    description:
+      "Browse the best designed ecommerce websites in one place. Filter page type, industry, style and view on desktop or mobile. Find Ecommerce UI/UX inspiration for your next project.",
+    subtitle: "Ecommerce UI & UX Design Inspiration",
+    tags: [TAGS.design, TAGS.inspiration],
+    url: "https://www.goodcart.design/",
   },
   {
     title: "Good Microcopy",
@@ -535,6 +553,15 @@ export const designLinks: Tool[] = [
     subtitle: "Curated colors in context",
     tags: [TAGS.color],
     url: "https://www.happyhues.co/",
+  },
+  {
+    title: "Headers Club",
+    category: CATEGORIES.design,
+    description:
+      "Browse the hottest header images on the internet. Got a header that's too hot to handle? Share it.",
+    subtitle: "The hottest headers on the internet",
+    tags: [TAGS.design, TAGS.inspiration],
+    url: "https://www.headers.club/",
   },
   {
     title: "InkField",
@@ -600,6 +627,15 @@ export const designLinks: Tool[] = [
     description: "Explore the latest design layers from the community.",
     tags: [TAGS.design],
     url: "https://layers.to/",
+  },
+  {
+    title: "Letterbox",
+    category: CATEGORIES.design,
+    description:
+      "Letters shaped by text. Pick a font, choose your colors, and watch type come alive.",
+    subtitle: "Letters made of letters",
+    tags: [TAGS.design, TAGS.typography],
+    url: "https://www.letterbox.sh/",
   },
   {
     title: "Linearity",
@@ -746,6 +782,14 @@ export const designLinks: Tool[] = [
     subtitle: "3D Mockups & Motion in Your Browser",
     tags: [TAGS.animation, TAGS.design, TAGS.image],
     url: "https://studio.morflax.com/",
+  },
+  {
+    title: "myfffonts",
+    author: "Julien Bidoret",
+    category: CATEGORIES.design,
+    description: "My own (libre) webfonts vault",
+    tags: [TAGS.design, TAGS.typography],
+    url: "https://myfffonts.accentgrave.net/",
   },
   {
     title: "Navbar Gallery",
@@ -958,6 +1002,15 @@ export const designLinks: Tool[] = [
     url: "https://savee.com/",
   },
   {
+    title: "Screenshot Studio",
+    category: CATEGORIES.design,
+    description:
+      "Free screenshot editor and mockup maker online — add gradient backgrounds, Safari and Chrome browser mockups, shadows, 3D effects, and animations to your screenshots. Import tweets and generate code snippets as images. Better free alternative to Pika Style and Shots.so. Export as PNG, JPG, or video. No signup needed.",
+    subtitle: "Free Screenshot Editor & Mockup Maker",
+    tags: [TAGS.design, TAGS.mockup],
+    url: "https://www.screenshot-studio.com/",
+  },
+  {
     title: "Selected",
     category: CATEGORIES.design,
     description:
@@ -1087,6 +1140,15 @@ export const designLinks: Tool[] = [
     description: "Generate typefaces in seconds. No licenses, no limits.",
     tags: [TAGS.design, TAGS.typography],
     url: "https://typograph.studio/en",
+  },
+  {
+    title: "Typotheque type foundry",
+    category: CATEGORIES.design,
+    description:
+      "Typotheque type foundry, get unique, high quality fonts for print and screens directly from the designers. We also create custom (bespoke) fonts for most world's languages.",
+    subtitle: "Unique, high quality fonts for print and screens",
+    tags: [TAGS.design, TAGS.typography],
+    url: "https://www.typotheque.com/",
   },
   {
     title: "Ultramock",

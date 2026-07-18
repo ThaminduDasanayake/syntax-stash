@@ -25,6 +25,15 @@ export const aiLinks: Tool[] = [
     url: "https://github.com/patchy631/ai-engineering-hub",
   },
   {
+    title: "AnythingLLM",
+    category: CATEGORIES.ai,
+    description:
+      "AnythingLLM is the AI application you've been seeking. Use any LLM to chat with your documents, enhance your productivity, and run the latest state-of-the-art LLMs completely privately with no technical setup.",
+    subtitle: "The all-in-one AI application for everyone",
+    tags: [TAGS.ai],
+    url: "https://anythingllm.com/",
+  },
+  {
     title: "AutoHedge",
     author: "The Swarm Corporation",
     category: CATEGORIES.ai,
@@ -353,7 +362,7 @@ export const aiLinks: Tool[] = [
     ],
     related: ["ollama/ollama", "Unstructured - Unstructured Data Platform for GenAI"],
     subtitle: "Self-Hosted AI Platform",
-    tags: [TAGS.llm, TAGS.platform, TAGS.ui, TAGS["self-hosted"]],
+    tags: [TAGS.llm, TAGS.platform, TAGS.selfHosted, TAGS.ui],
     url: "https://openwebui.com/",
   },
   {
