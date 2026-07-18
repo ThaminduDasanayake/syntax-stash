@@ -13,13 +13,13 @@ export function relativeTime(date: Date, now: Date): string {
 
 export function formatDate(date: Date, tz: string): string {
   return new Intl.DateTimeFormat("en-US", {
-    timeZone: tz,
-    weekday: "short",
-    month: "short",
     day: "2-digit",
     hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
     hour12: false,
+    minute: "2-digit",
+    month: "short",
+    second: "2-digit",
+    timeZone: tz,
+    weekday: "short",
   }).format(date);
 }

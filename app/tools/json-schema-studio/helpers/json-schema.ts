@@ -12,8 +12,8 @@ function inferJsonSchema(value: unknown): JsonSchema {
   if (typeof value === "number") return { type: "number" };
   if (typeof value === "boolean") return { type: "boolean" };
   if (Array.isArray(value)) {
-    if (value.length === 0) return { type: "array", items: {} };
-    return { type: "array", items: inferJsonSchema(value[0]) };
+    if (value.length === 0) return { items: {}, type: "array" };
+    return { items: inferJsonSchema(value[0]), type: "array" };
   }
   if (typeof value === "object") {
     const properties: Record<string, JsonSchema> = {};
@@ -23,8 +23,8 @@ function inferJsonSchema(value: unknown): JsonSchema {
       required.push(k);
     }
     return {
-      type: "object",
       properties,
+      type: "object",
       ...(required.length > 0 ? { required } : {}),
     };
   }

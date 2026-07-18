@@ -27,9 +27,6 @@ function pill(
   const h = BOX_H;
   const ry = h / 2;
   return {
-    width: w,
-    height: h,
-    railY: ry,
     el: (key) => (
       <g key={key}>
         {additionalEls}
@@ -55,6 +52,9 @@ function pill(
         </text>
       </g>
     ),
+    height: h,
+    railY: ry,
+    width: w,
   };
 }
 
@@ -81,9 +81,6 @@ function renderSequence(children: Rendered[]): Rendered {
   const totalW = cursor - H_GAP;
 
   return {
-    width: totalW,
-    height: totalH,
-    railY,
     el: (key) => (
       <g key={key}>
         {children.map((c, i) => {
@@ -99,6 +96,9 @@ function renderSequence(children: Rendered[]): Rendered {
         })}
       </g>
     ),
+    height: totalH,
+    railY,
+    width: totalW,
   };
 }
 
@@ -122,9 +122,6 @@ function renderDisjunction(children: Rendered[]): Rendered {
   const railY = offsets[0] + children[0].railY;
 
   return {
-    width: totalW,
-    height: totalH,
-    railY,
     el: (key) => (
       <g key={key}>
         {children.map((c, i) => {
@@ -172,6 +169,9 @@ function renderDisjunction(children: Rendered[]): Rendered {
         />
       </g>
     ),
+    height: totalH,
+    railY,
+    width: totalW,
   };
 }
 
@@ -181,9 +181,6 @@ function wrapQuantifier(inner: Rendered, label: string): Rendered {
   const h = inner.height + loopH;
 
   return {
-    width: w,
-    height: h,
-    railY: inner.railY + loopH,
     el: (key) => (
       <g key={key}>
         <g transform={`translate(0,${loopH})`}>{inner.el("inner")}</g>
@@ -207,6 +204,9 @@ function wrapQuantifier(inner: Rendered, label: string): Rendered {
         </text>
       </g>
     ),
+    height: h,
+    railY: inner.railY + loopH,
+    width: w,
   };
 }
 
@@ -217,9 +217,6 @@ function wrapGroup(inner: Rendered, label: string, color: typeof COLORS.group): 
   const h = inner.height + labelH + borderPad;
 
   return {
-    width: w,
-    height: h,
-    railY: inner.railY + labelH,
     el: (key) => (
       <g key={key}>
         <rect
@@ -248,6 +245,9 @@ function wrapGroup(inner: Rendered, label: string, color: typeof COLORS.group): 
         <g transform={`translate(${borderPad},${labelH})`}>{inner.el("inner")}</g>
       </g>
     ),
+    height: h,
+    railY: inner.railY + labelH,
+    width: w,
   };
 }
 
@@ -296,10 +296,10 @@ export function renderNode(node: RootNode): Rendered {
 
     case "anchor": {
       const labels: Record<string, string> = {
-        start: "^",
-        end: "$",
         boundary: "\\b",
+        end: "$",
         "not-boundary": "\\B",
+        start: "^",
       };
       return pill(labels[node.kind] ?? node.kind, COLORS.anchor);
     }
@@ -311,18 +311,18 @@ export function renderNode(node: RootNode): Rendered {
         return wrapGroup(body, "group", COLORS.group);
       }
       const labels: Record<string, string> = {
-        lookahead: "(?=...)",
-        negativeLookahead: "(?!...)",
-        lookbehind: "(?<=...)",
-        negativeLookbehind: "(?<!...)",
         ignore: "(?:...)",
+        lookahead: "(?=...)",
+        lookbehind: "(?<=...)",
+        negativeLookahead: "(?!...)",
+        negativeLookbehind: "(?<!...)",
       };
       return wrapGroup(body, labels[behavior] ?? behavior, COLORS.anchor);
     }
 
     case "quantifier": {
       const inner = renderNode(node.body[0]);
-      const { symbol, min, max, greedy } = node;
+      const { greedy, max, min, symbol } = node;
       let label = symbol ?? `{${min}${max === undefined ? "," : max === min ? "" : `,${max}`}}`;
       if (!greedy) label += "?";
       return wrapQuantifier(inner, label);

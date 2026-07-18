@@ -30,7 +30,7 @@ export function PatternLibrary({ onUsePatternAction }: PatternLibraryProps) {
         entry.description.toLowerCase().includes(q);
       return matchesCategory && matchesSearch;
     });
-  }, [search, activeCategory]);
+  }, [activeCategory, search]);
 
   function handleUsePattern(entry: (typeof REGEX_PATTERNS)[0]) {
     // Preload the test string with both valid and invalid examples to demonstrate how it works

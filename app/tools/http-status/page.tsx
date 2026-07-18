@@ -35,7 +35,7 @@ export default function HttpStatusPage() {
         entry.useCase.toLowerCase().includes(q);
       return matchesCategory && matchesSearch;
     });
-  }, [search, activeCategory]);
+  }, [activeCategory, search]);
 
   const tool = internalTools.find((t) => t.slug === "http-status");
 

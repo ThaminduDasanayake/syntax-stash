@@ -6,9 +6,7 @@ import { useMemo, useState } from "react";
 import ExportBlock from "@/app/tools/tailwind-studio/export-block";
 import ShadeButton from "@/app/tools/tailwind-studio/shade-button";
 import { ColorField } from "@/components/ui/color-field";
-import { Input } from "@/components/ui/input";
 import { InputField } from "@/components/ui/input-field";
-import { Label } from "@/components/ui/label";
 
 const SHADES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 
@@ -29,7 +27,7 @@ function generateShades(hex: string): { shade: number; hex: string; oklch: strin
     const [l, c, h] = color.oklch();
     const formattedOklch = `oklch(${l.toFixed(3)} ${c.toFixed(3)} ${(h || 0).toFixed(1)})`;
 
-    return { shade, hex: color.hex(), oklch: formattedOklch };
+    return { hex: color.hex(), oklch: formattedOklch, shade };
   });
 }
 
@@ -49,19 +47,19 @@ export function ShadesTab() {
     if (!shades.length) return "";
     const vars = shades.map((s) => `  --${colorName}-${s.shade}: ${s.hex};`).join("\n");
     return `:root {\n${vars}\n}`;
-  }, [shades, colorName]);
+  }, [colorName, shades]);
 
   const cssVariablesOklch = useMemo(() => {
     if (!shades.length) return "";
     const vars = shades.map((s) => `  --${colorName}-${s.shade}: ${s.oklch};`).join("\n");
     return `:root {\n${vars}\n}`;
-  }, [shades, colorName]);
+  }, [colorName, shades]);
 
   const tailwindConfig = useMemo(() => {
     if (!shades.length) return "";
     const vars = shades.map((s) => `    ${s.shade}: '${s.hex}',`).join("\n");
     return `  ${colorName}: {\n${vars}\n  },`;
-  }, [shades, colorName]);
+  }, [colorName, shades]);
 
   return (
     <div>
@@ -78,7 +76,7 @@ export function ShadesTab() {
 
       {shades.length > 0 && (
         <div className="mb-12 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-          {shades.map(({ shade, hex }) => (
+          {shades.map(({ hex, shade }) => (
             <ShadeButton key={shade} shade={shade} hex={hex} />
           ))}
         </div>

@@ -9,15 +9,15 @@ export type BezierPreset = {
 export const PRESETS: BezierPreset[] = [
   { label: "ease", p1x: 0.25, p1y: 0.1, p2x: 0.25, p2y: 1.0 },
   { label: "ease-in", p1x: 0.42, p1y: 0.0, p2x: 1.0, p2y: 1.0 },
-  { label: "ease-out", p1x: 0.0, p1y: 0.0, p2x: 0.58, p2y: 1.0 },
-  { label: "ease-in-out", p1x: 0.42, p1y: 0.0, p2x: 0.58, p2y: 1.0 },
-  { label: "linear", p1x: 0.0, p1y: 0.0, p2x: 1.0, p2y: 1.0 },
-  { label: "ease-out-back", p1x: 0.34, p1y: 1.56, p2x: 0.64, p2y: 1.0 },
   { label: "ease-in-back", p1x: 0.36, p1y: 0.0, p2x: 0.66, p2y: -0.56 },
-  { label: "ease-in-out-back", p1x: 0.68, p1y: -0.6, p2x: 0.32, p2y: 1.6 },
-  { label: "ease-out-expo", p1x: 0.16, p1y: 1.0, p2x: 0.3, p2y: 1.0 },
   { label: "ease-in-expo", p1x: 0.7, p1y: 0.0, p2x: 0.84, p2y: 0.0 },
+  { label: "ease-in-out", p1x: 0.42, p1y: 0.0, p2x: 0.58, p2y: 1.0 },
+  { label: "ease-in-out-back", p1x: 0.68, p1y: -0.6, p2x: 0.32, p2y: 1.6 },
   { label: "ease-in-out-expo", p1x: 0.87, p1y: 0.0, p2x: 0.13, p2y: 1.0 },
+  { label: "ease-out", p1x: 0.0, p1y: 0.0, p2x: 0.58, p2y: 1.0 },
+  { label: "ease-out-back", p1x: 0.34, p1y: 1.56, p2x: 0.64, p2y: 1.0 },
+  { label: "ease-out-expo", p1x: 0.16, p1y: 1.0, p2x: 0.3, p2y: 1.0 },
+  { label: "linear", p1x: 0.0, p1y: 0.0, p2x: 1.0, p2y: 1.0 },
 ];
 
 /** Evaluate a cubic Bezier component at parameter t (B0=(0,0), B3=(1,1)). */

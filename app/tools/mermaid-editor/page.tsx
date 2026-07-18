@@ -118,8 +118,8 @@ export default function MermaidEditorPage() {
           onValueChange={(v) => v && handleDiagramTypeChange(v)}
           options={(Object.entries(DIAGRAM_LABELS) as [DiagramType, string][]).map(
             ([key, label]) => ({
-              value: key,
               label: label,
+              value: key,
             }),
           )}
           triggerClassName="max-w-xs"

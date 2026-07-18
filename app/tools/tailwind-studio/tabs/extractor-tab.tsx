@@ -26,7 +26,7 @@ export function ExtractorTab() {
   const [tab, setTab] = useState<"css" | "jsx">("css");
 
   const generatedCss = useMemo(() => generateCss(entries), [entries]);
-  const refactoredJsx = useMemo(() => refactorSource(source, entries), [source, entries]);
+  const refactoredJsx = useMemo(() => refactorSource(source, entries), [entries, source]);
 
   function renameEntry(id: string, name: string) {
     setEntries((prev) => prev.map((e) => (e.id === id ? { ...e, semanticName: name } : e)));

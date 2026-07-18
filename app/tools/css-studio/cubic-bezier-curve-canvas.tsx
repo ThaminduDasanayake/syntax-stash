@@ -20,7 +20,7 @@ function toSvg(x: number, y: number) {
   return { cx: PAD + x * PLOT, cy: PAD + (1 - y) * PLOT };
 }
 
-export function CurveCanvas({ p1x, p1y, p2x, p2y, onChangeAction }: Props) {
+export function CurveCanvas({ onChangeAction, p1x, p1y, p2x, p2y }: Props) {
   const svgRef = useRef<SVGSVGElement>(null);
   const dragging = useRef<"p1" | "p2" | null>(null);
 

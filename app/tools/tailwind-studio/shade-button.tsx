@@ -3,7 +3,7 @@ import { CheckIcon, CopyIcon } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
-const ShadeButton = ({ shade, hex }: { shade: number; hex: string }) => {
+const ShadeButton = ({ hex, shade }: { shade: number; hex: string }) => {
   const { copied, copy } = useCopyToClipboard();
   const isBase = shade === 500;
 

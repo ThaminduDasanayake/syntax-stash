@@ -24,13 +24,13 @@ export const BasicMarksKit = [
       MarkComboRules.markdown({ variant: "boldItalic" }),
     ],
   }),
-  ItalicPlugin.configure({
-    inputRules: [ItalicRules.markdown({ variant: "*" }), ItalicRules.markdown({ variant: "_" })],
-  }),
   CodePlugin.configure({
     inputRules: [CodeRules.markdown()],
     node: { component: CodeLeaf },
     shortcuts: { toggle: { keys: "mod+e" } },
+  }),
+  ItalicPlugin.configure({
+    inputRules: [ItalicRules.markdown({ variant: "*" }), ItalicRules.markdown({ variant: "_" })],
   }),
   StrikethroughPlugin.configure({
     inputRules: [StrikethroughRules.markdown()],

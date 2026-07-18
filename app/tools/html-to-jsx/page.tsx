@@ -21,15 +21,15 @@ function HtmlToJsxPage() {
   const [asComponent, setAsComponent] = useState(true);
   const [selfCloseEmpty, setSelfCloseEmpty] = useState(true);
 
-  const { output, error } = useMemo(() => {
-    if (!input.trim()) return { output: "", error: null };
+  const { error, output } = useMemo(() => {
+    if (!input.trim()) return { error: null, output: "" };
     try {
-      const opts: ConvertOptions = { componentName, asComponent, selfCloseEmpty };
-      return { output: convertHtmlToJsx(input, opts), error: null };
+      const opts: ConvertOptions = { asComponent, componentName, selfCloseEmpty };
+      return { error: null, output: convertHtmlToJsx(input, opts) };
     } catch (e) {
-      return { output: "", error: e instanceof Error ? e.message : "Conversion failed" };
+      return { error: e instanceof Error ? e.message : "Conversion failed", output: "" };
     }
-  }, [input, componentName, asComponent, selfCloseEmpty]);
+  }, [asComponent, componentName, input, selfCloseEmpty]);
 
   const tool = internalTools.find((t) => t.slug === "html-to-jsx");
 

@@ -34,7 +34,7 @@ function inferPydanticType(value: unknown, fieldName: string, classes: PydanticC
       type: inferPydanticType(obj[k], k, classes),
     }));
     if (!classes.find((c) => c.name === className)) {
-      classes.push({ name: className, fields });
+      classes.push({ fields, name: className });
     }
     return className;
   }

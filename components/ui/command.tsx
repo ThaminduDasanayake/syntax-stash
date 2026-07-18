@@ -28,9 +28,9 @@ function Command({ className, ...props }: React.ComponentProps<typeof CommandPri
 
 function CommandDialog({
   title = "Command Palette",
-  description = "Search for a command to run...",
   children,
   className,
+  description = "Search for a command to run...",
   showCloseButton = false,
   ...props
 }: React.ComponentProps<typeof Dialog> & {
@@ -136,8 +136,8 @@ function CommandSeparator({
 }
 
 function CommandItem({
-  className,
   children,
+  className,
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.Item>) {
   return (

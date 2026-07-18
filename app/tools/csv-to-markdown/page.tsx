@@ -30,9 +30,9 @@ Charlie Brown,charlie@example.com,Manager`);
       const pipeCount = (trimmed.match(/\|/g) || []).length;
 
       const counts = [
-        { delim: ",", count: commaCount },
-        { delim: "\t", count: tabCount },
-        { delim: "|", count: pipeCount },
+        { count: commaCount, delim: "," },
+        { count: pipeCount, delim: "|" },
+        { count: tabCount, delim: "\t" },
       ];
 
       const maxCount = Math.max(...counts.map((c) => c.count));
@@ -99,13 +99,13 @@ Charlie Brown,charlie@example.com,Manager`);
     }
 
     return lines.join("\n");
-  }, [input, delimiter]);
+  }, [delimiter, input]);
 
   const delimiterOptions: Array<{ value: DelimiterType; label: string }> = [
-    { value: "auto", label: "Auto-detect" },
-    { value: "comma", label: "Comma (,)" },
-    { value: "tab", label: "Tab (\\t)" },
-    { value: "pipe", label: "Pipe (|)" },
+    { label: "Auto-detect", value: "auto" },
+    { label: "Comma (,)", value: "comma" },
+    { label: "Pipe (|)", value: "pipe" },
+    { label: "Tab (\\t)", value: "tab" },
   ];
 
   const tool = internalTools.find((t) => t.slug === "csv-to-markdown");

@@ -55,7 +55,7 @@ export async function getAllSnippets(): Promise<Snippet[]> {
           theme: "plastic",
         }) as Promise<string>);
 
-        return { filename, language, code, html };
+        return { code, filename, html, language };
       }),
     );
 
@@ -63,10 +63,10 @@ export async function getAllSnippets(): Promise<Snippet[]> {
       id,
       title: metadata.title,
       description: metadata.description || "",
+      files: processedFiles,
+      instructions: metadata.instructions,
       languages: metadata.languages,
       setup: metadata.setup,
-      instructions: metadata.instructions,
-      files: processedFiles,
     });
   }
 

@@ -12,7 +12,6 @@ export const newLinks: Tool[] = [
     url: "https://socialproofexamples.com/",
   },
 
-
   {
     title: "Avatune",
     category: CATEGORIES.dev,
@@ -169,7 +168,6 @@ export const newLinks: Tool[] = [
     subtitle: "UX Patterns for Artificial Intelligence Design",
     url: "https://www.shapeof.ai/",
   },
-
 
   {
     title: "zzzz",

@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 
 export function MultiSelect({
-  values,
-  selected,
-  onChange,
   max = 10,
+  onChange,
+  selected,
+  values,
 }: {
   values: { value: number; label: string }[];
   selected: number[];
@@ -22,7 +22,7 @@ export function MultiSelect({
 
   return (
     <div className="flex flex-wrap gap-1.5">
-      {values.map(({ value, label }) => (
+      {values.map(({ label, value }) => (
         <Button
           key={value}
           variant={selected.includes(value) ? "default" : "outline"}

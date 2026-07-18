@@ -27,13 +27,13 @@ export default function StringCaseConverterPage() {
     if (!input.trim()) {
       return {
         camelCase: "",
+        constantCase: "",
+        kebabCase: "",
+        lowercase: "",
         pascalCase: "",
         snakeCase: "",
-        kebabCase: "",
-        constantCase: "",
-        trainCase: "",
         titleCase: "",
-        lowercase: "",
+        trainCase: "",
         uppercase: "",
       };
     }
@@ -71,13 +71,13 @@ export default function StringCaseConverterPage() {
 
     return {
       camelCase,
+      constantCase,
+      kebabCase,
+      lowercase,
       pascalCase,
       snakeCase,
-      kebabCase,
-      constantCase,
-      trainCase,
       titleCase,
-      lowercase,
+      trainCase,
       uppercase,
     };
   }, [input]);
@@ -87,15 +87,15 @@ export default function StringCaseConverterPage() {
     label: string;
     description: string;
   }> = [
-    { key: "camelCase", label: "camelCase", description: "First word lowercase, rest capitalized" },
-    { key: "pascalCase", label: "PascalCase", description: "All words capitalized" },
-    { key: "snakeCase", label: "snake_case", description: "Lowercase with underscores" },
-    { key: "kebabCase", label: "kebab-case", description: "Lowercase with hyphens" },
-    { key: "constantCase", label: "CONSTANT_CASE", description: "Uppercase with underscores" },
-    { key: "trainCase", label: "Train-Case", description: "Capitalized with hyphens" },
-    { key: "titleCase", label: "Title Case", description: "Capitalized words with spaces" },
-    { key: "lowercase", label: "lowercase", description: "All lowercase" },
-    { key: "uppercase", label: "UPPERCASE", description: "All uppercase" },
+    { description: "All lowercase", key: "lowercase", label: "lowercase" },
+    { description: "All uppercase", key: "uppercase", label: "UPPERCASE" },
+    { description: "All words capitalized", key: "pascalCase", label: "PascalCase" },
+    { description: "Capitalized with hyphens", key: "trainCase", label: "Train-Case" },
+    { description: "Capitalized words with spaces", key: "titleCase", label: "Title Case" },
+    { description: "First word lowercase, rest capitalized", key: "camelCase", label: "camelCase" },
+    { description: "Lowercase with hyphens", key: "kebabCase", label: "kebab-case" },
+    { description: "Lowercase with underscores", key: "snakeCase", label: "snake_case" },
+    { description: "Uppercase with underscores", key: "constantCase", label: "CONSTANT_CASE" },
   ];
 
   const tool = internalTools.find((t) => t.slug === "string-case-converter");
@@ -116,7 +116,7 @@ export default function StringCaseConverterPage() {
         </div>
         {/* Outputs */}
         <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 overflow-y-auto sm:grid-cols-2 lg:grid-cols-3">
-          {cases.map(({ key, label, description }) => (
+          {cases.map(({ description, key, label }) => (
             <div key={key} className="shrink-0">
               <TextareaGroup
                 label={

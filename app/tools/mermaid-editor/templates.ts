@@ -1,28 +1,6 @@
 export type DiagramType = "flowchart" | "sequence" | "class" | "state" | "er" | "gantt" | "pie";
 
 export const DIAGRAM_TEMPLATES: Record<DiagramType, string> = {
-  flowchart: `flowchart TD
-    A([Start]) --> B{Is it working?}
-    B -- Yes --> C[✅ Ship it]
-    B -- No --> D[Debug]
-    D --> E{Fixed?}
-    E -- Yes --> B
-    E -- No --> F[🔥 Panic]
-    F --> D`,
-
-  sequence: `sequenceDiagram
-    participant Client
-    participant API
-    participant DB
-
-    Client->>+API: POST /login
-    API->>+DB: SELECT user WHERE email=?
-    DB-->>-API: User row
-    API-->>-Client: 200 { token }
-
-    Client->>+API: GET /profile (Bearer token)
-    API-->>-Client: 200 { name, email }`,
-
   class: `classDiagram
     class Animal {
       +String name
@@ -42,15 +20,6 @@ export const DIAGRAM_TEMPLATES: Record<DiagramType, string> = {
 
     Animal <|-- Dog
     Animal <|-- Cat`,
-
-  state: `stateDiagram-v2
-    [*] --> Idle
-    Idle --> Loading : fetch()
-    Loading --> Success : data received
-    Loading --> Error : request failed
-    Success --> Idle : reset()
-    Error --> Idle : retry()
-    Error --> [*] : dismiss()`,
 
   er: `erDiagram
     USER {
@@ -77,6 +46,15 @@ export const DIAGRAM_TEMPLATES: Record<DiagramType, string> = {
     POST ||--o{ COMMENT : has
     USER ||--o{ COMMENT : writes`,
 
+  flowchart: `flowchart TD
+    A([Start]) --> B{Is it working?}
+    B -- Yes --> C[✅ Ship it]
+    B -- No --> D[Debug]
+    D --> E{Fixed?}
+    E -- Yes --> B
+    E -- No --> F[🔥 Panic]
+    F --> D`,
+
   gantt: `gantt
     title Project Roadmap
     dateFormat  YYYY-MM-DD
@@ -96,14 +74,36 @@ export const DIAGRAM_TEMPLATES: Record<DiagramType, string> = {
     "Edge"    : 4.5
     "Firefox" : 3.1
     "Other"   : 7.9`,
+
+  sequence: `sequenceDiagram
+    participant Client
+    participant API
+    participant DB
+
+    Client->>+API: POST /login
+    API->>+DB: SELECT user WHERE email=?
+    DB-->>-API: User row
+    API-->>-Client: 200 { token }
+
+    Client->>+API: GET /profile (Bearer token)
+    API-->>-Client: 200 { name, email }`,
+
+  state: `stateDiagram-v2
+    [*] --> Idle
+    Idle --> Loading : fetch()
+    Loading --> Success : data received
+    Loading --> Error : request failed
+    Success --> Idle : reset()
+    Error --> Idle : retry()
+    Error --> [*] : dismiss()`,
 };
 
 export const DIAGRAM_LABELS: Record<DiagramType, string> = {
-  flowchart: "Flowchart",
-  sequence: "Sequence",
   class: "Class",
-  state: "State",
   er: "Entity-Relationship",
+  flowchart: "Flowchart",
   gantt: "Gantt",
   pie: "Pie chart",
+  sequence: "Sequence",
+  state: "State",
 };

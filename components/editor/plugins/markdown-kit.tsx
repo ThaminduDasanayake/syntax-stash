@@ -6,12 +6,12 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 
 export const MarkdownKit = [
-  BaseFootnoteReferencePlugin,
   BaseFootnoteDefinitionPlugin,
+  BaseFootnoteReferencePlugin,
   MarkdownPlugin.configure({
     options: {
-      plainMarks: [KEYS.suggestion, KEYS.comment],
-      remarkPlugins: [remarkMath, remarkGfm, remarkEmoji as any, remarkMdx, remarkMention],
+      plainMarks: [KEYS.comment, KEYS.suggestion],
+      remarkPlugins: [remarkEmoji as any, remarkGfm, remarkMath, remarkMdx, remarkMention],
     },
   }),
 ];

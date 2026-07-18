@@ -37,7 +37,7 @@ export function MediaToolbarButton() {
     });
 
     setUrl("");
-  }, [url, editor]);
+  }, [editor, url]);
 
   return (
     <AlertDialog

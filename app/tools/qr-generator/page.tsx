@@ -19,10 +19,10 @@ import { internalTools } from "@/lib/tools-data";
 type ErrorCorrectionLevel = "L" | "M" | "Q" | "H";
 
 const TEMPLATES = [
-  { label: "URL", value: "https://" },
   { label: "Email", value: "mailto:someone@example.com?subject=Hello" },
-  { label: "WiFi", value: "WIFI:T:WPA;S:MyNetworkName;P:MyPassword;;" },
   { label: "Geo", value: "geo:40.7128,-74.0060" },
+  { label: "URL", value: "https://" },
+  { label: "WiFi", value: "WIFI:T:WPA;S:MyNetworkName;P:MyPassword;;" },
 ];
 
 export default function QRGeneratorPage() {
@@ -56,12 +56,12 @@ export default function QRGeneratorPage() {
         const QRCode = QRCodeModule.default || QRCodeModule;
 
         const options = {
-          errorCorrectionLevel: errorLevel,
-          margin: margin,
           color: {
             dark: fg,
             light: transparentBg ? "#00000000" : bg,
           },
+          errorCorrectionLevel: errorLevel,
+          margin: margin,
         };
 
         QRCode.toDataURL(text, { ...options, width: 512 })
@@ -91,7 +91,7 @@ export default function QRGeneratorPage() {
     return () => {
       cancelled = true;
     };
-  }, [text, fg, bg, margin, errorLevel, transparentBg]);
+  }, [bg, errorLevel, fg, margin, text, transparentBg]);
 
   function handleDownload(format: "png" | "svg") {
     let downloadUrl: string | null = null;
@@ -169,7 +169,7 @@ export default function QRGeneratorPage() {
               <div className="space-y-2">
                 <Label>Error Correction Level</Label>
                 <div className="flex gap-2">
-                  {(["L", "M", "Q", "H"] as const).map((level) => (
+                  {(["H", "L", "M", "Q"] as const).map((level) => (
                     <Button
                       size="icon"
                       key={level}

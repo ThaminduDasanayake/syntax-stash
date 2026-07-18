@@ -23,13 +23,13 @@ import { HrElementStatic } from "@/components/plate-ui/hr-node-static";
 import { ParagraphElementStatic } from "@/components/plate-ui/paragraph-node-static";
 
 export const BaseBasicBlocksKit = [
-  BaseParagraphPlugin.withComponent(ParagraphElementStatic),
+  BaseBlockquotePlugin.withComponent(BlockquoteElementStatic),
   BaseH1Plugin.withComponent(H1ElementStatic),
   BaseH2Plugin.withComponent(H2ElementStatic),
   BaseH3Plugin.withComponent(H3ElementStatic),
   BaseH4Plugin.withComponent(H4ElementStatic),
   BaseH5Plugin.withComponent(H5ElementStatic),
   BaseH6Plugin.withComponent(H6ElementStatic),
-  BaseBlockquotePlugin.withComponent(BlockquoteElementStatic),
   BaseHorizontalRulePlugin.withComponent(HrElementStatic),
+  BaseParagraphPlugin.withComponent(ParagraphElementStatic),
 ];

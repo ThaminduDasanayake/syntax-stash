@@ -26,7 +26,7 @@ export default function CodeStashUi({ initialSnippets }: { initialSnippets: Snip
   );
 
   // 1. Setup Fuse.js for fuzzy searching
-  const fuse = useFuzzySearch(initialSnippets, ["title", "description", "languages"]);
+  const fuse = useFuzzySearch(initialSnippets, ["description", "languages", "title"]);
 
   // 2. Filter logic combining Fuse and Category tabs
   const filteredSnippets = useMemo(() => {
@@ -36,7 +36,7 @@ export default function CodeStashUi({ initialSnippets }: { initialSnippets: Snip
       results = results.filter((s) => s.languages.includes(activeFilter));
     }
     return results;
-  }, [searchQuery, activeFilter, fuse, initialSnippets]);
+  }, [activeFilter, fuse, initialSnippets, searchQuery]);
 
   const activeSnippet = initialSnippets.find((s) => s.id === activeId);
 

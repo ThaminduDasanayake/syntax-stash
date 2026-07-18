@@ -175,13 +175,12 @@ export function CodeSyntaxLeaf(props: PlateLeafProps<TCodeSyntaxLeaf>) {
 }
 
 const languages: { label: string; value: string }[] = [
-  { label: "Auto", value: "auto" },
-  { label: "Plain Text", value: "plaintext" },
   { label: "ABAP", value: "abap" },
   { label: "Agda", value: "agda" },
   { label: "Arduino", value: "arduino" },
   { label: "ASCII Art", value: "ascii" },
   { label: "Assembly", value: "x86asm" },
+  { label: "Auto", value: "auto" },
   { label: "Bash", value: "bash" },
   { label: "BASIC", value: "basic" },
   { label: "BNF", value: "bnf" },
@@ -226,8 +225,8 @@ const languages: { label: string; value: string }[] = [
   { label: "Makefile", value: "makefile" },
   { label: "Markdown", value: "markdown" },
   { label: "Markup", value: "markup" },
-  { label: "MATLAB", value: "matlab" },
   { label: "Mathematica", value: "mathematica" },
+  { label: "MATLAB", value: "matlab" },
   { label: "Mermaid", value: "mermaid" },
   { label: "Nix", value: "nix" },
   { label: "Notion Formula", value: "notion" },
@@ -236,6 +235,7 @@ const languages: { label: string; value: string }[] = [
   { label: "Pascal", value: "pascal" },
   { label: "Perl", value: "perl" },
   { label: "PHP", value: "php" },
+  { label: "Plain Text", value: "plaintext" },
   { label: "PowerShell", value: "powershell" },
   { label: "Prolog", value: "prolog" },
   { label: "Protocol Buffers", value: "protobuf" },

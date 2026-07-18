@@ -12,16 +12,16 @@ import { Label } from "@/components/ui/label";
 import { internalTools } from "@/lib/tools-data";
 
 const EXAMPLES = [
+  { label: "ISO 8601", value: "2024-04-16T12:00:00Z" },
   {
     label: "JWT",
     value:
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
   },
   { label: "ObjectId", value: "507f1f77bcf86cd799439011" },
-  { label: "UUID v1", value: "6ba7b810-9dad-11d1-80b4-00c04fd430c8" },
-  { label: "Unix sec", value: "1713264000" },
-  { label: "ISO 8601", value: "2024-04-16T12:00:00Z" },
   { label: "Snowflake", value: "175928847299117063" },
+  { label: "Unix sec", value: "1713264000" },
+  { label: "UUID v1", value: "6ba7b810-9dad-11d1-80b4-00c04fd430c8" },
 ];
 
 export default function UniversalDecoderPage() {

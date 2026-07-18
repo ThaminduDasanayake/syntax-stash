@@ -26,25 +26,25 @@ export default function URLParserPage() {
     return params;
   });
 
-  const { parsed, error } = useMemo(() => {
+  const { error, parsed } = useMemo(() => {
     const trimmed = input.trim();
-    if (!trimmed) return { parsed: null, error: "" };
+    if (!trimmed) return { error: "", parsed: null };
 
     try {
       const url = new URL(trimmed);
       return {
+        error: "",
         parsed: {
-          protocol: url.protocol.replace(":", ""),
           host: url.hostname,
           path: url.pathname || "/",
           port: url.port || "",
+          protocol: url.protocol.replace(":", ""),
         },
-        error: "",
       };
     } catch (e) {
       return {
-        parsed: null,
         error: e instanceof Error ? e.message : "Invalid URL",
+        parsed: null,
       };
     }
   }, [input]);
@@ -72,7 +72,7 @@ export default function URLParserPage() {
   const rebuiltURL = useMemo<string>(() => {
     if (!parsed) return "";
 
-    const { protocol, host, path, port } = parsed;
+    const { host, path, port, protocol } = parsed;
     const baseURL = `${protocol}://${host}${port ? `:${port}` : ""}${path}`;
 
     const params = new URLSearchParams();

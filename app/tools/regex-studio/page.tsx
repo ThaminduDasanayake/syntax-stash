@@ -25,7 +25,7 @@ export default function RegexStudioPage() {
     setFlags(entryFlags);
     setTestString(exampleText);
     setActiveTab("tester");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ behavior: "smooth", top: 0 });
   }
 
   return (

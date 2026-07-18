@@ -103,13 +103,13 @@ export function AnimationTab() {
 
     const iterStr = iterations === "infinite" ? "infinite" : iterations;
     return `@keyframes ${name} {\n${stops}\n}\n\n.animated {\n  animation: ${name} ${duration}ms ${timing} ${iterStr};\n}`;
-  }, [sortedFrames, duration, timing, iterations, animId]);
+  }, [animId, duration, iterations, sortedFrames, timing]);
 
   const previewStyle = useMemo(() => {
     return {
       animation: `ss-preview-${animId.slice(-6)} ${duration}ms ${timing} ${iterations === "infinite" ? "infinite" : parseInt(iterations) || 1}`,
     };
-  }, [duration, timing, iterations, animId]);
+  }, [animId, duration, iterations, timing]);
 
   const previewKeyframesCss = useMemo(() => {
     const stops = sortedFrames
@@ -122,7 +122,7 @@ export function AnimationTab() {
       })
       .join(" ");
     return `@keyframes ss-preview-${animId.slice(-6)} { ${stops} }`;
-  }, [sortedFrames, animId]);
+  }, [animId, sortedFrames]);
 
   return (
     <>
@@ -247,7 +247,7 @@ export function AnimationTab() {
               label="Timing"
               value={timing}
               onValueChange={(v) => v && setTiming(v)}
-              options={TIMING_FUNCTIONS.map((timing) => ({ value: timing, label: timing }))}
+              options={TIMING_FUNCTIONS.map((timing) => ({ label: timing, value: timing }))}
             />
           </div>
 

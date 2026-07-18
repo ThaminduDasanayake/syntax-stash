@@ -97,7 +97,7 @@ function parseParam(raw: string): ParsedParam | null {
 
   if (defaultValue) optional = true;
 
-  return { name, type: type || "any", optional, defaultValue };
+  return { defaultValue, name, optional, type: type || "any" };
 }
 
 export function parseFunctionSignature(source: string): ParsedFunction | null {
@@ -190,11 +190,11 @@ export function parseFunctionSignature(source: string): ParsedFunction | null {
     .filter((p): p is ParsedParam => p !== null);
 
   return {
-    name,
-    isAsync,
-    isArrow,
-    isGenerator,
     generics: generics || undefined,
+    isArrow,
+    isAsync,
+    isGenerator,
+    name,
     params,
     returnType: returnType || "void",
   };

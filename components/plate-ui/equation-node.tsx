@@ -98,7 +98,7 @@ export function InlineEquationElement(props: PlateElementProps<TEquationElement>
     if (selected && isCollapsed) {
       setOpen(true);
     }
-  }, [selected, isCollapsed]);
+  }, [isCollapsed, selected]);
 
   useEquationElement({
     element,
@@ -209,7 +209,7 @@ const EquationPopoverContent = ({
     >
       <EquationInput
         className={cn("max-h-[50vh] grow resize-none p-2 text-sm", className)}
-        state={{ isInline, open, onClose }}
+        state={{ isInline, onClose, open }}
         autoFocus
         {...props}
       />

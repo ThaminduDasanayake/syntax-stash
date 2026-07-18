@@ -32,12 +32,12 @@ function makeUser(id: number) {
   const lastName = rand(LAST_NAMES);
   return {
     id,
-    firstName,
-    lastName,
-    email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@${rand(DOMAINS)}`,
     age: randInt(18, 72),
     city: rand(CITIES),
+    email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@${rand(DOMAINS)}`,
+    firstName,
     joinedAt: randomPastDate(730),
+    lastName,
   };
 }
 
@@ -45,10 +45,10 @@ function makeProduct(id: number) {
   const name = `${rand(PRODUCT_ADJECTIVES)} ${rand(PRODUCT_NOUNS)}`;
   return {
     id,
-    name,
     category: rand(PRODUCT_CATEGORIES),
-    price: randFloat(4.99, 499.99),
     inStock: Math.random() > 0.2,
+    name,
+    price: randFloat(4.99, 499.99),
     rating: randFloat(1, 5, 1),
     sku: `SKU-${randInt(10000, 99999)}`,
   };
@@ -68,12 +68,12 @@ function makePost(id: number) {
   return {
     id,
     title,
-    slug: slugify(title),
     author: `${firstName} ${lastName}`,
     excerpt: `A short look at ${topic} and what it means for builders.`,
     likes: randInt(0, 5000),
-    tags,
     publishedAt: randomPastDate(365),
+    slug: slugify(title),
+    tags,
   };
 }
 

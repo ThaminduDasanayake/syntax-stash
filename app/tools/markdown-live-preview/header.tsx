@@ -24,15 +24,15 @@ interface HeaderProps {
 }
 
 export function Header({
-  stats,
   editorMode,
-  setEditorMode,
-  showHtml,
-  setShowHtml,
+  handleDownloadHtml,
+  handleDownloadMd,
   markdown,
   renderedHtml,
-  handleDownloadMd,
-  handleDownloadHtml,
+  setEditorMode,
+  setShowHtml,
+  showHtml,
+  stats,
 }: HeaderProps) {
   return (
     <div className="grid grid-cols-2 items-center gap-4">

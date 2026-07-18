@@ -18,12 +18,12 @@ import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 const ACTIONS: EncoderAction[] = [
-  { id: "b64-enc", label: "Encode Base64", run: encodeBase64 },
   { id: "b64-dec", label: "Decode Base64", run: decodeBase64 },
-  { id: "url-enc", label: "URL Encode", run: encodeURIComponent },
-  { id: "url-dec", label: "URL Decode", run: decodeURIComponent },
-  { id: "hex-enc", label: "String to Hex", run: stringToHex },
+  { id: "b64-enc", label: "Encode Base64", run: encodeBase64 },
   { id: "hex-dec", label: "Hex to String", run: hexToString },
+  { id: "hex-enc", label: "String to Hex", run: stringToHex },
+  { id: "url-dec", label: "URL Decode", run: decodeURIComponent },
+  { id: "url-enc", label: "URL Encode", run: encodeURIComponent },
 ];
 
 export default function EncoderPage() {
@@ -38,21 +38,21 @@ export default function EncoderPage() {
     }
   }
 
-  const { output, error } = useMemo(() => {
-    if (!actionId) return { output: "", error: null };
+  const { error, output } = useMemo(() => {
+    if (!actionId) return { error: null, output: "" };
 
     const activeAction = ACTIONS.find((a) => a.id === actionId);
-    if (!activeAction) return { output: "", error: null };
+    if (!activeAction) return { error: null, output: "" };
 
     try {
-      return { output: activeAction.run(input), error: null };
+      return { error: null, output: activeAction.run(input) };
     } catch (e) {
       return {
-        output: "",
         error: e instanceof Error ? e.message : `Failed to run ${activeAction.label}`,
+        output: "",
       };
     }
-  }, [input, actionId]);
+  }, [actionId, input]);
 
   const tool = internalTools.find((t) => t.slug === "encoder-decoder");
 

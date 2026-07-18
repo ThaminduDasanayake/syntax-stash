@@ -12,11 +12,11 @@ function gcd(a: number, b: number): number {
 }
 
 const PRESETS: { label: string; w: number; h: number }[] = [
-  { label: "16:9", w: 16, h: 9 },
-  { label: "4:3", w: 4, h: 3 },
-  { label: "1:1", w: 1, h: 1 },
-  { label: "21:9", w: 21, h: 9 },
-  { label: "9:16", w: 9, h: 16 },
+  { h: 1, label: "1:1", w: 1 },
+  { h: 3, label: "4:3", w: 4 },
+  { h: 9, label: "16:9", w: 16 },
+  { h: 9, label: "21:9", w: 21 },
+  { h: 16, label: "9:16", w: 9 },
 ];
 
 export function AspectRatioTab() {
@@ -35,8 +35,8 @@ export function AspectRatioTab() {
     const tailwind = `aspect-[${rw}/${rh}]`;
     const legacy = `.container {\n  position: relative;\n  width: 100%;\n  padding-bottom: ${paddingPct}%;\n}\n.container > * {\n  position: absolute;\n  inset: 0;\n}`;
 
-    return { rw, rh, paddingPct, css, tailwind, legacy };
-  }, [width, height]);
+    return { css, legacy, paddingPct, rh, rw, tailwind };
+  }, [height, width]);
 
   function applyPreset(w: number, h: number) {
     setWidth(w);
@@ -109,9 +109,9 @@ export function AspectRatioTab() {
               className="bg-primary/40 border-primary text-primary flex items-center justify-center rounded border-2 font-mono text-sm transition-all duration-150"
               style={{
                 aspectRatio: `${width} / ${height}`,
-                width: "100%",
-                maxWidth: height > width ? "140px" : "100%",
                 maxHeight: "220px",
+                maxWidth: height > width ? "140px" : "100%",
+                width: "100%",
               }}
             >
               {computed.rw}:{computed.rh}

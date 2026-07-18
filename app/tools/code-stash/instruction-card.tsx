@@ -16,7 +16,7 @@ export function InstructionCard({ instructions }: InstructionCardProps) {
         Instructions
       </CardHeader>
       <CardContent className="text-sky-200">
-        {instructions.map(({ text, code }, idx) => (
+        {instructions.map(({ code, text }, idx) => (
           <div key={idx}>
             <p>{text}</p>
 

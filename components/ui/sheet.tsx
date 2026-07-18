@@ -40,10 +40,10 @@ function SheetOverlay({
 }
 
 function SheetContent({
-  className,
   children,
-  side = "right",
+  className,
   showCloseButton = true,
+  side = "right",
   ...props
 }: React.ComponentProps<typeof SheetPrimitive.Content> & {
   side?: "top" | "right" | "bottom" | "left";

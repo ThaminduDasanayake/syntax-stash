@@ -1,6 +1,5 @@
 "use client";
 
-import { CheckIcon, CopyIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 
 import {
@@ -13,7 +12,6 @@ import {
   formatRgb,
   parseColor,
 } from "@/app/tools/color-studio/converter-formatters";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
@@ -25,51 +23,48 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
 export function ConverterTab() {
   const [inputFormat, setInputFormat] = useState("HEX");
   const [inputValue, setInputValue] = useState("#3b82f6");
 
-  const { copiedItem, copy } = useCopyToClipboard();
-
-  const { preview, results, isValid } = useMemo(() => {
+  const { isValid, preview, results } = useMemo(() => {
     try {
       const c = parseColor(inputFormat, inputValue);
       return {
-        preview: c.hex(),
         isValid: true,
+        preview: c.hex(),
         results: [
-          { id: "HEX", label: "HEX", value: c.hex() },
-          { id: "RGB", label: "RGB", value: formatRgb(c) },
           { id: "DEC_RGB", label: "Decimal RGB", value: formatDecimalRgb(c) },
+          { id: "HEX", label: "HEX", value: c.hex() },
           { id: "HSL", label: "HSL", value: formatHsl(c) },
           { id: "LAB", label: "LAB", value: formatLab(c) },
           { id: "LCH", label: "LCH", value: formatLch(c) },
           { id: "OKLAB", label: "OKLAB", value: formatOklab(c) },
           { id: "OKLCH", label: "OKLCH", value: formatOklch(c) },
+          { id: "RGB", label: "RGB", value: formatRgb(c) },
         ],
       };
     } catch {
       return {
-        preview: "transparent",
         isValid: false,
+        preview: "transparent",
         results: [],
       };
     }
   }, [inputFormat, inputValue]);
 
-  const inputOptions = ["HEX", "RGB", "DEC_RGB", "HSL", "LAB", "LCH", "OKLAB", "OKLCH"];
+  const inputOptions = ["DEC_RGB", "HEX", "HSL", "LAB", "LCH", "OKLAB", "OKLCH", "RGB"];
 
   const placeholders: Record<string, string> = {
-    HEX: "#3b82f6",
-    RGB: "rgb(59, 130, 246)",
     DEC_RGB: "rgb(0.2314, 0.5098, 0.9647)",
+    HEX: "#3b82f6",
     HSL: "hsl(217.2, 91.2%, 59.8%)",
     LAB: "lab(55.63 17.54 -64.42)",
     LCH: "lch(55.63 66.77 285.2)",
     OKLAB: "oklab(0.6231 -0.0332 -0.1851)",
     OKLCH: "oklch(0.6231 0.188 259.8)",
+    RGB: "rgb(59, 130, 246)",
   };
 
   const handleFormatChange = (newFormat: string | null) => {

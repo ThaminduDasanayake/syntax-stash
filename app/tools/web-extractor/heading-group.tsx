@@ -1,4 +1,4 @@
-export function HeadingGroup({ level, items }: { level: "h1" | "h2" | "h3"; items: string[] }) {
+export function HeadingGroup({ items, level }: { level: "h1" | "h2" | "h3"; items: string[] }) {
   if (items.length === 0) return null;
   const styles = {
     h1: "text-foreground font-semibold text-base",

@@ -4,9 +4,9 @@ import { ReactNode } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
 export function EmptyState({
-  icon = <TagIcon weight="duotone" size={22} className="text-muted-foreground" />,
   title,
   description,
+  icon = <TagIcon weight="duotone" size={22} className="text-muted-foreground" />,
 }: {
   icon?: ReactNode | null;
   title: string;

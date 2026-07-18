@@ -51,34 +51,19 @@ const groups: Group[] = [
     group: "Basic blocks",
     items: [
       {
-        icon: <ParagraphIcon />,
-        label: "Paragraph",
-        value: KEYS.p,
-      },
-      {
-        icon: <TextHOneIcon />,
-        label: "Heading 1",
-        value: "h1",
-      },
-      {
-        icon: <TextHTwoIcon />,
-        label: "Heading 2",
-        value: "h2",
-      },
-      {
-        icon: <TextHThreeIcon />,
-        label: "Heading 3",
-        value: "h3",
-      },
-      {
-        icon: <TableIcon />,
-        label: "Table",
-        value: KEYS.table,
-      },
-      {
         icon: <CodeIcon />,
         label: "Code",
         value: KEYS.codeBlock,
+      },
+      {
+        icon: <MinusIcon />,
+        label: "Divider",
+        value: KEYS.hr,
+      },
+      {
+        icon: <ParagraphIcon />,
+        label: "Paragraph",
+        value: KEYS.p,
       },
       {
         icon: <QuotesIcon />,
@@ -91,14 +76,56 @@ const groups: Group[] = [
         value: KEYS.equation,
       },
       {
-        icon: <MinusIcon />,
-        label: "Divider",
-        value: KEYS.hr,
+        icon: <TableIcon />,
+        label: "Table",
+        value: KEYS.table,
+      },
+      {
+        icon: <TextHOneIcon />,
+        label: "Heading 1",
+        value: "h1",
+      },
+      {
+        icon: <TextHThreeIcon />,
+        label: "Heading 3",
+        value: "h3",
+      },
+      {
+        icon: <TextHTwoIcon />,
+        label: "Heading 2",
+        value: "h2",
       },
     ].map((item) => ({
       ...item,
       onSelect: (editor, value) => {
         insertBlock(editor, value);
+      },
+    })),
+  },
+  {
+    group: "Inline",
+    items: [
+      {
+        focusEditor: false,
+        icon: <RadicalIcon />,
+        label: "Inline Equation",
+        value: KEYS.inlineEquation,
+      },
+      {
+        focusEditor: true,
+        icon: <TextSuperscriptIcon />,
+        label: "Footnote",
+        value: "action_footnote",
+      },
+      {
+        icon: <LinkIcon />,
+        label: "Link",
+        value: KEYS.link,
+      },
+    ].map((item) => ({
+      ...item,
+      onSelect: (editor, value) => {
+        insertInlineElement(editor, value);
       },
     })),
   },
@@ -111,14 +138,14 @@ const groups: Group[] = [
         value: KEYS.ul,
       },
       {
-        icon: <ListNumbersIcon />,
-        label: "Numbered list",
-        value: KEYS.ol,
-      },
-      {
         icon: <ListChecksIcon />,
         label: "To-do list",
         value: KEYS.listTodo,
+      },
+      {
+        icon: <ListNumbersIcon />,
+        label: "Numbered list",
+        value: KEYS.ol,
       },
     ].map((item) => ({
       ...item,
@@ -142,33 +169,6 @@ const groups: Group[] = [
       },
     })),
   },
-  {
-    group: "Inline",
-    items: [
-      {
-        icon: <LinkIcon />,
-        label: "Link",
-        value: KEYS.link,
-      },
-      {
-        focusEditor: true,
-        icon: <TextSuperscriptIcon />,
-        label: "Footnote",
-        value: "action_footnote",
-      },
-      {
-        focusEditor: false,
-        icon: <RadicalIcon />,
-        label: "Inline Equation",
-        value: KEYS.inlineEquation,
-      },
-    ].map((item) => ({
-      ...item,
-      onSelect: (editor, value) => {
-        insertInlineElement(editor, value);
-      },
-    })),
-  },
 ];
 
 export function InsertToolbarButton(props: DropdownMenuProps) {
@@ -189,7 +189,7 @@ export function InsertToolbarButton(props: DropdownMenuProps) {
       >
         {groups.map(({ group, items: nestedItems }) => (
           <ToolbarMenuGroup key={group} label={group}>
-            {nestedItems.map(({ icon, label, value, onSelect }) => (
+            {nestedItems.map(({ icon, label, onSelect, value }) => (
               <DropdownMenuItem
                 key={value}
                 className="gap-2"

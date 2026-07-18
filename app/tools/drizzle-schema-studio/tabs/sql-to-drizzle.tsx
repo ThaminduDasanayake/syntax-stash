@@ -11,8 +11,8 @@ import { SelectField } from "@/components/ui/select-field";
 import { TextareaGroup } from "@/components/ui/textarea-group";
 
 const dialectOptions = [
-  { value: "postgres", label: "PostgreSQL (pgTable)" },
-  { value: "mysql", label: "MySQL (mysqlTable)" },
+  { label: "MySQL (mysqlTable)", value: "mysql" },
+  { label: "PostgreSQL (pgTable)", value: "postgres" },
 ];
 
 export function SqlToDrizzle() {
@@ -23,7 +23,7 @@ export function SqlToDrizzle() {
     if (!sqlInput.trim()) return "";
     const tables = parseSQLTables(sqlInput);
     return generateSQLDrizzle(tables, sqlDialect);
-  }, [sqlInput, sqlDialect]);
+  }, [sqlDialect, sqlInput]);
 
   return (
     <div className="flex h-full min-h-0 w-full flex-1 flex-col space-y-6">
@@ -59,12 +59,12 @@ export function SqlToDrizzle() {
         <h3 className="mb-4 text-sm font-semibold">Supported Features</h3>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {[
-            ["Data Types", "SERIAL, INT, VARCHAR, TEXT, TIMESTAMP, BOOLEAN, UUID, JSON, and more"],
-            ["Constraints", "PRIMARY KEY, NOT NULL, UNIQUE, DEFAULT"],
-            ["Dialects", "PostgreSQL (pgTable) and MySQL (mysqlTable)"],
-            ["Multiple Tables", "Convert multiple CREATE TABLE statements at once"],
-            ["REFERENCES", "Foreign key references are noted in comments"],
             ["Clean Output", "Production-ready TypeScript with correct imports"],
+            ["Constraints", "PRIMARY KEY, NOT NULL, UNIQUE, DEFAULT"],
+            ["Convert multiple CREATE TABLE statements at once", "Multiple Tables"],
+            ["Data Types", "SERIAL, INT, VARCHAR, TEXT, TIMESTAMP, BOOLEAN, UUID, JSON, and more"],
+            ["Dialects", "PostgreSQL (pgTable) and MySQL (mysqlTable)"],
+            ["Foreign key references are noted in comments", "REFERENCES"],
           ].map(([title, desc]) => (
             <div key={title} className="bg-card border p-3">
               <p className="text-xs font-medium">{title}</p>

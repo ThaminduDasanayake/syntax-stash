@@ -424,13 +424,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   // Title & Description & Author & Language & Charset
   const title = cleanText(head.find("title").first().text()) || getMeta(head, ["og:title"]) || "";
   const description = getMeta(head, ["description", "og:description"]) || "";
-  
-  let author = getMeta(head, [
-    "article:author",
-    "author",
-    "og:article:author",
-    "twitter:creator",
-  ]);
+
+  let author = getMeta(head, ["article:author", "author", "og:article:author", "twitter:creator"]);
   if (!author) {
     author = extractAuthorFromJsonLd(jsonLd);
   }
@@ -482,8 +477,6 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     refresh: findHttpEquiv("refresh"),
     xUaCompatible: findHttpEquiv("X-UA-Compatible"),
   };
-
-
 
   // Link Classification & Deduplication
   const canonicalHref = head.find('link[rel="canonical" i]').attr("href");

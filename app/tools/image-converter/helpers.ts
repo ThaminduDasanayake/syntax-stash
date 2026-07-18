@@ -37,8 +37,8 @@ export function getTargetDimensions(img: HTMLImageElement, resize: ResizeOptions
   if (resize.mode === "percentage") {
     const scale = resize.percentage / 100;
     return {
-      width: Math.max(1, Math.round(img.naturalWidth * scale)),
       height: Math.max(1, Math.round(img.naturalHeight * scale)),
+      width: Math.max(1, Math.round(img.naturalWidth * scale)),
     };
   }
   if (resize.mode === "custom") {
@@ -46,22 +46,22 @@ export function getTargetDimensions(img: HTMLImageElement, resize: ResizeOptions
     const h = resize.height || img.naturalHeight;
     if (resize.lockAspectRatio) {
       const aspect = img.naturalWidth / img.naturalHeight;
-      if (resize.width && !resize.height) return { width: w, height: Math.round(w / aspect) };
-      if (resize.height && !resize.width) return { width: Math.round(h * aspect), height: h };
-      if (resize.width && resize.height) return { width: w, height: Math.round(w / aspect) };
+      if (resize.width && !resize.height) return { height: Math.round(w / aspect), width: w };
+      if (resize.height && !resize.width) return { height: h, width: Math.round(h * aspect) };
+      if (resize.width && resize.height) return { height: Math.round(w / aspect), width: w };
     }
-    return { width: w, height: h };
+    return { height: h, width: w };
   }
-  return { width: img.naturalWidth, height: img.naturalHeight };
+  return { height: img.naturalHeight, width: img.naturalWidth };
 }
 
 export async function encodeGif(
   canvas: HTMLCanvasElement,
   options: FormatOptionsMap["gif"],
 ): Promise<Blob> {
-  const { GIFEncoder, quantize, applyPalette } = await import("gifenc");
+  const { applyPalette, GIFEncoder, quantize } = await import("gifenc");
   const ctx = canvas.getContext("2d")!;
-  const { width, height } = canvas;
+  const { height, width } = canvas;
   const imageData = ctx.getImageData(0, 0, width, height);
   const palette = quantize(imageData.data, options.maxColours, { format: options.quantization });
   const index = applyPalette(imageData.data, palette, options.quantization);
@@ -76,7 +76,7 @@ export async function encodeBmp(
   options: FormatOptionsMap["bmp"],
 ): Promise<Blob> {
   const ctx = canvas.getContext("2d")!;
-  const { width, height } = canvas;
+  const { height, width } = canvas;
   const imageData = ctx.getImageData(0, 0, width, height);
   const { data } = imageData;
   const bpp = options.bitDepth;
@@ -197,7 +197,7 @@ export async function encodeIcns(
     const resized = document.createElement("canvas");
     resized.width = resized.height = size;
     resized.getContext("2d")!.drawImage(canvas, 0, 0, size, size);
-    entries.push({ type, data: await (await canvasToBlob(resized, "image/png")).arrayBuffer() });
+    entries.push({ data: await (await canvasToBlob(resized, "image/png")).arrayBuffer(), type });
   }
 
   const totalDataSize = entries.reduce((sum, e) => sum + 8 + e.data.byteLength, 0);

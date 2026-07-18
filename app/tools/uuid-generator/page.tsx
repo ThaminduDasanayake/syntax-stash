@@ -46,9 +46,9 @@ export default function UUIDGeneratorPage() {
   const allText = formatted.join("\n");
 
   const versionOptions = [
-    { value: "v4", label: "v4 — Random" },
-    { value: "v7", label: "v7 — Time-ordered (RFC 9562)" },
-    { value: "nil", label: "NIL — All zeros" },
+    { label: "NIL — All zeros", value: "nil" },
+    { label: "v4 — Random", value: "v4" },
+    { label: "v7 — Time-ordered (RFC 9562)", value: "v7" },
   ];
 
   const tool = internalTools.find((t) => t.slug === "uuid-generator");

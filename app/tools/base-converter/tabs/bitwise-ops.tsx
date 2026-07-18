@@ -85,12 +85,12 @@ export default function BitwiseOps() {
     const safe = clamp(result);
 
     return {
+      binary: "0b" + toBin(safe),
       decimal: toDec(safe),
       hex: "0x" + toHex(safe),
-      binary: "0b" + toBin(safe),
       octal: "0o" + toOct(safe),
     };
-  }, [bitwiseA, bitwiseB, selectedOp, baseA, baseB]);
+  }, [baseA, baseB, bitwiseA, bitwiseB, selectedOp]);
 
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -173,7 +173,7 @@ export default function BitwiseOps() {
               </span>
             </p>
             <div className="space-y-3">
-              {(["decimal", "hex", "binary", "octal"] as const).map((fmt) => (
+              {(["binary", "decimal", "hex", "octal"] as const).map((fmt) => (
                 <div key={fmt} className="flex items-center justify-between gap-2">
                   <Label className="text-muted-foreground w-16 shrink-0 capitalize">{fmt}</Label>
                   <code className="flex-1 truncate font-mono text-sm">{bitwiseResult[fmt]}</code>

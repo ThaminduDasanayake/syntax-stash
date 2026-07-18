@@ -89,8 +89,8 @@ export const Editor = ({
   className,
   disabled,
   focused,
-  variant,
   ref,
+  variant,
   ...props
 }: EditorProps & { ref?: React.RefObject<HTMLDivElement | null> }) => (
   <PlateContent

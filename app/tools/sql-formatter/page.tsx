@@ -13,12 +13,12 @@ import { internalTools } from "@/lib/tools-data";
 type SqlDialect = "sql" | "mysql" | "postgresql" | "sqlite" | "bigquery" | "transactsql";
 
 const DIALECTS: { value: SqlDialect; label: string }[] = [
-  { value: "sql", label: "Standard SQL" },
-  { value: "mysql", label: "MySQL" },
-  { value: "postgresql", label: "PostgreSQL" },
-  { value: "sqlite", label: "SQLite" },
-  { value: "bigquery", label: "BigQuery" },
-  { value: "transactsql", label: "T-SQL (MSSQL)" },
+  { label: "BigQuery", value: "bigquery" },
+  { label: "MySQL", value: "mysql" },
+  { label: "PostgreSQL", value: "postgresql" },
+  { label: "SQLite", value: "sqlite" },
+  { label: "Standard SQL", value: "sql" },
+  { label: "T-SQL (MSSQL)", value: "transactsql" },
 ];
 
 const PLACEHOLDER =
@@ -44,7 +44,7 @@ export default function SqlFormatterPage() {
       .then(({ format }) => {
         if (!isMounted) return;
         try {
-          const result = format(input, { language: dialect, keywordCase: "upper", tabWidth: 2 });
+          const result = format(input, { keywordCase: "upper", language: dialect, tabWidth: 2 });
           setOutput(result);
           setError(null);
         } catch (e) {
@@ -59,7 +59,7 @@ export default function SqlFormatterPage() {
     return () => {
       isMounted = false;
     };
-  }, [input, dialect]);
+  }, [dialect, input]);
 
   const tool = internalTools.find((t) => t.slug === "sql-formatter");
 

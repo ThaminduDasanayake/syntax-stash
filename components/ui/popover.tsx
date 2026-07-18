@@ -14,8 +14,8 @@ function PopoverTrigger({ ...props }: React.ComponentProps<typeof PopoverPrimiti
 }
 
 function PopoverContent({
-  className,
   align = "center",
+  className,
   sideOffset = 4,
   ...props
 }: React.ComponentProps<typeof PopoverPrimitive.Content>) {

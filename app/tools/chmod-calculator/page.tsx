@@ -15,8 +15,8 @@ import { internalTools } from "@/lib/tools-data";
 // bit 5 = group read, 4 = group write, 3 = group exec
 // bit 2 = other read, 1 = other write, 0 = other exec
 
-const GROUPS = ["Owner", "Group", "Other"] as const;
-const PERMS = ["Read", "Write", "Execute"] as const;
+const GROUPS = ["Group", "Other", "Owner"] as const;
+const PERMS = ["Execute", "Read", "Write"] as const;
 const PERM_CHARS = ["r", "w", "x"] as const;
 
 // Bit position for [group][perm]: Owner-Read = bit 8, Owner-Write = bit 7, ..., Other-Exec = bit 0
@@ -25,11 +25,11 @@ function bitIndex(groupIdx: number, permIdx: number): number {
 }
 
 const PRESETS: { label: string; bits: number }[] = [
-  { label: "644", bits: 0o644 },
-  { label: "755", bits: 0o755 },
-  { label: "777", bits: 0o777 },
-  { label: "600", bits: 0o600 },
-  { label: "400", bits: 0o400 },
+  { bits: 0o400, label: "400" },
+  { bits: 0o600, label: "600" },
+  { bits: 0o644, label: "644" },
+  { bits: 0o755, label: "755" },
+  { bits: 0o777, label: "777" },
 ];
 
 function symbolicToBits(sym: string): number | null {
@@ -80,7 +80,7 @@ export default function ChmodCalculatorPage() {
     const ls = `-${symbolic}`;
     const human = humanReadable(bits);
     const command = `chmod ${octal} <file>`;
-    return { octal, symbolic, ls, human, command };
+    return { command, human, ls, octal, symbolic };
   }, [bits]);
 
   function toggleBit(groupIdx: number, permIdx: number) {

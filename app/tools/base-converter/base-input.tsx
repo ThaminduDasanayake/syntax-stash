@@ -8,7 +8,7 @@ interface InputCardProps {
   onChange: (raw: string) => void;
   placeholder?: string;
 }
-const BaseInput = ({ label, prefix, value, onChange, placeholder }: InputCardProps) => {
+const BaseInput = ({ label, onChange, placeholder, prefix, value }: InputCardProps) => {
   return (
     <Card className="focus-within:border-primary/50 transition-colors">
       <CardContent className="p-4">

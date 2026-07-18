@@ -40,7 +40,7 @@ export default function PlaceholderGeneratorPage() {
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(displayText, width / 2, height / 2);
-  }, [width, height, bgColor, textColor, displayText]);
+  }, [bgColor, displayText, height, textColor, width]);
 
   function handleDownload() {
     const canvas = canvasRef.current;

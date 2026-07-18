@@ -9,14 +9,14 @@ import { LinkFloatingToolbar } from "@/components/plate-ui/link-toolbar";
 export const LinkKit = [
   LinkPlugin.configure({
     inputRules: [
-      LinkRules.markdown(),
+      LinkRules.autolink({ variant: "break" }),
       LinkRules.autolink({ variant: "paste" }),
       LinkRules.autolink({ variant: "space" }),
-      LinkRules.autolink({ variant: "break" }),
+      LinkRules.markdown(),
     ],
     render: {
-      node: LinkElement,
       afterEditable: () => <LinkFloatingToolbar />,
+      node: LinkElement,
     },
   }),
 ];

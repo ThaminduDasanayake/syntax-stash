@@ -44,18 +44,18 @@ export function computeDiff(
   while (i > 0 || j > 0) {
     if (i > 0 && j > 0 && aKeys[i - 1] === bKeys[j - 1]) {
       result.push({
-        type: "unchanged",
         content: aLines[i - 1],
-        oldLineNum: oldNum--,
         newLineNum: newNum--,
+        oldLineNum: oldNum--,
+        type: "unchanged",
       });
       i--;
       j--;
     } else if (j > 0 && (i === 0 || table[i][j - 1] >= table[i - 1][j])) {
-      result.push({ type: "added", content: bLines[j - 1], newLineNum: newNum-- });
+      result.push({ content: bLines[j - 1], newLineNum: newNum--, type: "added" });
       j--;
     } else {
-      result.push({ type: "removed", content: aLines[i - 1], oldLineNum: oldNum-- });
+      result.push({ content: aLines[i - 1], oldLineNum: oldNum--, type: "removed" });
       i--;
     }
   }
@@ -84,25 +84,25 @@ export function buildSideColumns(lines: DiffLine[]): { left: SideLine[]; right: 
   while (i < lines.length) {
     const line = lines[i];
     if (line.type === "unchanged") {
-      left.push({ line, key: `u-${i}` });
-      right.push({ line, key: `u-${i}` });
+      left.push({ key: `u-${i}`, line });
+      right.push({ key: `u-${i}`, line });
       i++;
     } else if (line.type === "removed") {
       // check if next line is added (a modification pair)
       const next = lines[i + 1];
       if (next?.type === "added") {
-        left.push({ line, key: `r-${i}` });
-        right.push({ line: next, key: `a-${i + 1}` });
+        left.push({ key: `r-${i}`, line });
+        right.push({ key: `a-${i + 1}`, line: next });
         i += 2;
       } else {
-        left.push({ line, key: `r-${i}` });
-        right.push({ line: null, key: `empty-r-${i}` });
+        left.push({ key: `r-${i}`, line });
+        right.push({ key: `empty-r-${i}`, line: null });
         i++;
       }
     } else {
       // added without a preceding removed
-      left.push({ line: null, key: `empty-a-${i}` });
-      right.push({ line, key: `a-${i}` });
+      left.push({ key: `empty-a-${i}`, line: null });
+      right.push({ key: `a-${i}`, line });
       i++;
     }
   }

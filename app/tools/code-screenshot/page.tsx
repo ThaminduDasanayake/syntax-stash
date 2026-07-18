@@ -62,8 +62,8 @@ export default function CodeScreenshotPage() {
     setExportError(null);
     try {
       const dataUrl = await toPng(exportRef.current, {
-        pixelRatio: 2,
         cacheBust: true,
+        pixelRatio: 2,
       });
       const a = document.createElement("a");
       a.href = dataUrl;
@@ -133,7 +133,7 @@ export default function CodeScreenshotPage() {
           <div className="space-y-4">
             <SelectField
               label="Language"
-              options={LANGUAGES.map((lang) => ({ value: lang, label: lang }))}
+              options={LANGUAGES.map((lang) => ({ label: lang, value: lang }))}
               value={language}
               onValueChange={(v) => v && setLanguage(v)}
             />
@@ -212,8 +212,8 @@ function escapeHtml(s: string): string {
 
 function ShikiRender({
   html,
-  showLineNumbers,
   lineCount,
+  showLineNumbers,
 }: {
   html: string;
   showLineNumbers: boolean;

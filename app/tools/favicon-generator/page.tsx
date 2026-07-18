@@ -46,9 +46,9 @@ export default function FaviconGeneratorPage() {
   const [genError, setGenError] = useState<string | null>(null);
   const [appName, setAppName] = useState("My App");
   const [opts, setOpts] = useState<RenderOptions>({
-    padding: 0,
-    fillBackground: false,
     backgroundColor: "#ffffff",
+    fillBackground: false,
+    padding: 0,
   });
 
   const genRef = useRef(0);
@@ -124,7 +124,7 @@ export default function FaviconGeneratorPage() {
       return new Map();
     });
     setSourceImg(null);
-    setOpts({ padding: 0, fillBackground: false, backgroundColor: "#ffffff" });
+    setOpts({ backgroundColor: "#ffffff", fillBackground: false, padding: 0 });
     setAppName("My App");
   };
 
@@ -133,7 +133,7 @@ export default function FaviconGeneratorPage() {
 
   const allCards = [
     ...OUTPUT_SIZES,
-    { size: 32, filename: "favicon.ico", label: "favicon.ico (16/32/48)" },
+    { filename: "favicon.ico", label: "favicon.ico (16/32/48)", size: 32 },
   ];
 
   return (
@@ -141,7 +141,7 @@ export default function FaviconGeneratorPage() {
       <div className="space-y-6">
         <FileDropzone
           onFileDropAction={handleFile}
-          accept={buildAcceptMap([".png", ".jpg", ".jpeg", ".svg", ".webp"])}
+          accept={buildAcceptMap([".jpeg", ".jpg", ".png", ".svg", ".webp"])}
           label={
             <>
               <p className="text-foreground font-medium">
@@ -209,7 +209,7 @@ export default function FaviconGeneratorPage() {
                   Preview &amp; Download
                 </p>
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-8">
-                  {allCards.map(({ size, filename, label }) => {
+                  {allCards.map(({ filename, label, size }) => {
                     const entry = outputs.get(filename);
                     const displaySize = Math.min(size, 64);
                     return (
@@ -219,7 +219,7 @@ export default function FaviconGeneratorPage() {
                       >
                         <div
                           className="flex items-center justify-center rounded"
-                          style={{ width: 64, height: 64, ...CHECKERBOARD }}
+                          style={{ height: 64, width: 64, ...CHECKERBOARD }}
                         >
                           {entry && (
                             // eslint-disable-next-line @next/next/no-img-element

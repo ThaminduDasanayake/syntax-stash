@@ -111,7 +111,7 @@ export function Converter() {
       const bitIndex = BITS - 1 - i;
       syncFrom(value ^ (1 << bitIndex));
     },
-    [value, syncFrom],
+    [syncFrom, value],
   );
 
   const signed = toSigned(value);
@@ -207,11 +207,11 @@ export function Converter() {
           {/* Nibble labels */}
           <div className="mt-2 flex flex-wrap gap-3 text-xs">
             {[
-              { label: "bits 15–12", color: "bg-red-500" },
-              { label: "bits 11–8", color: "bg-orange-500" },
-              { label: "bits 7–4", color: "bg-yellow-500" },
-              { label: "bits 3–0", color: "bg-green-500" },
-            ].map(({ label, color }) => (
+              { color: "bg-green-500", label: "bits 3–0" },
+              { color: "bg-orange-500", label: "bits 11–8" },
+              { color: "bg-red-500", label: "bits 15–12" },
+              { color: "bg-yellow-500", label: "bits 7–4" },
+            ].map(({ color, label }) => (
               <span key={label} className="text-muted-foreground flex items-center gap-1">
                 <span className={`inline-block h-2 w-2 ${color}`} />
                 {label}

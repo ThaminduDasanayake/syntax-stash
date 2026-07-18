@@ -16,7 +16,7 @@ function analyze(text: string): AnalyzerMetrics {
   const sentences = trimmed ? text.split(/[.!?]+/).filter((s) => s.trim().length > 0).length : 0;
   const bytes = new Blob([text]).size;
   const tokens = chars > 0 ? Math.ceil(chars / 4) : 0;
-  return { chars, words, sentences, bytes, tokens };
+  return { bytes, chars, sentences, tokens, words };
 }
 
 function formatReadingTime(words: number): string {
@@ -67,15 +67,15 @@ export default function AnalyzerPage() {
   const speakingTime = useMemo(() => formatSpeakingTime(metrics.words), [metrics.words]);
 
   const stats: AnalyzerStat[] = [
-    { label: "Characters", value: metrics.chars },
-    { label: "Words", value: metrics.words },
-    { label: "Sentences", value: metrics.sentences },
-    { label: "Bytes", value: metrics.bytes, hint: "UTF-8 size" },
     {
+      hint: "chars ÷ 4 heuristic",
       label: "Est. Tokens",
       value: metrics.tokens,
-      hint: "chars ÷ 4 heuristic",
     },
+    { hint: "UTF-8 size", label: "Bytes", value: metrics.bytes },
+    { label: "Characters", value: metrics.chars },
+    { label: "Sentences", value: metrics.sentences },
+    { label: "Words", value: metrics.words },
   ];
 
   const tool = internalTools.find((t) => t.slug === "text-analyzer");

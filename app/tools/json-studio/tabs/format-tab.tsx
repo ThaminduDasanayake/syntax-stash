@@ -24,7 +24,7 @@ export function FormatTab({ input }: { input: string }) {
         output: mode === "format" ? JSON.stringify(parsed, null, 2) : JSON.stringify(parsed),
       };
     } catch (e) {
-      return { ok: false, error: e instanceof Error ? e.message : "Invalid JSON" };
+      return { error: e instanceof Error ? e.message : "Invalid JSON", ok: false };
     }
   }, [input, mode]);
 

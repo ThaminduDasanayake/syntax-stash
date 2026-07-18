@@ -87,7 +87,7 @@ export function parseSmartBlocks(text: string): ParsedData | null {
     } catch {
       // keep original text even if parsing fails
     }
-    items.push({ originalText: el, data });
+    items.push({ data, originalText: el });
   }
 
   return { items, keys: Array.from(keySet) };

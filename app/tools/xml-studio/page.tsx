@@ -202,8 +202,8 @@ function jsonToXml(json: string, indent: number): string {
 }
 
 const INDENT_OPTIONS = [
-  { value: "2", label: "2 spaces" },
-  { value: "4", label: "4 spaces" },
+  { label: "2 spaces", value: "2" },
+  { label: "4 spaces", value: "4" },
 ];
 
 export default function XmlStudioPage() {
@@ -211,17 +211,17 @@ export default function XmlStudioPage() {
   const [input, setInput] = useState(XML_EXAMPLE);
   const [indent, setIndent] = useState<Indent>("2");
 
-  const { output, error } = useMemo<{ output: string; error: string }>(() => {
-    if (!input.trim()) return { output: "", error: "" };
+  const { error, output } = useMemo<{ output: string; error: string }>(() => {
+    if (!input.trim()) return { error: "", output: "" };
     try {
       const indentNum = parseInt(indent);
-      if (mode === "format") return { output: formatXML(input, indentNum), error: "" };
-      if (mode === "xml-to-json") return { output: xmlToJson(input, indentNum), error: "" };
-      return { output: jsonToXml(input, indentNum), error: "" };
+      if (mode === "format") return { error: "", output: formatXML(input, indentNum) };
+      if (mode === "xml-to-json") return { error: "", output: xmlToJson(input, indentNum) };
+      return { error: "", output: jsonToXml(input, indentNum) };
     } catch (e) {
-      return { output: "", error: (e as Error).message };
+      return { error: (e as Error).message, output: "" };
     }
-  }, [input, indent, mode]);
+  }, [indent, input, mode]);
 
   const handleModeChange = (m: Mode) => {
     setMode(m);

@@ -61,20 +61,20 @@ export default function YAMLJSONConverterPage() {
 
   const isYamlToJson = direction === "yaml-to-json";
 
-  const { output, error } = useMemo<{ output: string; error: string }>(() => {
-    if (!input.trim()) return { output: "", error: "" };
+  const { error, output } = useMemo<{ output: string; error: string }>(() => {
+    if (!input.trim()) return { error: "", output: "" };
     try {
       if (isYamlToJson) {
         const parsed = YAML.parse(input);
-        return { output: JSON.stringify(parsed, null, parseInt(indent)), error: "" };
+        return { error: "", output: JSON.stringify(parsed, null, parseInt(indent)) };
       } else {
         const parsed = JSON.parse(input);
-        return { output: YAML.stringify(parsed, null, { indent: parseInt(indent) }), error: "" };
+        return { error: "", output: YAML.stringify(parsed, null, { indent: parseInt(indent) }) };
       }
     } catch (e) {
-      return { output: "", error: (e as Error).message };
+      return { error: (e as Error).message, output: "" };
     }
-  }, [input, indent, isYamlToJson]);
+  }, [indent, input, isYamlToJson]);
 
   const handleDirectionChange = (d: string) => {
     const newDir = d as Direction;
@@ -88,8 +88,8 @@ export default function YAMLJSONConverterPage() {
   };
 
   const indentOptions = [
-    { value: "2", label: "2 spaces" },
-    { value: "4", label: "4 spaces" },
+    { label: "2 spaces", value: "2" },
+    { label: "4 spaces", value: "4" },
   ];
 
   const tool = internalTools.find((t) => t.slug === "yaml-json-converter");

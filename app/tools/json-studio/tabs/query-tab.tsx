@@ -14,15 +14,15 @@ import { InputField } from "@/components/ui/input-field";
 import { TextareaGroup } from "@/components/ui/textarea-group";
 
 const EXAMPLES = [
-  { label: "All book titles", query: "$.store.book[*].title" },
   { label: "All authors", query: "$.store.book[*].author" },
-  { label: "Books in stock", query: "$.store.book[?(@.inStock==true)]" },
-  { label: "Books cheaper than $10", query: "$.store.book[?(@.price < 10)]" },
-  { label: "Books with an ISBN", query: "$.store.book[?(@.isbn)]" },
+  { label: "All book titles", query: "$.store.book[*].title" },
+  { label: "All leaf values", query: "$..*" },
   { label: "All prices (recursive)", query: "$..price" },
+  { label: "Books cheaper than $10", query: "$.store.book[?(@.price < 10)]" },
+  { label: "Books in stock", query: "$.store.book[?(@.inStock==true)]" },
+  { label: "Books with an ISBN", query: "$.store.book[?(@.isbn)]" },
   { label: "First book", query: "$.store.book[0]" },
   { label: "Last book", query: "$.store.book[-1:]" },
-  { label: "All leaf values", query: "$..*" },
   { label: "Root", query: "$" },
 ];
 
@@ -30,15 +30,15 @@ const CHEATSHEET: [string, string][] = [
   ["$", "Root element"],
   [".", "Child operator"],
   ["..", "Recursive descent"],
-  ["*", "Wildcard — all elements"],
-  ["[n]", "Array index (0-based)"],
-  ["[-1:]", "Last element"],
   ["[0:3]", "Slice (items 0, 1, 2)"],
-  ["[*]", "All array items"],
-  ["[?(@.key)]", "Filter — key exists"],
-  ["[?(@.n > 10)]", "Filter — numeric comparison"],
-  ["[?(@.s == 'x')]", "Filter — string match"],
   ["[?(!@.key)]", "Filter — key absent"],
+  ["[?(@.key)]", "Filter — key exists"],
+  ["[?(@.s == 'x')]", "Filter — string match"],
+  ["[*]", "All array items"],
+  ["[-1:]", "Last element"],
+  ["[?(@.n > 10)]", "Filter — numeric comparison"],
+  ["[n]", "Array index (0-based)"],
+  ["*", "Wildcard — all elements"],
 ];
 
 type QueryResult =
@@ -53,7 +53,7 @@ type Props = {
   onQueryChangeAction: (q: string) => void;
 };
 
-export function QueryTab({ input, query, onQueryChangeAction }: Props) {
+export function QueryTab({ input, onQueryChangeAction, query }: Props) {
   const result = useMemo<QueryResult>(() => {
     const trimmedPayload = input.trim();
     const trimmedQuery = query.trim();
@@ -64,22 +64,22 @@ export function QueryTab({ input, query, onQueryChangeAction }: Props) {
     try {
       parsed = JSON.parse(trimmedPayload);
     } catch (e) {
-      return { status: "json_error", message: e instanceof Error ? e.message : "Invalid JSON" };
+      return { message: e instanceof Error ? e.message : "Invalid JSON", status: "json_error" };
     }
 
     if (!trimmedQuery) return { status: "idle" };
 
     try {
-      const matches = JSONPath({ path: trimmedQuery, json: parsed as object });
+      const matches = JSONPath({ json: parsed as object, path: trimmedQuery });
       return {
-        status: "ok",
-        output: JSON.stringify(matches, null, 2),
         count: Array.isArray(matches) ? matches.length : 1,
+        output: JSON.stringify(matches, null, 2),
+        status: "ok",
       };
     } catch (e) {
       return {
-        status: "query_error",
         message: e instanceof Error ? e.message : "Invalid JSONPath query",
+        status: "query_error",
       };
     }
   }, [input, query]);

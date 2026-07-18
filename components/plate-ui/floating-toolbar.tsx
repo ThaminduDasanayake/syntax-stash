@@ -36,11 +36,11 @@ export function FloatingToolbar({
     ...state,
     floatingOptions: {
       middleware: [
-        offset(12),
         flip({
-          fallbackPlacements: ["top-start", "top-end", "bottom-start", "bottom-end"],
+          fallbackPlacements: ["bottom-end", "bottom-start", "top-end", "top-start"],
           padding: 12,
         }),
+        offset(12),
       ],
       placement: "top",
       ...state?.floatingOptions,

@@ -15,7 +15,7 @@ export function parseJson(
   try {
     return { ok: true, value: JSON.parse(input) };
   } catch (e) {
-    return { ok: false, error: e instanceof Error ? e.message : "Invalid JSON" };
+    return { error: e instanceof Error ? e.message : "Invalid JSON", ok: false };
   }
 }
 

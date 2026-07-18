@@ -35,9 +35,6 @@ const selectBlockquoteStart = (editor: PlateEditor, path: Path) => {
 };
 
 const insertBlockMap: Record<string, (editor: PlateEditor, type: string) => void> = {
-  [KEYS.listTodo]: insertList,
-  [KEYS.ol]: insertList,
-  [KEYS.ul]: insertList,
   [KEYS.codeBlock]: (editor) => insertCodeBlock(editor, { select: true }),
   [KEYS.equation]: (editor) => insertEquation(editor, { select: true }),
   [KEYS.img]: (editor) =>
@@ -45,7 +42,10 @@ const insertBlockMap: Record<string, (editor: PlateEditor, type: string) => void
       select: true,
       type: KEYS.img,
     }),
+  [KEYS.listTodo]: insertList,
+  [KEYS.ol]: insertList,
   [KEYS.table]: (editor) => editor.getTransforms(TablePlugin).insert.table({}, { select: true }),
+  [KEYS.ul]: insertList,
 };
 
 const insertInlineMap: Record<string, (editor: PlateEditor, type: string) => void> = {
@@ -130,10 +130,10 @@ const setBlockMap: Record<
   string,
   (editor: PlateEditor, type: string, entry: NodeEntry<TElement>) => void
 > = {
+  [KEYS.codeBlock]: (editor) => toggleCodeBlock(editor),
   [KEYS.listTodo]: setList,
   [KEYS.ol]: setList,
   [KEYS.ul]: setList,
-  [KEYS.codeBlock]: (editor) => toggleCodeBlock(editor),
 };
 
 export const setBlockType = (editor: PlateEditor, type: string, { at }: { at?: Path } = {}) => {
@@ -157,7 +157,7 @@ export const setBlockType = (editor: PlateEditor, type: string, { at }: { at?: P
       const [node, path] = entry;
 
       if (node[KEYS.listType]) {
-        editor.tf.unsetNodes([KEYS.listType, "indent"], { at: path });
+        editor.tf.unsetNodes(["indent", KEYS.listType], { at: path });
       }
       if (type in setBlockMap) {
         return setBlockMap[type](editor, type, entry);

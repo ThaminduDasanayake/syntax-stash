@@ -5,11 +5,11 @@ export function makeService(templateId: string): Service {
   const tpl = SERVICE_TEMPLATES.find((t) => t.id === templateId) ?? SERVICE_TEMPLATES[0];
   return {
     id: crypto.randomUUID(),
-    templateId: tpl.id,
-    name: tpl.id,
-    image: tpl.image,
-    ports: tpl.defaultPorts.map((p) => ({ ...p })),
     env: tpl.defaultEnv.map((e) => ({ ...e })),
+    image: tpl.image,
+    name: tpl.id,
+    ports: tpl.defaultPorts.map((p) => ({ ...p })),
+    templateId: tpl.id,
     volumes: tpl.defaultVolumes.map((v) => ({ ...v })),
   };
 }
@@ -120,44 +120,44 @@ export function tokenize(raw: string): string[] {
 
 export function extractValue(token: string, rest: string[]): [string, number] {
   const eq = token.indexOf("=");
-  if (eq !== -1) return [token.slice(eq + 1), 0];
-  return [rest[0] ?? "", 1];
+  if (eq !== -1) return [0, token.slice(eq + 1)];
+  return [1, rest[0] ?? ""];
 }
 
 export function parseDockerRun(cmd: string): ParseResult {
   const raw = cmd.trim();
-  if (!raw) return { ok: false, error: "No command entered." };
+  if (!raw) return { error: "No command entered.", ok: false };
 
   const tokens = tokenize(raw);
   let i = 0;
 
   if (tokens[i] === "docker") i++;
   if (tokens[i] !== "run")
-    return { ok: false, error: `Expected "docker run", got "${tokens[i] ?? "(empty)"}"` };
+    return { error: `Expected "docker run", got "${tokens[i] ?? "(empty)"}"`, ok: false };
   i++;
 
   const svc: DockerService = {
-    name: "",
-    image: "",
-    ports: [],
-    volumes: [],
-    environment: [],
-    network: "",
-    restart: "",
-    detach: false,
-    rm: false,
-    tty: false,
-    privileged: false,
-    user: "",
-    workdir: "",
-    hostname: "",
-    entrypoint: "",
-    command: [],
-    labels: [],
     capAdd: [],
     capDrop: [],
-    memLimit: "",
+    command: [],
     cpuShares: "",
+    detach: false,
+    entrypoint: "",
+    environment: [],
+    hostname: "",
+    image: "",
+    labels: [],
+    memLimit: "",
+    name: "",
+    network: "",
+    ports: [],
+    privileged: false,
+    restart: "",
+    rm: false,
+    tty: false,
+    user: "",
+    volumes: [],
+    workdir: "",
   };
 
   while (i < tokens.length) {
@@ -187,94 +187,94 @@ export function parseDockerRun(cmd: string): ParseResult {
 
     const valueFlagMap: Array<[RegExp, (v: string) => void]> = [
       [
-        /^--name(?:=|$)/,
-        (v) => {
-          svc.name = v;
-        },
-      ],
-      [
-        /^(?:-p|--publish)(?:=|$)/,
-        (v) => {
-          svc.ports.push(v);
-        },
-      ],
-      [
-        /^(?:-v|--volume)(?:=|$)/,
-        (v) => {
-          svc.volumes.push(v);
-        },
-      ],
-      [
-        /^(?:-e|--env)(?:=|$)/,
-        (v) => {
-          svc.environment.push(v);
-        },
-      ],
-      [
-        /^--network(?:=|$)/,
-        (v) => {
-          svc.network = v;
-        },
-      ],
-      [
-        /^--restart(?:=|$)/,
-        (v) => {
-          svc.restart = v;
-        },
-      ],
-      [
-        /^(?:-u|--user)(?:=|$)/,
-        (v) => {
-          svc.user = v;
-        },
-      ],
-      [
-        /^(?:-w|--workdir)(?:=|$)/,
-        (v) => {
-          svc.workdir = v;
-        },
-      ],
-      [
-        /^(?:-h|--hostname)(?:=|$)/,
-        (v) => {
-          svc.hostname = v;
-        },
-      ],
-      [
-        /^--entrypoint(?:=|$)/,
-        (v) => {
-          svc.entrypoint = v;
-        },
-      ],
-      [
-        /^(?:-l|--label)(?:=|$)/,
-        (v) => {
-          svc.labels.push(v);
-        },
-      ],
-      [
-        /^--cap-add(?:=|$)/,
         (v) => {
           svc.capAdd.push(v);
         },
+        /^--cap-add(?:=|$)/,
       ],
       [
-        /^--cap-drop(?:=|$)/,
         (v) => {
           svc.capDrop.push(v);
         },
+        /^--cap-drop(?:=|$)/,
       ],
       [
-        /^(?:-m|--memory)(?:=|$)/,
-        (v) => {
-          svc.memLimit = v;
-        },
-      ],
-      [
-        /^--cpu-shares(?:=|$)/,
         (v) => {
           svc.cpuShares = v;
         },
+        /^--cpu-shares(?:=|$)/,
+      ],
+      [
+        (v) => {
+          svc.entrypoint = v;
+        },
+        /^--entrypoint(?:=|$)/,
+      ],
+      [
+        (v) => {
+          svc.environment.push(v);
+        },
+        /^(?:-e|--env)(?:=|$)/,
+      ],
+      [
+        (v) => {
+          svc.hostname = v;
+        },
+        /^(?:-h|--hostname)(?:=|$)/,
+      ],
+      [
+        (v) => {
+          svc.labels.push(v);
+        },
+        /^(?:-l|--label)(?:=|$)/,
+      ],
+      [
+        (v) => {
+          svc.memLimit = v;
+        },
+        /^(?:-m|--memory)(?:=|$)/,
+      ],
+      [
+        (v) => {
+          svc.name = v;
+        },
+        /^--name(?:=|$)/,
+      ],
+      [
+        (v) => {
+          svc.network = v;
+        },
+        /^--network(?:=|$)/,
+      ],
+      [
+        (v) => {
+          svc.ports.push(v);
+        },
+        /^(?:-p|--publish)(?:=|$)/,
+      ],
+      [
+        (v) => {
+          svc.restart = v;
+        },
+        /^--restart(?:=|$)/,
+      ],
+      [
+        (v) => {
+          svc.user = v;
+        },
+        /^(?:-u|--user)(?:=|$)/,
+      ],
+      [
+        (v) => {
+          svc.volumes.push(v);
+        },
+        /^(?:-v|--volume)(?:=|$)/,
+      ],
+      [
+        (v) => {
+          svc.workdir = v;
+        },
+        /^(?:-w|--workdir)(?:=|$)/,
       ],
     ];
 
@@ -302,7 +302,7 @@ export function parseDockerRun(cmd: string): ParseResult {
     break;
   }
 
-  if (!svc.image) return { ok: false, error: "Could not find an image name in the command." };
+  if (!svc.image) return { error: "Could not find an image name in the command.", ok: false };
   return { ok: true, service: svc };
 }
 
@@ -317,11 +317,11 @@ export function deriveServiceName(image: string): string {
 export function generateCompose(svc: DockerService): string {
   const serviceName = svc.name || deriveServiceName(svc.image);
   const lines: string[] = [
-    `version: "3.8"`,
     "",
-    "services:",
+    `version: "3.8"`,
     indent(1, `${serviceName}:`),
     indent(2, `image: ${svc.image}`),
+    "services:",
   ];
 
   if (svc.hostname) lines.push(indent(2, `hostname: ${svc.hostname}`));

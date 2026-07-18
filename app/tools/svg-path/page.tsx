@@ -32,15 +32,15 @@ export default function SvgPathViewerPage() {
   const viewBoxValue = `0 0 ${viewBoxWidth} ${viewBoxHeight}`;
 
   const STROKE_LINECAP = [
-    { value: "butt", label: "Butt" },
-    { value: "round", label: "Round" },
-    { value: "square", label: "Square" },
+    { label: "Butt", value: "butt" },
+    { label: "Round", value: "round" },
+    { label: "Square", value: "square" },
   ];
 
   const STROKE_LINEJOIN = [
-    { value: "miter", label: "Miter" },
-    { value: "round", label: "Round" },
-    { value: "bevel", label: "Bevel" },
+    { label: "Bevel", value: "bevel" },
+    { label: "Miter", value: "miter" },
+    { label: "Round", value: "round" },
   ];
 
   const isValidPath = pathData.trim().length > 0;
@@ -181,10 +181,10 @@ ${showBackground ? `  <rect width="100%" height="100%" fill="${bgColor}" rx="${b
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox={viewBoxValue}
                 style={{
-                  maxWidth: "400px",
-                  maxHeight: "400px",
-                  width: "100%",
                   height: "auto",
+                  maxHeight: "400px",
+                  maxWidth: "400px",
+                  width: "100%",
                 }}
               >
                 {showBackground && (

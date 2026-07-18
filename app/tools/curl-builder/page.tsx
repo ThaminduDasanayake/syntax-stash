@@ -31,13 +31,13 @@ type ParsedCurl = {
   flags: string[];
 };
 
-const METHODS: HttpMethod[] = ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"];
+const METHODS: HttpMethod[] = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"];
 
 const AUTH_TYPES = [
-  { value: "none", label: "None" },
-  { value: "bearer", label: "Bearer Token" },
-  { value: "basic", label: "Basic Auth (user:pass)" },
-  { value: "api-key", label: "API Key Header" },
+  { label: "API Key Header", value: "api-key" },
+  { label: "Basic Auth (user:pass)", value: "basic" },
+  { label: "Bearer Token", value: "bearer" },
+  { label: "None", value: "none" },
 ];
 
 function buildCurl(
@@ -95,7 +95,7 @@ function buildCurl(
 }
 
 function parseCurl(raw: string): ParsedCurl {
-  const result: ParsedCurl = { method: "GET", url: "", headers: [], body: "", auth: "", flags: [] };
+  const result: ParsedCurl = { auth: "", body: "", flags: [], headers: [], method: "GET", url: "" };
 
   // Remove line continuations
   const input = raw.replace(/\\\n\s*/g, " ").trim();
@@ -161,7 +161,7 @@ export default function CurlBuilderPage() {
   const generatedCurl = useMemo(
     () =>
       buildCurl(method, url, headers, params, body, authType, authValue, followRedirects, verbose),
-    [method, url, headers, params, body, authType, authValue, followRedirects, verbose],
+    [authType, authValue, body, followRedirects, headers, method, params, url, verbose],
   );
 
   const parsedResult = useMemo(() => (rawCurl.trim() ? parseCurl(rawCurl) : null), [rawCurl]);
@@ -215,7 +215,7 @@ export default function CurlBuilderPage() {
                 label="Method"
                 value={method}
                 onValueChange={(v) => v && setMethod(v as HttpMethod)}
-                options={METHODS.map((m) => ({ value: m, label: m }))}
+                options={METHODS.map((m) => ({ label: m, value: m }))}
               />
               <div className="flex-1 space-y-2">
                 <Label>URL</Label>

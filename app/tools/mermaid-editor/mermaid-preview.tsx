@@ -20,26 +20,26 @@ type Props = {
 let idCounter = 0;
 
 const THEME_BACKGROUNDS: Record<string, string> = {
-  default: "#ffffff",
+  base: "#ffffff",
   dark: "#1f2020",
+  default: "#ffffff",
   forest: "#f9fafb",
   neutral: "#eee8d5",
-  base: "#ffffff",
 };
 
 export function MermaidPreview({
-  code,
-  theme,
-  look,
-  fontFamily,
-  handDrawnSeed,
-  fontSize,
   backgroundColor,
-  primaryColor,
-  fontColor,
+  code,
   curve,
+  fontColor,
+  fontFamily,
+  fontSize,
+  handDrawnSeed,
+  look,
   onErrorAction,
   onRenderAction,
+  primaryColor,
+  theme,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [svg, setSvg] = useState<string>("");
@@ -50,10 +50,10 @@ export function MermaidPreview({
     import("mermaid").then((mod) => {
       if (cancelled) return;
       mod.default.initialize({
-        startOnLoad: false,
-        securityLevel: "loose",
-        htmlLabels: false,
         flowchart: { htmlLabels: false },
+        htmlLabels: false,
+        securityLevel: "loose",
+        startOnLoad: false,
       });
       setInitialized(true);
     });
@@ -72,22 +72,22 @@ export function MermaidPreview({
 
         const isBase = theme === "base";
         const initConfig = {
-          theme,
-          look,
-          fontFamily,
-          handDrawnSeed,
           flowchart: { curve },
+          fontFamily,
           gantt: { useWidth: (containerRef.current?.offsetWidth ?? 900) - 32 },
+          handDrawnSeed,
+          look,
+          theme,
           themeVariables: {
             ...(isBase && {
               background: backgroundColor,
+              lineColor: "#6b7280",
+              primaryBorderColor: "#4b5563",
               primaryColor,
               primaryTextColor: fontColor,
-              primaryBorderColor: "#4b5563",
-              lineColor: "#6b7280",
             }),
-            fontSize: `${fontSize}px`,
             fontFamily,
+            fontSize: `${fontSize}px`,
           },
         };
 
@@ -112,19 +112,19 @@ export function MermaidPreview({
       cancelled = true;
     };
   }, [
+    backgroundColor,
     code,
-    theme,
-    look,
+    curve,
+    fontColor,
     fontFamily,
+    fontSize,
     handDrawnSeed,
     initialized,
+    look,
     onErrorAction,
     onRenderAction,
-    fontSize,
-    backgroundColor,
     primaryColor,
-    fontColor,
-    curve,
+    theme,
   ]);
 
   if (!svg) {

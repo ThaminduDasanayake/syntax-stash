@@ -8,9 +8,9 @@ export async function optimizeSvg(input: string): Promise<OptimizeResponse> {
   try {
     const result = optimize(input, { multipass: true });
     return {
-      svg: result.data,
-      originalSize: Buffer.byteLength(input, "utf8"),
       optimizedSize: Buffer.byteLength(result.data, "utf8"),
+      originalSize: Buffer.byteLength(input, "utf8"),
+      svg: result.data,
     };
   } catch (e) {
     return { error: e instanceof Error ? e.message : "Invalid SVG" };

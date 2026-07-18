@@ -8,11 +8,11 @@ export const IndentKit = [
     inject: {
       targetPlugins: [
         ...KEYS.heading,
-        KEYS.p,
         KEYS.blockquote,
         KEYS.codeBlock,
-        KEYS.toggle,
         KEYS.img,
+        KEYS.p,
+        KEYS.toggle,
       ],
     },
     options: {

@@ -1,9 +1,9 @@
 import { Corners, Mode } from "@/app/tools/css-studio/border-radius-data";
 
 export function buildCssBorderRadius(corners: Corners, mode: Mode): string {
-  const { tl, tr, br, bl } = corners;
+  const { bl, br, tl, tr } = corners;
   if (mode === "Simple") {
-    const vals = [tl.h, tr.h, br.h, bl.h];
+    const vals = [bl.h, br.h, tl.h, tr.h];
     const unit = (v: number) => (v >= 9999 ? "9999px" : `${v}px`);
     if (vals.every((v) => v === vals[0])) return unit(vals[0]);
     return vals.map(unit).join(" ");

@@ -46,15 +46,15 @@ export default function TimeCalculatorPage() {
   const formatDisplayTime = useCallback(
     (d: Date, tz?: string, showTzName: boolean = true) => {
       return d.toLocaleString("en-GB", {
+        day: "2-digit",
+        hour: "2-digit",
+        hour12: use12Hour,
+        minute: "2-digit",
+        month: "short",
+        second: "2-digit",
         timeZone: tz,
         weekday: "short",
         year: "numeric",
-        month: "short",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: use12Hour,
         ...(showTzName && { timeZoneName: "short" }),
       });
     },
@@ -129,11 +129,11 @@ export default function TimeCalculatorPage() {
     const msToAdd = multiplier * amount * (UNIT_MS[mathUnit] || 0);
 
     return new Date(date.getTime() + msToAdd);
-  }, [mathBaseDate, mathAmount, mathUnit, mathMode]);
+  }, [mathAmount, mathBaseDate, mathMode, mathUnit]);
 
   const headerUTCTime = useMemo(
     () => formatDisplayTime(liveDate, "UTC"),
-    [liveDate, formatDisplayTime],
+    [formatDisplayTime, liveDate],
   );
   const headerTimestamp = useMemo(() => String(Math.floor(liveDate.getTime() / 1000)), [liveDate]);
 

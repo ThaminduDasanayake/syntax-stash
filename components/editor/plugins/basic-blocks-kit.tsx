@@ -26,7 +26,11 @@ import { HrElement } from "@/components/plate-ui/hr-node";
 import { ParagraphElement } from "@/components/plate-ui/paragraph-node";
 
 export const BasicBlocksKit = [
-  ParagraphPlugin.withComponent(ParagraphElement),
+  BlockquotePlugin.configure({
+    inputRules: [BlockquoteRules.markdown()],
+    node: { component: BlockquoteElement },
+    shortcuts: { toggle: { keys: "mod+shift+period" } },
+  }),
   H1Plugin.configure({
     inputRules: [HeadingRules.markdown()],
     node: {
@@ -87,11 +91,6 @@ export const BasicBlocksKit = [
     },
     shortcuts: { toggle: { keys: "mod+alt+6" } },
   }),
-  BlockquotePlugin.configure({
-    inputRules: [BlockquoteRules.markdown()],
-    node: { component: BlockquoteElement },
-    shortcuts: { toggle: { keys: "mod+shift+period" } },
-  }),
   HorizontalRulePlugin.configure({
     inputRules: [
       HorizontalRuleRules.markdown({ variant: "-" }),
@@ -101,4 +100,5 @@ export const BasicBlocksKit = [
       component: HrElement,
     },
   }),
+  ParagraphPlugin.withComponent(ParagraphElement),
 ];

@@ -24,7 +24,7 @@ export default function JwtDecoderPage() {
   const decoded = useMemo<JwtDecoded>(() => {
     const trimmed = token.trim();
 
-    const emptyState: JwtDecoded = { header: "", payload: "", signature: "", error: null };
+    const emptyState: JwtDecoded = { error: null, header: "", payload: "", signature: "" };
 
     if (!trimmed) return emptyState;
 
@@ -40,7 +40,7 @@ export default function JwtDecoderPage() {
       const header = JSON.stringify(JSON.parse(base64UrlDecode(parts[0])), null, 2);
       const payload = JSON.stringify(JSON.parse(base64UrlDecode(parts[1])), null, 2);
 
-      return { header, payload, signature: parts[2], error: null };
+      return { error: null, header, payload, signature: parts[2] };
     } catch (e) {
       const msg = e instanceof Error ? e.message : "unknown error";
       return { ...emptyState, error: `Decode failed: ${msg}` };

@@ -13,8 +13,8 @@ import {
 } from "@/components/plate-ui/table-node-static";
 
 export const BaseTableKit = [
+  BaseTableCellHeaderPlugin.withComponent(TableCellHeaderElementStatic),
+  BaseTableCellPlugin.withComponent(TableCellElementStatic),
   BaseTablePlugin.withComponent(TableElementStatic),
   BaseTableRowPlugin.withComponent(TableRowElementStatic),
-  BaseTableCellPlugin.withComponent(TableCellElementStatic),
-  BaseTableCellHeaderPlugin.withComponent(TableCellHeaderElementStatic),
 ];

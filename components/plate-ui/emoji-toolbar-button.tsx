@@ -90,6 +90,7 @@ export function EmojiPicker({
   emoji,
   emojiLibrary,
   focusedCategory,
+  handleCategoryClick,
   hasFound,
   i18n,
   icons = {
@@ -97,15 +98,14 @@ export function EmojiPicker({
     search: emojiSearchIcons,
   },
   isSearching,
+  onMouseOver,
+  onSelectEmoji,
   refs,
   searchResult,
   searchValue,
   setSearch,
   settings = EmojiSettings,
   visibleCategories,
-  handleCategoryClick,
-  onMouseOver,
-  onSelectEmoji,
 }: Omit<UseEmojiPickerType, "icons"> & {
   icons?: EmojiIconList<React.ReactElement>;
 }) {
@@ -188,9 +188,9 @@ const EmojiButton = React.memo(function EmojiButton({
 
 const RowOfButtons = React.memo(function RowOfButtons({
   emojiLibrary,
-  row,
   onMouseOver,
   onSelectEmoji,
+  row,
 }: {
   row: GridRow;
 } & Pick<UseEmojiPickerType, "emojiLibrary" | "onMouseOver" | "onSelectEmoji">) {
@@ -213,12 +213,12 @@ function EmojiPickerContent({
   emojiLibrary,
   i18n,
   isSearching = false,
+  onMouseOver,
+  onSelectEmoji,
   refs,
   searchResult,
   settings = EmojiSettings,
   visibleCategories,
-  onMouseOver,
-  onSelectEmoji,
 }: Pick<
   UseEmojiPickerType,
   | "emojiLibrary"
@@ -283,8 +283,8 @@ function EmojiPickerContent({
       getRowWidth,
       i18n.categories,
       isCategoryVisible,
-      onSelectEmoji,
       onMouseOver,
+      onSelectEmoji,
       settings,
     ],
   );
@@ -308,7 +308,7 @@ function EmojiPickerContent({
         </div>
       </div>
     ),
-    [emojiLibrary, getRowWidth, i18n.searchResult, searchResult, onSelectEmoji, onMouseOver],
+    [emojiLibrary, getRowWidth, i18n.searchResult, onMouseOver, onSelectEmoji, searchResult],
   );
 
   return (

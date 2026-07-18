@@ -51,13 +51,13 @@ export function GsapTab() {
     gsap.set(".gsap-preview-box", { clearProps: "all" });
 
     gsap[type](".gsap-preview-box", {
-      x,
-      y,
-      rotation,
-      opacity,
-      scale,
       duration,
       ease,
+      opacity,
+      rotation,
+      scale,
+      x,
+      y,
     });
   });
 
@@ -67,8 +67,8 @@ export function GsapTab() {
   });
 
   const generatedCode = useMemo(
-    () => generateCode({ type, ease, duration, x, y, rotation, opacity, scale }),
-    [type, ease, duration, x, y, rotation, opacity, scale],
+    () => generateCode({ duration, ease, opacity, rotation, scale, type, x, y }),
+    [duration, ease, opacity, rotation, scale, type, x, y],
   );
 
   return (
@@ -173,14 +173,14 @@ export function GsapTab() {
 
           <div className="flex flex-wrap gap-2 text-xs">
             {[
-              [`gsap.${type}()`, ""],
-              [ease, ""],
-              [`${duration}s`, ""],
-              x !== 0 ? [`x: ${x}px`, ""] : null,
-              y !== 0 ? [`y: ${y}px`, ""] : null,
-              rotation !== 0 ? [`rotate: ${rotation}°`, ""] : null,
-              opacity !== 1 ? [`opacity: ${opacity}`, ""] : null,
-              scale !== 1 ? [`scale: ${scale}`, ""] : null,
+              ["", `${duration}s`],
+              ["", `gsap.${type}()`],
+              ["", ease],
+              opacity !== 1 ? ["", `opacity: ${opacity}`] : null,
+              rotation !== 0 ? ["", `rotate: ${rotation}°`] : null,
+              scale !== 1 ? ["", `scale: ${scale}`] : null,
+              x !== 0 ? ["", `x: ${x}px`] : null,
+              y !== 0 ? ["", `y: ${y}px`] : null,
             ]
               .filter((item): item is [string, string] => item !== null)
               .map(([label], i) => (

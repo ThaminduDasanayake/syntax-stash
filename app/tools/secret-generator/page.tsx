@@ -31,124 +31,124 @@ interface Preset {
 
 const PRESETS: Preset[] = [
   {
-    id: "nextauth",
-    label: "NextAuth / Auth.js",
-    tag: "Next.js",
-    bytes: 32,
-    encoding: "base64",
-    prefix: "",
-    envKey: "AUTH_SECRET",
-    description: "AUTH_SECRET for Next.js Auth.js (npx auth secret)",
-  },
-  {
-    id: "jwt",
-    label: "JWT Secret",
-    tag: "General",
-    bytes: 32,
-    encoding: "base64",
-    prefix: "",
-    envKey: "JWT_SECRET",
-    description: "HMAC-SHA256 signing secret (256-bit)",
-  },
-  {
-    id: "api-key",
-    label: "API Key",
-    tag: "General",
-    bytes: 32,
-    encoding: "base64url",
-    prefix: "sk_",
-    envKey: "API_KEY",
-    description: 'URL-safe key with "sk_" prefix — like Stripe / OpenAI',
-  },
-  {
-    id: "webhook",
-    label: "Webhook Secret",
-    tag: "General",
-    bytes: 32,
-    encoding: "hex",
-    prefix: "whsec_",
-    envKey: "WEBHOOK_SECRET",
-    description: 'Hex secret with "whsec_" prefix — used by Stripe webhooks',
-  },
-  {
     id: "aes128",
-    label: "AES-128 Key",
-    tag: "Encryption",
     bytes: 16,
-    encoding: "hex",
-    prefix: "",
-    envKey: "ENCRYPTION_KEY",
     description: "128-bit AES symmetric encryption key",
+    encoding: "hex",
+    envKey: "ENCRYPTION_KEY",
+    label: "AES-128 Key",
+    prefix: "",
+    tag: "Encryption",
   },
   {
     id: "aes256",
-    label: "AES-256 Key",
-    tag: "Encryption",
     bytes: 32,
-    encoding: "hex",
-    prefix: "",
-    envKey: "ENCRYPTION_KEY",
     description: "256-bit AES symmetric encryption key",
-  },
-  {
-    id: "laravel",
-    label: "Laravel APP_KEY",
-    tag: "Laravel",
-    bytes: 32,
-    encoding: "base64",
-    prefix: "base64:",
-    envKey: "APP_KEY",
-    description: 'php artisan key:generate equivalent — "base64:" prefix required',
-  },
-  {
-    id: "django",
-    label: "Django SECRET_KEY",
-    tag: "Django",
-    bytes: 50,
-    encoding: "alphanum",
-    prefix: "",
-    envKey: "SECRET_KEY",
-    description: "50-char alphanumeric+symbols secret (django-insecure- prefix removed)",
-  },
-  {
-    id: "rails",
-    label: "Rails secret_key_base",
-    tag: "Rails",
-    bytes: 64,
     encoding: "hex",
+    envKey: "ENCRYPTION_KEY",
+    label: "AES-256 Key",
     prefix: "",
-    envKey: "SECRET_KEY_BASE",
-    description: "128-hex-char key — rails secret equivalent",
+    tag: "Encryption",
+  },
+  {
+    id: "api-key",
+    bytes: 32,
+    description: 'URL-safe key with "sk_" prefix — like Stripe / OpenAI',
+    encoding: "base64url",
+    envKey: "API_KEY",
+    label: "API Key",
+    prefix: "sk_",
+    tag: "General",
   },
   {
     id: "cookie",
-    label: "Cookie Signing Secret",
-    tag: "General",
     bytes: 32,
-    encoding: "hex",
-    prefix: "",
-    envKey: "COOKIE_SECRET",
     description: "For iron-session, express-session, cookie signing",
-  },
-  {
-    id: "hmac512",
-    label: "HMAC-SHA512 Key",
-    tag: "Crypto",
-    bytes: 64,
     encoding: "hex",
+    envKey: "COOKIE_SECRET",
+    label: "Cookie Signing Secret",
     prefix: "",
-    envKey: "HMAC_KEY",
-    description: "512-bit key for HMAC-SHA512 message authentication",
+    tag: "General",
   },
   {
     id: "custom",
-    label: "Custom",
-    tag: "Custom",
     bytes: 32,
-    encoding: "hex",
-    prefix: "",
-    envKey: "SECRET",
     description: "Configure your own byte length, encoding, and prefix",
+    encoding: "hex",
+    envKey: "SECRET",
+    label: "Custom",
+    prefix: "",
+    tag: "Custom",
+  },
+  {
+    id: "django",
+    bytes: 50,
+    description: "50-char alphanumeric+symbols secret (django-insecure- prefix removed)",
+    encoding: "alphanum",
+    envKey: "SECRET_KEY",
+    label: "Django SECRET_KEY",
+    prefix: "",
+    tag: "Django",
+  },
+  {
+    id: "hmac512",
+    bytes: 64,
+    description: "512-bit key for HMAC-SHA512 message authentication",
+    encoding: "hex",
+    envKey: "HMAC_KEY",
+    label: "HMAC-SHA512 Key",
+    prefix: "",
+    tag: "Crypto",
+  },
+  {
+    id: "jwt",
+    bytes: 32,
+    description: "HMAC-SHA256 signing secret (256-bit)",
+    encoding: "base64",
+    envKey: "JWT_SECRET",
+    label: "JWT Secret",
+    prefix: "",
+    tag: "General",
+  },
+  {
+    id: "laravel",
+    bytes: 32,
+    description: 'php artisan key:generate equivalent — "base64:" prefix required',
+    encoding: "base64",
+    envKey: "APP_KEY",
+    label: "Laravel APP_KEY",
+    prefix: "base64:",
+    tag: "Laravel",
+  },
+  {
+    id: "nextauth",
+    bytes: 32,
+    description: "AUTH_SECRET for Next.js Auth.js (npx auth secret)",
+    encoding: "base64",
+    envKey: "AUTH_SECRET",
+    label: "NextAuth / Auth.js",
+    prefix: "",
+    tag: "Next.js",
+  },
+  {
+    id: "rails",
+    bytes: 64,
+    description: "128-hex-char key — rails secret equivalent",
+    encoding: "hex",
+    envKey: "SECRET_KEY_BASE",
+    label: "Rails secret_key_base",
+    prefix: "",
+    tag: "Rails",
+  },
+  {
+    id: "webhook",
+    bytes: 32,
+    description: 'Hex secret with "whsec_" prefix — used by Stripe webhooks',
+    encoding: "hex",
+    envKey: "WEBHOOK_SECRET",
+    label: "Webhook Secret",
+    prefix: "whsec_",
+    tag: "General",
   },
 ];
 
@@ -195,29 +195,29 @@ function entropyBits(bytes: number): number {
 }
 
 function strengthLabel(bits: number): { label: string; color: string } {
-  if (bits < 128) return { label: "Fair", color: "text-yellow-500" };
-  if (bits < 192) return { label: "Strong", color: "text-emerald-500" };
-  return { label: "Very Strong", color: "text-green-500" };
+  if (bits < 128) return { color: "text-yellow-500", label: "Fair" };
+  if (bits < 192) return { color: "text-emerald-500", label: "Strong" };
+  return { color: "text-green-500", label: "Very Strong" };
 }
 
 // ─── Components ───────────────────────────────────────────────────────────────
 
 const ENCODING_OPTIONS: { value: Encoding; label: string }[] = [
-  { value: "base64", label: "Base64" },
-  { value: "base64url", label: "Base64URL (URL-safe)" },
-  { value: "hex", label: "Hex" },
-  { value: "alphanum", label: "Alphanumeric + symbols" },
+  { label: "Alphanumeric + symbols", value: "alphanum" },
+  { label: "Base64", value: "base64" },
+  { label: "Base64URL (URL-safe)", value: "base64url" },
+  { label: "Hex", value: "hex" },
 ];
 
 const TAG_COLORS: Record<string, string> = {
-  "Next.js": "bg-blue-500/10 text-blue-600 dark:text-blue-400",
-  General: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
-  Encryption: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
   Crypto: "bg-red-500/10 text-red-600 dark:text-red-400",
-  Laravel: "bg-pink-500/10 text-pink-600 dark:text-pink-400",
-  Django: "bg-green-500/10 text-green-600 dark:text-green-400",
-  Rails: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
   Custom: "bg-muted text-muted-foreground",
+  Django: "bg-green-500/10 text-green-600 dark:text-green-400",
+  Encryption: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
+  General: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
+  Laravel: "bg-pink-500/10 text-pink-600 dark:text-pink-400",
+  "Next.js": "bg-blue-500/10 text-blue-600 dark:text-blue-400",
+  Rails: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
 };
 
 function useCopyState() {
@@ -257,12 +257,12 @@ export default function SecretGeneratorPage() {
   // Regenerate secrets
   const generate = useCallback(() => {
     setSecrets(Array.from({ length: count }, () => prefix + generateSecret(bytes, encoding)));
-  }, [bytes, encoding, prefix, count]);
+  }, [bytes, count, encoding, prefix]);
 
   useEffect(() => {
     generate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [seed, bytes, encoding, prefix, count]);
+  }, [bytes, count, encoding, prefix, seed]);
 
   const bits = entropyBits(bytes);
   const strength = strengthLabel(bits);

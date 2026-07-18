@@ -17,19 +17,19 @@ interface FileDropzoneProps {
 }
 
 export default function FileDropzone({
-  onFileDropAction,
-  onFilesDropAction,
   accept,
   label,
-  multiple = false,
   maxSize,
+  multiple = false,
+  onFileDropAction,
+  onFilesDropAction,
   onReject,
 }: FileDropzoneProps) {
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getInputProps, getRootProps, isDragActive } = useDropzone({
     accept,
-    multiple,
-    maxSize,
     maxFiles: multiple ? 0 : 1,
+    maxSize,
+    multiple,
 
     onDrop: (acceptedFiles) => {
       if (acceptedFiles.length === 0) return;

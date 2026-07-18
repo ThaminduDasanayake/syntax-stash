@@ -2,8 +2,8 @@ import type { DiffLine } from "@/app/tools/diff-viewer/helpers";
 
 export function DiffLineRow({
   line,
-  showOld,
   showNew,
+  showOld,
 }: {
   line: DiffLine;
   showOld: boolean;

@@ -22,8 +22,8 @@ import { internalTools } from "@/lib/tools-data";
 
 export default function MongoPipelineBuilderPage() {
   const [stages, setStages] = useState<Stage[]>([
-    { id: uid(), type: "$match", value: STAGE_DEFAULTS["$match"] },
     { id: uid(), type: "$group", value: STAGE_DEFAULTS["$group"] },
+    { id: uid(), type: "$match", value: STAGE_DEFAULTS["$match"] },
     { id: uid(), type: "$sort", value: STAGE_DEFAULTS["$sort"] },
   ]);
 
@@ -40,8 +40,8 @@ export default function MongoPipelineBuilderPage() {
   };
 
   // Compile result
-  const { pipelineJSON, hasErrors } = useMemo(() => {
-    if (stages.length === 0) return { pipelineJSON: "[]", hasErrors: false };
+  const { hasErrors, pipelineJSON } = useMemo(() => {
+    if (stages.length === 0) return { hasErrors: false, pipelineJSON: "[]" };
 
     const compiled: unknown[] = [];
     let hasErrors = false;
@@ -57,8 +57,8 @@ export default function MongoPipelineBuilderPage() {
     }
 
     return {
-      pipelineJSON: JSON.stringify(compiled, null, 2),
       hasErrors,
+      pipelineJSON: JSON.stringify(compiled, null, 2),
     };
   }, [stages]);
 

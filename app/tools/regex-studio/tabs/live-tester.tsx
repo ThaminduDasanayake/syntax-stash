@@ -1,6 +1,5 @@
 "use client";
 
-import { DotOutlineIcon } from "@phosphor-icons/react";
 import { useMemo, useRef } from "react";
 
 import Diagram from "@/app/tools/regex-studio/components/diagram";
@@ -8,7 +7,6 @@ import { parseRegex } from "@/app/tools/regex-studio/helpers";
 import { RegexResult } from "@/app/tools/regex-studio/types";
 import { DotButton } from "@/components/dot-button";
 import { ErrorAlert } from "@/components/error-alert";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
@@ -16,7 +14,6 @@ import { DownloadButton } from "@/components/ui/download-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { TextareaGroup } from "@/components/ui/textarea-group";
-import { cn } from "@/lib/utils";
 
 interface LiveTesterProps {
   pattern: string;
@@ -28,16 +25,16 @@ interface LiveTesterProps {
 }
 
 export function LiveTester({
-  pattern,
-  setPattern,
   flags,
+  pattern,
   setFlags,
-  testString,
+  setPattern,
   setTestString,
+  testString,
 }: LiveTesterProps) {
   const diagramRef = useRef<SVGSVGElement>(null);
 
-  const parsed = useMemo(() => parseRegex(pattern, flags), [pattern, flags]);
+  const parsed = useMemo(() => parseRegex(pattern, flags), [flags, pattern]);
 
   const result = useMemo<RegexResult>(() => {
     if (!pattern) return { matches: [], ok: true };
@@ -75,7 +72,7 @@ export function LiveTester({
         ok: false,
       };
     }
-  }, [pattern, flags, testString]);
+  }, [flags, pattern, testString]);
 
   function toggleFlag(flag: string) {
     if (flags.includes(flag)) {

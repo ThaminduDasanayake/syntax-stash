@@ -26,7 +26,7 @@ export default function MockDataPage() {
 
     const safeCount = Math.max(1, Math.min(50, Math.floor(count) || 1));
     return JSON.stringify(generate(schema, safeCount), null, 2);
-  }, [schema, count, seed]);
+  }, [count, schema, seed]);
 
   const handleRegenerate = async () => {
     setIsGenerating(true);

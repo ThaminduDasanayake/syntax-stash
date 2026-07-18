@@ -51,12 +51,12 @@ export default function DockerComposePage() {
 
   const cliResult = useMemo(() => {
     const trimmed = cliInput.trim();
-    if (!trimmed) return { yaml: "", error: null };
+    if (!trimmed) return { error: null, yaml: "" };
 
     const parsed = parseDockerRun(trimmed);
-    if (!parsed.ok) return { yaml: "", error: parsed.error };
+    if (!parsed.ok) return { error: parsed.error, yaml: "" };
 
-    return { yaml: generateCompose(parsed.service), error: null };
+    return { error: null, yaml: generateCompose(parsed.service) };
   }, [cliInput]);
 
   const currentYaml = activeTab === "builder" ? builderYaml : cliResult.yaml;
@@ -78,7 +78,7 @@ export default function DockerComposePage() {
   function addPort(svcId: string) {
     updateService(svcId, "ports", [
       ...services.find((s) => s.id === svcId)!.ports,
-      { host: "", container: "" },
+      { container: "", host: "" },
     ]);
   }
   function removePort(svcId: string, idx: number) {
@@ -124,7 +124,7 @@ export default function DockerComposePage() {
   function addVolume(svcId: string) {
     updateService(svcId, "volumes", [
       ...services.find((s) => s.id === svcId)!.volumes,
-      { host: "", container: "" },
+      { container: "", host: "" },
     ]);
   }
   function removeVolume(svcId: string, idx: number) {
@@ -173,7 +173,7 @@ export default function DockerComposePage() {
                   <SelectField
                     value={selectedTemplate}
                     onValueChange={(v) => v && setSelectedTemplate(v)}
-                    options={SERVICE_TEMPLATES.map((tpl) => ({ value: tpl.id, label: tpl.name }))}
+                    options={SERVICE_TEMPLATES.map((tpl) => ({ label: tpl.name, value: tpl.id }))}
                   />
                   <Button onClick={addService} className="font-semibold">
                     <PlusIcon weight="bold" /> Add
@@ -353,19 +353,19 @@ export default function DockerComposePage() {
                 <CardContent>
                   <div className="grid gap-2 text-xs sm:grid-cols-2">
                     {[
+                      ["--cap-add / drop", "cap_add / drop"],
+                      ["--cpu-shares", "cpu_shares"],
+                      ["--entrypoint", "entrypoint"],
                       ["--name", "container_name"],
-                      ["-p / --publish", "ports"],
-                      ["-v / --volume", "volumes"],
-                      ["-e / --env", "environment"],
                       ["--network", "networks"],
                       ["--restart", "restart"],
-                      ["-u / -w / -h", "user / dir / host"],
-                      ["--entrypoint", "entrypoint"],
-                      ["-l / --label", "labels"],
-                      ["--cap-add / drop", "cap_add / drop"],
-                      ["-m / --memory", "mem_limit"],
-                      ["--cpu-shares", "cpu_shares"],
                       ["-d / -t / --priv", "tty / privileged"],
+                      ["-e / --env", "environment"],
+                      ["-l / --label", "labels"],
+                      ["-m / --memory", "mem_limit"],
+                      ["-p / --publish", "ports"],
+                      ["-u / -w / -h", "user / dir / host"],
+                      ["-v / --volume", "volumes"],
                     ].map(([flag, output]) => (
                       <div
                         key={flag}

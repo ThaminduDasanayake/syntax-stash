@@ -18,16 +18,16 @@ type TabId = "format" | "tree" | "query" | "organize";
 
 const TABS: { id: TabId; label: string }[] = [
   { id: "format", label: "Format" },
-  { id: "tree", label: "Tree" },
-  { id: "query", label: "Query" },
   { id: "organize", label: "Organize" },
+  { id: "query", label: "Query" },
+  { id: "tree", label: "Tree" },
 ];
 
 const SAMPLE_LABELS: { key: SampleKey; label: string }[] = [
   { key: "format", label: "Simple object" },
-  { key: "tree", label: "Nested user" },
-  { key: "query", label: "Bookstore" },
   { key: "organize", label: "People array" },
+  { key: "query", label: "Bookstore" },
+  { key: "tree", label: "Nested user" },
 ];
 
 export default function JsonStudioPage() {

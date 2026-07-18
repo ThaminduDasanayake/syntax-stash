@@ -11,21 +11,12 @@ export type Preset = {
   iterations: string;
 };
 
-export const TIMING_FUNCTIONS = ["ease", "ease-in", "ease-out", "ease-in-out", "linear"];
+export const TIMING_FUNCTIONS = ["ease", "ease-in", "ease-in-out", "ease-out", "linear"];
 
 export const PRESETS: Preset[] = [
   {
-    label: "Fade In",
-    keyframes: [
-      { percent: 0, properties: [{ key: "opacity", value: "0" }] },
-      { percent: 100, properties: [{ key: "opacity", value: "1" }] },
-    ],
     duration: 400,
-    timing: "ease-out",
     iterations: "1",
-  },
-  {
-    label: "Slide Up",
     keyframes: [
       {
         percent: 0,
@@ -42,46 +33,22 @@ export const PRESETS: Preset[] = [
         ],
       },
     ],
-    duration: 400,
+    label: "Slide Up",
     timing: "ease-out",
+  },
+  {
+    duration: 400,
     iterations: "1",
-  },
-  {
-    label: "Bounce",
     keyframes: [
-      { percent: 0, properties: [{ key: "transform", value: "translateY(0)" }] },
-      { percent: 25, properties: [{ key: "transform", value: "translateY(-12px)" }] },
-      { percent: 50, properties: [{ key: "transform", value: "translateY(0)" }] },
-      { percent: 75, properties: [{ key: "transform", value: "translateY(-6px)" }] },
-      { percent: 100, properties: [{ key: "transform", value: "translateY(0)" }] },
-    ],
-    duration: 800,
-    timing: "ease-in-out",
-    iterations: "infinite",
-  },
-  {
-    label: "Pulse",
-    keyframes: [
-      { percent: 0, properties: [{ key: "opacity", value: "1" }] },
-      { percent: 50, properties: [{ key: "opacity", value: "0.4" }] },
+      { percent: 0, properties: [{ key: "opacity", value: "0" }] },
       { percent: 100, properties: [{ key: "opacity", value: "1" }] },
     ],
-    duration: 2000,
-    timing: "ease-in-out",
-    iterations: "infinite",
+    label: "Fade In",
+    timing: "ease-out",
   },
   {
-    label: "Spin",
-    keyframes: [
-      { percent: 0, properties: [{ key: "transform", value: "rotate(0deg)" }] },
-      { percent: 100, properties: [{ key: "transform", value: "rotate(360deg)" }] },
-    ],
-    duration: 1000,
-    timing: "linear",
-    iterations: "infinite",
-  },
-  {
-    label: "Shake",
+    duration: 600,
+    iterations: "1",
     keyframes: [
       { percent: 0, properties: [{ key: "transform", value: "translateX(0)" }] },
       { percent: 20, properties: [{ key: "transform", value: "translateX(-8px)" }] },
@@ -90,20 +57,53 @@ export const PRESETS: Preset[] = [
       { percent: 80, properties: [{ key: "transform", value: "translateX(8px)" }] },
       { percent: 100, properties: [{ key: "transform", value: "translateX(0)" }] },
     ],
-    duration: 600,
+    label: "Shake",
     timing: "ease-in-out",
-    iterations: "1",
+  },
+  {
+    duration: 800,
+    iterations: "infinite",
+    keyframes: [
+      { percent: 0, properties: [{ key: "transform", value: "translateY(0)" }] },
+      { percent: 25, properties: [{ key: "transform", value: "translateY(-12px)" }] },
+      { percent: 50, properties: [{ key: "transform", value: "translateY(0)" }] },
+      { percent: 75, properties: [{ key: "transform", value: "translateY(-6px)" }] },
+      { percent: 100, properties: [{ key: "transform", value: "translateY(0)" }] },
+    ],
+    label: "Bounce",
+    timing: "ease-in-out",
+  },
+  {
+    duration: 1000,
+    iterations: "infinite",
+    keyframes: [
+      { percent: 0, properties: [{ key: "transform", value: "rotate(0deg)" }] },
+      { percent: 100, properties: [{ key: "transform", value: "rotate(360deg)" }] },
+    ],
+    label: "Spin",
+    timing: "linear",
+  },
+  {
+    duration: 2000,
+    iterations: "infinite",
+    keyframes: [
+      { percent: 0, properties: [{ key: "opacity", value: "1" }] },
+      { percent: 50, properties: [{ key: "opacity", value: "0.4" }] },
+      { percent: 100, properties: [{ key: "opacity", value: "1" }] },
+    ],
+    label: "Pulse",
+    timing: "ease-in-out",
   },
 ];
 
 export const COMMON_PROPERTIES = [
-  "opacity",
-  "transform",
-  "filter",
   "background-color",
   "border-radius",
   "box-shadow",
   "color",
-  "width",
+  "filter",
   "height",
+  "opacity",
+  "transform",
+  "width",
 ];

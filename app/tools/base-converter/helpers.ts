@@ -10,19 +10,19 @@ export const BITS = 16;
 export const MAX = (1 << BITS) - 1; // 65535
 
 export const BASE_LIST = [
-  { value: "2", label: "BIN" },
-  { value: "8", label: "OCT" },
-  { value: "10", label: "DEC" },
-  { value: "16", label: "HEX" },
+  { label: "BIN", value: "2" },
+  { label: "DEC", value: "10" },
+  { label: "HEX", value: "16" },
+  { label: "OCT", value: "8" },
 ];
 
 export const BITWISE_OPS: BitwiseOp[] = [
-  { id: "and", label: "AND", symbol: "&", fn: (a, b) => a & b },
-  { id: "or", label: "OR", symbol: "|", fn: (a, b) => a | b },
-  { id: "xor", label: "XOR", symbol: "^", fn: (a, b) => a ^ b },
-  { id: "not", label: "NOT", symbol: "~", fn: (a) => ~a & MAX, unary: true },
-  { id: "shl", label: "Shift Left", symbol: "<<", fn: (a, b) => (a << b) & MAX },
-  { id: "shr", label: "Shift Right", symbol: ">>", fn: (a, b) => a >> b },
+  { id: "and", fn: (a, b) => a & b, label: "AND", symbol: "&" },
+  { id: "not", fn: (a) => ~a & MAX, label: "NOT", symbol: "~", unary: true },
+  { id: "or", fn: (a, b) => a | b, label: "OR", symbol: "|" },
+  { id: "shl", fn: (a, b) => (a << b) & MAX, label: "Shift Left", symbol: "<<" },
+  { id: "shr", fn: (a, b) => a >> b, label: "Shift Right", symbol: ">>" },
+  { id: "xor", fn: (a, b) => a ^ b, label: "XOR", symbol: "^" },
 ];
 
 export function clamp(n: number): number {

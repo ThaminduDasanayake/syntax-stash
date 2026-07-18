@@ -15,8 +15,8 @@ import { SelectField } from "@/components/ui/select-field";
 import { TextareaGroup } from "@/components/ui/textarea-group";
 
 const dialectOptions = [
-  { value: "postgres", label: "PostgreSQL (pgTable)" },
-  { value: "sqlite", label: "SQLite (sqliteTable)" },
+  { label: "PostgreSQL (pgTable)", value: "postgres" },
+  { label: "SQLite (sqliteTable)", value: "sqlite" },
 ];
 
 export function PrismaToDrizzle() {
@@ -27,7 +27,7 @@ export function PrismaToDrizzle() {
     if (!prismaInput.trim()) return "";
     const models = parsePrismaModels(prismaInput);
     return generatePrismaDrizzle(models, prismaDialect);
-  }, [prismaInput, prismaDialect]);
+  }, [prismaDialect, prismaInput]);
 
   return (
     <div className="flex h-full min-h-0 w-full flex-1 flex-col space-y-6">
@@ -67,15 +67,15 @@ export function PrismaToDrizzle() {
         <div className="grid gap-3 text-xs md:grid-cols-2 lg:grid-cols-3">
           {(
             [
-              ["String", "text", "text"],
-              ["Int", "serial / integer", "integer"],
               ["BigInt", "bigserial / bigint", "integer"],
-              ["Float", "doublePrecision", "real"],
-              ["Decimal", "decimal", "real"],
+              ["blob", "bytea", "Bytes"],
               ["Boolean", "boolean", "integer (0/1)"],
-              ["DateTime", "timestamp", "text (ISO 8601)"],
+              ["DateTime", "text (ISO 8601)", "timestamp"],
+              ["Decimal", "decimal", "real"],
+              ["doublePrecision", "Float", "real"],
+              ["Int", "integer", "serial / integer"],
               ["Json", "jsonb", "text"],
-              ["Bytes", "bytea", "blob"],
+              ["String", "text", "text"],
             ] as [string, string, string][]
           ).map(([prisma, pg, sqlite]) => (
             <div key={prisma} className="bg-card flex items-center gap-2 border p-3 font-mono">

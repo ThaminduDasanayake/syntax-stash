@@ -7,21 +7,10 @@ export interface Stage {
 }
 
 export const STAGE_DEFAULTS: Record<StageType, string> = {
-  $match: `{
-  "status": "active"
-}`,
   $group: `{
   "_id": "$userId",
   "total": { "$sum": 1 },
   "avgScore": { "$avg": "$score" }
-}`,
-  $sort: `{
-  "createdAt": -1
-}`,
-  $project: `{
-  "_id": 0,
-  "name": 1,
-  "email": 1
 }`,
   $limit: `10`,
   $lookup: `{
@@ -30,24 +19,35 @@ export const STAGE_DEFAULTS: Record<StageType, string> = {
   "foreignField": "userId",
   "as": "orders"
 }`,
+  $match: `{
+  "status": "active"
+}`,
+  $project: `{
+  "_id": 0,
+  "name": 1,
+  "email": 1
+}`,
+  $sort: `{
+  "createdAt": -1
+}`,
 };
 
 export const STAGE_DESCRIPTIONS: Record<StageType, string> = {
-  $match: "Filter documents",
   $group: "Group & accumulate",
-  $sort: "Sort documents",
-  $project: "Shape the output",
   $limit: "Limit document count",
   $lookup: "Join a collection",
+  $match: "Filter documents",
+  $project: "Shape the output",
+  $sort: "Sort documents",
 };
 
 export const ALL_STAGES: StageType[] = [
-  "$match",
   "$group",
-  "$sort",
-  "$project",
   "$limit",
   "$lookup",
+  "$match",
+  "$project",
+  "$sort",
 ];
 
 export function uid(): string {

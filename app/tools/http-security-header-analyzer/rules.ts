@@ -11,17 +11,59 @@ export type HeaderRule = {
 
 export const SECURITY_HEADERS: HeaderRule[] = [
   {
-    key: "content-security-policy",
-    label: "Content-Security-Policy",
-    description: "Controls which resources the browser is allowed to load.",
-    severity: "critical",
-    validate: (v) => (v ? "pass" : "fail"),
-    recommendation: "default-src 'self'",
+    description: "Controls how much referrer information is included with requests.",
+    key: "referrer-policy",
+    label: "Referrer-Policy",
+    recommendation: "strict-origin-when-cross-origin",
+    severity: "recommended",
+    validate: (v) => {
+      if (!v) return "fail";
+      const safe = [
+        "no-referrer",
+        "same-origin",
+        "strict-origin",
+        "strict-origin-when-cross-origin",
+      ];
+      return safe.includes(v.trim().toLowerCase()) ? "pass" : "warn";
+    },
   },
   {
+    description: "Controls which browser features and APIs can be used.",
+    key: "permissions-policy",
+    label: "Permissions-Policy",
+    recommendation: "camera=(), microphone=(), geolocation=()",
+    severity: "recommended",
+    validate: (v) => (v ? "pass" : "warn"),
+  },
+  {
+    description: "Controls which origins can load this resource.",
+    key: "cross-origin-resource-policy",
+    label: "Cross-Origin-Resource-Policy",
+    recommendation: "same-origin",
+    severity: "optional",
+    validate: (v) => (v ? "pass" : "warn"),
+  },
+  {
+    description: "Controls which resources the browser is allowed to load.",
+    key: "content-security-policy",
+    label: "Content-Security-Policy",
+    recommendation: "default-src 'self'",
+    severity: "critical",
+    validate: (v) => (v ? "pass" : "fail"),
+  },
+  {
+    description: "Deprecated — legacy XSS filter. Should be removed in favour of CSP.",
+    key: "x-xss-protection",
+    label: "X-XSS-Protection",
+    recommendation: "Remove this header — rely on Content-Security-Policy instead.",
+    severity: "optional",
+    validate: (v) => (v ? "warn" : "pass"),
+  },
+  {
+    description: "Forces HTTPS connections for the specified duration.",
     key: "strict-transport-security",
     label: "Strict-Transport-Security",
-    description: "Forces HTTPS connections for the specified duration.",
+    recommendation: "max-age=31536000; includeSubDomains",
     severity: "critical",
     validate: (v) => {
       if (!v) return "fail";
@@ -29,78 +71,36 @@ export const SECURITY_HEADERS: HeaderRule[] = [
       if (!maxAge) return "warn";
       return parseInt(maxAge[1]) >= 31536000 ? "pass" : "warn";
     },
-    recommendation: "max-age=31536000; includeSubDomains",
   },
   {
+    description: "Isolates the browsing context to prevent cross-origin attacks.",
+    key: "cross-origin-opener-policy",
+    label: "Cross-Origin-Opener-Policy",
+    recommendation: "same-origin",
+    severity: "recommended",
+    validate: (v) => {
+      if (!v) return "warn";
+      return v.trim().toLowerCase() === "same-origin" ? "pass" : "warn";
+    },
+  },
+  {
+    description: "Prevents clickjacking by controlling if the page can be embedded in frames.",
     key: "x-frame-options",
     label: "X-Frame-Options",
-    description: "Prevents clickjacking by controlling if the page can be embedded in frames.",
+    recommendation: "SAMEORIGIN",
     severity: "recommended",
     validate: (v) => {
       if (!v) return "fail";
       const upper = v.trim().toUpperCase();
       return upper === "DENY" || upper === "SAMEORIGIN" ? "pass" : "warn";
     },
-    recommendation: "SAMEORIGIN",
   },
   {
+    description: "Prevents MIME-type sniffing attacks.",
     key: "x-content-type-options",
     label: "X-Content-Type-Options",
-    description: "Prevents MIME-type sniffing attacks.",
+    recommendation: "nosniff",
     severity: "recommended",
     validate: (v) => (v?.trim().toLowerCase() === "nosniff" ? "pass" : "fail"),
-    recommendation: "nosniff",
-  },
-  {
-    key: "referrer-policy",
-    label: "Referrer-Policy",
-    description: "Controls how much referrer information is included with requests.",
-    severity: "recommended",
-    validate: (v) => {
-      if (!v) return "fail";
-      const safe = [
-        "no-referrer",
-        "strict-origin",
-        "strict-origin-when-cross-origin",
-        "same-origin",
-      ];
-      return safe.includes(v.trim().toLowerCase()) ? "pass" : "warn";
-    },
-    recommendation: "strict-origin-when-cross-origin",
-  },
-  {
-    key: "permissions-policy",
-    label: "Permissions-Policy",
-    description: "Controls which browser features and APIs can be used.",
-    severity: "recommended",
-    validate: (v) => (v ? "pass" : "warn"),
-    recommendation: "camera=(), microphone=(), geolocation=()",
-  },
-  {
-    key: "cross-origin-opener-policy",
-    label: "Cross-Origin-Opener-Policy",
-    description: "Isolates the browsing context to prevent cross-origin attacks.",
-    severity: "recommended",
-    validate: (v) => {
-      if (!v) return "warn";
-      return v.trim().toLowerCase() === "same-origin" ? "pass" : "warn";
-    },
-    recommendation: "same-origin",
-  },
-  {
-    key: "cross-origin-resource-policy",
-    label: "Cross-Origin-Resource-Policy",
-    description: "Controls which origins can load this resource.",
-    severity: "optional",
-    validate: (v) => (v ? "pass" : "warn"),
-    recommendation: "same-origin",
-  },
-  {
-    key: "x-xss-protection",
-    label: "X-XSS-Protection",
-    description: "Deprecated — legacy XSS filter. Should be removed in favour of CSP.",
-    severity: "optional",
-    validate: (v) => (v ? "warn" : "pass"),
-    recommendation: "Remove this header — rely on Content-Security-Policy instead.",
   },
 ];

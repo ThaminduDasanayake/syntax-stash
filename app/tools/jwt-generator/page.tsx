@@ -15,17 +15,17 @@ import { internalTools } from "@/lib/tools-data";
 type Algorithm = "HS256" | "HS384" | "HS512";
 
 const ALGO_MAP: Record<Algorithm, { subtleName: string; hash: string }> = {
-  HS256: { subtleName: "HMAC", hash: "SHA-256" },
-  HS384: { subtleName: "HMAC", hash: "SHA-384" },
-  HS512: { subtleName: "HMAC", hash: "SHA-512" },
+  HS256: { hash: "SHA-256", subtleName: "HMAC" },
+  HS384: { hash: "SHA-384", subtleName: "HMAC" },
+  HS512: { hash: "SHA-512", subtleName: "HMAC" },
 };
 
 const DEFAULT_PAYLOAD = JSON.stringify(
   {
-    sub: "1234567890",
-    name: "Jane Doe",
-    iat: Math.floor(Date.now() / 1000),
     exp: Math.floor(Date.now() / 1000) + 3600,
+    iat: Math.floor(Date.now() / 1000),
+    name: "Jane Doe",
+    sub: "1234567890",
   },
   null,
   2,
@@ -43,7 +43,7 @@ function encodeUtf8(str: string): ArrayBuffer {
 }
 
 async function signJWT(algo: Algorithm, secret: string, payload: string): Promise<string> {
-  const { subtleName, hash } = ALGO_MAP[algo];
+  const { hash, subtleName } = ALGO_MAP[algo];
 
   const header = { alg: algo, typ: "JWT" };
   const headerEncoded = base64UrlEncode(encodeUtf8(JSON.stringify(header)));
@@ -51,7 +51,7 @@ async function signJWT(algo: Algorithm, secret: string, payload: string): Promis
   const signingInput = `${headerEncoded}.${payloadEncoded}`;
 
   const keyData = encodeUtf8(secret);
-  const key = await crypto.subtle.importKey("raw", keyData, { name: subtleName, hash }, false, [
+  const key = await crypto.subtle.importKey("raw", keyData, { hash, name: subtleName }, false, [
     "sign",
   ]);
 
@@ -60,9 +60,9 @@ async function signJWT(algo: Algorithm, secret: string, payload: string): Promis
 }
 
 const ALGO_OPTIONS: { value: Algorithm; label: string }[] = [
-  { value: "HS256", label: "HS256" },
-  { value: "HS384", label: "HS384" },
-  { value: "HS512", label: "HS512" },
+  { label: "HS256", value: "HS256" },
+  { label: "HS384", value: "HS384" },
+  { label: "HS512", value: "HS512" },
 ];
 
 export default function JwtGeneratorPage() {
@@ -93,7 +93,7 @@ export default function JwtGeneratorPage() {
       setError((e as Error).message);
       setToken("");
     }
-  }, [algo, secret, payload]);
+  }, [algo, payload, secret]);
 
   useEffect(() => {
     generate();

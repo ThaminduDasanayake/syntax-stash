@@ -16,7 +16,7 @@ export function parseSQLTables(sql: string): SQLTable[] {
   let match;
   while ((match = createTableRegex.exec(sql)) !== null) {
     const columns = parseSQLColumns(match[2]);
-    tables.push({ name: match[1], columns });
+    tables.push({ columns, name: match[1] });
   }
   return tables;
 }
@@ -38,9 +38,9 @@ export function parseSQLColumns(columnsStr: string): SQLColumn[] {
 
     const column: SQLColumn = {
       name,
-      type,
       notNull: /NOT\s+NULL/i.test(trimmed),
       primaryKey: /PRIMARY\s+KEY/i.test(trimmed),
+      type,
       unique: /UNIQUE/i.test(trimmed),
     };
 
@@ -62,25 +62,25 @@ export function mapSQLType(sqlType: string, dialect: SQLDialect): string {
     return m ? `varchar({ length: ${m[1]} })` : `varchar()`;
   }
   const map: Record<string, Record<SQLDialect, string>> = {
-    SERIAL: { postgres: "serial", mysql: "int" },
-    BIGSERIAL: { postgres: "bigserial", mysql: "bigint" },
-    INT: { postgres: "integer", mysql: "int" },
-    INTEGER: { postgres: "integer", mysql: "int" },
-    BIGINT: { postgres: "bigint", mysql: "bigint" },
-    SMALLINT: { postgres: "smallint", mysql: "smallint" },
-    TEXT: { postgres: "text", mysql: "text" },
-    BOOLEAN: { postgres: "boolean", mysql: "boolean" },
-    TIMESTAMP: { postgres: "timestamp", mysql: "timestamp" },
-    TIMESTAMPTZ: { postgres: "timestamp", mysql: "timestamp" },
-    DATE: { postgres: "date", mysql: "date" },
-    TIME: { postgres: "time", mysql: "time" },
-    DECIMAL: { postgres: "decimal", mysql: "decimal" },
-    NUMERIC: { postgres: "numeric", mysql: "decimal" },
-    FLOAT: { postgres: "real", mysql: "float" },
-    DOUBLE: { postgres: "doublePrecision", mysql: "double" },
-    UUID: { postgres: "uuid", mysql: "varchar" },
-    JSON: { postgres: "json", mysql: "json" },
-    JSONB: { postgres: "jsonb", mysql: "json" },
+    BIGINT: { mysql: "bigint", postgres: "bigint" },
+    BIGSERIAL: { mysql: "bigint", postgres: "bigserial" },
+    BOOLEAN: { mysql: "boolean", postgres: "boolean" },
+    DATE: { mysql: "date", postgres: "date" },
+    DECIMAL: { mysql: "decimal", postgres: "decimal" },
+    DOUBLE: { mysql: "double", postgres: "doublePrecision" },
+    FLOAT: { mysql: "float", postgres: "real" },
+    INT: { mysql: "int", postgres: "integer" },
+    INTEGER: { mysql: "int", postgres: "integer" },
+    JSON: { mysql: "json", postgres: "json" },
+    JSONB: { mysql: "json", postgres: "jsonb" },
+    NUMERIC: { mysql: "decimal", postgres: "numeric" },
+    SERIAL: { mysql: "int", postgres: "serial" },
+    SMALLINT: { mysql: "smallint", postgres: "smallint" },
+    TEXT: { mysql: "text", postgres: "text" },
+    TIME: { mysql: "time", postgres: "time" },
+    TIMESTAMP: { mysql: "timestamp", postgres: "timestamp" },
+    TIMESTAMPTZ: { mysql: "timestamp", postgres: "timestamp" },
+    UUID: { mysql: "varchar", postgres: "uuid" },
   };
   return map[type]?.[dialect] ?? "varchar()";
 }
@@ -146,15 +146,15 @@ export function parsePrismaField(line: string): PrismaField | null {
   const isRelation = /^[A-Z]/.test(prismaType) && !Object.keys(PG_TYPE_MAP).includes(prismaType);
   const defaultMatch = rest.match(/@default\(([^)]+)\)/);
   return {
-    name,
-    prismaType,
-    isOptional: !!optionalMark,
-    isList: !!listMark,
+    defaultValue: defaultMatch ? defaultMatch[1] : null,
     isId: rest.includes("@id"),
+    isList: !!listMark,
+    isOptional: !!optionalMark,
+    isRelation,
     isUnique: rest.includes("@unique"),
     isUpdatedAt: rest.includes("@updatedAt"),
-    defaultValue: defaultMatch ? defaultMatch[1] : null,
-    isRelation,
+    name,
+    prismaType,
   };
 }
 
@@ -167,7 +167,7 @@ export function parsePrismaModels(schema: string): PrismaModel[] {
       .split("\n")
       .map(parsePrismaField)
       .filter((f): f is PrismaField => f !== null);
-    models.push({ name: match[1], fields });
+    models.push({ fields, name: match[1] });
   }
   return models;
 }

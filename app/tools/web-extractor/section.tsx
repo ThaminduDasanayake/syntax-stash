@@ -13,7 +13,7 @@ interface SectionProps {
   children: ReactNode;
 }
 
-export function Section({ title, count, defaultOpen = true, children }: SectionProps) {
+export function Section({ title, children, count, defaultOpen = true }: SectionProps) {
   const [open, setOpen] = useState(defaultOpen);
 
   return (

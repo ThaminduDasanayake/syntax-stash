@@ -26,14 +26,14 @@ interface TextareaGroupProps extends TextareaHTMLAttributes<HTMLTextAreaElement>
 }
 
 export function TextareaGroup({
-  label,
   action,
-  footerText,
-  containerClassName,
-  className,
-  variant = "fill",
-  maxHeightClass,
   autoGrow = false,
+  className,
+  containerClassName,
+  footerText,
+  label,
+  maxHeightClass,
+  variant = "fill",
   ...props
 }: TextareaGroupProps) {
   const isFill = variant === "fill" && !autoGrow;

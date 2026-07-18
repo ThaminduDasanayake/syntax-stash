@@ -51,23 +51,23 @@ export default function ImageConverterPage() {
   const [avifSupported, setAvifSupported] = useState<boolean | null>(null);
 
   const [resize, setResize] = useState<ResizeOptions>({
-    mode: "original",
-    width: 0,
     height: 0,
-    percentage: 100,
     lockAspectRatio: true,
+    mode: "original",
+    percentage: 100,
+    width: 0,
   });
 
   const [formatOptions, setFormatOptions] = useState<FormatOptionsMap>({
-    png: { transparency: true, backgroundColour: "#ffffff" },
-    jpeg: { quality: 90, backgroundColour: "#ffffff" },
-    webp: { quality: 90, lossless: false },
     avif: { quality: 80 },
-    gif: { maxColours: 256, quantization: "rgb565" },
     bmp: { bitDepth: 32 },
+    gif: { maxColours: 256, quantization: "rgb565" },
+    icns: { multiSize: false, sizes: [128] },
+    ico: { multiSize: false, sizes: [32] },
+    jpeg: { backgroundColour: "#ffffff", quality: 90 },
+    png: { backgroundColour: "#ffffff", transparency: true },
     tiff: {},
-    ico: { sizes: [32], multiSize: false },
-    icns: { sizes: [128], multiSize: false },
+    webp: { lossless: false, quality: 90 },
   });
 
   const previewUrls = useMemo(() => images.map((file) => URL.createObjectURL(file)), [images]);
@@ -94,7 +94,7 @@ export default function ImageConverterPage() {
 
           try {
             const heic2any = (await import("heic2any")).default;
-            const convertedBlob = await heic2any({ blob: f, toType: "image/jpeg", quality: 0.9 });
+            const convertedBlob = await heic2any({ blob: f, quality: 0.9, toType: "image/jpeg" });
             const validBlob = Array.isArray(convertedBlob) ? convertedBlob[0] : convertedBlob;
             return new File([validBlob], f.name.replace(/\.heic$/i, ".jpg"), {
               type: "image/jpeg",
@@ -152,7 +152,7 @@ export default function ImageConverterPage() {
           img.src = objectUrl;
         });
 
-        const { width, height } = getTargetDimensions(img, resize);
+        const { height, width } = getTargetDimensions(img, resize);
 
         const needsBackground =
           targetFormat === "jpeg" ||
@@ -202,11 +202,11 @@ export default function ImageConverterPage() {
 
         const ext = targetFormat === "jpeg" ? "jpg" : targetFormat;
         results.push({
+          blob,
           name: file.name.replace(/\.[^.]+$/, `.${ext}`),
           originalFormat: file.type.split("/")[1] || "unknown",
-          targetFormat,
-          blob,
           size: blob.size,
+          targetFormat,
           url: URL.createObjectURL(blob),
         });
         URL.revokeObjectURL(objectUrl);
@@ -255,7 +255,7 @@ export default function ImageConverterPage() {
     a.click();
   };
 
-  const formatsWithSettings = ["jpeg", "webp", "avif", "png", "ico"];
+  const formatsWithSettings = ["avif", "ico", "jpeg", "png", "webp"];
 
   const tool = internalTools.find((t) => t.slug === "image-converter");
 
@@ -276,14 +276,14 @@ export default function ImageConverterPage() {
               multiple={true}
               onFilesDropAction={handleDrop}
               accept={buildAcceptMap([
-                ".png",
-                ".jpg",
-                ".jpeg",
-                ".webp",
                 ".avif",
                 ".gif",
                 ".heic",
                 ".heif",
+                ".jpeg",
+                ".jpg",
+                ".png",
+                ".webp",
               ])}
               label={
                 <>
@@ -355,15 +355,15 @@ export default function ImageConverterPage() {
             <div className="flex flex-wrap gap-2">
               {(
                 [
-                  "png",
-                  "jpeg",
-                  "webp",
                   "avif",
-                  "gif",
                   "bmp",
-                  "tiff",
-                  "ico",
+                  "gif",
                   "icns",
+                  "ico",
+                  "jpeg",
+                  "png",
+                  "tiff",
+                  "webp",
                 ] as ImageFormat[]
               ).map((fmt) => (
                 <Button
@@ -433,9 +433,9 @@ export default function ImageConverterPage() {
             <ButtonGroup className="grid w-full grid-cols-3">
               {(
                 [
-                  { v: "original", l: "Original" },
-                  { v: "custom", l: "Dimensions" },
-                  { v: "percentage", l: "Scale" },
+                  { l: "Dimensions", v: "custom" },
+                  { l: "Original", v: "original" },
+                  { l: "Scale", v: "percentage" },
                 ] as const
               ).map((mode) => (
                 <Button

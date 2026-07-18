@@ -27,22 +27,22 @@ export default function JsdocGeneratorPage() {
   const [style, setStyle] = useState<DocStyle>("jsdoc");
   const [includeThrows, setIncludeThrows] = useState(false);
 
-  const { output, error, parsed } = useMemo(() => {
-    if (!input.trim()) return { output: "", error: null, parsed: null };
+  const { error, output, parsed } = useMemo(() => {
+    if (!input.trim()) return { error: null, output: "", parsed: null };
     try {
       const result = parseFunctionSignature(input);
       if (!result)
-        return { output: "", error: "Could not parse function signature.", parsed: null };
-      return { output: generateDoc(result, style, includeThrows), error: null, parsed: result };
+        return { error: "Could not parse function signature.", output: "", parsed: null };
+      return { error: null, output: generateDoc(result, style, includeThrows), parsed: result };
     } catch (e) {
-      return { output: "", error: e instanceof Error ? e.message : "Parse error", parsed: null };
+      return { error: e instanceof Error ? e.message : "Parse error", output: "", parsed: null };
     }
-  }, [input, style, includeThrows]);
+  }, [includeThrows, input, style]);
 
   const documented = useMemo(() => {
     if (!output || !input.trim()) return "";
     return `${output}\n${input.trim()}`;
-  }, [output, input]);
+  }, [input, output]);
 
   const tool = internalTools.find((t) => t.slug === "jsdoc-generator");
 

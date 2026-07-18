@@ -6,7 +6,6 @@ import { useMemo, useState } from "react";
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
-import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { SliderField } from "@/components/ui/slider-field";
@@ -28,31 +27,31 @@ const DEFAULT_STOPS: ColorStop[] = [
 ];
 
 const LINEAR_DIRS = [
-  { value: "to right", label: "→ To Right" },
-  { value: "to left", label: "← To Left" },
-  { value: "to bottom", label: "↓ To Bottom" },
-  { value: "to top", label: "↑ To Top" },
-  { value: "to bottom right", label: "↘ To Bottom Right" },
-  { value: "to bottom left", label: "↙ To Bottom Left" },
-  { value: "to top right", label: "↗ To Top Right" },
-  { value: "to top left", label: "↖ To Top Left" },
-  { value: "custom", label: "Custom angle" },
+  { label: "← To Left", value: "to left" },
+  { label: "→ To Right", value: "to right" },
+  { label: "↑ To Top", value: "to top" },
+  { label: "↓ To Bottom", value: "to bottom" },
+  { label: "↖ To Top Left", value: "to top left" },
+  { label: "↗ To Top Right", value: "to top right" },
+  { label: "↘ To Bottom Right", value: "to bottom right" },
+  { label: "↙ To Bottom Left", value: "to bottom left" },
+  { label: "Custom angle", value: "custom" },
 ];
 
 const RADIAL_SHAPES = [
-  { value: "circle", label: "Circle" },
-  { value: "ellipse", label: "Ellipse" },
+  { label: "Circle", value: "circle" },
+  { label: "Ellipse", value: "ellipse" },
 ];
 
 const TAILWIND_GRADIENT_DIRS: Record<string, string> = {
-  "to right": "bg-gradient-to-r",
-  "to left": "bg-gradient-to-l",
   "to bottom": "bg-gradient-to-b",
-  "to top": "bg-gradient-to-t",
-  "to bottom right": "bg-gradient-to-br",
   "to bottom left": "bg-gradient-to-bl",
-  "to top right": "bg-gradient-to-tr",
+  "to bottom right": "bg-gradient-to-br",
+  "to left": "bg-gradient-to-l",
+  "to right": "bg-gradient-to-r",
+  "to top": "bg-gradient-to-t",
   "to top left": "bg-gradient-to-tl",
+  "to top right": "bg-gradient-to-tr",
 };
 
 export default function GradientGeneratorPage() {
@@ -76,7 +75,7 @@ export default function GradientGeneratorPage() {
       return `radial-gradient(${radialShape} at center, ${stopString})`;
     }
     return `conic-gradient(from ${conicAngle}deg at center, ${stopString})`;
-  }, [type, direction, angle, radialShape, conicAngle, stopString]);
+  }, [angle, conicAngle, direction, radialShape, stopString, type]);
 
   const cssRule = `background: ${cssValue};`;
 
@@ -88,7 +87,7 @@ export default function GradientGeneratorPage() {
       return `${dir} ${from} ${to}`;
     }
     return `bg-[${cssValue.replace(/\s/g, "_")}]`;
-  }, [type, direction, stops, sortedStops, cssValue]);
+  }, [cssValue, direction, sortedStops, stops, type]);
 
   const addStop = () => {
     const mid = Math.round(
@@ -117,7 +116,7 @@ export default function GradientGeneratorPage() {
           <div className="space-y-2">
             <Label>Type</Label>
             <div className="flex gap-2">
-              {(["linear", "radial", "conic"] as GradientType[]).map((t) => (
+              {(["conic", "linear", "radial"] as GradientType[]).map((t) => (
                 <Button
                   key={t}
                   size="sm"

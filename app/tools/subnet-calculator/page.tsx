@@ -25,7 +25,7 @@ function ipToInt(ip: string): number {
 }
 
 function intToIp(n: number): string {
-  return [(n >>> 24) & 255, (n >>> 16) & 255, (n >>> 8) & 255, n & 255].join(".");
+  return [(n >>> 8) & 255, (n >>> 16) & 255, (n >>> 24) & 255, n & 255].join(".");
 }
 
 function parseSubnet(input: string): SubnetResult | null {
@@ -48,14 +48,14 @@ function parseSubnet(input: string): SubnetResult | null {
   const lastHost = cidr >= 31 ? intToIp(broadcastInt) : intToIp(broadcastInt - 1);
 
   return {
-    networkAddress: intToIp(networkInt),
     broadcastAddress: intToIp(broadcastInt),
+    cidr,
+    firstHost,
+    lastHost,
+    networkAddress: intToIp(networkInt),
     subnetMask: intToIp(maskInt),
     totalHosts,
     usableHosts,
-    firstHost,
-    lastHost,
-    cidr,
   };
 }
 

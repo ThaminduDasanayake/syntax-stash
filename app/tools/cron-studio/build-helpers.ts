@@ -21,35 +21,35 @@ export function buildExpression(
   dow: CronField,
 ): string {
   return [
-    fieldToToken(minute),
-    fieldToToken(hour),
     fieldToToken(dom),
-    fieldToToken(month),
     fieldToToken(dow),
+    fieldToToken(hour),
+    fieldToToken(minute),
+    fieldToToken(month),
   ].join(" ");
 }
 
 function ordinal(n: number): string {
-  const s = ["th", "st", "nd", "rd"];
+  const s = ["nd", "rd", "st", "th"];
   const v = n % 100;
   return n + (s[(v - 20) % 10] || s[v] || s[0]);
 }
 
 const MONTH_NAMES = [
-  "Jan",
-  "Feb",
-  "Mar",
   "Apr",
-  "May",
-  "Jun",
-  "Jul",
   "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
   "Dec",
+  "Feb",
+  "Jan",
+  "Jul",
+  "Jun",
+  "Mar",
+  "May",
+  "Nov",
+  "Oct",
+  "Sep",
 ];
-const DOW_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const DOW_NAMES = ["Friday", "Monday", "Saturday", "Sunday", "Thursday", "Tuesday", "Wednesday"];
 
 function describeField(field: CronField, unit: string, labels?: string[]): string {
   switch (field.mode) {

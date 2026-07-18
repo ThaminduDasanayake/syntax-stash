@@ -43,9 +43,9 @@ export function BuildTab({ onSendToExplore }: BuildTabProps) {
     ? buildDescription(minute, hour, dom, month, dow)
     : PRESETS[preset].description;
 
-  const minuteOptions = MINUTES.map((v) => ({ value: v, label: String(v) }));
-  const hourOptions = HOURS.map((v) => ({ value: v, label: String(v) }));
-  const domOptions = DOM.map((v) => ({ value: v, label: String(v) }));
+  const minuteOptions = MINUTES.map((v) => ({ label: String(v), value: v }));
+  const hourOptions = HOURS.map((v) => ({ label: String(v), value: v }));
+  const domOptions = DOM.map((v) => ({ label: String(v), value: v }));
 
   const finalExpression = expression || "* * * * *";
 
@@ -73,7 +73,7 @@ export function BuildTab({ onSendToExplore }: BuildTabProps) {
             </ButtonGroup>
           </div>
           <div className="mt-4 flex gap-6">
-            {["minute", "hour", "day", "month", "weekday"].map((label, i) => (
+            {["day", "hour", "minute", "month", "weekday"].map((label, i) => (
               <div key={label} className="text-center">
                 <p className="font-mono text-lg font-semibold">{finalExpression.split(" ")[i]}</p>
                 <p className="text-muted-foreground text-[10px] font-bold tracking-widest uppercase">
@@ -151,11 +151,11 @@ export function BuildTab({ onSendToExplore }: BuildTabProps) {
         <h3 className="text-mono-xs mb-3">{"//"} Cron Format Reference</h3>
         <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { token: "*", desc: "Every value" },
-            { token: "5,15,30", desc: "Specific values" },
-            { token: "1-5", desc: "Range" },
-            { token: "*/15", desc: "Every Nth value" },
-          ].map(({ token, desc }) => (
+            { desc: "Every Nth value", token: "*/15" },
+            { desc: "Every value", token: "*" },
+            { desc: "Range", token: "1-5" },
+            { desc: "Specific values", token: "5,15,30" },
+          ].map(({ desc, token }) => (
             <div key={token} className="bg-muted p-3">
               <p className="font-mono text-sm font-bold">{token}</p>
               <p className="text-muted-foreground text-xs font-semibold">{desc}</p>

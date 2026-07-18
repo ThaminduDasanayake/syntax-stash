@@ -12,14 +12,14 @@ export const hasSelectableClass = ({
 }: {
   attributes: { className?: string };
   className?: string;
-}) => [className, attributes.className].filter(Boolean).join(" ").includes("slate-selectable");
+}) => [attributes.className, className].filter(Boolean).join(" ").includes("slate-selectable");
 
 export const BlockSelectionKit = [
   BlockSelectionPlugin.configure(({ editor }) => ({
     options: {
       enableContextMenu: true,
       isSelectable: (element) =>
-        !getPluginTypes(editor, [KEYS.column, KEYS.codeLine, KEYS.td]).includes(element.type),
+        !getPluginTypes(editor, [KEYS.codeLine, KEYS.column, KEYS.td]).includes(element.type),
       onKeyDownSelecting: (editor, e) => {
         if (isHotkey("mod+j")(e)) {
           editor.getApi(AIChatPlugin).aiChat.show();

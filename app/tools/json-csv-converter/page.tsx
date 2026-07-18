@@ -24,8 +24,8 @@ type Delimiter = "comma" | "tab" | "semicolon";
 
 const DELIMITER_MAP: Record<Delimiter, string> = {
   comma: ",",
-  tab: "\t",
   semicolon: ";",
+  tab: "\t",
 };
 
 const JSON_EXAMPLE = `[
@@ -48,19 +48,19 @@ export default function JSONCSVConverterPage() {
 
   const isJsonToCsv = direction === "json-to-csv";
 
-  const { output, error } = useMemo<{ output: string; error: string }>(() => {
-    if (!input.trim()) return { output: "", error: "" };
+  const { error, output } = useMemo<{ output: string; error: string }>(() => {
+    if (!input.trim()) return { error: "", output: "" };
     try {
       const delim = DELIMITER_MAP[delimiter];
       if (isJsonToCsv) {
-        return { output: jsonToCSV(input, delim, includeHeader, flatten), error: "" };
+        return { error: "", output: jsonToCSV(input, delim, includeHeader, flatten) };
       } else {
-        return { output: csvToJSON(input, delim), error: "" };
+        return { error: "", output: csvToJSON(input, delim) };
       }
     } catch (e) {
-      return { output: "", error: (e as Error).message };
+      return { error: (e as Error).message, output: "" };
     }
-  }, [input, delimiter, includeHeader, flatten, isJsonToCsv]);
+  }, [delimiter, flatten, includeHeader, input, isJsonToCsv]);
 
   const handleDirectionChange = (d: string) => {
     const newDir = d as Direction;
@@ -75,9 +75,9 @@ export default function JSONCSVConverterPage() {
   };
 
   const delimiterOptions = [
-    { value: "comma", label: "Comma (,)" },
-    { value: "tab", label: "Tab (\\t)" },
-    { value: "semicolon", label: "Semicolon (;)" },
+    { label: "Comma (,)", value: "comma" },
+    { label: "Semicolon (;)", value: "semicolon" },
+    { label: "Tab (\\t)", value: "tab" },
   ];
 
   const tool = internalTools.find((t) => t.slug === "json-csv-converter");

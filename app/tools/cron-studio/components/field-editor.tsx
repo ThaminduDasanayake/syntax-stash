@@ -14,12 +14,12 @@ interface FieldEditorProps {
   options: { value: number; label: string }[];
 }
 
-export function FieldEditor({ label, field, onChange, min, max, options }: FieldEditorProps) {
+export function FieldEditor({ field, label, max, min, onChange, options }: FieldEditorProps) {
   const modeOptions = [
-    { value: "every", label: "Every" },
-    { value: "specific", label: "Specific values" },
-    { value: "range", label: "Range" },
-    { value: "step", label: "Step" },
+    { label: "Every", value: "every" },
+    { label: "Range", value: "range" },
+    { label: "Specific values", value: "specific" },
+    { label: "Step", value: "step" },
   ];
 
   return (

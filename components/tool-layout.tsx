@@ -11,7 +11,7 @@ export function ToolLayout({ children, tool }: { children: ReactNode; tool: Tool
     notFound();
   }
 
-  const { icon, title, highlight, description, category } = tool;
+  const { title, category, description, highlight, icon } = tool;
   const Icon = icon ? iconMap[icon] : undefined;
 
   return (

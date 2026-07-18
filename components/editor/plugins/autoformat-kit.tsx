@@ -22,36 +22,37 @@ const createAutoformatTextSubstitutionRule = ({
 
 const arrowsRule = createAutoformatTextSubstitutionRule({
   patterns: [
-    { format: "→", match: "->" },
     { format: "←", match: "<-" },
-    { format: "⇒", match: "=>" },
+    { format: "→", match: "->" },
     { format: "⇐", match: ["<=", "≤="] },
+    { format: "⇒", match: "=>" },
   ],
 });
 
 const comparisonsRule = createAutoformatTextSubstitutionRule({
   patterns: [
-    { format: "≯", match: "!>" },
     { format: "≮", match: "!<" },
-    { format: "≥", match: ">=" },
+    { format: "≯", match: "!>" },
+    { format: "≰", match: "!<=" },
     { format: "≤", match: "<=" },
     { format: "≱", match: "!>=" },
-    { format: "≰", match: "!<=" },
+    { format: "≥", match: ">=" },
   ],
 });
 
 const equalityRule = createAutoformatTextSubstitutionRule({
   patterns: [
     { format: "≠", match: "!=" },
+    { format: "≉", match: "!~=" },
+    { format: "≈", match: "~=" },
     { format: "≡", match: "==" },
     { format: "≢", match: ["!==", "≠="] },
-    { format: "≈", match: "~=" },
-    { format: "≉", match: "!~=" },
   ],
 });
 
 const fractionsRule = createAutoformatTextSubstitutionRule({
   patterns: [
+    { format: "⅒", match: "1/10" },
     { format: "½", match: "1/2" },
     { format: "⅓", match: "1/3" },
     { format: "¼", match: "1/4" },
@@ -60,7 +61,6 @@ const fractionsRule = createAutoformatTextSubstitutionRule({
     { format: "⅐", match: "1/7" },
     { format: "⅛", match: "1/8" },
     { format: "⅑", match: "1/9" },
-    { format: "⅒", match: "1/10" },
     { format: "⅔", match: "2/3" },
     { format: "⅖", match: "2/5" },
     { format: "¾", match: "3/4" },
@@ -75,40 +75,40 @@ const fractionsRule = createAutoformatTextSubstitutionRule({
 
 const legalRule = createAutoformatTextSubstitutionRule({
   patterns: [
-    { format: "™", match: ["(tm)", "(TM)"] },
-    { format: "®", match: ["(r)", "(R)"] },
     { format: "©", match: ["(c)", "(C)"] },
+    { format: "®", match: ["(r)", "(R)"] },
+    { format: "™", match: ["(tm)", "(TM)"] },
   ],
 });
 
 const legalHtmlRule = createAutoformatTextSubstitutionRule({
   patterns: [
-    { format: "™", match: "&trade;" },
-    { format: "®", match: "&reg;" },
-    { format: "©", match: "&copy;" },
     { format: "§", match: "&sect;" },
+    { format: "©", match: "&copy;" },
+    { format: "®", match: "&reg;" },
+    { format: "™", match: "&trade;" },
   ],
 });
 
 const operatorsRule = createAutoformatTextSubstitutionRule({
   patterns: [
-    { format: "±", match: "+-" },
     { format: "‰", match: "%%" },
     { format: "‱", match: ["%%%", "‰%"] },
+    { format: "±", match: "+-" },
   ],
 });
 
 const punctuationRule = createAutoformatTextSubstitutionRule({
   patterns: [
-    { format: "»", match: ">>" },
     { format: "«", match: "<<" },
+    { format: "»", match: ">>" },
   ],
 });
 
 const smartQuotesRule = createAutoformatTextSubstitutionRule({
   patterns: [
-    { format: ["“", "”"], match: '"' },
     { format: ["‘", "’"], match: "'" },
+    { format: ["“", "”"], match: '"' },
   ],
 });
 
@@ -158,14 +158,13 @@ const superscriptSymbolsRule = createAutoformatTextSubstitutionRule({
 });
 
 const AutoformatShortcutsPlugin = createSlatePlugin({
-  key: "autoformatShortcuts",
   inputRules: [
-    legalRule,
-    legalHtmlRule,
     arrowsRule,
     comparisonsRule,
     equalityRule,
     fractionsRule,
+    legalHtmlRule,
+    legalRule,
     operatorsRule,
     punctuationRule,
     smartQuotesRule,
@@ -174,6 +173,7 @@ const AutoformatShortcutsPlugin = createSlatePlugin({
     superscriptNumbersRule,
     superscriptSymbolsRule,
   ],
+  key: "autoformatShortcuts",
 });
 
 export const AutoformatKit = [AutoformatShortcutsPlugin];

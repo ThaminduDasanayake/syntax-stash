@@ -33,13 +33,13 @@ type Props = {
 };
 
 const TYPE_COLORS: Record<string, string> = {
-  string: "text-emerald-400",
-  number: "text-sky-400",
   boolean: "text-violet-400",
   null: "text-muted-foreground",
+  number: "text-sky-400",
+  string: "text-emerald-400",
 };
 
-function Highlight({ text, query }: { text: string; query: string }) {
+function Highlight({ query, text }: { text: string; query: string }) {
   if (!query) return <>{text}</>;
   const idx = text.toLowerCase().indexOf(query.toLowerCase());
   if (idx < 0) return <>{text}</>;
@@ -54,7 +54,7 @@ function Highlight({ text, query }: { text: string; query: string }) {
   );
 }
 
-function CopyBtn({ text, icon: Icon }: { text: string; icon: typeof ClipboardIcon }) {
+function CopyBtn({ icon: Icon, text }: { text: string; icon: typeof ClipboardIcon }) {
   const { copied, copy } = useCopyToClipboard();
   return (
     <Button
@@ -77,8 +77,8 @@ function CopyBtn({ text, icon: Icon }: { text: string; icon: typeof ClipboardIco
 }
 
 function TestInQueryBtn({
-  path,
   onTestInQueryAction,
+  path,
 }: {
   path: string;
   onTestInQueryAction: (p: string) => void;
@@ -100,13 +100,13 @@ function TestInQueryBtn({
 }
 
 export function TreeNode({
-  name,
-  value,
-  path,
   depth,
-  searchQuery,
   forceExpand,
+  name,
   onTestInQueryAction,
+  path,
+  searchQuery,
+  value,
 }: Props) {
   const type = getValueType(value);
   const isContainer = type === "object" || type === "array";

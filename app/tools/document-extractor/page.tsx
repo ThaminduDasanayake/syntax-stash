@@ -40,7 +40,7 @@ export default function DocumentExtractorPage() {
     try {
       const fd = new FormData();
       fd.append("file", file);
-      const res = await fetch("/api/extract-text", { method: "POST", body: fd });
+      const res = await fetch("/api/extract-text", { body: fd, method: "POST" });
       const data = await res.json();
 
       if (!res.ok || data.error) {
@@ -72,7 +72,7 @@ export default function DocumentExtractorPage() {
               onFileDropAction={handleFileDrop}
               maxSize={MAX_BYTES}
               onReject={(errorMsg) => setError(errorMsg)}
-              accept={buildAcceptMap([".pdf", ".docx", ".html", ".htm", ".md", ".txt", ".csv"])}
+              accept={buildAcceptMap([".csv", ".docx", ".htm", ".html", ".md", ".pdf", ".txt"])}
               label={
                 <>
                   <p className="text-foreground font-medium">Drop a document (Max size: 4 MB)</p>

@@ -25,17 +25,17 @@ export default function MarkdownLivePreviewPage() {
   const [editorMode, setEditorMode] = useState<EditorMode>("raw");
   const [showPreview, setShowPreview] = useState(true);
 
-  const { renderedHtml, parseError } = useMemo(() => {
-    if (!markdown.trim()) return { renderedHtml: "", parseError: null };
+  const { parseError, renderedHtml } = useMemo(() => {
+    if (!markdown.trim()) return { parseError: null, renderedHtml: "" };
     try {
       return {
-        renderedHtml: marked.parse(markdown, { async: false, gfm: true, breaks: false }) as string,
         parseError: null,
+        renderedHtml: marked.parse(markdown, { async: false, breaks: false, gfm: true }) as string,
       };
     } catch (e) {
       return {
-        renderedHtml: "",
         parseError: e instanceof Error ? e.message : "Error parsing markdown.",
+        renderedHtml: "",
       };
     }
   }, [markdown]);
@@ -44,7 +44,7 @@ export default function MarkdownLivePreviewPage() {
     const words = markdown.trim() ? markdown.trim().split(/\s+/).length : 0;
     const chars = markdown.length;
     const lines = markdown.split("\n").length;
-    return { words, chars, lines };
+    return { chars, lines, words };
   }, [markdown]);
 
   function handleDownloadHtml() {

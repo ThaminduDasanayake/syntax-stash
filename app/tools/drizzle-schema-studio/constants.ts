@@ -1,25 +1,25 @@
 export const PG_TYPE_MAP: Record<string, string> = {
-  String: "text",
-  Int: "integer",
   BigInt: "bigint",
-  Float: "doublePrecision",
-  Decimal: "decimal",
   Boolean: "boolean",
-  DateTime: "timestamp",
-  Json: "jsonb",
   Bytes: "bytea",
+  DateTime: "timestamp",
+  Decimal: "decimal",
+  Float: "doublePrecision",
+  Int: "integer",
+  Json: "jsonb",
+  String: "text",
 };
 
 export const SQLITE_TYPE_MAP: Record<string, string> = {
-  String: "text",
-  Int: "integer",
   BigInt: "integer",
-  Float: "real",
-  Decimal: "real",
   Boolean: "integer",
-  DateTime: "text",
-  Json: "text",
   Bytes: "blob",
+  DateTime: "text",
+  Decimal: "real",
+  Float: "real",
+  Int: "integer",
+  Json: "text",
+  String: "text",
 };
 
 export const SQL_SAMPLE = `CREATE TABLE users (

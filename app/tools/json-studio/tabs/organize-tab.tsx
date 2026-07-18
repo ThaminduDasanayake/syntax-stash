@@ -52,13 +52,13 @@ export function OrganizeTab({ input }: { input: string }) {
 
     return items;
   }, [
-    parsed,
-    activeSortKey,
-    sortOrder,
     activeFilterKey,
+    activeSortKey,
     filterOperator,
     filterValue,
     hasValidData,
+    parsed,
+    sortOrder,
   ]);
 
   const resultJSON = useMemo(() => {
@@ -69,16 +69,16 @@ export function OrganizeTab({ input }: { input: string }) {
   const resultCount = result?.length ?? 0;
   const totalCount = parsed?.items?.length ?? 0;
 
-  const keyOptions = keys.map((k) => ({ value: k, label: k }));
+  const keyOptions = keys.map((k) => ({ label: k, value: k }));
   const orderOptions = [
-    { value: "asc", label: "Ascending" },
-    { value: "desc", label: "Descending" },
+    { label: "Ascending", value: "asc" },
+    { label: "Descending", value: "desc" },
   ];
   const operatorOptions = [
-    { value: "contains", label: "Contains" },
-    { value: "equals", label: "Equals" },
-    { value: "greater", label: "Greater Than (>)" },
-    { value: "less", label: "Less Than (<)" },
+    { label: "Contains", value: "contains" },
+    { label: "Equals", value: "equals" },
+    { label: "Greater Than (>)", value: "greater" },
+    { label: "Less Than (<)", value: "less" },
   ];
 
   return (

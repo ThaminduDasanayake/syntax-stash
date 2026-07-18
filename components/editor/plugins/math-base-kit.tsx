@@ -6,6 +6,6 @@ import {
 } from "@/components/plate-ui/equation-node-static";
 
 export const BaseMathKit = [
-  BaseInlineEquationPlugin.withComponent(InlineEquationElementStatic),
   BaseEquationPlugin.withComponent(EquationElementStatic),
+  BaseInlineEquationPlugin.withComponent(InlineEquationElementStatic),
 ];

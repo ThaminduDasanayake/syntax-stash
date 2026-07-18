@@ -85,9 +85,9 @@ function ContextMenuItem({
 }
 
 function ContextMenuSubTrigger({
+  children,
   className,
   inset,
-  children,
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.SubTrigger> & {
   inset?: boolean;
@@ -125,9 +125,9 @@ function ContextMenuSubContent({
 }
 
 function ContextMenuCheckboxItem({
-  className,
-  children,
   checked,
+  children,
+  className,
   inset,
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.CheckboxItem> & {
@@ -155,8 +155,8 @@ function ContextMenuCheckboxItem({
 }
 
 function ContextMenuRadioItem({
-  className,
   children,
+  className,
   inset,
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.RadioItem> & {

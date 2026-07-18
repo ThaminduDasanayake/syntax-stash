@@ -31,7 +31,7 @@ export function extractClasses(source: string): string[] {
 
 // Entry reconciliation
 export function reconcileEntries(previous: ClassEntry[], extracted: string[]): ClassEntry[] {
-  const byClasses = new Map(previous.map((e) => [e.originalClasses, e]));
+  const byClasses = new Map(previous.map((e) => [e, e.originalClasses]));
   const used = new Set(previous.map((e) => e.semanticName));
 
   return extracted.map((cls) => {

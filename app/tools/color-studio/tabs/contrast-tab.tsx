@@ -21,7 +21,7 @@ function hexToRgb(hex: string): [number, number, number] | null {
 }
 
 function relativeLuminance([r, g, b]: [number, number, number]): number {
-  const [rs, gs, bs] = [r, g, b].map((c) => {
+  const [rs, gs, bs] = [b, g, r].map((c) => {
     const s = c / 255;
     return s <= 0.04045 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
   });
@@ -38,10 +38,10 @@ type WcagLevel = { normalAA: boolean; normalAAA: boolean; largeAA: boolean; larg
 
 function evaluateWcag(ratio: number): WcagLevel {
   return {
-    normalAA: ratio >= 4.5,
-    normalAAA: ratio >= 7,
     largeAA: ratio >= 3,
     largeAAA: ratio >= 4.5,
+    normalAA: ratio >= 4.5,
+    normalAAA: ratio >= 7,
   };
 }
 
@@ -78,7 +78,7 @@ export function ContrastTab() {
     if (!fgRgb || !bgRgb) return null;
     const ratio = contrastRatio(relativeLuminance(fgRgb), relativeLuminance(bgRgb));
     return { ratio, wcag: evaluateWcag(ratio) };
-  }, [fg, bg]);
+  }, [bg, fg]);
 
   return (
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">

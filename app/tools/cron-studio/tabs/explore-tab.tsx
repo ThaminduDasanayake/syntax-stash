@@ -42,7 +42,7 @@ export function ExploreTab({ expression, setExpression }: ExploreTabProps) {
 
   const parsed = useMemo<CronParsed>(() => {
     const expr = expression.trim();
-    if (!expr) return { ok: false, error: "Enter a cron expression." };
+    if (!expr) return { error: "Enter a cron expression.", ok: false };
 
     try {
       const human = cronstrue.toString(expr);
@@ -52,9 +52,9 @@ export function ExploreTab({ expression, setExpression }: ExploreTabProps) {
       for (let i = 0; i < 20; i++) {
         dates.push(interval.next().toDate());
       }
-      return { ok: true, human, dates };
+      return { dates, human, ok: true };
     } catch (e) {
-      return { ok: false, error: e instanceof Error ? e.message : "Invalid cron expression" };
+      return { error: e instanceof Error ? e.message : "Invalid cron expression", ok: false };
     }
   }, [expression, timezone]);
 
@@ -87,7 +87,7 @@ export function ExploreTab({ expression, setExpression }: ExploreTabProps) {
             label="Timezone"
             value={timezone}
             onValueChange={setTimezone}
-            options={COMMON_TIMEZONES.map((tz) => ({ value: tz, label: tz }))}
+            options={COMMON_TIMEZONES.map((tz) => ({ label: tz, value: tz }))}
           />
 
           <SelectField

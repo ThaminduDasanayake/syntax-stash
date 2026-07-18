@@ -35,66 +35,6 @@ import { ToolbarButton, ToolbarMenuGroup } from "./toolbar";
 
 export const turnIntoItems = [
   {
-    icon: <ParagraphIcon />,
-    keywords: ["paragraph"],
-    label: "Text",
-    value: KEYS.p,
-  },
-  {
-    icon: <TextHOneIcon />,
-    keywords: ["title", "h1"],
-    label: "Heading 1",
-    value: "h1",
-  },
-  {
-    icon: <TextHTwoIcon />,
-    keywords: ["subtitle", "h2"],
-    label: "Heading 2",
-    value: "h2",
-  },
-  {
-    icon: <TextHThreeIcon />,
-    keywords: ["subtitle", "h3"],
-    label: "Heading 3",
-    value: "h3",
-  },
-  {
-    icon: <TextHFourIcon />,
-    keywords: ["subtitle", "h4"],
-    label: "Heading 4",
-    value: "h4",
-  },
-  {
-    icon: <TextHFiveIcon />,
-    keywords: ["subtitle", "h5"],
-    label: "Heading 5",
-    value: "h5",
-  },
-  {
-    icon: <TextHSixIcon />,
-    keywords: ["subtitle", "h6"],
-    label: "Heading 6",
-    value: "h6",
-  },
-  {
-    icon: <ListBulletsIcon />,
-    keywords: ["unordered", "ul", "-"],
-    label: "Bulleted list",
-    value: KEYS.ul,
-  },
-  {
-    icon: <ListNumbersIcon />,
-    keywords: ["ordered", "ol", "1"],
-    label: "Numbered list",
-    value: KEYS.ol,
-  },
-  {
-    icon: <SquareIcon />,
-    keywords: ["checklist", "task", "checkbox", "[]"],
-    label: "To-do list",
-    value: KEYS.listTodo,
-  },
-  {
     icon: <CaretRightIcon />,
     keywords: ["collapsible", "expandable"],
     label: "Toggle list",
@@ -106,6 +46,24 @@ export const turnIntoItems = [
     label: "Code",
     value: KEYS.codeBlock,
   },
+  {
+    icon: <ListBulletsIcon />,
+    keywords: ["-", "ul", "unordered"],
+    label: "Bulleted list",
+    value: KEYS.ul,
+  },
+  {
+    icon: <ListNumbersIcon />,
+    keywords: ["1", "ol", "ordered"],
+    label: "Numbered list",
+    value: KEYS.ol,
+  },
+  {
+    icon: <ParagraphIcon />,
+    keywords: ["paragraph"],
+    label: "Text",
+    value: KEYS.p,
+  },
   // {
   //   icon: <Code2 />,
   //   keywords: ["code-drawing", "diagram", "plantuml", "graphviz", "flowchart", "mermaid"],
@@ -114,9 +72,51 @@ export const turnIntoItems = [
   // },
   {
     icon: <QuotesIcon />,
-    keywords: ["citation", "blockquote", ">"],
+    keywords: [">", "blockquote", "citation"],
     label: "Quote",
     value: KEYS.blockquote,
+  },
+  {
+    icon: <SquareIcon />,
+    keywords: ["[]", "checkbox", "checklist", "task"],
+    label: "To-do list",
+    value: KEYS.listTodo,
+  },
+  {
+    icon: <TextHFiveIcon />,
+    keywords: ["h5", "subtitle"],
+    label: "Heading 5",
+    value: "h5",
+  },
+  {
+    icon: <TextHFourIcon />,
+    keywords: ["h4", "subtitle"],
+    label: "Heading 4",
+    value: "h4",
+  },
+  {
+    icon: <TextHOneIcon />,
+    keywords: ["h1", "title"],
+    label: "Heading 1",
+    value: "h1",
+  },
+  {
+    icon: <TextHSixIcon />,
+    keywords: ["h6", "subtitle"],
+    label: "Heading 6",
+    value: "h6",
+  },
+  {
+    icon: <TextHThreeIcon />,
+    keywords: ["h3", "subtitle"],
+    label: "Heading 3",
+    value: "h3",
+  },
+  {
+    icon: <TextHTwoIcon />,
+    keywords: ["h2", "subtitle"],
+    label: "Heading 2",
+    value: "h2",
   },
   // {
   //   icon: <Columns3Icon />,

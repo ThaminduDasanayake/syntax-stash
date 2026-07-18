@@ -22,8 +22,8 @@ import { internalTools } from "@/lib/tools-data";
 
 function SideBySideLineRow({
   line,
-  showOld,
   showNew,
+  showOld,
 }: {
   line: DiffLine | null;
   showOld: boolean;
@@ -48,7 +48,7 @@ export default function DiffViewerPage() {
     const removed = lines.filter((l) => l.type === "removed").length;
     const unchanged = lines.filter((l) => l.type === "unchanged").length;
     return { diffLines: lines, diffText: text, stats: { added, removed, unchanged } };
-  }, [original, modified, ignoreWhitespace]);
+  }, [ignoreWhitespace, modified, original]);
 
   const { left, right } = useMemo(
     () => (viewMode === "side-by-side" ? buildSideColumns(diffLines) : { left: [], right: [] }),

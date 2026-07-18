@@ -45,11 +45,11 @@ export function LinkFloatingToolbar({ state }: { state?: LinkFloatingToolbarStat
   const floatingOptions: UseVirtualFloatingOptions = React.useMemo(
     () => ({
       middleware: [
-        offset(8),
         flip({
-          fallbackPlacements: ["bottom-end", "top-start", "top-end"],
+          fallbackPlacements: ["bottom-end", "top-end", "top-start"],
           padding: 12,
         }),
+        offset(8),
       ],
       placement: activeSuggestionId || activeCommentId ? "top-start" : "bottom-start",
     }),

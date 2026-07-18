@@ -21,10 +21,10 @@ function getFavicon(toolUrl: string, explicitFavicon?: string) {
 }
 
 export function CardIcon({
-  url,
   alt,
   className = "bg-background",
   explicitFavicon,
+  url,
 }: {
   url: string;
   alt: string;

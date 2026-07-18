@@ -15,16 +15,16 @@ import { SwitchField } from "@/components/ui/switch-field";
 
 export function BorderRadiusTab() {
   const [linked, setLinked] = useState({
+    bl: true,
+    br: true,
     tl: true,
     tr: true,
-    br: true,
-    bl: true,
   });
   const [corners, setCorners] = useState<Corners>({
+    bl: { h: 8, v: 8 },
+    br: { h: 8, v: 8 },
     tl: { h: 8, v: 8 },
     tr: { h: 8, v: 8 },
-    br: { h: 8, v: 8 },
-    bl: { h: 8, v: 8 },
   });
 
   const derivedMode = Object.values(corners).some((c) => c.h !== c.v) ? "Advanced" : "Simple";
@@ -57,18 +57,18 @@ export function BorderRadiusTab() {
   function applyPreset(preset: (typeof PRESETS)[0]) {
     setCorners(preset.corners);
     setLinked({
+      bl: preset.corners.bl.h === preset.corners.bl.v,
+      br: preset.corners.br.h === preset.corners.br.v,
       tl: preset.corners.tl.h === preset.corners.tl.v,
       tr: preset.corners.tr.h === preset.corners.tr.v,
-      br: preset.corners.br.h === preset.corners.br.v,
-      bl: preset.corners.bl.h === preset.corners.bl.v,
     });
   }
 
   const cornerKeys: { key: keyof Corners; label: string }[] = [
+    { key: "bl", label: "Bottom Left" },
+    { key: "br", label: "Bottom Right" },
     { key: "tl", label: "Top Left" },
     { key: "tr", label: "Top Right" },
-    { key: "br", label: "Bottom Right" },
-    { key: "bl", label: "Bottom Left" },
   ];
 
   const MAX = 160;

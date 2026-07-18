@@ -28,15 +28,9 @@ type TabType = "ts" | "zod" | "pydantic" | "jsonSchema";
 const SAMPLE = JSON.stringify(
   {
     id: "user_42",
-    name: "Ada Lovelace",
     email: "ada@example.com",
     isActive: true,
-    tags: ["admin", "early-adopter"],
-    profile: {
-      bio: "Mathematician",
-      avatarUrl: null,
-      joinedAt: "1815-12-10T00:00:00Z",
-    },
+    name: "Ada Lovelace",
     posts: [
       {
         id: 1,
@@ -49,6 +43,12 @@ const SAMPLE = JSON.stringify(
         publishedAt: null,
       },
     ],
+    profile: {
+      avatarUrl: null,
+      bio: "Mathematician",
+      joinedAt: "1815-12-10T00:00:00Z",
+    },
+    tags: ["admin", "early-adopter"],
   },
   null,
   2,
@@ -67,33 +67,33 @@ export default function JsonSchemaStudioPage() {
   const result = useMemo(() => {
     const trimmed = input.trim();
     if (!trimmed) {
-      return { ok: true, ts: "", zod: "", pydantic: "", jsonSchema: "" };
+      return { jsonSchema: "", ok: true, pydantic: "", ts: "", zod: "" };
     }
 
     try {
       const parsed = JSON.parse(trimmed);
 
       const tsOpts: GenerateOptions = {
+        exportTypes,
+        optionalNulls,
+        readonly,
         rootName: rootName || "Root",
         useType: decl === "type",
-        exportTypes,
-        readonly,
-        optionalNulls,
       };
       return {
+        jsonSchema: buildJsonSchemaOutput(parsed, rootName),
         ok: true,
+        pydantic: buildPydanticOutput(parsed),
         ts: generateTypeScript(parsed, tsOpts),
         zod: buildZodOutput(parsed),
-        pydantic: buildPydanticOutput(parsed),
-        jsonSchema: buildJsonSchemaOutput(parsed, rootName),
       };
     } catch (e) {
       return {
-        ok: false,
         error: e instanceof Error ? e.message : "Invalid JSON format",
+        ok: false,
       };
     }
-  }, [input, rootName, decl, exportTypes, readonly, optionalNulls]);
+  }, [decl, exportTypes, input, optionalNulls, readonly, rootName]);
 
   function handleFormatJson() {
     try {

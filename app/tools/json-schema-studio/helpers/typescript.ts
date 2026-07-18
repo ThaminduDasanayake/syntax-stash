@@ -9,18 +9,18 @@ export type GenerateOptions = {
 };
 
 const RESERVED = new Set([
-  "string",
-  "number",
-  "boolean",
-  "null",
-  "undefined",
   "any",
-  "unknown",
-  "never",
-  "void",
-  "object",
-  "true",
+  "boolean",
   "false",
+  "never",
+  "null",
+  "number",
+  "object",
+  "string",
+  "true",
+  "undefined",
+  "unknown",
+  "void",
 ]);
 
 function pascalCase(input: string): string {
@@ -55,7 +55,7 @@ function mergeObjectShapes(items: Array<Record<string, JsonValue>>): {
   const fields = new Map<string, { values: JsonValue[]; presentIn: number }>();
   for (const item of items) {
     for (const [key, value] of Object.entries(item)) {
-      if (!fields.has(key)) fields.set(key, { values: [], presentIn: 0 });
+      if (!fields.has(key)) fields.set(key, { presentIn: 0, values: [] });
       const entry = fields.get(key)!;
       entry.values.push(value);
       entry.presentIn++;
@@ -107,7 +107,7 @@ export function generateTypeScript(json: unknown, options: GenerateOptions): str
         const merged = mergeObjectShapes(objects);
         const fields = buildFields(merged.fields, merged.total);
         const name = reserveName(elementHint);
-        interfaces.push({ name, fields });
+        interfaces.push({ fields, name });
         elementTypes.push(name);
       }
 
@@ -124,7 +124,7 @@ export function generateTypeScript(json: unknown, options: GenerateOptions): str
       const name = reserveName(hint);
       const merged = mergeObjectShapes([value as Record<string, JsonValue>]);
       const fields = buildFields(merged.fields, merged.total);
-      interfaces.push({ name, fields });
+      interfaces.push({ fields, name });
       return name;
     }
 
@@ -136,7 +136,7 @@ export function generateTypeScript(json: unknown, options: GenerateOptions): str
     total: number,
   ): InterfaceDef["fields"] {
     const result: InterfaceDef["fields"] = [];
-    for (const [key, { values, presentIn }] of fieldMap.entries()) {
+    for (const [key, { presentIn, values }] of fieldMap.entries()) {
       const types = uniqueTypes(values.map((v) => inferType(v, key)));
       let combined = types.join(" | ");
       let optional = presentIn < total;
@@ -147,7 +147,7 @@ export function generateTypeScript(json: unknown, options: GenerateOptions): str
           optional = true;
         }
       }
-      result.push({ key, type: combined, optional });
+      result.push({ key, optional, type: combined });
     }
     return result;
   }
@@ -164,7 +164,7 @@ export function generateTypeScript(json: unknown, options: GenerateOptions): str
     if (objectItems.length > 0 && objectItems.length === typedJson.length) {
       const merged = mergeObjectShapes(objectItems);
       const fields = buildFields(merged.fields, merged.total);
-      interfaces.push({ name: rootName, fields });
+      interfaces.push({ fields, name: rootName });
     } else {
       const elementHint = singularize(rootName);
       const types = uniqueTypes(typedJson.map((v) => inferType(v, elementHint)));
@@ -176,7 +176,7 @@ export function generateTypeScript(json: unknown, options: GenerateOptions): str
   } else if (typedJson !== null && typeof typedJson === "object") {
     const merged = mergeObjectShapes([typedJson as Record<string, JsonValue>]);
     const fields = buildFields(merged.fields, merged.total);
-    interfaces.push({ name: rootName, fields });
+    interfaces.push({ fields, name: rootName });
   } else {
     const aliasType = inferType(typedJson, rootName);
     return renderOutput([], options, [{ kind: "alias", name: rootName, value: aliasType }]);

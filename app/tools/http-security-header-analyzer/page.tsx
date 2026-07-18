@@ -30,17 +30,17 @@ const NEXT_CONFIG_BLOCK = generateNextConfig();
 export default function HeaderAnalyzerPage() {
   const [input, setInput] = useState(PLACEHOLDER);
 
-  const { graded, passCount, failCount, warnCount } = useMemo(() => {
+  const { failCount, graded, passCount, warnCount } = useMemo(() => {
     const map = parseHeaders(input);
     const graded = SECURITY_HEADERS.map((rule) => ({
-      rule,
       grade: rule.validate(map.get(rule.key)),
+      rule,
       value: map.get(rule.key),
     }));
     const passCount = graded.filter((g) => g.grade === "pass").length;
     const warnCount = graded.filter((g) => g.grade === "warn").length;
     const failCount = graded.filter((g) => g.grade === "fail").length;
-    return { graded, passCount, failCount, warnCount };
+    return { failCount, graded, passCount, warnCount };
   }, [input]);
 
   const tool = internalTools.find((t) => t.slug === "http-security-header-analyzer");
@@ -92,7 +92,7 @@ export default function HeaderAnalyzerPage() {
         {/* Right — Scorecard + Config */}
         <div className="flex h-full min-h-0 flex-col space-y-4">
           <div className="shrink-0 space-y-3">
-            {graded.map(({ rule, grade, value }) => (
+            {graded.map(({ grade, rule, value }) => (
               <div key={rule.key} className="border-border rounded-lg border p-3">
                 <div className="mb-1 flex items-center justify-between gap-2">
                   <p className="text-foreground truncate font-mono text-xs font-semibold">

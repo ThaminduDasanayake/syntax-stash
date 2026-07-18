@@ -17,13 +17,13 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 
   return {
     title: tool.title,
-    description: tool.description,
     alternates: { canonical: `/tools/${slug}` },
+    description: tool.description,
     openGraph: {
       title: tool.title,
       description: tool.description,
-      url: `/tools/${slug}`,
       type: "website",
+      url: `/tools/${slug}`,
     },
   };
 }

@@ -29,7 +29,7 @@ export function BoxShadowTab() {
     const rgbaColor = `rgba(${r}, ${g}, ${b}, ${shadowOpacity})`;
 
     return `${insetStr}${xOffset}px ${yOffset}px ${blurRadius}px ${spreadRadius}px ${rgbaColor}`;
-  }, [xOffset, yOffset, blurRadius, spreadRadius, shadowColor, shadowOpacity, shadowType]);
+  }, [blurRadius, shadowColor, shadowOpacity, shadowType, spreadRadius, xOffset, yOffset]);
 
   const cssCode = `box-shadow: ${shadowString};`;
 
@@ -129,12 +129,12 @@ export function BoxShadowTab() {
           <div className="flex h-64 items-center justify-center rounded-lg bg-linear-to-br from-slate-100 to-slate-50">
             <div
               style={{
-                width: "120px",
-                height: "120px",
                 backgroundColor: "#ffffff",
                 borderRadius: "8px",
                 boxShadow: shadowString,
+                height: "120px",
                 transition: "box-shadow 0.15s ease",
+                width: "120px",
               }}
             />
           </div>

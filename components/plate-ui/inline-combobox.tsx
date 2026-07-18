@@ -99,7 +99,7 @@ const InlineCombobox = ({
         setValueState(newValue);
       }
     },
-    [setValueProp, hasValueProp],
+    [hasValueProp, setValueProp],
   );
 
   /**
@@ -132,10 +132,9 @@ const InlineCombobox = ({
   }, [editor, element]);
 
   const { props: inputProps, removeInput } = useComboboxInput({
+    autoFocus: isCreator,
     cancelInputOnBlur: true,
     cursorState,
-    autoFocus: isCreator,
-    ref: inputRef,
     onCancelInput: (cause) => {
       if (cause !== "backspace") {
         editor.tf.insertText(trigger + value, {
@@ -149,6 +148,7 @@ const InlineCombobox = ({
         });
       }
     },
+    ref: inputRef,
   });
 
   const [hasEmpty, setHasEmpty] = React.useState(false);
@@ -163,7 +163,7 @@ const InlineCombobox = ({
       showTrigger,
       trigger,
     }),
-    [trigger, showTrigger, filter, inputRef, inputProps, removeInput, setHasEmpty],
+    [filter, inputProps, inputRef, removeInput, setHasEmpty, showTrigger, trigger],
   );
 
   const store = useComboboxStore({
@@ -255,7 +255,7 @@ const InlineComboboxContent: typeof ComboboxPopover = ({ className, ...props }) 
     if (!store) return;
 
     const state = store.getState();
-    const { items, activeId } = state;
+    const { activeId, items } = state;
 
     if (!items.length) return;
 
@@ -325,7 +325,7 @@ const InlineComboboxItem = ({
 
   const visible = React.useMemo(
     () => !filter || filter({ group, keywords, label, value }, search as string),
-    [filter, group, keywords, label, value, search],
+    [filter, group, keywords, label, search, value],
   );
 
   if (!visible) return null;

@@ -20,15 +20,15 @@ import { cn } from "@/lib/utils";
 import { DANGER_LEVELS, DangerLevel, GIT_CATEGORIES, GIT_COMMANDS } from "./data";
 
 const DANGER_STYLES: Record<DangerLevel, string> = {
-  safe: "border-green-500/30 bg-green-500/10 text-green-400",
   caution: "border-yellow-500/30 bg-yellow-500/10 text-yellow-400",
   destructive: "border-red-500/30 bg-red-500/10 text-red-400",
+  safe: "border-green-500/30 bg-green-500/10 text-green-400",
 };
 
 const DANGER_LABELS: Record<DangerLevel, string> = {
-  safe: "Safe",
   caution: "Caution",
   destructive: "Destructive",
+  safe: "Safe",
 };
 
 export default function GitCheatsheetPage() {
@@ -46,7 +46,7 @@ export default function GitCheatsheetPage() {
         !q || cmd.command.toLowerCase().includes(q) || cmd.description.toLowerCase().includes(q);
       return matchesCategory && matchesDanger && matchesSearch;
     });
-  }, [search, activeCategory, activeDanger]);
+  }, [activeCategory, activeDanger, search]);
 
   function copyCmd(cmd: string) {
     navigator.clipboard.writeText(cmd);

@@ -15,8 +15,8 @@ import {
 } from "@/components/plate-ui/table-node";
 
 export const TableKit = [
+  TableCellHeaderPlugin.withComponent(TableCellHeaderElement),
+  TableCellPlugin.withComponent(TableCellElement),
   TablePlugin.withComponent(TableElement),
   TableRowPlugin.withComponent(TableRowElement),
-  TableCellPlugin.withComponent(TableCellElement),
-  TableCellHeaderPlugin.withComponent(TableCellHeaderElement),
 ];

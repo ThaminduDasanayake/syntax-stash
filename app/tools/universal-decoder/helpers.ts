@@ -36,10 +36,10 @@ function tryJwt(input: string): DetectionResult | null {
     }
     if (payload.jti) meta["JWT ID"] = String(payload.jti);
     return {
-      format: "JSON Web Token (JWT)",
       confidence: "high",
-      timestamp: iat,
+      format: "JSON Web Token (JWT)",
       metadata: meta,
+      timestamp: iat,
     };
   } catch {
     return null;
@@ -54,15 +54,15 @@ function tryMongoObjectId(input: string): DetectionResult | null {
   const counter = input.slice(18, 24);
   const timestamp = new Date(parseInt(tsHex, 16) * 1000);
   return {
-    format: "MongoDB ObjectId",
     confidence: "high",
-    timestamp,
+    format: "MongoDB ObjectId",
     metadata: {
-      "Machine ID": machine.toUpperCase(),
-      "Process ID": `${parseInt(pid, 16)} (0x${pid.toUpperCase()})`,
       Counter: `${parseInt(counter, 16).toLocaleString()} (0x${counter.toUpperCase()})`,
       "Hex Structure": `${tsHex} ${machine} ${pid} ${counter}`,
+      "Machine ID": machine.toUpperCase(),
+      "Process ID": `${parseInt(pid, 16)} (0x${pid.toUpperCase()})`,
     },
+    timestamp,
   };
 }
 
@@ -98,10 +98,10 @@ function tryUuid(input: string): DetectionResult | null {
   }
 
   return {
-    format: `UUID v${version}`,
     confidence: "high",
-    timestamp,
+    format: `UUID v${version}`,
     metadata: meta,
+    timestamp,
   };
 }
 
@@ -111,10 +111,10 @@ function tryIso8601(input: string): DetectionResult | null {
   const d = new Date(input);
   if (isNaN(d.getTime())) return null;
   return {
-    format: "ISO 8601 Date String",
     confidence: "high",
-    timestamp: d,
+    format: "ISO 8601 Date String",
     metadata: {},
+    timestamp: d,
   };
 }
 
@@ -124,10 +124,10 @@ function tryUnixMs(input: string): DetectionResult | null {
   const d = new Date(ms);
   if (isNaN(d.getTime())) return null;
   return {
-    format: "Unix Timestamp (milliseconds)",
     confidence: "high",
-    timestamp: d,
+    format: "Unix Timestamp (milliseconds)",
     metadata: { "Raw Value": `${ms.toLocaleString()} ms` },
+    timestamp: d,
   };
 }
 
@@ -137,10 +137,10 @@ function tryUnixSec(input: string): DetectionResult | null {
   const d = new Date(sec * 1000);
   if (isNaN(d.getTime())) return null;
   return {
-    format: "Unix Timestamp (seconds)",
     confidence: "high",
-    timestamp: d,
+    format: "Unix Timestamp (seconds)",
     metadata: { "Raw Value": `${sec.toLocaleString()} sec` },
+    timestamp: d,
   };
 }
 
@@ -157,15 +157,15 @@ function trySnowflake(input: string): DetectionResult | null {
     const processId = Number((id >> BigInt(12)) & BigInt(0x1f));
     const increment = Number(id & BigInt(0xfff));
     return {
-      format: "Snowflake ID (Discord/Twitter)",
       confidence: "medium",
-      timestamp: d,
+      format: "Snowflake ID (Discord/Twitter)",
       metadata: {
-        "Worker ID": String(workerId),
-        "Process ID": String(processId),
         Increment: String(increment),
         Note: "Epoch assumes Discord (Jan 1 2015)",
+        "Process ID": String(processId),
+        "Worker ID": String(workerId),
       },
+      timestamp: d,
     };
   } catch {
     return null;
