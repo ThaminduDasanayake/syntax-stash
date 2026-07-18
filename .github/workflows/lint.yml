@@ -1,0 +1,37 @@
+name: Lint & Format Check
+
+on:
+  push:
+    branches:
+      - main
+      - staging
+  pull_request:
+    branches:
+      - main
+      - staging
+
+jobs:
+  lint:
+    name: Run ESLint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          cache: "npm"
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run ESLint with GitHub Formatter
+        run: npm run lint -- -f github
+
+      - name: Suggest Fixes on Failure
+        if: failure()
+        run: |
+          echo "::error::Linting failed! You can automatically fix many of these issues by running 'npm run lint:fix' and 'npm run format' in your local terminal."
