@@ -28,8 +28,8 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Run ESLint with GitHub Formatter
-        run: npm run lint -- -f github
+      - name: Run ESLint
+        run: npm run lint
 
       - name: Suggest Fixes on Failure
         if: failure()
