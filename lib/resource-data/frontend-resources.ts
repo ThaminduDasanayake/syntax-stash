@@ -287,6 +287,14 @@ export const frontendLinks: Tool[] = [
     url: "https://github.com/magnum6actual/flipoff",
   },
   {
+    title: "flowkit-ui",
+    author: "vzkiss",
+    category: CATEGORIES.frontend,
+    description:
+      "Patterns teams rebuild on every project - built once, reusable everywhere. Each one targets a concrete problem. Built on shadcn/ui and Base UI.",
+    url: "https://flowkit-ui.vzkiss.com/",
+  },
+  {
     title: "Fluid Functionalism.",
     category: CATEGORIES.frontend,
     description: "Open Source UI components created by @micka_design",
@@ -727,6 +735,14 @@ export const frontendLinks: Tool[] = [
     url: "https://rive.app/",
   },
   {
+    title: "SATIS UI",
+    category: CATEGORIES.frontend,
+    description:
+      "An evolving collection of production-ready components built for the shadcn/ui ecosystem. Supercharge your projects with fluid animations and modern best practices.",
+    subtitle: "Beautifully Engineered Components for shadcn/ui",
+    url: "https://satisui.xyz/",
+  },
+  {
     title: "shadcnmaps",
     category: CATEGORIES.frontend,
     description:
@@ -947,6 +963,14 @@ export const frontendLinks: Tool[] = [
       "Community-made library of free and customizable UI elements made with CSS or Tailwind. It's all free to copy and use in your projects. Uiverse can save you many hours spent on building & customizing UI components for your next project.",
     tags: [TAGS["ui-component"]],
     url: "https://uiverse.io/",
+  },
+  {
+    title: "Ultracite",
+    category: CATEGORIES.frontend,
+    description:
+      "Ultracite is a zero-config preset for ESLint, Biome, and Oxlint that helps teams and AI write consistent, type-safe code.",
+    subtitle: "Zero-Config Linting for Biome, ESLint, and Oxlint",
+    url: "https://www.ultracite.ai/",
   },
   {
     title: "unlumen UI",

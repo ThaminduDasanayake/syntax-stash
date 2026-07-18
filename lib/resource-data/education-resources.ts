@@ -394,6 +394,14 @@ export const educationLinks: Tool[] = [
     url: "https://gitmastery.me/",
   },
   {
+    title: "Gun.io",
+    category: CATEGORIES.education,
+    description:
+      "Gun.io connects companies with elite freelance software developers. Vetted engineers, automated compliance, and guaranteed delivery for high-stakes projects.",
+    subtitle: "The Technical Standard for High Stakes Engineering",
+    url: "https://gun.io/",
+  },
+  {
     title: "Handshake",
     category: CATEGORIES.education,
     description:
@@ -832,6 +840,14 @@ export const educationLinks: Tool[] = [
     subtitle: "UI Skills for Design Engineers",
     tags: [TAGS.education],
     url: "https://www.ui-skills.com/",
+  },
+  {
+    title: "Vibe Coder Blog",
+    category: CATEGORIES.education,
+    description:
+      "The practical guide to finishing what AI starts. Tutorials, tool reviews, and honest guides for founders, developers, and creators shipping with AI.",
+    subtitle: "The Missing Manual for AI-Assisted Development",
+    url: "https://blog.vibecoder.me/",
   },
   {
     title: "Web-Development",

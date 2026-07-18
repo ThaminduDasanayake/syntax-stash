@@ -11,24 +11,8 @@ export const newLinks: Tool[] = [
       "Browse social proof examples grounded in psychology, with real-life applications in business and marketing to build trust on your website and in advertising.",
     url: "https://socialproofexamples.com/",
   },
-  {
-    title: "Alexandrie",
-    author: "Alexandrie Team",
-    category: CATEGORIES.dev,
-    description:
-      "Alexandrie is a modern note-taking and knowledge base application built for students & creators. Write, organize and render beautiful notes using extended Markdown in a fast, clean and distraction-free interface. Self-hostable with Docker.",
-    subtitle: "Modern Markdown Note-Taking & Knowledge Base App",
-    url: "https://alexandrie-hub.fr/",
-  },
-  {
-    title: "almostnode",
-    author: "Macaly",
-    category: CATEGORIES.dev,
-    description:
-      "zA lightweight JavaScript library that runs Node.js, Next.js, Vite, and Express entirely in the browser. ~250KB gzipped, instant startup, no server required.",
-    subtitle: "Node.js in your browser",
-    url: "https://almostnode.dev/",
-  },
+
+
   {
     title: "Avatune",
     category: CATEGORIES.dev,
@@ -37,16 +21,7 @@ export const newLinks: Tool[] = [
     subtitle: "Avatars that feel like people",
     url: "https://www.avatune.dev/",
   },
-  {
-    title: "Barcode Generator Online",
-    author: "Jasper Bernaers",
-    category: CATEGORIES.design,
-    description:
-      "Create barcodes online free — Code 128, EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, GS1-128, Code 39, MSI, Codabar & Pharmacode. Live preview, custom size & colors, download PNG or SVG. No signup, no watermark, 100% in your browser.",
-    subtitle: "EAN-13, UPC-A, Code 128 & 15+ Formats (PNG/SVG)",
-    tags: [TAGS.color],
-    url: "https://jasperbernaers.com/online-free-barcode-generator/",
-  },
+
   {
     title: "Convert PNG to ICO file",
     author: "Kristjan Retter",
@@ -56,14 +31,7 @@ export const newLinks: Tool[] = [
     subtitle: "Custamizable",
     url: "https://png-to-ico.com/",
   },
-  {
-    title: "DesignMD",
-    category: CATEGORIES.dev,
-    description:
-      "Design context your AI can read. 70+ brand design systems as plain-text DESIGN.md files. Drop one in your prompt and ship UI that looks like it cost six figures.",
-    subtitle: "DESIGN.md catalog for AI agents",
-    url: "https://www.designmd.co/",
-  },
+
   {
     title: "DesignMeter",
     category: CATEGORIES.dev,
@@ -96,14 +64,7 @@ export const newLinks: Tool[] = [
     subtitle: "Build production-ready documentation from Markdown in seconds",
     url: "https://docmd.io/",
   },
-  {
-    title: "flowkit-ui",
-    author: "vzkiss",
-    category: CATEGORIES.dev,
-    description:
-      "Patterns teams rebuild on every project - built once, reusable everywhere. Each one targets a concrete problem. Built on shadcn/ui and Base UI.",
-    url: "https://flowkit-ui.vzkiss.com/",
-  },
+
   {
     title: "Fluid Type Scale Calculator",
     author: "Aleksandr Hovhannisyan",
@@ -134,14 +95,7 @@ export const newLinks: Tool[] = [
     subtitle: "Free online vector editor & procedural design tool",
     url: "https://graphite.art/",
   },
-  {
-    title: "Gun.io",
-    category: CATEGORIES.dev,
-    description:
-      "Gun.io connects companies with elite freelance software developers. Vetted engineers, automated compliance, and guaranteed delivery for high-stakes projects.",
-    subtitle: "The Technical Standard for High Stakes Engineering",
-    url: "https://gun.io/",
-  },
+
   {
     title: "MonoSketch",
     category: CATEGORIES.dev,
@@ -150,14 +104,7 @@ export const newLinks: Tool[] = [
     subtitle: "Unleash your ideas with ASCII",
     url: "https://monosketch.io/",
   },
-  {
-    title: "nomnoml",
-    category: CATEGORIES.dev,
-    description:
-      "A tool for drawing sassy UML diagrams based on syntax. Provides instant feedback and has a customizable styling.",
-    subtitle: "Supercharge your boxes and arrows.",
-    url: "https://www.nomnoml.com/",
-  },
+
   {
     title: "OpenPencil",
     category: CATEGORIES.dev,
@@ -174,14 +121,7 @@ export const newLinks: Tool[] = [
     subtitle: "A Vietnamese Typography Project",
     url: "https://republi.sh/",
   },
-  {
-    title: "SATIS UI",
-    category: CATEGORIES.dev,
-    description:
-      "An evolving collection of production-ready components built for the shadcn/ui ecosystem. Supercharge your projects with fluid animations and modern best practices.",
-    subtitle: "Beautifully Engineered Components for shadcn/ui",
-    url: "https://satisui.xyz/",
-  },
+
   {
     title: "Smallbits",
     category: CATEGORIES.dev,
@@ -212,14 +152,7 @@ export const newLinks: Tool[] = [
     subtitle: "Render JSX to images. Skip the browser.",
     url: "https://takumi.kane.tw/",
   },
-  {
-    title: "Templates - Vercel",
-    author: "Vercel",
-    category: CATEGORIES.dev,
-    description:
-      "Jumpstart your app development process with pre-built solutions from Vercel and our community.",
-    url: "https://vercel.com/templates",
-  },
+
   {
     title: "The League of Moveable Type",
     author: "Micah Rich",
@@ -236,22 +169,8 @@ export const newLinks: Tool[] = [
     subtitle: "UX Patterns for Artificial Intelligence Design",
     url: "https://www.shapeof.ai/",
   },
-  {
-    title: "Ultracite",
-    category: CATEGORIES.dev,
-    description:
-      "Ultracite is a zero-config preset for ESLint, Biome, and Oxlint that helps teams and AI write consistent, type-safe code.",
-    subtitle: "Zero-Config Linting for Biome, ESLint, and Oxlint",
-    url: "https://www.ultracite.ai/",
-  },
-  {
-    title: "Vibe Coder Blog",
-    category: CATEGORIES.dev,
-    description:
-      "The practical guide to finishing what AI starts. Tutorials, tool reviews, and honest guides for founders, developers, and creators shipping with AI.",
-    subtitle: "The Missing Manual for AI-Assisted Development",
-    url: "https://blog.vibecoder.me/",
-  },
+
+
   {
     title: "zzzz",
     category: CATEGORIES.dev,

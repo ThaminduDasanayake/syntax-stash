@@ -338,6 +338,14 @@ export const designLinks: Tool[] = [
     url: "https://designmd.me/",
   },
   {
+    title: "DesignMD",
+    category: CATEGORIES.dev,
+    description:
+      "Design context your AI can read. 70+ brand design systems as plain-text DESIGN.md files. Drop one in your prompt and ship UI that looks like it cost six figures.",
+    subtitle: "DESIGN.md catalog for AI agents",
+    url: "https://www.designmd.co/",
+  },
+  {
     title: "Developer Portfolios",
     author: "emmabostian",
     category: CATEGORIES.design,

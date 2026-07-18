@@ -54,6 +54,15 @@ export const mediaLinks: Tool[] = [
     url: "https://www.fffuel.co/",
   },
   {
+    title: "Free SVG Illustrations",
+    category: CATEGORIES.media,
+    description:
+      "Add personality to your design projects with this free collection of unique and playful SVG scribbles. Hand-drawn, these are ready for just copy and paste!",
+    subtitle: "Unique Scribbles for Your Designs",
+    tags: [TAGS.svg],
+    url: "https://illustrations.run/",
+  },
+  {
     title: "Haikei",
     category: CATEGORIES.media,
     description:

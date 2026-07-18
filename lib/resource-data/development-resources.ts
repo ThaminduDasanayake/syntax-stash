@@ -23,6 +23,24 @@ export const developmentLinks: Tool[] = [
     url: "https://acceptmarkdown.com/",
   },
   {
+    title: "Alexandrie",
+    author: "Alexandrie Team",
+    category: CATEGORIES.dev,
+    description:
+      "Alexandrie is a modern note-taking and knowledge base application built for students & creators. Write, organize and render beautiful notes using extended Markdown in a fast, clean and distraction-free interface. Self-hostable with Docker.",
+    subtitle: "Modern Markdown Note-Taking & Knowledge Base App",
+    url: "https://alexandrie-hub.fr/",
+  },
+  {
+    title: "almostnode",
+    author: "Macaly",
+    category: CATEGORIES.dev,
+    description:
+      "zA lightweight JavaScript library that runs Node.js, Next.js, Vite, and Express entirely in the browser. ~250KB gzipped, instant startup, no server required.",
+    subtitle: "Node.js in your browser",
+    url: "https://almostnode.dev/",
+  },
+  {
     title: "annyang!",
     category: CATEGORIES.dev,
     description:
@@ -86,6 +104,16 @@ export const developmentLinks: Tool[] = [
     favicon: "/github.svg",
     tags: [TAGS.tool],
     url: "https://github.com/RunaCapital/awesome-oss-alternatives",
+  },
+  {
+    title: "Barcode Generator Online",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.design,
+    description:
+      "Create barcodes online free — Code 128, EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, GS1-128, Code 39, MSI, Codabar & Pharmacode. Live preview, custom size & colors, download PNG or SVG. No signup, no watermark, 100% in your browser.",
+    subtitle: "EAN-13, UPC-A, Code 128 & 15+ Formats (PNG/SVG)",
+    tags: [TAGS.tool],
+    url: "https://jasperbernaers.com/online-free-barcode-generator/",
   },
   {
     title: "BestAlternative",
@@ -581,6 +609,14 @@ export const developmentLinks: Tool[] = [
     url: "https://github.com/n8n-io/n8n",
   },
   {
+    title: "nomnoml",
+    category: CATEGORIES.dev,
+    description:
+      "A tool for drawing sassy UML diagrams based on syntax. Provides instant feedback and has a customizable styling.",
+    subtitle: "Supercharge your boxes and arrows.",
+    url: "https://www.nomnoml.com/",
+  },
+  {
     title: "NoSignups",
     category: CATEGORIES.dev,
     description:
@@ -871,6 +907,14 @@ export const developmentLinks: Tool[] = [
     url: "https://surge.sh/",
   },
   {
+    title: "Templates - Vercel",
+    author: "Vercel",
+    category: CATEGORIES.dev,
+    description:
+      "Jumpstart your app development process with pre-built solutions from Vercel and our community.",
+    url: "https://vercel.com/templates",
+  },
+  {
     title: "Terraink",
     category: CATEGORIES.dev,
     description:
@@ -990,6 +1034,13 @@ export const developmentLinks: Tool[] = [
       "VisuAlgo was conceptualised in 2011 by Associate Professor Steven Halim (NUS School of Computing) as a tool to help his students better understand data structures and algorithms, by allowing them to learn the basics on their own and at their own pace. Together with his students from the National University of Singapore, a series of visualizations were developed and consolidated, from simple sorting algorithms to complex graph data structures. Though specifically designed for the use of NUS students taking various data structure and algorithm classes (CS1010/equivalent, CS2040/equivalent (inclusive of IT5003)), CS3230, CS3233, and CS4234), as advocators of online learning, we hope that curious minds around the world will find these visualizations useful as well.",
     subtitle: "Visualising data structures and algorithms through animation",
     url: "https://visualgo.net/en",
+  },
+  {
+    title: "Visual Studio Code for the Web",
+    category: CATEGORIES.dev,
+    description: "Build with Visual Studio Code, anywhere, anytime, entirely in your browser.",
+    tags: [TAGS.tool],
+    url: "https://vscode.dev/",
   },
   {
     title: "Voicebox",

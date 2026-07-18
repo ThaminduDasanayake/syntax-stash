@@ -37,6 +37,7 @@ export const TAGS = {
   scraper: "scraper",
   selfHosted: "self-hosted",
   sql: "sql",
+  svg: "svg",
   tool: "tool",
   typography: "typography",
   ui: "ui",
