@@ -12,6 +12,15 @@ export const newLinks: Tool[] = [
     url: "https://socialproofexamples.com/",
   },
   {
+    title: "Alexandrie",
+    author: "Alexandrie Team",
+    category: CATEGORIES.dev,
+    description:
+      "Alexandrie is a modern note-taking and knowledge base application built for students & creators. Write, organize and render beautiful notes using extended Markdown in a fast, clean and distraction-free interface. Self-hostable with Docker.",
+    subtitle: "Modern Markdown Note-Taking & Knowledge Base App",
+    url: "https://alexandrie-hub.fr/",
+  },
+  {
     title: "Barcode Generator Online",
     author: "Jasper Bernaers",
     category: CATEGORIES.design,
@@ -20,6 +29,15 @@ export const newLinks: Tool[] = [
     subtitle: "EAN-13, UPC-A, Code 128 & 15+ Formats (PNG/SVG)",
     tags: [TAGS.color],
     url: "https://jasperbernaers.com/online-free-barcode-generator/",
+  },
+  {
+    title: "Convert PNG to ICO file",
+    author: "Kristjan Retter",
+    category: CATEGORIES.dev,
+    description:
+      "Convert PNG to ICO files instantly in your browser. Create multi-size favicon bundles for websites without uploading files.",
+    subtitle: "Custamizable",
+    url: "https://png-to-ico.com/",
   },
   {
     title: "DesignMD",
@@ -54,10 +72,50 @@ export const newLinks: Tool[] = [
     url: "https://digibouquet.vercel.app/",
   },
   {
+    title: "docmd",
+    category: CATEGORIES.dev,
+    description:
+      "The zero-config documentation engine that starts instantly and scales with you, fast, SEO-friendly, and AI-ready by default.",
+    subtitle: "Build production-ready documentation from Markdown in seconds",
+    url: "https://docmd.io/",
+  },
+  {
+    title: "flowkit-ui",
+    author: "vzkiss",
+    category: CATEGORIES.dev,
+    description:
+      "Patterns teams rebuild on every project - built once, reusable everywhere. Each one targets a concrete problem. Built on shadcn/ui and Base UI.",
+    url: "https://flowkit-ui.vzkiss.com/",
+  },
+  {
+    title: "Fluid Type Scale Calculator",
+    author: "Aleksandr Hovhannisyan",
+    category: CATEGORIES.dev,
+    description:
+      "Generate font size variables for a fluid type scale with CSS clamp. Grab the output CSS and drop it into any design system.",
+    url: "https://www.fluid-type-scale.com/",
+  },
+  {
+    title: "Fontastic Space",
+    category: CATEGORIES.dev,
+    description:
+      "Compare Google Fonts side-by-side with anatomy overlays, OpenType metrics, pairing scores, and ready-to-use CSS. Free tool for designers and developers.",
+    subtitle: "Find Mathematically Optimal Font Pairings",
+    url: "https://fontastic.space/",
+  },
+  {
     title: "GitMCP",
     category: CATEGORIES.dev,
     description: "Instantly create an MCP server for any GitHub project",
     url: "https://gitmcp.io/",
+  },
+  {
+    title: "Graphite",
+    category: CATEGORIES.dev,
+    description:
+      "Open source free software. A vector graphics creativity suite with a clean, intuitive interface. Opens instantly (no signup) and runs locally in a browser. Exports SVG, PNG, JPG.",
+    subtitle: "Free online vector editor & procedural design tool",
+    url: "https://graphite.art/",
   },
   {
     title: "Gun.io",
@@ -68,11 +126,58 @@ export const newLinks: Tool[] = [
     url: "https://gun.io/",
   },
   {
+    title: "nomnoml",
+    category: CATEGORIES.dev,
+    description:
+      "A tool for drawing sassy UML diagrams based on syntax. Provides instant feedback and has a customizable styling.",
+    subtitle: "Supercharge your boxes and arrows.",
+    url: "https://www.nomnoml.com/",
+  },
+  {
+    title: "OpenPencil",
+    category: CATEGORIES.dev,
+    description:
+      "Open-source Figma alternative. Opens .fig files, built-in AI, fully programmable.",
+    subtitle: "Open-Source Design Editor",
+    url: "https://openpencil.dev/",
+  },
+  {
+    title: "Republish",
+    category: CATEGORIES.dev,
+    description:
+      "Republish is a community project by Behalf Studio that seeks to research Vietnamese typographic remnants and revive them into digital typefaces and fonts.",
+    subtitle: "A Vietnamese Typography Project",
+    url: "https://republi.sh/",
+  },
+  {
+    title: "SATIS UI",
+    category: CATEGORIES.dev,
+    description:
+      "An evolving collection of production-ready components built for the shadcn/ui ecosystem. Supercharge your projects with fluid animations and modern best practices.",
+    subtitle: "Beautifully Engineered Components for shadcn/ui",
+    url: "https://satisui.xyz/",
+  },
+  {
+    title: "Smallbits",
+    category: CATEGORIES.dev,
+    description:
+      "290+ pixelated icons on a limited 8×8 grid where every point counts. Free for personal and commercial use.",
+    subtitle: "290+ pixelated icons on an 8×8 grid",
+    url: "https://smallbits.design/",
+  },
+  {
     title: "StackShare",
     category: CATEGORIES.dev,
     description:
       "Discover and share the technology stacks used by top companies. Compare tools, read reviews, and make informed decisions about your tech stack.",
     url: "https://stackshare.io/",
+  },
+  {
+    title: "SvgPathEditor",
+    author: "Yann Armelin",
+    category: CATEGORIES.dev,
+    description: "Online editor to create and manipulate SVG paths",
+    url: "https://yqnn.github.io/svg-path-editor/",
   },
   {
     title: "Templates - Vercel",
@@ -83,12 +188,40 @@ export const newLinks: Tool[] = [
     url: "https://vercel.com/templates",
   },
   {
+    title: "The League of Moveable Type",
+    author: "Micah Rich",
+    category: CATEGORIES.dev,
+    description:
+      "The first open-source foundry. And your spot to learn how to use, make, and work with type.",
+    url: "https://www.theleagueofmoveabletype.com/",
+  },
+  {
+    title: "The Shape of AI",
+    category: CATEGORIES.dev,
+    description:
+      "Pattern library of AIUX patterns exploring best practices for designing AI Products.",
+    subtitle: "UX Patterns for Artificial Intelligence Design",
+    url: "https://www.shapeof.ai/",
+  },
+  {
     title: "Vibe Coder Blog",
     category: CATEGORIES.dev,
     description:
       "The practical guide to finishing what AI starts. Tutorials, tool reviews, and honest guides for founders, developers, and creators shipping with AI.",
     subtitle: "The Missing Manual for AI-Assisted Development",
     url: "https://blog.vibecoder.me/",
+  },
+  {
+    title: "zzzz",
+    category: CATEGORIES.dev,
+    description: "zzzz",
+    url: "zzzz",
+  },
+  {
+    title: "zzzz",
+    category: CATEGORIES.dev,
+    description: "zzzz",
+    url: "zzzz",
   },
   {
     title: "zzzz",

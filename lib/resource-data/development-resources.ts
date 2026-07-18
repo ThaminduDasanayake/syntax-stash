@@ -521,6 +521,15 @@ export const developmentLinks: Tool[] = [
     url: "https://jasperbernaers.com/markdown-live-editor/",
   },
   {
+    title: "Material for MkDocs",
+    author: "Martin Donath",
+    category: CATEGORIES.dev,
+    description:
+      "Write your documentation in Markdown and create a professional static site in minutes – searchable, customizable, in 60+ languages, for all devices",
+    tags: [TAGS.markdown, TAGS.tool],
+    url: "https://squidfunk.github.io/mkdocs-material/",
+  },
+  {
     title: "Mockaroo",
     category: CATEGORIES.dev,
     description:
@@ -752,6 +761,15 @@ export const developmentLinks: Tool[] = [
     subtitle: "100% Free Online Tools Collection",
     tags: [TAGS.development],
     url: "https://seostudio.tools/",
+  },
+  {
+    title: "Servercn",
+    author: "akkaldhami",
+    category: CATEGORIES.dev,
+    description:
+      "servercn is a component registry for building production-ready node.js backends, inspired by shadcn/ui.",
+    tags: [TAGS.backend],
+    url: "https://servercn.vercel.app/",
   },
   {
     title: "Shape Divider App",

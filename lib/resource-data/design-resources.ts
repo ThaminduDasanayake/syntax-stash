@@ -679,6 +679,14 @@ export const designLinks: Tool[] = [
     url: "https://meditationsincolor.com/colorists",
   },
   {
+    title: "Meshic",
+    category: CATEGORIES.design,
+    description: "Free tool for ASCII, dithering, shimmer, LEGO, and procedural pattern effects.",
+    subtitle: "Procedural Pattern Generator",
+    tags: [TAGS.ascii],
+    url: "https://meshic.app/",
+  },
+  {
     title: "Microcopy",
     category: CATEGORIES.design,
     description:
