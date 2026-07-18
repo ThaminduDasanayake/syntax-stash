@@ -313,7 +313,7 @@
 
 /* Nav*/
 @utility site-nav {
-  @apply fixed top-0 right-0 left-0 z-100 border-b border-transparent bg-[#ede9dddb] pt-[env(safe-area-inset-top)] backdrop-blur-md transition-colors duration-200 ease-out;
+  @apply fixed top-0 right-0 left-0 z-40 border-b border-transparent bg-[#ede9dddb] pt-[env(safe-area-inset-top)] backdrop-blur-md transition-colors duration-200 ease-out;
 }
 
 @utility site-nav--scrolled {

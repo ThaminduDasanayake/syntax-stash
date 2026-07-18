@@ -41,14 +41,6 @@ export const calculatorTools: Tool[] = [
 
 export const dataTools: Tool[] = [
   {
-    title: "Base64 Image Decoder",
-    category: CATEGORIES.data,
-    description: "Decode and preview base64-encoded images directly in your browser.",
-    highlight: "Decoder",
-    icon: "file-image",
-    slug: "base64-image-decoder",
-  },
-  {
     title: "Encoder / Decoder",
     category: CATEGORIES.data,
     description: "Convert strings between Base64, URL-encoded, and Hex encoding.",
@@ -89,15 +81,6 @@ export const dataTools: Tool[] = [
     highlight: "Decoder",
     icon: "key",
     slug: "jwt-decoder",
-  },
-  {
-    title: "JWT Generator",
-    category: CATEGORIES.data,
-    description:
-      "Sign JSON Web Tokens locally in your browser using HS256, HS384, or HS512. Pairs with JWT Decoder.",
-    highlight: "Generator",
-    icon: "seal",
-    slug: "jwt-generator",
   },
   {
     title: "Universal Decoder",

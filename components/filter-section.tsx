@@ -5,7 +5,6 @@ import { useMemo, useState } from "react";
 
 import { DotButton } from "@/components/dot-button";
 import ToolCard from "@/components/tool-card";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tool } from "@/types";
 
