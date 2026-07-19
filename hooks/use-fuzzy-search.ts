@@ -2,7 +2,7 @@ import Fuse from "fuse.js";
 import { useMemo } from "react";
 
 export function useFuzzySearch<T>(data: T[], keys: string[]) {
-  const fuse = useMemo(
+  return useMemo(
     () =>
       new Fuse(data, {
         keys,
@@ -10,6 +10,4 @@ export function useFuzzySearch<T>(data: T[], keys: string[]) {
       }),
     [data, keys],
   );
-
-  return fuse;
 }
