@@ -38,6 +38,15 @@ export const mediaLinks: Tool[] = [
     url: "https://www.cleanpng.com/",
   },
   {
+    title: "Convert PNG to ICO file",
+    author: "Kristjan Retter",
+    category: CATEGORIES.media,
+    description:
+      "Convert PNG to ICO files instantly in your browser. Create multi-size favicon bundles for websites without uploading files.",
+    subtitle: "Custamizable",
+    url: "https://png-to-ico.com/",
+  },
+  {
     title: "Craiyon",
     category: CATEGORIES.dev,
     description:
@@ -154,6 +163,14 @@ export const mediaLinks: Tool[] = [
       "Browse a curated collection of free, customizable SVG doodles and icons to use in your websites, apps, slides, and prints.",
     subtitle: "Free, editable SVGs to spice up your designs",
     url: "https://svgdoodles.com/",
+  },
+  {
+    title: "SvgPathEditor",
+    author: "Yann Armelin",
+    category: CATEGORIES.media,
+    description: "Online editor to create and manipulate SVG paths",
+    tags: [TAGS.svg],
+    url: "https://yqnn.github.io/svg-path-editor/",
   },
   {
     title: "SVG Repo",

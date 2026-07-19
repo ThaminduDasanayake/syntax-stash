@@ -427,6 +427,13 @@ export const developmentLinks: Tool[] = [
     url: "https://www.gitinspect.com/",
   },
   {
+    title: "GitMCP",
+    category: CATEGORIES.dev,
+    description: "Instantly create an MCP server for any GitHub project",
+    tags: [TAGS.git],
+    url: "https://gitmcp.io/",
+  },
+  {
     title: "GitReverse",
     category: CATEGORIES.dev,
     description:

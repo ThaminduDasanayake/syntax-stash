@@ -781,6 +781,14 @@ export const frontendLinks: Tool[] = [
     url: "https://skiper-ui.com/",
   },
   {
+    title: "Smallbits",
+    category: CATEGORIES.frontend,
+    description:
+      "290+ pixelated icons on a limited 8×8 grid where every point counts. Free for personal and commercial use.",
+    subtitle: "290+ pixelated icons on an 8×8 grid",
+    url: "https://smallbits.design/",
+  },
+  {
     title: "SmolCSS",
     author: "Stephanie Eckles",
     category: CATEGORIES.frontend,

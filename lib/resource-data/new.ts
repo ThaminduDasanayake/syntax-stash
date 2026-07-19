@@ -20,15 +20,7 @@ export const newLinks: Tool[] = [
     url: "https://www.avatune.dev/",
   },
 
-  {
-    title: "Convert PNG to ICO file",
-    author: "Kristjan Retter",
-    category: CATEGORIES.dev,
-    description:
-      "Convert PNG to ICO files instantly in your browser. Create multi-size favicon bundles for websites without uploading files.",
-    subtitle: "Custamizable",
-    url: "https://png-to-ico.com/",
-  },
+
 
   {
     title: "DesignMeter",
@@ -63,28 +55,8 @@ export const newLinks: Tool[] = [
     url: "https://docmd.io/",
   },
 
-  {
-    title: "Fluid Type Scale Calculator",
-    author: "Aleksandr Hovhannisyan",
-    category: CATEGORIES.dev,
-    description:
-      "Generate font size variables for a fluid type scale with CSS clamp. Grab the output CSS and drop it into any design system.",
-    url: "https://www.fluid-type-scale.com/",
-  },
-  {
-    title: "Fontastic Space",
-    category: CATEGORIES.dev,
-    description:
-      "Compare Google Fonts side-by-side with anatomy overlays, OpenType metrics, pairing scores, and ready-to-use CSS. Free tool for designers and developers.",
-    subtitle: "Find Mathematically Optimal Font Pairings",
-    url: "https://fontastic.space/",
-  },
-  {
-    title: "GitMCP",
-    category: CATEGORIES.dev,
-    description: "Instantly create an MCP server for any GitHub project",
-    url: "https://gitmcp.io/",
-  },
+
+
   {
     title: "Graphite",
     category: CATEGORIES.dev,
@@ -111,23 +83,9 @@ export const newLinks: Tool[] = [
     subtitle: "Open-Source Design Editor",
     url: "https://openpencil.dev/",
   },
-  {
-    title: "Republish",
-    category: CATEGORIES.dev,
-    description:
-      "Republish is a community project by Behalf Studio that seeks to research Vietnamese typographic remnants and revive them into digital typefaces and fonts.",
-    subtitle: "A Vietnamese Typography Project",
-    url: "https://republi.sh/",
-  },
 
-  {
-    title: "Smallbits",
-    category: CATEGORIES.dev,
-    description:
-      "290+ pixelated icons on a limited 8×8 grid where every point counts. Free for personal and commercial use.",
-    subtitle: "290+ pixelated icons on an 8×8 grid",
-    url: "https://smallbits.design/",
-  },
+
+
   {
     title: "StackShare",
     category: CATEGORIES.dev,
@@ -135,13 +93,7 @@ export const newLinks: Tool[] = [
       "Discover and share the technology stacks used by top companies. Compare tools, read reviews, and make informed decisions about your tech stack.",
     url: "https://stackshare.io/",
   },
-  {
-    title: "SvgPathEditor",
-    author: "Yann Armelin",
-    category: CATEGORIES.dev,
-    description: "Online editor to create and manipulate SVG paths",
-    url: "https://yqnn.github.io/svg-path-editor/",
-  },
+
   {
     title: "Takumi",
     author: "Kane Wang",

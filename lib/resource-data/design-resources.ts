@@ -451,6 +451,24 @@ export const designLinks: Tool[] = [
     url: "https://klotter.supply/fixelpont",
   },
   {
+    title: "Fluid Type Scale Calculator",
+    author: "Aleksandr Hovhannisyan",
+    category: CATEGORIES.design,
+    description:
+      "Generate font size variables for a fluid type scale with CSS clamp. Grab the output CSS and drop it into any design system.",
+    tags: [TAGS.typography],
+    url: "https://www.fluid-type-scale.com/",
+  },
+  {
+    title: "Fontastic Space",
+    category: CATEGORIES.design,
+    description:
+      "Compare Google Fonts side-by-side with anatomy overlays, OpenType metrics, pairing scores, and ready-to-use CSS. Free tool for designers and developers.",
+    subtitle: "Find Mathematically Optimal Font Pairings",
+    tags: [TAGS.typography],
+    url: "https://fontastic.space/",
+  },
+  {
     title: "Fontjoy",
     category: CATEGORIES.design,
     description:
@@ -984,6 +1002,15 @@ export const designLinks: Tool[] = [
     subtitle: "Typeface from Titus Kaphar / Reginald Dwayne Betts’ show at MoMA PS1",
     tags: [TAGS.typography],
     url: "https://www.redaction.us/",
+  },
+  {
+    title: "Republish",
+    category: CATEGORIES.design,
+    description:
+      "Republish is a community project by Behalf Studio that seeks to research Vietnamese typographic remnants and revive them into digital typefaces and fonts.",
+    subtitle: "A Vietnamese Typography Project",
+    tags: [TAGS.typography],
+    url: "https://republi.sh/",
   },
   {
     title: "Resource Boy",
