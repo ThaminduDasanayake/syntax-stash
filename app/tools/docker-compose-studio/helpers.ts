@@ -185,7 +185,7 @@ export function parseDockerRun(cmd: string): ParseResult {
       continue;
     }
 
-    const valueFlagMap: Array<[RegExp, (v: string) => void]> = [
+    const valueFlagMap: Array<[(v: string) => void, RegExp]> = [
       [
         (v) => {
           svc.capAdd.push(v);
@@ -279,7 +279,7 @@ export function parseDockerRun(cmd: string): ParseResult {
     ];
 
     let matched = false;
-    for (const [pattern, setter] of valueFlagMap) {
+    for (const [setter, pattern] of valueFlagMap) {
       if (pattern.test(tok)) {
         const [val, consumed] = extractValue(tok, rest);
         setter(val);

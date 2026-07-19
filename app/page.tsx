@@ -52,22 +52,22 @@ export default function Home() {
           <div className="hero-stack">
             <div className="hero-card">
               <div className="hero-card-wrap">
-                <ToolCard tool={internalTools[51]} />
+                <ToolCard tool={internalTools[5 % internalTools.length]} />
               </div>
             </div>
             <div className="hero-card">
               <div className="hero-card-wrap">
-                <ToolCard tool={internalTools[38]} />
+                <ToolCard tool={internalTools[10 % internalTools.length]} />
               </div>
             </div>
             <div className="hero-card">
               <div className="hero-card-wrap">
-                <ToolCard tool={internalTools[22]} />
+                <ToolCard tool={internalTools[15 % internalTools.length]} />
               </div>
             </div>
             <div className="hero-card">
               <div className="hero-card-wrap">
-                <ToolCard tool={internalTools[28]} />
+                <ToolCard tool={internalTools[20 % internalTools.length]} />
               </div>
             </div>
           </div>
