@@ -133,8 +133,8 @@ export default function DiffViewerPage() {
               <div className="ml-auto flex items-center gap-2">
                 {hasChanges && (
                   <div className="flex gap-3 text-xs">
-                    <span className="text-green-400">+{stats.added}</span>
-                    <span className="text-red-400">−{stats.removed}</span>
+                    <span className="text-green-600">+{stats.added}</span>
+                    <span className="text-red-600">−{stats.removed}</span>
                     <span>{stats.unchanged} unchanged</span>
                   </div>
                 )}

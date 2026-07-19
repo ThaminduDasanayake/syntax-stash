@@ -54,7 +54,12 @@ export default function UniversalDecoderPage() {
             </Label>
             <div className="flex flex-wrap gap-2">
               {EXAMPLES.map((ex) => (
-                <Button key={ex.label} variant="outline" onClick={() => setInput(ex.value)}>
+                <Button
+                  key={ex.label}
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setInput(ex.value)}
+                >
                   {ex.label}
                 </Button>
               ))}

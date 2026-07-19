@@ -10,12 +10,12 @@ export function DiffLineRow({
   showNew: boolean;
 }) {
   const bgClass =
-    line.type === "added" ? "bg-green-500/10" : line.type === "removed" ? "bg-red-500/10" : "";
+    line.type === "added" ? "bg-green-500/20" : line.type === "removed" ? "bg-red-500/20" : "";
   const textClass =
     line.type === "added"
-      ? "text-green-400"
+      ? "text-green-600"
       : line.type === "removed"
-        ? "text-red-400"
+        ? "text-red-600"
         : "text-muted-foreground";
   const prefix = line.type === "added" ? "+" : line.type === "removed" ? "-" : " ";
 
