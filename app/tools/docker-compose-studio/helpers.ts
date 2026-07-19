@@ -118,10 +118,10 @@ export function tokenize(raw: string): string[] {
   return tokens;
 }
 
-export function extractValue(token: string, rest: string[]): [string, number] {
+export function extractValue(token: string, rest: string[]): { val: string; consumed: number } {
   const eq = token.indexOf("=");
-  if (eq !== -1) return [0, token.slice(eq + 1)];
-  return [1, rest[0] ?? ""];
+  if (eq !== -1) return { consumed: 0, val: token.slice(eq + 1) };
+  return { consumed: 1, val: rest[0] ?? "" };
 }
 
 export function parseDockerRun(cmd: string): ParseResult {
@@ -281,7 +281,7 @@ export function parseDockerRun(cmd: string): ParseResult {
     let matched = false;
     for (const [setter, pattern] of valueFlagMap) {
       if (pattern.test(tok)) {
-        const [val, consumed] = extractValue(tok, rest);
+        const { consumed, val } = extractValue(tok, rest);
         setter(val);
         i += 1 + consumed;
         matched = true;
