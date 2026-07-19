@@ -20,8 +20,6 @@ export const newLinks: Tool[] = [
     url: "https://www.avatune.dev/",
   },
 
-
-
   {
     title: "DesignMeter",
     category: CATEGORIES.dev,
@@ -55,8 +53,6 @@ export const newLinks: Tool[] = [
     url: "https://docmd.io/",
   },
 
-
-
   {
     title: "Graphite",
     category: CATEGORIES.dev,
@@ -64,6 +60,15 @@ export const newLinks: Tool[] = [
       "Open source free software. A vector graphics creativity suite with a clean, intuitive interface. Opens instantly (no signup) and runs locally in a browser. Exports SVG, PNG, JPG.",
     subtitle: "Free online vector editor & procedural design tool",
     url: "https://graphite.art/",
+  },
+
+  {
+    title: "JSON For You",
+    category: CATEGORIES.dev,
+    description:
+      "Online JSON view, format, minify, validate and compare. It also provides graph view to preview JSON data, semantic comparing two JSON diffs, convert JSON to CSV or CSV to JSON and support jq online.",
+    subtitle: "The best online JSON tool",
+    url: "https://json4u.com/",
   },
 
   {
@@ -84,8 +89,6 @@ export const newLinks: Tool[] = [
     url: "https://openpencil.dev/",
   },
 
-
-
   {
     title: "StackShare",
     category: CATEGORIES.dev,
@@ -102,7 +105,6 @@ export const newLinks: Tool[] = [
     subtitle: "Render JSX to images. Skip the browser.",
     url: "https://takumi.kane.tw/",
   },
-
   {
     title: "The League of Moveable Type",
     author: "Micah Rich",
@@ -111,6 +113,7 @@ export const newLinks: Tool[] = [
       "The first open-source foundry. And your spot to learn how to use, make, and work with type.",
     url: "https://www.theleagueofmoveabletype.com/",
   },
+
   {
     title: "The Shape of AI",
     category: CATEGORIES.dev,
@@ -119,7 +122,13 @@ export const newLinks: Tool[] = [
     subtitle: "UX Patterns for Artificial Intelligence Design",
     url: "https://www.shapeof.ai/",
   },
-
+  {
+    title: "ToolMateX",
+    category: CATEGORIES.dev,
+    description: "Fast, free online tools for designers, developers, and creators.",
+    subtitle: "Free Online Tools for Designers & Developers",
+    url: "https://toolmatex.com/",
+  },
   {
     title: "zzzz",
     category: CATEGORIES.dev,

@@ -714,6 +714,14 @@ export const designLinks: Tool[] = [
     url: "https://www.lummi.ai/",
   },
   {
+    title: "Made With Gsap",
+    category: CATEGORIES.design,
+    description:
+      "A collection of 50 premium JavaScript effects made with GSAP. Showcasing scroll, drag, mouse move, infinite animations and more.",
+    tags: [TAGS.inspiration],
+    url: "https://madewithgsap.com/",
+  },
+  {
     title: "MagicPattern",
     category: CATEGORIES.design,
     description:
@@ -1019,6 +1027,14 @@ export const designLinks: Tool[] = [
       "Download free, best graphic design resource & creative assets: fonts, mockups, textures, templates, and Photoshop add-ons.",
     subtitle: "Free Graphic Design Resources / Assets",
     url: "https://resourceboy.com/",
+  },
+  {
+    title: "SaaS Explainer Videos",
+    category: CATEGORIES.design,
+    description:
+      "Explore the best SaaS explainer video examples. Get inspiration from how top software brands use video to simplify, engage, and convert. See examples.",
+    tags: [TAGS.inspiration],
+    url: "https://saasexplainervideos.com/",
   },
   {
     title: "Saaspo",
