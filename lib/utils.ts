@@ -32,15 +32,12 @@ type ResourceCategoryKey = keyof typeof RESOURCE_CATEGORIES;
 type ToolCategoryKey = keyof typeof TOOL_CATEGORIES;
 
 const TOOL_COLOR_MAP: Record<ToolCategoryKey, string> = {
-  calculators: "bg-c-orange text-ink",
-  data: "bg-c-blue text-paper",
-  development: "bg-c-pink text-ink",
-  devops: "bg-c-green text-ink",
-  imagesAssets: "bg-c-orange text-ink",
-  network: "bg-c-blue text-paper",
-  schemas: "bg-c-pink text-ink",
-  typography: "bg-c-green text-ink",
-  uiStyling: "bg-c-orange text-ink",
+  data: "bg-c-orange text-ink",
+  design: "bg-c-blue text-paper",
+  dev: "bg-c-pink text-ink",
+  education: "bg-c-green text-ink",
+  frontend: "bg-c-orange text-ink",
+  media: "bg-c-blue text-paper",
 };
 
 const RESOURCE_COLOR_MAP: Record<ResourceCategoryKey, string> = {
