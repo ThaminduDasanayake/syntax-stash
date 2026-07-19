@@ -52,7 +52,7 @@ export default function Home() {
           <div className="hero-stack">
             <div className="hero-card">
               <div className="hero-card-wrap">
-                <ToolCard tool={internalTools[52]} />
+                <ToolCard tool={internalTools[51]} />
               </div>
             </div>
             <div className="hero-card">

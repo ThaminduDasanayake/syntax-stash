@@ -16,29 +16,6 @@ export type ToolCategoryValue = (typeof CATEGORIES)[keyof typeof CATEGORIES];
 
 export const toolCategories: ToolCategoryValue[] = Object.values(CATEGORIES);
 
-export const calculatorTools: Tool[] = [
-  {
-    title: "Base Converter",
-    category: CATEGORIES.calculators,
-    description:
-      "Convert between decimal, hex, binary, and octal with a 16-bit toggle grid and bitwise ops.",
-    highlight: "Converter",
-    icon: "binary",
-    slug: "base-converter",
-    tags: ["binary", "bitwise", "decimal", "hex"],
-  },
-  {
-    title: "Time Calculator",
-    category: CATEGORIES.calculators,
-    description:
-      "Convert Unix timestamps, ISO dates, and local time. Timezone viewer and date arithmetic.",
-    highlight: "Calculator",
-    icon: "clock",
-    slug: "time-calculator",
-    tags: ["date", "time", "timestamp", "timezone"],
-  },
-];
-
 export const dataTools: Tool[] = [
   {
     title: "Encoder / Decoder",
@@ -164,15 +141,7 @@ export const developmentTools: Tool[] = [
     icon: "files",
     slug: "jsdoc-generator",
   },
-  {
-    title: "Markdown Live Preview",
-    category: CATEGORIES.development,
-    description:
-      "Write markdown with a real-time side-by-side preview. Supports GFM tables, task lists, and more.",
-    highlight: "Preview",
-    icon: "markdown-logo",
-    slug: "markdown-live-preview",
-  },
+
   {
     title: "Mermaid Live Editor",
     category: CATEGORIES.development,
@@ -268,15 +237,6 @@ export const devopsTools: Tool[] = [
 
 export const imageTools: Tool[] = [
   {
-    title: "Favicon Generator",
-    category: CATEGORIES.imagesAssets,
-    description:
-      "Generate the full favicon set (.ico, apple-touch, PWA icons) and HTML/manifest snippets from any source image. Browser-only.",
-    highlight: "Generator",
-    icon: "star",
-    slug: "favicon-generator",
-  },
-  {
     title: "Image Converter",
     category: CATEGORIES.imagesAssets,
     description: "Batch convert, resize, and process images natively in your browser.",
@@ -285,38 +245,12 @@ export const imageTools: Tool[] = [
     slug: "image-converter",
   },
   {
-    title: "Placeholder Image Generator",
-    category: CATEGORIES.imagesAssets,
-    description:
-      "Generate custom placeholder images with configurable dimensions, colors, and text. Download as PNG or copy as a data URL.",
-    highlight: "Generator",
-    icon: "frame-corners",
-    slug: "placeholder-generator",
-  },
-  {
     title: "QR Generator",
     category: CATEGORIES.imagesAssets,
     description: "Generate downloadable QR codes instantly — works entirely in your browser..",
     highlight: "Generator",
     icon: "qr-code",
     slug: "qr-generator",
-  },
-  {
-    title: "SVG Optimizer",
-    category: CATEGORIES.imagesAssets,
-    description: "Minify and clean bloated SVG files with multipass optimization..",
-    highlight: "Optimizer",
-    icon: "file-svg",
-    slug: "svg-optimizer",
-  },
-  {
-    title: "SVG Path Viewer Editor",
-    category: CATEGORIES.imagesAssets,
-    description:
-      "Preview and edit raw SVG 'd' paths with real-time visualization and customizable styling.",
-    highlight: "Editor",
-    icon: "file-svg",
-    slug: "svg-path",
   },
 ];
 
@@ -469,24 +403,6 @@ export const uiStyling: Tool[] = [
     slug: "css-to-tailwind",
   },
   {
-    title: "Gradient Generator",
-    category: CATEGORIES.uiStyling,
-    description:
-      "Build linear, radial, and conic gradients with a multi-stop editor. Exports plain CSS and Tailwind arbitrary values.",
-    highlight: "Generator",
-    icon: "gradient",
-    slug: "gradient-generator",
-  },
-  {
-    title: "Layout Visualizer",
-    category: CATEGORIES.uiStyling,
-    description:
-      "Interactively explore Tailwind Flex and Grid layout properties and see the code in real-time.",
-    highlight: "Visualizer",
-    icon: "layout",
-    slug: "layout-visualizer",
-  },
-  {
     title: "Tailwind Studio",
     category: CATEGORIES.uiStyling,
     description:
@@ -499,7 +415,6 @@ export const uiStyling: Tool[] = [
 
 // Internal Tools
 export const internalTools: Tool[] = [
-  ...calculatorTools,
   ...dataTools,
   ...developmentTools,
   ...devopsTools,
