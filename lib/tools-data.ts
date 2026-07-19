@@ -1,12 +1,10 @@
 import { Tool } from "@/types";
 
 export const CATEGORIES = {
-  data: "Data & APIs",
-  design: "Design & UX",
-  dev: "Developer Tools & Utilities",
-  education: "Education & Community",
-  frontend: "Frontend & UI",
-  media: "Media & Assets",
+  assets: "Assets",
+  data: "Data",
+  dev: "Development",
+  frontend: "Frontend",
 } as const;
 
 export type ToolCategoryValue = (typeof CATEGORIES)[keyof typeof CATEGORIES];
@@ -119,45 +117,6 @@ export const dataTools: Tool[] = [
   },
 ];
 
-export const designTools: Tool[] = [
-  {
-    title: "Code Screenshot",
-    category: CATEGORIES.design,
-    description:
-      "Turn any code snippet into a styled screenshot for docs, social posts, or PR reviews. Powered by Shiki.",
-    highlight: "Screenshot",
-    icon: "image",
-    slug: "code-screenshot",
-  },
-  {
-    title: "Color Studio",
-    category: CATEGORIES.design,
-    description:
-      "Convert between HEX/RGB/HSL/OKLCH, generate harmonic palettes, and check WCAG contrast — all in one tabbed studio.",
-    highlight: "Studio",
-    icon: "palette",
-    slug: "color-studio",
-  },
-  {
-    title: "CSS Studio",
-    category: CATEGORIES.design,
-    description:
-      "Border-radius, box-shadow, glassmorphism, cubic-bezier, CSS keyframes, and GSAP animations — all in one tabbed studio.",
-    highlight: "Studio",
-    icon: "file-css",
-    slug: "css-studio",
-  },
-  {
-    title: "Mermaid Live Editor",
-    category: CATEGORIES.design,
-    description:
-      "Write Mermaid diagrams with a live SVG preview. Supports flowcharts, sequence, ER, and more.",
-    highlight: "Live Editor",
-    icon: "flow-arrow",
-    slug: "mermaid-editor",
-  },
-];
-
 export const developmentTools: Tool[] = [
   {
     title: ".gitignore Generator",
@@ -219,15 +178,7 @@ export const developmentTools: Tool[] = [
     icon: "shipping-container",
     slug: "docker-compose-studio",
   },
-  {
-    title: "Document Extractor",
-    category: CATEGORIES.dev,
-    description:
-      "Extract clean text or LLM-ready Markdown from PDF, DOCX, HTML, CSV, and text files.",
-    highlight: "Extractor",
-    icon: "book-open-text",
-    slug: "document-extractor",
-  },
+
   {
     title: "Drizzle Schema Studio",
     category: CATEGORIES.dev,
@@ -238,14 +189,15 @@ export const developmentTools: Tool[] = [
     slug: "drizzle-schema-studio",
   },
   {
-    title: "HTTP Security Header Analyzer",
+    title: "Git Command Cheatsheet",
     category: CATEGORIES.dev,
     description:
-      "Paste raw HTTP response headers and get an OWASP-graded security scorecard with fix recommendations.",
-    highlight: "Analyzer",
-    icon: "shield-check",
-    slug: "http-security-header-analyzer",
+      "A searchable reference of ~70 git commands, organised by intent with danger-level indicators.",
+    highlight: "Cheatsheet",
+    icon: "git-branch",
+    slug: "git-cheatsheet",
   },
+
   {
     title: "JSDoc / TSDoc Generator",
     category: CATEGORIES.dev,
@@ -274,29 +226,12 @@ export const developmentTools: Tool[] = [
     slug: "sql-formatter",
   },
   {
-    title: "Subnet / CIDR Calculator",
-    category: CATEGORIES.dev,
-    description:
-      "Calculate network address, broadcast, subnet mask, and host ranges from CIDR notation.",
-    highlight: "CIDR Calculator",
-    icon: "network",
-    slug: "subnet-calculator",
-  },
-  {
     title: "Text Analyzer",
     category: CATEGORIES.dev,
     description: "Count characters, words, bytes, and estimate LLM tokens for any block of text.",
     highlight: "Analyzer",
     icon: "file-txt",
     slug: "text-analyzer",
-  },
-  {
-    title: "URL Parser & Builder",
-    category: CATEGORIES.dev,
-    description: "Parse, analyze, and rebuild URLs with editable query parameters.",
-    highlight: "Parser & Builder",
-    icon: "link",
-    slug: "url-parser",
   },
   {
     title: "UUID Generator",
@@ -307,37 +242,27 @@ export const developmentTools: Tool[] = [
     icon: "identification-card",
     slug: "uuid-generator",
   },
-  {
-    title: "Web Extractor",
-    category: CATEGORIES.dev,
-    description: "Extract meta tags, headings, and links from any public URL.",
-    highlight: "Extractor",
-    icon: "globe",
-    slug: "web-extractor",
-  },
-];
-
-export const educationTools: Tool[] = [
-  {
-    title: "Git Command Cheatsheet",
-    category: CATEGORIES.education,
-    description:
-      "A searchable reference of ~70 git commands, organised by intent with danger-level indicators.",
-    highlight: "Cheatsheet",
-    icon: "git-branch",
-    slug: "git-cheatsheet",
-  },
-  {
-    title: "HTTP Status Reference",
-    category: CATEGORIES.education,
-    description: "Every standard HTTP status code with descriptions and real-world use cases.",
-    highlight: "Reference",
-    icon: "globe-hemisphere-east",
-    slug: "http-status",
-  },
 ];
 
 export const frontendTools: Tool[] = [
+  {
+    title: "Color Studio",
+    category: CATEGORIES.frontend,
+    description:
+      "Convert between HEX/RGB/HSL/OKLCH, generate harmonic palettes, and check WCAG contrast — all in one tabbed studio.",
+    highlight: "Studio",
+    icon: "palette",
+    slug: "color-studio",
+  },
+  {
+    title: "CSS Studio",
+    category: CATEGORIES.frontend,
+    description:
+      "Border-radius, box-shadow, glassmorphism, cubic-bezier, CSS keyframes, and GSAP animations — all in one tabbed studio.",
+    highlight: "Studio",
+    icon: "file-css",
+    slug: "css-studio",
+  },
   {
     title: "CSS to Tailwind",
     category: CATEGORIES.frontend,
@@ -355,6 +280,23 @@ export const frontendTools: Tool[] = [
     highlight: "JSX",
     icon: "file-jsx",
     slug: "html-to-jsx",
+  },
+  {
+    title: "HTTP Security Header Analyzer",
+    category: CATEGORIES.frontend,
+    description:
+      "Paste raw HTTP response headers and get an OWASP-graded security scorecard with fix recommendations.",
+    highlight: "Analyzer",
+    icon: "shield-check",
+    slug: "http-security-header-analyzer",
+  },
+  {
+    title: "HTTP Status Reference",
+    category: CATEGORIES.frontend,
+    description: "Every standard HTTP status code with descriptions and real-world use cases.",
+    highlight: "Reference",
+    icon: "globe-hemisphere-east",
+    slug: "http-status",
   },
   {
     title: "Regex Studio",
@@ -382,20 +324,54 @@ export const frontendTools: Tool[] = [
     icon: "swatches",
     slug: "tailwind-studio",
   },
+  {
+    title: "URL Parser & Builder",
+    category: CATEGORIES.frontend,
+    description: "Parse, analyze, and rebuild URLs with editable query parameters.",
+    highlight: "Parser & Builder",
+    icon: "link",
+    slug: "url-parser",
+  },
+  {
+    title: "Web Extractor",
+    category: CATEGORIES.frontend,
+    description: "Extract meta tags, headings, and links from any public URL.",
+    highlight: "Extractor",
+    icon: "globe",
+    slug: "web-extractor",
+  },
 ];
 
-export const mediaTools: Tool[] = [
+export const assetsTools: Tool[] = [
+  {
+    title: "Document Extractor",
+    category: CATEGORIES.assets,
+    description:
+      "Extract clean text or LLM-ready Markdown from PDF, DOCX, HTML, CSV, and text files.",
+    highlight: "Extractor",
+    icon: "book-open-text",
+    slug: "document-extractor",
+  },
   {
     title: "Image Converter",
-    category: CATEGORIES.media,
+    category: CATEGORIES.assets,
     description: "Batch convert, resize, and process images natively in your browser.",
     highlight: "Converter",
     icon: "image",
     slug: "image-converter",
   },
   {
+    title: "Mermaid Live Editor",
+    category: CATEGORIES.assets,
+    description:
+      "Write Mermaid diagrams with a live SVG preview. Supports flowcharts, sequence, ER, and more.",
+    highlight: "Live Editor",
+    icon: "flow-arrow",
+    slug: "mermaid-editor",
+  },
+  {
     title: "QR Generator",
-    category: CATEGORIES.media,
+    category: CATEGORIES.assets,
     description: "Generate downloadable QR codes instantly — works entirely in your browser..",
     highlight: "Generator",
     icon: "qr-code",
@@ -405,10 +381,8 @@ export const mediaTools: Tool[] = [
 
 // Internal Tools
 export const internalTools: Tool[] = [
+  ...assetsTools,
   ...dataTools,
-  ...designTools,
   ...developmentTools,
-  ...educationTools,
   ...frontendTools,
-  ...mediaTools,
 ];

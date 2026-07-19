@@ -32,12 +32,10 @@ type ResourceCategoryKey = keyof typeof RESOURCE_CATEGORIES;
 type ToolCategoryKey = keyof typeof TOOL_CATEGORIES;
 
 const TOOL_COLOR_MAP: Record<ToolCategoryKey, string> = {
-  data: "bg-c-orange text-ink",
-  design: "bg-c-blue text-paper",
+  assets: "bg-c-orange text-ink",
+  data: "bg-c-blue text-paper",
   dev: "bg-c-pink text-ink",
-  education: "bg-c-green text-ink",
-  frontend: "bg-c-orange text-ink",
-  media: "bg-c-blue text-paper",
+  frontend: "bg-c-green text-ink",
 };
 
 const RESOURCE_COLOR_MAP: Record<ResourceCategoryKey, string> = {
