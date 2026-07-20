@@ -182,8 +182,8 @@
     text-rendering: optimizeLegibility;
   }
 
-  html {
-    @apply overflow-x-clip;
+  body[data-scroll-locked] .site-nav {
+    @apply pr-2;
   }
 
   body {
