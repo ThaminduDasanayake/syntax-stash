@@ -655,11 +655,11 @@
 }
 
 @utility card-title {
-  @apply font-display m-0 flex-none text-left text-[clamp(20px,1.8vw,26px)] leading-none font-extrabold tracking-tight text-balance hyphens-auto uppercase;
+  @apply font-display m-0 flex-none text-left text-[clamp(20px,1.8vw,26px)] leading-none font-extrabold tracking-tight text-balance wrap-anywhere hyphens-auto uppercase;
 }
 
 @utility card-subtitle {
-  @apply text-left font-serif text-[clamp(14px,1.1vw,16px)] leading-snug italic opacity-80;
+  @apply mt-1 mb-1 border-l border-current/70 pl-2 font-semibold opacity-90 transition-opacity duration-200;
 }
 
 @utility card-description {

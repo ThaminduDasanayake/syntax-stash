@@ -117,6 +117,7 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "A collection of DESIGN.md files analysis by popular brand design systems. Drop one into your project and let coding agents generate a matching UI.",
+    favicon: "/github.svg",
     tags: [TAGS.design],
     url: "https://github.com/voltagent/awesome-design-md",
   },
@@ -314,6 +315,16 @@ export const designLinks: Tool[] = [
     url: "https://designmd.app/",
   },
   {
+    title: "Design AI Systems",
+    author: "Khalidabdi1",
+    category: CATEGORIES.design,
+    description:
+      "This repository is a curated library of DESIGN.md files extracted from real public websites so AI agents can generate UI that matches a known visual style, design system, and interaction language.",
+    favicon: "/github.svg",
+    tags: [TAGS.design],
+    url: "https://github.com/Khalidabdi1/design-ai",
+  },
+  {
     title: "DesignBookmark",
     category: CATEGORIES.design,
     description:
@@ -364,6 +375,8 @@ export const designLinks: Tool[] = [
     title: "DIELINE",
     category: CATEGORIES.design,
     description: "The Leading Source for Packaging Innovation and Insight",
+    favicon:
+      "https://i0.wp.com/thedieline.com/wp-content/uploads/2024/04/dieline-favicon.png?fit=32%2C32&quality=65&ssl=1",
     tags: [TAGS.inspiration],
     url: "https://thedieline.com/",
   },
@@ -380,6 +393,7 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "Turn any image into dithered art, halftone, ASCII, Bayer matrix, Lego or dot effects. Free browser-based tool. No install, no account needed.",
+    favicon: "https://www.ditther.com/favicon.png",
     subtitle: "Free Dither, Halftone & Pixel Effects Tool",
     tags: [TAGS.ascii],
     url: "https://www.ditther.com/",
@@ -594,6 +608,7 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "A system that preserves the act of drawing itself, where every gesture is remembered and every image continues to evolve.",
+    favicon: "https://ileivoivm.github.io/inkField/assets/icon-192.png",
     tags: [TAGS.design],
     url: "https://ileivoivm.github.io/inkField/",
   },
@@ -621,14 +636,6 @@ export const designLinks: Tool[] = [
     subtitle: "Free Desk Setup Planner & Visualizer",
     tags: [TAGS.design],
     url: "https://www.juddesk.com/",
-  },
-  {
-    title: "Khalidabdi1/design-ai",
-    category: CATEGORIES.design,
-    description:
-      "This repository is a curated library of DESIGN.md files extracted from real public websites so AI agents can generate UI that matches a known visual style, design system, and interaction language.",
-    tags: [TAGS.design],
-    url: "https://github.com/Khalidabdi1/design-ai",
   },
   {
     title: "Khroma",
@@ -869,6 +876,7 @@ export const designLinks: Tool[] = [
     title: "OS Design Directory",
     category: CATEGORIES.design,
     description: "Curated design resources, tools, and inspiration for designers and developers.",
+    favicon: "https://design-directory-blue.vercel.app/favicon.svg",
     tags: [TAGS.design],
     url: "https://design-directory-blue.vercel.app/",
   },
@@ -909,9 +917,11 @@ export const designLinks: Tool[] = [
     url: "https://editor.pascal.app/",
   },
   {
-    title: "penpot/penpot",
+    title: "Penpot",
+    author: "Penpot",
     category: CATEGORIES.design,
     description: "Penpot: The open-source design tool for design and code collaboration",
+    favicon: "/github.svg",
     tags: [TAGS.design],
     url: "https://github.com/penpot/penpot",
   },
@@ -1007,6 +1017,7 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "Redaction is a bespoke typeface commissioned by Titus Kaphar and Reginald Dwayne Betts’ for The Redaction exhibition at MoMA PS1.",
+    favicon: "https://www.redaction.us/favicon.png",
     subtitle: "Typeface from Titus Kaphar / Reginald Dwayne Betts’ show at MoMA PS1",
     tags: [TAGS.typography],
     url: "https://www.redaction.us/",
@@ -1049,14 +1060,17 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "Savee is a curated place for visual inspiration. Discover references chosen by designers, collect what matters, and build a sharper eye without ads or clutter.",
+    favicon: "https://st.savee-cdn.com/favicons/favicon-96x96.png",
     tags: [TAGS.design, TAGS.inspiration],
     url: "https://savee.com/",
   },
   {
     title: "Screenshot Studio",
     category: CATEGORIES.design,
+    className: "bg-foreground border-paper",
     description:
       "Free screenshot editor and mockup maker online — add gradient backgrounds, Safari and Chrome browser mockups, shadows, 3D effects, and animations to your screenshots. Import tweets and generate code snippets as images. Better free alternative to Pika Style and Shots.so. Export as PNG, JPG, or video. No signup needed.",
+    favicon: "https://www.screenshot-studio.com/favicon.svg",
     subtitle: "Free Screenshot Editor & Mockup Maker",
     tags: [TAGS.design, TAGS.mockup],
     url: "https://www.screenshot-studio.com/",
