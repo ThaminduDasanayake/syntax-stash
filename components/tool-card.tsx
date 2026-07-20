@@ -68,6 +68,7 @@ function CardBody({ tool }: ToolCardProps) {
 
           <h3 className="card-title">{tool.title}</h3>
 
+          {tool.subtitle && <p className="card-subtitle">{tool.subtitle}</p>}
           <p className="card-description">{tool.description}</p>
 
           {!isInternal && (

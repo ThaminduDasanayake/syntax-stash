@@ -658,8 +658,16 @@
   @apply font-display m-0 flex-none text-left text-[clamp(20px,1.8vw,26px)] leading-none font-extrabold tracking-tight text-balance hyphens-auto uppercase;
 }
 
+@utility card-subtitle {
+  @apply text-left font-serif text-[clamp(14px,1.1vw,16px)] leading-snug italic opacity-80;
+}
+
 @utility card-description {
   @apply m-0 line-clamp-6 flex-none text-sm leading-relaxed font-medium text-pretty opacity-90;
+
+  .card:has(.card-subtitle) & {
+    @apply line-clamp-3;
+  }
 }
 
 @utility card-footer {
