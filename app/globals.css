@@ -313,7 +313,7 @@
 
 /* Nav*/
 @utility site-nav {
-  @apply fixed top-0 right-0 left-0 z-40 border-b border-transparent bg-[#ede9dddb] pt-[env(safe-area-inset-top)] backdrop-blur-md transition-colors duration-200 ease-out;
+  @apply fixed top-0 right-0 left-0 z-60 border-b border-transparent bg-[#ede9dddb] pt-[env(safe-area-inset-top)] backdrop-blur-md transition-colors duration-200 ease-out;
 }
 
 @utility site-nav--scrolled {
@@ -335,13 +335,18 @@
 }
 
 @utility nav-links {
-  @apply bg-bg border-ink fixed top-16 right-0 left-0 z-100 hidden flex-col items-start gap-1 border-b-[1.5px] px-5 pt-5 pb-7;
+  @apply bg-bg border-ink fixed top-16 right-0 left-0 z-60 hidden flex-col items-start gap-1 border-b-[1.5px] px-5 pt-5 pb-7;
 
   @apply md:static md:z-auto md:flex md:flex-row md:items-center md:gap-6 md:border-none md:bg-transparent md:p-0;
 }
 
 @utility nav-links--open {
   @apply flex;
+}
+
+:root:has(.nav-links--open) {
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 @utility nav-link {
@@ -365,7 +370,7 @@
 }
 
 @utility nav-backdrop {
-  @apply fixed top-16 right-0 bottom-0 left-0 z-90 block animate-[nav-backdrop-in_180ms_ease-out] bg-[#14110b6b] md:hidden;
+  @apply fixed top-16 right-0 bottom-0 left-0 z-50 block animate-[nav-backdrop-in_180ms_ease-out] bg-[#14110b6b] md:hidden;
 }
 
 @keyframes nav-backdrop-in {

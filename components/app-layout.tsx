@@ -21,12 +21,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
       <AppHeader isScrolled={isScrolled} onSearchOpenAction={() => setCommandMenuOpen(true)} />
-      <main
-        // onScroll={(e) => setIsScrolled(e.currentTarget.scrollTop > 10)}
-        className="flex-1"
-      >
-        {children}
-      </main>
+      <main className="flex-1">{children}</main>
       <AppFooter />
       <CommandMenu open={commandMenuOpen} setOpenAction={setCommandMenuOpen} />
     </div>
