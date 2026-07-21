@@ -1,6 +1,6 @@
 import { CopyButton } from "@/components/ui/copy-button";
 
-export function MetaRow({ label, value }: { label: string; value: string }) {
+export function MetaRow({ label, value }: { label: string; value: string | null }) {
   if (!value) return null;
   return (
     <div className="group relative grid grid-cols-[110px_1fr] gap-4 py-2.5 pr-10 text-sm not-last:border-b">

@@ -72,14 +72,6 @@ export const mediaLinks: Tool[] = [
     url: "https://illustrations.run/",
   },
   {
-    title: "Free SVG Illustrations",
-    category: CATEGORIES.media,
-    description: "xxx",
-    subtitle: "Unique Scribbles for Your Designs",
-    tags: [TAGS.illustration, TAGS.svg],
-    url: "https://svghub.vercel.app/",
-  },
-  {
     title: "Haikei",
     category: CATEGORIES.media,
     description:
@@ -171,6 +163,13 @@ export const mediaLinks: Tool[] = [
       "Browse a curated collection of free, customizable SVG doodles and icons to use in your websites, apps, slides, and prints.",
     subtitle: "Free, editable SVGs to spice up your designs",
     url: "https://svgdoodles.com/",
+  },
+  {
+    title: "SVG Hub",
+    category: CATEGORIES.media,
+    description: "Custom-color elements ready to paste into your project",
+    tags: [TAGS.illustration, TAGS.svg],
+    url: "https://svghub.vercel.app/",
   },
   {
     title: "SvgPathEditor",
