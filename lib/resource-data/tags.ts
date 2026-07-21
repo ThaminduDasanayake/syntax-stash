@@ -18,6 +18,7 @@ export const TAGS = {
   git: "git",
   hosting: "hosting",
   icon: "icon",
+  illustration: "illustration",
   image: "image",
   inspiration: "inspiration",
   javascript: "javascript",

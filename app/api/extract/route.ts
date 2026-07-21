@@ -328,24 +328,36 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
   let html: string;
   try {
-    const response = await fetchWithRetry(targetUrl.href, {
-      headers: {
-        Accept:
-          "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-        "Accept-Language": "en-US,en;q=0.9",
-        "Cache-Control": "no-cache",
-        "Sec-Ch-Ua": '"Not A(Brand";v="8", "Chromium";v="132", "Google Chrome";v="132"',
-        "Sec-Ch-Ua-Mobile": "?0",
-        "Sec-Ch-Ua-Platform": '"Windows"',
-        "Sec-Fetch-Dest": "document",
-        "Sec-Fetch-Mode": "navigate",
-        "Sec-Fetch-Site": "none",
-        "Upgrade-Insecure-Requests": "1",
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36",
-      },
-      redirect: "follow",
-    });
+    const apiKey = process.env.SCRAPINGBEE_API_KEY;
+    let response: Response;
+
+    if (apiKey) {
+      const scrapingBeeUrl = `https://app.scrapingbee.com/api/v1/?api_key=${encodeURIComponent(
+        apiKey
+      )}&url=${encodeURIComponent(targetUrl.href)}&render_js=true`;
+      response = await fetchWithRetry(scrapingBeeUrl, {
+        redirect: "follow",
+      });
+    } else {
+      response = await fetchWithRetry(targetUrl.href, {
+        headers: {
+          Accept:
+            "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+          "Accept-Language": "en-US,en;q=0.9",
+          "Cache-Control": "no-cache",
+          "Sec-Ch-Ua": '"Not A(Brand";v="8", "Chromium";v="132", "Google Chrome";v="132"',
+          "Sec-Ch-Ua-Mobile": "?0",
+          "Sec-Ch-Ua-Platform": '"Windows"',
+          "Sec-Fetch-Dest": "document",
+          "Sec-Fetch-Mode": "navigate",
+          "Sec-Fetch-Site": "none",
+          "Upgrade-Insecure-Requests": "1",
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36",
+        },
+        redirect: "follow",
+      });
+    }
 
     const contentLength = response.headers.get("content-length");
     if (contentLength) {
@@ -359,9 +371,23 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     }
 
     if (!response.ok) {
+      let errorMessage = `Remote server returned ${response.status} ${response.statusText}`;
+      if (apiKey) {
+        try {
+          const errText = await response.text();
+          const parsed = JSON.parse(errText);
+          if (parsed && typeof parsed === "object" && "message" in parsed) {
+            errorMessage = `ScrapingBee Error: ${parsed.message}`;
+          } else {
+            errorMessage = `ScrapingBee returned status ${response.status}: ${errText.slice(0, 150)}`;
+          }
+        } catch {
+          // Fallback if parsing fails or stream is already closed
+        }
+      }
       return NextResponse.json(
         {
-          error: `Remote server returned ${response.status} ${response.statusText}`,
+          error: errorMessage,
         },
         { status: 502 },
       );

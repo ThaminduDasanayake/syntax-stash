@@ -68,8 +68,16 @@ export const mediaLinks: Tool[] = [
     description:
       "Add personality to your design projects with this free collection of unique and playful SVG scribbles. Hand-drawn, these are ready for just copy and paste!",
     subtitle: "Unique Scribbles for Your Designs",
-    tags: [TAGS.svg],
+    tags: [TAGS.illustration, TAGS.svg],
     url: "https://illustrations.run/",
+  },
+  {
+    title: "Free SVG Illustrations",
+    category: CATEGORIES.media,
+    description: "xxx",
+    subtitle: "Unique Scribbles for Your Designs",
+    tags: [TAGS.illustration, TAGS.svg],
+    url: "https://svghub.vercel.app/",
   },
   {
     title: "Haikei",
