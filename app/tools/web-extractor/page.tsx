@@ -115,6 +115,40 @@ export default function WebExtractorPage() {
 
   const tool = internalTools.find((t) => t.slug === "web-extractor");
 
+  function beautifyHtml(html: string): string {
+    let indentLevel = 0;
+    const indentSize = 2;
+
+    // Split tags onto separate lines while preserving text content
+    const tokens = html
+      .replace(/>\s*</g, ">\n<")
+      .split("\n")
+      .map((token) => token.trim())
+      .filter(Boolean);
+
+    return tokens
+      .map((token) => {
+        // Decrease indent for closing tags: </tag>
+        if (/^<\//.test(token)) {
+          indentLevel = Math.max(0, indentLevel - 1);
+        }
+
+        const line = " ".repeat(indentLevel * indentSize) + token;
+
+        // Increase indent for opening tags (excluding self-closing, doctypes, void tags)
+        const isOpeningTag = /^<[a-zA-Z0-9-]+/.test(token);
+        const isSelfClosing = /\/>$/.test(token) || /^<(meta|link|img|br|hr|input)/i.test(token);
+        const isClosingTag = /^<\//.test(token);
+
+        if (isOpeningTag && !isSelfClosing && !isClosingTag) {
+          indentLevel++;
+        }
+
+        return line;
+      })
+      .join("\n");
+  }
+
   return (
     <ToolLayout tool={tool}>
       <div className="flex h-full min-h-0 w-full flex-1 flex-col space-y-6">
@@ -270,7 +304,7 @@ export default function WebExtractorPage() {
                 autoGrow
                 className="font-mono text-xs break-all whitespace-pre-wrap"
                 label="HTML Output"
-                value={headHtml}
+                value={beautifyHtml(headHtml)}
                 readOnly
                 action={<CopyButton iconOnly textToCopy={headHtml} disabled={!headHtml} />}
               />

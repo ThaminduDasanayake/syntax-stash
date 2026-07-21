@@ -142,8 +142,11 @@ export async function POST(req: NextRequest) {
       viewport: $('meta[name="viewport"]').attr("content")?.trim() || null,
     };
 
+    // Format and indent the <head> tag
+    const formattedHeadHtml = $.xml("head");
+
     // Return extracted head HTML
-    return NextResponse.json({ head: headHtml, metadata });
+    return NextResponse.json({ head: formattedHeadHtml, metadata });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
     return NextResponse.json({ error: errorMessage }, { status: 500 });

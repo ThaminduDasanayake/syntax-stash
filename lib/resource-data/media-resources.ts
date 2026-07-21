@@ -64,6 +64,14 @@ export const mediaLinks: Tool[] = [
   },
   {
     title: "Free SVG Illustrations",
+    author: "Lukasz Adam",
+    category: CATEGORIES.media,
+    description: "Free SVG Illustrations For Websites (CC0 Licensed)",
+    tags: [TAGS.illustration, TAGS.svg],
+    url: "https://lukaszadam.com/illustrations",
+  },
+  {
+    title: "Free SVG Illustrations",
     category: CATEGORIES.media,
     description:
       "Add personality to your design projects with this free collection of unique and playful SVG scribbles. Hand-drawn, these are ready for just copy and paste!",
@@ -79,6 +87,15 @@ export const mediaLinks: Tool[] = [
     subtitle: "Generate unique SVG design assets",
     tags: [TAGS.image],
     url: "https://haikei.app/",
+  },
+  {
+    title: "Highlights",
+    category: CATEGORIES.media,
+    description:
+      "Highlights is an open-source hand-drawn illustration library created by Outdraw Design to help everyone tell their story. The library contains over 100 vector shapes ready to use by all creatives in their work: websites, apps, videos, illustrations, and many more.",
+    subtitle: "Hand-Drawn Illustration Library",
+    tags: [TAGS.illustration, TAGS.svg],
+    url: "https://www.highlights.design/",
   },
   {
     title: "Iconify Design",
@@ -156,12 +173,29 @@ export const mediaLinks: Tool[] = [
     subtitle: "Remove Background from Image for Free",
     url: "https://icons8.com/bgremover",
   },
+  // {
+  //   title: "scribbbles",
+  //   category: CATEGORIES.media,
+  //   description: "100+ vectorized scribbbles to spice up your design projects!",
+  //   tags: [TAGS.illustration, TAGS.svg],
+  //   url: "https://www.scribbbles.design/",
+  // },
+  {
+    title: "Svg Doodle icon",
+    category: CATEGORIES.media,
+    className: "bg-foreground border-paper",
+    description: "Free Svg Doodle icon Pack",
+    favicon: "https://svgicon.net/wp-content/uploads/2023/05/svg-doodle-icon-logo.png",
+    tags: [TAGS.illustration, TAGS.svg],
+    url: "https://svgicon.net/",
+  },
   {
     title: "SVG Doodles",
     category: CATEGORIES.media,
     description:
       "Browse a curated collection of free, customizable SVG doodles and icons to use in your websites, apps, slides, and prints.",
     subtitle: "Free, editable SVGs to spice up your designs",
+    tags: [TAGS.svg],
     url: "https://svgdoodles.com/",
   },
   {
