@@ -11,6 +11,7 @@ export type Tool = {
   highlight?: string;
   icon?: IconName;
   related?: string[];
+  ogImage?: string;
   slug?: string;
   subtitle?: string;
   tags?: string[];

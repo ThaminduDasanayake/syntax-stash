@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useState } from "react";
 
 import { cn } from "@/lib/utils";
@@ -10,9 +9,16 @@ function getFavicon(toolUrl: string, explicitFavicon?: string) {
     const origin = url.origin;
 
     const sources: string[] = [];
+
     if (explicitFavicon) sources.push(explicitFavicon);
 
+    // Higher quality favicon sources first
+    sources.push(`${origin}/apple-touch-icon.png`);
+    sources.push(`${origin}/favicon.svg`);
+    sources.push(`${origin}/favicon.png`);
     sources.push(`${origin}/favicon.ico`);
+
+    // Google fallback
     sources.push(`https://www.google.com/s2/favicons?domain=${domain}&sz=128`);
     return sources;
   } catch {
@@ -34,14 +40,18 @@ export function CardIcon({
   const sources = getFavicon(url, explicitFavicon);
   const [index, setIndex] = useState(0);
 
+  const src = sources[index];
+
+  if (!src) {
+    return <div className={cn(className, "card-icon-box p-1")} />;
+  }
+
   return (
     <div className={cn(className, "card-icon-box p-1")}>
-      <Image
-        src={sources[index]}
+      <img
+        src={src}
         alt={alt}
-        width={24}
-        height={24}
-        unoptimized
+        loading="lazy"
         className="h-full w-full object-contain"
         onError={() => {
           if (index < sources.length - 1) {

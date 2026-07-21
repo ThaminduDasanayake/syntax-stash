@@ -64,9 +64,85 @@ export async function POST(req: NextRequest) {
     const headHtml = data.head ?? "";
     const $ = cheerio.load(headHtml);
 
+    function absoluteUrl(value: string | null | undefined, base: string) {
+      if (!value) return null;
+
+      try {
+        return new URL(value, base).href;
+      } catch {
+        return null;
+      }
+    }
+
+    const baseUrl = targetUrl;
+
+    const icons = {
+      appleTouchIcon: $('link[rel="apple-touch-icon"]').first().attr("href") || null,
+
+      favicon:
+        $('link[rel="icon"][type="image/png"]').first().attr("href") ||
+        $('link[rel="icon"]').first().attr("href") ||
+        null,
+
+      faviconSvg: $('link[rel="icon"][type="image/svg+xml"]').first().attr("href") || null,
+    };
+
+    function extractJsonLdLogo($: cheerio.CheerioAPI): string | null {
+      let logo: string | null = null;
+
+      $('script[type="application/ld+json"]').each((_, el) => {
+        try {
+          const json = JSON.parse($(el).text());
+          const items = Array.isArray(json)
+            ? json
+            : json["@graph"] && Array.isArray(json["@graph"])
+              ? json["@graph"]
+              : [json];
+
+          for (const item of items) {
+            if (item.logo) {
+              if (typeof item.logo === "string") {
+                logo = item.logo;
+              } else if (typeof item.logo === "object" && item.logo?.url) {
+                logo = item.logo.url;
+              }
+            }
+          }
+        } catch {
+          // Ignore JSON parse errors for malformed script tags
+        }
+      });
+
+      return logo;
+    }
+
+    const jsonLdLogo = extractJsonLdLogo($);
+
+    const rawOgImage = $('meta[property="og:image"]').attr("content")?.trim() || null;
+    const rawTwitterImage =
+      $('meta[property="twitter:image"]').attr("content")?.trim() ||
+      $('meta[name="twitter:image"]').attr("content")?.trim() ||
+      null;
+
+    // Extract preloaded image screenshots if present
+    const screenshots = $('link[rel="preload"][as="image"]')
+      .map((_, el) => $(el).attr("href"))
+      .get()
+      .map((href) => absoluteUrl(href, baseUrl))
+      .filter((url): url is string => Boolean(url));
+
     // Extract structured metadata mapping directly to your MetaRow controls
     const metadata = {
       title: $("title").first().text().trim() || null,
+      assets: {
+        appleTouchIcon: absoluteUrl(icons.appleTouchIcon, baseUrl),
+        favicon: absoluteUrl(icons.favicon, baseUrl),
+        faviconSvg: absoluteUrl(icons.faviconSvg, baseUrl),
+        logo: absoluteUrl(jsonLdLogo, baseUrl),
+        ogImage: absoluteUrl(rawOgImage, baseUrl),
+        screenshots,
+        twitterImage: absoluteUrl(rawTwitterImage, baseUrl),
+      },
       author: $('meta[name="author"]').attr("content")?.trim() || null,
       canonicalUrl: $('link[rel="canonical"]').attr("href")?.trim() || null,
       charset: $("meta[charset]").attr("charset") || null,
@@ -79,6 +155,7 @@ export async function POST(req: NextRequest) {
           .map((k) => k.trim())
           .filter(Boolean) ?? [],
       language: $("html").attr("lang") || null,
+
       openGraph: {
         title: $('meta[property="og:title"]').attr("content")?.trim() || null,
         description: $('meta[property="og:description"]').attr("content")?.trim() || null,
@@ -142,11 +219,7 @@ export async function POST(req: NextRequest) {
       viewport: $('meta[name="viewport"]').attr("content")?.trim() || null,
     };
 
-    // Format and indent the <head> tag
-    const formattedHeadHtml = $.xml("head");
-
-    // Return extracted head HTML
-    return NextResponse.json({ head: formattedHeadHtml, metadata });
+    return NextResponse.json({ head: headHtml, metadata });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
     return NextResponse.json({ error: errorMessage }, { status: 500 });

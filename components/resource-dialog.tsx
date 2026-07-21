@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowSquareOutIcon, CaretLeftIcon, CaretRightIcon, XIcon } from "@phosphor-icons/react";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
@@ -151,6 +152,15 @@ export function ResourceDialog({ tool }: ToolCardProps) {
         {/* Right Side */}
         <div className="modal-right">
           <div className="modal-content">
+            {activeTool.ogImage && (
+              <img
+                src={activeTool.ogImage}
+                alt={activeTool.title}
+                className="h-auto w-full"
+                loading="lazy"
+              />
+            )}
+
             <div className="modal-sections">
               {activeTool.details?.map(({ title, content }, index) => (
                 <div key={index} className="modal-section">

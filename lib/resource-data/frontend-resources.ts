@@ -209,6 +209,14 @@ export const frontendLinks: Tool[] = [
     url: "https://cssloaders.github.io/",
   },
   {
+    title: "CuiCui",
+    author: "Damien Schneider",
+    category: CATEGORIES.frontend,
+    description: "A collection of UI components for advanced applications.",
+    tags: [TAGS["ui-component"]],
+    url: "https://cuicui.day/",
+  },
+  {
     title: "Cult UI",
     category: CATEGORIES.frontend,
     description:
@@ -511,6 +519,17 @@ export const frontendLinks: Tool[] = [
     subtitle: "Create & edit Lottie animations",
     tags: [TAGS.animation],
     url: "https://www.lottielab.com/",
+  },
+  {
+    title: "lucide-animated",
+    author: "pqoqubbw",
+    category: CATEGORIES.frontend,
+    description:
+      "Free open-source library of 350+ beautifully crafted animated React icons. Built with Motion and Lucide. Copy-paste ready, MIT licensed, fully customizable SVG icons with smooth animations.",
+    ogImage: "https://lucide-animated.com/og.png",
+    subtitle: "Free Animated React Icons Library",
+    tags: [TAGS.icon],
+    url: "https://lucide-animated.com/",
   },
   {
     title: "Lukacho UI",

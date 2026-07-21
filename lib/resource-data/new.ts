@@ -1,3 +1,4 @@
+import { TAGS } from "@/lib/resource-data/tags";
 import { Tool } from "@/types";
 
 import { CATEGORIES } from "./categories";

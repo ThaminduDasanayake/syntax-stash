@@ -12,6 +12,16 @@ export const designLinks: Tool[] = [
     url: "https://graph-easy.online/",
   },
   {
+    title: "A1",
+    category: CATEGORIES.design,
+    description:
+      "A collection of the best websites found on the internet. Hand-picked design inspiration for designers, developers and creatives. Updated nearly every day.",
+    ogImage: "https://www.a1.gallery/images/og-default.webp",
+    subtitle: "Website design inspiration gallery",
+    tags: [TAGS.design, TAGS.inspiration],
+    url: "https://www.a1.gallery",
+  },
+  {
     title: "Adfolio",
     category: CATEGORIES.design,
     description:
@@ -463,6 +473,16 @@ export const designLinks: Tool[] = [
       "fixelPont is a chaotic pixel font. it comes in two styles, regular and rounded, and includes ByeByeBinary's post-binary ligatures for the french language. it's licensed under the CUTE license.",
     tags: [TAGS.typography],
     url: "https://klotter.supply/fixelpont",
+  },
+  {
+    title: "Flectofy",
+    category: CATEGORIES.design,
+    description:
+      "Flectofy is a generative design tool in the **Design** category that creates transformed versions of text and images using preset templates. It enables users to apply stylistic alterations such as fattening text, mirroring content, or adding captions, along with translation options for text input. Flectofy fits into design workflows for generating custom graphic elements like organic-looking SVG shapes, patterns, and backgrounds, which can be exported in SVG or PNG formats. Pricing details are not specified, but it offers free access through a web-based interface.",
+    ogImage:
+      "https://cdn.sanity.io/images/nxwwhcgv/production/08e533e7d683cdefe3c2ad471596a7d0af3cc7cc-1920x1080.png?rect=0,36,1920,1008&w=1200&h=630&auto=format",
+    tags: [TAGS.pattern],
+    url: "https://flectofy.flecto.io/",
   },
   {
     title: "Fluid Type Scale Calculator",
@@ -1023,6 +1043,16 @@ export const designLinks: Tool[] = [
     url: "https://www.redaction.us/",
   },
   {
+    title: "Refto",
+    category: CATEGORIES.design,
+    description:
+      "Discover curated website inspiration, landing page examples, portfolio sites, SaaS website references, and interaction design patterns in one searchable web design gallery.",
+    ogImage: "https://refto.one/images/og.jpg",
+    subtitle: "Website Inspiration Gallery & Web Design References",
+    tags: [TAGS.design, TAGS.inspiration],
+    url: "https://refto.one/",
+  },
+  {
     title: "Republish",
     category: CATEGORIES.design,
     description:
@@ -1090,6 +1120,16 @@ export const designLinks: Tool[] = [
     description: "Millions of practice design prompts to challenge you to think outside the box.",
     subtitle: "Design Challenge Generator",
     url: "https://sharpen.design/",
+  },
+  {
+    title: "Showcase",
+    category: CATEGORIES.design,
+    description:
+      "Discover hand-picked website inspiration, design signals, and build-ready references for your next product, landing page, or brand site.",
+    ogImage: "https://showcase.supply/preview.png",
+    subtitle: "Hand-picked Website Inspiration for Your Next Build",
+    tags: [TAGS.design, TAGS.inspiration],
+    url: "https://www.showcase.supply/",
   },
   {
     title: "SPACE TYPE GENERATOR",
