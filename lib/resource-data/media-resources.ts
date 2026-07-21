@@ -55,6 +55,14 @@ export const mediaLinks: Tool[] = [
     url: "https://www.craiyon.com/en/background-remover",
   },
   {
+    title: "Create beautiful images of your code",
+    category: CATEGORIES.media,
+    description:
+      "Turn your code into beautiful images. Choose from a range of syntax colors, hide or show the background, and toggle between a dark and light window.",
+    ogImage: "https://www.ray.so/_next/static/media/og.0wf8b~rvlko.g.png",
+    url: "https://ray.so/",
+  },
+  {
     title: "fffuel",
     category: CATEGORIES.media,
     description:

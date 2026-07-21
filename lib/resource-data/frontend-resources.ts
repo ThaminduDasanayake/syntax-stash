@@ -276,6 +276,14 @@ export const frontendLinks: Tool[] = [
     url: "https://efferd.com/",
   },
   {
+    title: "Epic Easing",
+    category: CATEGORIES.frontend,
+    description:
+      "Quickly and easily generate easing curves for ease, spring, and bounce animations. Utilize animation presets or create your own custom animation curve, spring, or bounce. Instantly export to CSS, SCSS, Objective-C, and Swift.",
+    ogImage: "https://epiceasing.com/epiceasing_preview.png",
+    url: "https://epiceasing.com/",
+  },
+  {
     title: "Flicker",
     category: CATEGORIES.frontend,
     description:
@@ -444,6 +452,14 @@ export const frontendLinks: Tool[] = [
     description: "Icon Explorer with Instant searching, powered by Iconify",
     tags: [TAGS.icon],
     url: "https://icones.js.org/",
+  },
+  {
+    title: "Icon Maker by Raycast",
+    category: CATEGORIES.frontend,
+    description: "Create beautiful icons for your next project, app, or Raycast extension.",
+    ogImage: "https://www.ray.so/_next/static/media/og-image.00c8lrgmh62oa.png",
+    tags: [TAGS.icon],
+    url: "https://ray.so/icon",
   },
   {
     title: "Icons8",
