@@ -5,6 +5,16 @@ import { TAGS } from "./tags";
 
 export const designLinks: Tool[] = [
   {
+    title: "60fps",
+    category: CATEGORIES.design,
+    description:
+      "60fps is a curated collection of UI/UX animation and interaction design details from the world’s best iOS, and web apps.",
+    ogImage: "https://framerusercontent.com/images/mB8WqomRNWMwPrMEL90Vtl8JGrE.png",
+    subtitle: "UI/UX animation inspiration for mobile & web apps",
+    tags: [TAGS.inspiration],
+    url: "https://60fps.design/",
+  },
+  {
     title: "[ graph ] ~~> [ easy ]",
     category: CATEGORIES.design,
     description: "Convert Graph::Easy and DOT notation to ASCII art, box art, and more.",
@@ -156,6 +166,15 @@ export const designLinks: Tool[] = [
     url: "https://before.click/",
   },
   {
+    title: "Best Free Fonts",
+    category: CATEGORIES.design,
+    description:
+      "Compare Google Fonts side-by-side with anatomy overlays, OpenType metrics, pairing scores, and ready-to-use CSS. Free tool for designers and developers.",
+    ogImage: "https://bestfreefonts.com/opengraph-image?b9c68fc35fe7f272",
+    tags: [TAGS.typography],
+    url: "https://bestfreefonts.com/",
+  },
+  {
     title: "Blank",
     category: CATEGORIES.design,
     description: "The fastest Figma UI kit and Design system for your projects.",
@@ -183,6 +202,7 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "Call for inspiration using the purple hat for when you have inspiration blocks or need fresh new ideas. A great tool created by a designer for web professionals.",
+    ogImage: "https://calltoinspiration.com/share.png",
     subtitle: "Small details for very exacting ideas!",
     tags: [TAGS.design],
     url: "https://calltoinspiration.com/",
@@ -497,10 +517,20 @@ export const designLinks: Tool[] = [
     title: "Fontastic Space",
     category: CATEGORIES.design,
     description:
-      "Compare Google Fonts side-by-side with anatomy overlays, OpenType metrics, pairing scores, and ready-to-use CSS. Free tool for designers and developers.",
+      "Best Free Fonts is a curated selection of free fonts. Including serif, sans serif, script and monospace.",
     subtitle: "Find Mathematically Optimal Font Pairings",
     tags: [TAGS.typography],
     url: "https://fontastic.space/",
+  },
+  {
+    title: "Font Brief",
+    category: CATEGORIES.design,
+    description:
+      "A revolutionary Font discovery tool for Branding & Editorial. Exclusively curated",
+    ogImage:
+      "https://cdn.prod.website-files.com/5eeb4370978cbe4a1f392156/5f847dd9ec17cbbba67c8636_Artboard%2068.svg",
+    tags: [TAGS.typography],
+    url: "https://www.fontbrief.com/home",
   },
   {
     title: "Fontjoy",
@@ -622,6 +652,15 @@ export const designLinks: Tool[] = [
     subtitle: "The hottest headers on the internet",
     tags: [TAGS.design, TAGS.inspiration],
     url: "https://www.headers.club/",
+  },
+  {
+    title: "Ingradients",
+    category: CATEGORIES.design,
+    description: "Hand-picked mesh gradients for your next design project.",
+    ogImage:
+      "https://framerusercontent.com/modules/reOxh1U6VCuZnfou6x2m/eJmnQAJafZ0DjECK4JSI/assets/S3wd0yoFBBYAKv1E4nAuhoWxC8.jpg",
+    tags: [TAGS.color, TAGS.gradient],
+    url: "https://ingradients.net/",
   },
   {
     title: "InkField",
@@ -827,6 +866,16 @@ export const designLinks: Tool[] = [
     url: "https://www.mockdown.design/",
   },
   {
+    title: "MockupNest",
+    category: CATEGORIES.design,
+    description:
+      "Download exclusive free PSD mockups and edit them online instantly. Use MockupNest’s online mockup generator to customize product mockups for personal and commercial use — no Photoshop required.",
+    ogImage: "https://cdn.mockupnest.com/wp-content/uploads/2023/09/Fallback-Image-Mockupnest.jpg",
+    subtitle: "Free PSD Mockups to Download & Edit Online",
+    tags: [TAGS.mockup],
+    url: "https://mockupnest.com/",
+  },
+  {
     title: "Mockuuups Studio",
     category: CATEGORIES.design,
     description:
@@ -944,6 +993,15 @@ export const designLinks: Tool[] = [
     favicon: "/github.svg",
     tags: [TAGS.design],
     url: "https://github.com/penpot/penpot",
+  },
+  {
+    title: "Photo Gradient",
+    category: CATEGORIES.design,
+    description: "Generate beautiful gradients from colors or from a photo",
+    ogImage: "https://photogradient.com/social-image.png",
+    subtitle: "Image to Mesh Gradient",
+    tags: [TAGS.gradient],
+    url: "https://photogradient.com/",
   },
   {
     title: "Picture Palette",

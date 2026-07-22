@@ -323,7 +323,7 @@ export default function WebExtractorPage() {
             <Section title="Extracted <head> Tag">
               <TextareaGroup
                 autoGrow
-                className="font-mono text-xs break-all whitespace-pre-wrap"
+                className="font-mono text-xs! break-all whitespace-pre-wrap"
                 label="HTML Output"
                 value={beautifyHtml(headHtml)}
                 readOnly

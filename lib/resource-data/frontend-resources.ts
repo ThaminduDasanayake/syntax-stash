@@ -133,7 +133,7 @@ export const frontendLinks: Tool[] = [
     description:
       "An open-source icon set where every icon represents a CSS property–value pair. Copy as SVG or React component. Built for design tools, inspectors, and documentation.",
     subtitle: "Icons for CSS Properties",
-    tags: [TAGS.icon],
+    tags: [TAGS.icons],
     url: "https://designsurface.dev/cascade",
   },
   {
@@ -450,15 +450,23 @@ export const frontendLinks: Tool[] = [
     title: "Icônes",
     category: CATEGORIES.frontend,
     description: "Icon Explorer with Instant searching, powered by Iconify",
-    tags: [TAGS.icon],
+    tags: [TAGS.icons],
     url: "https://icones.js.org/",
   },
   {
+    title: "Iconify Design",
+    category: CATEGORIES.frontend,
+    description: "All popular icon sets, one framework",
+    tags: [TAGS.icons],
+    url: "https://iconify.design/",
+  },
+  {
     title: "Icon Maker by Raycast",
+    author: "Raycast",
     category: CATEGORIES.frontend,
     description: "Create beautiful icons for your next project, app, or Raycast extension.",
     ogImage: "https://www.ray.so/_next/static/media/og-image.00c8lrgmh62oa.png",
-    tags: [TAGS.icon],
+    tags: [TAGS.icons],
     url: "https://ray.so/icon",
   },
   {
@@ -468,6 +476,13 @@ export const frontendLinks: Tool[] = [
       "A flexible icon family for interfaces, diagrams, presentations — whatever, really.",
     subtitle: "Download 1,509,000 free icons (SVG, PNG)",
     url: "https://icons8.com/icons",
+  },
+  {
+    title: "Iconsax",
+    category: CATEGORIES.frontend,
+    description: "Iconsax is a collection of icons for designers and developers",
+    tags: [TAGS.icons],
+    url: "https://iconsax.io/",
   },
   {
     title: "Impeccable",
@@ -484,6 +499,20 @@ export const frontendLinks: Tool[] = [
       "Copy and paste accessible React components built on React Aria and Tailwind CSS. 87+ production-ready components for Next.js and Laravel.",
     tags: [TAGS["ui-component"]],
     url: "https://intentui.com/",
+  },
+  {
+    title: "iOS Icon Gallery",
+    category: CATEGORIES.frontend,
+    description: "Showcasing beautiful icon designs from the iOS App Store.",
+    tags: [TAGS.icons],
+    url: "https://www.iosicongallery.com/",
+  },
+  {
+    title: "Its Hover",
+    category: CATEGORIES.frontend,
+    description: "Animated icons that move with intent.",
+    tags: [TAGS.icons],
+    url: "https://www.itshover.com/",
   },
   {
     title: "Jitter",
@@ -544,7 +573,7 @@ export const frontendLinks: Tool[] = [
       "Free open-source library of 350+ beautifully crafted animated React icons. Built with Motion and Lucide. Copy-paste ready, MIT licensed, fully customizable SVG icons with smooth animations.",
     ogImage: "https://lucide-animated.com/og.png",
     subtitle: "Free Animated React Icons Library",
-    tags: [TAGS.icon],
+    tags: [TAGS.icons],
     url: "https://lucide-animated.com/",
   },
   {
@@ -916,6 +945,14 @@ export const frontendLinks: Tool[] = [
       "Get free-to-use Prebuilt React components powered by Tailwind CSS & Framer Motion. Modern, Minimal and customizable. Just copy, paste and you're ready to go!",
     tags: [TAGS["ui-component"]],
     url: "https://syntaxui.com/",
+  },
+  {
+    title: "TechIcons",
+    category: CATEGORIES.frontend,
+    description: "Download, copy and paste tech icons in SVG and PNG format for your projects.",
+    subtitle: "SVG and PNG tech icons",
+    tags: [TAGS.icons],
+    url: "https://techicons.dev/",
   },
   {
     title: "termcn",

@@ -47,6 +47,16 @@ export const mediaLinks: Tool[] = [
     url: "https://png-to-ico.com/",
   },
   {
+    title: "coolshapes",
+    author: "Vijay Verma",
+    category: CATEGORIES.media,
+    description:
+      "100+ Abstract shapes with cool grainy gradient. Ready to use with any design dev project.",
+    ogImage: "https://coolshap.es/preview.jpg?v1",
+    tags: [TAGS.illustration, TAGS.shapes],
+    url: "https://coolshap.es/",
+  },
+  {
     title: "Craiyon",
     category: CATEGORIES.dev,
     description:
@@ -56,6 +66,7 @@ export const mediaLinks: Tool[] = [
   },
   {
     title: "Create beautiful images of your code",
+    author: "Raycast",
     category: CATEGORIES.media,
     description:
       "Turn your code into beautiful images. Choose from a range of syntax colors, hide or show the background, and toggle between a dark and light window.",
@@ -106,40 +117,22 @@ export const mediaLinks: Tool[] = [
     url: "https://www.highlights.design/",
   },
   {
-    title: "Iconify Design",
-    category: CATEGORIES.media,
-    description: "All popular icon sets, one framework",
-    tags: [TAGS.icon],
-    url: "https://iconify.design/",
-  },
-  {
-    title: "Iconsax",
-    category: CATEGORIES.media,
-    description: "Iconsax is a collection of icons for designers and developers",
-    tags: [TAGS.icon],
-    url: "https://iconsax.io/",
-  },
-  {
-    title: "iOS Icon Gallery",
-    category: CATEGORIES.media,
-    description: "Showcasing beautiful icon designs from the iOS App Store.",
-    tags: [TAGS.icon],
-    url: "https://www.iosicongallery.com/",
-  },
-  {
-    title: "Its Hover",
-    category: CATEGORIES.media,
-    description: "Animated icons that move with intent.",
-    tags: [TAGS.icon],
-    url: "https://www.itshover.com/",
-  },
-  {
     title: "Logos",
     category: CATEGORIES.media,
     description:
       "15,015 free SVG logos for apps, dev tools and tech brands. Search, filter by category, download or copy in one click.",
-    tags: [TAGS.icon],
+    tags: [TAGS.logo],
     url: "https://logos.lndev.me/",
+  },
+  {
+    title: "Need3D",
+    category: CATEGORIES.media,
+    description:
+      "Library of free 3D objects for your projects, stock 3D illustrations, abstract 3D graphics",
+    ogImage: "https://static.tildacdn.com/tild3635-6261-4232-b337-343261643835/Frame_137.jpg",
+    subtitle: "library 3D illustrations",
+    tags: [TAGS["3D"]],
+    url: "https://need3d.ru/en",
   },
   {
     title: "Newt",
@@ -181,13 +174,15 @@ export const mediaLinks: Tool[] = [
     subtitle: "Remove Background from Image for Free",
     url: "https://icons8.com/bgremover",
   },
-  // {
-  //   title: "scribbbles",
-  //   category: CATEGORIES.media,
-  //   description: "100+ vectorized scribbbles to spice up your design projects!",
-  //   tags: [TAGS.illustration, TAGS.svg],
-  //   url: "https://www.scribbbles.design/",
-  // },
+  {
+    title: "Storytale",
+    category: CATEGORIES.media,
+    description:
+      "High-class web assets under simple subscription. Huge library of stylish assets that grows every week. You can get them all by yearly subscription and download any assets you want for commercial and personal projects.",
+    ogImage: "https://storytale-public.b-cdn.net/static/assets/storytale-app/img/Open-Graph.png",
+    tags: [TAGS.graphics],
+    url: "https://storytale.io/browse/?isFree=true",
+  },
   {
     title: "Svg Doodle icon",
     category: CATEGORIES.media,
@@ -222,20 +217,22 @@ export const mediaLinks: Tool[] = [
     url: "https://yqnn.github.io/svg-path-editor/",
   },
   {
+    title: "SVG Pattern Builder",
+    category: CATEGORIES.media,
+    description:
+      "SVG Pattern Builder allows you to create, customize, and download unique animated SVG patterns for your web and design projects. Great for Figma, Framer, Webflow and video projects.",
+    ogImage: "https://svg.designcode.io/cover.jpg",
+    subtitle: "Create and Customize Patterns Online",
+    tags: [TAGS.svg],
+    url: "https://svg.designcode.io/",
+  },
+  {
     title: "SVG Repo",
     category: CATEGORIES.media,
     description:
       "Free Vectors and Icons in SVG format. ✅ Download free mono or multi color vectors for commercial use. Search in 500.000+ Free SVG Vectors and Icons.",
     subtitle: "Free SVG Vectors and Icons",
     url: "https://www.svgrepo.com/",
-  },
-  {
-    title: "TechIcons",
-    category: CATEGORIES.media,
-    description: "Download, copy and paste tech icons in SVG and PNG format for your projects.",
-    subtitle: "SVG and PNG tech icons",
-    tags: [TAGS.icon],
-    url: "https://techicons.dev/",
   },
   {
     title: "theSVG",

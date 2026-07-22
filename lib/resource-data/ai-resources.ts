@@ -376,6 +376,15 @@ export const aiLinks: Tool[] = [
     url: "https://github.com/langchain-ai/openwiki",
   },
   {
+    title: "Prompt Explorer by Raycast",
+    author: "Raycast",
+    category: CATEGORIES.ai,
+    description: "Easily browse, share, and add prompts to Raycast.",
+    ogImage: "https://www.ray.so/_next/static/media/og-image.0xf6y8axn-d2x.png",
+    tags: [TAGS.ai],
+    url: "https://ray.so/prompts/code",
+  },
+  {
     title: "RAG-Anything",
     author: "HKUDS",
     category: CATEGORIES.ai,

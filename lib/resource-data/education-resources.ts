@@ -410,6 +410,15 @@ export const educationLinks: Tool[] = [
     url: "https://joinhandshake.com/",
   },
   {
+    title: "Hey Design Systems!",
+    category: CATEGORIES.education,
+    description: "Your introduction to design systems, curated by @saura3h",
+    favicon: "https://heydesign.systems/images/webclip.png",
+    ogImage: "https://heydesign.systems/images/hds-display.png",
+    tags: [TAGS.education],
+    url: "https://heydesign.systems/",
+  },
+  {
     title: "HF Viewer",
     category: CATEGORIES.education,
     description:
@@ -623,6 +632,13 @@ export const educationLinks: Tool[] = [
       "Fix your Git mistakes fast with plain English solutions every developer needs at least once.",
     tags: [TAGS.education],
     url: "https://ohshitgit.com/",
+  },
+  {
+    title: "Onym",
+    category: CATEGORIES.education,
+    description: "Tools and resources for naming things.",
+    ogImage: "https://guide.onym.co/assets/imgs/social.jpg",
+    url: "https://guide.onym.co/",
   },
   {
     title: "Parker Dewey",

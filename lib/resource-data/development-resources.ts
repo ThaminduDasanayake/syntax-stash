@@ -288,7 +288,7 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description:
       "A space to discuss and keep up software development and manage your software career",
-    tags: [TAGS.tool],
+    tags: [TAGS.social, TAGS.tool],
     url: "https://dev.to/",
   },
   {
@@ -374,7 +374,7 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description: "FluidCAD — write CAD models in JavaScript. See the result in real time.",
     subtitle: "Parametric CAD for everyone",
-    tags: [TAGS.cad, TAGS.tool, TAGS["3d"]],
+    tags: [TAGS.cad, TAGS.tool, TAGS["3D"]],
     url: "https://fluidcad.io/",
   },
   {
