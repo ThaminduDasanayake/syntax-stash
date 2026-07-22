@@ -166,6 +166,16 @@ export const designLinks: Tool[] = [
     url: "https://before.click/",
   },
   {
+    title: "Bento Grids",
+    author: "Ivan Volti",
+    category: CATEGORIES.design,
+    description: "BentoGrids is a curated collection of bento designs for your inspiration.",
+    favicon: "https://bentogrids.com/favicon/icon-192x192.png",
+    ogImage: "https://bentogrids.com/images/og.png",
+    tags: [TAGS.inspiration],
+    url: "https://bentogrids.com/",
+  },
+  {
     title: "Best Free Fonts",
     category: CATEGORIES.design,
     description:
@@ -237,8 +247,9 @@ export const designLinks: Tool[] = [
     title: "Color Hunt",
     category: CATEGORIES.design,
     description:
-      "Discover the newest hand-picked color palettes of Color Hunt. Get color inspiration for your design and art projects.",
-    subtitle: "Color Palettes for Designers and Artists",
+      "Find the perfect trendy color palettes and get color inspiration for your next design or art project.",
+    ogImage: "https://colorhunt.co/img/color-hunt-og.png",
+    subtitle: "The Most Popular Color Palettes of 2026",
     tags: [TAGS.color],
     url: "https://colorhunt.co/",
   },
@@ -266,6 +277,15 @@ export const designLinks: Tool[] = [
     description: "Create content in one place. Incredibly fast. Save as images or videos.",
     tags: [TAGS.design],
     url: "https://contentcore.xyz/",
+  },
+  {
+    title: "Coolors",
+    category: CATEGORIES.design,
+    description: "Generate or browse beautiful color combinations for your designs.",
+    ogImage: "https://coolors.co/assets/img/og_image.png",
+    subtitle: "The super fast color palettes generator!",
+    tags: [TAGS.color],
+    url: "https://coolors.co/",
   },
   {
     title: "Cosmos",
@@ -628,14 +648,6 @@ export const designLinks: Tool[] = [
     url: "https://grid-paper.daverupert.com/",
   },
   {
-    title: "Haikei",
-    category: CATEGORIES.design,
-    description:
-      "A web-based design tool to generate unique SVG design assets for websites, social media, blog posts, desktop and mobile wallpapers, posters, and more! Our generators let you discover, customize, randomize, and export generative SVG design assets ready to use with your favorite design tools.",
-    subtitle: "Generate unique SVG design assets",
-    url: "https://haikei.app/",
-  },
-  {
     title: "Happy Hues",
     category: CATEGORIES.design,
     description:
@@ -900,6 +912,15 @@ export const designLinks: Tool[] = [
     description: "My own (libre) webfonts vault",
     tags: [TAGS.design, TAGS.typography],
     url: "https://myfffonts.accentgrave.net/",
+  },
+  {
+    title: "mymind",
+    category: CATEGORIES.design,
+    description: "A collection of unique color combinations for your design projects.",
+    ogImage: "https://static.accelerator.net/134/0.107.0/colors/images/mymind-colors-twitter.jpg",
+    subtitle: "Mindfully curated color palettes",
+    tags: [TAGS.color],
+    url: "https://access.mymind.com/colors",
   },
   {
     title: "Navbar Gallery",
@@ -1296,6 +1317,15 @@ export const designLinks: Tool[] = [
       "Typeface is a wonderful font manager for macOS that helps you pick the perfect type for your designs. With a minimal interface and total focus on your fonts browsing your collection becomes a delightful experience. And new powerful font management features let you effortlessly organize even the largest libraries.",
     tags: [TAGS.typography],
     url: "https://typefaceapp.com/",
+  },
+  {
+    title: "typo/graphic posters",
+    category: CATEGORIES.design,
+    description: "since 2008, a reference platform for typographic and graphic posters.",
+    // favicon: "https://bentogrids.com/favicon/icon-192x192.png",
+    ogImage: "https://www.typographicposters.com/typographic-posters-new-website-2021-photo.jpg",
+    tags: [TAGS.inspiration],
+    url: "https://www.typographicposters.com/",
   },
   {
     title: "Typograph Studio",

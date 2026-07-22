@@ -103,8 +103,9 @@ export const mediaLinks: Tool[] = [
     category: CATEGORIES.media,
     description:
       "A web-based design tool to generate unique SVG design assets for websites, social media, blog posts, desktop and mobile wallpapers, posters, and more! Our generators let you discover, customize, randomize, and export generative SVG design assets ready to use with your favorite design tools.",
+    ogImage: "https://haikei.app/haikei-cover.png",
     subtitle: "Generate unique SVG design assets",
-    tags: [TAGS.image],
+    tags: [TAGS.svg],
     url: "https://haikei.app/",
   },
   {
@@ -143,6 +144,16 @@ export const mediaLinks: Tool[] = [
     url: "https://newt.sh/",
   },
   {
+    title: "OGimage.gallery",
+    category: CATEGORIES.media,
+    description: "Gallery with the best and most carefully collected OG images.",
+    ogImage:
+      "https://cdn.prod.website-files.com/6040b8a8176ad35fd8dbf709/606597ba2d86c0c02d518010_og.jpg",
+    subtitle: "The finest hand-picked OG Images ✨",
+    tags: [TAGS.image],
+    url: "https://www.ogimage.gallery/",
+  },
+  {
     title: "Pattern Monster",
     category: CATEGORIES.media,
     description:
@@ -173,6 +184,15 @@ export const mediaLinks: Tool[] = [
       "Remove image backgrounds automatically in 5 seconds with just one click. Don't spend hours manually picking pixels. Upload your photo now & see the magic.",
     subtitle: "Remove Background from Image for Free",
     url: "https://icons8.com/bgremover",
+  },
+  {
+    title: "Same Energy",
+    category: CATEGORIES.media,
+    description: "Find beautiful images.",
+    ogImage: "https://same.energy/blacklogo-bg.png",
+    subtitle: "Visual Search Engine",
+    tags: [TAGS.image],
+    url: "https://same.energy/",
   },
   {
     title: "Storytale",
