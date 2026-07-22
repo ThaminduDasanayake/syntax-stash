@@ -123,7 +123,7 @@ export function FilterSection({
                 </div>
                 <div className="card-grid">
                   {catItems.map((tool) => (
-                    <ToolCard key={tool.url || tool.slug || tool.title} tool={tool} />
+                    <ToolCard key={tool.url || tool.slug} tool={tool} />
                   ))}
                 </div>
               </div>

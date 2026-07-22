@@ -8,6 +8,7 @@ export const TAGS = {
   backend: "backend",
   builder: "builder",
   cad: "cad",
+  cheatsheet: "cheatsheet",
   color: "color",
   crawler: "crawler",
   data: "data",

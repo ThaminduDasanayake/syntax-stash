@@ -797,6 +797,17 @@ export const educationLinks: Tool[] = [
     url: "https://github.com/donnemartin/system-design-primer",
   },
   {
+    title: "Tailwind CSS Cheatsheet",
+    category: CATEGORIES.education,
+    className: "bg-foreground border-paper",
+    description:
+      "A quick reference guide to learn Tailwind CSS. Easily browse and search through all Tailwind utility classes and CSS properties on a single page.",
+    favicon: "https://tailwindcss.504b.cc/icon.svg?1cec5e974a00aedb",
+    ogImage: "https://tailwindcss.504b.cc/og-card.png",
+    tags: [TAGS.cheatsheet],
+    url: "https://tailwindcss.504b.cc/",
+  },
+  {
     title: "Tech Interview Handbook",
     category: CATEGORIES.education,
     description: "Free curated interview preparation materials for busy people",
@@ -833,6 +844,17 @@ export const educationLinks: Tool[] = [
     url: "https://www.pragmaticengineer.com/",
   },
   {
+    title: "The State of UX in 2025",
+    author: "Fabricio Teixeira, Caio Braga",
+    category: CATEGORIES.education,
+    description:
+      "From design tools, to our design process, to the user behaviors that will change the way we design — a list of what to expect for User Experience (UX) Design in the next year.",
+    ogImage:
+      "https://static1.squarespace.com/static/59ebb4b3cd39c3e3ae4822d5/t/674899f1a263bb54e2e7b625/1732811251481/1.jpg?format=1500w",
+    tags: [TAGS.newsletter],
+    url: "https://trends.uxdesign.cc/",
+  },
+  {
     title: "Training Superintelligence",
     category: CATEGORIES.education,
     description:
@@ -856,6 +878,15 @@ export const educationLinks: Tool[] = [
     subtitle: "UI Skills for Design Engineers",
     tags: [TAGS.education],
     url: "https://www.ui-skills.com/",
+  },
+  {
+    title: "Uxcel",
+    category: CATEGORIES.education,
+    description:
+      "Learn in-demand UX design, product management & AI skills with bite-sized interactive courses, career paths, and live events. Join 500k+ professionals advancing careers.",
+    ogImage: "https://img.uxcel.com/assets/marketing/open-graph-v3/OG%20-%20Uxcel%20-%20Home.png",
+    subtitle: "Learn UX Design, Product Management & AI Skills",
+    url: "https://uxcel.com/",
   },
   {
     title: "Vibe Coder Blog",

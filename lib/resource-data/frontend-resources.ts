@@ -182,6 +182,17 @@ export const frontendLinks: Tool[] = [
     url: "https://css-tricks.com/",
   },
   {
+    title: "CSS Buttons",
+    category: CATEGORIES.frontend,
+    description:
+      "Explore Cssbuttons.io for a diverse collection of over 100 unique button styles. Get the code you need to enhance your web projects with stylish, functional buttons. Elevate your design with ease and creativity!",
+    favicon: "https://cssbuttons.io/favicon-96x96.png",
+    ogImage:
+      "https://imagedelivery.net/KMb5EadhEKC1gAE0LkjL1g/cb814b9d-45f8-46f5-3108-91e511990200/public",
+    tags: [TAGS["ui-component"]],
+    url: "https://cssbuttons.io/",
+  },
+  {
     title: "CSS Gradient",
     category: CATEGORIES.frontend,
     description:
@@ -282,6 +293,16 @@ export const frontendLinks: Tool[] = [
       "Quickly and easily generate easing curves for ease, spring, and bounce animations. Utilize animation presets or create your own custom animation curve, spring, or bounce. Instantly export to CSS, SCSS, Objective-C, and Swift.",
     ogImage: "https://epiceasing.com/epiceasing_preview.png",
     url: "https://epiceasing.com/",
+  },
+  {
+    title: "Fancy Components",
+    author: "Daniel Petho",
+    category: CATEGORIES.frontend,
+    description:
+      "Ready to use, fancy React components to make the web fun again. Free & Open Source.",
+    ogImage: "https://fancycomponents.dev/og.jpg",
+    tags: [TAGS["ui-component"]],
+    url: "https://www.fancycomponents.dev/",
   },
   {
     title: "Flicker",
@@ -807,6 +828,17 @@ export const frontendLinks: Tool[] = [
     url: "https://satisui.xyz/",
   },
   {
+    title: "Shadcnblocks",
+    category: CATEGORIES.frontend,
+    description:
+      "Discover hundreds of extra shadcn/ui blocks and Shadcn UI components. Shadcnblocks is a premium component library built with Shadcn UI, React & Tailwind.",
+    favicon: "https://www.shadcnblocks.com/favicon/apple-touch-icon.png",
+    ogImage: "https://cdn.shadcnblocks.com/shadcnblocks/images/og/og-default.png",
+    subtitle: "shadcn/ui blocks & components",
+    tags: [TAGS["ui-component"]],
+    url: "https://www.shadcnblocks.com/",
+  },
+  {
     title: "shadcnmaps",
     category: CATEGORIES.frontend,
     description:
@@ -939,10 +971,11 @@ export const frontendLinks: Tool[] = [
     url: "https://www.swishy.ai/",
   },
   {
-    title: "SyntaxUI - Free React, Tailwind CSS & Framer UI Components",
+    title: "SyntaxUI",
     category: CATEGORIES.frontend,
     description:
       "Get free-to-use Prebuilt React components powered by Tailwind CSS & Framer Motion. Modern, Minimal and customizable. Just copy, paste and you're ready to go!",
+    subtitle: "Free React, Tailwind CSS & Framer UI Components",
     tags: [TAGS["ui-component"]],
     url: "https://syntaxui.com/",
   },

@@ -506,6 +506,18 @@ export const designLinks: Tool[] = [
     url: "https://endlesstools.io/",
   },
   {
+    title: "Eyecandy",
+    author: "Jacobi Mehringer",
+    category: CATEGORIES.design,
+    description:
+      "The visual technique library for visual technique lovers. Enjoy. Learn. Don't gatekeep.",
+    favicon: "https://asset.eyecannndy.com/static/images/favicon.png",
+    ogImage: "https://asset.eyecannndy.com/static/images/eyecandy-og.jpg",
+    subtitle: "Visual Technique Library",
+    tags: [TAGS.inspiration],
+    url: "https://eyecannndy.com/",
+  },
+  {
     title: "fixelPont",
     author: "falk schröter",
     category: CATEGORIES.design,
@@ -897,6 +909,14 @@ export const designLinks: Tool[] = [
     url: "https://mockuuups.studio/",
   },
   {
+    title: "Modern Illustration",
+    category: CATEGORIES.design,
+    description:
+      "An archive of illustration from c.1950-1975, shining a spotlight on pioneering illustrators and their work.",
+    tags: [TAGS.inspiration],
+    url: "https://www.modernillustration.org/",
+  },
+  {
     title: "Morflax Studio",
     category: CATEGORIES.design,
     description:
@@ -969,6 +989,16 @@ export const designLinks: Tool[] = [
     favicon: "https://design-directory-blue.vercel.app/favicon.svg",
     tags: [TAGS.design],
     url: "https://design-directory-blue.vercel.app/",
+  },
+  {
+    title: "Pafolios",
+    category: CATEGORIES.design,
+    description:
+      "Browse 808 best design portfolio examples and get inspired by exceptional work from talented creatives worldwide. learn and improve your design skills with real-world examples.",
+    ogImage: "https://pafolios.com/opengraph-image.jpg",
+    subtitle: "The best design portfolio examples and inspiration 2025",
+    tags: [TAGS.inspiration],
+    url: "https://pafolios.com/",
   },
   {
     title: "Palette Maker",
@@ -1201,6 +1231,14 @@ export const designLinks: Tool[] = [
     url: "https://sharpen.design/",
   },
   {
+    title: "Shots",
+    category: CATEGORIES.design,
+    description: "Create Amazing Mockups",
+    ogImage: "https://shots.so/image/og-new.jpg?v=2",
+    tags: [TAGS.mockup],
+    url: "https://shots.so/",
+  },
+  {
     title: "Showcase",
     category: CATEGORIES.design,
     description:
@@ -1397,6 +1435,8 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "Browse hundreds of the best website headlines and explore creative, real-world examples from SaaS, B2B, and DTC brands to inspire your website marketing copy.",
+    ogImage: "https://websiteheadlines.com/og-image.png",
+    tags: [TAGS.inspiration],
     url: "https://websiteheadlines.com/",
   },
   {

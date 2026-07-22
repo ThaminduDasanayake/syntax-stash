@@ -229,6 +229,14 @@ export const mediaLinks: Tool[] = [
     url: "https://svghub.vercel.app/",
   },
   {
+    title: "SVGL",
+    category: CATEGORIES.media,
+    description: "A beautiful library with SVG logos",
+    ogImage: "https://svgl.app/images/screenshot_dark.png",
+    tags: [TAGS.svg],
+    url: "https://svgl.app/",
+  },
+  {
     title: "SvgPathEditor",
     author: "Yann Armelin",
     category: CATEGORIES.media,
@@ -253,6 +261,17 @@ export const mediaLinks: Tool[] = [
       "Free Vectors and Icons in SVG format. ✅ Download free mono or multi color vectors for commercial use. Search in 500.000+ Free SVG Vectors and Icons.",
     subtitle: "Free SVG Vectors and Icons",
     url: "https://www.svgrepo.com/",
+  },
+  {
+    title: "Symbl",
+    author: "Revend Group",
+    category: CATEGORIES.media,
+    description:
+      "Discover a curated collection of SVG icons, HTML symbols, and design tools at Symbl. Perfect for developers and designers to enhance web projects with ease and creativity.",
+    ogImage: "https://symbl.revend.group/img/cover.jpg",
+    subtitle: "Your Ultimate Symbol Library",
+    tags: [TAGS.svg],
+    url: "https://symbl.revend.group/",
   },
   {
     title: "theSVG",

@@ -212,7 +212,7 @@ export function ResourceDialog({ tool }: ToolCardProps) {
                     const dotColor = colors[i % colors.length];
                     return (
                       <div
-                        key={res.title}
+                        key={res.url}
                         onClick={() => setActiveTool(res)}
                         className="border-ink text-mono-xs bg-paper flex cursor-pointer items-center gap-2 border px-3 py-2 font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-transform hover:-translate-y-0.5"
                       >
