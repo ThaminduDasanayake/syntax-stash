@@ -86,6 +86,15 @@ export const frontendLinks: Tool[] = [
     url: "https://auto-animate.formkit.com/",
   },
   {
+    title: "Background Snippets Generator",
+    author: "naymur rahman",
+    category: CATEGORIES.frontend,
+    description:
+      "Generate beautiful CSS background patterns, gradients, textures, and snippets for your website. Perfect for modern web design and UI backgrounds.",
+    ogImage: "https://tools.ui-layouts.com/bgsnippets.jpg",
+    url: "https://tools.ui-layouts.com/background-snippets",
+  },
+  {
     title: "beUI",
     category: CATEGORIES.frontend,
     description:
@@ -860,6 +869,15 @@ export const frontendLinks: Tool[] = [
       "Component library for creative WebGPU effects in modern frontend frameworks. Compose interactive visuals for Vue, React, Svelte, Solid & JS.",
     tags: [TAGS.animation],
     url: "https://shaders.com/",
+  },
+  {
+    title: "Shadows Generator",
+    author: "naymur rahman",
+    category: CATEGORIES.frontend,
+    description:
+      "Generate beautiful CSS and Tailwind CSS v3/v4 box-shadows and text-shadows. Perfect for modern UI, glassmorphism, and soft design systems.",
+    ogImage: "https://tools.ui-layouts.com/shadows.jpg",
+    url: "https://tools.ui-layouts.com/shadows",
   },
   {
     title: "Shoogle",

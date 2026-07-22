@@ -262,6 +262,17 @@ export const designLinks: Tool[] = [
     url: "https://colorize.design/",
   },
   {
+    title: "Color Lab",
+    author: "naymur rahman",
+    category: CATEGORIES.design,
+    description:
+      "Color Lab is your all-in-one color and UI toolkit. Create stunning palettes, convert between HEX, RGB, HSL, and design custom themes with the built-in Shadcn UI Theme Generator – ideal for designers and frontend developers.",
+    ogImage: "https://tools.ui-layouts.com/color-lab-og.jpg",
+    subtitle: "Generate Color Palettes, Convert Codes & Build Shadcn Themes",
+    tags: [TAGS.color],
+    url: "https://tools.ui-layouts.com/color-lab",
+  },
+  {
     title: "Color Name Finder",
     author: "Jasper Bernaers",
     category: CATEGORIES.design,

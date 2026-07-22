@@ -204,6 +204,16 @@ export const mediaLinks: Tool[] = [
     url: "https://storytale.io/browse/?isFree=true",
   },
   {
+    title: "SVG Clip-Path Generator",
+    author: "naymur rahman",
+    category: CATEGORIES.media,
+    description:
+      "Create and customize SVG clip-path shapes for your website with ease. Free tool for web designers and developers.",
+    ogImage: "https://tools.ui-layouts.com/clippath.jpg",
+    tags: [TAGS.svg],
+    url: "https://tools.ui-layouts.com/clip-paths",
+  },
+  {
     title: "Svg Doodle icon",
     category: CATEGORIES.media,
     className: "bg-foreground border-paper",
@@ -235,6 +245,17 @@ export const mediaLinks: Tool[] = [
     ogImage: "https://svgl.app/images/screenshot_dark.png",
     tags: [TAGS.svg],
     url: "https://svgl.app/",
+  },
+  {
+    title: "SVG Line Draw",
+    author: "naymur rahman",
+    category: CATEGORIES.media,
+    description:
+      "SVG Line Draw is your creative playground for sketching hand-drawn lines, arrows, highlights, and animations. Perfect for annotations, web design, and interactive storytelling.",
+    ogImage: "https://tools.ui-layouts.com/svgpathanimation.jpg",
+    subtitle: "Sketch & Animate Hand-Drawn Lines for the Web",
+    tags: [TAGS.svg],
+    url: "https://tools.ui-layouts.com/svg-line-draw",
   },
   {
     title: "SvgPathEditor",
