@@ -284,6 +284,15 @@ export const designLinks: Tool[] = [
     url: "https://tools.ui-layouts.com/color-lab",
   },
   {
+    title: "Colormind",
+    category: CATEGORIES.design,
+    description:
+      "Generate color combinations in one click. Colormind creates cohesive color schemes using a deep neural net.",
+    subtitle: "The AI powered color palette generator",
+    tags: [TAGS.color],
+    url: "https://colormind.io/",
+  },
+  {
     title: "Color Name Finder",
     author: "Jasper Bernaers",
     category: CATEGORIES.design,
@@ -1299,6 +1308,17 @@ export const designLinks: Tool[] = [
     description: "Millions of practice design prompts to challenge you to think outside the box.",
     subtitle: "Design Challenge Generator",
     url: "https://sharpen.design/",
+  },
+  {
+    title: "Shoot.Design",
+    category: CATEGORIES.design,
+    description:
+      "Explore a curated collection of the best App Store screenshots & icons. Get inspired, refine your app's visuals, and boost your downloads!",
+    ogImage:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-03-21%20at%2015.57.20-K9ewxkwnbW0DJviQFlifkXRL7UebWj.png",
+    subtitle: "App Screenshot & Icon Inspiration",
+    tags: [TAGS.inspiration],
+    url: "https://www.shoot.design/",
   },
   {
     title: "Shots",

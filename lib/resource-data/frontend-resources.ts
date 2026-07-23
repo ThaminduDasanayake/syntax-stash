@@ -867,6 +867,17 @@ export const frontendLinks: Tool[] = [
     url: "https://satisui.xyz/",
   },
   {
+    title: "Shadcn Blocks",
+    author: "Ephraim Duncan",
+    category: CATEGORIES.frontend,
+    description:
+      "Customize theme for shadcn/ui with tweakcn's interactive editor. Supports Tailwind CSS v4, Shadcn UI, and custom styles. Modify properties, preview changes, and get the code in real time.",
+    ogImage: "https://blocks.so/opengraph-image.png",
+    subtitle: "60+ Free shadcn/ui Components for React | blocks.so - shadcn/ui blocks",
+    tags: [TAGS["ui-component"]],
+    url: "https://blocks.so/",
+  },
+  {
     title: "Shadcnblocks",
     category: CATEGORIES.frontend,
     description:
@@ -1026,6 +1037,17 @@ export const frontendLinks: Tool[] = [
     subtitle: "Free React, Tailwind CSS & Framer UI Components",
     tags: [TAGS["ui-component"]],
     url: "https://syntaxui.com/",
+  },
+  {
+    title: "Tailark",
+    category: CATEGORIES.frontend,
+    description:
+      "Speed up your workflow with responsive, pre-built UI blocks designed for marketing websites.",
+    favicon: "https://tailark.com/icon.svg?icon.a2a0cd9d.svg",
+    ogImage: "https://tailark.com/opengraph-image.png?opengraph-image.35bb4318.png",
+    subtitle: "Shadcn Marketing Blocks",
+    tags: [TAGS["ui-component"]],
+    url: "https://tailark.com/",
   },
   {
     title: "TechIcons",

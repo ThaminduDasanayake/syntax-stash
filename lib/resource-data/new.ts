@@ -53,7 +53,15 @@ export const newLinks: Tool[] = [
     subtitle: "Build production-ready documentation from Markdown in seconds",
     url: "https://docmd.io/",
   },
-
+  {
+    title: "Excalidraw Whiteboard",
+    category: CATEGORIES.dev,
+    description:
+      "Excalidraw is a virtual collaborative whiteboard tool that lets you easily sketch diagrams that have a hand-drawn feel to them.",
+    ogImage: "https://excalidraw.com/og-image-3.png",
+    subtitle: "Collaborative whiteboarding made easy",
+    url: "https://excalidraw.com/",
+  },
   {
     title: "Graphite",
     category: CATEGORIES.dev,
@@ -71,7 +79,6 @@ export const newLinks: Tool[] = [
     subtitle: "The best online JSON tool",
     url: "https://json4u.com/",
   },
-
   {
     title: "MonoSketch",
     category: CATEGORIES.dev,
@@ -96,7 +103,13 @@ export const newLinks: Tool[] = [
     subtitle: "Open-Source Design Editor",
     url: "https://openpencil.dev/",
   },
-
+  {
+    title: "Paper Sizes",
+    category: CATEGORIES.dev,
+    description:
+      "A comprehensive resource listing all international standards for paper sizes, dimensions and formats.",
+    url: "https://papersizes.io/",
+  },
   {
     title: "StackShare",
     category: CATEGORIES.dev,
@@ -134,6 +147,12 @@ export const newLinks: Tool[] = [
     description: "Fast, free online tools for designers, developers, and creators.",
     subtitle: "Free Online Tools for Designers & Developers",
     url: "https://toolmatex.com/",
+  },
+  {
+    title: "zzzz",
+    category: CATEGORIES.dev,
+    description: "zzzz",
+    url: "zzzz",
   },
   {
     title: "zzzz",

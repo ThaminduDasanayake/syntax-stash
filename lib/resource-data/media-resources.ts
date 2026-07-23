@@ -420,6 +420,15 @@ export const mediaLinks: Tool[] = [
     url: "https://www.vecteezy.com/",
   },
   {
+    title: "Vecto3d",
+    category: CATEGORIES.media,
+    description: "A super simple tool to convert SVG logos to 3D models",
+    ogImage: "https://www.vecto3d.xyz/twitter-image-v1.png",
+    subtitle: "Convert SVGs to 3D",
+    tags: [TAGS.svg, TAGS["3D"]],
+    url: "https://vecto3d.app/",
+  },
+  {
     title: "wannathis.one",
     category: CATEGORIES.media,
     description:
