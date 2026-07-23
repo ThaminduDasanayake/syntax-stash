@@ -21,6 +21,17 @@ export const frontendLinks: Tool[] = [
     url: "https://ui.aceternity.com/",
   },
   {
+    title: "All ShadCN",
+    category: CATEGORIES.frontend,
+    description:
+      "Explore All Shadcn, your go-to hub for premium & free Shadcn Themes, Components, Blocks, and Tools.",
+    ogImage:
+      "https://cdn.allshadcn.com/as-assets/og-images/static-pages/all-shadcn---300+-shadcn-templates,-components,-blocks-&-tools.png",
+    subtitle: "300+ Shadcn Templates, Components, Blocks & Tools",
+    tags: [TAGS["ui-component"]],
+    url: "https://allshadcn.com/",
+  },
+  {
     title: "Animate UI",
     category: CATEGORIES.frontend,
     description:
@@ -277,6 +288,16 @@ export const frontendLinks: Tool[] = [
       "A light-weight, no-dependency, vanilla JavaScript library to drive user's focus across the page.",
     tags: [TAGS.animation],
     url: "https://driverjs.com/",
+  },
+  {
+    title: "Easing Graphs",
+    category: CATEGORIES.frontend,
+    className: "bg-foreground border-paper",
+    description: "A curated collection of easing graphs",
+    favicon: "https://www.easing.dev/logo.svg",
+    ogImage: "https://easing.dev/opengraph-image.png?f63f59cbea8235ed",
+    tags: [TAGS.animation],
+    url: "https://www.easing.dev/",
   },
   {
     title: "Easing Wizard",
@@ -642,6 +663,15 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description: "Matter.js is 2D rigid body JavaScript physics engine for the web",
     url: "https://brm.io/matter-js/",
+  },
+  {
+    title: "Mesh-Gradient Generator",
+    author: "naymur rahman",
+    category: CATEGORIES.frontend,
+    description:
+      "Create beautiful mesh gradients and fluid color transitions for your web designs. Perfect for modern UI and backgrounds.",
+    ogImage: "https://tools.ui-layouts.com/meshgradients.jpg",
+    url: "https://tools.ui-layouts.com/mesh-gradients",
   },
   {
     title: "Mesh Gradient",

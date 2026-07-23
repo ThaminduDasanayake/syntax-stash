@@ -80,7 +80,14 @@ export const newLinks: Tool[] = [
     subtitle: "Unleash your ideas with ASCII",
     url: "https://monosketch.io/",
   },
-
+  {
+    title: "Odyc.js",
+    category: CATEGORIES.dev,
+    description:
+      "Odyc.js is a simple JavaScript library to create interactive narrative games, even without coding experience.",
+    ogImage: "https://odyc.dev/og.png",
+    url: "https://odyc.dev/",
+  },
   {
     title: "OpenPencil",
     category: CATEGORIES.dev,
@@ -97,7 +104,6 @@ export const newLinks: Tool[] = [
       "Discover and share the technology stacks used by top companies. Compare tools, read reviews, and make informed decisions about your tech stack.",
     url: "https://stackshare.io/",
   },
-
   {
     title: "Takumi",
     author: "Kane Wang",
@@ -114,7 +120,6 @@ export const newLinks: Tool[] = [
       "The first open-source foundry. And your spot to learn how to use, make, and work with type.",
     url: "https://www.theleagueofmoveabletype.com/",
   },
-
   {
     title: "The Shape of AI",
     category: CATEGORIES.dev,

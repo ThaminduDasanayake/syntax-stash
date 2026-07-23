@@ -38,6 +38,17 @@ export const mediaLinks: Tool[] = [
     url: "https://www.cleanpng.com/",
   },
   {
+    title: "Contour",
+    author: "illustrations.run",
+    category: CATEGORIES.media,
+    description:
+      "Generate custom topographic SVG maps with adjustable contour lines. Free tool for creating scalable vector graphics perfect for design projects, presentations and artwork.",
+    ogImage: "https://illustrations.run/contour/images/og-image.png",
+    subtitle: "Topography SVG Generator. Contour Lines ready to copy/paste.",
+    tags: [TAGS.svg],
+    url: "https://illustrations.run/contour/",
+  },
+  {
     title: "Convert PNG to ICO file",
     author: "Kristjan Retter",
     category: CATEGORIES.media,
@@ -74,12 +85,44 @@ export const mediaLinks: Tool[] = [
     url: "https://ray.so/",
   },
   {
+    title: "Doodle Ipsum",
+    category: CATEGORIES.media,
+    description: "Illustration placeholders for developers. Powered by Blush",
+    ogImage: "https://doodleipsum.com/1000x750/flat?bg=e3f5f8&i=23243fc71ac1a810a5873bde01e17f07",
+    tags: [TAGS.illustration],
+    url: "https://doodleipsum.com/",
+  },
+  {
     title: "fffuel",
     category: CATEGORIES.media,
     description:
       "A fun collection of free SVG generators for gradients, patterns, shapes, textures & cool backgrounds. Plus, some more color tools for web designers.",
     tags: [TAGS.image],
     url: "https://www.fffuel.co/",
+  },
+  {
+    title: "Free Flat Vector Illustration Collection",
+    category: CATEGORIES.media,
+    description:
+      "A diverse range of flat vector illustrations available in SVG and PNG formats. All free with just two clicks. No registration required!",
+    favicon:
+      "https://i0.wp.com/graphicsauce.co/free-placeholder-logo/wp-content/uploads/2024/08/graphicsauce-icon.png?fit=117,5126&ssl=1",
+    ogImage:
+      "https://graphicsauce.co/free-flat-vector-Illustrations/wp-content/uploads/2024/08/Free-Flat-Vector-Illustrations.png",
+    tags: [TAGS.illustration, TAGS.svg],
+    url: "https://graphicsauce.co/free-flat-vector-Illustrations/",
+  },
+  {
+    title: "Free Placeholder Logo Collection",
+    category: CATEGORIES.media,
+    description:
+      "Browse and customize our eye catching transparent placeholder logo collection and download it as SVG or PNG.",
+    favicon:
+      "https://i0.wp.com/graphicsauce.co/free-placeholder-logo/wp-content/uploads/2024/08/graphicsauce-icon.png?fit=117,5126&ssl=1",
+    ogImage:
+      "https://graphicsauce.co/free-placeholder-logo/wp-content/uploads/2024/08/Free-PlaceHolder-Logo.jpg",
+    tags: [TAGS.logo],
+    url: "https://graphicsauce.co/free-placeholder-logo/",
   },
   {
     title: "Free SVG Illustrations",
@@ -90,13 +133,12 @@ export const mediaLinks: Tool[] = [
     url: "https://lukaszadam.com/illustrations",
   },
   {
-    title: "Free SVG Illustrations",
+    title: "Fresh Folk",
     category: CATEGORIES.media,
-    description:
-      "Add personality to your design projects with this free collection of unique and playful SVG scribbles. Hand-drawn, these are ready for just copy and paste!",
-    subtitle: "Unique Scribbles for Your Designs",
-    tags: [TAGS.illustration, TAGS.svg],
-    url: "https://illustrations.run/",
+    description: "An illustration library of people and objects",
+    ogImage: "https://fresh-folk.com/assets/images/card.jpg?v=c3f994c8",
+    tags: [TAGS.illustration],
+    url: "https://fresh-folk.com/",
   },
   {
     title: "Haikei",
@@ -195,6 +237,27 @@ export const mediaLinks: Tool[] = [
     url: "https://same.energy/",
   },
   {
+    title: "Scribbles",
+    author: "illustrations.run",
+    category: CATEGORIES.media,
+    description:
+      "Add personality to your design projects with this free collection of unique and playful SVG scribbles. Hand-drawn, these are ready for just copy and paste!",
+    ogImage: "https://illustrations.run/images/scribbles-illustrations-og-image.png",
+    subtitle: "Free SVG Illustrations - Unique Scribbles for Your Designs",
+    tags: [TAGS.illustration, TAGS.svg],
+    url: "https://illustrations.run/",
+  },
+  {
+    title: "Scribbles Mix",
+    author: "illustrations.run",
+    category: CATEGORIES.media,
+    description: "More than 1000+ SVG scribbles. Add personality to your designs.",
+    ogImage: "https://illustrations.run/scribbles-mix/images/scribbles-mix-header.png",
+    subtitle: "SVG Collection (1000+ files)",
+    tags: [TAGS.illustration, TAGS.svg],
+    url: "https://illustrations.run/scribbles-mix/",
+  },
+  {
     title: "Storytale",
     category: CATEGORIES.media,
     description:
@@ -284,6 +347,15 @@ export const mediaLinks: Tool[] = [
     url: "https://www.svgrepo.com/",
   },
   {
+    title: "Svg Wave",
+    category: CATEGORIES.media,
+    description:
+      "SVG Wave is a minimal svg wave generator with lot of customization. It lets you abiltiy to generate and export pngs and svgs of beautiful waves. SVG wave also lets you layer multiple waves. Create SVGs for your website designs.",
+    subtitle: "A free & beautiful gradient SVG wave Generator.",
+    tags: [TAGS.svg],
+    url: "https://svgwave.in/",
+  },
+  {
     title: "Symbl",
     author: "Revend Group",
     category: CATEGORIES.media,
@@ -302,6 +374,16 @@ export const mediaLinks: Tool[] = [
     subtitle: "6,149+ Free Brand SVG Icons for Developers and Designers",
     tags: [TAGS.image],
     url: "https://thesvg.org/",
+  },
+  {
+    title: "Thiings",
+    category: CATEGORIES.media,
+    description:
+      "Browse the Thiings collection: 10,000+ free 3D icons generated with AI. Download individual icons free for personal use, or get a lifetime commercial license for the whole collection.",
+    ogImage: "https://www.thiings.co/meta-new.png",
+    subtitle: "10,000+ Free AI-Generated 3D Icons",
+    tags: [TAGS.illustration, TAGS["3D"]],
+    url: "https://www.thiings.co/things",
   },
   {
     title: "TopPNG",
@@ -345,6 +427,17 @@ export const mediaLinks: Tool[] = [
     subtitle: "High Quality Mockups and 3D Illustrations for Design Projects",
     tags: [TAGS.mockup],
     url: "https://wannathis.one/",
+  },
+  {
+    title: "Warp SVG Online",
+    author: "Pavel Laptev",
+    category: CATEGORIES.media,
+    description: "Warp and distort SVG online",
+    favicon: "https://pavellaptev.github.io/warp-svg/dist/images/favicons/favico-128.png",
+    ogImage:
+      "https://raw.githubusercontent.com/PavelLaptev/warp-svg/master/dist/images/web-preview.jpg",
+    tags: [TAGS.svg],
+    url: "https://pavellaptev.github.io/warp-svg/",
   },
   {
     title: "Webcam Text Overlay App",

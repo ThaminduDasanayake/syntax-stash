@@ -208,6 +208,17 @@ export const designLinks: Tool[] = [
     url: "https://brand-generator.stoyanov.works/",
   },
   {
+    title: "BrandGuidelines",
+    author: "1042 Studio",
+    category: CATEGORIES.design,
+    description:
+      "Welcome to the brand design guidelines documents directory. Search over our worldwide style assets handpicked collection, access to PDF documents for inspiration.",
+    ogImage: "https://framerusercontent.com/assets/cwe1pVJ32PfqncHdMYeqHvXmlCw.png",
+    subtitle: "The Brand Styleguide Document Showcase",
+    tags: [TAGS.inspiration],
+    url: "https://www.brandguidelines.net/",
+  },
+  {
     title: "CallToInspiration",
     category: CATEGORIES.design,
     description:
@@ -442,6 +453,14 @@ export const designLinks: Tool[] = [
     url: "https://thedieline.com/",
   },
   {
+    title: "Dinamo Font Gauntlet",
+    category: CATEGORIES.design,
+    description: "The Dinamo Font Gauntlet is a tool for proofing, generating and animating fonts.",
+    subtitle: "The Easiest Way to Make Fonts",
+    tags: [TAGS.typography],
+    url: "https://fontgauntlet.com/",
+  },
+  {
     title: "Directory Mockups",
     category: CATEGORIES.design,
     description:
@@ -629,6 +648,18 @@ export const designLinks: Tool[] = [
     url: "https://typotheque.luuse.io/",
   },
   {
+    title: "Free Mockup Collection",
+    category: CATEGORIES.design,
+    description:
+      "Choose from a wide range of mockup options and bring your designs to life. Available in FIG and PSD",
+    favicon:
+      "https://i0.wp.com/graphicsauce.co/free-placeholder-logo/wp-content/uploads/2024/08/graphicsauce-icon.png?fit=117,5126&ssl=1",
+    ogImage:
+      "https://graphicsauce.co/free-mockups/wp-content/uploads/2024/08/iphone-14-pro-mockup-169.jpg",
+    tags: [TAGS.mockup],
+    url: "https://graphicsauce.co/free-mockups/",
+  },
+  {
     title: "getdesign.md",
     category: CATEGORIES.design,
     description:
@@ -636,6 +667,16 @@ export const designLinks: Tool[] = [
     subtitle: "DESIGN.md collection for AI coding agents",
     tags: [TAGS.design],
     url: "https://getdesign.md/",
+  },
+  {
+    title: "Getillustra",
+    category: CATEGORIES.design,
+    description:
+      "Getillustra curates inspiring web illustrations, UI references, and hand-picked visuals for design-forward teams.",
+    ogImage: "https://getillustra.com/assets/getillustralogo.svg",
+    subtitle: "Curated digital illustration inspiration for modern product teams.",
+    tags: [TAGS.inspiration],
+    url: "https://getillustra.com/",
   },
   {
     title: "GoodCart",
@@ -1012,6 +1053,15 @@ export const designLinks: Tool[] = [
     url: "https://pafolios.com/",
   },
   {
+    title: "Page Flows",
+    category: CATEGORIES.design,
+    description:
+      "Explore 100,000+ recorded user flows, app screens, and UI patterns from Airbnb, Uber, Netflix & more. Save hours on UX research with Page Flows.",
+    subtitle: "UI/UX Design Inspiration & User Flows from Top Apps",
+    tags: [TAGS.inspiration],
+    url: "https://pageflows.com/",
+  },
+  {
     title: "Palette Maker",
     category: CATEGORIES.design,
     description:
@@ -1226,6 +1276,15 @@ export const designLinks: Tool[] = [
     url: "https://www.screenshot-studio.com/",
   },
   {
+    title: "Sections.wtf",
+    category: CATEGORIES.design,
+    description: "A curation of the interesting web section design inspirations.",
+    ogImage: "https://framerusercontent.com/images/bPpQcfKtz2Rc3o8piSJkFcdf7s.png",
+    subtitle: "Inspiring Web Sections",
+    tags: [TAGS.inspiration],
+    url: "https://sections.wtf/",
+  },
+  {
     title: "Selected",
     category: CATEGORIES.design,
     description:
@@ -1265,6 +1324,16 @@ export const designLinks: Tool[] = [
     description: "A kinetic type generator from kielm",
     tags: [TAGS.typography],
     url: "https://spacetypegenerator.com/",
+  },
+  {
+    title: "Spotted in Prod",
+    category: CATEGORIES.design,
+    description:
+      "Spotted in Prod is a curated collection of standout iOS apps and interactions. Discover the makers behind the work—and download apps that do it right.",
+    ogImage: "https://www.spottedinprod.com/opengraph-image.png?opengraph-image.ab455828.png",
+    subtitle: "The very best of iOS",
+    tags: [TAGS.inspiration],
+    url: "https://www.spottedinprod.com/",
   },
   {
     title: "Sprrrint",
