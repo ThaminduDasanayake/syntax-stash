@@ -269,6 +269,16 @@ export const developmentLinks: Tool[] = [
     url: "https://cssgridgenerator.io/",
   },
   {
+    title: "CSS Unit Converter",
+    category: CATEGORIES.dev,
+    description:
+      "Easily convert pixels to CSS units like Rems, Ems, Inches and more with CSS Unit Converter tools. Get accurate results, fast!",
+    ogImage: "https://cssunitconverter.com/uploads/css-unit-converter-social-og.png",
+    subtitle: "Effortless, Fast and 100% Accurate",
+    tags: [TAGS.tool],
+    url: "https://cssunitconverter.com/",
+  },
+  {
     title: "delphitools",
     category: CATEGORIES.dev,
     description:
@@ -307,6 +317,18 @@ export const developmentLinks: Tool[] = [
     subtitle: "TL;DR for developer documentation",
     tags: [TAGS.development, TAGS.education],
     url: "https://devhints.io/",
+  },
+  {
+    title: "Dev Utilities",
+    author: "Jam",
+    category: CATEGORIES.dev,
+    description:
+      "Jam exists to make developers lives easier. Here are fast, free, open source, ad-free tools. Simplify your coding tasks with utilities like Base64 encode/decode, URL encode/decode, HEX to RGB converter, Timestamp to Date converter, and more.",
+    favicon:
+      "https://raw.githubusercontent.com/jamdotdev/jam-dev-utilities/main/public/icons/icon.svg",
+    subtitle: "Open Source Developer Tools | Free Utilities",
+    tags: [TAGS.tool],
+    url: "https://jam.dev/utilities",
   },
   {
     title: "DigitalPlat Domain",
@@ -533,6 +555,17 @@ export const developmentLinks: Tool[] = [
     subtitle: "A beautiful JSON viewer for the web",
     tags: [TAGS.tool],
     url: "https://jsonhero.io/",
+  },
+  {
+    title: "Jsonify",
+    category: CATEGORIES.dev,
+    description:
+      "Transform XLSX/CSV translation files into structured JSON. Simplify multilingual website and app localization. Convert excel/csv language data to JSON objects effortlessly.",
+    favicon: "https://www.jsonify.net/images/seo-logo.svg",
+    ogImage: "https://jsonify.net/_next/static/media/og-image.834f1293.webp",
+    subtitle: "Free JSON generator",
+    tags: [TAGS.tool],
+    url: "https://www.jsonify.net/",
   },
   {
     title: "Just Delete Me",

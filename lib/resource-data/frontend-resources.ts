@@ -140,6 +140,18 @@ export const frontendLinks: Tool[] = [
     url: "https://boneyard.vercel.app/",
   },
   {
+    title: "Boxicons",
+    author: "Boxicons",
+    category: CATEGORIES.frontend,
+    description:
+      "Access 50,000+ Pro icon variations and 3,500+ free icons. High-quality SVG icons for React, Vue, Figma & more. Download in SVG, PNG, JSX formats. Perfect for web & mobile apps.",
+    favicon: "https://cdn.boxicons.com/logo.svg",
+    ogImage: "https://boxicons.com/opengraph-image.png",
+    subtitle: "High Quality Web Icons",
+    tags: [TAGS.icons],
+    url: "https://boxicons.com/",
+  },
+  {
     title: "Brik",
     category: CATEGORIES.frontend,
     description:
@@ -256,6 +268,17 @@ export const frontendLinks: Tool[] = [
     url: "https://www.cult-ui.com/",
   },
   {
+    title: "daisyUI",
+    category: CATEGORIES.frontend,
+    description:
+      "Tailwind CSS component library by daisyUI. Build faster with semantic components, built-in themes, and reusable UI blocks.",
+    favicon: "https://img.daisyui.com/images/daisyui/mark.svg",
+    ogImage: "https://img.daisyui.com/images/default.webp",
+    subtitle: "Tailwind CSS Component Library",
+    tags: [TAGS["ui-component"]],
+    url: "https://daisyui.com/",
+  },
+  {
     title: "DASCA",
     category: CATEGORIES.frontend,
     description:
@@ -333,6 +356,16 @@ export const frontendLinks: Tool[] = [
     ogImage: "https://fancycomponents.dev/og.jpg",
     tags: [TAGS["ui-component"]],
     url: "https://www.fancycomponents.dev/",
+  },
+  {
+    title: "Flexbox Labs",
+    category: CATEGORIES.frontend,
+    description: "A visual tool for experimenting with flexbox and CSS grid layouts.",
+    favicon: "https://raw.githubusercontent.com/prazzon/Flexbox-Labs/master/public/img/logo.svg",
+    ogImage:
+      "https://raw.githubusercontent.com/prazzon/Flexbox-Labs/master/.github/images/Screenshot1.png",
+    tags: [TAGS.tool],
+    url: "https://flexboxlabs.netlify.app/",
   },
   {
     title: "Flicker",
@@ -461,6 +494,7 @@ export const frontendLinks: Tool[] = [
     title: "Gravity UI",
     category: CATEGORIES.frontend,
     description: "Build modern interfaces with the Gravity design system and libraries",
+    ogImage: "https://gravity-ui.com/index-social.png",
     tags: [TAGS["ui-component"]],
     url: "https://gravity-ui.com/",
   },
@@ -498,6 +532,16 @@ export const frontendLinks: Tool[] = [
     url: "https://hypercolor.dev/",
   },
   {
+    title: "Iconer",
+    category: CATEGORIES.frontend,
+    description:
+      "App where you can easily customize icons. Choose from a variety of libraries with different licenses. Edit attributes, copy and export effortlessly.",
+    ogImage: "https://iconer.app/image.jpg",
+    subtitle: "Free Icons for Everything (SVG, PNG, JSX)",
+    tags: [TAGS.icons],
+    url: "https://iconer.app/",
+  },
+  {
     title: "Icônes",
     category: CATEGORIES.frontend,
     description: "Icon Explorer with Instant searching, powered by Iconify",
@@ -526,6 +570,7 @@ export const frontendLinks: Tool[] = [
     description:
       "A flexible icon family for interfaces, diagrams, presentations — whatever, really.",
     subtitle: "Download 1,509,000 free icons (SVG, PNG)",
+    tags: [TAGS.icons],
     url: "https://icons8.com/icons",
   },
   {
@@ -615,6 +660,17 @@ export const frontendLinks: Tool[] = [
     subtitle: "Create & edit Lottie animations",
     tags: [TAGS.animation],
     url: "https://www.lottielab.com/",
+  },
+  {
+    title: "LsIcon",
+    author: "Wis Design",
+    category: CATEGORIES.frontend,
+    description:
+      "Discover 700+ customizable SVG icons for React. LSicon offers open-source, high-quality icons designed on a 16px grid with 1px strokes. Perfect for developers and designers.",
+    ogImage: "https://www.lsicon.com/static/website.jpg",
+    subtitle: "Open-Source SVG Icons for React Developers and Designers",
+    tags: [TAGS.icons],
+    url: "https://www.lsicon.com/",
   },
   {
     title: "lucide-animated",
