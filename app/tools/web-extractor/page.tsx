@@ -2,12 +2,15 @@
 
 import {
   ArrowSquareOutIcon,
+  CodeIcon,
   GlobeIcon,
+  LightningIcon,
   MagnifyingGlassIcon,
   SpinnerGapIcon,
 } from "@phosphor-icons/react";
 import { useRef, useState } from "react";
 
+import { ExtractedMetadata, parseHeadHtml } from "@/app/tools/web-extractor/head-parser";
 import { MetaRow } from "@/app/tools/web-extractor/meta-row";
 import { Section } from "@/app/tools/web-extractor/section";
 import { ErrorAlert } from "@/components/error-alert";
@@ -17,76 +20,20 @@ import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { InputField } from "@/components/ui/input-field";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
 export default function WebExtractorPage() {
+  const [activeTab, setActiveTab] = useState<"url" | "paste">("url");
   const [url, setUrl] = useState("");
+  const [pastedHtml, setPastedHtml] = useState("");
+  const [baseUrlInput, setBaseUrlInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [headHtml, setHeadHtml] = useState<string | null>(null);
   const [metadata, setMetadata] = useState<ExtractedMetadata | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  interface ExtractedMetadata {
-    url: string;
-    title: string | null;
-    description: string | null;
-    author: string | null;
-    keywords: string[];
-    canonicalUrl: string | null;
-    charset: string | null;
-    language: string | null;
-    viewport: string | null;
-    generator: string | null;
-    assets: {
-      appleTouchIcon: string | null;
-      favicon: string | null;
-      faviconSvg: string | null;
-      logo: string | null;
-      ogImage: string | null;
-      twitterImage: string | null;
-      screenshots: string[];
-    };
-    robots: {
-      robots: string | null;
-      googlebot: string | null;
-      bingbot: string | null;
-    };
-    themeColor: {
-      themeColor: string | null;
-      colorScheme: string | null;
-    };
-    openGraph: {
-      title: string | null;
-      description: string | null;
-      image: string | null;
-      type: string | null;
-      siteName: string | null;
-      locale: string | null;
-      localeAlternate: string[];
-    };
-    twitter: {
-      title: string | null;
-      description: string | null;
-      card: string | null;
-      image: string | null;
-      site: string | null;
-      creator: string | null;
-    };
-    verification: {
-      google: string | null;
-      bing: string | null;
-      pinterest: string | null;
-      yandex: string | null;
-      facebook: string | null;
-    };
-    securityHeaders: {
-      contentSecurityPolicy: string | null;
-      refresh: string | null;
-      xUaCompatible: string | null;
-    };
-  }
 
   async function handleExtract() {
     const trimmed = url.trim();
@@ -122,13 +69,38 @@ export default function WebExtractorPage() {
     }
   }
 
+  function handleManualParse() {
+    const trimmedHtml = pastedHtml.trim();
+    if (!trimmedHtml) {
+      setError("Please paste <head> tag HTML content to parse.");
+      return;
+    }
+
+    setError(null);
+    try {
+      const parsed = parseHeadHtml(trimmedHtml, baseUrlInput.trim() || undefined);
+      setHeadHtml(trimmedHtml);
+      setMetadata(parsed);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Failed to parse pasted HTML content.");
+    }
+  }
+
+  function handleClear() {
+    setUrl("");
+    setPastedHtml("");
+    setBaseUrlInput("");
+    setHeadHtml(null);
+    setMetadata(null);
+    setError(null);
+  }
+
   const tool = internalTools.find((t) => t.slug === "web-extractor");
 
   function beautifyHtml(html: string): string {
     let indentLevel = 0;
     const indentSize = 2;
 
-    // Split tags onto separate lines while preserving text content
     const tokens = html
       .replace(/>\s*</g, ">\n<")
       .split("\n")
@@ -137,14 +109,12 @@ export default function WebExtractorPage() {
 
     return tokens
       .map((token) => {
-        // Decrease indent for closing tags: </tag>
         if (/^<\//.test(token)) {
           indentLevel = Math.max(0, indentLevel - 1);
         }
 
         const line = " ".repeat(indentLevel * indentSize) + token;
 
-        // Increase indent for opening tags (excluding self-closing, doctypes, void tags)
         const isOpeningTag = /^<[a-zA-Z0-9-]+/.test(token);
         const isSelfClosing = /\/>$/.test(token) || /^<(meta|link|img|br|hr|input)/i.test(token);
         const isClosingTag = /^<\//.test(token);
@@ -161,60 +131,142 @@ export default function WebExtractorPage() {
   return (
     <ToolLayout tool={tool}>
       <div className="flex h-full min-h-0 w-full flex-1 flex-col space-y-6">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            void handleExtract();
+        <Tabs
+          value={activeTab}
+          onValueChange={(val) => {
+            setActiveTab(val as "url" | "paste");
+            setError(null);
           }}
-          className="mx-auto w-full max-w-2xl shrink-0 space-y-4"
+          className="mx-auto w-full max-w-2xl shrink-0"
         >
-          <InputField
-            ref={inputRef}
-            label="Target URL"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            placeholder="https://example.com"
-            disabled={loading}
-            suffix={
-              <ClearButton
-                type="button"
-                iconOnly
-                onClick={() => {
-                  setUrl("");
-                  setHeadHtml(null);
-                  setMetadata(null);
-                  setError(null);
-                }}
-                disabled={loading || (!url && !headHtml)}
-              />
-            }
-          />
+          <TabsList className="mb-4 grid w-full grid-cols-2">
+            <TabsTrigger value="url">
+              <GlobeIcon size={16} className="mr-2 shrink-0" />
+              Fetch via URL
+            </TabsTrigger>
+            <TabsTrigger value="paste">
+              <CodeIcon size={16} className="mr-2 shrink-0" />
+              Paste &lt;head&gt; HTML
+            </TabsTrigger>
+          </TabsList>
 
-          <Button type="submit" className="w-full font-semibold" disabled={loading}>
-            {loading ? (
-              <>
-                <SpinnerGapIcon weight="bold" className="animate-spin" />
-                Extracting Head Tag...
-              </>
-            ) : (
-              <>
-                <MagnifyingGlassIcon weight="bold" />
-                Extract Head Tag
-              </>
-            )}
-          </Button>
-        </form>
+          <TabsContent value="url">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                void handleExtract();
+              }}
+              className="space-y-4"
+            >
+              <InputField
+                ref={inputRef}
+                label="Target URL"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                placeholder="https://example.com"
+                disabled={loading}
+                suffix={
+                  <ClearButton
+                    type="button"
+                    iconOnly
+                    onClick={handleClear}
+                    disabled={loading || (!url && !headHtml && !pastedHtml)}
+                  />
+                }
+              />
+
+              <Button type="submit" className="w-full font-semibold" disabled={loading}>
+                {loading ? (
+                  <>
+                    <SpinnerGapIcon weight="bold" className="animate-spin" />
+                    Extracting Head Tag...
+                  </>
+                ) : (
+                  <>
+                    <MagnifyingGlassIcon weight="bold" />
+                    Extract Head Tag
+                  </>
+                )}
+              </Button>
+            </form>
+          </TabsContent>
+
+          <TabsContent value="paste">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleManualParse();
+              }}
+              className="space-y-4"
+            >
+              <TextareaGroup
+                label="Paste <head> Tag HTML"
+                placeholder="<head>&#10;  <title>Example Page</title>&#10;  <meta name='description' content='Page description...'>&#10;</head>"
+                value={pastedHtml}
+                onChange={(e) => setPastedHtml(e.target.value)}
+                rows={6}
+                className="font-mono text-xs"
+              />
+
+              <InputField
+                label="Base URL (Optional)"
+                value={baseUrlInput}
+                onChange={(e) => setBaseUrlInput(e.target.value)}
+                placeholder="https://example.com (for resolving relative favicon / og:image links)"
+                suffix={
+                  <ClearButton
+                    type="button"
+                    iconOnly
+                    onClick={handleClear}
+                    disabled={!url && !headHtml && !pastedHtml && !baseUrlInput}
+                  />
+                }
+              />
+
+              <Button type="submit" className="w-full font-semibold">
+                <LightningIcon weight="bold" />
+                Extract Data from HTML
+              </Button>
+            </form>
+          </TabsContent>
+        </Tabs>
 
         {error && (
-          <div className="mx-auto w-full max-w-2xl shrink-0">
+          <div className="mx-auto w-full max-w-2xl shrink-0 space-y-3">
             <ErrorAlert message={error} />
+            {activeTab === "url" && (
+              <div className="border-amber-500/20 bg-amber-500/10 flex flex-col gap-2 border p-3.5 text-xs text-amber-600 dark:text-amber-400 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="font-semibold">API credits run out or request failed?</p>
+                  <p className="text-muted-foreground mt-0.5">
+                    You can paste the website's raw &lt;head&gt; tag HTML directly to extract all metadata offline.
+                  </p>
+                </div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="shrink-0 font-medium"
+                  onClick={() => {
+                    if (url) {
+                      setBaseUrlInput(url);
+                    }
+                    setActiveTab("paste");
+                    setError(null);
+                  }}
+                >
+                  <CodeIcon size={14} className="mr-1.5" />
+                  Paste &lt;head&gt; HTML Manually
+                </Button>
+              </div>
+            )}
           </div>
         )}
 
         {!headHtml && !loading && !error && (
           <EmptyState
-            title="Awaiting Target URL"
-            description="Enter a website address above to fetch its exact <head> HTML content via ScrapingBee."
+            title="Awaiting Input"
+            description="Enter a website URL to fetch via API, or paste raw <head> HTML to extract structured metadata directly."
           />
         )}
 
@@ -234,19 +286,27 @@ export default function WebExtractorPage() {
             {/* Page Link Banner */}
             <div className="border-border bg-card flex items-center gap-3 border px-4 py-3">
               <GlobeIcon size={20} className="text-primary shrink-0" />
-              <a
-                href={metadata.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-foreground truncate font-mono text-sm font-medium hover:underline"
-              >
-                {metadata.url}
-              </a>
-              <ArrowSquareOutIcon
-                weight="duotone"
-                size={16}
-                className="text-muted-foreground ml-auto shrink-0"
-              />
+              {metadata.url.startsWith("http://") || metadata.url.startsWith("https://") ? (
+                <a
+                  href={metadata.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground truncate font-mono text-sm font-medium hover:underline"
+                >
+                  {metadata.url}
+                </a>
+              ) : (
+                <span className="text-foreground truncate font-mono text-sm font-medium">
+                  {metadata.url}
+                </span>
+              )}
+              {metadata.url.startsWith("http") && (
+                <ArrowSquareOutIcon
+                  weight="duotone"
+                  size={16}
+                  className="text-muted-foreground ml-auto shrink-0"
+                />
+              )}
             </div>
 
             {/* Extracted Metadata Rows */}

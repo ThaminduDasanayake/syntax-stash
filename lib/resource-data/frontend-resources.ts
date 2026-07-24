@@ -1025,6 +1025,18 @@ export const frontendLinks: Tool[] = [
     url: "https://www.smoothui.dev/",
   },
   {
+    title: "soundcn",
+    author: "soundcn",
+    category: CATEGORIES.frontend,
+    description:
+      "700+ curated UI sound effects for modern web apps. Browse, preview, and install sounds with a single command. Free and open source.",
+    favicon: "https://www.soundcn.xyz/icon.svg?icon.025y~su-z2aj3.svg",
+    ogImage: "https://www.soundcn.xyz/og-dark.png",
+    subtitle: "Free Sound Effects for Modern Web Apps",
+    tags: [TAGS["ui-component"]],
+    url: "https://www.soundcn.xyz/",
+  },
+  {
     title: "Spectrum UI",
     category: CATEGORIES.frontend,
     description:

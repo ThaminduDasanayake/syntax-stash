@@ -154,10 +154,4 @@ export const newLinks: Tool[] = [
     description: "zzzz",
     url: "zzzz",
   },
-  {
-    title: "zzzz",
-    category: CATEGORIES.dev,
-    description: "zzzz",
-    url: "zzzz",
-  },
 ];

@@ -425,17 +425,17 @@ export const designLinks: Tool[] = [
     title: "DesignMD",
     category: CATEGORIES.design,
     description:
-      "Paste a URL. Get a complete DESIGN.md file in seconds. Extract design tokens, typography & component styles — ready for AI coding agents.",
-    subtitle: "Generate DESIGN.md Files with AI",
-    url: "https://designmd.me/",
-  },
-  {
-    title: "DesignMD",
-    category: CATEGORIES.dev,
-    description:
       "Design context your AI can read. 70+ brand design systems as plain-text DESIGN.md files. Drop one in your prompt and ship UI that looks like it cost six figures.",
     subtitle: "DESIGN.md catalog for AI agents",
     url: "https://www.designmd.co/",
+  },
+  {
+    title: "DesignMD",
+    category: CATEGORIES.design,
+    description:
+      "Paste a URL. Get a complete DESIGN.md file in seconds. Extract design tokens, typography & component styles — ready for AI coding agents.",
+    subtitle: "Generate DESIGN.md Files with AI",
+    url: "https://designmd.me/",
   },
   {
     title: "Developer Portfolios",

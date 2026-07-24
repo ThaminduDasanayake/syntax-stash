@@ -814,6 +814,18 @@ export const developmentLinks: Tool[] = [
     url: "https://readme.so/",
   },
   {
+    title: "regex101",
+    author: "Firas Dib",
+    category: CATEGORIES.dev,
+    description:
+      "Online regex tester and debugger. Test, explain, benchmark, and generate code for PCRE2, JavaScript, Python, Go, Java, .NET, and Rust.",
+    favicon: "https://regex101.com/static/assets/icons/favicon-196.png",
+    ogImage: "https://regex101.com/preview/",
+    subtitle: "build, test, and debug regex",
+    tags: [TAGS.tool],
+    url: "https://regex101.com/",
+  },
+  {
     title: "relic",
     category: CATEGORIES.dev,
     description:
