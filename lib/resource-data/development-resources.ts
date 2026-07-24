@@ -416,6 +416,15 @@ export const developmentLinks: Tool[] = [
     url: "https://galaxybrain.com/",
   },
   {
+    title: "gists.sh",
+    category: CATEGORIES.dev,
+    description: "Gists, but beautiful",
+    favicon: "https://gists.sh/icon.svg?icon.4926590c.svg",
+    ogImage: "https://gists.sh/opengraph-image?9c823d7c5fa882a6",
+    tags: [TAGS.tool],
+    url: "https://gists.sh/",
+  },
+  {
     title: "GitDiagram",
     category: CATEGORIES.dev,
     description:

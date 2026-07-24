@@ -160,6 +160,17 @@ export const frontendLinks: Tool[] = [
     url: "https://brik.space/",
   },
   {
+    title: "Bundui",
+    category: CATEGORIES.frontend,
+    description:
+      "Tailwind is a carefully curated collection of 200+ handcrafted UI components built with CSS, React, and shadcn/ui.",
+    favicon: "https://bundui.io/logo.svg",
+    ogImage: "https://bundui.io/og-image.png",
+    subtitle: "Tailwind CSS & shadcn/ui components, UI blocks, examples and more.",
+    tags: [TAGS["ui-component"]],
+    url: "https://bundui.io/",
+  },
+  {
     title: "Cascade",
     category: CATEGORIES.frontend,
     description:
@@ -199,6 +210,18 @@ export const frontendLinks: Tool[] = [
     description: "Pixel-perfect, uniquely crafted.",
     tags: [TAGS.animation, TAGS["ui-component"]],
     url: "https://chanhdai.com/components",
+  },
+  {
+    title: "coolicons PRO",
+    category: CATEGORIES.frontend,
+    className: "bg-foreground border-paper",
+    description:
+      "coolicons is a carefully designed collection of 1,320+ icons with a focus on simplicity and consistency. Perfectly suited for web, application and mobile design.",
+    favicon: "https://coolicons.cool/images/favicons/favicon.svg",
+    ogImage: "https://coolicons.cool/images/ogi.webp",
+    subtitle: "1,320+ Carefully Designed Icons | Duotone, Duocolor, Line Icons",
+    tags: [TAGS.icons],
+    url: "https://coolicons.cool/",
   },
   {
     title: "Cover Flow",
@@ -906,6 +929,19 @@ export const frontendLinks: Tool[] = [
     url: "https://styles.refero.design/",
   },
   {
+    title: "ReUI",
+    author: "ReUI",
+    category: CATEGORIES.frontend,
+    description:
+      "Free Shadcn UI components and pro blocks for React and Tailwind CSS. Hand-crafted icons, templates, and a hosted MCP server so coding agents build with the shadcn CLI.",
+    favicon: "https://reui.io/favicon.ico",
+    ogImage:
+      "https://reui.io/og?title=Free%20Shadcn%20UI%20Components%2C%20Blocks%2C%20Icons%2C%20Templates%20%26%20MCP&description=Free%20Shadcn%20UI%20components%20and%20pro%20blocks%20for%20React%20and%20Tailwind%20CSS.%20Hand-crafted%20icons%2C%20templates%2C%20and%20a%20hosted%20MCP%20server%20so%20coding%20agents%20build%20with%20the%20shadcn%20CLI.&v=dpl_7SoDQLxB1vnarVpa5BSr3NUxi4T8",
+    subtitle: "Free Shadcn UI Components, Blocks, Icons, Templates & MCP",
+    tags: [TAGS["ui-component"]],
+    url: "https://reui.io/",
+  },
+  {
     title: "Rive",
     category: CATEGORIES.frontend,
     description:
@@ -913,6 +949,19 @@ export const frontendLinks: Tool[] = [
     subtitle: "The interactive experience engine",
     tags: [TAGS.animation],
     url: "https://rive.app/",
+  },
+  {
+    title: "Roundicons",
+    author: "Ramy Wafaa",
+    category: CATEGORIES.frontend,
+    className: "bg-foreground border-paper",
+    description:
+      "45,000+ premium vector icons across 29 packs. One-time payment, lifetime download access, 30-day money-back guarantee.",
+    favicon: "https://roundicons.com/favicon.svg",
+    ogImage: "https://roundicons.com/og.png",
+    subtitle: "45,000+ premium vector icons in one bundle",
+    tags: [TAGS.icons],
+    url: "https://roundicons.com/",
   },
   {
     title: "SATIS UI",
@@ -1070,6 +1119,16 @@ export const frontendLinks: Tool[] = [
     subtitle: "Design engine for vibe coding",
     tags: [TAGS.ai, TAGS.development, TAGS.ui],
     url: "https://styleseed-demo.vercel.app/",
+  },
+  {
+    title: "Supercons",
+    category: CATEGORIES.frontend,
+    description:
+      "A friendly open source React iconset by Lachlan Campbell. Download supercons icons on npm.",
+    favicon: "https://supercons.vercel.app/apple-touch-icon.png",
+    ogImage: "https://cloud-l7ijxkyvg.vercel.app/2021-02-02_21010z8cwfunpdn3jp59d7np4z6q5kdj.png",
+    tags: [TAGS.icons],
+    url: "https://supercons.vercel.app/",
   },
   {
     title: "SVGator",

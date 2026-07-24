@@ -631,6 +631,17 @@ export const designLinks: Tool[] = [
     url: "https://fontshare.com/",
   },
   {
+    title: "Fonttrio",
+    category: CATEGORIES.design,
+    description:
+      "Three fonts. One command. Curated font pairings for shadcn/ui. Install heading, body, and mono fonts with a single CLI command.",
+    favicon: "https://www.fonttrio.xyz/logo/logo-square.svg",
+    ogImage: "https://www.fonttrio.xyz/opengraph-image?f9e6e75089f71bc5",
+    subtitle: "Best Font Pairings",
+    tags: [TAGS.typography],
+    url: "https://www.fonttrio.xyz/",
+  },
+  {
     title: "Framer",
     category: CATEGORIES.design,
     description:
@@ -667,6 +678,17 @@ export const designLinks: Tool[] = [
       "https://graphicsauce.co/free-mockups/wp-content/uploads/2024/08/iphone-14-pro-mockup-169.jpg",
     tags: [TAGS.mockup],
     url: "https://graphicsauce.co/free-mockups/",
+  },
+  {
+    title: "Gallereee",
+    category: CATEGORIES.design,
+    description:
+      "A curated gallery of the best portfolio websites on the web. Real references from indie designers and top studios, updated every week.",
+    favicon: "https://framerusercontent.com/images/BiWJrqiYUGxSUk4pM5PpNjTGDY.png",
+    ogImage: "https://framerusercontent.com/images/jEhl5jLuSyvYzocWgsqxxTY.jpg",
+    subtitle: "Best Inspirational Portfolio Websites. Handpicked for Creatives.",
+    tags: [TAGS.inspiration],
+    url: "https://www.gallereee.com/",
   },
   {
     title: "getdesign.md",
