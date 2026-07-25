@@ -836,6 +836,18 @@ export const educationLinks: Tool[] = [
     url: "https://github.com/thealgorithms",
   },
   {
+    title: "The Guide to Design",
+    category: CATEGORIES.education,
+    description:
+      "A self-guided class to help you get started in UX and answer key questions about craft, design, and career",
+    favicon:
+      "https://c-p.rmcdn.net/5ecbe27f82f5b3005df02f46/upload-d5b8b0bd-8a1d-4610-90a3-64bb282fc788_144.png",
+    ogImage:
+      "https://c-p.rmcdn.net/5ecbe27f82f5b3005df02f46/upload-775bb649-148a-432c-9de0-cbbd583a78f5.jpg",
+    tags: [TAGS.design, TAGS.education],
+    url: "https://start.uxdesign.cc/",
+  },
+  {
     title: "The Odin Project",
     category: CATEGORIES.education,
     description:

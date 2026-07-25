@@ -267,6 +267,17 @@ export const designLinks: Tool[] = [
     url: "https://colorflow.ls.graphics/",
   },
   {
+    title: "ColorHub",
+    author: "Dan Cranney",
+    category: CATEGORIES.design,
+    description: "Find the perfect color palette for your next project",
+    favicon: "https://www.colorhub.app/favicon.png",
+    ogImage:
+      "https://raw.githubusercontent.com/danielcranney/repo-storage/main/colorhub-v2-meta-image.jpg",
+    tags: [TAGS.color],
+    url: "https://www.colorhub.app/",
+  },
+  {
     title: "Color Hunt",
     category: CATEGORIES.design,
     description:

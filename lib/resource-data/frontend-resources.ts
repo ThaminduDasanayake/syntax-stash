@@ -666,6 +666,17 @@ export const frontendLinks: Tool[] = [
     url: "https://www.jolyui.dev/",
   },
   {
+    title: "JustGage",
+    author: "JustGage Team",
+    category: CATEGORIES.frontend,
+    description:
+      "Modern SVG gauge library with zero dependencies. Create beautiful, animated dashboard gauges with ease.",
+    favicon: "https://raw.githubusercontent.com/toorshia/justgage/master/docs/public/logo.png",
+    subtitle: "Modern SVG Gauges",
+    tags: [TAGS["ui-component"]],
+    url: "https://toorshia.github.io/justgage/",
+  },
+  {
     title: "Kokonut UI",
     category: CATEGORIES.frontend,
     description:

@@ -375,6 +375,17 @@ export const developmentLinks: Tool[] = [
     url: "https://domainstack.io/",
   },
   {
+    title: "Downdetector",
+    category: CATEGORIES.dev,
+    description:
+      "Check if services are down based on real-time user reports. Downdetector shows live status updates and outages people are experiencing.",
+    favicon: "https://downdetector.com/icons/apple-touch-icon.png",
+    ogImage: "https://downdetector.com/images/open-graph/banner.png",
+    subtitle: "Check real-time service problems and outages US",
+    tags: [TAGS.tool],
+    url: "https://downdetector.com/",
+  },
+  {
     title: "Dub",
     author: "Dub Inc",
     category: CATEGORIES.dev,
@@ -584,6 +595,14 @@ export const developmentLinks: Tool[] = [
       "Collection of handy online tools for developers, with great UX. IT Tools is a free and open-source collection of handy online tools for developers & people working in IT.",
     tags: [TAGS.tool],
     url: "https://it-tools.tech/",
+  },
+  {
+    title: "itty.dev",
+    category: CATEGORIES.dev,
+    description: "Ultra-small, powerful helpers for modern serverless APIs.",
+    favicon: "https://itty.dev/itty-square.256.png",
+    tags: [TAGS.development],
+    url: "https://itty.dev/",
   },
   {
     title: "JSON Hero",
@@ -821,6 +840,15 @@ export const developmentLinks: Tool[] = [
     url: "https://pocketbase.io/",
   },
   {
+    title: "Pointilliser",
+    category: CATEGORIES.dev,
+    description: "Tools for generating neo-pointillist graphics",
+    favicon: "https://pointilliser.elwyn.co/meta/apple-touch-icon.png",
+    ogImage: "https://pointilliser.elwyn.co/meta/og-image.jpg",
+    tags: [TAGS.tool],
+    url: "https://pointilliser.com/",
+  },
+  {
     title: "Postgres Sandbox",
     category: CATEGORIES.dev,
     description: "In-browser Postgres sandbox with AI assistance",
@@ -930,6 +958,15 @@ export const developmentLinks: Tool[] = [
       "servercn is a component registry for building production-ready node.js backends, inspired by shadcn/ui.",
     tags: [TAGS.backend],
     url: "https://servercn.vercel.app/",
+  },
+  {
+    title: "Sesame",
+    category: CATEGORIES.dev,
+    description: "A Creative Tool Purpose-built for Brand Expression built by Athletics",
+    favicon: "https://framerusercontent.com/images/WJWI673zK3jnxT1D0uBh7inaRA.png",
+    ogImage: "https://framerusercontent.com/images/2KmY3qRaki1ljnz5ojnGOaNt4.jpg",
+    tags: [TAGS.tool],
+    url: "https://sesame.design/",
   },
   {
     title: "Shape Divider App",
@@ -1072,6 +1109,17 @@ export const developmentLinks: Tool[] = [
       "Open-source localization platform developers enjoy working with. With in-app translation, seamless integrations, and collaborative tools, scaling multilingual apps becomes easy. Sign up for free. ",
     subtitle: "Translate your app",
     url: "https://tolgee.io/",
+  },
+  {
+    title: "Tooooools.app",
+    author: "Daniil Sukhovskoy",
+    category: CATEGORIES.dev,
+    description:
+      "Apply lo-fi effects to your images and videos: dithering, halftone, gradients, patterns and more. Free, no sign-up required.",
+    favicon: "https://www.tooooools.app/favicon.ico",
+    ogImage: "https://www.tooooools.app/open-graph.jpg",
+    tags: [TAGS.tool],
+    url: "https://www.tooooools.app/",
   },
   {
     title: "ToS;DR",

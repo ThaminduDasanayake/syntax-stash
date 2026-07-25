@@ -210,6 +210,15 @@ export const newLinks: Tool[] = [
     url: "https://toolmatex.com/",
   },
   {
+    title: "TUIStudio",
+    category: CATEGORIES.dev,
+    description:
+      "A Figma-like visual editor for TUI applications. Drag-and-drop components, edit properties in real-time, and export to 6 frameworks with one click.",
+    favicon: "https://tui.studio/assets/favicon_dark.svg",
+    subtitle: "Design Terminal UIs. Visually.",
+    url: "https://tui.studio/",
+  },
+  {
     title: "uiprint",
     author: "Vijay Verma",
     category: CATEGORIES.dev,
@@ -221,10 +230,14 @@ export const newLinks: Tool[] = [
     url: "https://uiprint.co/",
   },
   {
-    title: "zzzz",
+    title: "Usetools.Design",
+    author: "Usetools.Design",
     category: CATEGORIES.dev,
-    description: "zzzz",
-    url: "zzzz",
+    description:
+      "Discover the best design tools and resources for designers and developers. Curated collection of UI/UX tools, icons, illustrations, and more.",
+    ogImage: "https://www.usetools.design/og-image.webp",
+    subtitle: "Curated Design Tools & Resources",
+    url: "https://www.usetools.design/",
   },
   {
     title: "zzzz",
