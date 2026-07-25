@@ -362,6 +362,16 @@ export const educationLinks: Tool[] = [
     url: "https://exercism.org/",
   },
   {
+    title: "explainshell.com",
+    author: "Idan Kamara",
+    category: CATEGORIES.education,
+    className: "bg-foreground border-paper",
+    description: "Match command-line arguments to their help text",
+    favicon: "https://explainshell.com/static/img/shell-dark.png",
+    tags: [TAGS.education],
+    url: "https://explainshell.com/",
+  },
+  {
     title: "free media heck yeah",
     category: CATEGORIES.education,
     description: "The largest collection of free stuff on the internet!",

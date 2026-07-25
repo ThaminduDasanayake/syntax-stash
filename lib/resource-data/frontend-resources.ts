@@ -915,6 +915,15 @@ export const frontendLinks: Tool[] = [
     url: "https://primeui.com/",
   },
   {
+    title: "React Aria",
+    category: CATEGORIES.frontend,
+    description: "Craft world-class accessible components with custom styles.",
+    favicon: "https://react-aria.adobe.com/server/react-aria-favicon.0d52b4c6.svg",
+    ogImage: "https://react-aria.adobe.com/server/ReactAriaOpenGraph.c58014f0.webp",
+    tags: [TAGS["ui-component"]],
+    url: "https://react-aria.adobe.com/",
+  },
+  {
     title: "React Bits",
     category: CATEGORIES.frontend,
     description:

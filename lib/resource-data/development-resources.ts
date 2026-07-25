@@ -253,6 +253,17 @@ export const developmentLinks: Tool[] = [
     url: "https://p2r3.github.io/convert/",
   },
   {
+    title: "Convex",
+    category: CATEGORIES.dev,
+    description:
+      "All gas, no breakages. Convex is the reactive backend platform that keeps up with you and your agents.",
+    favicon: "https://dashboard.convex.dev/convex-logo-only.svg",
+    ogImage: "https://www.convex.dev/og-home.png",
+    subtitle: "All gas, no breakages",
+    tags: [TAGS.backend],
+    url: "https://www.convex.dev/",
+  },
+  {
     title: "Coolify",
     category: CATEGORIES.dev,
     description:
@@ -346,6 +357,13 @@ export const developmentLinks: Tool[] = [
     subtitle: "Collaborative Backend & Headless CMS",
     tags: [TAGS.backend],
     url: "https://directus.com/",
+  },
+  {
+    title: "docsify",
+    category: CATEGORIES.dev,
+    description: "A magical documentation generator.",
+    favicon: "https://docsify.js.org/_media/icon.svg",
+    url: "https://docsify.js.org/#/",
   },
   {
     title: "Domainstack",
@@ -521,6 +539,17 @@ export const developmentLinks: Tool[] = [
       "The Digital Trade School for Slashies looking to stack their creative skills alongside a good vibes community. Take an online course, connect with creatives, find creative jobs and events.",
     tags: [TAGS.design, TAGS.education],
     url: "https://ilovecreatives.com/",
+  },
+  {
+    title: "iLovePDF",
+    category: CATEGORIES.dev,
+    description:
+      "iLovePDF is an online service to work with PDF files completely free and easy to use. Merge PDF, split PDF, compress PDF, office to PDF, PDF to JPG and more!",
+    favicon: "https://www.ilovepdf.com/img/app-icon.png",
+    ogImage: "https://www.ilovepdf.com/img/ilovepdf/social/en-US/ilovepdf.png",
+    subtitle: "Online PDF tools for PDF lovers",
+    tags: [TAGS.pdf, TAGS.tool],
+    url: "https://www.ilovepdf.com/",
   },
   {
     title: "Image to ASCII Converter",
@@ -968,6 +997,18 @@ export const developmentLinks: Tool[] = [
     url: "https://surge.sh/",
   },
   {
+    title: "Table Format Converter",
+    author: "Durandal GmbH",
+    category: CATEGORIES.dev,
+    description:
+      "Free online tool to convert your table data to CSV, HTML, JSON, Markdown and more. No registration required, works offline, and keeps your data private.",
+    favicon: "https://www.tableformatconverter.com/apple-icon.png",
+    ogImage: "https://www.tableformatconverter.com/opengraph-image.png",
+    subtitle: "The Best Free Online Table Converter",
+    tags: [TAGS.tool],
+    url: "https://www.tableformatconverter.com/",
+  },
+  {
     title: "Templates - Vercel",
     author: "Vercel",
     category: CATEGORIES.dev,
@@ -998,6 +1039,16 @@ export const developmentLinks: Tool[] = [
     url: "https://tina.io/",
   },
   {
+    title: "TinEye",
+    category: CATEGORIES.dev,
+    description:
+      "Search billions of images with TinEye reverse image search and find where images appear online.",
+    favicon: "https://tineye.com/assets/touch_icons/touch-icon-192x192.webp",
+    subtitle: "Reverse Image Search",
+    tags: [TAGS.tool],
+    url: "https://tineye.com/",
+  },
+  {
     title: "TinyWow",
     category: CATEGORIES.dev,
     description: "Free AI Writing, PDF, Image, and other Online Tools",
@@ -1009,6 +1060,8 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description:
       "A free and instant virtual whiteboarding with online collaboration. No signup required. Works on all devices: mobile, tablets, and desktop.",
+    favicon: "https://www.tldraw.com/favicon.svg",
+    ogImage: "https://www.tldraw.com/social-og.png",
     subtitle: "Very good free whiteboard",
     url: "https://www.tldraw.com/",
   },

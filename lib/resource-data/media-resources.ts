@@ -216,6 +216,15 @@ export const mediaLinks: Tool[] = [
     url: "https://pattern.monster/",
   },
   {
+    title: "Peeps Avatar Builder by UI8.net",
+    category: CATEGORIES.media,
+    description: "Look what I just made with the Peeps Avatar Builder @UI8",
+    favicon: "https://peeps.ui8.net/apple-touch-icon.png",
+    ogImage: "https://peeps-ui8-net-master.s3.amazonaws.com/meta-image.png",
+    tags: [TAGS.illustration],
+    url: "https://peeps.ui8.net/",
+  },
+  {
     title: "Pexels",
     category: CATEGORIES.media,
     description:
