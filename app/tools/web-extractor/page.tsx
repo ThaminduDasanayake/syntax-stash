@@ -206,6 +206,14 @@ export default function WebExtractorPage() {
                 onChange={(e) => setPastedHtml(e.target.value)}
                 rows={6}
                 className="font-mono text-xs"
+                action={
+                  <ClearButton
+                    size="sm"
+                    onClick={() => {
+                      setPastedHtml("");
+                    }}
+                  />
+                }
               />
 
               <InputField
@@ -235,11 +243,12 @@ export default function WebExtractorPage() {
           <div className="mx-auto w-full max-w-2xl shrink-0 space-y-3">
             <ErrorAlert message={error} />
             {activeTab === "url" && (
-              <div className="border-amber-500/20 bg-amber-500/10 flex flex-col gap-2 border p-3.5 text-xs text-amber-600 dark:text-amber-400 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-col gap-2 border border-amber-500/20 bg-amber-500/10 p-3.5 text-xs text-amber-600 sm:flex-row sm:items-center sm:justify-between dark:text-amber-400">
                 <div>
                   <p className="font-semibold">API credits run out or request failed?</p>
                   <p className="text-muted-foreground mt-0.5">
-                    You can paste the website's raw &lt;head&gt; tag HTML directly to extract all metadata offline.
+                    You can paste the website&apos;s raw &lt;head&gt; tag HTML directly to extract
+                    all metadata offline.
                   </p>
                 </div>
                 <Button
