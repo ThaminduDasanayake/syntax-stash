@@ -22,6 +22,30 @@ export const newLinks: Tool[] = [
   },
 
   {
+    title: "Bloo",
+    author: "Vijay Verma",
+    category: CATEGORIES.dev,
+    description:
+      "All in one open source wireframe kit for quick design and prototyping your idea. Its library contains more than 250+ components supporting darkmode and 150+ ready to use mobile screens.",
+    favicon: "https://bloouikit.com/icons/icon-192x192.png?v=61644abbf8a11d3ebd259b7b641950e4",
+    ogImage: "https://bloouikit.com/preview.jpg",
+    subtitle: "Low Fidelity Wireframe Kit",
+    tags: [TAGS.illustration],
+    url: "https://bloouikit.com/",
+  },
+  {
+    title: "Contra",
+    author: "Vijay Verma",
+    category: CATEGORIES.dev,
+    description:
+      "Open source wireframe kit for quick design and prototyping . Beautifully crafted easy to use wireframe kit with more than 150 mobile components and 50+ screens.",
+    favicon: "https://contrauikit.com/icons/icon-192x192.png?v=a65b32fc628415e93899a664c5a7cb8c",
+    ogImage: "https://contrauikit.com/preview.jpg",
+    subtitle: "Wireframe Kit",
+    tags: [TAGS.illustration],
+    url: "https://contrauikit.com/",
+  },
+  {
     title: "DesignMeter",
     category: CATEGORIES.dev,
     description:
@@ -70,7 +94,6 @@ export const newLinks: Tool[] = [
     subtitle: "Free online vector editor & procedural design tool",
     url: "https://graphite.art/",
   },
-
   {
     title: "HOVERSTAT.ES",
     category: CATEGORIES.dev,
@@ -185,6 +208,17 @@ export const newLinks: Tool[] = [
     description: "Fast, free online tools for designers, developers, and creators.",
     subtitle: "Free Online Tools for Designers & Developers",
     url: "https://toolmatex.com/",
+  },
+  {
+    title: "uiprint",
+    author: "Vijay Verma",
+    category: CATEGORIES.dev,
+    description: "Collection of printable wireframe, mockup and dot grid sketchpad templates",
+    favicon: "https://uiprint.co/icons/icon-192x192.png?v=114185a10255201d7a4e237c19855c61",
+    ogImage: "https://uiprint.co/preview.jpg",
+    subtitle: "Get Printable Mockups and Sketchpads",
+    tags: [TAGS.illustration],
+    url: "https://uiprint.co/",
   },
   {
     title: "zzzz",

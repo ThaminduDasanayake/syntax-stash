@@ -29,6 +29,27 @@ export const mediaLinks: Tool[] = [
     url: "https://asciinator.app/",
   },
   {
+    title: "Blush",
+    category: CATEGORIES.media,
+    description:
+      "Blush makes it easy to add free illustrations to your designs. Play with fully customizable graphics made by artists across the globe.",
+    favicon: "https://blush.design/apple-touch-icon.png",
+    ogImage: "https://blush.design/og-image.png",
+    subtitle: "Illustrations for everyone",
+    tags: [TAGS.illustration],
+    url: "https://blush.design/",
+  },
+  {
+    title: "Carbon",
+    category: CATEGORIES.media,
+    description:
+      "Carbon is the easiest way to create and share beautiful images of your source code.",
+    favicon: "https://carbon.now.sh/favicon.ico",
+    ogImage: "https://carbon.now.sh/static/brand/banner.png",
+    subtitle: "Create and share beautiful images of your source code",
+    url: "https://carbon.now.sh/",
+  },
+  {
     title: "CleanPNG",
     category: CATEGORIES.media,
     description:
@@ -88,6 +109,7 @@ export const mediaLinks: Tool[] = [
     title: "Doodle Ipsum",
     category: CATEGORIES.media,
     description: "Illustration placeholders for developers. Powered by Blush",
+    favicon: "https://blush.design/apple-touch-icon.png",
     ogImage: "https://doodleipsum.com/1000x750/flat?bg=e3f5f8&i=23243fc71ac1a810a5873bde01e17f07",
     tags: [TAGS.illustration],
     url: "https://doodleipsum.com/",
@@ -153,6 +175,17 @@ export const mediaLinks: Tool[] = [
     url: "https://getillustrations.com/",
   },
   {
+    title: "Good Stuff No Nonsense",
+    category: CATEGORIES.media,
+    description:
+      "Looking for hand drawn icons of exceptional quality? You're in the right place. This little vector illustrations are ready to use in your designs.",
+    favicon:
+      "https://goodstuffnononsense.com/wp-content/uploads/2016/03/cropped-gsnn-sygnet-heart-2-300x300.png",
+    subtitle: "Hand Drawn Vector Icons",
+    tags: [TAGS.illustration],
+    url: "https://goodstuffnononsense.com/",
+  },
+  {
     title: "Haikei",
     category: CATEGORIES.media,
     description:
@@ -170,6 +203,18 @@ export const mediaLinks: Tool[] = [
     subtitle: "Hand-Drawn Illustration Library",
     tags: [TAGS.illustration, TAGS.svg],
     url: "https://www.highlights.design/",
+  },
+  {
+    title: "illlustrations",
+    author: "Vijay Verma",
+    category: CATEGORIES.media,
+    description:
+      "Large set of opensource illustrations. You can use completely free and without attribution.",
+    favicon: "https://illlustrations.co/icons/icon-192x192.png?v=1d0394bf9fc267e40ccc6d562175855a",
+    ogImage: "https://illlustrations.co/preview.jpg",
+    subtitle: "open source illustrations kit",
+    tags: [TAGS.illustration],
+    url: "https://illlustrations.co/",
   },
   {
     title: "Logos",
@@ -414,6 +459,18 @@ export const mediaLinks: Tool[] = [
     subtitle: "Download Free PNG images, icons and backgrounds",
     tags: [TAGS.design, TAGS.image],
     url: "https://toppng.com/",
+  },
+  {
+    title: "uilogos",
+    author: "Vijay Verma",
+    category: CATEGORIES.media,
+    description:
+      "More than 25+ professionally designed logos and plugin to add dummy logos to your design and mockups.",
+    favicon: "https://uilogos.co/favicon.ico",
+    ogImage: "https://uilogos.co/preview.jpg",
+    subtitle: "lorem ipsum for logos | free logo placeholder",
+    tags: [TAGS.logo],
+    url: "https://uilogos.co/",
   },
   {
     title: "unDraw",
