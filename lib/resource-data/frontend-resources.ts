@@ -499,6 +499,17 @@ export const frontendLinks: Tool[] = [
     url: "https://gingham.laney.tech/",
   },
   {
+    title: "gooey-toast",
+    category: CATEGORIES.frontend,
+    description:
+      "Morphing toast notifications for React. Organic blob animations, promise tracking, and full customization out of the box.",
+    favicon: "https://goey-toast.vercel.app/apple-touch-icon.png",
+    ogImage: "https://goey-toast.vercel.app/og-image.png",
+    subtitle: "Morphing toast notifications for React",
+    tags: [TAGS["ui-component"]],
+    url: "https://goey-toast.vercel.app/",
+  },
+  {
     title: "Gradienty",
     category: CATEGORIES.frontend,
     description:
@@ -641,6 +652,18 @@ export const frontendLinks: Tool[] = [
     subtitle: "A fast and simple motion design tool on the web",
     tags: [TAGS.animation],
     url: "https://jitter.video/",
+  },
+  {
+    title: "Joly UI",
+    author: "johuniq",
+    category: CATEGORIES.frontend,
+    description:
+      "50+ free, open-source React components built on shadcn/ui & Radix. Copy-paste ready for Next.js, TypeScript & Tailwind CSS.",
+    favicon: "https://jolyui.dev/icon.png",
+    ogImage: "https://jolyui.dev/opengraph-image.png",
+    subtitle: "50+ Free shadcn/ui Components for React & Next.js",
+    tags: [TAGS["ui-component"]],
+    url: "https://www.jolyui.dev/",
   },
   {
     title: "Kokonut UI",
@@ -1176,6 +1199,17 @@ export const frontendLinks: Tool[] = [
     subtitle: "Free React, Tailwind CSS & Framer UI Components",
     tags: [TAGS["ui-component"]],
     url: "https://syntaxui.com/",
+  },
+  {
+    title: "TableCraft",
+    category: CATEGORIES.frontend,
+    description:
+      "A production-ready, type-safe, fully customizable table component for modern React applications.",
+    favicon: "https://react-table-craft.vercel.app/brand/logo-light.svg",
+    ogImage: "https://react-table-craft.vercel.app/brand/thumnail.png",
+    subtitle: "The Ultimate React Table Engine",
+    tags: [TAGS["ui-component"]],
+    url: "https://react-table-craft.vercel.app/",
   },
   {
     title: "Tailark",

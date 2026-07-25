@@ -1520,6 +1520,16 @@ export const designLinks: Tool[] = [
     url: "https://www.transparenttextures.com/",
   },
   {
+    title: "Tunera Type Foundry",
+    category: CATEGORIES.design,
+    description:
+      "Tunera is a transnational type foundry, that aims to present new and original typefaces for everyone. Tunera Type Foundry got its name from the Indian fig cactus, called “tunera” in Spanish, because it offers sharp font picks, rich curves and lots of flavor.",
+    favicon: "https://www.tunera.xyz/site/templates/styles/images/favicon/apple-touch-icon.png",
+    ogImage: "https://www.tunera.xyz/site/assets/files/1/image-tunera.png",
+    tags: [TAGS.typography],
+    url: "https://www.tunera.xyz/",
+  },
+  {
     title: "Typeface App",
     category: CATEGORIES.design,
     description:

@@ -1,3 +1,4 @@
+import { newLinks } from "@/lib/resource-data/new";
 import { Tool } from "@/types";
 
 import { aiLinks } from "./ai-resources";
@@ -18,6 +19,7 @@ export { frontendLinks } from "./frontend-resources";
 export { mediaLinks } from "./media-resources";
 
 export const resourceLinks: Tool[] = [
+  ...newLinks,
   ...aiLinks,
   ...dataLinks,
   ...designLinks,
