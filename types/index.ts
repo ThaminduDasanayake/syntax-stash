@@ -5,7 +5,7 @@ export type Tool = {
   authorLink?: string;
   category: string;
   className?: string;
-  description: string;
+  description?: string;
   details?: { title: string; content: string }[];
   favicon?: string;
   highlight?: string;

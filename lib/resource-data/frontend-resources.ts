@@ -1002,6 +1002,18 @@ export const frontendLinks: Tool[] = [
     url: "https://www.shadcnmaps.com/",
   },
   {
+    title: "ShadcnStore",
+    author: "ShadcnStore",
+    category: CATEGORIES.frontend,
+    description:
+      "Build faster with production-ready Shadcn UI blocks and components. Copy-paste React components built with Tailwind CSS. Perfect for Next.js, Vite, and modern web applications. Start building beautiful interfaces today.",
+    favicon: "https://shadcnstore.com/docs/logo.svg",
+    ogImage: "https://assets.shadcnstore.com/shadcnstore.com/brand/og-image.2400w.19d03d.png",
+    subtitle: "Premium Shadcn UI Blocks & Components for Modern Web Apps",
+    tags: [TAGS["ui-component"]],
+    url: "https://shadcnstore.com",
+  },
+  {
     title: "Shader Gradient",
     category: CATEGORIES.frontend,
     description: "Create beautiful moving gradients on Framer, Figma and React",

@@ -141,6 +141,18 @@ export const mediaLinks: Tool[] = [
     url: "https://fresh-folk.com/",
   },
   {
+    title: "GetIllustrations",
+    category: CATEGORIES.media,
+    description:
+      "170,000+ hand-drawn vector illustrations & icons, SVG, PNG & Adobe Illustrator. Free packs + All-Access from $195/yr. Commercial license, no attribution.",
+    favicon: "https://getillustrations.com/favicon/safari-pinned-tab.svg",
+    ogImage:
+      "https://getillustrations.com/images/Getillustrations-free-and-premium-vector-illustrations.png",
+    subtitle: "170K+ Vector Illustrations & Icons: SVG, PNG & AI",
+    tags: [TAGS.illustration],
+    url: "https://getillustrations.com/",
+  },
+  {
     title: "Haikei",
     category: CATEGORIES.media,
     description:

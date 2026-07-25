@@ -82,6 +82,18 @@ export const designLinks: Tool[] = [
     url: "https://animos.app/",
   },
   {
+    title: "Another Graphic",
+    category: CATEGORIES.design,
+    description:
+      "The visual technique library for visual technique lovers. Enjoy. Learn. Don't gatekeep.",
+    favicon: "https://anothergraphic.org/wp-content/uploads/2019/07/cropped-favicon-1-180x180.png",
+    ogImage:
+      "https://anothergraphic.org/wp-content/uploads/2019/07/AnotherGraphic-logo_1200_630.jpg",
+    subtitle: "Archive of graphic design focused on typographic treatment",
+    tags: [TAGS.inspiration],
+    url: "https://anothergraphic.org/",
+  },
+  {
     title: "Artkit",
     category: CATEGORIES.design,
     description: "A collection of creative, browser-based tools for images, motion, and graphics.",
@@ -470,6 +482,16 @@ export const designLinks: Tool[] = [
     url: "https://fontgauntlet.com/",
   },
   {
+    title: "DinPattern",
+    category: CATEGORIES.design,
+    description: "A design resource for seamless patterns, brushes and wordpress themes",
+    favicon:
+      "https://dinpattern.com/wp-content/uploads/2019/05/cropped-dinpattern-icon-180x180.png",
+    subtitle: "Free seamless patterns",
+    tags: [TAGS.patterns],
+    url: "https://dinpattern.com/",
+  },
+  {
     title: "Directory Mockups",
     category: CATEGORIES.design,
     description:
@@ -572,7 +594,7 @@ export const designLinks: Tool[] = [
       "Flectofy is a generative design tool in the **Design** category that creates transformed versions of text and images using preset templates. It enables users to apply stylistic alterations such as fattening text, mirroring content, or adding captions, along with translation options for text input. Flectofy fits into design workflows for generating custom graphic elements like organic-looking SVG shapes, patterns, and backgrounds, which can be exported in SVG or PNG formats. Pricing details are not specified, but it offers free access through a web-based interface.",
     ogImage:
       "https://cdn.sanity.io/images/nxwwhcgv/production/08e533e7d683cdefe3c2ad471596a7d0af3cc7cc-1920x1080.png?rect=0,36,1920,1008&w=1200&h=630&auto=format",
-    tags: [TAGS.pattern],
+    tags: [TAGS.patterns],
     url: "https://flectofy.flecto.io/",
   },
   {
@@ -629,6 +651,17 @@ export const designLinks: Tool[] = [
     subtitle: "Quality Fonts. Free.",
     tags: [TAGS.typography],
     url: "https://fontshare.com/",
+  },
+  {
+    title: "Fonts in Movies",
+    category: CATEGORIES.design,
+    description:
+      "Explore the fonts that bring iconic movie scenes to life. From sci-fi epics to timeless dramas, Fonts in Movies highlights the typography behind cinema's most memorable moments.",
+    favicon: "https://fontsinmovies.com/safari-pinned-tab.svg",
+    ogImage: "https://fontsinmovies.com/og.jpg",
+    subtitle: "Discover Iconic Typography in Cinema Classics",
+    tags: [TAGS.typography],
+    url: "https://fontsinmovies.com/",
   },
   {
     title: "Fonttrio",
@@ -1129,6 +1162,15 @@ export const designLinks: Tool[] = [
     url: "https://editor.pascal.app/",
   },
   {
+    title: "Pattern Club",
+    category: CATEGORIES.design,
+    description: "A collection of patterns, textures & visuals from designers & illustrators",
+    favicon: "https://patternclub.io/assets/images/apple-touch-icon.png?v=c5540109",
+    ogImage: "https://patternclub.io/assets/images/share.jpg?v=c5540109",
+    tags: [TAGS.patterns],
+    url: "https://patternclub.io/",
+  },
+  {
     title: "Penpot",
     author: "Penpot",
     category: CATEGORIES.design,
@@ -1471,6 +1513,13 @@ export const designLinks: Tool[] = [
     url: "https://toolfolio.com/",
   },
   {
+    title: "Transparent Textures",
+    category: CATEGORIES.design,
+    favicon: "https://www.transparenttextures.com/favicon.png",
+    tags: [TAGS.textures],
+    url: "https://www.transparenttextures.com/",
+  },
+  {
     title: "Typeface App",
     category: CATEGORIES.design,
     description:
@@ -1482,7 +1531,6 @@ export const designLinks: Tool[] = [
     title: "typo/graphic posters",
     category: CATEGORIES.design,
     description: "since 2008, a reference platform for typographic and graphic posters.",
-    // favicon: "https://bentogrids.com/favicon/icon-192x192.png",
     ogImage: "https://www.typographicposters.com/typographic-posters-new-website-2021-photo.jpg",
     tags: [TAGS.inspiration],
     url: "https://www.typographicposters.com/",

@@ -72,6 +72,13 @@ export const newLinks: Tool[] = [
   },
 
   {
+    title: "HOVERSTAT.ES",
+    category: CATEGORIES.dev,
+    description: "The home of alternative design, code and content on the world wide web.",
+    subtitle: "The home of alternative web-design.",
+    url: "https://www.hoverstat.es/",
+  },
+  {
     title: "JSON For You",
     category: CATEGORIES.dev,
     description:
