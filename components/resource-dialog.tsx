@@ -123,6 +123,7 @@ export function ResourceDialog({ tool }: ToolCardProps) {
             </div>
 
             <CardIcon
+              key={activeTool.url}
               url={activeTool.url!}
               alt={activeTool.title}
               className={activeTool.className}

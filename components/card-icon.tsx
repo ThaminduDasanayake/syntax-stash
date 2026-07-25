@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -7,20 +7,20 @@ function getFavicon(toolUrl: string, explicitFavicon?: string) {
     const url = new URL(toolUrl);
     const domain = url.hostname;
     const origin = url.origin;
+    const googleFallback = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
 
     const sources: string[] = [];
 
-    if (explicitFavicon) sources.push(explicitFavicon);
+    if (explicitFavicon) {
+      sources.push(explicitFavicon);
+      sources.push(googleFallback);
+    } else {
+      // High-reliability sources: Google service first to avoid 404 console errors
+      sources.push(googleFallback);
+      sources.push(`${origin}/favicon.ico`);
+    }
 
-    // Higher quality favicon sources first
-    sources.push(`${origin}/apple-touch-icon.png`);
-    sources.push(`${origin}/favicon.svg`);
-    sources.push(`${origin}/favicon.png`);
-    sources.push(`${origin}/favicon.ico`);
-
-    // Google fallback
-    sources.push(`https://www.google.com/s2/favicons?domain=${domain}&sz=128`);
-    return sources;
+    return Array.from(new Set(sources));
   } catch {
     return explicitFavicon ? [explicitFavicon] : [];
   }
@@ -39,6 +39,11 @@ export function CardIcon({
 }) {
   const sources = getFavicon(url, explicitFavicon);
   const [index, setIndex] = useState(0);
+
+  // Reset index when URL or explicitFavicon prop changes
+  useEffect(() => {
+    setIndex(0);
+  }, [url, explicitFavicon]);
 
   const src = sources[index];
 
@@ -62,3 +67,4 @@ export function CardIcon({
     </div>
   );
 }
+
