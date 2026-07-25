@@ -15,10 +15,15 @@ import { ToolCardProps } from "@/types";
 
 export function ResourceDialog({ tool }: ToolCardProps) {
   const [activeTool, setActiveTool] = useState(tool);
+  const [ogError, setOgError] = useState(false);
 
   useEffect(() => {
     setActiveTool(tool);
   }, [tool]);
+
+  useEffect(() => {
+    setOgError(false);
+  }, [activeTool]);
 
   const currentIndex = useMemo(() => {
     return resourceLinks.findIndex((r) => r.title === activeTool.title);
@@ -153,12 +158,13 @@ export function ResourceDialog({ tool }: ToolCardProps) {
         {/* Right Side */}
         <div className="modal-right">
           <div className="modal-content">
-            {activeTool.ogImage && (
+            {activeTool.ogImage && !ogError && (
               <img
                 src={activeTool.ogImage}
                 alt={activeTool.title}
                 className="h-auto w-full"
                 loading="lazy"
+                onError={() => setOgError(true)}
               />
             )}
 
