@@ -172,6 +172,14 @@ export const newLinks: Tool[] = [
     url: "https://meodai.github.io/poline/",
   },
   {
+    title: "Screen Sizes",
+    category: CATEGORIES.dev,
+    description: "A complete guide for Apple Displays, Icon Sizes, and more!",
+    favicon: "https://screensizes.app/favicon.svg",
+    ogImage: "https://www.screensizes.app/ogimage.png",
+    url: "https://screensizes.app/",
+  },
+  {
     title: "StackShare",
     category: CATEGORIES.dev,
     description:

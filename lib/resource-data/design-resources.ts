@@ -258,6 +258,17 @@ export const designLinks: Tool[] = [
     url: "https://colir.space/",
   },
   {
+    title: "Collletttivo · CLT",
+    category: CATEGORIES.design,
+    description:
+      "Collletttivo is an Open-Source type foundry and a network of people promoting the practice of type design through mutual exchange and collaboration.",
+    favicon:
+      "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%0A%20%20%3Ccircle%20cx%3D%228%22%20cy%3D%228%22%20r%3D%228%22%20fill%3D%22%23ec7038%22%2F%3E%0A%3C%2Fsvg%3E",
+    ogImage: "https://www.collletttivo.it/_og/d/c_Homepage,s_MV291URIJbzr-9Xy.png",
+    tags: [TAGS.typography],
+    url: "https://www.collletttivo.it/",
+  },
+  {
     title: "ColorFlow",
     category: CATEGORIES.design,
     description:
@@ -616,6 +627,17 @@ export const designLinks: Tool[] = [
       "Generate font size variables for a fluid type scale with CSS clamp. Grab the output CSS and drop it into any design system.",
     tags: [TAGS.typography],
     url: "https://www.fluid-type-scale.com/",
+  },
+  {
+    title: "Flyerwrk",
+    category: CATEGORIES.design,
+    description:
+      "Experience the fusion of art and design with our exclusive range of graphic objects and textures, tailored for the fearless designer.",
+    favicon: "https://framerusercontent.com/images/NG28mBEA3mZFaq7noxpfYoD9A4g.png",
+    ogImage: "https://framerusercontent.com/assets/U3HShuiSBc3Uj3AVXoyNACftTu4.png",
+    subtitle: "Graphic Assets For The Fearless Designer",
+    tags: [TAGS.graphics],
+    url: "https://www.flyerwrk.com/",
   },
   {
     title: "Fontastic Space",
@@ -1399,6 +1421,7 @@ export const designLinks: Tool[] = [
     title: "Shots",
     category: CATEGORIES.design,
     description: "Create Amazing Mockups",
+    favicon: "https://shots.so/image/favicon.png",
     ogImage: "https://shots.so/image/og-new.jpg?v=2",
     tags: [TAGS.mockup],
     url: "https://shots.so/",

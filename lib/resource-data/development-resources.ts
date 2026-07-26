@@ -5,6 +5,20 @@ import { TAGS } from "./tags";
 
 export const developmentLinks: Tool[] = [
   {
+    title: "10 Minute Mail",
+    author: "Devon Hillard",
+    category: CATEGORIES.dev,
+    description:
+      "Free temp mail that self-destructs in 10 minutes. The original temp email and disposable email service since 2006. No signup needed. Get your free temporary email address instantly.",
+    favicon:
+      "https://10minutemail.com/img/icons/apple-touch-icon-180x180-17053118f766d4b08f0abf1a090d3ac1.png",
+    ogImage: "https://10minutemail.com/img/10minutemail-og-image.jpg",
+    subtitle:
+      "Free Temp Mail & Temporary Email Service - 10 Minute Mail - Free Anonymous Temporary email",
+    tags: [TAGS.tool],
+    url: "https://10minutemail.com/",
+  },
+  {
     title: "10x",
     category: CATEGORIES.dev,
     description:
@@ -689,6 +703,16 @@ export const developmentLinks: Tool[] = [
     url: "https://squidfunk.github.io/mkdocs-material/",
   },
   {
+    title: "Mintlify",
+    category: CATEGORIES.dev,
+    description: "Self-updating documentation for startups, enterprises, and agents.",
+    favicon: "https://raw.githubusercontent.com/mintlify/starter/main/favicon.svg",
+    ogImage: "https://www.mintlify.com/_next/static/media/og.28576e75.png",
+    subtitle: "The Knowledge Platform Built for Agents",
+    tags: [TAGS.tool],
+    url: "https://www.mintlify.com/",
+  },
+  {
     title: "Mockaroo",
     category: CATEGORIES.dev,
     description:
@@ -1054,6 +1078,17 @@ export const developmentLinks: Tool[] = [
     url: "https://vercel.com/templates",
   },
   {
+    title: "Temp Mail",
+    category: CATEGORIES.dev,
+    description:
+      "Keep spam out of your mail and stay safe - just use a disposable temporary email address! Protect your personal email address from spam with Temp-mail",
+    favicon: "https://temp-mail.org/images/tm_mobile_icon@2x.png",
+    ogImage: "https://temp-mail.org/images/brand-logo.png",
+    subtitle: "Disposable Temporary Email",
+    tags: [TAGS.tool],
+    url: "https://temp-mail.org/",
+  },
+  {
     title: "Terraink",
     category: CATEGORIES.dev,
     description:
@@ -1165,6 +1200,16 @@ export const developmentLinks: Tool[] = [
     url: "https://typesense.org/",
   },
   {
+    title: "Unicorn Studio",
+    category: CATEGORIES.dev,
+    description:
+      "Create enchanting WebGL effects, motion, and interactivity — in minutes, not hours. Unicorn Studio makes WebGL easy for designers to embed in Framer, Webflow, or any website.",
+    ogImage: "https://www.unicorn.studio/images/ogg2.png",
+    subtitle: "No-code WebGL Tool",
+    tags: [TAGS.noCode, TAGS.tool],
+    url: "https://www.unicorn.studio/",
+  },
+  {
     title: "URL to Any",
     category: CATEGORIES.dev,
     description:
@@ -1242,6 +1287,19 @@ export const developmentLinks: Tool[] = [
     subtitle: "Grow your app on Autopilot",
     tags: [TAGS.tool],
     url: "https://winwinkit.com/",
+  },
+  {
+    title: "Wolfram|Alpha",
+    category: CATEGORIES.dev,
+    description:
+      "Compute answers using Wolfram's breakthrough technology & knowledgebase, relied on by millions of students & professionals. For math, science, nutrition, history, geography, engineering, mathematics, linguistics, sports, finance, music...",
+    favicon:
+      "https://www.wolframalpha.com/_next/static/images/favicon_b48d893b991ff67016124a4d51822e63.ico",
+    ogImage:
+      "https://www.wolframalpha.com/_next/static/images/share_9016222d6b2fadaacc58b484cb3edace.png",
+    subtitle: "Computational Intelligence",
+    tags: [TAGS.tool],
+    url: "https://www.wolframalpha.com/",
   },
   {
     title: "Workout Cool",

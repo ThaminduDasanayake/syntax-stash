@@ -33,6 +33,7 @@ export const TAGS = {
   markdown: "markdown",
   mockup: "mockup",
   newsletter: "newsletter",
+  noCode: "no-code",
   "open-source": "open-source",
   patterns: "patterns",
   pdf: "pdf",
