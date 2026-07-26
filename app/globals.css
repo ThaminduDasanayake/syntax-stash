@@ -688,7 +688,7 @@
 }
 
 @utility modal-top-actions {
-  @apply absolute top-[max(14px,env(safe-area-inset-top))] right-[max(14px,env(safe-area-inset-right))] z-10 flex items-center gap-5.5;
+  @apply xs:gap-5.5 absolute top-[max(14px,env(safe-area-inset-top))] right-[max(14px,env(safe-area-inset-right))] z-10 flex items-center gap-3;
 }
 
 @utility modal-body {
@@ -758,6 +758,14 @@
 
 @utility modal-section-body {
   @apply text-base leading-relaxed;
+}
+
+@utility modal-related-chips {
+  @apply xs:flex-wrap xs:gap-1.5 flex flex-col items-stretch gap-2;
+}
+
+@utility modal-related-chip {
+  @apply xs:inline-flex items-center justify-start gap-2 px-3.5 py-3 font-bold tracking-wider uppercase sm:px-3 sm:py-2;
 }
 
 @utility modal-link {

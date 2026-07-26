@@ -211,9 +211,9 @@ export function ResourceDialog({ tool }: ToolCardProps) {
 
             {/* Related Section */}
             {relatedResources.length > 0 && (
-              <div className="mt-12">
+              <div className="modal-related-chips">
                 <h4 className="text-mono-2xs text-c-green mb-4">RELATED</h4>
-                <div className="flex flex-wrap gap-3">
+                <div className="modal-related-chip">
                   {relatedResources.map((res, i) => {
                     const colors = ["bg-c-blue", "bg-c-green", "bg-c-orange", "bg-c-pink"];
                     const dotColor = colors[i % colors.length];
