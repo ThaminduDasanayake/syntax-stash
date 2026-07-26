@@ -684,7 +684,7 @@
 
 /* Resource Modal */
 @utility modal-panel {
-  @apply relative flex h-[calc(100vh-120px)]! max-h-[calc(100vh-80px)]! w-full! max-w-235! flex-col overflow-hidden border-2 p-0! shadow-[0_40px_80px_-20px_#00000059];
+  @apply relative flex h-[calc(100dvh-32px)] max-h-[100dvh-32px] w-full! max-w-235! flex-col overflow-hidden border-2 p-0! shadow-[0_40px_80px_-20px_#00000059] md:h-[calc(100vh-120px)]! md:max-h-[calc(100vh-80px)]!;
 }
 
 @utility modal-top-actions {
@@ -692,11 +692,11 @@
 }
 
 @utility modal-body {
-  @apply grid min-h-0 flex-1 grid-cols-[340px_1fr] overflow-hidden;
+  @apply grid min-h-0 flex-1 grid-cols-1 overflow-hidden md:grid-cols-[340px_1fr];
 }
 
 @utility modal-left {
-  @apply flex flex-col overflow-y-auto border-r-2 px-7 py-8;
+  @apply flex shrink-0 flex-col overflow-y-visible border-b-2 px-5 pt-5 pb-4 md:overflow-y-auto md:border-r-2 md:border-b-0 md:px-7 md:py-8;
 }
 
 @utility modal-cat-label {
@@ -724,11 +724,11 @@
 }
 
 @utility modal-description {
-  @apply flex-1 border-t border-t-current pt-2 leading-6.5 font-medium wrap-break-word opacity-90;
+  @apply flex-none border-t border-t-current pt-2 leading-6.5 font-medium wrap-break-word opacity-90 md:flex-1;
 }
 
 @utility modal-author {
-  @apply text-mono-2xs mt-auto pt-6 opacity-75;
+  @apply text-mono-2xs mt-auto pt-4 opacity-75 md:pt-6;
 }
 
 @utility modal-author-link {
@@ -740,7 +740,7 @@
 }
 
 @utility modal-content {
-  @apply min-h-0 flex-1 overflow-y-auto overscroll-contain px-8 pt-20 pb-5;
+  @apply min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pt-5 pb-3.5 md:px-8 md:pt-20 md:pb-5;
 }
 
 @utility modal-sections {
@@ -769,7 +769,7 @@
 }
 
 @utility modal-nav-row {
-  @apply border-t-line flex shrink-0 items-center justify-end gap-0 border-t px-4.5 pt-2.5 pb-3.5;
+  @apply border-t-line flex shrink-0 items-center justify-end gap-0 border-t px-5 pt-2.5 pb-3.5 md:px-4.5 md:pt-2.5 md:pb-3.5;
 }
 
 /* Tabs */
