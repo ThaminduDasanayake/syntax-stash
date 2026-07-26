@@ -803,6 +803,19 @@ export const frontendLinks: Tool[] = [
     url: "https://miromiro.app/",
   },
   {
+    title: "Morphin",
+    author: "Morphin",
+    category: CATEGORIES.frontend,
+    className: "bg-foreground border-paper",
+    description:
+      "Build premium React interfaces with production-ready animated components, micro-interactions and motion UI patterns. Ship polished UI 10x faster.",
+    favicon: "https://morphin.dev/logo.svg",
+    ogImage: "https://morphin.dev/twitter-image?eaa549bb27ece1c0",
+    subtitle: "Premium Animated React Components & Motion UI Library",
+    tags: [TAGS["ui-component"]],
+    url: "https://morphin.dev/",
+  },
+  {
     title: "Motion",
     category: CATEGORIES.frontend,
     description:
@@ -1055,6 +1068,18 @@ export const frontendLinks: Tool[] = [
     subtitle: "Premium Shadcn UI Blocks & Components for Modern Web Apps",
     tags: [TAGS["ui-component"]],
     url: "https://shadcnstore.com",
+  },
+  {
+    title: "ShadCN Themer",
+    author: "Mike Tromba",
+    category: CATEGORIES.frontend,
+    description:
+      "Discover and create beautiful themes for shadcn/ui. Browse thousands of community-made themes, customize colors with OKLCH picker, select Google Fonts, adjust border radius, and export themes instantly for your Next.js projects.",
+    favicon: "https://shadcnthemer.com/favicon.ico",
+    ogImage: "https://shadcnthemer.com/og-image.png",
+    subtitle: "ShadCN Themes - Create Beautiful Themes for shadcn/ui",
+    tags: [TAGS["ui-component"]],
+    url: "https://shadcnthemer.com/",
   },
   {
     title: "Shader Gradient",

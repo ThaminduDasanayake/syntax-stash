@@ -46,6 +46,17 @@ export const newLinks: Tool[] = [
     url: "https://contrauikit.com/",
   },
   {
+    title: "Contrast Report",
+    author: "Adam Chaboryk",
+    category: CATEGORIES.dev,
+    description: "Straightforward colour contrast checker with Picture-in-picture (PiP) mode.",
+    favicon:
+      "https://raw.githubusercontent.com/adamchaboryk/contrast.report/main/public/icons/icon-384x384.webp",
+    ogImage: "https://contrast.report/og-contrast-report.png",
+    subtitle: "WCAG Colour Contrast Checker",
+    url: "https://contrast.report/",
+  },
+  {
     title: "DesignMeter",
     category: CATEGORIES.dev,
     description:
@@ -172,6 +183,16 @@ export const newLinks: Tool[] = [
     url: "https://meodai.github.io/poline/",
   },
   {
+    title: "ScreensDesign",
+    category: CATEGORIES.dev,
+    description:
+      "Research real iOS app screens, onboarding flows, paywalls, and revenue-backed patterns, then generate app screens from proven mobile design examples.",
+    favicon: "https://screensdesign.com/img/favicon.svg",
+    ogImage: "https://screensdesign.com/img/sd_preview_v2.jpg?v=2",
+    subtitle: "App Design Library & AI Screen Generator",
+    url: "https://screensdesign.com/",
+  },
+  {
     title: "Screen Sizes",
     category: CATEGORIES.dev,
     description: "A complete guide for Apple Displays, Icon Sizes, and more!",
@@ -246,6 +267,16 @@ export const newLinks: Tool[] = [
     ogImage: "https://www.usetools.design/og-image.webp",
     subtitle: "Curated Design Tools & Resources",
     url: "https://www.usetools.design/",
+  },
+  {
+    title: "Varchive",
+    author: "Cameron Moll LLC",
+    category: CATEGORIES.dev,
+    description:
+      "Varchive is a digest of artificial intelligence news biased toward design, curated by Cameron Moll.",
+    favicon: "https://varchive.ai/favicons/apple-touch-icon.png",
+    ogImage: "https://varchive.ai/social-og.png",
+    url: "https://varchive.ai/",
   },
   {
     title: "zzzz",

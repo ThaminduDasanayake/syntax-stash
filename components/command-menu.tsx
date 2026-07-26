@@ -20,7 +20,7 @@ import { resourceLinks } from "@/lib/resource-data";
 import { internalTools } from "@/lib/tools-data";
 import { CommandMenuProps, Tool } from "@/types";
 
-function truncateWords(text: string, maxWords: number = 15) {
+function truncateWords(text: string = "", maxWords: number = 15) {
   if (!text) return "";
   const words = text.split(/\s+/);
   if (words.length > maxWords) {
@@ -113,7 +113,7 @@ export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
               return (
                 <CommandItem
                   key={tool.slug}
-                  value={`${tool.title} ${tool.description}`}
+                  value={`${tool.title} ${tool.description ?? ""}`}
                   onSelect={() => handleSelect(tool)}
                 >
                   {/* Structural Level Indentation Logic */}
@@ -145,7 +145,7 @@ export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
             {resourceLinks.map((tool) => (
               <CommandItem
                 key={tool.url}
-                value={`${tool.title} ${tool.description} ${tool.category}`}
+                value={`${tool.title} ${tool.description ?? ""} ${tool.category}`}
                 onSelect={() => handleSelect(tool)}
               >
                 {/* Structural Level Indentation Logic */}
@@ -158,7 +158,7 @@ export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
                     url={tool.url!}
                     alt={tool.title}
                     explicitFavicon={tool.favicon}
-                    className="border-border bg-background flex h-10 w-10 shrink-0 items-center justify-center border-2! p-[2px]!"
+                    className="border-border bg-background flex h-10 w-10 shrink-0 items-center justify-center border-2! p-0.5!"
                   />
                 )}
                 <div className="ml-1 flex min-w-0 flex-1 flex-col">

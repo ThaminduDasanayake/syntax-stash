@@ -1075,6 +1075,18 @@ export const designLinks: Tool[] = [
     url: "https://studio.morflax.com/",
   },
   {
+    title: "Motion Folios",
+    category: CATEGORIES.design,
+    className: "bg-foreground border-paper",
+    description:
+      "Discover a curated collection of motion design portfolios and studios. Explore creativity, animation craft, and inspiring motion work worldwide.",
+    favicon: "https://global.divhunt.com/5b25794ad4a46784aa03244df4a7a28d_5809.png",
+    ogImage: "https://global.divhunt.com/c120b5b1d3a395c6372577c6935d807f_25514.png",
+    subtitle: "Curated Motion Design Portfolios.",
+    tags: [TAGS.inspiration],
+    url: "https://motionfolios.com/",
+  },
+  {
     title: "myfffonts",
     author: "Julien Bidoret",
     category: CATEGORIES.design,
@@ -1154,6 +1166,8 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "Explore 100,000+ recorded user flows, app screens, and UI patterns from Airbnb, Uber, Netflix & more. Save hours on UX research with Page Flows.",
+    favicon: "https://i.pinimg.com/280x280_RS/ef/75/00/ef75008a75dc746b39cdbbfafdf7a511.jpg",
+    ogImage: "https://pageflows.com/static/website/images/pageflowssocial.png",
     subtitle: "UI/UX Design Inspiration & User Flows from Top Apps",
     tags: [TAGS.inspiration],
     url: "https://pageflows.com/",

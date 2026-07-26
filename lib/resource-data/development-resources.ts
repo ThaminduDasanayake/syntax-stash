@@ -148,6 +148,19 @@ export const developmentLinks: Tool[] = [
     url: "https://www.bored.com/",
   },
   {
+    title: "Browserless",
+    category: CATEGORIES.dev,
+    className: "bg-foreground border-paper",
+    description:
+      "Give your AI agents a real cloud browser that won't crash or get blocked. Connect over MCP, Puppeteer, or Playwright with stealth and Authenticated Profiles built in.",
+    favicon: "https://www.browserless.io/favicon.svg",
+    ogImage:
+      "https://cdn.prod.website-files.com/65cb4923a3a6b08fe1124094/6601a7a5b8508b353addd84f_social-preview.jpg",
+    subtitle: "The Browser Your AI Agents Run On",
+    tags: [TAGS.backend],
+    url: "https://www.browserless.io/",
+  },
+  {
     title: "Bundlephobia",
     category: CATEGORIES.dev,
     description:
@@ -548,6 +561,18 @@ export const developmentLinks: Tool[] = [
     description: "Building bigger, faster, more reliable websites.",
     tags: [TAGS.development, TAGS.education],
     url: "https://highscalability.com/",
+  },
+  {
+    title: "Hoppscotch",
+    category: CATEGORIES.dev,
+    className: "bg-foreground border-paper",
+    description:
+      "Hoppscotch is an open-source API development ecosystem that helps you create and test your API requests saving precious time in development.",
+    favicon: "https://hoppscotch.com/images/logo.svg",
+    ogImage: "https://hoppscotch.com/banner.png",
+    subtitle: "Make better APIs",
+    tags: [TAGS.backend],
+    url: "https://hoppscotch.com/",
   },
   {
     title: "Hoppscotch",
@@ -955,6 +980,17 @@ export const developmentLinks: Tool[] = [
     description: "A dev-tool that aids faster and precise responsive web development.",
     tags: [TAGS.development],
     url: "https://responsively.app/",
+  },
+  {
+    title: "ScrapingBee",
+    category: CATEGORIES.dev,
+    description:
+      "ScrapingBee is the best web scraping API that handles proxies and headless browsers for you — so you can focus on extracting the data you need.",
+    favicon: "https://www.scrapingbee.com/images/favico.svg",
+    ogImage: "https://www.scrapingbee.com/images/cover.jpg",
+    subtitle: "The Best Web Scraping API",
+    tags: [TAGS.backend],
+    url: "https://www.scrapingbee.com/",
   },
   {
     title: "Scrapling",
