@@ -684,7 +684,7 @@
 
 /* Resource Modal */
 @utility modal-panel {
-  @apply relative flex h-[calc(100dvh-32px)] max-h-[100dvh-32px] w-full! max-w-235! flex-col overflow-hidden border-2 p-0! shadow-[0_40px_80px_-20px_#00000059] md:h-[calc(100vh-120px)]! md:max-h-[calc(100vh-80px)]!;
+  @apply relative flex h-[calc(100dvh-32px)] max-h-[100dvh-32px] w-[calc(100vw-2rem)]! max-w-235! flex-col overflow-hidden border-2 p-0! shadow-[0_40px_80px_-20px_#00000059] md:h-[calc(100vh-120px)]! md:max-h-[calc(100vh-80px)]!;
 }
 
 @utility modal-top-actions {
