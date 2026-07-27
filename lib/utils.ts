@@ -66,7 +66,9 @@ export function getResourceColorByKey(key: string): string {
   return RESOURCE_COLOR_MAP[key as ResourceCategoryKey] || "bg-[var(--paper)] text-[var(--ink)]";
 }
 
-const RESOURCE_THEME_MAP: Record<ResourceCategoryKey, "orange" | "blue" | "pink" | "green"> = {
+export type ResourceTheme = "orange" | "blue" | "pink" | "green";
+
+const RESOURCE_THEME_MAP: Record<ResourceCategoryKey, ResourceTheme> = {
   ai: "orange",
   data: "blue",
   design: "pink",
@@ -76,9 +78,28 @@ const RESOURCE_THEME_MAP: Record<ResourceCategoryKey, "orange" | "blue" | "pink"
   media: "pink",
 };
 
-export function getResourceThemeByKey(key: string): "orange" | "blue" | "pink" | "green" {
+export function getResourceThemeByKey(key: string): ResourceTheme {
   return RESOURCE_THEME_MAP[key as ResourceCategoryKey] || "blue";
 }
+
+export const RESOURCE_THEME_STYLES: Record<ResourceTheme, { chip: string; dot: string }> = {
+  orange: {
+    chip: "hover:bg-c-orange hover:text-ink",
+    dot: "bg-c-orange border-orange-deep",
+  },
+  blue: {
+    chip: "hover:bg-c-blue hover:text-paper",
+    dot: "bg-c-blue border-blue-deep",
+  },
+  pink: {
+    chip: "hover:bg-c-pink hover:text-ink",
+    dot: "bg-c-pink border-pink-deep",
+  },
+  green: {
+    chip: "hover:bg-c-green hover:text-ink",
+    dot: "bg-c-green border-green-deep",
+  },
+};
 
 // "bg-c-yellow text-ink",
 // "bg-c-purple text-paper",

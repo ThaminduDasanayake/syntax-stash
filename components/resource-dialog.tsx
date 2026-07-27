@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
 import { CardIcon } from "@/components/card-icon";
-import { DotButton } from "@/components/dot-button";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
@@ -15,6 +14,7 @@ import {
   getResourceColorByKey,
   getResourceKeyFromValue,
   getResourceThemeByKey,
+  RESOURCE_THEME_STYLES,
 } from "@/lib/utils";
 import { ToolCardProps } from "@/types";
 
@@ -197,15 +197,16 @@ export function ResourceDialog({ tool }: ToolCardProps) {
                   {authorResources.map((res) => {
                     const key = getResourceKeyFromValue(res.category);
                     const theme = getResourceThemeByKey(key);
+                    const styles = RESOURCE_THEME_STYLES[theme];
                     return (
-                      <DotButton
+                      <button
                         key={res.title}
-                        isActive={false}
-                        theme={theme}
-                        label={res.title}
-                        className=""
                         onClick={() => setActiveTool(res)}
-                      />
+                        className={cn("modal-related-chip", styles.chip)}
+                      >
+                        <span className={cn("modal-chip-dot", styles.dot)} />
+                        {res.title}
+                      </button>
                     );
                   })}
                 </div>
@@ -220,22 +221,16 @@ export function ResourceDialog({ tool }: ToolCardProps) {
                   {relatedResources.map((res) => {
                     const key = getResourceKeyFromValue(res.category);
                     const theme = getResourceThemeByKey(key);
+                    const styles = RESOURCE_THEME_STYLES[theme];
                     return (
                       <button
-                        key={res.url}
+                        key={res.url || res.title}
                         onClick={() => setActiveTool(res)}
-                        className="modal-related-chip"
+                        className={cn("modal-related-chip", styles.chip)}
                       >
-                        <span className={cn("modal-chip-dot", theme)}></span>
+                        <span className={cn("modal-chip-dot", styles.dot)} />
                         {res.title}
                       </button>
-                      // <DotButton
-                      //   key={res.url || res.title}
-                      //   isActive={false}
-                      //   theme={theme}
-                      //   label={res.title}
-                      //   onClick={() => setActiveTool(res)}
-                      // />
                     );
                   })}
                 </div>
