@@ -357,6 +357,17 @@ export const developmentLinks: Tool[] = [
     url: "https://devhints.io/",
   },
   {
+    title: "Dev Tools",
+    author: "Hitarth Shah",
+    category: CATEGORIES.dev,
+    description:
+      "Free online developer tools including JSON viewer, Base64 converter, UUID generator, JWT decoder, and more. All tools work offline for privacy and speed. No registration required.",
+    favicon: "https://dev-tool.dev/favicon.ico",
+    subtitle: "Your Ultimate Developer Toolkit | Free Online Tools",
+    tags: [TAGS.tool],
+    url: "https://dev-tool.dev/",
+  },
+  {
     title: "Dev Utilities",
     author: "Jam",
     category: CATEGORIES.dev,
@@ -628,6 +639,14 @@ export const developmentLinks: Tool[] = [
     url: "https://immich.app/",
   },
   {
+    title: "InputOutput",
+    category: CATEGORIES.dev,
+    description: "Simple web tools with no popups, no cookies, no tracking.",
+    favicon: "https://inputoutput.dev/favicon.ico",
+    tags: [TAGS.tool],
+    url: "https://inputoutput.dev/",
+  },
+  {
     title: "IT Tools - Handy online tools for developers",
     category: CATEGORIES.dev,
     description:
@@ -700,6 +719,17 @@ export const developmentLinks: Tool[] = [
     subtitle: "Curated Mac Discoveries",
     tags: [TAGS.development, TAGS.inspiration],
     url: "https://macfolio.com/",
+  },
+  {
+    title: "Maily",
+    category: CATEGORIES.dev,
+    description:
+      "Craft beautiful emails effortlessly with Maily, the powerful email editor that ensures impeccable communication across all major clients.",
+    favicon: "https://maily.to/brand/logo.svg",
+    ogImage: "https://maily.to/og-image.png",
+    subtitle: "Open-source editor for crafting emails",
+    tags: [TAGS.tool],
+    url: "https://maily.to/",
   },
   {
     title: "MAKE MY DRIVE FUN",

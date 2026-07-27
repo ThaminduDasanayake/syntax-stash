@@ -205,6 +205,17 @@ export const mediaLinks: Tool[] = [
     url: "https://www.highlights.design/",
   },
   {
+    title: "Iconly",
+    category: CATEGORIES.media,
+    description:
+      "Convert SVG strokes to fills and make your icons webfont compatible. Clean up and reduce the size of your SVG files. Free online SVG compressor & minifier. Extract SVG icons from SVG/TTF/EOT icon font files. SVG font to SVG icons converter.",
+    favicon: "https://iconly.io/apple-touch-icon.png",
+    ogImage: "https://iconly.io/output/png/open-graph.png",
+    subtitle: "Icon Font Generator",
+    tags: [TAGS.svg],
+    url: "https://iconly.io/",
+  },
+  {
     title: "Icoon",
     category: CATEGORIES.media,
     description:
@@ -416,6 +427,17 @@ export const mediaLinks: Tool[] = [
     url: "https://yqnn.github.io/svg-path-editor/",
   },
   {
+    title: "SVG Path Visualizer",
+    author: "Mathieu Dutour",
+    category: CATEGORIES.media,
+    description:
+      "Enter an SVG path data (the string inside the `d` attribute) to visualize it and discover all its different commands.",
+    favicon: "https://svg-path-visualizer.netlify.app/logo512.png",
+    ogImage: "https://svg-path-visualizer.netlify.app/og-image.png",
+    tags: [TAGS.svg],
+    url: "https://svg-path-visualizer.netlify.app/",
+  },
+  {
     title: "SVG Pattern Builder",
     category: CATEGORIES.media,
     description:
@@ -526,6 +548,15 @@ export const mediaLinks: Tool[] = [
     subtitle: "Convert SVGs to 3D",
     tags: [TAGS.svg, TAGS["3D"]],
     url: "https://vecto3d.app/",
+  },
+  {
+    title: "Vivus Instant",
+    category: CATEGORIES.media,
+    description: "Inline SVG Drawing Animation with CSS",
+    favicon: "https://maxwellito.github.io/vivus-instant/assets/vivus_instant_logo.svg",
+    ogImage: "https://maxwellito.github.io/vivus-instant/assets/vivus_instant_logo_loop.svg",
+    tags: [TAGS.animation, TAGS.svg],
+    url: "https://maxwellito.github.io/vivus-instant/",
   },
   {
     title: "wannathis.one",

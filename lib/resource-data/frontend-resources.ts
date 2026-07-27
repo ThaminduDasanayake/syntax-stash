@@ -196,6 +196,17 @@ export const frontendLinks: Tool[] = [
     url: "https://codepen.io/",
   },
   {
+    title: "Colorffy",
+    category: CATEGORIES.frontend,
+    description:
+      "Create beautiful color schemes, dynamic gradients, and custom themes with Colorffy—the ultimate CSS color palette generator and designer toolkit suite.",
+    favicon: "https://colorffy.com/icon-pwa.svg",
+    ogImage: "https://colorffy.com/seo/seo-home.png",
+    subtitle: "Create Beautiful CSS Color Palettes & UI Themes",
+    tags: [TAGS.color],
+    url: "https://colorffy.com/",
+  },
+  {
     title: "Componentry",
     category: CATEGORIES.frontend,
     description:
@@ -623,6 +634,16 @@ export const frontendLinks: Tool[] = [
     url: "https://impeccable.style/",
   },
   {
+    title: "Indie UI",
+    category: CATEGORIES.frontend,
+    description:
+      "Make your website stand out with minimal effort. Built with Reactjs, shadcn and Framer Motion for animation.",
+    favicon: "https://ui.indie-starter.dev/favicon.ico",
+    ogImage: "https://ui.indie-starter.dev/opengraph-image.jpg?2c560e418071e952",
+    tags: [TAGS["ui-component"]],
+    url: "https://ui.indie-starter.dev/",
+  },
+  {
     title: "Intent UI",
     category: CATEGORIES.frontend,
     description:
@@ -675,6 +696,16 @@ export const frontendLinks: Tool[] = [
     subtitle: "Modern SVG Gauges",
     tags: [TAGS["ui-component"]],
     url: "https://toorshia.github.io/justgage/",
+  },
+  {
+    title: "Kibo UI",
+    category: CATEGORIES.frontend,
+    description:
+      "Kibo UI is a custom registry of composable, accessible and open source components designed for use with shadcn/ui.",
+    favicon: "https://www.kibo-ui.com/apple-icon.png?apple-icon.78308315.png",
+    ogImage: "https://www.kibo-ui.com/opengraph-image.jpg?opengraph-image.408bd8df.jpg",
+    tags: [TAGS["ui-component"]],
+    url: "https://www.kibo-ui.com/",
   },
   {
     title: "Kokonut UI",
@@ -1291,6 +1322,17 @@ export const frontendLinks: Tool[] = [
       "Customize theme for shadcn/ui with tweakcn's interactive editor. Supports Tailwind CSS v4, Shadcn UI, and custom styles. Modify properties, preview changes, and get the code in real time.",
     tags: [TAGS["ui-component"]],
     url: "https://tweakcn.com/",
+  },
+  {
+    title: "Tinte",
+    author: "Railly Hugo",
+    category: CATEGORIES.frontend,
+    description:
+      "Agent-native design system infrastructure for shadcn/ui. 13 semantic OKLCH tokens compile to presets, VS Code themes, terminal configs, and 19+ formats. Install with one command via shadcn CLI v4. 500+ presets, AI generation, agent skill included.",
+    favicon: "https://www.tinte.dev/icons/favicon-192x192.png",
+    subtitle: "Agent-Native Design System Infrastructure",
+    tags: [TAGS["ui-component"]],
+    url: "https://www.tinte.dev/",
   },
   {
     title: "tldraw SDK",
