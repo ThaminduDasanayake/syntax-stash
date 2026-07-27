@@ -212,6 +212,8 @@ export const newLinks: Tool[] = [
     author: "Kane Wang",
     category: CATEGORIES.dev,
     description: "JSX to pixels in Rust. Node, Workers, browser. No headless Chrome.",
+    ogImage:
+      "https://raw.githubusercontent.com/kane50613/takumi/master/example/twitter-images/output/og-image.png",
     subtitle: "Render JSX to images. Skip the browser.",
     url: "https://takumi.kane.tw/",
   },
