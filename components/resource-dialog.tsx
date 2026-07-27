@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
 import { CardIcon } from "@/components/card-icon";
+import { DotButton } from "@/components/dot-button";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
@@ -211,21 +212,30 @@ export function ResourceDialog({ tool }: ToolCardProps) {
 
             {/* Related Section */}
             {relatedResources.length > 0 && (
-              <div className="modal-related-chips">
-                <h4 className="text-mono-2xs text-c-green mb-4">RELATED</h4>
-                <div className="modal-related-chip">
+              <div>
+                <span className="modal-related-label">Related</span>
+                <div className="modal-related-chips">
                   {relatedResources.map((res, i) => {
                     const colors = ["bg-c-blue", "bg-c-green", "bg-c-orange", "bg-c-pink"];
-                    const dotColor = colors[i % colors.length];
+                    // const dotColor = colors[i % colors.length];
+                    // const isActive = activeCategory === res.category;
                     return (
-                      <div
+                      <DotButton
                         key={res.url}
+                        isActive={false}
+                        index={i}
+                        label={res.title}
                         onClick={() => setActiveTool(res)}
-                        className="border-ink text-mono-xs bg-paper flex cursor-pointer items-center gap-2 border px-3 py-2 font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-transform hover:-translate-y-0.5"
-                      >
-                        <span className={`h-2 w-2 rounded-full ${dotColor}`}></span>
-                        {res.title}
-                      </div>
+                      />
+                      // <div
+                      //   key={res.url}
+                      //   onClick={() => setActiveTool(res)}
+                      //   className="model-related-chip"
+                      //   // className="border-ink text-mono-xs bg-paper flex cursor-pointer items-center gap-2 border px-3 py-2 font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-transform hover:-translate-y-0.5"
+                      // >
+                      //   <span className={cn("modal-chip-dot", dotColor)}></span>
+                      //   {res.title}
+                      // </div>
                     );
                   })}
                 </div>
