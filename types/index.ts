@@ -6,7 +6,7 @@ export type Tool = {
   category: string;
   className?: string;
   description?: string;
-  details?: { title: string; content: string }[];
+  // details?: { title: string; content: string }[];
   favicon?: string;
   highlight?: string;
   icon?: IconName;

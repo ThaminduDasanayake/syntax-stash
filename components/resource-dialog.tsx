@@ -188,12 +188,6 @@ export function ResourceDialog({ tool }: ToolCardProps) {
             </div>
 
             <div className="modal-sections">
-              {activeTool.details?.map(({ title, content }, index) => (
-                <div key={index} className="modal-section">
-                  <h3 className="modal-section-heading">{title}</h3>
-                  <p className="modal-section-body">{content}</p>
-                </div>
-              ))}
               <div className="flex gap-2">
                 {activeTool.tags?.map((tag) => (
                   <div key={tag} className="text-mono-2xs border px-1 py-0.5 hover:shadow-sm">

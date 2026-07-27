@@ -238,18 +238,6 @@ export const aiLinks: Tool[] = [
     category: CATEGORIES.ai,
     description:
       "Low-code AI builder for agentic and RAG applications. Build AI applications with ease",
-    details: [
-      {
-        title: "IN THE AGE OF AI",
-        content:
-          "Building custom ChatGPT-like bots and AI workflows typically requires heavy Python scripting (LangChain/LlamaIndex). Langflow reduces this to a visual node-based experience, drastically speeding up prototyping and deployment for teams.",
-      },
-      {
-        title: "WHAT IT IS",
-        content:
-          "A visual framework for building multi-agent and RAG applications. It’s open-source and provides a drag-and-drop UI to compose LLMs, vector stores, and prompt templates easily.",
-      },
-    ],
     related: ["Dify", "OpenHands"],
     tags: [TAGS.agents, TAGS.builder, TAGS.rag, TAGS["low-code"]],
     url: "https://www.langflow.org/",
@@ -360,18 +348,6 @@ export const aiLinks: Tool[] = [
     category: CATEGORIES.ai,
     description:
       "Run AI on your own terms. Connect any model, extend with code, protect what matters—without compromise.",
-    details: [
-      {
-        title: "PRIVACY FOCUS",
-        content:
-          "By self-hosting your AI stack, no corporate entity can use your chats for training data. Your local documents and conversations remain strictly on your own hardware.",
-      },
-      {
-        title: "WHY USE THIS",
-        content:
-          "If you want the ChatGPT Plus experience but fully offline or pointing to your own local models (like Llama 3 via Ollama), this is the definitive UI. It supports multiple users, RAG document uploading, and full API integrations.",
-      },
-    ],
     related: ["ollama/ollama", "Unstructured - Unstructured Data Platform for GenAI"],
     subtitle: "Self-Hosted AI Platform",
     tags: [TAGS.llm, TAGS.platform, TAGS.selfHosted, TAGS.ui],
