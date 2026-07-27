@@ -15,6 +15,19 @@ export const designLinks: Tool[] = [
     url: "https://60fps.design/",
   },
   {
+    title: "404s",
+    category: CATEGORIES.design,
+    description:
+      "Where dead ends become creative opportunities. Find inspiration for your next 404 page design with our curated collection of error pages that transform user frustration into delightful experiences. Fresh ideas for designers who refuse to let a 404 be boring. Here for all those lost pages waiting to be found.",
+    favicon:
+      "https://cdn.prod.website-files.com/65ba70a4bb6f912baf009423/65bc1ed89a6f1dd0c60f93c4_Frame%203.png",
+    ogImage:
+      "https://cdn.prod.website-files.com/65ba70a4bb6f912baf009423/6899c6b37147b1d3587301c5_2533.webp",
+    subtitle: "A Curated Gallery of Creative Error Page Designs",
+    tags: [TAGS.inspiration, TAGS.ui],
+    url: "https://www.404s.design/",
+  },
+  {
     title: "[ graph ] ~~> [ easy ]",
     category: CATEGORIES.design,
     description: "Convert Graph::Easy and DOT notation to ASCII art, box art, and more.",
@@ -1137,6 +1150,17 @@ export const designLinks: Tool[] = [
     url: "https://www.nudges.fyi/",
   },
   {
+    title: "OGFolio",
+    category: CATEGORIES.design,
+    description:
+      "A curated library of the best Open Graph images from around the web. Get inspired for your next OG image.",
+    favicon: "https://www.ogfolio.com/icon.png?icon.3cx16b835loqr.png",
+    ogImage: "https://ogfolio.com/og-image.jpg",
+    subtitle: "Curated Library of Open Graph Images",
+    tags: [TAGS.inspiration, TAGS.ui],
+    url: "https://www.ogfolio.com/",
+  },
+  {
     title: "Omma",
     category: CATEGORIES.design,
     description: "Build interactive experiences, websites, 3d, and apps using natural language.",
@@ -1179,6 +1203,17 @@ export const designLinks: Tool[] = [
       "Free color tool for creatives and color lovers. Create color palettes and preview them on UI/UX, Illustrations, Web, Apps, Branding and other designs.",
     tags: [TAGS.color],
     url: "https://palettemaker.com/",
+  },
+  {
+    title: "Paletton",
+    category: CATEGORIES.design,
+    description:
+      "In love with colors, since 2002. A designer tool for creating color combinations that work together well. Formerly known as Color Scheme Designer. Use the color wheel to create great color palettes.",
+    favicon: "https://paletton.com/img/favicon-128.png",
+    ogImage: "https://paletton.com/img/paletton-preview-20140414.png",
+    subtitle: "The Color Scheme Designer",
+    tags: [TAGS.color],
+    url: "https://paletton.com/",
   },
   {
     title: "PaperAnimator.com",
@@ -1650,6 +1685,24 @@ export const designLinks: Tool[] = [
       "A dialog overlay that interrupts the current flow to capture attention and require an explicit action before returning to the main interface.",
     tags: [TAGS.design, TAGS.education],
     url: "https://ux-dictionary.vercel.app/",
+  },
+  {
+    title: "Velvetyne",
+    category: CATEGORIES.design,
+    description: "Libre fonts for everyone",
+    favicon: "https://velvetyne.fr/site/templates//img/favicon.svg",
+    ogImage: "https://velvetyne.fr/site/templates/img/og.gif",
+    tags: [TAGS.typography],
+    url: "https://velvetyne.fr/",
+  },
+  {
+    title: "Viewport UI",
+    category: CATEGORIES.design,
+    description: "UI curated experiences for you inspiration.",
+    favicon: "https://pbs.twimg.com/profile_images/1704142404859707393/5FOwwiF4_400x400.jpg",
+    ogImage: "https://viewport-ui.design/images/meta-image.jpg",
+    tags: [TAGS.design, TAGS.inspiration, TAGS.ui],
+    url: "https://viewport-ui.design/",
   },
   {
     title: "Visual Journal",

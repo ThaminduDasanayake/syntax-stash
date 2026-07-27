@@ -205,6 +205,17 @@ export const mediaLinks: Tool[] = [
     url: "https://www.highlights.design/",
   },
   {
+    title: "Icoon",
+    category: CATEGORIES.media,
+    description:
+      "Explore 3D icons, illustrations, images, and more AI-generated creative assets. Speed up your design process with ready-made, high-quality assets for your website, app, landing page, or print.",
+    favicon: "https://framerusercontent.com/images/0kGFrcvOz1dn6LDsbAi3cfzxSk.webp",
+    ogImage: "https://framerusercontent.com/images/8R6ihoS2suE4HJyi8h0sYg06lA.jpg",
+    subtitle: "3D Icon library",
+    tags: [TAGS.illustration, TAGS["3D"]],
+    url: "https://www.icoon.co/",
+  },
+  {
     title: "illlustrations",
     author: "Vijay Verma",
     category: CATEGORIES.media,
@@ -322,6 +333,16 @@ export const mediaLinks: Tool[] = [
     subtitle: "SVG Collection (1000+ files)",
     tags: [TAGS.illustration, TAGS.svg],
     url: "https://illustrations.run/scribbles-mix/",
+  },
+  {
+    title: "SketchValley",
+    category: CATEGORIES.media,
+    description:
+      "1,000+ free SVG & PNG illustrations for commercial use. Flat, 3D, hand-drawn & minimal styles. No attribution, no signup — download instantly for websites, apps & decks.",
+    favicon: "https://sketchvalley.com/uploads/logo.svg",
+    subtitle: "Free Illustrations — No Attribution Required",
+    tags: [TAGS.illustration],
+    url: "https://sketchvalley.com/",
   },
   {
     title: "Storytale",

@@ -14,6 +14,7 @@ export const TAGS = {
   data: "data",
   "data-viz": "data-viz",
   design: "design",
+  designAssets: "design assets",
   development: "development",
   education: "education",
   git: "git",
