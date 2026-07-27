@@ -48,6 +48,8 @@ export function ResourceDialog({ tool }: ToolCardProps) {
 
   const key = getResourceKeyFromValue(activeTool.category);
   const colorClasses = getResourceColorByKey(key);
+  const activeTheme = getResourceThemeByKey(key);
+  const activeThemeStyles = RESOURCE_THEME_STYLES[activeTheme];
 
   const authorResources = useMemo(() => {
     if (!activeTool.author) return [];
@@ -176,7 +178,7 @@ export function ResourceDialog({ tool }: ToolCardProps) {
             )}
 
             <div className="modal-link">
-              <span className="modal-section-heading">Resource UrL</span>
+              <span className={cn("modal-heading", activeThemeStyles.label)}>Resource UrL</span>
               <a
                 href={activeTool.url}
                 target="_blank"
@@ -200,7 +202,9 @@ export function ResourceDialog({ tool }: ToolCardProps) {
             {/* Author Resources Section */}
             {authorResources.length > 0 && (
               <div className="mb-5.5">
-                <span className="modal-related-label">More by {activeTool.author}</span>
+                <span className={cn("modal-heading", activeThemeStyles.label)}>
+                  More by {activeTool.author}
+                </span>
                 <div className="modal-related-chips">
                   {authorResources.map((res) => {
                     const key = getResourceKeyFromValue(res.category);
@@ -224,7 +228,7 @@ export function ResourceDialog({ tool }: ToolCardProps) {
             {/* Related Section */}
             {relatedResources.length > 0 && (
               <div>
-                <span className="modal-related-label">Related</span>
+                <span className={cn("modal-heading", activeThemeStyles.label)}>Related</span>
                 <div className="modal-related-chips">
                   {relatedResources.map((res) => {
                     const key = getResourceKeyFromValue(res.category);

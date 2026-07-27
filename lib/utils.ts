@@ -82,22 +82,29 @@ export function getResourceThemeByKey(key: string): ResourceTheme {
   return RESOURCE_THEME_MAP[key as ResourceCategoryKey] || "blue";
 }
 
-export const RESOURCE_THEME_STYLES: Record<ResourceTheme, { chip: string; dot: string }> = {
+export const RESOURCE_THEME_STYLES: Record<
+  ResourceTheme,
+  { chip: string; dot: string; label: string }
+> = {
   blue: {
     chip: "hover:bg-c-blue hover:text-paper",
     dot: "bg-c-blue border-blue-deep group-hover:bg-paper group-hover:border-paper",
+    label: "text-blue-deep",
   },
   green: {
     chip: "hover:bg-c-green hover:text-ink",
     dot: "bg-c-green border-green-deep group-hover:bg-ink group-hover:border-ink",
+    label: "text-green-deep",
   },
   orange: {
     chip: "hover:bg-c-orange hover:text-ink",
     dot: "bg-c-orange border-orange-deep group-hover:bg-ink group-hover:border-ink",
+    label: "text-orange-deep",
   },
   pink: {
     chip: "hover:bg-c-pink hover:text-ink",
     dot: "bg-c-pink border-pink-deep group-hover:bg-ink group-hover:border-ink",
+    label: "text-pink-deep",
   },
 };
 

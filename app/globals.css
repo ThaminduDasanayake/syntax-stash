@@ -752,15 +752,11 @@
   @apply flex flex-col;
 }
 
-@utility modal-section-heading {
-  @apply text-mono-2xs mb-2;
-}
-
 @utility modal-section-body {
   @apply text-ink-2 text-base leading-relaxed;
 }
 
-@utility modal-related-label {
+@utility modal-heading {
   @apply text-display-2xs mb-2.5 block;
 }
 
