@@ -333,7 +333,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
     if (apiKey) {
       const scrapingBeeUrl = `https://app.scrapingbee.com/api/v1/?api_key=${encodeURIComponent(
-        apiKey
+        apiKey,
       )}&url=${encodeURIComponent(targetUrl.href)}&render_js=true`;
       response = await fetchWithRetry(scrapingBeeUrl, {
         redirect: "follow",

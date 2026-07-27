@@ -57,12 +57,7 @@ function CardBody({ tool }: ToolCardProps) {
                 <Icon className="card-icon" />
               </div>
             ) : (
-              <CardIcon
-                url={tool.url!}
-                alt={tool.title}
-                className={tool.className}
-                explicitFavicon={tool.favicon}
-              />
+              <CardIcon alt={tool.title} className={tool.className} favicon={tool.favicon} />
             )}
           </div>
 

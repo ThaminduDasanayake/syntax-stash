@@ -139,22 +139,7 @@ export function parseHeadHtml(rawHtml: string, baseUrl?: string): ExtractedMetad
     .filter((content): content is string => Boolean(content));
 
   return {
-    url: effectiveBase || "Pasted HTML",
     title,
-    author: doc.querySelector('meta[name="author"]')?.getAttribute("content")?.trim() || null,
-    keywords,
-    canonicalUrl:
-      doc.querySelector('link[rel="canonical"]')?.getAttribute("href")?.trim() || null,
-    charset:
-      doc.querySelector("meta[charset]")?.getAttribute("charset") ||
-      doc.querySelector('meta[http-equiv="Content-Type"]')?.getAttribute("content") ||
-      null,
-    description:
-      doc.querySelector('meta[name="description"]')?.getAttribute("content")?.trim() || null,
-    generator:
-      doc.querySelector('meta[name="generator"]')?.getAttribute("content")?.trim() || null,
-    language: doc.querySelector("html")?.getAttribute("lang") || null,
-
     assets: {
       appleTouchIcon: absoluteUrl(appleTouchIcon, effectiveBase),
       favicon: absoluteUrl(favicon, effectiveBase),
@@ -164,8 +149,21 @@ export function parseHeadHtml(rawHtml: string, baseUrl?: string): ExtractedMetad
       screenshots: preloadScreenshots,
       twitterImage: absoluteUrl(rawTwitterImage, effectiveBase),
     },
+    author: doc.querySelector('meta[name="author"]')?.getAttribute("content")?.trim() || null,
+    canonicalUrl: doc.querySelector('link[rel="canonical"]')?.getAttribute("href")?.trim() || null,
+    charset:
+      doc.querySelector("meta[charset]")?.getAttribute("charset") ||
+      doc.querySelector('meta[http-equiv="Content-Type"]')?.getAttribute("content") ||
+      null,
+    description:
+      doc.querySelector('meta[name="description"]')?.getAttribute("content")?.trim() || null,
+    generator: doc.querySelector('meta[name="generator"]')?.getAttribute("content")?.trim() || null,
+    keywords,
+    language: doc.querySelector("html")?.getAttribute("lang") || null,
 
     openGraph: {
+      title:
+        doc.querySelector('meta[property="og:title"]')?.getAttribute("content")?.trim() || null,
       description:
         doc.querySelector('meta[property="og:description"]')?.getAttribute("content")?.trim() ||
         null,
@@ -175,9 +173,7 @@ export function parseHeadHtml(rawHtml: string, baseUrl?: string): ExtractedMetad
         doc.querySelector('meta[property="og:locale"]')?.getAttribute("content")?.trim() || null,
       localeAlternate,
       siteName:
-        doc.querySelector('meta[property="og:site_name"]')?.getAttribute("content")?.trim() ||
-        null,
-      title: doc.querySelector('meta[property="og:title"]')?.getAttribute("content")?.trim() || null,
+        doc.querySelector('meta[property="og:site_name"]')?.getAttribute("content")?.trim() || null,
       type: doc.querySelector('meta[property="og:type"]')?.getAttribute("content")?.trim() || null,
     },
 
@@ -209,13 +205,20 @@ export function parseHeadHtml(rawHtml: string, baseUrl?: string): ExtractedMetad
     },
 
     twitter: {
+      title:
+        doc.querySelector('meta[property="twitter:title"]')?.getAttribute("content")?.trim() ||
+        doc.querySelector('meta[name="twitter:title"]')?.getAttribute("content")?.trim() ||
+        null,
       card: doc.querySelector('meta[name="twitter:card"]')?.getAttribute("content")?.trim() || null,
       creator:
         doc.querySelector('meta[property="twitter:creator"]')?.getAttribute("content")?.trim() ||
         doc.querySelector('meta[name="twitter:creator"]')?.getAttribute("content")?.trim() ||
         null,
       description:
-        doc.querySelector('meta[property="twitter:description"]')?.getAttribute("content")?.trim() ||
+        doc
+          .querySelector('meta[property="twitter:description"]')
+          ?.getAttribute("content")
+          ?.trim() ||
         doc.querySelector('meta[name="twitter:description"]')?.getAttribute("content")?.trim() ||
         null,
       image:
@@ -226,20 +229,23 @@ export function parseHeadHtml(rawHtml: string, baseUrl?: string): ExtractedMetad
         doc.querySelector('meta[property="twitter:site"]')?.getAttribute("content")?.trim() ||
         doc.querySelector('meta[name="twitter:site"]')?.getAttribute("content")?.trim() ||
         null,
-      title:
-        doc.querySelector('meta[property="twitter:title"]')?.getAttribute("content")?.trim() ||
-        doc.querySelector('meta[name="twitter:title"]')?.getAttribute("content")?.trim() ||
-        null,
     },
 
+    url: effectiveBase || "Pasted HTML",
+
     verification: {
-      bing: doc.querySelector('meta[name="msvalidate.01"]')?.getAttribute("content")?.trim() || null,
+      bing:
+        doc.querySelector('meta[name="msvalidate.01"]')?.getAttribute("content")?.trim() || null,
       facebook:
-        doc.querySelector('meta[name="facebook-domain-verification"]')?.getAttribute("content")?.trim() ||
-        null,
+        doc
+          .querySelector('meta[name="facebook-domain-verification"]')
+          ?.getAttribute("content")
+          ?.trim() || null,
       google:
-        doc.querySelector('meta[name="google-site-verification"]')?.getAttribute("content")?.trim() ||
-        null,
+        doc
+          .querySelector('meta[name="google-site-verification"]')
+          ?.getAttribute("content")
+          ?.trim() || null,
       pinterest:
         doc.querySelector('meta[name="p:domain_verify"]')?.getAttribute("content")?.trim() || null,
       yandex:
@@ -247,7 +253,6 @@ export function parseHeadHtml(rawHtml: string, baseUrl?: string): ExtractedMetad
         null,
     },
 
-    viewport:
-      doc.querySelector('meta[name="viewport"]')?.getAttribute("content")?.trim() || null,
+    viewport: doc.querySelector('meta[name="viewport"]')?.getAttribute("content")?.trim() || null,
   };
 }

@@ -136,10 +136,9 @@ export function ResourceDialog({ tool }: ToolCardProps) {
 
             <CardIcon
               key={activeTool.url}
-              url={activeTool.url!}
               alt={activeTool.title}
               className={activeTool.className}
-              explicitFavicon={activeTool.favicon}
+              favicon={activeTool.favicon}
             />
           </div>
 
@@ -167,6 +166,7 @@ export function ResourceDialog({ tool }: ToolCardProps) {
           <div className="modal-content">
             {activeTool.ogImage && !ogError && (
               <div className="mb-5.5">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={activeTool.ogImage}
                   alt={activeTool.title}

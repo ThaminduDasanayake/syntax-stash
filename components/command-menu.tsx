@@ -155,9 +155,8 @@ export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
                   </div>
                 ) : (
                   <CardIcon
-                    url={tool.url!}
                     alt={tool.title}
-                    explicitFavicon={tool.favicon}
+                    favicon={tool.favicon}
                     className="border-border bg-background flex h-10 w-10 shrink-0 items-center justify-center border-2! p-0.5!"
                   />
                 )}
