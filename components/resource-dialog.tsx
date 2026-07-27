@@ -1,7 +1,6 @@
 "use client";
 
 import { ArrowSquareOutIcon, CaretLeftIcon, CaretRightIcon, XIcon } from "@phosphor-icons/react";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
@@ -11,7 +10,12 @@ import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { resourceLinks } from "@/lib/resource-data";
-import { cn, getResourceColorByKey, getResourceKeyFromValue } from "@/lib/utils";
+import {
+  cn,
+  getResourceColorByKey,
+  getResourceKeyFromValue,
+  getResourceThemeByKey,
+} from "@/lib/utils";
 import { ToolCardProps } from "@/types";
 
 export function ResourceDialog({ tool }: ToolCardProps) {
@@ -187,23 +191,21 @@ export function ResourceDialog({ tool }: ToolCardProps) {
 
             {/* Author Resources Section */}
             {authorResources.length > 0 && (
-              <div className="mt-12">
-                <h4 className="text-mono-2xs text-c-blue mb-4 font-extrabold tracking-wider uppercase">
-                  More by {activeTool.author}
-                </h4>
-                <div className="flex flex-wrap gap-3">
-                  {authorResources.map((res, i) => {
-                    const colors = ["bg-c-blue", "bg-c-green", "bg-c-orange", "bg-c-pink"];
-                    const dotColor = colors[i % colors.length];
+              <div>
+                <span className="modal-related-label">More by {activeTool.author}</span>
+                <div className="modal-related-chips">
+                  {authorResources.map((res) => {
+                    const key = getResourceKeyFromValue(res.category);
+                    const theme = getResourceThemeByKey(key);
                     return (
-                      <div
+                      <DotButton
                         key={res.title}
+                        isActive={false}
+                        theme={theme}
+                        label={res.title}
+                        className=""
                         onClick={() => setActiveTool(res)}
-                        className="border-ink text-mono-xs bg-paper flex cursor-pointer items-center gap-2 border px-3 py-2 font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-transform hover:-translate-y-0.5"
-                      >
-                        <span className={`h-2 w-2 rounded-full ${dotColor}`}></span>
-                        {res.title}
-                      </div>
+                      />
                     );
                   })}
                 </div>
@@ -215,27 +217,25 @@ export function ResourceDialog({ tool }: ToolCardProps) {
               <div>
                 <span className="modal-related-label">Related</span>
                 <div className="modal-related-chips">
-                  {relatedResources.map((res, i) => {
-                    const colors = ["bg-c-blue", "bg-c-green", "bg-c-orange", "bg-c-pink"];
-                    // const dotColor = colors[i % colors.length];
-                    // const isActive = activeCategory === res.category;
+                  {relatedResources.map((res) => {
+                    const key = getResourceKeyFromValue(res.category);
+                    const theme = getResourceThemeByKey(key);
                     return (
-                      <DotButton
+                      <button
                         key={res.url}
-                        isActive={false}
-                        index={i}
-                        label={res.title}
                         onClick={() => setActiveTool(res)}
-                      />
-                      // <div
-                      //   key={res.url}
+                        className="modal-related-chip"
+                      >
+                        <span className={cn("modal-chip-dot", theme)}></span>
+                        {res.title}
+                      </button>
+                      // <DotButton
+                      //   key={res.url || res.title}
+                      //   isActive={false}
+                      //   theme={theme}
+                      //   label={res.title}
                       //   onClick={() => setActiveTool(res)}
-                      //   className="model-related-chip"
-                      //   // className="border-ink text-mono-xs bg-paper flex cursor-pointer items-center gap-2 border px-3 py-2 font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-transform hover:-translate-y-0.5"
-                      // >
-                      //   <span className={cn("modal-chip-dot", dotColor)}></span>
-                      //   {res.title}
-                      // </div>
+                      // />
                     );
                   })}
                 </div>

@@ -66,6 +66,20 @@ export function getResourceColorByKey(key: string): string {
   return RESOURCE_COLOR_MAP[key as ResourceCategoryKey] || "bg-[var(--paper)] text-[var(--ink)]";
 }
 
+const RESOURCE_THEME_MAP: Record<ResourceCategoryKey, "orange" | "blue" | "pink" | "green"> = {
+  ai: "orange",
+  data: "blue",
+  design: "pink",
+  dev: "green",
+  education: "orange",
+  frontend: "blue",
+  media: "pink",
+};
+
+export function getResourceThemeByKey(key: string): "orange" | "blue" | "pink" | "green" {
+  return RESOURCE_THEME_MAP[key as ResourceCategoryKey] || "blue";
+}
+
 // "bg-c-yellow text-ink",
 // "bg-c-purple text-paper",
 // "bg-c-cyan text-ink",

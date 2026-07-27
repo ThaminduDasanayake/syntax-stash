@@ -765,11 +765,15 @@
 }
 
 @utility modal-related-chips {
-  @apply xs:flex-wrap xs:gap-1.5 flex flex-col items-stretch gap-2;
+  @apply xs:flex-wrap xs:flex-row xs:gap-1.5 flex flex-col items-stretch gap-2;
 }
 
 @utility modal-related-chip {
-  @apply xs:inline-flex items-center justify-start gap-2 px-3.5 py-3 font-bold tracking-wider uppercase sm:px-3 sm:py-2;
+  @apply xs:inline-flex text-display-xs border-ink cursor-pointer items-center justify-start gap-2 border-[1.5px] px-3.5 py-3 transition-all duration-200 ease-out sm:px-3 sm:py-2;
+}
+
+@utility modal-chip-dot {
+  @apply h-1.75 w-1.75 shrink-0 rounded-full border;
 }
 
 @utility modal-link {
