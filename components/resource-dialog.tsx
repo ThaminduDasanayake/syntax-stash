@@ -164,14 +164,28 @@ export function ResourceDialog({ tool }: ToolCardProps) {
         <div className="modal-right">
           <div className="modal-content">
             {activeTool.ogImage && !ogError && (
-              <img
-                src={activeTool.ogImage}
-                alt={activeTool.title}
-                className="h-auto w-full"
-                loading="lazy"
-                onError={() => setOgError(true)}
-              />
+              <div className="mb-5.5">
+                <img
+                  src={activeTool.ogImage}
+                  alt={activeTool.title}
+                  className="h-auto w-full"
+                  loading="lazy"
+                  onError={() => setOgError(true)}
+                />
+              </div>
             )}
+
+            <div className="modal-link">
+              <span className="modal-section-heading">Resource UrL</span>
+              <a
+                href={activeTool.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-xs break-all underline decoration-current/40 underline-offset-2 transition-all duration-150 ease-out hover:decoration-current"
+              >
+                {activeTool.url}
+              </a>
+            </div>
 
             <div className="modal-sections">
               {activeTool.details?.map(({ title, content }, index) => (
@@ -191,7 +205,7 @@ export function ResourceDialog({ tool }: ToolCardProps) {
 
             {/* Author Resources Section */}
             {authorResources.length > 0 && (
-              <div>
+              <div className="mb-5.5">
                 <span className="modal-related-label">More by {activeTool.author}</span>
                 <div className="modal-related-chips">
                   {authorResources.map((res) => {
@@ -202,7 +216,7 @@ export function ResourceDialog({ tool }: ToolCardProps) {
                       <button
                         key={res.title}
                         onClick={() => setActiveTool(res)}
-                        className={cn("modal-related-chip", styles.chip)}
+                        className={cn("modal-related-chip group", styles.chip)}
                       >
                         <span className={cn("modal-chip-dot", styles.dot)} />
                         {res.title}
@@ -226,7 +240,7 @@ export function ResourceDialog({ tool }: ToolCardProps) {
                       <button
                         key={res.url || res.title}
                         onClick={() => setActiveTool(res)}
-                        className={cn("modal-related-chip", styles.chip)}
+                        className={cn("modal-related-chip group", styles.chip)}
                       >
                         <span className={cn("modal-chip-dot", styles.dot)} />
                         {res.title}
@@ -236,18 +250,6 @@ export function ResourceDialog({ tool }: ToolCardProps) {
                 </div>
               </div>
             )}
-          </div>
-
-          <div className="modal-link">
-            <span className="modal-section-heading">RESOURCE URL</span>
-            <a
-              href={activeTool.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-mono text-xs break-all underline decoration-current/40 underline-offset-2 transition-all duration-150 ease-out hover:decoration-current"
-            >
-              {activeTool.url}
-            </a>
           </div>
 
           <div className="modal-launch">

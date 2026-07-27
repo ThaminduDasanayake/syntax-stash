@@ -83,21 +83,21 @@ export function getResourceThemeByKey(key: string): ResourceTheme {
 }
 
 export const RESOURCE_THEME_STYLES: Record<ResourceTheme, { chip: string; dot: string }> = {
-  orange: {
-    chip: "hover:bg-c-orange hover:text-ink",
-    dot: "bg-c-orange border-orange-deep",
-  },
   blue: {
     chip: "hover:bg-c-blue hover:text-paper",
-    dot: "bg-c-blue border-blue-deep",
-  },
-  pink: {
-    chip: "hover:bg-c-pink hover:text-ink",
-    dot: "bg-c-pink border-pink-deep",
+    dot: "bg-c-blue border-blue-deep group-hover:bg-paper group-hover:border-paper",
   },
   green: {
     chip: "hover:bg-c-green hover:text-ink",
-    dot: "bg-c-green border-green-deep",
+    dot: "bg-c-green border-green-deep group-hover:bg-ink group-hover:border-ink",
+  },
+  orange: {
+    chip: "hover:bg-c-orange hover:text-ink",
+    dot: "bg-c-orange border-orange-deep group-hover:bg-ink group-hover:border-ink",
+  },
+  pink: {
+    chip: "hover:bg-c-pink hover:text-ink",
+    dot: "bg-c-pink border-pink-deep group-hover:bg-ink group-hover:border-ink",
   },
 };
 

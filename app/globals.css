@@ -48,7 +48,7 @@
   --green-tint-2: #a8cd86;
   --orange-deep: #b87e00;
   --orange-soft: #ebc568;
-  --blue-deep: #2a47d3;
+  --blue-deep: #1a2a7a;
   --blue-soft: #94a4dc;
   --pink-deep: #6b35b8;
   --pink-soft: #e4d1f8;
@@ -769,15 +769,15 @@
 }
 
 @utility modal-related-chip {
-  @apply xs:inline-flex text-display-xs border-ink cursor-pointer items-center justify-start gap-2 border-[1.5px] px-3.5 py-3 transition-all duration-200 ease-out sm:px-3 sm:py-2;
+  @apply xs:inline-flex text-display-xs border-ink bg-paper cursor-pointer items-center justify-start gap-2 border-[1.5px] px-3.5 py-3 transition-all duration-200 ease-out sm:px-3 sm:py-2;
 }
 
 @utility modal-chip-dot {
-  @apply h-1.75 w-1.75 shrink-0 rounded-full border;
+  @apply h-2 w-2 shrink-0 rounded-full border transition-colors duration-200;
 }
 
 @utility modal-link {
-  @apply border-line mx-8 mt-6 flex flex-col border-t pt-4;
+  @apply mb-5.5 flex flex-col;
 }
 
 @utility modal-launch {
