@@ -244,6 +244,18 @@ export const designLinks: Tool[] = [
     url: "https://www.brandguidelines.net/",
   },
   {
+    title: "Brands In Motion",
+    category: CATEGORIES.design,
+    description:
+      "Brands in Motion is an independent resource, showcasing the very best motion design in branding.",
+    favicon:
+      "https://images.squarespace-cdn.com/content/v1/663ba87248e1575777904df4/e39de4b0-db21-4e23-91f5-816b1a8a12dc/favicon.ico?format=100w",
+    ogImage:
+      "https://static1.squarespace.com/static/663ba87248e1575777904df4/t/66585459f3960d1eaa917471/1717064793554/BrandsInMotion_Logo_RGB_Black.png?format=1500w",
+    tags: [TAGS.inspiration],
+    url: "https://www.brandsinmotion.xyz/",
+  },
+  {
     title: "CallToInspiration",
     category: CATEGORIES.design,
     description:
@@ -485,6 +497,19 @@ export const designLinks: Tool[] = [
     url: "https://designmd.me/",
   },
   {
+    title: "Design System Diaries",
+    author: "Lewis",
+    category: CATEGORIES.design,
+    description:
+      "A weekly exploration of interesting challenges (and solutions) from designers of the biggest design systems in the world. Click to read Design System Diaries, by Lewis, a Substack publication. Launched 2 years ago.",
+    favicon:
+      "https://substackcdn.com/image/fetch/$s_!0-Hp!,w_150,h_150,c_fill,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F91467af0-f475-43cf-8fdb-b222d0c55e95_382x382.png",
+    ogImage:
+      "https://substackcdn.com/image/fetch/$s_!Lu1v!,f_auto,q_auto:best,fl_progressive:steep/https%3A%2F%2Fdesignsystemdiaries.substack.com%2Ftwitter%2Fsubscribe-card.jpg%3Fv%3D2120431422%26version%3D9",
+    tags: [TAGS.design],
+    url: "https://designsystemdiaries.substack.com/",
+  },
+  {
     title: "Developer Portfolios",
     author: "emmabostian",
     category: CATEGORIES.design,
@@ -708,6 +733,19 @@ export const designLinks: Tool[] = [
     subtitle: "Discover Iconic Typography in Cinema Classics",
     tags: [TAGS.typography],
     url: "https://fontsinmovies.com/",
+  },
+  {
+    title: "Font Tester",
+    category: CATEGORIES.design,
+    description:
+      "Font Tester is a browser extension to help you preview and compare 1000+ fonts live on any website",
+    favicon:
+      "https://raw.githubusercontent.com/PaulleDemon/font-tester-chrome/refs/heads/main/public/logos/logo.svg",
+    ogImage:
+      "https://raw.githubusercontent.com/PaulleDemon/font-tester-chrome/refs/heads/main/docs/font-tester.png",
+    subtitle: "Test and preview fonts",
+    tags: [TAGS.typography],
+    url: "https://font-tester.foxcraft.tech/",
   },
   {
     title: "Fonttrio",
