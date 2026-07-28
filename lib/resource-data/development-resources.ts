@@ -388,6 +388,18 @@ export const developmentLinks: Tool[] = [
     url: "https://devhints.io/",
   },
   {
+    title: "Dev Resources",
+    author: "Marcel Cruz",
+    category: CATEGORIES.dev,
+    description:
+      "A collection of resources for developers, categorized and crowdsourced. Learn programming, UI inspiration, job boards, images, icons and much more.",
+    favicon: "https://devresourc.es/favicon-dr/safari-pinned-tab.svg",
+    ogImage: "https://devresourc.es/og",
+    subtitle: "A Collaborative List Of 800+ Resources For Developers",
+    tags: [TAGS.tool],
+    url: "https://devresourc.es/",
+  },
+  {
     title: "Dev Tools",
     author: "Hitarth Shah",
     category: CATEGORIES.dev,
@@ -433,6 +445,18 @@ export const developmentLinks: Tool[] = [
     description: "A magical documentation generator.",
     favicon: "https://docsify.js.org/_media/icon.svg",
     url: "https://docsify.js.org/#/",
+  },
+  {
+    title: "Domain Digger",
+    category: CATEGORIES.dev,
+    description:
+      "Domain Digger is the full open-source toolkit for next-level domain analysis, providing detailed DNS, IP, WHOIS data, and SSL/TLS history in a user-friendly, no-install interface.",
+    favicon:
+      "https://raw.githubusercontent.com/wotschofsky/domain-digger/main/assets/logo-dark.svg",
+    ogImage: "https://digger.tools/opengraph-image-1jdwle",
+    subtitle: "DNS Lookup, WHOIS Lookup & more",
+    tags: [TAGS.tool],
+    url: "https://digger.tools/",
   },
   {
     title: "Domainstack",

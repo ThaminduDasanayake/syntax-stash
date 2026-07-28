@@ -44,10 +44,15 @@ export default function AppFooter() {
           <Link href="/about" className="footer-nav-link">
             About
           </Link>
-          <Link href="#" className="footer-nav-link">
+          <Link
+            href="https://github.com/ThaminduDasanayake/syntax-stash/blob/main/CONTRIBUTING.md"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-nav-link"
+          >
             Contribute
           </Link>
-          <Link href="#" className="footer-nav-link">
+          <Link href="/changelog" className="footer-nav-link">
             Changelog
           </Link>
         </div>
