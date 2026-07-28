@@ -560,6 +560,19 @@ export const frontendLinks: Tool[] = [
     url: "https://heropatterns.com/",
   },
   {
+    title: "htmldocs",
+    author: "htmldocs team",
+    category: CATEGORIES.frontend,
+    description:
+      "Create and generate professional documents and PDFs using React components. htmldocs offers a simple, powerful API for automated document generation and management.",
+    favicon: "https://raw.githubusercontent.com/htmldocs-js/htmldocs/canary/apps/docs/favicon.svg",
+    // https://raw.githubusercontent.com/jamdotdev/jam-dev-utilities/main/public/icons/icon.svg
+    ogImage: "https://htmldocs.com/og-image.png",
+    subtitle: "Build and generate documents with React",
+    tags: [TAGS.react],
+    url: "https://htmldocs.com/",
+  },
+  {
     title: "HTMLrev",
     category: CATEGORIES.frontend,
     description:

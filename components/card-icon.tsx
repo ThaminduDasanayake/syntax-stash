@@ -24,6 +24,7 @@ export function CardIcon({
         src={favicon}
         alt={alt}
         loading="lazy"
+        referrerPolicy="no-referrer"
         className="h-full w-full object-contain"
         onError={() => setHasError(true)}
       />

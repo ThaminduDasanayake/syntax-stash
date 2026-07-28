@@ -139,6 +139,17 @@ export const developmentLinks: Tool[] = [
     url: "https://www.bestalternative.dev/en",
   },
   {
+    title: "Better-T-Stack",
+    category: CATEGORIES.dev,
+    description:
+      "A modern CLI tool for scaffolding end-to-end type-safe TypeScript projects with best practices and customizable configurations",
+    favicon: "https://better-t-stack.dev/favicon/favicon.svg",
+    ogImage: "https://better-t-stack.dev/og/site/home.png",
+    subtitle: "Free Online Design Tools for Developers & Designers",
+    tags: [TAGS.tool],
+    url: "https://better-t-stack.dev/",
+  },
+  {
     title: "BORED",
     category: CATEGORIES.dev,
     description:
@@ -248,6 +259,15 @@ export const developmentLinks: Tool[] = [
     subtitle: "Free Online Developer Tools",
     tags: [TAGS.tool],
     url: "https://coddy.tech/tools",
+  },
+  {
+    title: "Code Diagram",
+    category: CATEGORIES.dev,
+    description: "A diagram tool that lives inside VS Code",
+    favicon: "https://www.codediagram.io/assets/logo-big-square.png",
+    ogImage: "https://www.codediagram.io/assets/img/twitter-url-main.png",
+    tags: [TAGS.tool],
+    url: "https://www.codediagram.io/",
   },
   {
     title: "CodeFlow",
@@ -734,7 +754,7 @@ export const developmentLinks: Tool[] = [
   {
     title: "MAKE MY DRIVE FUN",
     category: CATEGORIES.dev,
-    description: "Enter in two locations to make the drive fun.\n",
+    description: "Enter in two locations to make the drive fun.",
     tags: [TAGS.map],
     url: "https://makemydrivefun.com/",
   },
@@ -910,6 +930,30 @@ export const developmentLinks: Tool[] = [
     url: "https://physicallybased.info/",
   },
   {
+    title: "PinMe",
+    author: "Glitter Network",
+    category: CATEGORIES.dev,
+    description:
+      "Publish a frontend in seconds. Great for AI generated pages, demos, and landing sites.",
+    favicon: "https://pinme.eth.limo/favicon.ico",
+    ogImage: "https://pinme.eth.limo/pinme.jpg",
+    subtitle: "Publish Sites in Seconds",
+    tags: [TAGS.tool],
+    url: "https://pinme.eth.limo/",
+  },
+  {
+    title: "pkg.vc",
+    category: CATEGORIES.dev,
+    className: "bg-foreground border-paper",
+    description:
+      "Preview, test, and share npm packages instantly. Install npm package builds from pull requests before merge.",
+    favicon: "https://pkg.vc/logo.svg",
+    ogImage: "https://pkg.vc/_app/immutable/assets/og.BZXjwXhn.png",
+    subtitle: "Install npm Packages from Pull Requests",
+    tags: [TAGS.tool],
+    url: "https://pkg.vc/",
+  },
+  {
     title: "PocketBase",
     category: CATEGORIES.dev,
     description:
@@ -957,6 +1001,19 @@ export const developmentLinks: Tool[] = [
     description:
       "Use readme.so's markdown editor and templates to easily create a ReadMe for your projects",
     url: "https://readme.so/",
+  },
+  {
+    title: "Reflag",
+    category: CATEGORIES.dev,
+    className: "bg-foreground border-paper",
+    description: "TypeScript feature management that gets you back to building, faster.",
+    favicon:
+      "https://cdn.prod.website-files.com/68a872edf3df6064de547670/68b8414134c540f12c2928bc_reflag-dynamic-favicon.svg",
+    ogImage:
+      "https://cdn.prod.website-files.com/68a872edf3df6064de547670/68e674a70f2a92f3a26d3296_reflag-og-home%20(2)-min.png",
+    subtitle: "Feature flags on autopilot",
+    tags: [TAGS.tool],
+    url: "https://reflag.com/",
   },
   {
     title: "regex101",
@@ -1164,6 +1221,19 @@ export const developmentLinks: Tool[] = [
     subtitle: "Disposable Temporary Email",
     tags: [TAGS.tool],
     url: "https://temp-mail.org/",
+  },
+  {
+    title: "Termino.js",
+    author: "Marketing Pipeline",
+    category: CATEGORIES.dev,
+    description:
+      "Create a web based terminal on any website - great for games, animations and real world apps!",
+    favicon: "./github.svg",
+    ogImage:
+      "https://opengraph.githubassets.com/c7149c48dc2e09be2ce2a7b28403989870676ccd875e94170feb99d80f33e687/MarketingPipeline/Termino.js",
+    subtitle: "Live Demo",
+    tags: [TAGS.tool],
+    url: "https://marketingpipeline.github.io/Termino.js/demo",
   },
   {
     title: "Terraink",

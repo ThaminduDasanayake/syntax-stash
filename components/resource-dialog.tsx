@@ -172,6 +172,7 @@ export function ResourceDialog({ tool }: ToolCardProps) {
                   alt={activeTool.title}
                   className="h-auto w-full"
                   loading="lazy"
+                  referrerPolicy="no-referrer"
                   onError={() => setOgError(true)}
                 />
               </div>
