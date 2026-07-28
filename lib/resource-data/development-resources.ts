@@ -871,6 +871,16 @@ export const developmentLinks: Tool[] = [
     url: "https://github.com/n8n-io/n8n",
   },
   {
+    title: "namae",
+    category: CATEGORIES.dev,
+    description: "Check availability of your new app name for major registries at once.",
+    favicon: "https://namae.dev/apple-touch-icon.png",
+    ogImage: "https://namae.dev/social.png",
+    subtitle: "Grab a slick name for your new project",
+    tags: [TAGS.tool],
+    url: "https://namae.dev/",
+  },
+  {
     title: "nomnoml",
     category: CATEGORIES.dev,
     description:

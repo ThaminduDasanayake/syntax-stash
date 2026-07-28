@@ -303,6 +303,15 @@ export const designLinks: Tool[] = [
     url: "https://colorflow.ls.graphics/",
   },
   {
+    title: "Color Generator",
+    category: CATEGORIES.design,
+    description: "Generate beautiful color palettes for your design system.",
+    favicon: "https://kigen.design/kigen-logo-icon.svg",
+    ogImage: "https://kigen.design/color-og.jpg",
+    tags: [TAGS.color],
+    url: "https://kigen.design/color",
+  },
+  {
     title: "ColorHub",
     author: "Dan Cranney",
     category: CATEGORIES.design,
@@ -1321,6 +1330,18 @@ export const designLinks: Tool[] = [
     ogImage: "https://patternclub.io/assets/images/share.jpg?v=c5540109",
     tags: [TAGS.patterns],
     url: "https://patternclub.io/",
+  },
+  {
+    title: "Pattern Craft",
+    author: "Megh Bari",
+    category: CATEGORIES.design,
+    description:
+      "Create stunning websites with our curated collection of 100+ modern CSS background patterns and gradients for your websites and apps. Easily copy and paste into your next project. Crafted with modern CSS and Tailwind for seamless integration.",
+    favicon: "https://patterncraft.store/favicon.svg",
+    ogImage: "https://patterncraft.store/og-banner.png",
+    subtitle: "Modern Background Patterns & Gradients Snippets",
+    tags: [TAGS.patterns],
+    url: "https://patterncraft.store/",
   },
   {
     title: "Penpot",

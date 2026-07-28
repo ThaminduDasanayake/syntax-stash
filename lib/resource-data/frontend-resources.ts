@@ -246,6 +246,16 @@ export const frontendLinks: Tool[] = [
     url: "https://coolicons.cool/",
   },
   {
+    title: "coss ui",
+    category: CATEGORIES.frontend,
+    description: "Built for developers and AI.",
+    favicon: "https://coss.com/ui/favicon.ico",
+    ogImage: "https://coss.com/ui/opengraph-image.png",
+    subtitle: "A new, modern UI component library built on top of Base UI",
+    tags: [TAGS["ui-component"]],
+    url: "https://coss.com/ui",
+  },
+  {
     title: "Cover Flow",
     category: CATEGORIES.frontend,
     description: "iOS-like Cover Flow for React.",
@@ -519,6 +529,18 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description: "A CSS generator for custom gingham patterns",
     url: "https://gingham.laney.tech/",
+  },
+  {
+    title: "Glyphs",
+    category: CATEGORIES.frontend,
+    description:
+      "A dynamic design system for creating icon sets in Figma and using them on the web.",
+    favicon: "https://glyphs.fyi/favicon.ico",
+    ogImage:
+      "https://raw.githubusercontent.com/gorango/glyphs/main/docs/static/content/community-dark.jpg",
+    subtitle: "The Complete Icon Design System",
+    tags: [TAGS.icons],
+    url: "https://glyphs.fyi/",
   },
   {
     title: "gooey-toast",
@@ -1227,6 +1249,16 @@ export const frontendLinks: Tool[] = [
     subtitle: "Free Sound Effects for Modern Web Apps",
     tags: [TAGS["ui-component"]],
     url: "https://www.soundcn.xyz/",
+  },
+  {
+    title: "Soundz",
+    author: "Kaycee Ingram",
+    category: CATEGORIES.frontend,
+    description: "A Lightweight, Customizable Sound Effects Wrapper for React.",
+    favicon: "https://soundzjs.vercel.app/s-icon.svg",
+    ogImage: "https://soundzjs.vercel.app/soundz.svg",
+    tags: [TAGS["ui-component"]],
+    url: "https://soundzjs.vercel.app/",
   },
   {
     title: "Spectrum UI",
