@@ -2,6 +2,21 @@
   "name": "syntax-stash",
   "version": "0.1.0",
   "private": true,
+  "description": "A curated stash of developer tools, utilities, generators, and resources for modern web development.",
+  "author": "Thamindu Dasanayake <thamindudasanayake@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ThaminduDasanayake/syntax-stash.git"
+  },
+  "keywords": [
+    "nextjs",
+    "developer-tools",
+    "web-development",
+    "regex-studio",
+    "diff-viewer",
+    "curated-resources"
+  ],
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

@@ -34,10 +34,44 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "syntax-stash",
+    default: "syntax-stash — Curated Developer Tools & Resources",
     template: "%s | syntax-stash",
   },
-  description: "A curated stash of developer tools, resources, and snippets.",
+  authors: [{ name: "Thamindu Dasanayake", url: "https://github.com/ThaminduDasanayake" }],
+  creator: "Thamindu Dasanayake",
+  description:
+    "A curated, open-source stash of developer tools, utilities, generators, and resources for modern web development.",
+  keywords: [
+    "code snippets",
+    "converters",
+    "developer tools",
+    "diff viewer",
+    "formatters",
+    "frontend utilities",
+    "regex studio",
+    "syntax stash",
+    "web development",
+  ],
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://syntax-stash.vercel.app"),
+  openGraph: {
+    title: "syntax-stash — Curated Developer Tools & Resources",
+    description:
+      "A curated, open-source stash of developer tools, utilities, generators, and resources for modern web development.",
+    locale: "en_US",
+    siteName: "syntax-stash",
+    type: "website",
+    url: "https://syntax-stash.vercel.app",
+  },
+  robots: {
+    follow: true,
+    index: true,
+  },
+  twitter: {
+    title: "syntax-stash — Curated Developer Tools & Resources",
+    card: "summary_large_image",
+    description:
+      "A curated, open-source stash of developer tools, utilities, generators, and resources for modern web development.",
+  },
 };
 
 export default function RootLayout({

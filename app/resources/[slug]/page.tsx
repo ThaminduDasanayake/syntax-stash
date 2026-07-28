@@ -1,11 +1,31 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { FilterSection } from "@/components/filter-section";
 import { resourceCategories, resourceLinks } from "@/lib/resource-data";
 import { slugify } from "@/lib/utils";
 
-export function generateStaticParams() {
+type Params = { slug: string };
+
+export function generateStaticParams(): Params[] {
   return resourceCategories.map((cat) => ({ slug: slugify(cat) }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
+  const { slug } = await params;
+  const category = resourceCategories.find((c) => slugify(c) === slug);
+  if (!category) return {};
+
+  return {
+    title: category,
+    alternates: { canonical: `/resources/${slug}` },
+    description: `Curated web development resources, tools, and documentation for ${category}.`,
+    openGraph: {
+      title: `${category} Resources — syntax-stash`,
+      description: `Curated web development resources, tools, and documentation for ${category}.`,
+      url: `/resources/${slug}`,
+    },
+  };
 }
 
 export default async function ResourceCategoryPage(props: PageProps<"/resources/[slug]">) {

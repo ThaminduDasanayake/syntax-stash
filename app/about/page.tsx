@@ -1,8 +1,16 @@
 import { ArrowUpRightIcon, GithubLogo } from "@phosphor-icons/react/ssr";
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
 import { Button } from "@/components/ui/button";
+
+export const metadata: Metadata = {
+  title: "About",
+  alternates: { canonical: "/about" },
+  description:
+    "Learn about the story, philosophy, and open-source mission behind Syntax Stash — a distraction-free developer toolbelt.",
+};
 
 export default function AboutPage() {
   return (
