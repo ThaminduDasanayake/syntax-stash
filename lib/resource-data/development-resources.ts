@@ -506,6 +506,14 @@ export const developmentLinks: Tool[] = [
     url: "https://free-for.dev/",
   },
   {
+    title: "Fumadocs",
+    category: CATEGORIES.dev,
+    description: "The React.js documentation framework.",
+    favicon: "https://www.fumadocs.dev/icon.png",
+    ogImage: "https://www.fumadocs.dev/banner.png",
+    url: "https://www.fumadocs.dev/",
+  },
+  {
     title: "GalaxyBrain",
     category: CATEGORIES.dev,
     description: "An information operating system powered by local files.",
@@ -521,6 +529,17 @@ export const developmentLinks: Tool[] = [
     ogImage: "https://gists.sh/opengraph-image?9c823d7c5fa882a6",
     tags: [TAGS.tool],
     url: "https://gists.sh/",
+  },
+  {
+    title: "GitButler",
+    category: CATEGORIES.dev,
+    description:
+      "GitButler is a modern Git-based version control interface with both a GUI and CLI built from the ground up for AI-powered workflows.",
+    favicon: "https://gitbutler.com/favicon/favicon.svg",
+    ogImage: "https://gitbutler.com/og-image.png",
+    subtitle: "Git, but better",
+    tags: [TAGS.git],
+    url: "https://gitbutler.com/",
   },
   {
     title: "GitDiagram",
@@ -577,6 +596,18 @@ export const developmentLinks: Tool[] = [
       "Turn any GitHub profile into an installable coding skill by analyzing the profile, repo lineup, and real code style.",
     subtitle: "Visualize Any GitHub Repository",
     url: "https://www.gittoskill.com/",
+  },
+  {
+    title: "Grep",
+    author: "Vercel",
+    category: CATEGORIES.dev,
+    description:
+      "Effortlessly search for code, files, and paths across a million GitHub repositories.",
+    favicon: "https://grep.app/icon.png",
+    // ogImage: "https://gists.sh/opengraph-image?9c823d7c5fa882a6",
+    subtitle: "Code Search",
+    tags: [TAGS.tool],
+    url: "https://grep.app/",
   },
   {
     title: "HEIC to JPG Converter",
