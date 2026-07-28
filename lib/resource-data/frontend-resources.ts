@@ -1059,6 +1059,15 @@ export const frontendLinks: Tool[] = [
     url: "https://satisui.xyz/",
   },
   {
+    title: "Scrollbar",
+    category: CATEGORIES.frontend,
+    description: "Simple CSS scrollbar editor.",
+    favicon: "https://scrollbar.app/apple-touch-icon.png",
+    ogImage: "https://www.scrollbar.app/scrollbar_cover.png",
+    tags: [TAGS["ui-component"]],
+    url: "https://scrollbar.app/",
+  },
+  {
     title: "Shadcn Blocks",
     author: "Ephraim Duncan",
     category: CATEGORIES.frontend,

@@ -261,6 +261,16 @@ export const newLinks: Tool[] = [
     url: "https://uiprint.co/",
   },
   {
+    title: "User Initial avatars",
+    author: "Lasse Rafn",
+    category: CATEGORIES.dev,
+    description:
+      "Generate image avatars with user initials for free, just specify name. No limits or registration.",
+    ogImage: "https://ui-avatars.com/assets/meta.png",
+    subtitle: "Generate avatars with initials",
+    url: "https://ui-avatars.com/",
+  },
+  {
     title: "Usetools.Design",
     author: "Usetools.Design",
     category: CATEGORIES.dev,

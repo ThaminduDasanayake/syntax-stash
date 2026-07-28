@@ -1117,6 +1117,17 @@ export const developmentLinks: Tool[] = [
     url: "https://strapi.io/",
   },
   {
+    title: "Super Designer",
+    category: CATEGORIES.dev,
+    description:
+      "30+ free online design tools — generate backgrounds, gradients, CSS patterns, 3D shapes, color palettes & more. No signup, instant PNG/SVG/CSS export.",
+    favicon: "https://superdesigner.co/logo.svg",
+    ogImage: "https://superdesigner.co/og/og.png",
+    subtitle: "Free Online Design Tools for Developers & Designers",
+    tags: [TAGS.tool],
+    url: "https://superdesigner.co/",
+  },
+  {
     title: "Surge",
     category: CATEGORIES.dev,
     description:
@@ -1283,6 +1294,16 @@ export const developmentLinks: Tool[] = [
     subtitle: "All-in-one URL Conversion Tool",
     tags: [TAGS.tool],
     url: "https://urltoany.com/",
+  },
+  {
+    title: "UserCheck",
+    category: CATEGORIES.dev,
+    description: "Block disposable emails with our API. Start for free today.",
+    favicon: "https://www.usercheck.com/favicon.png",
+    ogImage: "https://api.webshot.co/EVWMY5",
+    subtitle: "Stop Disposable Emails from Creating Spam Accounts",
+    tags: [TAGS.backend],
+    url: "https://www.usercheck.com/",
   },
   {
     title: "Vault andzn",

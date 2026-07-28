@@ -40,6 +40,14 @@ export const mediaLinks: Tool[] = [
     url: "https://blush.design/",
   },
   {
+    title: "Boxy SVG Editor",
+    category: CATEGORIES.media,
+    description: "Create and edit Scalable Vector Graphics (SVG) files online",
+    favicon: "https://boxy-svg.com/icons/favicon.svg",
+    tags: [TAGS.svg],
+    url: "https://boxy-svg.com/",
+  },
+  {
     title: "Carbon",
     category: CATEGORIES.media,
     description:
@@ -113,6 +121,18 @@ export const mediaLinks: Tool[] = [
     ogImage: "https://doodleipsum.com/1000x750/flat?bg=e3f5f8&i=23243fc71ac1a810a5873bde01e17f07",
     tags: [TAGS.illustration],
     url: "https://doodleipsum.com/",
+  },
+  {
+    title: "Effect.app",
+    category: CATEGORIES.media,
+    className: "bg-foreground border-paper",
+    description:
+      "Apply visual effects to images and videos online — glitch, blur, distort, halftone & more.",
+    favicon: "https://effect.app/icon.svg",
+    ogImage: "https://effect.app/effect-og.jpg",
+    subtitle: "Online Image & Video Effect Generator – Free",
+    tags: [TAGS.svg],
+    url: "https://effect.app/",
   },
   {
     title: "fffuel",
@@ -245,6 +265,16 @@ export const mediaLinks: Tool[] = [
       "15,015 free SVG logos for apps, dev tools and tech brands. Search, filter by category, download or copy in one click.",
     tags: [TAGS.logo],
     url: "https://logos.lndev.me/",
+  },
+  {
+    title: "Mossaik",
+    category: CATEGORIES.media,
+    description: "Stylish SVG Backgrounds for your websites and designs",
+    favicon: "https://mossaik.app/favicon.ico",
+    ogImage:
+      "https://gabriel.perales.me/_next/image?url=%2Fstatic%2Fimages%2Fmossaik.png&w=1200&q=75",
+    tags: [TAGS.svg],
+    url: "https://mossaik.app/",
   },
   {
     title: "Need3D",
