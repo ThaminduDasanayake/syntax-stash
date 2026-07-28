@@ -777,6 +777,16 @@ export const designLinks: Tool[] = [
     url: "https://ezascii.com/",
   },
   {
+    title: "Free Design Stuff",
+    category: CATEGORIES.design,
+    description:
+      "Free design resources. Find curated top quality design resources free for personal and commercial use. Accessible to everyone.",
+    favicon: "https://freedesignstuff.com/assets/images/apple-touch-icon.png?v=74cbd46e",
+    ogImage: "https://freedesignstuff.com/assets/images/card.jpg?v=74cbd46e",
+    tags: [TAGS.design],
+    url: "https://freedesignstuff.com/",
+  },
+  {
     title: "Free Font Library",
     category: CATEGORIES.design,
     description: "Free OpenSource font library",
@@ -852,6 +862,18 @@ export const designLinks: Tool[] = [
     subtitle: "Browse Fonts",
     tags: [TAGS.design, TAGS.typography],
     url: "https://fonts.google.com/",
+  },
+  {
+    title: "Graduum",
+    author: "Niklaus Gerber",
+    category: CATEGORIES.design,
+    description:
+      "A collection of one hundred free high-quality mesh gradients suitable for desktop and mobile use.",
+    favicon: "https://graduum.niklausgerber.com/assets/images/apple-touch-icon.png?v=a66bfeb6",
+    ogImage: "https://graduum.niklausgerber.com/assets/images/share.jpg?v=a66bfeb6",
+    subtitle: "Free Mesh Gradients by Niklaus Gerber",
+    tags: [TAGS.color],
+    url: "https://graduum.niklausgerber.com/",
   },
   {
     title: "Grid Paper",

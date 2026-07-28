@@ -773,7 +773,7 @@
 }
 
 @utility modal-link {
-  @apply mb-5.5 flex flex-col;
+  @apply mb-5.5 flex flex-col items-start;
 }
 
 @utility modal-launch {

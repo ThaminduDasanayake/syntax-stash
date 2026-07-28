@@ -21,6 +21,17 @@ export const frontendLinks: Tool[] = [
     url: "https://ui.aceternity.com/",
   },
   {
+    title: "AI Elements",
+    category: CATEGORIES.frontend,
+    description:
+      "A component library and custom registry built on top of shadcn/ui to help you build AI-native applications faster.",
+    favicon: "https://elements.ai-sdk.dev/favicon.ico",
+    ogImage:
+      "https://raw.githubusercontent.com/vercel/ai-elements/main/apps/docs/app/opengraph-image.png",
+    tags: [TAGS["ui-component"]],
+    url: "https://elements.ai-sdk.dev/",
+  },
+  {
     title: "All ShadCN",
     category: CATEGORIES.frontend,
     description:
@@ -566,7 +577,6 @@ export const frontendLinks: Tool[] = [
     description:
       "Create and generate professional documents and PDFs using React components. htmldocs offers a simple, powerful API for automated document generation and management.",
     favicon: "https://raw.githubusercontent.com/htmldocs-js/htmldocs/canary/apps/docs/favicon.svg",
-    // https://raw.githubusercontent.com/jamdotdev/jam-dev-utilities/main/public/icons/icon.svg
     ogImage: "https://htmldocs.com/og-image.png",
     subtitle: "Build and generate documents with React",
     tags: [TAGS.react],
@@ -1252,6 +1262,16 @@ export const frontendLinks: Tool[] = [
     subtitle: "Design engine for vibe coding",
     tags: [TAGS.ai, TAGS.development, TAGS.ui],
     url: "https://styleseed-demo.vercel.app/",
+  },
+  {
+    title: "Supabase UI Library",
+    author: "Supabase",
+    category: CATEGORIES.frontend,
+    description: "Provides a library of components for your project",
+    favicon: "https://supabase.com/favicon/favicon.svg",
+    ogImage: "https://supabase.com/ui/img/supabase-og-image.png",
+    tags: [TAGS["ui-component"]],
+    url: "https://supabase.com/ui",
   },
   {
     title: "Supercons",

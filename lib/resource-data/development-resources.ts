@@ -319,6 +319,17 @@ export const developmentLinks: Tool[] = [
     url: "https://coolify.io/",
   },
   {
+    title: "cron-job.org",
+    category: CATEGORIES.dev,
+    description: "Free cronjobs - from minutely to once a year.",
+    favicon:
+      "https://raw.githubusercontent.com/pschlan/cron-job.org/master/frontend/public/logo192.png",
+    ogImage:
+      "https://cron-job.org/_next/image/?url=%2Fimages%2Fconsole-history-shadow-en.png&w=3840&q=75",
+    tags: [TAGS.tool],
+    url: "https://cron-job.org/en/",
+  },
+  {
     title: "CSS Grid Generator",
     category: CATEGORIES.dev,
     description:
@@ -1000,6 +1011,8 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description:
       "Use readme.so's markdown editor and templates to easily create a ReadMe for your projects",
+    favicon: "https://readme.so/readme.svg",
+    ogImage: "https://readme.so/screenshot.png",
     url: "https://readme.so/",
   },
   {
