@@ -1,11 +1,12 @@
 import type { MetadataRoute } from "next";
 
 import { resourceCategories } from "@/lib/resource-data";
+import { siteConfig } from "@/lib/site-config";
 import { internalTools } from "@/lib/tools-data";
 import { slugify } from "@/lib/utils";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://syntax-stash.vercel.app";
+  const baseUrl = siteConfig.url;
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {

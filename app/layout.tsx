@@ -8,6 +8,7 @@ import AppLayout from "@/components/app-layout";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { siteConfig } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 
 const bricolage = Bricolage_Grotesque({
@@ -34,43 +35,30 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "syntax-stash — Curated Developer Tools & Resources",
-    template: "%s | syntax-stash",
+    default: siteConfig.title,
+    template: `%s | ${siteConfig.name}`,
   },
-  authors: [{ name: "Thamindu Dasanayake", url: "https://github.com/ThaminduDasanayake" }],
-  creator: "Thamindu Dasanayake",
-  description:
-    "A curated, open-source stash of developer tools, utilities, generators, and resources for modern web development.",
-  keywords: [
-    "code snippets",
-    "converters",
-    "developer tools",
-    "diff viewer",
-    "formatters",
-    "frontend utilities",
-    "regex studio",
-    "syntax stash",
-    "web development",
-  ],
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://syntax-stash.vercel.app"),
+  authors: [{ name: siteConfig.author.name, url: siteConfig.author.github }],
+  creator: siteConfig.author.name,
+  description: siteConfig.description,
+  keywords: [...siteConfig.keywords],
+  metadataBase: new URL(siteConfig.url),
   openGraph: {
-    title: "syntax-stash — Curated Developer Tools & Resources",
-    description:
-      "A curated, open-source stash of developer tools, utilities, generators, and resources for modern web development.",
+    title: siteConfig.title,
+    description: siteConfig.description,
     locale: "en_US",
-    siteName: "syntax-stash",
+    siteName: siteConfig.name,
     type: "website",
-    url: "https://syntax-stash.vercel.app",
+    url: siteConfig.url,
   },
   robots: {
     follow: true,
     index: true,
   },
   twitter: {
-    title: "syntax-stash — Curated Developer Tools & Resources",
+    title: siteConfig.title,
     card: "summary_large_image",
-    description:
-      "A curated, open-source stash of developer tools, utilities, generators, and resources for modern web development.",
+    description: siteConfig.description,
   },
 };
 
