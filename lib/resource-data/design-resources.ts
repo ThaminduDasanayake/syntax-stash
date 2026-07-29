@@ -1714,15 +1714,6 @@ export const designLinks: Tool[] = [
     url: "https://sprrrint.com/",
   },
   {
-    title: "SSGOI",
-    category: CATEGORIES.design,
-    description:
-      "Router-agnostic page transitions for React, Svelte, Vue, Solid, Angular, and Qwik. Built on the Web Animations API with spring physics and state preservation.",
-    subtitle: "Native page transitions on the web",
-    tags: [TAGS.design],
-    url: "https://ssgoi.dev/",
-  },
-  {
     title: "Stack & Justify",
     author: "Max Esnée",
     category: CATEGORIES.design,
@@ -1767,14 +1758,6 @@ export const designLinks: Tool[] = [
     subtitle: "AI Product Design Agent | UI from a Prompt",
     tags: [TAGS.design],
     url: "https://app.superdesign.dev/",
-  },
-  {
-    title: "Super Designer",
-    category: CATEGORIES.design,
-    description:
-      "30+ free online design tools — generate backgrounds, gradients, CSS patterns, 3D shapes, color palettes & more. No signup, instant PNG/SVG/CSS export.",
-    subtitle: "Free Online Design Tools for Developers & Designers",
-    url: "https://superdesigner.co/",
   },
   {
     title: "Text Diagram",
@@ -1906,14 +1889,6 @@ export const designLinks: Tool[] = [
       "UNCUT.wtf is a free typeface catalogue, focusing on somewhat contemporary type. There are currently 163 typefaces featured.",
     tags: [TAGS.typography],
     url: "https://uncut.wtf/",
-  },
-  {
-    title: "Unicorn Studio",
-    category: CATEGORIES.design,
-    description:
-      "Create enchanting WebGL effects, motion, and interactivity — in minutes, not hours. Unicorn Studio makes WebGL easy for designers to embed in Framer, Webflow, or any website.",
-    tags: [TAGS.design],
-    url: "https://www.unicorn.studio/",
   },
   {
     title: "ux dictionary",

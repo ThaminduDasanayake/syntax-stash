@@ -1289,9 +1289,12 @@ export const frontendLinks: Tool[] = [
   },
   {
     title: "SSGOI",
+    author: "MeurSyphus",
     category: CATEGORIES.frontend,
     description:
       "Router-agnostic page transitions for React, Svelte, Vue, Solid, Angular, and Qwik. Built on the Web Animations API with spring physics and state preservation.",
+    favicon: "https://ssgoi.dev/ssgoi-logo.png",
+    ogImage: "https://ssgoi.dev/og.png",
     subtitle: "Native page transitions on the web",
     tags: [TAGS.animation],
     url: "https://ssgoi.dev/",

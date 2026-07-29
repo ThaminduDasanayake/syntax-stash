@@ -2,6 +2,7 @@
 
 import { ArrowSquareOutIcon, ToolboxIcon } from "@phosphor-icons/react";
 import Link from "next/link";
+import { useState } from "react";
 
 import { CardIcon } from "@/components/card-icon";
 import { ResourceDialog } from "@/components/resource-dialog";
@@ -102,6 +103,7 @@ function CardBody({ tool }: ToolCardProps) {
 }
 
 export default function ToolCard({ tool }: ToolCardProps) {
+  const [open, setOpen] = useState(false);
   const linkWrapperClass =
     "block w-full h-full outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary text-left";
 
@@ -114,13 +116,13 @@ export default function ToolCard({ tool }: ToolCardProps) {
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <div className={linkWrapperClass}>
           <CardBody tool={tool} />
         </div>
       </DialogTrigger>
-      <ResourceDialog tool={tool} />
+      <ResourceDialog key={`${tool.url || tool.title}-${open}`} tool={tool} />
     </Dialog>
   );
 }

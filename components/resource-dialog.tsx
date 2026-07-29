@@ -2,7 +2,7 @@
 
 import { ArrowSquareOutIcon, CaretLeftIcon, CaretRightIcon, XIcon } from "@phosphor-icons/react";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import { CardIcon } from "@/components/card-icon";
 import { Button } from "@/components/ui/button";
@@ -16,19 +16,16 @@ import {
   getResourceThemeByKey,
   RESOURCE_THEME_STYLES,
 } from "@/lib/utils";
-import { ToolCardProps } from "@/types";
+import { Tool,ToolCardProps } from "@/types";
 
 export function ResourceDialog({ tool }: ToolCardProps) {
   const [activeTool, setActiveTool] = useState(tool);
   const [ogError, setOgError] = useState(false);
 
-  useEffect(() => {
-    setActiveTool(tool);
-  }, [tool]);
-
-  useEffect(() => {
+  const handleSelectTool = (res: Tool) => {
     setOgError(false);
-  }, [activeTool]);
+    setActiveTool(res);
+  };
 
   const currentIndex = useMemo(() => {
     return resourceLinks.findIndex((r) => r.title === activeTool.title);
@@ -37,13 +34,13 @@ export function ResourceDialog({ tool }: ToolCardProps) {
   const handleNext = () => {
     if (currentIndex === -1) return;
     const nextIndex = (currentIndex + 1) % resourceLinks.length;
-    setActiveTool(resourceLinks[nextIndex]);
+    handleSelectTool(resourceLinks[nextIndex]);
   };
 
   const handlePrev = () => {
     if (currentIndex === -1) return;
     const prevIndex = (currentIndex - 1 + resourceLinks.length) % resourceLinks.length;
-    setActiveTool(resourceLinks[prevIndex]);
+    handleSelectTool(resourceLinks[prevIndex]);
   };
 
   const key = getResourceKeyFromValue(activeTool.category);
@@ -214,7 +211,7 @@ export function ResourceDialog({ tool }: ToolCardProps) {
                     return (
                       <button
                         key={res.title}
-                        onClick={() => setActiveTool(res)}
+                        onClick={() => handleSelectTool(res)}
                         className={cn("modal-related-chip group", styles.chip)}
                       >
                         <span className={cn("modal-chip-dot", styles.dot)} />
@@ -238,7 +235,7 @@ export function ResourceDialog({ tool }: ToolCardProps) {
                     return (
                       <button
                         key={res.url || res.title}
-                        onClick={() => setActiveTool(res)}
+                        onClick={() => handleSelectTool(res)}
                         className={cn("modal-related-chip group", styles.chip)}
                       >
                         <span className={cn("modal-chip-dot", styles.dot)} />

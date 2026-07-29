@@ -1259,7 +1259,7 @@ export const developmentLinks: Tool[] = [
     favicon: "https://superdesigner.co/logo.svg",
     ogImage: "https://superdesigner.co/og/og.png",
     subtitle: "Free Online Design Tools for Developers & Designers",
-    tags: [TAGS.tool],
+    tags: [TAGS.design, TAGS.tool],
     url: "https://superdesigner.co/",
   },
   {
@@ -1491,13 +1491,6 @@ export const developmentLinks: Tool[] = [
       "Near-perfect voice cloning with multiple TTS engines. Desktop app for Mac, Windows, and Linux. Multi-sample support, smart caching, local or remote inference.",
     subtitle: "Open Source Voice Cloning Desktop App",
     url: "https://voicebox.sh/",
-  },
-  {
-    title: "web.dev",
-    category: CATEGORIES.dev,
-    description: "Guidance to build modern web experiences that work on any browser.",
-    tags: [TAGS.development],
-    url: "https://web.dev/",
   },
   {
     title: "Web Apps by 123apps",
