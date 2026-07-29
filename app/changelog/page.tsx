@@ -74,7 +74,7 @@ export default function ChangelogPage() {
             >
               <div className="flex flex-wrap items-center justify-between gap-4 border-b-2 border-current/20 pb-4">
                 <div className="flex items-center gap-3">
-                  <span className="bg-c-blue text-paper px-3 py-1 font-mono text-xs font-bold uppercase tracking-wider">
+                  <span className="bg-c-blue text-paper px-3 py-1 font-mono text-xs font-bold tracking-wider uppercase">
                     {entry.version}
                   </span>
                   <h2 className="text-display-md font-bold">{entry.title}</h2>

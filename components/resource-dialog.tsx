@@ -16,7 +16,7 @@ import {
   getResourceThemeByKey,
   RESOURCE_THEME_STYLES,
 } from "@/lib/utils";
-import { Tool,ToolCardProps } from "@/types";
+import { Tool, ToolCardProps } from "@/types";
 
 export function ResourceDialog({ tool }: ToolCardProps) {
   const [activeTool, setActiveTool] = useState(tool);

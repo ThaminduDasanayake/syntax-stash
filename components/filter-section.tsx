@@ -36,7 +36,7 @@ export function FilterSection({
 
   const handleClear = () => {
     setSearchQuery("");
-  }
+  };
 
   const filteredItems = useMemo(() => {
     return items.filter((tool) => {

@@ -10,12 +10,14 @@ Thank you for your interest in contributing to **Syntax Stash**! We welcome cont
    Click the **Fork** button at the top right of [GitHub](https://github.com/ThaminduDasanayake/syntax-stash).
 
 2. **Clone your Fork**
+
    ```bash
    git clone https://github.com/YOUR_USERNAME/syntax-stash.git
    cd syntax-stash
    ```
 
 3. **Install Dependencies**
+
    ```bash
    npm install
    ```

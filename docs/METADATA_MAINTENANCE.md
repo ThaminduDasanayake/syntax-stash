@@ -34,6 +34,7 @@ syntax-stash/
 `lib/site-config.ts` is the single source of truth for all metadata.
 
 ### How to update production URL:
+
 If your production URL or domain changes, update `url` in `lib/site-config.ts`:
 
 ```ts
@@ -41,7 +42,8 @@ export const siteConfig = {
   name: "syntax-stash",
   shortName: "SyntaxStash",
   title: "syntax-stash — Curated Developer Tools & Resources",
-  description: "A curated, open-source stash of developer tools, utilities, generators, and resources.",
+  description:
+    "A curated, open-source stash of developer tools, utilities, generators, and resources.",
   url: process.env.NEXT_PUBLIC_APP_URL || "https://syntax-stash.vercel.app", // <--- Production URL
   author: {
     name: "Thamindu Dasanayake",
@@ -64,6 +66,7 @@ export const siteConfig = {
 - **OpenGraph & Twitter Cards**: Generates standard `<meta property="og:...">` tags.
 
 ### Adding metadata to a new page:
+
 To add metadata to a new static page (e.g. `app/blog/page.tsx`), export a `metadata` object:
 
 ```ts
@@ -83,7 +86,11 @@ export const metadata: Metadata = {
 For dynamic routes like `/tools/[slug]` or `/resources/[slug]`, metadata is generated dynamically per request/build using `generateMetadata()`:
 
 ```ts
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
   const { slug } = await params;
   const item = findItemBySlug(slug);
 
