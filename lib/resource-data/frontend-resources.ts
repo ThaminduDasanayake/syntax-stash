@@ -1015,6 +1015,16 @@ export const frontendLinks: Tool[] = [
     url: "https://primeui.com/",
   },
   {
+    title: "Radix Icons",
+    author: "Radix",
+    category: CATEGORIES.frontend,
+    description: "A crisp set of 15×15 icons designed by the WorkOS team.",
+    favicon: "https://www.radix-ui.com/favicon-black.svg",
+    ogImage: "https://radix-ui.com/icons/opengraph-image.png",
+    tags: [TAGS.icons],
+    url: "https://www.radix-ui.com/icons",
+  },
+  {
     title: "React Aria",
     category: CATEGORIES.frontend,
     description: "Craft world-class accessible components with custom styles.",

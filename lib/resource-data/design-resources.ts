@@ -371,6 +371,16 @@ export const designLinks: Tool[] = [
     url: "https://jasperbernaers.com/colours/",
   },
   {
+    title: "Colors & Fonts",
+    category: CATEGORIES.design,
+    description:
+      "Build complete color scales from a single base color or create harmonious 5-color palettes using color theory. Real-time contrast checking, HSL editing, and export to Tailwind v4, CSS, SCSS, Figma tokens, and more.",
+    favicon: "https://www.colorsandfonts.com/favicons/apple-touch-icon.png",
+    ogImage: "https://www.colorsandfonts.com/openGraph/fb.png",
+    tags: [TAGS.color, TAGS.typography],
+    url: "https://www.colorsandfonts.com/",
+  },
+  {
     title: "ContentCore",
     category: CATEGORIES.design,
     description: "Create content in one place. Incredibly fast. Save as images or videos.",
@@ -648,6 +658,19 @@ export const designLinks: Tool[] = [
     url: "https://eyecannndy.com/",
   },
   {
+    title: "Figma Tools",
+    author: "Figma",
+    category: CATEGORIES.design,
+    description:
+      "Discover helpful design tools in Figma to boost creativity, speed up your process, and bring your ideas to life.",
+    favicon: "https://static.figma.com/app/icon/2/favicon.svg",
+    ogImage:
+      "https://cdn.sanity.io/images/599r6htc/regionalized/342e17642c7afa81206490b0dd21c3e5724ae040-2400x1260.png",
+    subtitle: "Essential Design Tools for Designers & Creators",
+    tags: [TAGS.design, TAGS.tool],
+    url: "https://www.figma.com/tools/",
+  },
+  {
     title: "fixelPont",
     author: "falk schröter",
     category: CATEGORIES.design,
@@ -704,6 +727,16 @@ export const designLinks: Tool[] = [
       "https://cdn.prod.website-files.com/5eeb4370978cbe4a1f392156/5f847dd9ec17cbbba67c8636_Artboard%2068.svg",
     tags: [TAGS.typography],
     url: "https://www.fontbrief.com/home",
+  },
+  {
+    title: "fontdata",
+    author: "Lars Schwarz",
+    category: CATEGORIES.design,
+    description: "Designing a new typeface and wondering if the name is already taken?",
+    ogImage: "https://namecheck.fontdata.com/ogimagev1.png",
+    subtitle: "typeface name check",
+    tags: [TAGS.typography],
+    url: "https://namecheck.fontdata.com/",
   },
   {
     title: "Fontjoy",
@@ -873,6 +906,17 @@ export const designLinks: Tool[] = [
     url: "https://fonts.google.com/",
   },
   {
+    title: "Gradient Colors Collection",
+    author: "GradientsCSS",
+    category: CATEGORIES.design,
+    description:
+      "Discover and explore beautiful gradient colors for your projects. GradientsCSS offers a curated collection of gradient palettes for web design and creative work.",
+    favicon: "https://gradientscss.vercel.app/favicon/favicon.svg",
+    ogImage: "https://gradientscss.vercel.app/favicon/banner.jpg",
+    tags: [TAGS.color],
+    url: "https://gradientscss.vercel.app/",
+  },
+  {
     title: "Graduum",
     author: "Niklaus Gerber",
     category: CATEGORIES.design,
@@ -883,6 +927,16 @@ export const designLinks: Tool[] = [
     subtitle: "Free Mesh Gradients by Niklaus Gerber",
     tags: [TAGS.color],
     url: "https://graduum.niklausgerber.com/",
+  },
+  {
+    title: "GRAFIK STASH",
+    category: CATEGORIES.design,
+    description:
+      "Premium Design Resources for Digital Creators. Mockups, Icons, Illustrations and UI Kits to boost your workflow.",
+    favicon: "https://grafikstash.com/wp-content/uploads/2021/01/G-Dealer.svg",
+    ogImage: "https://grafikstash.com/wp-content/uploads/2021/01/WP_Featured_Image.jpg",
+    tags: [TAGS.mockup],
+    url: "https://grafikstash.com/",
   },
   {
     title: "Grid Paper",
@@ -907,6 +961,18 @@ export const designLinks: Tool[] = [
     subtitle: "The hottest headers on the internet",
     tags: [TAGS.design, TAGS.inspiration],
     url: "https://www.headers.club/",
+  },
+  {
+    title: "ImageColorPicker.com",
+    category: CATEGORIES.design,
+    className: "bg-foreground border-paper",
+    description:
+      "Upload an image, paste from clipboard, or enter a URL to instantly pick colors. Get HEX, RGB, HSL codes free — no signup required.",
+    favicon: "https://imagecolorpicker.com/favicon.svg",
+    ogImage: "https://imagecolorpicker.com/imagecolorpicker-preview_b.webp",
+    subtitle: "Pick Colors from Any Image – Free HEX, RGB & Color Codes",
+    tags: [TAGS.color],
+    url: "https://imagecolorpicker.com/",
   },
   {
     title: "Ingradients",
@@ -1411,6 +1477,28 @@ export const designLinks: Tool[] = [
     url: "https://precise-type.com/",
   },
   {
+    title: "Pure",
+    category: CATEGORIES.design,
+    description:
+      "Daily landing page design inspiration featuring only the top designs in the industry.",
+    favicon: "https://framerusercontent.com/images/KMaAsToyjpy6dbL3iFbSuAqIHOk.svg",
+    ogImage: "https://framerusercontent.com/images/nfRZTFdT8Wy5FgofyujrYKs8T0A.png",
+    subtitle: "Landing Page Design Inspiration",
+    tags: [TAGS.inspiration],
+    url: "https://purelanding.page/",
+  },
+  {
+    title: "Radix Colors",
+    author: "Radix",
+    category: CATEGORIES.design,
+    description:
+      "An open-source color system for designing beautiful, accessible websites and apps.",
+    favicon: "https://www.radix-ui.com/favicon-black.svg",
+    ogImage: "https://radix-ui.com/colors/opengraph-image.png",
+    tags: [TAGS.color],
+    url: "https://www.radix-ui.com/colors",
+  },
+  {
     title: "RapidRAW",
     category: CATEGORIES.design,
     description:
@@ -1511,6 +1599,17 @@ export const designLinks: Tool[] = [
     url: "https://savee.com/",
   },
   {
+    title: "Scale",
+    author: "Hayk An",
+    category: CATEGORIES.design,
+    description: "Color scale generator by Hayk An",
+    favicon: "https://hihayk.github.io/scale/favicon.ico",
+    ogImage: "https://raw.githubusercontent.com/hihayk/scale/master/docs/screenshot-1.png",
+    subtitle: "Color scale generator",
+    tags: [TAGS.color],
+    url: "https://hihayk.github.io/scale",
+  },
+  {
     title: "Screenshot Studio",
     category: CATEGORIES.design,
     className: "bg-foreground border-paper",
@@ -1538,6 +1637,18 @@ export const designLinks: Tool[] = [
     subtitle: "Framer Templates Ranking & Marketplace Directory",
     tags: [TAGS.design, TAGS.inspiration, TAGS.ui],
     url: "https://selected.site/",
+  },
+  {
+    title: "Shadecolr",
+    author: "Radix",
+    category: CATEGORIES.design,
+    description:
+      "Generate Tailwind CSS color palettes for SaaS dashboards, product UI, and client projects. Preview them in a real interface and export usable shades fast.",
+    favicon: "https://www.shadecolr.com/image/favicon/favicon.svg",
+    ogImage: "https://www.shadecolr.com/image/shadecolr-cover.png",
+    subtitle: "Generate color palettes for Tailwind CSS",
+    tags: [TAGS.color],
+    url: "https://www.shadecolr.com/",
   },
   {
     title: "Sharpen",
@@ -1612,6 +1723,18 @@ export const designLinks: Tool[] = [
     url: "https://ssgoi.dev/",
   },
   {
+    title: "Stack & Justify",
+    author: "Max Esnée",
+    category: CATEGORIES.design,
+    description:
+      "Stack & Justify is a tool to help create type specimens by finding words or phrases of the same width. It is free to use and distributed under GPLv3 license.",
+    favicon:
+      "data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22%3E%3Ctext%20y=%22.9em%22%20font-size=%2290%22%3E🗜️%3C/text%3E%3C/svg%3E",
+    ogImage: "https://max-esnee.com/stack-and-justify/images/screenshot.png",
+    tags: [TAGS.typography],
+    url: "https://max-esnee.com/stack-and-justify/",
+  },
+  {
     title: "Storyboard Maker",
     category: CATEGORIES.design,
     description:
@@ -1677,6 +1800,29 @@ export const designLinks: Tool[] = [
     subtitle: "UI/UX Design Subscription for Startups",
     tags: [TAGS.design],
     url: "https://designproject.io/",
+  },
+  {
+    title: "The good colors",
+    author: "Fran Pérez",
+    category: CATEGORIES.design,
+    description:
+      "Generate perceptually uniform color palettes with OKLCH, ensuring consistent lightness and chroma. Supports wide gamut displays, checks contrast ratios using APAC, and is optimized for color blindness.",
+    favicon:
+      "data:image/svg+xml;utf8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%3Crect%0A%20%20%20%20%20%20%20%20%20%20x%3D%221%22%0A%20%20%20%20%20%20%20%20%20%20y%3D%221%22%0A%20%20%20%20%20%20%20%20%20%20width%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20height%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20rx%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20fill%3D%22%23ffb0cc%22%0A%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%3Crect%0A%20%20%20%20%20%20%20%20%20%20x%3D%226%22%0A%20%20%20%20%20%20%20%20%20%20y%3D%221%22%0A%20%20%20%20%20%20%20%20%20%20width%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20height%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20rx%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20fill%3D%22%23ffb4b3%22%0A%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%3Crect%0A%20%20%20%20%20%20%20%20%20%20x%3D%2211%22%0A%20%20%20%20%20%20%20%20%20%20y%3D%221%22%0A%20%20%20%20%20%20%20%20%20%20width%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20height%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20rx%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20fill%3D%22%23ffba80%22%0A%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%3Crect%0A%20%20%20%20%20%20%20%20%20%20x%3D%221%22%0A%20%20%20%20%20%20%20%20%20%20y%3D%226%22%0A%20%20%20%20%20%20%20%20%20%20width%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20height%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20rx%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20fill%3D%22%23eace58%22%0A%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%3Crect%0A%20%20%20%20%20%20%20%20%20%20x%3D%226%22%0A%20%20%20%20%20%20%20%20%20%20y%3D%226%22%0A%20%20%20%20%20%20%20%20%20%20width%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20height%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20rx%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20fill%3D%22%23ade27f%22%0A%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%3Crect%0A%20%20%20%20%20%20%20%20%20%20x%3D%2211%22%0A%20%20%20%20%20%20%20%20%20%20y%3D%226%22%0A%20%20%20%20%20%20%20%20%20%20width%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20height%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20rx%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20fill%3D%22%2356edc5%22%0A%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%3Crect%0A%20%20%20%20%20%20%20%20%20%20x%3D%221%22%0A%20%20%20%20%20%20%20%20%20%20y%3D%2211%22%0A%20%20%20%20%20%20%20%20%20%20width%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20height%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20rx%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20fill%3D%22%2334e7ff%22%0A%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%3Crect%0A%20%20%20%20%20%20%20%20%20%20x%3D%226%22%0A%20%20%20%20%20%20%20%20%20%20y%3D%2211%22%0A%20%20%20%20%20%20%20%20%20%20width%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20height%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20rx%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20fill%3D%22%23a7d2ff%22%0A%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%3Crect%0A%20%20%20%20%20%20%20%20%20%20x%3D%2211%22%0A%20%20%20%20%20%20%20%20%20%20y%3D%2211%22%0A%20%20%20%20%20%20%20%20%20%20width%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20height%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20rx%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20fill%3D%22%23d5c1ff%22%0A%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%0A%20%20%20%20%3C%2Fsvg%3E",
+    ogImage: "https://thegoodcolors.com/og-poster.png",
+    tags: [TAGS.color],
+    url: "https://thegoodcolors.com/",
+  },
+  {
+    title: "The Good Line-Height",
+    author: "Fran Pérez",
+    category: CATEGORIES.design,
+    description:
+      "Simplify type scales by automatically calculating the perfect line height for any text & grid combination.",
+    favicon: "https://thegoodlineheight.com/favicon.svg",
+    ogImage: "https://thegoodlineheight.com/og-poster.png",
+    tags: [TAGS.typography],
+    url: "https://thegoodlineheight.com/",
   },
   {
     title: "Toolfolio",
