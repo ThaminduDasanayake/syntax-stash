@@ -293,6 +293,10 @@
   @apply font-mono text-base! font-bold tracking-wide uppercase;
 }
 
+@utility text-mono-3xl {
+  @apply font-mono text-3xl! font-bold tracking-wide uppercase;
+}
+
 /* Font display Typography */
 @utility text-display-2xs {
   @apply font-display text-[10px]! font-bold! tracking-widest uppercase;
