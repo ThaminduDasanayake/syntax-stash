@@ -34,6 +34,10 @@ export function FilterSection({
     }
   };
 
+  const handleClear = () => {
+    setSearchQuery("");
+  }
+
   const filteredItems = useMemo(() => {
     return items.filter((tool) => {
       // Category filter
@@ -77,9 +81,16 @@ export function FilterSection({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <button className="filter-search-clear">
-              <XIcon weight="bold" />
-            </button>
+            {searchQuery && (
+              <button
+                type="button"
+                className="filter-search-clear"
+                onClick={handleClear}
+                aria-label="Clear search"
+              >
+                <XIcon weight="bold" />
+              </button>
+            )}
           </div>
           <div className="filter-pills">
             {categories.map((item, i) => {
