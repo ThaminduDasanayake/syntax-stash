@@ -400,6 +400,18 @@ export const developmentLinks: Tool[] = [
     url: "https://devresourc.es/",
   },
   {
+    title: "DevToolLab",
+    author: "DevToolLab Team",
+    category: CATEGORIES.dev,
+    description:
+      "Free online developer tools for JSON, XML, CSS formatting, conversion, minification and encoding. No registration required.",
+    favicon: "https://devtoollab.com/favicon.svg",
+    ogImage: "https://devtoollab.com/og-image.svg",
+    subtitle: "Free Online Developer Tools",
+    tags: [TAGS.tool],
+    url: "https://devtoollab.com/",
+  },
+  {
     title: "Dev Tools",
     author: "Hitarth Shah",
     category: CATEGORIES.dev,

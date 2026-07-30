@@ -1233,9 +1233,13 @@ export const frontendLinks: Tool[] = [
   },
   {
     title: "Skiper UI",
+    author: "Gxuri",
     category: CATEGORIES.frontend,
     description:
       "Brand new uncommon components for your Next.js project. Use with ease through shadcn CLI 3.0, featuring fast-growing components and collections that are easy to edit and use.",
+    favicon: "https://skiper-ui.com/logos/logo.svg",
+    ogImage: "https://skiper-ui.com/og-main.png",
+    subtitle: "Un-common Components for shadcn/ui",
     tags: [TAGS["ui-component"]],
     url: "https://skiper-ui.com/",
   },
@@ -1397,6 +1401,18 @@ export const frontendLinks: Tool[] = [
     subtitle: "The Ultimate React Table Engine",
     tags: [TAGS["ui-component"]],
     url: "https://react-table-craft.vercel.app/",
+  },
+  {
+    title: "Tabler Icons",
+    author: "codecalm",
+    category: CATEGORIES.frontend,
+    description:
+      "Tabler Icons: 6184 free and open source SVG icons. Customizable size, color and stroke. Available for React, SolidJS, Vue, Figma and more for free!",
+    favicon: "https://tabler.io/favicon.ico",
+    ogImage: "https://tabler.io/icons/opengraph-image-1v9qf3.png",
+    subtitle: "6150+ free vector icons for web design",
+    tags: [TAGS.icons],
+    url: "https://tabler.io/icons",
   },
   {
     title: "Tailark",

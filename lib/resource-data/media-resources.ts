@@ -167,6 +167,18 @@ export const mediaLinks: Tool[] = [
     url: "https://graphicsauce.co/free-placeholder-logo/",
   },
   {
+    title: "Free SVG Converter",
+    author: "Kristjan Retter",
+    category: CATEGORIES.media,
+    description:
+      "Free SVG converter with color palette customization. Works with both Jpg to svg and png to svg. Upload the image and adjust colors using our built-in color picker. Convert to editable SVG format instantly. No signup required",
+    favicon: "https://svgconverter.online/favicon.ico",
+    ogImage: "https://svgconverter.online/thumbnail.png",
+    subtitle: "With Color",
+    tags: [TAGS.svg],
+    url: "https://svgconverter.online",
+  },
+  {
     title: "Free SVG Illustrations",
     author: "Lukasz Adam",
     category: CATEGORIES.media,
@@ -305,6 +317,15 @@ export const mediaLinks: Tool[] = [
     url: "https://www.ogimage.gallery/",
   },
   {
+    title: "Pastefy",
+    category: CATEGORIES.media,
+    description: "Pastefy is an Open Source self-hosted Pastebin/GithubGist alternative.",
+    favicon: "https://pastefy.app/icons/apple-touch-icon.png",
+    ogImage: "https://pastefy.app/thumbnail.png",
+    subtitle: "Share your code snippets",
+    url: "https://pastefy.app",
+  },
+  {
     title: "Pattern Monster",
     category: CATEGORIES.media,
     description:
@@ -328,6 +349,18 @@ export const mediaLinks: Tool[] = [
       "Free stock photos & videos you can use everywhere. Browse millions of high-quality royalty free stock images & copyright free pictures. No attribution required.",
     subtitle: "Free Stock Photos, Royalty Free Stock Images & Copyright Free Pictures",
     url: "https://www.pexels.com/",
+  },
+  {
+    title: "Placeholder Image Generator",
+    author: "Kristjan Retter",
+    category: CATEGORIES.media,
+    description:
+      "Create free placeholder images using our generator. Select your brand colors and image size, and copy the image URL",
+    favicon: "https://placeholderimage.io/logo.svg",
+    ogImage: "https://placeholderimage.io/thumbnail.png",
+    subtitle: "With Brand Colors",
+    tags: [TAGS.image],
+    url: "https://placeholderimage.io/",
   },
   {
     title: "Pngfile",

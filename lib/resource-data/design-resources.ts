@@ -529,6 +529,18 @@ export const designLinks: Tool[] = [
     url: "https://designsystemdiaries.substack.com/",
   },
   {
+    title: "Details.so",
+    category: CATEGORIES.design,
+    className: "bg-foreground border-paper",
+    description:
+      "Curated web design inspiration from real websites: hero sections, footers, preloaders, page transitions and animations — updated weekly.",
+    favicon: "https://www.details.so/favicons/favicon.svg",
+    ogImage: "https://www.details.so/og-default.jpg",
+    subtitle: "Best Web Design Inspiration",
+    tags: [TAGS.inspiration],
+    url: "https://www.details.so/inspo",
+  },
+  {
     title: "Developer Portfolios",
     author: "emmabostian",
     category: CATEGORIES.design,
@@ -1936,6 +1948,19 @@ export const designLinks: Tool[] = [
     description: "The best in Branding, Editorial and Graphic Design",
     subtitle: "Branding, Editorial and Graphic Design",
     url: "https://visualjournal.it/",
+  },
+  {
+    title: "Web Design Inspiration",
+    author: "Kristjan Retter",
+    category: CATEGORIES.design,
+    className: "bg-foreground border-paper",
+    description:
+      "Web design inspiration: a curated collection of unique websites and UI sections. Fresh design ideas for designers and developers, updated regularly",
+    favicon: "https://webdesigninspiration.io/logo.svg",
+    ogImage: "https://webdesigninspiration.io/thumbnail.png",
+    subtitle: "Unique, Simple designs",
+    tags: [TAGS.inspiration],
+    url: "https://webdesigninspiration.io/",
   },
   {
     title: "Website Headlines (dotcom)",
