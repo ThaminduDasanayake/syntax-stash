@@ -73,6 +73,18 @@ export const newLinks: Tool[] = [
     url: "https://designspells.com/",
   },
   {
+    title: "Detail",
+    author: "Rene Wang",
+    category: CATEGORIES.dev,
+    className: "bg-foreground border-paper",
+    description:
+      "A curated reference of small design decisions that shape better interfaces. For designers and engineers who care about the details.",
+    favicon: "https://detail.design/icon.svg",
+    ogImage: "https://detail.design/og.png",
+    subtitle: "Where craft lives",
+    url: "https://detail.design/",
+  },
+  {
     title: "digibouquet",
     category: CATEGORIES.dev,
     description:
@@ -199,6 +211,15 @@ export const newLinks: Tool[] = [
     favicon: "https://screensizes.app/favicon.svg",
     ogImage: "https://www.screensizes.app/ogimage.png",
     url: "https://screensizes.app/",
+  },
+  {
+    title: "Slidev",
+    author: "Anthony Fu",
+    category: CATEGORIES.dev,
+    description: "Presentation slides for developers",
+    favicon: "https://sli.dev/logo.svg",
+    ogImage: "https://sli.dev/og-image.png",
+    url: "https://sli.dev/",
   },
   {
     title: "StackShare",

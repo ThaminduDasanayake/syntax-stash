@@ -545,6 +545,18 @@ export const educationLinks: Tool[] = [
     url: "https://leetcode.com/",
   },
   {
+    title: "Lessons of Design",
+    category: CATEGORIES.education,
+    description:
+      "The musings of a designer on why he designs the way he does and what he’s learned along the journey.",
+    favicon:
+      "https://c-p.rmcdn.net/5d7571a83f6bcf79139dec7f/upload-261c647f-a942-4a3e-a6db-53d59162e4f7_144.png",
+    ogImage:
+      "https://c-p.rmcdn.net/5d7571a83f6bcf79139dec7f/4093140/Screenshot-73d0a118-7781-4e14-b2d7-b87cbadfc86a_readyscr_1024.jpg",
+    tags: [TAGS.design, TAGS.education],
+    url: "https://lessons.design/",
+  },
+  {
     title: "LLMs from scratch",
     author: "rasbt",
     category: CATEGORIES.education,

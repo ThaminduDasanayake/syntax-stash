@@ -1275,6 +1275,17 @@ export const developmentLinks: Tool[] = [
     url: "https://strapi.io/",
   },
   {
+    title: "Styleframe",
+    category: CATEGORIES.dev,
+    description:
+      "Styleframe turns your design system into a type-safe TypeScript source of truth and compiles it to CSS — one engine behind tokens, themes, utilities, and recipes.",
+    favicon: "https://www.styleframe.dev/logo.svg",
+    ogImage: "https://www.styleframe.dev/_og/s/o_nwvl3e.png",
+    subtitle: "The Design Systems Styling Engine",
+    tags: [TAGS.social, TAGS.tool],
+    url: "https://www.styleframe.dev/",
+  },
+  {
     title: "Super Designer",
     category: CATEGORIES.dev,
     description:

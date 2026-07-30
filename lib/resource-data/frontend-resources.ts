@@ -379,6 +379,18 @@ export const frontendLinks: Tool[] = [
     url: "https://driverjs.com/",
   },
   {
+    title: "EaseMaster",
+    author: "Satish Kumar",
+    category: CATEGORIES.frontend,
+    description:
+      "Design motion that feels real. The ultimate easing visualization tool for generating Cubic Bezier curves and Spring physics for CSS, Tailwind, Framer Motion, and GSAP.",
+    favicon: "https://easemaster.satisui.xyz/icon0.svg",
+    ogImage: "https://easemaster.satisui.xyz/og-image.png",
+    subtitle: "CSS & Spring Easing Generator",
+    tags: [TAGS.animation],
+    url: "https://easemaster.satisui.xyz/",
+  },
+  {
     title: "Easing Graphs",
     category: CATEGORIES.frontend,
     className: "bg-foreground border-paper",
@@ -686,6 +698,18 @@ export const frontendLinks: Tool[] = [
     subtitle: "Download 1,509,000 free icons (SVG, PNG)",
     tags: [TAGS.icons],
     url: "https://icons8.com/icons",
+  },
+  {
+    title: "Icons",
+    author: "Chandu Machineni",
+    category: CATEGORIES.frontend,
+    description:
+      "Access 2 million+ free SVG icons from 200+ popular libraries. Search, customize colors, sizes & stroke width. Download instantly or copy code. Perfect for designers & developers.",
+    favicon: "https://freesvg.vercel.app/favicon.ico",
+    ogImage: "https://freesvg.vercel.app/og-image.jpg",
+    subtitle: "Free SVG Icon Library - 2M+ Icons | Search, Customize & Download",
+    tags: [TAGS.icons],
+    url: "https://freesvg.vercel.app/",
   },
   {
     title: "Iconsax",
@@ -1167,6 +1191,17 @@ export const frontendLinks: Tool[] = [
     subtitle: "shadcn/ui blocks & components",
     tags: [TAGS["ui-component"]],
     url: "https://www.shadcnblocks.com/",
+  },
+  {
+    title: "Shadcnexamples",
+    category: CATEGORIES.frontend,
+    description:
+      "Shadcn UI examples, components, and blocks. Built with Tailwind CSS, Shadcn/ui, Next.js, React, Vue.js. Typescript compatible.",
+    favicon: "https://shadcnexamples.com/logo.png",
+    ogImage: "https://shadcnexamples.com/preview.png",
+    subtitle: "Shadcn UI Components and Blocks",
+    tags: [TAGS["ui-component"]],
+    url: "https://shadcnexamples.com/",
   },
   {
     title: "shadcnmaps",
