@@ -508,6 +508,17 @@ export const developmentLinks: Tool[] = [
     url: "https://explainx.ai/tools",
   },
   {
+    title: "FliiipBook",
+    author: "FliiipBook",
+    category: CATEGORIES.dev,
+    description:
+      "Draw frame-by-frame animations and create GIFs directly in your browser. Simple, fun, and powerful animation tool with onion skinning, timeline controls, and instant GIF export.",
+    favicon: "https://www.fliiipbook.com/favicon.ico",
+    ogImage: "https://www.fliiipbook.com/og-image.png",
+    tags: [TAGS.animation, TAGS.tool],
+    url: "https://www.fliiipbook.com/",
+  },
+  {
     title: "Flority",
     category: CATEGORIES.dev,
     description: "Your Online Flower Arrangement App",

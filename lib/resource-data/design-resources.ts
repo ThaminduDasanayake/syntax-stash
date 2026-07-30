@@ -1389,6 +1389,17 @@ export const designLinks: Tool[] = [
     url: "https://editor.pascal.app/",
   },
   {
+    title: "Path to Design",
+    category: CATEGORIES.design,
+    description:
+      "Explore real design careers from UI/UX, product, and graphic designers, plus many other design roles. Learn how designers get started, what tools they use, and how their roles evolve without the guesswork.",
+    favicon: "https://pbs.twimg.com/profile_images/2035629354705707008/q5X2Txfm_400x400.jpg",
+    ogImage: "https://pathtodesign.com/path-to-design-og-image.jpg",
+    subtitle: "Real UI/UX, Product & Graphic Designer Stories",
+    tags: [TAGS.design],
+    url: "https://www.pathtodesign.com/",
+  },
+  {
     title: "Pattern Club",
     category: CATEGORIES.design,
     description: "A collection of patterns, textures & visuals from designers & illustrators",
@@ -1747,6 +1758,9 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "Generate super awesome color palettes by shifting hue, saturation, lightness, and more. 100% free without ads.",
+    favicon: "https://supercolorpalette.com/favicon.svg",
+    ogImage: "https://i.imgur.com/XeZmcBP.png",
+    subtitle: "100% Free Color Palette Generator",
     tags: [TAGS.color],
     url: "https://supercolorpalette.com/",
   },

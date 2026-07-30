@@ -280,6 +280,17 @@ export const frontendLinks: Tool[] = [
     url: "https://cssbuttons.io/",
   },
   {
+    title: "CSS Diner",
+    author: "Luke Pacholski",
+    category: CATEGORIES.frontend,
+    description: "A fun game to help you learn and practice CSS selectors.",
+    favicon: "https://flukeout.github.io/favicon.png",
+    ogImage: "https://flukeout.github.io/images/fb-share.jpg",
+    subtitle: "Where we feast on CSS Selectors!",
+    tags: [TAGS.css],
+    url: "https://flukeout.github.io/",
+  },
+  {
     title: "CSS Gradient",
     category: CATEGORIES.frontend,
     description:
@@ -512,6 +523,8 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Take your frontend skills to the next level by recreating real websites from real companies.",
+    favicon: "https://www.frontendpractice.com/images/favicon.ico",
+    ogImage: "https://www.frontendpractice.com/FP-meta.png",
     subtitle: "Become a better frontend developer.",
     tags: [TAGS.development, TAGS.education, TAGS.ui],
     url: "https://www.frontendpractice.com/",
@@ -620,6 +633,17 @@ export const frontendLinks: Tool[] = [
     favicon: "https://hypercolor.dev/favicon.png",
     tags: [TAGS.color],
     url: "https://hypercolor.dev/",
+  },
+  {
+    title: "HyperUI",
+    category: CATEGORIES.frontend,
+    description:
+      "Free, open-source Tailwind CSS components for modern web development. Copy-paste ready components to build beautiful, responsive websites faster.",
+    favicon: "https://www.hyperui.dev/favicon.ico",
+    ogImage: "https://hyperui.dev/og.jpg",
+    subtitle: "Free Tailwind CSS Components",
+    tags: [TAGS["ui-component"]],
+    url: "https://hyperui.dev/",
   },
   {
     title: "Iconer",
@@ -1577,5 +1601,14 @@ export const frontendLinks: Tool[] = [
       "Browse 180 free CSS gradients for backgrounds, UI, websites, and design systems. Copy CSS code, explore color palettes, and find gradient inspiration fast.",
     tags: [TAGS.color],
     url: "https://webgradients.com/",
+  },
+  {
+    title: "Web Interface Guidelines",
+    category: CATEGORIES.frontend,
+    description: "A non-exhaustive list of details that make a good web interface.",
+    favicon: "https://interfaces.rauno.me/favicon.svg",
+    ogImage: "https://interfaces.rauno.me/og.png",
+    tags: [TAGS.education],
+    url: "https://interfaces.rauno.me",
   },
 ];

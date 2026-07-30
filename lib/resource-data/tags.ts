@@ -11,6 +11,7 @@ export const TAGS = {
   cheatsheet: "cheatsheet",
   color: "color",
   crawler: "crawler",
+  css: "css",
   data: "data",
   "data-viz": "data-viz",
   design: "design",
