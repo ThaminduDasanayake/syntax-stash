@@ -2,7 +2,6 @@
 
 import { ReactNode, useEffect, useState } from "react";
 
-import AppFooter from "@/components/app-footer";
 import AppHeader from "@/components/app-header";
 import CommandMenu from "@/components/command-menu";
 import Footer from "@/components/footer";
@@ -23,7 +22,6 @@ export default function AppLayout({ children }: { children: ReactNode }) {
     <div className="flex min-h-screen flex-col">
       <AppHeader isScrolled={isScrolled} onSearchOpenAction={() => setCommandMenuOpen(true)} />
       <main className="flex-1">{children}</main>
-      <AppFooter />
       <Footer />
       <CommandMenu open={commandMenuOpen} setOpenAction={setCommandMenuOpen} />
     </div>
