@@ -780,6 +780,18 @@ export const frontendLinks: Tool[] = [
     url: "https://www.jolyui.dev/",
   },
   {
+    title: "junwen-k/ui-x",
+    author: "junwen-k",
+    category: CATEGORIES.frontend,
+    className: "bg-foreground border-paper",
+    description:
+      "Beautifully designed components that you can copy and paste into your apps. Accessible. Customizable. Open Source.",
+    favicon: "https://ui-x.junwen-k.dev/favicon.svg",
+    ogImage: "https://ui-x.junwen-k.dev/og.jpg",
+    tags: [TAGS["ui-component"]],
+    url: "https://ui-x.junwen-k.dev/",
+  },
+  {
     title: "JustGage",
     author: "JustGage Team",
     category: CATEGORIES.frontend,
@@ -1454,11 +1466,23 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Speed up your workflow with responsive, pre-built UI blocks designed for marketing websites.",
-    favicon: "https://tailark.com/icon.svg?icon.a2a0cd9d.svg",
-    ogImage: "https://tailark.com/opengraph-image.png?opengraph-image.35bb4318.png",
+    favicon: "https://tailark.com/icon.svg",
+    ogImage: "https://tailark.com/opengraph-image.png",
     subtitle: "Shadcn Marketing Blocks",
     tags: [TAGS["ui-component"]],
     url: "https://tailark.com/",
+  },
+  {
+    title: "Tailwind CSS Animations Plugin",
+    author: "Miguel Ángel Durán (midudev)",
+    category: CATEGORIES.frontend,
+    description:
+      "Add 79+ ready-to-use CSS animations to Tailwind CSS with utility classes. Fade, slide, zoom, scroll-driven motion, and dialog effects. Zero config, open source by midudev.",
+    favicon: "https://tailwind-animations.com/favicon.svg",
+    ogImage: "https://tailwind-animations.com/og.jpg",
+    subtitle: "79+ Utility Classes",
+    tags: [TAGS.animation],
+    url: "https://tailwindcss-animations.vercel.app",
   },
   {
     title: "TechIcons",

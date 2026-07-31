@@ -107,6 +107,15 @@ export const designLinks: Tool[] = [
     url: "https://anothergraphic.org/",
   },
   {
+    title: "AppFuel",
+    category: CATEGORIES.design,
+    description: "Find winning ads and organic content from top apps",
+    favicon: "https://media.theappfuel.com/appfuel-static/appfuel-favicon-20260623-180.png",
+    ogImage: "https://theappfuel.com/og/appfuel-share.png",
+    tags: [TAGS.inspiration],
+    url: "https://www.theappfuel.com",
+  },
+  {
     title: "Artkit",
     category: CATEGORIES.design,
     description: "A collection of creative, browser-based tools for images, motion, and graphics.",
@@ -760,6 +769,16 @@ export const designLinks: Tool[] = [
     url: "https://fontjoy.com/",
   },
   {
+    title: "Font Mojo",
+    category: CATEGORIES.design,
+    description: "Fontmojo is a simple app to preview, compare, and organize fonts.",
+    favicon: "https://fontmojo.com/favicon.svg",
+    ogImage: "https://fontmojo.com/OG.jpg",
+    subtitle: "Compare and Pick Fonts",
+    tags: [TAGS.typography],
+    url: "https://fontmojo.com/",
+  },
+  {
     title: "Fontself",
     category: CATEGORIES.design,
     description:
@@ -1325,6 +1344,18 @@ export const designLinks: Tool[] = [
     url: "https://omma.build/",
   },
   {
+    title: "Open Foundry",
+    category: CATEGORIES.design,
+    description:
+      "For over a decade, Open Foundry has been the leading curated source for open source typefaces, showcasing exceptional fonts, celebrating their makers and encouraging exploration.",
+    favicon: "https://open-foundry.com/icon.svg",
+    ogImage:
+      "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:ifhrf2dhrh2d6iza22i4begs/bafkreia455l6bx3d2vpzyhgz6sclysutdts7wnmsjm5ocf2nefnjm3xtuy",
+    subtitle: "Curated Fonts for Free",
+    tags: [TAGS.typography],
+    url: "https://open-foundry.com/",
+  },
+  {
     title: "OS Design Directory",
     category: CATEGORIES.design,
     description: "Curated design resources, tools, and inspiration for designers and developers.",
@@ -1431,6 +1462,12 @@ export const designLinks: Tool[] = [
     subtitle: "Modern Background Patterns & Gradients Snippets",
     tags: [TAGS.patterns],
     url: "https://patterncraft.store/",
+  },
+  {
+    title: "Pattern Playground",
+    category: CATEGORIES.design,
+    tags: [TAGS.patterns],
+    url: "https://patterns-three-livid.vercel.app/",
   },
   {
     title: "Penpot",

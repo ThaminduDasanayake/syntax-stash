@@ -372,6 +372,15 @@ export const educationLinks: Tool[] = [
     url: "https://explainshell.com/",
   },
   {
+    title: "Free Code Camp",
+    category: CATEGORIES.education,
+    description: "Learn to Code — For Free — Coding Courses for Busy People",
+    favicon: "https://cdn.freecodecamp.org/platform/universal/fcc_puck_500.jpg",
+    ogImage: "https://cdn.freecodecamp.org/platform/universal/fcc_meta_1920X1080-indigo.png",
+    tags: [TAGS.education],
+    url: "https://www.freecodecamp.org/",
+  },
+  {
     title: "free media heck yeah",
     category: CATEGORIES.education,
     description: "The largest collection of free stuff on the internet!",
@@ -929,6 +938,15 @@ export const educationLinks: Tool[] = [
       "The practical guide to finishing what AI starts. Tutorials, tool reviews, and honest guides for founders, developers, and creators shipping with AI.",
     subtitle: "The Missing Manual for AI-Assisted Development",
     url: "https://blog.vibecoder.me/",
+  },
+  {
+    title: "Visual Types",
+    category: CATEGORIES.education,
+    description: "Interactive visualizations of TypeScript concepts. Behold pretty colors.",
+    favicon: "https://types.kitlangton.com/apple-touch-icon.png",
+    ogImage: "https://types.kitlangton.com/og/og-image.png",
+    tags: [TAGS.education],
+    url: "https://types.kitlangton.com/",
   },
   {
     title: "Web-Development",

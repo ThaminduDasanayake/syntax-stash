@@ -29,6 +29,18 @@ export const mediaLinks: Tool[] = [
     url: "https://asciinator.app/",
   },
   {
+    title: "Avatars",
+    author: "Outpace Studios",
+    category: CATEGORIES.media,
+    description:
+      "Free, zero-dependency React component for generative gradient avatars. Any seed becomes a unique mesh gradient or crisp dither, no stored images or network calls.",
+    favicon: "https://outpacestudios.com/favicon.svg",
+    ogImage: "https://avatars.outpacestudios.com/meta.jpg",
+    subtitle: "Beautiful Generative Gradient Avatars for React",
+    tags: [TAGS.image],
+    url: "https://avatars.outpacestudios.com/",
+  },
+  {
     title: "Blush",
     category: CATEGORIES.media,
     description:
@@ -277,6 +289,17 @@ export const mediaLinks: Tool[] = [
       "15,015 free SVG logos for apps, dev tools and tech brands. Search, filter by category, download or copy in one click.",
     tags: [TAGS.logo],
     url: "https://logos.lndev.me/",
+  },
+  {
+    title: "Mega Doodles Pack",
+    author: "MariaLetta",
+    category: CATEGORIES.media,
+    description:
+      "🔥 Big vector pack with hand-drawn doodles for presentations, social media, blog posts and so on",
+    favicon: "/github.svg",
+    ogImage: "https://raw.githubusercontent.com/MariaLetta/mega-doodles-pack/master/preview/1.png",
+    tags: [TAGS.illustration],
+    url: "https://github.com/MariaLetta/mega-doodles-pack",
   },
   {
     title: "Mossaik",

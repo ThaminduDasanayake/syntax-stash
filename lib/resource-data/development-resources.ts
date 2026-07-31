@@ -1451,6 +1451,17 @@ export const developmentLinks: Tool[] = [
     url: "https://trigger.dev/",
   },
   {
+    title: "tunnl.gg",
+    category: CATEGORIES.dev,
+    description:
+      "Instant public URLs for your local web server. No installation required, just use SSH. Secure, fast, and developer-friendly reverse tunneling.",
+    favicon: "https://tunnl.gg/favicon.svg",
+    ogImage: "https://tunnl.gg/og-image.png",
+    subtitle: "The easiest way to expose localhost to the internet",
+    tags: [TAGS.tool],
+    url: "https://tunnl.gg/",
+  },
+  {
     title: "Typesense",
     category: CATEGORIES.dev,
     description:

@@ -5,6 +5,7 @@ export const TAGS = {
   "ai-agent": "ai-agent",
   animation: "animation",
   ascii: "ascii",
+  avatars: "avatars",
   backend: "backend",
   builder: "builder",
   cad: "cad",
