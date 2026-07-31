@@ -370,6 +370,15 @@ export const designLinks: Tool[] = [
     url: "https://colormind.io/",
   },
   {
+    title: "Color Moods",
+    category: CATEGORIES.design,
+    description: "Generate pairs of colors based on the amount of stimulation you select.",
+    favicon: "https://colormoods.co/assets/images/favicon/apple-touch-icon.png",
+    ogImage: "https://colormoods.co/assets/images/og-image.jpg",
+    tags: [TAGS.color],
+    url: "https://colormoods.co/",
+  },
+  {
     title: "Color Name Finder",
     author: "Jasper Bernaers",
     category: CATEGORIES.design,
