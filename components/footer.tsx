@@ -15,10 +15,6 @@ export default function Footer() {
         {/* Top Section: About Manifesto */}
         <div className="pb-12">
           <div className="flex max-w-2xl flex-col gap-3">
-            <div className="text-c-orange flex items-center gap-2 font-mono text-xs font-bold tracking-widest uppercase">
-              <span>[ 01 ]</span>
-              <span>SYNTAX STASH</span>
-            </div>
             <div className="flex flex-col items-start gap-2">
               <h3 className="text-paper font-mono text-xl font-bold tracking-tight sm:text-2xl">
                 OPEN SOURCE DEVELOPER UTILITIES.
@@ -27,7 +23,7 @@ export default function Footer() {
                 {siteConfig.description}
               </p>
               <span className="text-c-blue mt-1 font-mono text-[11px] font-bold tracking-widest uppercase">
-                NO TRACKERS · NO ADS · MIT LICENSE
+                NO TRACKERS · NO ADS · 100% OPEN SOURCE
               </span>
             </div>
           </div>
@@ -43,7 +39,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="hover:text-c-orange transition-colors"
               >
-                [ GitHub Repository ↗ ]
+                [ GitHub ↗ ]
               </a>
               <a
                 href={`${siteConfig.links.github}/blob/main/CONTRIBUTING.md`}
@@ -51,7 +47,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="hover:text-c-green transition-colors"
               >
-                [ Contribute Tool ↗ ]
+                [ Contribute ↗ ]
               </a>
               <Link href="/changelog" className="hover:text-c-blue transition-colors">
                 [ Changelog ]
@@ -63,7 +59,7 @@ export default function Footer() {
               className="group hover:text-c-orange flex cursor-pointer items-center gap-1.5 transition-colors"
             >
               <span>[ BACK TO TOP</span>
-              <span className="transition-transform group-hover:-translate-y-0.5">↑ </span>]
+              <span className="transition-transform group-hover:-translate-y-0.5">↑ ]</span>
             </button>
           </div>
         </div>
@@ -79,13 +75,9 @@ export default function Footer() {
       {/* Bottom Metadata Bar */}
       <div className="border-paper/15 text-paper/60 mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 border-t px-6 pt-6 font-mono text-[11px] sm:flex-row sm:px-12 lg:px-16">
         <span>
-          © {new Date().getFullYear()} {siteConfig.author.name}. MIT LICENSE.
+          © {new Date().getFullYear()} {siteConfig.author.name}
         </span>
-        <div className="flex gap-4">
-          <span>HOSTED ON VERCEL</span>
-          <span>·</span>
-          <span>CURATED FOR DEVELOPERS</span>
-        </div>
+        <span>CURATED FOR DEVELOPERS</span>
       </div>
     </footer>
   );
