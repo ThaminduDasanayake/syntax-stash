@@ -1,5 +1,7 @@
 "use client";
 
+import { ArrowUpIcon } from "@phosphor-icons/react";
+import { ArrowUpRightIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 
 import { siteConfig } from "@/lib/site-config";
@@ -35,29 +37,43 @@ export default function Footer() {
                 href={siteConfig.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-c-orange transition-colors"
+                className="group flex gap-1 transition-colors"
               >
-                [ GitHub ↗ ]
+                [ GitHub{" "}
+                <span className="transition-transform group-hover:-translate-y-0.5">
+                  <ArrowUpRightIcon weight="bold" />
+                </span>{" "}
+                ]
               </a>
               <a
                 href={`${siteConfig.links.github}/blob/main/CONTRIBUTING.md`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-c-green transition-colors"
+                className="group flex gap-1 transition-colors"
               >
-                [ Contribute ↗ ]
+                [ Contribute{" "}
+                <span className="transition-transform group-hover:-translate-y-0.5">
+                  <ArrowUpRightIcon weight="bold" />
+                </span>
+                ]
               </a>
-              <Link href="/changelog" className="hover:text-c-blue transition-colors">
+              <Link
+                href="/changelog"
+                className="after:bg-paper relative inline-block transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
+              >
                 [ Changelog ]
               </Link>
             </div>
 
             <button
               onClick={scrollToTop}
-              className="group hover:text-c-orange flex cursor-pointer items-center gap-1.5 transition-colors"
+              className="group flex cursor-pointer items-center gap-1.5 transition-colors"
             >
               <span>[ BACK TO TOP</span>
-              <span className="transition-transform group-hover:-translate-y-0.5">↑ </span>]
+              <span className="transition-transform group-hover:-translate-y-0.5">
+                <ArrowUpIcon weight="bold" />
+              </span>
+              ]
             </button>
           </div>
         </div>
