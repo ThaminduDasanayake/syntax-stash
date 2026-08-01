@@ -370,6 +370,15 @@ export const designLinks: Tool[] = [
     url: "https://colormind.io/",
   },
   {
+    title: "Color Moods",
+    category: CATEGORIES.design,
+    description: "Generate pairs of colors based on the amount of stimulation you select.",
+    favicon: "https://colormoods.co/assets/images/favicon/apple-touch-icon.png",
+    ogImage: "https://colormoods.co/assets/images/og-image.jpg",
+    tags: [TAGS.color],
+    url: "https://colormoods.co/",
+  },
+  {
     title: "Color Name Finder",
     author: "Jasper Bernaers",
     category: CATEGORIES.design,
@@ -378,6 +387,17 @@ export const designLinks: Tool[] = [
     subtitle: "HTML Colour Names, HEX, RGB, HSL | jasperbernaers.com",
     tags: [TAGS.color],
     url: "https://jasperbernaers.com/colours/",
+  },
+  {
+    title: "Color Palette Pro",
+    category: CATEGORIES.design,
+    description:
+      "Generate customizable color palettes in advanced color spaces that can be easily shared, downloaded, or exported.",
+    favicon:
+      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAFBklEQVR4AeRYPYwbRRR+b3wFEn86qktxviPdURClogOBhHKGAgESkaCiCVUiRIgdQRGlAJ0dEqFQkYYKJAqCKMB3QiKCjiZRKLgunO+k5CpOkERJcd7J9816N/b5b9c+x/bOaMYznnnz3vd92p2dGSMjTl/c+Hlhpbb6TmVz9bOVjerlcq16FeVmeaN6D7V1JWzfRPsqbZwt5nDuiOHJSARY2Vx7sby5er5cW/27njMbKvZ7a+0nqvImCB1GOSAqj6EOc9g+gD+HaeNsMYdz6YO+6BPj+57Nfnlc+ffXp8tb1VMErDb4Xaz9SMQuDe8fPuCLPumbMRhreL+hh6EFIBg+svr/7rYEUtkf0iG49l+IgRiMxZiM3W6TrmcoASpba8f19u4/fGRbHul0GNJb45VhTMau1NaOp3fwcMZAApzbqj6PRew3GwQX4WoWZVx51kpwkViIaRAQqQWo3PjlWBDIdVF5eZCAI5kDLMREbGn9pxKgvFk9b3P6ddogj8qe2IgxTbzEAmDR+VasYGVP434MtsDosCYMnUgAfId/wKLzbkKfYzcjVmJOAqSvAE5Na99K4myibIDZYe8DqqcAfJ+oZh8fEztM7OTQC2BXAdyKivep1+SpGAMHx6UL2I4C8JvKFbXLnKnrJhdy6gS8owBBXb6UjKVunNoEcFtLbCwyxl8EnLh1lz2pRQAeLrC1PLvHJjN/sXU/S47NhFoEMHfqRQyOc2+P8CPNsw2OcZBYACpjAzv5O70Y+mANciTXaHYsgN7dPYb35OEtTWSRtRpHace1wSsWQAJ9v9GX/aqJqxMgvG/DbUv2qTcY2qWQs4gTAJeWbzRGvKkizk4AHHML3jCPiFpxnE149+7T4x8rsETuZjeXeyHq8q0md2NUDvlGPOJL7iYIfHz8QwnI3ajKoniayJ1fgTlP+ZP2nBErs2x5WcDdCPbGWSbfkxu4m54GHgzyFbjvAc/OFK3cN3gFdjqPetCrsmNAcxvF17xtrJUN8TSRu8FeeN1T/kLuJrBy3VcByN3M1Ot/+ioAuZuPD75eE1EPXwNdJ3d+BcBfquJb0pCzE8CK/uQb/4izE+B0/sgf4tVroOsh58atsDAZ+w0rL0oTV/cEkLR9fOYSjsbZPxdg/++4kjRKLMDpZ179T41eQF+mMzmSa0QyFoAdwRO5CuqpPhwBf6+80+AY27QIQGXUmDPxaMYaKuYMOUpTahGA/cX5I19hLbjCdqaKlSvFBXDbQ6pNAI6bnHwoGUvdOHUU4NR84S+t2w+yogG5kFMnPh0FoGHx4GuXRGX6vwrg4LiQVIfSVQDalvKFk6r6HdvTWIidHHph7ykAJxbzy++J6mW2p6oAs8PeB3RfATi/lF9+m2qyPQ2FWIk5CdZEAtCRUxPvE9sTXYDRYU0IMrEA9FfimjDBXweu9sRIrElLKgHolCuqMXJIsLHg/4kowEJMxJYWT2oBGIDf1NJi4RUVc0JExnl22MHW/QSxEBOwpM4DCRBF4dbSPjnzLBadzwXHzKh/5DViMSZju637EAGHEoBxebjAovOpfWpmTowUZaQ3S7i8RQzGYkzGliHT0AJE8QmmNF84V1pYfs6qeQl7B+wiATgyGLiGD9UL9EnfjMFYA7vbM3HfBGj2y/u2Un75JAHn6sEiLiCPukfWyo+wu4ZyS/AYow5z2L6FP9csbJyt6FHOpQ/6ok+Mt+VhOx4AAAD//w+u7LYAAAAGSURBVAMAkST1QJPNV/sAAAAASUVORK5CYII=",
+    ogImage: "https://colorpalette.pro/colorpalettepro.png",
+    tags: [TAGS.color],
+    url: "https://colorpalette.pro/",
   },
   {
     title: "Colors & Fonts",
@@ -985,6 +1005,15 @@ export const designLinks: Tool[] = [
     url: "https://www.happyhues.co/",
   },
   {
+    title: "Harmonizer",
+    category: CATEGORIES.design,
+    description: "Color palette generator for UI",
+    favicon: "https://harmonizer.evilmartians.com/favicon.svg",
+    ogImage: "https://harmonizer.evilmartians.com/social-image.png",
+    tags: [TAGS.color],
+    url: "https://harmonizer.evilmartians.com/",
+  },
+  {
     title: "Headers Club",
     category: CATEGORIES.design,
     description:
@@ -992,6 +1021,18 @@ export const designLinks: Tool[] = [
     subtitle: "The hottest headers on the internet",
     tags: [TAGS.design, TAGS.inspiration],
     url: "https://www.headers.club/",
+  },
+  {
+    title: "HeyDesigner",
+    author: "Tamas Sari",
+    category: CATEGORIES.design,
+    description:
+      "10,000+ designers read HeyDesigner. Hand-picked design links — daily on the site, weekly in your inbox. UX, modern CSS, design systems, AI tools, and product insights.",
+    favicon: "https://heydesigner.com/apple-touch-icon.png",
+    ogImage: "https://heydesigner.com/images/meta/heydesigner-og-image.png",
+    subtitle: "Hand-picked Design Links, Daily",
+    tags: [TAGS.newsletter],
+    url: "https://heydesigner.com/",
   },
   {
     title: "ImageColorPicker.com",
@@ -1906,6 +1947,18 @@ export const designLinks: Tool[] = [
     url: "https://www.tunera.xyz/",
   },
   {
+    title: "Type Colony",
+    category: CATEGORIES.design,
+    description:
+      "Type Colony offers a range of typography solutions, from free typefaces for designers to custom font design services. Explore variable fonts for flexibility, good poster fonts for impact, and aesthetic fonts for style. Elevate your brand's identity with our custom font design services.",
+    favicon:
+      "https://cdn.dribbble.com/users/1785980/avatars/normal/fa1d429d9b6a932f9fec69e4ab968d8d.jpg",
+    ogImage: "https://typecolony.com/cdn/shop/files/Banner_Web_Embed.jpg",
+    subtitle: "Commercial Fonts for Sale for Designers",
+    tags: [TAGS.typography],
+    url: "https://typecolony.com/",
+  },
+  {
     title: "Typeface App",
     category: CATEGORIES.design,
     description:
@@ -1962,6 +2015,15 @@ export const designLinks: Tool[] = [
       "UNCUT.wtf is a free typeface catalogue, focusing on somewhat contemporary type. There are currently 163 typefaces featured.",
     tags: [TAGS.typography],
     url: "https://uncut.wtf/",
+  },
+  {
+    title: "Use & Modify",
+    category: CATEGORIES.design,
+    description:
+      "This is a personal selection of beautiful, classy, punk, professional, incomplete, weird typefaces. Open source licenses make them free to use and modify. This selection is the result of deep search and crushes.",
+    favicon: "https://usemodify.com/site/templates/styles/images/favicon-use---modify.gif",
+    tags: [TAGS.typography],
+    url: "https://usemodify.com/",
   },
   {
     title: "ux dictionary",

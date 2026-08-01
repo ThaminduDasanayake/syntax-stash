@@ -110,6 +110,18 @@ export const newLinks: Tool[] = [
     url: "https://excalidraw.com/",
   },
   {
+    title: "Freelance Things",
+    category: CATEGORIES.dev,
+    description:
+      "Discover the best communities, tools, articles, books, podcasts, and videos to help you on your freelance journey. Sent straight to your inbox, updated weekly.",
+    favicon:
+      "https://cdn.prod.website-files.com/63bc15b13144b8438045a67c/676571298ec154cdf5ef4ba6_freelance-things-app-clip.png",
+    ogImage:
+      "https://cdn.prod.website-files.com/63bc15b13144b8438045a67c/64b78f3450c55065a27d4422_freelance-things-social-image.png",
+    subtitle: "Curated Resources For Freelancers",
+    url: "https://www.freelancethings.co/",
+  },
+  {
     title: "Graphite",
     category: CATEGORIES.dev,
     description:

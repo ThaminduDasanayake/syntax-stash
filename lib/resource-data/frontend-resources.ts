@@ -43,6 +43,18 @@ export const frontendLinks: Tool[] = [
     url: "https://allshadcn.com/",
   },
   {
+    title: "AnimateIcons",
+    author: "Avijit Dey",
+    category: CATEGORIES.frontend,
+    description:
+      "Free, open-source animated SVG icons for React. Drop-in components built on motion/react with hover and imperative triggers, configurable size, color, and duration - installable via the shadcn CLI.",
+    favicon: "https://animateicons.in/logo.svg",
+    ogImage: "https://animateicons.in/og.png",
+    subtitle: "Free Animated React Icon Library",
+    tags: [TAGS.icons],
+    url: "https://animateicons.in/",
+  },
+  {
     title: "Animate UI",
     category: CATEGORIES.frontend,
     description:
@@ -189,6 +201,15 @@ export const frontendLinks: Tool[] = [
     subtitle: "Icons for CSS Properties",
     tags: [TAGS.icons],
     url: "https://designsurface.dev/cascade",
+  },
+  {
+    title: "central icon system",
+    category: CATEGORIES.frontend,
+    description: "Designed to be universal. Built for every context—across any medium.",
+    favicon: "https://centralicons.com/logo.png",
+    ogImage: "https://centralicons.com/meta.png",
+    tags: [TAGS.icons],
+    url: "https://centralicons.com/",
   },
   {
     title: "Clonify",
@@ -618,6 +639,17 @@ export const frontendLinks: Tool[] = [
     url: "https://heropatterns.com/",
   },
   {
+    title: "hookcn",
+    author: "strlrd-29",
+    category: CATEGORIES.frontend,
+    description: "A collection of reusable react hooks that you can copy and paste into your apps.",
+    favicon:
+      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-anchor size-5' aria-hidden='true'%3E%3Cpath d='M12 22V8'%3E%3C/path%3E%3Cpath d='M5 12H2a10 10 0 0 0 20 0h-3'%3E%3C/path%3E%3Ccircle cx='12' cy='5' r='3'%3E%3C/circle%3E%3C/svg%3E",
+    ogImage: "https://hookcn.ouassim.tech/og.png",
+    tags: [TAGS.react],
+    url: "https://hookcn.ouassim.tech/",
+  },
+  {
     title: "htmldocs",
     author: "htmldocs team",
     category: CATEGORIES.frontend,
@@ -658,6 +690,17 @@ export const frontendLinks: Tool[] = [
     url: "https://hyperui.dev/",
   },
   {
+    title: "Iconbuddy",
+    category: CATEGORIES.frontend,
+    description:
+      "Search and download 300,000+ free SVG icons from open source icon libraries. Customize colors and sizes, then export SVG, PNG, JSX, or Base64.",
+    favicon: "https://iconbuddy.com/iconbuddy-logo.png",
+    ogImage: "https://iconbuddy.com/og-image.png",
+    subtitle: "Free SVG Icons - 300,000+ Open Source Icons",
+    tags: [TAGS.icons],
+    url: "https://iconbuddy.com/",
+  },
+  {
     title: "Iconer",
     category: CATEGORIES.frontend,
     description:
@@ -692,6 +735,7 @@ export const frontendLinks: Tool[] = [
   },
   {
     title: "Icons8",
+    author: "Icons8",
     category: CATEGORIES.frontend,
     description:
       "A flexible icon family for interfaces, diagrams, presentations — whatever, really.",
@@ -931,12 +975,45 @@ export const frontendLinks: Tool[] = [
     url: "https://meshgradient.com/",
   },
   {
+    title: "Meteocons",
+    author: "Bas Milius",
+    category: CATEGORIES.frontend,
+    description: "Animated weather icons for the modern web. 500+ icons in SVG and Lottie.",
+    favicon: "https://meteocons.com/favicon.svg",
+    ogImage: "https://raw.githubusercontent.com/basmilius/meteocons/main/assets/header.png",
+    subtitle: "Animated Weather Icons",
+    tags: [TAGS.icons],
+    url: "https://meteocons.com/",
+  },
+  {
+    title: "Meteor Icons",
+    category: CATEGORIES.frontend,
+    className: "bg-neutral-500 border-paper",
+    description: "Open source icon library for MeteorJS.",
+    favicon: "https://meteoricons.com/favicon.svg",
+    ogImage: "https://meteoricons.com/images/og-image.png",
+    tags: [TAGS.icons],
+    url: "https://meteoricons.com/",
+  },
+  {
     title: "MiroMiro",
     category: CATEGORIES.frontend,
     description:
       "The design-to-code tool that turns any website into clean HTML, Tailwind, and design tokens in one click. Paste real code straight into Cursor, Claude,...",
     subtitle: "Website to Code: Copy Real HTML & Tailwind",
     url: "https://miromiro.app/",
+  },
+  {
+    title: "Monoco",
+    author: "Monokai",
+    category: CATEGORIES.frontend,
+    description:
+      "Monoco is a tiny JavaScript library that adds squircles (smooth corners) and other corner types to html elements.",
+    favicon: "https://somonoco.com/favicon.png",
+    ogImage: "https://somonoco.com/featured-image.jpg",
+    subtitle: "smooth squircle corners for HTML elements",
+    tags: [TAGS["ui-component"]],
+    url: "https://somonoco.com/",
   },
   {
     title: "Morphin",
@@ -1123,6 +1200,18 @@ export const frontendLinks: Tool[] = [
     url: "https://r3f.docs.pmnd.rs/getting-started/introduction",
   },
   {
+    title: "React Zero-UI",
+    category: CATEGORIES.frontend,
+    description:
+      "React Zero-UI is a CSS-powered React state manager for UI state with zero React re-renders, no providers, and generated Tailwind variants.",
+    favicon:
+      "https://raw.githubusercontent.com/react-zero-ui/core/main/examples/demo/public/assets/zero-ui-favicon-transparent.png",
+    ogImage: "https://zero-ui.dev/assets/zero-ui-logo.png",
+    subtitle: "React UI State Management Without Re-renders",
+    tags: [TAGS.react],
+    url: "https://zero-ui.dev/",
+  },
+  {
     title: "Refero Styles",
     category: CATEGORIES.frontend,
     description:
@@ -1248,6 +1337,17 @@ export const frontendLinks: Tool[] = [
     url: "https://shadcnthemer.com/",
   },
   {
+    title: "Shadcn UI Blocks",
+    category: CATEGORIES.frontend,
+    description:
+      "Explore a curated collection of customized Shadcn UI blocks and components. Preview, customize, and copy ready-to-use code snippets to streamline your web development workflow. Perfect for creating responsive, high-quality Shadcn UI designs with ease.",
+    favicon: "https://www.shadcnui-blocks.com/images/android-chrome-192x192.png",
+    ogImage: "https://www.shadcnui-blocks.com/images/og-image.png",
+    subtitle: "Customized Shadcn UI Blocks & Components | Preview & Copy",
+    tags: [TAGS["ui-component"]],
+    url: "https://www.shadcnui-blocks.com/",
+  },
+  {
     title: "Shader Gradient",
     category: CATEGORIES.frontend,
     description: "Create beautiful moving gradients on Framer, Figma and React",
@@ -1361,6 +1461,18 @@ export const frontendLinks: Tool[] = [
     subtitle: "3D Design tool in the browser with real-time collaboration",
     tags: [TAGS.animation],
     url: "https://spline.design/",
+  },
+  {
+    title: "spoilerjs",
+    category: CATEGORIES.frontend,
+    className: "bg-foreground border-paper",
+    description:
+      "A framework-agnostic web component for creating beautiful spoiler effects with Telegram-inspired particle animations. Easily integrates into React, Vue, Svelte, or vanilla JS.",
+    favicon: "https://spoilerjs.sh4jid.me/apple-touch-icon.png",
+    ogImage: "https://spoilerjs.sh4jid.me/og_image.png",
+    subtitle: "Beautiful Spoiler Effects",
+    tags: [TAGS["ui-component"]],
+    url: "https://spoilerjs.sh4jid.me/",
   },
   {
     title: "SSGOI",
@@ -1685,5 +1797,15 @@ export const frontendLinks: Tool[] = [
     ogImage: "https://interfaces.rauno.me/og.png",
     tags: [TAGS.education],
     url: "https://interfaces.rauno.me",
+  },
+  {
+    title: "WigggleUI",
+    category: CATEGORIES.frontend,
+    description: "A beautiful collection of 80+ copy-and-paste widgets for your next project.",
+    favicon: "https://wigggle-ui.vercel.app/icon.svg",
+    ogImage: "https://wigggle-ui.vercel.app/opengraph-image.png",
+    subtitle: "Open Source Widgets for the Web.",
+    tags: [TAGS["ui-component"]],
+    url: "https://wigggle-ui.vercel.app/",
   },
 ];

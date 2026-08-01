@@ -645,6 +645,19 @@ export const developmentLinks: Tool[] = [
     url: "https://www.gittoskill.com/",
   },
   {
+    title: "Good Design Tools",
+    category: CATEGORIES.dev,
+    description:
+      "Good Design Tools is a collection of over 400+ of the best tools and resources for UI designers, UX designers, digital designers and graphic designers.",
+    favicon:
+      "https://cdn.prod.website-files.com/67210aff9949540f7d0b7e68/6721f8223a09e7f42ee940c2_icon.png",
+    ogImage:
+      "https://cdn.prod.website-files.com/67210aff9949540f7d0b7e68/6723d0df6547c7442e02af2c_668d6476333bccde98b6bada_GDT%20OG.png",
+    subtitle: "The best tools and resources for designers",
+    tags: [TAGS.tool],
+    url: "https://www.gooddesign.tools/",
+  },
+  {
     title: "Grep",
     author: "Vercel",
     category: CATEGORIES.dev,
@@ -943,6 +956,18 @@ export const developmentLinks: Tool[] = [
       "A cinematic audio dubbing, cloning and voice generation studio. Enterprise-grade processing with AI-powered voice synthesis, 600+ language support, and self-hosted deployment.",
     subtitle: "Cinematic audio dubbing, cloning & voice generation | palash.dev",
     url: "https://palash.dev/omnivoice/",
+  },
+  {
+    title: "Online converter",
+    category: CATEGORIES.dev,
+    description:
+      "Convert files like images, video, documents, audio and more to other formats with this free and fast online converter.",
+    favicon: "https://www.online-convert.com/assets/favicon/apple-touch-icon.png",
+    ogImage:
+      "https://www.online-convert.com/assets/social-share-image/en/www-online-convert-com.png",
+    subtitle: "Convert video, images, audio and documents for free",
+    tags: [TAGS.tool],
+    url: "https://www.online-convert.com/",
   },
   {
     title: "OpenFlowKit",
