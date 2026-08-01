@@ -135,6 +135,19 @@ export const mediaLinks: Tool[] = [
     url: "https://doodleipsum.com/",
   },
   {
+    title: "DrawKit",
+    category: CATEGORIES.media,
+    description:
+      "Free and premium vector SVG illustrations for you to use on your next project, no attribution required! Vector illustrations, icons, 3D illustrations, animation, mockups, Figma plugins and more.",
+    favicon:
+      "https://cdn.prod.website-files.com/682d1c6b3c16bb956eafd69b/682d1c6b3c16bb956eafd82f_DrawKit-Webclip.png",
+    ogImage:
+      "https://cdn.prod.website-files.com/626f5d0ae6c15c780f2dd5c4/6336572b684b9428785ccd40_DrawKit%20Website%20preview.png",
+    subtitle: "Beautiful 2D & 3D Illustrations and Icons",
+    tags: [TAGS.illustration],
+    url: "https://www.drawkit.com/",
+  },
+  {
     title: "Effect.app",
     category: CATEGORIES.media,
     className: "bg-foreground border-paper",
@@ -340,6 +353,16 @@ export const mediaLinks: Tool[] = [
     url: "https://www.ogimage.gallery/",
   },
   {
+    title: "On Fire illustrations",
+    category: CATEGORIES.media,
+    description:
+      "Free illustrations that will wake up any project with its unique mood. Say «YES» to mind-blowing design.",
+    favicon: "https://onfire.craftwork.design/images/favicon.png",
+    ogImage: "https://onfire.craftwork.design/images/Open-Graph.png",
+    tags: [TAGS.illustration],
+    url: "https://onfire.craftwork.design/",
+  },
+  {
     title: "Pastefy",
     category: CATEGORIES.media,
     description: "Pastefy is an Open Source self-hosted Pastebin/GithubGist alternative.",
@@ -449,6 +472,17 @@ export const mediaLinks: Tool[] = [
     ogImage: "https://storytale-public.b-cdn.net/static/assets/storytale-app/img/Open-Graph.png",
     tags: [TAGS.graphics],
     url: "https://storytale.io/browse/?isFree=true",
+  },
+  {
+    title: "Streamline",
+    category: CATEGORIES.media,
+    description:
+      "Download free, exclusive art and illustrations in multiple formats including vectors, SVG, and PNG. High-quality digital assets for your creative projects.",
+    favicon: "https://www.streamlinehq.com/favicons/favicon.svg",
+    ogImage: "https://framerusercontent.com/images/s57uVk1eoeFfyNafmGmCGbi5q4I.png",
+    subtitle: "Exclusive Stock Illustrations",
+    tags: [TAGS.illustration],
+    url: "https://www.streamlinehq.com/illustrations",
   },
   {
     title: "SVG Clip-Path Generator",
@@ -588,6 +622,20 @@ export const mediaLinks: Tool[] = [
     subtitle: "Download Free PNG images, icons and backgrounds",
     tags: [TAGS.design, TAGS.image],
     url: "https://toppng.com/",
+  },
+  {
+    title: "Transhumans",
+    author: "Pablo Stanley",
+    category: CATEGORIES.media,
+    description:
+      "Transhumans, a collection of black and white illustrations inspired by punk rock, transhumanism, and minimalist Japanese art. Created by Pablo Stanley, these open-source pieces are free to download and remix. Dive into the bold and imperfect brush strokes of this unique collection",
+    favicon:
+      "https://cdn.prod.website-files.com/64c73d04a946980a44765330/64c9625c3e90504925bc759b_favicon-1.png",
+    ogImage:
+      "https://cdn.prod.website-files.com/64c73d04a946980a44765330/64d9999d28972bb41c26f3ff_og-image.png",
+    subtitle: "Open Source Punk Sci-Fi Art Collection by Pablo Stanley",
+    tags: [TAGS.illustration],
+    url: "https://www.transhumans.xyz/",
   },
   {
     title: "uilogos",

@@ -43,6 +43,18 @@ export const frontendLinks: Tool[] = [
     url: "https://allshadcn.com/",
   },
   {
+    title: "AnimateIcons",
+    author: "Avijit Dey",
+    category: CATEGORIES.frontend,
+    description:
+      "Free, open-source animated SVG icons for React. Drop-in components built on motion/react with hover and imperative triggers, configurable size, color, and duration - installable via the shadcn CLI.",
+    favicon: "https://animateicons.in/logo.svg",
+    ogImage: "https://animateicons.in/og.png",
+    subtitle: "Free Animated React Icon Library",
+    tags: [TAGS.icons],
+    url: "https://animateicons.in/",
+  },
+  {
     title: "Animate UI",
     category: CATEGORIES.frontend,
     description:
@@ -1187,6 +1199,18 @@ export const frontendLinks: Tool[] = [
     url: "https://r3f.docs.pmnd.rs/getting-started/introduction",
   },
   {
+    title: "React Zero-UI",
+    category: CATEGORIES.frontend,
+    description:
+      "React Zero-UI is a CSS-powered React state manager for UI state with zero React re-renders, no providers, and generated Tailwind variants.",
+    favicon:
+      "https://raw.githubusercontent.com/react-zero-ui/core/main/examples/demo/public/assets/zero-ui-favicon-transparent.png",
+    ogImage: "https://zero-ui.dev/assets/zero-ui-logo.png",
+    subtitle: "React UI State Management Without Re-renders",
+    tags: [TAGS.react],
+    url: "https://zero-ui.dev/",
+  },
+  {
     title: "Refero Styles",
     category: CATEGORIES.frontend,
     description:
@@ -1436,6 +1460,18 @@ export const frontendLinks: Tool[] = [
     subtitle: "3D Design tool in the browser with real-time collaboration",
     tags: [TAGS.animation],
     url: "https://spline.design/",
+  },
+  {
+    title: "spoilerjs",
+    category: CATEGORIES.frontend,
+    className: "bg-foreground border-paper",
+    description:
+      "A framework-agnostic web component for creating beautiful spoiler effects with Telegram-inspired particle animations. Easily integrates into React, Vue, Svelte, or vanilla JS.",
+    favicon: "https://spoilerjs.sh4jid.me/apple-touch-icon.png",
+    ogImage: "https://spoilerjs.sh4jid.me/og_image.png",
+    subtitle: "Beautiful Spoiler Effects",
+    tags: [TAGS["ui-component"]],
+    url: "https://spoilerjs.sh4jid.me/",
   },
   {
     title: "SSGOI",

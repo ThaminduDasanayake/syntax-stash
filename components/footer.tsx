@@ -1,7 +1,6 @@
 "use client";
 
-import { ArrowUpIcon } from "@phosphor-icons/react";
-import { ArrowUpRightIcon } from "@phosphor-icons/react/ssr";
+import { ArrowUpIcon, ArrowUpRightIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 
 import { siteConfig } from "@/lib/site-config";
@@ -39,10 +38,10 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="group flex gap-1 transition-colors"
               >
-                [ GitHub{" "}
+                [ GitHub
                 <span className="transition-transform group-hover:-translate-y-0.5">
                   <ArrowUpRightIcon weight="bold" />
-                </span>{" "}
+                </span>
                 ]
               </a>
               <a
@@ -51,7 +50,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="group flex gap-1 transition-colors"
               >
-                [ Contribute{" "}
+                [ Contribute
                 <span className="transition-transform group-hover:-translate-y-0.5">
                   <ArrowUpRightIcon weight="bold" />
                 </span>
