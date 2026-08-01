@@ -6,6 +6,7 @@ export const CATEGORIES = {
   education: "Education & Community",
   frontend: "Frontend & UI",
   media: "Media & Assets",
+  typography: "Typography",
 } as const;
 
 export type CategoryValue = (typeof CATEGORIES)[keyof typeof CATEGORIES];
