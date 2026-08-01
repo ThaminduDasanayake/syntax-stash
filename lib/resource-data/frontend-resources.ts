@@ -43,18 +43,6 @@ export const frontendLinks: Tool[] = [
     url: "https://allshadcn.com/",
   },
   {
-    title: "AnimateIcons",
-    author: "Avijit Dey",
-    category: CATEGORIES.frontend,
-    description:
-      "Free, open-source animated SVG icons for React. Drop-in components built on motion/react with hover and imperative triggers, configurable size, color, and duration - installable via the shadcn CLI.",
-    favicon: "https://animateicons.in/logo.svg",
-    ogImage: "https://animateicons.in/og.png",
-    subtitle: "Free Animated React Icon Library",
-    tags: [TAGS.icons],
-    url: "https://animateicons.in/",
-  },
-  {
     title: "Animate UI",
     category: CATEGORIES.frontend,
     description:
@@ -163,18 +151,6 @@ export const frontendLinks: Tool[] = [
     url: "https://boneyard.vercel.app/",
   },
   {
-    title: "Boxicons",
-    author: "Boxicons",
-    category: CATEGORIES.frontend,
-    description:
-      "Access 50,000+ Pro icon variations and 3,500+ free icons. High-quality SVG icons for React, Vue, Figma & more. Download in SVG, PNG, JSX formats. Perfect for web & mobile apps.",
-    favicon: "https://cdn.boxicons.com/logo.svg",
-    ogImage: "https://boxicons.com/opengraph-image.png",
-    subtitle: "High Quality Web Icons",
-    tags: [TAGS.icons],
-    url: "https://boxicons.com/",
-  },
-  {
     title: "Brik",
     category: CATEGORIES.frontend,
     description:
@@ -194,24 +170,6 @@ export const frontendLinks: Tool[] = [
     url: "https://bundui.io/",
   },
   {
-    title: "Cascade",
-    category: CATEGORIES.frontend,
-    description:
-      "An open-source icon set where every icon represents a CSS property–value pair. Copy as SVG or React component. Built for design tools, inspectors, and documentation.",
-    subtitle: "Icons for CSS Properties",
-    tags: [TAGS.icons],
-    url: "https://designsurface.dev/cascade",
-  },
-  {
-    title: "central icon system",
-    category: CATEGORIES.frontend,
-    description: "Designed to be universal. Built for every context—across any medium.",
-    favicon: "https://centralicons.com/logo.png",
-    ogImage: "https://centralicons.com/meta.png",
-    tags: [TAGS.icons],
-    url: "https://centralicons.com/",
-  },
-  {
     title: "Clonify",
     category: CATEGORIES.frontend,
     description:
@@ -228,17 +186,6 @@ export const frontendLinks: Tool[] = [
     url: "https://codepen.io/",
   },
   {
-    title: "Colorffy",
-    category: CATEGORIES.frontend,
-    description:
-      "Create beautiful color schemes, dynamic gradients, and custom themes with Colorffy—the ultimate CSS color palette generator and designer toolkit suite.",
-    favicon: "https://colorffy.com/icon-pwa.svg",
-    ogImage: "https://colorffy.com/seo/seo-home.png",
-    subtitle: "Create Beautiful CSS Color Palettes & UI Themes",
-    tags: [TAGS.color],
-    url: "https://colorffy.com/",
-  },
-  {
     title: "Componentry",
     category: CATEGORIES.frontend,
     description:
@@ -253,18 +200,6 @@ export const frontendLinks: Tool[] = [
     description: "Pixel-perfect, uniquely crafted.",
     tags: [TAGS.animation, TAGS["ui-component"]],
     url: "https://chanhdai.com/components",
-  },
-  {
-    title: "coolicons PRO",
-    category: CATEGORIES.frontend,
-    className: "bg-foreground border-paper",
-    description:
-      "coolicons is a carefully designed collection of 1,320+ icons with a focus on simplicity and consistency. Perfectly suited for web, application and mobile design.",
-    favicon: "https://coolicons.cool/images/favicons/favicon.svg",
-    ogImage: "https://coolicons.cool/images/ogi.webp",
-    subtitle: "1,320+ Carefully Designed Icons | Duotone, Duocolor, Line Icons",
-    tags: [TAGS.icons],
-    url: "https://coolicons.cool/",
   },
   {
     title: "coss ui",
@@ -310,14 +245,6 @@ export const frontendLinks: Tool[] = [
     subtitle: "Where we feast on CSS Selectors!",
     tags: [TAGS.css],
     url: "https://flukeout.github.io/",
-  },
-  {
-    title: "CSS Gradient",
-    category: CATEGORIES.frontend,
-    description:
-      "As a free CSS gradient generator tool, this website lets you create a colorful gradient background for your website, blog, or social media profile.",
-    tags: [TAGS.color],
-    url: "https://cssgradient.io/",
   },
   {
     title: "CSS Loaders",
@@ -577,18 +504,6 @@ export const frontendLinks: Tool[] = [
     url: "https://gingham.laney.tech/",
   },
   {
-    title: "Glyphs",
-    category: CATEGORIES.frontend,
-    description:
-      "A dynamic design system for creating icon sets in Figma and using them on the web.",
-    favicon: "https://glyphs.fyi/favicon.ico",
-    ogImage:
-      "https://raw.githubusercontent.com/gorango/glyphs/main/docs/static/content/community-dark.jpg",
-    subtitle: "The Complete Icon Design System",
-    tags: [TAGS.icons],
-    url: "https://glyphs.fyi/",
-  },
-  {
     title: "gooey-toast",
     category: CATEGORIES.frontend,
     description:
@@ -598,14 +513,6 @@ export const frontendLinks: Tool[] = [
     subtitle: "Morphing toast notifications for React",
     tags: [TAGS["ui-component"]],
     url: "https://goey-toast.vercel.app/",
-  },
-  {
-    title: "Gradienty",
-    category: CATEGORIES.frontend,
-    description:
-      "Easily create beautiful Tailwind CSS gradients with Gradienty - a CSS generator. Choose from ready-made gradients or customize your own for eye-catching backgrounds, text effects, and glassmorphism designs. Perfect for websites, apps, and more. Try it for free now!",
-    tags: [TAGS.color],
-    url: "https://gradienty.codes/",
   },
   {
     title: "Grainrad",
@@ -670,15 +577,6 @@ export const frontendLinks: Tool[] = [
     url: "https://htmlrev.com/",
   },
   {
-    title: "Hypercolor",
-    category: CATEGORIES.frontend,
-    description:
-      "A curated collection of beautiful Tailwind CSS gradients using the full range of Tailwind CSS colors. Easily copy and paste the class names, CSS or even save the gradients as an image.",
-    favicon: "https://hypercolor.dev/favicon.png",
-    tags: [TAGS.color],
-    url: "https://hypercolor.dev/",
-  },
-  {
     title: "HyperUI",
     category: CATEGORIES.frontend,
     description:
@@ -688,79 +586,6 @@ export const frontendLinks: Tool[] = [
     subtitle: "Free Tailwind CSS Components",
     tags: [TAGS["ui-component"]],
     url: "https://hyperui.dev/",
-  },
-  {
-    title: "Iconbuddy",
-    category: CATEGORIES.frontend,
-    description:
-      "Search and download 300,000+ free SVG icons from open source icon libraries. Customize colors and sizes, then export SVG, PNG, JSX, or Base64.",
-    favicon: "https://iconbuddy.com/iconbuddy-logo.png",
-    ogImage: "https://iconbuddy.com/og-image.png",
-    subtitle: "Free SVG Icons - 300,000+ Open Source Icons",
-    tags: [TAGS.icons],
-    url: "https://iconbuddy.com/",
-  },
-  {
-    title: "Iconer",
-    category: CATEGORIES.frontend,
-    description:
-      "App where you can easily customize icons. Choose from a variety of libraries with different licenses. Edit attributes, copy and export effortlessly.",
-    ogImage: "https://iconer.app/image.jpg",
-    subtitle: "Free Icons for Everything (SVG, PNG, JSX)",
-    tags: [TAGS.icons],
-    url: "https://iconer.app/",
-  },
-  {
-    title: "Icônes",
-    category: CATEGORIES.frontend,
-    description: "Icon Explorer with Instant searching, powered by Iconify",
-    tags: [TAGS.icons],
-    url: "https://icones.js.org/",
-  },
-  {
-    title: "Iconify Design",
-    category: CATEGORIES.frontend,
-    description: "All popular icon sets, one framework",
-    tags: [TAGS.icons],
-    url: "https://iconify.design/",
-  },
-  {
-    title: "Icon Maker by Raycast",
-    author: "Raycast",
-    category: CATEGORIES.frontend,
-    description: "Create beautiful icons for your next project, app, or Raycast extension.",
-    ogImage: "https://www.ray.so/_next/static/media/og-image.00c8lrgmh62oa.png",
-    tags: [TAGS.icons],
-    url: "https://ray.so/icon",
-  },
-  {
-    title: "Icons8",
-    author: "Icons8",
-    category: CATEGORIES.frontend,
-    description:
-      "A flexible icon family for interfaces, diagrams, presentations — whatever, really.",
-    subtitle: "Download 1,509,000 free icons (SVG, PNG)",
-    tags: [TAGS.icons],
-    url: "https://icons8.com/icons",
-  },
-  {
-    title: "Icons",
-    author: "Chandu Machineni",
-    category: CATEGORIES.frontend,
-    description:
-      "Access 2 million+ free SVG icons from 200+ popular libraries. Search, customize colors, sizes & stroke width. Download instantly or copy code. Perfect for designers & developers.",
-    favicon: "https://freesvg.vercel.app/favicon.ico",
-    ogImage: "https://freesvg.vercel.app/og-image.jpg",
-    subtitle: "Free SVG Icon Library - 2M+ Icons | Search, Customize & Download",
-    tags: [TAGS.icons],
-    url: "https://freesvg.vercel.app/",
-  },
-  {
-    title: "Iconsax",
-    category: CATEGORIES.frontend,
-    description: "Iconsax is a collection of icons for designers and developers",
-    tags: [TAGS.icons],
-    url: "https://iconsax.io/",
   },
   {
     title: "Impeccable",
@@ -787,20 +612,6 @@ export const frontendLinks: Tool[] = [
       "Copy and paste accessible React components built on React Aria and Tailwind CSS. 87+ production-ready components for Next.js and Laravel.",
     tags: [TAGS["ui-component"]],
     url: "https://intentui.com/",
-  },
-  {
-    title: "iOS Icon Gallery",
-    category: CATEGORIES.frontend,
-    description: "Showcasing beautiful icon designs from the iOS App Store.",
-    tags: [TAGS.icons],
-    url: "https://www.iosicongallery.com/",
-  },
-  {
-    title: "Its Hover",
-    category: CATEGORIES.frontend,
-    description: "Animated icons that move with intent.",
-    tags: [TAGS.icons],
-    url: "https://www.itshover.com/",
   },
   {
     title: "Jitter",
@@ -899,28 +710,6 @@ export const frontendLinks: Tool[] = [
     url: "https://www.lottielab.com/",
   },
   {
-    title: "LsIcon",
-    author: "Wis Design",
-    category: CATEGORIES.frontend,
-    description:
-      "Discover 700+ customizable SVG icons for React. LSicon offers open-source, high-quality icons designed on a 16px grid with 1px strokes. Perfect for developers and designers.",
-    ogImage: "https://www.lsicon.com/static/website.jpg",
-    subtitle: "Open-Source SVG Icons for React Developers and Designers",
-    tags: [TAGS.icons],
-    url: "https://www.lsicon.com/",
-  },
-  {
-    title: "lucide-animated",
-    author: "pqoqubbw",
-    category: CATEGORIES.frontend,
-    description:
-      "Free open-source library of 350+ beautifully crafted animated React icons. Built with Motion and Lucide. Copy-paste ready, MIT licensed, fully customizable SVG icons with smooth animations.",
-    ogImage: "https://lucide-animated.com/og.png",
-    subtitle: "Free Animated React Icons Library",
-    tags: [TAGS.icons],
-    url: "https://lucide-animated.com/",
-  },
-  {
     title: "Lukacho UI",
     category: CATEGORIES.frontend,
     description: "Animated UI component Collection made with Next.js | TailwindCSS | Framer Motion",
@@ -965,35 +754,6 @@ export const frontendLinks: Tool[] = [
       "Create beautiful mesh gradients and fluid color transitions for your web designs. Perfect for modern UI and backgrounds.",
     ogImage: "https://tools.ui-layouts.com/meshgradients.jpg",
     url: "https://tools.ui-layouts.com/mesh-gradients",
-  },
-  {
-    title: "Mesh Gradient",
-    category: CATEGORIES.frontend,
-    description: "MESH is a simple way to create beautiful, unique gradients using shaders.",
-    favicon: "https://meshgradient.com/logo-sm.svg",
-    tags: [TAGS.color],
-    url: "https://meshgradient.com/",
-  },
-  {
-    title: "Meteocons",
-    author: "Bas Milius",
-    category: CATEGORIES.frontend,
-    description: "Animated weather icons for the modern web. 500+ icons in SVG and Lottie.",
-    favicon: "https://meteocons.com/favicon.svg",
-    ogImage: "https://raw.githubusercontent.com/basmilius/meteocons/main/assets/header.png",
-    subtitle: "Animated Weather Icons",
-    tags: [TAGS.icons],
-    url: "https://meteocons.com/",
-  },
-  {
-    title: "Meteor Icons",
-    category: CATEGORIES.frontend,
-    className: "bg-neutral-500 border-paper",
-    description: "Open source icon library for MeteorJS.",
-    favicon: "https://meteoricons.com/favicon.svg",
-    ogImage: "https://meteoricons.com/images/og-image.png",
-    tags: [TAGS.icons],
-    url: "https://meteoricons.com/",
   },
   {
     title: "MiroMiro",
@@ -1152,16 +912,6 @@ export const frontendLinks: Tool[] = [
     url: "https://primeui.com/",
   },
   {
-    title: "Radix Icons",
-    author: "Radix",
-    category: CATEGORIES.frontend,
-    description: "A crisp set of 15×15 icons designed by the WorkOS team.",
-    favicon: "https://www.radix-ui.com/favicon-black.svg",
-    ogImage: "https://radix-ui.com/icons/opengraph-image.png",
-    tags: [TAGS.icons],
-    url: "https://www.radix-ui.com/icons",
-  },
-  {
     title: "React Aria",
     category: CATEGORIES.frontend,
     description: "Craft world-class accessible components with custom styles.",
@@ -1240,19 +990,6 @@ export const frontendLinks: Tool[] = [
     subtitle: "The interactive experience engine",
     tags: [TAGS.animation],
     url: "https://rive.app/",
-  },
-  {
-    title: "Roundicons",
-    author: "Ramy Wafaa",
-    category: CATEGORIES.frontend,
-    className: "bg-foreground border-paper",
-    description:
-      "45,000+ premium vector icons across 29 packs. One-time payment, lifetime download access, 30-day money-back guarantee.",
-    favicon: "https://roundicons.com/favicon.svg",
-    ogImage: "https://roundicons.com/og.png",
-    subtitle: "45,000+ premium vector icons in one bundle",
-    tags: [TAGS.icons],
-    url: "https://roundicons.com/",
   },
   {
     title: "SATIS UI",
@@ -1346,13 +1083,6 @@ export const frontendLinks: Tool[] = [
     subtitle: "Customized Shadcn UI Blocks & Components | Preview & Copy",
     tags: [TAGS["ui-component"]],
     url: "https://www.shadcnui-blocks.com/",
-  },
-  {
-    title: "Shader Gradient",
-    category: CATEGORIES.frontend,
-    description: "Create beautiful moving gradients on Framer, Figma and React",
-    tags: [TAGS.color],
-    url: "https://shadergradient.co/",
   },
   {
     title: "Shaders",
@@ -1506,16 +1236,6 @@ export const frontendLinks: Tool[] = [
     url: "https://supabase.com/ui",
   },
   {
-    title: "Supercons",
-    category: CATEGORIES.frontend,
-    description:
-      "A friendly open source React iconset by Lachlan Campbell. Download supercons icons on npm.",
-    favicon: "https://supercons.vercel.app/apple-touch-icon.png",
-    ogImage: "https://cloud-l7ijxkyvg.vercel.app/2021-02-02_21010z8cwfunpdn3jp59d7np4z6q5kdj.png",
-    tags: [TAGS.icons],
-    url: "https://supercons.vercel.app/",
-  },
-  {
     title: "SVGator",
     category: CATEGORIES.frontend,
     description:
@@ -1562,18 +1282,6 @@ export const frontendLinks: Tool[] = [
     url: "https://react-table-craft.vercel.app/",
   },
   {
-    title: "Tabler Icons",
-    author: "codecalm",
-    category: CATEGORIES.frontend,
-    description:
-      "Tabler Icons: 6184 free and open source SVG icons. Customizable size, color and stroke. Available for React, SolidJS, Vue, Figma and more for free!",
-    favicon: "https://tabler.io/favicon.ico",
-    ogImage: "https://tabler.io/icons/opengraph-image-1v9qf3.png",
-    subtitle: "6150+ free vector icons for web design",
-    tags: [TAGS.icons],
-    url: "https://tabler.io/icons",
-  },
-  {
     title: "Tailark",
     category: CATEGORIES.frontend,
     description:
@@ -1595,14 +1303,6 @@ export const frontendLinks: Tool[] = [
     subtitle: "79+ Utility Classes",
     tags: [TAGS.animation],
     url: "https://tailwindcss-animations.vercel.app",
-  },
-  {
-    title: "TechIcons",
-    category: CATEGORIES.frontend,
-    description: "Download, copy and paste tech icons in SVG and PNG format for your projects.",
-    subtitle: "SVG and PNG tech icons",
-    tags: [TAGS.icons],
-    url: "https://techicons.dev/",
   },
   {
     title: "termcn",
@@ -1678,15 +1378,6 @@ export const frontendLinks: Tool[] = [
     description: "Useful things for web developers.",
     subtitle: "Useful things for devs",
     url: "https://uiball.com/",
-  },
-  {
-    title: "UI Colors",
-    category: CATEGORIES.frontend,
-    description:
-      "Create and customize beautiful Tailwind CSS color palettes. Generate, edit, and export colors for your design with our intuitive color generator tool.",
-    subtitle: "Tailwind CSS Colors - All colors + Custom color generator",
-    tags: [TAGS.color],
-    url: "https://uicolors.app/",
   },
   {
     title: "Uilora",
@@ -1780,14 +1471,6 @@ export const frontendLinks: Tool[] = [
     subtitle: "Premium React Components, Dashboards & Blocks",
     tags: [TAGS.animation, TAGS["ui-component"]],
     url: "https://ui.watermelon.sh/",
-  },
-  {
-    title: "WebGradients",
-    category: CATEGORIES.frontend,
-    description:
-      "Browse 180 free CSS gradients for backgrounds, UI, websites, and design systems. Copy CSS code, explore color palettes, and find gradient inspiration fast.",
-    tags: [TAGS.color],
-    url: "https://webgradients.com/",
   },
   {
     title: "Web Interface Guidelines",

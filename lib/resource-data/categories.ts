@@ -1,11 +1,14 @@
 export const CATEGORIES = {
   ai: "AI & Machine Learning",
+  colors: "Color & Gradients",
   data: "Data & APIs",
   design: "Design & UX",
   dev: "Developer Tools & Utilities",
   education: "Education & Community",
   frontend: "Frontend & UI",
+  icons: "Icons & Illustrations",
   media: "Media & Assets",
+  typography: "Typography",
 } as const;
 
 export type CategoryValue = (typeof CATEGORIES)[keyof typeof CATEGORIES];
