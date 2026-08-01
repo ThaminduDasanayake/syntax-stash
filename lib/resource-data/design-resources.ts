@@ -266,112 +266,7 @@ export const designLinks: Tool[] = [
     tags: [TAGS.design],
     url: "https://cognitivebiasindex.com/",
   },
-  {
-    title: "Colir",
-    category: CATEGORIES.design,
-    description:
-      "Create unique, professional gradients with curve-based control. Real-time WebGL rendering, 12 blend modes, and advanced visual effects.",
-    subtitle: "Gradients",
-    tags: [TAGS.color],
-    url: "https://colir.space/",
-  },
-  {
-    title: "ColorFlow",
-    category: CATEGORIES.design,
-    description:
-      "Create stunning mesh gradients with ColorFlow. Professional gradient editor with real-time preview, customizable control points, and export options. Perfect for designers and developers.",
-    subtitle: "Advanced Mesh Gradient Generator & Editor",
-    tags: [TAGS.design],
-    url: "https://colorflow.ls.graphics/",
-  },
-  {
-    title: "Color Generator",
-    category: CATEGORIES.design,
-    description: "Generate beautiful color palettes for your design system.",
-    favicon: "https://kigen.design/kigen-logo-icon.svg",
-    ogImage: "https://kigen.design/color-og.jpg",
-    tags: [TAGS.color],
-    url: "https://kigen.design/color",
-  },
-  {
-    title: "ColorHub",
-    author: "Dan Cranney",
-    category: CATEGORIES.design,
-    description: "Find the perfect color palette for your next project",
-    favicon: "https://www.colorhub.app/favicon.png",
-    ogImage:
-      "https://raw.githubusercontent.com/danielcranney/repo-storage/main/colorhub-v2-meta-image.jpg",
-    tags: [TAGS.color],
-    url: "https://www.colorhub.app/",
-  },
-  {
-    title: "Color Hunt",
-    category: CATEGORIES.design,
-    description:
-      "Find the perfect trendy color palettes and get color inspiration for your next design or art project.",
-    ogImage: "https://colorhunt.co/img/color-hunt-og.png",
-    subtitle: "The Most Popular Color Palettes of 2026",
-    tags: [TAGS.color],
-    url: "https://colorhunt.co/",
-  },
-  {
-    title: "Colorize",
-    category: CATEGORIES.design,
-    description:
-      "Generate color palettes instantly from any website effortlessly. Enter a URL to explore color schemes and combinations directly from the site's design. No sign-up required. Try it now!",
-    tags: [TAGS.color],
-    url: "https://colorize.design/",
-  },
-  {
-    title: "Color Lab",
-    author: "naymur rahman",
-    category: CATEGORIES.design,
-    description:
-      "Color Lab is your all-in-one color and UI toolkit. Create stunning palettes, convert between HEX, RGB, HSL, and design custom themes with the built-in Shadcn UI Theme Generator – ideal for designers and frontend developers.",
-    ogImage: "https://tools.ui-layouts.com/color-lab-og.jpg",
-    subtitle: "Generate Color Palettes, Convert Codes & Build Shadcn Themes",
-    tags: [TAGS.color],
-    url: "https://tools.ui-layouts.com/color-lab",
-  },
-  {
-    title: "Colormind",
-    category: CATEGORIES.design,
-    description:
-      "Generate color combinations in one click. Colormind creates cohesive color schemes using a deep neural net.",
-    subtitle: "The AI powered color palette generator",
-    tags: [TAGS.color],
-    url: "https://colormind.io/",
-  },
-  {
-    title: "Color Moods",
-    category: CATEGORIES.design,
-    description: "Generate pairs of colors based on the amount of stimulation you select.",
-    favicon: "https://colormoods.co/assets/images/favicon/apple-touch-icon.png",
-    ogImage: "https://colormoods.co/assets/images/og-image.jpg",
-    tags: [TAGS.color],
-    url: "https://colormoods.co/",
-  },
-  {
-    title: "Color Name Finder",
-    author: "Jasper Bernaers",
-    category: CATEGORIES.design,
-    description:
-      "Free color name finder — identify any HTML color by name, HEX, RGB or HSL. Browse all 140+ CSS named colours, search by hue, and copy values instantly. No signup.",
-    subtitle: "HTML Colour Names, HEX, RGB, HSL | jasperbernaers.com",
-    tags: [TAGS.color],
-    url: "https://jasperbernaers.com/colours/",
-  },
-  {
-    title: "Color Palette Pro",
-    category: CATEGORIES.design,
-    description:
-      "Generate customizable color palettes in advanced color spaces that can be easily shared, downloaded, or exported.",
-    favicon:
-      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAFBklEQVR4AeRYPYwbRRR+b3wFEn86qktxviPdURClogOBhHKGAgESkaCiCVUiRIgdQRGlAJ0dEqFQkYYKJAqCKMB3QiKCjiZRKLgunO+k5CpOkERJcd7J9816N/b5b9c+x/bOaMYznnnz3vd92p2dGSMjTl/c+Hlhpbb6TmVz9bOVjerlcq16FeVmeaN6D7V1JWzfRPsqbZwt5nDuiOHJSARY2Vx7sby5er5cW/27njMbKvZ7a+0nqvImCB1GOSAqj6EOc9g+gD+HaeNsMYdz6YO+6BPj+57Nfnlc+ffXp8tb1VMErDb4Xaz9SMQuDe8fPuCLPumbMRhreL+hh6EFIBg+svr/7rYEUtkf0iG49l+IgRiMxZiM3W6TrmcoASpba8f19u4/fGRbHul0GNJb45VhTMau1NaOp3fwcMZAApzbqj6PRew3GwQX4WoWZVx51kpwkViIaRAQqQWo3PjlWBDIdVF5eZCAI5kDLMREbGn9pxKgvFk9b3P6ddogj8qe2IgxTbzEAmDR+VasYGVP434MtsDosCYMnUgAfId/wKLzbkKfYzcjVmJOAqSvAE5Na99K4myibIDZYe8DqqcAfJ+oZh8fEztM7OTQC2BXAdyKivep1+SpGAMHx6UL2I4C8JvKFbXLnKnrJhdy6gS8owBBXb6UjKVunNoEcFtLbCwyxl8EnLh1lz2pRQAeLrC1PLvHJjN/sXU/S47NhFoEMHfqRQyOc2+P8CPNsw2OcZBYACpjAzv5O70Y+mANciTXaHYsgN7dPYb35OEtTWSRtRpHace1wSsWQAJ9v9GX/aqJqxMgvG/DbUv2qTcY2qWQs4gTAJeWbzRGvKkizk4AHHML3jCPiFpxnE149+7T4x8rsETuZjeXeyHq8q0md2NUDvlGPOJL7iYIfHz8QwnI3ajKoniayJ1fgTlP+ZP2nBErs2x5WcDdCPbGWSbfkxu4m54GHgzyFbjvAc/OFK3cN3gFdjqPetCrsmNAcxvF17xtrJUN8TSRu8FeeN1T/kLuJrBy3VcByN3M1Ot/+ioAuZuPD75eE1EPXwNdJ3d+BcBfquJb0pCzE8CK/uQb/4izE+B0/sgf4tVroOsh58atsDAZ+w0rL0oTV/cEkLR9fOYSjsbZPxdg/++4kjRKLMDpZ179T41eQF+mMzmSa0QyFoAdwRO5CuqpPhwBf6+80+AY27QIQGXUmDPxaMYaKuYMOUpTahGA/cX5I19hLbjCdqaKlSvFBXDbQ6pNAI6bnHwoGUvdOHUU4NR84S+t2w+yogG5kFMnPh0FoGHx4GuXRGX6vwrg4LiQVIfSVQDalvKFk6r6HdvTWIidHHph7ykAJxbzy++J6mW2p6oAs8PeB3RfATi/lF9+m2qyPQ2FWIk5CdZEAtCRUxPvE9sTXYDRYU0IMrEA9FfimjDBXweu9sRIrElLKgHolCuqMXJIsLHg/4kowEJMxJYWT2oBGIDf1NJi4RUVc0JExnl22MHW/QSxEBOwpM4DCRBF4dbSPjnzLBadzwXHzKh/5DViMSZju637EAGHEoBxebjAovOpfWpmTowUZaQ3S7i8RQzGYkzGliHT0AJE8QmmNF84V1pYfs6qeQl7B+wiATgyGLiGD9UL9EnfjMFYA7vbM3HfBGj2y/u2Un75JAHn6sEiLiCPukfWyo+wu4ZyS/AYow5z2L6FP9csbJyt6FHOpQ/6ok+Mt+VhOx4AAAD//w+u7LYAAAAGSURBVAMAkST1QJPNV/sAAAAASUVORK5CYII=",
-    ogImage: "https://colorpalette.pro/colorpalettepro.png",
-    tags: [TAGS.color],
-    url: "https://colorpalette.pro/",
-  },
+
   {
     title: "Colors & Fonts",
     category: CATEGORIES.design,
@@ -388,15 +283,6 @@ export const designLinks: Tool[] = [
     description: "Create content in one place. Incredibly fast. Save as images or videos.",
     tags: [TAGS.design],
     url: "https://contentcore.xyz/",
-  },
-  {
-    title: "Coolors",
-    category: CATEGORIES.design,
-    description: "Generate or browse beautiful color combinations for your designs.",
-    ogImage: "https://coolors.co/assets/img/og_image.png",
-    subtitle: "The super fast color palettes generator!",
-    tags: [TAGS.color],
-    url: "https://coolors.co/",
   },
   {
     title: "Cosmos",
@@ -761,29 +647,6 @@ export const designLinks: Tool[] = [
     url: "https://www.goodcart.design/",
   },
   {
-    title: "Gradient Colors Collection",
-    author: "GradientsCSS",
-    category: CATEGORIES.design,
-    description:
-      "Discover and explore beautiful gradient colors for your projects. GradientsCSS offers a curated collection of gradient palettes for web design and creative work.",
-    favicon: "https://gradientscss.vercel.app/favicon/favicon.svg",
-    ogImage: "https://gradientscss.vercel.app/favicon/banner.jpg",
-    tags: [TAGS.color],
-    url: "https://gradientscss.vercel.app/",
-  },
-  {
-    title: "Graduum",
-    author: "Niklaus Gerber",
-    category: CATEGORIES.design,
-    description:
-      "A collection of one hundred free high-quality mesh gradients suitable for desktop and mobile use.",
-    favicon: "https://graduum.niklausgerber.com/assets/images/apple-touch-icon.png?v=a66bfeb6",
-    ogImage: "https://graduum.niklausgerber.com/assets/images/share.jpg?v=a66bfeb6",
-    subtitle: "Free Mesh Gradients by Niklaus Gerber",
-    tags: [TAGS.color],
-    url: "https://graduum.niklausgerber.com/",
-  },
-  {
     title: "GRAFIK STASH",
     category: CATEGORIES.design,
     description:
@@ -798,24 +661,6 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description: "Printable Grid Paper",
     url: "https://grid-paper.daverupert.com/",
-  },
-  {
-    title: "Happy Hues",
-    category: CATEGORIES.design,
-    description:
-      "See color palette inspiration on a real example website. As you click on different palettes every color on this site updates to give you context of how that color could be used for your design or illustration projects.",
-    subtitle: "Curated colors in context",
-    tags: [TAGS.color],
-    url: "https://www.happyhues.co/",
-  },
-  {
-    title: "Harmonizer",
-    category: CATEGORIES.design,
-    description: "Color palette generator for UI",
-    favicon: "https://harmonizer.evilmartians.com/favicon.svg",
-    ogImage: "https://harmonizer.evilmartians.com/social-image.png",
-    tags: [TAGS.color],
-    url: "https://harmonizer.evilmartians.com/",
   },
   {
     title: "Headers Club",
@@ -837,27 +682,6 @@ export const designLinks: Tool[] = [
     subtitle: "Hand-picked Design Links, Daily",
     tags: [TAGS.newsletter],
     url: "https://heydesigner.com/",
-  },
-  {
-    title: "ImageColorPicker.com",
-    category: CATEGORIES.design,
-    className: "bg-foreground border-paper",
-    description:
-      "Upload an image, paste from clipboard, or enter a URL to instantly pick colors. Get HEX, RGB, HSL codes free — no signup required.",
-    favicon: "https://imagecolorpicker.com/favicon.svg",
-    ogImage: "https://imagecolorpicker.com/imagecolorpicker-preview_b.webp",
-    subtitle: "Pick Colors from Any Image – Free HEX, RGB & Color Codes",
-    tags: [TAGS.color],
-    url: "https://imagecolorpicker.com/",
-  },
-  {
-    title: "Ingradients",
-    category: CATEGORIES.design,
-    description: "Hand-picked mesh gradients for your next design project.",
-    ogImage:
-      "https://framerusercontent.com/modules/reOxh1U6VCuZnfou6x2m/eJmnQAJafZ0DjECK4JSI/assets/S3wd0yoFBBYAKv1E4nAuhoWxC8.jpg",
-    tags: [TAGS.color, TAGS.gradient],
-    url: "https://ingradients.net/",
   },
   {
     title: "InkField",
@@ -892,14 +716,6 @@ export const designLinks: Tool[] = [
     subtitle: "Free Desk Setup Planner & Visualizer",
     tags: [TAGS.design],
     url: "https://www.juddesk.com/",
-  },
-  {
-    title: "Khroma",
-    category: CATEGORIES.design,
-    description:
-      "Khroma is the fastest way to discover, search, and save color combos and palettes you'll love. Discover a personalized AI-powered color tool for designers to find the perfect color scheme.",
-    tags: [TAGS.color],
-    url: "https://www.khroma.co/",
   },
   {
     title: "landing.love",
@@ -991,16 +807,6 @@ export const designLinks: Tool[] = [
     subtitle: "AI-Powered Floor Plan Creation",
     tags: [TAGS.design],
     url: "https://www.maket.ai/",
-  },
-  {
-    title: "Meditations in Color",
-    author: "Pixel Symphony",
-    category: CATEGORIES.design,
-    description:
-      "Colorists in the Colorist Archive: browse chromatic profiles, artwork palettes, and generative color studies across artists, periods, and collections.",
-    subtitle: "Chromatic Profiles",
-    tags: [TAGS.color],
-    url: "https://meditationsincolor.com/colorists",
   },
   {
     title: "Meshic",
@@ -1102,15 +908,6 @@ export const designLinks: Tool[] = [
     url: "https://motionfolios.com/",
   },
   {
-    title: "mymind",
-    category: CATEGORIES.design,
-    description: "A collection of unique color combinations for your design projects.",
-    ogImage: "https://static.accelerator.net/134/0.107.0/colors/images/mymind-colors-twitter.jpg",
-    subtitle: "Mindfully curated color palettes",
-    tags: [TAGS.color],
-    url: "https://access.mymind.com/colors",
-  },
-  {
     title: "Navbar Gallery",
     category: CATEGORIES.design,
     description:
@@ -1155,16 +952,6 @@ export const designLinks: Tool[] = [
     url: "https://www.ogfolio.com/",
   },
   {
-    title: "OKLCH Color Picker & Converter",
-    category: CATEGORIES.design,
-    description: "OKLCH is a new way to encode colors (like hex, RGBA, or HSL)",
-    favicon:
-      "data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='128'%20height='128'%3e%3ccircle%20fill='oklch(0.7 0.1 279)'%20cx='64'%20cy='64'%20r='64'/%3e%3cpath%20fill='%23fff'%20d='m16%2064%2048-48%2048%2048-48%2048zm16%200%2032%2032%2032-32-32-32z'/%3e%3c/svg%3e",
-    ogImage: "https://oklch.com/og-oklch.png",
-    tags: [TAGS.color],
-    url: "https://oklch.com/",
-  },
-  {
     title: "Omma",
     category: CATEGORIES.design,
     description: "Build interactive experiences, websites, 3d, and apps using natural language.",
@@ -1199,25 +986,6 @@ export const designLinks: Tool[] = [
     subtitle: "UI/UX Design Inspiration & User Flows from Top Apps",
     tags: [TAGS.inspiration],
     url: "https://pageflows.com/",
-  },
-  {
-    title: "Palette Maker",
-    category: CATEGORIES.design,
-    description:
-      "Free color tool for creatives and color lovers. Create color palettes and preview them on UI/UX, Illustrations, Web, Apps, Branding and other designs.",
-    tags: [TAGS.color],
-    url: "https://palettemaker.com/",
-  },
-  {
-    title: "Paletton",
-    category: CATEGORIES.design,
-    description:
-      "In love with colors, since 2002. A designer tool for creating color combinations that work together well. Formerly known as Color Scheme Designer. Use the color wheel to create great color palettes.",
-    favicon: "https://paletton.com/img/favicon-128.png",
-    ogImage: "https://paletton.com/img/paletton-preview-20140414.png",
-    subtitle: "The Color Scheme Designer",
-    tags: [TAGS.color],
-    url: "https://paletton.com/",
   },
   {
     title: "PaperAnimator.com",
@@ -1295,31 +1063,6 @@ export const designLinks: Tool[] = [
     url: "https://github.com/penpot/penpot",
   },
   {
-    title: "Photo Gradient",
-    category: CATEGORIES.design,
-    description: "Generate beautiful gradients from colors or from a photo",
-    ogImage: "https://photogradient.com/social-image.png",
-    subtitle: "Image to Mesh Gradient",
-    tags: [TAGS.gradient],
-    url: "https://photogradient.com/",
-  },
-  {
-    title: "Picture Palette",
-    category: CATEGORIES.design,
-    description: "Aesthetically pleasing color palettes based on aesthetically pleasing pictures.",
-    tags: [TAGS.color],
-    url: "https://picture-palette.web.app/",
-  },
-  {
-    title: "Picular",
-    category: CATEGORIES.design,
-    description:
-      "Picular is a rocket fast primary color generator using Google’s image search. If you ever needed the perfect yellow hex code from a banana, this is the tool for you.",
-    favicon: "https://picular.co/images/favicon-base.png",
-    tags: [TAGS.color],
-    url: "https://picular.co/",
-  },
-  {
     title: "Pixelbuddha",
     category: CATEGORIES.design,
     description:
@@ -1354,27 +1097,6 @@ export const designLinks: Tool[] = [
     url: "https://purelanding.page/",
   },
   {
-    title: "Radix Colors",
-    author: "Radix",
-    category: CATEGORIES.design,
-    description:
-      "An open-source color system for designing beautiful, accessible websites and apps.",
-    favicon: "https://www.radix-ui.com/favicon-black.svg",
-    ogImage: "https://radix-ui.com/colors/opengraph-image.png",
-    tags: [TAGS.color],
-    url: "https://www.radix-ui.com/colors",
-  },
-  {
-    title: "RandomA11y",
-    category: CATEGORIES.design,
-    description:
-      "Discover millions of accessible color combinations with RandomA11y, the real-time color playground.",
-    ogImage: "https://randoma11y-feed.adam-f8f.workers.dev/og-image.png",
-    subtitle: "Endless collection of accessible color combos",
-    tags: [TAGS.color],
-    url: "https://randoma11y.com/",
-  },
-  {
     title: "RapidRAW",
     category: CATEGORIES.design,
     description:
@@ -1396,13 +1118,6 @@ export const designLinks: Tool[] = [
       "With 19,000+ curated emails and counting, discover the best examples to help build your next campaign. Get inspiration and join millions of marketers.",
     tags: [TAGS.inspiration],
     url: "https://reallygoodemails.com/",
-  },
-  {
-    title: "Realtime Colors",
-    category: CATEGORIES.design,
-    description: "Visualize your colors and fonts on a real website.",
-    tags: [TAGS.color],
-    url: "https://www.realtimecolors.com/",
   },
   {
     title: "Recent",
@@ -1456,17 +1171,6 @@ export const designLinks: Tool[] = [
     url: "https://savee.com/",
   },
   {
-    title: "Scale",
-    author: "Hayk An",
-    category: CATEGORIES.design,
-    description: "Color scale generator by Hayk An",
-    favicon: "https://hihayk.github.io/scale/favicon.ico",
-    ogImage: "https://raw.githubusercontent.com/hihayk/scale/master/docs/screenshot-1.png",
-    subtitle: "Color scale generator",
-    tags: [TAGS.color],
-    url: "https://hihayk.github.io/scale",
-  },
-  {
     title: "Screenshot Studio",
     category: CATEGORIES.design,
     className: "bg-foreground border-paper",
@@ -1494,18 +1198,6 @@ export const designLinks: Tool[] = [
     subtitle: "Framer Templates Ranking & Marketplace Directory",
     tags: [TAGS.design, TAGS.inspiration, TAGS.ui],
     url: "https://selected.site/",
-  },
-  {
-    title: "Shadecolr",
-    author: "Radix",
-    category: CATEGORIES.design,
-    description:
-      "Generate Tailwind CSS color palettes for SaaS dashboards, product UI, and client projects. Preview them in a real interface and export usable shades fast.",
-    favicon: "https://www.shadecolr.com/image/favicon/favicon.svg",
-    ogImage: "https://www.shadecolr.com/image/shadecolr-cover.png",
-    subtitle: "Generate color palettes for Tailwind CSS",
-    tags: [TAGS.color],
-    url: "https://www.shadecolr.com/",
   },
   {
     title: "Sharpen",
@@ -1581,17 +1273,6 @@ export const designLinks: Tool[] = [
     url: "https://supahero.io/",
   },
   {
-    title: "Super Color Palette",
-    category: CATEGORIES.design,
-    description:
-      "Generate super awesome color palettes by shifting hue, saturation, lightness, and more. 100% free without ads.",
-    favicon: "https://supercolorpalette.com/favicon.svg",
-    ogImage: "https://i.imgur.com/XeZmcBP.png",
-    subtitle: "100% Free Color Palette Generator",
-    tags: [TAGS.color],
-    url: "https://supercolorpalette.com/",
-  },
-  {
     title: "Superdesign",
     category: CATEGORIES.design,
     description:
@@ -1624,18 +1305,6 @@ export const designLinks: Tool[] = [
     subtitle: "UI/UX Design Subscription for Startups",
     tags: [TAGS.design],
     url: "https://designproject.io/",
-  },
-  {
-    title: "The good colors",
-    author: "Fran Pérez",
-    category: CATEGORIES.design,
-    description:
-      "Generate perceptually uniform color palettes with OKLCH, ensuring consistent lightness and chroma. Supports wide gamut displays, checks contrast ratios using APAC, and is optimized for color blindness.",
-    favicon:
-      "data:image/svg+xml;utf8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%3Crect%0A%20%20%20%20%20%20%20%20%20%20x%3D%221%22%0A%20%20%20%20%20%20%20%20%20%20y%3D%221%22%0A%20%20%20%20%20%20%20%20%20%20width%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20height%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20rx%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20fill%3D%22%23ffb0cc%22%0A%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%3Crect%0A%20%20%20%20%20%20%20%20%20%20x%3D%226%22%0A%20%20%20%20%20%20%20%20%20%20y%3D%221%22%0A%20%20%20%20%20%20%20%20%20%20width%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20height%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20rx%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20fill%3D%22%23ffb4b3%22%0A%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%3Crect%0A%20%20%20%20%20%20%20%20%20%20x%3D%2211%22%0A%20%20%20%20%20%20%20%20%20%20y%3D%221%22%0A%20%20%20%20%20%20%20%20%20%20width%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20height%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20rx%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20fill%3D%22%23ffba80%22%0A%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%3Crect%0A%20%20%20%20%20%20%20%20%20%20x%3D%221%22%0A%20%20%20%20%20%20%20%20%20%20y%3D%226%22%0A%20%20%20%20%20%20%20%20%20%20width%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20height%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20rx%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20fill%3D%22%23eace58%22%0A%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%3Crect%0A%20%20%20%20%20%20%20%20%20%20x%3D%226%22%0A%20%20%20%20%20%20%20%20%20%20y%3D%226%22%0A%20%20%20%20%20%20%20%20%20%20width%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20height%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20rx%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20fill%3D%22%23ade27f%22%0A%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%3Crect%0A%20%20%20%20%20%20%20%20%20%20x%3D%2211%22%0A%20%20%20%20%20%20%20%20%20%20y%3D%226%22%0A%20%20%20%20%20%20%20%20%20%20width%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20height%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20rx%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20fill%3D%22%2356edc5%22%0A%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%3Crect%0A%20%20%20%20%20%20%20%20%20%20x%3D%221%22%0A%20%20%20%20%20%20%20%20%20%20y%3D%2211%22%0A%20%20%20%20%20%20%20%20%20%20width%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20height%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20rx%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20fill%3D%22%2334e7ff%22%0A%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%3Crect%0A%20%20%20%20%20%20%20%20%20%20x%3D%226%22%0A%20%20%20%20%20%20%20%20%20%20y%3D%2211%22%0A%20%20%20%20%20%20%20%20%20%20width%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20height%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20rx%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20fill%3D%22%23a7d2ff%22%0A%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%3Crect%0A%20%20%20%20%20%20%20%20%20%20x%3D%2211%22%0A%20%20%20%20%20%20%20%20%20%20y%3D%2211%22%0A%20%20%20%20%20%20%20%20%20%20width%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20height%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20rx%3D%224%22%0A%20%20%20%20%20%20%20%20%20%20fill%3D%22%23d5c1ff%22%0A%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%0A%20%20%20%20%3C%2Fsvg%3E",
-    ogImage: "https://thegoodcolors.com/og-poster.png",
-    tags: [TAGS.color],
-    url: "https://thegoodcolors.com/",
   },
   {
     title: "Toolfolio",

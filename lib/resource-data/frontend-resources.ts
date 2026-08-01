@@ -228,17 +228,6 @@ export const frontendLinks: Tool[] = [
     url: "https://codepen.io/",
   },
   {
-    title: "Colorffy",
-    category: CATEGORIES.frontend,
-    description:
-      "Create beautiful color schemes, dynamic gradients, and custom themes with Colorffy—the ultimate CSS color palette generator and designer toolkit suite.",
-    favicon: "https://colorffy.com/icon-pwa.svg",
-    ogImage: "https://colorffy.com/seo/seo-home.png",
-    subtitle: "Create Beautiful CSS Color Palettes & UI Themes",
-    tags: [TAGS.color],
-    url: "https://colorffy.com/",
-  },
-  {
     title: "Componentry",
     category: CATEGORIES.frontend,
     description:
@@ -310,14 +299,6 @@ export const frontendLinks: Tool[] = [
     subtitle: "Where we feast on CSS Selectors!",
     tags: [TAGS.css],
     url: "https://flukeout.github.io/",
-  },
-  {
-    title: "CSS Gradient",
-    category: CATEGORIES.frontend,
-    description:
-      "As a free CSS gradient generator tool, this website lets you create a colorful gradient background for your website, blog, or social media profile.",
-    tags: [TAGS.color],
-    url: "https://cssgradient.io/",
   },
   {
     title: "CSS Loaders",
@@ -600,14 +581,6 @@ export const frontendLinks: Tool[] = [
     url: "https://goey-toast.vercel.app/",
   },
   {
-    title: "Gradienty",
-    category: CATEGORIES.frontend,
-    description:
-      "Easily create beautiful Tailwind CSS gradients with Gradienty - a CSS generator. Choose from ready-made gradients or customize your own for eye-catching backgrounds, text effects, and glassmorphism designs. Perfect for websites, apps, and more. Try it for free now!",
-    tags: [TAGS.color],
-    url: "https://gradienty.codes/",
-  },
-  {
     title: "Grainrad",
     category: CATEGORIES.frontend,
     description: "Grainrad - Free WebGPU-powered ASCII, dithering, and retro effects at 60fps",
@@ -668,15 +641,6 @@ export const frontendLinks: Tool[] = [
       "Free HTML CSS templates and themes for websites, landing pages, blogs, portfolios, ecommerce and admin dashboards.",
     tags: [TAGS["ui-component"]],
     url: "https://htmlrev.com/",
-  },
-  {
-    title: "Hypercolor",
-    category: CATEGORIES.frontend,
-    description:
-      "A curated collection of beautiful Tailwind CSS gradients using the full range of Tailwind CSS colors. Easily copy and paste the class names, CSS or even save the gradients as an image.",
-    favicon: "https://hypercolor.dev/favicon.png",
-    tags: [TAGS.color],
-    url: "https://hypercolor.dev/",
   },
   {
     title: "HyperUI",
@@ -965,14 +929,6 @@ export const frontendLinks: Tool[] = [
       "Create beautiful mesh gradients and fluid color transitions for your web designs. Perfect for modern UI and backgrounds.",
     ogImage: "https://tools.ui-layouts.com/meshgradients.jpg",
     url: "https://tools.ui-layouts.com/mesh-gradients",
-  },
-  {
-    title: "Mesh Gradient",
-    category: CATEGORIES.frontend,
-    description: "MESH is a simple way to create beautiful, unique gradients using shaders.",
-    favicon: "https://meshgradient.com/logo-sm.svg",
-    tags: [TAGS.color],
-    url: "https://meshgradient.com/",
   },
   {
     title: "Meteocons",
@@ -1348,13 +1304,6 @@ export const frontendLinks: Tool[] = [
     url: "https://www.shadcnui-blocks.com/",
   },
   {
-    title: "Shader Gradient",
-    category: CATEGORIES.frontend,
-    description: "Create beautiful moving gradients on Framer, Figma and React",
-    tags: [TAGS.color],
-    url: "https://shadergradient.co/",
-  },
-  {
     title: "Shaders",
     category: CATEGORIES.frontend,
     description:
@@ -1680,15 +1629,6 @@ export const frontendLinks: Tool[] = [
     url: "https://uiball.com/",
   },
   {
-    title: "UI Colors",
-    category: CATEGORIES.frontend,
-    description:
-      "Create and customize beautiful Tailwind CSS color palettes. Generate, edit, and export colors for your design with our intuitive color generator tool.",
-    subtitle: "Tailwind CSS Colors - All colors + Custom color generator",
-    tags: [TAGS.color],
-    url: "https://uicolors.app/",
-  },
-  {
     title: "Uilora",
     category: CATEGORIES.frontend,
     description:
@@ -1780,14 +1720,6 @@ export const frontendLinks: Tool[] = [
     subtitle: "Premium React Components, Dashboards & Blocks",
     tags: [TAGS.animation, TAGS["ui-component"]],
     url: "https://ui.watermelon.sh/",
-  },
-  {
-    title: "WebGradients",
-    category: CATEGORIES.frontend,
-    description:
-      "Browse 180 free CSS gradients for backgrounds, UI, websites, and design systems. Copy CSS code, explore color palettes, and find gradient inspiration fast.",
-    tags: [TAGS.color],
-    url: "https://webgradients.com/",
   },
   {
     title: "Web Interface Guidelines",
