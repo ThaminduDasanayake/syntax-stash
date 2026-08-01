@@ -6,6 +6,7 @@ export const CATEGORIES = {
   dev: "Developer Tools & Utilities",
   education: "Education & Community",
   frontend: "Frontend & UI",
+  icons: "Icons & Illustrations",
   media: "Media & Assets",
   typography: "Typography",
 } as const;
