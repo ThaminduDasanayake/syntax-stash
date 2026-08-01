@@ -168,6 +168,18 @@ export const mediaLinks: Tool[] = [
     url: "https://www.fffuel.co/",
   },
   {
+    title: "Free Clipart & Illustrations",
+    author: "Icons8",
+    category: CATEGORIES.media,
+    description:
+      "Download free clipart images and graphics in PNG, SVG, GIF formats. Explore our vector, 3D, and animated illustrations for commercial use.",
+    favicon: "https://maxst.icons8.com/vue-static/illustrations/favicon/ouch-96x96.png",
+    ogImage: "https://maxst.icons8.com/vue-static/illustrations/seo/opengraph.png",
+    subtitle: "Vector SVG and PNG Graphics, Ouch Images for Download",
+    tags: [TAGS.illustration],
+    url: "https://icons8.com/illustrations",
+  },
+  {
     title: "Free Flat Vector Illustration Collection",
     category: CATEGORIES.media,
     description:
@@ -418,6 +430,7 @@ export const mediaLinks: Tool[] = [
   },
   {
     title: "remove.bg",
+    author: "Icons8",
     category: CATEGORIES.media,
     description:
       "Remove image backgrounds automatically in 5 seconds with just one click. Don't spend hours manually picking pixels. Upload your photo now & see the magic.",

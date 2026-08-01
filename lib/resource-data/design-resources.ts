@@ -1005,6 +1005,15 @@ export const designLinks: Tool[] = [
     url: "https://www.happyhues.co/",
   },
   {
+    title: "Harmonizer",
+    category: CATEGORIES.design,
+    description: "Color palette generator for UI",
+    favicon: "https://harmonizer.evilmartians.com/favicon.svg",
+    ogImage: "https://harmonizer.evilmartians.com/social-image.png",
+    tags: [TAGS.color],
+    url: "https://harmonizer.evilmartians.com/",
+  },
+  {
     title: "Headers Club",
     category: CATEGORIES.design,
     description:
@@ -1936,6 +1945,18 @@ export const designLinks: Tool[] = [
     ogImage: "https://www.tunera.xyz/site/assets/files/1/image-tunera.png",
     tags: [TAGS.typography],
     url: "https://www.tunera.xyz/",
+  },
+  {
+    title: "Type Colony",
+    category: CATEGORIES.design,
+    description:
+      "Type Colony offers a range of typography solutions, from free typefaces for designers to custom font design services. Explore variable fonts for flexibility, good poster fonts for impact, and aesthetic fonts for style. Elevate your brand's identity with our custom font design services.",
+    favicon:
+      "https://cdn.dribbble.com/users/1785980/avatars/normal/fa1d429d9b6a932f9fec69e4ab968d8d.jpg",
+    ogImage: "https://typecolony.com/cdn/shop/files/Banner_Web_Embed.jpg",
+    subtitle: "Commercial Fonts for Sale for Designers",
+    tags: [TAGS.typography],
+    url: "https://typecolony.com/",
   },
   {
     title: "Typeface App",

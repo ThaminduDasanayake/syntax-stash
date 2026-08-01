@@ -735,6 +735,7 @@ export const frontendLinks: Tool[] = [
   },
   {
     title: "Icons8",
+    author: "Icons8",
     category: CATEGORIES.frontend,
     description:
       "A flexible icon family for interfaces, diagrams, presentations — whatever, really.",
