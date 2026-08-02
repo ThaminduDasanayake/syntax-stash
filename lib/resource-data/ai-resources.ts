@@ -432,6 +432,16 @@ export const aiLinks: Tool[] = [
     url: "https://unstructured.io/",
   },
   {
+    title: "Varchive",
+    author: "Cameron Moll LLC",
+    category: CATEGORIES.ai,
+    description:
+      "Varchive is a digest of artificial intelligence news biased toward design, curated by Cameron Moll.",
+    favicon: "https://varchive.ai/favicons/apple-touch-icon.png",
+    ogImage: "https://varchive.ai/social-og.png",
+    url: "https://varchive.ai/",
+  },
+  {
     title: "Vibe-Trading",
     author: "HKUDS",
     category: CATEGORIES.ai,

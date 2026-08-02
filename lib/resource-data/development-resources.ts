@@ -452,6 +452,14 @@ export const developmentLinks: Tool[] = [
     url: "https://directus.com/",
   },
   {
+    title: "docmd",
+    category: CATEGORIES.dev,
+    description:
+      "The zero-config documentation engine that starts instantly and scales with you, fast, SEO-friendly, and AI-ready by default.",
+    subtitle: "Build production-ready documentation from Markdown in seconds",
+    url: "https://docmd.io/",
+  },
+  {
     title: "docsify",
     category: CATEGORIES.dev,
     description: "A magical documentation generator.",

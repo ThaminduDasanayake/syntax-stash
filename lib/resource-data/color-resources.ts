@@ -122,6 +122,17 @@ export const colorLinks: Tool[] = [
     url: "https://colorpalette.pro/",
   },
   {
+    title: "Contrast Report",
+    author: "Adam Chaboryk",
+    category: CATEGORIES.colors,
+    description: "Straightforward colour contrast checker with Picture-in-picture (PiP) mode.",
+    favicon:
+      "https://raw.githubusercontent.com/adamchaboryk/contrast.report/main/public/icons/icon-384x384.webp",
+    ogImage: "https://contrast.report/og-contrast-report.png",
+    subtitle: "WCAG Colour Contrast Checker",
+    url: "https://contrast.report/",
+  },
+  {
     title: "Coolors",
     category: CATEGORIES.colors,
     description: "Generate or browse beautiful color combinations for your designs.",
@@ -305,6 +316,16 @@ export const colorLinks: Tool[] = [
     favicon: "https://picular.co/images/favicon-base.png",
     tags: [TAGS.color],
     url: "https://picular.co/",
+  },
+  {
+    title: "Poline",
+    category: CATEGORIES.colors,
+    description:
+      "Poline is lightweight, dependency free and fast JavaScript function written in TypeScript. It draws lines between anchors over polar HSL coordinates to generate pleasing color palettes.",
+    favicon: "https://meodai.github.io/poline/poline-wheel.png",
+    ogImage: "https://meodai.github.io/poline/socialfb.png",
+    subtitle: "Esoteric Color Palette Generation Library",
+    url: "https://meodai.github.io/poline/",
   },
   {
     title: "Radix Colors",

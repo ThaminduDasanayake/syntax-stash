@@ -115,6 +115,14 @@ export const mediaLinks: Tool[] = [
     url: "https://ray.so/",
   },
   {
+    title: "digibouquet",
+    category: CATEGORIES.media,
+    description:
+      "Build a beautiful digital flower bouquet and send it to someone you love. Choose from roses, peonies, sunflowers, and more. Free, fun, and made with love.",
+    subtitle: "send a digital flower bouquet",
+    url: "https://digibouquet.vercel.app/",
+  },
+  {
     title: "Doodle Ipsum",
     category: CATEGORIES.media,
     description: "Illustration placeholders for developers. Powered by Blush",

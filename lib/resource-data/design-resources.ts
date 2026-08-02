@@ -15,6 +15,13 @@ export const designLinks: Tool[] = [
     url: "https://60fps.design/",
   },
   {
+    title: "191 Social Proof Examples",
+    category: CATEGORIES.design,
+    description:
+      "Browse social proof examples grounded in psychology, with real-life applications in business and marketing to build trust on your website and in advertising.",
+    url: "https://socialproofexamples.com/",
+  },
+  {
     title: "404s",
     category: CATEGORIES.design,
     description:
@@ -69,6 +76,7 @@ export const designLinks: Tool[] = [
     tags: [TAGS.ai, TAGS.design],
     url: "https://ai-index.eu/",
   },
+
   {
     title: "AI Particle Simulator",
     category: CATEGORIES.design,
@@ -77,7 +85,6 @@ export const designLinks: Tool[] = [
     subtitle: "Professional 3D Swarm Simulator",
     url: "https://particles.casberry.in/",
   },
-
   {
     title: "animos",
     category: CATEGORIES.design,
@@ -211,6 +218,18 @@ export const designLinks: Tool[] = [
     url: "https://useblank.design/",
   },
   {
+    title: "Bloo",
+    author: "Vijay Verma",
+    category: CATEGORIES.design,
+    description:
+      "All in one open source wireframe kit for quick design and prototyping your idea. Its library contains more than 250+ components supporting darkmode and 150+ ready to use mobile screens.",
+    favicon: "https://bloouikit.com/icons/icon-192x192.png?v=61644abbf8a11d3ebd259b7b641950e4",
+    ogImage: "https://bloouikit.com/preview.jpg",
+    subtitle: "Low Fidelity Wireframe Kit",
+    tags: [TAGS.illustration],
+    url: "https://bloouikit.com/",
+  },
+  {
     title: "Bookmarkify",
     category: CATEGORIES.design,
     description:
@@ -248,6 +267,7 @@ export const designLinks: Tool[] = [
     tags: [TAGS.inspiration],
     url: "https://www.brandsinmotion.xyz/",
   },
+
   {
     title: "CallToInspiration",
     category: CATEGORIES.design,
@@ -266,7 +286,6 @@ export const designLinks: Tool[] = [
     tags: [TAGS.design],
     url: "https://cognitivebiasindex.com/",
   },
-
   {
     title: "Colors & Fonts",
     category: CATEGORIES.design,
@@ -283,6 +302,18 @@ export const designLinks: Tool[] = [
     description: "Create content in one place. Incredibly fast. Save as images or videos.",
     tags: [TAGS.design],
     url: "https://contentcore.xyz/",
+  },
+  {
+    title: "Contra",
+    author: "Vijay Verma",
+    category: CATEGORIES.design,
+    description:
+      "Open source wireframe kit for quick design and prototyping . Beautifully crafted easy to use wireframe kit with more than 150 mobile components and 50+ screens.",
+    favicon: "https://contrauikit.com/icons/icon-192x192.png?v=a65b32fc628415e93899a664c5a7cb8c",
+    ogImage: "https://contrauikit.com/preview.jpg",
+    subtitle: "Wireframe Kit",
+    tags: [TAGS.illustration],
+    url: "https://contrauikit.com/",
   },
   {
     title: "Cosmos",
@@ -395,6 +426,22 @@ export const designLinks: Tool[] = [
     url: "https://designmd.me/",
   },
   {
+    title: "DesignMeter",
+    category: CATEGORIES.design,
+    description:
+      "Get objective UI/UX scores with actionable insights. Analyze visual hierarchy, usability, and user experience. Free AI-powered design analysis tool.",
+    subtitle: "How good is your design, really?",
+    url: "https://designmeter.ai/",
+  },
+  {
+    title: "Design Spells",
+    category: CATEGORIES.design,
+    description:
+      "Discover micro-interactions, easter eggs, and other seemingly extra design details that infuse life, personality, and fun back into the web.",
+    subtitle: "Design details that feel like magic",
+    url: "https://designspells.com/",
+  },
+  {
     title: "Design System Diaries",
     author: "Lewis",
     category: CATEGORIES.design,
@@ -406,6 +453,18 @@ export const designLinks: Tool[] = [
       "https://substackcdn.com/image/fetch/$s_!Lu1v!,f_auto,q_auto:best,fl_progressive:steep/https%3A%2F%2Fdesignsystemdiaries.substack.com%2Ftwitter%2Fsubscribe-card.jpg%3Fv%3D2120431422%26version%3D9",
     tags: [TAGS.design],
     url: "https://designsystemdiaries.substack.com/",
+  },
+  {
+    title: "Detail",
+    author: "Rene Wang",
+    category: CATEGORIES.design,
+    className: "bg-foreground border-paper",
+    description:
+      "A curated reference of small design decisions that shape better interfaces. For designers and engineers who care about the details.",
+    favicon: "https://detail.design/icon.svg",
+    ogImage: "https://detail.design/og.png",
+    subtitle: "Where craft lives",
+    url: "https://detail.design/",
   },
   {
     title: "Details.so",
@@ -519,6 +578,15 @@ export const designLinks: Tool[] = [
       "No-coding tool to create 3D assets, key visual for social media, identity elements and other marketing and design need.",
     tags: [TAGS.design],
     url: "https://endlesstools.io/",
+  },
+  {
+    title: "Excalidraw Whiteboard",
+    category: CATEGORIES.design,
+    description:
+      "Excalidraw is a virtual collaborative whiteboard tool that lets you easily sketch diagrams that have a hand-drawn feel to them.",
+    ogImage: "https://excalidraw.com/og-image-3.png",
+    subtitle: "Collaborative whiteboarding made easy",
+    url: "https://excalidraw.com/",
   },
   {
     title: "Eyecandy",
@@ -657,6 +725,14 @@ export const designLinks: Tool[] = [
     url: "https://grafikstash.com/",
   },
   {
+    title: "Graphite",
+    category: CATEGORIES.design,
+    description:
+      "Open source free software. A vector graphics creativity suite with a clean, intuitive interface. Opens instantly (no signup) and runs locally in a browser. Exports SVG, PNG, JPG.",
+    subtitle: "Free online vector editor & procedural design tool",
+    url: "https://graphite.art/",
+  },
+  {
     title: "Grid Paper",
     category: CATEGORIES.design,
     description: "Printable Grid Paper",
@@ -682,6 +758,13 @@ export const designLinks: Tool[] = [
     subtitle: "Hand-picked Design Links, Daily",
     tags: [TAGS.newsletter],
     url: "https://heydesigner.com/",
+  },
+  {
+    title: "HOVERSTAT.ES",
+    category: CATEGORIES.design,
+    description: "The home of alternative design, code and content on the world wide web.",
+    subtitle: "The home of alternative web-design.",
+    url: "https://www.hoverstat.es/",
   },
   {
     title: "InkField",
@@ -887,6 +970,14 @@ export const designLinks: Tool[] = [
     url: "https://www.modernillustration.org/",
   },
   {
+    title: "MonoSketch",
+    category: CATEGORIES.design,
+    description:
+      "MonoSketch is a powerful ASCII sketching and diagramming app that lets you effortlessly transform your ideas into visually stunning designs.",
+    subtitle: "Unleash your ideas with ASCII",
+    url: "https://monosketch.io/",
+  },
+  {
     title: "Morflax Studio",
     category: CATEGORIES.design,
     description:
@@ -957,6 +1048,14 @@ export const designLinks: Tool[] = [
     description: "Build interactive experiences, websites, 3d, and apps using natural language.",
     tags: [TAGS.design],
     url: "https://omma.build/",
+  },
+  {
+    title: "OpenPencil",
+    category: CATEGORIES.design,
+    description:
+      "Open-source Figma alternative. Opens .fig files, built-in AI, fully programmable.",
+    subtitle: "Open-Source Design Editor",
+    url: "https://openpencil.dev/",
   },
   {
     title: "OS Design Directory",
@@ -1188,6 +1287,16 @@ export const designLinks: Tool[] = [
     url: "https://savee.com/",
   },
   {
+    title: "ScreensDesign",
+    category: CATEGORIES.design,
+    description:
+      "Research real iOS app screens, onboarding flows, paywalls, and revenue-backed patterns, then generate app screens from proven mobile design examples.",
+    favicon: "https://screensdesign.com/img/favicon.svg",
+    ogImage: "https://screensdesign.com/img/sd_preview_v2.jpg?v=2",
+    subtitle: "App Design Library & AI Screen Generator",
+    url: "https://screensdesign.com/",
+  },
+  {
     title: "Screenshot Studio",
     category: CATEGORIES.design,
     className: "bg-foreground border-paper",
@@ -1327,6 +1436,14 @@ export const designLinks: Tool[] = [
     url: "https://designproject.io/",
   },
   {
+    title: "The Shape of AI",
+    category: CATEGORIES.design,
+    description:
+      "Pattern library of AIUX patterns exploring best practices for designing AI Products.",
+    subtitle: "UX Patterns for Artificial Intelligence Design",
+    url: "https://www.shapeof.ai/",
+  },
+  {
     title: "Toolfolio",
     category: CATEGORIES.design,
     description:
@@ -1342,12 +1459,45 @@ export const designLinks: Tool[] = [
     url: "https://www.transparenttextures.com/",
   },
   {
+    title: "Trending Design",
+    author: "Trending Design",
+    category: CATEGORIES.design,
+    description:
+      "Discover handpicked design products from top brands. Art prints, design books, home decor, apparel, workspace tools, lighting, and furniture for creative professionals.",
+    favicon: "https://trending.design/favicon.ico",
+    ogImage: "https://trending.design/images/ogimage.png",
+    subtitle: "Curated Design Products",
+    url: "https://trending.design/",
+  },
+  {
     title: "typo/graphic posters",
     category: CATEGORIES.design,
     description: "since 2008, a reference platform for typographic and graphic posters.",
     ogImage: "https://www.typographicposters.com/typographic-posters-new-website-2021-photo.jpg",
     tags: [TAGS.inspiration],
     url: "https://www.typographicposters.com/",
+  },
+  {
+    title: "UI Guideline",
+    author: "UI Guideline",
+    category: CATEGORIES.design,
+    description:
+      "UI Guideline is the ultimate resource for designers, featuring meticulously researched UI components, Figma UI Kits, and in-depth guides to elevate your design projects. We conduct deep analysis of the world's largest Design Systems, studying how they name, define, and document properties, anatomy, best practices, and more for each component.",
+    favicon: "https://mcp.uiguideline.com/logo.svg",
+    ogImage: "https://www.uiguideline.com/assets/images/social/thumbnail-social.jpg",
+    subtitle: "Decoding the World's Leading Design Systems.",
+    url: "https://www.uiguideline.com/",
+  },
+  {
+    title: "uiprint",
+    author: "Vijay Verma",
+    category: CATEGORIES.design,
+    description: "Collection of printable wireframe, mockup and dot grid sketchpad templates",
+    favicon: "https://uiprint.co/icons/icon-192x192.png?v=114185a10255201d7a4e237c19855c61",
+    ogImage: "https://uiprint.co/preview.jpg",
+    subtitle: "Get Printable Mockups and Sketchpads",
+    tags: [TAGS.mockup],
+    url: "https://uiprint.co/",
   },
   {
     title: "Ultramock",
@@ -1366,6 +1516,16 @@ export const designLinks: Tool[] = [
     subtitle: "A Selective Library of High-Quality Creative Assets",
     tags: [TAGS.mockup],
     url: "https://unblast.com/",
+  },
+  {
+    title: "Usetools.Design",
+    author: "Usetools.Design",
+    category: CATEGORIES.design,
+    description:
+      "Discover the best design tools and resources for designers and developers. Curated collection of UI/UX tools, icons, illustrations, and more.",
+    ogImage: "https://www.usetools.design/og-image.webp",
+    subtitle: "Curated Design Tools & Resources",
+    url: "https://www.usetools.design/",
   },
   {
     title: "ux dictionary",

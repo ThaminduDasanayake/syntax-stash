@@ -300,6 +300,14 @@ export const typographyLinks: Tool[] = [
     url: "https://thegoodlineheight.com/",
   },
   {
+    title: "The League of Moveable Type",
+    author: "Micah Rich",
+    category: CATEGORIES.typography,
+    description:
+      "The first open-source foundry. And your spot to learn how to use, make, and work with type.",
+    url: "https://www.theleagueofmoveabletype.com/",
+  },
+  {
     title: "Tunera Type Foundry",
     category: CATEGORIES.typography,
     description:

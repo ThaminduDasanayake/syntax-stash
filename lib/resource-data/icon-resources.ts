@@ -28,6 +28,14 @@ export const iconLinks: Tool[] = [
     url: "https://animateicons.in/",
   },
   {
+    title: "Avatune",
+    category: CATEGORIES.icons,
+    description:
+      "A typed, SSR-first avatar primitive for the web — seven frameworks, eleven themes, zero dependencies. Compose by hand or let the predictor draft from a photo.",
+    subtitle: "Avatars that feel like people",
+    url: "https://www.avatune.dev/",
+  },
+  {
     title: "Basicons",
     category: CATEGORIES.icons,
     description:
@@ -552,6 +560,16 @@ export const iconLinks: Tool[] = [
     subtitle: "SVG and PNG tech icons",
     tags: [TAGS.icons],
     url: "https://techicons.dev/",
+  },
+  {
+    title: "User Initial avatars",
+    author: "Lasse Rafn",
+    category: CATEGORIES.icons,
+    description:
+      "Generate image avatars with user initials for free, just specify name. No limits or registration.",
+    ogImage: "https://ui-avatars.com/assets/meta.png",
+    subtitle: "Generate avatars with initials",
+    url: "https://ui-avatars.com/",
   },
   {
     title: "Vecto3d",
