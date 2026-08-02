@@ -473,8 +473,11 @@ export const developmentLinks: Tool[] = [
   {
     title: "Domainstack",
     category: CATEGORIES.dev,
+    className: "bg-foreground border-paper",
     description:
       "Instant lookups for WHOIS, DNS, hosting, certificates, SEO and more, plus free domain tracking and change alerts.",
+    favicon: "https://domainstack.io/icon.svg",
+    ogImage: "https://github.com/user-attachments/assets/15754f3d-82d1-4b8d-9b13-616c3ab9dd53",
     subtitle: "Domain Intelligence Made Easy",
     tags: [TAGS.tool],
     url: "https://domainstack.io/",
@@ -645,6 +648,16 @@ export const developmentLinks: Tool[] = [
     url: "https://www.gittoskill.com/",
   },
   {
+    title: "Glance",
+    author: "Glance",
+    category: CATEGORIES.dev,
+    description: "A self-hosted dashboard that puts all your feeds in one place",
+    favicon: "/github.svg",
+    ogImage:
+      "https://repository-images.githubusercontent.com/github-production-repository-image-32fea6/792861139/5aa82f46-2f6d-4773-a4f3-b42e136f453f?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20260802%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260802T163537Z&X-Amz-Expires=300&X-Amz-Signature=d417d27b4293fd15e931da798a25bce1ab2c9a069aa4712316bd771378ced265&X-Amz-SignedHeaders=host&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoiaHR0cHM6Ly9yZXBvc2l0b3J5LWltYWdlcy5naXRodWJ1c2VyY29udGVudC5jb20vIiwia2V5Ijoia2V5MSIsImV4cCI6MTc4NTY4ODgzNywibmJmIjoxNzg1Njg4NTM3LCJwYXRoIjoicmVwb3NpdG9yeS1pbWFnZXMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIn0.LiTuiIdZoV0a4idqfl5G1STknJsbvorrOatWcx2mKs8",
+    url: "https://github.com/glanceapp/glance",
+  },
+  {
     title: "Good Design Tools",
     category: CATEGORIES.dev,
     description:
@@ -767,6 +780,17 @@ export const developmentLinks: Tool[] = [
     favicon: "https://inputoutput.dev/favicon.ico",
     tags: [TAGS.tool],
     url: "https://inputoutput.dev/",
+  },
+  {
+    title: "Invoice Builder",
+    author: "piratuks",
+    category: CATEGORIES.dev,
+    description:
+      "Invoice and quotation builder desktop app with PDF export, designed for small businesses and freelancers. Create, manage, and export invoices and quotes easily using a local database in an Electron-based app.",
+    favicon: "/github.svg",
+    ogImage:
+      "https://opengraph.githubassets.com/f50c07ae3a04dedde35800ded790b1ed85d154e313f6e136a5cc3c7e256c5d65/piratuks/invoice-builder",
+    url: "https://github.com/piratuks/invoice-builder",
   },
   {
     title: "IT Tools - Handy online tools for developers",
@@ -976,6 +1000,16 @@ export const developmentLinks: Tool[] = [
       "Open-source, local-first AI diagramming for architecture diagrams, flowcharts, system design, and editable exports. No signup required.",
     tags: [TAGS.development],
     url: "https://openflowkit.com/",
+  },
+  {
+    title: "OpenGraph",
+    category: CATEGORIES.dev,
+    className: "bg-foreground border-paper",
+    description: "The #1 og:image scanner and generator on the web.",
+    favicon: "https://www.opengraph.xyz/icon0.svg",
+    ogImage: "https://www.opengraph.xyz/favicons/og.png",
+    tags: [TAGS.tool],
+    url: "https://www.opengraph.xyz/",
   },
   {
     title: "Open Source Alternatives to Popular Software",

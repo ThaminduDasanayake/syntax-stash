@@ -17,6 +17,17 @@ export const iconLinks: Tool[] = [
     url: "https://animateicons.in/",
   },
   {
+    title: "Basicons",
+    category: CATEGORIES.icons,
+    description:
+      "A set of free, open-source icons for your next project. Customise and download individual svg icons or the entire collection.",
+    favicon: "https://www.basicons.com/favicon.ico",
+    ogImage: "https://www.basicons.com/opengraph-image.png",
+    subtitle: "Basic icons for product design & development",
+    tags: [TAGS.icons],
+    url: "https://www.basicons.com/",
+  },
+  {
     title: "Boxicons",
     author: "Boxicons",
     category: CATEGORIES.icons,
@@ -469,6 +480,16 @@ export const iconLinks: Tool[] = [
       "Free Vectors and Icons in SVG format. ✅ Download free mono or multi color vectors for commercial use. Search in 500.000+ Free SVG Vectors and Icons.",
     subtitle: "Free SVG Vectors and Icons",
     url: "https://www.svgrepo.com/",
+  },
+  {
+    title: "SVG Shapes",
+    author: "Monika Michalczyk",
+    category: CATEGORIES.icons,
+    description: "Free copy-paste SVG Shapes for your next project. Made by Monika Michalczyk.",
+    favicon: "https://framerusercontent.com/images/AcOOvejHuHDkEKzCQ1dp2N1qCs.svg",
+    ogImage: "https://framerusercontent.com/images/MH0UKXtlzQanSSX5IHDcTM2gkI.jpg",
+    tags: [TAGS.svg],
+    url: "https://www.shapes.gallery/",
   },
   {
     title: "Svg Wave",

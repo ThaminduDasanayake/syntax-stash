@@ -283,6 +283,17 @@ export const newLinks: Tool[] = [
     url: "https://tui.studio/",
   },
   {
+    title: "UI Guideline",
+    author: "UI Guideline",
+    category: CATEGORIES.dev,
+    description:
+      "UI Guideline is the ultimate resource for designers, featuring meticulously researched UI components, Figma UI Kits, and in-depth guides to elevate your design projects. We conduct deep analysis of the world's largest Design Systems, studying how they name, define, and document properties, anatomy, best practices, and more for each component.",
+    favicon: "https://mcp.uiguideline.com/logo.svg",
+    ogImage: "https://www.uiguideline.com/assets/images/social/thumbnail-social.jpg",
+    subtitle: "Decoding the World's Leading Design Systems.",
+    url: "https://www.uiguideline.com/",
+  },
+  {
     title: "uiprint",
     author: "Vijay Verma",
     category: CATEGORIES.dev,

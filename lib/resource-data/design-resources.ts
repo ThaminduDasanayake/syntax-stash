@@ -589,8 +589,8 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "Free design resources. Find curated top quality design resources free for personal and commercial use. Accessible to everyone.",
-    favicon: "https://freedesignstuff.com/assets/images/apple-touch-icon.png?v=74cbd46e",
-    ogImage: "https://freedesignstuff.com/assets/images/card.jpg?v=74cbd46e",
+    favicon: "https://freedesignstuff.com/assets/images/apple-touch-icon.png",
+    ogImage: "https://freedesignstuff.com/assets/images/card.jpg",
     tags: [TAGS.design],
     url: "https://freedesignstuff.com/",
   },
@@ -1260,6 +1260,9 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "Free online storyboard software for film, education, UX, and marketing. Create professional storyboards — no drawing skills needed.",
+    favicon: "https://cdn-1.webcatalog.io/catalog/storytribe/storytribe-icon-filled-256.png",
+    ogImage: "https://storytribeapp.com/images/og-image-01.png",
+    subtitle: "Free Online Storyboard Maker for Film & Education",
     tags: [TAGS.design],
     url: "https://storytribeapp.com/",
   },

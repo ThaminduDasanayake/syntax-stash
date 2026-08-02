@@ -219,6 +219,16 @@ export const typographyLinks: Tool[] = [
     url: "https://myfffonts.accentgrave.net/",
   },
   {
+    title: "notyourtypefoundry",
+    category: CATEGORIES.typography,
+    description:
+      "A small independent type foundry and design studio based in Rotterdam, the Netherlands.",
+    favicon: "https://www.notyourtype.nl/site/assets/files/icons/apple-icon-144x144.png",
+    ogImage: "https://www.notyourtype.nl/site/assets/files/1/scr-20251218-kara.png",
+    tags: [TAGS.typography],
+    url: "https://www.notyourtype.nl/",
+  },
+  {
     title: "Open Foundry",
     category: CATEGORIES.typography,
     description:
