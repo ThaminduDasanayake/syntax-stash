@@ -162,14 +162,6 @@ export const newLinks: Tool[] = [
     url: "https://monosketch.io/",
   },
   {
-    title: "Odyc.js",
-    category: CATEGORIES.dev,
-    description:
-      "Odyc.js is a simple JavaScript library to create interactive narrative games, even without coding experience.",
-    ogImage: "https://odyc.dev/og.png",
-    url: "https://odyc.dev/",
-  },
-  {
     title: "OpenPencil",
     category: CATEGORIES.dev,
     description:
@@ -194,16 +186,7 @@ export const newLinks: Tool[] = [
       "A comprehensive resource listing all international standards for paper sizes, dimensions and formats.",
     url: "https://papersizes.io/",
   },
-  {
-    title: "pen.dev",
-    category: CATEGORIES.dev,
-    description:
-      "pen.dev fundamentally increases your engineering speed by bringing designing directly into your preferred IDE.",
-    favicon: "https://www.pen.dev/favicon.svg",
-    ogImage: "https://pen.dev/og-image-v4.png",
-    subtitle: "Design on canvas. Land in code.",
-    url: "https://www.pen.dev/",
-  },
+
   {
     title: "Poline",
     category: CATEGORIES.dev,
@@ -225,14 +208,7 @@ export const newLinks: Tool[] = [
     subtitle: "App Design Library & AI Screen Generator",
     url: "https://screensdesign.com/",
   },
-  {
-    title: "Screen Sizes",
-    category: CATEGORIES.dev,
-    description: "A complete guide for Apple Displays, Icon Sizes, and more!",
-    favicon: "https://screensizes.app/favicon.svg",
-    ogImage: "https://www.screensizes.app/ogimage.png",
-    url: "https://screensizes.app/",
-  },
+
   {
     title: "Slidev",
     author: "Anthony Fu",

@@ -5,6 +5,17 @@ import { TAGS } from "./tags";
 
 export const iconLinks: Tool[] = [
   {
+    title: "Absurd Design",
+    category: CATEGORIES.icons,
+    description:
+      "Download free illustrations – beautiful hand-drawn artwork for any creative project. Enhance websites, books, and more with high-quality visuals.",
+    favicon: "https://absurd.design/img/favicon/apple-touch-icon-152x152.png",
+    ogImage: "https://absurd.design/img/social.jpg",
+    subtitle: "Free Hand-Drawn Illustrations for Download – Unleash Your Imagination",
+    tags: [TAGS.illustration],
+    url: "https://absurd.design/intro",
+  },
+  {
     title: "AnimateIcons",
     author: "Avijit Dey",
     category: CATEGORIES.icons,

@@ -836,6 +836,14 @@ export const frontendLinks: Tool[] = [
     url: "https://novaui.design/",
   },
   {
+    title: "Odyc.js",
+    category: CATEGORIES.dev,
+    description:
+      "Odyc.js is a simple JavaScript library to create interactive narrative games, even without coding experience.",
+    ogImage: "https://odyc.dev/og.png",
+    url: "https://odyc.dev/",
+  },
+  {
     title: "Open Props: sub-atomic styles",
     category: CATEGORIES.frontend,
     description:
@@ -883,6 +891,16 @@ export const frontendLinks: Tool[] = [
     subtitle: "shadcn/ui for React PDFs | Copy-Paste PDF Components",
     tags: [TAGS.development, TAGS.pdf],
     url: "https://pdfx.akashpise.dev/",
+  },
+  {
+    title: "pen.dev",
+    category: CATEGORIES.dev,
+    description:
+      "pen.dev fundamentally increases your engineering speed by bringing designing directly into your preferred IDE.",
+    favicon: "https://www.pen.dev/favicon.svg",
+    ogImage: "https://pen.dev/og-image-v4.png",
+    subtitle: "Design on canvas. Land in code.",
+    url: "https://www.pen.dev/",
   },
   {
     title: "phantom-ui",
@@ -1010,6 +1028,14 @@ export const frontendLinks: Tool[] = [
       "An evolving collection of production-ready components built for the shadcn/ui ecosystem. Supercharge your projects with fluid animations and modern best practices.",
     subtitle: "Beautifully Engineered Components for shadcn/ui",
     url: "https://satisui.xyz/",
+  },
+  {
+    title: "Screen Sizes",
+    category: CATEGORIES.dev,
+    description: "A complete guide for Apple Displays, Icon Sizes, and more!",
+    favicon: "https://screensizes.app/favicon.svg",
+    ogImage: "https://www.screensizes.app/ogimage.png",
+    url: "https://screensizes.app/",
   },
   {
     title: "Scrollbar",
