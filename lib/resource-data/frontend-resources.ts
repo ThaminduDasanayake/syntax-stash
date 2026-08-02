@@ -837,7 +837,7 @@ export const frontendLinks: Tool[] = [
   },
   {
     title: "Odyc.js",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.frontend,
     description:
       "Odyc.js is a simple JavaScript library to create interactive narrative games, even without coding experience.",
     ogImage: "https://odyc.dev/og.png",
@@ -894,7 +894,7 @@ export const frontendLinks: Tool[] = [
   },
   {
     title: "pen.dev",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.frontend,
     description:
       "pen.dev fundamentally increases your engineering speed by bringing designing directly into your preferred IDE.",
     favicon: "https://www.pen.dev/favicon.svg",
@@ -1031,7 +1031,7 @@ export const frontendLinks: Tool[] = [
   },
   {
     title: "Screen Sizes",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.frontend,
     description: "A complete guide for Apple Displays, Icon Sizes, and more!",
     favicon: "https://screensizes.app/favicon.svg",
     ogImage: "https://www.screensizes.app/ogimage.png",

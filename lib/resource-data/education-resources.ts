@@ -313,6 +313,15 @@ export const educationLinks: Tool[] = [
     url: "https://deepwiki.com/",
   },
   {
+    title: "Design Beyond Barriers",
+    category: CATEGORIES.education,
+    description:
+      "What makes an interface accessible? And how can designers create experiences that work for all users? This guide answers all your burning questions about accessibility—like how to design for everyone, even those juggling a hot coffee and a pet hamster.",
+    favicon: "https://designbeyondbarriers.com/apple-touch-icon.png",
+    ogImage: "https://designbeyondbarriers.com/share.jpg",
+    url: "https://designbeyondbarriers.com/",
+  },
+  {
     title: "Developer Roadmaps",
     category: CATEGORIES.education,
     description:
@@ -379,6 +388,18 @@ export const educationLinks: Tool[] = [
     ogImage: "https://cdn.freecodecamp.org/platform/universal/fcc_meta_1920X1080-indigo.png",
     tags: [TAGS.education],
     url: "https://www.freecodecamp.org/",
+  },
+  {
+    title: "Freelance Things",
+    category: CATEGORIES.education,
+    description:
+      "Discover the best communities, tools, articles, books, podcasts, and videos to help you on your freelance journey. Sent straight to your inbox, updated weekly.",
+    favicon:
+      "https://cdn.prod.website-files.com/63bc15b13144b8438045a67c/676571298ec154cdf5ef4ba6_freelance-things-app-clip.png",
+    ogImage:
+      "https://cdn.prod.website-files.com/63bc15b13144b8438045a67c/64b78f3450c55065a27d4422_freelance-things-social-image.png",
+    subtitle: "Curated Resources For Freelancers",
+    url: "https://www.freelancethings.co/",
   },
   {
     title: "free media heck yeah",
@@ -791,6 +812,13 @@ export const educationLinks: Tool[] = [
     description:
       "As a Data Scientist analyzing Squid Games data, write SQL queries to pass 9 SQL challenges posed to you be the Front Man.",
     url: "https://datalemur.com/sql-game",
+  },
+  {
+    title: "StackShare",
+    category: CATEGORIES.education,
+    description:
+      "Discover and share the technology stacks used by top companies. Compare tools, read reviews, and make informed decisions about your tech stack.",
+    url: "https://stackshare.io/",
   },
   {
     title: "Start UX Design",

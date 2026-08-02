@@ -56,15 +56,7 @@ export const newLinks: Tool[] = [
     subtitle: "WCAG Colour Contrast Checker",
     url: "https://contrast.report/",
   },
-  {
-    title: "Design Beyond Barriers",
-    category: CATEGORIES.dev,
-    description:
-      "What makes an interface accessible? And how can designers create experiences that work for all users? This guide answers all your burning questions about accessibility—like how to design for everyone, even those juggling a hot coffee and a pet hamster.",
-    favicon: "https://designbeyondbarriers.com/apple-touch-icon.png",
-    ogImage: "https://designbeyondbarriers.com/share.jpg",
-    url: "https://designbeyondbarriers.com/",
-  },
+
   {
     title: "DesignMeter",
     category: CATEGORIES.dev,
@@ -118,18 +110,7 @@ export const newLinks: Tool[] = [
     subtitle: "Collaborative whiteboarding made easy",
     url: "https://excalidraw.com/",
   },
-  {
-    title: "Freelance Things",
-    category: CATEGORIES.dev,
-    description:
-      "Discover the best communities, tools, articles, books, podcasts, and videos to help you on your freelance journey. Sent straight to your inbox, updated weekly.",
-    favicon:
-      "https://cdn.prod.website-files.com/63bc15b13144b8438045a67c/676571298ec154cdf5ef4ba6_freelance-things-app-clip.png",
-    ogImage:
-      "https://cdn.prod.website-files.com/63bc15b13144b8438045a67c/64b78f3450c55065a27d4422_freelance-things-social-image.png",
-    subtitle: "Curated Resources For Freelancers",
-    url: "https://www.freelancethings.co/",
-  },
+
   {
     title: "Graphite",
     category: CATEGORIES.dev,
@@ -162,23 +143,7 @@ export const newLinks: Tool[] = [
     subtitle: "Open-Source Design Editor",
     url: "https://openpencil.dev/",
   },
-  {
-    title: "Paper",
-    category: CATEGORIES.dev,
-    description:
-      "Paper is a modern and powerful design tool that helps you create, share, and ship your best work.",
-    favicon: "https://paper.design/apple-touch-icon.png",
-    ogImage: "https://paper.design/opengraph-image.jpg?opengraph-image.9a84ecdd.jpg",
-    subtitle: "design, share, ship",
-    url: "https://paper.design/",
-  },
-  {
-    title: "Paper Sizes",
-    category: CATEGORIES.dev,
-    description:
-      "A comprehensive resource listing all international standards for paper sizes, dimensions and formats.",
-    url: "https://papersizes.io/",
-  },
+
 
   {
     title: "Poline",
@@ -200,15 +165,6 @@ export const newLinks: Tool[] = [
     ogImage: "https://screensdesign.com/img/sd_preview_v2.jpg?v=2",
     subtitle: "App Design Library & AI Screen Generator",
     url: "https://screensdesign.com/",
-  },
-
-
-  {
-    title: "StackShare",
-    category: CATEGORIES.dev,
-    description:
-      "Discover and share the technology stacks used by top companies. Compare tools, read reviews, and make informed decisions about your tech stack.",
-    url: "https://stackshare.io/",
   },
 
   {

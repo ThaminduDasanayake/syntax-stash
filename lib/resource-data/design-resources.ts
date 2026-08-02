@@ -988,6 +988,16 @@ export const designLinks: Tool[] = [
     url: "https://pageflows.com/",
   },
   {
+    title: "Paper",
+    category: CATEGORIES.design,
+    description:
+      "Paper is a modern and powerful design tool that helps you create, share, and ship your best work.",
+    favicon: "https://paper.design/apple-touch-icon.png",
+    ogImage: "https://paper.design/opengraph-image.jpg?opengraph-image.9a84ecdd.jpg",
+    subtitle: "design, share, ship",
+    url: "https://paper.design/",
+  },
+  {
     title: "PaperAnimator.com",
     category: CATEGORIES.design,
     description:
@@ -1004,6 +1014,13 @@ export const designLinks: Tool[] = [
     subtitle: "Custom Paper Generator",
     tags: [TAGS.design],
     url: "https://paperme.pixzens.com/",
+  },
+  {
+    title: "Paper Sizes",
+    category: CATEGORIES.design,
+    description:
+      "A comprehensive resource listing all international standards for paper sizes, dimensions and formats.",
+    url: "https://papersizes.io/",
   },
   {
     title: "Pascal Editor",
