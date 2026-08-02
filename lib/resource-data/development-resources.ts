@@ -809,6 +809,14 @@ export const developmentLinks: Tool[] = [
     url: "https://itty.dev/",
   },
   {
+    title: "JSON For You",
+    category: CATEGORIES.dev,
+    description:
+      "Online JSON view, format, minify, validate and compare. It also provides graph view to preview JSON data, semantic comparing two JSON diffs, convert JSON to CSV or CSV to JSON and support jq online.",
+    subtitle: "The best online JSON tool",
+    url: "https://json4u.com/",
+  },
+  {
     title: "JSON Hero",
     category: CATEGORIES.dev,
     description:
@@ -1309,6 +1317,15 @@ export const developmentLinks: Tool[] = [
     url: "https://skysend.app/",
   },
   {
+    title: "Slidev",
+    author: "Anthony Fu",
+    category: CATEGORIES.dev,
+    description: "Presentation slides for developers",
+    favicon: "https://sli.dev/logo.svg",
+    ogImage: "https://sli.dev/og-image.png",
+    url: "https://sli.dev/",
+  },
+  {
     title: "Squoosh",
     category: CATEGORIES.dev,
     description:
@@ -1373,6 +1390,16 @@ export const developmentLinks: Tool[] = [
     subtitle: "The Best Free Online Table Converter",
     tags: [TAGS.tool],
     url: "https://www.tableformatconverter.com/",
+  },
+  {
+    title: "Takumi",
+    author: "Kane Wang",
+    category: CATEGORIES.dev,
+    description: "JSX to pixels in Rust. Node, Workers, browser. No headless Chrome.",
+    ogImage:
+      "https://raw.githubusercontent.com/kane50613/takumi/master/example/twitter-images/output/og-image.png",
+    subtitle: "Render JSX to images. Skip the browser.",
+    url: "https://takumi.kane.tw/",
   },
   {
     title: "Templates - Vercel",
@@ -1464,6 +1491,13 @@ export const developmentLinks: Tool[] = [
     url: "https://tolgee.io/",
   },
   {
+    title: "ToolMateX",
+    category: CATEGORIES.dev,
+    description: "Fast, free online tools for designers, developers, and creators.",
+    subtitle: "Free Online Tools for Designers & Developers",
+    url: "https://toolmatex.com/",
+  },
+  {
     title: "Tooooools.app",
     author: "Daniil Sukhovskoy",
     category: CATEGORIES.dev,
@@ -1520,6 +1554,15 @@ export const developmentLinks: Tool[] = [
     subtitle: "Build and deploy fully-managed AI agents and workflows.",
     tags: [TAGS.ai, TAGS.backend, TAGS.development],
     url: "https://trigger.dev/",
+  },
+  {
+    title: "TUIStudio",
+    category: CATEGORIES.dev,
+    description:
+      "A Figma-like visual editor for TUI applications. Drag-and-drop components, edit properties in real-time, and export to 6 frameworks with one click.",
+    favicon: "https://tui.studio/assets/favicon_dark.svg",
+    subtitle: "Design Terminal UIs. Visually.",
+    url: "https://tui.studio/",
   },
   {
     title: "tunnl.gg",

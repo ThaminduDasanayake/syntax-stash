@@ -145,14 +145,7 @@ export const newLinks: Tool[] = [
     subtitle: "The home of alternative web-design.",
     url: "https://www.hoverstat.es/",
   },
-  {
-    title: "JSON For You",
-    category: CATEGORIES.dev,
-    description:
-      "Online JSON view, format, minify, validate and compare. It also provides graph view to preview JSON data, semantic comparing two JSON diffs, convert JSON to CSV or CSV to JSON and support jq online.",
-    subtitle: "The best online JSON tool",
-    url: "https://json4u.com/",
-  },
+
   {
     title: "MonoSketch",
     category: CATEGORIES.dev,
@@ -209,15 +202,7 @@ export const newLinks: Tool[] = [
     url: "https://screensdesign.com/",
   },
 
-  {
-    title: "Slidev",
-    author: "Anthony Fu",
-    category: CATEGORIES.dev,
-    description: "Presentation slides for developers",
-    favicon: "https://sli.dev/logo.svg",
-    ogImage: "https://sli.dev/og-image.png",
-    url: "https://sli.dev/",
-  },
+
   {
     title: "StackShare",
     category: CATEGORIES.dev,
@@ -225,16 +210,7 @@ export const newLinks: Tool[] = [
       "Discover and share the technology stacks used by top companies. Compare tools, read reviews, and make informed decisions about your tech stack.",
     url: "https://stackshare.io/",
   },
-  {
-    title: "Takumi",
-    author: "Kane Wang",
-    category: CATEGORIES.dev,
-    description: "JSX to pixels in Rust. Node, Workers, browser. No headless Chrome.",
-    ogImage:
-      "https://raw.githubusercontent.com/kane50613/takumi/master/example/twitter-images/output/og-image.png",
-    subtitle: "Render JSX to images. Skip the browser.",
-    url: "https://takumi.kane.tw/",
-  },
+
   {
     title: "The League of Moveable Type",
     author: "Micah Rich",
@@ -251,13 +227,7 @@ export const newLinks: Tool[] = [
     subtitle: "UX Patterns for Artificial Intelligence Design",
     url: "https://www.shapeof.ai/",
   },
-  {
-    title: "ToolMateX",
-    category: CATEGORIES.dev,
-    description: "Fast, free online tools for designers, developers, and creators.",
-    subtitle: "Free Online Tools for Designers & Developers",
-    url: "https://toolmatex.com/",
-  },
+
   {
     title: "Trending Design",
     author: "Trending Design",
@@ -269,15 +239,7 @@ export const newLinks: Tool[] = [
     subtitle: "Curated Design Products",
     url: "https://trending.design/",
   },
-  {
-    title: "TUIStudio",
-    category: CATEGORIES.dev,
-    description:
-      "A Figma-like visual editor for TUI applications. Drag-and-drop components, edit properties in real-time, and export to 6 frameworks with one click.",
-    favicon: "https://tui.studio/assets/favicon_dark.svg",
-    subtitle: "Design Terminal UIs. Visually.",
-    url: "https://tui.studio/",
-  },
+
   {
     title: "UI Guideline",
     author: "UI Guideline",
