@@ -25,6 +25,18 @@ export const aiLinks: Tool[] = [
     url: "https://github.com/patchy631/ai-engineering-hub",
   },
   {
+    title: "Andrej Karpathy Skills",
+    author: "Multica AI",
+    category: CATEGORIES.ai,
+    description:
+      "A single CLAUDE.md file to improve Claude Code behavior, derived from Andrej Karpathy's observations on LLM coding pitfalls.",
+    favicon: "/github.svg",
+    ogImage:
+      "https://opengraph.githubassets.com/8aba2cedd2dc2447cd55eeb1f08834209b7fb6bcb660e17e2f03baf7e5b9d195/multica-ai/andrej-karpathy-skills",
+    tags: [TAGS.ai],
+    url: "https://github.com/multica-ai/andrej-karpathy-skills",
+  },
+  {
     title: "AnythingLLM",
     category: CATEGORIES.ai,
     description:
@@ -418,6 +430,16 @@ export const aiLinks: Tool[] = [
     subtitle: "Unstructured Data Platform for GenAI",
     tags: [TAGS.ai],
     url: "https://unstructured.io/",
+  },
+  {
+    title: "Varchive",
+    author: "Cameron Moll LLC",
+    category: CATEGORIES.ai,
+    description:
+      "Varchive is a digest of artificial intelligence news biased toward design, curated by Cameron Moll.",
+    favicon: "https://varchive.ai/favicons/apple-touch-icon.png",
+    ogImage: "https://varchive.ai/social-og.png",
+    url: "https://varchive.ai/",
   },
   {
     title: "Vibe-Trading",

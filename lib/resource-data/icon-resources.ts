@@ -5,6 +5,17 @@ import { TAGS } from "./tags";
 
 export const iconLinks: Tool[] = [
   {
+    title: "Absurd Design",
+    category: CATEGORIES.icons,
+    description:
+      "Download free illustrations – beautiful hand-drawn artwork for any creative project. Enhance websites, books, and more with high-quality visuals.",
+    favicon: "https://absurd.design/img/favicon/apple-touch-icon-152x152.png",
+    ogImage: "https://absurd.design/img/social.jpg",
+    subtitle: "Free Hand-Drawn Illustrations for Download – Unleash Your Imagination",
+    tags: [TAGS.illustration],
+    url: "https://absurd.design/intro",
+  },
+  {
     title: "AnimateIcons",
     author: "Avijit Dey",
     category: CATEGORIES.icons,
@@ -15,6 +26,25 @@ export const iconLinks: Tool[] = [
     subtitle: "Free Animated React Icon Library",
     tags: [TAGS.icons],
     url: "https://animateicons.in/",
+  },
+  {
+    title: "Avatune",
+    category: CATEGORIES.icons,
+    description:
+      "A typed, SSR-first avatar primitive for the web — seven frameworks, eleven themes, zero dependencies. Compose by hand or let the predictor draft from a photo.",
+    subtitle: "Avatars that feel like people",
+    url: "https://www.avatune.dev/",
+  },
+  {
+    title: "Basicons",
+    category: CATEGORIES.icons,
+    description:
+      "A set of free, open-source icons for your next project. Customise and download individual svg icons or the entire collection.",
+    favicon: "https://www.basicons.com/favicon.ico",
+    ogImage: "https://www.basicons.com/opengraph-image.png",
+    subtitle: "Basic icons for product design & development",
+    tags: [TAGS.icons],
+    url: "https://www.basicons.com/",
   },
   {
     title: "Boxicons",
@@ -262,6 +292,17 @@ export const iconLinks: Tool[] = [
     url: "https://www.itshover.com/",
   },
   {
+    title: "Lineicons",
+    category: CATEGORIES.icons,
+    description:
+      "Get 27988+ free line icons in SVG, PNG, React, Figma, and more. Available in multiple variations, with free CDN & icon editor for seamless customization!",
+    favicon: "https://avatars.githubusercontent.com/u/90905687",
+    ogImage: "https://cdn.pimjo.com/lineicons-5.jpg",
+    subtitle: "Free Line Icons for Designers and Developers",
+    tags: [TAGS.icons],
+    url: "https://lineicons.com/",
+  },
+  {
     title: "LsIcon",
     author: "Wis Design",
     category: CATEGORIES.icons,
@@ -471,6 +512,16 @@ export const iconLinks: Tool[] = [
     url: "https://www.svgrepo.com/",
   },
   {
+    title: "SVG Shapes",
+    author: "Monika Michalczyk",
+    category: CATEGORIES.icons,
+    description: "Free copy-paste SVG Shapes for your next project. Made by Monika Michalczyk.",
+    favicon: "https://framerusercontent.com/images/AcOOvejHuHDkEKzCQ1dp2N1qCs.svg",
+    ogImage: "https://framerusercontent.com/images/MH0UKXtlzQanSSX5IHDcTM2gkI.jpg",
+    tags: [TAGS.svg],
+    url: "https://www.shapes.gallery/",
+  },
+  {
     title: "Svg Wave",
     category: CATEGORIES.icons,
     description:
@@ -509,6 +560,16 @@ export const iconLinks: Tool[] = [
     subtitle: "SVG and PNG tech icons",
     tags: [TAGS.icons],
     url: "https://techicons.dev/",
+  },
+  {
+    title: "User Initial avatars",
+    author: "Lasse Rafn",
+    category: CATEGORIES.icons,
+    description:
+      "Generate image avatars with user initials for free, just specify name. No limits or registration.",
+    ogImage: "https://ui-avatars.com/assets/meta.png",
+    subtitle: "Generate avatars with initials",
+    url: "https://ui-avatars.com/",
   },
   {
     title: "Vecto3d",

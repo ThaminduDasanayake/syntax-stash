@@ -41,6 +41,14 @@ export const mediaLinks: Tool[] = [
     url: "https://avatars.outpacestudios.com/",
   },
   {
+    title: "BDFM",
+    category: CATEGORIES.media,
+    description: "Bitmap generator",
+    favicon: "https://bitmap.designfamilymarket.com/assets/apple-touch-icon.png",
+    ogImage: "https://bitmap.designfamilymarket.com/assets/logo.png",
+    url: "https://bitmap.designfamilymarket.com/",
+  },
+  {
     title: "Blush",
     category: CATEGORIES.media,
     description:
@@ -105,6 +113,14 @@ export const mediaLinks: Tool[] = [
       "Turn your code into beautiful images. Choose from a range of syntax colors, hide or show the background, and toggle between a dark and light window.",
     ogImage: "https://www.ray.so/_next/static/media/og.0wf8b~rvlko.g.png",
     url: "https://ray.so/",
+  },
+  {
+    title: "digibouquet",
+    category: CATEGORIES.media,
+    description:
+      "Build a beautiful digital flower bouquet and send it to someone you love. Choose from roses, peonies, sunflowers, and more. Free, fun, and made with love.",
+    subtitle: "send a digital flower bouquet",
+    url: "https://digibouquet.vercel.app/",
   },
   {
     title: "Doodle Ipsum",

@@ -452,6 +452,14 @@ export const developmentLinks: Tool[] = [
     url: "https://directus.com/",
   },
   {
+    title: "docmd",
+    category: CATEGORIES.dev,
+    description:
+      "The zero-config documentation engine that starts instantly and scales with you, fast, SEO-friendly, and AI-ready by default.",
+    subtitle: "Build production-ready documentation from Markdown in seconds",
+    url: "https://docmd.io/",
+  },
+  {
     title: "docsify",
     category: CATEGORIES.dev,
     description: "A magical documentation generator.",
@@ -473,8 +481,11 @@ export const developmentLinks: Tool[] = [
   {
     title: "Domainstack",
     category: CATEGORIES.dev,
+    className: "bg-foreground border-paper",
     description:
       "Instant lookups for WHOIS, DNS, hosting, certificates, SEO and more, plus free domain tracking and change alerts.",
+    favicon: "https://domainstack.io/icon.svg",
+    ogImage: "https://github.com/user-attachments/assets/15754f3d-82d1-4b8d-9b13-616c3ab9dd53",
     subtitle: "Domain Intelligence Made Easy",
     tags: [TAGS.tool],
     url: "https://domainstack.io/",
@@ -645,6 +656,16 @@ export const developmentLinks: Tool[] = [
     url: "https://www.gittoskill.com/",
   },
   {
+    title: "Glance",
+    author: "Glance",
+    category: CATEGORIES.dev,
+    description: "A self-hosted dashboard that puts all your feeds in one place",
+    favicon: "/github.svg",
+    ogImage:
+      "https://repository-images.githubusercontent.com/github-production-repository-image-32fea6/792861139/5aa82f46-2f6d-4773-a4f3-b42e136f453f?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20260802%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260802T163537Z&X-Amz-Expires=300&X-Amz-Signature=d417d27b4293fd15e931da798a25bce1ab2c9a069aa4712316bd771378ced265&X-Amz-SignedHeaders=host&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoiaHR0cHM6Ly9yZXBvc2l0b3J5LWltYWdlcy5naXRodWJ1c2VyY29udGVudC5jb20vIiwia2V5Ijoia2V5MSIsImV4cCI6MTc4NTY4ODgzNywibmJmIjoxNzg1Njg4NTM3LCJwYXRoIjoicmVwb3NpdG9yeS1pbWFnZXMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIn0.LiTuiIdZoV0a4idqfl5G1STknJsbvorrOatWcx2mKs8",
+    url: "https://github.com/glanceapp/glance",
+  },
+  {
     title: "Good Design Tools",
     category: CATEGORIES.dev,
     description:
@@ -769,6 +790,17 @@ export const developmentLinks: Tool[] = [
     url: "https://inputoutput.dev/",
   },
   {
+    title: "Invoice Builder",
+    author: "piratuks",
+    category: CATEGORIES.dev,
+    description:
+      "Invoice and quotation builder desktop app with PDF export, designed for small businesses and freelancers. Create, manage, and export invoices and quotes easily using a local database in an Electron-based app.",
+    favicon: "/github.svg",
+    ogImage:
+      "https://opengraph.githubassets.com/f50c07ae3a04dedde35800ded790b1ed85d154e313f6e136a5cc3c7e256c5d65/piratuks/invoice-builder",
+    url: "https://github.com/piratuks/invoice-builder",
+  },
+  {
     title: "IT Tools - Handy online tools for developers",
     category: CATEGORIES.dev,
     description:
@@ -783,6 +815,14 @@ export const developmentLinks: Tool[] = [
     favicon: "https://itty.dev/itty-square.256.png",
     tags: [TAGS.development],
     url: "https://itty.dev/",
+  },
+  {
+    title: "JSON For You",
+    category: CATEGORIES.dev,
+    description:
+      "Online JSON view, format, minify, validate and compare. It also provides graph view to preview JSON data, semantic comparing two JSON diffs, convert JSON to CSV or CSV to JSON and support jq online.",
+    subtitle: "The best online JSON tool",
+    url: "https://json4u.com/",
   },
   {
     title: "JSON Hero",
@@ -976,6 +1016,16 @@ export const developmentLinks: Tool[] = [
       "Open-source, local-first AI diagramming for architecture diagrams, flowcharts, system design, and editable exports. No signup required.",
     tags: [TAGS.development],
     url: "https://openflowkit.com/",
+  },
+  {
+    title: "OpenGraph",
+    category: CATEGORIES.dev,
+    className: "bg-foreground border-paper",
+    description: "The #1 og:image scanner and generator on the web.",
+    favicon: "https://www.opengraph.xyz/icon0.svg",
+    ogImage: "https://www.opengraph.xyz/favicons/og.png",
+    tags: [TAGS.tool],
+    url: "https://www.opengraph.xyz/",
   },
   {
     title: "Open Source Alternatives to Popular Software",
@@ -1275,6 +1325,15 @@ export const developmentLinks: Tool[] = [
     url: "https://skysend.app/",
   },
   {
+    title: "Slidev",
+    author: "Anthony Fu",
+    category: CATEGORIES.dev,
+    description: "Presentation slides for developers",
+    favicon: "https://sli.dev/logo.svg",
+    ogImage: "https://sli.dev/og-image.png",
+    url: "https://sli.dev/",
+  },
+  {
     title: "Squoosh",
     category: CATEGORIES.dev,
     description:
@@ -1339,6 +1398,16 @@ export const developmentLinks: Tool[] = [
     subtitle: "The Best Free Online Table Converter",
     tags: [TAGS.tool],
     url: "https://www.tableformatconverter.com/",
+  },
+  {
+    title: "Takumi",
+    author: "Kane Wang",
+    category: CATEGORIES.dev,
+    description: "JSX to pixels in Rust. Node, Workers, browser. No headless Chrome.",
+    ogImage:
+      "https://raw.githubusercontent.com/kane50613/takumi/master/example/twitter-images/output/og-image.png",
+    subtitle: "Render JSX to images. Skip the browser.",
+    url: "https://takumi.kane.tw/",
   },
   {
     title: "Templates - Vercel",
@@ -1430,6 +1499,13 @@ export const developmentLinks: Tool[] = [
     url: "https://tolgee.io/",
   },
   {
+    title: "ToolMateX",
+    category: CATEGORIES.dev,
+    description: "Fast, free online tools for designers, developers, and creators.",
+    subtitle: "Free Online Tools for Designers & Developers",
+    url: "https://toolmatex.com/",
+  },
+  {
     title: "Tooooools.app",
     author: "Daniil Sukhovskoy",
     category: CATEGORIES.dev,
@@ -1439,6 +1515,18 @@ export const developmentLinks: Tool[] = [
     ogImage: "https://www.tooooools.app/open-graph.jpg",
     tags: [TAGS.tool],
     url: "https://www.tooooools.app/",
+  },
+  {
+    title: "Toptal Utilities",
+    category: CATEGORIES.dev,
+    description:
+      "Toptal Utilities is a collection of helpful tools and resources for online professionals curated and created by our community. Get started for free now.",
+    favicon: "https://frontier-assets.toptal.com/992e7e6ce32e8969.svg",
+    ogImage:
+      "https://bs-uploads.toptal.io/blackfish-uploads/components/open_graph_image/8895819/og_image/optimized/Toptal_Global-d8a07ef18d5947fb64312399cd375efb.png",
+    subtitle: "Tools & Resources Developers, Designers",
+    tags: [TAGS.tool],
+    url: "https://www.toptal.com/utilities-tools",
   },
   {
     title: "ToS;DR",
@@ -1474,6 +1562,15 @@ export const developmentLinks: Tool[] = [
     subtitle: "Build and deploy fully-managed AI agents and workflows.",
     tags: [TAGS.ai, TAGS.backend, TAGS.development],
     url: "https://trigger.dev/",
+  },
+  {
+    title: "TUIStudio",
+    category: CATEGORIES.dev,
+    description:
+      "A Figma-like visual editor for TUI applications. Drag-and-drop components, edit properties in real-time, and export to 6 frameworks with one click.",
+    favicon: "https://tui.studio/assets/favicon_dark.svg",
+    subtitle: "Design Terminal UIs. Visually.",
+    url: "https://tui.studio/",
   },
   {
     title: "tunnl.gg",
