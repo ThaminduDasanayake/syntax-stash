@@ -41,6 +41,14 @@ export const mediaLinks: Tool[] = [
     url: "https://avatars.outpacestudios.com/",
   },
   {
+    title: "BDFM",
+    category: CATEGORIES.media,
+    description: "Bitmap generator",
+    favicon: "https://bitmap.designfamilymarket.com/assets/apple-touch-icon.png",
+    ogImage: "https://bitmap.designfamilymarket.com/assets/logo.png",
+    url: "https://bitmap.designfamilymarket.com/",
+  },
+  {
     title: "Blush",
     category: CATEGORIES.media,
     description:

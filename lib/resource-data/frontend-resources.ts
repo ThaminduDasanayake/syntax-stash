@@ -807,6 +807,18 @@ export const frontendLinks: Tool[] = [
     url: "https://motion-primitives.com/",
   },
   {
+    title: "MynaUI",
+    author: "Praveen Juge",
+    category: CATEGORIES.frontend,
+    description:
+      "MynaUI is a comprehensive design system and UI kit that lets you customize and extend designs.",
+    favicon: "https://mynaui.com/icon.svg",
+    ogImage: "https://mosaic.praveenjuge.com/use?url=https://mynaui.com/",
+    subtitle: "Made with TailwindCSS, shadcn/ui, Radix UI and Figma.",
+    tags: [TAGS["ui-component"]],
+    url: "https://mynaui.com/",
+  },
+  {
     title: "Neobrutalism components",
     category: CATEGORIES.frontend,
     description: "A collection of neobrutalism-styled components based on shadcn/ui.",
@@ -1145,13 +1157,15 @@ export const frontendLinks: Tool[] = [
     url: "https://smooothy.vercel.app/",
   },
   {
-    title: "Smooth UI",
+    title: "SmoothUI",
     category: CATEGORIES.frontend,
-    className: "bg-foreground border-paper",
     description:
       "Animated React components with smooth Motion animations. Drop-in shadcn/ui compatible, fully customizable with Tailwind CSS.",
+    favicon: "https://smoothui.dev/logomark-smoothui.svg",
+    ogImage: "https://smoothui.dev/og-optimized.webp",
+    subtitle: "Animated React Components for shadcn/ui | Motion & Tailwind",
     tags: [TAGS["ui-component"]],
-    url: "https://www.smoothui.dev/",
+    url: "https://smoothui.dev/",
   },
   {
     title: "soundcn",

@@ -273,6 +273,17 @@ export const iconLinks: Tool[] = [
     url: "https://www.itshover.com/",
   },
   {
+    title: "Lineicons",
+    category: CATEGORIES.icons,
+    description:
+      "Get 27988+ free line icons in SVG, PNG, React, Figma, and more. Available in multiple variations, with free CDN & icon editor for seamless customization!",
+    favicon: "https://avatars.githubusercontent.com/u/90905687",
+    ogImage: "https://cdn.pimjo.com/lineicons-5.jpg",
+    subtitle: "Free Line Icons for Designers and Developers",
+    tags: [TAGS.icons],
+    url: "https://lineicons.com/",
+  },
+  {
     title: "LsIcon",
     author: "Wis Design",
     category: CATEGORIES.icons,

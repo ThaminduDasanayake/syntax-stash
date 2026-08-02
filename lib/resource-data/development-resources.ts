@@ -1475,6 +1475,18 @@ export const developmentLinks: Tool[] = [
     url: "https://www.tooooools.app/",
   },
   {
+    title: "Toptal Utilities",
+    category: CATEGORIES.dev,
+    description:
+      "Toptal Utilities is a collection of helpful tools and resources for online professionals curated and created by our community. Get started for free now.",
+    favicon: "https://frontier-assets.toptal.com/992e7e6ce32e8969.svg",
+    ogImage:
+      "https://bs-uploads.toptal.io/blackfish-uploads/components/open_graph_image/8895819/og_image/optimized/Toptal_Global-d8a07ef18d5947fb64312399cd375efb.png",
+    subtitle: "Tools & Resources Developers, Designers",
+    tags: [TAGS.tool],
+    url: "https://www.toptal.com/utilities-tools",
+  },
+  {
     title: "ToS;DR",
     category: CATEGORIES.dev,
     description:

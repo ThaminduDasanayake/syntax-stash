@@ -57,6 +57,15 @@ export const newLinks: Tool[] = [
     url: "https://contrast.report/",
   },
   {
+    title: "Design Beyond Barriers",
+    category: CATEGORIES.dev,
+    description:
+      "What makes an interface accessible? And how can designers create experiences that work for all users? This guide answers all your burning questions about accessibility—like how to design for everyone, even those juggling a hot coffee and a pet hamster.",
+    favicon: "https://designbeyondbarriers.com/apple-touch-icon.png",
+    ogImage: "https://designbeyondbarriers.com/share.jpg",
+    url: "https://designbeyondbarriers.com/",
+  },
+  {
     title: "DesignMeter",
     category: CATEGORIES.dev,
     description:
@@ -272,6 +281,17 @@ export const newLinks: Tool[] = [
     description: "Fast, free online tools for designers, developers, and creators.",
     subtitle: "Free Online Tools for Designers & Developers",
     url: "https://toolmatex.com/",
+  },
+  {
+    title: "Trending Design",
+    author: "Trending Design",
+    category: CATEGORIES.dev,
+    description:
+      "Discover handpicked design products from top brands. Art prints, design books, home decor, apparel, workspace tools, lighting, and furniture for creative professionals.",
+    favicon: "https://trending.design/favicon.ico",
+    ogImage: "https://trending.design/images/ogimage.png",
+    subtitle: "Curated Design Products",
+    url: "https://trending.design/",
   },
   {
     title: "TUIStudio",
