@@ -28,6 +28,18 @@ export const iconLinks: Tool[] = [
     url: "https://animateicons.in/",
   },
   {
+    title: "Atlas Icons",
+    category: CATEGORIES.icons,
+    description:
+      "Free open-source icon library by GetIllustrations. 7,980 hand-crafted icons across 41 packs in three stroke weights. Webfont, React, Vue, Flutter, React Native, Figma plugin. MIT licensed.",
+    favicon: "https://iconsatlas.com/assets/img/favicon.svg",
+    ogImage:
+      "https://www.figma.com/community/thumbnail?resource_id=1182746451598399442&resource_type=plugin",
+    subtitle: "7,980 free open-source icons in 41 packs · MIT licensed",
+    tags: [TAGS.icons],
+    url: "https://iconsatlas.com/",
+  },
+  {
     title: "Avatune",
     category: CATEGORIES.icons,
     description:
@@ -106,6 +118,17 @@ export const iconLinks: Tool[] = [
     subtitle: "1,320+ Carefully Designed Icons | Duotone, Duocolor, Line Icons",
     tags: [TAGS.icons],
     url: "https://coolicons.cool/",
+  },
+  {
+    title: "Flowbite",
+    category: CATEGORIES.icons,
+    description:
+      "Get started with a collection of 751 free and open-source SVG icons compatible with Flowbite and Tailwind CSS based on solid and outline styles with React (JSX) and Figma support.",
+    favicon: "https://flowbite.com/images/logo.svg",
+    ogImage: "https://flowbite.com/images/og-image.png",
+    subtitle: "Free and open-source SVG Icons",
+    tags: [TAGS.icons],
+    url: "https://flowbite.com/icons/",
   },
   {
     title: "FREE - 200+ Unique Illustrations",
@@ -336,6 +359,15 @@ export const iconLinks: Tool[] = [
     subtitle: "Free Animated React Icons Library",
     tags: [TAGS.icons],
     url: "https://lucide-animated.com/",
+  },
+  {
+    title: "Lucide Icons",
+    category: CATEGORIES.icons,
+    description: "Browse all Lucide icons.",
+    favicon: "https://lucide.dev/logo.light.svg",
+    ogImage: "https://lucide.dev/og.png",
+    tags: [TAGS.icons],
+    url: "https://lucide.dev/icons/",
   },
   {
     title: "Mega Doodles Pack",

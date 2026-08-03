@@ -531,6 +531,14 @@ export const developmentLinks: Tool[] = [
     url: "https://explainx.ai/tools",
   },
   {
+    title: "Find Great Domain Names",
+    category: CATEGORIES.dev,
+    description:
+      "Each day, millions of expired domains are up for auction. You will miss golden opportunities.",
+    favicon: "https://yournextdomain.com/public/logo.svg",
+    url: "https://yournextdomain.com/",
+  },
+  {
     title: "FliiipBook",
     author: "FliiipBook",
     category: CATEGORIES.dev,
