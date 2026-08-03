@@ -79,6 +79,17 @@ export const iconLinks: Tool[] = [
     url: "https://boxy-svg.com/",
   },
   {
+    title: "Buttery.so",
+    author: "Rachel How",
+    category: CATEGORIES.icons,
+    className: "bg-foreground border-paper",
+    description: "Buttery smooth, minimal icons for interfaces.",
+    favicon: "https://www.buttery.so/logo-loaf.svg",
+    ogImage: "https://www.buttery.so/opengraph-image.png",
+    tags: [TAGS.icons],
+    url: "https://www.buttery.so/icons",
+  },
+  {
     title: "Cascade",
     category: CATEGORIES.icons,
     description:
@@ -410,6 +421,28 @@ export const iconLinks: Tool[] = [
       "https://gabriel.perales.me/_next/image?url=%2Fstatic%2Fimages%2Fmossaik.png&w=1200&q=75",
     tags: [TAGS.svg],
     url: "https://mossaik.app/",
+  },
+  {
+    title: "Overflow Design",
+    category: CATEGORIES.icons,
+    description:
+      "Free Notion icons for dashboards, docs, and templates. Explore a 591-icon starter set in regular, duotone, and accent color styles.",
+    favicon: "https://www.overflow.design/favicon.ico",
+    ogImage: "https://www.overflow.design/assets/img/od-preview.jpg",
+    subtitle: "Free Notion Icons",
+    tags: [TAGS.icons],
+    url: "https://www.overflow.design/notion-icons/free/",
+  },
+  {
+    title: "Pixelarticons",
+    category: CATEGORIES.icons,
+    description:
+      "4431 hand-crafted pixel art icons on a 24x24 grid. 4 styles: base, sharp, glyph, solid. 880 free, full set via Pro license. npm install pixelarticons.",
+    favicon: "https://pixelarticons.com/favicon.svg",
+    ogImage: "https://pixelarticons.com/og-default.jpg",
+    subtitle: "4431 Pixel Art Icons | Free & Pro",
+    tags: [TAGS.icons],
+    url: "https://pixelarticons.com/",
   },
   {
     title: "Radix Icons",

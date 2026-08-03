@@ -583,7 +583,6 @@ export const developmentLinks: Tool[] = [
     title: "GalaxyBrain",
     category: CATEGORIES.dev,
     description: "An information operating system powered by local files.",
-    subtitle: "An information operating system powered by local files",
     tags: [TAGS.tool],
     url: "https://galaxybrain.com/",
   },
@@ -958,6 +957,17 @@ export const developmentLinks: Tool[] = [
     url: "https://www.mockaroo.com/",
   },
   {
+    title: "Mux",
+    category: CATEGORIES.dev,
+    description:
+      "Mux helps teams ship high-performance and cost-effective video in minutes, not months. Build better video into anything from websites to platforms to AI workflows.",
+    favicon: "https://www.mux.com/icon-pwu6ef.svg",
+    ogImage: "https://www.mux.com/api/og",
+    subtitle: "Video API for developers",
+    tags: [TAGS.tool],
+    url: "https://www.mux.com/",
+  },
+  {
     title: "n8n-io/n8n",
     category: CATEGORIES.dev,
     description:
@@ -1255,6 +1265,18 @@ export const developmentLinks: Tool[] = [
       "Build and deploy software collaboratively with the power of AI without spending a second on setup.",
     tags: [TAGS.development],
     url: "https://replit.com/",
+  },
+  {
+    title: "Resend",
+    author: "Resend",
+    category: CATEGORIES.dev,
+    description:
+      "The best way to reach humans instead of spam folders. Deliver transactional and marketing emails at scale.",
+    favicon: "https://resend.com/static/favicons/favicon-marketing@144x144.png",
+    ogImage: "https://resend.com/static/cover.png",
+    subtitle: "Email for developers",
+    tags: [TAGS.tool],
+    url: "https://resend.com/",
   },
   {
     title: "Responsively App",

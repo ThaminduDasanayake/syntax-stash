@@ -5,6 +5,16 @@ import { TAGS } from "./tags";
 
 export const frontendLinks: Tool[] = [
   {
+    title: "9ui",
+    author: "Bora Baloglu",
+    category: CATEGORIES.frontend,
+    description: "Beautiful, customizable components built with Base UI and Tailwind CSS.",
+    favicon: "https://www.9ui.dev/apple-touch-icon.png",
+    ogImage: "https://www.9ui.dev/og.jpg",
+    tags: [TAGS["ui-component"]],
+    url: "https://www.9ui.dev/",
+  },
+  {
     title: "21st Dev",
     category: CATEGORIES.frontend,
     description:
@@ -133,6 +143,17 @@ export const frontendLinks: Tool[] = [
     subtitle: "Charts & Data Visualization Components",
     tags: [TAGS["ui-component"]],
     url: "https://bklit.com/",
+  },
+  {
+    title: "Blendy",
+    category: CATEGORIES.frontend,
+    description:
+      "Blendy, a framework-agnostic tool that smoothly transitions one element into another with just a few lines of code.",
+    favicon: "https://blendy.tahazsh.com/favicon.svg",
+    ogImage: "https://blendy.tahazsh.com/banner.png",
+    subtitle: "Smoothly transition elements",
+    tags: [TAGS.animation],
+    url: "https://blendy.tahazsh.com/",
   },
   {
     title: "Blossom Carousel",
