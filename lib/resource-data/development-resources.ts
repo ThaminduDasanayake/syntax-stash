@@ -531,6 +531,14 @@ export const developmentLinks: Tool[] = [
     url: "https://explainx.ai/tools",
   },
   {
+    title: "Find Great Domain Names",
+    category: CATEGORIES.dev,
+    description:
+      "Each day, millions of expired domains are up for auction. You will miss golden opportunities.",
+    favicon: "https://yournextdomain.com/public/logo.svg",
+    url: "https://yournextdomain.com/",
+  },
+  {
     title: "FliiipBook",
     author: "FliiipBook",
     category: CATEGORIES.dev,
@@ -575,7 +583,6 @@ export const developmentLinks: Tool[] = [
     title: "GalaxyBrain",
     category: CATEGORIES.dev,
     description: "An information operating system powered by local files.",
-    subtitle: "An information operating system powered by local files",
     tags: [TAGS.tool],
     url: "https://galaxybrain.com/",
   },
@@ -766,6 +773,17 @@ export const developmentLinks: Tool[] = [
     url: "https://jasperbernaers.com/image-to-ascii/",
   },
   {
+    title: "Image Tools Pro",
+    category: CATEGORIES.dev,
+    description:
+      "Transform your photos with ease using imagetoolspro.com. Edit, crop, resize, and customize your images effortlessly with our advanced editing features.",
+    favicon: "https://imagetoolspro.com/picture.webp",
+    ogImage: "https://imagetoolspro.com/img/logo.svg",
+    subtitle: "Online Image Tools — Edit & Enhance Photos with imagetoolspro",
+    tags: [TAGS.tool],
+    url: "https://imagetoolspro.com/",
+  },
+  {
     title: "IMG.LY SDK",
     category: CATEGORIES.dev,
     description:
@@ -937,6 +955,17 @@ export const developmentLinks: Tool[] = [
     subtitle: "Random Data Generator and API Mocking Tool | JSON / CSV / SQL / Excel",
     tags: [TAGS.tool],
     url: "https://www.mockaroo.com/",
+  },
+  {
+    title: "Mux",
+    category: CATEGORIES.dev,
+    description:
+      "Mux helps teams ship high-performance and cost-effective video in minutes, not months. Build better video into anything from websites to platforms to AI workflows.",
+    favicon: "https://www.mux.com/icon-pwu6ef.svg",
+    ogImage: "https://www.mux.com/api/og",
+    subtitle: "Video API for developers",
+    tags: [TAGS.tool],
+    url: "https://www.mux.com/",
   },
   {
     title: "n8n-io/n8n",
@@ -1238,6 +1267,18 @@ export const developmentLinks: Tool[] = [
     url: "https://replit.com/",
   },
   {
+    title: "Resend",
+    author: "Resend",
+    category: CATEGORIES.dev,
+    description:
+      "The best way to reach humans instead of spam folders. Deliver transactional and marketing emails at scale.",
+    favicon: "https://resend.com/static/favicons/favicon-marketing@144x144.png",
+    ogImage: "https://resend.com/static/cover.png",
+    subtitle: "Email for developers",
+    tags: [TAGS.tool],
+    url: "https://resend.com/",
+  },
+  {
     title: "Responsively App",
     category: CATEGORIES.dev,
     description: "A dev-tool that aids faster and precise responsive web development.",
@@ -1342,10 +1383,11 @@ export const developmentLinks: Tool[] = [
     url: "https://squoosh.app/",
   },
   {
-    title: "Stirling - PDF Processor",
+    title: "Stirling",
     category: CATEGORIES.dev,
     description:
       "GitHub's #1 PDF application with 30M+ downloads. The next generation of the PDF Editor - private, open-source, and built to scale.",
+    subtitle: "PDF Processor",
     tags: [TAGS.tool],
     url: "https://stirling.com/",
   },

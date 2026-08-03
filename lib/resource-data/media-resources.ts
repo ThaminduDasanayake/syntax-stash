@@ -201,7 +201,7 @@ export const mediaLinks: Tool[] = [
     category: CATEGORIES.media,
     description:
       "170,000+ hand-drawn vector illustrations & icons, SVG, PNG & Adobe Illustrator. Free packs + All-Access from $195/yr. Commercial license, no attribution.",
-    favicon: "https://getillustrations.com/favicon/safari-pinned-tab.svg",
+    favicon: "https://getillustrations.com/images/logo/logo.svg",
     ogImage:
       "https://getillustrations.com/images/Getillustrations-free-and-premium-vector-illustrations.png",
     subtitle: "170K+ Vector Illustrations & Icons: SVG, PNG & AI",
@@ -226,6 +226,16 @@ export const mediaLinks: Tool[] = [
       "15,015 free SVG logos for apps, dev tools and tech brands. Search, filter by category, download or copy in one click.",
     tags: [TAGS.logo],
     url: "https://logos.lndev.me/",
+  },
+  {
+    title: "Media Cheat Sheet",
+    category: CATEGORIES.media,
+    description:
+      "Easily access the most accurate image and video specs for social media and digital advertising. Stay updated with the latest sizes, dimensions, and specifications.",
+    favicon: "https://mediacheatsheet.com/favicon.png",
+    ogImage: "https://mediacheatsheet.com/og-image.jpg",
+    subtitle: "Social Media & Ad Specs Cheat Sheet",
+    url: "https://mediacheatsheet.com/",
   },
   {
     title: "Need3D",

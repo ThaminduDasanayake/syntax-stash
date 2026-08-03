@@ -58,6 +58,17 @@ export const typographyLinks: Tool[] = [
     url: "https://doodlefonts.app/",
   },
   {
+    title: "Fallback Font Generator",
+    author: "Brian Louis Ramirez",
+    category: CATEGORIES.typography,
+    description:
+      "Reduce Cumulative Layout Shift (CLS) by adjusting web fonts and system font fallbacks using @font-face",
+    favicon: "https://screenspan.net/favicon.svg",
+    ogImage: "https://screenspan.net/img/about-fallback-font-hero.jpg",
+    tags: [TAGS.typography],
+    url: "https://screenspan.net/fallback",
+  },
+  {
     title: "fixelPont",
     author: "falk schröter",
     category: CATEGORIES.typography,

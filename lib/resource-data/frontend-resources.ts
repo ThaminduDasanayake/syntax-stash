@@ -5,6 +5,16 @@ import { TAGS } from "./tags";
 
 export const frontendLinks: Tool[] = [
   {
+    title: "9ui",
+    author: "Bora Baloglu",
+    category: CATEGORIES.frontend,
+    description: "Beautiful, customizable components built with Base UI and Tailwind CSS.",
+    favicon: "https://www.9ui.dev/apple-touch-icon.png",
+    ogImage: "https://www.9ui.dev/og.jpg",
+    tags: [TAGS["ui-component"]],
+    url: "https://www.9ui.dev/",
+  },
+  {
     title: "21st Dev",
     category: CATEGORIES.frontend,
     description:
@@ -135,6 +145,17 @@ export const frontendLinks: Tool[] = [
     url: "https://bklit.com/",
   },
   {
+    title: "Blendy",
+    category: CATEGORIES.frontend,
+    description:
+      "Blendy, a framework-agnostic tool that smoothly transitions one element into another with just a few lines of code.",
+    favicon: "https://blendy.tahazsh.com/favicon.svg",
+    ogImage: "https://blendy.tahazsh.com/banner.png",
+    subtitle: "Smoothly transition elements",
+    tags: [TAGS.animation],
+    url: "https://blendy.tahazsh.com/",
+  },
+  {
     title: "Blossom Carousel",
     category: CATEGORIES.frontend,
     description: "Enhance native scrolling with dragging instead of replacing it.",
@@ -170,6 +191,17 @@ export const frontendLinks: Tool[] = [
     url: "https://bundui.io/",
   },
   {
+    title: "BuouUI",
+    author: "buou",
+    category: CATEGORIES.frontend,
+    description:
+      "This is a beautiful UI library with components, sections, landing page, and templates using Tailwind CSS.",
+    favicon: "https://buouui.com/apple-touch-icon.png",
+    ogImage: "https://buouui.com/og.jpg",
+    tags: [TAGS["ui-component"]],
+    url: "https://buouui.com/",
+  },
+  {
     title: "Clonify",
     category: CATEGORIES.frontend,
     description:
@@ -187,11 +219,16 @@ export const frontendLinks: Tool[] = [
   },
   {
     title: "Componentry",
+    author: "Harsh Jadhav",
     category: CATEGORIES.frontend,
+    className: "bg-foreground border-paper",
     description:
-      "Componentry is a free, open-source React UI component library by Harsh Jadhav. Beautiful, animated, copy-paste components built with Tailwind CSS, TypeScript, and Framer Motion. The best UI components for modern web applications.",
+      "Beautiful, animated React UI components with styling and motion already handled. Built with Tailwind CSS, TypeScript, and Framer Motion.",
+    favicon: "https://componentry.dev/icon.svg",
+    ogImage: "https://componentry.dev/opengraph-image.png",
+    subtitle: "Beautiful Animated UI Components for React",
     tags: [TAGS["ui-component"]],
-    url: "https://www.componentry.fun/",
+    url: "https://componentry.dev/",
   },
   {
     title: "Components – Chánh Đại",
@@ -264,6 +301,17 @@ export const frontendLinks: Tool[] = [
       "CSS Loader is a collection of different types of loaders, spinners and their source code. There are no image dependencies in this. It's is done using pure CSS. Hence it is easily customization too.",
     tags: [TAGS.animation],
     url: "https://cssloaders.github.io/",
+  },
+  {
+    title: "CSS Polka Dot Generator",
+    author: "Brian Louis Ramirez",
+    category: CATEGORIES.frontend,
+    description:
+      "Generate polka dot patterns using CSS custom variables for background images. No JS required.",
+    favicon: "https://screenspan.net/favicon.svg",
+    ogImage: "https://screenspan.net/img/polka-hero.jpg",
+    tags: [TAGS.patterns],
+    url: "https://screenspan.net/polka/",
   },
   {
     title: "CuiCui",
@@ -364,6 +412,17 @@ export const frontendLinks: Tool[] = [
       "Save hours of design time with clean, ready-to-use shadcn blocks that just work — modern, responsive, and built for speed.",
     tags: [TAGS["ui-component"]],
     url: "https://efferd.com/",
+  },
+  {
+    title: "ElevenLabs UI",
+    author: "ElevenLabs",
+    category: CATEGORIES.frontend,
+    description:
+      "A collection of Open Source agent and audio components that you can customize and extend.",
+    favicon: "https://ui.elevenlabs.io/apple-touch-icon.png",
+    ogImage: "https://ui.elevenlabs.io/opengraph-image.png",
+    tags: [TAGS.audio, TAGS["ui-component"]],
+    url: "https://ui.elevenlabs.io/",
   },
   {
     title: "Epic Easing",
@@ -1427,6 +1486,18 @@ export const frontendLinks: Tool[] = [
     subtitle: "Premium UI Components for Next.js & React Native",
     tags: [TAGS["ui-component"]],
     url: "https://www.uilora.com/",
+  },
+  {
+    title: "UI SFX",
+    author: "Yuki Capital",
+    category: CATEGORIES.frontend,
+    description:
+      "Preview 936 open-source UI sound effects for web, mobile, SaaS, and games. Compare 12 sonic styles, one-shots, and seamless loops.",
+    favicon: "https://uisfx.com/favicon.svg",
+    ogImage: "https://uisfx.com/og-ui-sound-effects-v4.jpg",
+    subtitle: "UI Sound Design: 936 Interface Sound Effects",
+    tags: [TAGS.audio],
+    url: "https://uisfx.com/",
   },
   {
     title: "Uiverse",

@@ -28,6 +28,18 @@ export const iconLinks: Tool[] = [
     url: "https://animateicons.in/",
   },
   {
+    title: "Atlas Icons",
+    category: CATEGORIES.icons,
+    description:
+      "Free open-source icon library by GetIllustrations. 7,980 hand-crafted icons across 41 packs in three stroke weights. Webfont, React, Vue, Flutter, React Native, Figma plugin. MIT licensed.",
+    favicon: "https://iconsatlas.com/assets/img/favicon.svg",
+    ogImage:
+      "https://www.figma.com/community/thumbnail?resource_id=1182746451598399442&resource_type=plugin",
+    subtitle: "7,980 free open-source icons in 41 packs · MIT licensed",
+    tags: [TAGS.icons],
+    url: "https://iconsatlas.com/",
+  },
+  {
     title: "Avatune",
     category: CATEGORIES.icons,
     description:
@@ -65,6 +77,17 @@ export const iconLinks: Tool[] = [
     favicon: "https://boxy-svg.com/icons/favicon.svg",
     tags: [TAGS.svg],
     url: "https://boxy-svg.com/",
+  },
+  {
+    title: "Buttery.so",
+    author: "Rachel How",
+    category: CATEGORIES.icons,
+    className: "bg-foreground border-paper",
+    description: "Buttery smooth, minimal icons for interfaces.",
+    favicon: "https://www.buttery.so/logo-loaf.svg",
+    ogImage: "https://www.buttery.so/opengraph-image.png",
+    tags: [TAGS.icons],
+    url: "https://www.buttery.so/icons",
   },
   {
     title: "Cascade",
@@ -106,6 +129,30 @@ export const iconLinks: Tool[] = [
     subtitle: "1,320+ Carefully Designed Icons | Duotone, Duocolor, Line Icons",
     tags: [TAGS.icons],
     url: "https://coolicons.cool/",
+  },
+  {
+    title: "Flowbite",
+    category: CATEGORIES.icons,
+    description:
+      "Get started with a collection of 751 free and open-source SVG icons compatible with Flowbite and Tailwind CSS based on solid and outline styles with React (JSX) and Figma support.",
+    favicon: "https://flowbite.com/images/logo.svg",
+    ogImage: "https://flowbite.com/images/og-image.png",
+    subtitle: "Free and open-source SVG Icons",
+    tags: [TAGS.icons],
+    url: "https://flowbite.com/icons/",
+  },
+  {
+    title: "FREE - 200+ Unique Illustrations",
+    author: "GraphicSauce",
+    category: CATEGORIES.icons,
+    description:
+      "This illustration combines cultural characters from various continents and packaged in a modern style, suitable for your startup that wants to stand up among others. Key Features: 100% Vector Library100 pre-made scenes (200+ scenes on our website)Drag and drop scene builder with organized layer...",
+    favicon: "https://static.figma.com/app/icon/1/favicon.svg",
+    ogImage:
+      "https://s3-alpha.figma.com/hub/file/5135664550/9154eac7-d255-41a6-91d3-aa55bbf67c3c-cover.png",
+    subtitle: "Figma",
+    tags: [TAGS.illustration],
+    url: "https://www.figma.com/community/file/1331150412576485660/free-200-unique-illustrations",
   },
   {
     title: "Free Flat Vector Illustration Collection",
@@ -288,7 +335,7 @@ export const iconLinks: Tool[] = [
     title: "Its Hover",
     category: CATEGORIES.icons,
     description: "Animated icons that move with intent.",
-    tags: [TAGS.icons],
+    tags: [TAGS.animation, TAGS.icons],
     url: "https://www.itshover.com/",
   },
   {
@@ -319,10 +366,20 @@ export const iconLinks: Tool[] = [
     category: CATEGORIES.icons,
     description:
       "Free open-source library of 350+ beautifully crafted animated React icons. Built with Motion and Lucide. Copy-paste ready, MIT licensed, fully customizable SVG icons with smooth animations.",
+    favicon: "https://lucide-animated.com/icon",
     ogImage: "https://lucide-animated.com/og.png",
     subtitle: "Free Animated React Icons Library",
-    tags: [TAGS.icons],
+    tags: [TAGS.animation, TAGS.icons],
     url: "https://lucide-animated.com/",
+  },
+  {
+    title: "Lucide Icons",
+    category: CATEGORIES.icons,
+    description: "Browse all Lucide icons.",
+    favicon: "https://lucide.dev/logo.light.svg",
+    ogImage: "https://lucide.dev/og.png",
+    tags: [TAGS.icons],
+    url: "https://lucide.dev/icons/",
   },
   {
     title: "Mega Doodles Pack",
@@ -365,6 +422,37 @@ export const iconLinks: Tool[] = [
       "https://gabriel.perales.me/_next/image?url=%2Fstatic%2Fimages%2Fmossaik.png&w=1200&q=75",
     tags: [TAGS.svg],
     url: "https://mossaik.app/",
+  },
+  {
+    title: "moving icons",
+    category: CATEGORIES.icons,
+    description: "beautifully crafted, moving icons. for svelte.",
+    favicon: "https://www.movingicons.dev/favicon.png",
+    ogImage: "https://movingicons.dev/og.png",
+    tags: [TAGS.animation, TAGS.icons, TAGS.svelte],
+    url: "https://www.movingicons.dev/",
+  },
+  {
+    title: "Overflow Design",
+    category: CATEGORIES.icons,
+    description:
+      "Free Notion icons for dashboards, docs, and templates. Explore a 591-icon starter set in regular, duotone, and accent color styles.",
+    favicon: "https://www.overflow.design/favicon.ico",
+    ogImage: "https://www.overflow.design/assets/img/od-preview.jpg",
+    subtitle: "Free Notion Icons",
+    tags: [TAGS.icons],
+    url: "https://www.overflow.design/notion-icons/free/",
+  },
+  {
+    title: "Pixelarticons",
+    category: CATEGORIES.icons,
+    description:
+      "4431 hand-crafted pixel art icons on a 24x24 grid. 4 styles: base, sharp, glyph, solid. 880 free, full set via Pro license. npm install pixelarticons.",
+    favicon: "https://pixelarticons.com/favicon.svg",
+    ogImage: "https://pixelarticons.com/og-default.jpg",
+    subtitle: "4431 Pixel Art Icons | Free & Pro",
+    tags: [TAGS.icons],
+    url: "https://pixelarticons.com/",
   },
   {
     title: "Radix Icons",
@@ -560,6 +648,18 @@ export const iconLinks: Tool[] = [
     subtitle: "SVG and PNG tech icons",
     tags: [TAGS.icons],
     url: "https://techicons.dev/",
+  },
+  {
+    title: "useAnimations",
+    author: "Patrik Svoboda",
+    category: CATEGORIES.icons,
+    description:
+      "Library of animated icons created in Lottie Framework for immediate use in your applications or websites.",
+    favicon: "https://useanimations.com/images/apple-touch-icon.png",
+    ogImage: "https://useanimations.com/images/OGuseAnimationsImage.jpg",
+    subtitle: "A micro-animations library",
+    tags: [TAGS.animation, TAGS.icons, TAGS.svelte],
+    url: "https://useanimations.com/",
   },
   {
     title: "User Initial avatars",
