@@ -1363,6 +1363,17 @@ export const designLinks: Tool[] = [
     url: "https://www.showcase.supply/",
   },
   {
+    title: "SparkBites",
+    category: CATEGORIES.design,
+    description:
+      "Discover SparkBites, a curated directory of innovative web design inspiration. Explore UI/UX trends, creative portfolios, and design resources.",
+    favicon: "https://sparkbites.dev/apple-icon.png",
+    ogImage: "https://sparkbites.dev/opengraph-image.jpg",
+    subtitle: "Web Design Inspiration Directory",
+    tags: [TAGS.inspiration],
+    url: "https://sparkbites.dev/",
+  },
+  {
     title: "Spotted in Prod",
     category: CATEGORIES.design,
     description:
