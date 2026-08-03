@@ -17,7 +17,7 @@ export function ToolLayout({ children, tool }: { children: ReactNode; tool: Tool
   return (
     <div className="flex w-full grow flex-col">
       {/* Editorial Tool Header */}
-      <div className="border-border bg-background border-b-2 px-6 py-12 md:px-12 lg:px-24">
+      <div className="border-border bg-background border-b-2 px-6 py-24 md:px-12 lg:px-24">
         <div className="mx-auto flex w-full max-w-7xl flex-col items-start gap-8">
           <Link
             href="/tools"
