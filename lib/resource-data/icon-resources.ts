@@ -335,7 +335,7 @@ export const iconLinks: Tool[] = [
     title: "Its Hover",
     category: CATEGORIES.icons,
     description: "Animated icons that move with intent.",
-    tags: [TAGS.icons],
+    tags: [TAGS.animation, TAGS.icons],
     url: "https://www.itshover.com/",
   },
   {
@@ -366,9 +366,10 @@ export const iconLinks: Tool[] = [
     category: CATEGORIES.icons,
     description:
       "Free open-source library of 350+ beautifully crafted animated React icons. Built with Motion and Lucide. Copy-paste ready, MIT licensed, fully customizable SVG icons with smooth animations.",
+    favicon: "https://lucide-animated.com/icon",
     ogImage: "https://lucide-animated.com/og.png",
     subtitle: "Free Animated React Icons Library",
-    tags: [TAGS.icons],
+    tags: [TAGS.animation, TAGS.icons],
     url: "https://lucide-animated.com/",
   },
   {
@@ -421,6 +422,15 @@ export const iconLinks: Tool[] = [
       "https://gabriel.perales.me/_next/image?url=%2Fstatic%2Fimages%2Fmossaik.png&w=1200&q=75",
     tags: [TAGS.svg],
     url: "https://mossaik.app/",
+  },
+  {
+    title: "moving icons",
+    category: CATEGORIES.icons,
+    description: "beautifully crafted, moving icons. for svelte.",
+    favicon: "https://www.movingicons.dev/favicon.png",
+    ogImage: "https://movingicons.dev/og.png",
+    tags: [TAGS.animation, TAGS.icons, TAGS.svelte],
+    url: "https://www.movingicons.dev/",
   },
   {
     title: "Overflow Design",
@@ -638,6 +648,18 @@ export const iconLinks: Tool[] = [
     subtitle: "SVG and PNG tech icons",
     tags: [TAGS.icons],
     url: "https://techicons.dev/",
+  },
+  {
+    title: "useAnimations",
+    author: "Patrik Svoboda",
+    category: CATEGORIES.icons,
+    description:
+      "Library of animated icons created in Lottie Framework for immediate use in your applications or websites.",
+    favicon: "https://useanimations.com/images/apple-touch-icon.png",
+    ogImage: "https://useanimations.com/images/OGuseAnimationsImage.jpg",
+    subtitle: "A micro-animations library",
+    tags: [TAGS.animation, TAGS.icons, TAGS.svelte],
+    url: "https://useanimations.com/",
   },
   {
     title: "User Initial avatars",

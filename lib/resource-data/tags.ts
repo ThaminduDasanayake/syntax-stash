@@ -50,6 +50,7 @@ export const TAGS = {
   shapes: "shapes",
   social: "social",
   sql: "sql",
+  svelte: "svelte",
   svg: "svg",
   textures: "textures",
   tool: "tool",
