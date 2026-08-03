@@ -20,6 +20,7 @@ export const TAGS = {
   designAssets: "design assets",
   development: "development",
   education: "education",
+  email: "email",
   git: "git",
   gradient: "gradient",
   graphics: "graphics",
@@ -31,7 +32,7 @@ export const TAGS = {
   javascript: "javascript",
   job: "job",
   llm: "llm",
-  logo: "logo",
+  logo: "logos",
   "low-code": "low-code",
   map: "map",
   markdown: "markdown",
@@ -57,6 +58,7 @@ export const TAGS = {
   typography: "typography",
   ui: "ui",
   "ui-component": "ui-component",
+  vector: "vector",
 } as const;
 
 export type TagType = keyof typeof TAGS;

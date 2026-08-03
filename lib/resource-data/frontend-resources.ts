@@ -156,6 +156,15 @@ export const frontendLinks: Tool[] = [
     url: "https://blendy.tahazsh.com/",
   },
   {
+    title: "Blocks",
+    author: "Ali Imam",
+    category: CATEGORIES.frontend,
+    favicon: "https://www.aliimam.in/apple-touch-icon.png",
+    ogImage: "https://www.aliimam.in/opengraph-image.jpg",
+    tags: [TAGS.ui],
+    url: "https://old.aliimam.in/blocks",
+  },
+  {
     title: "Blossom Carousel",
     category: CATEGORIES.frontend,
     description: "Enhance native scrolling with dragging instead of replacing it.",
@@ -237,6 +246,15 @@ export const frontendLinks: Tool[] = [
     description: "Pixel-perfect, uniquely crafted.",
     tags: [TAGS.animation, TAGS["ui-component"]],
     url: "https://chanhdai.com/components",
+  },
+  {
+    title: "Components",
+    author: "Ali Imam",
+    category: CATEGORIES.frontend,
+    favicon: "https://www.aliimam.in/apple-touch-icon.png",
+    ogImage: "https://www.aliimam.in/opengraph-image.jpg",
+    tags: [TAGS["ui-component"]],
+    url: "https://old.aliimam.in/docs/components",
   },
   {
     title: "coss ui",
@@ -927,12 +945,30 @@ export const frontendLinks: Tool[] = [
     url: "https://www.originkit.dev/",
   },
   {
+    title: "Pages",
+    author: "Ali Imam",
+    category: CATEGORIES.frontend,
+    favicon: "https://www.aliimam.in/apple-touch-icon.png",
+    ogImage: "https://www.aliimam.in/opengraph-image.jpg",
+    tags: [TAGS.ui],
+    url: "https://old.aliimam.in/pages",
+  },
+  {
     title: "Park UI",
     category: CATEGORIES.frontend,
     description:
       "Beautifully designed components built with Ark UI and Panda CSS that work with a variety of JS frameworks.",
     tags: [TAGS["ui-component"]],
     url: "https://park-ui.com/",
+  },
+  {
+    title: "Patterns",
+    author: "Ali Imam",
+    category: CATEGORIES.frontend,
+    favicon: "https://www.aliimam.in/apple-touch-icon.png",
+    ogImage: "https://www.aliimam.in/opengraph-image.jpg",
+    tags: [TAGS.patterns],
+    url: "https://old.aliimam.in/patterns",
   },
   {
     title: "PDFSlick",

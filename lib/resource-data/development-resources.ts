@@ -111,6 +111,17 @@ export const developmentLinks: Tool[] = [
     url: "https://jasperbernaers.com/ascii-webcam/",
   },
   {
+    title: "AutoSend",
+    category: CATEGORIES.dev,
+    description:
+      "AutoSend is a lightweight SendGrid alternative for transactional and marketing emails. Simple, modern, and built to scale.",
+    favicon: "https://autosend.com/favicon_32.png",
+    ogImage: "https://dqy38fnwh4fqs.cloudfront.net/autosend/website/landing/autosend-og.webp",
+    subtitle: "Email for Developers and Marketers",
+    tags: [TAGS.email, TAGS.tool],
+    url: "https://autosend.com/",
+  },
+  {
     title: "Awesome OSS Alternatives",
     author: "RunaCapital",
     category: CATEGORIES.dev,
@@ -433,6 +444,17 @@ export const developmentLinks: Tool[] = [
     subtitle: "Open Source Developer Tools | Free Utilities",
     tags: [TAGS.tool],
     url: "https://jam.dev/utilities",
+  },
+  {
+    title: "Diffs, from Pierre",
+    author: "The Pierre Computer Co.",
+    category: CATEGORIES.dev,
+    description:
+      "@pierre/diffs is an open source diff and code rendering library. Built on Shiki for syntax highlighting and theming, super customizable, and packed with features.",
+    favicon: "https://diffs.com/diffs-brand/icon.svg",
+    ogImage: "https://diffs.com/diffs-brand/opengraph-image.png",
+    tags: [TAGS.tool],
+    url: "https://diffs.com/",
   },
   {
     title: "DigitalPlat Domain",
@@ -1275,7 +1297,7 @@ export const developmentLinks: Tool[] = [
     favicon: "https://resend.com/static/favicons/favicon-marketing@144x144.png",
     ogImage: "https://resend.com/static/cover.png",
     subtitle: "Email for developers",
-    tags: [TAGS.tool],
+    tags: [TAGS.email, TAGS.tool],
     url: "https://resend.com/",
   },
   {

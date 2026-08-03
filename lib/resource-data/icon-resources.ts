@@ -284,6 +284,15 @@ export const iconLinks: Tool[] = [
   },
   {
     title: "Icons",
+    author: "Ali Imam",
+    category: CATEGORIES.icons,
+    favicon: "https://www.aliimam.in/apple-touch-icon.png",
+    ogImage: "https://www.aliimam.in/opengraph-image.jpg",
+    tags: [TAGS.icons, TAGS.logo, TAGS.vector],
+    url: "https://old.aliimam.in/icons",
+  },
+  {
+    title: "Icons",
     author: "Chandu Machineni",
     category: CATEGORIES.icons,
     description:
