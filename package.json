@@ -1,6 +1,6 @@
 {
   "name": "syntax-stash",
-  "version": "0.1.0",
+  "version": "1.3.0",
   "private": true,
   "description": "A curated stash of developer tools, utilities, generators, and resources for modern web development.",
   "author": "Thamindu Dasanayake <thamindudasanayake@gmail.com>",
