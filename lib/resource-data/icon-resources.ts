@@ -108,6 +108,19 @@ export const iconLinks: Tool[] = [
     url: "https://coolicons.cool/",
   },
   {
+    title: "FREE - 200+ Unique Illustrations",
+    author: "GraphicSauce",
+    category: CATEGORIES.icons,
+    description:
+      "This illustration combines cultural characters from various continents and packaged in a modern style, suitable for your startup that wants to stand up among others. Key Features: 100% Vector Library100 pre-made scenes (200+ scenes on our website)Drag and drop scene builder with organized layer...",
+    favicon: "https://static.figma.com/app/icon/1/favicon.svg",
+    ogImage:
+      "https://s3-alpha.figma.com/hub/file/5135664550/9154eac7-d255-41a6-91d3-aa55bbf67c3c-cover.png",
+    subtitle: "Figma",
+    tags: [TAGS.illustration],
+    url: "https://www.figma.com/community/file/1331150412576485660/free-200-unique-illustrations",
+  },
+  {
     title: "Free Flat Vector Illustration Collection",
     category: CATEGORIES.icons,
     description:

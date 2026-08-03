@@ -7,6 +7,6 @@ export const newLinks: Tool[] = [
     title: "zzzz",
     category: CATEGORIES.dev,
     description: "zzzz",
-    url: "zzzz",
+    url: "https://aethercss.lovable.app/",
   },
 ];

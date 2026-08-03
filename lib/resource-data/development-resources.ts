@@ -766,6 +766,17 @@ export const developmentLinks: Tool[] = [
     url: "https://jasperbernaers.com/image-to-ascii/",
   },
   {
+    title: "Image Tools Pro",
+    category: CATEGORIES.dev,
+    description:
+      "Transform your photos with ease using imagetoolspro.com. Edit, crop, resize, and customize your images effortlessly with our advanced editing features.",
+    favicon: "https://imagetoolspro.com/picture.webp",
+    ogImage: "https://imagetoolspro.com/img/logo.svg",
+    subtitle: "Online Image Tools — Edit & Enhance Photos with imagetoolspro",
+    tags: [TAGS.tool],
+    url: "https://imagetoolspro.com/",
+  },
+  {
     title: "IMG.LY SDK",
     category: CATEGORIES.dev,
     description:
@@ -1342,10 +1353,11 @@ export const developmentLinks: Tool[] = [
     url: "https://squoosh.app/",
   },
   {
-    title: "Stirling - PDF Processor",
+    title: "Stirling",
     category: CATEGORIES.dev,
     description:
       "GitHub's #1 PDF application with 30M+ downloads. The next generation of the PDF Editor - private, open-source, and built to scale.",
+    subtitle: "PDF Processor",
     tags: [TAGS.tool],
     url: "https://stirling.com/",
   },

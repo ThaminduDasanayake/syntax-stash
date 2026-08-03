@@ -170,6 +170,17 @@ export const frontendLinks: Tool[] = [
     url: "https://bundui.io/",
   },
   {
+    title: "BuouUI",
+    author: "buou",
+    category: CATEGORIES.frontend,
+    description:
+      "This is a beautiful UI library with components, sections, landing page, and templates using Tailwind CSS.",
+    favicon: "https://buouui.com/apple-touch-icon.png",
+    ogImage: "https://buouui.com/og.jpg",
+    tags: [TAGS["ui-component"]],
+    url: "https://buouui.com/",
+  },
+  {
     title: "Clonify",
     category: CATEGORIES.frontend,
     description:
@@ -364,6 +375,17 @@ export const frontendLinks: Tool[] = [
       "Save hours of design time with clean, ready-to-use shadcn blocks that just work — modern, responsive, and built for speed.",
     tags: [TAGS["ui-component"]],
     url: "https://efferd.com/",
+  },
+  {
+    title: "ElevenLabs UI",
+    author: "ElevenLabs",
+    category: CATEGORIES.frontend,
+    description:
+      "A collection of Open Source agent and audio components that you can customize and extend.",
+    favicon: "https://ui.elevenlabs.io/apple-touch-icon.png",
+    ogImage: "https://ui.elevenlabs.io/opengraph-image.png",
+    tags: [TAGS.audio, TAGS["ui-component"]],
+    url: "https://ui.elevenlabs.io/",
   },
   {
     title: "Epic Easing",
