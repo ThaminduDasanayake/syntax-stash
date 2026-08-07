@@ -351,9 +351,9 @@ export const mediaLinks: Tool[] = [
     title: "SketchValley",
     category: CATEGORIES.media,
     description:
-      "1,000+ free SVG & PNG illustrations for commercial use. Flat, 3D, hand-drawn & minimal styles. No attribution, no signup — download instantly for websites, apps & decks.",
+      "1,000+ free illustrations for websites, apps and presentations — SVG and PNG, no attribution required. Flat, 3D, hand-drawn and minimal styles. No signup, instant download.",
     favicon: "https://sketchvalley.com/uploads/logo.svg",
-    subtitle: "Free Illustrations — No Attribution Required",
+    subtitle: "Free SVG & PNG Illustrations for Commercial Use — No Attribution",
     tags: [TAGS.illustration],
     url: "https://sketchvalley.com/",
   },

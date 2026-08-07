@@ -5,6 +5,14 @@ import { TAGS } from "./tags";
 
 export const colorLinks: Tool[] = [
   {
+    title: "Actionable Color Palettes",
+    author: "Csaba Kissi",
+    category: CATEGORIES.frontend,
+    description: "Hand curated color palettes with previews",
+    tags: [TAGS.color],
+    url: "https://colorpalettes.colorion.co/",
+  },
+  {
     title: "Colir",
     category: CATEGORIES.colors,
     description:
@@ -64,6 +72,17 @@ export const colorLinks: Tool[] = [
     url: "https://colorhunt.co/",
   },
   {
+    title: "colorion",
+    author: "Csaba Kissi",
+    category: CATEGORIES.frontend,
+    description: "Discover, save, and copy modern color palettes for your next project.",
+    favicon: "https://colorion.co/favicon.svg",
+    ogImage: "https://colorion.co/og-image.png",
+    subtitle: "Curated Color Palettes",
+    tags: [TAGS.color],
+    url: "https://colorion.co/",
+  },
+  {
     title: "Colorize",
     category: CATEGORIES.colors,
     description:
@@ -109,6 +128,16 @@ export const colorLinks: Tool[] = [
     subtitle: "HTML Colour Names, HEX, RGB, HSL | jasperbernaers.com",
     tags: [TAGS.color],
     url: "https://jasperbernaers.com/colours/",
+  },
+  {
+    title: "Color Palette Generator",
+    author: "Csaba Kissi",
+    category: CATEGORIES.frontend,
+    description: "Generate new color palette generator with every press of the spacebar",
+    favicon: "https://palettegenerator.colorion.co/thumbnail.png",
+    ogImage: "https://palettegenerator.colorion.co/shared.png",
+    tags: [TAGS.color],
+    url: "https://palettegenerator.colorion.co/",
   },
   {
     title: "Color Palette Pro",
@@ -407,6 +436,16 @@ export const colorLinks: Tool[] = [
     ogImage: "https://thegoodcolors.com/og-poster.png",
     tags: [TAGS.color],
     url: "https://thegoodcolors.com/",
+  },
+  {
+    title: "Two Color Combinations",
+    author: "Csaba Kissi",
+    category: CATEGORIES.frontend,
+    description: "Hand-picked two color combinations with copy-ready HEX values.",
+    favicon: "https://2colors.colorion.co/favicon.svg",
+    ogImage: "https://2colors.colorion.co/og-image.png",
+    tags: [TAGS.color],
+    url: "https://2colors.colorion.co/",
   },
   {
     title: "UI Colors",

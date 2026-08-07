@@ -332,12 +332,13 @@ export const designLinks: Tool[] = [
     url: "https://craftwork.design/",
   },
   {
-    title: "CreatoomIFlow",
+    title: "Creatoom",
     category: CATEGORIES.design,
     description:
       "✨ Big collection of premium and free mockups psd for branding, advertising and graphic design! You can get unlimited access to all mockup templates on our site ⭐",
-    subtitle: "ASCIPremium and free mockups psd",
-    tags: [TAGS.design, TAGS.image],
+    favicon: "https://creatoom.com/wp-content/uploads/2022/12/cropped-Logo-creatoom-4-192x192.png",
+    subtitle: "Premium and free mockups psd",
+    tags: [TAGS.design, TAGS.mockup],
     url: "https://creatoom.com/",
   },
   {

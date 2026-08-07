@@ -23,6 +23,18 @@ export const frontendLinks: Tool[] = [
     url: "https://21st.dev/",
   },
   {
+    title: "404 Animation Library",
+    author: "Csaba Kissi",
+    category: CATEGORIES.frontend,
+    description:
+      "A library of ready-to-copy 404 page animations built with pure CSS. Click any animation to grab its code — no JavaScript, no dependencies, MIT licensed.",
+    favicon: "https://404.colorion.co/favicon.svg",
+    ogImage: "https://404.colorion.co/og-image.png",
+    subtitle: "Free CSS 404 page animations to copy",
+    tags: [TAGS.animation, TAGS.css, TAGS["ui-component"]],
+    url: "https://404.colorion.co/",
+  },
+  {
     title: "Aceternity UI",
     category: CATEGORIES.frontend,
     description:
@@ -280,6 +292,18 @@ export const frontendLinks: Tool[] = [
     url: "https://css-tricks.com/",
   },
   {
+    title: "CSS Button Library",
+    author: "Csaba Kissi",
+    category: CATEGORIES.frontend,
+    description:
+      "A library of 99 buttons with pure-CSS hover effects — no JavaScript, no dependencies. Click any button to view and copy its CSS.",
+    favicon: "https://animatedbuttons.colorion.co/favicon.svg",
+    ogImage: "https://animatedbuttons.colorion.co/og.png",
+    subtitle: "99 pure-CSS hover effects, free to copy",
+    tags: [TAGS.animation, TAGS.css, TAGS["ui-component"]],
+    url: "https://animatedbuttons.colorion.co/",
+  },
+  {
     title: "CSS Buttons",
     category: CATEGORIES.frontend,
     description:
@@ -300,6 +324,18 @@ export const frontendLinks: Tool[] = [
     subtitle: "Where we feast on CSS Selectors!",
     tags: [TAGS.css],
     url: "https://flukeout.github.io/",
+  },
+  {
+    title: "CSS Loader Library",
+    author: "Csaba Kissi",
+    category: CATEGORIES.frontend,
+    description:
+      "A library of 99 loading spinners built with pure CSS. Click any loader to copy its CSS — no JavaScript, no dependencies, MIT licensed.",
+    favicon: "https://cssloaders.colorion.co/favicon.svg",
+    ogImage: "https://cssloaders.colorion.co/og-image.png",
+    subtitle: "99 pure-CSS loaders, free to copy",
+    tags: [TAGS.animation, TAGS.css, TAGS["ui-component"]],
+    url: "https://css-loaders.colorion.co/",
   },
   {
     title: "CSS Loaders",
@@ -330,6 +366,40 @@ export const frontendLinks: Tool[] = [
     ogImage: "https://screenspan.net/img/polka-hero.jpg",
     tags: [TAGS.patterns],
     url: "https://screenspan.net/polka/",
+  },
+  {
+    title: "CSS Text Effects",
+    author: "Csaba Kissi",
+    category: CATEGORIES.frontend,
+    description:
+      "A library of 75 animated text effects built with pure CSS — gradient, glitch, typewriter, neon, liquid fill and more. Click any effect to copy its CSS. No JavaScript, no dependencies, MIT licensed.",
+    favicon: "https://text-effects.colorion.co/favicon.svg",
+    ogImage: "https://text-effects.colorion.co/og-image.png",
+    subtitle: "75 pure-CSS text animations, free to copy",
+    tags: [TAGS.animation, TAGS.css, TAGS["ui-component"]],
+    url: "https://text-effects.colorion.co/",
+  },
+  {
+    title: "CSS Toggle Library",
+    author: "Csaba Kissi",
+    category: CATEGORIES.frontend,
+    description:
+      "A library of pure-CSS toggles, switches, checkboxes and radios — no JavaScript, no dependencies. Click any toggle to view and copy its self-contained CSS.",
+    favicon: "https://toggles.colorion.co/favicon.svg",
+    ogImage: "https://toggles.colorion.co/og-image.png",
+    subtitle: "Pure-CSS Switches & Checkboxes",
+    tags: [TAGS.animation, TAGS.css, TAGS["ui-component"]],
+    url: "https://toggles.colorion.co/",
+  },
+  {
+    title: "CSS Tooltip Library",
+    author: "Csaba Kissi",
+    category: CATEGORIES.frontend,
+    description:
+      "A library of pure-CSS tooltips in 8 directions with fade and slide reveals — no JavaScript, no dependencies. Click any tooltip to view and copy its CSS.",
+    subtitle: "Pure-CSS ::after tooltips, free to copy",
+    tags: [TAGS.animation, TAGS.css, TAGS["ui-component"]],
+    url: "https://tooltips.colorion.co/",
   },
   {
     title: "CuiCui",
@@ -743,6 +813,18 @@ export const frontendLinks: Tool[] = [
     ogImage: "https://www.kibo-ui.com/opengraph-image.jpg?opengraph-image.408bd8df.jpg",
     tags: [TAGS["ui-component"]],
     url: "https://www.kibo-ui.com/",
+  },
+  {
+    title: "Kinetics",
+    author: "Csaba Kissi",
+    category: CATEGORIES.frontend,
+    description:
+      "A library of spring-driven micro-interactions for web apps. Copy the CSS or React, tune the physics, ship the motion.",
+    favicon: "https://kinetics.colorion.co/favicon.svg",
+    ogImage: "https://kinetics.colorion.co/og-image.png",
+    subtitle: "Spring-physics motion for web interfaces",
+    tags: [TAGS.animation, TAGS.css, TAGS["ui-component"]],
+    url: "https://kinetics.colorion.co/",
   },
   {
     title: "Kokonut UI",
