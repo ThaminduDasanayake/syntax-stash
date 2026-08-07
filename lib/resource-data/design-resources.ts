@@ -549,9 +549,13 @@ export const designLinks: Tool[] = [
   },
   {
     title: "Durves",
+    author: "Filipe Esteves",
     category: CATEGORIES.design,
+    className: "bg-foreground border-paper",
     description:
       "A tool for creating and exporting dot patterns for graphic designers, UI/UX, and other visual professionals.",
+    favicon: "https://www.durves.com/favicon.a02a46ad.svg",
+    ogImage: "https://www.durves.com/ogImage.2cead86d.png",
     subtitle: "Design Pattern Tool",
     tags: [TAGS.design],
     url: "https://www.durves.com/",

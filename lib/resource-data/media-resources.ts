@@ -41,6 +41,17 @@ export const mediaLinks: Tool[] = [
     url: "https://avatars.outpacestudios.com/",
   },
   {
+    title: "Basic Pattern Repository",
+    author: "Thomas Michael Semmler",
+    category: CATEGORIES.media,
+    description:
+      "A collection of hand-coded SVG <pattern>'s, ready to be used in inline SVG or however you like.",
+    favicon: "https://patterns.helloyes.dev/assets/favicons/1.svg",
+    ogImage: "https://patterns.helloyes.dev/previews/default.png",
+    tags: [TAGS.patterns, TAGS.svg],
+    url: "https://patterns.helloyes.dev/",
+  },
+  {
     title: "BDFM",
     category: CATEGORIES.media,
     description: "Bitmap generator",
@@ -346,6 +357,16 @@ export const mediaLinks: Tool[] = [
     subtitle: "Visual Search Engine",
     tags: [TAGS.image],
     url: "https://same.energy/",
+  },
+  {
+    title: "Sine wave SVG generator",
+    category: CATEGORIES.media,
+    description:
+      "Generate perfect sine waves and export them as SVG for your designs and backgrounds.",
+    favicon: "https://www.sinwaver.com/favicon.svg",
+    ogImage: "https://i.ibb.co/r4rqt4s/OG-image.png",
+    tags: [TAGS.svg],
+    url: "https://www.sinwaver.com/",
   },
   {
     title: "SketchValley",

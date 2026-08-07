@@ -572,6 +572,19 @@ export const developmentLinks: Tool[] = [
     url: "https://yournextdomain.com/",
   },
   {
+    title: "Firecrawl Tools",
+    author: "Firecrawl",
+    category: CATEGORIES.dev,
+    description:
+      "Free online tools for developers and marketers: extract URLs from any website, summarize articles with AI, and more. No signup required. Powered by Firecrawl.",
+    favicon:
+      "https://raw.githubusercontent.com/firecrawl/firecrawl/main/apps/test-site/src/assets/firecrawl-logo.svg",
+    ogImage: "https://www.firecrawl.dev/og.png",
+    subtitle: "Free Web Extraction Tools",
+    tags: [TAGS.tool],
+    url: "https://www.firecrawl.dev/tools",
+  },
+  {
     title: "FliiipBook",
     author: "FliiipBook",
     category: CATEGORIES.dev,
