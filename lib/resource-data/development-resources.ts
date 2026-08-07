@@ -37,6 +37,17 @@ export const developmentLinks: Tool[] = [
     url: "https://acceptmarkdown.com/",
   },
   {
+    title: "AdGuard Ad Blocker",
+    category: CATEGORIES.dev,
+    description:
+      "AdGuard is the best way to get rid of annoying ads and online tracking and protect your computer from malware. Make your web surfing fast, safe and ad-free",
+    favicon: "https://st2.adguardcdn.com/favicons/adguard/favicon.svg",
+    ogImage: "https://cdn.adguardcdn.com/website/adguard.com/video/meta/agnar_en.png",
+    subtitle: "Block ads, popups, and trackers",
+    tags: [TAGS.tool],
+    url: "https://adguard.com/",
+  },
+  {
     title: "Alexandrie",
     author: "Alexandrie Team",
     category: CATEGORIES.dev,
@@ -746,6 +757,17 @@ export const developmentLinks: Tool[] = [
     url: "https://highscalability.com/",
   },
   {
+    title: "Home Assistant",
+    author: "Home Assistant",
+    category: CATEGORIES.dev,
+    description:
+      "Open source home automation that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts. Perfect to run on a...",
+    favicon: "https://www.home-assistant.io/images/favicon-192x192.png",
+    ogImage: "https://www.home-assistant.io/images/default-social.png",
+    tags: [TAGS.tool],
+    url: "https://www.home-assistant.io/",
+  },
+  {
     title: "Hoppscotch",
     category: CATEGORIES.dev,
     className: "bg-foreground border-paper",
@@ -889,6 +911,17 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description: "A directory of direct links to delete your account from web services.",
     url: "https://justdeleteme.xyz/",
+  },
+  {
+    title: "Karakeep",
+    category: CATEGORIES.dev,
+    description:
+      "Karakeep is the open-source bookmark manager for links, notes, and images. Automatically organize and tag your bookmarks with AI. Self-hostable, with apps for iOS, Android, Chrome, and Firefox.",
+    favicon: "https://karakeep.app/icons/logo-icon.svg",
+    ogImage: "https://karakeep.app/opengraph-image.png",
+    subtitle: "The Bookmark Everything App | Save, Organize & Tag with AI",
+    tags: [TAGS.tool],
+    url: "https://karakeep.app/",
   },
   {
     title: "KeystoneJS",
@@ -1102,6 +1135,18 @@ export const developmentLinks: Tool[] = [
     subtitle: "Collecting all the cheat sheets",
     tags: [TAGS.development, TAGS.education],
     url: "https://overapi.com/",
+  },
+  {
+    title: "Paperless-ngx",
+    author: "the Paperless-ngx team",
+    category: CATEGORIES.dev,
+    description: "Documentation for the Paperless-ngx document management system software.",
+    favicon:
+      "https://raw.githubusercontent.com/paperless-ngx/paperless-ngx/dev/docs/assets/logo_leaf.svg",
+    ogImage:
+      "https://opengraph.githubassets.com/e41f9417cd92968ecb63476d01b5e01def7f1a1b63698286415859dd4cd2770f/paperless-ngx/paperless-ngx",
+    tags: [TAGS.tool],
+    url: "https://docs.paperless-ngx.com/",
   },
   {
     title: "patorjk.com",
@@ -1409,8 +1454,12 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description:
       "GitHub's #1 PDF application with 30M+ downloads. The next generation of the PDF Editor - private, open-source, and built to scale.",
+    favicon:
+      "https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/frontend/editor/src/core/assets/brand/branding-logo/logo-mark.svg",
+    ogImage:
+      "https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/frontend/editor/src/core/assets/brand/modern-logo/Firstpage.png",
     subtitle: "PDF Processor",
-    tags: [TAGS.tool],
+    tags: [TAGS.pdf, TAGS.tool],
     url: "https://stirling.com/",
   },
   {
