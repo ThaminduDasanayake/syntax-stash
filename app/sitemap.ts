@@ -33,6 +33,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
       url: `${baseUrl}/tools`,
     },
+    {
+      changeFrequency: "weekly",
+      lastModified: new Date(),
+      priority: 0.7,
+      url: `${baseUrl}/changelog`,
+    },
   ];
 
   const toolRoutes: MetadataRoute.Sitemap = internalTools
