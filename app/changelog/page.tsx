@@ -43,14 +43,12 @@ export default function ChangelogPage() {
                     key={entry.version}
                     href={`#${entry.version}`}
                     className={`border-border flex items-center gap-1.5 border-2 px-3 py-1 font-mono text-xs font-bold transition-all hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] ${
-                      isLatest
-                        ? "bg-c-blue text-paper"
-                        : "bg-card text-foreground hover:bg-muted"
+                      isLatest ? "bg-c-blue text-paper" : "bg-card text-foreground hover:bg-muted"
                     }`}
                   >
                     <span>{entry.version}</span>
                     {isLatest && (
-                      <span className="ml-1 rounded bg-paper/20 px-1.5 py-0.5 text-[10px] uppercase text-paper">
+                      <span className="bg-paper/20 text-paper ml-1 rounded px-1.5 py-0.5 text-[10px] uppercase">
                         Latest
                       </span>
                     )}
@@ -72,7 +70,7 @@ export default function ChangelogPage() {
           ) : (
             <div className="relative flex flex-col gap-10 pl-4 sm:pl-8">
               {/* Vertical Timeline Line */}
-              <div className="border-border absolute bottom-4 left-2 top-4 w-1 border-l-2 border-dashed sm:left-4" />
+              <div className="border-border absolute top-4 bottom-4 left-2 w-1 border-l-2 border-dashed sm:left-4" />
 
               {changelogEntries.map((entry) => {
                 const isLatest = entry.version === latestVersion;
@@ -85,7 +83,7 @@ export default function ChangelogPage() {
                   >
                     {/* Timeline Node Indicator */}
                     <div
-                      className={`border-border absolute -left-6 top-8 h-4 w-4 rounded-full border-2 sm:-left-10 ${
+                      className={`border-border absolute top-8 -left-6 h-4 w-4 rounded-full border-2 sm:-left-10 ${
                         isLatest
                           ? "bg-c-blue shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
                           : "bg-muted-foreground/30"
@@ -94,7 +92,7 @@ export default function ChangelogPage() {
 
                     {/* Changelog Entry Card */}
                     <div
-                      className={`border-border bg-card flex flex-col gap-6 border-2 p-6 sm:p-8 transition-all ${
+                      className={`border-border bg-card flex flex-col gap-6 border-2 p-6 transition-all sm:p-8 ${
                         isLatest
                           ? "shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,0.9)]"
                           : "shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
@@ -107,14 +105,12 @@ export default function ChangelogPage() {
                             {entry.version}
                           </span>
                           {isLatest && (
-                            <span className="border-border bg-c-orange text-ink border px-2.5 py-1 font-mono text-xs font-extrabold uppercase tracking-widest shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                            <span className="border-border bg-c-orange text-ink border px-2.5 py-1 font-mono text-xs font-extrabold tracking-widest uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                               ★ LATEST RELEASE
                             </span>
                           )}
                         </div>
-                        <span className="font-mono text-xs font-bold opacity-70">
-                          {entry.date}
-                        </span>
+                        <span className="font-mono text-xs font-bold opacity-70">{entry.date}</span>
                       </div>
 
                       {/* Card Sections */}
@@ -122,14 +118,14 @@ export default function ChangelogPage() {
                         {entry.sections.map((section) => (
                           <div key={section.title} className="flex flex-col gap-3">
                             <div className="flex items-center gap-2">
-                              <span className="border-border bg-muted/60 text-foreground border px-2.5 py-0.5 font-mono text-[11px] font-bold uppercase tracking-wider">
+                              <span className="border-border bg-muted/60 text-foreground border px-2.5 py-0.5 font-mono text-[11px] font-bold tracking-wider uppercase">
                                 {section.title}
                               </span>
                             </div>
                             <ul className="flex flex-col gap-2.5 font-mono text-sm leading-relaxed opacity-90">
                               {section.items.map((item, itemIdx) => (
                                 <li key={itemIdx} className="flex items-start gap-3">
-                                  <span className="text-c-blue select-none font-bold">→</span>
+                                  <span className="text-c-blue font-bold select-none">→</span>
                                   <span
                                     dangerouslySetInnerHTML={{
                                       __html: formatInlineMarkdown(item),
