@@ -28,8 +28,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   };
 }
 
-export default async function ResourceCategoryPage(props: PageProps<"/resources/[slug]">) {
-  const { slug } = await props.params;
+export default async function ResourceCategoryPage({ params }: { params: Promise<Params> }) {
+  const { slug } = await params;
 
   const category = resourceCategories.find((c) => slugify(c) === slug);
   if (!category) notFound();

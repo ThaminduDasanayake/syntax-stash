@@ -1,8 +1,17 @@
 "use client";
 
-import { ArrowSquareOutIcon, CaretLeftIcon, CaretRightIcon, XIcon } from "@phosphor-icons/react";
+import {
+  ArrowSquareOutIcon,
+  CaretLeftIcon,
+  CaretRightIcon,
+  CheckIcon,
+  CopyIcon,
+  ShareNetworkIcon,
+  XIcon,
+} from "@phosphor-icons/react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { toast } from "sonner";
 
 import { CardIcon } from "@/components/card-icon";
 import { Button } from "@/components/ui/button";
@@ -21,10 +30,26 @@ import { Tool, ToolCardProps } from "@/types";
 export function ResourceDialog({ tool }: ToolCardProps) {
   const [activeTool, setActiveTool] = useState(tool);
   const [ogError, setOgError] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const handleSelectTool = (res: Tool) => {
     setOgError(false);
+    setCopied(false);
     setActiveTool(res);
+  };
+
+  const handleCopyLink = () => {
+    const urlToCopy = activeTool.url || (typeof window !== "undefined" ? window.location.href : "");
+    if (!urlToCopy) return;
+
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(urlToCopy);
+    }
+    setCopied(true);
+    toast.success(`Copied link for ${activeTool.title}!`, {
+      description: urlToCopy,
+    });
+    setTimeout(() => setCopied(false), 2000);
   };
 
   const currentIndex = useMemo(() => {
@@ -100,7 +125,20 @@ export function ResourceDialog({ tool }: ToolCardProps) {
 
   return (
     <DialogContent showCloseButton={false} className="modal-panel">
-      <div className="modal-top-actions">
+      <div className="modal-top-actions flex items-center gap-2">
+        <Button
+          variant="secondary"
+          size="icon"
+          className="border-[1.5px]"
+          onClick={handleCopyLink}
+          title="Copy resource URL"
+        >
+          {copied ? (
+            <CheckIcon weight="bold" className="text-c-green" />
+          ) : (
+            <ShareNetworkIcon weight="bold" />
+          )}
+        </Button>
         <DialogClose asChild>
           <Button variant="secondary" size="icon" className="border-[1.5px]">
             <XIcon weight="bold" />
@@ -177,14 +215,28 @@ export function ResourceDialog({ tool }: ToolCardProps) {
 
             <div className="modal-link">
               <span className={cn("modal-heading", activeThemeStyles.label)}>Resource UrL</span>
-              <a
-                href={activeTool.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-mono text-xs break-all underline decoration-current/40 underline-offset-2 transition-all duration-150 ease-out hover:decoration-current"
-              >
-                {activeTool.url}
-              </a>
+              <div className="flex items-center justify-between gap-2">
+                <a
+                  href={activeTool.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-xs break-all underline decoration-current/40 underline-offset-2 transition-all duration-150 ease-out hover:decoration-current"
+                >
+                  {activeTool.url}
+                </a>
+                <button
+                  type="button"
+                  onClick={handleCopyLink}
+                  title="Copy link"
+                  className="text-muted-foreground hover:text-foreground shrink-0 transition-colors"
+                >
+                  {copied ? (
+                    <CheckIcon weight="bold" className="text-c-green size-3.5" />
+                  ) : (
+                    <CopyIcon weight="bold" className="size-3.5" />
+                  )}
+                </button>
+              </div>
             </div>
 
             <div className="modal-sections">
@@ -248,8 +300,8 @@ export function ResourceDialog({ tool }: ToolCardProps) {
             )}
           </div>
 
-          <div className="modal-launch">
-            <Button asChild>
+          <div className="modal-launch flex items-center gap-2">
+            <Button asChild className="flex-1">
               <a
                 href={activeTool.url}
                 target="_blank"
@@ -258,6 +310,19 @@ export function ResourceDialog({ tool }: ToolCardProps) {
               >
                 Open resource <ArrowSquareOutIcon weight="bold" />
               </a>
+            </Button>
+            <Button
+              variant="secondary"
+              size="icon"
+              onClick={handleCopyLink}
+              title="Copy direct link"
+              className="shrink-0 border-[1.5px]"
+            >
+              {copied ? (
+                <CheckIcon weight="bold" className="text-c-green" />
+              ) : (
+                <CopyIcon weight="bold" />
+              )}
             </Button>
           </div>
 

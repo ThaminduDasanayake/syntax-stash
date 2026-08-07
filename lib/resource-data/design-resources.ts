@@ -332,12 +332,13 @@ export const designLinks: Tool[] = [
     url: "https://craftwork.design/",
   },
   {
-    title: "CreatoomIFlow",
+    title: "Creatoom",
     category: CATEGORIES.design,
     description:
       "✨ Big collection of premium and free mockups psd for branding, advertising and graphic design! You can get unlimited access to all mockup templates on our site ⭐",
-    subtitle: "ASCIPremium and free mockups psd",
-    tags: [TAGS.design, TAGS.image],
+    favicon: "https://creatoom.com/wp-content/uploads/2022/12/cropped-Logo-creatoom-4-192x192.png",
+    subtitle: "Premium and free mockups psd",
+    tags: [TAGS.design, TAGS.mockup],
     url: "https://creatoom.com/",
   },
   {
@@ -548,9 +549,13 @@ export const designLinks: Tool[] = [
   },
   {
     title: "Durves",
+    author: "Filipe Esteves",
     category: CATEGORIES.design,
+    className: "bg-foreground border-paper",
     description:
       "A tool for creating and exporting dot patterns for graphic designers, UI/UX, and other visual professionals.",
+    favicon: "https://www.durves.com/favicon.a02a46ad.svg",
+    ogImage: "https://www.durves.com/ogImage.2cead86d.png",
     subtitle: "Design Pattern Tool",
     tags: [TAGS.design],
     url: "https://www.durves.com/",
