@@ -324,12 +324,28 @@ export const designLinks: Tool[] = [
   },
   {
     title: "Craftwork",
+    author: "Craftwork",
     category: CATEGORIES.design,
+    className: "bg-foreground border-paper",
     description:
       "Design resources for everyone. Freebies and premium web design products, custom illustrations and graphics on one marketplace.",
+    favicon: "https://craftwork.design/favicon.svg",
+    ogImage: "https://cfw6.b-cdn.net/opengraph-image.png",
     subtitle: "UX/UI kits, illustrations, mockups, fonts and more",
     tags: [TAGS.design, TAGS.ui],
     url: "https://craftwork.design/",
+  },
+  {
+    title: "Craftwork Mockups",
+    author: "Craftwork",
+    category: CATEGORIES.design,
+    className: "bg-foreground border-paper",
+    description:
+      "Free Mockups design resources on Craftwork: Get access to free mockups on Craftwork. Whether you need free logo mockups, app mockups, or website mockups, we.",
+    favicon: "https://craftwork.design/favicon.svg",
+    subtitle: "Free Mockups Design Resources",
+    tags: [TAGS.mockup],
+    url: "https://craftwork.design/free/mockups",
   },
   {
     title: "Creatoom",
@@ -930,6 +946,16 @@ export const designLinks: Tool[] = [
     url: "https://minimal.gallery/",
   },
   {
+    title: "Minimal Mockups",
+    author: "Jehlani Luciano",
+    category: CATEGORIES.design,
+    description: "",
+    favicon: "https://www.minimalmockups.com/favicon.svg",
+    ogImage: "https://www.minimalmockups.com/minimal-mockups-cover.jpg",
+    tags: [TAGS.mockup],
+    url: "https://www.minimalmockups.com/",
+  },
+  {
     title: "Mobbin",
     category: CATEGORIES.design,
     description:
@@ -956,6 +982,17 @@ export const designLinks: Tool[] = [
     subtitle: "Free PSD Mockups to Download & Edit Online",
     tags: [TAGS.mockup],
     url: "https://mockupnest.com/",
+  },
+  {
+    title: "Mockup Selection",
+    category: CATEGORIES.design,
+    description:
+      "Discover the ultimate collection of Photoshop mockups at Mockup Selection. Our premium templates for devices, storefronts, billboards, and more are designed to elevate your design projects. Perfect for designers seeking to enhance their presentations and portfolios with high-quality, versatile mockups. Visit Mockup Selection today and bring your creative visions to life!",
+    favicon: "https://www.mockupselection.com/wp-content/uploads/2024/03/Favicon_03.svg",
+    ogImage: "https://www.mockupselection.com/wp-content/uploads/2024/03/Mockupselection_meta.png",
+    subtitle: "Highres Photoshop Mockups for Creatives",
+    tags: [TAGS.mockup],
+    url: "https://www.mockupselection.com/",
   },
   {
     title: "Mockuuups Studio",
@@ -1002,6 +1039,17 @@ export const designLinks: Tool[] = [
     subtitle: "Curated Motion Design Portfolios.",
     tags: [TAGS.inspiration],
     url: "https://motionfolios.com/",
+  },
+  {
+    title: "Mr.Mockup",
+    category: CATEGORIES.design,
+    description:
+      "High Quality PSD Mockups and Graphic Design Freebies to Showcase Your Work Like a Pro! We build premium and free Mockup templates for profesional designers.",
+    favicon: "https://mrmockup.com/wp-content/uploads/2017/04/Favicon.png",
+    ogImage: "https://mrmockup.com/wp-content/uploads/2017/04/MrMockup-Logo.png",
+    subtitle: "PSD Mockups & Graphic Design Freebies",
+    tags: [TAGS.mockup],
+    url: "https://mrmockup.com/",
   },
   {
     title: "Navbar Gallery",

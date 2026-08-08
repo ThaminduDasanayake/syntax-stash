@@ -317,8 +317,20 @@ export const mediaLinks: Tool[] = [
     category: CATEGORIES.media,
     description:
       "Free stock photos & videos you can use everywhere. Browse millions of high-quality royalty free stock images & copyright free pictures. No attribution required.",
+    favicon: "https://static.pexels.com/1/images/meta/safari-pinned-tab.svg",
+    ogImage: "https://static.pexels.com/1/images/meta/pexels-stock-photos.jpg",
     subtitle: "Free Stock Photos, Royalty Free Stock Images & Copyright Free Pictures",
     url: "https://www.pexels.com/",
+  },
+  {
+    title: "Pixel Surplus",
+    category: CATEGORIES.media,
+    description:
+      "Free stock photos & videos you can use everywhere. Browse millions of high-quality royalty free stock images & copyright free pictures. No attribution required.",
+    favicon: "https://pixelsurplus.com/cdn/shop/files/PS-Brand-Draft.png",
+    ogImage: "https://pixelsurplus.com/cdn/shop/files/All-Access-Header_1200x630.png",
+    subtitle: "Resources for Creators",
+    url: "https://pixelsurplus.com/",
   },
   {
     title: "Placeholder Image Generator",

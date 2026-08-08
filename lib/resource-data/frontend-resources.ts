@@ -1462,6 +1462,17 @@ export const frontendLinks: Tool[] = [
     url: "https://www.svgator.com/",
   },
   {
+    title: "SVG Spinners",
+    category: CATEGORIES.frontend,
+    description:
+      "Collection of 100+ Open Source SVG-based icons you can use to show content is being loaded. Absolutely free with no attribution required.",
+    favicon: "https://magecdn.com/assets/icons/favicon.png",
+    ogImage: "https://i.magecdn.com/d2b508/ee0b63_og_image_3?f=png",
+    subtitle: "Open Source SVG Loading Icons",
+    tags: [TAGS.animation, TAGS.svg, TAGS["ui-component"]],
+    url: "https://magecdn.com/tools/svg-loaders",
+  },
+  {
     title: "SVG Studio",
     category: CATEGORIES.frontend,
     description:
