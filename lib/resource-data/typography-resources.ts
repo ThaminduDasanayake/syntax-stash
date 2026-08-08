@@ -341,6 +341,15 @@ export const typographyLinks: Tool[] = [
     url: "https://typecolony.com/",
   },
   {
+    title: "Typeface.fyi",
+    author: "Vlad Muslakov",
+    category: CATEGORIES.typography,
+    description: "See the typeface behind any text on the web. A tiny Chrome extension.",
+    favicon: "https://www.typeface.fyi/assets/favicon.svg",
+    tags: [TAGS.typography],
+    url: "https://www.typeface.fyi/",
+  },
+  {
     title: "Typeface App",
     category: CATEGORIES.typography,
     description:

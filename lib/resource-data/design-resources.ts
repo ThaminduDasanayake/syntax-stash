@@ -143,10 +143,26 @@ export const designLinks: Tool[] = [
   {
     title: "ASCII Magic",
     category: CATEGORIES.design,
+    className: "bg-foreground border-paper",
     description:
       "Free ASCII art generator. Turn any photo or video into ASCII, pixel art, voxel, mosaic, halftone, glitch or LEGO, in your browser, no signup, no upload.",
+    favicon: "https://www.ascii-magic.com/favicon.svg",
+    ogImage: "https://www.ascii-magic.com/og.jpg",
     subtitle: "Free ASCII Art Generator, Image & Video to ASCII",
+    tags: [TAGS.ascii],
     url: "https://www.ascii-magic.com/",
+  },
+  {
+    title: "ASCII Motion",
+    author: "Cameron Foxly",
+    category: CATEGORIES.design,
+    description:
+      "A powerful browser-based tool for creating, editing, and animating ASCII art. Features include advanced drawing tools, color palettes, effects, and video export capabilities.",
+    favicon: "https://ascii-motion.com/favicon.svg",
+    ogImage: "https://ascii-motion.com/og-image.png",
+    subtitle: "Create ASCII Art Animations in the browser",
+    tags: [TAGS.ascii],
+    url: "https://ascii-motion.com/",
   },
   {
     title: "Aura",

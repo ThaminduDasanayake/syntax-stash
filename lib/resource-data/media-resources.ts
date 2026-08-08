@@ -391,6 +391,18 @@ export const mediaLinks: Tool[] = [
     url: "https://sketchvalley.com/",
   },
   {
+    title: "slides.supply",
+    author: "Vlad Muslakov",
+    category: CATEGORIES.media,
+    description:
+      "A curated library of presentation slide inspiration — the individual slides people actually need when building presentations, pitching ideas, and telling stories.",
+    favicon: "https://slides.supply/favicon.ico",
+    ogImage: "https://slides.supply/opengraph-image",
+    subtitle: "Curated presentation slides",
+    tags: [TAGS.typography],
+    url: "https://slides.supply/",
+  },
+  {
     title: "Storytale",
     category: CATEGORIES.media,
     description:

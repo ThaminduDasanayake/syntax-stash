@@ -139,6 +139,18 @@ export const frontendLinks: Tool[] = [
     url: "https://tools.ui-layouts.com/background-snippets",
   },
   {
+    title: "BagUI",
+    author: "Anelka Bagalane",
+    category: CATEGORIES.frontend,
+    description:
+      "BagUI is an open-source shadcn/ui registry with production-ready components, blocks, templates, and animations for React, Next.js, and Tailwind CSS. Copy, customize, and build faster.",
+    favicon: "https://www.bagui.pro/faviconblack.png",
+    ogImage: "https://www.bagui.pro/og-image.png",
+    subtitle: "Open Source shadcn/ui Components & Blocks",
+    tags: [TAGS["ui-component"]],
+    url: "https://www.bagui.pro/",
+  },
+  {
     title: "beUI",
     category: CATEGORIES.frontend,
     description:
@@ -243,6 +255,18 @@ export const frontendLinks: Tool[] = [
     subtitle: "Your All-in-One Framer & Figma UI Library",
     tags: [TAGS["ui-component"]],
     url: "https://clonify.io/",
+  },
+  {
+    title: "CodeFronts",
+    author: "CodeFronts",
+    category: CATEGORIES.frontend,
+    description:
+      "Browse hundreds of free CSS components, interactive generators, animations, layouts and frontend tools. Copy-paste ready with live demos. No sign-up, no paywall.",
+    favicon: "https://codefronts.com/favicon.svg",
+    ogImage: "https://codefronts.com/og-default.png",
+    subtitle: "Free CSS Components, Generators & Frontend Tools",
+    tags: [TAGS["ui-component"]],
+    url: "https://codefronts.com/",
   },
   {
     title: "CodePen",
