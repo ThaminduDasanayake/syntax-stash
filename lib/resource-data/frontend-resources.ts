@@ -193,6 +193,19 @@ export const frontendLinks: Tool[] = [
     url: "https://boneyard.vercel.app/",
   },
   {
+    title: "Border Beam",
+    author: "Jakub Antalik",
+    category: CATEGORIES.frontend,
+    className: "bg-foreground border-paper",
+    description:
+      "A lightweight React component that renders an animated glowing border beam effect. Supports multiple sizes, color variants, and themes.",
+    favicon: "https://beam.jakubantalik.com/favicon.svg",
+    ogImage: "https://beam.jakubantalik.com/og-v2.jpg",
+    subtitle: "Animated border beam component for React",
+    tags: [TAGS.animation],
+    url: "https://beam.jakubantalik.com/",
+  },
+  {
     title: "Brik",
     category: CATEGORIES.frontend,
     description:
@@ -733,6 +746,16 @@ export const frontendLinks: Tool[] = [
     subtitle: "Free Tailwind CSS Components",
     tags: [TAGS["ui-component"]],
     url: "https://hyperui.dev/",
+  },
+  {
+    title: "Image generation",
+    author: "Jakub Antalik",
+    category: CATEGORIES.frontend,
+    description: "Image generation loader and reveal component.",
+    favicon: "https://image.jakubantalik.com/images/favicon.png",
+    ogImage: "https://image.jakubantalik.com/images/og-image.jpg",
+    tags: [TAGS.animation],
+    url: "https://image.jakubantalik.com/",
   },
   {
     title: "Impeccable",
@@ -1550,6 +1573,19 @@ export const frontendLinks: Tool[] = [
     url: "https://tweakcn.com/",
   },
   {
+    title: "Thinking orbs",
+    author: "Jakub Antalik",
+    category: CATEGORIES.frontend,
+    description:
+      "Dotted thought-orb loading indicators for AI and agent UIs. Nine hand-tuned states, two sizes, auto dark/light theme.",
+    favicon: "https://orbs.jakubantalik.com/header.png",
+    ogImage:
+      "https://opengraph.githubassets.com/162bca73d172be0872926f469374c11037f77602f8739960332e0d90a4471f0c/Jakubantalik/thinking-orbs",
+    subtitle: "Animated thinking orb component",
+    tags: [TAGS["ui-component"]],
+    url: "https://orbs.jakubantalik.com/",
+  },
+  {
     title: "Tinte",
     author: "Railly Hugo",
     category: CATEGORIES.frontend,
@@ -1585,9 +1621,12 @@ export const frontendLinks: Tool[] = [
   },
   {
     title: "Transitions.dev",
+    author: "Jakub Antalik",
     category: CATEGORIES.frontend,
     description:
       "Collection of the most essential transitions for web apps that you can just copy and paste into any project.",
+    favicon: "https://transitions.dev/assets/favicon-light-mode.png",
+    ogImage: "https://transitions.dev/assets/og-main.jpg",
     subtitle: "Essential transitions for web apps",
     tags: [TAGS.animation],
     url: "https://transitions.dev/",

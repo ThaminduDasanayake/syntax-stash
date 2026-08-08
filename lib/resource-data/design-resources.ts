@@ -974,6 +974,26 @@ export const designLinks: Tool[] = [
     url: "https://www.mockdown.design/",
   },
   {
+    title: "Mocku",
+    category: CATEGORIES.design,
+    description:
+      "Mockups crafted by designers, made for professional creatives. Authentic visuals for serious design work.",
+    favicon: "https://www.hellomocku.com/cdn/shop/files/Mocku_logotype_white-on-black_square.svg",
+    ogImage: "https://www.hellomocku.com/cdn/shop/files/Mocku_logotype_SEO-cover.svg",
+    tags: [TAGS.mockup],
+    url: "https://www.hellomocku.com/",
+  },
+  {
+    title: "Mockupia",
+    category: CATEGORIES.design,
+    description:
+      "Get unique, beautiful mockups that offer great detail and quality. Showcase your designs effortlessly. Our mockups are essential for standout results",
+    favicon: "https://cdn.mockupia.com/wp-content/uploads/logo-icon.svg",
+    ogImage: "https://cdn.mockupia.com/wp-content/uploads/logo.svg",
+    tags: [TAGS.mockup],
+    url: "https://mockupia.com/",
+  },
+  {
     title: "MockupNest",
     category: CATEGORIES.design,
     description:
