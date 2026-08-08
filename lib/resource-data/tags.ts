@@ -57,6 +57,7 @@ export const TAGS = {
   svg: "svg",
   textures: "textures",
   tool: "tool",
+  tutorial: "tutorial",
   typography: "typography",
   ui: "ui",
   "ui-component": "ui-component",

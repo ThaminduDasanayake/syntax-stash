@@ -1159,10 +1159,15 @@ export const frontendLinks: Tool[] = [
   },
   {
     title: "Prime UI",
+    author: "Pixel Point",
     category: CATEGORIES.frontend,
+    className: "bg-foreground border-paper",
     description:
       "Prime UI is the missing foundation for AI-generated websites. Go from sitemaps and wireframes to production-ready Next.js and Tailwind CSS code in minutes.",
+    favicon: "https://primeui.com/logomark-dark.svg",
+    ogImage: "https://primeui.com/social-previews/index.jpg",
     subtitle: "Build sites fast. Fear no code.",
+    tags: [TAGS["ui-component"]],
     url: "https://primeui.com/",
   },
   {
@@ -1188,6 +1193,15 @@ export const frontendLinks: Tool[] = [
     description:
       "Let coding agents diagnose and fix React codebases with deterministic static analysis.",
     url: "https://www.react.doctor/",
+  },
+  {
+    title: "React Grab",
+    category: CATEGORIES.frontend,
+    description: "Copy any UI element for your coding agent.",
+    favicon: "https://react-grab.com/logo.svg",
+    ogImage: "https://react-grab.com/api/og",
+    tags: [TAGS["ai-agent"]],
+    url: "https://www.react-grab.com/",
   },
   {
     title: "React Haiku",
@@ -1269,6 +1283,19 @@ export const frontendLinks: Tool[] = [
     ogImage: "https://www.scrollbar.app/scrollbar_cover.png",
     tags: [TAGS["ui-component"]],
     url: "https://scrollbar.app/",
+  },
+  {
+    title: "Scroll Mask",
+    author: "Tim Wilson",
+    category: CATEGORIES.frontend,
+    className: "bg-foreground border-paper",
+    description:
+      "A tiny Tailwind @utility for scroll-driven gradient masks at the edges of overflow containers.",
+    favicon: "https://twilson.net/favicon.ico",
+    ogImage: "https://twilson.net/scroll-mask/opengraph-image.jpg",
+    subtitle: "Scroll Mask Tailwind CSS Utilities",
+    tags: [TAGS["ui-component"]],
+    url: "https://twilson.net/scroll-mask",
   },
   {
     title: "Shadcn Blocks",
@@ -1662,6 +1689,16 @@ export const frontendLinks: Tool[] = [
       "@pierre/trees is an open source file tree rendering library. It's built for performance and flexibility, is super customizable, and comes packed with features.",
     tags: [TAGS["ui-component"]],
     url: "https://trees.software/",
+  },
+  {
+    title: "Tutorials",
+    author: "Codrops",
+    category: CATEGORIES.frontend,
+    description:
+      "In this section, you will find a variety of in-depth articles written by skilled front-end developers that cover a range of web development and web design techniques.",
+    favicon: "https://tympanus.net/codrops/wp-content/themes/codropstheme03/favicons/favicon.svg",
+    tags: [TAGS.tutorial],
+    url: "https://tympanus.net/codrops/category/tutorials/",
   },
   {
     title: "UI Ball",

@@ -1674,6 +1674,16 @@ export const designLinks: Tool[] = [
     url: "https://websiteheadlines.com/",
   },
   {
+    title: "Webzibition",
+    author: "Codrops",
+    category: CATEGORIES.design,
+    description: "An exhibition of really great websites. Updated regularly.",
+    favicon: "https://tympanus.net/codrops/wp-content/themes/codropstheme03/favicons/favicon.svg",
+    ogImage: "https://codrops-1f606.kxcdn.com/codrops/wp-content/uploads/2024/09/Webzibition.jpg",
+    tags: [TAGS.inspiration],
+    url: "https://tympanus.net/codrops/hub/",
+  },
+  {
     title: "Wiretext",
     category: CATEGORIES.design,
     description:
