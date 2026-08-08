@@ -296,8 +296,7 @@ export const colorLinks: Tool[] = [
     title: "OKLCH Color Picker & Converter",
     category: CATEGORIES.colors,
     description: "OKLCH is a new way to encode colors (like hex, RGBA, or HSL)",
-    favicon:
-      "data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='128'%20height='128'%3e%3ccircle%20fill='oklch(0.7 0.1 279)'%20cx='64'%20cy='64'%20r='64'/%3e%3cpath%20fill='%23fff'%20d='m16%2064%2048-48%2048%2048-48%2048zm16%200%2032%2032%2032-32-32-32z'/%3e%3c/svg%3e",
+    favicon: "https://raw.githubusercontent.com/evilmartians/oklch-picker/main/view/base/oklch.svg",
     ogImage: "https://oklch.com/og-oklch.png",
     tags: [TAGS.color],
     url: "https://oklch.com/",
