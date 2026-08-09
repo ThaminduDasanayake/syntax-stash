@@ -16,6 +16,16 @@ export const aiLinks: Tool[] = [
     url: "https://github.com/cloudflare/agentic-inbox",
   },
   {
+    title: "AI Design Field Guide",
+    category: CATEGORIES.ai,
+    description:
+      "Learn techniques from the designers behind OpenAI, Anthropic, Figma, Notion & more",
+    favicon: "https://www.aidesignfieldguide.com/favicon/apple-icon-180x180.png",
+    ogImage: "https://www.aidesignfieldguide.com/share-link.png",
+    tags: [TAGS.ai],
+    url: "https://www.aidesignfieldguide.com/",
+  },
+  {
     title: "AI Engineering Hub",
     author: "patchy631",
     category: CATEGORIES.ai,

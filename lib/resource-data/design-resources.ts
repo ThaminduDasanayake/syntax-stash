@@ -284,6 +284,19 @@ export const designLinks: Tool[] = [
     url: "https://www.brandsinmotion.xyz/",
   },
   {
+    title: "BX Museum",
+    category: CATEGORIES.design,
+    description:
+      "BX Museum is a curated repository of brand artifacts, offering categorized collections from various brands to explore design, identity, and marketing elements. Perfect for researchers and enthusiasts alike.",
+    favicon:
+      "https://cdn.prod.website-files.com/66f3d2d45b23e6f3f4a65cb0/67346de87e01c7d83ae7c8ba_favicon-256x256.png",
+    ogImage:
+      "https://cdn.prod.website-files.com/66f3d2d45b23e6f3f4a65cb0/67345ba13da6f5961887c3a6_hero-img.png",
+    tags: [TAGS.inspiration],
+    url: "https://www.bxmuseum.com/",
+  },
+
+  {
     title: "CallToInspiration",
     category: CATEGORIES.design,
     description:
@@ -293,7 +306,6 @@ export const designLinks: Tool[] = [
     tags: [TAGS.design],
     url: "https://calltoinspiration.com/",
   },
-
   {
     title: "Cognitive Bias Index",
     category: CATEGORIES.design,
@@ -890,6 +902,14 @@ export const designLinks: Tool[] = [
     url: "https://layers.to/",
   },
   {
+    title: "limitype",
+    category: CATEGORIES.design,
+    favicon:
+      "https://payhip.com/cdn-cgi/image/format=auto,width=1500/https://pe56d.s3.amazonaws.com/o_1ie3aobv112ranv9ppedhk199vl.jpg",
+    tags: [TAGS.mockup],
+    url: "https://limitype.com/",
+  },
+  {
     title: "Linearity",
     category: CATEGORIES.design,
     description:
@@ -1081,6 +1101,17 @@ export const designLinks: Tool[] = [
     subtitle: "Highres Photoshop Mockups for Creatives",
     tags: [TAGS.mockup],
     url: "https://www.mockupselection.com/",
+  },
+  {
+    title: "Mockups Supply",
+    category: CATEGORIES.design,
+    description:
+      "Download premium Photoshop mockups with unlimited access. Minimal, photoreal mockups for branding, packaging, logos, and product displays.",
+    favicon: "https://framerusercontent.com/images/owLfLTBGHLw3H8KuUmoGX19AzMk.jpg",
+    ogImage: "https://framerusercontent.com/assets/QYhoDyXwm94Zf9vFinRwVkum5zg.jpg",
+    subtitle: "Download Free & Premium Mockups",
+    tags: [TAGS.mockup],
+    url: "https://www.mockups.supply/",
   },
   {
     title: "Mockuuups Studio",
@@ -1363,6 +1394,19 @@ export const designLinks: Tool[] = [
     url: "https://planner5d.com/",
   },
   {
+    title: "Pricing Pages",
+    category: CATEGORIES.design,
+    description:
+      "Discover handpicked pricing page examples from SaaS companies, ecommerce brands, and digital agencies. Find design inspiration for your next pricing page design",
+    favicon:
+      "https://cdn.prod.website-files.com/689668ab1aaf9433c413496a/68974c42171c725b5363155a_Frame%201597885923.png",
+    ogImage:
+      "https://cdn.prod.website-files.com/689668ab1aaf9433c413496a/6899c68afc269da2e4141637_2532.webp",
+    subtitle: "A Curated Gallery of Pricing Page Designs",
+    tags: [TAGS.inspiration],
+    url: "https://pricingpages.design/",
+  },
+  {
     title: "Pure",
     category: CATEGORIES.design,
     description:
@@ -1583,6 +1627,19 @@ export const designLinks: Tool[] = [
     url: "https://app.superdesign.dev/",
   },
   {
+    title: "SUX Network",
+    category: CATEGORIES.design,
+    description:
+      "A collaborative AI workspace, built on your company context. Build and orchestrate agents right alongside your team's projects, meetings, and connected apps.",
+    favicon:
+      "https://suxnetwork.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fd0065044-1ae4-4e71-b8e7-0492900cd1d7%2F7e402af4-9ca9-4240-85c0-323005c6ba85%2Fimg_temporarynewsletterlogo_linkedin.webp?id=36fe841f-898b-4fe9-a8f3-7b6636852c49&table=block&spaceId=d0065044-1ae4-4e71-b8e7-0492900cd1d7&width=250&userId=&cache=v2&imgBuildSrc=requestProxiedImageUrl",
+    ogImage:
+      "https://suxnetwork.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fd0065044-1ae4-4e71-b8e7-0492900cd1d7%2F543a4d05-28fc-4822-a391-79888bba2b76%2Fplaybook_notion.webp?table=block&id=36fe841f-898b-4fe9-a8f3-7b6636852c49&spaceId=d0065044-1ae4-4e71-b8e7-0492900cd1d7&width=2000&userId=&cache=v2&imgBuildSrc=requestProxiedImageUrl",
+    subtitle: "Resource Collection",
+    tags: [TAGS.inspiration],
+    url: "https://suxnetwork.notion.site/",
+  },
+  {
     title: "Text Diagram",
     category: CATEGORIES.design,
     description: "Text Diagram is a web tool for drawing UML sequence diagram in pure text.",
@@ -1706,6 +1763,30 @@ export const designLinks: Tool[] = [
       "A dialog overlay that interrupts the current flow to capture attention and require an explicit action before returning to the main interface.",
     tags: [TAGS.design, TAGS.education],
     url: "https://ux-dictionary.vercel.app/",
+  },
+  {
+    title: "UX Playbook",
+    category: CATEGORIES.design,
+    description:
+      "Learn with UX Playbook through playbooks, courses, and coaching.  Step-by-steps guides built with Notion. Learn more.",
+    favicon:
+      "https://images.squarespace-cdn.com/content/v1/60c24f208febea5136b4e297/27e7a919-40ea-49c5-a627-3d1b66b20647/favicon.ico",
+    ogImage:
+      "https://static1.squarespace.com/static/60c24f208febea5136b4e297/t/677b465dc0f0e423d94fd358/1736132189715/UX+Playbook+Cover.png",
+    subtitle: "Playbooks, Courses, Coaching",
+    tags: [TAGS.design],
+    url: "https://uxplaybook.org/",
+  },
+  {
+    title: "UXSnaps",
+    category: CATEGORIES.design,
+    description:
+      "Explore real UI/UX breakdowns from billion-dollar apps. Actionable lessons, visual insights, and patterns you can apply. Built for designers & product teams.",
+    favicon: "https://www.uxsnaps.com/favicon-light.ico",
+    ogImage: "https://www.uxsnaps.com/og-home.png",
+    subtitle: "Actionable UI/UX Breakdowns from Top Apps",
+    tags: [TAGS.inspiration],
+    url: "https://www.uxsnaps.com/",
   },
   {
     title: "Viewport UI",

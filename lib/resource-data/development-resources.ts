@@ -1429,6 +1429,18 @@ export const developmentLinks: Tool[] = [
     url: "https://shrtcts.click/",
   },
   {
+    title: "Site Critique",
+    author: "Brutally Human",
+    category: CATEGORIES.dev,
+    description:
+      "Your website gets judged in seconds. We show you what those seconds are saying. Get honest feedback on how clients and recruiters really perceive your site.",
+    favicon: "https://sitecritique.app/apple-touch-icon.png",
+    ogImage: "https://sitecritique.app/og-image.png",
+    subtitle: "See Your Website The Way Others Do",
+    tags: [TAGS.tool],
+    url: "https://sitecritique.app/",
+  },
+  {
     title: "SitePoint",
     category: CATEGORIES.dev,
     description:
