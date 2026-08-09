@@ -15,6 +15,7 @@ import { toast } from "sonner";
 import { CardIcon } from "@/components/card-icon";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
+import { CopyButton } from "@/components/ui/copy-button";
 import { DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { resourceLinks } from "@/lib/resource-data";
 import {
@@ -273,29 +274,23 @@ export function ResourceDialog({ tool }: ToolCardProps) {
           </div>
 
           <div className="modal-launch flex items-center gap-2">
-            <Button asChild className="flex-1">
+            <Button asChild size="sm" className="flex-1">
               <a
                 href={activeTool.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-mono-xs w-full"
+                className="text-mono-xs w-full border-[1.5px]"
               >
                 Open resource <ArrowSquareOutIcon weight="bold" />
               </a>
             </Button>
-            <Button
+            <CopyButton
+              textToCopy={activeTool.url || ""}
+              labelName="Copy Link"
               variant="secondary"
-              size="icon"
-              onClick={handleCopyLink}
-              title="Copy direct link"
+              size="sm"
               className="shrink-0 border-[1.5px]"
-            >
-              {copied ? (
-                <CheckIcon weight="bold" className="text-c-green" />
-              ) : (
-                <CopyIcon weight="bold" />
-              )}
-            </Button>
+            />
           </div>
 
           <div className="modal-nav-row">
