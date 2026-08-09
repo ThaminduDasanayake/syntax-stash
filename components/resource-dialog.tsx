@@ -1,16 +1,8 @@
 "use client";
 
-import {
-  ArrowSquareOutIcon,
-  CaretLeftIcon,
-  CaretRightIcon,
-  CheckIcon,
-  CopyIcon,
-  XIcon,
-} from "@phosphor-icons/react";
+import { ArrowSquareOutIcon, CaretLeftIcon, CaretRightIcon, XIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { toast } from "sonner";
 
 import { CardIcon } from "@/components/card-icon";
 import { Button } from "@/components/ui/button";
@@ -30,26 +22,10 @@ import { Tool, ToolCardProps } from "@/types";
 export function ResourceDialog({ tool }: ToolCardProps) {
   const [activeTool, setActiveTool] = useState(tool);
   const [ogError, setOgError] = useState(false);
-  const [copied, setCopied] = useState(false);
 
   const handleSelectTool = (res: Tool) => {
     setOgError(false);
-    setCopied(false);
     setActiveTool(res);
-  };
-
-  const handleCopyLink = () => {
-    const urlToCopy = activeTool.url || (typeof window !== "undefined" ? window.location.href : "");
-    if (!urlToCopy) return;
-
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(urlToCopy);
-    }
-    setCopied(true);
-    toast.success(`Copied link for ${activeTool.title}!`, {
-      description: urlToCopy,
-    });
-    setTimeout(() => setCopied(false), 2000);
   };
 
   const currentIndex = useMemo(() => {
