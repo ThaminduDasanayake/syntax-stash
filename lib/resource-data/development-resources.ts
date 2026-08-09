@@ -485,6 +485,18 @@ export const developmentLinks: Tool[] = [
     url: "https://directus.com/",
   },
   {
+    title: "Ditto",
+    author: "ion.design",
+    category: CATEGORIES.dev,
+    description:
+      "Point Ditto at any public URL and get a byte-stable copy as clean, componentized Next.js or Vite code in minutes — deterministic, no LLM guesswork, fidelity preserved. Open source, with a hosted REST API and MCP server.",
+    favicon: "https://ditto.site/assets/ditto.svg",
+    ogImage: "https://ditto.site/assets/og.png",
+    subtitle: "Clone any website",
+    tags: [TAGS.tool],
+    url: "https://ditto.site/",
+  },
+  {
     title: "docmd",
     category: CATEGORIES.dev,
     description:

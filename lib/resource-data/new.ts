@@ -4,6 +4,15 @@ import { CATEGORIES } from "./categories";
 
 export const newLinks: Tool[] = [
   {
+    title: "A Little Box of Goodies",
+    category: CATEGORIES.dev,
+    description:
+      "A Little Box of Goodies est. for sending a little care things to tuck inside. Photo + Photo Song + Song Video + Video Gift + Gift Voice + Voice Drawing + Drawing Location + Location Coupon + Coupon News + News",
+    favicon: "https://alittleboxofgoodies.com/favicon.ico",
+    subtitle: "digital care package",
+    url: "https://alittleboxofgoodies.com/",
+  },
+  {
     title: "Colf",
     category: CATEGORIES.dev,
     description: "Prompt solutions to algorithmic problems with the fewest tokens.",

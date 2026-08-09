@@ -165,6 +165,17 @@ export const designLinks: Tool[] = [
     url: "https://ascii-motion.com/",
   },
   {
+    title: "Asylab",
+    category: CATEGORIES.design,
+    description:
+      "Discover premium PSD mockups, UI kits, and design assets for creators and brands. Explore device mockups, logo mockups, gradients, and templates for creators and brands.",
+    favicon: "https://framerusercontent.com/images/rK8G5Vzxrw0knTjlCr5AWiYmk.png",
+    ogImage: "https://framerusercontent.com/assets/Tp0pbYdHYZTjKyrZ8ojWnFnVnw.webp",
+    subtitle: "Premium Mockups, UI Kits & Design Assets",
+    tags: [TAGS.mockup],
+    url: "https://www.asylab.com/",
+  },
+  {
     title: "Aura",
     category: CATEGORIES.design,
     description:
@@ -295,7 +306,6 @@ export const designLinks: Tool[] = [
     tags: [TAGS.inspiration],
     url: "https://www.bxmuseum.com/",
   },
-
   {
     title: "CallToInspiration",
     category: CATEGORIES.design,
@@ -548,6 +558,16 @@ export const designLinks: Tool[] = [
     subtitle: "Best Web Design Inspiration",
     tags: [TAGS.inspiration],
     url: "https://www.details.so/inspo",
+  },
+  {
+    title: "Details Matter",
+    category: CATEGORIES.design,
+    description:
+      "Details Matter is a side project and a hope to create a cool gallery of micro interactions on the internet that blow minds.",
+    favicon: "https://framerusercontent.com/images/fx9ovGXaj5WzEzzs2fkqg3rkYk.png",
+    ogImage: "https://framerusercontent.com/assets/BXtlbqJmiZcoxmYxlMWU6OSCl84.png",
+    tags: [TAGS.inspiration],
+    url: "https://detailsmatter.framer.website/",
   },
   {
     title: "Developer Portfolios",
@@ -833,6 +853,15 @@ export const designLinks: Tool[] = [
     url: "https://www.headers.club/",
   },
   {
+    title: "Hell's Blue Boy Mockups",
+    category: CATEGORIES.design,
+    description: "Perfectly Imperfect Mockups From the Streets of Thailand.",
+    favicon: "https://hellsblueboy.com/cdn/shop/files/favicon-192.png",
+    ogImage: "https://hellsblueboy.com/cdn/shop/files/HBB-Mockups-1200.jpg",
+    tags: [TAGS.mockup],
+    url: "https://hellsblueboy.com/",
+  },
+  {
     title: "HeyDesigner",
     author: "Tamas Sari",
     category: CATEGORIES.design,
@@ -843,6 +872,18 @@ export const designLinks: Tool[] = [
     subtitle: "Hand-picked Design Links, Daily",
     tags: [TAGS.newsletter],
     url: "https://heydesigner.com/",
+  },
+  {
+    title: "House of Mockups",
+    category: CATEGORIES.design,
+    description:
+      "Download the best quality free and premium mockups and resources for packaging design, posters and billboards, phones, UI kits, instagram advertising templates and fonts to beautifully mockup and present your design projects",
+    favicon:
+      "https://cdn.shopify.com/s/files/1/0386/0194/9324/files/schemaplus_organization_logo.png",
+    ogImage: "https://houseofmockups.com/cdn/shop/files/HouseofMockups-Website-1500x940.jpg",
+    subtitle: "Best Free and Premium Mockups and Resources for Graphic Designers",
+    tags: [TAGS.mockup],
+    url: "https://houseofmockups.com/",
   },
   {
     title: "HOVERSTAT.ES",
@@ -1056,6 +1097,17 @@ export const designLinks: Tool[] = [
     ogImage: "https://www.hellomocku.com/cdn/shop/files/Mocku_logotype_SEO-cover.svg",
     tags: [TAGS.mockup],
     url: "https://www.hellomocku.com/",
+  },
+  {
+    title: "Mockup Flock",
+    category: CATEGORIES.design,
+    description:
+      "Mockup Flock delivers commercial realistic PSD mockups & Bundles and custom mockup services for brands, designers, and creatives. Commercial use allowed, save up to 50% on curated collections for designers and print on demand projects. Elevate your project designs today!",
+    favicon: "https://mockupflock.com/cdn/shop/files/Mockup_flock_favicon.jpg",
+    ogImage: "https://mockupflock.com/cdn/shop/files/Mockup_Flock_Logo.png",
+    subtitle: "Commercial Realistic PSD Mockups & Bundles",
+    tags: [TAGS.mockup],
+    url: "https://mockupflock.com/",
   },
   {
     title: "Mockupia",
@@ -1665,6 +1717,18 @@ export const designLinks: Tool[] = [
     url: "https://designproject.io/",
   },
   {
+    title: "The Free Mockup",
+    category: CATEGORIES.design,
+    description:
+      "Download the web’s largest collection of free, high-quality mockups. Perfect for app/website presentations, product showcases, branding, and packaging. New assets added daily.",
+    favicon: "https://www.free-mockup.com/favicon.svg",
+    ogImage:
+      "https://www.free-mockup.com/wp-content/uploads/2026/05/free-mockup-com-social-sharing.jpg",
+    subtitle: "The Best Free Mockups",
+    tags: [TAGS.mockup],
+    url: "https://www.free-mockup.com/",
+  },
+  {
     title: "The Shape of AI",
     category: CATEGORIES.design,
     description:
@@ -1705,6 +1769,30 @@ export const designLinks: Tool[] = [
     ogImage: "https://www.typographicposters.com/typographic-posters-new-website-2021-photo.jpg",
     tags: [TAGS.inspiration],
     url: "https://www.typographicposters.com/",
+  },
+  {
+    title: "UI.live",
+    category: CATEGORIES.design,
+    description: "The free design sharing platform powering the creator economy.",
+    favicon: "https://ui.live/favicons/favicon.svg",
+    ogImage:
+      "https://firebasestorage.googleapis.com/v0/b/ui8-ui-live.appspot.com/o/assets%2Fopengraph.jpg?alt=media",
+    subtitle: "Create. Share. Grow.",
+    tags: [TAGS.inspiration],
+    url: "https://ui.live/",
+  },
+  {
+    title: "UI / UX Design Inspiration and Design News Newsletter",
+    author: "Kris from uibits.co",
+    category: CATEGORIES.design,
+    description:
+      "Design newsletter - get great design examples and news in your inbox! Mobile design inspiration, Web design inspiration, AR design inspiration, Interaction design examples and inspiration",
+    favicon:
+      "https://media.beehiiv.com/cdn-cgi/image/fit=scale-down,format=auto,onerror=redirect,quality=80/uploads/publication/logo/1026f7d6-ab31-4c69-8a07-57984876ace0/thumb_Screenshot_2025-01-28_at_13.15.55.png",
+    ogImage:
+      "https://media.beehiiv.com/cdn-cgi/image/fit=scale-down,format=auto,onerror=redirect,quality=80/uploads/publication/thumbnail/1026f7d6-ab31-4c69-8a07-57984876ace0/landscape_Screenshot_2025-01-28_at_13.15.55.png",
+    tags: [TAGS.inspiration, TAGS.newsletter],
+    url: "https://uibits.co/",
   },
   {
     title: "UI Guideline",
