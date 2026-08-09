@@ -293,6 +293,17 @@ export const colorLinks: Tool[] = [
     url: "https://access.mymind.com/colors",
   },
   {
+    title: "oklch.fyi",
+    category: CATEGORIES.colors,
+    description:
+      "Build palettes with consistent lightness and predictable shades, convert between formats, and explore gamut — all in OKLCH.",
+    favicon: "https://oklch.fyi/favicon.ico",
+    ogImage: "https://zaevelstnancdrwi.public.blob.vercel-storage.com/oklch-og.png",
+    subtitle: "Pick, convert and generate OKLCH colors",
+    tags: [TAGS.color],
+    url: "https://oklch.fyi/",
+  },
+  {
     title: "OKLCH Color Picker & Converter",
     category: CATEGORIES.colors,
     description: "OKLCH is a new way to encode colors (like hex, RGBA, or HSL)",

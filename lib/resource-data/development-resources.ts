@@ -1747,6 +1747,16 @@ export const developmentLinks: Tool[] = [
     url: "https://www.usercheck.com/",
   },
   {
+    title: "useSend",
+    category: CATEGORIES.dev,
+    description: "Pay only for what you send, not for storing contacts",
+    favicon: "https://usesend.com/logo-squircle.png",
+    ogImage: "https://uploads.usesend.com/logos/og.png",
+    subtitle: "Open source email platform",
+    tags: [TAGS.email, TAGS.tool],
+    url: "https://usesend.com/",
+  },
+  {
     title: "Vault andzn",
     category: CATEGORIES.dev,
     description:

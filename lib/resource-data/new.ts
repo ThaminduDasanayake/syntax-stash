@@ -23,6 +23,17 @@ export const newLinks: Tool[] = [
     url: "https://tympanus.net/codrops/hub/",
   },
   {
+    title: "listmonk",
+    category: CATEGORIES.dev,
+    description:
+      "Send e-mail campaigns and transactional e-mails. High performance and features packed into one app.",
+    favicon: "https://listmonk.app/static/images/favicon.webp",
+    ogImage: "https://listmonk.app/static/images/thumbnail.webp",
+    subtitle:
+      "Free and open source self-hosted newsletter, mailing list manager, and transactional mails",
+    url: "https://listmonk.app/",
+  },
+  {
     title: "Mosaic",
     category: CATEGORIES.dev,
     description: "A place where social media graphics look like a wall of art",
@@ -39,6 +50,15 @@ export const newLinks: Tool[] = [
     ogImage: "https://rows.gg/brand/og.png",
     subtitle: "Rows is an unapologetically simple way to track anything",
     url: "https://rows.gg/",
+  },
+  {
+    title: "VERT.sh",
+    category: CATEGORIES.dev,
+    description:
+      "With VERT, you can quickly convert any image, video, audio, and document file. No ads, no tracking, open source, and all processing (other than video) is done on your device.",
+    favicon: "https://vert.sh/favicon.png",
+    ogImage: "https://vert.sh/_app/immutable/assets/VERT_Feature.D5UIwpMt.webp",
+    url: "https://vert.sh/",
   },
   {
     title: "zzzz",

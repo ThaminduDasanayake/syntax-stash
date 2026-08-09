@@ -944,6 +944,8 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "A collection of 50 premium JavaScript effects made with GSAP. Showcasing scroll, drag, mouse move, infinite animations and more.",
+    favicon: "https://madewithgsap.com/assets/img/fav/favicon.svg",
+    ogImage: "https://madewithgsap.com/assets/img/og.jpg",
     tags: [TAGS.inspiration],
     url: "https://madewithgsap.com/",
   },
@@ -1316,6 +1318,17 @@ export const designLinks: Tool[] = [
     favicon: "/github.svg",
     tags: [TAGS.design],
     url: "https://github.com/penpot/penpot",
+  },
+  {
+    title: "PersonalSit.es",
+    category: CATEGORIES.design,
+    description:
+      "Personal sites are sick as hell, so this site was built so we can all discover each other's. This directory of links are by folks that want to share their site with the world.",
+    favicon: "https://personalsit.es/assets/images/safari-pinned-tab.svg",
+    ogImage: "https://personalsit.es/assets/images/opengraph.jpg",
+    subtitle: "Yes we got hot and fresh sites",
+    tags: [TAGS.inspiration],
+    url: "https://personalsit.es/",
   },
   {
     title: "Pixeden Club",
