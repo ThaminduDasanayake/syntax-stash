@@ -23,6 +23,16 @@ export const newLinks: Tool[] = [
     url: "https://tympanus.net/codrops/hub/",
   },
   {
+    title: "Rows",
+    category: CATEGORIES.dev,
+    description:
+      "Rows is a shared, multiplayer list for tracking anything you’ve got going: projects, tasks, reading lists, trips. Live cursors, inline editing, no signups for your team, nothing to learn.",
+    favicon: "https://rows.gg/brand/rows-mark-logo.svg",
+    ogImage: "https://rows.gg/brand/og.png",
+    subtitle: "Rows is an unapologetically simple way to track anything",
+    url: "https://rows.gg/",
+  },
+  {
     title: "zzzz",
     category: CATEGORIES.dev,
     description: "zzzz",

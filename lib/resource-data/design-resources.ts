@@ -391,6 +391,16 @@ export const designLinks: Tool[] = [
     url: "https://www.dark.design/",
   },
   {
+    title: "DekGrativ",
+    category: CATEGORIES.design,
+    description: "Sell digital assets for commercial projects with featured apparel mockups.",
+    favicon: "https://dekgrativ.com/cdn/shop/files/Logo_WEB-DekGrafis-New_2026.png",
+    ogImage: "https://dekgrativ.com/cdn/shop/files/BANNER_SOCIALMEDIA.png",
+    subtitle: "Find Apparel Mockup for Your Brand",
+    tags: [TAGS.mockup],
+    url: "https://dekgrativ.com/",
+  },
+  {
     title: "Design.dev",
     category: CATEGORIES.design,
     description:
@@ -1014,10 +1024,24 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "Download exclusive free PSD mockups and edit them online instantly. Use MockupNest’s online mockup generator to customize product mockups for personal and commercial use — no Photoshop required.",
+    favicon:
+      "https://cdn.mockupnest.com/wp-content/themes/Mockupnest/images/android-icon-192x192.png",
     ogImage: "https://cdn.mockupnest.com/wp-content/uploads/2023/09/Fallback-Image-Mockupnest.jpg",
     subtitle: "Free PSD Mockups to Download & Edit Online",
     tags: [TAGS.mockup],
     url: "https://mockupnest.com/",
+  },
+  {
+    title: "Mockups Design",
+    category: CATEGORIES.design,
+    description:
+      "Download free mockups! Mockups Design is a site where you can find free premium mockups that can be used in your private and commercial work.",
+    favicon:
+      "https://mockups-design-com.b-cdn.net/wp-content/uploads/2017/08/cropped-favicon-180x180.png",
+    ogImage: "https://mockups-design-com.b-cdn.net/wp-content/uploads/2017/08/MOckups_OG.jpg",
+    subtitle: "Free Premium Mockups - Instant Download",
+    tags: [TAGS.mockup],
+    url: "https://mockups-design.com/",
   },
   {
     title: "Mockup Selection",
@@ -1266,6 +1290,15 @@ export const designLinks: Tool[] = [
     favicon: "/github.svg",
     tags: [TAGS.design],
     url: "https://github.com/penpot/penpot",
+  },
+  {
+    title: "Pixeden Club",
+    category: CATEGORIES.design,
+    description: "Exclusive graphic, web and design assets club.",
+    favicon: "https://www.pixeden.com/seo/apple-touch-icon.png",
+    ogImage: "https://www.pixeden.com/seo/share_img.jpg",
+    tags: [TAGS.mockup],
+    url: "https://www.pixeden.com/",
   },
   {
     title: "Pixelbuddha",

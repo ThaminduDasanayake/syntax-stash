@@ -222,6 +222,16 @@ export const typographyLinks: Tool[] = [
     url: "https://www.letterbox.sh/",
   },
   {
+    title: "Meshfont",
+    category: CATEGORIES.typography,
+    description: "Sculpt your own letterforms and export them as a real font.",
+    favicon: "https://meshfont.com/favicon.svg",
+    ogImage: "https://meshfont.com/og.png",
+    subtitle: "sculpt your own font",
+    tags: [TAGS.typography],
+    url: "https://meshfont.com/",
+  },
+  {
     title: "myfffonts",
     author: "Julien Bidoret",
     category: CATEGORIES.typography,
