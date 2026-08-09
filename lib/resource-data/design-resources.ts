@@ -76,7 +76,6 @@ export const designLinks: Tool[] = [
     tags: [TAGS.ai, TAGS.design],
     url: "https://ai-index.eu/",
   },
-
   {
     title: "AI Particle Simulator",
     category: CATEGORIES.design,
@@ -85,6 +84,7 @@ export const designLinks: Tool[] = [
     subtitle: "Professional 3D Swarm Simulator",
     url: "https://particles.casberry.in/",
   },
+
   {
     title: "animos",
     category: CATEGORIES.design,
@@ -283,7 +283,6 @@ export const designLinks: Tool[] = [
     tags: [TAGS.inspiration],
     url: "https://www.brandsinmotion.xyz/",
   },
-
   {
     title: "CallToInspiration",
     category: CATEGORIES.design,
@@ -294,6 +293,7 @@ export const designLinks: Tool[] = [
     tags: [TAGS.design],
     url: "https://calltoinspiration.com/",
   },
+
   {
     title: "Cognitive Bias Index",
     category: CATEGORIES.design,
@@ -335,6 +335,8 @@ export const designLinks: Tool[] = [
     title: "Cosmos",
     category: CATEGORIES.design,
     description: "Your space for inspiration",
+    favicon: "https://www.cosmos.so/icon-dark.svg",
+    ogImage: "https://www.cosmos.so/opengraph-image.jpg",
     tags: [TAGS.inspiration],
     url: "https://www.cosmos.so/",
   },
@@ -381,6 +383,20 @@ export const designLinks: Tool[] = [
     subtitle: "The Best Call-to-Action Inspiration for Designers",
     tags: [TAGS.design, TAGS.inspiration, TAGS.ui],
     url: "https://www.cta.gallery/",
+  },
+  {
+    title: "Dark Mode Design",
+    category: CATEGORIES.design,
+    className: "bg-foreground border-paper",
+    description:
+      "Dark Mode Design is a showcase of beautifully designed and inspiring dark mode websites. Dim the lights, lower your screen brightness, and enjoy.",
+    favicon:
+      "https://cdn.prod.website-files.com/5ea7fc450fe2ee12b924f695/5eb141ef8a376a1ba144d636_5a3020ceb3ac8c9598190f05fbf011b0_Logo.svg",
+    ogImage:
+      "https://cdn.prod.website-files.com/5ea7fc450fe2ee12b924f695/63f1a4bc731066c857d55d0b_97ffe48072aebe00cb0efe5b320f4130_OpenGraph-min.png",
+    subtitle: "🌘 Handpicked website inspiration",
+    tags: [TAGS.inspiration],
+    url: "https://www.darkmodedesign.com/",
   },
   {
     title: "Dark Themed Web Design Inspiration",
@@ -562,6 +578,16 @@ export const designLinks: Tool[] = [
       "Elevate your designs with our high-quality mockups of digital devices, stationary, and more. Our easy to use PSD files will make your work standout.",
     tags: [TAGS.design],
     url: "https://mockups.directory/",
+  },
+  {
+    title: "Dither Garden",
+    category: CATEGORIES.design,
+    description:
+      "Transform images through mathematical dithering algorithms including Floyd-Steinberg, Atkinson, and Blue-Noise techniques for professional image processing.",
+    favicon: "https://www.dithergarden.com/assets/images/favicon.svg",
+    ogImage: "https://www.dithergarden.com/assets/images/social-share.png",
+    subtitle: "Professional Image Dithering Tool",
+    url: "https://www.dithergarden.com/",
   },
   {
     title: "Ditther",

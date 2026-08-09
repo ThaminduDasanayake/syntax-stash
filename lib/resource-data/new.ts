@@ -23,6 +23,14 @@ export const newLinks: Tool[] = [
     url: "https://tympanus.net/codrops/hub/",
   },
   {
+    title: "Mosaic",
+    category: CATEGORIES.dev,
+    description: "A place where social media graphics look like a wall of art",
+    favicon: "https://framerusercontent.com/images/eU1UM9Iiu9VyGPf6hPWR38aO6Bk.png",
+    ogImage: "https://framerusercontent.com/assets/uS3wCgLcvYbPkXQ7MzeN78GM.png",
+    url: "https://mosaicmedia.framer.website/",
+  },
+  {
     title: "Rows",
     category: CATEGORIES.dev,
     description:
