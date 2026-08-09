@@ -144,8 +144,7 @@ export const colorLinks: Tool[] = [
     category: CATEGORIES.colors,
     description:
       "Generate customizable color palettes in advanced color spaces that can be easily shared, downloaded, or exported.",
-    favicon:
-      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAFBklEQVR4AeRYPYwbRRR+b3wFEn86qktxviPdURClogOBhHKGAgESkaCiCVUiRIgdQRGlAJ0dEqFQkYYKJAqCKMB3QiKCjiZRKLgunO+k5CpOkERJcd7J9816N/b5b9c+x/bOaMYznnnz3vd92p2dGSMjTl/c+Hlhpbb6TmVz9bOVjerlcq16FeVmeaN6D7V1JWzfRPsqbZwt5nDuiOHJSARY2Vx7sby5er5cW/27njMbKvZ7a+0nqvImCB1GOSAqj6EOc9g+gD+HaeNsMYdz6YO+6BPj+57Nfnlc+ffXp8tb1VMErDb4Xaz9SMQuDe8fPuCLPumbMRhreL+hh6EFIBg+svr/7rYEUtkf0iG49l+IgRiMxZiM3W6TrmcoASpba8f19u4/fGRbHul0GNJb45VhTMau1NaOp3fwcMZAApzbqj6PRew3GwQX4WoWZVx51kpwkViIaRAQqQWo3PjlWBDIdVF5eZCAI5kDLMREbGn9pxKgvFk9b3P6ddogj8qe2IgxTbzEAmDR+VasYGVP434MtsDosCYMnUgAfId/wKLzbkKfYzcjVmJOAqSvAE5Na99K4myibIDZYe8DqqcAfJ+oZh8fEztM7OTQC2BXAdyKivep1+SpGAMHx6UL2I4C8JvKFbXLnKnrJhdy6gS8owBBXb6UjKVunNoEcFtLbCwyxl8EnLh1lz2pRQAeLrC1PLvHJjN/sXU/S47NhFoEMHfqRQyOc2+P8CPNsw2OcZBYACpjAzv5O70Y+mANciTXaHYsgN7dPYb35OEtTWSRtRpHace1wSsWQAJ9v9GX/aqJqxMgvG/DbUv2qTcY2qWQs4gTAJeWbzRGvKkizk4AHHML3jCPiFpxnE149+7T4x8rsETuZjeXeyHq8q0md2NUDvlGPOJL7iYIfHz8QwnI3ajKoniayJ1fgTlP+ZP2nBErs2x5WcDdCPbGWSbfkxu4m54GHgzyFbjvAc/OFK3cN3gFdjqPetCrsmNAcxvF17xtrJUN8TSRu8FeeN1T/kLuJrBy3VcByN3M1Ot/+ioAuZuPD75eE1EPXwNdJ3d+BcBfquJb0pCzE8CK/uQb/4izE+B0/sgf4tVroOsh58atsDAZ+w0rL0oTV/cEkLR9fOYSjsbZPxdg/++4kjRKLMDpZ179T41eQF+mMzmSa0QyFoAdwRO5CuqpPhwBf6+80+AY27QIQGXUmDPxaMYaKuYMOUpTahGA/cX5I19hLbjCdqaKlSvFBXDbQ6pNAI6bnHwoGUvdOHUU4NR84S+t2w+yogG5kFMnPh0FoGHx4GuXRGX6vwrg4LiQVIfSVQDalvKFk6r6HdvTWIidHHph7ykAJxbzy++J6mW2p6oAs8PeB3RfATi/lF9+m2qyPQ2FWIk5CdZEAtCRUxPvE9sTXYDRYU0IMrEA9FfimjDBXweu9sRIrElLKgHolCuqMXJIsLHg/4kowEJMxJYWT2oBGIDf1NJi4RUVc0JExnl22MHW/QSxEBOwpM4DCRBF4dbSPjnzLBadzwXHzKh/5DViMSZju637EAGHEoBxebjAovOpfWpmTowUZaQ3S7i8RQzGYkzGliHT0AJE8QmmNF84V1pYfs6qeQl7B+wiATgyGLiGD9UL9EnfjMFYA7vbM3HfBGj2y/u2Un75JAHn6sEiLiCPukfWyo+wu4ZyS/AYow5z2L6FP9csbJyt6FHOpQ/6ok+Mt+VhOx4AAAD//w+u7LYAAAAGSURBVAMAkST1QJPNV/sAAAAASUVORK5CYII=",
+    favicon: "https://colorpalette.pro/favicon.svg",
     ogImage: "https://colorpalette.pro/colorpalettepro.png",
     tags: [TAGS.color],
     url: "https://colorpalette.pro/",
@@ -291,6 +290,17 @@ export const colorLinks: Tool[] = [
     subtitle: "Mindfully curated color palettes",
     tags: [TAGS.color],
     url: "https://access.mymind.com/colors",
+  },
+  {
+    title: "oklch.fyi",
+    category: CATEGORIES.colors,
+    description:
+      "Build palettes with consistent lightness and predictable shades, convert between formats, and explore gamut — all in OKLCH.",
+    favicon: "https://oklch.fyi/favicon.ico",
+    ogImage: "https://zaevelstnancdrwi.public.blob.vercel-storage.com/oklch-og.png",
+    subtitle: "Pick, convert and generate OKLCH colors",
+    tags: [TAGS.color],
+    url: "https://oklch.fyi/",
   },
   {
     title: "OKLCH Color Picker & Converter",

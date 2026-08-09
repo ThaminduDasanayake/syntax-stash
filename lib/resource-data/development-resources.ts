@@ -485,6 +485,18 @@ export const developmentLinks: Tool[] = [
     url: "https://directus.com/",
   },
   {
+    title: "Ditto",
+    author: "ion.design",
+    category: CATEGORIES.dev,
+    description:
+      "Point Ditto at any public URL and get a byte-stable copy as clean, componentized Next.js or Vite code in minutes — deterministic, no LLM guesswork, fidelity preserved. Open source, with a hosted REST API and MCP server.",
+    favicon: "https://ditto.site/assets/ditto.svg",
+    ogImage: "https://ditto.site/assets/og.png",
+    subtitle: "Clone any website",
+    tags: [TAGS.tool],
+    url: "https://ditto.site/",
+  },
+  {
     title: "docmd",
     category: CATEGORIES.dev,
     description:
@@ -1429,6 +1441,18 @@ export const developmentLinks: Tool[] = [
     url: "https://shrtcts.click/",
   },
   {
+    title: "Site Critique",
+    author: "Brutally Human",
+    category: CATEGORIES.dev,
+    description:
+      "Your website gets judged in seconds. We show you what those seconds are saying. Get honest feedback on how clients and recruiters really perceive your site.",
+    favicon: "https://sitecritique.app/apple-touch-icon.png",
+    ogImage: "https://sitecritique.app/og-image.png",
+    subtitle: "See Your Website The Way Others Do",
+    tags: [TAGS.tool],
+    url: "https://sitecritique.app/",
+  },
+  {
     title: "SitePoint",
     category: CATEGORIES.dev,
     description:
@@ -1745,6 +1769,16 @@ export const developmentLinks: Tool[] = [
     subtitle: "Stop Disposable Emails from Creating Spam Accounts",
     tags: [TAGS.backend],
     url: "https://www.usercheck.com/",
+  },
+  {
+    title: "useSend",
+    category: CATEGORIES.dev,
+    description: "Pay only for what you send, not for storing contacts",
+    favicon: "https://usesend.com/logo-squircle.png",
+    ogImage: "https://uploads.usesend.com/logos/og.png",
+    subtitle: "Open source email platform",
+    tags: [TAGS.email, TAGS.tool],
+    url: "https://usesend.com/",
   },
   {
     title: "Vault andzn",

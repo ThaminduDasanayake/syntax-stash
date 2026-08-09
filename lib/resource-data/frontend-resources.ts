@@ -139,6 +139,18 @@ export const frontendLinks: Tool[] = [
     url: "https://tools.ui-layouts.com/background-snippets",
   },
   {
+    title: "BagUI",
+    author: "Anelka Bagalane",
+    category: CATEGORIES.frontend,
+    description:
+      "BagUI is an open-source shadcn/ui registry with production-ready components, blocks, templates, and animations for React, Next.js, and Tailwind CSS. Copy, customize, and build faster.",
+    favicon: "https://www.bagui.pro/faviconblack.png",
+    ogImage: "https://www.bagui.pro/og-image.png",
+    subtitle: "Open Source shadcn/ui Components & Blocks",
+    tags: [TAGS["ui-component"]],
+    url: "https://www.bagui.pro/",
+  },
+  {
     title: "beUI",
     category: CATEGORIES.frontend,
     description:
@@ -243,6 +255,18 @@ export const frontendLinks: Tool[] = [
     subtitle: "Your All-in-One Framer & Figma UI Library",
     tags: [TAGS["ui-component"]],
     url: "https://clonify.io/",
+  },
+  {
+    title: "CodeFronts",
+    author: "CodeFronts",
+    category: CATEGORIES.frontend,
+    description:
+      "Browse hundreds of free CSS components, interactive generators, animations, layouts and frontend tools. Copy-paste ready with live demos. No sign-up, no paywall.",
+    favicon: "https://codefronts.com/favicon.svg",
+    ogImage: "https://codefronts.com/og-default.png",
+    subtitle: "Free CSS Components, Generators & Frontend Tools",
+    tags: [TAGS["ui-component"]],
+    url: "https://codefronts.com/",
   },
   {
     title: "CodePen",
@@ -1135,10 +1159,15 @@ export const frontendLinks: Tool[] = [
   },
   {
     title: "Prime UI",
+    author: "Pixel Point",
     category: CATEGORIES.frontend,
+    className: "bg-foreground border-paper",
     description:
       "Prime UI is the missing foundation for AI-generated websites. Go from sitemaps and wireframes to production-ready Next.js and Tailwind CSS code in minutes.",
+    favicon: "https://primeui.com/logomark-dark.svg",
+    ogImage: "https://primeui.com/social-previews/index.jpg",
     subtitle: "Build sites fast. Fear no code.",
+    tags: [TAGS["ui-component"]],
     url: "https://primeui.com/",
   },
   {
@@ -1164,6 +1193,15 @@ export const frontendLinks: Tool[] = [
     description:
       "Let coding agents diagnose and fix React codebases with deterministic static analysis.",
     url: "https://www.react.doctor/",
+  },
+  {
+    title: "React Grab",
+    category: CATEGORIES.frontend,
+    description: "Copy any UI element for your coding agent.",
+    favicon: "https://react-grab.com/logo.svg",
+    ogImage: "https://react-grab.com/api/og",
+    tags: [TAGS["ai-agent"]],
+    url: "https://www.react-grab.com/",
   },
   {
     title: "React Haiku",
@@ -1213,6 +1251,17 @@ export const frontendLinks: Tool[] = [
     url: "https://reui.io/",
   },
   {
+    title: "Ripplix",
+    category: CATEGORIES.frontend,
+    description:
+      "The curated library of UI Animation. Stop shipping static interfaces. Access premium UI Animation examples for Mobile, Web, AR / VR and Smartwatches that makes product feel alive.",
+    favicon: "https://www.ripplix.com/storage/uploads/settings/01KDMZ1YX7NHESD0DBKWDEPH09.png",
+    ogImage: "https://www.ripplix.com/images/og/og-default.png",
+    subtitle: "7,000+ UI Animation & Micro-interaction Library (2026)",
+    tags: [TAGS.animation, TAGS.inspiration],
+    url: "https://www.ripplix.com/",
+  },
+  {
     title: "Rive",
     category: CATEGORIES.frontend,
     description:
@@ -1245,6 +1294,19 @@ export const frontendLinks: Tool[] = [
     ogImage: "https://www.scrollbar.app/scrollbar_cover.png",
     tags: [TAGS["ui-component"]],
     url: "https://scrollbar.app/",
+  },
+  {
+    title: "Scroll Mask",
+    author: "Tim Wilson",
+    category: CATEGORIES.frontend,
+    className: "bg-foreground border-paper",
+    description:
+      "A tiny Tailwind @utility for scroll-driven gradient masks at the edges of overflow containers.",
+    favicon: "https://twilson.net/favicon.ico",
+    ogImage: "https://twilson.net/scroll-mask/opengraph-image.jpg",
+    subtitle: "Scroll Mask Tailwind CSS Utilities",
+    tags: [TAGS["ui-component"]],
+    url: "https://twilson.net/scroll-mask",
   },
   {
     title: "Shadcn Blocks",
@@ -1638,6 +1700,16 @@ export const frontendLinks: Tool[] = [
       "@pierre/trees is an open source file tree rendering library. It's built for performance and flexibility, is super customizable, and comes packed with features.",
     tags: [TAGS["ui-component"]],
     url: "https://trees.software/",
+  },
+  {
+    title: "Tutorials",
+    author: "Codrops",
+    category: CATEGORIES.frontend,
+    description:
+      "In this section, you will find a variety of in-depth articles written by skilled front-end developers that cover a range of web development and web design techniques.",
+    favicon: "https://tympanus.net/codrops/wp-content/themes/codropstheme03/favicons/favicon.svg",
+    tags: [TAGS.tutorial],
+    url: "https://tympanus.net/codrops/category/tutorials/",
   },
   {
     title: "UI Ball",

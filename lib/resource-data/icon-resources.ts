@@ -341,6 +341,16 @@ export const iconLinks: Tool[] = [
     url: "https://www.iosicongallery.com/",
   },
   {
+    title: "Isocons",
+    author: "Isocons",
+    category: CATEGORIES.icons,
+    description: "Carefully crafted isometric icons.",
+    favicon: "https://www.isocons.app/brand/favicon-dark.svg",
+    ogImage: "https://isocons.app/og.jpg",
+    tags: [TAGS.icons],
+    url: "https://www.isocons.app/",
+  },
+  {
     title: "Its Hover",
     category: CATEGORIES.icons,
     description: "Animated icons that move with intent.",

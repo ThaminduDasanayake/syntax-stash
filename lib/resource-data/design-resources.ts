@@ -76,7 +76,6 @@ export const designLinks: Tool[] = [
     tags: [TAGS.ai, TAGS.design],
     url: "https://ai-index.eu/",
   },
-
   {
     title: "AI Particle Simulator",
     category: CATEGORIES.design,
@@ -85,6 +84,7 @@ export const designLinks: Tool[] = [
     subtitle: "Professional 3D Swarm Simulator",
     url: "https://particles.casberry.in/",
   },
+
   {
     title: "animos",
     category: CATEGORIES.design,
@@ -143,10 +143,37 @@ export const designLinks: Tool[] = [
   {
     title: "ASCII Magic",
     category: CATEGORIES.design,
+    className: "bg-foreground border-paper",
     description:
       "Free ASCII art generator. Turn any photo or video into ASCII, pixel art, voxel, mosaic, halftone, glitch or LEGO, in your browser, no signup, no upload.",
+    favicon: "https://www.ascii-magic.com/favicon.svg",
+    ogImage: "https://www.ascii-magic.com/og.jpg",
     subtitle: "Free ASCII Art Generator, Image & Video to ASCII",
+    tags: [TAGS.ascii],
     url: "https://www.ascii-magic.com/",
+  },
+  {
+    title: "ASCII Motion",
+    author: "Cameron Foxly",
+    category: CATEGORIES.design,
+    description:
+      "A powerful browser-based tool for creating, editing, and animating ASCII art. Features include advanced drawing tools, color palettes, effects, and video export capabilities.",
+    favicon: "https://ascii-motion.com/favicon.svg",
+    ogImage: "https://ascii-motion.com/og-image.png",
+    subtitle: "Create ASCII Art Animations in the browser",
+    tags: [TAGS.ascii],
+    url: "https://ascii-motion.com/",
+  },
+  {
+    title: "Asylab",
+    category: CATEGORIES.design,
+    description:
+      "Discover premium PSD mockups, UI kits, and design assets for creators and brands. Explore device mockups, logo mockups, gradients, and templates for creators and brands.",
+    favicon: "https://framerusercontent.com/images/rK8G5Vzxrw0knTjlCr5AWiYmk.png",
+    ogImage: "https://framerusercontent.com/assets/Tp0pbYdHYZTjKyrZ8ojWnFnVnw.webp",
+    subtitle: "Premium Mockups, UI Kits & Design Assets",
+    tags: [TAGS.mockup],
+    url: "https://www.asylab.com/",
   },
   {
     title: "Aura",
@@ -267,7 +294,18 @@ export const designLinks: Tool[] = [
     tags: [TAGS.inspiration],
     url: "https://www.brandsinmotion.xyz/",
   },
-
+  {
+    title: "BX Museum",
+    category: CATEGORIES.design,
+    description:
+      "BX Museum is a curated repository of brand artifacts, offering categorized collections from various brands to explore design, identity, and marketing elements. Perfect for researchers and enthusiasts alike.",
+    favicon:
+      "https://cdn.prod.website-files.com/66f3d2d45b23e6f3f4a65cb0/67346de87e01c7d83ae7c8ba_favicon-256x256.png",
+    ogImage:
+      "https://cdn.prod.website-files.com/66f3d2d45b23e6f3f4a65cb0/67345ba13da6f5961887c3a6_hero-img.png",
+    tags: [TAGS.inspiration],
+    url: "https://www.bxmuseum.com/",
+  },
   {
     title: "CallToInspiration",
     category: CATEGORIES.design,
@@ -319,6 +357,8 @@ export const designLinks: Tool[] = [
     title: "Cosmos",
     category: CATEGORIES.design,
     description: "Your space for inspiration",
+    favicon: "https://www.cosmos.so/icon-dark.svg",
+    ogImage: "https://www.cosmos.so/opengraph-image.jpg",
     tags: [TAGS.inspiration],
     url: "https://www.cosmos.so/",
   },
@@ -367,12 +407,36 @@ export const designLinks: Tool[] = [
     url: "https://www.cta.gallery/",
   },
   {
+    title: "Dark Mode Design",
+    category: CATEGORIES.design,
+    className: "bg-foreground border-paper",
+    description:
+      "Dark Mode Design is a showcase of beautifully designed and inspiring dark mode websites. Dim the lights, lower your screen brightness, and enjoy.",
+    favicon:
+      "https://cdn.prod.website-files.com/5ea7fc450fe2ee12b924f695/5eb141ef8a376a1ba144d636_5a3020ceb3ac8c9598190f05fbf011b0_Logo.svg",
+    ogImage:
+      "https://cdn.prod.website-files.com/5ea7fc450fe2ee12b924f695/63f1a4bc731066c857d55d0b_97ffe48072aebe00cb0efe5b320f4130_OpenGraph-min.png",
+    subtitle: "🌘 Handpicked website inspiration",
+    tags: [TAGS.inspiration],
+    url: "https://www.darkmodedesign.com/",
+  },
+  {
     title: "Dark Themed Web Design Inspiration",
     category: CATEGORIES.design,
     description:
       "The best hand-picked dark themed websites on the internet. From designers for designers. Curated with love.",
     tags: [TAGS.design],
     url: "https://www.dark.design/",
+  },
+  {
+    title: "DekGrativ",
+    category: CATEGORIES.design,
+    description: "Sell digital assets for commercial projects with featured apparel mockups.",
+    favicon: "https://dekgrativ.com/cdn/shop/files/Logo_WEB-DekGrafis-New_2026.png",
+    ogImage: "https://dekgrativ.com/cdn/shop/files/BANNER_SOCIALMEDIA.png",
+    subtitle: "Find Apparel Mockup for Your Brand",
+    tags: [TAGS.mockup],
+    url: "https://dekgrativ.com/",
   },
   {
     title: "Design.dev",
@@ -496,6 +560,16 @@ export const designLinks: Tool[] = [
     url: "https://www.details.so/inspo",
   },
   {
+    title: "Details Matter",
+    category: CATEGORIES.design,
+    description:
+      "Details Matter is a side project and a hope to create a cool gallery of micro interactions on the internet that blow minds.",
+    favicon: "https://framerusercontent.com/images/fx9ovGXaj5WzEzzs2fkqg3rkYk.png",
+    ogImage: "https://framerusercontent.com/assets/BXtlbqJmiZcoxmYxlMWU6OSCl84.png",
+    tags: [TAGS.inspiration],
+    url: "https://detailsmatter.framer.website/",
+  },
+  {
     title: "Developer Portfolios",
     author: "emmabostian",
     category: CATEGORIES.design,
@@ -536,6 +610,16 @@ export const designLinks: Tool[] = [
       "Elevate your designs with our high-quality mockups of digital devices, stationary, and more. Our easy to use PSD files will make your work standout.",
     tags: [TAGS.design],
     url: "https://mockups.directory/",
+  },
+  {
+    title: "Dither Garden",
+    category: CATEGORIES.design,
+    description:
+      "Transform images through mathematical dithering algorithms including Floyd-Steinberg, Atkinson, and Blue-Noise techniques for professional image processing.",
+    favicon: "https://www.dithergarden.com/assets/images/favicon.svg",
+    ogImage: "https://www.dithergarden.com/assets/images/social-share.png",
+    subtitle: "Professional Image Dithering Tool",
+    url: "https://www.dithergarden.com/",
   },
   {
     title: "Ditther",
@@ -769,6 +853,15 @@ export const designLinks: Tool[] = [
     url: "https://www.headers.club/",
   },
   {
+    title: "Hell's Blue Boy Mockups",
+    category: CATEGORIES.design,
+    description: "Perfectly Imperfect Mockups From the Streets of Thailand.",
+    favicon: "https://hellsblueboy.com/cdn/shop/files/favicon-192.png",
+    ogImage: "https://hellsblueboy.com/cdn/shop/files/HBB-Mockups-1200.jpg",
+    tags: [TAGS.mockup],
+    url: "https://hellsblueboy.com/",
+  },
+  {
     title: "HeyDesigner",
     author: "Tamas Sari",
     category: CATEGORIES.design,
@@ -779,6 +872,18 @@ export const designLinks: Tool[] = [
     subtitle: "Hand-picked Design Links, Daily",
     tags: [TAGS.newsletter],
     url: "https://heydesigner.com/",
+  },
+  {
+    title: "House of Mockups",
+    category: CATEGORIES.design,
+    description:
+      "Download the best quality free and premium mockups and resources for packaging design, posters and billboards, phones, UI kits, instagram advertising templates and fonts to beautifully mockup and present your design projects",
+    favicon:
+      "https://cdn.shopify.com/s/files/1/0386/0194/9324/files/schemaplus_organization_logo.png",
+    ogImage: "https://houseofmockups.com/cdn/shop/files/HouseofMockups-Website-1500x940.jpg",
+    subtitle: "Best Free and Premium Mockups and Resources for Graphic Designers",
+    tags: [TAGS.mockup],
+    url: "https://houseofmockups.com/",
   },
   {
     title: "HOVERSTAT.ES",
@@ -838,6 +943,14 @@ export const designLinks: Tool[] = [
     url: "https://layers.to/",
   },
   {
+    title: "limitype",
+    category: CATEGORIES.design,
+    favicon:
+      "https://payhip.com/cdn-cgi/image/format=auto,width=1500/https://pe56d.s3.amazonaws.com/o_1ie3aobv112ranv9ppedhk199vl.jpg",
+    tags: [TAGS.mockup],
+    url: "https://limitype.com/",
+  },
+  {
     title: "Linearity",
     category: CATEGORIES.design,
     description:
@@ -892,6 +1005,8 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "A collection of 50 premium JavaScript effects made with GSAP. Showcasing scroll, drag, mouse move, infinite animations and more.",
+    favicon: "https://madewithgsap.com/assets/img/fav/favicon.svg",
+    ogImage: "https://madewithgsap.com/assets/img/og.jpg",
     tags: [TAGS.inspiration],
     url: "https://madewithgsap.com/",
   },
@@ -984,6 +1099,17 @@ export const designLinks: Tool[] = [
     url: "https://www.hellomocku.com/",
   },
   {
+    title: "Mockup Flock",
+    category: CATEGORIES.design,
+    description:
+      "Mockup Flock delivers commercial realistic PSD mockups & Bundles and custom mockup services for brands, designers, and creatives. Commercial use allowed, save up to 50% on curated collections for designers and print on demand projects. Elevate your project designs today!",
+    favicon: "https://mockupflock.com/cdn/shop/files/Mockup_flock_favicon.jpg",
+    ogImage: "https://mockupflock.com/cdn/shop/files/Mockup_Flock_Logo.png",
+    subtitle: "Commercial Realistic PSD Mockups & Bundles",
+    tags: [TAGS.mockup],
+    url: "https://mockupflock.com/",
+  },
+  {
     title: "Mockupia",
     category: CATEGORIES.design,
     description:
@@ -998,10 +1124,24 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "Download exclusive free PSD mockups and edit them online instantly. Use MockupNest’s online mockup generator to customize product mockups for personal and commercial use — no Photoshop required.",
+    favicon:
+      "https://cdn.mockupnest.com/wp-content/themes/Mockupnest/images/android-icon-192x192.png",
     ogImage: "https://cdn.mockupnest.com/wp-content/uploads/2023/09/Fallback-Image-Mockupnest.jpg",
     subtitle: "Free PSD Mockups to Download & Edit Online",
     tags: [TAGS.mockup],
     url: "https://mockupnest.com/",
+  },
+  {
+    title: "Mockups Design",
+    category: CATEGORIES.design,
+    description:
+      "Download free mockups! Mockups Design is a site where you can find free premium mockups that can be used in your private and commercial work.",
+    favicon:
+      "https://mockups-design-com.b-cdn.net/wp-content/uploads/2017/08/cropped-favicon-180x180.png",
+    ogImage: "https://mockups-design-com.b-cdn.net/wp-content/uploads/2017/08/MOckups_OG.jpg",
+    subtitle: "Free Premium Mockups - Instant Download",
+    tags: [TAGS.mockup],
+    url: "https://mockups-design.com/",
   },
   {
     title: "Mockup Selection",
@@ -1013,6 +1153,17 @@ export const designLinks: Tool[] = [
     subtitle: "Highres Photoshop Mockups for Creatives",
     tags: [TAGS.mockup],
     url: "https://www.mockupselection.com/",
+  },
+  {
+    title: "Mockups Supply",
+    category: CATEGORIES.design,
+    description:
+      "Download premium Photoshop mockups with unlimited access. Minimal, photoreal mockups for branding, packaging, logos, and product displays.",
+    favicon: "https://framerusercontent.com/images/owLfLTBGHLw3H8KuUmoGX19AzMk.jpg",
+    ogImage: "https://framerusercontent.com/assets/QYhoDyXwm94Zf9vFinRwVkum5zg.jpg",
+    subtitle: "Download Free & Premium Mockups",
+    tags: [TAGS.mockup],
+    url: "https://www.mockups.supply/",
   },
   {
     title: "Mockuuups Studio",
@@ -1252,6 +1403,26 @@ export const designLinks: Tool[] = [
     url: "https://github.com/penpot/penpot",
   },
   {
+    title: "PersonalSit.es",
+    category: CATEGORIES.design,
+    description:
+      "Personal sites are sick as hell, so this site was built so we can all discover each other's. This directory of links are by folks that want to share their site with the world.",
+    favicon: "https://personalsit.es/assets/images/safari-pinned-tab.svg",
+    ogImage: "https://personalsit.es/assets/images/opengraph.jpg",
+    subtitle: "Yes we got hot and fresh sites",
+    tags: [TAGS.inspiration],
+    url: "https://personalsit.es/",
+  },
+  {
+    title: "Pixeden Club",
+    category: CATEGORIES.design,
+    description: "Exclusive graphic, web and design assets club.",
+    favicon: "https://www.pixeden.com/seo/apple-touch-icon.png",
+    ogImage: "https://www.pixeden.com/seo/share_img.jpg",
+    tags: [TAGS.mockup],
+    url: "https://www.pixeden.com/",
+  },
+  {
     title: "Pixelbuddha",
     category: CATEGORIES.design,
     description:
@@ -1273,6 +1444,19 @@ export const designLinks: Tool[] = [
       "An advanced and easy-to-use 2D/3D house design tool. Create your dream home design with powerful but easy software by Planner 5D.",
     tags: [TAGS.design],
     url: "https://planner5d.com/",
+  },
+  {
+    title: "Pricing Pages",
+    category: CATEGORIES.design,
+    description:
+      "Discover handpicked pricing page examples from SaaS companies, ecommerce brands, and digital agencies. Find design inspiration for your next pricing page design",
+    favicon:
+      "https://cdn.prod.website-files.com/689668ab1aaf9433c413496a/68974c42171c725b5363155a_Frame%201597885923.png",
+    ogImage:
+      "https://cdn.prod.website-files.com/689668ab1aaf9433c413496a/6899c68afc269da2e4141637_2532.webp",
+    subtitle: "A Curated Gallery of Pricing Page Designs",
+    tags: [TAGS.inspiration],
+    url: "https://pricingpages.design/",
   },
   {
     title: "Pure",
@@ -1495,6 +1679,19 @@ export const designLinks: Tool[] = [
     url: "https://app.superdesign.dev/",
   },
   {
+    title: "SUX Network",
+    category: CATEGORIES.design,
+    description:
+      "A collaborative AI workspace, built on your company context. Build and orchestrate agents right alongside your team's projects, meetings, and connected apps.",
+    favicon:
+      "https://suxnetwork.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fd0065044-1ae4-4e71-b8e7-0492900cd1d7%2F7e402af4-9ca9-4240-85c0-323005c6ba85%2Fimg_temporarynewsletterlogo_linkedin.webp?id=36fe841f-898b-4fe9-a8f3-7b6636852c49&table=block&spaceId=d0065044-1ae4-4e71-b8e7-0492900cd1d7&width=250&userId=&cache=v2&imgBuildSrc=requestProxiedImageUrl",
+    ogImage:
+      "https://suxnetwork.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2Fd0065044-1ae4-4e71-b8e7-0492900cd1d7%2F543a4d05-28fc-4822-a391-79888bba2b76%2Fplaybook_notion.webp?table=block&id=36fe841f-898b-4fe9-a8f3-7b6636852c49&spaceId=d0065044-1ae4-4e71-b8e7-0492900cd1d7&width=2000&userId=&cache=v2&imgBuildSrc=requestProxiedImageUrl",
+    subtitle: "Resource Collection",
+    tags: [TAGS.inspiration],
+    url: "https://suxnetwork.notion.site/",
+  },
+  {
     title: "Text Diagram",
     category: CATEGORIES.design,
     description: "Text Diagram is a web tool for drawing UML sequence diagram in pure text.",
@@ -1518,6 +1715,18 @@ export const designLinks: Tool[] = [
     subtitle: "UI/UX Design Subscription for Startups",
     tags: [TAGS.design],
     url: "https://designproject.io/",
+  },
+  {
+    title: "The Free Mockup",
+    category: CATEGORIES.design,
+    description:
+      "Download the web’s largest collection of free, high-quality mockups. Perfect for app/website presentations, product showcases, branding, and packaging. New assets added daily.",
+    favicon: "https://www.free-mockup.com/favicon.svg",
+    ogImage:
+      "https://www.free-mockup.com/wp-content/uploads/2026/05/free-mockup-com-social-sharing.jpg",
+    subtitle: "The Best Free Mockups",
+    tags: [TAGS.mockup],
+    url: "https://www.free-mockup.com/",
   },
   {
     title: "The Shape of AI",
@@ -1560,6 +1769,30 @@ export const designLinks: Tool[] = [
     ogImage: "https://www.typographicposters.com/typographic-posters-new-website-2021-photo.jpg",
     tags: [TAGS.inspiration],
     url: "https://www.typographicposters.com/",
+  },
+  {
+    title: "UI.live",
+    category: CATEGORIES.design,
+    description: "The free design sharing platform powering the creator economy.",
+    favicon: "https://ui.live/favicons/favicon.svg",
+    ogImage:
+      "https://firebasestorage.googleapis.com/v0/b/ui8-ui-live.appspot.com/o/assets%2Fopengraph.jpg?alt=media",
+    subtitle: "Create. Share. Grow.",
+    tags: [TAGS.inspiration],
+    url: "https://ui.live/",
+  },
+  {
+    title: "UI / UX Design Inspiration and Design News Newsletter",
+    author: "Kris from uibits.co",
+    category: CATEGORIES.design,
+    description:
+      "Design newsletter - get great design examples and news in your inbox! Mobile design inspiration, Web design inspiration, AR design inspiration, Interaction design examples and inspiration",
+    favicon:
+      "https://media.beehiiv.com/cdn-cgi/image/fit=scale-down,format=auto,onerror=redirect,quality=80/uploads/publication/logo/1026f7d6-ab31-4c69-8a07-57984876ace0/thumb_Screenshot_2025-01-28_at_13.15.55.png",
+    ogImage:
+      "https://media.beehiiv.com/cdn-cgi/image/fit=scale-down,format=auto,onerror=redirect,quality=80/uploads/publication/thumbnail/1026f7d6-ab31-4c69-8a07-57984876ace0/landscape_Screenshot_2025-01-28_at_13.15.55.png",
+    tags: [TAGS.inspiration, TAGS.newsletter],
+    url: "https://uibits.co/",
   },
   {
     title: "UI Guideline",
@@ -1620,6 +1853,30 @@ export const designLinks: Tool[] = [
     url: "https://ux-dictionary.vercel.app/",
   },
   {
+    title: "UX Playbook",
+    category: CATEGORIES.design,
+    description:
+      "Learn with UX Playbook through playbooks, courses, and coaching.  Step-by-steps guides built with Notion. Learn more.",
+    favicon:
+      "https://images.squarespace-cdn.com/content/v1/60c24f208febea5136b4e297/27e7a919-40ea-49c5-a627-3d1b66b20647/favicon.ico",
+    ogImage:
+      "https://static1.squarespace.com/static/60c24f208febea5136b4e297/t/677b465dc0f0e423d94fd358/1736132189715/UX+Playbook+Cover.png",
+    subtitle: "Playbooks, Courses, Coaching",
+    tags: [TAGS.design],
+    url: "https://uxplaybook.org/",
+  },
+  {
+    title: "UXSnaps",
+    category: CATEGORIES.design,
+    description:
+      "Explore real UI/UX breakdowns from billion-dollar apps. Actionable lessons, visual insights, and patterns you can apply. Built for designers & product teams.",
+    favicon: "https://www.uxsnaps.com/favicon-light.ico",
+    ogImage: "https://www.uxsnaps.com/og-home.png",
+    subtitle: "Actionable UI/UX Breakdowns from Top Apps",
+    tags: [TAGS.inspiration],
+    url: "https://www.uxsnaps.com/",
+  },
+  {
     title: "Viewport UI",
     category: CATEGORIES.design,
     description: "UI curated experiences for you inspiration.",
@@ -1656,6 +1913,16 @@ export const designLinks: Tool[] = [
     ogImage: "https://websiteheadlines.com/og-image.png",
     tags: [TAGS.inspiration],
     url: "https://websiteheadlines.com/",
+  },
+  {
+    title: "Webzibition",
+    author: "Codrops",
+    category: CATEGORIES.design,
+    description: "An exhibition of really great websites. Updated regularly.",
+    favicon: "https://tympanus.net/codrops/wp-content/themes/codropstheme03/favicons/favicon.svg",
+    ogImage: "https://codrops-1f606.kxcdn.com/codrops/wp-content/uploads/2024/09/Webzibition.jpg",
+    tags: [TAGS.inspiration],
+    url: "https://tympanus.net/codrops/hub/",
   },
   {
     title: "Wiretext",
