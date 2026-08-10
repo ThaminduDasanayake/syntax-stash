@@ -60,6 +60,15 @@ export const mediaLinks: Tool[] = [
     url: "https://bitmap.designfamilymarket.com/",
   },
   {
+    title: "blobSketch",
+    category: CATEGORIES.media,
+    description:
+      "blobSketch is a WebGL-based canvas for creating physics-driven blobs, lines, and repulsion circles. Draw shapes, tweak physics, then export to SVG or high-res JPG.",
+    favicon: "https://avatars.githubusercontent.com/u/1743726",
+    ogImage: "https://cpreid2.github.io/blobSketch/images/splash.png",
+    url: "https://cpreid2.github.io/blobSketch/",
+  },
+  {
     title: "Blush",
     category: CATEGORIES.media,
     description:

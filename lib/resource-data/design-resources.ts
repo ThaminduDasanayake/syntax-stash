@@ -84,7 +84,6 @@ export const designLinks: Tool[] = [
     subtitle: "Professional 3D Swarm Simulator",
     url: "https://particles.casberry.in/",
   },
-
   {
     title: "animos",
     category: CATEGORIES.design,
@@ -1099,6 +1098,17 @@ export const designLinks: Tool[] = [
     url: "https://www.hellomocku.com/",
   },
   {
+    title: "Mockup Cloud",
+    category: CATEGORIES.design,
+    description:
+      "Branding, Stationery, Brochure, Device, T-Shirt and many more PSD Mockups, Created by Professionals for Everyone.",
+    favicon: "https://www.mockupcloud.com/images/favicon/mockup-cloud-fav-152x152.png",
+    ogImage: "https://www.mockupcloud.com/images/og-default.jpg",
+    subtitle: "Premium & Free PSD Mockup Store",
+    tags: [TAGS.mockup],
+    url: "https://www.mockupcloud.com/",
+  },
+  {
     title: "Mockup Flock",
     category: CATEGORIES.design,
     description:
@@ -1875,6 +1885,15 @@ export const designLinks: Tool[] = [
     subtitle: "Actionable UI/UX Breakdowns from Top Apps",
     tags: [TAGS.inspiration],
     url: "https://www.uxsnaps.com/",
+  },
+  {
+    title: "Video-to-ASCII",
+    category: CATEGORIES.design,
+    description: "Turn videos into ASCII pixel art",
+    favicon: "https://collidingscopes.github.io/ascii/assets/siteFavicon3.png",
+    ogImage: "https://collidingscopes.github.io/ascii/assets/metro.png",
+    tags: [TAGS.ascii],
+    url: "https://collidingscopes.github.io/ascii/",
   },
   {
     title: "Viewport UI",
