@@ -178,6 +178,17 @@ export const typographyLinks: Tool[] = [
     url: "https://fontsinmovies.com/",
   },
   {
+    title: "Fonts inspiration",
+    author: "MaxiBestOf",
+    category: CATEGORIES.typography,
+    description: "Discover fresh fonts",
+    favicon: "https://maxibestof.one/favicon.png",
+    ogImage: "https://maxibestof.one/og.jpg",
+    subtitle: "Fonts inspiration, combinations & similar fonts",
+    tags: [TAGS.typography],
+    url: "https://maxibestof.one/typefaces",
+  },
+  {
     title: "Font Tester",
     category: CATEGORIES.typography,
     description:

@@ -226,6 +226,17 @@ export const designLinks: Tool[] = [
     url: "https://before.click/",
   },
   {
+    title: "Bendito Mockup",
+    category: CATEGORIES.design,
+    description:
+      "High-quality PSD mockups for branding, packaging, print, clothing and F&B design. 2,000+ files. Free & premium downloads for graphic designers.",
+    favicon: "https://benditomockup.com/wp-content/uploads/2023/12/cropped-favicon.ico-150x150.png",
+    ogImage: "https://benditomockup.com/wp-content/uploads/2025/03/YOAST-Site_image.png",
+    subtitle: "Premium PSD Mockups for Graphic Designers",
+    tags: [TAGS.mockup],
+    url: "https://benditomockup.com/",
+  },
+  {
     title: "Bento Grids",
     author: "Ivan Volti",
     category: CATEGORIES.design,
@@ -1525,7 +1536,10 @@ export const designLinks: Tool[] = [
     category: CATEGORIES.design,
     description:
       "Download free, best graphic design resource & creative assets: fonts, mockups, textures, templates, and Photoshop add-ons.",
+    favicon: "https://resourceboy.com/apple-touch-icon.png",
+    ogImage: "https://resourceboy.com/wp-content/uploads/2024/11/rb-logo.svg",
     subtitle: "Free Graphic Design Resources / Assets",
+    tags: [TAGS.gradient, TAGS.mockup, TAGS.patterns, TAGS.textures, TAGS.typography],
     url: "https://resourceboy.com/",
   },
   {
@@ -1545,6 +1559,19 @@ export const designLinks: Tool[] = [
     url: "https://saaspo.com/",
   },
   {
+    title: "Sagesmask",
+    category: CATEGORIES.design,
+    description:
+      "Download High-quality Free & Premium Mockups. Discover mockups and creative images at Sagesmask.",
+    favicon:
+      "https://storage.ghost.io/c/01/f7/01f7fddb-1a68-4a00-842a-ad5848f847ac/content/images/size/w256h256/2026/04/Sagesmask-Logo-80px.png",
+    ogImage:
+      "https://storage.ghost.io/c/01/f7/01f7fddb-1a68-4a00-842a-ad5848f847ac/content/images/2026/04/Sagesmask-Logo-500px.png",
+    subtitle: "Free & Premium Mockups",
+    tags: [TAGS.mockup],
+    url: "https://www.sagesmask.com/",
+  },
+  {
     title: "Savee",
     category: CATEGORIES.design,
     description:
@@ -1554,12 +1581,22 @@ export const designLinks: Tool[] = [
     url: "https://savee.com/",
   },
   {
+    title: "Scene Number Mockup",
+    category: CATEGORIES.design,
+    description:
+      "Scene Number Mockup creates cinematic, realistic PSD mockups that help designers turn their designs into believable scenes.",
+    favicon: "https://cdn.imweb.me/thumbnail/20240619/92d89df32b7b8.png",
+    ogImage: "https://cdn.imweb.me/upload/S202405041d37b8796de38/d852d7ca5c21e.png",
+    tags: [TAGS.mockup],
+    url: "https://scenenumbermockup.com/",
+  },
+  {
     title: "ScreensDesign",
     category: CATEGORIES.design,
     description:
       "Research real iOS app screens, onboarding flows, paywalls, and revenue-backed patterns, then generate app screens from proven mobile design examples.",
     favicon: "https://screensdesign.com/img/favicon.svg",
-    ogImage: "https://screensdesign.com/img/sd_preview_v2.jpg?v=2",
+    ogImage: "https://screensdesign.com/img/sd_preview_v2.jpg",
     subtitle: "App Design Library & AI Screen Generator",
     url: "https://screensdesign.com/",
   },
@@ -1573,6 +1610,16 @@ export const designLinks: Tool[] = [
     subtitle: "Free Screenshot Editor & Mockup Maker",
     tags: [TAGS.design, TAGS.mockup],
     url: "https://www.screenshot-studio.com/",
+  },
+  {
+    title: "Section design inspiration",
+    author: "MaxiBestOf",
+    category: CATEGORIES.design,
+    description: "Discover fresh section designs",
+    favicon: "https://maxibestof.one/favicon.png",
+    ogImage: "https://maxibestof.one/og.jpg",
+    tags: [TAGS.inspiration],
+    url: "https://maxibestof.one/sections",
   },
   {
     title: "Sections.wtf",
@@ -1923,6 +1970,18 @@ export const designLinks: Tool[] = [
     subtitle: "Unique, Simple designs",
     tags: [TAGS.inspiration],
     url: "https://webdesigninspiration.io/",
+  },
+  {
+    title: "Website design inspiration",
+    author: "MaxiBestOf",
+    category: CATEGORIES.design,
+    description:
+      "Explore a curated collection of website design inspiration with layouts, typography, and similar websites from designers worldwide. Find ideas fast.",
+    favicon: "https://maxibestof.one/favicon.png",
+    ogImage: "https://maxibestof.one/og.jpg",
+    subtitle: "Website design inspiration, layouts & similar websites",
+    tags: [TAGS.inspiration],
+    url: "https://maxibestof.one/websites",
   },
   {
     title: "Website Headlines (dotcom)",
