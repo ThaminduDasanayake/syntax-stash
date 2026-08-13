@@ -1,6 +1,7 @@
 export const CATEGORIES = {
   ai: "AI & Machine Learning",
   animation: "Animation & Motion",
+  backend: "Backend & Infrastructure",
   colors: "Color & Gradients",
   data: "Data & APIs",
   design: "Design & UX",
