@@ -12,6 +12,7 @@ import { iconLinks } from "./icon-resources";
 import { inspirationLinks } from "./inspiration-resources";
 import { mediaLinks } from "./media-resources";
 import { typographyLinks } from "./typography-resources";
+import { uiLinks } from "./ui-component-resources";
 
 export { aiLinks } from "./ai-resources";
 export { type CategoryValue, resourceCategories } from "./categories";
@@ -25,6 +26,7 @@ export { iconLinks } from "./icon-resources";
 export { inspirationLinks } from "./inspiration-resources";
 export { mediaLinks } from "./media-resources";
 export { typographyLinks } from "./typography-resources";
+export { uiLinks } from "./ui-component-resources";
 
 export const resourceLinks: Tool[] = [
   ...newLinks,
@@ -39,4 +41,5 @@ export const resourceLinks: Tool[] = [
   ...inspirationLinks,
   ...mediaLinks,
   ...typographyLinks,
+  ...uiLinks,
 ];

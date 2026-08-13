@@ -10,6 +10,7 @@ export const CATEGORIES = {
   inspiration: "Inspiration & Galleries",
   media: "Media & Assets",
   typography: "Typography",
+  ui: "UI Components & Libraries",
 } as const;
 
 export type CategoryValue = (typeof CATEGORIES)[keyof typeof CATEGORIES];
