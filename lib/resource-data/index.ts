@@ -2,6 +2,7 @@ import { newLinks } from "@/lib/resource-data/new";
 import { Tool } from "@/types";
 
 import { aiLinks } from "./ai-resources";
+import { animationLinks } from "./animation-resources";
 import { colorLinks } from "./color-resources";
 import { dataLinks } from "./data-resources";
 import { designLinks } from "./design-resources";
@@ -15,6 +16,7 @@ import { typographyLinks } from "./typography-resources";
 import { uiLinks } from "./ui-component-resources";
 
 export { aiLinks } from "./ai-resources";
+export { animationLinks } from "./animation-resources";
 export { type CategoryValue, resourceCategories } from "./categories";
 export { colorLinks } from "./color-resources";
 export { dataLinks } from "./data-resources";
@@ -31,6 +33,7 @@ export { uiLinks } from "./ui-component-resources";
 export const resourceLinks: Tool[] = [
   ...newLinks,
   ...aiLinks,
+  ...animationLinks,
   ...colorLinks,
   ...dataLinks,
   ...designLinks,
