@@ -177,7 +177,6 @@ export const developmentLinks: Tool[] = [
     description:
       "Discover the most fun, interesting and cool websites on the internet. Hundreds of hand-picked funny sites, free games, educational resources and things to do when you're bored.",
     subtitle: "Fun, interesting & cool websites to explore when bored",
-    tags: [TAGS.inspiration],
     url: "https://www.bored.com/",
   },
   {
@@ -977,7 +976,6 @@ export const developmentLinks: Tool[] = [
     description:
       "Discover the best software, hardware, workspace setups, books, videos, and posts for the Mac ecosystem.",
     subtitle: "Curated Mac Discoveries",
-    tags: [TAGS.development, TAGS.inspiration],
     url: "https://macfolio.com/",
   },
   {

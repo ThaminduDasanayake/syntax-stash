@@ -45,18 +45,6 @@ export const dataLinks: Tool[] = [
     url: "https://bytebytego.com/",
   },
   {
-    title: "Dataviz Inspiration",
-    author: "Yan Holtz",
-    category: CATEGORIES.data,
-    description:
-      "The biggest list of chart examples available on the web. Hundreds of the best viz projects displayed using a pinterest style sorted by tool and chart type.",
-    favicon: "https://www.dataviz-inspiration.com/favicon/apple-touch-icon.png",
-    ogImage: "https://www.dataviz-inspiration.com/overview.png",
-    subtitle: "Hundreds of chart examples",
-    tags: [TAGS.inspiration],
-    url: "https://www.dataviz-inspiration.com/",
-  },
-  {
     title: "Free Public APIs",
     category: CATEGORIES.data,
     description:

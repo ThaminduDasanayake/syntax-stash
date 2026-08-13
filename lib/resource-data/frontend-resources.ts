@@ -1251,17 +1251,6 @@ export const frontendLinks: Tool[] = [
     url: "https://reui.io/",
   },
   {
-    title: "Ripplix",
-    category: CATEGORIES.frontend,
-    description:
-      "The curated library of UI Animation. Stop shipping static interfaces. Access premium UI Animation examples for Mobile, Web, AR / VR and Smartwatches that makes product feel alive.",
-    favicon: "https://www.ripplix.com/storage/uploads/settings/01KDMZ1YX7NHESD0DBKWDEPH09.png",
-    ogImage: "https://www.ripplix.com/images/og/og-default.png",
-    subtitle: "7,000+ UI Animation & Micro-interaction Library (2026)",
-    tags: [TAGS.animation, TAGS.inspiration],
-    url: "https://www.ripplix.com/",
-  },
-  {
     title: "Rive",
     category: CATEGORIES.frontend,
     description:
