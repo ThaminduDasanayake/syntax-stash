@@ -463,6 +463,14 @@ export const iconLinks: Tool[] = [
     url: "https://www.overflow.design/notion-icons/free/",
   },
   {
+    title: "Phosphor Icons",
+    category: CATEGORIES.icons,
+    description:
+      "A flexible icon family for interfaces, diagrams, presentations — whatever, really.",
+    tags: [TAGS.icons],
+    url: "https://phosphoricons.com/",
+  },
+  {
     title: "Pixelarticons",
     category: CATEGORIES.icons,
     description:
@@ -516,6 +524,15 @@ export const iconLinks: Tool[] = [
     subtitle: "SVG Collection (1000+ files)",
     tags: [TAGS.illustration, TAGS.svg],
     url: "https://illustrations.run/scribbles-mix/",
+  },
+  {
+    title: "Smallbits",
+    category: CATEGORIES.frontend,
+    description:
+      "290+ pixelated icons on a limited 8×8 grid where every point counts. Free for personal and commercial use.",
+    subtitle: "290+ pixelated icons on an 8×8 grid",
+    tags: [TAGS.icons],
+    url: "https://smallbits.design/",
   },
   {
     title: "Supercons",

@@ -2,6 +2,8 @@ import { newLinks } from "@/lib/resource-data/new";
 import { Tool } from "@/types";
 
 import { aiLinks } from "./ai-resources";
+import { animationLinks } from "./animation-resources";
+import { backendLinks } from "./backend-resources";
 import { colorLinks } from "./color-resources";
 import { dataLinks } from "./data-resources";
 import { designLinks } from "./design-resources";
@@ -9,10 +11,14 @@ import { developmentLinks } from "./development-resources";
 import { educationLinks } from "./education-resources";
 import { frontendLinks } from "./frontend-resources";
 import { iconLinks } from "./icon-resources";
+import { inspirationLinks } from "./inspiration-resources";
 import { mediaLinks } from "./media-resources";
 import { typographyLinks } from "./typography-resources";
+import { uiLinks } from "./ui-component-resources";
 
 export { aiLinks } from "./ai-resources";
+export { animationLinks } from "./animation-resources";
+export { backendLinks } from "./backend-resources";
 export { type CategoryValue, resourceCategories } from "./categories";
 export { colorLinks } from "./color-resources";
 export { dataLinks } from "./data-resources";
@@ -21,12 +27,16 @@ export { developmentLinks } from "./development-resources";
 export { educationLinks } from "./education-resources";
 export { frontendLinks } from "./frontend-resources";
 export { iconLinks } from "./icon-resources";
+export { inspirationLinks } from "./inspiration-resources";
 export { mediaLinks } from "./media-resources";
 export { typographyLinks } from "./typography-resources";
+export { uiLinks } from "./ui-component-resources";
 
 export const resourceLinks: Tool[] = [
   ...newLinks,
   ...aiLinks,
+  ...animationLinks,
+  ...backendLinks,
   ...colorLinks,
   ...dataLinks,
   ...designLinks,
@@ -34,6 +44,8 @@ export const resourceLinks: Tool[] = [
   ...educationLinks,
   ...frontendLinks,
   ...iconLinks,
+  ...inspirationLinks,
   ...mediaLinks,
   ...typographyLinks,
+  ...uiLinks,
 ];

@@ -40,15 +40,19 @@ const TOOL_COLOR_MAP: Record<ToolCategoryKey, string> = {
 
 const RESOURCE_COLOR_MAP: Record<ResourceCategoryKey, string> = {
   ai: "bg-c-orange text-ink",
-  colors: "bg-c-blue text-paper",
-  data: "bg-c-pink text-ink",
-  design: "bg-c-green text-ink",
-  dev: "bg-c-orange text-ink",
-  education: "bg-c-blue text-paper",
-  frontend: "bg-c-pink text-ink",
-  icons: "bg-c-green text-ink",
-  media: "bg-c-orange text-ink",
-  typography: "bg-c-blue text-paper",
+  animation: "bg-c-blue text-paper",
+  backend: "bg-c-pink text-ink",
+  colors: "bg-c-green text-ink",
+  data: "bg-c-orange text-ink",
+  design: "bg-c-blue text-paper",
+  dev: "bg-c-pink text-ink",
+  education: "bg-c-green text-ink",
+  frontend: "bg-c-orange text-ink",
+  icons: "bg-c-blue text-paper",
+  inspiration: "bg-c-pink text-ink",
+  media: "bg-c-green text-ink",
+  typography: "bg-c-orange text-ink",
+  ui: "bg-c-blue text-paper",
 };
 
 export function getToolKeyFromValue(value: string): string {
@@ -73,15 +77,19 @@ export type ResourceTheme = "orange" | "blue" | "pink" | "green";
 
 const RESOURCE_THEME_MAP: Record<ResourceCategoryKey, ResourceTheme> = {
   ai: "orange",
-  colors: "blue",
-  data: "pink",
-  design: "green",
-  dev: "orange",
-  education: "blue",
-  frontend: "pink",
-  icons: "green",
-  media: "orange",
-  typography: "blue",
+  animation: "blue",
+  backend: "pink",
+  colors: "green",
+  data: "orange",
+  design: "blue",
+  dev: "pink",
+  education: "green",
+  frontend: "orange",
+  icons: "blue",
+  inspiration: "pink",
+  media: "green",
+  typography: "orange",
+  ui: "blue",
 };
 
 export function getResourceThemeByKey(key: string): ResourceTheme {

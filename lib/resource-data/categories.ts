@@ -1,5 +1,7 @@
 export const CATEGORIES = {
   ai: "AI & Machine Learning",
+  animation: "Animation & Motion",
+  backend: "Backend & Infrastructure",
   colors: "Color & Gradients",
   data: "Data & APIs",
   design: "Design & UX",
@@ -7,8 +9,10 @@ export const CATEGORIES = {
   education: "Education & Community",
   frontend: "Frontend & UI",
   icons: "Icons & Illustrations",
+  inspiration: "Inspiration & Galleries",
   media: "Media & Assets",
   typography: "Typography",
+  ui: "UI Components & Libraries",
 } as const;
 
 export type CategoryValue = (typeof CATEGORIES)[keyof typeof CATEGORIES];

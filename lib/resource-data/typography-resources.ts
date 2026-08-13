@@ -9,6 +9,8 @@ export const typographyLinks: Tool[] = [
     author: "falk schröter",
     category: CATEGORIES.typography,
     description: "an open-source variable monospace typeface with a full IPA character set.",
+    favicon:
+      "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦆</text></svg>",
     tags: [TAGS.typography],
     url: "https://klotter.supply/a-mono",
   },
@@ -20,6 +22,16 @@ export const typographyLinks: Tool[] = [
     ogImage: "https://bestfreefonts.com/opengraph-image?b9c68fc35fe7f272",
     tags: [TAGS.typography],
     url: "https://bestfreefonts.com/",
+  },
+  {
+    title: "bonk",
+    author: "falk schröter",
+    category: CATEGORIES.typography,
+    description: "bonk is a playfully pointy, unicase open-source typeface.",
+    favicon:
+      "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦆</text></svg>",
+    tags: [TAGS.typography],
+    url: "https://klotter.supply/bonk",
   },
   {
     title: "Collletttivo · CLT",
@@ -74,6 +86,8 @@ export const typographyLinks: Tool[] = [
     category: CATEGORIES.typography,
     description:
       "fixelPont is a chaotic pixel font. it comes in two styles, regular and rounded, and includes ByeByeBinary's post-binary ligatures for the french language. it's licensed under the CUTE license.",
+    favicon:
+      "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦆</text></svg>",
     tags: [TAGS.typography],
     url: "https://klotter.supply/fixelpont",
   },
@@ -164,6 +178,17 @@ export const typographyLinks: Tool[] = [
     url: "https://fontsinmovies.com/",
   },
   {
+    title: "Fonts inspiration",
+    author: "MaxiBestOf",
+    category: CATEGORIES.typography,
+    description: "Discover fresh fonts",
+    favicon: "https://maxibestof.one/favicon.png",
+    ogImage: "https://maxibestof.one/og.jpg",
+    subtitle: "Fonts inspiration, combinations & similar fonts",
+    tags: [TAGS.typography],
+    url: "https://maxibestof.one/typefaces",
+  },
+  {
     title: "Font Tester",
     category: CATEGORIES.typography,
     description:
@@ -196,6 +221,16 @@ export const typographyLinks: Tool[] = [
     url: "https://typotheque.luuse.io/",
   },
   {
+    title: "Gidole",
+    category: CATEGORIES.typography,
+    description: "Gidole - Open Source Modern DIN. A minimal, narrow and yet friendly typeface",
+    favicon: "https://gidole.github.io/apple-touch-icon-180x180.png",
+    ogImage: "https://gidole.github.io/img/gidoleopensourcemoderndinface.png",
+    subtitle: "Gidole Open Source Modern DIN",
+    tags: [TAGS.typography],
+    url: "https://gidole.github.io/",
+  },
+  {
     title: "Good Microcopy",
     author: "Richard Sison",
     category: CATEGORIES.typography,
@@ -220,6 +255,27 @@ export const typographyLinks: Tool[] = [
     subtitle: "Letters made of letters",
     tags: [TAGS.typography],
     url: "https://www.letterbox.sh/",
+  },
+  {
+    title: "madleen",
+    author: "falk schröter",
+    category: CATEGORIES.typography,
+    description: "madleen is a monospace, unicase, open-source, serif typeface.",
+    favicon:
+      "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦆</text></svg>",
+    tags: [TAGS.typography],
+    url: "https://klotter.supply/madleen",
+  },
+  {
+    title: "madleen text",
+    author: "falk schröter",
+    category: CATEGORIES.typography,
+    description:
+      "madleen text is a version of the typeface madleen, adapted for longer, smaller texts.",
+    favicon:
+      "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦆</text></svg>",
+    tags: [TAGS.typography],
+    url: "https://klotter.supply/madleen-text",
   },
   {
     title: "Meshfont",
@@ -308,6 +364,17 @@ export const typographyLinks: Tool[] = [
     ogImage: "https://max-esnee.com/stack-and-justify/images/screenshot.png",
     tags: [TAGS.typography],
     url: "https://max-esnee.com/stack-and-justify/",
+  },
+  {
+    title: "struggle",
+    author: "falk schröter",
+    category: CATEGORIES.typography,
+    description:
+      "a bold open-source display typeface inspired by, used in and made for grassroots communication.",
+    favicon:
+      "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦆</text></svg>",
+    tags: [TAGS.typography],
+    url: "https://klotter.supply/struggle",
   },
   {
     title: "The Good Line-Height",
