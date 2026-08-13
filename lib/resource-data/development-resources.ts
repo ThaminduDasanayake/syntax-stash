@@ -242,6 +242,14 @@ export const developmentLinks: Tool[] = [
     url: "https://codeflow-five.vercel.app/",
   },
   {
+    title: "Colf",
+    category: CATEGORIES.dev,
+    description: "Prompt solutions to algorithmic problems with the fewest tokens.",
+    favicon: "https://colf.dev/icon.svg",
+    ogImage: "https://colf.dev/opengraph-image",
+    url: "https://colf.dev/",
+  },
+  {
     title: "comimi",
     category: CATEGORIES.dev,
     description:
@@ -811,6 +819,17 @@ export const developmentLinks: Tool[] = [
     url: "https://www.koefo.com/",
   },
   {
+    title: "listmonk",
+    category: CATEGORIES.dev,
+    description:
+      "Send e-mail campaigns and transactional e-mails. High performance and features packed into one app.",
+    favicon: "https://listmonk.app/static/images/favicon.webp",
+    ogImage: "https://listmonk.app/static/images/thumbnail.webp",
+    subtitle:
+      "Free and open source self-hosted newsletter, mailing list manager, and transactional mails",
+    url: "https://listmonk.app/",
+  },
+  {
     title: "Macfolio",
     category: CATEGORIES.dev,
     description:
@@ -1140,6 +1159,16 @@ export const developmentLinks: Tool[] = [
     url: "https://responsively.app/",
   },
   {
+    title: "Rows",
+    category: CATEGORIES.dev,
+    description:
+      "Rows is a shared, multiplayer list for tracking anything you’ve got going: projects, tasks, reading lists, trips. Live cursors, inline editing, no signups for your team, nothing to learn.",
+    favicon: "https://rows.gg/brand/rows-mark-logo.svg",
+    ogImage: "https://rows.gg/brand/og.png",
+    subtitle: "Rows is an unapologetically simple way to track anything",
+    url: "https://rows.gg/",
+  },
+  {
     title: "SEOStudio",
     category: CATEGORIES.dev,
     description:
@@ -1443,6 +1472,15 @@ export const developmentLinks: Tool[] = [
     subtitle: "Free Online Design Tools — ASCII Generator, Color Palette Maker & More",
     tags: [TAGS.tool],
     url: "https://vaultandzn.com/pages/all-tools",
+  },
+  {
+    title: "VERT.sh",
+    category: CATEGORIES.dev,
+    description:
+      "With VERT, you can quickly convert any image, video, audio, and document file. No ads, no tracking, open source, and all processing (other than video) is done on your device.",
+    favicon: "https://vert.sh/favicon.png",
+    ogImage: "https://vert.sh/_app/immutable/assets/VERT_Feature.D5UIwpMt.webp",
+    url: "https://vert.sh/",
   },
   {
     title: "vid2ascii",

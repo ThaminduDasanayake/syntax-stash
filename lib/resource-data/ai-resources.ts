@@ -137,6 +137,18 @@ export const aiLinks: Tool[] = [
     url: "https://github.com/AgriciDaniel/claude-ads",
   },
   {
+    title: "Claude Code Templates",
+    author: "Daniel Avila",
+    category: CATEGORIES.ai,
+    description:
+      "Browse and install 1000+ pre-built components for Claude Code. AI agents, slash commands, MCP integrations, hooks, and settings. Free, open-source CLI tool.",
+    favicon: "https://aitmpl.com/static/favicon/apple-touch-icon.png",
+    ogImage: "https://www.aitmpl.com/logo.png",
+    subtitle: "1000+ Agents, Commands, Skills & MCP Integrations",
+    tags: [TAGS.ai],
+    url: "https://aitmpl.com/",
+  },
+  {
     title: "Crawl4AI",
     category: CATEGORIES.ai,
     description: "Open-source LLM-Friendly Web Crawler & Scraper",

@@ -13,12 +13,29 @@ export const mediaLinks: Tool[] = [
     url: "https://3dsvg.design/",
   },
   {
+    title: "Acubens Design",
+    category: CATEGORIES.media,
+    description: "Streetwear & Apparel Designer",
+    favicon: "https://public-files.gumroad.com/26oayrlqvhks3p08s0852u8kujl5",
+    ogImage: "https://public-files.gumroad.com/6vvkk7rwhwtatsuoql3f9msyd59s",
+    url: "https://acubensdesign.gumroad.com/",
+  },
+  {
     title: "AI Background Remover",
     category: CATEGORIES.media,
     description:
       "Erase image backgrounds and make a transparent background, using AI. Remove backgrounds from any photo online for free",
     subtitle: "Remove Background From Image",
     url: "https://www.remove.bg/",
+  },
+  {
+    title: "A Little Box of Goodies",
+    category: CATEGORIES.media,
+    description:
+      "A Little Box of Goodies est. for sending a little care things to tuck inside. Photo + Photo Song + Song Video + Video Gift + Gift Voice + Voice Drawing + Drawing Location + Location Coupon + Coupon News + News",
+    favicon: "https://alittleboxofgoodies.com/favicon.ico",
+    subtitle: "digital care package",
+    url: "https://alittleboxofgoodies.com/",
   },
   {
     title: "ASCIInator",
@@ -99,6 +116,15 @@ export const mediaLinks: Tool[] = [
     url: "https://www.cleanpng.com/",
   },
   {
+    title: "Clipdrop",
+    category: CATEGORIES.media,
+    description: "Remove background, cleanup pictures, upscaling, Stable diffusion and more…",
+    favicon: "https://clipdrop.co/favicon.ico",
+    ogImage: "https://assets.reactbricks.com/G-dH90DZVcB0SiT/images/original/Lxv-0lCYYQgvMU7.webp",
+    subtitle: "Create stunning visuals in seconds with AI.",
+    url: "https://clipdrop.co/",
+  },
+  {
     title: "Convert PNG to ICO file",
     author: "Kristjan Retter",
     category: CATEGORIES.media,
@@ -133,6 +159,14 @@ export const mediaLinks: Tool[] = [
       "Turn your code into beautiful images. Choose from a range of syntax colors, hide or show the background, and toggle between a dark and light window.",
     ogImage: "https://www.ray.so/_next/static/media/og.0wf8b~rvlko.g.png",
     url: "https://ray.so/",
+  },
+  {
+    title: "DesignUp",
+    category: CATEGORIES.media,
+    description: "On Gumroad",
+    favicon: "https://public-files.gumroad.com/ot3nmgnwlzwolsh1v5mbltbq1svu",
+    ogImage: "https://public-files.gumroad.com/ynrrbypqs8yw1noozlv1cixvyzcd",
+    url: "https://designupnet.gumroad.com/",
   },
   {
     title: "digibouquet",
@@ -183,6 +217,14 @@ export const mediaLinks: Tool[] = [
       "A fun collection of free SVG generators for gradients, patterns, shapes, textures & cool backgrounds. Plus, some more color tools for web designers.",
     tags: [TAGS.image],
     url: "https://www.fffuel.co/",
+  },
+  {
+    title: "Fisga Studio",
+    category: CATEGORIES.media,
+    description: "Unusual resources for next level design",
+    favicon: "https://public-files.gumroad.com/mog7q685yre30sghfsi6b3n26xx3",
+    ogImage: "https://public-files.gumroad.com/4y7k85ewz5lhf8rvhbo7noeooikm",
+    url: "https://fisga.gumroad.com/",
   },
   {
     title: "Free Clipart & Illustrations",
@@ -502,6 +544,15 @@ export const mediaLinks: Tool[] = [
     url: "https://unsplash.com/",
   },
   {
+    title: "Varun Kumar",
+    category: CATEGORIES.media,
+    description:
+      "Fueled by a love for design tutorials and a desire to share valuable resources with the creative community. Turning inspiration into education, one pixel at a time.",
+    favicon: "https://public-files.gumroad.com/26c552b223afht07gewt06u9juav",
+    ogImage: "https://public-files.gumroad.com/26c552b223afht07gewt06u9juav",
+    url: "https://vroon.gumroad.com/",
+  },
+  {
     title: "Vecteezy",
     category: CATEGORIES.media,
     description:
@@ -525,5 +576,13 @@ export const mediaLinks: Tool[] = [
     description:
       "This interactive web app transforms your webcam feed by overlaying customizable text on bright areas, encouraging creativity and mindfulness in real-time.",
     url: "https://text-over-video.figma.site/",
+  },
+  {
+    title: "YUZU",
+    category: CATEGORIES.media,
+    description: "i'm independent digital creator — welcome to my mockup store 🪴",
+    favicon: "https://public-files.gumroad.com/nxonwfel0h0yqlm2yti3jexzx8yk",
+    ogImage: "https://public-files.gumroad.com/nxonwfel0h0yqlm2yti3jexzx8yk",
+    url: "https://yuzudigital.gumroad.com/",
   },
 ];
