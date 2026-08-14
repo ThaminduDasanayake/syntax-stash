@@ -13,12 +13,29 @@ export const mediaLinks: Tool[] = [
     url: "https://3dsvg.design/",
   },
   {
+    title: "Acubens Design",
+    category: CATEGORIES.media,
+    description: "Streetwear & Apparel Designer",
+    favicon: "https://public-files.gumroad.com/26oayrlqvhks3p08s0852u8kujl5",
+    ogImage: "https://public-files.gumroad.com/6vvkk7rwhwtatsuoql3f9msyd59s",
+    url: "https://acubensdesign.gumroad.com/",
+  },
+  {
     title: "AI Background Remover",
     category: CATEGORIES.media,
     description:
       "Erase image backgrounds and make a transparent background, using AI. Remove backgrounds from any photo online for free",
     subtitle: "Remove Background From Image",
     url: "https://www.remove.bg/",
+  },
+  {
+    title: "A Little Box of Goodies",
+    category: CATEGORIES.media,
+    description:
+      "A Little Box of Goodies est. for sending a little care things to tuck inside. Photo + Photo Song + Song Video + Video Gift + Gift Voice + Voice Drawing + Drawing Location + Location Coupon + Coupon News + News",
+    favicon: "https://alittleboxofgoodies.com/favicon.ico",
+    subtitle: "digital care package",
+    url: "https://alittleboxofgoodies.com/",
   },
   {
     title: "ASCIInator",
@@ -80,6 +97,18 @@ export const mediaLinks: Tool[] = [
     url: "https://blush.design/",
   },
   {
+    title: "Bulk Image Resizer",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.media,
+    description:
+      "Free online bulk image resizer — resize multiple JPEG, PNG & WebP images at once by pixels, percentage or preset. Batch resize for web, social media & email. Drag & drop, lock aspect ratio, crop/fit/pad, download as ZIP. No signup, no upload, 100% client-side.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/bulk-image-resizer/og-image.png",
+    subtitle: "Resize Multiple Images Online Free",
+    tags: [TAGS.image],
+    url: "https://jasperbernaers.com/bulk-image-resizer/",
+  },
+  {
     title: "Carbon",
     category: CATEGORIES.media,
     description:
@@ -97,6 +126,15 @@ export const mediaLinks: Tool[] = [
     subtitle: "HD png images and illustrations. Free unlimited download. - CleanPNG",
     tags: [TAGS.image],
     url: "https://www.cleanpng.com/",
+  },
+  {
+    title: "Clipdrop",
+    category: CATEGORIES.media,
+    description: "Remove background, cleanup pictures, upscaling, Stable diffusion and more…",
+    favicon: "https://clipdrop.co/favicon.ico",
+    ogImage: "https://assets.reactbricks.com/G-dH90DZVcB0SiT/images/original/Lxv-0lCYYQgvMU7.webp",
+    subtitle: "Create stunning visuals in seconds with AI.",
+    url: "https://clipdrop.co/",
   },
   {
     title: "Convert PNG to ICO file",
@@ -133,6 +171,14 @@ export const mediaLinks: Tool[] = [
       "Turn your code into beautiful images. Choose from a range of syntax colors, hide or show the background, and toggle between a dark and light window.",
     ogImage: "https://www.ray.so/_next/static/media/og.0wf8b~rvlko.g.png",
     url: "https://ray.so/",
+  },
+  {
+    title: "DesignUp",
+    category: CATEGORIES.media,
+    description: "On Gumroad",
+    favicon: "https://public-files.gumroad.com/ot3nmgnwlzwolsh1v5mbltbq1svu",
+    ogImage: "https://public-files.gumroad.com/ynrrbypqs8yw1noozlv1cixvyzcd",
+    url: "https://designupnet.gumroad.com/",
   },
   {
     title: "digibouquet",
@@ -183,6 +229,37 @@ export const mediaLinks: Tool[] = [
       "A fun collection of free SVG generators for gradients, patterns, shapes, textures & cool backgrounds. Plus, some more color tools for web designers.",
     tags: [TAGS.image],
     url: "https://www.fffuel.co/",
+  },
+  {
+    title: "Fisga Studio",
+    category: CATEGORIES.media,
+    description: "Unusual resources for next level design",
+    favicon: "https://public-files.gumroad.com/mog7q685yre30sghfsi6b3n26xx3",
+    ogImage: "https://public-files.gumroad.com/4y7k85ewz5lhf8rvhbo7noeooikm",
+    url: "https://fisga.gumroad.com/",
+  },
+  {
+    title: "Free Barcode Generator Online",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.media,
+    description:
+      "Create barcodes online free — Code 128, EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, GS1-128, Code 39, MSI, Codabar & Pharmacode. Live preview, custom size & colors, download PNG or SVG. No signup, no watermark, 100% in your browser.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/online-free-barcode-generator/og-image.png",
+    subtitle: "EAN-13, UPC-A, Code 128 & 15+ Formats (PNG/SVG)",
+    tags: [TAGS.barcode],
+    url: "https://jasperbernaers.com/online-free-barcode-generator/",
+  },
+  {
+    title: "Free Business Card Designer",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.media,
+    description:
+      "Free online business card designer — a fancy visual editor with 22 templates, logo upload, gradients & patterns, shapes and icons, QR codes, snap guides, front & back, and print-ready 300 DPI PDF export with bleed and crop marks. EU, US and square sizes. No signup, no watermark.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/business-card-designer/og-image.png",
+    subtitle: "22 Templates, Logo Upload, QR Codes, Print-Ready PDF",
+    url: "https://jasperbernaers.com/business-card-designer/",
   },
   {
     title: "Free Clipart & Illustrations",
@@ -238,6 +315,18 @@ export const mediaLinks: Tool[] = [
     subtitle: "Hand Drawn Vector Icons",
     tags: [TAGS.illustration],
     url: "https://goodstuffnononsense.com/",
+  },
+  {
+    title: "LinkedIn Text Formatter",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.media,
+    description:
+      "Make text bold or italic on LinkedIn in seconds: type, style, copy, paste. Free LinkedIn post formatter with Unicode bold, italic, bullets ▸ and checkmarks ✓ — no login, no ads, character counter included.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/LinkedIn-Post-Formatter/og-image.png",
+    subtitle: "Free Bold & Italic Text Generator for LinkedIn Posts",
+    tags: [TAGS.social],
+    url: "https://jasperbernaers.com/LinkedIn-Post-Formatter/",
   },
   {
     title: "Logos",
@@ -330,6 +419,18 @@ export const mediaLinks: Tool[] = [
     ogImage: "https://static.pexels.com/1/images/meta/pexels-stock-photos.jpg",
     subtitle: "Free Stock Photos, Royalty Free Stock Images & Copyright Free Pictures",
     url: "https://www.pexels.com/",
+  },
+  {
+    title: "Photo Collage Maker",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.media,
+    description:
+      "Free browser-based photo collage maker. Pick a layout (grids, mosaics, filmstrip, pixel heart), drop in photos, zoom & pan, apply filters, add captions and export PNG or JPEG. 100% client-side — no upload, no account, no watermark.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/photo-collage/og-image.png",
+    subtitle: "Free Online Grid & Freeform Collages",
+    tags: [TAGS.image],
+    url: "https://jasperbernaers.com/photo-collage/",
   },
   {
     title: "Pixel Surplus",
@@ -502,6 +603,15 @@ export const mediaLinks: Tool[] = [
     url: "https://unsplash.com/",
   },
   {
+    title: "Varun Kumar",
+    category: CATEGORIES.media,
+    description:
+      "Fueled by a love for design tutorials and a desire to share valuable resources with the creative community. Turning inspiration into education, one pixel at a time.",
+    favicon: "https://public-files.gumroad.com/26c552b223afht07gewt06u9juav",
+    ogImage: "https://public-files.gumroad.com/26c552b223afht07gewt06u9juav",
+    url: "https://vroon.gumroad.com/",
+  },
+  {
     title: "Vecteezy",
     category: CATEGORIES.media,
     description:
@@ -525,5 +635,13 @@ export const mediaLinks: Tool[] = [
     description:
       "This interactive web app transforms your webcam feed by overlaying customizable text on bright areas, encouraging creativity and mindfulness in real-time.",
     url: "https://text-over-video.figma.site/",
+  },
+  {
+    title: "YUZU",
+    category: CATEGORIES.media,
+    description: "i'm independent digital creator — welcome to my mockup store 🪴",
+    favicon: "https://public-files.gumroad.com/nxonwfel0h0yqlm2yti3jexzx8yk",
+    ogImage: "https://public-files.gumroad.com/nxonwfel0h0yqlm2yti3jexzx8yk",
+    url: "https://yuzudigital.gumroad.com/",
   },
 ];

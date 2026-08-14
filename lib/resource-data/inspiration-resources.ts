@@ -156,6 +156,19 @@ export const inspirationLinks: Tool[] = [
     url: "https://calltoinspiration.com/",
   },
   {
+    title: "Codrops",
+    author: "Codrops",
+    category: CATEGORIES.inspiration,
+    description:
+      "Explore the latest web design and frontend development trends with tutorials, demos, and creative coding resources.",
+    favicon: "https://tympanus.net/codrops/wp-content/themes/codropstheme03/favicons/favicon.svg",
+    ogImage:
+      "https://codrops-1f606.kxcdn.com/codrops/wp-content/uploads/2024/04/codrops_social_graph.jpg",
+    subtitle: "Fueling web creativity since 2009",
+    tags: [TAGS.tutorial],
+    url: "https://tympanus.net/codrops/",
+  },
+  {
     title: "Cosmos",
     category: CATEGORIES.inspiration,
     description: "Your space for inspiration",
@@ -163,6 +176,18 @@ export const inspirationLinks: Tool[] = [
     ogImage: "https://www.cosmos.so/opengraph-image.jpg",
     tags: [TAGS.inspiration],
     url: "https://www.cosmos.so/",
+  },
+  {
+    title: "Creative Hub",
+    author: "Codrops",
+    category: CATEGORIES.inspiration,
+    description:
+      "The Creative Hub is a growing showcase of open source web demos, design experiments, interactive concepts, and creative ideas. It highlights original work by Codrops contributors alongside standout projects from around the web.",
+    favicon: "https://tympanus.net/codrops/wp-content/themes/codropstheme03/favicons/favicon.svg",
+    ogImage:
+      "https://codrops-1f606.kxcdn.com/codrops/wp-content/uploads/2025/09/creativehub_cover.jpg",
+    tags: [TAGS.inspiration],
+    url: "https://tympanus.net/codrops/hub/",
   },
   {
     title: "CTA.gallery",
@@ -397,6 +422,15 @@ export const inspirationLinks: Tool[] = [
       "An archive of illustration from c.1950-1975, shining a spotlight on pioneering illustrators and their work.",
     tags: [TAGS.inspiration],
     url: "https://www.modernillustration.org/",
+  },
+  {
+    title: "Mosaic",
+    category: CATEGORIES.inspiration,
+    description: "A place where social media graphics look like a wall of art",
+    favicon: "https://framerusercontent.com/images/eU1UM9Iiu9VyGPf6hPWR38aO6Bk.png",
+    ogImage: "https://framerusercontent.com/assets/uS3wCgLcvYbPkXQ7MzeN78GM.png",
+    tags: [TAGS.inspiration],
+    url: "https://mosaicmedia.framer.website/",
   },
   {
     title: "Motion Folios",
@@ -740,6 +774,6 @@ export const inspirationLinks: Tool[] = [
     favicon: "https://tympanus.net/codrops/wp-content/themes/codropstheme03/favicons/favicon.svg",
     ogImage: "https://codrops-1f606.kxcdn.com/codrops/wp-content/uploads/2024/09/Webzibition.jpg",
     tags: [TAGS.inspiration],
-    url: "https://tympanus.net/codrops/hub/",
+    url: "https://tympanus.net/codrops/webzibition/",
   },
 ];

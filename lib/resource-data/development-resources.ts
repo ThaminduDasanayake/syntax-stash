@@ -91,26 +91,6 @@ export const developmentLinks: Tool[] = [
     url: "https://arnismc.com/",
   },
   {
-    title: "ASCII Art Generator",
-    author: "Jasper Bernaers",
-    category: CATEGORIES.dev,
-    description:
-      "Free ASCII art generator — the easiest ascii pictures generator and ascii text maker online. Convert any image or photo to ASCII art, or transform text into ASCII art fonts (like Patorjk TAAG). 50+ FIGlet fonts, color mode, multiple character sets. Download as TXT or PNG. No upload, no sign-up, 100% private.",
-    subtitle: "Text to ASCII Art Maker & Braille Art | No Upload | Patorjk Alternative",
-    tags: [TAGS.ascii, TAGS.tool],
-    url: "https://jasperbernaers.com/ASCII-generator/",
-  },
-  {
-    title: "ASCII Webcam",
-    author: "Jasper Bernaers",
-    category: CATEGORIES.dev,
-    description:
-      "Turn your webcam into live ASCII art — real-time camera to text conversion in your browser. Multiple character sets (Blocks, Braille, Detailed, Binary), color mode, adjustable FPS & resolution. Record GIFs, take snapshots. 100% private, no upload, no sign-up.",
-    subtitle: "Live Camera to ASCII Art in Real-Time | No Upload | jasperbernaers.com",
-    tags: [TAGS.ascii, TAGS.tool],
-    url: "https://jasperbernaers.com/ascii-webcam/",
-  },
-  {
     title: "Awesome OSS Alternatives",
     author: "RunaCapital",
     category: CATEGORIES.dev,
@@ -118,16 +98,6 @@ export const developmentLinks: Tool[] = [
     favicon: "/github.svg",
     tags: [TAGS.tool],
     url: "https://github.com/RunaCapital/awesome-oss-alternatives",
-  },
-  {
-    title: "Barcode Generator Online",
-    author: "Jasper Bernaers",
-    category: CATEGORIES.design,
-    description:
-      "Create barcodes online free — Code 128, EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, GS1-128, Code 39, MSI, Codabar & Pharmacode. Live preview, custom size & colors, download PNG or SVG. No signup, no watermark, 100% in your browser.",
-    subtitle: "EAN-13, UPC-A, Code 128 & 15+ Formats (PNG/SVG)",
-    tags: [TAGS.tool],
-    url: "https://jasperbernaers.com/online-free-barcode-generator/",
   },
   {
     title: "BestAlternative",
@@ -193,6 +163,16 @@ export const developmentLinks: Tool[] = [
     url: "https://cal.com/",
   },
   {
+    title: "Cap",
+    category: CATEGORIES.dev,
+    description:
+      "Cap is the open source alternative to Loom. Lightweight, powerful, and cross-platform. Record and share in seconds.",
+    favicon: "https://cap.so/logos/logo-solo.svg",
+    ogImage: "https://cap.so/api/og",
+    subtitle: "Beautiful screen recordings, owned by you.",
+    url: "https://cap.so/",
+  },
+  {
     title: "City Roads",
     category: CATEGORIES.dev,
     description:
@@ -242,6 +222,14 @@ export const developmentLinks: Tool[] = [
     url: "https://codeflow-five.vercel.app/",
   },
   {
+    title: "Colf",
+    category: CATEGORIES.dev,
+    description: "Prompt solutions to algorithmic problems with the fewest tokens.",
+    favicon: "https://colf.dev/icon.svg",
+    ogImage: "https://colf.dev/opengraph-image",
+    url: "https://colf.dev/",
+  },
+  {
     title: "comimi",
     category: CATEGORIES.dev,
     description:
@@ -262,6 +250,16 @@ export const developmentLinks: Tool[] = [
     description:
       "Truly universal online file converter. Private, on-device conversion across mediums.",
     url: "https://p2r3.github.io/convert/",
+  },
+  {
+    title: "ConvertX",
+    author: "Emrik Östling",
+    category: CATEGORIES.dev,
+    description: "💾 Self-hosted online file converter. Supports 1000+ formats ⚙️",
+    favicon: "https://raw.githubusercontent.com/C4illin/ConvertX/main/public/favicon.svg",
+    ogImage: "https://raw.githubusercontent.com/C4illin/ConvertX/main/images/logo.png",
+    tags: [TAGS.selfHosted],
+    url: "https://github.com/C4illin/ConvertX",
   },
   {
     title: "CSS Grid Generator",
@@ -460,8 +458,7 @@ export const developmentLinks: Tool[] = [
     description:
       "Turn markdown into responsive, email-safe HTML that renders perfectly across every client.",
     subtitle: "Responsive Emails, Written in Markdown",
-    tags: [TAGS.markdown, TAGS.tool],
-
+    tags: [TAGS.email, TAGS.markdown],
     url: "https://www.emailmd.dev/",
   },
   {
@@ -471,6 +468,17 @@ export const developmentLinks: Tool[] = [
       "Discover and compare AI tools — search by task, filter by category, and read community reviews.",
     tags: [TAGS.tool],
     url: "https://explainx.ai/tools",
+  },
+  {
+    title: "fallow",
+    category: CATEGORIES.dev,
+    description:
+      "Free static analysis for TypeScript and JavaScript: dead code, duplication, complexity, architecture drift. Optional paid runtime shows what actually runs in production.",
+    favicon: "https://fallow.tools/favicon.svg",
+    ogImage: "https://fallow.tools/og-default.png",
+    subtitle: "codebase intelligence for typescript and javascript",
+    tags: [TAGS.javascript, TAGS.typescript],
+    url: "https://fallow.tools/",
   },
   {
     title: "Find Great Domain Names",
@@ -506,12 +514,60 @@ export const developmentLinks: Tool[] = [
     url: "https://fluidcad.io/",
   },
   {
+    title: "Free ASCII Art Generator",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.dev,
+    description:
+      "Free ASCII art generator — the easiest ascii pictures generator and ascii text maker online. Convert any image or photo to ASCII art, or transform text into ASCII art fonts (like Patorjk TAAG). 50+ FIGlet fonts, color mode, multiple character sets. Download as TXT or PNG. No upload, no sign-up, 100% private.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/ASCII-generator/og-image.png",
+    subtitle: "Text to ASCII Art Maker & Braille Art | No Upload | Patorjk Alternative",
+    tags: [TAGS.ascii, TAGS.tool],
+    url: "https://jasperbernaers.com/ASCII-generator/",
+  },
+  {
+    title: "Free ASCII Webcam",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.dev,
+    description:
+      "Turn your webcam into live ASCII art — real-time camera to text conversion in your browser. Multiple character sets (Blocks, Braille, Detailed, Binary), color mode, adjustable FPS & resolution. Record GIFs, take snapshots. 100% private, no upload, no sign-up.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/ascii-webcam/og-image.png",
+    subtitle: "Live Camera to ASCII Art in Real-Time | No Upload",
+    tags: [TAGS.ascii, TAGS.tool],
+    url: "https://jasperbernaers.com/ascii-webcam/",
+  },
+  {
     title: "Free for Developers",
     category: CATEGORIES.dev,
     description:
       "Developers and Open Source authors now have a massive amount of services offering free tiers, but it can be hard to find them all to make informed decisions.",
     tags: [TAGS.tool],
     url: "https://free-for.dev/",
+  },
+  {
+    title: "Free Online Audio Editor",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.dev,
+    description:
+      "Free audio editor in your browser: cut, trim, fade, normalize, reverse, speed change, filters, echo, reverb, noise gate, compressor. Record from mic, view spectrogram, loop selections, export WAV or MP3. No upload — 100% private, no sign-up.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/audio-editor/og-image.png",
+    subtitle: "Cut, Trim, Effects, Record & Export MP3/WAV",
+    tags: [TAGS.audio, TAGS.tool],
+    url: "https://jasperbernaers.com/audio-editor/",
+  },
+  {
+    title: "Free PDF Tools Online",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.dev,
+    description:
+      "Free online PDF tools — merge PDF files into one, split PDF by pages, compress PDF size by 80%, convert PDF to JPG images, convert JPG to PDF, rotate and organize pages. 100% browser-based with no file upload to any server. No watermarks, no daily limits, no registration. Best free alternative to SmallPDF, iLovePDF, PDF24, Sejda and Adobe Acrobat online. Works on Windows, Mac, Linux, iPhone and Android.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/pdf/og-image.png",
+    subtitle: "Merge, Split, Compress, Convert PDF to JPG | No Upload, No Watermark, No Sign‑Up",
+    tags: [TAGS.pdf, TAGS.tool],
+    url: "https://jasperbernaers.com/pdf/",
   },
   {
     title: "Fumadocs",
@@ -611,7 +667,7 @@ export const developmentLinks: Tool[] = [
     description: "A self-hosted dashboard that puts all your feeds in one place",
     favicon: "/github.svg",
     ogImage:
-      "https://repository-images.githubusercontent.com/github-production-repository-image-32fea6/792861139/5aa82f46-2f6d-4773-a4f3-b42e136f453f?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20260802%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260802T163537Z&X-Amz-Expires=300&X-Amz-Signature=d417d27b4293fd15e931da798a25bce1ab2c9a069aa4712316bd771378ced265&X-Amz-SignedHeaders=host&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoiaHR0cHM6Ly9yZXBvc2l0b3J5LWltYWdlcy5naXRodWJ1c2VyY29udGVudC5jb20vIiwia2V5Ijoia2V5MSIsImV4cCI6MTc4NTY4ODgzNywibmJmIjoxNzg1Njg4NTM3LCJwYXRoIjoicmVwb3NpdG9yeS1pbWFnZXMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIn0.LiTuiIdZoV0a4idqfl5G1STknJsbvorrOatWcx2mKs8",
+      "https://raw.githubusercontent.com/glanceapp/glance/main/docs/images/readme-main-image.png",
     url: "https://github.com/glanceapp/glance",
   },
   {
@@ -645,8 +701,10 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description:
       "Convert HEIC to JPG online for free — drop your iPhone photos and they convert instantly, in batch, right in your browser. No upload to any server, no watermark, no signup, no limits. Also HEIC to PNG and WebP, quality control and ZIP download. Works on Windows 10/11, Android, Mac and Linux.",
-    subtitle: "Free, Batch, No Upload (Windows, Android, Mac) | jasperbernaers.com",
-    tags: [TAGS.tool],
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/free-heic-to-jpg-converter/og-image.png",
+    subtitle: "Free, Batch, No Upload (Windows, Android, Mac)",
+    tags: [TAGS.heic, TAGS.image, TAGS.jpg, TAGS.tool],
     url: "https://jasperbernaers.com/free-heic-to-jpg-converter/",
   },
   {
@@ -700,8 +758,10 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description:
       "Free image to ASCII converter — turn any PNG, JPG or WebP photo into ASCII art instantly. One-tap styles, braille dot art, color ASCII, dithering. Copy, share, download TXT or PNG. No upload, no signup, 100% in your browser.",
-    subtitle: "PNG, JPG & SVG to ASCII Art Online Free | jasperbernaers.com",
-    tags: [TAGS.ascii, TAGS.tool],
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/image-to-ascii/og-image.png",
+    subtitle: "PNG, JPG & SVG to ASCII Art Online Free",
+    tags: [TAGS.ascii, TAGS.image, TAGS.tool],
     url: "https://jasperbernaers.com/image-to-ascii/",
   },
   {
@@ -811,6 +871,17 @@ export const developmentLinks: Tool[] = [
     url: "https://www.koefo.com/",
   },
   {
+    title: "listmonk",
+    category: CATEGORIES.dev,
+    description:
+      "Send e-mail campaigns and transactional e-mails. High performance and features packed into one app.",
+    favicon: "https://listmonk.app/static/images/favicon.webp",
+    ogImage: "https://listmonk.app/static/images/thumbnail.webp",
+    subtitle:
+      "Free and open source self-hosted newsletter, mailing list manager, and transactional mails",
+    url: "https://listmonk.app/",
+  },
+  {
     title: "Macfolio",
     category: CATEGORIES.dev,
     description:
@@ -831,8 +902,10 @@ export const developmentLinks: Tool[] = [
     category: CATEGORIES.dev,
     description:
       "Free online Markdown editor with instant live preview — GitHub-style preview, README & blog templates, visual table generator, Mermaid diagrams, math, share links, export to HTML/MD/PDF. Auto-saves in your browser. No sign-up, no upload.",
-    subtitle: "Live Preview, GitHub Style, Templates & HTML/PDF Export | jasperbernaers.com",
-    tags: [TAGS.markdown, TAGS.tool],
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/markdown-live-editor/og-image.png",
+    subtitle: "Live Preview, GitHub Style, Templates & HTML/PDF Export",
+    tags: [TAGS.markdown],
     url: "https://jasperbernaers.com/markdown-live-editor/",
   },
   {
@@ -938,6 +1011,18 @@ export const developmentLinks: Tool[] = [
     url: "https://www.online-convert.com/",
   },
   {
+    title: "Online Notepad",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.dev,
+    description:
+      "A free online notepad that opens instantly — just start typing. Autosaves in your browser, no login, no install, works offline. Line numbers, tabs and syntax highlighting when you need them, so it doubles as a Notepad++ alternative on any device.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/notepad/og-image.png",
+    subtitle: "Free, Autosave, No Sign-Up | Notepad++ Alternative",
+    tags: [TAGS.editor, TAGS.tool],
+    url: "https://jasperbernaers.com/notepad/",
+  },
+  {
     title: "OpenFlowKit",
     category: CATEGORIES.dev,
     description:
@@ -962,6 +1047,16 @@ export const developmentLinks: Tool[] = [
       "A curated collection of the best open source alternatives to everyday SaaS products. Save money with reliable tools hand-picked for you.",
     tags: [TAGS.tool],
     url: "https://openalternative.co/",
+  },
+  {
+    title: "openstatus",
+    category: CATEGORIES.dev,
+    description:
+      "Ship your status page before your SOC 2 auditor asks for it. Communicate incidents, prove compliance readiness, and monitor uptime from 28 global regions. Open source and free to start.",
+    favicon: "https://www.openstatus.dev/assets/logos/OpenStatus-Logo.svg",
+    ogImage: "https://www.openstatus.dev/api/og",
+    subtitle: "The Compliance-First Status Page",
+    url: "https://www.openstatus.dev/",
   },
   {
     title: "Oualator",
@@ -1007,16 +1102,6 @@ export const developmentLinks: Tool[] = [
       "Free, Private & Browser-Based. Merge, edit, and edit PDF files online without uploading to servers.",
     subtitle: "Professional PDF Tools",
     url: "https://pdfcraft.devtoolcafe.com/en/",
-  },
-  {
-    title: "PDF Tools Online",
-    author: "Jasper Bernaers",
-    category: CATEGORIES.dev,
-    description:
-      "Free online PDF tools — merge PDF files into one, split PDF by pages, compress PDF size by 80%, convert PDF to JPG images, convert JPG to PDF, rotate and organize pages. 100% browser-based with no file upload to any server. No watermarks, no daily limits, no registration. Best free alternative to SmallPDF, iLovePDF, PDF24, Sejda and Adobe Acrobat online. Works on Windows, Mac, Linux, iPhone and Android.",
-    subtitle: "Merge, Split, Compress, Convert PDF to JPG | No Upload, No Watermark, No Sign‑Up",
-    tags: [TAGS.pdf, TAGS.tool],
-    url: "https://jasperbernaers.com/pdf/",
   },
   {
     title: "Photoroom - AI Photo Editor",
@@ -1138,6 +1223,16 @@ export const developmentLinks: Tool[] = [
     description: "A dev-tool that aids faster and precise responsive web development.",
     tags: [TAGS.development],
     url: "https://responsively.app/",
+  },
+  {
+    title: "Rows",
+    category: CATEGORIES.dev,
+    description:
+      "Rows is a shared, multiplayer list for tracking anything you’ve got going: projects, tasks, reading lists, trips. Live cursors, inline editing, no signups for your team, nothing to learn.",
+    favicon: "https://rows.gg/brand/rows-mark-logo.svg",
+    ogImage: "https://rows.gg/brand/og.png",
+    subtitle: "Rows is an unapologetically simple way to track anything",
+    url: "https://rows.gg/",
   },
   {
     title: "SEOStudio",
@@ -1443,6 +1538,15 @@ export const developmentLinks: Tool[] = [
     subtitle: "Free Online Design Tools — ASCII Generator, Color Palette Maker & More",
     tags: [TAGS.tool],
     url: "https://vaultandzn.com/pages/all-tools",
+  },
+  {
+    title: "VERT.sh",
+    category: CATEGORIES.dev,
+    description:
+      "With VERT, you can quickly convert any image, video, audio, and document file. No ads, no tracking, open source, and all processing (other than video) is done on your device.",
+    favicon: "https://vert.sh/favicon.png",
+    ogImage: "https://vert.sh/_app/immutable/assets/VERT_Feature.D5UIwpMt.webp",
+    url: "https://vert.sh/",
   },
   {
     title: "vid2ascii",
