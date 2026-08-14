@@ -795,6 +795,14 @@ export const uiLinks: Tool[] = [
     url: "https://shoogle.dev/",
   },
   {
+    title: "Sileo",
+    category: CATEGORIES.ui,
+    description:
+      "A tiny, beautiful, physics-based toast component for React. SVG morphing and spring animations.",
+    tags: [TAGS["ui-component"]],
+    url: "https://sileo.aaryan.design/",
+  },
+  {
     title: "Skiper UI",
     author: "Gxuri",
     category: CATEGORIES.ui,
