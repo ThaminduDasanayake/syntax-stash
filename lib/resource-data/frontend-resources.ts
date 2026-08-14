@@ -353,6 +353,13 @@ export const frontendLinks: Tool[] = [
     url: "https://tools.ui-layouts.com/shadows",
   },
   {
+    title: "Shape Divider App",
+    category: CATEGORIES.frontend,
+    description: "Create fully responsive shape dividers for your next web project",
+    tags: [TAGS.css, TAGS.html, TAGS.shapes, TAGS.svg],
+    url: "https://www.shapedivider.app/",
+  },
+  {
     title: "soundcn",
     author: "soundcn",
     category: CATEGORIES.frontend,
@@ -373,6 +380,16 @@ export const frontendLinks: Tool[] = [
     ogImage: "https://soundzjs.vercel.app/soundz.svg",
     tags: [TAGS["ui-component"]],
     url: "https://soundzjs.vercel.app/",
+  },
+  {
+    title: "Styleframe",
+    category: CATEGORIES.frontend,
+    description:
+      "Styleframe turns your design system into a type-safe TypeScript source of truth and compiles it to CSS — one engine behind tokens, themes, utilities, and recipes.",
+    favicon: "https://www.styleframe.dev/logo.svg",
+    ogImage: "https://www.styleframe.dev/_og/s/o_nwvl3e.png",
+    subtitle: "The Design Systems Styling Engine",
+    url: "https://www.styleframe.dev/",
   },
   {
     title: "StyleSeed",

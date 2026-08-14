@@ -30,6 +30,7 @@ export const TAGS = {
   graphics: "graphics",
   heic: "heic",
   hosting: "hosting",
+  html: "html",
   icons: "icons",
   illustration: "illustration",
   image: "image",

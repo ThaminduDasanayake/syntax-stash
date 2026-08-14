@@ -446,17 +446,6 @@ export const developmentLinks: Tool[] = [
     url: "https://yournextdomain.com/",
   },
   {
-    title: "FliiipBook",
-    author: "FliiipBook",
-    category: CATEGORIES.dev,
-    description:
-      "Draw frame-by-frame animations and create GIFs directly in your browser. Simple, fun, and powerful animation tool with onion skinning, timeline controls, and instant GIF export.",
-    favicon: "https://www.fliiipbook.com/favicon.ico",
-    ogImage: "https://www.fliiipbook.com/og-image.png",
-    tags: [TAGS.animation, TAGS.tool],
-    url: "https://www.fliiipbook.com/",
-  },
-  {
     title: "Flority",
     category: CATEGORIES.dev,
     description: "Your Online Flower Arrangement App",
@@ -753,34 +742,6 @@ export const developmentLinks: Tool[] = [
     url: "https://it-tools.tech/",
   },
   {
-    title: "JSON For You",
-    category: CATEGORIES.dev,
-    description:
-      "Online JSON view, format, minify, validate and compare. It also provides graph view to preview JSON data, semantic comparing two JSON diffs, convert JSON to CSV or CSV to JSON and support jq online.",
-    subtitle: "The best online JSON tool",
-    url: "https://json4u.com/",
-  },
-  {
-    title: "JSON Hero",
-    category: CATEGORIES.dev,
-    description:
-      "JSON Hero makes reading and understand JSON files easy by giving you a clean and beautiful UI packed with extra features.",
-    subtitle: "A beautiful JSON viewer for the web",
-    tags: [TAGS.tool],
-    url: "https://jsonhero.io/",
-  },
-  {
-    title: "Jsonify",
-    category: CATEGORIES.dev,
-    description:
-      "Transform XLSX/CSV translation files into structured JSON. Simplify multilingual website and app localization. Convert excel/csv language data to JSON objects effortlessly.",
-    favicon: "https://www.jsonify.net/images/seo-logo.svg",
-    ogImage: "https://jsonify.net/_next/static/media/og-image.834f1293.webp",
-    subtitle: "Free JSON generator",
-    tags: [TAGS.tool],
-    url: "https://www.jsonify.net/",
-  },
-  {
     title: "Just Delete Me",
     category: CATEGORIES.dev,
     description: "A directory of direct links to delete your account from web services.",
@@ -860,15 +821,6 @@ export const developmentLinks: Tool[] = [
     subtitle: "The Knowledge Platform Built for Agents",
     tags: [TAGS.tool],
     url: "https://www.mintlify.com/",
-  },
-  {
-    title: "Mockaroo",
-    category: CATEGORIES.dev,
-    description:
-      "A free test data generator and API mocking tool - Mockaroo lets you create custom CSV, JSON, SQL, and Excel datasets to test and demo your software.",
-    subtitle: "Random Data Generator and API Mocking Tool | JSON / CSV / SQL / Excel",
-    tags: [TAGS.tool],
-    url: "https://www.mockaroo.com/",
   },
   {
     title: "Mux",
@@ -1175,13 +1127,6 @@ export const developmentLinks: Tool[] = [
     url: "https://sesame.design/",
   },
   {
-    title: "Shape Divider App",
-    category: CATEGORIES.dev,
-    description: "Create fully responsive shape dividers for your next web project",
-    tags: [TAGS.tool],
-    url: "https://www.shapedivider.app/",
-  },
-  {
     title: "SHRTCTS",
     category: CATEGORIES.dev,
     description:
@@ -1242,17 +1187,6 @@ export const developmentLinks: Tool[] = [
     url: "https://stirling.com/",
   },
   {
-    title: "Styleframe",
-    category: CATEGORIES.dev,
-    description:
-      "Styleframe turns your design system into a type-safe TypeScript source of truth and compiles it to CSS — one engine behind tokens, themes, utilities, and recipes.",
-    favicon: "https://www.styleframe.dev/logo.svg",
-    ogImage: "https://www.styleframe.dev/_og/s/o_nwvl3e.png",
-    subtitle: "The Design Systems Styling Engine",
-    tags: [TAGS.social, TAGS.tool],
-    url: "https://www.styleframe.dev/",
-  },
-  {
     title: "Super Designer",
     category: CATEGORIES.dev,
     description:
@@ -1293,19 +1227,6 @@ export const developmentLinks: Tool[] = [
     subtitle: "Disposable Temporary Email",
     tags: [TAGS.tool],
     url: "https://temp-mail.org/",
-  },
-  {
-    title: "Termino.js",
-    author: "Marketing Pipeline",
-    category: CATEGORIES.dev,
-    description:
-      "Create a web based terminal on any website - great for games, animations and real world apps!",
-    favicon: "./github.svg",
-    ogImage:
-      "https://opengraph.githubassets.com/c7149c48dc2e09be2ce2a7b28403989870676ccd875e94170feb99d80f33e687/MarketingPipeline/Termino.js",
-    subtitle: "Live Demo",
-    tags: [TAGS.tool],
-    url: "https://marketingpipeline.github.io/Termino.js/demo",
   },
   {
     title: "Terraink",
@@ -1404,16 +1325,6 @@ export const developmentLinks: Tool[] = [
     favicon: "https://tui.studio/assets/favicon_dark.svg",
     subtitle: "Design Terminal UIs. Visually.",
     url: "https://tui.studio/",
-  },
-  {
-    title: "Unicorn Studio",
-    category: CATEGORIES.dev,
-    description:
-      "Create enchanting WebGL effects, motion, and interactivity — in minutes, not hours. Unicorn Studio makes WebGL easy for designers to embed in Framer, Webflow, or any website.",
-    ogImage: "https://www.unicorn.studio/images/ogg2.png",
-    subtitle: "No-code WebGL Tool",
-    tags: [TAGS.noCode, TAGS.tool],
-    url: "https://www.unicorn.studio/",
   },
   {
     title: "URL to Any",
