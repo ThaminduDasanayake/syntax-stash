@@ -169,6 +169,14 @@ export const uiLinks: Tool[] = [
     url: "https://codefronts.com/",
   },
   {
+    title: "comimi",
+    category: CATEGORIES.ui,
+    description:
+      "comimi is a TypeScript/JavaScript library that allows you to embed a manga viewer into websites.",
+    tags: [TAGS.javascript, TAGS.typescript],
+    url: "https://yui540.com/comimi",
+  },
+  {
     title: "Componentry",
     author: "Harsh Jadhav",
     category: CATEGORIES.ui,

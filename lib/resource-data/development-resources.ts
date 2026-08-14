@@ -230,54 +230,11 @@ export const developmentLinks: Tool[] = [
     url: "https://colf.dev/",
   },
   {
-    title: "comimi",
-    category: CATEGORIES.dev,
-    description:
-      "comimi is a TypeScript/JavaScript library that allows you to embed a manga viewer into websites.",
-    tags: [TAGS.development],
-    url: "https://yui540.com/comimi",
-  },
-  {
     title: "Context.dev Free Tools",
     category: CATEGORIES.dev,
     description: "Free tools for developers and SEOs",
     tags: [TAGS.tool],
     url: "https://www.context.dev/free-tools",
-  },
-  {
-    title: "Convert to it!",
-    category: CATEGORIES.dev,
-    description:
-      "Truly universal online file converter. Private, on-device conversion across mediums.",
-    url: "https://p2r3.github.io/convert/",
-  },
-  {
-    title: "ConvertX",
-    author: "Emrik Östling",
-    category: CATEGORIES.dev,
-    description: "💾 Self-hosted online file converter. Supports 1000+ formats ⚙️",
-    favicon: "https://raw.githubusercontent.com/C4illin/ConvertX/main/public/favicon.svg",
-    ogImage: "https://raw.githubusercontent.com/C4illin/ConvertX/main/images/logo.png",
-    tags: [TAGS.selfHosted],
-    url: "https://github.com/C4illin/ConvertX",
-  },
-  {
-    title: "CSS Grid Generator",
-    category: CATEGORIES.dev,
-    description:
-      "A user-friendly tool designed for web developers to effortlessly create customizable CSS grids for seamless web development.",
-    tags: [TAGS.development],
-    url: "https://cssgridgenerator.io/",
-  },
-  {
-    title: "CSS Unit Converter",
-    category: CATEGORIES.dev,
-    description:
-      "Easily convert pixels to CSS units like Rems, Ems, Inches and more with CSS Unit Converter tools. Get accurate results, fast!",
-    ogImage: "https://cssunitconverter.com/uploads/css-unit-converter-social-og.png",
-    subtitle: "Effortless, Fast and 100% Accurate",
-    tags: [TAGS.tool],
-    url: "https://cssunitconverter.com/",
   },
   {
     title: "delphitools",
@@ -696,18 +653,6 @@ export const developmentLinks: Tool[] = [
     url: "https://grep.app/",
   },
   {
-    title: "HEIC to JPG Converter",
-    author: "Jasper Bernaers",
-    category: CATEGORIES.dev,
-    description:
-      "Convert HEIC to JPG online for free — drop your iPhone photos and they convert instantly, in batch, right in your browser. No upload to any server, no watermark, no signup, no limits. Also HEIC to PNG and WebP, quality control and ZIP download. Works on Windows 10/11, Android, Mac and Linux.",
-    favicon: "https://jasperbernaers.com/favicon.svg",
-    ogImage: "https://jasperbernaers.com/free-heic-to-jpg-converter/og-image.png",
-    subtitle: "Free, Batch, No Upload (Windows, Android, Mac)",
-    tags: [TAGS.heic, TAGS.image, TAGS.jpg, TAGS.tool],
-    url: "https://jasperbernaers.com/free-heic-to-jpg-converter/",
-  },
-  {
     title: "High Scalability",
     category: CATEGORIES.dev,
     description: "Building bigger, faster, more reliable websites.",
@@ -763,17 +708,6 @@ export const developmentLinks: Tool[] = [
     subtitle: "PNG, JPG & SVG to ASCII Art Online Free",
     tags: [TAGS.ascii, TAGS.image, TAGS.tool],
     url: "https://jasperbernaers.com/image-to-ascii/",
-  },
-  {
-    title: "Image Tools Pro",
-    category: CATEGORIES.dev,
-    description:
-      "Transform your photos with ease using imagetoolspro.com. Edit, crop, resize, and customize your images effortlessly with our advanced editing features.",
-    favicon: "https://imagetoolspro.com/picture.webp",
-    ogImage: "https://imagetoolspro.com/img/logo.svg",
-    subtitle: "Online Image Tools — Edit & Enhance Photos with imagetoolspro",
-    tags: [TAGS.tool],
-    url: "https://imagetoolspro.com/",
   },
   {
     title: "IMG.LY SDK",
@@ -997,18 +931,6 @@ export const developmentLinks: Tool[] = [
       "A cinematic audio dubbing, cloning and voice generation studio. Enterprise-grade processing with AI-powered voice synthesis, 600+ language support, and self-hosted deployment.",
     subtitle: "Cinematic audio dubbing, cloning & voice generation | palash.dev",
     url: "https://palash.dev/omnivoice/",
-  },
-  {
-    title: "Online converter",
-    category: CATEGORIES.dev,
-    description:
-      "Convert files like images, video, documents, audio and more to other formats with this free and fast online converter.",
-    favicon: "https://www.online-convert.com/assets/favicon/apple-touch-icon.png",
-    ogImage:
-      "https://www.online-convert.com/assets/social-share-image/en/www-online-convert-com.png",
-    subtitle: "Convert video, images, audio and documents for free",
-    tags: [TAGS.tool],
-    url: "https://www.online-convert.com/",
   },
   {
     title: "Online Notepad",
@@ -1307,14 +1229,6 @@ export const developmentLinks: Tool[] = [
     url: "https://sli.dev/",
   },
   {
-    title: "Squoosh",
-    category: CATEGORIES.dev,
-    description:
-      "Squoosh is the ultimate image optimizer that allows you to compress and compare images with different codecs in your browser.",
-    tags: [TAGS.tool],
-    url: "https://squoosh.app/",
-  },
-  {
     title: "Stirling",
     category: CATEGORIES.dev,
     description:
@@ -1362,16 +1276,6 @@ export const developmentLinks: Tool[] = [
     url: "https://www.tableformatconverter.com/",
   },
   {
-    title: "Takumi",
-    author: "Kane Wang",
-    category: CATEGORIES.dev,
-    description: "JSX to pixels in Rust. Node, Workers, browser. No headless Chrome.",
-    ogImage:
-      "https://raw.githubusercontent.com/kane50613/takumi/master/example/twitter-images/output/og-image.png",
-    subtitle: "Render JSX to images. Skip the browser.",
-    url: "https://takumi.kane.tw/",
-  },
-  {
     title: "Templates - Vercel",
     author: "Vercel",
     category: CATEGORIES.dev,
@@ -1410,16 +1314,6 @@ export const developmentLinks: Tool[] = [
       "Free online map poster and wallpaper generator. Design custom, print-ready map art for any city or location — export as PNG, PDF, or SVG. No sign-up required.",
     tags: [TAGS.map],
     url: "https://terraink.app/",
-  },
-  {
-    title: "TinEye",
-    category: CATEGORIES.dev,
-    description:
-      "Search billions of images with TinEye reverse image search and find where images appear online.",
-    favicon: "https://tineye.com/assets/touch_icons/touch-icon-192x192.webp",
-    subtitle: "Reverse Image Search",
-    tags: [TAGS.tool],
-    url: "https://tineye.com/",
   },
   {
     title: "TinyWow",

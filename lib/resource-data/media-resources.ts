@@ -146,6 +146,24 @@ export const mediaLinks: Tool[] = [
     url: "https://png-to-ico.com/",
   },
   {
+    title: "Convert to it!",
+    category: CATEGORIES.media,
+    description:
+      "Truly universal online file converter. Private, on-device conversion across mediums.",
+    url: "https://p2r3.github.io/convert/",
+  },
+  {
+    title: "ConvertX",
+    author: "Emrik Östling",
+    category: CATEGORIES.media,
+    description: "💾 Self-hosted online file converter. Supports 1000+ formats ⚙️",
+    favicon: "https://raw.githubusercontent.com/C4illin/ConvertX/main/public/favicon.svg",
+    ogImage:
+      "https://repository-images.githubusercontent.com/783343310/5c97fe6b-0ba3-4d51-b04c-704d93920842",
+    tags: [TAGS.selfHosted],
+    url: "https://github.com/C4illin/ConvertX",
+  },
+  {
     title: "coolshapes",
     author: "Vijay Verma",
     category: CATEGORIES.media,
@@ -157,7 +175,7 @@ export const mediaLinks: Tool[] = [
   },
   {
     title: "Craiyon",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.media,
     description:
       "Remove background from image - unlimited, HD, fast, free & no sign up! Remove Bg & add white background, black background or transparent background.",
     subtitle: "FREE HD Background Remover | Remove Bg Online",
@@ -317,6 +335,29 @@ export const mediaLinks: Tool[] = [
     url: "https://goodstuffnononsense.com/",
   },
   {
+    title: "HEIC to JPG Converter",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.media,
+    description:
+      "Convert HEIC to JPG online for free — drop your iPhone photos and they convert instantly, in batch, right in your browser. No upload to any server, no watermark, no signup, no limits. Also HEIC to PNG and WebP, quality control and ZIP download. Works on Windows 10/11, Android, Mac and Linux.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/free-heic-to-jpg-converter/og-image.png",
+    subtitle: "Free, Batch, No Upload (Windows, Android, Mac)",
+    tags: [TAGS.heic, TAGS.image, TAGS.jpg, TAGS.tool],
+    url: "https://jasperbernaers.com/free-heic-to-jpg-converter/",
+  },
+  {
+    title: "Image Tools Pro",
+    category: CATEGORIES.media,
+    description:
+      "Transform your photos with ease using imagetoolspro.com. Edit, crop, resize, and customize your images effortlessly with our advanced editing features.",
+    favicon: "https://imagetoolspro.com/picture.webp",
+    ogImage: "https://imagetoolspro.com/img/logo.svg",
+    subtitle: "Online Image Tools — Edit & Enhance Photos with imagetoolspro",
+    tags: [TAGS.image],
+    url: "https://imagetoolspro.com/",
+  },
+  {
     title: "LinkedIn Text Formatter",
     author: "Jasper Bernaers",
     category: CATEGORIES.media,
@@ -383,6 +424,18 @@ export const mediaLinks: Tool[] = [
     ogImage: "https://onfire.craftwork.design/images/Open-Graph.png",
     tags: [TAGS.illustration],
     url: "https://onfire.craftwork.design/",
+  },
+  {
+    title: "Online converter",
+    category: CATEGORIES.media,
+    description:
+      "Convert files like images, video, documents, audio and more to other formats with this free and fast online converter.",
+    favicon: "https://www.online-convert.com/assets/favicon/apple-touch-icon.png",
+    ogImage:
+      "https://www.online-convert.com/assets/social-share-image/en/www-online-convert-com.png",
+    subtitle: "Convert video, images, audio and documents for free",
+    tags: [TAGS.tool],
+    url: "https://www.online-convert.com/",
   },
   {
     title: "Pastefy",
@@ -513,6 +566,14 @@ export const mediaLinks: Tool[] = [
     url: "https://slides.supply/",
   },
   {
+    title: "Squoosh",
+    category: CATEGORIES.media,
+    description:
+      "Squoosh is the ultimate image optimizer that allows you to compress and compare images with different codecs in your browser.",
+    tags: [TAGS.image],
+    url: "https://squoosh.app/",
+  },
+  {
     title: "Storytale",
     category: CATEGORIES.media,
     description:
@@ -550,6 +611,16 @@ export const mediaLinks: Tool[] = [
     subtitle: "10,000+ Free AI-Generated 3D Icons",
     tags: [TAGS.illustration, TAGS["3D"]],
     url: "https://www.thiings.co/things",
+  },
+  {
+    title: "TinEye",
+    category: CATEGORIES.media,
+    description:
+      "Search billions of images with TinEye reverse image search and find where images appear online.",
+    favicon: "https://tineye.com/assets/touch_icons/touch-icon-192x192.webp",
+    subtitle: "Reverse Image Search",
+    tags: [TAGS.image],
+    url: "https://tineye.com/",
   },
   {
     title: "TopPNG",

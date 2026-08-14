@@ -57,6 +57,14 @@ export const frontendLinks: Tool[] = [
     url: "https://flukeout.github.io/",
   },
   {
+    title: "CSS Grid Generator",
+    category: CATEGORIES.frontend,
+    description:
+      "A user-friendly tool designed for web developers to effortlessly create customizable CSS grids for seamless web development.",
+    tags: [TAGS.css],
+    url: "https://cssgridgenerator.io/",
+  },
+  {
     title: "CSS Polka Dot Generator",
     author: "Brian Louis Ramirez",
     category: CATEGORIES.frontend,
@@ -66,6 +74,16 @@ export const frontendLinks: Tool[] = [
     ogImage: "https://screenspan.net/img/polka-hero.jpg",
     tags: [TAGS.patterns],
     url: "https://screenspan.net/polka/",
+  },
+  {
+    title: "CSS Unit Converter",
+    category: CATEGORIES.frontend,
+    description:
+      "Easily convert pixels to CSS units like Rems, Ems, Inches and more with CSS Unit Converter tools. Get accurate results, fast!",
+    ogImage: "https://cssunitconverter.com/uploads/css-unit-converter-social-og.png",
+    subtitle: "Effortless, Fast and 100% Accurate",
+    tags: [TAGS.css],
+    url: "https://cssunitconverter.com/",
   },
   {
     title: "Flexbox Labs",
@@ -367,6 +385,16 @@ export const frontendLinks: Tool[] = [
     subtitle: "Design engine for vibe coding",
     tags: [TAGS.ai, TAGS.development, TAGS.ui],
     url: "https://styleseed-demo.vercel.app/",
+  },
+  {
+    title: "Takumi",
+    author: "Kane Wang",
+    category: CATEGORIES.dev,
+    description: "JSX to pixels in Rust. Node, Workers, browser. No headless Chrome.",
+    ogImage:
+      "https://raw.githubusercontent.com/kane50613/takumi/master/example/twitter-images/output/og-image.png",
+    subtitle: "Render JSX to images. Skip the browser.",
+    url: "https://takumi.kane.tw/",
   },
   {
     title: "ThemeCN",
