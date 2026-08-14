@@ -125,7 +125,9 @@ export const colorLinks: Tool[] = [
     category: CATEGORIES.colors,
     description:
       "Free color name finder — identify any HTML color by name, HEX, RGB or HSL. Browse all 140+ CSS named colours, search by hue, and copy values instantly. No signup.",
-    subtitle: "HTML Colour Names, HEX, RGB, HSL | jasperbernaers.com",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/colours/og-image.png",
+    subtitle: "HTML Colour Names, HEX, RGB, HSL",
     tags: [TAGS.color],
     url: "https://jasperbernaers.com/colours/",
   },

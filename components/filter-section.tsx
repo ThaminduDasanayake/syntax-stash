@@ -49,6 +49,7 @@ export function FilterSection({
       if (!query) return true;
       return (
         tool.title.toLowerCase().includes(query) ||
+        tool.author?.toLowerCase().includes(query) ||
         tool.description?.toLowerCase().includes(query) ||
         tool.subtitle?.toLowerCase().includes(query) ||
         tool.tags?.some((tag) => tag.toLowerCase().includes(query)) ||

@@ -97,6 +97,18 @@ export const mediaLinks: Tool[] = [
     url: "https://blush.design/",
   },
   {
+    title: "Bulk Image Resizer",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.media,
+    description:
+      "Free online bulk image resizer — resize multiple JPEG, PNG & WebP images at once by pixels, percentage or preset. Batch resize for web, social media & email. Drag & drop, lock aspect ratio, crop/fit/pad, download as ZIP. No signup, no upload, 100% client-side.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/bulk-image-resizer/og-image.png",
+    subtitle: "Resize Multiple Images Online Free",
+    tags: [TAGS.image],
+    url: "https://jasperbernaers.com/bulk-image-resizer/",
+  },
+  {
     title: "Carbon",
     category: CATEGORIES.media,
     description:
@@ -227,6 +239,29 @@ export const mediaLinks: Tool[] = [
     url: "https://fisga.gumroad.com/",
   },
   {
+    title: "Free Barcode Generator Online",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.media,
+    description:
+      "Create barcodes online free — Code 128, EAN-13, EAN-8, UPC-A, UPC-E, ITF-14, GS1-128, Code 39, MSI, Codabar & Pharmacode. Live preview, custom size & colors, download PNG or SVG. No signup, no watermark, 100% in your browser.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/online-free-barcode-generator/og-image.png",
+    subtitle: "EAN-13, UPC-A, Code 128 & 15+ Formats (PNG/SVG)",
+    tags: [TAGS.barcode],
+    url: "https://jasperbernaers.com/online-free-barcode-generator/",
+  },
+  {
+    title: "Free Business Card Designer",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.media,
+    description:
+      "Free online business card designer — a fancy visual editor with 22 templates, logo upload, gradients & patterns, shapes and icons, QR codes, snap guides, front & back, and print-ready 300 DPI PDF export with bleed and crop marks. EU, US and square sizes. No signup, no watermark.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/business-card-designer/og-image.png",
+    subtitle: "22 Templates, Logo Upload, QR Codes, Print-Ready PDF",
+    url: "https://jasperbernaers.com/business-card-designer/",
+  },
+  {
     title: "Free Clipart & Illustrations",
     author: "Icons8",
     category: CATEGORIES.media,
@@ -280,6 +315,18 @@ export const mediaLinks: Tool[] = [
     subtitle: "Hand Drawn Vector Icons",
     tags: [TAGS.illustration],
     url: "https://goodstuffnononsense.com/",
+  },
+  {
+    title: "LinkedIn Text Formatter",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.media,
+    description:
+      "Make text bold or italic on LinkedIn in seconds: type, style, copy, paste. Free LinkedIn post formatter with Unicode bold, italic, bullets ▸ and checkmarks ✓ — no login, no ads, character counter included.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/LinkedIn-Post-Formatter/og-image.png",
+    subtitle: "Free Bold & Italic Text Generator for LinkedIn Posts",
+    tags: [TAGS.social],
+    url: "https://jasperbernaers.com/LinkedIn-Post-Formatter/",
   },
   {
     title: "Logos",
@@ -372,6 +419,18 @@ export const mediaLinks: Tool[] = [
     ogImage: "https://static.pexels.com/1/images/meta/pexels-stock-photos.jpg",
     subtitle: "Free Stock Photos, Royalty Free Stock Images & Copyright Free Pictures",
     url: "https://www.pexels.com/",
+  },
+  {
+    title: "Photo Collage Maker",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.media,
+    description:
+      "Free browser-based photo collage maker. Pick a layout (grids, mosaics, filmstrip, pixel heart), drop in photos, zoom & pan, apply filters, add captions and export PNG or JPEG. 100% client-side — no upload, no account, no watermark.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/photo-collage/og-image.png",
+    subtitle: "Free Online Grid & Freeform Collages",
+    tags: [TAGS.image],
+    url: "https://jasperbernaers.com/photo-collage/",
   },
   {
     title: "Pixel Surplus",
