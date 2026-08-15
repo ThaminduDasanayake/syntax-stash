@@ -30,6 +30,7 @@ export const TAGS = {
   graphics: "graphics",
   heic: "heic",
   hosting: "hosting",
+  html: "html",
   icons: "icons",
   illustration: "illustration",
   image: "image",
@@ -48,7 +49,9 @@ export const TAGS = {
   "open-source": "open-source",
   patterns: "patterns",
   pdf: "pdf",
+  photos: "photos",
   platform: "platform",
+  presentation: "presentation",
   python: "python",
   rag: "rag",
   react: "react",
@@ -67,6 +70,7 @@ export const TAGS = {
   ui: "ui",
   "ui-component": "ui-component",
   vector: "vector",
+  video: "video",
 } as const;
 
 export type TagType = keyof typeof TAGS;

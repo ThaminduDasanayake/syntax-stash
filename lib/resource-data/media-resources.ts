@@ -146,6 +146,24 @@ export const mediaLinks: Tool[] = [
     url: "https://png-to-ico.com/",
   },
   {
+    title: "Convert to it!",
+    category: CATEGORIES.media,
+    description:
+      "Truly universal online file converter. Private, on-device conversion across mediums.",
+    url: "https://p2r3.github.io/convert/",
+  },
+  {
+    title: "ConvertX",
+    author: "Emrik Östling",
+    category: CATEGORIES.media,
+    description: "💾 Self-hosted online file converter. Supports 1000+ formats ⚙️",
+    favicon: "https://raw.githubusercontent.com/C4illin/ConvertX/main/public/favicon.svg",
+    ogImage:
+      "https://repository-images.githubusercontent.com/783343310/5c97fe6b-0ba3-4d51-b04c-704d93920842",
+    tags: [TAGS.selfHosted],
+    url: "https://github.com/C4illin/ConvertX",
+  },
+  {
     title: "coolshapes",
     author: "Vijay Verma",
     category: CATEGORIES.media,
@@ -157,7 +175,7 @@ export const mediaLinks: Tool[] = [
   },
   {
     title: "Craiyon",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.media,
     description:
       "Remove background from image - unlimited, HD, fast, free & no sign up! Remove Bg & add white background, black background or transparent background.",
     subtitle: "FREE HD Background Remover | Remove Bg Online",
@@ -239,6 +257,30 @@ export const mediaLinks: Tool[] = [
     url: "https://fisga.gumroad.com/",
   },
   {
+    title: "Free ASCII Art Generator",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.media,
+    description:
+      "Free ASCII art generator — the easiest ascii pictures generator and ascii text maker online. Convert any image or photo to ASCII art, or transform text into ASCII art fonts (like Patorjk TAAG). 50+ FIGlet fonts, color mode, multiple character sets. Download as TXT or PNG. No upload, no sign-up, 100% private.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/ASCII-generator/og-image.png",
+    subtitle: "Text to ASCII Art Maker & Braille Art | No Upload | Patorjk Alternative",
+    tags: [TAGS.ascii, TAGS.tool],
+    url: "https://jasperbernaers.com/ASCII-generator/",
+  },
+  {
+    title: "Free ASCII Webcam",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.media,
+    description:
+      "Turn your webcam into live ASCII art — real-time camera to text conversion in your browser. Multiple character sets (Blocks, Braille, Detailed, Binary), color mode, adjustable FPS & resolution. Record GIFs, take snapshots. 100% private, no upload, no sign-up.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/ascii-webcam/og-image.png",
+    subtitle: "Live Camera to ASCII Art in Real-Time | No Upload",
+    tags: [TAGS.ascii, TAGS.tool],
+    url: "https://jasperbernaers.com/ascii-webcam/",
+  },
+  {
     title: "Free Barcode Generator Online",
     author: "Jasper Bernaers",
     category: CATEGORIES.media,
@@ -272,6 +314,18 @@ export const mediaLinks: Tool[] = [
     subtitle: "Vector SVG and PNG Graphics, Ouch Images for Download",
     tags: [TAGS.illustration],
     url: "https://icons8.com/illustrations",
+  },
+  {
+    title: "Free Online Audio Editor",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.media,
+    description:
+      "Free audio editor in your browser: cut, trim, fade, normalize, reverse, speed change, filters, echo, reverb, noise gate, compressor. Record from mic, view spectrogram, loop selections, export WAV or MP3. No upload — 100% private, no sign-up.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/audio-editor/og-image.png",
+    subtitle: "Cut, Trim, Effects, Record & Export MP3/WAV",
+    tags: [TAGS.audio, TAGS.tool],
+    url: "https://jasperbernaers.com/audio-editor/",
   },
   {
     title: "Free Placeholder Logo Collection",
@@ -317,6 +371,41 @@ export const mediaLinks: Tool[] = [
     url: "https://goodstuffnononsense.com/",
   },
   {
+    title: "HEIC to JPG Converter",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.media,
+    description:
+      "Convert HEIC to JPG online for free — drop your iPhone photos and they convert instantly, in batch, right in your browser. No upload to any server, no watermark, no signup, no limits. Also HEIC to PNG and WebP, quality control and ZIP download. Works on Windows 10/11, Android, Mac and Linux.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/free-heic-to-jpg-converter/og-image.png",
+    subtitle: "Free, Batch, No Upload (Windows, Android, Mac)",
+    tags: [TAGS.heic, TAGS.image, TAGS.jpg, TAGS.tool],
+    url: "https://jasperbernaers.com/free-heic-to-jpg-converter/",
+  },
+  {
+    title: "Image to ASCII Converter",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.media,
+    description:
+      "Free image to ASCII converter — turn any PNG, JPG or WebP photo into ASCII art instantly. One-tap styles, braille dot art, color ASCII, dithering. Copy, share, download TXT or PNG. No upload, no signup, 100% in your browser.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/image-to-ascii/og-image.png",
+    subtitle: "PNG, JPG & SVG to ASCII Art Online Free",
+    tags: [TAGS.ascii, TAGS.image, TAGS.tool],
+    url: "https://jasperbernaers.com/image-to-ascii/",
+  },
+  {
+    title: "Image Tools Pro",
+    category: CATEGORIES.media,
+    description:
+      "Transform your photos with ease using imagetoolspro.com. Edit, crop, resize, and customize your images effortlessly with our advanced editing features.",
+    favicon: "https://imagetoolspro.com/picture.webp",
+    ogImage: "https://imagetoolspro.com/img/logo.svg",
+    subtitle: "Online Image Tools — Edit & Enhance Photos with imagetoolspro",
+    tags: [TAGS.image],
+    url: "https://imagetoolspro.com/",
+  },
+  {
     title: "LinkedIn Text Formatter",
     author: "Jasper Bernaers",
     category: CATEGORIES.media,
@@ -358,9 +447,13 @@ export const mediaLinks: Tool[] = [
   },
   {
     title: "Newt",
+    author: "Pablo Stanley",
     category: CATEGORIES.media,
     description:
       "A code-native pixel art tool. Paint like a normal raster editor; underneath, every pixel is a color token in clean, editable code. Export SVG, CSS, React, PNG, and GIF.",
+    favicon: "https://newt.sh/icon.svg",
+    ogImage: "https://newt.sh/opengraph-image.png",
+    subtitle: "pixel art, code underneath",
     tags: [TAGS.image],
     url: "https://newt.sh/",
   },
@@ -375,6 +468,16 @@ export const mediaLinks: Tool[] = [
     url: "https://www.ogimage.gallery/",
   },
   {
+    title: "OmniVoice Studio",
+    author: "Palash Debnath",
+    category: CATEGORIES.media,
+    description:
+      "A cinematic audio dubbing, cloning and voice generation studio. Enterprise-grade processing with AI-powered voice synthesis, 600+ language support, and self-hosted deployment.",
+    subtitle: "Cinematic audio dubbing, cloning & voice generation | palash.dev",
+    tags: [TAGS.audio],
+    url: "https://palash.dev/omnivoice/",
+  },
+  {
     title: "On Fire illustrations",
     category: CATEGORIES.media,
     description:
@@ -383,6 +486,28 @@ export const mediaLinks: Tool[] = [
     ogImage: "https://onfire.craftwork.design/images/Open-Graph.png",
     tags: [TAGS.illustration],
     url: "https://onfire.craftwork.design/",
+  },
+  {
+    title: "Online converter",
+    category: CATEGORIES.media,
+    description:
+      "Convert files like images, video, documents, audio and more to other formats with this free and fast online converter.",
+    favicon: "https://www.online-convert.com/assets/favicon/apple-touch-icon.png",
+    ogImage:
+      "https://www.online-convert.com/assets/social-share-image/en/www-online-convert-com.png",
+    subtitle: "Convert video, images, audio and documents for free",
+    tags: [TAGS.tool],
+    url: "https://www.online-convert.com/",
+  },
+  {
+    title: "Pablo Stanley",
+    author: "Pablo Stanley",
+    category: CATEGORIES.media,
+    description:
+      "Hi, I'm Pabs. I make pixel characters, doodle packs, illustration brushes, apps, and sometimes a course. Most are free. Take what you need.",
+    favicon: "https://public-files.gumroad.com/l8v9qevsaqbjn54phbdvxfe12ccz",
+    ogImage: "https://public-files.gumroad.com/w7gn8wgeepf3ju0xtqdoslypjb7f",
+    url: "https://pablostanley.gumroad.com/",
   },
   {
     title: "Pastefy",
@@ -513,6 +638,14 @@ export const mediaLinks: Tool[] = [
     url: "https://slides.supply/",
   },
   {
+    title: "Squoosh",
+    category: CATEGORIES.media,
+    description:
+      "Squoosh is the ultimate image optimizer that allows you to compress and compare images with different codecs in your browser.",
+    tags: [TAGS.image],
+    url: "https://squoosh.app/",
+  },
+  {
     title: "Storytale",
     category: CATEGORIES.media,
     description:
@@ -550,6 +683,16 @@ export const mediaLinks: Tool[] = [
     subtitle: "10,000+ Free AI-Generated 3D Icons",
     tags: [TAGS.illustration, TAGS["3D"]],
     url: "https://www.thiings.co/things",
+  },
+  {
+    title: "TinEye",
+    category: CATEGORIES.media,
+    description:
+      "Search billions of images with TinEye reverse image search and find where images appear online.",
+    favicon: "https://tineye.com/assets/touch_icons/touch-icon-192x192.webp",
+    subtitle: "Reverse Image Search",
+    tags: [TAGS.image],
+    url: "https://tineye.com/",
   },
   {
     title: "TopPNG",
@@ -621,6 +764,22 @@ export const mediaLinks: Tool[] = [
     url: "https://www.vecteezy.com/",
   },
   {
+    title: "vid2ascii",
+    category: CATEGORIES.media,
+    description: "Convert videos to ASCII.",
+    tags: [TAGS.ascii, TAGS.video],
+    url: "https://www.vid2ascii.com/",
+  },
+  {
+    title: "Voicebox",
+    category: CATEGORIES.media,
+    description:
+      "Near-perfect voice cloning with multiple TTS engines. Desktop app for Mac, Windows, and Linux. Multi-sample support, smart caching, local or remote inference.",
+    subtitle: "Open Source Voice Cloning Desktop App",
+    tags: [TAGS.audio],
+    url: "https://voicebox.sh/",
+  },
+  {
     title: "wannathis.one",
     category: CATEGORIES.media,
     description:
@@ -635,6 +794,23 @@ export const mediaLinks: Tool[] = [
     description:
       "This interactive web app transforms your webcam feed by overlaying customizable text on bright areas, encouraging creativity and mindfulness in real-time.",
     url: "https://text-over-video.figma.site/",
+  },
+  {
+    title: "yoinks",
+    author: "Pablo Stanley",
+    category: CATEGORIES.media,
+    description: "yoink any video from your terminal. no shady ads.",
+    favicon: "./github.svg",
+    ogImage: "https://raw.githubusercontent.com/pablostanley/yoinks/main/assets/home.png",
+    tags: [TAGS.video],
+    url: "https://github.com/pablostanley/yoinks",
+  },
+  {
+    title: "yt-dlp/yt-dlp",
+    category: CATEGORIES.media,
+    description: "A feature-rich command-line audio/video downloader.",
+    tags: [TAGS.audio, TAGS.video],
+    url: "https://github.com/yt-dlp/yt-dlp",
   },
   {
     title: "YUZU",

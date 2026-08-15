@@ -57,6 +57,14 @@ export const frontendLinks: Tool[] = [
     url: "https://flukeout.github.io/",
   },
   {
+    title: "CSS Grid Generator",
+    category: CATEGORIES.frontend,
+    description:
+      "A user-friendly tool designed for web developers to effortlessly create customizable CSS grids for seamless web development.",
+    tags: [TAGS.css],
+    url: "https://cssgridgenerator.io/",
+  },
+  {
     title: "CSS Polka Dot Generator",
     author: "Brian Louis Ramirez",
     category: CATEGORIES.frontend,
@@ -66,6 +74,16 @@ export const frontendLinks: Tool[] = [
     ogImage: "https://screenspan.net/img/polka-hero.jpg",
     tags: [TAGS.patterns],
     url: "https://screenspan.net/polka/",
+  },
+  {
+    title: "CSS Unit Converter",
+    category: CATEGORIES.frontend,
+    description:
+      "Easily convert pixels to CSS units like Rems, Ems, Inches and more with CSS Unit Converter tools. Get accurate results, fast!",
+    ogImage: "https://cssunitconverter.com/uploads/css-unit-converter-social-og.png",
+    subtitle: "Effortless, Fast and 100% Accurate",
+    tags: [TAGS.css],
+    url: "https://cssunitconverter.com/",
   },
   {
     title: "Flexbox Labs",
@@ -228,6 +246,15 @@ export const frontendLinks: Tool[] = [
     url: "https://www.pen.dev/",
   },
   {
+    title: "poco.",
+    author: "Hayk An",
+    category: CATEGORIES.frontend,
+    description: "Minimal set of CSS variables and utilities",
+    favicon: "https://hihayk.github.io/poco/images/favicon.png",
+    ogImage: "https://raw.githubusercontent.com/hihayk/poco/master/docs/shot-1.png",
+    url: "https://hihayk.github.io/poco/",
+  },
+  {
     title: "Pretext",
     category: CATEGORIES.frontend,
     description:
@@ -335,6 +362,22 @@ export const frontendLinks: Tool[] = [
     url: "https://tools.ui-layouts.com/shadows",
   },
   {
+    title: "Shape Divider App",
+    category: CATEGORIES.frontend,
+    description: "Create fully responsive shape dividers for your next web project",
+    tags: [TAGS.css, TAGS.html, TAGS.shapes, TAGS.svg],
+    url: "https://www.shapedivider.app/",
+  },
+  {
+    title: "Shaper",
+    author: "Hayk An",
+    category: CATEGORIES.frontend,
+    description: "Interface styles shaper",
+    favicon: "https://hihayk.github.io/shaper/logo192.png",
+    ogImage: "https://hihayk.github.io/shaper/shot.png",
+    url: "https://hihayk.github.io/shaper/",
+  },
+  {
     title: "soundcn",
     author: "soundcn",
     category: CATEGORIES.frontend,
@@ -357,6 +400,16 @@ export const frontendLinks: Tool[] = [
     url: "https://soundzjs.vercel.app/",
   },
   {
+    title: "Styleframe",
+    category: CATEGORIES.frontend,
+    description:
+      "Styleframe turns your design system into a type-safe TypeScript source of truth and compiles it to CSS — one engine behind tokens, themes, utilities, and recipes.",
+    favicon: "https://www.styleframe.dev/logo.svg",
+    ogImage: "https://www.styleframe.dev/_og/s/o_nwvl3e.png",
+    subtitle: "The Design Systems Styling Engine",
+    url: "https://www.styleframe.dev/",
+  },
+  {
     title: "StyleSeed",
     author: "bitjaru",
     category: CATEGORIES.frontend,
@@ -367,6 +420,16 @@ export const frontendLinks: Tool[] = [
     subtitle: "Design engine for vibe coding",
     tags: [TAGS.ai, TAGS.development, TAGS.ui],
     url: "https://styleseed-demo.vercel.app/",
+  },
+  {
+    title: "Takumi",
+    author: "Kane Wang",
+    category: CATEGORIES.dev,
+    description: "JSX to pixels in Rust. Node, Workers, browser. No headless Chrome.",
+    ogImage:
+      "https://raw.githubusercontent.com/kane50613/takumi/master/example/twitter-images/output/og-image.png",
+    subtitle: "Render JSX to images. Skip the browser.",
+    url: "https://takumi.kane.tw/",
   },
   {
     title: "ThemeCN",

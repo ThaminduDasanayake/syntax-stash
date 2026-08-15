@@ -7,7 +7,7 @@ export const colorLinks: Tool[] = [
   {
     title: "Actionable Color Palettes",
     author: "Csaba Kissi",
-    category: CATEGORIES.frontend,
+    category: CATEGORIES.colors,
     description: "Hand curated color palettes with previews",
     tags: [TAGS.color],
     url: "https://colorpalettes.colorion.co/",
@@ -74,7 +74,7 @@ export const colorLinks: Tool[] = [
   {
     title: "colorion",
     author: "Csaba Kissi",
-    category: CATEGORIES.frontend,
+    category: CATEGORIES.colors,
     description: "Discover, save, and copy modern color palettes for your next project.",
     favicon: "https://colorion.co/favicon.svg",
     ogImage: "https://colorion.co/og-image.png",
@@ -134,7 +134,7 @@ export const colorLinks: Tool[] = [
   {
     title: "Color Palette Generator",
     author: "Csaba Kissi",
-    category: CATEGORIES.frontend,
+    category: CATEGORIES.colors,
     description: "Generate new color palette generator with every press of the spacebar",
     favicon: "https://palettegenerator.colorion.co/thumbnail.png",
     ogImage: "https://palettegenerator.colorion.co/shared.png",
@@ -451,7 +451,7 @@ export const colorLinks: Tool[] = [
   {
     title: "Two Color Combinations",
     author: "Csaba Kissi",
-    category: CATEGORIES.frontend,
+    category: CATEGORIES.colors,
     description: "Hand-picked two color combinations with copy-ready HEX values.",
     favicon: "https://2colors.colorion.co/favicon.svg",
     ogImage: "https://2colors.colorion.co/og-image.png",
@@ -474,5 +474,15 @@ export const colorLinks: Tool[] = [
       "Browse 180 free CSS gradients for backgrounds, UI, websites, and design systems. Copy CSS code, explore color palettes, and find gradient inspiration fast.",
     tags: [TAGS.color],
     url: "https://webgradients.com/",
+  },
+  {
+    title: "Wheel",
+    author: "Hayk An",
+    category: CATEGORIES.colors,
+    description: "Color wheel generator",
+    favicon: "https://hihayk.github.io/wheel/favicon.ico",
+    ogImage: "https://raw.githubusercontent.com/hihayk/wheel/master/docs/shot.png",
+    tags: [TAGS.color],
+    url: "https://hihayk.github.io/wheel",
   },
 ];

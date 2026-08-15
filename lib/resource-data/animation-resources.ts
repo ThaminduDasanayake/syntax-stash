@@ -162,6 +162,17 @@ export const animationLinks: Tool[] = [
     url: "https://flicker.laurie.fyi/",
   },
   {
+    title: "FliiipBook",
+    author: "FliiipBook",
+    category: CATEGORIES.animation,
+    description:
+      "Draw frame-by-frame animations and create GIFs directly in your browser. Simple, fun, and powerful animation tool with onion skinning, timeline controls, and instant GIF export.",
+    favicon: "https://www.fliiipbook.com/favicon.ico",
+    ogImage: "https://www.fliiipbook.com/og-image.png",
+    tags: [TAGS.animation, TAGS.tool],
+    url: "https://www.fliiipbook.com/",
+  },
+  {
     title: "FlipOff.",
     author: "magnum6actual",
     category: CATEGORIES.animation,
@@ -364,5 +375,15 @@ export const animationLinks: Tool[] = [
     subtitle: "Essential transitions for web apps",
     tags: [TAGS.animation],
     url: "https://transitions.dev/",
+  },
+  {
+    title: "Unicorn Studio",
+    category: CATEGORIES.animation,
+    description:
+      "Create enchanting WebGL effects, motion, and interactivity — in minutes, not hours. Unicorn Studio makes WebGL easy for designers to embed in Framer, Webflow, or any website.",
+    ogImage: "https://www.unicorn.studio/images/ogg2.png",
+    subtitle: "No-code WebGL Tool",
+    tags: [TAGS.animation, TAGS.noCode],
+    url: "https://www.unicorn.studio/",
   },
 ];

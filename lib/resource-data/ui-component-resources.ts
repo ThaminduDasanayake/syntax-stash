@@ -126,6 +126,17 @@ export const uiLinks: Tool[] = [
     url: "https://boneyard.vercel.app/",
   },
   {
+    title: "Brand UI",
+    category: CATEGORIES.ui,
+    description:
+      "Documentation for Primer Brand - GitHub's design system for brand-led marketing experiences",
+    favicon: "https://primer.style/icon.svg",
+    ogImage: "https://primer.style/brand/og-image.png",
+    subtitle: "Primer",
+    tags: [TAGS["ui-component"]],
+    url: "https://primer.style/brand/",
+  },
+  {
     title: "Bundui",
     category: CATEGORIES.ui,
     description:
@@ -167,6 +178,14 @@ export const uiLinks: Tool[] = [
     subtitle: "Free CSS Components, Generators & Frontend Tools",
     tags: [TAGS["ui-component"]],
     url: "https://codefronts.com/",
+  },
+  {
+    title: "comimi",
+    category: CATEGORIES.ui,
+    description:
+      "comimi is a TypeScript/JavaScript library that allows you to embed a manga viewer into websites.",
+    tags: [TAGS.javascript, TAGS.typescript],
+    url: "https://yui540.com/comimi",
   },
   {
     title: "Componentry",
@@ -682,6 +701,16 @@ export const uiLinks: Tool[] = [
     subtitle: "Build sites fast. Fear no code.",
     tags: [TAGS["ui-component"]],
     url: "https://primeui.com/",
+  },
+  {
+    title: "Product UI",
+    category: CATEGORIES.ui,
+    description:
+      "Primer product UI is a set of guidelines, principles, and patterns for designing and building UI at GitHub.",
+    favicon: "https://primer.style/icon.svg",
+    subtitle: "Primer",
+    tags: [TAGS["ui-component"]],
+    url: "https://primer.style/product/",
   },
   {
     title: "React Aria",

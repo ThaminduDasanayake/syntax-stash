@@ -452,6 +452,15 @@ export const iconLinks: Tool[] = [
     url: "https://www.movingicons.dev/",
   },
   {
+    title: "Octicons",
+    category: CATEGORIES.icons,
+    description: "A scalable set of icons handcrafted by GitHub.",
+    favicon: "https://primer.style/icon.svg",
+    subtitle: "Primer",
+    tags: [TAGS.icons],
+    url: "https://primer.style/octicons/",
+  },
+  {
     title: "Overflow Design",
     category: CATEGORIES.icons,
     description:
@@ -469,6 +478,18 @@ export const iconLinks: Tool[] = [
       "A flexible icon family for interfaces, diagrams, presentations — whatever, really.",
     tags: [TAGS.icons],
     url: "https://phosphoricons.com/",
+  },
+  {
+    title: "Pixabots",
+    author: "Pablo Stanley",
+    category: CATEGORIES.icons,
+    description:
+      "10,752 unique pixel art characters with deterministic IDs. Free API for avatars, animated GIFs, and more.",
+    favicon: "https://pixabots.com/apple-icon.png",
+    ogImage: "https://pixabots.com/api/og",
+    subtitle: "Pixel Character Avatars",
+    tags: [TAGS.illustration],
+    url: "https://pixabots.com/",
   },
   {
     title: "Pixelarticons",

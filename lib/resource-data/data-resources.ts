@@ -53,6 +53,42 @@ export const dataLinks: Tool[] = [
     url: "https://www.freepublicapis.com/",
   },
   {
+    title: "Hoppscotch",
+    category: CATEGORIES.data,
+    description: "Helps you create requests faster, saving precious time on development.",
+    subtitle: "Open source API development ecosystem",
+    tags: [TAGS.tool],
+    url: "https://hoppscotch.io/",
+  },
+  {
+    title: "JSON For You",
+    category: CATEGORIES.data,
+    description:
+      "Online JSON view, format, minify, validate and compare. It also provides graph view to preview JSON data, semantic comparing two JSON diffs, convert JSON to CSV or CSV to JSON and support jq online.",
+    subtitle: "The best online JSON tool",
+    url: "https://json4u.com/",
+  },
+  {
+    title: "JSON Hero",
+    category: CATEGORIES.data,
+    description:
+      "JSON Hero makes reading and understand JSON files easy by giving you a clean and beautiful UI packed with extra features.",
+    subtitle: "A beautiful JSON viewer for the web",
+    tags: [TAGS.tool],
+    url: "https://jsonhero.io/",
+  },
+  {
+    title: "Jsonify",
+    category: CATEGORIES.data,
+    description:
+      "Transform XLSX/CSV translation files into structured JSON. Simplify multilingual website and app localization. Convert excel/csv language data to JSON objects effortlessly.",
+    favicon: "https://www.jsonify.net/images/seo-logo.svg",
+    ogImage: "https://jsonify.net/_next/static/media/og-image.834f1293.webp",
+    subtitle: "Free JSON generator",
+    tags: [TAGS.tool],
+    url: "https://www.jsonify.net/",
+  },
+  {
     title: "MCP Servers",
     category: CATEGORIES.data,
     description:
@@ -67,6 +103,15 @@ export const dataLinks: Tool[] = [
       "Turn any URL into structured data. The all-in-one API for browser automation: screenshots, PDFs, scraping, and link previews. No infrastructure to manage.",
     tags: [TAGS.data],
     url: "https://microlink.io/",
+  },
+  {
+    title: "Mockaroo",
+    category: CATEGORIES.data,
+    description:
+      "A free test data generator and API mocking tool - Mockaroo lets you create custom CSV, JSON, SQL, and Excel datasets to test and demo your software.",
+    subtitle: "Random Data Generator and API Mocking Tool | JSON / CSV / SQL / Excel",
+    tags: [TAGS.tool],
+    url: "https://www.mockaroo.com/",
   },
   {
     title: "Product Hunt",

@@ -70,6 +70,15 @@ export const typographyLinks: Tool[] = [
     url: "https://doodlefonts.app/",
   },
   {
+    title: "Doppler",
+    author: "Hayk An",
+    category: CATEGORIES.frontend,
+    description: "Type scale with dynamic line height",
+    favicon: "https://hihayk.github.io/doppler/favicon.ico",
+    ogImage: "https://raw.githubusercontent.com/hihayk/doppler/master/docs/shot.png",
+    url: "https://hihayk.github.io/doppler/",
+  },
+  {
     title: "Fallback Font Generator",
     author: "Brian Louis Ramirez",
     category: CATEGORIES.typography,
@@ -440,6 +449,18 @@ export const typographyLinks: Tool[] = [
     description: "Generate typefaces in seconds. No licenses, no limits.",
     tags: [TAGS.typography],
     url: "https://typograph.studio/en",
+  },
+  {
+    title: "Typography",
+    author: "GitHub",
+    category: CATEGORIES.typography,
+    description:
+      "We rely on a handful of custom fonts to carry forward our brand message, centered on Mona Sans and Mona Sans Mono.",
+    favicon: "./github.svg",
+    ogImage: "https://brand.github.com/_next/static/media/type-01.cbbd0662.png",
+    subtitle: "Brand Toolkit",
+    tags: [TAGS.typography],
+    url: "https://brand.github.com/foundations/typography",
   },
   {
     title: "Typotheque type foundry",
