@@ -13,6 +13,7 @@ import { frontendLinks } from "./frontend-resources";
 import { iconLinks } from "./icon-resources";
 import { inspirationLinks } from "./inspiration-resources";
 import { mediaLinks } from "./media-resources";
+import { mockupLinks } from "./mockup-resources";
 import { typographyLinks } from "./typography-resources";
 import { uiLinks } from "./ui-component-resources";
 
@@ -30,6 +31,7 @@ export { frontendLinks } from "./frontend-resources";
 export { iconLinks } from "./icon-resources";
 export { inspirationLinks } from "./inspiration-resources";
 export { mediaLinks } from "./media-resources";
+export { mockupLinks } from "./mockup-resources";
 export { typographyLinks } from "./typography-resources";
 export { uiLinks } from "./ui-component-resources";
 
@@ -47,6 +49,7 @@ export const resourceLinks: Tool[] = [
   ...iconLinks,
   ...inspirationLinks,
   ...mediaLinks,
+  ...mockupLinks,
   ...typographyLinks,
   ...uiLinks,
 ];

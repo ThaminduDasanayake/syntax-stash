@@ -12,6 +12,7 @@ export const CATEGORIES = {
   icons: "Icons & Illustrations",
   inspiration: "Inspiration & Galleries",
   media: "Media & Assets",
+  mockups: "Mockups & Presentations",
   typography: "Typography",
   ui: "UI Components & Libraries",
 } as const;

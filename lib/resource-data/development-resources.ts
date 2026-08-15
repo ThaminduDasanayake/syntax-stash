@@ -594,14 +594,6 @@ export const developmentLinks: Tool[] = [
     url: "https://www.home-assistant.io/",
   },
   {
-    title: "Hoppscotch",
-    category: CATEGORIES.dev,
-    description: "Helps you create requests faster, saving precious time on development.",
-    subtitle: "Open source API development ecosystem",
-    tags: [TAGS.tool],
-    url: "https://hoppscotch.io/",
-  },
-  {
     title: "ilovecreatives",
     category: CATEGORIES.dev,
     description:

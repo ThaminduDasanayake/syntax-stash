@@ -53,6 +53,14 @@ export const dataLinks: Tool[] = [
     url: "https://www.freepublicapis.com/",
   },
   {
+    title: "Hoppscotch",
+    category: CATEGORIES.data,
+    description: "Helps you create requests faster, saving precious time on development.",
+    subtitle: "Open source API development ecosystem",
+    tags: [TAGS.tool],
+    url: "https://hoppscotch.io/",
+  },
+  {
     title: "JSON For You",
     category: CATEGORIES.data,
     description:
