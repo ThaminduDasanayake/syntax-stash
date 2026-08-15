@@ -69,6 +69,7 @@ export const TAGS = {
   ui: "ui",
   "ui-component": "ui-component",
   vector: "vector",
+  video: "video",
 } as const;
 
 export type TagType = keyof typeof TAGS;

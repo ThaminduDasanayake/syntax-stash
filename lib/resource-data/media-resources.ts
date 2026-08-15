@@ -257,6 +257,30 @@ export const mediaLinks: Tool[] = [
     url: "https://fisga.gumroad.com/",
   },
   {
+    title: "Free ASCII Art Generator",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.media,
+    description:
+      "Free ASCII art generator — the easiest ascii pictures generator and ascii text maker online. Convert any image or photo to ASCII art, or transform text into ASCII art fonts (like Patorjk TAAG). 50+ FIGlet fonts, color mode, multiple character sets. Download as TXT or PNG. No upload, no sign-up, 100% private.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/ASCII-generator/og-image.png",
+    subtitle: "Text to ASCII Art Maker & Braille Art | No Upload | Patorjk Alternative",
+    tags: [TAGS.ascii, TAGS.tool],
+    url: "https://jasperbernaers.com/ASCII-generator/",
+  },
+  {
+    title: "Free ASCII Webcam",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.media,
+    description:
+      "Turn your webcam into live ASCII art — real-time camera to text conversion in your browser. Multiple character sets (Blocks, Braille, Detailed, Binary), color mode, adjustable FPS & resolution. Record GIFs, take snapshots. 100% private, no upload, no sign-up.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/ascii-webcam/og-image.png",
+    subtitle: "Live Camera to ASCII Art in Real-Time | No Upload",
+    tags: [TAGS.ascii, TAGS.tool],
+    url: "https://jasperbernaers.com/ascii-webcam/",
+  },
+  {
     title: "Free Barcode Generator Online",
     author: "Jasper Bernaers",
     category: CATEGORIES.media,
@@ -290,6 +314,18 @@ export const mediaLinks: Tool[] = [
     subtitle: "Vector SVG and PNG Graphics, Ouch Images for Download",
     tags: [TAGS.illustration],
     url: "https://icons8.com/illustrations",
+  },
+  {
+    title: "Free Online Audio Editor",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.media,
+    description:
+      "Free audio editor in your browser: cut, trim, fade, normalize, reverse, speed change, filters, echo, reverb, noise gate, compressor. Record from mic, view spectrogram, loop selections, export WAV or MP3. No upload — 100% private, no sign-up.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/audio-editor/og-image.png",
+    subtitle: "Cut, Trim, Effects, Record & Export MP3/WAV",
+    tags: [TAGS.audio, TAGS.tool],
+    url: "https://jasperbernaers.com/audio-editor/",
   },
   {
     title: "Free Placeholder Logo Collection",
@@ -345,6 +381,18 @@ export const mediaLinks: Tool[] = [
     subtitle: "Free, Batch, No Upload (Windows, Android, Mac)",
     tags: [TAGS.heic, TAGS.image, TAGS.jpg, TAGS.tool],
     url: "https://jasperbernaers.com/free-heic-to-jpg-converter/",
+  },
+  {
+    title: "Image to ASCII Converter",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.media,
+    description:
+      "Free image to ASCII converter — turn any PNG, JPG or WebP photo into ASCII art instantly. One-tap styles, braille dot art, color ASCII, dithering. Copy, share, download TXT or PNG. No upload, no signup, 100% in your browser.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/image-to-ascii/og-image.png",
+    subtitle: "PNG, JPG & SVG to ASCII Art Online Free",
+    tags: [TAGS.ascii, TAGS.image, TAGS.tool],
+    url: "https://jasperbernaers.com/image-to-ascii/",
   },
   {
     title: "Image Tools Pro",
@@ -414,6 +462,16 @@ export const mediaLinks: Tool[] = [
     subtitle: "The finest hand-picked OG Images ✨",
     tags: [TAGS.image],
     url: "https://www.ogimage.gallery/",
+  },
+  {
+    title: "OmniVoice Studio",
+    author: "Palash Debnath",
+    category: CATEGORIES.media,
+    description:
+      "A cinematic audio dubbing, cloning and voice generation studio. Enterprise-grade processing with AI-powered voice synthesis, 600+ language support, and self-hosted deployment.",
+    subtitle: "Cinematic audio dubbing, cloning & voice generation | palash.dev",
+    tags: [TAGS.audio],
+    url: "https://palash.dev/omnivoice/",
   },
   {
     title: "On Fire illustrations",
@@ -692,6 +750,22 @@ export const mediaLinks: Tool[] = [
     url: "https://www.vecteezy.com/",
   },
   {
+    title: "vid2ascii",
+    category: CATEGORIES.media,
+    description: "Convert videos to ASCII.",
+    tags: [TAGS.ascii, TAGS.video],
+    url: "https://www.vid2ascii.com/",
+  },
+  {
+    title: "Voicebox",
+    category: CATEGORIES.media,
+    description:
+      "Near-perfect voice cloning with multiple TTS engines. Desktop app for Mac, Windows, and Linux. Multi-sample support, smart caching, local or remote inference.",
+    subtitle: "Open Source Voice Cloning Desktop App",
+    tags: [TAGS.audio],
+    url: "https://voicebox.sh/",
+  },
+  {
     title: "wannathis.one",
     category: CATEGORIES.media,
     description:
@@ -706,6 +780,13 @@ export const mediaLinks: Tool[] = [
     description:
       "This interactive web app transforms your webcam feed by overlaying customizable text on bright areas, encouraging creativity and mindfulness in real-time.",
     url: "https://text-over-video.figma.site/",
+  },
+  {
+    title: "yt-dlp/yt-dlp",
+    category: CATEGORIES.media,
+    description: "A feature-rich command-line audio/video downloader.",
+    tags: [TAGS.audio, TAGS.video],
+    url: "https://github.com/yt-dlp/yt-dlp",
   },
   {
     title: "YUZU",

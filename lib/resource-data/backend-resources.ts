@@ -98,6 +98,14 @@ export const backendLinks: Tool[] = [
     url: "https://deno.com/deploy",
   },
   {
+    title: "DigitalPlat Domain",
+    category: CATEGORIES.backend,
+    description:
+      "DigitalPlat Domain is a nonprofit stewarding free, public-benefit namespaces for people and organizations everywhere.",
+    tags: [TAGS.tool],
+    url: "https://domain.digitalplat.org/",
+  },
+  {
     title: "Directus",
     category: CATEGORIES.backend,
     description:
@@ -105,6 +113,49 @@ export const backendLinks: Tool[] = [
     subtitle: "Collaborative Backend & Headless CMS",
     tags: [TAGS.backend],
     url: "https://directus.com/",
+  },
+  {
+    title: "Domain Digger",
+    category: CATEGORIES.backend,
+    description:
+      "Domain Digger is the full open-source toolkit for next-level domain analysis, providing detailed DNS, IP, WHOIS data, and SSL/TLS history in a user-friendly, no-install interface.",
+    favicon:
+      "https://raw.githubusercontent.com/wotschofsky/domain-digger/main/assets/logo-dark.svg",
+    ogImage: "https://digger.tools/opengraph-image-1jdwle",
+    subtitle: "DNS Lookup, WHOIS Lookup & more",
+    tags: [TAGS.tool],
+    url: "https://digger.tools/",
+  },
+  {
+    title: "Domainstack",
+    category: CATEGORIES.backend,
+    className: "bg-foreground border-paper",
+    description:
+      "Instant lookups for WHOIS, DNS, hosting, certificates, SEO and more, plus free domain tracking and change alerts.",
+    favicon: "https://domainstack.io/icon.svg",
+    ogImage: "https://github.com/user-attachments/assets/15754f3d-82d1-4b8d-9b13-616c3ab9dd53",
+    subtitle: "Domain Intelligence Made Easy",
+    tags: [TAGS.tool],
+    url: "https://domainstack.io/",
+  },
+  {
+    title: "Downdetector",
+    category: CATEGORIES.backend,
+    description:
+      "Check if services are down based on real-time user reports. Downdetector shows live status updates and outages people are experiencing.",
+    favicon: "https://downdetector.com/icons/apple-touch-icon.png",
+    ogImage: "https://downdetector.com/images/open-graph/banner.png",
+    subtitle: "Check real-time service problems and outages US",
+    tags: [TAGS.tool],
+    url: "https://downdetector.com/",
+  },
+  {
+    title: "Find Great Domain Names",
+    category: CATEGORIES.backend,
+    description:
+      "Each day, millions of expired domains are up for auction. You will miss golden opportunities.",
+    favicon: "https://yournextdomain.com/public/logo.svg",
+    url: "https://yournextdomain.com/",
   },
   {
     title: "Firecrawl Tools",
@@ -177,6 +228,16 @@ export const backendLinks: Tool[] = [
     description:
       "Fair-code workflow automation platform with native AI capabilities. Combine visual building with custom code, self-host or cloud, 400+ integrations.",
     url: "https://github.com/n8n-io/n8n",
+  },
+  {
+    title: "namae",
+    category: CATEGORIES.backend,
+    description: "Check availability of your new app name for major registries at once.",
+    favicon: "https://namae.dev/apple-touch-icon.png",
+    ogImage: "https://namae.dev/social.png",
+    subtitle: "Grab a slick name for your new project",
+    tags: [TAGS.tool],
+    url: "https://namae.dev/",
   },
   {
     title: "Payload",

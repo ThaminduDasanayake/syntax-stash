@@ -111,15 +111,6 @@ export const developmentLinks: Tool[] = [
     url: "https://bundlephobia.com/",
   },
   {
-    title: "Bytes",
-    category: CATEGORIES.dev,
-    description:
-      "The most entertaining (and informative) JavaScript newsletter. Delivered twice a week, for free.",
-    subtitle: "The Best JavaScript Newsletter",
-    tags: [TAGS.tool],
-    url: "https://bytes.dev/",
-  },
-  {
     title: "Cadmapper",
     category: CATEGORIES.dev,
     description:
@@ -220,31 +211,6 @@ export const developmentLinks: Tool[] = [
     url: "https://delphi.tools/",
   },
   {
-    title: "DEV Community",
-    category: CATEGORIES.dev,
-    description:
-      "A space to discuss and keep up software development and manage your software career",
-    tags: [TAGS.social, TAGS.tool],
-    url: "https://dev.to/",
-  },
-  {
-    title: "DevDocs API Documentation",
-    category: CATEGORIES.dev,
-    description:
-      "Fast, offline, and free documentation browser for developers. Search 100+ docs in one web app: HTML, CSS, JavaScript, PHP, Ruby, Python, Go, C, C++…",
-    tags: [TAGS.tool],
-    url: "https://devdocs.io/",
-  },
-  {
-    title: "Devhints",
-    author: "Rico Sta. Cruz",
-    category: CATEGORIES.dev,
-    description: "A ridiculous collection of web development cheatsheets",
-    subtitle: "TL;DR for developer documentation",
-    tags: [TAGS.development, TAGS.education],
-    url: "https://devhints.io/",
-  },
-  {
     title: "Dev Resources",
     author: "Marcel Cruz",
     category: CATEGORIES.dev,
@@ -303,14 +269,6 @@ export const developmentLinks: Tool[] = [
     url: "https://diffs.com/",
   },
   {
-    title: "DigitalPlat Domain",
-    category: CATEGORIES.dev,
-    description:
-      "DigitalPlat Domain is a nonprofit stewarding free, public-benefit namespaces for people and organizations everywhere.",
-    tags: [TAGS.tool],
-    url: "https://domain.digitalplat.org/",
-  },
-  {
     title: "Ditto",
     author: "ion.design",
     category: CATEGORIES.dev,
@@ -321,41 +279,6 @@ export const developmentLinks: Tool[] = [
     subtitle: "Clone any website",
     tags: [TAGS.tool],
     url: "https://ditto.site/",
-  },
-  {
-    title: "Domain Digger",
-    category: CATEGORIES.dev,
-    description:
-      "Domain Digger is the full open-source toolkit for next-level domain analysis, providing detailed DNS, IP, WHOIS data, and SSL/TLS history in a user-friendly, no-install interface.",
-    favicon:
-      "https://raw.githubusercontent.com/wotschofsky/domain-digger/main/assets/logo-dark.svg",
-    ogImage: "https://digger.tools/opengraph-image-1jdwle",
-    subtitle: "DNS Lookup, WHOIS Lookup & more",
-    tags: [TAGS.tool],
-    url: "https://digger.tools/",
-  },
-  {
-    title: "Domainstack",
-    category: CATEGORIES.dev,
-    className: "bg-foreground border-paper",
-    description:
-      "Instant lookups for WHOIS, DNS, hosting, certificates, SEO and more, plus free domain tracking and change alerts.",
-    favicon: "https://domainstack.io/icon.svg",
-    ogImage: "https://github.com/user-attachments/assets/15754f3d-82d1-4b8d-9b13-616c3ab9dd53",
-    subtitle: "Domain Intelligence Made Easy",
-    tags: [TAGS.tool],
-    url: "https://domainstack.io/",
-  },
-  {
-    title: "Downdetector",
-    category: CATEGORIES.dev,
-    description:
-      "Check if services are down based on real-time user reports. Downdetector shows live status updates and outages people are experiencing.",
-    favicon: "https://downdetector.com/icons/apple-touch-icon.png",
-    ogImage: "https://downdetector.com/images/open-graph/banner.png",
-    subtitle: "Check real-time service problems and outages US",
-    tags: [TAGS.tool],
-    url: "https://downdetector.com/",
   },
   {
     title: "Dub",
@@ -388,14 +311,6 @@ export const developmentLinks: Tool[] = [
     url: "https://fallow.tools/",
   },
   {
-    title: "Find Great Domain Names",
-    category: CATEGORIES.dev,
-    description:
-      "Each day, millions of expired domains are up for auction. You will miss golden opportunities.",
-    favicon: "https://yournextdomain.com/public/logo.svg",
-    url: "https://yournextdomain.com/",
-  },
-  {
     title: "Flority",
     category: CATEGORIES.dev,
     description: "Your Online Flower Arrangement App",
@@ -410,60 +325,12 @@ export const developmentLinks: Tool[] = [
     url: "https://fluidcad.io/",
   },
   {
-    title: "Free ASCII Art Generator",
-    author: "Jasper Bernaers",
-    category: CATEGORIES.dev,
-    description:
-      "Free ASCII art generator — the easiest ascii pictures generator and ascii text maker online. Convert any image or photo to ASCII art, or transform text into ASCII art fonts (like Patorjk TAAG). 50+ FIGlet fonts, color mode, multiple character sets. Download as TXT or PNG. No upload, no sign-up, 100% private.",
-    favicon: "https://jasperbernaers.com/favicon.svg",
-    ogImage: "https://jasperbernaers.com/ASCII-generator/og-image.png",
-    subtitle: "Text to ASCII Art Maker & Braille Art | No Upload | Patorjk Alternative",
-    tags: [TAGS.ascii, TAGS.tool],
-    url: "https://jasperbernaers.com/ASCII-generator/",
-  },
-  {
-    title: "Free ASCII Webcam",
-    author: "Jasper Bernaers",
-    category: CATEGORIES.dev,
-    description:
-      "Turn your webcam into live ASCII art — real-time camera to text conversion in your browser. Multiple character sets (Blocks, Braille, Detailed, Binary), color mode, adjustable FPS & resolution. Record GIFs, take snapshots. 100% private, no upload, no sign-up.",
-    favicon: "https://jasperbernaers.com/favicon.svg",
-    ogImage: "https://jasperbernaers.com/ascii-webcam/og-image.png",
-    subtitle: "Live Camera to ASCII Art in Real-Time | No Upload",
-    tags: [TAGS.ascii, TAGS.tool],
-    url: "https://jasperbernaers.com/ascii-webcam/",
-  },
-  {
     title: "Free for Developers",
     category: CATEGORIES.dev,
     description:
       "Developers and Open Source authors now have a massive amount of services offering free tiers, but it can be hard to find them all to make informed decisions.",
     tags: [TAGS.tool],
     url: "https://free-for.dev/",
-  },
-  {
-    title: "Free Online Audio Editor",
-    author: "Jasper Bernaers",
-    category: CATEGORIES.dev,
-    description:
-      "Free audio editor in your browser: cut, trim, fade, normalize, reverse, speed change, filters, echo, reverb, noise gate, compressor. Record from mic, view spectrogram, loop selections, export WAV or MP3. No upload — 100% private, no sign-up.",
-    favicon: "https://jasperbernaers.com/favicon.svg",
-    ogImage: "https://jasperbernaers.com/audio-editor/og-image.png",
-    subtitle: "Cut, Trim, Effects, Record & Export MP3/WAV",
-    tags: [TAGS.audio, TAGS.tool],
-    url: "https://jasperbernaers.com/audio-editor/",
-  },
-  {
-    title: "Free PDF Tools Online",
-    author: "Jasper Bernaers",
-    category: CATEGORIES.dev,
-    description:
-      "Free online PDF tools — merge PDF files into one, split PDF by pages, compress PDF size by 80%, convert PDF to JPG images, convert JPG to PDF, rotate and organize pages. 100% browser-based with no file upload to any server. No watermarks, no daily limits, no registration. Best free alternative to SmallPDF, iLovePDF, PDF24, Sejda and Adobe Acrobat online. Works on Windows, Mac, Linux, iPhone and Android.",
-    favicon: "https://jasperbernaers.com/favicon.svg",
-    ogImage: "https://jasperbernaers.com/pdf/og-image.png",
-    subtitle: "Merge, Split, Compress, Convert PDF to JPG | No Upload, No Watermark, No Sign‑Up",
-    tags: [TAGS.pdf, TAGS.tool],
-    url: "https://jasperbernaers.com/pdf/",
   },
   {
     title: "GalaxyBrain",
@@ -576,13 +443,6 @@ export const developmentLinks: Tool[] = [
     url: "https://grep.app/",
   },
   {
-    title: "High Scalability",
-    category: CATEGORIES.dev,
-    description: "Building bigger, faster, more reliable websites.",
-    tags: [TAGS.development, TAGS.education],
-    url: "https://highscalability.com/",
-  },
-  {
     title: "Home Assistant",
     author: "Home Assistant",
     category: CATEGORIES.dev,
@@ -602,38 +462,6 @@ export const developmentLinks: Tool[] = [
     url: "https://ilovecreatives.com/",
   },
   {
-    title: "iLovePDF",
-    category: CATEGORIES.dev,
-    description:
-      "iLovePDF is an online service to work with PDF files completely free and easy to use. Merge PDF, split PDF, compress PDF, office to PDF, PDF to JPG and more!",
-    favicon: "https://www.ilovepdf.com/img/app-icon.png",
-    ogImage: "https://www.ilovepdf.com/img/ilovepdf/social/en-US/ilovepdf.png",
-    subtitle: "Online PDF tools for PDF lovers",
-    tags: [TAGS.pdf, TAGS.tool],
-    url: "https://www.ilovepdf.com/",
-  },
-  {
-    title: "Image to ASCII Converter",
-    author: "Jasper Bernaers",
-    category: CATEGORIES.dev,
-    description:
-      "Free image to ASCII converter — turn any PNG, JPG or WebP photo into ASCII art instantly. One-tap styles, braille dot art, color ASCII, dithering. Copy, share, download TXT or PNG. No upload, no signup, 100% in your browser.",
-    favicon: "https://jasperbernaers.com/favicon.svg",
-    ogImage: "https://jasperbernaers.com/image-to-ascii/og-image.png",
-    subtitle: "PNG, JPG & SVG to ASCII Art Online Free",
-    tags: [TAGS.ascii, TAGS.image, TAGS.tool],
-    url: "https://jasperbernaers.com/image-to-ascii/",
-  },
-  {
-    title: "IMG.LY SDK",
-    category: CATEGORIES.dev,
-    description:
-      "IMG.LY's video, photo and creative SDK brings beautiful creative editing to your applications. Powering 500+ million creations per month.",
-    subtitle: "Bring Photo, Video, and Design Editing into Your App",
-    tags: [TAGS.tool],
-    url: "https://img.ly/",
-  },
-  {
     title: "Immich",
     category: CATEGORIES.dev,
     description:
@@ -647,17 +475,6 @@ export const developmentLinks: Tool[] = [
     favicon: "https://inputoutput.dev/favicon.ico",
     tags: [TAGS.tool],
     url: "https://inputoutput.dev/",
-  },
-  {
-    title: "Invoice Builder",
-    author: "piratuks",
-    category: CATEGORIES.dev,
-    description:
-      "Invoice and quotation builder desktop app with PDF export, designed for small businesses and freelancers. Create, manage, and export invoices and quotes easily using a local database in an Electron-based app.",
-    favicon: "/github.svg",
-    ogImage:
-      "https://opengraph.githubassets.com/f50c07ae3a04dedde35800ded790b1ed85d154e313f6e136a5cc3c7e256c5d65/piratuks/invoice-builder",
-    url: "https://github.com/piratuks/invoice-builder",
   },
   {
     title: "IT Tools - Handy online tools for developers",
@@ -729,16 +546,6 @@ export const developmentLinks: Tool[] = [
     url: "https://www.mux.com/",
   },
   {
-    title: "namae",
-    category: CATEGORIES.dev,
-    description: "Check availability of your new app name for major registries at once.",
-    favicon: "https://namae.dev/apple-touch-icon.png",
-    ogImage: "https://namae.dev/social.png",
-    subtitle: "Grab a slick name for your new project",
-    tags: [TAGS.tool],
-    url: "https://namae.dev/",
-  },
-  {
     title: "nomnoml",
     category: CATEGORIES.dev,
     description:
@@ -769,15 +576,6 @@ export const developmentLinks: Tool[] = [
     description: "Progressive Web Application with 12 open source frontend focused tools",
     tags: [TAGS.development],
     url: "https://omatsuri.app/",
-  },
-  {
-    title: "OmniVoice Studio",
-    author: "Palash Debnath",
-    category: CATEGORIES.dev,
-    description:
-      "A cinematic audio dubbing, cloning and voice generation studio. Enterprise-grade processing with AI-powered voice synthesis, 600+ language support, and self-hosted deployment.",
-    subtitle: "Cinematic audio dubbing, cloning & voice generation | palash.dev",
-    url: "https://palash.dev/omnivoice/",
   },
   {
     title: "OpenFlowKit",
@@ -825,40 +623,12 @@ export const developmentLinks: Tool[] = [
     url: "https://oualator.com/",
   },
   {
-    title: "OverAPI.com",
-    category: CATEGORIES.dev,
-    description: "OverAPI.com is a site collecting all the cheatsheets,all!",
-    subtitle: "Collecting all the cheat sheets",
-    tags: [TAGS.development, TAGS.education],
-    url: "https://overapi.com/",
-  },
-  {
-    title: "Paperless-ngx",
-    author: "the Paperless-ngx team",
-    category: CATEGORIES.dev,
-    description: "Documentation for the Paperless-ngx document management system software.",
-    favicon:
-      "https://raw.githubusercontent.com/paperless-ngx/paperless-ngx/dev/docs/assets/logo_leaf.svg",
-    ogImage:
-      "https://opengraph.githubassets.com/e41f9417cd92968ecb63476d01b5e01def7f1a1b63698286415859dd4cd2770f/paperless-ngx/paperless-ngx",
-    tags: [TAGS.tool],
-    url: "https://docs.paperless-ngx.com/",
-  },
-  {
     title: "patorjk.com",
     category: CATEGORIES.dev,
     description:
       "Welcome! My name is Pat. I am a software developer and amateur photographer. Here you'll find an array of web apps, programming tutorials, and random projects.",
     tags: [TAGS.tool],
     url: "https://patorjk.com/",
-  },
-  {
-    title: "PDFCraft",
-    category: CATEGORIES.dev,
-    description:
-      "Free, Private & Browser-Based. Merge, edit, and edit PDF files online without uploading to servers.",
-    subtitle: "Professional PDF Tools",
-    url: "https://pdfcraft.devtoolcafe.com/en/",
   },
   {
     title: "Photoroom - AI Photo Editor",
@@ -1013,34 +783,12 @@ export const developmentLinks: Tool[] = [
     url: "https://sitecritique.app/",
   },
   {
-    title: "SitePoint",
-    category: CATEGORIES.dev,
-    description:
-      "Learn Web Design & Development with SitePoint tutorials, courses and books - HTML5, CSS3, JavaScript, PHP, mobile app development, Responsive Web Design",
-    subtitle: "Learn HTML, CSS, JavaScript, PHP, Ruby & Responsive Design",
-    tags: [TAGS.design, TAGS.development, TAGS.education],
-    url: "https://www.sitepoint.com/",
-  },
-  {
     title: "SkySend",
     category: CATEGORIES.dev,
     description:
       "Minimalist, end-to-end encrypted, self-hostable file and note sharing. Zero-knowledge server - files and notes are encrypted in the browser before upload. No accounts, no telemetry, built for speed and security.",
     subtitle: "Encrypted File & Note Sharing",
     url: "https://skysend.app/",
-  },
-  {
-    title: "Stirling",
-    category: CATEGORIES.dev,
-    description:
-      "GitHub's #1 PDF application with 30M+ downloads. The next generation of the PDF Editor - private, open-source, and built to scale.",
-    favicon:
-      "https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/frontend/editor/src/core/assets/brand/branding-logo/logo-mark.svg",
-    ogImage:
-      "https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/frontend/editor/src/core/assets/brand/modern-logo/Firstpage.png",
-    subtitle: "PDF Processor",
-    tags: [TAGS.pdf, TAGS.tool],
-    url: "https://stirling.com/",
   },
   {
     title: "Super Designer",
@@ -1210,34 +958,11 @@ export const developmentLinks: Tool[] = [
     url: "https://vert.sh/",
   },
   {
-    title: "vid2ascii",
-    category: CATEGORIES.dev,
-    description: "Convert videos to ASCII.",
-    tags: [TAGS.tool],
-    url: "https://www.vid2ascii.com/",
-  },
-  {
-    title: "VisuAlgo",
-    category: CATEGORIES.dev,
-    description:
-      "VisuAlgo was conceptualised in 2011 by Associate Professor Steven Halim (NUS School of Computing) as a tool to help his students better understand data structures and algorithms, by allowing them to learn the basics on their own and at their own pace. Together with his students from the National University of Singapore, a series of visualizations were developed and consolidated, from simple sorting algorithms to complex graph data structures. Though specifically designed for the use of NUS students taking various data structure and algorithm classes (CS1010/equivalent, CS2040/equivalent (inclusive of IT5003)), CS3230, CS3233, and CS4234), as advocators of online learning, we hope that curious minds around the world will find these visualizations useful as well.",
-    subtitle: "Visualising data structures and algorithms through animation",
-    url: "https://visualgo.net/en",
-  },
-  {
     title: "Visual Studio Code for the Web",
     category: CATEGORIES.dev,
     description: "Build with Visual Studio Code, anywhere, anytime, entirely in your browser.",
     tags: [TAGS.tool],
     url: "https://vscode.dev/",
-  },
-  {
-    title: "Voicebox",
-    category: CATEGORIES.dev,
-    description:
-      "Near-perfect voice cloning with multiple TTS engines. Desktop app for Mac, Windows, and Linux. Multi-sample support, smart caching, local or remote inference.",
-    subtitle: "Open Source Voice Cloning Desktop App",
-    url: "https://voicebox.sh/",
   },
   {
     title: "Web Apps by 123apps",
@@ -1284,12 +1009,5 @@ export const developmentLinks: Tool[] = [
     subtitle: "Build Your Perfect Workout",
     tags: [TAGS.inspiration],
     url: "https://www.workout.cool/en",
-  },
-  {
-    title: "yt-dlp/yt-dlp",
-    category: CATEGORIES.dev,
-    description: "A feature-rich command-line audio/video downloader.",
-    tags: [TAGS.tool],
-    url: "https://github.com/yt-dlp/yt-dlp",
   },
 ];

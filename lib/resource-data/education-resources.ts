@@ -196,6 +196,15 @@ export const educationLinks: Tool[] = [
     url: "https://github.com/codecrafters-io/build-your-own-x",
   },
   {
+    title: "Bytes",
+    category: CATEGORIES.education,
+    description:
+      "The most entertaining (and informative) JavaScript newsletter. Delivered twice a week, for free.",
+    subtitle: "The Best JavaScript Newsletter",
+    tags: [TAGS.newsletter],
+    url: "https://bytes.dev/",
+  },
+  {
     title: "Coddy",
     category: CATEGORIES.education,
     description: "Interactive lessons in Python, JavaScript, SQL, and 15+ languages.",
@@ -320,6 +329,14 @@ export const educationLinks: Tool[] = [
     favicon: "https://designbeyondbarriers.com/apple-touch-icon.png",
     ogImage: "https://designbeyondbarriers.com/share.jpg",
     url: "https://designbeyondbarriers.com/",
+  },
+  {
+    title: "DEV Community",
+    category: CATEGORIES.education,
+    description:
+      "A space to discuss and keep up software development and manage your software career",
+    tags: [TAGS.social, TAGS.tool],
+    url: "https://dev.to/",
   },
   {
     title: "Developer Roadmaps",
@@ -465,6 +482,13 @@ export const educationLinks: Tool[] = [
       "View any Hugging Face model. We believe good understanding of AI models unlocks innovative ideas.",
     tags: [TAGS.education],
     url: "https://hfviewer.com/",
+  },
+  {
+    title: "High Scalability",
+    category: CATEGORIES.education,
+    description: "Building bigger, faster, more reliable websites.",
+    tags: [TAGS.development, TAGS.education],
+    url: "https://highscalability.com/",
   },
   {
     title: "Himalayas",
@@ -807,6 +831,15 @@ export const educationLinks: Tool[] = [
     url: "https://www.shortcutfoo.com/",
   },
   {
+    title: "SitePoint",
+    category: CATEGORIES.education,
+    description:
+      "Learn Web Design & Development with SitePoint tutorials, courses and books - HTML5, CSS3, JavaScript, PHP, mobile app development, Responsive Web Design",
+    subtitle: "Learn HTML, CSS, JavaScript, PHP, Ruby & Responsive Design",
+    tags: [TAGS.design, TAGS.development, TAGS.education],
+    url: "https://www.sitepoint.com/",
+  },
+  {
     title: "SQL Squid Game",
     category: CATEGORIES.education,
     description:
@@ -966,6 +999,14 @@ export const educationLinks: Tool[] = [
       "The practical guide to finishing what AI starts. Tutorials, tool reviews, and honest guides for founders, developers, and creators shipping with AI.",
     subtitle: "The Missing Manual for AI-Assisted Development",
     url: "https://blog.vibecoder.me/",
+  },
+  {
+    title: "VisuAlgo",
+    category: CATEGORIES.education,
+    description:
+      "VisuAlgo was conceptualised in 2011 by Associate Professor Steven Halim (NUS School of Computing) as a tool to help his students better understand data structures and algorithms, by allowing them to learn the basics on their own and at their own pace. Together with his students from the National University of Singapore, a series of visualizations were developed and consolidated, from simple sorting algorithms to complex graph data structures. Though specifically designed for the use of NUS students taking various data structure and algorithm classes (CS1010/equivalent, CS2040/equivalent (inclusive of IT5003)), CS3230, CS3233, and CS4234), as advocators of online learning, we hope that curious minds around the world will find these visualizations useful as well.",
+    subtitle: "Visualising data structures and algorithms through animation",
+    url: "https://visualgo.net/en",
   },
   {
     title: "Visual Types",

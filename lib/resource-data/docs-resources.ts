@@ -31,6 +31,23 @@ export const documentationLinks: Tool[] = [
     url: "https://anytype.io/",
   },
   {
+    title: "DevDocs API Documentation",
+    category: CATEGORIES.docs,
+    description:
+      "Fast, offline, and free documentation browser for developers. Search 100+ docs in one web app: HTML, CSS, JavaScript, PHP, Ruby, Python, Go, C, C++…",
+    tags: [TAGS.tool],
+    url: "https://devdocs.io/",
+  },
+  {
+    title: "Devhints",
+    author: "Rico Sta. Cruz",
+    category: CATEGORIES.docs,
+    description: "A ridiculous collection of web development cheatsheets",
+    subtitle: "TL;DR for developer documentation",
+    tags: [TAGS.development, TAGS.education],
+    url: "https://devhints.io/",
+  },
+  {
     title: "docmd",
     category: CATEGORIES.docs,
     description:
@@ -55,6 +72,18 @@ export const documentationLinks: Tool[] = [
     url: "https://www.emailmd.dev/",
   },
   {
+    title: "Free PDF Tools Online",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.docs,
+    description:
+      "Free online PDF tools — merge PDF files into one, split PDF by pages, compress PDF size by 80%, convert PDF to JPG images, convert JPG to PDF, rotate and organize pages. 100% browser-based with no file upload to any server. No watermarks, no daily limits, no registration. Best free alternative to SmallPDF, iLovePDF, PDF24, Sejda and Adobe Acrobat online. Works on Windows, Mac, Linux, iPhone and Android.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/pdf/og-image.png",
+    subtitle: "Merge, Split, Compress, Convert PDF to JPG | No Upload, No Watermark, No Sign‑Up",
+    tags: [TAGS.pdf, TAGS.tool],
+    url: "https://jasperbernaers.com/pdf/",
+  },
+  {
     title: "Fumadocs",
     category: CATEGORIES.docs,
     description: "The React.js documentation framework.",
@@ -73,6 +102,28 @@ export const documentationLinks: Tool[] = [
     subtitle: "Instant, Professional Code Documentation",
     tags: [TAGS.development],
     url: "https://gitdocify.com/",
+  },
+  {
+    title: "iLovePDF",
+    category: CATEGORIES.docs,
+    description:
+      "iLovePDF is an online service to work with PDF files completely free and easy to use. Merge PDF, split PDF, compress PDF, office to PDF, PDF to JPG and more!",
+    favicon: "https://www.ilovepdf.com/img/app-icon.png",
+    ogImage: "https://www.ilovepdf.com/img/ilovepdf/social/en-US/ilovepdf.png",
+    subtitle: "Online PDF tools for PDF lovers",
+    tags: [TAGS.pdf, TAGS.tool],
+    url: "https://www.ilovepdf.com/",
+  },
+  {
+    title: "Invoice Builder",
+    author: "piratuks",
+    category: CATEGORIES.docs,
+    description:
+      "Invoice and quotation builder desktop app with PDF export, designed for small businesses and freelancers. Create, manage, and export invoices and quotes easily using a local database in an Electron-based app.",
+    favicon: "/github.svg",
+    ogImage:
+      "https://opengraph.githubassets.com/f50c07ae3a04dedde35800ded790b1ed85d154e313f6e136a5cc3c7e256c5d65/piratuks/invoice-builder",
+    url: "https://github.com/piratuks/invoice-builder",
   },
   {
     title: "Markdown Editor Online",
@@ -118,6 +169,33 @@ export const documentationLinks: Tool[] = [
     url: "https://jasperbernaers.com/notepad/",
   },
   {
+    title: "OverAPI.com",
+    category: CATEGORIES.docs,
+    description: "OverAPI.com is a site collecting all the cheatsheets,all!",
+    subtitle: "Collecting all the cheat sheets",
+    tags: [TAGS.development, TAGS.education],
+    url: "https://overapi.com/",
+  },
+  {
+    title: "Paperless-ngx",
+    author: "The Paperless-ngx team",
+    category: CATEGORIES.docs,
+    description: "Documentation for the Paperless-ngx document management system software.",
+    favicon:
+      "https://raw.githubusercontent.com/paperless-ngx/paperless-ngx/dev/docs/assets/logo_leaf.svg",
+    ogImage:
+      "https://opengraph.githubassets.com/e41f9417cd92968ecb63476d01b5e01def7f1a1b63698286415859dd4cd2770f/paperless-ngx/paperless-ngx",
+    url: "https://docs.paperless-ngx.com/",
+  },
+  {
+    title: "PDFCraft",
+    category: CATEGORIES.docs,
+    description:
+      "Free, Private & Browser-Based. Merge, edit, and edit PDF files online without uploading to servers.",
+    subtitle: "Professional PDF Tools",
+    url: "https://pdfcraft.devtoolcafe.com/en/",
+  },
+  {
     title: "Quarkdown",
     category: CATEGORIES.docs,
     description:
@@ -144,5 +222,18 @@ export const documentationLinks: Tool[] = [
     ogImage: "https://sli.dev/og-image.png",
     tags: [TAGS.presentation],
     url: "https://sli.dev/",
+  },
+  {
+    title: "Stirling",
+    category: CATEGORIES.docs,
+    description:
+      "GitHub's #1 PDF application with 30M+ downloads. The next generation of the PDF Editor - private, open-source, and built to scale.",
+    favicon:
+      "https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/frontend/editor/src/core/assets/brand/branding-logo/logo-mark.svg",
+    ogImage:
+      "https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/frontend/editor/src/core/assets/brand/modern-logo/Firstpage.png",
+    subtitle: "PDF Processor",
+    tags: [TAGS.pdf, TAGS.tool],
+    url: "https://stirling.com/",
   },
 ];
