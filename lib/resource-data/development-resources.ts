@@ -28,15 +28,6 @@ export const developmentLinks: Tool[] = [
     url: "https://www.10x.app/",
   },
   {
-    title: "Accept: text/markdown",
-    category: CATEGORIES.dev,
-    description:
-      "Serve Markdown to AI agents and LLMs via the Accept: text/markdown header. Browsers get HTML, agents get clean Markdown.",
-    subtitle: "Serve Markdown to AI Agents with Accept Headers",
-    tags: [TAGS.markdown, TAGS.tool],
-    url: "https://acceptmarkdown.com/",
-  },
-  {
     title: "AdGuard Ad Blocker",
     category: CATEGORIES.dev,
     description:
@@ -46,15 +37,6 @@ export const developmentLinks: Tool[] = [
     subtitle: "Block ads, popups, and trackers",
     tags: [TAGS.tool],
     url: "https://adguard.com/",
-  },
-  {
-    title: "Alexandrie",
-    author: "Alexandrie Team",
-    category: CATEGORIES.dev,
-    description:
-      "Alexandrie is a modern note-taking and knowledge base application built for students & creators. Write, organize and render beautiful notes using extended Markdown in a fast, clean and distraction-free interface. Self-hostable with Docker.",
-    subtitle: "Modern Markdown Note-Taking & Knowledge Base App",
-    url: "https://alexandrie-hub.fr/",
   },
   {
     title: "almostnode",
@@ -73,14 +55,6 @@ export const developmentLinks: Tool[] = [
     subtitle: "Easily add speech recognition to your site",
     tags: [TAGS.tool],
     url: "https://www.talater.com/annyang/",
-  },
-  {
-    title: "Anytype",
-    category: CATEGORIES.dev,
-    description:
-      "Create notes, tasks, databases, and chats that only you can access. Your data stays on your device — fully owned, secure, and private. Free to start.",
-    subtitle: "A safe haven for digital collaboration",
-    url: "https://anytype.io/",
   },
   {
     title: "Arnis",
@@ -349,21 +323,6 @@ export const developmentLinks: Tool[] = [
     url: "https://ditto.site/",
   },
   {
-    title: "docmd",
-    category: CATEGORIES.dev,
-    description:
-      "The zero-config documentation engine that starts instantly and scales with you, fast, SEO-friendly, and AI-ready by default.",
-    subtitle: "Build production-ready documentation from Markdown in seconds",
-    url: "https://docmd.io/",
-  },
-  {
-    title: "docsify",
-    category: CATEGORIES.dev,
-    description: "A magical documentation generator.",
-    favicon: "https://docsify.js.org/_media/icon.svg",
-    url: "https://docsify.js.org/#/",
-  },
-  {
     title: "Domain Digger",
     category: CATEGORIES.dev,
     description:
@@ -408,15 +367,6 @@ export const developmentLinks: Tool[] = [
     subtitle: "The Modern Link Attribution Platform",
     tags: [TAGS.development, TAGS.tool],
     url: "https://github.com/dubinc/dub",
-  },
-  {
-    title: "emailmd",
-    category: CATEGORIES.dev,
-    description:
-      "Turn markdown into responsive, email-safe HTML that renders perfectly across every client.",
-    subtitle: "Responsive Emails, Written in Markdown",
-    tags: [TAGS.email, TAGS.markdown],
-    url: "https://www.emailmd.dev/",
   },
   {
     title: "explainx.ai Tools",
@@ -516,14 +466,6 @@ export const developmentLinks: Tool[] = [
     url: "https://jasperbernaers.com/pdf/",
   },
   {
-    title: "Fumadocs",
-    category: CATEGORIES.dev,
-    description: "The React.js documentation framework.",
-    favicon: "https://www.fumadocs.dev/icon.png",
-    ogImage: "https://www.fumadocs.dev/banner.png",
-    url: "https://www.fumadocs.dev/",
-  },
-  {
     title: "GalaxyBrain",
     category: CATEGORIES.dev,
     description: "An information operating system powered by local files.",
@@ -558,14 +500,6 @@ export const developmentLinks: Tool[] = [
     subtitle: "Visualize Any GitHub Repository",
     tags: [TAGS.tool],
     url: "https://gitdiagram.com/",
-  },
-  {
-    title: "GitDocify",
-    category: CATEGORIES.dev,
-    description:
-      "Turn any GitHub repository into structured, source-grounded documentation with GitDocify..",
-    tags: [TAGS.development],
-    url: "https://gitdocify.com/",
   },
   {
     title: "Git Explorer",
@@ -792,37 +726,6 @@ export const developmentLinks: Tool[] = [
     url: "https://makemydrivefun.com/",
   },
   {
-    title: "Markdown Editor Online",
-    author: "Jasper Bernaers",
-    category: CATEGORIES.dev,
-    description:
-      "Free online Markdown editor with instant live preview — GitHub-style preview, README & blog templates, visual table generator, Mermaid diagrams, math, share links, export to HTML/MD/PDF. Auto-saves in your browser. No sign-up, no upload.",
-    favicon: "https://jasperbernaers.com/favicon.svg",
-    ogImage: "https://jasperbernaers.com/markdown-live-editor/og-image.png",
-    subtitle: "Live Preview, GitHub Style, Templates & HTML/PDF Export",
-    tags: [TAGS.markdown],
-    url: "https://jasperbernaers.com/markdown-live-editor/",
-  },
-  {
-    title: "Material for MkDocs",
-    author: "Martin Donath",
-    category: CATEGORIES.dev,
-    description:
-      "Write your documentation in Markdown and create a professional static site in minutes – searchable, customizable, in 60+ languages, for all devices",
-    tags: [TAGS.markdown, TAGS.tool],
-    url: "https://squidfunk.github.io/mkdocs-material/",
-  },
-  {
-    title: "Mintlify",
-    category: CATEGORIES.dev,
-    description: "Self-updating documentation for startups, enterprises, and agents.",
-    favicon: "https://raw.githubusercontent.com/mintlify/starter/main/favicon.svg",
-    ogImage: "https://www.mintlify.com/_next/static/media/og.28576e75.png",
-    subtitle: "The Knowledge Platform Built for Agents",
-    tags: [TAGS.tool],
-    url: "https://www.mintlify.com/",
-  },
-  {
     title: "Mux",
     category: CATEGORIES.dev,
     description:
@@ -883,18 +786,6 @@ export const developmentLinks: Tool[] = [
       "A cinematic audio dubbing, cloning and voice generation studio. Enterprise-grade processing with AI-powered voice synthesis, 600+ language support, and self-hosted deployment.",
     subtitle: "Cinematic audio dubbing, cloning & voice generation | palash.dev",
     url: "https://palash.dev/omnivoice/",
-  },
-  {
-    title: "Online Notepad",
-    author: "Jasper Bernaers",
-    category: CATEGORIES.dev,
-    description:
-      "A free online notepad that opens instantly — just start typing. Autosaves in your browser, no login, no install, works offline. Line numbers, tabs and syntax highlighting when you need them, so it doubles as a Notepad++ alternative on any device.",
-    favicon: "https://jasperbernaers.com/favicon.svg",
-    ogImage: "https://jasperbernaers.com/notepad/og-image.png",
-    subtitle: "Free, Autosave, No Sign-Up | Notepad++ Alternative",
-    tags: [TAGS.editor, TAGS.tool],
-    url: "https://jasperbernaers.com/notepad/",
   },
   {
     title: "OpenFlowKit",
@@ -1015,30 +906,12 @@ export const developmentLinks: Tool[] = [
     url: "https://pointilliser.com/",
   },
   {
-    title: "Quarkdown",
-    category: CATEGORIES.dev,
-    description:
-      "Quarkdown is a modern, open-source, Markdown-based typesetting system for creating papers, presentations, knowledge bases and static websites.",
-    subtitle: "Markdown with superpowers",
-    tags: [TAGS.development],
-    url: "https://quarkdown.com/",
-  },
-  {
     title: "RayonMaps",
     category: CATEGORIES.dev,
     description:
       "Export OpenStreetMap Data to DXF. Get the CAD geometry of any site on Earth — in just 3 steps.",
     tags: [TAGS.map],
     url: "https://maps.rayon.design/",
-  },
-  {
-    title: "readme.so",
-    category: CATEGORIES.dev,
-    description:
-      "Use readme.so's markdown editor and templates to easily create a ReadMe for your projects",
-    favicon: "https://readme.so/readme.svg",
-    ogImage: "https://readme.so/screenshot.png",
-    url: "https://readme.so/",
   },
   {
     title: "Reflag",
@@ -1163,15 +1036,6 @@ export const developmentLinks: Tool[] = [
       "Minimalist, end-to-end encrypted, self-hostable file and note sharing. Zero-knowledge server - files and notes are encrypted in the browser before upload. No accounts, no telemetry, built for speed and security.",
     subtitle: "Encrypted File & Note Sharing",
     url: "https://skysend.app/",
-  },
-  {
-    title: "Slidev",
-    author: "Anthony Fu",
-    category: CATEGORIES.dev,
-    description: "Presentation slides for developers",
-    favicon: "https://sli.dev/logo.svg",
-    ogImage: "https://sli.dev/og-image.png",
-    url: "https://sli.dev/",
   },
   {
     title: "Stirling",

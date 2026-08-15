@@ -50,6 +50,7 @@ export const TAGS = {
   patterns: "patterns",
   pdf: "pdf",
   platform: "platform",
+  presentation: "presentation",
   python: "python",
   rag: "rag",
   react: "react",

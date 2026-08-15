@@ -7,6 +7,7 @@ import { colorLinks } from "./color-resources";
 import { dataLinks } from "./data-resources";
 import { designLinks } from "./design-resources";
 import { developmentLinks } from "./development-resources";
+import { documentationLinks } from "./docs-resources";
 import { educationLinks } from "./education-resources";
 import { frontendLinks } from "./frontend-resources";
 import { iconLinks } from "./icon-resources";
@@ -23,6 +24,7 @@ export { colorLinks } from "./color-resources";
 export { dataLinks } from "./data-resources";
 export { designLinks } from "./design-resources";
 export { developmentLinks } from "./development-resources";
+export { documentationLinks } from "./docs-resources";
 export { educationLinks } from "./education-resources";
 export { frontendLinks } from "./frontend-resources";
 export { iconLinks } from "./icon-resources";
@@ -39,6 +41,7 @@ export const resourceLinks: Tool[] = [
   ...dataLinks,
   ...designLinks,
   ...developmentLinks,
+  ...documentationLinks,
   ...educationLinks,
   ...frontendLinks,
   ...iconLinks,

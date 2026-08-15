@@ -6,6 +6,7 @@ export const CATEGORIES = {
   data: "Data & APIs",
   design: "Design & UX",
   dev: "Developer Tools & Utilities",
+  docs: "Documentation & Markdown",
   education: "Education & Community",
   frontend: "Frontend & UI",
   icons: "Icons & Illustrations",
