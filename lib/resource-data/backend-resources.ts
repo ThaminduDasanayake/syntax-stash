@@ -277,6 +277,17 @@ export const backendLinks: Tool[] = [
     url: "https://database.build/",
   },
   {
+    title: "Puter.js",
+    author: "Puter",
+    category: CATEGORIES.backend,
+    description:
+      "Puter.js is the backend for AI-generated apps. Use your existing AI coding tool to build production-ready apps with up to 90% fewer AI tokens. Auth, cloud storage, database, OpenAI, Claude, Gemini, Grok, Kimi, DeepSeek, and more, all through a single JavaScript library. No API keys. Zero setup.",
+    favicon: "https://developer.puter.com/favicons/apple-icon.png",
+    ogImage: "https://developer.puter.com/card.png",
+    subtitle: "The Backend for AI-Generated Apps",
+    url: "https://developer.puter.com/",
+  },
+  {
     title: "Render",
     category: CATEGORIES.backend,
     description:

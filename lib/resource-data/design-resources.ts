@@ -282,6 +282,17 @@ export const designLinks: Tool[] = [
     url: "https://designmeter.ai/",
   },
   {
+    title: "Design Prompts",
+    author: "Design Prompts",
+    category: CATEGORIES.design,
+    description:
+      "Explore 31+ stunning design styles rendered from the same data. Get AI-ready prompts to recreate any aesthetic in your own projects.",
+    favicon: "https://designprompts.dev/favicon.svg",
+    ogImage: "https://designprompts.dev/og-image.png",
+    subtitle: "AI-Powered Design Style Explorer",
+    url: "https://designprompts.dev/",
+  },
+  {
     title: "Design Spells",
     category: CATEGORIES.design,
     description:

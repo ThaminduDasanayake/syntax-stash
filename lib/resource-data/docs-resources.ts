@@ -147,6 +147,15 @@ export const documentationLinks: Tool[] = [
     url: "https://squidfunk.github.io/mkdocs-material/",
   },
   {
+    title: "Matter.",
+    author: "Hayk An",
+    category: CATEGORIES.frontend,
+    description: "A task manager that highlights what matters most to you",
+    favicon: "https://hihayk.github.io/matter/favicon.ico",
+    ogImage: "https://raw.githubusercontent.com/hihayk/matter/master/docs/shot.png",
+    url: "https://hihayk.github.io/matter/",
+  },
+  {
     title: "Mintlify",
     category: CATEGORIES.docs,
     description: "Self-updating documentation for startups, enterprises, and agents.",
@@ -212,6 +221,16 @@ export const documentationLinks: Tool[] = [
     favicon: "https://readme.so/readme.svg",
     ogImage: "https://readme.so/screenshot.png",
     url: "https://readme.so/",
+  },
+  {
+    title: "Signature PDF",
+    category: CATEGORIES.docs,
+    description:
+      "Signature PDF is free online software for signing (individually or collaboratively), organizing, or compressing PDF files.",
+    favicon: "https://pdf.24eme.fr/logo.svg",
+    subtitle: "Sign and manipulate PDFs freely",
+    tags: [TAGS.pdf],
+    url: "https://pdf.24eme.fr/",
   },
   {
     title: "Slidev",

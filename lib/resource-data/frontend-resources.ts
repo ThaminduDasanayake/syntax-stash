@@ -246,6 +246,15 @@ export const frontendLinks: Tool[] = [
     url: "https://www.pen.dev/",
   },
   {
+    title: "poco.",
+    author: "Hayk An",
+    category: CATEGORIES.frontend,
+    description: "Minimal set of CSS variables and utilities",
+    favicon: "https://hihayk.github.io/poco/images/favicon.png",
+    ogImage: "https://raw.githubusercontent.com/hihayk/poco/master/docs/shot-1.png",
+    url: "https://hihayk.github.io/poco/",
+  },
+  {
     title: "Pretext",
     category: CATEGORIES.frontend,
     description:
@@ -358,6 +367,15 @@ export const frontendLinks: Tool[] = [
     description: "Create fully responsive shape dividers for your next web project",
     tags: [TAGS.css, TAGS.html, TAGS.shapes, TAGS.svg],
     url: "https://www.shapedivider.app/",
+  },
+  {
+    title: "Shaper",
+    author: "Hayk An",
+    category: CATEGORIES.frontend,
+    description: "Interface styles shaper",
+    favicon: "https://hihayk.github.io/shaper/logo192.png",
+    ogImage: "https://hihayk.github.io/shaper/shot.png",
+    url: "https://hihayk.github.io/shaper/",
   },
   {
     title: "soundcn",

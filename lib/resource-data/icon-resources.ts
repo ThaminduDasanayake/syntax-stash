@@ -452,6 +452,15 @@ export const iconLinks: Tool[] = [
     url: "https://www.movingicons.dev/",
   },
   {
+    title: "Octicons",
+    category: CATEGORIES.icons,
+    description: "A scalable set of icons handcrafted by GitHub.",
+    favicon: "https://primer.style/icon.svg",
+    subtitle: "Primer",
+    tags: [TAGS.icons],
+    url: "https://primer.style/octicons/",
+  },
+  {
     title: "Overflow Design",
     category: CATEGORIES.icons,
     description:

@@ -325,9 +325,11 @@ export const aiLinks: Tool[] = [
     author: "Diego Rodrigues de Sa e Souza",
     category: CATEGORIES.ai,
     description:
-      "Free, open-source AI router with auto-fallback. 268 providers, one endpoint, 95 MCP tools, 18 routing strategies, A2A protocol, auto-combo engine, semantic cache, memory & skills. Deploy anywhere.",
+      "Free, open-source AI router with auto-fallback. 339 providers, one endpoint, 95 MCP tools, 19 routing strategies, A2A protocol, auto-combo engine, semantic cache, memory & skills. Deploy anywhere.",
     favicon:
-      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🔀%3C/text%3E%3C/svg%3E",
+      "https://raw.githubusercontent.com/diegosouzapw/OmniRoute/release/v3.8.50/public/favicon.svg",
+    ogImage:
+      "https://raw.githubusercontent.com/diegosouzapw/OmniRoute/release/v3.8.50/docs/diagrams/readme-hero.svg",
     subtitle: "Free AI Gateway for Multi-Provider LLMs",
     tags: [TAGS.ai],
     url: "https://omniroute.online/",

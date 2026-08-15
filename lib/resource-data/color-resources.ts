@@ -475,4 +475,14 @@ export const colorLinks: Tool[] = [
     tags: [TAGS.color],
     url: "https://webgradients.com/",
   },
+  {
+    title: "Wheel",
+    author: "Hayk An",
+    category: CATEGORIES.colors,
+    description: "Color wheel generator",
+    favicon: "https://hihayk.github.io/wheel/favicon.ico",
+    ogImage: "https://raw.githubusercontent.com/hihayk/wheel/master/docs/shot.png",
+    tags: [TAGS.color],
+    url: "https://hihayk.github.io/wheel",
+  },
 ];
