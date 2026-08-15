@@ -1,55 +1,16 @@
 import { ComponentProps } from "react";
 
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn, Theme, THEME_CONFIG,THEMES } from "@/lib/utils";
 
-export type Theme = "orange" | "blue" | "pink" | "green";
-
-export const THEMES = {
-  0: "orange",
-  1: "blue",
-  2: "pink",
-  3: "green",
-} as const;
-
-const THEME_LOOP_ORDER = Object.values(THEMES);
-
-const THEME_STYLES = {
-  orange: {
-    button: "bg-c-orange text-ink hover:bg-c-orange",
-    dotActive: "bg-ink border-ink",
-    dotInactive: "bg-c-orange border-ink",
-  },
-  blue: {
-    button: "bg-c-blue text-paper hover:bg-c-blue hover:text-paper",
-    dotActive: "bg-paper border-paper",
-    dotInactive: "bg-c-blue border-ink",
-  },
-  pink: {
-    button: "bg-c-pink text-ink hover:bg-c-pink",
-    dotActive: "bg-ink border-ink",
-    dotInactive: "bg-c-pink border-ink",
-  },
-  green: {
-    button: "bg-c-green text-ink hover:bg-c-green",
-    dotActive: "bg-ink border-ink",
-    dotInactive: "bg-c-green border-ink",
-  },
-} satisfies Record<
-  Theme,
-  {
-    button: string;
-    dotActive: string;
-    dotInactive: string;
-  }
->;
+export type { Theme };
 
 interface DotButtonProps extends ComponentProps<typeof Button> {
-  isActive: boolean;
-  index?: number;
-  theme?: Theme;
   badgeText?: string;
+  index?: number;
+  isActive: boolean;
   label: string;
+  theme?: Theme;
 }
 
 export function DotButton({
@@ -61,14 +22,13 @@ export function DotButton({
   theme,
   ...props
 }: DotButtonProps) {
-  const activeTheme: Theme = theme ?? THEME_LOOP_ORDER[index % THEME_LOOP_ORDER.length];
-
-  const styles = THEME_STYLES[activeTheme];
+  const activeTheme: Theme = theme ?? THEMES[index % THEMES.length];
+  const styles = THEME_CONFIG[activeTheme];
 
   return (
     <Button
       variant={isActive ? "default" : "outline"}
-      className={cn("filter-pill", isActive && styles.button, className)}
+      className={cn("filter-pill", isActive && styles.pillActive, className)}
       {...props}
     >
       <span className={cn("filter-pill-dot", isActive ? styles.dotActive : styles.dotInactive)} />

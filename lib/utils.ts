@@ -28,97 +28,73 @@ export function downloadStringAsFile(content: string, filename: string, mimeType
   URL.revokeObjectURL(url);
 }
 
-type ResourceCategoryKey = keyof typeof RESOURCE_CATEGORIES;
-type ToolCategoryKey = keyof typeof TOOL_CATEGORIES;
+export type Theme = "orange" | "blue" | "pink" | "green";
 
-export type ResourceTheme = "orange" | "blue" | "pink" | "green";
+export const THEMES: readonly Theme[] = ["orange", "blue", "pink", "green"] as const;
 
-export const THEME_CYCLE: readonly ResourceTheme[] = ["orange", "blue", "pink", "green"] as const;
-
-export const THEME_COLOR_CLASSES: Record<ResourceTheme, string> = {
-  orange: "bg-c-orange text-ink",
-  blue: "bg-c-blue text-paper",
-  pink: "bg-c-pink text-ink",
-  green: "bg-c-green text-ink",
-};
-
-const resourceCategoryKeys = Object.keys(RESOURCE_CATEGORIES) as ResourceCategoryKey[];
-const toolCategoryKeys = Object.keys(TOOL_CATEGORIES) as ToolCategoryKey[];
-
-const TOOL_COLOR_MAP: Record<ToolCategoryKey, string> = Object.fromEntries(
-  toolCategoryKeys.map((key, index) => [
-    key,
-    THEME_COLOR_CLASSES[THEME_CYCLE[index % THEME_CYCLE.length]],
-  ]),
-) as Record<ToolCategoryKey, string>;
-
-const RESOURCE_COLOR_MAP: Record<ResourceCategoryKey, string> = Object.fromEntries(
-  resourceCategoryKeys.map((key, index) => [
-    key,
-    THEME_COLOR_CLASSES[THEME_CYCLE[index % THEME_CYCLE.length]],
-  ]),
-) as Record<ResourceCategoryKey, string>;
-
-const RESOURCE_THEME_MAP: Record<ResourceCategoryKey, ResourceTheme> = Object.fromEntries(
-  resourceCategoryKeys.map((key, index) => [key, THEME_CYCLE[index % THEME_CYCLE.length]]),
-) as Record<ResourceCategoryKey, ResourceTheme>;
-
-export function getToolKeyFromValue(value: string): string {
-  const entry = Object.entries(TOOL_CATEGORIES).find(([_, val]) => val === value);
-  return entry ? entry[0] : "unknown";
-}
-
-export function getResourceKeyFromValue(value: string): string {
-  const entry = Object.entries(RESOURCE_CATEGORIES).find(([_, val]) => val === value);
-  return entry ? entry[0] : "unknown";
-}
-
-export function getToolColorByKey(key: string): string {
-  return TOOL_COLOR_MAP[key as ToolCategoryKey] || "bg-[var(--paper)] text-[var(--ink)]";
-}
-
-export function getResourceColorByKey(key: string): string {
-  return RESOURCE_COLOR_MAP[key as ResourceCategoryKey] || "bg-[var(--paper)] text-[var(--ink)]";
-}
-
-export function getResourceThemeByKey(key: string): ResourceTheme {
-  return RESOURCE_THEME_MAP[key as ResourceCategoryKey] || "blue";
-}
-
-export const RESOURCE_THEME_STYLES: Record<
-  ResourceTheme,
-  { chip: string; dot: string; label: string }
+export const THEME_CONFIG: Record<
+  Theme,
+  {
+    bg: string;
+    chip: string;
+    dot: string;
+    dotActive: string;
+    dotInactive: string;
+    label: string;
+    pillActive: string;
+  }
 > = {
   orange: {
+    bg: "bg-c-orange text-ink",
     chip: "hover:bg-c-orange hover:text-ink",
     dot: "bg-c-orange border-orange-deep group-hover:bg-ink group-hover:border-ink",
+    dotActive: "bg-ink border-ink",
+    dotInactive: "bg-c-orange border-ink",
     label: "text-orange-deep",
+    pillActive: "bg-c-orange text-ink hover:bg-c-orange",
   },
   blue: {
+    bg: "bg-c-blue text-paper",
     chip: "hover:bg-c-blue hover:text-paper",
     dot: "bg-c-blue border-blue-deep group-hover:bg-paper group-hover:border-paper",
+    dotActive: "bg-paper border-paper",
+    dotInactive: "bg-c-blue border-ink",
     label: "text-blue-deep",
+    pillActive: "bg-c-blue text-paper hover:bg-c-blue hover:text-paper",
   },
   pink: {
+    bg: "bg-c-pink text-ink",
     chip: "hover:bg-c-pink hover:text-ink",
     dot: "bg-c-pink border-pink-deep group-hover:bg-ink group-hover:border-ink",
+    dotActive: "bg-ink border-ink",
+    dotInactive: "bg-c-pink border-ink",
     label: "text-pink-deep",
+    pillActive: "bg-c-pink text-ink hover:bg-c-pink",
   },
   green: {
+    bg: "bg-c-green text-ink",
     chip: "hover:bg-c-green hover:text-ink",
     dot: "bg-c-green border-green-deep group-hover:bg-ink group-hover:border-ink",
+    dotActive: "bg-ink border-ink",
+    dotInactive: "bg-c-green border-ink",
     label: "text-green-deep",
+    pillActive: "bg-c-green text-ink hover:bg-c-green",
   },
 };
 
-// "bg-c-yellow text-ink",
-// "bg-c-purple text-paper",
-// "bg-c-cyan text-ink",
-// "bg-c-red text-paper",
+const RESOURCE_VALUES: string[] = Object.values(RESOURCE_CATEGORIES);
+const TOOL_VALUES: string[] = Object.values(TOOL_CATEGORIES);
 
-export const tabStyles = [
-  "tab-trigger-blue",
-  "tab-trigger-green",
-  "tab-trigger-orange",
-  "tab-trigger-pink",
-];
+export function getCategoryTheme(category: string): Theme {
+  const resourceIdx = RESOURCE_VALUES.indexOf(category);
+  if (resourceIdx !== -1) return THEMES[resourceIdx % THEMES.length];
+
+  const toolIdx = TOOL_VALUES.indexOf(category);
+  if (toolIdx !== -1) return THEMES[toolIdx % THEMES.length];
+
+  return THEMES[0];
+}
+
+export function getCategoryColor(category: string): string {
+  return THEME_CONFIG[getCategoryTheme(category)].bg;
+}

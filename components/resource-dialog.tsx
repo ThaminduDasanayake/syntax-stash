@@ -10,13 +10,7 @@ import { ButtonGroup } from "@/components/ui/button-group";
 import { CopyButton } from "@/components/ui/copy-button";
 import { DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { resourceLinks } from "@/lib/resource-data";
-import {
-  cn,
-  getResourceColorByKey,
-  getResourceKeyFromValue,
-  getResourceThemeByKey,
-  RESOURCE_THEME_STYLES,
-} from "@/lib/utils";
+import { cn, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
 import { Tool, ToolCardProps } from "@/types";
 
 export function ResourceDialog({ tool }: ToolCardProps) {
@@ -44,10 +38,9 @@ export function ResourceDialog({ tool }: ToolCardProps) {
     handleSelectTool(resourceLinks[prevIndex]);
   };
 
-  const key = getResourceKeyFromValue(activeTool.category);
-  const colorClasses = getResourceColorByKey(key);
-  const activeTheme = getResourceThemeByKey(key);
-  const activeThemeStyles = RESOURCE_THEME_STYLES[activeTheme];
+  const activeTheme = getCategoryTheme(activeTool.category);
+  const activeThemeStyles = THEME_CONFIG[activeTheme];
+  const colorClasses = activeThemeStyles.bg;
 
   const authorResources = useMemo(() => {
     if (!activeTool.author) return [];
@@ -206,9 +199,7 @@ export function ResourceDialog({ tool }: ToolCardProps) {
                 </span>
                 <div className="modal-related-chips">
                   {authorResources.map((res) => {
-                    const key = getResourceKeyFromValue(res.category);
-                    const theme = getResourceThemeByKey(key);
-                    const styles = RESOURCE_THEME_STYLES[theme];
+                    const styles = THEME_CONFIG[getCategoryTheme(res.category)];
                     return (
                       <button
                         key={res.title}
@@ -230,9 +221,7 @@ export function ResourceDialog({ tool }: ToolCardProps) {
                 <span className={cn("modal-heading", activeThemeStyles.label)}>Related</span>
                 <div className="modal-related-chips">
                   {relatedResources.map((res) => {
-                    const key = getResourceKeyFromValue(res.category);
-                    const theme = getResourceThemeByKey(key);
-                    const styles = RESOURCE_THEME_STYLES[theme];
+                    const styles = THEME_CONFIG[getCategoryTheme(res.category)];
                     return (
                       <button
                         key={res.url || res.title}

@@ -10,22 +10,13 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { iconMap } from "@/lib/icons";
 import { internalTools } from "@/lib/tools-data";
-import {
-  cn,
-  getResourceColorByKey,
-  getResourceKeyFromValue,
-  getToolColorByKey,
-  getToolKeyFromValue,
-} from "@/lib/utils";
+import { cn, getCategoryColor } from "@/lib/utils";
 import { ToolCardProps } from "@/types";
 
 function CardBody({ tool }: ToolCardProps) {
   const isInternal = !!tool.slug;
   const Icon = (tool.icon && iconMap[tool.icon]) || ToolboxIcon;
-  const key = isInternal
-    ? getToolKeyFromValue(tool.category)
-    : getResourceKeyFromValue(tool.category);
-  const colorClasses = isInternal ? getToolColorByKey(key) : getResourceColorByKey(key);
+  const colorClasses = getCategoryColor(tool.category);
 
   let toolNumber = "";
   if (isInternal) {
