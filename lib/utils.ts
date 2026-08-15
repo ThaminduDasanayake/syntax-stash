@@ -31,29 +31,37 @@ export function downloadStringAsFile(content: string, filename: string, mimeType
 type ResourceCategoryKey = keyof typeof RESOURCE_CATEGORIES;
 type ToolCategoryKey = keyof typeof TOOL_CATEGORIES;
 
-const TOOL_COLOR_MAP: Record<ToolCategoryKey, string> = {
-  assets: "bg-c-orange text-ink",
-  data: "bg-c-blue text-paper",
-  dev: "bg-c-pink text-ink",
-  frontend: "bg-c-green text-ink",
+export type ResourceTheme = "orange" | "blue" | "pink" | "green";
+
+export const THEME_CYCLE: readonly ResourceTheme[] = ["orange", "blue", "pink", "green"] as const;
+
+export const THEME_COLOR_CLASSES: Record<ResourceTheme, string> = {
+  orange: "bg-c-orange text-ink",
+  blue: "bg-c-blue text-paper",
+  pink: "bg-c-pink text-ink",
+  green: "bg-c-green text-ink",
 };
 
-const RESOURCE_COLOR_MAP: Record<ResourceCategoryKey, string> = {
-  ai: "bg-c-orange text-ink",
-  animation: "bg-c-blue text-paper",
-  backend: "bg-c-pink text-ink",
-  colors: "bg-c-green text-ink",
-  data: "bg-c-orange text-ink",
-  design: "bg-c-blue text-paper",
-  dev: "bg-c-pink text-ink",
-  education: "bg-c-green text-ink",
-  frontend: "bg-c-orange text-ink",
-  icons: "bg-c-blue text-paper",
-  inspiration: "bg-c-pink text-ink",
-  media: "bg-c-green text-ink",
-  typography: "bg-c-orange text-ink",
-  ui: "bg-c-blue text-paper",
-};
+const resourceCategoryKeys = Object.keys(RESOURCE_CATEGORIES) as ResourceCategoryKey[];
+const toolCategoryKeys = Object.keys(TOOL_CATEGORIES) as ToolCategoryKey[];
+
+const TOOL_COLOR_MAP: Record<ToolCategoryKey, string> = Object.fromEntries(
+  toolCategoryKeys.map((key, index) => [
+    key,
+    THEME_COLOR_CLASSES[THEME_CYCLE[index % THEME_CYCLE.length]],
+  ]),
+) as Record<ToolCategoryKey, string>;
+
+const RESOURCE_COLOR_MAP: Record<ResourceCategoryKey, string> = Object.fromEntries(
+  resourceCategoryKeys.map((key, index) => [
+    key,
+    THEME_COLOR_CLASSES[THEME_CYCLE[index % THEME_CYCLE.length]],
+  ]),
+) as Record<ResourceCategoryKey, string>;
+
+const RESOURCE_THEME_MAP: Record<ResourceCategoryKey, ResourceTheme> = Object.fromEntries(
+  resourceCategoryKeys.map((key, index) => [key, THEME_CYCLE[index % THEME_CYCLE.length]]),
+) as Record<ResourceCategoryKey, ResourceTheme>;
 
 export function getToolKeyFromValue(value: string): string {
   const entry = Object.entries(TOOL_CATEGORIES).find(([_, val]) => val === value);
@@ -73,25 +81,6 @@ export function getResourceColorByKey(key: string): string {
   return RESOURCE_COLOR_MAP[key as ResourceCategoryKey] || "bg-[var(--paper)] text-[var(--ink)]";
 }
 
-export type ResourceTheme = "orange" | "blue" | "pink" | "green";
-
-const RESOURCE_THEME_MAP: Record<ResourceCategoryKey, ResourceTheme> = {
-  ai: "orange",
-  animation: "blue",
-  backend: "pink",
-  colors: "green",
-  data: "orange",
-  design: "blue",
-  dev: "pink",
-  education: "green",
-  frontend: "orange",
-  icons: "blue",
-  inspiration: "pink",
-  media: "green",
-  typography: "orange",
-  ui: "blue",
-};
-
 export function getResourceThemeByKey(key: string): ResourceTheme {
   return RESOURCE_THEME_MAP[key as ResourceCategoryKey] || "blue";
 }
@@ -100,25 +89,25 @@ export const RESOURCE_THEME_STYLES: Record<
   ResourceTheme,
   { chip: string; dot: string; label: string }
 > = {
-  blue: {
-    chip: "hover:bg-c-blue hover:text-paper",
-    dot: "bg-c-blue border-blue-deep group-hover:bg-paper group-hover:border-paper",
-    label: "text-blue-deep",
-  },
-  green: {
-    chip: "hover:bg-c-green hover:text-ink",
-    dot: "bg-c-green border-green-deep group-hover:bg-ink group-hover:border-ink",
-    label: "text-green-deep",
-  },
   orange: {
     chip: "hover:bg-c-orange hover:text-ink",
     dot: "bg-c-orange border-orange-deep group-hover:bg-ink group-hover:border-ink",
     label: "text-orange-deep",
   },
+  blue: {
+    chip: "hover:bg-c-blue hover:text-paper",
+    dot: "bg-c-blue border-blue-deep group-hover:bg-paper group-hover:border-paper",
+    label: "text-blue-deep",
+  },
   pink: {
     chip: "hover:bg-c-pink hover:text-ink",
     dot: "bg-c-pink border-pink-deep group-hover:bg-ink group-hover:border-ink",
     label: "text-pink-deep",
+  },
+  green: {
+    chip: "hover:bg-c-green hover:text-ink",
+    dot: "bg-c-green border-green-deep group-hover:bg-ink group-hover:border-ink",
+    label: "text-green-deep",
   },
 };
 

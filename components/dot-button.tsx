@@ -15,25 +15,25 @@ export const THEMES = {
 const THEME_LOOP_ORDER = Object.values(THEMES);
 
 const THEME_STYLES = {
-  blue: {
-    button: "bg-c-blue text-paper hover:bg-c-blue hover:text-paper",
-    dotActive: "bg-paper border-paper",
-    dotInactive: "bg-c-blue border-ink",
-  },
-  green: {
-    button: "bg-c-green text-ink hover:bg-c-green",
-    dotActive: "bg-ink border-ink",
-    dotInactive: "bg-c-green border-ink",
-  },
   orange: {
     button: "bg-c-orange text-ink hover:bg-c-orange",
     dotActive: "bg-ink border-ink",
     dotInactive: "bg-c-orange border-ink",
   },
+  blue: {
+    button: "bg-c-blue text-paper hover:bg-c-blue hover:text-paper",
+    dotActive: "bg-paper border-paper",
+    dotInactive: "bg-c-blue border-ink",
+  },
   pink: {
     button: "bg-c-pink text-ink hover:bg-c-pink",
     dotActive: "bg-ink border-ink",
     dotInactive: "bg-c-pink border-ink",
+  },
+  green: {
+    button: "bg-c-green text-ink hover:bg-c-green",
+    dotActive: "bg-ink border-ink",
+    dotInactive: "bg-c-green border-ink",
   },
 } satisfies Record<
   Theme,

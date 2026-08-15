@@ -18,7 +18,7 @@ export const backendLinks: Tool[] = [
   },
   {
     title: "AutoSend",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     description:
       "AutoSend is a lightweight SendGrid alternative for transactional and marketing emails. Simple, modern, and built to scale.",
     favicon: "https://autosend.com/favicon_32.png",
@@ -29,7 +29,7 @@ export const backendLinks: Tool[] = [
   },
   {
     title: "Browserless",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     className: "bg-foreground border-paper",
     description:
       "Give your AI agents a real cloud browser that won't crash or get blocked. Connect over MCP, Puppeteer, or Playwright with stealth and Authenticated Profiles built in.",
@@ -41,7 +41,7 @@ export const backendLinks: Tool[] = [
   },
   {
     title: "Checkmate",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     description:
       "Monitor your servers, websites, Docker containers, and infrastructure with Checkmate. Open-source, self-hosted, and built for teams who value control.",
     subtitle: "Open source infrastructure monitoring",
@@ -49,7 +49,7 @@ export const backendLinks: Tool[] = [
   },
   {
     title: "Cloudflare",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     description: "Welcome to Cloudflare - Powering the next generation of applications",
     subtitle: "Build for the agent era",
     tags: [TAGS.hosting],
@@ -57,7 +57,7 @@ export const backendLinks: Tool[] = [
   },
   {
     title: "Cloudflare Pages",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     description: "Build your next application with Cloudflare Pages",
     tags: [TAGS.hosting],
     url: "https://pages.cloudflare.com/",
@@ -75,7 +75,7 @@ export const backendLinks: Tool[] = [
   },
   {
     title: "Coolify",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     description:
       "Self-hosting platform with superpowers. Deploy apps, databases & 280+ services to your server. Open-source alternative to Heroku.",
     tags: [TAGS.hosting],
@@ -83,7 +83,7 @@ export const backendLinks: Tool[] = [
   },
   {
     title: "cron-job.org",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     description: "Free cronjobs - from minutely to once a year.",
     favicon:
       "https://raw.githubusercontent.com/pschlan/cron-job.org/master/frontend/public/logo192.png",
@@ -93,7 +93,7 @@ export const backendLinks: Tool[] = [
   },
   {
     title: "Deno Deploy",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     description: "One simple platform for anything that runs with JavaScript or Typescript.",
     url: "https://deno.com/deploy",
   },
@@ -109,7 +109,7 @@ export const backendLinks: Tool[] = [
   {
     title: "Firecrawl Tools",
     author: "Firecrawl",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     description:
       "Free online tools for developers and marketers: extract URLs from any website, summarize articles with AI, and more. No signup required. Powered by Firecrawl.",
     favicon:
@@ -120,7 +120,7 @@ export const backendLinks: Tool[] = [
   },
   {
     title: "here.now",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     description:
       "Publish any file or folder to the web in seconds from your AI agent. Free, no sign-up required. Just tell your agent to publish to here.now and get a live URL back instantly.",
     subtitle: "Instant web hosting for agents",
@@ -128,7 +128,7 @@ export const backendLinks: Tool[] = [
   },
   {
     title: "Hoppscotch",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     className: "bg-foreground border-paper",
     description:
       "Hoppscotch is an open-source API development ecosystem that helps you create and test your API requests saving precious time in development.",
@@ -139,7 +139,7 @@ export const backendLinks: Tool[] = [
   },
   {
     title: "itty.dev",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     description: "Ultra-small, powerful helpers for modern serverless APIs.",
     favicon: "https://itty.dev/itty-square.256.png",
     url: "https://itty.dev/",
@@ -162,7 +162,7 @@ export const backendLinks: Tool[] = [
   },
   {
     title: "Maily",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     description:
       "Craft beautiful emails effortlessly with Maily, the powerful email editor that ensures impeccable communication across all major clients.",
     favicon: "https://maily.to/brand/logo.svg",
@@ -173,7 +173,7 @@ export const backendLinks: Tool[] = [
   },
   {
     title: "n8n-io/n8n",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     description:
       "Fair-code workflow automation platform with native AI capabilities. Combine visual building with custom code, self-host or cloud, 400+ integrations.",
     url: "https://github.com/n8n-io/n8n",
@@ -190,7 +190,7 @@ export const backendLinks: Tool[] = [
   {
     title: "PinMe",
     author: "Glitter Network",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     description:
       "Publish a frontend in seconds. Great for AI generated pages, demos, and landing sites.",
     favicon: "https://pinme.eth.limo/favicon.ico",
@@ -217,7 +217,7 @@ export const backendLinks: Tool[] = [
   },
   {
     title: "Render",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     description:
       "Deploy and scale any app or agent from your first user to your billionth. Build faster on intuitive cloud infrastructure for the modern web.",
     subtitle: "The cloud for builders",
@@ -227,7 +227,7 @@ export const backendLinks: Tool[] = [
   {
     title: "Resend",
     author: "Resend",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     description:
       "The best way to reach humans instead of spam folders. Deliver transactional and marketing emails at scale.",
     favicon: "https://resend.com/static/favicons/favicon-marketing@144x144.png",
@@ -238,7 +238,7 @@ export const backendLinks: Tool[] = [
   },
   {
     title: "ScrapingBee",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     description:
       "ScrapingBee is the best web scraping API that handles proxies and headless browsers for you — so you can focus on extracting the data you need.",
     favicon: "https://www.scrapingbee.com/images/favico.svg",
@@ -249,7 +249,7 @@ export const backendLinks: Tool[] = [
   {
     title: "Scrapling",
     author: "D4Vinci",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     description:
       "🕷️ An adaptive Web Scraping framework that handles everything from a single request to a full-scale crawl!",
     favicon: "/github.svg",
@@ -275,14 +275,14 @@ export const backendLinks: Tool[] = [
   },
   {
     title: "Surge",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     description:
       "Shipping web projects should be fast, easy, and low risk. Surge is static web publishing for Front-End Developers, right from the CLI.",
     url: "https://surge.sh/",
   },
   {
     title: "tiiny.host",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     description: "Tiiny Host is the simplest way to share your work online.",
     url: "https://tiiny.host/",
   },
@@ -296,7 +296,7 @@ export const backendLinks: Tool[] = [
   },
   {
     title: "Trigger.dev",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     description:
       "Trigger.dev is the open source platform for building AI workflows in TypeScript. Long-running tasks with retries, queues, observability, and elastic scaling.",
     subtitle: "Build and deploy fully-managed AI agents and workflows.",
@@ -304,7 +304,7 @@ export const backendLinks: Tool[] = [
   },
   {
     title: "tunnl.gg",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     description:
       "Instant public URLs for your local web server. No installation required, just use SSH. Secure, fast, and developer-friendly reverse tunneling.",
     favicon: "https://tunnl.gg/favicon.svg",
@@ -323,7 +323,7 @@ export const backendLinks: Tool[] = [
   },
   {
     title: "UserCheck",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     description: "Block disposable emails with our API. Start for free today.",
     favicon: "https://www.usercheck.com/favicon.png",
     ogImage: "https://api.webshot.co/EVWMY5",
@@ -333,7 +333,7 @@ export const backendLinks: Tool[] = [
   },
   {
     title: "useSend",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.backend,
     description: "Pay only for what you send, not for storing contacts",
     favicon: "https://usesend.com/logo-squircle.png",
     ogImage: "https://uploads.usesend.com/logos/og.png",
