@@ -480,6 +480,18 @@ export const iconLinks: Tool[] = [
     url: "https://phosphoricons.com/",
   },
   {
+    title: "Pixabots",
+    author: "Pablo Stanley",
+    category: CATEGORIES.icons,
+    description:
+      "10,752 unique pixel art characters with deterministic IDs. Free API for avatars, animated GIFs, and more.",
+    favicon: "https://pixabots.com/apple-icon.png",
+    ogImage: "https://pixabots.com/api/og",
+    subtitle: "Pixel Character Avatars",
+    tags: [TAGS.illustration],
+    url: "https://pixabots.com/",
+  },
+  {
     title: "Pixelarticons",
     category: CATEGORIES.icons,
     description:

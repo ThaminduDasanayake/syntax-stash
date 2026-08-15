@@ -456,6 +456,17 @@ export const aiLinks: Tool[] = [
     url: "https://unstructured.io/",
   },
   {
+    title: "v0",
+    author: "Vercel",
+    category: CATEGORIES.ai,
+    description:
+      "Your collaborative AI assistant to design, iterate, and scale full-stack applications for the web.",
+    favicon: "https://v0.app/assets/icon.svg",
+    ogImage: "https://v0.app/chat/api/og",
+    subtitle: "Build Full-Stack Web Apps with AI",
+    url: "https://v0.app/",
+  },
+  {
     title: "Varchive",
     author: "Cameron Moll LLC",
     category: CATEGORIES.ai,

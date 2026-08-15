@@ -447,9 +447,13 @@ export const mediaLinks: Tool[] = [
   },
   {
     title: "Newt",
+    author: "Pablo Stanley",
     category: CATEGORIES.media,
     description:
       "A code-native pixel art tool. Paint like a normal raster editor; underneath, every pixel is a color token in clean, editable code. Export SVG, CSS, React, PNG, and GIF.",
+    favicon: "https://newt.sh/icon.svg",
+    ogImage: "https://newt.sh/opengraph-image.png",
+    subtitle: "pixel art, code underneath",
     tags: [TAGS.image],
     url: "https://newt.sh/",
   },
@@ -790,6 +794,16 @@ export const mediaLinks: Tool[] = [
     description:
       "This interactive web app transforms your webcam feed by overlaying customizable text on bright areas, encouraging creativity and mindfulness in real-time.",
     url: "https://text-over-video.figma.site/",
+  },
+  {
+    title: "yoinks",
+    author: "Pablo Stanley",
+    category: CATEGORIES.media,
+    description: "yoink any video from your terminal. no shady ads.",
+    favicon: "./github.svg",
+    ogImage: "https://raw.githubusercontent.com/pablostanley/yoinks/main/assets/home.png",
+    tags: [TAGS.video],
+    url: "https://github.com/pablostanley/yoinks",
   },
   {
     title: "yt-dlp/yt-dlp",

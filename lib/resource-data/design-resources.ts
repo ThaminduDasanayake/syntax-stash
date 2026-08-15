@@ -314,6 +314,17 @@ export const designLinks: Tool[] = [
     url: "https://designsystemdiaries.substack.com/",
   },
   {
+    title: "Design Team",
+    author: "Pablo Stanley",
+    category: CATEGORIES.design,
+    description:
+      "Build a team of specialized AI agents for design work. Each agent has a role, personality, and expertise. Export as skill files for Claude Code, Cursor, or any AI tool.",
+    favicon: "https://www.designteam.app/icon.png",
+    subtitle: "Assemble Your AI Design Crew",
+    tags: [TAGS.ai, TAGS.design],
+    url: "https://www.designteam.app/",
+  },
+  {
     title: "Detail",
     author: "Rene Wang",
     category: CATEGORIES.design,
@@ -393,9 +404,12 @@ export const designLinks: Tool[] = [
   },
   {
     title: "Efecto",
+    author: "Pablo Stanley",
     category: CATEGORIES.design,
     description:
       "The design tool where AI agents are first-class. Artboards, layers, auto-layout, 66 MCP tools. Free.",
+    favicon: "https://efecto.app/favicon.svg",
+    ogImage: "https://efecto.app/og-image.jpg",
     subtitle: "Where Humans & Robots Design Together",
     tags: [TAGS.design],
     url: "https://efecto.app/",
@@ -803,6 +817,18 @@ export const designLinks: Tool[] = [
     subtitle: "Framer and  Figma Templates, Component Library",
     tags: [TAGS.design],
     url: "https://sprrrint.com/",
+  },
+  {
+    title: "squig",
+    author: "Pablo Stanley",
+    category: CATEGORIES.design,
+    description:
+      "An infinite canvas of real UI components that all render like you sketched them on a napkin. Argue about structure, not corner radius.",
+    favicon: "https://squig.sh/icon.svg",
+    ogImage: "https://squig.sh/opengraph-image",
+    subtitle: "wireframes that know they're wireframes",
+    tags: [TAGS.design],
+    url: "https://squig.sh/",
   },
   {
     title: "Storyboard Maker",

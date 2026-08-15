@@ -233,6 +233,18 @@ export const inspirationLinks: Tool[] = [
     url: "https://www.dataviz-inspiration.com/",
   },
   {
+    title: "Desigeist",
+    author: "Pablo Stanley",
+    category: CATEGORIES.inspiration,
+    description:
+      "Discover daily design inspiration curated by Pablo Stanley. Browse beautiful illustrations, typography, UI/UX designs, branding, posters, web design, and creative work from top designers worldwide.",
+    favicon: "https://www.desigeist.com/assets/icon-lightmode.svg",
+    ogImage: "https://desigeist.com/opengraph-image",
+    subtitle: "Daily Design Inspiration",
+    tags: [TAGS.inspiration],
+    url: "https://www.desigeist.com/",
+  },
+  {
     title: "Details.so",
     category: CATEGORIES.inspiration,
     className: "bg-foreground border-paper",
@@ -363,8 +375,10 @@ export const inspirationLinks: Tool[] = [
     category: CATEGORIES.inspiration,
     description:
       "Browse our collection of unique, royalty-free AI stock photos, illustrations, and 3D. Perfect for all your creative projects, each image is crafted by global digital artists.",
+    favicon: "https://www.lummi.ai/apple-icon.png",
+    ogImage: "https://api.lummi.ai/api/og/home",
     subtitle: "Free AI Stock Images, Illustrations & 3D",
-    tags: [TAGS.inspiration],
+    tags: [TAGS.inspiration, TAGS.photos, TAGS["3D"]],
     url: "https://www.lummi.ai/",
   },
   {

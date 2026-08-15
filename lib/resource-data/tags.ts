@@ -49,6 +49,7 @@ export const TAGS = {
   "open-source": "open-source",
   patterns: "patterns",
   pdf: "pdf",
+  photos: "photos",
   platform: "platform",
   presentation: "presentation",
   python: "python",
