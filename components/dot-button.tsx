@@ -1,7 +1,7 @@
 import { ComponentProps } from "react";
 
 import { Button } from "@/components/ui/button";
-import { cn, Theme, THEME_CONFIG,THEMES } from "@/lib/utils";
+import { cn, Theme, THEME_CONFIG, THEMES } from "@/lib/utils";
 
 export type { Theme };
 
