@@ -158,16 +158,104 @@ export const backendLinks: Tool[] = [
     url: "https://yournextdomain.com/",
   },
   {
-    title: "Firecrawl Tools",
+    title: "Firecrawl",
     author: "Firecrawl",
     category: CATEGORIES.backend,
     description:
-      "Free online tools for developers and marketers: extract URLs from any website, summarize articles with AI, and more. No signup required. Powered by Firecrawl.",
+      "Firecrawl is the context API to search, scrape, and interact with the web at scale. Turn any source into clean Markdown or structured data your agents can ship with.",
     favicon:
       "https://raw.githubusercontent.com/firecrawl/firecrawl/main/apps/test-site/src/assets/firecrawl-logo.svg",
     ogImage: "https://www.firecrawl.dev/og.png",
-    subtitle: "Free Web Extraction Tools",
-    url: "https://www.firecrawl.dev/tools",
+    subtitle: "The context API to search, scrape, and interact with the web at scale. 🔥",
+    url: "https://www.firecrawl.dev/",
+  },
+  {
+    title: "Free AI Article Summarizer",
+    author: "Firecrawl",
+    category: CATEGORIES.backend,
+    description:
+      "Free AI article summarizer: paste any URL and get a concise summary in seconds. No signup required. Works on JavaScript-heavy pages, blogs, news, and reports. Need it at scale? Use the Firecrawl API.",
+    favicon:
+      "https://raw.githubusercontent.com/firecrawl/firecrawl/main/apps/test-site/src/assets/firecrawl-logo.svg",
+    ogImage: "https://www.firecrawl.dev/og.png",
+    url: "https://www.firecrawl.dev/tools/article-summarizer",
+  },
+  {
+    title: "Free AI Visibility Audit (AEO + GEO)",
+    author: "Firecrawl",
+    category: CATEGORIES.backend,
+    description:
+      "AI visibility audit: paste a URL and get AEO + GEO scores for how well AI answer engines (ChatGPT, Perplexity, Gemini, AI Overviews) can crawl, read, trust, and cite your page, with prioritized fixes. Powered by Firecrawl.",
+    favicon:
+      "https://raw.githubusercontent.com/firecrawl/firecrawl/main/apps/test-site/src/assets/firecrawl-logo.svg",
+    ogImage: "https://www.firecrawl.dev/og.png",
+    url: "https://www.firecrawl.dev/tools/ai-visibility-audit",
+  },
+  {
+    title: "Free PDF to JSON Converter",
+    author: "Firecrawl",
+    category: CATEGORIES.backend,
+    description:
+      "Free PDF to JSON converter: paste any PDF URL and get clean, structured JSON instantly. No signup required. Extracts titles, sections, and key points from reports, invoices, and docs. Need it at scale? Use the Firecrawl API.",
+    favicon:
+      "https://raw.githubusercontent.com/firecrawl/firecrawl/main/apps/test-site/src/assets/firecrawl-logo.svg",
+    ogImage: "https://www.firecrawl.dev/og.png",
+    url: "https://www.firecrawl.dev/tools/pdf-to-json",
+  },
+  {
+    title: "Free Product Data Extractor",
+    author: "Firecrawl",
+    category: CATEGORIES.backend,
+    description:
+      "Product data extraction from any URL: paste a product page and get structured JSON with price, variants, availability, images, SKU, and sale pricing, plus schema.org Product JSON-LD. Powered by Firecrawl.",
+    favicon:
+      "https://raw.githubusercontent.com/firecrawl/firecrawl/main/apps/test-site/src/assets/firecrawl-logo.svg",
+    ogImage: "https://www.firecrawl.dev/og.png",
+    url: "https://www.firecrawl.dev/tools/product-data-extractor",
+  },
+  {
+    title: "Free URL Extractor",
+    author: "Firecrawl",
+    category: CATEGORIES.backend,
+    description:
+      "Free URL extractor: paste any website URL and get every link in seconds. No signup, no limits. Copy to clipboard or download CSV. Need scale? Use the Firecrawl API.",
+    favicon:
+      "https://raw.githubusercontent.com/firecrawl/firecrawl/main/apps/test-site/src/assets/firecrawl-logo.svg",
+    ogImage: "https://www.firecrawl.dev/og.png",
+    url: "https://www.firecrawl.dev/tools/url-extractor",
+  },
+  {
+    title: "Free URL to JSON Converter",
+    author: "Firecrawl",
+    category: CATEGORIES.backend,
+    description:
+      "Free URL to JSON converter: paste any website URL and get structured JSON instantly. No signup required. Works on JavaScript-heavy pages, blogs, docs, and product pages. Need it at scale? Use the Firecrawl API.",
+    favicon:
+      "https://raw.githubusercontent.com/firecrawl/firecrawl/main/apps/test-site/src/assets/firecrawl-logo.svg",
+    ogImage: "https://www.firecrawl.dev/og.png",
+    url: "https://www.firecrawl.dev/tools/url-to-json",
+  },
+  {
+    title: "Free Website to Markdown Converter",
+    author: "Firecrawl",
+    category: CATEGORIES.backend,
+    description:
+      "Free website to markdown converter: paste any URL and get clean markdown instantly. No signup required. Works on JavaScript-heavy pages, blogs, docs, and articles. Need it at scale? Use the Firecrawl API.",
+    favicon:
+      "https://raw.githubusercontent.com/firecrawl/firecrawl/main/apps/test-site/src/assets/firecrawl-logo.svg",
+    ogImage: "https://www.firecrawl.dev/og.png",
+    url: "https://www.firecrawl.dev/tools/website-to-markdown",
+  },
+  {
+    title: "Free Website to Text Converter",
+    author: "Firecrawl",
+    category: CATEGORIES.backend,
+    description:
+      "Free website to text converter: paste any URL and get clean plain text instantly. No signup required. Works on JavaScript-heavy pages, blogs, docs, and articles. Need it at scale? Use the Firecrawl API.",
+    favicon:
+      "https://raw.githubusercontent.com/firecrawl/firecrawl/main/apps/test-site/src/assets/firecrawl-logo.svg",
+    ogImage: "https://www.firecrawl.dev/og.png",
+    url: "https://www.firecrawl.dev/tools/website-to-text",
   },
   {
     title: "here.now",

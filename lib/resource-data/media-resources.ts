@@ -666,6 +666,16 @@ export const mediaLinks: Tool[] = [
     url: "https://www.streamlinehq.com/illustrations",
   },
   {
+    title: "Text to ASCII Art Generator (TAAG)",
+    author: "patorjk",
+    category: CATEGORIES.media,
+    description:
+      "An online text conversion tool for changing text into ASCII art pictures. The output can be used to decorate emails, online profiles, IMs, and more!",
+    favicon: "https://patorjk.com/software/taag/candy.png",
+    tags: [TAGS.ascii],
+    url: "https://patorjk.com/software/taag/",
+  },
+  {
     title: "theSVG",
     category: CATEGORIES.media,
     description:
@@ -713,7 +723,7 @@ export const mediaLinks: Tool[] = [
       "https://cdn.prod.website-files.com/64c73d04a946980a44765330/64c9625c3e90504925bc759b_favicon-1.png",
     ogImage:
       "https://cdn.prod.website-files.com/64c73d04a946980a44765330/64d9999d28972bb41c26f3ff_og-image.png",
-    subtitle: "Open Source Punk Sci-Fi Art Collection by Pablo Stanley",
+    subtitle: "Open Source Punk Sci-Fi Art Collection",
     tags: [TAGS.illustration],
     url: "https://www.transhumans.xyz/",
   },
