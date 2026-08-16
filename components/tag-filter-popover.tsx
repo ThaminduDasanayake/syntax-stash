@@ -63,7 +63,7 @@ function TagFilterContent({
       <div className="border-border bg-popover flex items-center justify-between border-b px-4 py-3 sm:px-3 sm:py-2">
         <div className="flex items-center gap-2">
           <FunnelIcon weight="bold" className="text-primary size-4" />
-          <span className="text-mono-xs font-bold uppercase tracking-wider">Filter by Tags</span>
+          <span className="text-mono-xs font-bold tracking-wider uppercase">Filter by Tags</span>
         </div>
 
         {hasSelected && (
@@ -136,7 +136,7 @@ function TagFilterContent({
                       "flex cursor-pointer items-center justify-between rounded-none border-l-2 px-3 py-2.5 font-mono text-xs transition-colors sm:px-2.5 sm:py-1.5",
                       isChecked
                         ? "border-primary bg-primary/10 text-foreground font-bold"
-                        : "hover:bg-muted/60 border-transparent text-foreground/80",
+                        : "hover:bg-muted/60 text-foreground/80 border-transparent",
                     )}
                   >
                     <div className="flex items-center gap-2.5 sm:gap-2">
@@ -181,7 +181,7 @@ export function TagFilterPopover({
 
   // Floating trigger button
   const triggerButton = (
-    <div className={cn("fixed right-5 bottom-17 z-40 sm:right-8 sm:bottom-21", className)}>
+    <div className={cn("fixed right-5 bottom-18 z-40 sm:right-8 sm:bottom-22", className)}>
       <Tooltip>
         <TooltipTrigger asChild>
           <Button

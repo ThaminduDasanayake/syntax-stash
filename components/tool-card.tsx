@@ -6,23 +6,17 @@ import { memo, useState } from "react";
 
 import { CardIcon } from "@/components/card-icon";
 import { ResourceDialog } from "@/components/resource-dialog";
-import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { iconMap } from "@/lib/icons";
 import { internalTools } from "@/lib/tools-data";
-import { cn, getCategoryColor, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
+import { cn, getCategoryColor } from "@/lib/utils";
 import { ToolCardProps } from "@/types";
 
-function CardBody({ onTagClick, tool }: ToolCardProps) {
+function CardBody({ tool }: ToolCardProps) {
   const isInternal = !!tool.slug;
   const Icon = (tool.icon && iconMap[tool.icon]) || ToolboxIcon;
   const colorClasses = getCategoryColor(tool.category);
-  const theme = getCategoryTheme(tool.category);
-  const themeConfig = THEME_CONFIG[theme];
-  const deepColorClass = themeConfig.label;
-  const deepBorderClass = themeConfig.border;
-  const softColorClass = themeConfig.soft;
 
   let toolNumber = "";
   if (isInternal) {
@@ -63,42 +57,6 @@ function CardBody({ onTagClick, tool }: ToolCardProps) {
 
           {tool.subtitle && <p className="card-subtitle">{tool.subtitle}</p>}
           <p className="card-description">{tool.description}</p>
-
-          {tool.tags && tool.tags.length > 0 && (
-            <div className="card-tags flex flex-wrap items-center gap-1.5 pt-2.5">
-              {tool.tags.slice(0, 3).map((tag) => (
-                <Button
-                  key={tag}
-                  variant="outline"
-                  size="xs"
-                  onClick={(e) => {
-                    if (onTagClick) {
-                      e.stopPropagation();
-                      onTagClick(tag);
-                    }
-                  }}
-                  className={cn(
-                    "text-mono-2xs h-5.5 rounded-none border-[1.5px] px-1.5 py-0 font-mono font-bold transition-all duration-150 hover:-translate-y-0.5 hover:shadow-xs",
-                    deepColorClass,
-                    deepBorderClass,
-                    softColorClass,
-                  )}
-                >
-                  #{tag}
-                </Button>
-              ))}
-              {tool.tags.length > 3 && (
-                <span
-                  className={cn(
-                    "text-mono-2xs self-center font-mono font-semibold opacity-75",
-                    deepColorClass,
-                  )}
-                >
-                  +{tool.tags.length - 3}
-                </span>
-              )}
-            </div>
-          )}
 
           {!isInternal && (
             <div className="card-footer">
@@ -143,7 +101,7 @@ function ToolCardComponent({ onTagClick, tool }: ToolCardProps) {
   if (tool.slug) {
     return (
       <Link href={`/tools/${tool.slug}`} className={linkWrapperClass}>
-        <CardBody tool={tool} onTagClick={onTagClick} />
+        <CardBody tool={tool} />
       </Link>
     );
   }
@@ -152,7 +110,7 @@ function ToolCardComponent({ onTagClick, tool }: ToolCardProps) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <div className={linkWrapperClass}>
-          <CardBody tool={tool} onTagClick={onTagClick} />
+          <CardBody tool={tool} />
         </div>
       </DialogTrigger>
       {open && (
