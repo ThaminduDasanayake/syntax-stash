@@ -1,10 +1,13 @@
 "use client";
 
-import { MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
-import { useMemo, useState } from "react";
+import { ArrowsCounterClockwiseIcon, MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { Suspense, useCallback, useDeferredValue, useMemo, useRef, useState } from "react";
 
 import { DotButton } from "@/components/dot-button";
+import { TagFilterPopover, TagOption } from "@/components/tag-filter-popover";
 import ToolCard from "@/components/tool-card";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tool } from "@/types";
 
@@ -16,36 +19,175 @@ interface FilterSectionProps {
   itemLabel?: string;
 }
 
-export function FilterSection({
+function FilterSectionInner({
   categories,
   initialCategory,
   itemLabel = "Items",
   items,
   searchPlaceholder = "Search...",
 }: FilterSectionProps) {
-  const [activeCategory, setActiveCategory] = useState<string | null>(initialCategory || null);
-  const [searchQuery, setSearchQuery] = useState("");
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const searchDebounceRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Read initial params from URL if present
+  const initialTags = useMemo(() => {
+    const tagParam = searchParams.get("tag");
+    return tagParam ? tagParam.split(",").filter(Boolean) : [];
+  }, [searchParams]);
+
+  const initialMode = useMemo(() => {
+    return searchParams.get("mode") === "all" ? "all" : "any";
+  }, [searchParams]);
+
+  const initialQuery = useMemo(() => {
+    return searchParams.get("q") || "";
+  }, [searchParams]);
+
+  const initialCat = useMemo(() => {
+    return searchParams.get("category") || initialCategory || null;
+  }, [initialCategory, searchParams]);
+
+  const [activeCategory, setActiveCategory] = useState<string | null>(initialCat);
+  const [selectedTags, setSelectedTags] = useState<string[]>(initialTags);
+  const [matchMode, setMatchMode] = useState<"any" | "all">(initialMode);
+  const [searchQuery, setSearchQuery] = useState(initialQuery);
+
+  // Defer heavy list filtering so typing input response is instantaneous (0ms lag)
+  const deferredSearchQuery = useDeferredValue(searchQuery);
+
+  // Sync state to URL without full page reload
+  const syncUrl = useCallback(
+    (cat: string | null, tags: string[], mode: "any" | "all", query: string) => {
+      if (typeof window === "undefined") return;
+      const params = new URLSearchParams(window.location.search);
+
+      if (cat && !initialCategory) {
+        params.set("category", cat);
+      } else {
+        params.delete("category");
+      }
+
+      if (tags.length > 0) {
+        params.set("tag", tags.join(","));
+      } else {
+        params.delete("tag");
+      }
+
+      if (mode === "all" && tags.length > 1) {
+        params.set("mode", "all");
+      } else {
+        params.delete("mode");
+      }
+
+      if (query.trim()) {
+        params.set("q", query.trim());
+      } else {
+        params.delete("q");
+      }
+
+      const queryString = params.toString();
+      const newUrl = queryString ? `${pathname}?${queryString}` : pathname;
+      window.history.replaceState(null, "", newUrl);
+    },
+    [initialCategory, pathname],
+  );
+
+  // Calculate available tags and their counts scoped to current category
+  const availableTags: TagOption[] = useMemo(() => {
+    const scopedItems = activeCategory
+      ? items.filter((tool) => tool.category === activeCategory)
+      : items;
+
+    const counts = new Map<string, number>();
+    for (const tool of scopedItems) {
+      if (tool.tags) {
+        for (const tag of tool.tags) {
+          counts.set(tag, (counts.get(tag) || 0) + 1);
+        }
+      }
+    }
+
+    return Array.from(counts.entries())
+      .map(([name, count]) => ({ count, name }))
+      .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+  }, [activeCategory, items]);
 
   const handleCategoryClick = (category: string) => {
-    if (activeCategory === category) {
-      setActiveCategory(null);
-    } else {
-      setActiveCategory(category);
-    }
+    const nextCategory = activeCategory === category ? null : category;
+    setActiveCategory(nextCategory);
+    syncUrl(nextCategory, selectedTags, matchMode, searchQuery);
   };
 
-  const handleClear = () => {
+  const handleToggleTag = (tag: string) => {
+    const next = selectedTags.includes(tag)
+      ? selectedTags.filter((t) => t !== tag)
+      : [...selectedTags, tag];
+    setSelectedTags(next);
+    syncUrl(activeCategory, next, matchMode, searchQuery);
+  };
+
+  const handleClearTags = () => {
+    setSelectedTags([]);
+    syncUrl(activeCategory, [], matchMode, searchQuery);
+  };
+
+  const handleMatchModeChange = (mode: "any" | "all") => {
+    setMatchMode(mode);
+    syncUrl(activeCategory, selectedTags, mode, searchQuery);
+  };
+
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+    if (searchDebounceRef.current) {
+      clearTimeout(searchDebounceRef.current);
+    }
+    searchDebounceRef.current = setTimeout(() => {
+      syncUrl(activeCategory, selectedTags, matchMode, value);
+    }, 200);
+  };
+
+  const handleClearSearch = () => {
+    if (searchDebounceRef.current) {
+      clearTimeout(searchDebounceRef.current);
+    }
     setSearchQuery("");
+    syncUrl(activeCategory, selectedTags, matchMode, "");
+  };
+
+  const handleResetAll = () => {
+    if (searchDebounceRef.current) {
+      clearTimeout(searchDebounceRef.current);
+    }
+    setActiveCategory(initialCategory || null);
+    setSelectedTags([]);
+    setMatchMode("any");
+    setSearchQuery("");
+    syncUrl(initialCategory || null, [], "any", "");
   };
 
   const filteredItems = useMemo(() => {
+    const query = deferredSearchQuery.toLowerCase().trim();
+
     return items.filter((tool) => {
       // Category filter
       if (activeCategory && tool.category !== activeCategory) {
         return false;
       }
+
+      // Tag filter
+      if (selectedTags.length > 0) {
+        const toolTags = tool.tags || [];
+        if (matchMode === "all") {
+          const matchesAll = selectedTags.every((t) => toolTags.includes(t));
+          if (!matchesAll) return false;
+        } else {
+          const matchesAny = selectedTags.some((t) => toolTags.includes(t));
+          if (!matchesAny) return false;
+        }
+      }
+
       // Search filter
-      const query = searchQuery.toLowerCase().trim();
       if (!query) return true;
       return (
         tool.title.toLowerCase().includes(query) ||
@@ -56,7 +198,7 @@ export function FilterSection({
         tool.category.toLowerCase().includes(query)
       );
     });
-  }, [activeCategory, items, searchQuery]);
+  }, [activeCategory, deferredSearchQuery, items, matchMode, selectedTags]);
 
   // Group the filtered items by category
   const groupedItems = useMemo(() => {
@@ -80,19 +222,20 @@ export function FilterSection({
               className="filter-search"
               placeholder={searchPlaceholder}
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => handleSearchChange(e.target.value)}
             />
             {searchQuery && (
               <button
                 type="button"
                 className="filter-search-clear"
-                onClick={handleClear}
+                onClick={handleClearSearch}
                 aria-label="Clear search"
               >
                 <XIcon weight="bold" />
               </button>
             )}
           </div>
+
           <div className="filter-pills">
             {categories.map((item, i) => {
               const isActive = activeCategory === item;
@@ -107,18 +250,76 @@ export function FilterSection({
               );
             })}
           </div>
+
           <div className="filter-count">
             <span className="filter-count-num">{filteredItems.length}</span>
             <span> of {items.length}</span>
           </div>
         </div>
+
+        {/* Active Tag Chips Bar */}
+        {selectedTags.length > 0 && (
+          <div className="border-t-ink/15 mx-auto mt-2.5 max-w-7xl border-t px-5 pt-2.5 md:px-8">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-mono-2xs text-ink-mute font-bold tracking-wider uppercase">
+                Active tags:
+              </span>
+              {selectedTags.map((tag) => (
+                <Button
+                  key={tag}
+                  size="xs"
+                  variant="outline"
+                  className="group text-mono-2xs px-2 py-1"
+                  onClick={() => handleToggleTag(tag)}
+                  aria-label={`Remove tag ${tag}`}
+                >
+                  <span>#{tag}</span>
+                  <XIcon weight="bold" className="group-hover:text-destructive" />
+                </Button>
+              ))}
+
+              {selectedTags.length > 1 && (
+                <Button
+                  variant="outline"
+                  size="xs"
+                  onClick={() => handleMatchModeChange(matchMode === "any" ? "all" : "any")}
+                  className="text-mono-2xs px-2 py-1"
+                  title="Click to toggle match mode"
+                >
+                  <ArrowsCounterClockwiseIcon weight="bold" />
+                  Mode: <span className="text-ink font-bold">{matchMode.toUpperCase()}</span>
+                </Button>
+              )}
+
+              <Button
+                variant="clear"
+                onClick={handleClearTags}
+                className="text-mono-2xs ml-auto underline-offset-2 hover:underline"
+              >
+                Clear all tags ({selectedTags.length})
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="card-body">
         <div className="section-inner">
           {Object.keys(groupedItems).length === 0 ? (
-            <div className="py-12 text-center font-mono text-sm opacity-60">
-              No {itemLabel.toLowerCase()} found matching your search.
+            <div className="py-16 text-center">
+              <p className="font-mono text-sm opacity-60">
+                No {itemLabel.toLowerCase()} found matching your filters.
+              </p>
+              {(selectedTags.length > 0 || searchQuery || activeCategory) && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleResetAll}
+                  className="mt-4 font-mono text-xs"
+                >
+                  Reset all filters
+                </Button>
+              )}
             </div>
           ) : (
             Object.entries(groupedItems).map(([category, catItems]) => (
@@ -135,7 +336,11 @@ export function FilterSection({
                 </div>
                 <div className="card-grid">
                   {catItems.map((tool) => (
-                    <ToolCard key={tool.url || tool.slug} tool={tool} />
+                    <ToolCard
+                      key={tool.url || tool.slug}
+                      tool={tool}
+                      onTagClick={handleToggleTag}
+                    />
                   ))}
                 </div>
               </div>
@@ -143,6 +348,25 @@ export function FilterSection({
           )}
         </div>
       </div>
+
+      {availableTags.length > 0 && (
+        <TagFilterPopover
+          availableTags={availableTags}
+          selectedTags={selectedTags}
+          onToggleTag={handleToggleTag}
+          onClearTags={handleClearTags}
+          matchMode={matchMode}
+          onMatchModeChange={handleMatchModeChange}
+        />
+      )}
     </>
+  );
+}
+
+export function FilterSection(props: FilterSectionProps) {
+  return (
+    <Suspense>
+      <FilterSectionInner {...props} />
+    </Suspense>
   );
 }

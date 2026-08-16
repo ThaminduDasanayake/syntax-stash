@@ -316,6 +316,18 @@ export const mediaLinks: Tool[] = [
     url: "https://icons8.com/illustrations",
   },
   {
+    title: "Free Favicon Generator",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.media,
+    description:
+      "Free favicon generator — upload any image and instantly create favicons in all sizes: 16x16, 32x32, 48x48, 96x96, 180x180 (Apple Touch Icon), 192x192 & 512x512 (Android/PWA). Get ready-to-use HTML code. No upload to server, no sign-up, 100% browser-based.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/free-favicon-generator/og-image.png",
+    subtitle: "All Sizes & Platforms from Any Image",
+    tags: [TAGS.image],
+    url: "https://jasperbernaers.com/free-favicon-generator/",
+  },
+  {
     title: "Free Online Audio Editor",
     author: "Jasper Bernaers",
     category: CATEGORIES.media,
@@ -338,6 +350,18 @@ export const mediaLinks: Tool[] = [
       "https://graphicsauce.co/free-placeholder-logo/wp-content/uploads/2024/08/Free-PlaceHolder-Logo.jpg",
     tags: [TAGS.logo],
     url: "https://graphicsauce.co/free-placeholder-logo/",
+  },
+  {
+    title: "Free QR Code Generator",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.media,
+    description:
+      "Generate QR codes for URLs, WiFi, vCard, SMS, email, calendar events, location & crypto. Custom dot styles, logo overlay, SVG export, bulk ZIP download, QR code scanner. 100% free, private, no signup.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/QR/og-image.png",
+    subtitle: "URL, WiFi, vCard, Bulk + QR Scanner",
+    tags: [TAGS.qr],
+    url: "https://jasperbernaers.com/QR/",
   },
   {
     title: "Fresh Folk",
@@ -404,6 +428,18 @@ export const mediaLinks: Tool[] = [
     subtitle: "Online Image Tools — Edit & Enhance Photos with imagetoolspro",
     tags: [TAGS.image],
     url: "https://imagetoolspro.com/",
+  },
+  {
+    title: "Image Watermark Tool",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.media,
+    description:
+      "Free online image watermark tool. Add a text or logo watermark to your photos with custom position, opacity, rotation, tiling and fonts. Export as PNG or JPEG. 100% client-side — your images never leave your browser, no uploads, no sign-up.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/image-watermark/og-image.png",
+    subtitle: "Add Text & Image Watermarks Online",
+    tags: [TAGS.image],
+    url: "https://jasperbernaers.com/image-watermark/",
   },
   {
     title: "LinkedIn Text Formatter",
@@ -666,6 +702,16 @@ export const mediaLinks: Tool[] = [
     url: "https://www.streamlinehq.com/illustrations",
   },
   {
+    title: "Text to ASCII Art Generator (TAAG)",
+    author: "patorjk",
+    category: CATEGORIES.media,
+    description:
+      "An online text conversion tool for changing text into ASCII art pictures. The output can be used to decorate emails, online profiles, IMs, and more!",
+    favicon: "https://patorjk.com/software/taag/candy.png",
+    tags: [TAGS.ascii],
+    url: "https://patorjk.com/software/taag/",
+  },
+  {
     title: "theSVG",
     category: CATEGORIES.media,
     description:
@@ -713,7 +759,7 @@ export const mediaLinks: Tool[] = [
       "https://cdn.prod.website-files.com/64c73d04a946980a44765330/64c9625c3e90504925bc759b_favicon-1.png",
     ogImage:
       "https://cdn.prod.website-files.com/64c73d04a946980a44765330/64d9999d28972bb41c26f3ff_og-image.png",
-    subtitle: "Open Source Punk Sci-Fi Art Collection by Pablo Stanley",
+    subtitle: "Open Source Punk Sci-Fi Art Collection",
     tags: [TAGS.illustration],
     url: "https://www.transhumans.xyz/",
   },

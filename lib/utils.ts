@@ -36,49 +36,59 @@ export const THEME_CONFIG: Record<
   Theme,
   {
     bg: string;
+    border: string;
     chip: string;
     dot: string;
     dotActive: string;
     dotInactive: string;
     label: string;
     pillActive: string;
+    soft: string;
   }
 > = {
   orange: {
     bg: "bg-c-orange text-ink",
+    border: "border-orange-deep",
     chip: "hover:bg-c-orange hover:text-ink",
     dot: "bg-c-orange border-orange-deep group-hover:bg-ink group-hover:border-ink",
     dotActive: "bg-ink border-ink",
     dotInactive: "bg-c-orange border-ink",
-    label: "text-orange-deep",
+    label: "text-orange-deep hover:text-orange-deep",
     pillActive: "bg-c-orange text-ink hover:bg-c-orange",
+    soft: "bg-orange-soft hover:bg-orange-soft",
   },
   blue: {
     bg: "bg-c-blue text-paper",
+    border: "border-blue-deep",
     chip: "hover:bg-c-blue hover:text-paper",
     dot: "bg-c-blue border-blue-deep group-hover:bg-paper group-hover:border-paper",
     dotActive: "bg-paper border-paper",
     dotInactive: "bg-c-blue border-ink",
-    label: "text-blue-deep",
+    label: "text-blue-deep hover:text-blue-deep",
     pillActive: "bg-c-blue text-paper hover:bg-c-blue hover:text-paper",
+    soft: "bg-blue-soft hover:bg-blue-soft",
   },
   pink: {
     bg: "bg-c-pink text-ink",
+    border: "border-pink-deep",
     chip: "hover:bg-c-pink hover:text-ink",
     dot: "bg-c-pink border-pink-deep group-hover:bg-ink group-hover:border-ink",
     dotActive: "bg-ink border-ink",
     dotInactive: "bg-c-pink border-ink",
-    label: "text-pink-deep",
+    label: "text-pink-deep hover:text-pink-deep",
     pillActive: "bg-c-pink text-ink hover:bg-c-pink",
+    soft: "bg-pink-soft hover:bg-pink-soft",
   },
   green: {
     bg: "bg-c-green text-ink",
+    border: "border-green-deep",
     chip: "hover:bg-c-green hover:text-ink",
     dot: "bg-c-green border-green-deep group-hover:bg-ink group-hover:border-ink",
     dotActive: "bg-ink border-ink",
     dotInactive: "bg-c-green border-ink",
-    label: "text-green-deep",
+    label: "text-green-deep hover:text-green-deep",
     pillActive: "bg-c-green text-ink hover:bg-c-green",
+    soft: "bg-green-soft hover:bg-green-soft",
   },
 };
 

@@ -400,6 +400,17 @@ export const frontendLinks: Tool[] = [
     url: "https://soundzjs.vercel.app/",
   },
   {
+    title: "Stack Match",
+    author: "Alicia Sykes",
+    category: CATEGORIES.dev,
+    description:
+      "Compare 18+ frontend frameworks including React, Vue, Angular, Svelte. Interactive tool with performance metrics, bundle size analysis, and scoring system. Make data-driven decisions for your next project.",
+    favicon: "https://stack-match.as93.net/apple-touch-icon.png",
+    ogImage: "https://stack-match.as93.net/og_image.png",
+    subtitle: "Find Your Perfect Frontend Framework",
+    url: "https://stack-match.as93.net/",
+  },
+  {
     title: "Styleframe",
     category: CATEGORIES.frontend,
     description:

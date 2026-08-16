@@ -74,6 +74,18 @@ export const developmentLinks: Tool[] = [
     url: "https://github.com/RunaCapital/awesome-oss-alternatives",
   },
   {
+    title: "Awesome Privacy",
+    author: "Alicia Sykes",
+    category: CATEGORIES.dev,
+    description:
+      "Find privacy-respecting alternatives to the apps and services you use every day. A curated directory of open source, secure and ad-free software.",
+    favicon: "https://awesome-privacy.xyz/favicon.svg",
+    ogImage: "https://awesome-privacy.xyz/banner.png",
+    subtitle: "The Ultimate List of Private Apps",
+    tags: [TAGS.security],
+    url: "https://awesome-privacy.xyz/",
+  },
+  {
     title: "BestAlternative",
     category: CATEGORIES.dev,
     description:
@@ -267,6 +279,16 @@ export const developmentLinks: Tool[] = [
     ogImage: "https://diffs.com/diffs-brand/opengraph-image.png",
     tags: [TAGS.tool],
     url: "https://diffs.com/",
+  },
+  {
+    title: "Digital Defense",
+    author: "Alicia Sykes",
+    category: CATEGORIES.dev,
+    description: "The ultimate personal security checklist to secure your digital life",
+    favicon: "https://digital-defense.io/favicon.png",
+    ogImage: "https://digital-defense.io/banner.png",
+    tags: [TAGS.security, TAGS.tool],
+    url: "https://digital-defense.io/",
   },
   {
     title: "Ditto",
@@ -623,14 +645,6 @@ export const developmentLinks: Tool[] = [
     url: "https://oualator.com/",
   },
   {
-    title: "patorjk.com",
-    category: CATEGORIES.dev,
-    description:
-      "Welcome! My name is Pat. I am a software developer and amateur photographer. Here you'll find an array of web apps, programming tutorials, and random projects.",
-    tags: [TAGS.tool],
-    url: "https://patorjk.com/",
-  },
-  {
     title: "Photoroom - AI Photo Editor",
     category: CATEGORIES.dev,
     description:
@@ -973,11 +987,15 @@ export const developmentLinks: Tool[] = [
   },
   {
     title: "Web Check",
+    author: "Alicia Sykes",
     category: CATEGORIES.dev,
+    className: "bg-foreground border-paper",
     description:
       "Web Check is the all-in-one OSINT and security tool, for revealing the inner workings of any website",
-    tags: [TAGS.tool],
-    url: "https://web-check.xyz",
+    favicon: "https://web-check.xyz/favicon.svg",
+    ogImage: "https://web-check.xyz/banner.png",
+    tags: [TAGS.osint, TAGS.security, TAGS.tool],
+    url: "https://web-check.xyz/",
   },
   {
     title: "WinWinKit",

@@ -13,7 +13,7 @@ import { resourceLinks } from "@/lib/resource-data";
 import { cn, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
 import { Tool, ToolCardProps } from "@/types";
 
-export function ResourceDialog({ tool }: ToolCardProps) {
+export function ResourceDialog({ onTagClick, tool }: ToolCardProps) {
   const [activeTool, setActiveTool] = useState(tool);
   const [ogError, setOgError] = useState(false);
 
@@ -181,15 +181,29 @@ export function ResourceDialog({ tool }: ToolCardProps) {
               </a>
             </div>
 
-            <div className="modal-sections">
-              <div className="flex gap-2">
-                {activeTool.tags?.map((tag) => (
-                  <div key={tag} className="text-mono-2xs border px-1 py-0.5 hover:shadow-sm">
-                    # {tag}
-                  </div>
-                ))}
+            {activeTool.tags && activeTool.tags.length > 0 && (
+              <div className="modal-sections">
+                <div className="flex flex-wrap gap-1.5">
+                  {activeTool.tags.map((tag) => (
+                    <Button
+                      key={tag}
+                      variant="outline"
+                      size="xs"
+                      onClick={() => onTagClick?.(tag)}
+                      className={cn(
+                        "text-mono-xs h-6 rounded-none border-[1.5px] px-2 py-0 font-bold transition-all duration-150 hover:-translate-y-0.5 hover:shadow-xs",
+                        activeThemeStyles.label,
+                        activeThemeStyles.border,
+                        activeThemeStyles.soft,
+                      )}
+                      title={`Filter by #${tag}`}
+                    >
+                      #{tag}
+                    </Button>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Author Resources Section */}
             {authorResources.length > 0 && (

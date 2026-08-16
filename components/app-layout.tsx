@@ -5,6 +5,7 @@ import { ReactNode, useEffect, useState } from "react";
 import AppHeader from "@/components/app-header";
 import CommandMenu from "@/components/command-menu";
 import Footer from "@/components/footer";
+import { ScrollToTop } from "@/components/scroll-to-top";
 
 export default function AppLayout({ children }: { children: ReactNode }) {
   const [commandMenuOpen, setCommandMenuOpen] = useState(false);
@@ -24,6 +25,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
       <main className="flex-1">{children}</main>
       <Footer />
       <CommandMenu open={commandMenuOpen} setOpenAction={setCommandMenuOpen} />
+      <ScrollToTop />
     </div>
   );
 }
