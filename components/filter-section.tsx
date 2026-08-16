@@ -2,7 +2,7 @@
 
 import { MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
 import { usePathname, useSearchParams } from "next/navigation";
-import { Suspense, useCallback, useMemo, useState } from "react";
+import { Suspense, useCallback, useDeferredValue, useMemo, useRef, useState } from "react";
 
 import { DotButton } from "@/components/dot-button";
 import { TagFilterPopover, TagOption } from "@/components/tag-filter-popover";
@@ -28,6 +28,7 @@ function FilterSectionInner({
 }: FilterSectionProps) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const searchDebounceRef = useRef<NodeJS.Timeout | null>(null);
 
   // Read initial params from URL if present
   const initialTags = useMemo(() => {
@@ -51,6 +52,9 @@ function FilterSectionInner({
   const [selectedTags, setSelectedTags] = useState<string[]>(initialTags);
   const [matchMode, setMatchMode] = useState<"any" | "all">(initialMode);
   const [searchQuery, setSearchQuery] = useState(initialQuery);
+
+  // Defer heavy list filtering so typing input response is instantaneous (0ms lag)
+  const deferredSearchQuery = useDeferredValue(searchQuery);
 
   // Sync state to URL without full page reload
   const syncUrl = useCallback(
@@ -116,11 +120,11 @@ function FilterSectionInner({
   };
 
   const handleToggleTag = (tag: string) => {
-    setSelectedTags((prev) => {
-      const next = prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag];
-      syncUrl(activeCategory, next, matchMode, searchQuery);
-      return next;
-    });
+    const next = selectedTags.includes(tag)
+      ? selectedTags.filter((t) => t !== tag)
+      : [...selectedTags, tag];
+    setSelectedTags(next);
+    syncUrl(activeCategory, next, matchMode, searchQuery);
   };
 
   const handleClearTags = () => {
@@ -135,15 +139,26 @@ function FilterSectionInner({
 
   const handleSearchChange = (value: string) => {
     setSearchQuery(value);
-    syncUrl(activeCategory, selectedTags, matchMode, value);
+    if (searchDebounceRef.current) {
+      clearTimeout(searchDebounceRef.current);
+    }
+    searchDebounceRef.current = setTimeout(() => {
+      syncUrl(activeCategory, selectedTags, matchMode, value);
+    }, 200);
   };
 
   const handleClearSearch = () => {
+    if (searchDebounceRef.current) {
+      clearTimeout(searchDebounceRef.current);
+    }
     setSearchQuery("");
     syncUrl(activeCategory, selectedTags, matchMode, "");
   };
 
   const handleResetAll = () => {
+    if (searchDebounceRef.current) {
+      clearTimeout(searchDebounceRef.current);
+    }
     setActiveCategory(initialCategory || null);
     setSelectedTags([]);
     setMatchMode("any");
@@ -152,6 +167,8 @@ function FilterSectionInner({
   };
 
   const filteredItems = useMemo(() => {
+    const query = deferredSearchQuery.toLowerCase().trim();
+
     return items.filter((tool) => {
       // Category filter
       if (activeCategory && tool.category !== activeCategory) {
@@ -171,7 +188,6 @@ function FilterSectionInner({
       }
 
       // Search filter
-      const query = searchQuery.toLowerCase().trim();
       if (!query) return true;
       return (
         tool.title.toLowerCase().includes(query) ||
@@ -182,7 +198,7 @@ function FilterSectionInner({
         tool.category.toLowerCase().includes(query)
       );
     });
-  }, [activeCategory, items, matchMode, searchQuery, selectedTags]);
+  }, [activeCategory, deferredSearchQuery, items, matchMode, selectedTags]);
 
   // Group the filtered items by category
   const groupedItems = useMemo(() => {

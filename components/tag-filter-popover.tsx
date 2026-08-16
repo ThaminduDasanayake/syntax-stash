@@ -58,9 +58,9 @@ export function TagFilterPopover({
           variant={hasSelected ? "default" : "outline"}
           size="sm"
           className={cn(
-            "filter-tag-btn text-display-xs border-ink h-10 gap-2 rounded-none border-[1.5px] font-mono transition-all duration-200",
+            "filter-tag-btn text-display-xs border-ink h-10 gap-2 rounded-none border-[1.5px] font-mono transition-all duration-200 hover:shadow-sm",
             hasSelected
-              ? "bg-primary text-primary-foreground shadow-sm"
+              ? "bg-primary text-primary-foreground"
               : "hover:bg-muted text-ink bg-transparent",
             className,
           )}
@@ -69,7 +69,7 @@ export function TagFilterPopover({
           <TagIcon weight={hasSelected ? "fill" : "bold"} className="shrink-0" />
           <span className="truncate">Tags</span>
           {hasSelected && (
-            <span className="bg-primary-foreground text-primary py-0.2 rounded-full px-1.5 font-mono text-[10px] font-bold tabular-nums">
+            <span className="bg-primary-foreground text-primary rounded-full border px-1.25 font-mono text-[10px] font-bold tabular-nums">
               {selectedTags.length}
             </span>
           )}
