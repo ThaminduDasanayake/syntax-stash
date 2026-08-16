@@ -6,17 +6,23 @@ import { memo, useState } from "react";
 
 import { CardIcon } from "@/components/card-icon";
 import { ResourceDialog } from "@/components/resource-dialog";
+import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { iconMap } from "@/lib/icons";
 import { internalTools } from "@/lib/tools-data";
-import { cn, getCategoryColor } from "@/lib/utils";
+import { cn, getCategoryColor, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
 import { ToolCardProps } from "@/types";
 
 function CardBody({ onTagClick, tool }: ToolCardProps) {
   const isInternal = !!tool.slug;
   const Icon = (tool.icon && iconMap[tool.icon]) || ToolboxIcon;
   const colorClasses = getCategoryColor(tool.category);
+  const theme = getCategoryTheme(tool.category);
+  const themeConfig = THEME_CONFIG[theme];
+  const deepColorClass = themeConfig.label;
+  const deepBorderClass = themeConfig.border;
+  const softColorClass = themeConfig.soft;
 
   let toolNumber = "";
   if (isInternal) {
@@ -59,24 +65,35 @@ function CardBody({ onTagClick, tool }: ToolCardProps) {
           <p className="card-description">{tool.description}</p>
 
           {tool.tags && tool.tags.length > 0 && (
-            <div className="card-tags flex flex-wrap gap-1 pt-2">
+            <div className="card-tags flex flex-wrap items-center gap-1.5 pt-2.5">
               {tool.tags.slice(0, 3).map((tag) => (
-                <button
+                <Button
                   key={tag}
-                  type="button"
+                  variant="outline"
+                  size="xs"
                   onClick={(e) => {
                     if (onTagClick) {
                       e.stopPropagation();
                       onTagClick(tag);
                     }
                   }}
-                  className="text-mono-2xs text-ink-mute hover:text-ink hover:border-ink/50 border-ink/20 inline-flex items-center border px-1 py-0.2 font-mono transition-colors"
+                  className={cn(
+                    "text-mono-2xs h-5.5 rounded-none border-[1.5px] px-1.5 py-0 font-mono font-bold transition-all duration-150 hover:-translate-y-0.5 hover:shadow-xs",
+                    deepColorClass,
+                    deepBorderClass,
+                    softColorClass,
+                  )}
                 >
                   #{tag}
-                </button>
+                </Button>
               ))}
               {tool.tags.length > 3 && (
-                <span className="text-mono-2xs text-ink-mute/60 self-center font-mono">
+                <span
+                  className={cn(
+                    "text-mono-2xs self-center font-mono font-semibold opacity-75",
+                    deepColorClass,
+                  )}
+                >
                   +{tool.tags.length - 3}
                 </span>
               )}

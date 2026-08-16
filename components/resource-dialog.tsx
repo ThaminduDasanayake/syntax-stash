@@ -185,15 +185,21 @@ export function ResourceDialog({ onTagClick, tool }: ToolCardProps) {
               <div className="modal-sections">
                 <div className="flex flex-wrap gap-1.5">
                   {activeTool.tags.map((tag) => (
-                    <button
+                    <Button
                       key={tag}
-                      type="button"
+                      variant="outline"
+                      size="xs"
                       onClick={() => onTagClick?.(tag)}
-                      className="text-mono-2xs border-border bg-muted/40 hover:border-primary hover:bg-primary/10 hover:text-primary inline-flex cursor-pointer items-center border px-1.5 py-0.5 font-mono transition-colors"
+                      className={cn(
+                        "text-mono-xs h-6 rounded-none border-[1.5px] px-2 py-0 font-bold transition-all duration-150 hover:-translate-y-0.5 hover:shadow-xs",
+                        activeThemeStyles.label,
+                        activeThemeStyles.border,
+                        activeThemeStyles.soft,
+                      )}
                       title={`Filter by #${tag}`}
                     >
-                      # {tag}
-                    </button>
+                      #{tag}
+                    </Button>
                   ))}
                 </div>
               </div>
