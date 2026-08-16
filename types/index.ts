@@ -21,6 +21,7 @@ export type Tool = {
 
 export type ToolCardProps = {
   tool: Tool;
+  onTagClick?: (tag: string) => void;
 };
 
 export type HeaderProps = {
