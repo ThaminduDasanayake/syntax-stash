@@ -54,6 +54,7 @@ export const TAGS = {
   platform: "platform",
   presentation: "presentation",
   python: "python",
+  qr: "qr",
   rag: "rag",
   react: "react",
   scraper: "scraper",

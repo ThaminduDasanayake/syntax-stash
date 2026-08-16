@@ -72,6 +72,29 @@ export const documentationLinks: Tool[] = [
     url: "https://www.emailmd.dev/",
   },
   {
+    title: "Free Email Signature Generator",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.docs,
+    description:
+      "Free email signature generator. Create a professional HTML email signature with your logo, social links and contact details, then copy the code into Outlook, Gmail or Apple Mail. Live preview, no signup, no watermark, 100% free and private.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/email-signature/og-image.png",
+    subtitle: "HTML Signatures for Outlook, Gmail & Apple Mail",
+    tags: [TAGS.email],
+    url: "https://jasperbernaers.com/email-signature/",
+  },
+  {
+    title: "Free Invoice Generator Online",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.docs,
+    description:
+      "Free online invoice generator — create professional invoices in seconds. Add line items, tax, discounts, your logo. Export print-ready PDF instantly. No sign-up, no watermark, no ads. 100% browser-based and private. Best free alternative to Wave, Zoho Invoice, and FreshBooks.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/invoice-generator/og-image.png",
+    subtitle: "Create & Download PDF Invoices | No Sign-Up, No Watermark",
+    url: "https://jasperbernaers.com/invoice-generator/",
+  },
+  {
     title: "Free PDF Tools Online",
     author: "Jasper Bernaers",
     category: CATEGORIES.docs,
@@ -82,6 +105,18 @@ export const documentationLinks: Tool[] = [
     subtitle: "Merge, Split, Compress, Convert PDF to JPG | No Upload, No Watermark, No Sign‑Up",
     tags: [TAGS.pdf, TAGS.tool],
     url: "https://jasperbernaers.com/pdf/",
+  },
+  {
+    title: "Free PDF Translator",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.docs,
+    description:
+      "Free browser-based PDF translator. Extract text from any PDF and translate it to 100+ languages instantly. No upload, no server, 100% private. Powered by MyMemory.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/pdf-translator/og-image.png",
+    subtitle: "Translate PDFs to Any Language",
+    tags: [TAGS.pdf],
+    url: "https://jasperbernaers.com/pdf-translator/",
   },
   {
     title: "Fumadocs",
@@ -205,6 +240,18 @@ export const documentationLinks: Tool[] = [
     url: "https://pdfcraft.devtoolcafe.com/en/",
   },
   {
+    title: "PDF Form Filler",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.docs,
+    description:
+      "Fill in any PDF in your browser — add text, checkmarks, dates and hand-drawn signatures. No upload, 100% private, instant PDF export. Free, no signup.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/pdf-form-filler/og-image.png",
+    subtitle: "Fill, Sign & Export PDFs Free",
+    tags: [TAGS.pdf],
+    url: "https://jasperbernaers.com/pdf-form-filler/",
+  },
+  {
     title: "Quarkdown",
     category: CATEGORIES.docs,
     description:
@@ -254,5 +301,16 @@ export const documentationLinks: Tool[] = [
     subtitle: "PDF Processor",
     tags: [TAGS.pdf, TAGS.tool],
     url: "https://stirling.com/",
+  },
+  {
+    title: "Text Cleaner",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.docs,
+    description:
+      "Free online text cleaner. Remove extra spaces, line breaks, smart quotes and Word/PDF formatting, strip HTML, remove accents, find & replace, sort, dedup and more — live, in your browser.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/text-cleaner/og-image.png",
+    subtitle: "Remove Extra Spaces, Line Breaks & Formatting Online",
+    url: "https://jasperbernaers.com/text-cleaner/",
   },
 ];

@@ -29,6 +29,17 @@ export const dataLinks: Tool[] = [
     url: "https://github.com/awesomedata/awesome-public-datasets",
   },
   {
+    title: "Azure Naming Convention Generator",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.data,
+    description:
+      "Generate Azure resource names following Microsoft Cloud Adoption Framework (CAF) conventions. 85+ resource types, live validation, Terraform & Bicep export. Free, no signup.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/azurenamingconvention/og-image.png",
+    subtitle: "CAF Compliant, Free",
+    url: "https://jasperbernaers.com/azurenamingconvention/",
+  },
+  {
     title: "Behind the Email",
     category: CATEGORIES.data,
     description:
@@ -43,6 +54,39 @@ export const dataLinks: Tool[] = [
     description: "Everything you need to take your system design skill to the next level",
     subtitle: "Technical Interview Prep",
     url: "https://bytebytego.com/",
+  },
+  {
+    title: "Env File Editor",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.data,
+    description:
+      "Free online .env file editor — create, edit, validate & compare environment files. Syntax highlighting, duplicate detection, secret masking, multi-env diff, export .env/.json/.yaml. No signup, 100% client-side. Your secrets never leave your browser.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/env-editor/og-image.png",
+    subtitle: "Edit .env Files Online Free",
+    url: "https://jasperbernaers.com/env-editor/",
+  },
+  {
+    title: "Free Fake Data Generator Online",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.data,
+    description:
+      "Free fake data generator — create realistic test data with 45+ field types: names, emails, addresses, IBANs, IPs, UUIDs, dates, slugs, user agents, coordinates. Generate up to 1000 rows. Export to CSV, JSON, SQL, TSV, YAML or XML. Build custom schemas. No sign-up, no upload, 100% in-browser. GDPR safe. Free Mockaroo alternative.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/fake-data/og-image.png",
+    subtitle: "Generate Test Data in CSV, JSON, SQL, YAML & XML | Mockaroo Alternative",
+    url: "https://jasperbernaers.com/fake-data/",
+  },
+  {
+    title: "Free Lorem Ipsum Alternative",
+    author: "Jasper Bernaers",
+    category: CATEGORIES.data,
+    description:
+      "Free developer-themed placeholder text generator. Replace boring Lorem Ipsum with git commits, terminal logs, API responses, error messages, code comments, and more. Copy or download instantly.",
+    favicon: "https://jasperbernaers.com/favicon.svg",
+    ogImage: "https://jasperbernaers.com/lore-gen/og-image.png",
+    subtitle: "Developer Placeholder Text Generator",
+    url: "https://jasperbernaers.com/lore-gen/",
   },
   {
     title: "Free Public APIs",
