@@ -581,7 +581,7 @@
 }
 
 @utility filter-search-wrap {
-  @apply relative max-w-none min-w-0 flex-1;
+  @apply relative max-w-none min-w-0 flex-1 sm:max-w-70 sm:min-w-70;
 }
 
 @utility filter-search-icon {

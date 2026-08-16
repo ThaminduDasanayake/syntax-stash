@@ -1,6 +1,6 @@
 "use client";
 
-import { MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
+import { ArrowsCounterClockwiseIcon, MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useDeferredValue, useMemo, useRef, useState } from "react";
 
@@ -216,36 +216,23 @@ function FilterSectionInner({
     <>
       <div className="filter-bar">
         <div className="filter-bar-inner">
-          <div className="flex flex-1 items-center gap-2 sm:max-w-96 sm:min-w-80">
-            <div className="filter-search-wrap flex-1">
-              <MagnifyingGlassIcon weight="bold" className="filter-search-icon" />
-              <Input
-                className="filter-search"
-                placeholder={searchPlaceholder}
-                value={searchQuery}
-                onChange={(e) => handleSearchChange(e.target.value)}
-              />
-              {searchQuery && (
-                <button
-                  type="button"
-                  className="filter-search-clear"
-                  onClick={handleClearSearch}
-                  aria-label="Clear search"
-                >
-                  <XIcon weight="bold" />
-                </button>
-              )}
-            </div>
-
-            {availableTags.length > 0 && (
-              <TagFilterPopover
-                availableTags={availableTags}
-                selectedTags={selectedTags}
-                onToggleTag={handleToggleTag}
-                onClearTags={handleClearTags}
-                matchMode={matchMode}
-                onMatchModeChange={handleMatchModeChange}
-              />
+          <div className="filter-search-wrap">
+            <MagnifyingGlassIcon weight="bold" className="filter-search-icon" />
+            <Input
+              className="filter-search"
+              placeholder={searchPlaceholder}
+              value={searchQuery}
+              onChange={(e) => handleSearchChange(e.target.value)}
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                className="filter-search-clear"
+                onClick={handleClearSearch}
+                aria-label="Clear search"
+              >
+                <XIcon weight="bold" />
+              </button>
             )}
           </div>
 
@@ -274,43 +261,43 @@ function FilterSectionInner({
         {selectedTags.length > 0 && (
           <div className="border-t-ink/15 mx-auto mt-2.5 max-w-7xl border-t px-5 pt-2.5 md:px-8">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-mono-2xs text-ink-mute font-bold uppercase tracking-wider">
+              <span className="text-mono-2xs text-ink-mute font-bold tracking-wider uppercase">
                 Active tags:
               </span>
               {selectedTags.map((tag) => (
-                <button
+                <Button
                   key={tag}
-                  type="button"
+                  size="xs"
+                  variant="outline"
+                  className="group text-mono-2xs px-2 py-1"
                   onClick={() => handleToggleTag(tag)}
-                  className="text-mono-2xs bg-primary/10 border-primary/40 text-ink hover:bg-primary/20 group inline-flex items-center gap-1.5 border px-2 py-1 font-mono transition-colors"
                   aria-label={`Remove tag ${tag}`}
                 >
                   <span>#{tag}</span>
-                  <XIcon
-                    weight="bold"
-                    className="text-ink-mute group-hover:text-destructive size-3"
-                  />
-                </button>
+                  <XIcon weight="bold" className="group-hover:text-destructive" />
+                </Button>
               ))}
 
               {selectedTags.length > 1 && (
-                <button
-                  type="button"
+                <Button
+                  variant="outline"
+                  size="xs"
                   onClick={() => handleMatchModeChange(matchMode === "any" ? "all" : "any")}
-                  className="text-mono-2xs border-ink/20 bg-background text-ink-mute hover:text-ink hover:border-ink/50 inline-flex items-center gap-1 border px-2 py-1 font-mono uppercase transition-colors"
+                  className="text-mono-2xs px-2 py-1"
                   title="Click to toggle match mode"
                 >
+                  <ArrowsCounterClockwiseIcon weight="bold" />
                   Mode: <span className="text-ink font-bold">{matchMode.toUpperCase()}</span>
-                </button>
+                </Button>
               )}
 
-              <button
-                type="button"
+              <Button
+                variant="clear"
                 onClick={handleClearTags}
-                className="text-mono-2xs text-ink-mute hover:text-destructive ml-auto font-mono underline underline-offset-2 transition-colors"
+                className="text-mono-2xs ml-auto underline-offset-2 hover:underline"
               >
                 Clear all tags ({selectedTags.length})
-              </button>
+              </Button>
             </div>
           </div>
         )}
@@ -361,6 +348,17 @@ function FilterSectionInner({
           )}
         </div>
       </div>
+
+      {availableTags.length > 0 && (
+        <TagFilterPopover
+          availableTags={availableTags}
+          selectedTags={selectedTags}
+          onToggleTag={handleToggleTag}
+          onClearTags={handleClearTags}
+          matchMode={matchMode}
+          onMatchModeChange={handleMatchModeChange}
+        />
+      )}
     </>
   );
 }

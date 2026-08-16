@@ -26,6 +26,7 @@ const buttonVariants = cva(
         xs: "gap-2 rounded-[min(var(--radius-md),10px)] px-2 py-0.5 text-xs in-data-[slot=button-group]:rounded-none has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
       },
       variant: {
+        clear: "text-destructive! hover:text-destructive border-none",
         default: "bg-ink text-paper hover:bg-paper hover:text-ink",
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
