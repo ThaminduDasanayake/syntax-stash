@@ -55,7 +55,7 @@ export const THEME_CONFIG: Record<
     dotInactive: "bg-c-orange border-ink",
     label: "text-orange-deep hover:text-orange-deep",
     pillActive: "bg-c-orange text-ink hover:bg-c-orange",
-    soft: "bg-orange-soft hover:bg-orange-soft",
+    soft: "bg-orange-tint hover:bg-orange-tint",
   },
   blue: {
     bg: "bg-c-blue text-paper",
@@ -66,7 +66,7 @@ export const THEME_CONFIG: Record<
     dotInactive: "bg-c-blue border-ink",
     label: "text-blue-deep hover:text-blue-deep",
     pillActive: "bg-c-blue text-paper hover:bg-c-blue hover:text-paper",
-    soft: "bg-blue-soft hover:bg-blue-soft",
+    soft: "bg-blue-tint hover:bg-blue-tint",
   },
   pink: {
     bg: "bg-c-pink text-ink",
@@ -77,7 +77,7 @@ export const THEME_CONFIG: Record<
     dotInactive: "bg-c-pink border-ink",
     label: "text-pink-deep hover:text-pink-deep",
     pillActive: "bg-c-pink text-ink hover:bg-c-pink",
-    soft: "bg-pink-soft hover:bg-pink-soft",
+    soft: "bg-pink-tint hover:bg-pink-tint",
   },
   green: {
     bg: "bg-c-green text-ink",
@@ -88,7 +88,7 @@ export const THEME_CONFIG: Record<
     dotInactive: "bg-c-green border-ink",
     label: "text-green-deep hover:text-green-deep",
     pillActive: "bg-c-green text-ink hover:bg-c-green",
-    soft: "bg-green-soft hover:bg-green-soft",
+    soft: "bg-green-tint hover:bg-green-tint",
   },
 };
 
