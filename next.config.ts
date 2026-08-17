@@ -1,6 +1,14 @@
 import type { NextConfig } from "next";
 
+const lastUpdateDate = new Intl.DateTimeFormat("en-US", {
+  month: "long",
+  year: "numeric",
+}).format(new Date());
+
 const nextConfig: NextConfig = {
+  env: {
+    NEXT_PUBLIC_LAST_UPDATE: lastUpdateDate,
+  },
   experimental: {
     optimizePackageImports: ["@phosphor-icons/react"],
   },

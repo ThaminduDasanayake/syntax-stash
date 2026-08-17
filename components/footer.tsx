@@ -86,7 +86,7 @@ export default function Footer() {
 
       <div className="border-ink-mute text-paper/60 mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 border-t px-6 pt-6 font-mono text-[11px] uppercase sm:flex-row sm:px-12 lg:px-16">
         <span>© {new Date().getFullYear()} SYNTAX STASH</span>
-        <span>Last update June 2026</span>
+        <span>Last update {process.env.NEXT_PUBLIC_LAST_UPDATE || "2026"}</span>
       </div>
     </footer>
   );
