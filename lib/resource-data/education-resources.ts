@@ -1064,6 +1064,16 @@ export const educationLinks: Tool[] = [
     url: "https://andreasbm.github.io/web-skills/",
   },
   {
+    title: "Web Tools Weekly",
+    category: CATEGORIES.education,
+    description: "A weekly newsletter for front-end developers with a specific focus on tools.",
+    favicon: "https://webtoolsweekly.s3.amazonaws.com/gear.svg",
+    ogImage: "https://webtoolsweekly.s3.amazonaws.com/logo.svg",
+    subtitle: "A Weekly Newsletter for Front-end Developers",
+    tags: [TAGS.newsletter],
+    url: "https://webtoolsweekly.com/",
+  },
+  {
     title: "Wellfound",
     category: CATEGORIES.education,
     description:

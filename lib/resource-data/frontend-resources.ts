@@ -515,6 +515,8 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Ultracite is a zero-config preset for ESLint, Biome, and Oxlint that helps teams and AI write consistent, type-safe code.",
+    favicon: "https://www.ultracite.ai/favicon.svg",
+    ogImage: "https://www.ultracite.ai/opengraph-image.png",
     subtitle: "Zero-Config Linting for Biome, ESLint, and Oxlint",
     url: "https://www.ultracite.ai/",
   },

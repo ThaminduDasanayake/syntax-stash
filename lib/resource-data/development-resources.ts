@@ -758,6 +758,16 @@ export const developmentLinks: Tool[] = [
     url: "https://rows.gg/",
   },
   {
+    title: "RSSHub",
+    author: "DIYgod",
+    category: CATEGORIES.data,
+    description: "Everything is RSSible 🧡",
+    favicon: "https://raw.githubusercontent.com/DIYgod/RSSHub/master/public/logo.svg",
+    subtitle: "Everything is RSSible",
+    tags: [TAGS.rss, TAGS.selfHosted, TAGS.tool],
+    url: "https://docs.rsshub.app/",
+  },
+  {
     title: "SEOStudio",
     category: CATEGORIES.dev,
     description:
