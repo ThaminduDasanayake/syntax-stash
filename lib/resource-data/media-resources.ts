@@ -245,7 +245,10 @@ export const mediaLinks: Tool[] = [
     category: CATEGORIES.media,
     description:
       "A fun collection of free SVG generators for gradients, patterns, shapes, textures & cool backgrounds. Plus, some more color tools for web designers.",
-    tags: [TAGS.image],
+    favicon: "https://www.fffuel.co/images/favicon/favicon.svg",
+    ogImage: "https://fffuel.co/images/cover.png",
+    subtitle: "Free SVG generators, color tools & web design tools",
+    tags: [TAGS.color, TAGS.svg, TAGS.tool],
     url: "https://www.fffuel.co/",
   },
   {
@@ -407,6 +410,18 @@ export const mediaLinks: Tool[] = [
     url: "https://jasperbernaers.com/free-heic-to-jpg-converter/",
   },
   {
+    title: "iiisometric",
+    author: "fffuel",
+    category: CATEGORIES.media,
+    description:
+      "Create isometric design constructions by placing blocks together to form complex 3D-looking shapes. Export your creations as SVG files.",
+    favicon: "https://fffuel.co/images/favicon/favicon.svg",
+    ogImage: "https://fffuel.co/images/covers/iiisometric.png",
+    subtitle: "3D-like isometric design builder",
+    tags: [TAGS.svg],
+    url: "https://www.fffuel.co/iiisometric/",
+  },
+  {
     title: "Image to ASCII Converter",
     author: "Jasper Bernaers",
     category: CATEGORIES.media,
@@ -454,12 +469,36 @@ export const mediaLinks: Tool[] = [
     url: "https://jasperbernaers.com/LinkedIn-Post-Formatter/",
   },
   {
+    title: "llline",
+    author: "fffuel",
+    category: CATEGORIES.media,
+    description:
+      "SVG generator that makes it easy to create lines & strokes that look and feel organic. Tweak the colors, add dashes and make it your own, then export the SVG.",
+    favicon: "https://fffuel.co/images/favicon/favicon.svg",
+    ogImage: "https://fffuel.co/images/covers/llline.png",
+    subtitle: "Smooth SVG Line/Stroke Generator",
+    tags: [TAGS.svg],
+    url: "https://fffuel.co/llline/",
+  },
+  {
     title: "Logos",
     category: CATEGORIES.media,
     description:
       "15,015 free SVG logos for apps, dev tools and tech brands. Search, filter by category, download or copy in one click.",
     tags: [TAGS.logo],
     url: "https://logos.lndev.me/",
+  },
+  {
+    title: "Making SVG Loading Spinners",
+    author: "fffuel",
+    category: CATEGORIES.media,
+    description:
+      "Learn to create a cool SVG loading spinner with this step-by-step guide. We'll use attributes like stroke-dasharray and stroke-dashoffset to make it easy.",
+    favicon: "https://fffuel.co/images/favicon/favicon.svg",
+    ogImage: "https://fffuel.co/images/covers/svg-spinner.jpg",
+    subtitle: "An Interactive Guide",
+    tags: [TAGS.svg],
+    url: "https://fffuel.co/svg-spinner/",
   },
   {
     title: "Media Cheat Sheet",
@@ -470,6 +509,18 @@ export const mediaLinks: Tool[] = [
     ogImage: "https://mediacheatsheet.com/og-image.jpg",
     subtitle: "Social Media & Ad Specs Cheat Sheet",
     url: "https://mediacheatsheet.com/",
+  },
+  {
+    title: "mmmotif",
+    author: "fffuel",
+    category: CATEGORIES.media,
+    description:
+      "Easily generate SVG shape patterns with a 3D feel, thanks to isometric design. Export the SVG code and use the 3D patterns in your designs right away.",
+    favicon: "https://fffuel.co/images/favicon/favicon.svg",
+    ogImage: "https://fffuel.co/images/covers/mmmotif.png",
+    subtitle: "SVG generator for 3D-like isomorphic patterns",
+    tags: [TAGS.svg],
+    url: "https://fffuel.co/mmmotif/",
   },
   {
     title: "Need3D",
@@ -680,6 +731,42 @@ export const mediaLinks: Tool[] = [
       "Squoosh is the ultimate image optimizer that allows you to compress and compare images with different codecs in your browser.",
     tags: [TAGS.image],
     url: "https://squoosh.app/",
+  },
+  {
+    title: "ssshape",
+    author: "fffuel",
+    category: CATEGORIES.media,
+    description:
+      "Free SVG blob shape generator that allows you to control the final shapes. Copy/export as SVG and use the blob-like shapes in your designs right away.",
+    favicon: "https://fffuel.co/images/favicon/favicon.svg",
+    ogImage: "https://fffuel.co/images/covers/ssshape.png",
+    subtitle: "SVG Blob/Organic Shape Generator with Extra Controls",
+    tags: [TAGS.shapes, TAGS.svg],
+    url: "https://fffuel.co/ssshape/",
+  },
+  {
+    title: "sssplatter",
+    author: "fffuel",
+    category: CATEGORIES.media,
+    description:
+      "A simple SVG shape generator for random shapes that are blob-like, but with more of a splattered/splash feel.",
+    favicon: "https://fffuel.co/images/favicon/favicon.svg",
+    ogImage: "https://fffuel.co/images/covers/sssplatter.png",
+    subtitle: "generate SVG shapes that look splattered",
+    tags: [TAGS.svg],
+    url: "https://www.fffuel.co/sssplatter/",
+  },
+  {
+    title: "SSSVG",
+    author: "fffuel",
+    category: CATEGORIES.media,
+    description:
+      "A visual & interactive SVG reference. Quickly look up how to define SVG shapes, transforms, masks, patterns, gradients, text and more.",
+    favicon: "https://fffuel.co/images/favicon/favicon.svg",
+    ogImage: "https://fffuel.co/images/covers/sssvg.png",
+    subtitle: "An Interactive SVG Reference",
+    tags: [TAGS.svg],
+    url: "https://fffuel.co/sssvg/",
   },
   {
     title: "Storytale",

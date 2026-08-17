@@ -221,6 +221,7 @@ export const colorLinks: Tool[] = [
   },
   {
     title: "Harmonizer",
+    author: "Evil Martians",
     category: CATEGORIES.colors,
     description: "Color palette generator for UI",
     favicon: "https://harmonizer.evilmartians.com/favicon.svg",
