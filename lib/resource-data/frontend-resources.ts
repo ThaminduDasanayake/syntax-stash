@@ -76,6 +76,18 @@ export const frontendLinks: Tool[] = [
     url: "https://screenspan.net/polka/",
   },
   {
+    title: "CSS Selectors",
+    author: "fffuel",
+    category: CATEGORIES.frontend,
+    description:
+      "Visual guide to CSS selectors, including pseudo-classes (:nth-child, :hover,...), functional pseudo-classes (:not, :is,...) and pseudo-elements.",
+    favicon: "https://fffuel.co/images/favicon/favicon.svg",
+    ogImage: "https://fffuel.co/images/covers/css-selectors.png",
+    subtitle: "A Visual Guide & Reference",
+    tags: [TAGS.css],
+    url: "https://www.fffuel.co/css-selectors/",
+  },
+  {
     title: "CSS Unit Converter",
     category: CATEGORIES.frontend,
     description:
@@ -503,6 +515,8 @@ export const frontendLinks: Tool[] = [
     category: CATEGORIES.frontend,
     description:
       "Ultracite is a zero-config preset for ESLint, Biome, and Oxlint that helps teams and AI write consistent, type-safe code.",
+    favicon: "https://www.ultracite.ai/favicon.svg",
+    ogImage: "https://www.ultracite.ai/opengraph-image.png",
     subtitle: "Zero-Config Linting for Biome, ESLint, and Oxlint",
     url: "https://www.ultracite.ai/",
   },

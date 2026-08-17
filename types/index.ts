@@ -6,11 +6,9 @@ export type Tool = {
   category: string;
   className?: string;
   description?: string;
-  // details?: { title: string; content: string }[];
   favicon?: string;
   highlight?: string;
   icon?: IconName;
-  related?: string[];
   ogImage?: string;
   slug?: string;
   subtitle?: string;
@@ -21,7 +19,7 @@ export type Tool = {
 
 export type ToolCardProps = {
   tool: Tool;
-  onTagClick?: (tag: string) => void;
+  onTagClickAction?: (tag: string) => void;
 };
 
 export type HeaderProps = {

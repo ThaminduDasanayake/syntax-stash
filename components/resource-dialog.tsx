@@ -13,7 +13,7 @@ import { resourceLinks } from "@/lib/resource-data";
 import { cn, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
 import { Tool, ToolCardProps } from "@/types";
 
-export function ResourceDialog({ onTagClick, tool }: ToolCardProps) {
+export function ResourceDialog({ onTagClickAction, tool }: ToolCardProps) {
   const [activeTool, setActiveTool] = useState(tool);
   const [ogError, setOgError] = useState(false);
 
@@ -50,13 +50,6 @@ export function ResourceDialog({ onTagClick, tool }: ToolCardProps) {
   }, [activeTool]);
 
   const relatedResources = useMemo(() => {
-    // 1. Explicitly Defined Related Resources
-    if (activeTool.related && activeTool.related.length > 0) {
-      const explicitRelated = resourceLinks.filter((r) => activeTool.related!.includes(r.title));
-      return explicitRelated.filter((r) => !authorResources.some((ar) => ar.title === r.title));
-    }
-
-    // 2. Tag Intersection Algorithm
     const activeTags = activeTool.tags || [];
     const scoredResources = resourceLinks
       .filter(
@@ -77,7 +70,6 @@ export function ResourceDialog({ onTagClick, tool }: ToolCardProps) {
       .slice(0, 3)
       .map((item) => item.resource);
 
-    // 3. Fallback (if no tags match, pick 3 from same category)
     if (scoredResources.length === 0) {
       return resourceLinks
         .filter(
@@ -189,7 +181,7 @@ export function ResourceDialog({ onTagClick, tool }: ToolCardProps) {
                       key={tag}
                       variant="outline"
                       size="xs"
-                      onClick={() => onTagClick?.(tag)}
+                      onClick={() => onTagClickAction?.(tag)}
                       className={cn(
                         "text-mono-xs h-6 rounded-none border-[1.5px] px-2 py-0 font-bold transition-all duration-150 hover:-translate-y-0.5 hover:shadow-xs",
                         activeThemeStyles.label,

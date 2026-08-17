@@ -11,7 +11,6 @@ export const aiLinks: Tool[] = [
     description:
       "A self-hosted email client with an AI agent, running entirely on Cloudflare Workers.",
     favicon: "/github.svg",
-    related: ["Open WebUI"],
     tags: [TAGS.ai],
     url: "https://github.com/cloudflare/agentic-inbox",
   },
@@ -62,7 +61,6 @@ export const aiLinks: Tool[] = [
     description:
       "Build your autonomous hedge fund in minutes. AutoHedge harnesses the power of swarm intelligence and AI agents to automate market analysis, risk management, and trade execution.",
     favicon: "/github.svg",
-    related: ["Fincept Terminal", "Vibe-Trading"],
     tags: [TAGS.ai],
     url: "https://github.com/The-Swarm-Corporation/AutoHedge",
   },
@@ -71,7 +69,6 @@ export const aiLinks: Tool[] = [
     category: CATEGORIES.ai,
     description:
       "The curated directory of Claude AI resources: the Claude Code 2.1 cheatsheet, agent skills, top MCP servers, plugins, SDKs and integrations for developers.",
-    related: ["claude-ads", "OpenHands"],
     subtitle: "Claude AI Tools, Cheatsheet, Skills & MCP Servers",
     tags: [TAGS.ai],
     url: "https://awesomeclaude.ai/",
@@ -92,7 +89,6 @@ export const aiLinks: Tool[] = [
     category: CATEGORIES.ai,
     description: "100+ AI Agent & RAG apps you can actually run — clone, customize, ship.",
     favicon: "/github.svg",
-    related: ["Langflow", "ollama/ollama"],
     tags: [TAGS.ai],
     url: "https://github.com/Shubhamsaboo/awesome-llm-apps",
   },
@@ -101,7 +97,6 @@ export const aiLinks: Tool[] = [
     category: CATEGORIES.ai,
     description:
       "78,000+ GitHub stars. Trusted by Fortune 500. The #1 open-source browser automation platform.",
-    related: ["Crawl4AI", "jo-inc/camofox-browser"],
     subtitle: "The way AI uses the internet",
     tags: [TAGS.ai],
     url: "https://browser-use.com/",
@@ -113,7 +108,6 @@ export const aiLinks: Tool[] = [
     description:
       "Stealth headless browser for AI agents — bypass Cloudflare, bot detection, and anti-scraping. Drop-in Puppeteer/Playwright replacement.",
     favicon: "/github.svg",
-    related: ["Browser Use - The way AI uses the internet", "Crawl4AI"],
     tags: [TAGS.ai],
     url: "https://github.com/jo-inc/camofox-browser",
   },
@@ -132,7 +126,6 @@ export const aiLinks: Tool[] = [
     description:
       "Comprehensive paid advertising audit & optimization skill for Claude Code. 250+ checks across Google, Meta, YouTube, LinkedIn, TikTok, Microsoft & Apple Ads with weighted scoring, parallel agents, industry templates, and AI creative generation.",
     favicon: "/github.svg",
-    related: ["Awesome Claude"],
     tags: [TAGS.ai],
     url: "https://github.com/AgriciDaniel/claude-ads",
   },
@@ -152,7 +145,6 @@ export const aiLinks: Tool[] = [
     title: "Crawl4AI",
     category: CATEGORIES.ai,
     description: "Open-source LLM-Friendly Web Crawler & Scraper",
-    related: ["Browser Use - The way AI uses the internet", "jo-inc/camofox-browser", "Maxun"],
     tags: [TAGS.crawler, TAGS.llm, TAGS.scraper, TAGS["open-source"]],
     url: "https://docs.crawl4ai.com/",
   },
@@ -161,7 +153,6 @@ export const aiLinks: Tool[] = [
     category: CATEGORIES.ai,
     description:
       "Unlock agentic workflow with Dify. Develop, deploy, and manage autonomous agents, RAG pipelines, and more for teams at any scale, effortlessly.",
-    related: ["Langflow", "Unstructured - Unstructured Data Platform for GenAI"],
     subtitle: "Leading Agentic Workflow Builder",
     tags: [TAGS.ai],
     url: "https://dify.ai/",
@@ -184,10 +175,11 @@ export const aiLinks: Tool[] = [
   },
   {
     title: "eve",
+    author: "Vercel",
     category: CATEGORIES.ai,
     description:
       "Like Next.js for web apps, but for agents. Markdown for instructions and skills, TypeScript for tools. Durable by default.",
-    subtitle: "The Agent Framework - Vercel",
+    subtitle: "The Agent Framework",
     tags: [TAGS.ai],
     url: "https://vercel.com/eve",
   },
@@ -198,7 +190,6 @@ export const aiLinks: Tool[] = [
     description:
       "FinceptTerminal is a modern finance application offering advanced market analytics, investment research, and economic data tools, designed for interactive exploration and data-driven decision-making in a user-friendly environment.",
     favicon: "/github.svg",
-    related: ["AutoHedge", "Vibe-Trading"],
     tags: [TAGS.ai],
     url: "https://github.com/Fincept-Corporation/FinceptTerminal",
   },
@@ -254,7 +245,6 @@ export const aiLinks: Tool[] = [
     category: CATEGORIES.ai,
     description: "Write HTML. Render video. Built for agents.",
     favicon: "/github.svg",
-    related: ["Anil-matcha/Open-Generative-AI"],
     tags: [TAGS.ai],
     url: "https://github.com/heygen-com/hyperframes",
   },
@@ -267,21 +257,42 @@ export const aiLinks: Tool[] = [
     url: "https://kickbacks.ai/",
   },
   {
+    title: "Label Studio",
+    category: CATEGORIES.ai,
+    description:
+      "Multi-modal data labeling and annotation platform for agent traces, LLM evals, RLHF, computer vision, document AI, NLP, audio transcription, and more.",
+    favicon: "https://labelstud.io/favicon.svg",
+    ogImage:
+      "https://cdn.sanity.io/images/k7elabj6/production/91e23a79f08972e22abe23b7f70866fddecbb17b-1200x630.png",
+    subtitle: "Open Source Data Labeling and AI Evaluation",
+    tags: [TAGS.ai],
+    url: "https://labelstud.io/",
+  },
+  {
     title: "Langflow",
     author: "Langflow",
     category: CATEGORIES.ai,
     description:
       "Low-code AI builder for agentic and RAG applications. Build AI applications with ease",
-    related: ["Dify", "OpenHands"],
     tags: [TAGS.agents, TAGS.builder, TAGS.rag, TAGS["low-code"]],
     url: "https://www.langflow.org/",
+  },
+  {
+    title: "LLM Gateway",
+    category: CATEGORIES.ai,
+    description:
+      "Route, manage, and analyze LLM requests across OpenAI, Anthropic, Google, and 40+ providers through one unified, OpenAI-compatible API. Free and open source.",
+    favicon: "https://llmgateway.io/brand/logo-black.svg",
+    ogImage: "https://llmgateway.io/opengraph.png",
+    subtitle: "Unified API for Multiple LLM Providers",
+    tags: [TAGS.ai],
+    url: "https://llmgateway.io/",
   },
   {
     title: "Maxun",
     category: CATEGORIES.ai,
     description:
       "The easiest AI-powered  web scraping, crawling, extraction, search platform. The best open-source Browse AI alternative.",
-    related: ["Crawl4AI", "jo-inc/camofox-browser"],
     subtitle: "Scrape, Extract, Crawl, Search Web Data With No-Code",
     tags: [TAGS.ai],
     url: "https://www.maxun.dev/",
@@ -316,7 +327,6 @@ export const aiLinks: Tool[] = [
     description:
       "Get up and running with Kimi-K2.6, GLM-5.1, MiniMax, DeepSeek, gpt-oss, Qwen, Gemma and other models.",
     favicon: "/github.svg",
-    related: ["Open WebUI", "Shubhamsaboo/awesome-llm-apps"],
     tags: [TAGS.ai],
     url: "https://github.com/ollama/ollama",
   },
@@ -341,7 +351,6 @@ export const aiLinks: Tool[] = [
     description:
       "Open-source alternative to AI video platforms — Free AI image & video generation studio with 200+ models (Flux, Midjourney, Kling, Sora, Veo). No content filters. Self-hosted, MIT licensed.",
     favicon: "/github.svg",
-    related: ["heygen-com/hyperframes", "Open-LLM-VTuber/Open-LLM-VTuber"],
     tags: [TAGS.ai],
     url: "https://github.com/Anil-matcha/Open-Generative-AI",
   },
@@ -352,7 +361,6 @@ export const aiLinks: Tool[] = [
     description:
       "Talk to any LLM with hands-free voice interaction, voice interruption, and Live2D taking face running locally across platforms.",
     favicon: "/github.svg",
-    related: ["Anil-matcha/Open-Generative-AI", "openai/whisper"],
     tags: [TAGS.ai],
     url: "https://github.com/Open-LLM-VTuber/Open-LLM-VTuber",
   },
@@ -373,10 +381,20 @@ export const aiLinks: Tool[] = [
     description:
       "Meet OpenHands, the open-source, model-agnostic platform for cloud coding agents. Automate real engineering work securely and transparently. Build faster with full control.",
     favicon: "/github.svg",
-    related: ["Awesome Claude", "Langflow"],
     subtitle: "The Open Platform for Cloud Coding Agents",
     tags: [TAGS.ai],
     url: "https://www.openhands.dev/",
+  },
+  {
+    title: "OpenRouter",
+    category: CATEGORIES.ai,
+    description:
+      "The unified interface for every model. Find the best models & prices for your prompts",
+    favicon: "https://openrouter.ai/favicon/glyph.png",
+    ogImage:
+      "https://openrouter.ai/dynamic-og?pathname=default&title=OpenRouter&description=The+unified+interface+for+every+model.+Find+the+best+models+%26+prices+for+your+prompts&v=2",
+    tags: [TAGS.ai],
+    url: "https://openrouter.ai",
   },
   {
     title: "Open WebUI",
@@ -384,7 +402,6 @@ export const aiLinks: Tool[] = [
     category: CATEGORIES.ai,
     description:
       "Run AI on your own terms. Connect any model, extend with code, protect what matters—without compromise.",
-    related: ["ollama/ollama", "Unstructured - Unstructured Data Platform for GenAI"],
     subtitle: "Self-Hosted AI Platform",
     tags: [TAGS.llm, TAGS.platform, TAGS.selfHosted, TAGS.ui],
     url: "https://openwebui.com/",
@@ -450,7 +467,6 @@ export const aiLinks: Tool[] = [
     category: CATEGORIES.ai,
     description:
       "Transform complex, unstructured data into clean, AI-ready inputs. Connect to any source, process 64+ file types, and power your GenAI projects. Start now.",
-    related: ["Dify", "Open WebUI"],
     subtitle: "Unstructured Data Platform for GenAI",
     tags: [TAGS.ai],
     url: "https://unstructured.io/",
@@ -482,7 +498,6 @@ export const aiLinks: Tool[] = [
     category: CATEGORIES.ai,
     description: "Vibe-Trading: Your Personal Trading Agent",
     favicon: "/github.svg",
-    related: ["AutoHedge", "Fincept Terminal"],
     tags: [TAGS.ai],
     url: "https://github.com/HKUDS/Vibe-Trading",
   },
@@ -492,7 +507,6 @@ export const aiLinks: Tool[] = [
     category: CATEGORIES.ai,
     description: "Robust Speech Recognition via Large-Scale Weak Supervision",
     favicon: "/github.svg",
-    related: ["Open-LLM-VTuber/Open-LLM-VTuber"],
     tags: [TAGS.ai],
     url: "https://github.com/openai/whisper",
   },

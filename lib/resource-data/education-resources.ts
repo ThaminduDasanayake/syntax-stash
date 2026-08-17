@@ -646,6 +646,18 @@ export const educationLinks: Tool[] = [
     url: "https://www.mlh.com/",
   },
   {
+    title: "Martian Chronicles",
+    author: "Evil Martians",
+    category: CATEGORIES.education,
+    description:
+      "We’ve got articles for junior and experienced developers, case studies for startup founders and managers, and thorough technical deep dives into unexpected terrain. No matter where you’re coming from, you’re certain to gain some insight here, whether it’s more practical, or something that really takes you for a ride.",
+    favicon: "https://evilmartians.com/favicon.svg",
+    ogImage: "https://evilmartians.com/images/social.jpg",
+    subtitle: "Evil Martians’ team blog",
+    tags: [TAGS.article, TAGS.blog],
+    url: "https://evilmartians.com/chronicles",
+  },
+  {
     title: "Mimo",
     category: CATEGORIES.education,
     description:
@@ -1050,6 +1062,16 @@ export const educationLinks: Tool[] = [
     description: "A visual overview of useful skills to learn as a web developer",
     tags: [TAGS.education],
     url: "https://andreasbm.github.io/web-skills/",
+  },
+  {
+    title: "Web Tools Weekly",
+    category: CATEGORIES.education,
+    description: "A weekly newsletter for front-end developers with a specific focus on tools.",
+    favicon: "https://webtoolsweekly.s3.amazonaws.com/gear.svg",
+    ogImage: "https://webtoolsweekly.s3.amazonaws.com/logo.svg",
+    subtitle: "A Weekly Newsletter for Front-end Developers",
+    tags: [TAGS.newsletter],
+    url: "https://webtoolsweekly.com/",
   },
   {
     title: "Wellfound",

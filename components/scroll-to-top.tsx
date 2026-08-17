@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowUpIcon } from "@phosphor-icons/react";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -8,9 +9,14 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { cn } from "@/lib/utils";
 
 export function ScrollToTop() {
+  const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(false);
 
+  const isResourcesPage = pathname?.startsWith("/resources");
+
   useEffect(() => {
+    if (!isResourcesPage) return;
+
     const toggleVisibility = () => {
       // Show button after scrolling past 300px
       if (window.scrollY > 300) {
@@ -25,7 +31,11 @@ export function ScrollToTop() {
     toggleVisibility();
 
     return () => window.removeEventListener("scroll", toggleVisibility);
-  }, []);
+  }, [isResourcesPage]);
+
+  if (!isResourcesPage) {
+    return null;
+  }
 
   const scrollToTop = () => {
     window.scrollTo({

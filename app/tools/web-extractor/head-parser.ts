@@ -31,6 +31,7 @@ export interface ExtractedMetadata {
     title: string | null;
     description: string | null;
     image: string | null;
+    url: string | null;
     type: string | null;
     siteName: string | null;
     locale: string | null;
@@ -75,6 +76,28 @@ export function parseHeadHtml(rawHtml: string, baseUrl?: string): ExtractedMetad
     }
   }
 
+  function getMeta(names: string[]): string | null {
+    for (const name of names) {
+      const lower = name.toLowerCase();
+      const selectors = [
+        `meta[itemprop="${lower}"]`,
+        `meta[itemprop="${name}"]`,
+        `meta[name="${lower}"]`,
+        `meta[name="${name}"]`,
+        `meta[property="${lower}"]`,
+        `meta[property="${name}"]`,
+      ];
+      for (const sel of selectors) {
+        const el = doc.querySelector(sel);
+        if (el) {
+          const content = el.getAttribute("content")?.trim() || el.getAttribute("value")?.trim();
+          if (content) return content;
+        }
+      }
+    }
+    return null;
+  }
+
   const effectiveBase = baseUrl?.trim() ? baseUrl.trim() : undefined;
 
   const titleEl = doc.querySelector("title");
@@ -113,12 +136,13 @@ export function parseHeadHtml(rawHtml: string, baseUrl?: string): ExtractedMetad
     }
   });
 
-  const rawOgImage =
-    doc.querySelector('meta[property="og:image"]')?.getAttribute("content")?.trim() || null;
-  const rawTwitterImage =
-    doc.querySelector('meta[property="twitter:image"]')?.getAttribute("content")?.trim() ||
-    doc.querySelector('meta[name="twitter:image"]')?.getAttribute("content")?.trim() ||
-    null;
+  const rawOgImage = getMeta(["og:image", "og:image:secure_url", "og:image:url"]);
+  const rawTwitterImage = getMeta([
+    "twitter:image",
+    "twitter:image:secure_url",
+    "twitter:image:src",
+    "twitter:image:url",
+  ]);
 
   const preloadScreenshots = Array.from(doc.querySelectorAll('link[rel="preload"][as="image"]'))
     .map((el) => el.getAttribute("href"))
@@ -127,15 +151,17 @@ export function parseHeadHtml(rawHtml: string, baseUrl?: string): ExtractedMetad
     .filter((url): url is string => Boolean(url));
 
   const keywords =
-    doc
-      .querySelector('meta[name="keywords"]')
-      ?.getAttribute("content")
+    getMeta(["keywords"])
       ?.split(",")
       .map((k) => k.trim())
       .filter(Boolean) ?? [];
 
-  const localeAlternate = Array.from(doc.querySelectorAll('meta[property="og:locale:alternate"]'))
-    .map((el) => el.getAttribute("content")?.trim())
+  const localeAlternate = Array.from(
+    doc.querySelectorAll(
+      'meta[property="og:locale:alternate"], meta[name="og:locale:alternate"], meta[property="og:locale:alternate:locale"], meta[name="og:locale:alternate:locale"]',
+    ),
+  )
+    .map((el) => el.getAttribute("content")?.trim() || el.getAttribute("value")?.trim())
     .filter((content): content is string => Boolean(content));
 
   return {
@@ -149,39 +175,32 @@ export function parseHeadHtml(rawHtml: string, baseUrl?: string): ExtractedMetad
       screenshots: preloadScreenshots,
       twitterImage: absoluteUrl(rawTwitterImage, effectiveBase),
     },
-    author: doc.querySelector('meta[name="author"]')?.getAttribute("content")?.trim() || null,
+    author: getMeta(["article:author", "author", "creator"]),
     canonicalUrl: doc.querySelector('link[rel="canonical"]')?.getAttribute("href")?.trim() || null,
     charset:
       doc.querySelector("meta[charset]")?.getAttribute("charset") ||
       doc.querySelector('meta[http-equiv="Content-Type"]')?.getAttribute("content") ||
       null,
-    description:
-      doc.querySelector('meta[name="description"]')?.getAttribute("content")?.trim() || null,
-    generator: doc.querySelector('meta[name="generator"]')?.getAttribute("content")?.trim() || null,
+    description: getMeta(["description"]),
+    generator: getMeta(["generator"]),
     keywords,
     language: doc.querySelector("html")?.getAttribute("lang") || null,
 
     openGraph: {
-      title:
-        doc.querySelector('meta[property="og:title"]')?.getAttribute("content")?.trim() || null,
-      description:
-        doc.querySelector('meta[property="og:description"]')?.getAttribute("content")?.trim() ||
-        null,
-      image:
-        doc.querySelector('meta[property="og:image"]')?.getAttribute("content")?.trim() || null,
-      locale:
-        doc.querySelector('meta[property="og:locale"]')?.getAttribute("content")?.trim() || null,
+      title: getMeta(["og:title"]),
+      description: getMeta(["og:description"]),
+      image: absoluteUrl(rawOgImage, effectiveBase),
+      locale: getMeta(["og:locale"]),
       localeAlternate,
-      siteName:
-        doc.querySelector('meta[property="og:site_name"]')?.getAttribute("content")?.trim() || null,
-      type: doc.querySelector('meta[property="og:type"]')?.getAttribute("content")?.trim() || null,
+      siteName: getMeta(["og:site_name", "og:sitename"]),
+      type: getMeta(["og:type"]),
+      url: absoluteUrl(getMeta(["og:url"]), effectiveBase),
     },
 
     robots: {
-      bingbot: doc.querySelector('meta[name="bingbot"]')?.getAttribute("content")?.trim() || null,
-      googlebot:
-        doc.querySelector('meta[name="googlebot"]')?.getAttribute("content")?.trim() || null,
-      robots: doc.querySelector('meta[name="robots"]')?.getAttribute("content")?.trim() || null,
+      bingbot: getMeta(["bingbot"]),
+      googlebot: getMeta(["googlebot"]),
+      robots: getMeta(["robots"]),
     },
 
     securityHeaders: {
@@ -198,61 +217,29 @@ export function parseHeadHtml(rawHtml: string, baseUrl?: string): ExtractedMetad
     },
 
     themeColor: {
-      colorScheme:
-        doc.querySelector('meta[name="color-scheme"]')?.getAttribute("content")?.trim() || null,
-      themeColor:
-        doc.querySelector('meta[name="theme-color"]')?.getAttribute("content")?.trim() || null,
+      colorScheme: getMeta(["color-scheme"]),
+      themeColor: getMeta(["theme-color"]),
     },
 
     twitter: {
-      title:
-        doc.querySelector('meta[property="twitter:title"]')?.getAttribute("content")?.trim() ||
-        doc.querySelector('meta[name="twitter:title"]')?.getAttribute("content")?.trim() ||
-        null,
-      card: doc.querySelector('meta[name="twitter:card"]')?.getAttribute("content")?.trim() || null,
-      creator:
-        doc.querySelector('meta[property="twitter:creator"]')?.getAttribute("content")?.trim() ||
-        doc.querySelector('meta[name="twitter:creator"]')?.getAttribute("content")?.trim() ||
-        null,
-      description:
-        doc
-          .querySelector('meta[property="twitter:description"]')
-          ?.getAttribute("content")
-          ?.trim() ||
-        doc.querySelector('meta[name="twitter:description"]')?.getAttribute("content")?.trim() ||
-        null,
-      image:
-        doc.querySelector('meta[property="twitter:image"]')?.getAttribute("content")?.trim() ||
-        doc.querySelector('meta[name="twitter:image"]')?.getAttribute("content")?.trim() ||
-        null,
-      site:
-        doc.querySelector('meta[property="twitter:site"]')?.getAttribute("content")?.trim() ||
-        doc.querySelector('meta[name="twitter:site"]')?.getAttribute("content")?.trim() ||
-        null,
+      title: getMeta(["twitter:title"]),
+      card: getMeta(["twitter:card"]),
+      creator: getMeta(["twitter:creator"]),
+      description: getMeta(["twitter:description"]),
+      image: absoluteUrl(rawTwitterImage, effectiveBase),
+      site: getMeta(["twitter:site"]),
     },
 
     url: effectiveBase || "Pasted HTML",
 
     verification: {
-      bing:
-        doc.querySelector('meta[name="msvalidate.01"]')?.getAttribute("content")?.trim() || null,
-      facebook:
-        doc
-          .querySelector('meta[name="facebook-domain-verification"]')
-          ?.getAttribute("content")
-          ?.trim() || null,
-      google:
-        doc
-          .querySelector('meta[name="google-site-verification"]')
-          ?.getAttribute("content")
-          ?.trim() || null,
-      pinterest:
-        doc.querySelector('meta[name="p:domain_verify"]')?.getAttribute("content")?.trim() || null,
-      yandex:
-        doc.querySelector('meta[name="yandex-verification"]')?.getAttribute("content")?.trim() ||
-        null,
+      bing: getMeta(["msvalidate.01"]),
+      facebook: getMeta(["facebook-domain-verification"]),
+      google: getMeta(["google-site-verification"]),
+      pinterest: getMeta(["p:domain_verify"]),
+      yandex: getMeta(["yandex-verification"]),
     },
 
-    viewport: doc.querySelector('meta[name="viewport"]')?.getAttribute("content")?.trim() || null,
+    viewport: getMeta(["viewport"]),
   };
 }

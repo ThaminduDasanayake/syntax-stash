@@ -203,6 +203,16 @@ export const mockupLinks: Tool[] = [
     url: "https://mockups-design.com/",
   },
   {
+    title: "Mockups Digital",
+    category: CATEGORIES.mockups,
+    description:
+      "Your go-to destination for expertly curated, top-quality mockups, providing designers with the best resources to enhance their creative projects.",
+    favicon: "https://framerusercontent.com/images/wEXohEiFG4ASZXaUIFYWvyOKqQ.png",
+    ogImage: "https://framerusercontent.com/assets/aqFLoOfopd4NZsWWE19ScMM4z0k.gif",
+    tags: [TAGS.mockup],
+    url: "https://mockups.digital/",
+  },
+  {
     title: "Mockup Selection",
     category: CATEGORIES.mockups,
     description:

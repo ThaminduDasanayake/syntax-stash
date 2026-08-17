@@ -92,6 +92,7 @@ export const documentationLinks: Tool[] = [
     favicon: "https://jasperbernaers.com/favicon.svg",
     ogImage: "https://jasperbernaers.com/invoice-generator/og-image.png",
     subtitle: "Create & Download PDF Invoices | No Sign-Up, No Watermark",
+    tags: [TAGS.invoice],
     url: "https://jasperbernaers.com/invoice-generator/",
   },
   {
@@ -158,7 +159,19 @@ export const documentationLinks: Tool[] = [
     favicon: "/github.svg",
     ogImage:
       "https://opengraph.githubassets.com/f50c07ae3a04dedde35800ded790b1ed85d154e313f6e136a5cc3c7e256c5d65/piratuks/invoice-builder",
+    tags: [TAGS.invoice],
     url: "https://github.com/piratuks/invoice-builder",
+  },
+  {
+    title: "Invoicely",
+    category: CATEGORIES.docs,
+    description:
+      "Invoicely is a simple and easy to use invoice generator where you can create beautiful and professional invoices in minutes. ~ Proudly OSS - Backed by Cloudflare OSS",
+    favicon: "https://invoicely.gg/official/invoicely-logo.png",
+    ogImage: "https://invoicely.gg/official/og-banner.png",
+    subtitle: "Create Beautiful & Professional Invoices",
+    tags: [TAGS.invoice, TAGS.selfHosted],
+    url: "https://invoicely.gg/",
   },
   {
     title: "Markdown Editor Online",

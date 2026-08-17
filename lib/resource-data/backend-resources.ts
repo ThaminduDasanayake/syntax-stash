@@ -17,6 +17,17 @@ export const backendLinks: Tool[] = [
     url: "https://appwrite.io/",
   },
   {
+    title: "Arcjet",
+    category: CATEGORIES.backend,
+    description:
+      "Arcjet is the runtime security platform that ships in your AI code. Detect prompt injection, authorize agent tool calls, redact sensitive data, and block bots and abuse. Real-time security building blocks you call inside your app, before an action happens.",
+    favicon: "https://arcjet.com/favicon.png",
+    ogImage: "https://arcjet.com/social/arcjet-og-image.png",
+    subtitle: "AI agent runtime security",
+    tags: [TAGS.security],
+    url: "https://arcjet.com/",
+  },
+  {
     title: "AutoSend",
     category: CATEGORIES.backend,
     description:
@@ -61,6 +72,16 @@ export const backendLinks: Tool[] = [
     description: "Build your next application with Cloudflare Pages",
     tags: [TAGS.hosting],
     url: "https://pages.cloudflare.com/",
+  },
+  {
+    title: "CodeRabbit",
+    category: CATEGORIES.backend,
+    description:
+      "AI-first pull request reviewer with context-aware feedback, line-by-line code suggestions, and real-time chat.",
+    favicon: "https://www.coderabbit.ai/apple-touch-icon.png",
+    ogImage: "https://www.coderabbit.ai/content/assets/agentic-change-management-og.png",
+    subtitle: "AI Code Reviews",
+    url: "https://www.coderabbit.ai/",
   },
   {
     title: "Convex",
@@ -137,6 +158,19 @@ export const backendLinks: Tool[] = [
     subtitle: "Domain Intelligence Made Easy",
     tags: [TAGS.tool],
     url: "https://domainstack.io/",
+  },
+  {
+    title: "Doppler",
+    category: CATEGORIES.backend,
+    description:
+      "Doppler's secrets management platform helps teams secure, sync, and automate secrets across cloud and on-prem environments with security and developer-friendly workflows.",
+    favicon:
+      "https://cdn.sanity.io/images/q3zajrd2/production/01ad0eb786c8260c4daa709fe8a6f57fb063655e-101x100.svg",
+    ogImage:
+      "https://cdn.sanity.io/images/q3zajrd2/production/d19dd120622b42ec12c9dd5e4f1cd00b92c698e3-2400x1260.png",
+    subtitle: "Secrets management for humans and AI agents",
+    tags: [TAGS.security],
+    url: "https://www.doppler.com/",
   },
   {
     title: "Downdetector",
@@ -480,6 +514,17 @@ export const backendLinks: Tool[] = [
     subtitle: "Open Source Alternative to Algolia + Pinecone",
     tags: [TAGS.backend],
     url: "https://typesense.org/",
+  },
+  {
+    title: "Umami",
+    category: CATEGORIES.backend,
+    description:
+      "Understand traffic, campaigns, behavior, conversions, and revenue in one privacy-first, open-source analytics platform. Self-host or use Umami Cloud.",
+    favicon: "https://raw.githubusercontent.com/umami-software/umami/master/src/assets/logo.svg",
+    ogImage: "https://umami.is/opengraph-image-j8qpfc.png",
+    subtitle: "Privacy-First Analytics Platform",
+    tags: [TAGS.analytics, TAGS.selfHosted],
+    url: "https://umami.is/",
   },
   {
     title: "UserCheck",

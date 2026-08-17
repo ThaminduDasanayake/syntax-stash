@@ -144,7 +144,7 @@ export function QueryTab({ input, onQueryChangeAction, query }: Props) {
       <Card className="mx-auto w-full">
         <CardContent>
           <Collapsible className="data-[state=open]:bg-muted rounded-md">
-            <CollapsibleTrigger>
+            <CollapsibleTrigger asChild className="w-full">
               <Button variant="ghost" className="group w-full">
                 JSONPath Syntax Reference
                 <CaretDownIcon

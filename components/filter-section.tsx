@@ -259,17 +259,17 @@ function FilterSectionInner({
 
         {/* Active Tag Chips Bar */}
         {selectedTags.length > 0 && (
-          <div className="border-t-ink/15 mx-auto mt-2.5 max-w-7xl border-t px-5 pt-2.5 md:px-8">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-mono-2xs text-ink-mute font-bold tracking-wider uppercase">
-                Active tags:
+          <div className="border-t-ink/15 mx-auto mt-2 max-w-7xl border-t px-4 pt-2 sm:px-6 md:px-8">
+            <div className="no-scrollbar flex items-center gap-1.5 overflow-x-auto py-0.5 sm:flex-wrap sm:gap-2">
+              <span className="text-mono-2xs text-ink-mute shrink-0 font-bold tracking-wider uppercase">
+                Active:
               </span>
               {selectedTags.map((tag) => (
                 <Button
                   key={tag}
                   size="xs"
                   variant="outline"
-                  className="group text-mono-2xs px-2 py-1"
+                  className="group text-mono-2xs shrink-0 px-2 py-0.5"
                   onClick={() => handleToggleTag(tag)}
                   aria-label={`Remove tag ${tag}`}
                 >
@@ -283,7 +283,7 @@ function FilterSectionInner({
                   variant="outline"
                   size="xs"
                   onClick={() => handleMatchModeChange(matchMode === "any" ? "all" : "any")}
-                  className="text-mono-2xs px-2 py-1"
+                  className="text-mono-2xs shrink-0 px-2 py-0.5"
                   title="Click to toggle match mode"
                 >
                   <ArrowsCounterClockwiseIcon weight="bold" />
@@ -293,10 +293,11 @@ function FilterSectionInner({
 
               <Button
                 variant="clear"
+                size="xs"
                 onClick={handleClearTags}
-                className="text-mono-2xs ml-auto underline-offset-2 hover:underline"
+                className="text-mono-2xs text-destructive shrink-0 font-mono font-semibold hover:underline sm:ml-auto"
               >
-                Clear all tags ({selectedTags.length})
+                Clear all ({selectedTags.length})
               </Button>
             </div>
           </div>
@@ -324,22 +325,27 @@ function FilterSectionInner({
           ) : (
             Object.entries(groupedItems).map(([category, catItems]) => (
               <div key={category} className="cat-section">
-                <div className="cat-divider">
-                  <h2 className="font-mono text-xl font-extrabold tracking-widest uppercase">
-                    {category}
-                  </h2>
-                  <span className="bg-primary h-0.5 flex-1" />
+                <div className="cat-divider flex flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:gap-4">
+                  <div className="flex w-full flex-col gap-1 sm:w-auto sm:flex-1 sm:flex-row sm:items-center sm:gap-4">
+                    <h2 className="font-mono text-lg font-extrabold tracking-widest uppercase sm:text-xl">
+                      {category}
+                    </h2>
+                    <span className="bg-primary hidden h-0.5 flex-1 sm:block" />
+                  </div>
 
-                  <span className="text-mono-sm">
-                    {catItems.length} {itemLabel}
-                  </span>
+                  <div className="flex w-full items-center gap-3 sm:w-auto">
+                    <span className="text-mono-xs sm:text-mono-sm text-ink-mute shrink-0 font-mono">
+                      {catItems.length} {itemLabel}
+                    </span>
+                    <span className="bg-primary h-0.5 flex-1 sm:hidden" />
+                  </div>
                 </div>
                 <div className="card-grid">
                   {catItems.map((tool) => (
                     <ToolCard
                       key={tool.url || tool.slug}
                       tool={tool}
-                      onTagClick={handleToggleTag}
+                      onTagClickAction={handleToggleTag}
                     />
                   ))}
                 </div>

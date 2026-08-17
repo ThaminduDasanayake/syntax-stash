@@ -72,7 +72,7 @@ export const typographyLinks: Tool[] = [
   {
     title: "Doppler",
     author: "Hayk An",
-    category: CATEGORIES.frontend,
+    category: CATEGORIES.typography,
     description: "Type scale with dynamic line height",
     favicon: "https://hihayk.github.io/doppler/favicon.ico",
     ogImage: "https://raw.githubusercontent.com/hihayk/doppler/master/docs/shot.png",
@@ -285,6 +285,28 @@ export const typographyLinks: Tool[] = [
       "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦆</text></svg>",
     tags: [TAGS.typography],
     url: "https://klotter.supply/madleen-text",
+  },
+  {
+    title: "Martian Grotesk",
+    author: "Evil Martians",
+    category: CATEGORIES.typography,
+    description:
+      "An open typeface family with a strong personality designed for web and digital projects. It contains a variable font and 63 styles. Martian Grotesk appears legible on most platforms, even when being rendered in small sizes.",
+    favicon: "https://evilmartians.com/favicon.svg",
+    ogImage: "https://evilmartians.com/social-cards/products/martian-grotesk.jpg",
+    tags: [TAGS.typography],
+    url: "https://evilmartians.com/products/martian-grotesk",
+  },
+  {
+    title: "Martian Mono",
+    author: "Evil Martians",
+    category: CATEGORIES.typography,
+    description:
+      "Martian Mono is a monospaced version of the Martian Grotesk for code style design. It's the first Evil Martians open source typeface on the market.",
+    favicon: "https://evilmartians.com/favicon.svg",
+    ogImage: "https://evilmartians.com/social-cards/products/martian-mono.jpg",
+    tags: [TAGS.typography],
+    url: "https://evilmartians.com/products/martian-mono",
   },
   {
     title: "Meshfont",

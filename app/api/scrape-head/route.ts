@@ -1,6 +1,83 @@
 import * as cheerio from "cheerio";
 import { NextRequest, NextResponse } from "next/server";
 
+const BROWSER_HEADERS = {
+  Accept:
+    "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+  "Accept-Language": "en-US,en;q=0.9",
+  "Cache-Control": "no-cache",
+  Pragma: "no-cache",
+  "Sec-Ch-Ua": '"Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"',
+  "Sec-Ch-Ua-Mobile": "?0",
+  "Sec-Ch-Ua-Platform": '"macOS"',
+  "Sec-Fetch-Dest": "document",
+  "Sec-Fetch-Mode": "navigate",
+  "Sec-Fetch-Site": "none",
+  "Sec-Fetch-User": "?1",
+  "Upgrade-Insecure-Requests": "1",
+  "User-Agent":
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+};
+
+async function fetchDirect(targetUrl: string): Promise<string> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 9000);
+
+  try {
+    const res = await fetch(targetUrl, {
+      headers: BROWSER_HEADERS,
+      redirect: "follow",
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!res.ok) {
+      throw new Error(`Direct fetch returned status code ${res.status}`);
+    }
+
+    const contentType = res.headers.get("content-type") || "";
+    if (
+      contentType &&
+      !contentType.includes("text/html") &&
+      !contentType.includes("application/xhtml") &&
+      !contentType.includes("text/plain")
+    ) {
+      throw new Error(`Expected HTML content but received ${contentType}`);
+    }
+
+    return await res.text();
+  } catch (err) {
+    clearTimeout(timeoutId);
+    throw err;
+  }
+}
+
+async function fetchScrapingBee(targetUrl: string, apiKey: string): Promise<string> {
+  const scrapingBeeUrl = new URL("https://app.scrapingbee.com/api/v1/");
+  scrapingBeeUrl.searchParams.append("api_key", apiKey);
+  scrapingBeeUrl.searchParams.append("url", targetUrl);
+  scrapingBeeUrl.searchParams.append("render_js", "true");
+  scrapingBeeUrl.searchParams.append("wait", "3000");
+
+  const extractRules = {
+    head: {
+      output: "html",
+      selector: "head",
+    },
+  };
+  scrapingBeeUrl.searchParams.append("extract_rules", JSON.stringify(extractRules));
+
+  const response = await fetch(scrapingBeeUrl.toString());
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data?.message || `ScrapingBee returned status code ${response.status}`);
+  }
+
+  return data.head ?? "";
+}
+
 export async function POST(req: NextRequest) {
   try {
     const { targetUrl } = await req.json();
@@ -20,53 +97,47 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid targetUrl provided" }, { status: 400 });
     }
 
-    // Ensure API Key is available
-    const API_KEY = process.env.SCRAPINGBEE_API_KEY;
-    if (!API_KEY) {
-      return NextResponse.json(
-        { error: "Server error: Missing ScrapingBee API key configuration" },
-        { status: 500 },
-      );
+    let rawHtml = "";
+    let extractionSource: "direct" | "scrapingbee" = "direct";
+    let directError: Error | null = null;
+
+    // 1. Try Direct Fetch first (Free, 0 credits, ~300ms)
+    try {
+      rawHtml = await fetchDirect(targetUrl);
+    } catch (err) {
+      directError = err instanceof Error ? err : new Error(String(err));
     }
 
-    // Build ScrapingBee API request URL
-    const scrapingBeeUrl = new URL("https://app.scrapingbee.com/api/v1/");
-    scrapingBeeUrl.searchParams.append("api_key", API_KEY);
-    scrapingBeeUrl.searchParams.append("url", targetUrl);
-    scrapingBeeUrl.searchParams.append("render_js", "true");
-
-    scrapingBeeUrl.searchParams.append("wait", "3000");
-
-    // Set extract_rules to fetch only the inner/outer HTML of the <head> tag
-    const extractRules = {
-      head: {
-        output: "html",
-        selector: "head",
-      },
-    };
-    scrapingBeeUrl.searchParams.append("extract_rules", JSON.stringify(extractRules));
-
-    // Send request to ScrapingBee
-    const response = await fetch(scrapingBeeUrl.toString());
-
-    // Parse response and handle ScrapingBee-specific errors
-    const data = await response.json();
-
-    if (!response.ok) {
-      return NextResponse.json(
-        {
-          error: data?.message || `ScrapingBee returned status code ${response.status}`,
-        },
-        { status: response.status },
-      );
+    // 2. If Direct Fetch failed, try ScrapingBee fallback if API key is configured
+    if (!rawHtml) {
+      const apiKey = process.env.SCRAPINGBEE_API_KEY;
+      if (apiKey) {
+        try {
+          rawHtml = await fetchScrapingBee(targetUrl, apiKey);
+          extractionSource = "scrapingbee";
+        } catch (sbErr) {
+          const sbMessage = sbErr instanceof Error ? sbErr.message : "ScrapingBee error";
+          return NextResponse.json(
+            {
+              error: `Direct fetch failed (${directError?.message ?? "unknown"}) and ScrapingBee fallback failed (${sbMessage}). You can paste the raw <head> HTML in the 'Paste HTML' tab instead.`,
+            },
+            { status: 502 },
+          );
+        }
+      } else {
+        return NextResponse.json(
+          {
+            error: `Failed to fetch URL directly: ${directError?.message ?? "Network error"}. You can paste the raw <head> HTML in the 'Paste HTML' tab to extract metadata offline.`,
+          },
+          { status: 502 },
+        );
+      }
     }
 
-    const headHtml = data.head ?? "";
-    const $ = cheerio.load(headHtml);
+    const $ = cheerio.load(rawHtml);
 
     function absoluteUrl(value: string | null | undefined, base: string) {
       if (!value) return null;
-
       try {
         return new URL(value, base).href;
       } catch {
@@ -74,16 +145,36 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    function getMeta(names: string[]): string | null {
+      for (const name of names) {
+        const lower = name.toLowerCase();
+        const selectors = [
+          `meta[itemprop="${lower}"]`,
+          `meta[itemprop="${name}"]`,
+          `meta[name="${lower}"]`,
+          `meta[name="${name}"]`,
+          `meta[property="${lower}"]`,
+          `meta[property="${name}"]`,
+        ];
+        for (const sel of selectors) {
+          const el = $(sel).first();
+          if (el.length > 0) {
+            const content = el.attr("content")?.trim() || el.attr("value")?.trim();
+            if (content) return content;
+          }
+        }
+      }
+      return null;
+    }
+
     const baseUrl = targetUrl;
 
     const icons = {
       appleTouchIcon: $('link[rel="apple-touch-icon"]').first().attr("href") || null,
-
       favicon:
         $('link[rel="icon"][type="image/png"]').first().attr("href") ||
         $('link[rel="icon"]').first().attr("href") ||
         null,
-
       faviconSvg: $('link[rel="icon"][type="image/svg+xml"]').first().attr("href") || null,
     };
 
@@ -109,7 +200,7 @@ export async function POST(req: NextRequest) {
             }
           }
         } catch {
-          // Ignore JSON parse errors for malformed script tags
+          // Ignore JSON parse errors
         }
       });
 
@@ -118,20 +209,30 @@ export async function POST(req: NextRequest) {
 
     const jsonLdLogo = extractJsonLdLogo($);
 
-    const rawOgImage = $('meta[property="og:image"]').attr("content")?.trim() || null;
-    const rawTwitterImage =
-      $('meta[property="twitter:image"]').attr("content")?.trim() ||
-      $('meta[name="twitter:image"]').attr("content")?.trim() ||
-      null;
+    const rawOgImage = getMeta(["og:image", "og:image:secure_url", "og:image:url"]);
+    const rawTwitterImage = getMeta([
+      "twitter:image",
+      "twitter:image:secure_url",
+      "twitter:image:src",
+      "twitter:image:url",
+    ]);
 
-    // Extract preloaded image screenshots if present
     const screenshots = $('link[rel="preload"][as="image"]')
       .map((_, el) => $(el).attr("href"))
       .get()
       .map((href) => absoluteUrl(href, baseUrl))
       .filter((url): url is string => Boolean(url));
 
-    // Extract structured metadata mapping directly to your MetaRow controls
+    const localeAlternate = $(
+      'meta[property="og:locale:alternate"], meta[name="og:locale:alternate"], meta[property="og:locale:alternate:locale"], meta[name="og:locale:alternate:locale"]',
+    )
+      .map((_, el) => $(el).attr("content")?.trim() || $(el).attr("value")?.trim())
+      .get()
+      .filter((content): content is string => Boolean(content));
+
+    const headInner = $("head").html();
+    const headHtml = headInner ? `<head>${headInner}</head>` : rawHtml.slice(0, 30000);
+
     const metadata = {
       title: $("title").first().text().trim() || null,
       assets: {
@@ -143,34 +244,32 @@ export async function POST(req: NextRequest) {
         screenshots,
         twitterImage: absoluteUrl(rawTwitterImage, baseUrl),
       },
-      author: $('meta[name="author"]').attr("content")?.trim() || null,
+      author: getMeta(["article:author", "author", "creator"]),
       canonicalUrl: $('link[rel="canonical"]').attr("href")?.trim() || null,
       charset: $("meta[charset]").attr("charset") || null,
-      description: $('meta[name="description"]').attr("content")?.trim() || null,
-      generator: $('meta[name="generator"]').attr("content")?.trim() || null,
+      description: getMeta(["description"]),
+      generator: getMeta(["generator"]),
       keywords:
-        $('meta[name="keywords"]')
-          .attr("content")
+        getMeta(["keywords"])
           ?.split(",")
           .map((k) => k.trim())
           .filter(Boolean) ?? [],
       language: $("html").attr("lang") || null,
 
       openGraph: {
-        title: $('meta[property="og:title"]').attr("content")?.trim() || null,
-        description: $('meta[property="og:description"]').attr("content")?.trim() || null,
-        image: $('meta[property="og:image"]').attr("content")?.trim() || null,
-        locale: $('meta[property="og:locale"]').attr("content")?.trim() || null,
-        localeAlternate: $('meta[property="og:locale:alternate"]')
-          .map((_, el) => $(el).attr("content")?.trim())
-          .get(),
-        siteName: $('meta[property="og:site_name"]').attr("content")?.trim() || null,
-        type: $('meta[property="og:type"]').attr("content")?.trim() || null,
+        title: getMeta(["og:title"]),
+        description: getMeta(["og:description"]),
+        image: absoluteUrl(rawOgImage, baseUrl),
+        locale: getMeta(["og:locale"]),
+        localeAlternate,
+        siteName: getMeta(["og:site_name", "og:sitename"]),
+        type: getMeta(["og:type"]),
+        url: absoluteUrl(getMeta(["og:url"]), baseUrl),
       },
       robots: {
-        bingbot: $('meta[name="bingbot"]').attr("content")?.trim() || null,
-        googlebot: $('meta[name="googlebot"]').attr("content")?.trim() || null,
-        robots: $('meta[name="robots"]').attr("content")?.trim() || null,
+        bingbot: getMeta(["bingbot"]),
+        googlebot: getMeta(["googlebot"]),
+        robots: getMeta(["robots"]),
       },
 
       securityHeaders: {
@@ -181,45 +280,37 @@ export async function POST(req: NextRequest) {
       },
 
       themeColor: {
-        colorScheme: $('meta[name="color-scheme"]').attr("content")?.trim() || null,
-        themeColor: $('meta[name="theme-color"]').attr("content")?.trim() || null,
+        colorScheme: getMeta(["color-scheme"]),
+        themeColor: getMeta(["theme-color"]),
       },
 
       twitter: {
-        title:
-          $('meta[property="twitter:title"]').attr("content")?.trim() ||
-          $('meta[name="twitter:title"]').attr("content")?.trim() ||
-          null,
-        card: $('meta[name="twitter:card"]').attr("content")?.trim() || null,
-        creator:
-          $('meta[property="twitter:creator"]').attr("content")?.trim() ||
-          $('meta[name="twitter:creator"]').attr("content")?.trim() ||
-          null,
-        description:
-          $('meta[property="twitter:description"]').attr("content")?.trim() ||
-          $('meta[name="twitter:description"]').attr("content")?.trim() ||
-          null,
-        image:
-          $('meta[property="twitter:image"]').attr("content")?.trim() ||
-          $('meta[name="twitter:image"]').attr("content")?.trim() ||
-          null,
-        site: $('meta[property="twitter:site"]').attr("content")?.trim() || null,
+        title: getMeta(["twitter:title"]),
+        card: getMeta(["twitter:card"]),
+        creator: getMeta(["twitter:creator"]),
+        description: getMeta(["twitter:description"]),
+        image: absoluteUrl(rawTwitterImage, baseUrl),
+        site: getMeta(["twitter:site"]),
       },
 
       url: targetUrl,
 
       verification: {
-        bing: $('meta[name="msvalidate.01"]').attr("content")?.trim() || null,
-        facebook: $('meta[name="facebook-domain-verification"]').attr("content")?.trim() || null,
-        google: $('meta[name="google-site-verification"]').attr("content")?.trim() || null,
-        pinterest: $('meta[name="p:domain_verify"]').attr("content")?.trim() || null,
-        yandex: $('meta[name="yandex-verification"]').attr("content")?.trim() || null,
+        bing: getMeta(["msvalidate.01"]),
+        facebook: getMeta(["facebook-domain-verification"]),
+        google: getMeta(["google-site-verification"]),
+        pinterest: getMeta(["p:domain_verify"]),
+        yandex: getMeta(["yandex-verification"]),
       },
 
-      viewport: $('meta[name="viewport"]').attr("content")?.trim() || null,
+      viewport: getMeta(["viewport"]),
     };
 
-    return NextResponse.json({ head: headHtml, metadata });
+    return NextResponse.json({
+      head: headHtml,
+      metadata,
+      source: extractionSource,
+    });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
     return NextResponse.json({ error: errorMessage }, { status: 500 });
