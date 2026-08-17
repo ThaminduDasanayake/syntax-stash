@@ -34,7 +34,6 @@ export async function POST(req: NextRequest) {
     scrapingBeeUrl.searchParams.append("api_key", API_KEY);
     scrapingBeeUrl.searchParams.append("url", targetUrl);
     scrapingBeeUrl.searchParams.append("render_js", "true");
-
     scrapingBeeUrl.searchParams.append("wait", "3000");
 
     // Set extract_rules to fetch only the inner/outer HTML of the <head> tag
@@ -74,16 +73,36 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    function getMeta(names: string[]): string | null {
+      for (const name of names) {
+        const lower = name.toLowerCase();
+        const selectors = [
+          `meta[itemprop="${lower}"]`,
+          `meta[itemprop="${name}"]`,
+          `meta[name="${lower}"]`,
+          `meta[name="${name}"]`,
+          `meta[property="${lower}"]`,
+          `meta[property="${name}"]`,
+        ];
+        for (const sel of selectors) {
+          const el = $(sel).first();
+          if (el.length > 0) {
+            const content = el.attr("content")?.trim() || el.attr("value")?.trim();
+            if (content) return content;
+          }
+        }
+      }
+      return null;
+    }
+
     const baseUrl = targetUrl;
 
     const icons = {
       appleTouchIcon: $('link[rel="apple-touch-icon"]').first().attr("href") || null,
-
       favicon:
         $('link[rel="icon"][type="image/png"]').first().attr("href") ||
         $('link[rel="icon"]').first().attr("href") ||
         null,
-
       faviconSvg: $('link[rel="icon"][type="image/svg+xml"]').first().attr("href") || null,
     };
 
@@ -118,11 +137,13 @@ export async function POST(req: NextRequest) {
 
     const jsonLdLogo = extractJsonLdLogo($);
 
-    const rawOgImage = $('meta[property="og:image"]').attr("content")?.trim() || null;
-    const rawTwitterImage =
-      $('meta[property="twitter:image"]').attr("content")?.trim() ||
-      $('meta[name="twitter:image"]').attr("content")?.trim() ||
-      null;
+    const rawOgImage = getMeta(["og:image", "og:image:secure_url", "og:image:url"]);
+    const rawTwitterImage = getMeta([
+      "twitter:image",
+      "twitter:image:secure_url",
+      "twitter:image:src",
+      "twitter:image:url",
+    ]);
 
     // Extract preloaded image screenshots if present
     const screenshots = $('link[rel="preload"][as="image"]')
@@ -130,6 +151,13 @@ export async function POST(req: NextRequest) {
       .get()
       .map((href) => absoluteUrl(href, baseUrl))
       .filter((url): url is string => Boolean(url));
+
+    const localeAlternate = $(
+      'meta[property="og:locale:alternate"], meta[name="og:locale:alternate"], meta[property="og:locale:alternate:locale"], meta[name="og:locale:alternate:locale"]',
+    )
+      .map((_, el) => $(el).attr("content")?.trim() || $(el).attr("value")?.trim())
+      .get()
+      .filter((content): content is string => Boolean(content));
 
     // Extract structured metadata mapping directly to your MetaRow controls
     const metadata = {
@@ -143,34 +171,32 @@ export async function POST(req: NextRequest) {
         screenshots,
         twitterImage: absoluteUrl(rawTwitterImage, baseUrl),
       },
-      author: $('meta[name="author"]').attr("content")?.trim() || null,
+      author: getMeta(["article:author", "author", "creator"]),
       canonicalUrl: $('link[rel="canonical"]').attr("href")?.trim() || null,
       charset: $("meta[charset]").attr("charset") || null,
-      description: $('meta[name="description"]').attr("content")?.trim() || null,
-      generator: $('meta[name="generator"]').attr("content")?.trim() || null,
+      description: getMeta(["description"]),
+      generator: getMeta(["generator"]),
       keywords:
-        $('meta[name="keywords"]')
-          .attr("content")
+        getMeta(["keywords"])
           ?.split(",")
           .map((k) => k.trim())
           .filter(Boolean) ?? [],
       language: $("html").attr("lang") || null,
 
       openGraph: {
-        title: $('meta[property="og:title"]').attr("content")?.trim() || null,
-        description: $('meta[property="og:description"]').attr("content")?.trim() || null,
-        image: $('meta[property="og:image"]').attr("content")?.trim() || null,
-        locale: $('meta[property="og:locale"]').attr("content")?.trim() || null,
-        localeAlternate: $('meta[property="og:locale:alternate"]')
-          .map((_, el) => $(el).attr("content")?.trim())
-          .get(),
-        siteName: $('meta[property="og:site_name"]').attr("content")?.trim() || null,
-        type: $('meta[property="og:type"]').attr("content")?.trim() || null,
+        title: getMeta(["og:title"]),
+        description: getMeta(["og:description"]),
+        image: absoluteUrl(rawOgImage, baseUrl),
+        locale: getMeta(["og:locale"]),
+        localeAlternate,
+        siteName: getMeta(["og:site_name", "og:sitename"]),
+        type: getMeta(["og:type"]),
+        url: absoluteUrl(getMeta(["og:url"]), baseUrl),
       },
       robots: {
-        bingbot: $('meta[name="bingbot"]').attr("content")?.trim() || null,
-        googlebot: $('meta[name="googlebot"]').attr("content")?.trim() || null,
-        robots: $('meta[name="robots"]').attr("content")?.trim() || null,
+        bingbot: getMeta(["bingbot"]),
+        googlebot: getMeta(["googlebot"]),
+        robots: getMeta(["robots"]),
       },
 
       securityHeaders: {
@@ -181,42 +207,30 @@ export async function POST(req: NextRequest) {
       },
 
       themeColor: {
-        colorScheme: $('meta[name="color-scheme"]').attr("content")?.trim() || null,
-        themeColor: $('meta[name="theme-color"]').attr("content")?.trim() || null,
+        colorScheme: getMeta(["color-scheme"]),
+        themeColor: getMeta(["theme-color"]),
       },
 
       twitter: {
-        title:
-          $('meta[property="twitter:title"]').attr("content")?.trim() ||
-          $('meta[name="twitter:title"]').attr("content")?.trim() ||
-          null,
-        card: $('meta[name="twitter:card"]').attr("content")?.trim() || null,
-        creator:
-          $('meta[property="twitter:creator"]').attr("content")?.trim() ||
-          $('meta[name="twitter:creator"]').attr("content")?.trim() ||
-          null,
-        description:
-          $('meta[property="twitter:description"]').attr("content")?.trim() ||
-          $('meta[name="twitter:description"]').attr("content")?.trim() ||
-          null,
-        image:
-          $('meta[property="twitter:image"]').attr("content")?.trim() ||
-          $('meta[name="twitter:image"]').attr("content")?.trim() ||
-          null,
-        site: $('meta[property="twitter:site"]').attr("content")?.trim() || null,
+        title: getMeta(["twitter:title"]),
+        card: getMeta(["twitter:card"]),
+        creator: getMeta(["twitter:creator"]),
+        description: getMeta(["twitter:description"]),
+        image: absoluteUrl(rawTwitterImage, baseUrl),
+        site: getMeta(["twitter:site"]),
       },
 
       url: targetUrl,
 
       verification: {
-        bing: $('meta[name="msvalidate.01"]').attr("content")?.trim() || null,
-        facebook: $('meta[name="facebook-domain-verification"]').attr("content")?.trim() || null,
-        google: $('meta[name="google-site-verification"]').attr("content")?.trim() || null,
-        pinterest: $('meta[name="p:domain_verify"]').attr("content")?.trim() || null,
-        yandex: $('meta[name="yandex-verification"]').attr("content")?.trim() || null,
+        bing: getMeta(["msvalidate.01"]),
+        facebook: getMeta(["facebook-domain-verification"]),
+        google: getMeta(["google-site-verification"]),
+        pinterest: getMeta(["p:domain_verify"]),
+        yandex: getMeta(["yandex-verification"]),
       },
 
-      viewport: $('meta[name="viewport"]').attr("content")?.trim() || null,
+      viewport: getMeta(["viewport"]),
     };
 
     return NextResponse.json({ head: headHtml, metadata });

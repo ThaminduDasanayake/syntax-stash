@@ -346,6 +346,7 @@ export default function WebExtractorPage() {
                 <MetaRow label="OG Title" value={metadata.openGraph.title} />
                 <MetaRow label="OG Desc." value={metadata.openGraph.description} />
                 <MetaRow label="OG Image" value={metadata.openGraph.image} />
+                <MetaRow label="OG URL" value={metadata.openGraph.url} />
                 <MetaRow label="OG Type" value={metadata.openGraph.type} />
                 <MetaRow label="OG Site" value={metadata.openGraph.siteName} />
                 <MetaRow label="OG Locale" value={metadata.openGraph.locale} />

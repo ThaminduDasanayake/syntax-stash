@@ -20,7 +20,7 @@ export function Section({ title, children, count, defaultOpen = true }: SectionP
     <Card className="mx-auto flex w-full flex-col gap-6">
       <CardContent className="p-2.5">
         <Collapsible open={open} onOpenChange={setOpen} className="data-[state=open]:bg-muted/50">
-          <CollapsibleTrigger className="w-full">
+          <CollapsibleTrigger asChild className="w-full">
             <Button variant="ghost" className="group w-full justify-between px-3">
               <div className="flex items-center gap-2">
                 <span className="text-sm font-medium">{title}</span>
