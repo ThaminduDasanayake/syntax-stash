@@ -50,13 +50,6 @@ export function ResourceDialog({ onTagClickAction, tool }: ToolCardProps) {
   }, [activeTool]);
 
   const relatedResources = useMemo(() => {
-    // 1. Explicitly Defined Related Resources
-    if (activeTool.related && activeTool.related.length > 0) {
-      const explicitRelated = resourceLinks.filter((r) => activeTool.related!.includes(r.title));
-      return explicitRelated.filter((r) => !authorResources.some((ar) => ar.title === r.title));
-    }
-
-    // 2. Tag Intersection Algorithm
     const activeTags = activeTool.tags || [];
     const scoredResources = resourceLinks
       .filter(
@@ -77,7 +70,6 @@ export function ResourceDialog({ onTagClickAction, tool }: ToolCardProps) {
       .slice(0, 3)
       .map((item) => item.resource);
 
-    // 3. Fallback (if no tags match, pick 3 from same category)
     if (scoredResources.length === 0) {
       return resourceLinks
         .filter(
