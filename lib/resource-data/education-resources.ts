@@ -646,6 +646,18 @@ export const educationLinks: Tool[] = [
     url: "https://www.mlh.com/",
   },
   {
+    title: "Martian Chronicles",
+    author: "Evil Martians",
+    category: CATEGORIES.education,
+    description:
+      "We’ve got articles for junior and experienced developers, case studies for startup founders and managers, and thorough technical deep dives into unexpected terrain. No matter where you’re coming from, you’re certain to gain some insight here, whether it’s more practical, or something that really takes you for a ride.",
+    favicon: "https://evilmartians.com/favicon.svg",
+    ogImage: "https://evilmartians.com/images/social.jpg",
+    subtitle: "Evil Martians’ team blog",
+    tags: [TAGS.article, TAGS.blog],
+    url: "https://evilmartians.com/chronicles",
+  },
+  {
     title: "Mimo",
     category: CATEGORIES.education,
     description:
