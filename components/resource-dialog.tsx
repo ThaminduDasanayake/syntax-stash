@@ -13,7 +13,7 @@ import { resourceLinks } from "@/lib/resource-data";
 import { cn, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
 import { Tool, ToolCardProps } from "@/types";
 
-export function ResourceDialog({ onTagClick, tool }: ToolCardProps) {
+export function ResourceDialog({ onTagClickAction, tool }: ToolCardProps) {
   const [activeTool, setActiveTool] = useState(tool);
   const [ogError, setOgError] = useState(false);
 
@@ -189,7 +189,7 @@ export function ResourceDialog({ onTagClick, tool }: ToolCardProps) {
                       key={tag}
                       variant="outline"
                       size="xs"
-                      onClick={() => onTagClick?.(tag)}
+                      onClick={() => onTagClickAction?.(tag)}
                       className={cn(
                         "text-mono-xs h-6 rounded-none border-[1.5px] px-2 py-0 font-bold transition-all duration-150 hover:-translate-y-0.5 hover:shadow-xs",
                         activeThemeStyles.label,

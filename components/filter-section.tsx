@@ -345,7 +345,7 @@ function FilterSectionInner({
                     <ToolCard
                       key={tool.url || tool.slug}
                       tool={tool}
-                      onTagClick={handleToggleTag}
+                      onTagClickAction={handleToggleTag}
                     />
                   ))}
                 </div>

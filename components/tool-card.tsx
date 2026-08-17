@@ -93,7 +93,7 @@ function CardBody({ tool }: ToolCardProps) {
   );
 }
 
-function ToolCardComponent({ onTagClick, tool }: ToolCardProps) {
+function ToolCardComponent({ onTagClickAction, tool }: ToolCardProps) {
   const [open, setOpen] = useState(false);
   const linkWrapperClass =
     "block w-full h-full outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary text-left";
@@ -117,9 +117,9 @@ function ToolCardComponent({ onTagClick, tool }: ToolCardProps) {
         <ResourceDialog
           key={`${tool.url || tool.title}-${open}`}
           tool={tool}
-          onTagClick={(tag) => {
+          onTagClickAction={(tag) => {
             setOpen(false);
-            onTagClick?.(tag);
+            onTagClickAction?.(tag);
           }}
         />
       )}
