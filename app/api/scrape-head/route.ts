@@ -1,6 +1,83 @@
 import * as cheerio from "cheerio";
 import { NextRequest, NextResponse } from "next/server";
 
+const BROWSER_HEADERS = {
+  Accept:
+    "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+  "Accept-Language": "en-US,en;q=0.9",
+  "Cache-Control": "no-cache",
+  Pragma: "no-cache",
+  "Sec-Ch-Ua": '"Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"',
+  "Sec-Ch-Ua-Mobile": "?0",
+  "Sec-Ch-Ua-Platform": '"macOS"',
+  "Sec-Fetch-Dest": "document",
+  "Sec-Fetch-Mode": "navigate",
+  "Sec-Fetch-Site": "none",
+  "Sec-Fetch-User": "?1",
+  "Upgrade-Insecure-Requests": "1",
+  "User-Agent":
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+};
+
+async function fetchDirect(targetUrl: string): Promise<string> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 9000);
+
+  try {
+    const res = await fetch(targetUrl, {
+      headers: BROWSER_HEADERS,
+      redirect: "follow",
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!res.ok) {
+      throw new Error(`Direct fetch returned status code ${res.status}`);
+    }
+
+    const contentType = res.headers.get("content-type") || "";
+    if (
+      contentType &&
+      !contentType.includes("text/html") &&
+      !contentType.includes("application/xhtml") &&
+      !contentType.includes("text/plain")
+    ) {
+      throw new Error(`Expected HTML content but received ${contentType}`);
+    }
+
+    return await res.text();
+  } catch (err) {
+    clearTimeout(timeoutId);
+    throw err;
+  }
+}
+
+async function fetchScrapingBee(targetUrl: string, apiKey: string): Promise<string> {
+  const scrapingBeeUrl = new URL("https://app.scrapingbee.com/api/v1/");
+  scrapingBeeUrl.searchParams.append("api_key", apiKey);
+  scrapingBeeUrl.searchParams.append("url", targetUrl);
+  scrapingBeeUrl.searchParams.append("render_js", "true");
+  scrapingBeeUrl.searchParams.append("wait", "3000");
+
+  const extractRules = {
+    head: {
+      output: "html",
+      selector: "head",
+    },
+  };
+  scrapingBeeUrl.searchParams.append("extract_rules", JSON.stringify(extractRules));
+
+  const response = await fetch(scrapingBeeUrl.toString());
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data?.message || `ScrapingBee returned status code ${response.status}`);
+  }
+
+  return data.head ?? "";
+}
+
 export async function POST(req: NextRequest) {
   try {
     const { targetUrl } = await req.json();
@@ -20,52 +97,47 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid targetUrl provided" }, { status: 400 });
     }
 
-    // Ensure API Key is available
-    const API_KEY = process.env.SCRAPINGBEE_API_KEY;
-    if (!API_KEY) {
-      return NextResponse.json(
-        { error: "Server error: Missing ScrapingBee API key configuration" },
-        { status: 500 },
-      );
+    let rawHtml = "";
+    let extractionSource: "direct" | "scrapingbee" = "direct";
+    let directError: Error | null = null;
+
+    // 1. Try Direct Fetch first (Free, 0 credits, ~300ms)
+    try {
+      rawHtml = await fetchDirect(targetUrl);
+    } catch (err) {
+      directError = err instanceof Error ? err : new Error(String(err));
     }
 
-    // Build ScrapingBee API request URL
-    const scrapingBeeUrl = new URL("https://app.scrapingbee.com/api/v1/");
-    scrapingBeeUrl.searchParams.append("api_key", API_KEY);
-    scrapingBeeUrl.searchParams.append("url", targetUrl);
-    scrapingBeeUrl.searchParams.append("render_js", "true");
-    scrapingBeeUrl.searchParams.append("wait", "3000");
-
-    // Set extract_rules to fetch only the inner/outer HTML of the <head> tag
-    const extractRules = {
-      head: {
-        output: "html",
-        selector: "head",
-      },
-    };
-    scrapingBeeUrl.searchParams.append("extract_rules", JSON.stringify(extractRules));
-
-    // Send request to ScrapingBee
-    const response = await fetch(scrapingBeeUrl.toString());
-
-    // Parse response and handle ScrapingBee-specific errors
-    const data = await response.json();
-
-    if (!response.ok) {
-      return NextResponse.json(
-        {
-          error: data?.message || `ScrapingBee returned status code ${response.status}`,
-        },
-        { status: response.status },
-      );
+    // 2. If Direct Fetch failed, try ScrapingBee fallback if API key is configured
+    if (!rawHtml) {
+      const apiKey = process.env.SCRAPINGBEE_API_KEY;
+      if (apiKey) {
+        try {
+          rawHtml = await fetchScrapingBee(targetUrl, apiKey);
+          extractionSource = "scrapingbee";
+        } catch (sbErr) {
+          const sbMessage = sbErr instanceof Error ? sbErr.message : "ScrapingBee error";
+          return NextResponse.json(
+            {
+              error: `Direct fetch failed (${directError?.message ?? "unknown"}) and ScrapingBee fallback failed (${sbMessage}). You can paste the raw <head> HTML in the 'Paste HTML' tab instead.`,
+            },
+            { status: 502 },
+          );
+        }
+      } else {
+        return NextResponse.json(
+          {
+            error: `Failed to fetch URL directly: ${directError?.message ?? "Network error"}. You can paste the raw <head> HTML in the 'Paste HTML' tab to extract metadata offline.`,
+          },
+          { status: 502 },
+        );
+      }
     }
 
-    const headHtml = data.head ?? "";
-    const $ = cheerio.load(headHtml);
+    const $ = cheerio.load(rawHtml);
 
     function absoluteUrl(value: string | null | undefined, base: string) {
       if (!value) return null;
-
       try {
         return new URL(value, base).href;
       } catch {
@@ -128,7 +200,7 @@ export async function POST(req: NextRequest) {
             }
           }
         } catch {
-          // Ignore JSON parse errors for malformed script tags
+          // Ignore JSON parse errors
         }
       });
 
@@ -145,7 +217,6 @@ export async function POST(req: NextRequest) {
       "twitter:image:url",
     ]);
 
-    // Extract preloaded image screenshots if present
     const screenshots = $('link[rel="preload"][as="image"]')
       .map((_, el) => $(el).attr("href"))
       .get()
@@ -159,7 +230,9 @@ export async function POST(req: NextRequest) {
       .get()
       .filter((content): content is string => Boolean(content));
 
-    // Extract structured metadata mapping directly to your MetaRow controls
+    const headInner = $("head").html();
+    const headHtml = headInner ? `<head>${headInner}</head>` : rawHtml.slice(0, 30000);
+
     const metadata = {
       title: $("title").first().text().trim() || null,
       assets: {
@@ -233,7 +306,11 @@ export async function POST(req: NextRequest) {
       viewport: getMeta(["viewport"]),
     };
 
-    return NextResponse.json({ head: headHtml, metadata });
+    return NextResponse.json({
+      head: headHtml,
+      metadata,
+      source: extractionSource,
+    });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
     return NextResponse.json({ error: errorMessage }, { status: 500 });
