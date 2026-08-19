@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 
 import ToolCard from "@/components/tool-card";
 import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { internalTools } from "@/lib/tools-data";
 import { Tool } from "@/types";
 
@@ -96,26 +97,28 @@ export function ToolsCarousel({ tools, totalCount }: ToolsCarouselProps) {
           </Button>
 
           <div className="featured-arrows">
-            <Button
-              size="icon"
-              variant="secondary"
-              onClick={() => handleScroll("left")}
-              disabled={!canScrollLeft}
-              aria-label="Scroll left"
-              className="border-border hover:border-ink disabled:hover:border-border size-10 border-2 transition-all disabled:opacity-30"
-            >
-              <ArrowLeftIcon weight="bold" className="size-4" />
-            </Button>
-            <Button
-              size="icon"
-              variant="secondary"
-              onClick={() => handleScroll("right")}
-              disabled={!canScrollRight}
-              aria-label="Scroll right"
-              className="border-border hover:border-ink disabled:hover:border-border size-10 border-2 transition-all disabled:opacity-30"
-            >
-              <ArrowRightIcon weight="bold" className="size-4" />
-            </Button>
+            <ButtonGroup>
+              <Button
+                variant="secondary"
+                className="h-10 w-10 border-[1.5px]"
+                size="icon"
+                onClick={() => handleScroll("left")}
+                disabled={!canScrollLeft}
+                aria-label="Scroll left"
+              >
+                <ArrowLeftIcon weight="bold" />
+              </Button>
+              <Button
+                variant="secondary"
+                className="h-10 w-10 border-[1.5px]"
+                size="icon"
+                onClick={() => handleScroll("right")}
+                disabled={!canScrollRight}
+                aria-label="Scroll right"
+              >
+                <ArrowRightIcon weight="bold" />
+              </Button>
+            </ButtonGroup>
           </div>
         </div>
       </div>

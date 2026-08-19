@@ -596,17 +596,11 @@
 
 @utility featured-track {
   @apply -mx-5 grid w-[calc(100%+2.5rem)] snap-x snap-mandatory scroll-pl-5 auto-cols-[290px] grid-flow-col gap-4 overflow-x-auto scroll-smooth px-5 pt-2 pb-6 md:-mx-8 md:w-[calc(100%+4rem)] md:scroll-pl-8 md:px-8;
-  overscroll-behavior-x: contain;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: var(--line-2) transparent;
 
   &::-webkit-scrollbar {
     height: 4px;
   }
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
+
   &::-webkit-scrollbar-thumb {
     background: var(--line-2);
     border-radius: 0;
@@ -862,11 +856,11 @@
 }
 
 @utility modal-related-chip {
-  @apply xs:inline-flex text-display-xs border-ink bg-paper cursor-pointer items-center justify-start gap-2 border-[1.5px] px-3.5 py-3 transition-all duration-200 ease-out sm:px-3 sm:py-2;
+  @apply flex xs:inline-flex text-display-xs border-ink bg-paper cursor-pointer items-center justify-start gap-2 border-[1.5px] px-3.5 py-3 transition-all duration-200 ease-out sm:px-3 sm:py-2;
 }
 
 @utility modal-chip-dot {
-  @apply h-2 w-2 shrink-0 rounded-full border transition-colors duration-200;
+  @apply inline-block size-2 shrink-0 aspect-square rounded-full border transition-colors duration-200;
 }
 
 @utility modal-link {
