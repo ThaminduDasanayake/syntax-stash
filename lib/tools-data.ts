@@ -1,10 +1,10 @@
 import { Tool } from "@/types";
 
 export const CATEGORIES = {
-  assets: "Assets",
   data: "Data",
-  dev: "Development",
-  frontend: "Frontend",
+  dev: "Developer Tools & Utilities",
+  frontend: "Frontend & UI",
+  media: "Media & Assets",
 } as const;
 
 export type ToolCategoryValue = (typeof CATEGORIES)[keyof typeof CATEGORIES];
@@ -342,10 +342,10 @@ export const frontendTools: Tool[] = [
   },
 ];
 
-export const assetsTools: Tool[] = [
+export const mediaTools: Tool[] = [
   {
     title: "Document Extractor",
-    category: CATEGORIES.assets,
+    category: CATEGORIES.media,
     description:
       "Extract clean text or LLM-ready Markdown from PDF, DOCX, HTML, CSV, and text files.",
     highlight: "Extractor",
@@ -354,7 +354,7 @@ export const assetsTools: Tool[] = [
   },
   {
     title: "Image Converter",
-    category: CATEGORIES.assets,
+    category: CATEGORIES.media,
     description: "Batch convert, resize, and process images natively in your browser.",
     highlight: "Converter",
     icon: "image",
@@ -362,7 +362,7 @@ export const assetsTools: Tool[] = [
   },
   {
     title: "Mermaid Live Editor",
-    category: CATEGORIES.assets,
+    category: CATEGORIES.media,
     description:
       "Write Mermaid diagrams with a live SVG preview. Supports flowcharts, sequence, ER, and more.",
     highlight: "Live Editor",
@@ -371,8 +371,8 @@ export const assetsTools: Tool[] = [
   },
   {
     title: "QR Generator",
-    category: CATEGORIES.assets,
-    description: "Generate downloadable QR codes instantly — works entirely in your browser..",
+    category: CATEGORIES.media,
+    description: "Generate downloadable QR codes instantly — works entirely in your browser.",
     highlight: "Generator",
     icon: "qr-code",
     slug: "qr-generator",
@@ -381,8 +381,8 @@ export const assetsTools: Tool[] = [
 
 // Internal Tools
 export const internalTools: Tool[] = [
-  ...assetsTools,
   ...dataTools,
   ...developmentTools,
   ...frontendTools,
+  ...mediaTools,
 ];

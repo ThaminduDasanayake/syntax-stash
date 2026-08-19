@@ -48,10 +48,10 @@ export default function Home() {
   const totalCategories = new Set([...toolCategories, ...resourceCategories]).size;
   const formattedCategories = String(totalCategories).padStart(2, "0");
 
-  const heroTool1 = internalTools.find((t) => t.slug === "document-extractor") || internalTools[0];
-  const heroTool2 = internalTools.find((t) => t.slug === "web-extractor") || internalTools[1];
-  const heroTool3 = internalTools.find((t) => t.slug === "css-studio") || internalTools[2];
-  const heroTool4 = internalTools.find((t) => t.slug === "curl-builder") || internalTools[3];
+  const heroTool1 = internalTools.find((t) => t.slug === "curl-builder") || internalTools[3];
+  const heroTool2 = internalTools.find((t) => t.slug === "gitignore-generator") || internalTools[2];
+  const heroTool3 = internalTools.find((t) => t.slug === "regex-studio") || internalTools[1];
+  const heroTool4 = internalTools.find((t) => t.slug === "qr-generator") || internalTools[0];
 
   return (
     <>
@@ -202,7 +202,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid w-full grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="vault-grid">
             {resourceCategories.map((category) => {
               const slug = slugify(category);
               const count = resourceLinks.filter((r) => r.category === category).length;
@@ -214,44 +214,18 @@ export default function Home() {
                 <Link
                   key={category}
                   href={`/resources/${slug}`}
-                  className={cn(
-                    "group border-border bg-card flex flex-col justify-between border-2 p-4 transition-all duration-200 hover:-translate-y-1 hover:shadow-xs",
-                    hoverTheme.card,
-                  )}
+                  className={cn("group vault-card", hoverTheme.card)}
                 >
-                  <div className="flex items-center justify-between gap-2 pb-3">
+                  <div className="vault-card-header">
                     <div className="flex items-center gap-1.5">
                       <span
-                        className={cn(
-                          "size-2 rounded-full border transition-colors",
-                          themeConfig.dotInactive,
-                          hoverTheme.dot,
-                        )}
+                        className={cn("vault-card-dot", themeConfig.dotInactive, hoverTheme.dot)}
                       />
                     </div>
-                    <span
-                      className={cn(
-                        "text-foreground font-mono text-xs font-bold tabular-nums transition-colors",
-                        hoverTheme.text,
-                      )}
-                    >
-                      {count} items
-                    </span>
+                    <span className={cn("vault-card-count", hoverTheme.text)}>{count} items</span>
                   </div>
-                  <h3
-                    className={cn(
-                      "text-foreground font-mono text-sm font-extrabold tracking-wide uppercase transition-colors",
-                      hoverTheme.text,
-                    )}
-                  >
-                    {category}
-                  </h3>
-                  <div
-                    className={cn(
-                      "border-border/50 text-mono-2xs text-muted-foreground mt-4 flex items-center justify-between border-t pt-2.5 transition-colors",
-                      hoverTheme.footer,
-                    )}
-                  >
+                  <h3 className={cn("vault-card-title", hoverTheme.text)}>{category}</h3>
+                  <div className={cn("vault-card-footer", hoverTheme.footer)}>
                     <span>Browse vault</span>
                     <ArrowRightIcon
                       weight="bold"
