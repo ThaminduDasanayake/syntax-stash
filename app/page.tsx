@@ -64,15 +64,15 @@ export default function Home() {
             </div>
 
             <h1 className="hero-headline">
-              THE DEVELOPER
+              Architecture, craft & utilities
               <br />
-              <em>stash</em>.
+              <em>for the modern web stack</em>.
             </h1>
 
             <p className="hero-sub">
-              A curated manual of {resourceLinks.length} modern web engineering resources and{" "}
-              {internalTools.length} interactive browser utilities. Built for tactile exploration,
-              rapid reference, and craft.
+              {resourceLinks.length} curated resources across sixteen categories, paired with{" "}
+              {internalTools.length} interactive browser tools. A reference manual to browse, and a
+              workbench you can build with.
             </p>
 
             <div className="hero-cta-row">
