@@ -31,21 +31,34 @@ export function ToolsCarousel({ tools, totalCount }: ToolsCarouselProps) {
     const el = scrollRef.current;
     if (!el) return;
     checkScroll();
+
     el.addEventListener("scroll", checkScroll, { passive: true });
     window.addEventListener("resize", checkScroll);
+
+    const ro = new ResizeObserver(() => {
+      checkScroll();
+    });
+    ro.observe(el);
+
     return () => {
       el.removeEventListener("scroll", checkScroll);
       window.removeEventListener("resize", checkScroll);
+      ro.disconnect();
     };
-  }, []);
+  }, [tools]);
 
   const handleScroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
-    // Scroll by the container width (or 1 full set of cards)
-    const scrollAmount = scrollRef.current.clientWidth;
-    scrollRef.current.scrollBy({
+    const el = scrollRef.current;
+    // Step by card width (280px) + gap (16px) = 296px
+    const cardStep = 280 + 16;
+    const currentIndex = Math.round(el.scrollLeft / cardStep);
+    const targetIndex = direction === "left" ? Math.max(0, currentIndex - 1) : currentIndex + 1;
+    const targetScrollLeft = targetIndex * cardStep;
+
+    el.scrollTo({
       behavior: "smooth",
-      left: direction === "left" ? -scrollAmount : scrollAmount,
+      left: targetScrollLeft,
     });
   };
 

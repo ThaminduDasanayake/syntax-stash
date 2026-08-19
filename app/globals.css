@@ -583,7 +583,7 @@
 }
 
 @utility featured-head {
-  @apply mb-10 flex flex-wrap items-end justify-between gap-5;
+  @apply mb-10 flex w-full flex-wrap items-end justify-between gap-5;
 }
 
 @utility featured-sub {
@@ -591,31 +591,44 @@
 }
 
 @utility featured-track-wrap {
-  @apply relative overflow-x-clip overflow-y-visible;
+  @apply relative w-full max-w-full min-w-0 overflow-x-clip overflow-y-visible;
 }
 
 @utility featured-track {
-  @apply -mx-5 grid snap-x snap-mandatory scroll-pl-5 grid-cols-[repeat(8,280px)] gap-4 overflow-x-auto scroll-smooth px-5 pt-1 pb-6 md:-mx-8 md:scroll-pl-8 md:px-8;
+  @apply -mx-5 grid w-[calc(100%+2.5rem)] snap-x snap-mandatory scroll-pl-5 auto-cols-[290px] grid-flow-col gap-4 overflow-x-auto scroll-smooth px-5 pt-2 pb-6 md:-mx-8 md:w-[calc(100%+4rem)] md:scroll-pl-8 md:px-8;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-2) transparent;
 
   &::-webkit-scrollbar {
     height: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
   }
   &::-webkit-scrollbar-thumb {
     background: var(--line-2);
     border-radius: 0;
   }
 
+  & > * {
+    @apply snap-start snap-always;
+    scroll-snap-stop: always;
+  }
+
   & .card {
-    @apply snap-start;
+    @apply snap-start snap-always;
+    scroll-snap-stop: always;
   }
 }
 
 @utility featured-controls {
-  @apply mt-6 flex items-center gap-3;
+  @apply mt-6 flex w-full items-center justify-between gap-3;
 }
 
 @utility featured-arrows {
-  @apply ml-auto flex gap-0;
+  @apply ml-auto flex;
 }
 
 /* Resource Stash*/
@@ -628,7 +641,7 @@
 }
 
 @utility section-inner {
-  @apply mx-auto flex max-w-7xl flex-col items-start px-8;
+  @apply mx-auto flex w-full max-w-7xl flex-col items-start px-5 md:px-8;
 }
 
 @utility lib-headline {
