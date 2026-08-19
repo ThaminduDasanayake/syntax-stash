@@ -1,17 +1,57 @@
-import { ArrowLeftIcon, ArrowRightIcon } from "@phosphor-icons/react/ssr";
+import { ArrowRightIcon, CompassIcon, WrenchIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 
 import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
 import ToolCard from "@/components/tool-card";
 import { Button } from "@/components/ui/button";
-import { ButtonGroup } from "@/components/ui/button-group";
 import { resourceCategories, resourceLinks } from "@/lib/resource-data";
 import { internalTools, toolCategories } from "@/lib/tools-data";
+import { cn, getCategoryTheme, slugify, type Theme, THEME_CONFIG } from "@/lib/utils";
+
+const THEME_HOVER_MAP: Record<
+  Theme,
+  {
+    card: string;
+    dot: string;
+    footer: string;
+    text: string;
+  }
+> = {
+  orange: {
+    card: "hover:bg-c-orange hover:border-orange-deep hover:text-ink",
+    dot: "group-hover:bg-ink group-hover:border-ink",
+    footer: "group-hover:border-ink/20 group-hover:text-ink/80",
+    text: "group-hover:text-ink",
+  },
+  blue: {
+    card: "hover:bg-c-blue hover:border-blue-deep hover:text-paper",
+    dot: "group-hover:bg-paper group-hover:border-paper",
+    footer: "group-hover:border-paper/25 group-hover:text-paper/85",
+    text: "group-hover:text-paper",
+  },
+  pink: {
+    card: "hover:bg-c-pink hover:border-pink-deep hover:text-ink",
+    dot: "group-hover:bg-ink group-hover:border-ink",
+    footer: "group-hover:border-ink/20 group-hover:text-ink/80",
+    text: "group-hover:text-ink",
+  },
+  green: {
+    card: "hover:bg-c-green hover:border-green-deep hover:text-ink",
+    dot: "group-hover:bg-ink group-hover:border-ink",
+    footer: "group-hover:border-ink/20 group-hover:text-ink/80",
+    text: "group-hover:text-ink",
+  },
+};
 
 export default function Home() {
   const topTools = internalTools.slice(0, 4);
   const totalCategories = new Set([...toolCategories, ...resourceCategories]).size;
   const formattedCategories = String(totalCategories).padStart(2, "0");
+
+  const heroTool1 = internalTools.find((t) => t.slug === "document-extractor") || internalTools[0];
+  const heroTool2 = internalTools.find((t) => t.slug === "web-extractor") || internalTools[1];
+  const heroTool3 = internalTools.find((t) => t.slug === "css-studio") || internalTools[2];
+  const heroTool4 = internalTools.find((t) => t.slug === "curl-builder") || internalTools[3];
 
   return (
     <>
@@ -20,29 +60,31 @@ export default function Home() {
         <div className="hero-inner">
           <div className="hero-copy">
             <div className="hero-eyebrow">
-              <HeroEyebrowDots />A REFERENCE FOR MODERN WEB DEVELOPMENT
+              <HeroEyebrowDots />A REFERENCE &amp; WORKBENCH FOR MODERN WEB DEVELOPMENT
             </div>
 
             <h1 className="hero-headline">
-              THE FRONTEND
+              THE DEVELOPER
               <br />
               <em>stash</em>.
             </h1>
 
             <p className="hero-sub">
-              {internalTools.length} field tools across curated categories. Each one is a working
-              utility or reference. The stash is a manual you can play with.
+              A curated manual of {resourceLinks.length} modern web engineering resources and{" "}
+              {internalTools.length} interactive browser utilities. Built for tactile exploration,
+              rapid reference, and craft.
             </p>
 
             <div className="hero-cta-row">
               <Button asChild size="lg" variant="default">
-                <Link href="/tools" className="text-display-sm">
-                  EXPLORE TOOLS <ArrowRightIcon weight="bold" className="" />
+                <Link href="/resources" className="text-display-sm">
+                  BROWSE RESOURCES
+                  <ArrowRightIcon weight="bold" className="ml-1" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="secondary">
-                <Link href="/resources" className="text-display-sm">
-                  BROWSE RESOURCES
+                <Link href="/tools" className="text-display-sm">
+                  EXPLORE TOOLS
                 </Link>
               </Button>
             </div>
@@ -52,22 +94,22 @@ export default function Home() {
           <div className="hero-stack">
             <div className="hero-card">
               <div className="hero-card-wrap">
-                <ToolCard tool={internalTools[1 % internalTools.length]} />
+                <ToolCard tool={heroTool1} />
               </div>
             </div>
             <div className="hero-card">
               <div className="hero-card-wrap">
-                <ToolCard tool={internalTools[11 % internalTools.length]} />
+                <ToolCard tool={heroTool2} />
               </div>
             </div>
             <div className="hero-card">
               <div className="hero-card-wrap">
-                <ToolCard tool={internalTools[16 % internalTools.length]} />
+                <ToolCard tool={heroTool3} />
               </div>
             </div>
             <div className="hero-card">
               <div className="hero-card-wrap">
-                <ToolCard tool={internalTools[36 % internalTools.length]} />
+                <ToolCard tool={heroTool4} />
               </div>
             </div>
           </div>
@@ -83,11 +125,11 @@ export default function Home() {
           </div>
           <div className="stat-item">
             <h2 className="stat-num">{internalTools.length}</h2>
-            <p className="stat-label">Inbuilt Tools</p>
+            <p className="stat-label">INBUILT TOOLS</p>
           </div>
           <div className="stat-item">
             <h2 className="stat-num">{resourceLinks.length}</h2>
-            <p className="stat-label">Curated Resources</p>
+            <p className="stat-label">CURATED RESOURCES</p>
           </div>
           <div className="stat-item">
             <h2 className="stat-num">100%</h2>
@@ -138,20 +180,118 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Top Tools */}
+      {/* Curated Resource Vault Spotlight */}
+      <section className="border-border bg-background border-b-2 px-6 py-24 sm:px-12 lg:px-24">
+        <div className="mx-auto w-full max-w-7xl">
+          <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <div>
+              <div className="text-primary mb-2 flex items-center gap-2 font-mono text-xs font-bold tracking-wider uppercase">
+                <CompassIcon weight="bold" className="size-4" />
+                <span>Curated Knowledge Vault</span>
+              </div>
+              <h2 className="flex flex-wrap items-baseline gap-3 text-4xl tracking-tighter sm:text-5xl lg:text-6xl">
+                <span className="font-display font-black uppercase">
+                  {resourceCategories.length} CATEGORIES,
+                </span>
+                <span className="font-serif tracking-normal lowercase italic">handpicked.</span>
+              </h2>
+            </div>
+            <p className="max-w-md font-mono text-xs leading-relaxed opacity-80 md:text-right">
+              From animation engines and component libraries to AI toolchains and typography
+              foundries.
+            </p>
+          </div>
+
+          <div className="grid w-full grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-4">
+            {resourceCategories.map((category) => {
+              const slug = slugify(category);
+              const count = resourceLinks.filter((r) => r.category === category).length;
+              const theme = getCategoryTheme(category);
+              const themeConfig = THEME_CONFIG[theme];
+              const hoverTheme = THEME_HOVER_MAP[theme];
+
+              return (
+                <Link
+                  key={category}
+                  href={`/resources/${slug}`}
+                  className={cn(
+                    "group border-border bg-card flex flex-col justify-between border-2 p-4 transition-all duration-200 hover:-translate-y-1 hover:shadow-xs",
+                    hoverTheme.card,
+                  )}
+                >
+                  <div className="flex items-center justify-between gap-2 pb-3">
+                    <div className="flex items-center gap-1.5">
+                      <span
+                        className={cn(
+                          "size-2 rounded-full border transition-colors",
+                          themeConfig.dotInactive,
+                          hoverTheme.dot,
+                        )}
+                      />
+                    </div>
+                    <span
+                      className={cn(
+                        "text-foreground font-mono text-xs font-bold tabular-nums transition-colors",
+                        hoverTheme.text,
+                      )}
+                    >
+                      {count} items
+                    </span>
+                  </div>
+                  <h3
+                    className={cn(
+                      "text-foreground font-mono text-sm font-extrabold tracking-wide uppercase transition-colors",
+                      hoverTheme.text,
+                    )}
+                  >
+                    {category}
+                  </h3>
+                  <div
+                    className={cn(
+                      "border-border/50 text-mono-2xs text-muted-foreground mt-4 flex items-center justify-between border-t pt-2.5 transition-colors",
+                      hoverTheme.footer,
+                    )}
+                  >
+                    <span>Browse vault</span>
+                    <ArrowRightIcon
+                      weight="bold"
+                      className="size-3.5 transition-transform duration-200 group-hover:translate-x-1"
+                    />
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+
+          <div className="border-border mt-10 flex items-center justify-between border-t-2 pt-8">
+            <Button asChild size="sm" variant="default">
+              <Link href="/resources" className="text-display-xs">
+                EXPLORE ALL {resourceLinks.length} RESOURCES{" "}
+                <ArrowRightIcon weight="bold" className="ml-2 size-3.5" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Top Inbuilt Tools Section */}
       <section className="bg-background px-6 py-24 sm:px-12 lg:px-24">
         <div className="mx-auto w-full max-w-7xl">
-          <div className="mb-16 flex flex-col justify-between gap-8 md:flex-row md:items-end">
-            <h2 className="flex items-baseline gap-4 text-5xl tracking-tighter sm:text-6xl">
-              <span className="font-display font-black uppercase">
-                {internalTools.length} TOOLS,
-              </span>
-              <span className="font-serif text-5xl tracking-normal lowercase italic">
-                ready to use.
-              </span>
-            </h2>
-            <p className="max-w-xs font-mono text-sm opacity-80 md:text-right">
-              Each card carries a small live demo. Click for the full utility.
+          <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <div>
+              <div className="text-primary mb-2 flex items-center gap-2 font-mono text-xs font-bold tracking-wider uppercase">
+                <WrenchIcon weight="bold" className="size-4" />
+                <span>Interactive Utilities</span>
+              </div>
+              <h2 className="flex flex-wrap items-baseline gap-3 text-4xl tracking-tighter sm:text-5xl lg:text-6xl">
+                <span className="font-display font-black uppercase">
+                  {internalTools.length} TOOLS,
+                </span>
+                <span className="font-serif tracking-normal lowercase italic">ready to use.</span>
+              </h2>
+            </div>
+            <p className="max-w-xs font-mono text-xs leading-relaxed opacity-80 md:text-right">
+              Each card carries a working demo or generator. Click for the full utility.
             </p>
           </div>
 
@@ -165,18 +305,9 @@ export default function Home() {
             <Button asChild size="sm" variant="default">
               <Link href="/tools" className="text-display-xs">
                 BROWSE ALL {internalTools.length} TOOLS{" "}
-                <ArrowRightIcon weight="bold" className="ml-2" />
+                <ArrowRightIcon weight="bold" className="ml-2 size-3.5" />
               </Link>
             </Button>
-
-            <ButtonGroup className="hidden sm:flex">
-              <Button size="icon" variant="secondary" className="h-10 w-10">
-                <ArrowLeftIcon weight="bold" />
-              </Button>
-              <Button size="icon" variant="secondary" className="h-10 w-10">
-                <ArrowRightIcon weight="bold" />
-              </Button>
-            </ButtonGroup>
           </div>
         </div>
       </section>
