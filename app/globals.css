@@ -567,6 +567,64 @@
   @apply border-border/50 text-mono-2xs text-muted-foreground mt-4 flex items-center justify-between border-t pt-2.5 transition-colors;
 }
 
+/* Featured Section */
+@utility featured-section {
+  @apply bg-bg border-b-line py-28;
+}
+
+@utility section-header {
+  @apply mb-14 grid grid-cols-1 items-start gap-4 md:grid-cols-2 md:gap-12;
+}
+
+@utility section-title {
+  @apply font-display text-[clamp(36px,5vw,72px)] leading-[0.92] font-extrabold tracking-tighter uppercase;
+
+  @apply [&_em]:font-serif [&_em]:font-normal [&_em]:tracking-tight [&_em]:lowercase [&_em]:italic;
+}
+
+@utility featured-head {
+  @apply mb-10 flex w-full flex-wrap items-end justify-between gap-5;
+}
+
+@utility featured-sub {
+  @apply text-ink-2 max-w-[40ch] leading-[1.55];
+}
+
+@utility featured-track-wrap {
+  @apply relative w-full max-w-full min-w-0 overflow-x-clip overflow-y-visible;
+}
+
+@utility featured-track {
+  @apply -mx-5 grid w-[calc(100%+2.5rem)] snap-x snap-mandatory scroll-pl-6 auto-cols-[290px] grid-flow-col gap-4 overflow-x-auto scroll-smooth px-6 pt-3 pb-6 md:-mx-8 md:w-[calc(100%+4rem)] md:scroll-pl-9 md:px-9;
+
+  &::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--line-2);
+    border-radius: 0;
+  }
+
+  & > * {
+    @apply snap-start snap-always;
+    scroll-snap-stop: always;
+  }
+
+  & .card {
+    @apply snap-start snap-always;
+    scroll-snap-stop: always;
+  }
+}
+
+@utility featured-controls {
+  @apply mt-6 flex w-full items-center justify-between gap-3;
+}
+
+@utility featured-arrows {
+  @apply ml-auto flex;
+}
+
 /* Resource Stash*/
 @utility lib-page {
   @apply flex w-full flex-col;
@@ -577,7 +635,7 @@
 }
 
 @utility section-inner {
-  @apply mx-auto flex max-w-7xl flex-col items-start px-8;
+  @apply mx-auto flex w-full max-w-7xl flex-col items-start px-5 md:px-8;
 }
 
 @utility lib-headline {
@@ -657,7 +715,7 @@
 }
 
 @utility card {
-  @apply block w-full cursor-pointer transition-all duration-200 outline-none hover:-translate-x-1 hover:-translate-y-1 hover:shadow-md;
+  @apply relative block w-full cursor-pointer transition-all duration-200 outline-none hover:z-10 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-md;
 }
 
 @utility card-inner {
@@ -798,11 +856,11 @@
 }
 
 @utility modal-related-chip {
-  @apply xs:inline-flex text-display-xs border-ink bg-paper cursor-pointer items-center justify-start gap-2 border-[1.5px] px-3.5 py-3 transition-all duration-200 ease-out sm:px-3 sm:py-2;
+  @apply xs:inline-flex text-display-xs border-ink bg-paper flex cursor-pointer items-center justify-start gap-2 border-[1.5px] px-3.5 py-3 transition-all duration-200 ease-out sm:px-3 sm:py-2;
 }
 
 @utility modal-chip-dot {
-  @apply h-2 w-2 shrink-0 rounded-full border transition-colors duration-200;
+  @apply inline-block aspect-square size-2 shrink-0 rounded-full border transition-colors duration-200;
 }
 
 @utility modal-link {
