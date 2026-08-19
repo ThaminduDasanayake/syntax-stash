@@ -429,7 +429,7 @@
 }
 /* Hero */
 @utility hero {
-  @apply border-line bg-sec-1 overflow-x-clip border-b pt-33 pb-12;
+  @apply border-line bg-sec-1 overflow-x-clip border-b pt-33 pb-16;
 }
 
 @utility hero-inner {
@@ -453,7 +453,7 @@
 }
 
 @utility hero-sub {
-  @apply text-ink-2 mb-5 max-w-[52ch] font-mono text-lg leading-relaxed sm:mb-7;
+  @apply text-ink-2 mb-5 max-w-[52ch] text-lg leading-relaxed sm:mb-7;
 }
 
 @utility hero-cta-row {
@@ -536,6 +536,35 @@
 
 @utility stat-label {
   @apply text-mono-xs text-ink-mute;
+}
+
+/* Vault Cards*/
+@utility vault-grid {
+  @apply grid w-full grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-4;
+}
+
+@utility vault-card {
+  @apply border-border bg-card flex flex-col justify-between border-2 p-4 transition-all duration-200 hover:-translate-y-1 hover:shadow-xs;
+}
+
+@utility vault-card-header {
+  @apply flex items-center justify-between gap-2 pb-3;
+}
+
+@utility vault-card-dot {
+  @apply size-2 rounded-full border transition-colors;
+}
+
+@utility vault-card-count {
+  @apply text-foreground font-mono text-xs font-bold tabular-nums transition-colors;
+}
+
+@utility vault-card-title {
+  @apply text-foreground font-mono text-sm font-extrabold tracking-wide uppercase transition-colors;
+}
+
+@utility vault-card-footer {
+  @apply border-border/50 text-mono-2xs text-muted-foreground mt-4 flex items-center justify-between border-t pt-2.5 transition-colors;
 }
 
 /* Resource Stash*/

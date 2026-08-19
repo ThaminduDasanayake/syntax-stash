@@ -96,11 +96,11 @@ const RESOURCE_VALUES: string[] = Object.values(RESOURCE_CATEGORIES);
 const TOOL_VALUES: string[] = Object.values(TOOL_CATEGORIES);
 
 export function getCategoryTheme(category: string): Theme {
-  const resourceIdx = RESOURCE_VALUES.indexOf(category);
-  if (resourceIdx !== -1) return THEMES[resourceIdx % THEMES.length];
-
   const toolIdx = TOOL_VALUES.indexOf(category);
   if (toolIdx !== -1) return THEMES[toolIdx % THEMES.length];
+
+  const resourceIdx = RESOURCE_VALUES.indexOf(category);
+  if (resourceIdx !== -1) return THEMES[resourceIdx % THEMES.length];
 
   return THEMES[0];
 }
