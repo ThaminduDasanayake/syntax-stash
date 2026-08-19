@@ -595,7 +595,7 @@
 }
 
 @utility featured-track {
-  @apply -mx-5 grid w-[calc(100%+2.5rem)] snap-x snap-mandatory scroll-pl-5 auto-cols-[290px] grid-flow-col gap-4 overflow-x-auto scroll-smooth px-5 pt-2 pb-6 md:-mx-8 md:w-[calc(100%+4rem)] md:scroll-pl-8 md:px-8;
+  @apply -mx-5 grid w-[calc(100%+2.5rem)] snap-x snap-mandatory scroll-pl-6 auto-cols-[290px] grid-flow-col gap-4 overflow-x-auto scroll-smooth px-6 pt-3 pb-6 md:-mx-8 md:w-[calc(100%+4rem)] md:scroll-pl-9 md:px-9;
 
   &::-webkit-scrollbar {
     height: 4px;
@@ -715,7 +715,7 @@
 }
 
 @utility card {
-  @apply block w-full cursor-pointer transition-all duration-200 outline-none hover:-translate-x-1 hover:-translate-y-1 hover:shadow-md;
+  @apply relative block w-full cursor-pointer transition-all duration-200 outline-none hover:z-10 hover:-translate-x-1 hover:-translate-y-1 hover:shadow-md;
 }
 
 @utility card-inner {
@@ -856,11 +856,11 @@
 }
 
 @utility modal-related-chip {
-  @apply flex xs:inline-flex text-display-xs border-ink bg-paper cursor-pointer items-center justify-start gap-2 border-[1.5px] px-3.5 py-3 transition-all duration-200 ease-out sm:px-3 sm:py-2;
+  @apply xs:inline-flex text-display-xs border-ink bg-paper flex cursor-pointer items-center justify-start gap-2 border-[1.5px] px-3.5 py-3 transition-all duration-200 ease-out sm:px-3 sm:py-2;
 }
 
 @utility modal-chip-dot {
-  @apply inline-block size-2 shrink-0 aspect-square rounded-full border transition-colors duration-200;
+  @apply inline-block aspect-square size-2 shrink-0 rounded-full border transition-colors duration-200;
 }
 
 @utility modal-link {
