@@ -1,11 +1,19 @@
-import { ArrowRightIcon, CompassIcon, WrenchIcon } from "@phosphor-icons/react/ssr";
+import { ArrowRightIcon, CompassIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 
 import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
 import ToolCard from "@/components/tool-card";
+import { ToolsCarousel } from "@/components/tools-carousel";
 import { Button } from "@/components/ui/button";
 import { resourceCategories, resourceLinks } from "@/lib/resource-data";
-import { internalTools, toolCategories } from "@/lib/tools-data";
+import {
+  dataTools,
+  developmentTools,
+  frontendTools,
+  internalTools,
+  mediaTools,
+  toolCategories,
+} from "@/lib/tools-data";
 import { cn, getCategoryTheme, slugify, type Theme, THEME_CONFIG } from "@/lib/utils";
 
 const THEME_HOVER_MAP: Record<
@@ -44,7 +52,12 @@ const THEME_HOVER_MAP: Record<
 };
 
 export default function Home() {
-  const topTools = internalTools.slice(0, 4);
+  const topTools = [
+    ...dataTools.slice(0, 2),
+    ...developmentTools.slice(0, 2),
+    ...frontendTools.slice(0, 2),
+    ...mediaTools.slice(0, 2),
+  ];
   const totalCategories = new Set([...toolCategories, ...resourceCategories]).size;
   const formattedCategories = String(totalCategories).padStart(2, "0");
 
@@ -248,43 +261,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Top Inbuilt Tools Section */}
-      <section className="bg-background px-6 py-24 sm:px-12 lg:px-24">
-        <div className="mx-auto w-full max-w-7xl">
-          <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <div>
-              <div className="text-primary mb-2 flex items-center gap-2 font-mono text-xs font-bold tracking-wider uppercase">
-                <WrenchIcon weight="bold" className="size-4" />
-                <span>Interactive Utilities</span>
-              </div>
-              <h2 className="flex flex-wrap items-baseline gap-3 text-4xl tracking-tighter sm:text-5xl lg:text-6xl">
-                <span className="font-display font-black uppercase">
-                  {internalTools.length} TOOLS,
-                </span>
-                <span className="font-serif tracking-normal lowercase italic">ready to use.</span>
-              </h2>
-            </div>
-            <p className="max-w-xs font-mono text-xs leading-relaxed opacity-80 md:text-right">
-              Each card carries a working demo or generator. Click for the full utility.
-            </p>
-          </div>
-
-          <div className="mb-12 grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {topTools.map((tool) => (
-              <ToolCard key={tool.slug} tool={tool} />
-            ))}
-          </div>
-
-          <div className="border-border flex items-center justify-between border-t-2 pt-8">
-            <Button asChild size="sm" variant="default">
-              <Link href="/tools" className="text-display-xs">
-                BROWSE ALL {internalTools.length} TOOLS{" "}
-                <ArrowRightIcon weight="bold" className="ml-2 size-3.5" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+      <ToolsCarousel tools={topTools} totalCount={internalTools.length} />
     </>
   );
 }

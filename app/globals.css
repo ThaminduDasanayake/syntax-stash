@@ -567,6 +567,57 @@
   @apply border-border/50 text-mono-2xs text-muted-foreground mt-4 flex items-center justify-between border-t pt-2.5 transition-colors;
 }
 
+/* Featured Section */
+@utility featured-section {
+  @apply bg-bg border-b-line py-28;
+}
+
+@utility section-header {
+  @apply mb-14 grid grid-cols-1 items-start gap-4 md:grid-cols-2 md:gap-12;
+}
+
+@utility section-title {
+  @apply font-display text-[clamp(36px,5vw,72px)] leading-[0.92] font-extrabold tracking-tighter uppercase;
+
+  @apply [&_em]:font-serif [&_em]:font-normal [&_em]:tracking-tight [&_em]:lowercase [&_em]:italic;
+}
+
+@utility featured-head {
+  @apply mb-10 flex flex-wrap items-end justify-between gap-5;
+}
+
+@utility featured-sub {
+  @apply text-ink-2 max-w-[40ch] leading-[1.55];
+}
+
+@utility featured-track-wrap {
+  @apply relative overflow-x-clip overflow-y-visible;
+}
+
+@utility featured-track {
+  @apply -mx-5 grid snap-x snap-mandatory scroll-pl-5 grid-cols-[repeat(8,280px)] gap-4 overflow-x-auto scroll-smooth px-5 pt-1 pb-6 md:-mx-8 md:scroll-pl-8 md:px-8;
+
+  &::-webkit-scrollbar {
+    height: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--line-2);
+    border-radius: 0;
+  }
+
+  & .card {
+    @apply snap-start;
+  }
+}
+
+@utility featured-controls {
+  @apply mt-6 flex items-center gap-3;
+}
+
+@utility featured-arrows {
+  @apply ml-auto flex gap-0;
+}
+
 /* Resource Stash*/
 @utility lib-page {
   @apply flex w-full flex-col;
