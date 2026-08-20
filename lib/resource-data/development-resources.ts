@@ -223,6 +223,26 @@ export const developmentLinks: Tool[] = [
     url: "https://delphi.tools/",
   },
   {
+    title: "Design System Checklist",
+    category: CATEGORIES.dev,
+    description: "An open-source checklist to help you plan, build and grow your design system.",
+    favicon: "https://designsystemchecklist.com/apple-touch-icon.png",
+    ogImage: "https://designsystemchecklist.com/meta-v2.png",
+    tags: [TAGS.designSystem],
+    url: "https://www.designsystemchecklist.com/",
+  },
+  {
+    title: "Design Systems Surf",
+    category: CATEGORIES.dev,
+    description:
+      "Explore real design systems, components, foundations, practical products, and AI-ready tools to build, improve, and maintain your design system.",
+    favicon: "https://framerusercontent.com/images/DYo9UMNI98uGRwbaTgDsr6wjvo.svg",
+    ogImage: "https://framerusercontent.com/images/LXqdPaxFqWbO3zHBGgOGKq0.png",
+    subtitle: "Design System Resources & Tools",
+    tags: [TAGS.designSystem],
+    url: "https://designsystems.surf/",
+  },
+  {
     title: "Dev Resources",
     author: "Marcel Cruz",
     category: CATEGORIES.dev,
@@ -557,6 +577,16 @@ export const developmentLinks: Tool[] = [
     url: "https://makemydrivefun.com/",
   },
   {
+    title: "Modulor",
+    category: CATEGORIES.dev,
+    description:
+      "Modulor is the design system by GR8 Tech. It’s a tool for designing and implementing your product—good-looking and easy to build.",
+    favicon: "https://framerusercontent.com/images/6HDMeabpZGmM3FK9OzyNx7Pqq8.svg",
+    ogImage: "https://framerusercontent.com/assets/jqkKeu8zA7KwIDAZFgsvnmE6A1U.png",
+    tags: [TAGS.designSystem],
+    url: "https://modulor.design/",
+  },
+  {
     title: "Mux",
     category: CATEGORIES.dev,
     description:
@@ -768,6 +798,15 @@ export const developmentLinks: Tool[] = [
     url: "https://docs.rsshub.app/",
   },
   {
+    title: "SaaS UI",
+    category: CATEGORIES.dev,
+    description: "Free Illustrations for your Documentation or Design System - Illustrations",
+    favicon: "https://illustrations.saas-ui.dev/favicon/apple-touch-icon.png",
+    ogImage: "https://illustrations.saas-ui.dev/assets/og/x.png",
+    tags: [TAGS.designSystem, TAGS.illustration],
+    url: "https://illustrations.saas-ui.dev",
+  },
+  {
     title: "SEOStudio",
     category: CATEGORIES.dev,
     description:
@@ -863,6 +902,15 @@ export const developmentLinks: Tool[] = [
       "Free online map poster and wallpaper generator. Design custom, print-ready map art for any city or location — export as PNG, PDF, or SVG. No sign-up required.",
     tags: [TAGS.map],
     url: "https://terraink.app/",
+  },
+  {
+    title: "The Design System Guide",
+    category: CATEGORIES.dev,
+    description: "Set Up a Design System. Guide, Resources, Useful Tools, Checklists",
+    favicon: "https://framerusercontent.com/images/1WoLyCLIvGrwxsrOf899aWfSo88.png",
+    ogImage: "https://framerusercontent.com/assets/dkDkjc3jbsnWBTeks2ffB82jbk.png",
+    tags: [TAGS.designSystem],
+    url: "https://thedesignsystem.guide/",
   },
   {
     title: "TinyWow",

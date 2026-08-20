@@ -84,6 +84,17 @@ export const inspirationLinks: Tool[] = [
     url: "https://www.theappfuel.com",
   },
   {
+    title: "App Stacks",
+    category: CATEGORIES.inspiration,
+    description:
+      "Discover what makes your favorite apps so special - from their origin story to their tech stacks and the tools their teams rely on daily. Build smarter by learning from the best.",
+    favicon: "https://framerusercontent.com/images/4T0UNvU36mIiCVLukl8ZRY75SBs.svg",
+    ogImage: "https://framerusercontent.com/images/jwbuKJvevICX4yU8X893c9CKqXY.png",
+    subtitle: "Discover stories and stacks behind your favorite apps",
+    tags: [TAGS.inspiration],
+    url: "https://appstacks.club/",
+  },
+  {
     title: "Awwwards",
     category: CATEGORIES.inspiration,
     description:
@@ -109,6 +120,17 @@ export const inspirationLinks: Tool[] = [
     ogImage: "https://bentogrids.com/images/og.png",
     tags: [TAGS.inspiration],
     url: "https://bentogrids.com/",
+  },
+  {
+    title: "Best Designs On X.com",
+    category: CATEGORIES.inspiration,
+    description:
+      "Discover the best design inspiration from top creatives on X. Updated hourly with hand-picked visual showcases, logos, UI, branding, and more.",
+    favicon: "https://bestdesignsonx.com/favicon.webp",
+    ogImage: "https://bestdesignsonx.com/og-image.png",
+    subtitle: "Actionable UI/UX Breakdowns from Top Apps",
+    tags: [TAGS.inspiration],
+    url: "https://bestdesignsonx.com/",
   },
   {
     title: "BrandGuidelines",
@@ -617,6 +639,19 @@ export const inspirationLinks: Tool[] = [
     subtitle: "App Design Library & AI Screen Generator",
     tags: [TAGS.inspiration],
     url: "https://screensdesign.com/",
+  },
+  {
+    title: "SearchSystem™",
+    author: "Julien Van Havere",
+    category: CATEGORIES.inspiration,
+    description:
+      "An ever-growing collection of references and tools for designers. Curated by Julien Van Havere, founder of DesignPractice™ and TypeFoundry™.",
+    favicon:
+      "https://64.media.tumblr.com/e3f94bdea94cacba3ce62f712a89b349/b5e82c5b12d80c73-23/s128x128u_c1/77757ef576e84c81e9ca9dbe7e3525b9154548a0.pnj",
+    ogImage:
+      "https://64.media.tumblr.com/75ba2717c5a8526bb93b5c20b3e16eab/55401726c0f3d8e0-e6/s2048x3072/063265d95c8f55a8236ccd25482cd8c2d568a1c9.png",
+    tags: [TAGS.inspiration],
+    url: "https://searchsystem.co/",
   },
   {
     title: "Section design inspiration",

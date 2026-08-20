@@ -201,6 +201,14 @@ export const mediaLinks: Tool[] = [
     url: "https://ray.so/",
   },
   {
+    title: "DesignFamilyMarket",
+    category: CATEGORIES.media,
+    description: "High-Quality Graphic Assets",
+    favicon: "https://public-files.gumroad.com/hke4c923a9zy7vs2a22bokrqhw9c",
+    ogImage: "https://public-files.gumroad.com/06rfjlkmfxuxa2ml4mvnhtogards",
+    url: "https://designfamilymarket.gumroad.com/",
+  },
+  {
     title: "DesignUp",
     category: CATEGORIES.media,
     description: "On Gumroad",
