@@ -57,6 +57,17 @@ export const developmentLinks: Tool[] = [
     url: "https://www.talater.com/annyang/",
   },
   {
+    title: "AntV Infographic",
+    category: CATEGORIES.dev,
+    description:
+      "AntV Infographic is a powerful visualization library for building interactive and customizable infographics. Create stunning visual stories with ease using our intuitive API and rich set of components.",
+    favicon: "https://infographic.antv.vision/favicon.svg",
+    ogImage:
+      "https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*ZdeISZWHuyIAAAAAbEAAAAgAemJ7AQ/fmt.webp",
+    subtitle: "An infographic generation and rendering framework that brings words to life.",
+    url: "https://infographic.antv.vision/",
+  },
+  {
     title: "Arnis",
     category: CATEGORIES.dev,
     description:
@@ -666,6 +677,18 @@ export const developmentLinks: Tool[] = [
     url: "https://www.openstatus.dev/",
   },
   {
+    title: "OpenUI",
+    author: "OpenUI",
+    category: CATEGORIES.dev,
+    description:
+      "Full-stack, renderer-agnostic Generative UI with a streaming-first language, official React support, community integrations, and up to 67% fewer tokens than JSON.",
+    favicon: "https://www.openui.com/shiro-logo.svg",
+    ogImage: "https://www.openui.com/meta-image.png",
+    subtitle: "The Open Standard for Generative UI",
+    tags: [TAGS.development],
+    url: "https://www.openui.com/",
+  },
+  {
     title: "Oualator",
     category: CATEGORIES.dev,
     description:
@@ -823,6 +846,17 @@ export const developmentLinks: Tool[] = [
     ogImage: "https://framerusercontent.com/images/2KmY3qRaki1ljnz5ojnGOaNt4.jpg",
     tags: [TAGS.tool],
     url: "https://sesame.design/",
+  },
+  {
+    title: "shieldcn",
+    author: "Justin Levine",
+    category: CATEGORIES.dev,
+    description:
+      "Beautiful GitHub README badges and charts styled as shadcn/ui, plus a free visual README builder. Generate SVG and PNG badges for npm, GitHub, GitLab, Discord, and 45+ providers, build charts and header banners, and compose a whole README in the Studio. Free and open source.",
+    favicon: "https://shieldcn.dev/icon.png",
+    ogImage: "https://shieldcn.dev/og.png",
+    subtitle: "Beautiful README Badges & Charts",
+    url: "https://shieldcn.dev/",
   },
   {
     title: "SHRTCTS",
@@ -1010,6 +1044,14 @@ export const developmentLinks: Tool[] = [
     subtitle: "All-in-one URL Conversion Tool",
     tags: [TAGS.tool],
     url: "https://urltoany.com/",
+  },
+  {
+    title: "UX Components",
+    category: CATEGORIES.dev,
+    description:
+      "A practical guide to UX components — what they are, when to reach for them, and when to choose something else instead. Browse by category, explore the atomic design hierarchy, or compare semantic naming across popular design systems.",
+    favicon: "https://ux-components.com/favicon.svg",
+    url: "https://ux-components.com/",
   },
   {
     title: "Vault andzn",
