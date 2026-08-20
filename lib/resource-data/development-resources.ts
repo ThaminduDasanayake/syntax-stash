@@ -507,6 +507,18 @@ export const developmentLinks: Tool[] = [
     url: "https://www.home-assistant.io/",
   },
   {
+    title: "html-video",
+    author: "Open Design",
+    category: CATEGORIES.dev,
+    description:
+      "html-video turns HTML into video — on your laptop. Programmatic video for coding agents: an HTML to video meta-layer — bring your local coding agent.",
+    favicon: "https://open-design.ai/favicon.svg",
+    ogImage:
+      "https://static.open-design.ai/cdn-cgi/image/width=2400,quality=82,format=auto/https://static.open-design.ai/landing/assets/html-video/banner.png",
+    subtitle: "HTML to video, programmatic video for coding agents",
+    url: "https://open-design.ai/html-video/",
+  },
+  {
     title: "ilovecreatives",
     category: CATEGORIES.dev,
     description:
@@ -528,6 +540,15 @@ export const developmentLinks: Tool[] = [
     favicon: "https://inputoutput.dev/favicon.ico",
     tags: [TAGS.tool],
     url: "https://inputoutput.dev/",
+  },
+  {
+    title: "Iso Middle Earth",
+    category: CATEGORIES.dev,
+    description: "Build your own isometric realm in Middle-earth",
+    favicon: "https://isomiddleearth.com/logo.png",
+    ogImage: "https://isomiddleearth.com/og.png",
+    subtitle: "Isometric Realm Builder",
+    url: "https://isomiddleearth.com/",
   },
   {
     title: "IT Tools - Handy online tools for developers",
@@ -609,6 +630,16 @@ export const developmentLinks: Tool[] = [
     url: "https://www.mux.com/",
   },
   {
+    title: "NameThatUI",
+    category: CATEGORIES.dev,
+    description:
+      "Can't name that UI element? Describe it badly — “the pale pill behind the menu bar icon”, “the dots you grab to drag” — and get its real name, API symbol, and a precise prompt for your coding agent.",
+    favicon: "https://namethatui.com/apple-icon",
+    ogImage: "https://namethatui.com/opengraph-image",
+    subtitle: "What Is This UI Element Called?",
+    url: "https://namethatui.com/",
+  },
+  {
     title: "nomnoml",
     category: CATEGORIES.dev,
     description:
@@ -639,6 +670,17 @@ export const developmentLinks: Tool[] = [
     description: "Progressive Web Application with 12 open source frontend focused tools",
     tags: [TAGS.development],
     url: "https://omatsuri.app/",
+  },
+  {
+    title: "OpenDesign",
+    author: "Open Design",
+    category: CATEGORIES.dev,
+    description:
+      "Open-source vibe design workspace & Claude Design alternative — build prototypes, landing pages, dashboards, slides & HTML video with your own coding agent.",
+    favicon: "https://open-design.ai/favicon.svg",
+    ogImage: "https://static.open-design.ai/landing/assets/og-card.png",
+    subtitle: "Best Open Source Claude Design Alternative",
+    url: "https://open-design.ai/",
   },
   {
     title: "OpenFlowKit",
@@ -945,6 +987,16 @@ export const developmentLinks: Tool[] = [
     ogImage: "https://framerusercontent.com/assets/dkDkjc3jbsnWBTeks2ffB82jbk.png",
     tags: [TAGS.designSystem],
     url: "https://thedesignsystem.guide/",
+  },
+  {
+    title: "Tiny World Builder",
+    category: CATEGORIES.dev,
+    description:
+      "Tiny World Builder is a playful voxel world editor for building, remixing, flying through, and sharing tiny worlds in your browser.",
+    favicon: "https://tinyworld.build/assets/twlogo.webp",
+    ogImage: "https://tinyworld.build/assets/landing-hero.webp",
+    subtitle: "Build voxel worlds in your browser",
+    url: "https://tinyworld.build/",
   },
   {
     title: "TinyWow",
