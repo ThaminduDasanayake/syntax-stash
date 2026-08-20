@@ -84,9 +84,21 @@ export default function Footer() {
         </h1>
       </div>
 
-      <div className="border-ink-mute text-paper/60 mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 border-t px-6 pt-6 font-mono text-[11px] uppercase sm:flex-row sm:px-12 lg:px-16">
-        <span>© {new Date().getFullYear()} SYNTAX STASH</span>
-        <span>Last update {process.env.NEXT_PUBLIC_LAST_UPDATE || "2026"}</span>
+      <div className="border-ink-mute text-paper/60 mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 border-t px-6 pt-6 font-mono text-[11px] uppercase sm:flex-row sm:px-12 lg:px-16">
+        <div className="flex flex-wrap items-center justify-center gap-1.5 text-center sm:justify-start sm:text-left">
+          <span>© {new Date().getFullYear()} SYNTAX STASH</span>
+          <span className="opacity-40">·</span>
+          <span>BUILT BY</span>
+          <a
+            href={siteConfig.links.authorLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-paper hover:text-c-orange underline underline-offset-2 transition-colors"
+          >
+            {siteConfig.author.name}
+          </a>
+        </div>
+        <span>LAST UPDATE {process.env.NEXT_PUBLIC_LAST_UPDATE || "2026"}</span>
       </div>
     </footer>
   );
