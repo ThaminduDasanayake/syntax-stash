@@ -57,6 +57,17 @@ export const developmentLinks: Tool[] = [
     url: "https://www.talater.com/annyang/",
   },
   {
+    title: "AntV Infographic",
+    category: CATEGORIES.dev,
+    description:
+      "AntV Infographic is a powerful visualization library for building interactive and customizable infographics. Create stunning visual stories with ease using our intuitive API and rich set of components.",
+    favicon: "https://infographic.antv.vision/favicon.svg",
+    ogImage:
+      "https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*ZdeISZWHuyIAAAAAbEAAAAgAemJ7AQ/fmt.webp",
+    subtitle: "An infographic generation and rendering framework that brings words to life.",
+    url: "https://infographic.antv.vision/",
+  },
+  {
     title: "Arnis",
     category: CATEGORIES.dev,
     description:
@@ -221,6 +232,26 @@ export const developmentLinks: Tool[] = [
     subtitle: "privacy-first browser tools",
     tags: [TAGS.tool],
     url: "https://delphi.tools/",
+  },
+  {
+    title: "Design System Checklist",
+    category: CATEGORIES.dev,
+    description: "An open-source checklist to help you plan, build and grow your design system.",
+    favicon: "https://designsystemchecklist.com/apple-touch-icon.png",
+    ogImage: "https://designsystemchecklist.com/meta-v2.png",
+    tags: [TAGS.designSystem],
+    url: "https://www.designsystemchecklist.com/",
+  },
+  {
+    title: "Design Systems Surf",
+    category: CATEGORIES.dev,
+    description:
+      "Explore real design systems, components, foundations, practical products, and AI-ready tools to build, improve, and maintain your design system.",
+    favicon: "https://framerusercontent.com/images/DYo9UMNI98uGRwbaTgDsr6wjvo.svg",
+    ogImage: "https://framerusercontent.com/images/LXqdPaxFqWbO3zHBGgOGKq0.png",
+    subtitle: "Design System Resources & Tools",
+    tags: [TAGS.designSystem],
+    url: "https://designsystems.surf/",
   },
   {
     title: "Dev Resources",
@@ -476,6 +507,18 @@ export const developmentLinks: Tool[] = [
     url: "https://www.home-assistant.io/",
   },
   {
+    title: "html-video",
+    author: "Open Design",
+    category: CATEGORIES.dev,
+    description:
+      "html-video turns HTML into video — on your laptop. Programmatic video for coding agents: an HTML to video meta-layer — bring your local coding agent.",
+    favicon: "https://open-design.ai/favicon.svg",
+    ogImage:
+      "https://static.open-design.ai/cdn-cgi/image/width=2400,quality=82,format=auto/https://static.open-design.ai/landing/assets/html-video/banner.png",
+    subtitle: "HTML to video, programmatic video for coding agents",
+    url: "https://open-design.ai/html-video/",
+  },
+  {
     title: "ilovecreatives",
     category: CATEGORIES.dev,
     description:
@@ -497,6 +540,15 @@ export const developmentLinks: Tool[] = [
     favicon: "https://inputoutput.dev/favicon.ico",
     tags: [TAGS.tool],
     url: "https://inputoutput.dev/",
+  },
+  {
+    title: "Iso Middle Earth",
+    category: CATEGORIES.dev,
+    description: "Build your own isometric realm in Middle-earth",
+    favicon: "https://isomiddleearth.com/logo.png",
+    ogImage: "https://isomiddleearth.com/og.png",
+    subtitle: "Isometric Realm Builder",
+    url: "https://isomiddleearth.com/",
   },
   {
     title: "IT Tools - Handy online tools for developers",
@@ -557,6 +609,16 @@ export const developmentLinks: Tool[] = [
     url: "https://makemydrivefun.com/",
   },
   {
+    title: "Modulor",
+    category: CATEGORIES.dev,
+    description:
+      "Modulor is the design system by GR8 Tech. It’s a tool for designing and implementing your product—good-looking and easy to build.",
+    favicon: "https://framerusercontent.com/images/6HDMeabpZGmM3FK9OzyNx7Pqq8.svg",
+    ogImage: "https://framerusercontent.com/assets/jqkKeu8zA7KwIDAZFgsvnmE6A1U.png",
+    tags: [TAGS.designSystem],
+    url: "https://modulor.design/",
+  },
+  {
     title: "Mux",
     category: CATEGORIES.dev,
     description:
@@ -566,6 +628,16 @@ export const developmentLinks: Tool[] = [
     subtitle: "Video API for developers",
     tags: [TAGS.tool],
     url: "https://www.mux.com/",
+  },
+  {
+    title: "NameThatUI",
+    category: CATEGORIES.dev,
+    description:
+      "Can't name that UI element? Describe it badly — “the pale pill behind the menu bar icon”, “the dots you grab to drag” — and get its real name, API symbol, and a precise prompt for your coding agent.",
+    favicon: "https://namethatui.com/apple-icon",
+    ogImage: "https://namethatui.com/opengraph-image",
+    subtitle: "What Is This UI Element Called?",
+    url: "https://namethatui.com/",
   },
   {
     title: "nomnoml",
@@ -598,6 +670,17 @@ export const developmentLinks: Tool[] = [
     description: "Progressive Web Application with 12 open source frontend focused tools",
     tags: [TAGS.development],
     url: "https://omatsuri.app/",
+  },
+  {
+    title: "OpenDesign",
+    author: "Open Design",
+    category: CATEGORIES.dev,
+    description:
+      "Open-source vibe design workspace & Claude Design alternative — build prototypes, landing pages, dashboards, slides & HTML video with your own coding agent.",
+    favicon: "https://open-design.ai/favicon.svg",
+    ogImage: "https://static.open-design.ai/landing/assets/og-card.png",
+    subtitle: "Best Open Source Claude Design Alternative",
+    url: "https://open-design.ai/",
   },
   {
     title: "OpenFlowKit",
@@ -634,6 +717,18 @@ export const developmentLinks: Tool[] = [
     ogImage: "https://www.openstatus.dev/api/og",
     subtitle: "The Compliance-First Status Page",
     url: "https://www.openstatus.dev/",
+  },
+  {
+    title: "OpenUI",
+    author: "OpenUI",
+    category: CATEGORIES.dev,
+    description:
+      "Full-stack, renderer-agnostic Generative UI with a streaming-first language, official React support, community integrations, and up to 67% fewer tokens than JSON.",
+    favicon: "https://www.openui.com/shiro-logo.svg",
+    ogImage: "https://www.openui.com/meta-image.png",
+    subtitle: "The Open Standard for Generative UI",
+    tags: [TAGS.development],
+    url: "https://www.openui.com/",
   },
   {
     title: "Oualator",
@@ -768,6 +863,15 @@ export const developmentLinks: Tool[] = [
     url: "https://docs.rsshub.app/",
   },
   {
+    title: "SaaS UI",
+    category: CATEGORIES.dev,
+    description: "Free Illustrations for your Documentation or Design System - Illustrations",
+    favicon: "https://illustrations.saas-ui.dev/favicon/apple-touch-icon.png",
+    ogImage: "https://illustrations.saas-ui.dev/assets/og/x.png",
+    tags: [TAGS.designSystem, TAGS.illustration],
+    url: "https://illustrations.saas-ui.dev",
+  },
+  {
     title: "SEOStudio",
     category: CATEGORIES.dev,
     description:
@@ -784,6 +888,17 @@ export const developmentLinks: Tool[] = [
     ogImage: "https://framerusercontent.com/images/2KmY3qRaki1ljnz5ojnGOaNt4.jpg",
     tags: [TAGS.tool],
     url: "https://sesame.design/",
+  },
+  {
+    title: "shieldcn",
+    author: "Justin Levine",
+    category: CATEGORIES.dev,
+    description:
+      "Beautiful GitHub README badges and charts styled as shadcn/ui, plus a free visual README builder. Generate SVG and PNG badges for npm, GitHub, GitLab, Discord, and 45+ providers, build charts and header banners, and compose a whole README in the Studio. Free and open source.",
+    favicon: "https://shieldcn.dev/icon.png",
+    ogImage: "https://shieldcn.dev/og.png",
+    subtitle: "Beautiful README Badges & Charts",
+    url: "https://shieldcn.dev/",
   },
   {
     title: "SHRTCTS",
@@ -863,6 +978,25 @@ export const developmentLinks: Tool[] = [
       "Free online map poster and wallpaper generator. Design custom, print-ready map art for any city or location — export as PNG, PDF, or SVG. No sign-up required.",
     tags: [TAGS.map],
     url: "https://terraink.app/",
+  },
+  {
+    title: "The Design System Guide",
+    category: CATEGORIES.dev,
+    description: "Set Up a Design System. Guide, Resources, Useful Tools, Checklists",
+    favicon: "https://framerusercontent.com/images/1WoLyCLIvGrwxsrOf899aWfSo88.png",
+    ogImage: "https://framerusercontent.com/assets/dkDkjc3jbsnWBTeks2ffB82jbk.png",
+    tags: [TAGS.designSystem],
+    url: "https://thedesignsystem.guide/",
+  },
+  {
+    title: "Tiny World Builder",
+    category: CATEGORIES.dev,
+    description:
+      "Tiny World Builder is a playful voxel world editor for building, remixing, flying through, and sharing tiny worlds in your browser.",
+    favicon: "https://tinyworld.build/assets/twlogo.webp",
+    ogImage: "https://tinyworld.build/assets/landing-hero.webp",
+    subtitle: "Build voxel worlds in your browser",
+    url: "https://tinyworld.build/",
   },
   {
     title: "TinyWow",
@@ -962,6 +1096,14 @@ export const developmentLinks: Tool[] = [
     subtitle: "All-in-one URL Conversion Tool",
     tags: [TAGS.tool],
     url: "https://urltoany.com/",
+  },
+  {
+    title: "UX Components",
+    category: CATEGORIES.dev,
+    description:
+      "A practical guide to UX components — what they are, when to reach for them, and when to choose something else instead. Browse by category, explore the atomic design hierarchy, or compare semantic naming across popular design systems.",
+    favicon: "https://ux-components.com/favicon.svg",
+    url: "https://ux-components.com/",
   },
   {
     title: "Vault andzn",

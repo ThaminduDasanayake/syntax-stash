@@ -67,6 +67,15 @@ export const mockupLinks: Tool[] = [
     url: "https://mockups.directory/",
   },
   {
+    title: "Evocative ID",
+    category: CATEGORIES.mockups,
+    description: "On Gumroad",
+    favicon: "https://public-files.gumroad.com/lknq7rem8ljseaory2ktjfzc3x5c",
+    ogImage: "https://public-files.gumroad.com/qqcl2f4xjz35gq2wg6kkyzuo6nw3",
+    tags: [TAGS.mockup],
+    url: "https://nurfautama.gumroad.com/",
+  },
+  {
     title: "Free Mockup Collection",
     category: CATEGORIES.mockups,
     description:

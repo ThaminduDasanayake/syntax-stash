@@ -627,7 +627,7 @@ export const uiLinks: Tool[] = [
     favicon: "https://mynaui.com/icon.svg",
     ogImage: "https://mosaic.praveenjuge.com/use?url=https://mynaui.com/",
     subtitle: "Made with TailwindCSS, shadcn/ui, Radix UI and Figma.",
-    tags: [TAGS["ui-component"]],
+    tags: [TAGS.designSystem, TAGS.icons, TAGS["ui-component"]],
     url: "https://mynaui.com/",
   },
   {

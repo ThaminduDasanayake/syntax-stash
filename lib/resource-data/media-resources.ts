@@ -46,6 +46,16 @@ export const mediaLinks: Tool[] = [
     url: "https://asciinator.app/",
   },
   {
+    title: "Audio Library",
+    category: CATEGORIES.media,
+    description: "tapis d'épingle by Rrrrrose Azerty · Country & Folk music / Calm music",
+    favicon: "https://cdn.audiolibrary.com.co/themes/ytalc/assets/favicon/apple-touch-icon.png",
+    ogImage: "https://cdn.audiolibrary.com.co/themes/ytalc/assets/img/og-home.jpeg",
+    subtitle: "No Copyright Music",
+    tags: [TAGS.audio],
+    url: "https://audiolibrary.com.co/",
+  },
+  {
     title: "Avatars",
     author: "Outpace Studios",
     category: CATEGORIES.media,
@@ -191,6 +201,14 @@ export const mediaLinks: Tool[] = [
     url: "https://ray.so/",
   },
   {
+    title: "DesignFamilyMarket",
+    category: CATEGORIES.media,
+    description: "High-Quality Graphic Assets",
+    favicon: "https://public-files.gumroad.com/hke4c923a9zy7vs2a22bokrqhw9c",
+    ogImage: "https://public-files.gumroad.com/06rfjlkmfxuxa2ml4mvnhtogards",
+    url: "https://designfamilymarket.gumroad.com/",
+  },
+  {
     title: "DesignUp",
     category: CATEGORIES.media,
     description: "On Gumroad",
@@ -258,6 +276,16 @@ export const mediaLinks: Tool[] = [
     favicon: "https://public-files.gumroad.com/mog7q685yre30sghfsi6b3n26xx3",
     ogImage: "https://public-files.gumroad.com/4y7k85ewz5lhf8rvhbo7noeooikm",
     url: "https://fisga.gumroad.com/",
+  },
+  {
+    title: "Fluidmotion",
+    category: CATEGORIES.media,
+    description:
+      "A curated collection of beautiful customizable video backgrounds for you to edit and use in your own projects.",
+    favicon: "https://fluidmotion.app/apple-touch-icon-192.png",
+    ogImage: "https://fluidmotion.app/social-preview.png",
+    tags: [TAGS.video],
+    url: "https://fluidmotion.app/",
   },
   {
     title: "Free ASCII Art Generator",
@@ -489,6 +517,17 @@ export const mediaLinks: Tool[] = [
     url: "https://logos.lndev.me/",
   },
   {
+    title: "Magnific",
+    category: CATEGORIES.media,
+    description:
+      "The complete platform of creative AI tools for image, video, and audio generation. Create anything from campaigns, product shots to filmmaking. Be Magnific.",
+    favicon: "https://media.magnific.com/magnific-favicons/favicon-dark.svg",
+    ogImage: "https://media.magnific.com/meta-tags-social/mg-home-og.jpg",
+    subtitle: "The AI Creative Platform",
+    tags: [TAGS.audio, TAGS.image, TAGS.video],
+    url: "https://www.magnific.com/",
+  },
+  {
     title: "Making SVG Loading Spinners",
     author: "fffuel",
     category: CATEGORIES.media,
@@ -673,6 +712,16 @@ export const mediaLinks: Tool[] = [
       "Download 100% free PNG images with transparent backgrounds! Browse thousands of high-resolution PNGs for designers, marketers & content creators. No attribution required!.",
     tags: [TAGS.design, TAGS.image],
     url: "https://pngfile.net/",
+  },
+  {
+    title: "Rebrand",
+    category: CATEGORIES.media,
+    description:
+      "Explore the best new design systems, identity launches, and rebrand reveal videos.",
+    favicon: "https://www.rebrand.gallery/apple-icon.png",
+    subtitle: "A curated gallery of rebrands and visual identities",
+    tags: [TAGS.image, TAGS.video],
+    url: "https://www.rebrand.gallery/",
   },
   {
     title: "remove.bg",
@@ -902,6 +951,17 @@ export const mediaLinks: Tool[] = [
     description: "Convert videos to ASCII.",
     tags: [TAGS.ascii, TAGS.video],
     url: "https://www.vid2ascii.com/",
+  },
+  {
+    title: "Vidsplay",
+    category: CATEGORIES.media,
+    description: "Royalty Free Stock Video Footage Clips",
+    favicon:
+      "https://www.vidsplay.com/wp-content/uploads/2019/10/vidsplay-logo-without-text-300x300.png",
+    ogImage:
+      "https://www.vidsplay.com/wp-content/themes/vidsplay-v1.0/assets/images/vidsplay-logo.svg",
+    tags: [TAGS.video],
+    url: "https://www.vidsplay.com/",
   },
   {
     title: "Voicebox",
