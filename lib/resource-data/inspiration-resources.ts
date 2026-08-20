@@ -156,6 +156,17 @@ export const inspirationLinks: Tool[] = [
     url: "https://calltoinspiration.com/",
   },
   {
+    title: "ClickPilot",
+    category: CATEGORIES.inspiration,
+    description:
+      "Thumbnail previewing, inspiration, and collaboration built to create phenomenal YouTube thumbnails that make audiences click.",
+    favicon: "https://clickpilot.app/images/logo/rounded.svg",
+    ogImage: "https://clickpilot.app/images/meta/meta.png",
+    subtitle: "Preview, Test, & Review YouTube Thumbnails",
+    tags: [TAGS.image],
+    url: "https://clickpilot.app/",
+  },
+  {
     title: "Codrops",
     author: "Codrops",
     category: CATEGORIES.inspiration,
@@ -728,6 +739,17 @@ export const inspirationLinks: Tool[] = [
     subtitle: "Actionable UI/UX Breakdowns from Top Apps",
     tags: [TAGS.inspiration],
     url: "https://www.uxsnaps.com/",
+  },
+  {
+    title: "Vidclue",
+    category: CATEGORIES.inspiration,
+    description:
+      "Browse hundreds of video ideas and examples designed for brands and businesses. Save hours of content research with our curated short-form inspiraton.",
+    favicon: "https://vidclue.com/favicon.ico",
+    ogImage: "https://vidclue.com/og-image.png",
+    subtitle: "Video ideas for business",
+    tags: [TAGS.video],
+    url: "https://vidclue.com/",
   },
   {
     title: "Viewport UI",
