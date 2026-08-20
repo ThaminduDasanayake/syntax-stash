@@ -21,6 +21,7 @@ export const siteConfig = {
   ],
   links: {
     authorGithub: "https://github.com/ThaminduDasanayake",
+    authorLink: "https://thamindu-dasanayake.vercel.app/",
     email: "mailto:thamindudasanayake@gmail.com",
     github: "https://github.com/ThaminduDasanayake/syntax-stash",
   },
