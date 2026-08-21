@@ -324,7 +324,7 @@ function FilterSectionInner({
             </div>
           ) : (
             Object.entries(groupedItems).map(([category, catItems]) => (
-              <div key={category} className="cat-section">
+              <div key={category} className="cat-section w-full">
                 <div className="cat-divider flex flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:gap-4">
                   <div className="flex w-full flex-col gap-1 sm:w-auto sm:flex-1 sm:flex-row sm:items-center sm:gap-4">
                     <h2 className="font-mono text-lg font-extrabold tracking-widest uppercase sm:text-xl">
