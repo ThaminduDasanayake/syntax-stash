@@ -647,15 +647,15 @@
 }
 
 @utility card-body {
-  @apply pt-14 pb-24;
+  @apply w-full pt-14 pb-24;
 }
 
 @utility cat-section {
-  @apply mb-14;
+  @apply mb-14 w-full;
 }
 
 @utility cat-divider {
-  @apply relative mb-5 flex items-center gap-4 overflow-hidden pt-5.5 pb-4.5;
+  @apply relative mb-5 flex w-full items-center gap-4 overflow-hidden pt-5.5 pb-4.5;
 }
 
 /* Filter Bar*/

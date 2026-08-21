@@ -45,6 +45,16 @@ export const typographyLinks: Tool[] = [
     url: "https://www.collletttivo.it/",
   },
   {
+    title: "Commit Mono",
+    category: CATEGORIES.typography,
+    description:
+      "Commit Mono is an anonymous and neutral programming typeface focused on creating a better reading experience.",
+    favicon: "https://commitmono.com/src/favicon/icon-512.svg",
+    ogImage: "https://commitmono.com/src/img/commitmono.png",
+    subtitle: "Neutral programming typeface.",
+    url: "https://commitmono.com/",
+  },
+  {
     title: "DaFont",
     category: CATEGORIES.typography,
     description:
@@ -88,6 +98,17 @@ export const typographyLinks: Tool[] = [
     ogImage: "https://screenspan.net/img/about-fallback-font-hero.jpg",
     tags: [TAGS.typography],
     url: "https://screenspan.net/fallback",
+  },
+  {
+    title: "FiraCode",
+    author: "Nikita Prokopov",
+    category: CATEGORIES.typography,
+    description: "Free monospaced font with programming ligatures.",
+    favicon: "./github.svg",
+    ogImage:
+      "https://repository-images.githubusercontent.com/26500787/bf313080-6b02-11ea-9cd5-c3dca880736d",
+    tags: [TAGS.typography],
+    url: "https://github.com/tonsky/firacode",
   },
   {
     title: "fixelPont",
@@ -257,6 +278,35 @@ export const typographyLinks: Tool[] = [
     url: "https://fonts.google.com/",
   },
   {
+    title: "Hack",
+    author: "Christopher Simpkins",
+    category: CATEGORIES.typography,
+    description: "A typeface designed for source code",
+    favicon: "https://sourcefoundry.org/hack/favicon.png",
+    ogImage: "https://sourcefoundry.org/hack/assets/img/mockup/Aa-mockup-2.png",
+    tags: [TAGS.typography],
+    url: "https://sourcefoundry.org/hack/",
+  },
+  {
+    title: "JetBrains Mono",
+    category: CATEGORIES.typography,
+    description:
+      "Try JetBrains Mono in your IDE. Its simple forms and attention to every detail make coding a nice experience for developers’ eyes, no matter which IDE you choose.",
+    favicon: "https://www.jetbrains.com/lp/mono/icons/icon-192x192.png",
+    ogImage:
+      "https://www.jetbrains.com/lp/mono/static/preview-0d5da2c7dc8a75121b80e025c50e3bd4.png",
+    subtitle:
+      "A free and open source typeface for developers | JetBrains: Developer Tools for Professionals and Teams",
+    url: "https://www.jetbrains.com/lp/mono/",
+  },
+  {
+    title: "JuliaMono",
+    category: CATEGORIES.typography,
+    description: "A monospaced font for scientific and technical computing",
+    favicon: "https://juliamono.netlify.app/assets/favicon.png",
+    url: "https://juliamono.netlify.app/",
+  },
+  {
     title: "Letterbox",
     category: CATEGORIES.typography,
     description:
@@ -264,6 +314,15 @@ export const typographyLinks: Tool[] = [
     subtitle: "Letters made of letters",
     tags: [TAGS.typography],
     url: "https://www.letterbox.sh/",
+  },
+  {
+    title: "LINE Seed",
+    category: CATEGORIES.typography,
+    description:
+      "LINE Seed is a Geometric typeface with some Gothic influences and an emphasis on simplicity. It's designed to look familiar to everyone in a variety of places.",
+    favicon: "https://seed.line.me/src/images/favicon/favicon180.png",
+    ogImage: "https://seed.line.me/src/images/en/pc_type_img.png",
+    url: "https://seed.line.me/index_en.html",
   },
   {
     title: "madleen",
@@ -327,6 +386,16 @@ export const typographyLinks: Tool[] = [
     url: "https://myfffonts.accentgrave.net/",
   },
   {
+    title: "Nerd Fonts",
+    category: CATEGORIES.typography,
+    description:
+      "Iconic font aggregator, collection, & patcher: 10,000+ glyph/icons, 70+ patched fonts: Hack, Source Code Pro, more. Popular glyph collections: Font Awesome, Octicons, Material Design Icons, and more",
+    favicon: "https://www.nerdfonts.com/assets/img/apple-touch-icon.png",
+    ogImage: "https://www.nerdfonts.com/assets/img/sankey-glyphs-combined-diagram.png",
+    subtitle: "Iconic font aggregator, glyphs/icons collection, & fonts patcher",
+    url: "https://www.nerdfonts.com/",
+  },
+  {
     title: "notyourtypefoundry",
     category: CATEGORIES.typography,
     description:
@@ -376,6 +445,16 @@ export const typographyLinks: Tool[] = [
     subtitle: "A Vietnamese Typography Project",
     tags: [TAGS.typography],
     url: "https://republi.sh/",
+  },
+  {
+    title: "Server Mono",
+    category: CATEGORIES.typography,
+    description:
+      "Server Mono is a typeface inspired by typewriters, Apple's San Francisco Mono, ASCII art, command-line interfaces, and programming tools.",
+    favicon: "https://servermono.com/favicon-32x32.png",
+    ogImage:
+      "https://intdev-global.s3.us-west-2.amazonaws.com/public/internet-dev/e5957545-e79c-44d7-a7b0-e82b8edbc314.png",
+    url: "https://servermono.com/",
   },
   {
     title: "SPACE TYPE GENERATOR",

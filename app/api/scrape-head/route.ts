@@ -87,14 +87,32 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "A valid targetUrl string is required" }, { status: 400 });
     }
 
-    // Validate URL structure and protocol
+    // Validate URL structure, protocol, and private destination
     try {
       const parsedUrl = new URL(targetUrl);
       if (!["http:", "https:"].includes(parsedUrl.protocol)) {
         throw new Error("Only http and https protocols are supported");
       }
-    } catch {
-      return NextResponse.json({ error: "Invalid targetUrl provided" }, { status: 400 });
+      const host = parsedUrl.hostname.toLowerCase().trim();
+      if (
+        host === "localhost" ||
+        host === "127.0.0.1" ||
+        host === "0.0.0.0" ||
+        host === "::1" ||
+        host.endsWith(".local") ||
+        host.endsWith(".internal") ||
+        /^(10\.|127\.|169\.254\.|192\.168\.|172\.(1[6-9]|2[0-9]|3[0-1])\.)/.test(host)
+      ) {
+        return NextResponse.json(
+          { error: "Requests to local or private network destinations are not allowed" },
+          { status: 400 },
+        );
+      }
+    } catch (e) {
+      return NextResponse.json(
+        { error: e instanceof Error ? e.message : "Invalid targetUrl provided" },
+        { status: 400 },
+      );
     }
 
     let rawHtml = "";

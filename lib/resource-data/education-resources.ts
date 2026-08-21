@@ -104,6 +104,17 @@ export const educationLinks: Tool[] = [
     url: "https://www.alg0.dev/",
   },
   {
+    title: "Anatomy Atelier",
+    category: CATEGORIES.education,
+    description:
+      "Explore medically detailed 3D organs — heart, brain, lungs, liver, kidneys, eye, intestine, pancreas, and skin — through an elegant, interactive anatomy atelier.",
+    favicon: "https://anatomy-livid.vercel.app/favicon.svg",
+    ogImage: "https://anatomy-livid.vercel.app/og.jpg",
+    subtitle: "Learn anatomy like an artist",
+    tags: [TAGS.education],
+    url: "https://anatomy-livid.vercel.app/",
+  },
+  {
     title: "App Ideas",
     author: "florinpop17",
     category: CATEGORIES.education,

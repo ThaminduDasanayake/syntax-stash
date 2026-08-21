@@ -315,7 +315,22 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
     targetUrl = new URL(rawUrl);
     if (targetUrl.protocol !== "http:" && targetUrl.protocol !== "https:") {
-      throw new Error("Only http and https are supported.");
+      throw new Error("Only http and https protocols are supported.");
+    }
+    const host = targetUrl.hostname.toLowerCase().trim();
+    if (
+      host === "localhost" ||
+      host === "127.0.0.1" ||
+      host === "0.0.0.0" ||
+      host === "::1" ||
+      host.endsWith(".local") ||
+      host.endsWith(".internal") ||
+      /^(10\.|127\.|169\.254\.|192\.168\.|172\.(1[6-9]|2[0-9]|3[0-1])\.)/.test(host)
+    ) {
+      return NextResponse.json(
+        { error: "Requests to local or private network destinations are not allowed." },
+        { status: 400 },
+      );
     }
   } catch (e) {
     return NextResponse.json(
