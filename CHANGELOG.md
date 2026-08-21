@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.4.0] - 2026-08-21
+
+### Added
+
+- **Interactive Homepage Tools Carousel**: Added interactive `ToolsCarousel` on the homepage featuring card-by-card snap scrolling (`scroll-snap-stop: always`), button navigation controls, and unclipped hover state elevation (`hover:z-10`).
+- **Resource Vault Additions**: Added 30+ new curated tools, fonts, and resources across Typography (Commit Mono, FiraCode, JetBrains Mono, JuliaMono, LINE Seed, Nerd Fonts, Server Mono, Hack), Media, Development, and Inspiration collections.
+- **Security Hardening & Headers**: Added global HTTP Security Headers in `next.config.ts` (`X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`) and server-side SSRF private IP validation in route handlers.
+- **Project Infrastructure**: Overhauled `README.md` documentation, added `.env.example`, and configured `vercel.json` deployment rules for the `main` branch.
+
+### Changed
+
+- **Landing Page Redesign**: Redesigned homepage hero layout, typography, and added a resource vault category showcase section.
+- **Category Layout Fix**: Enforced full-width layout (`cat-section w-full`) across filter sections to prevent category dividers and card grids from squishing on single-item views.
+- **Footer Attribution**: Updated footer bottom bar to display project copyright alongside author attribution and GitHub profile link.
+- **Metadata Scraping Engine**: Implemented direct-fetch fallback with ScrapingBee fallback and standardized meta-tag extraction.
+
+---
+
 ## [1.3.0] - 2026-08-04
 
 ### Added
