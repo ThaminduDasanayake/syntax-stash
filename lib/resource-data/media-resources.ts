@@ -107,6 +107,16 @@ export const mediaLinks: Tool[] = [
     url: "https://blush.design/",
   },
   {
+    title: "Book of Shapes",
+    category: CATEGORIES.media,
+    description:
+      "A curated gallery of generative patterns. Discover, customize, and download unique algorithmic art.",
+    favicon: "https://www.bookofshapes.com/favicon.svg",
+    ogImage: "https://bookofshapes.com/og-default.png",
+    tags: [TAGS.svg],
+    url: "https://www.bookofshapes.com/",
+  },
+  {
     title: "Bulk Image Resizer",
     author: "Jasper Bernaers",
     category: CATEGORIES.media,
@@ -626,6 +636,16 @@ export const mediaLinks: Tool[] = [
     url: "https://www.online-convert.com/",
   },
   {
+    title: "Ortho",
+    category: CATEGORIES.media,
+    description:
+      "Transform flat SVG graphics into isometric 3D projections. Apply rotations, add depth extrusion, create animations, and export as clean vectors.",
+    favicon: "https://ortho.brdrck.me/favicon.ico",
+    subtitle: "Isometric / Orthographic SVG Renderer by @brdrck",
+    tags: [TAGS.svg, TAGS["3D"]],
+    url: "https://ortho.brdrck.me/",
+  },
+  {
     title: "Pablo Stanley",
     author: "Pablo Stanley",
     category: CATEGORIES.media,
@@ -774,6 +794,18 @@ export const mediaLinks: Tool[] = [
     url: "https://slides.supply/",
   },
   {
+    title: "Spherium",
+    author: "Spherium",
+    category: CATEGORIES.media,
+    description:
+      "Create stunning, customizable 3D globes and maps directly in your browser. Export high-quality SVGs for your designs. The ultimate WebGL map generator for professionals.",
+    favicon: "https://tryspherium.com/favicon.png",
+    ogImage: "https://tryspherium.com/og-image.png",
+    subtitle: "Advanced WebGL Globe & Map Generator",
+    tags: [TAGS.svg, TAGS["3D"]],
+    url: "https://tryspherium.com/",
+  },
+  {
     title: "Squoosh",
     category: CATEGORIES.media,
     description:
@@ -816,6 +848,16 @@ export const mediaLinks: Tool[] = [
     subtitle: "An Interactive SVG Reference",
     tags: [TAGS.svg],
     url: "https://fffuel.co/sssvg/",
+  },
+  {
+    title: "Sticky.ui8",
+    category: CATEGORIES.media,
+    description:
+      "An interactive 3D sticker and graphics web experiment powered by UI8 Forge and Three.js WebGPU that transforms flat SVG graphics into dynamic isometric 3D projections.",
+    favicon: "https://sticky.ui8.dev/favicon.svg",
+    ogImage: "https://sticky.ui8.dev/og.png",
+    tags: [TAGS.svg, TAGS["3D"]],
+    url: "https://sticky.ui8.dev/",
   },
   {
     title: "Storytale",
