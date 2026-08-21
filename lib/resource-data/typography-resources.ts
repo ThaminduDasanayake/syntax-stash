@@ -278,6 +278,16 @@ export const typographyLinks: Tool[] = [
     url: "https://fonts.google.com/",
   },
   {
+    title: "Hack",
+    author: "Christopher Simpkins",
+    category: CATEGORIES.typography,
+    description: "A typeface designed for source code",
+    favicon: "https://sourcefoundry.org/hack/favicon.png",
+    ogImage: "https://sourcefoundry.org/hack/assets/img/mockup/Aa-mockup-2.png",
+    tags: [TAGS.typography],
+    url: "https://sourcefoundry.org/hack/",
+  },
+  {
     title: "JetBrains Mono",
     category: CATEGORIES.typography,
     description:
