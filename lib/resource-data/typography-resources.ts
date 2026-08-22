@@ -89,6 +89,17 @@ export const typographyLinks: Tool[] = [
     url: "https://hihayk.github.io/doppler/",
   },
   {
+    title: "Dx Lactos Free Font",
+    author: "Dirtyline Studio",
+    category: CATEGORIES.typography,
+    description:
+      "Dx Lactos, a font that breaks boundaries with its boldness and variable width, exuding a sense of fun and quirkiness. Designed to make an immediate impact, this font thrives in environments where grabbing attention is paramount. Its expanded and playful demeanor perfectly complements promotional materials for movies and series, seamlessly aligning with the aesthetic demands of leading entertainment platforms",
+    favicon: "https://dirtylinestudio.com/wp-content/uploads/2020/07/favicon_ds.png",
+    ogImage:
+      "https://dirtylinestudio.com/wp-content/uploads/2024/06/Dx-lactos-Preview-web-03-cover-free.png",
+    url: "https://dirtylinestudio.com/product/dx-lactos-free-font/",
+  },
+  {
     title: "Fallback Font Generator",
     author: "Brian Louis Ramirez",
     category: CATEGORIES.typography,
@@ -394,6 +405,16 @@ export const typographyLinks: Tool[] = [
     ogImage: "https://www.nerdfonts.com/assets/img/sankey-glyphs-combined-diagram.png",
     subtitle: "Iconic font aggregator, glyphs/icons collection, & fonts patcher",
     url: "https://www.nerdfonts.com/",
+  },
+  {
+    title: "Neue Metana Next Free Font",
+    author: "Dirtyline Studio",
+    category: CATEGORIES.typography,
+    description:
+      "Neue Metana Next is a modern minimalis design typeface with geometric type and more feature alternative character. there include some ligature. It is inspired by hype and urban design a font suited for lifestyle with trend design.",
+    favicon: "https://dirtylinestudio.com/wp-content/uploads/2020/07/favicon_ds.png",
+    ogImage: "https://dirtylinestudio.com/wp-content/uploads/2022/05/thumnail-Freebies-01-01.png",
+    url: "https://dirtylinestudio.com/product/neue-metana-next-free-font/",
   },
   {
     title: "notyourtypefoundry",

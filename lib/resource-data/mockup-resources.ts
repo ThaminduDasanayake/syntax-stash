@@ -5,6 +5,15 @@ import { TAGS } from "./tags";
 
 export const mockupLinks: Tool[] = [
   {
+    title: "Alex Paliotta",
+    category: CATEGORIES.mockups,
+    description: "On Gumroad",
+    favicon: "https://public-files.gumroad.com/e543fq72joas504itmty07794df7",
+    ogImage: "https://public-files.gumroad.com/sp627o0c6dr4wd7jhtpxmp9p2otn",
+    tags: [TAGS.mockup],
+    url: "https://paliotta.gumroad.com/",
+  },
+  {
     title: "Asylab",
     category: CATEGORIES.mockups,
     description:
