@@ -131,6 +131,17 @@ export const iconLinks: Tool[] = [
     url: "https://coolicons.cool/",
   },
   {
+    title: "Creattie",
+    category: CATEGORIES.icons,
+    description:
+      "Creattie is a curated library of Lottie animations and animated icons created by award-winning artists.",
+    favicon: "https://creattie.com/apple-icon-180x180.png",
+    ogImage: "https://ik.imagekit.io/creattie/main/pages/659Ofw6NoEDqOd67D9.png",
+    subtitle: "Premium Lottie Animations & Animated Icons",
+    tags: [TAGS.animation, TAGS.illustration],
+    url: "https://creattie.com/",
+  },
+  {
     title: "Flowbite",
     category: CATEGORIES.icons,
     description:

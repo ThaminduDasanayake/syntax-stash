@@ -262,6 +262,19 @@ export const typographyLinks: Tool[] = [
     url: "https://typotheque.luuse.io/",
   },
   {
+    title: "Geist Pixel",
+    author: "Vercel",
+    category: CATEGORIES.typography,
+    description:
+      "Geist Pixel is a bitmap-inspired typeface built on the same foundations as Geist and Geist Mono, reinterpreted through a strict pixel grid. It’s precise, intentional, and unapologetically digital.",
+    favicon:
+      "https://assets.vercel.com/image/upload/q_auto/front/favicon/vercel/apple-touch-icon-114x114.png",
+    ogImage:
+      "https://assets.vercel.com/image/upload/contentful/image/e5382hct74si/6IKD8z6krd4FlGZPw6w645/2f7f22a51487b94265542f6610f3e930/Geist.png",
+    tags: [TAGS.typography],
+    url: "https://vercel.com/blog/introducing-geist-pixel",
+  },
+  {
     title: "Gidole",
     category: CATEGORIES.typography,
     description: "Gidole - Open Source Modern DIN. A minimal, narrow and yet friendly typeface",
