@@ -301,6 +301,15 @@ export const designLinks: Tool[] = [
     url: "https://designspells.com/",
   },
   {
+    title: "Design Syndrome",
+    category: CATEGORIES.design,
+    description: "Become a Design Ninja 🥷™",
+    favicon: "https://public-files.gumroad.com/hsapaevraw5900dqrwae4longazp",
+    ogImage: "https://public-files.gumroad.com/c4v3r5lnuukigk49wbfjra23j306",
+    tags: [TAGS.mockup, TAGS.textures],
+    url: "https://designsyndrome.gumroad.com/",
+  },
+  {
     title: "Design System Diaries",
     author: "Lewis",
     category: CATEGORIES.design,
@@ -978,5 +987,14 @@ export const designLinks: Tool[] = [
     subtitle: "Unicode Wireframe Design Tool",
     tags: [TAGS.design],
     url: "https://wiretext.app/",
+  },
+  {
+    title: "züli",
+    category: CATEGORIES.design,
+    description: "Some Digital Assets",
+    favicon: "https://public-files.gumroad.com/muyd3kmush1n8bz412n34bks4qoo",
+    ogImage: "https://public-files.gumroad.com/nanvwu97g7ctjww1if6ptiba0zyo",
+    tags: [TAGS.mockup, TAGS.textures, TAGS.typography, TAGS.vector],
+    url: "https://zuli.gumroad.com/",
   },
 ];

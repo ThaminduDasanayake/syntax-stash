@@ -237,6 +237,19 @@ export const animationLinks: Tool[] = [
     url: "https://lottiefiles.com/",
   },
   {
+    title: "Lottieflow",
+    category: CATEGORIES.animation,
+    description:
+      "Download Lottie icon animations to implement on your Webflow website. Change hex color, customize easing, and download json files to use Lottie with Webflow Interactions. Made by Finsweet.",
+    favicon:
+      "https://cdn.prod.website-files.com/5d76680dc57fa0f42dcfe0c5/5d769663344fac12df06fae1_fav-awesome.png",
+    ogImage:
+      "https://cdn.prod.website-files.com/5d76680dc57fa0f42dcfe0c5/5dc214043af52b276dd35223_lottieflow-og-image.jpg",
+    subtitle: "Lottie icon animations for Webflow",
+    tags: [TAGS.animation],
+    url: "https://finsweet.com/lottieflow",
+  },
+  {
     title: "Lottielab",
     category: CATEGORIES.animation,
     description:

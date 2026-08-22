@@ -989,6 +989,16 @@ export const developmentLinks: Tool[] = [
     url: "https://thedesignsystem.guide/",
   },
   {
+    title: "TinyLottie",
+    category: CATEGORIES.dev,
+    description:
+      "Free browser-based Lottie JSON and dotLottie optimizer. Compress Lottie animations up to 98% instantly — no uploads, 100% private. Works with After Effects, Figma, Webflow, React Native, and Next.js.",
+    favicon: "https://tinylottie.com/favicon.ico",
+    ogImage: "https://tinylottie.com/opengraph-image",
+    subtitle: "Free Lottie & dotLottie Optimizer — Compress up to 98%",
+    url: "https://tiny-lottie.vercel.app/",
+  },
+  {
     title: "Tiny World Builder",
     category: CATEGORIES.dev,
     description:
