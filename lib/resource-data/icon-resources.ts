@@ -198,6 +198,19 @@ export const iconLinks: Tool[] = [
     url: "https://lukaszadam.com/illustrations",
   },
   {
+    title: "Free Vintage Illustration",
+    author: "Heritage Type Co",
+    category: CATEGORIES.icons,
+    description:
+      "Explore our Heritage Library at Heritage Type Co, where you'll discover a treasure trove of free vintage illustrations. Dive into the past with our stunning collection of timeless artwork. Download and use these captivating vintage illustrations to add a touch of nostalgia to your creative projects.",
+    favicon:
+      "https://www.heritagetype.com/cdn/shop/files/HTC_fav_32x32_cc453038-976f-4459-8f62-06ff6d5f5a09_32x32.png",
+    ogImage:
+      "https://cdn.shopify.com/s/files/1/0325/8312/3075/files/Heritage_Type_Co_Share_c4293adb-251d-4d4f-83fc-474c8f8a3583.jpg",
+    tags: [TAGS.illustration],
+    url: "https://www.heritagetype.com/pages/free-vintage-illustrations",
+  },
+  {
     title: "Glyphs",
     category: CATEGORIES.icons,
     description:

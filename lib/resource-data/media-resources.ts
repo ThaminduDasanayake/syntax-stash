@@ -594,6 +594,17 @@ export const mediaLinks: Tool[] = [
     url: "https://newt.sh/",
   },
   {
+    title: "Nordic Gradients™ Ø",
+    category: CATEGORIES.media,
+    description:
+      "12x Nordic Gradients Ø™, Twelve textured gradients inspired by Nordic atmospheres. 4K JPGs for use in decks, on landing pages, social content, product, or even as your phone wallpaper.",
+    favicon: "https://public-files.gumroad.com/npdklb8xe8dinqcuq6mj78hxh4by",
+    ogImage: "https://public-files.gumroad.com/73kbap57xm7xz7xmqk67rhrmx7sp",
+    subtitle: "Free Download",
+    tags: [TAGS.gradient],
+    url: "https://lightstageio.gumroad.com/l/nordic-gradients",
+  },
+  {
     title: "OGimage.gallery",
     category: CATEGORIES.media,
     description: "Gallery with the best and most carefully collected OG images.",

@@ -402,6 +402,16 @@ export const developmentLinks: Tool[] = [
     url: "https://gists.sh/",
   },
   {
+    title: "Gitboard",
+    author: "Mateo Roldos",
+    category: CATEGORIES.dev,
+    description: "An interactive canvas for making GitHub repos feel less static.",
+    favicon:
+      "data:image/svg+xml;base64,CiAgICAgICAgPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIiBmaWxsPSJub25lIj4KICAgICAgICAgIDxyZWN0IHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0iI2ZmZmZmZiIgcng9IjYiLz4KICAgICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQsIDQpIiBzdHJva2U9IiMwYTBhMGEiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBmaWxsPSJub25lIj4KICAgICAgICAgICAgPHJlY3Qgd2lkdGg9IjciIGhlaWdodD0iOSIgeD0iMyIgeT0iMyIgcng9IjAuMSIvPgogICAgICAgICAgICA8cmVjdCB3aWR0aD0iNyIgaGVpZ2h0PSI1IiB4PSIxNCIgeT0iMyIgcng9IjAuMSIvPgogICAgICAgICAgICA8cmVjdCB3aWR0aD0iNyIgaGVpZ2h0PSI5IiB4PSIxNCIgeT0iMTIiIHJ4PSIwLjEiLz4KICAgICAgICAgICAgPHJlY3Qgd2lkdGg9IjciIGhlaWdodD0iNSIgeD0iMyIgeT0iMTYiIHJ4PSIwLjEiLz4KICAgICAgICAgIDwvZz4KICAgICAgICA8L3N2Zz4KICAgICAg",
+    tags: [TAGS.development, TAGS.git, TAGS.tool],
+    url: "https://gitboard-app.netlify.app/",
+  },
+  {
     title: "GitButler",
     category: CATEGORIES.dev,
     description:

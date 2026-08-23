@@ -903,6 +903,16 @@ export const designLinks: Tool[] = [
     url: "https://www.shapeof.ai/",
   },
   {
+    title: "Tokenbase",
+    author: "Mateo Roldos",
+    category: CATEGORIES.design,
+    description: "Create, manage and distribute your design tokens",
+    favicon: "https://token-base.com/LOGO_TOKENBASE.png",
+    ogImage: "https://token-base.com/APP_SCREENSHOT.jpg",
+    tags: [TAGS.designSystem, TAGS.tool],
+    url: "https://token-base.com/",
+  },
+  {
     title: "Toolfolio",
     category: CATEGORIES.design,
     description:

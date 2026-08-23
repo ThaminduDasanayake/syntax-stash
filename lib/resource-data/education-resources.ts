@@ -478,6 +478,18 @@ export const educationLinks: Tool[] = [
     url: "https://joinhandshake.com/",
   },
   {
+    title: "HEART Framework",
+    author: "Turtle.Design",
+    category: CATEGORIES.education,
+    description:
+      "The HEART framework methodology was created by Google as a way to track user-centred metrics on their own products. The framework is used to help measure the quality of the user experience (UX) of products by creating defined metrics that design teams can use to track progress towards their goals.",
+    favicon:
+      "https://cdn.prod.website-files.com/62f3d0c4a0d810ef42360686/6328bd29dc49a2bbba9cf8f3_heart.png",
+    ogImage:
+      "https://s3-figma-hubfile-images-production-cdn-cgi.figma.com/cdn-cgi/image/format=auto,quality=85,width=1600/hub/file/carousel/img/7ff3352a5ab4416fe5a1fa658e31f8726ef71373",
+    url: "https://www.heartframework.com/",
+  },
+  {
     title: "Hey Design Systems!",
     category: CATEGORIES.education,
     description: "Your introduction to design systems, curated by @saura3h",
