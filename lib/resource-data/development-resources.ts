@@ -301,6 +301,18 @@ export const developmentLinks: Tool[] = [
     url: "https://jam.dev/utilities",
   },
   {
+    title: "Diagram Design",
+    author: "Cathryn Lavery",
+    category: CATEGORIES.dev,
+    description:
+      "38 editorial diagram types for Claude Code, Codex, and Pi. Self-contained HTML + SVG. No shadows. No Mermaid slop.",
+    favicon: "./github.svg",
+    ogImage:
+      "https://raw.githubusercontent.com/cathrynlavery/diagram-design/main/docs/screenshots/architecture.png",
+    tags: [TAGS.tool],
+    url: "https://cathrynlavery.github.io/diagram-design/",
+  },
+  {
     title: "Diffs, from Pierre",
     author: "The Pierre Computer Co.",
     category: CATEGORIES.dev,
@@ -750,10 +762,11 @@ export const developmentLinks: Tool[] = [
     url: "https://oualator.com/",
   },
   {
-    title: "Photoroom - AI Photo Editor",
+    title: "Photoroom",
     category: CATEGORIES.dev,
     description:
       "Enhance your photos with our AI photo editor. Create stunning images in seconds with AI-powered technology and our powerful tools.",
+    subtitle: "AI Photo Editor",
     tags: [TAGS.tool],
     url: "https://www.photoroom.com/tools",
   },
@@ -785,6 +798,17 @@ export const developmentLinks: Tool[] = [
     ogImage: "https://pointilliser.elwyn.co/meta/og-image.jpg",
     tags: [TAGS.tool],
     url: "https://pointilliser.com/",
+  },
+  {
+    title: "prettymaps",
+    category: CATEGORIES.dev,
+    description:
+      "Draw pretty maps from OpenStreetMap data! Built with osmnx + matplotlib + shapely",
+    favicon: "https://prettymaps.streamlit.app/-/build/favicon.svg",
+    ogImage:
+      "https://raw.githubusercontent.com/marceloprates/prettymaps/refs/heads/main/pictures/app_placeholder.png",
+    tags: [TAGS.map, TAGS.png, TAGS.svg],
+    url: "https://prettymaps.streamlit.app/",
   },
   {
     title: "RayonMaps",

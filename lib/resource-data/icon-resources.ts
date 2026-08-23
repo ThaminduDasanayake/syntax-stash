@@ -457,6 +457,19 @@ export const iconLinks: Tool[] = [
     url: "https://meteoricons.com/",
   },
   {
+    title: "morphicons",
+    author: "Guillermo",
+    category: CATEGORIES.icons,
+    className: "bg-foreground border-paper",
+    description:
+      "Morph any SVG icon into any other with spring physics. Animate Lucide, Tabler and Heroicons in React, Vue, Svelte, React Native, Astro or vanilla JS. Zero dependencies, ~6 KB gzip.",
+    favicon: "https://www.morphicons.com/morphicons.svg",
+    ogImage: "https://www.morphicons.com/opengraph-image",
+    subtitle: "SVG icon morphing library for React, Vue & Svelte",
+    tags: [TAGS.animation, TAGS.icons],
+    url: "https://www.morphicons.com/",
+  },
+  {
     title: "Mossaik",
     category: CATEGORIES.icons,
     description: "Stylish SVG Backgrounds for your websites and designs",

@@ -57,6 +57,7 @@ export const TAGS = {
   pdf: "pdf",
   photos: "photos",
   platform: "platform",
+  png: "png",
   presentation: "presentation",
   python: "python",
   qr: "qr",

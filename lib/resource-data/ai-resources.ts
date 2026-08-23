@@ -212,6 +212,17 @@ export const aiLinks: Tool[] = [
     url: "https://github.com/lllyasviel/Fooocus",
   },
   {
+    title: "Freebuff",
+    author: "Freebuff",
+    category: CATEGORIES.ai,
+    description:
+      "Freebuff is the free coding agent: a free CLI coding agent and Freebuff Web, the free way to build full-stack apps. No subscription, no setup, no lock-in. The free alternative to Claude Code, Cursor, Codex, Lovable, Replit, Bolt, Windsurf, and Devin.",
+    favicon: "https://freebuff.com/favicon/apple-touch-icon.png",
+    ogImage: "https://freebuff.com/opengraph-image.png",
+    subtitle: "The free coding agent (free Claude Code, Codex, Cursor & Lovable alternative)",
+    url: "https://freebuff.com/",
+  },
+  {
     title: "Hands-On Large Language Models",
     author: "HandsOnLLM",
     category: CATEGORIES.ai,
