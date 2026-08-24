@@ -5,6 +5,18 @@ import { TAGS } from "./tags";
 
 export const typographyLinks: Tool[] = [
   {
+    title: "Adobe Fonts",
+    category: CATEGORIES.typography,
+    description:
+      "Adobe Fonts partners with the world’s leading type foundries to bring thousands of beautiful fonts to designers every day. No need to worry about licensing, and you can use fonts from Adobe Fonts on the web or in desktop applications.",
+    favicon:
+      "https://afwebcdn.fonts.adobe.com/assets/apple-touch-icon-6bb8816ebcdf01e54fa23f0cff07714f8296cd5d31ce185fdc3c1d643a253670.png",
+    ogImage: "https://fonts.adobe.com/adobe-fonts-social.jpg",
+    subtitle: "Explore unlimited fonts",
+    tags: [TAGS.typography],
+    url: "https://fonts.adobe.com/",
+  },
+  {
     title: "A MONO",
     author: "falk schröter",
     category: CATEGORIES.typography,
@@ -32,6 +44,17 @@ export const typographyLinks: Tool[] = [
       "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦆</text></svg>",
     tags: [TAGS.typography],
     url: "https://klotter.supply/bonk",
+  },
+  {
+    title: "Bricolage Grotesque",
+    category: CATEGORIES.typography,
+    description:
+      "An expressive variable font that blends iconic French and British designs across three axes: weight, width, and optical size. It visually expresses what it feels like when you cannot be what you were and yet you can never truly be anybody else.",
+    favicon: "https://ateliertriay.github.io/bricolage/favicon/apple-touch-icon.png",
+    ogImage: "https://ateliertriay.github.io/bricolage/socials/card.png",
+    subtitle: "Free & Open Source Variable Font",
+    tags: [TAGS.typography],
+    url: "https://ateliertriay.github.io/bricolage/",
   },
   {
     title: "Collletttivo · CLT",
@@ -230,6 +253,18 @@ export const typographyLinks: Tool[] = [
     url: "https://maxibestof.one/typefaces",
   },
   {
+    title: "Font Squirrel",
+    author: "Ethan Dunham",
+    category: CATEGORIES.typography,
+    description:
+      "Font Squirrel scours the internet for high quality, legitimately free fonts . Download thousands of completely legal, high quality, free fonts.",
+    favicon: "https://www.fontsquirrel.com/apple-touch-icon.png",
+    ogImage: "https://www.fontsquirrel.com/presentation/theme_site/images/social_media_default.jpg",
+    subtitle: "Free Fonts! Legit Free & Quality",
+    tags: [TAGS.typography],
+    url: "https://www.fontsquirrel.com/",
+  },
+  {
     title: "Font Tester",
     category: CATEGORIES.typography,
     description:
@@ -260,6 +295,18 @@ export const typographyLinks: Tool[] = [
     subtitle: "Letters made of letters",
     tags: [TAGS.typography],
     url: "https://typotheque.luuse.io/",
+  },
+  {
+    title: "Funnel",
+    author: "Dicotype",
+    category: CATEGORIES.typography,
+    description:
+      "A typeface family associated with the Funnel service product for marketers and data teams.",
+    favicon: "./github.svg",
+    ogImage:
+      "https://raw.githubusercontent.com/Dicotype/Funnel/main/artwork/funnel_type_artwork-001.jpg",
+    tags: [TAGS.typography],
+    url: "https://github.com/Dicotype/Funnel",
   },
   {
     title: "Geist Pixel",
@@ -310,6 +357,16 @@ export const typographyLinks: Tool[] = [
     ogImage: "https://sourcefoundry.org/hack/assets/img/mockup/Aa-mockup-2.png",
     tags: [TAGS.typography],
     url: "https://sourcefoundry.org/hack/",
+  },
+  {
+    title: "indestructible type*",
+    author: "Owen Earl",
+    category: CATEGORIES.typography,
+    description:
+      "Central to the vision of the foundry, is making free, highly versatile, archetypal typography. Fonts that capture the essence of a typographic idea and will look good in any context. Fonts that will have a full range of widths and styles and use the latest technology to recreate the best designs of history. These are Indestructible Fonts, and they are the main focus of the foundry.",
+    favicon: "https://indestructibletype.com/assets/Favicon.png",
+    tags: [TAGS.typography],
+    url: "https://indestructibletype.com/Home.html",
   },
   {
     title: "JetBrains Mono",
@@ -400,6 +457,13 @@ export const typographyLinks: Tool[] = [
     subtitle: "sculpt your own font",
     tags: [TAGS.typography],
     url: "https://meshfont.com/",
+  },
+  {
+    title: "mononoki",
+    category: CATEGORIES.typography,
+    description: "a font for programming and code review",
+    tags: [TAGS.typography],
+    url: "https://madmalik.github.io/mononoki/",
   },
   {
     title: "myfffonts",
@@ -613,6 +677,13 @@ export const typographyLinks: Tool[] = [
       "UNCUT.wtf is a free typeface catalogue, focusing on somewhat contemporary type. There are currently 163 typefaces featured.",
     tags: [TAGS.typography],
     url: "https://uncut.wtf/",
+  },
+  {
+    title: "Undercase Type",
+    category: CATEGORIES.typography,
+    description: "Undercase Type is the independent type foundry of Phaedra Charles",
+    tags: [TAGS.typography],
+    url: "https://undercase.xyz/",
   },
   {
     title: "Use & Modify",

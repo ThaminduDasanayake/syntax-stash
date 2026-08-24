@@ -301,6 +301,18 @@ export const developmentLinks: Tool[] = [
     url: "https://jam.dev/utilities",
   },
   {
+    title: "Diagram Design",
+    author: "Cathryn Lavery",
+    category: CATEGORIES.dev,
+    description:
+      "38 editorial diagram types for Claude Code, Codex, and Pi. Self-contained HTML + SVG. No shadows. No Mermaid slop.",
+    favicon: "./github.svg",
+    ogImage:
+      "https://raw.githubusercontent.com/cathrynlavery/diagram-design/main/docs/screenshots/architecture.png",
+    tags: [TAGS.tool],
+    url: "https://cathrynlavery.github.io/diagram-design/",
+  },
+  {
     title: "Diffs, from Pierre",
     author: "The Pierre Computer Co.",
     category: CATEGORIES.dev,
@@ -400,6 +412,16 @@ export const developmentLinks: Tool[] = [
     ogImage: "https://gists.sh/opengraph-image?9c823d7c5fa882a6",
     tags: [TAGS.tool],
     url: "https://gists.sh/",
+  },
+  {
+    title: "Gitboard",
+    author: "Mateo Roldos",
+    category: CATEGORIES.dev,
+    description: "An interactive canvas for making GitHub repos feel less static.",
+    favicon:
+      "data:image/svg+xml;base64,CiAgICAgICAgPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIiBmaWxsPSJub25lIj4KICAgICAgICAgIDxyZWN0IHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0iI2ZmZmZmZiIgcng9IjYiLz4KICAgICAgICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQsIDQpIiBzdHJva2U9IiMwYTBhMGEiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBmaWxsPSJub25lIj4KICAgICAgICAgICAgPHJlY3Qgd2lkdGg9IjciIGhlaWdodD0iOSIgeD0iMyIgeT0iMyIgcng9IjAuMSIvPgogICAgICAgICAgICA8cmVjdCB3aWR0aD0iNyIgaGVpZ2h0PSI1IiB4PSIxNCIgeT0iMyIgcng9IjAuMSIvPgogICAgICAgICAgICA8cmVjdCB3aWR0aD0iNyIgaGVpZ2h0PSI5IiB4PSIxNCIgeT0iMTIiIHJ4PSIwLjEiLz4KICAgICAgICAgICAgPHJlY3Qgd2lkdGg9IjciIGhlaWdodD0iNSIgeD0iMyIgeT0iMTYiIHJ4PSIwLjEiLz4KICAgICAgICAgIDwvZz4KICAgICAgICA8L3N2Zz4KICAgICAg",
+    tags: [TAGS.development, TAGS.git, TAGS.tool],
+    url: "https://gitboard-app.netlify.app/",
   },
   {
     title: "GitButler",
@@ -740,10 +762,11 @@ export const developmentLinks: Tool[] = [
     url: "https://oualator.com/",
   },
   {
-    title: "Photoroom - AI Photo Editor",
+    title: "Photoroom",
     category: CATEGORIES.dev,
     description:
       "Enhance your photos with our AI photo editor. Create stunning images in seconds with AI-powered technology and our powerful tools.",
+    subtitle: "AI Photo Editor",
     tags: [TAGS.tool],
     url: "https://www.photoroom.com/tools",
   },
@@ -775,6 +798,17 @@ export const developmentLinks: Tool[] = [
     ogImage: "https://pointilliser.elwyn.co/meta/og-image.jpg",
     tags: [TAGS.tool],
     url: "https://pointilliser.com/",
+  },
+  {
+    title: "prettymaps",
+    category: CATEGORIES.dev,
+    description:
+      "Draw pretty maps from OpenStreetMap data! Built with osmnx + matplotlib + shapely",
+    favicon: "https://prettymaps.streamlit.app/-/build/favicon.svg",
+    ogImage:
+      "https://raw.githubusercontent.com/marceloprates/prettymaps/refs/heads/main/pictures/app_placeholder.png",
+    tags: [TAGS.map, TAGS.png, TAGS.svg],
+    url: "https://prettymaps.streamlit.app/",
   },
   {
     title: "RayonMaps",

@@ -45,6 +45,7 @@ export const iconLinks: Tool[] = [
     description:
       "A typed, SSR-first avatar primitive for the web — seven frameworks, eleven themes, zero dependencies. Compose by hand or let the predictor draft from a photo.",
     subtitle: "Avatars that feel like people",
+    tags: [TAGS.avatars],
     url: "https://www.avatune.dev/",
   },
   {
@@ -196,6 +197,19 @@ export const iconLinks: Tool[] = [
     description: "Free SVG Illustrations For Websites (CC0 Licensed)",
     tags: [TAGS.illustration, TAGS.svg],
     url: "https://lukaszadam.com/illustrations",
+  },
+  {
+    title: "Free Vintage Illustration",
+    author: "Heritage Type Co",
+    category: CATEGORIES.icons,
+    description:
+      "Explore our Heritage Library at Heritage Type Co, where you'll discover a treasure trove of free vintage illustrations. Dive into the past with our stunning collection of timeless artwork. Download and use these captivating vintage illustrations to add a touch of nostalgia to your creative projects.",
+    favicon:
+      "https://www.heritagetype.com/cdn/shop/files/HTC_fav_32x32_cc453038-976f-4459-8f62-06ff6d5f5a09_32x32.png",
+    ogImage:
+      "https://cdn.shopify.com/s/files/1/0325/8312/3075/files/Heritage_Type_Co_Share_c4293adb-251d-4d4f-83fc-474c8f8a3583.jpg",
+    tags: [TAGS.illustration],
+    url: "https://www.heritagetype.com/pages/free-vintage-illustrations",
   },
   {
     title: "Glyphs",
@@ -442,6 +456,19 @@ export const iconLinks: Tool[] = [
     ogImage: "https://meteoricons.com/images/og-image.png",
     tags: [TAGS.icons],
     url: "https://meteoricons.com/",
+  },
+  {
+    title: "morphicons",
+    author: "Guillermo",
+    category: CATEGORIES.icons,
+    className: "bg-foreground border-paper",
+    description:
+      "Morph any SVG icon into any other with spring physics. Animate Lucide, Tabler and Heroicons in React, Vue, Svelte, React Native, Astro or vanilla JS. Zero dependencies, ~6 KB gzip.",
+    favicon: "https://www.morphicons.com/morphicons.svg",
+    ogImage: "https://www.morphicons.com/opengraph-image",
+    subtitle: "SVG icon morphing library for React, Vue & Svelte",
+    tags: [TAGS.animation, TAGS.icons],
+    url: "https://www.morphicons.com/",
   },
   {
     title: "Mossaik",
