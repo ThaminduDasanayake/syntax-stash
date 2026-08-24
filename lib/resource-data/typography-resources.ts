@@ -5,6 +5,18 @@ import { TAGS } from "./tags";
 
 export const typographyLinks: Tool[] = [
   {
+    title: "Adobe Fonts",
+    category: CATEGORIES.typography,
+    description:
+      "Adobe Fonts partners with the world’s leading type foundries to bring thousands of beautiful fonts to designers every day. No need to worry about licensing, and you can use fonts from Adobe Fonts on the web or in desktop applications.",
+    favicon:
+      "https://afwebcdn.fonts.adobe.com/assets/apple-touch-icon-6bb8816ebcdf01e54fa23f0cff07714f8296cd5d31ce185fdc3c1d643a253670.png",
+    ogImage: "https://fonts.adobe.com/adobe-fonts-social.jpg",
+    subtitle: "Explore unlimited fonts",
+    tags: [TAGS.typography],
+    url: "https://fonts.adobe.com/",
+  },
+  {
     title: "A MONO",
     author: "falk schröter",
     category: CATEGORIES.typography,
@@ -241,6 +253,18 @@ export const typographyLinks: Tool[] = [
     url: "https://maxibestof.one/typefaces",
   },
   {
+    title: "Font Squirrel",
+    author: "Ethan Dunham",
+    category: CATEGORIES.typography,
+    description:
+      "Font Squirrel scours the internet for high quality, legitimately free fonts . Download thousands of completely legal, high quality, free fonts.",
+    favicon: "https://www.fontsquirrel.com/apple-touch-icon.png",
+    ogImage: "https://www.fontsquirrel.com/presentation/theme_site/images/social_media_default.jpg",
+    subtitle: "Free Fonts! Legit Free & Quality",
+    tags: [TAGS.typography],
+    url: "https://www.fontsquirrel.com/",
+  },
+  {
     title: "Font Tester",
     category: CATEGORIES.typography,
     description:
@@ -271,6 +295,18 @@ export const typographyLinks: Tool[] = [
     subtitle: "Letters made of letters",
     tags: [TAGS.typography],
     url: "https://typotheque.luuse.io/",
+  },
+  {
+    title: "Funnel",
+    author: "Dicotype",
+    category: CATEGORIES.typography,
+    description:
+      "A typeface family associated with the Funnel service product for marketers and data teams.",
+    favicon: "./github.svg",
+    ogImage:
+      "https://raw.githubusercontent.com/Dicotype/Funnel/main/artwork/funnel_type_artwork-001.jpg",
+    tags: [TAGS.typography],
+    url: "https://github.com/Dicotype/Funnel",
   },
   {
     title: "Geist Pixel",
