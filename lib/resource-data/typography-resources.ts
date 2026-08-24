@@ -34,6 +34,17 @@ export const typographyLinks: Tool[] = [
     url: "https://klotter.supply/bonk",
   },
   {
+    title: "Bricolage Grotesque",
+    category: CATEGORIES.typography,
+    description:
+      "An expressive variable font that blends iconic French and British designs across three axes: weight, width, and optical size. It visually expresses what it feels like when you cannot be what you were and yet you can never truly be anybody else.",
+    favicon: "https://ateliertriay.github.io/bricolage/favicon/apple-touch-icon.png",
+    ogImage: "https://ateliertriay.github.io/bricolage/socials/card.png",
+    subtitle: "Free & Open Source Variable Font",
+    tags: [TAGS.typography],
+    url: "https://ateliertriay.github.io/bricolage/",
+  },
+  {
     title: "Collletttivo · CLT",
     category: CATEGORIES.typography,
     description:
@@ -312,6 +323,16 @@ export const typographyLinks: Tool[] = [
     url: "https://sourcefoundry.org/hack/",
   },
   {
+    title: "indestructible type*",
+    author: "Owen Earl",
+    category: CATEGORIES.typography,
+    description:
+      "Central to the vision of the foundry, is making free, highly versatile, archetypal typography. Fonts that capture the essence of a typographic idea and will look good in any context. Fonts that will have a full range of widths and styles and use the latest technology to recreate the best designs of history. These are Indestructible Fonts, and they are the main focus of the foundry.",
+    favicon: "https://indestructibletype.com/assets/Favicon.png",
+    tags: [TAGS.typography],
+    url: "https://indestructibletype.com/Home.html",
+  },
+  {
     title: "JetBrains Mono",
     category: CATEGORIES.typography,
     description:
@@ -400,6 +421,13 @@ export const typographyLinks: Tool[] = [
     subtitle: "sculpt your own font",
     tags: [TAGS.typography],
     url: "https://meshfont.com/",
+  },
+  {
+    title: "mononoki",
+    category: CATEGORIES.typography,
+    description: "a font for programming and code review",
+    tags: [TAGS.typography],
+    url: "https://madmalik.github.io/mononoki/",
   },
   {
     title: "myfffonts",
@@ -613,6 +641,13 @@ export const typographyLinks: Tool[] = [
       "UNCUT.wtf is a free typeface catalogue, focusing on somewhat contemporary type. There are currently 163 typefaces featured.",
     tags: [TAGS.typography],
     url: "https://uncut.wtf/",
+  },
+  {
+    title: "Undercase Type",
+    category: CATEGORIES.typography,
+    description: "Undercase Type is the independent type foundry of Phaedra Charles",
+    tags: [TAGS.typography],
+    url: "https://undercase.xyz/",
   },
   {
     title: "Use & Modify",

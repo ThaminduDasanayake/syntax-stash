@@ -45,6 +45,7 @@ export const iconLinks: Tool[] = [
     description:
       "A typed, SSR-first avatar primitive for the web — seven frameworks, eleven themes, zero dependencies. Compose by hand or let the predictor draft from a photo.",
     subtitle: "Avatars that feel like people",
+    tags: [TAGS.avatars],
     url: "https://www.avatune.dev/",
   },
   {
