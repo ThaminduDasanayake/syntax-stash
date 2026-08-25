@@ -359,6 +359,15 @@ export const typographyLinks: Tool[] = [
     url: "https://sourcefoundry.org/hack/",
   },
   {
+    title: "Hauora Sans",
+    category: CATEGORIES.typography,
+    description:
+      "Neo-grotesque sans-serif font originally designed for an open-sourced health research project",
+    ogImage: "https://raw.githubusercontent.com/WCYS-Co/Hauora-Sans/master/docs/HS_OpenGraph.svg",
+    tags: [TAGS.typography],
+    url: "https://wcys-co.github.io/Hauora-Sans/",
+  },
+  {
     title: "indestructible type*",
     author: "Owen Earl",
     category: CATEGORIES.typography,
@@ -516,6 +525,14 @@ export const typographyLinks: Tool[] = [
     url: "https://open-foundry.com/",
   },
   {
+    title: "Pixel Code",
+    category: CATEGORIES.typography,
+    description: "A pixel font that's actually good for programming.",
+    ogImage: "https://qwerasd205.github.io/PixelCode/examples/quick_brown_fox.js.png",
+    tags: [TAGS.typography],
+    url: "https://qwerasd205.github.io/PixelCode/",
+  },
+  {
     title: "Precise Type",
     author: "Adonis Raul Raduca",
     category: CATEGORIES.typography,
@@ -601,6 +618,8 @@ export const typographyLinks: Tool[] = [
     category: CATEGORIES.typography,
     description:
       "The first open-source foundry. And your spot to learn how to use, make, and work with type.",
+    ogImage: "https://www.theleagueofmoveabletype.com/opengraph-image",
+    tags: [TAGS.typography],
     url: "https://www.theleagueofmoveabletype.com/",
   },
   {
