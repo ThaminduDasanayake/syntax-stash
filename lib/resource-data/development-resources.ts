@@ -463,6 +463,17 @@ export const developmentLinks: Tool[] = [
     url: "https://git.gaozih.com/",
   },
   {
+    title: "GitHub Next",
+    author: "GitHub Next",
+    category: CATEGORIES.dev,
+    className: "bg-foreground border-paper",
+    description:
+      "A team of researchers and engineers at GitHub prototyping the tools, workflows, and ideas that will shape the future of software development.",
+    favicon: "https://githubnext.com/favicon.svg",
+    ogImage: "https://githubnext.com/og/default.png",
+    url: "https://githubnext.com/",
+  },
+  {
     title: "gitinspect.com",
     author: "Jeremy Osih",
     category: CATEGORIES.dev,

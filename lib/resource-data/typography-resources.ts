@@ -87,6 +87,16 @@ export const typographyLinks: Tool[] = [
     url: "https://www.dafont.com/",
   },
   {
+    title: "Departure Mono",
+    category: CATEGORIES.typography,
+    description:
+      "Departure Mono is a monospaced pixel font by Helena Zhang, licensed under the SIL OFL.",
+    favicon: "https://departuremono.com/favicon.ico",
+    ogImage: "https://departuremono.com/assets/departure-og.png",
+    tags: [TAGS.typography],
+    url: "https://departuremono.com/",
+  },
+  {
     title: "Dinamo Font Gauntlet",
     category: CATEGORIES.typography,
     description: "The Dinamo Font Gauntlet is a tool for proofing, generating and animating fonts.",
@@ -154,6 +164,16 @@ export const typographyLinks: Tool[] = [
       "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦆</text></svg>",
     tags: [TAGS.typography],
     url: "https://klotter.supply/fixelpont",
+  },
+  {
+    title: "Fliege Mono",
+    category: CATEGORIES.typography,
+    description: "A monospaced font for code and text.",
+    favicon: "https://pavellaptev.github.io/Fliege-mono/favicon.png",
+    ogImage:
+      "https://raw.githubusercontent.com/PavelLaptev/Fliege-mono/main/website-demo/static/og-image.png",
+    tags: [TAGS.typography],
+    url: "https://pavellaptev.github.io/Fliege-mono/",
   },
   {
     title: "Fluid Type Scale Calculator",
@@ -368,6 +388,19 @@ export const typographyLinks: Tool[] = [
     url: "https://wcys-co.github.io/Hauora-Sans/",
   },
   {
+    title: "Inclusive Sans",
+    author: "Olivia King",
+    category: CATEGORIES.typography,
+    description:
+      "Inclusive Sans is a text typeface designed for legibility and readability. It’s available as an Open Source project, free for use on Google Fonts.",
+    favicon:
+      "https://images.squarespace-cdn.com/content/v1/6729a539ee468b0e499215ee/910f12b1-ec2b-45c7-b3a5-65a914084d45/favicon.ico?format=100w",
+    ogImage:
+      "https://static1.squarespace.com/static/6729a539ee468b0e499215ee/6729adbd5a5c91783ed4e0a5/6729adbd5a5c91783ed4e0a6/1763682798559/Inclusive_Sans_Overview.gif?format=1500w",
+    tags: [TAGS.typography],
+    url: "https://www.oliviaking.com/inclusivesans/feature",
+  },
+  {
     title: "indestructible type*",
     author: "Owen Earl",
     category: CATEGORIES.typography,
@@ -468,6 +501,17 @@ export const typographyLinks: Tool[] = [
     url: "https://meshfont.com/",
   },
   {
+    title: "Monaspace",
+    author: "GitHub Next",
+    category: CATEGORIES.typography,
+    className: "bg-foreground border-paper",
+    description: "An innovative superfamily of fonts for code",
+    favicon: "https://githubnext.com/favicon.svg",
+    ogImage: "https://monaspace.githubnext.com/opengraph-image.png",
+    tags: [TAGS.typography],
+    url: "https://monaspace.githubnext.com/",
+  },
+  {
     title: "mononoki",
     category: CATEGORIES.typography,
     description: "a font for programming and code review",
@@ -481,6 +525,16 @@ export const typographyLinks: Tool[] = [
     description: "My own (libre) webfonts vault",
     tags: [TAGS.typography],
     url: "https://myfffonts.accentgrave.net/",
+  },
+  {
+    title: "Nacelle | ドットコロン",
+    category: CATEGORIES.typography,
+    description:
+      "NacelleはAileronのデザインを見直し、全体的に改修を施したネオグロテスク・サンセリフです。",
+    favicon: "https://dotcolon.net/icon.svg?icon.0r-g_~cwqkwbq.svg",
+    ogImage: "https://dotcolon.net/images/ogimages/nacelle.png",
+    tags: [TAGS.typography],
+    url: "https://dotcolon.net/fonts/nacelle/",
   },
   {
     title: "Nerd Fonts",
@@ -577,6 +631,18 @@ export const typographyLinks: Tool[] = [
     description: "A kinetic type generator from kielm",
     tags: [TAGS.typography],
     url: "https://spacetypegenerator.com/",
+  },
+  {
+    title: "Srbija Sans Font",
+    category: CATEGORIES.typography,
+    description:
+      "Tipografsko pismo Srbija je savremeni sans serif sa naglašenom geometrijom, karakterističnom osobinom grotesk pisama kome pripada. Sadrži čiste i neutralne forme u bold težini, oslobođene svakog dekorativnog detalja, zbog čega je lako primenjivo.",
+    favicon:
+      "https://cdn.prod.website-files.com/62fb719824e1dab0d359a279/6305e30c2c2835783ae6fb41_Srbija-Pro-webclip.png",
+    ogImage:
+      "https://cdn.prod.website-files.com/62fb719824e1dab0d359a279/630f2ffa837436fc92ff9474_Srbija%20Sans%20Lat.jpg",
+    tags: [TAGS.typography],
+    url: "https://www.srbijasans.rs/",
   },
   {
     title: "Stack & Justify",
