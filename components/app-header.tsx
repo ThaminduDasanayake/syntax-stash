@@ -3,7 +3,7 @@
 import { BookmarksSimpleIcon, ListIcon, MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Suspense, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -24,10 +24,10 @@ function AppHeaderInner({
   onSearchOpenAction,
 }: HeaderProps & { isScrolled?: boolean }) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
   const { bookmarksCount } = useBookmarks();
-  const isSavedActive = pathname === "/resources" && searchParams?.get("saved") === "true";
+  const isSavedActive = pathname === "/saved";
+
 
   return (
     <>
@@ -62,7 +62,7 @@ function AppHeaderInner({
             })}
 
             <Link
-              href="/resources?saved=true"
+              href="/saved"
               onClick={() => setIsOpen(false)}
               className={cn(
                 "nav-link inline-flex items-center gap-1.5",
@@ -75,11 +75,12 @@ function AppHeaderInner({
               />
               <span>Saved</span>
               {bookmarksCount > 0 && (
-                <span className="bg-ink text-paper dark:bg-paper dark:text-ink inline-flex min-h-4.5 min-w-4.5 shrink-0 items-center justify-center rounded-full px-1 text-center text-[10px] leading-none font-extrabold">
+                <span className="bg-ink text-paper dark:bg-paper dark:text-ink inline-flex min-h-4.5 min-w-4.5 shrink-0 items-center justify-center rounded-full px-1 text-center text-[10px] font-extrabold leading-none">
                   {bookmarksCount}
                 </span>
               )}
             </Link>
+
 
             <Button onClick={onSearchOpenAction} size="sm" aria-label="Search" className="nav-cta">
               <MagnifyingGlassIcon weight="bold" className="shrink-0" />

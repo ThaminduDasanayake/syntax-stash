@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo, useSyncExternalStore } from "react";
 
-import { getResourceId } from "@/lib/utils";
+import { downloadStringAsFile, getResourceId } from "@/lib/utils";
 import { Tool } from "@/types";
 
 const BOOKMARKS_STORAGE_KEY = "syntax_stash_bookmarks";
@@ -65,9 +65,7 @@ export function useBookmarks() {
     getServerSnapshot,
   );
 
-
   const bookmarkedSet = useMemo(() => new Set(bookmarks), [bookmarks]);
-
 
   const isBookmarked = useCallback(
     (target: Tool | string): boolean => {
@@ -113,12 +111,39 @@ export function useBookmarks() {
     }
   }, []);
 
+  const exportBookmarks = useCallback(() => {
+    if (typeof window === "undefined") return;
+    const data = JSON.stringify(bookmarks, null, 2);
+    downloadStringAsFile(data, "syntax-stash-bookmarks.json", "application/json");
+  }, [bookmarks]);
+
+  const importBookmarks = useCallback((jsonContent: string): boolean => {
+    if (typeof window === "undefined") return false;
+    try {
+      const parsed = JSON.parse(jsonContent);
+      if (Array.isArray(parsed) && parsed.every((id) => typeof id === "string")) {
+        const merged = Array.from(new Set([...cachedBookmarks, ...parsed]));
+        localStorage.setItem(BOOKMARKS_STORAGE_KEY, JSON.stringify(merged));
+        cachedRawString = JSON.stringify(merged);
+        cachedBookmarks = merged;
+        window.dispatchEvent(new Event(BOOKMARKS_EVENT_KEY));
+        return true;
+      }
+    } catch (e) {
+      console.error("Failed to import bookmarks", e);
+    }
+    return false;
+  }, []);
+
   return {
     bookmarkedSet,
     bookmarks,
     bookmarksCount: bookmarks.length,
     clearBookmarks,
+    exportBookmarks,
+    importBookmarks,
     isBookmarked,
     toggleBookmark,
   };
 }
+
