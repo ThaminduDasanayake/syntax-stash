@@ -225,6 +225,17 @@ export const developmentLinks: Tool[] = [
     url: "https://www.context.dev/free-tools",
   },
   {
+    title: "Crumbs",
+    category: CATEGORIES.dev,
+    description:
+      "Crumbs is a self-hostable, offline-first note-taking app that respects your privacy. Deploy with a single Docker command.",
+    favicon: "https://crumbs.bretzel.app/assets/apple-touch-icon.png",
+    ogImage: "https://crumbs.bretzel.app/assets/screenshot-grid.png",
+    subtitle: "Your notes. Your server. Your rules.",
+    tags: [TAGS.selfHosted],
+    url: "https://crumbs.bretzel.app/",
+  },
+  {
     title: "delphitools",
     category: CATEGORIES.dev,
     description:
@@ -450,6 +461,17 @@ export const developmentLinks: Tool[] = [
     description: "Find the right git commands without digging through the web.",
     tags: [TAGS.development, TAGS.tool],
     url: "https://git.gaozih.com/",
+  },
+  {
+    title: "GitHub Next",
+    author: "GitHub Next",
+    category: CATEGORIES.dev,
+    className: "bg-foreground border-paper",
+    description:
+      "A team of researchers and engineers at GitHub prototyping the tools, workflows, and ideas that will shape the future of software development.",
+    favicon: "https://githubnext.com/favicon.svg",
+    ogImage: "https://githubnext.com/og/default.png",
+    url: "https://githubnext.com/",
   },
   {
     title: "gitinspect.com",
@@ -897,6 +919,17 @@ export const developmentLinks: Tool[] = [
     url: "https://docs.rsshub.app/",
   },
   {
+    title: "Ryot",
+    category: CATEGORIES.dev,
+    description:
+      "Self-hosted platform for tracking your media, fitness, and personal data. Complete privacy and control over your digital life.",
+    favicon: "https://raw.githubusercontent.com/IgnisDa/ryot/main/libs/assets/icon-512x512.png",
+    ogImage: "https://ryot.io/cta-image.png",
+    subtitle: "The Only Self-Hosted Tracker You Will Ever Need",
+    tags: [TAGS.selfHosted],
+    url: "https://ryot.io/",
+  },
+  {
     title: "SaaS UI",
     category: CATEGORIES.dev,
     description: "Free Illustrations for your Documentation or Design System - Illustrations",
@@ -1223,5 +1256,17 @@ export const developmentLinks: Tool[] = [
     subtitle: "Build Your Perfect Workout",
     tags: [TAGS.inspiration],
     url: "https://www.workout.cool/en",
+  },
+  {
+    title: "ZenNotes",
+    category: CATEGORIES.dev,
+    description:
+      "ZenNotes is a keyboard-first Markdown notes app with native desktop and mobile apps. Keep local files, sync across devices, create backups, and publish notes to the web with ZenNotes Cloud.",
+    favicon:
+      "https://raw.githubusercontent.com/ZenNotes/zennotes/main/apps/web/public/icon-192.png",
+    ogImage: "https://zennotes.org/images/app.webp",
+    subtitle: "Markdown notes, sync, backups, and publishing",
+    tags: [TAGS.markdown, TAGS.selfHosted],
+    url: "https://zennotes.org/",
   },
 ];

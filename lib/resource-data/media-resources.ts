@@ -161,6 +161,17 @@ export const mediaLinks: Tool[] = [
     url: "https://carbon.now.sh/",
   },
   {
+    title: "Cinematic Sound Pack",
+    author: "Nikko Hunt",
+    category: CATEGORIES.media,
+    description:
+      "25 High Quality Cinematic Sound Effects. Just import them into your project in Premiere Pro, Final Cut or whatever editing software you use, and drag them into the audio channels. 25.wav files consisting of Risers, Impacts, Sweeps, Whooshes, Textures and other Glitch sounds.",
+    favicon: "https://public-files.gumroad.com/8znc9qorioddnyoe3cmgu7oum7tn",
+    ogImage: "https://public-files.gumroad.com/uf5q97xuzrqcx5h5uk0xkz4j2gia",
+    tags: [TAGS.audio],
+    url: "https://nikkohunt.gumroad.com/l/dpclP",
+  },
+  {
     title: "CleanPNG",
     category: CATEGORIES.media,
     description:
@@ -606,6 +617,17 @@ export const mediaLinks: Tool[] = [
     url: "https://fffuel.co/mmmotif/",
   },
   {
+    title: "mobygratis",
+    category: CATEGORIES.media,
+    description:
+      "Free music resource designed to empower creative projects by students, non-profits, indie filmmakers, musicians and more.",
+    favicon: "https://mobygratis.com/favicon.ico",
+    ogImage: "https://mobygratis-clpkhsepzq-uc.a.run.app/assets/moby-header-image.jpg",
+    subtitle: "Free Moby music to empower your creative projects",
+    tags: [TAGS.audio],
+    url: "https://mobygratis.com/",
+  },
+  {
     title: "Need3D",
     category: CATEGORIES.media,
     description:
@@ -837,6 +859,17 @@ export const mediaLinks: Tool[] = [
     subtitle: "Curated presentation slides",
     tags: [TAGS.typography],
     url: "https://slides.supply/",
+  },
+  {
+    title: "Sound Design Essentials (For Video Creators)",
+    author: "Nikko Hunt",
+    category: CATEGORIES.media,
+    description:
+      "110 high quality cinematic sounds in .wav format. Just import the sounds into your project in Premiere Pro, Final Cut or whatever editing software you use, and drag them into the audio channels. Included in the 110 sounds are:- 25 Sweeps and 15 “Whoosh” sound effects.- 12 Cinematic Hits- 16 Nature Sounds - 5 Risers - 15 Soundscapes- 17 Foley/Human Sounds- 5 Glitch Sounds All sounds have been captured from personal journeys from around the world or crafted using professional sound design software and techniques.",
+    favicon: "https://public-files.gumroad.com/8znc9qorioddnyoe3cmgu7oum7tn",
+    ogImage: "https://public-files.gumroad.com/8zm2txbm0nzd6i1u0qopf4yeidot",
+    tags: [TAGS.audio],
+    url: "https://nikkohunt.gumroad.com/l/JJCAf",
   },
   {
     title: "Spherium",

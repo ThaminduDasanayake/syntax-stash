@@ -87,6 +87,16 @@ export const typographyLinks: Tool[] = [
     url: "https://www.dafont.com/",
   },
   {
+    title: "Departure Mono",
+    category: CATEGORIES.typography,
+    description:
+      "Departure Mono is a monospaced pixel font by Helena Zhang, licensed under the SIL OFL.",
+    favicon: "https://departuremono.com/favicon.ico",
+    ogImage: "https://departuremono.com/assets/departure-og.png",
+    tags: [TAGS.typography],
+    url: "https://departuremono.com/",
+  },
+  {
     title: "Dinamo Font Gauntlet",
     category: CATEGORIES.typography,
     description: "The Dinamo Font Gauntlet is a tool for proofing, generating and animating fonts.",
@@ -112,6 +122,16 @@ export const typographyLinks: Tool[] = [
     url: "https://hihayk.github.io/doppler/",
   },
   {
+    title: "dot colon",
+    category: CATEGORIES.typography,
+    description:
+      "I have released an original font. You are free to use it for both commercial and non-commercial purposes.",
+    favicon: "https://dotcolon.net/icon.svg",
+    ogImage: "https://dotcolon.net/images/ogimages/default.png",
+    tags: [TAGS.typography],
+    url: "https://dotcolon.net/",
+  },
+  {
     title: "Dx Lactos Free Font",
     author: "Dirtyline Studio",
     category: CATEGORIES.typography,
@@ -121,6 +141,17 @@ export const typographyLinks: Tool[] = [
     ogImage:
       "https://dirtylinestudio.com/wp-content/uploads/2024/06/Dx-lactos-Preview-web-03-cover-free.png",
     url: "https://dirtylinestudio.com/product/dx-lactos-free-font/",
+  },
+  {
+    title: "ENDLESS",
+    category: CATEGORIES.typography,
+    description:
+      "Endless is a modern geometric sans serif designed for versatility and everyday use. With tight kerning, strong legibility, and a smooth visual rhythm, it delivers a clean yet distinctive look across both print and digital work. Its subtle design features give it a bold, cool personality while remaining highly functional. Free for personal and commercial use.",
+    favicon:
+      "https://static.wixstatic.com/media/6609f8_1f9c1e62b2a049fe95e328b4a15867db%7Emv2.png/v1/fill/w_192%2Ch_192%2Clg_1%2Cusm_0.66_1.00_0.01/6609f8_1f9c1e62b2a049fe95e328b4a15867db%7Emv2.png",
+    ogImage: "https://static.wixstatic.com/media/6609f8_8035cf17984848d092ad8fedc892c1d5~mv2.gif",
+    tags: [TAGS.typography],
+    url: "https://www.sreejithdesigns.com/copy-of-cub-cards-1",
   },
   {
     title: "Fallback Font Generator",
@@ -156,6 +187,16 @@ export const typographyLinks: Tool[] = [
     url: "https://klotter.supply/fixelpont",
   },
   {
+    title: "Fliege Mono",
+    category: CATEGORIES.typography,
+    description: "A monospaced font for code and text.",
+    favicon: "https://pavellaptev.github.io/Fliege-mono/favicon.png",
+    ogImage:
+      "https://raw.githubusercontent.com/PavelLaptev/Fliege-mono/main/website-demo/static/og-image.png",
+    tags: [TAGS.typography],
+    url: "https://pavellaptev.github.io/Fliege-mono/",
+  },
+  {
     title: "Fluid Type Scale Calculator",
     author: "Aleksandr Hovhannisyan",
     category: CATEGORIES.typography,
@@ -163,6 +204,14 @@ export const typographyLinks: Tool[] = [
       "Generate font size variables for a fluid type scale with CSS clamp. Grab the output CSS and drop it into any design system.",
     tags: [TAGS.typography],
     url: "https://www.fluid-type-scale.com/",
+  },
+  {
+    title: "Fond de riz",
+    category: CATEGORIES.typography,
+    description:
+      "The fond de riz is a project that aim to distribute open source typeface in perpetual evolution.",
+    tags: [TAGS.typography],
+    url: "https://fonderiz.fr/",
   },
   {
     title: "Fontastic Space",
@@ -192,6 +241,26 @@ export const typographyLinks: Tool[] = [
     subtitle: "typeface name check",
     tags: [TAGS.typography],
     url: "https://namecheck.fontdata.com/",
+  },
+  {
+    title: "Fontes",
+    author: "Anrt",
+    category: CATEGORIES.typography,
+    description: "Atelier national de recherche typographique",
+    favicon: "https://anrt-nancy.fr/media/site/9191beda98-1678377835/android-icon-192x192.png",
+    tags: [TAGS.typography],
+    url: "https://anrt-nancy.fr/en/fonts",
+  },
+  {
+    title: "Fontesk",
+    category: CATEGORIES.typography,
+    description:
+      "Discover the best free fonts in our curated typography collection. Download high quality fonts for free and enhance your design aesthetics.",
+    favicon: "https://fontesk.com/wp-content/uploads/2018/09/fntsksm.png",
+    ogImage: "https://fontesk.com/wp-content/uploads/2018/09/flogo.png",
+    subtitle: "Free Fonts & Typefaces",
+    tags: [TAGS.typography],
+    url: "https://fontesk.com/",
   },
   {
     title: "Fontjoy",
@@ -309,6 +378,19 @@ export const typographyLinks: Tool[] = [
     url: "https://github.com/Dicotype/Funnel",
   },
   {
+    title: "Geist Font",
+    author: "Vercel",
+    category: CATEGORIES.typography,
+    description:
+      "Geist is a typeface made for developers and designers, embodying Vercel's design principles of simplicity, minimalism, and speed, drawing inspiration from the renowned Swiss design movement.",
+    favicon:
+      "https://assets.vercel.com/image/upload/q_auto/front/favicon/vercel/apple-touch-icon-114x114.png",
+    ogImage:
+      "https://k2mkucxia43oc7fa.public.blob.vercel-storage.com/front/geist-font-page/og/geist-font-og.png",
+    tags: [TAGS.typography],
+    url: "https://vercel.com/font",
+  },
+  {
     title: "Geist Pixel",
     author: "Vercel",
     category: CATEGORIES.typography,
@@ -327,7 +409,7 @@ export const typographyLinks: Tool[] = [
     description: "Gidole - Open Source Modern DIN. A minimal, narrow and yet friendly typeface",
     favicon: "https://gidole.github.io/apple-touch-icon-180x180.png",
     ogImage: "https://gidole.github.io/img/gidoleopensourcemoderndinface.png",
-    subtitle: "Gidole Open Source Modern DIN",
+    subtitle: "Open Source Modern DIN",
     tags: [TAGS.typography],
     url: "https://gidole.github.io/",
   },
@@ -359,6 +441,28 @@ export const typographyLinks: Tool[] = [
     url: "https://sourcefoundry.org/hack/",
   },
   {
+    title: "Hauora Sans",
+    category: CATEGORIES.typography,
+    description:
+      "Neo-grotesque sans-serif font originally designed for an open-sourced health research project",
+    ogImage: "https://raw.githubusercontent.com/WCYS-Co/Hauora-Sans/master/docs/HS_OpenGraph.svg",
+    tags: [TAGS.typography],
+    url: "https://wcys-co.github.io/Hauora-Sans/",
+  },
+  {
+    title: "Inclusive Sans",
+    author: "Olivia King",
+    category: CATEGORIES.typography,
+    description:
+      "Inclusive Sans is a text typeface designed for legibility and readability. It’s available as an Open Source project, free for use on Google Fonts.",
+    favicon:
+      "https://images.squarespace-cdn.com/content/v1/6729a539ee468b0e499215ee/910f12b1-ec2b-45c7-b3a5-65a914084d45/favicon.ico?format=100w",
+    ogImage:
+      "https://static1.squarespace.com/static/6729a539ee468b0e499215ee/6729adbd5a5c91783ed4e0a5/6729adbd5a5c91783ed4e0a6/1763682798559/Inclusive_Sans_Overview.gif?format=1500w",
+    tags: [TAGS.typography],
+    url: "https://www.oliviaking.com/inclusivesans/feature",
+  },
+  {
     title: "indestructible type*",
     author: "Owen Earl",
     category: CATEGORIES.typography,
@@ -367,6 +471,16 @@ export const typographyLinks: Tool[] = [
     favicon: "https://indestructibletype.com/assets/Favicon.png",
     tags: [TAGS.typography],
     url: "https://indestructibletype.com/Home.html",
+  },
+  {
+    title: "Inter font family",
+    author: "Rasmus",
+    category: CATEGORIES.typography,
+    description: "Inter is a typeface family",
+    favicon: "https://rsms.me/inter/res/favicon.png",
+    ogImage: "https://rsms.me/inter/res/share.png",
+    tags: [TAGS.typography],
+    url: "https://rsms.me/inter/",
   },
   {
     title: "JetBrains Mono",
@@ -395,6 +509,17 @@ export const typographyLinks: Tool[] = [
     subtitle: "Letters made of letters",
     tags: [TAGS.typography],
     url: "https://www.letterbox.sh/",
+  },
+  {
+    title: "Lilex",
+    category: CATEGORIES.typography,
+    description:
+      "Lilex is a free open source monospaced font with programming ligatures, based on IBM Plex Mono. Variable weight 100–700, italics, Powerline symbols, Latin, Cyrillic and Greek.",
+    favicon: "https://lilex.myrt.co/favicon.svg",
+    ogImage: "https://lilex.myrt.co/og.png",
+    subtitle: "Free Monospaced Font with Ligatures for Developers",
+    tags: [TAGS.typography],
+    url: "https://lilex.myrt.co/",
   },
   {
     title: "LINE Seed",
@@ -459,11 +584,42 @@ export const typographyLinks: Tool[] = [
     url: "https://meshfont.com/",
   },
   {
+    title: "Mona Sans & Hubot Sans",
+    author: "GitHub",
+    category: CATEGORIES.typography,
+    description: "Two variable, open source fonts from GitHub.",
+    favicon: "./github.svg",
+    ogImage: "https://github.githubassets.com/assets/mona-hubot-sans-eb98d1659f57.png",
+    tags: [TAGS.typography],
+    url: "https://github.com/mona-sans",
+  },
+  {
+    title: "Monaspace",
+    author: "GitHub Next",
+    category: CATEGORIES.typography,
+    className: "bg-foreground border-paper",
+    description: "An innovative superfamily of fonts for code",
+    favicon: "https://githubnext.com/favicon.svg",
+    ogImage: "https://monaspace.githubnext.com/opengraph-image.png",
+    tags: [TAGS.typography],
+    url: "https://monaspace.githubnext.com/",
+  },
+  {
     title: "mononoki",
     category: CATEGORIES.typography,
     description: "a font for programming and code review",
     tags: [TAGS.typography],
     url: "https://madmalik.github.io/mononoki/",
+  },
+  {
+    title: "Montagu Slab",
+    author: "Florian Karsten Typefaces",
+    category: CATEGORIES.typography,
+    description: "An open-source slab-serif typeface (7 weights, 14 styles, open-source)",
+    favicon: "https://avatars.githubusercontent.com/u/17274596?s=200&v=4",
+    ogImage: "https://fonts.floriankarsten.com/content/9-montagu-slab/montagu-slab-thumb.png",
+    tags: [TAGS.typography],
+    url: "https://fonts.floriankarsten.com/montagu-slab",
   },
   {
     title: "myfffonts",
@@ -516,6 +672,14 @@ export const typographyLinks: Tool[] = [
     url: "https://open-foundry.com/",
   },
   {
+    title: "Pixel Code",
+    category: CATEGORIES.typography,
+    description: "A pixel font that's actually good for programming.",
+    ogImage: "https://qwerasd205.github.io/PixelCode/examples/quick_brown_fox.js.png",
+    tags: [TAGS.typography],
+    url: "https://qwerasd205.github.io/PixelCode/",
+  },
+  {
     title: "Precise Type",
     author: "Adonis Raul Raduca",
     category: CATEGORIES.typography,
@@ -545,6 +709,17 @@ export const typographyLinks: Tool[] = [
     url: "https://republi.sh/",
   },
   {
+    title: "Savate Specimen",
+    author: "Plomb Type",
+    category: CATEGORIES.typography,
+    description:
+      "Savate is a humanist sans-serif typeface with reverse contrast. Available in 8 weights from Extralight to Black with matching italics.",
+    favicon: "https://www.plombtype.com/favicon.svg",
+    ogImage: "https://www.plombtype.com/savate/images/og-image-savate.png",
+    tags: [TAGS.typography],
+    url: "https://www.plombtype.com/savate/",
+  },
+  {
     title: "Server Mono",
     category: CATEGORIES.typography,
     description:
@@ -555,11 +730,34 @@ export const typographyLinks: Tool[] = [
     url: "https://servermono.com/",
   },
   {
+    title: "Space Grotesk",
+    author: "Florian Karsten Typefaces",
+    category: CATEGORIES.typography,
+    description:
+      "An open-source sans-serif typefaces based on Space Mono (4 weights, 4 styles, open-source)",
+    favicon: "https://avatars.githubusercontent.com/u/17274596?s=200&v=4",
+    ogImage: "https://fonts.floriankarsten.com/content/8-space-grotesk/space-grotesk-thumb-1.png",
+    tags: [TAGS.typography],
+    url: "https://fonts.floriankarsten.com/space-grotesk",
+  },
+  {
     title: "SPACE TYPE GENERATOR",
     category: CATEGORIES.typography,
     description: "A kinetic type generator from kielm",
     tags: [TAGS.typography],
     url: "https://spacetypegenerator.com/",
+  },
+  {
+    title: "Srbija Sans Font",
+    category: CATEGORIES.typography,
+    description:
+      "Tipografsko pismo Srbija je savremeni sans serif sa naglašenom geometrijom, karakterističnom osobinom grotesk pisama kome pripada. Sadrži čiste i neutralne forme u bold težini, oslobođene svakog dekorativnog detalja, zbog čega je lako primenjivo.",
+    favicon:
+      "https://cdn.prod.website-files.com/62fb719824e1dab0d359a279/6305e30c2c2835783ae6fb41_Srbija-Pro-webclip.png",
+    ogImage:
+      "https://cdn.prod.website-files.com/62fb719824e1dab0d359a279/630f2ffa837436fc92ff9474_Srbija%20Sans%20Lat.jpg",
+    tags: [TAGS.typography],
+    url: "https://www.srbijasans.rs/",
   },
   {
     title: "Stack & Justify",
@@ -601,6 +799,8 @@ export const typographyLinks: Tool[] = [
     category: CATEGORIES.typography,
     description:
       "The first open-source foundry. And your spot to learn how to use, make, and work with type.",
+    ogImage: "https://www.theleagueofmoveabletype.com/opengraph-image",
+    tags: [TAGS.typography],
     url: "https://www.theleagueofmoveabletype.com/",
   },
   {
@@ -675,6 +875,8 @@ export const typographyLinks: Tool[] = [
     category: CATEGORIES.typography,
     description:
       "UNCUT.wtf is a free typeface catalogue, focusing on somewhat contemporary type. There are currently 163 typefaces featured.",
+    favicon: "https://uncut.wtf/assets/images/favicon.svg",
+    ogImage: "https://uncut.wtf/assets/images/og_image.jpg",
     tags: [TAGS.typography],
     url: "https://uncut.wtf/",
   },
@@ -710,5 +912,14 @@ export const typographyLinks: Tool[] = [
     subtitle: "Encyclopedia",
     tags: [TAGS.typography],
     url: "https://wiki.wordsoftype.com/",
+  },
+  {
+    title: "X Cicéro",
+    category: CATEGORIES.typography,
+    description:
+      "X Cicéro is a type design workshop offered to students in the graphic design option at ESAD Valence, built around the small collection of wooden type in the school's typographic printing workshop.",
+    ogImage: "https://xcicero.esad-gv.net/images/XC_scan.jpg",
+    tags: [TAGS.typography],
+    url: "https://xcicero.esad-gv.net/index.php",
   },
 ];
