@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowSquareOutIcon, CaretLeftIcon, CaretRightIcon, XIcon } from "@phosphor-icons/react";
+import { ArrowSquareOutIcon, BookmarkSimpleIcon, CaretLeftIcon, CaretRightIcon, XIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { CopyButton } from "@/components/ui/copy-button";
 import { DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import { useBookmarks } from "@/hooks/use-bookmarks";
 import { resourceLinks } from "@/lib/resource-data";
 import { cn, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
 import { Tool, ToolCardProps } from "@/types";
@@ -16,6 +17,9 @@ import { Tool, ToolCardProps } from "@/types";
 export function ResourceDialog({ onTagClickAction, tool }: ToolCardProps) {
   const [activeTool, setActiveTool] = useState(tool);
   const [ogError, setOgError] = useState(false);
+  const { isBookmarked, toggleBookmark } = useBookmarks();
+  const bookmarked = isBookmarked(activeTool);
+
 
   const handleSelectTool = (res: Tool) => {
     setOgError(false);
@@ -255,6 +259,16 @@ export function ResourceDialog({ onTagClickAction, tool }: ToolCardProps) {
                 Open resource <ArrowSquareOutIcon weight="bold" />
               </a>
             </Button>
+            <Button
+              variant={bookmarked ? "default" : "secondary"}
+              size="sm"
+              onClick={() => toggleBookmark(activeTool)}
+              className="shrink-0 border-[1.5px]"
+            >
+              <BookmarkSimpleIcon weight={bookmarked ? "fill" : "bold"} className="size-4" />
+              {bookmarked ? "Saved" : "Save"}
+            </Button>
+
             <CopyButton
               textToCopy={activeTool.url || ""}
               labelName="Copy Link"
@@ -263,6 +277,7 @@ export function ResourceDialog({ onTagClickAction, tool }: ToolCardProps) {
               className="shrink-0 border-[1.5px]"
             />
           </div>
+
 
           <div className="modal-nav-row">
             <ButtonGroup>

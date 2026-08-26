@@ -1,13 +1,14 @@
 "use client";
 
-import { ListIcon, MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
+import { BookmarksSimpleIcon, ListIcon, MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Kbd } from "@/components/ui/kbd";
+import { useBookmarks } from "@/hooks/use-bookmarks";
 import { cn } from "@/lib/utils";
 import { HeaderProps } from "@/types";
 
@@ -18,12 +19,15 @@ const navLinks = {
   3: { exact: true, href: "/about", label: "About" },
 };
 
-export default function AppHeader({
+function AppHeaderInner({
   isScrolled,
   onSearchOpenAction,
 }: HeaderProps & { isScrolled?: boolean }) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const { bookmarksCount } = useBookmarks();
+  const isSavedActive = pathname === "/saved";
+
 
   return (
     <>
@@ -41,7 +45,9 @@ export default function AppHeader({
           {/* Navigation Links */}
           <nav className={cn("nav-links", isOpen && "nav-links--open")}>
             {Object.values(navLinks).map((link) => {
-              const isActive = link.exact ? pathname === link.href : pathname.startsWith(link.href);
+              const isActive =
+                !isSavedActive &&
+                (link.exact ? pathname === link.href : pathname.startsWith(link.href));
 
               return (
                 <Link
@@ -54,6 +60,27 @@ export default function AppHeader({
                 </Link>
               );
             })}
+
+            <Link
+              href="/saved"
+              onClick={() => setIsOpen(false)}
+              className={cn(
+                "nav-link inline-flex items-center gap-1.5",
+                isSavedActive && "nav-link--active",
+              )}
+            >
+              <BookmarksSimpleIcon
+                weight={bookmarksCount > 0 ? "fill" : "bold"}
+                className="size-4 text-current"
+              />
+              <span>Saved</span>
+              {bookmarksCount > 0 && (
+                <span className="bg-ink text-paper dark:bg-paper dark:text-ink inline-flex min-h-4.5 min-w-4.5 shrink-0 items-center justify-center rounded-full px-1 text-center text-[10px] font-extrabold leading-none">
+                  {bookmarksCount}
+                </span>
+              )}
+            </Link>
+
 
             <Button onClick={onSearchOpenAction} size="sm" aria-label="Search" className="nav-cta">
               <MagnifyingGlassIcon weight="bold" className="shrink-0" />
@@ -79,5 +106,13 @@ export default function AppHeader({
         <div className="nav-backdrop" aria-hidden="true" onClick={() => setIsOpen(false)} />
       )}
     </>
+  );
+}
+
+export default function AppHeader(props: HeaderProps & { isScrolled?: boolean }) {
+  return (
+    <Suspense>
+      <AppHeaderInner {...props} />
+    </Suspense>
   );
 }

@@ -16,6 +16,14 @@ export function slugify(str: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
+export function getResourceId(target: { title?: string; slug?: string; url?: string } | string): string {
+  if (typeof target === "string") return target;
+  if (target.slug) return target.slug;
+  if (target.url) return target.url;
+  if (target.title) return slugify(target.title);
+  return "";
+}
+
 export function downloadStringAsFile(content: string, filename: string, mimeType = "text/plain") {
   const blob = new Blob([content], { type: mimeType });
   const url = URL.createObjectURL(blob);
