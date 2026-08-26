@@ -8,26 +8,32 @@ import { Tool } from "@/types";
 const BOOKMARKS_STORAGE_KEY = "syntax_stash_bookmarks";
 const BOOKMARKS_EVENT_KEY = "syntax-stash-bookmarks-updated";
 
+const EMPTY_BOOKMARKS: string[] = [];
+
 let cachedBookmarks: string[] = [];
 let cachedRawString: string | null = null;
 
 function getBookmarksFromStorage(): string[] {
-  if (typeof window === "undefined") return [];
+  if (typeof window === "undefined") return EMPTY_BOOKMARKS;
   try {
     const raw = localStorage.getItem(BOOKMARKS_STORAGE_KEY);
     if (raw === cachedRawString) return cachedBookmarks;
     cachedRawString = raw;
     if (!raw) {
-      cachedBookmarks = [];
+      cachedBookmarks = EMPTY_BOOKMARKS;
       return cachedBookmarks;
     }
     const parsed = JSON.parse(raw);
-    cachedBookmarks = Array.isArray(parsed) ? parsed : [];
+    cachedBookmarks = Array.isArray(parsed) ? parsed : EMPTY_BOOKMARKS;
     return cachedBookmarks;
   } catch (e) {
     console.error("Failed to parse bookmarks from localStorage", e);
-    return [];
+    return EMPTY_BOOKMARKS;
   }
+}
+
+function getServerSnapshot(): string[] {
+  return EMPTY_BOOKMARKS;
 }
 
 function subscribe(callback: () => void) {
@@ -56,8 +62,9 @@ export function useBookmarks() {
   const bookmarks = useSyncExternalStore(
     subscribe,
     getBookmarksFromStorage,
-    () => [],
+    getServerSnapshot,
   );
+
 
   const bookmarkedSet = useMemo(() => new Set(bookmarks), [bookmarks]);
 
