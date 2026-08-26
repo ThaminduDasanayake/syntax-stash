@@ -6,6 +6,7 @@ import { memo, useState } from "react";
 
 import { CardIcon } from "@/components/card-icon";
 import { ResourceDialog } from "@/components/resource-dialog";
+import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useBookmarks } from "@/hooks/use-bookmarks";
@@ -77,9 +78,10 @@ function CardBody({ tool }: ToolCardProps) {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <button
-                      type="button"
-                      className="group/bookmark p-1 text-current opacity-70 transition-opacity hover:opacity-100"
+                    <Button
+                      variant="ghost"
+                      size="icon-xs"
+                      className="group/bookmark border-none bg-transparent text-current opacity-70 transition-opacity hover:bg-transparent hover:opacity-100"
                       onClick={handleBookmarkClick}
                       aria-label={bookmarked ? "Remove bookmark" : "Save bookmark"}
                     >
@@ -87,10 +89,10 @@ function CardBody({ tool }: ToolCardProps) {
                         weight={bookmarked ? "fill" : "bold"}
                         className={cn(
                           "size-4 transition-transform group-hover/bookmark:scale-110",
-                          bookmarked && "fill-amber-500 text-amber-500",
+                          bookmarked && "fill-background-500 text-amber-500",
                         )}
                       />
-                    </button>
+                    </Button>
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>{bookmarked ? "Remove bookmark" : "Save bookmark"}</p>
@@ -125,7 +127,6 @@ function CardBody({ tool }: ToolCardProps) {
     </article>
   );
 }
-
 
 function ToolCardComponent({ onTagClickAction, tool }: ToolCardProps) {
   const [open, setOpen] = useState(false);
