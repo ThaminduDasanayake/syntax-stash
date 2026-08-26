@@ -10,10 +10,8 @@ import ToolCard from "@/components/tool-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useBookmarks } from "@/hooks/use-bookmarks";
-import { cn, getResourceId } from "@/lib/utils";
+import { getResourceId } from "@/lib/utils";
 import { Tool } from "@/types";
-
-
 
 interface FilterSectionProps {
   initialCategory?: string;
@@ -34,7 +32,8 @@ function FilterSectionInner({
   const pathname = usePathname();
   const searchDebounceRef = useRef<NodeJS.Timeout | null>(null);
 
-  const { bookmarkedSet, bookmarksCount } = useBookmarks();
+  const { bookmarkedSet } = useBookmarks();
+
 
   // Read initial params from URL if present
   const initialTags = useMemo(() => {
@@ -147,13 +146,8 @@ function FilterSectionInner({
     syncUrl(nextCategory, selectedTags, matchMode, searchQuery, savedOnly);
   };
 
-  const handleToggleSavedOnly = () => {
-    const nextSaved = !savedOnly;
-    setSavedOnly(nextSaved);
-    syncUrl(activeCategory, selectedTags, matchMode, searchQuery, nextSaved);
-  };
-
   const handleToggleTag = (tag: string) => {
+
     const next = selectedTags.includes(tag)
       ? selectedTags.filter((t) => t !== tag)
       : [...selectedTags, tag];
@@ -278,33 +272,6 @@ function FilterSectionInner({
           </div>
 
           <div className="filter-pills">
-            <button
-              type="button"
-              onClick={handleToggleSavedOnly}
-              className={cn(
-                "group relative inline-flex h-7 items-center gap-1.5 border px-2.5 font-mono text-[11px] font-bold uppercase transition-all duration-150 focus-visible:outline-2 focus-visible:outline-primary cursor-pointer",
-                savedOnly
-                  ? "bg-amber-500 text-black border-amber-600 shadow-xs"
-                  : "bg-background/80 text-foreground border-ink/20 hover:border-amber-500/80 hover:bg-amber-500/10",
-              )}
-            >
-              <BookmarkSimpleIcon
-                weight={savedOnly || bookmarksCount > 0 ? "fill" : "bold"}
-                className={cn("size-3.5", savedOnly ? "text-black" : "text-amber-500")}
-              />
-              <span>Saved</span>
-              {bookmarksCount > 0 && (
-                <span
-                  className={cn(
-                    "ml-0.5 inline-flex items-center justify-center rounded-full px-1.5 py-0.2 text-[10px] font-extrabold leading-none",
-                    savedOnly ? "bg-black text-amber-500" : "bg-amber-500/20 text-amber-600 dark:text-amber-400",
-                  )}
-                >
-                  {bookmarksCount}
-                </span>
-              )}
-            </button>
-
             {categories.map((item, i) => {
               const isActive = activeCategory === item;
               return (
@@ -318,6 +285,7 @@ function FilterSectionInner({
               );
             })}
           </div>
+
 
           <div className="filter-count">
             <span className="filter-count-num">{filteredItems.length}</span>
