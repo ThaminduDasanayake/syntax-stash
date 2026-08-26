@@ -34,37 +34,21 @@ function FilterSectionInner({
 
   const { bookmarkedSet } = useBookmarks();
 
-
-  // Read initial params from URL if present
-  const initialTags = useMemo(() => {
-    const tagParam = searchParams.get("tag");
+  // Derive filter state directly from searchParams for instant navigation sync
+  const savedOnly = searchParams.get("saved") === "true";
+  const catParam = searchParams.get("category");
+  const activeCategory = catParam || initialCategory || null;
+  const tagParam = searchParams.get("tag");
+  const selectedTags = useMemo(() => {
     return tagParam ? tagParam.split(",").filter(Boolean) : [];
-  }, [searchParams]);
+  }, [tagParam]);
+  const matchMode = searchParams.get("mode") === "all" ? "all" : "any";
 
-  const initialMode = useMemo(() => {
-    return searchParams.get("mode") === "all" ? "all" : "any";
-  }, [searchParams]);
-
-  const initialQuery = useMemo(() => {
-    return searchParams.get("q") || "";
-  }, [searchParams]);
-
-  const initialCat = useMemo(() => {
-    return searchParams.get("category") || initialCategory || null;
-  }, [initialCategory, searchParams]);
-
-  const initialSaved = useMemo(() => {
-    return searchParams.get("saved") === "true";
-  }, [searchParams]);
-
-  const [activeCategory, setActiveCategory] = useState<string | null>(initialCat);
-  const [selectedTags, setSelectedTags] = useState<string[]>(initialTags);
-  const [matchMode, setMatchMode] = useState<"any" | "all">(initialMode);
-  const [searchQuery, setSearchQuery] = useState(initialQuery);
-  const [savedOnly, setSavedOnly] = useState<boolean>(initialSaved);
+  const [searchQuery, setSearchQuery] = useState(() => searchParams.get("q") || "");
 
   // Defer heavy list filtering so typing input response is instantaneous (0ms lag)
   const deferredSearchQuery = useDeferredValue(searchQuery);
+
 
   // Sync state to URL without full page reload
   const syncUrl = useCallback(
@@ -112,9 +96,11 @@ function FilterSectionInner({
       const queryString = params.toString();
       const newUrl = queryString ? `${pathname}?${queryString}` : pathname;
       window.history.replaceState(null, "", newUrl);
+      window.dispatchEvent(new Event("popstate"));
     },
     [initialCategory, pathname, savedOnly],
   );
+
 
   // Calculate available tags and their counts scoped to current category
   const availableTags: TagOption[] = useMemo(() => {
@@ -142,28 +128,24 @@ function FilterSectionInner({
 
   const handleCategoryClick = (category: string) => {
     const nextCategory = activeCategory === category ? null : category;
-    setActiveCategory(nextCategory);
     syncUrl(nextCategory, selectedTags, matchMode, searchQuery, savedOnly);
   };
 
   const handleToggleTag = (tag: string) => {
-
     const next = selectedTags.includes(tag)
       ? selectedTags.filter((t) => t !== tag)
       : [...selectedTags, tag];
-    setSelectedTags(next);
     syncUrl(activeCategory, next, matchMode, searchQuery, savedOnly);
   };
 
   const handleClearTags = () => {
-    setSelectedTags([]);
     syncUrl(activeCategory, [], matchMode, searchQuery, savedOnly);
   };
 
   const handleMatchModeChange = (mode: "any" | "all") => {
-    setMatchMode(mode);
     syncUrl(activeCategory, selectedTags, mode, searchQuery, savedOnly);
   };
+
 
   const handleSearchChange = (value: string) => {
     setSearchQuery(value);
@@ -187,13 +169,10 @@ function FilterSectionInner({
     if (searchDebounceRef.current) {
       clearTimeout(searchDebounceRef.current);
     }
-    setActiveCategory(initialCategory || null);
-    setSelectedTags([]);
-    setMatchMode("any");
     setSearchQuery("");
-    setSavedOnly(false);
     syncUrl(initialCategory || null, [], "any", "", false);
   };
+
 
   const filteredItems = useMemo(() => {
     const query = deferredSearchQuery.toLowerCase().trim();
@@ -355,11 +334,12 @@ function FilterSectionInner({
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => setSavedOnly(false)}
+                  onClick={() => syncUrl(activeCategory, selectedTags, matchMode, searchQuery, false)}
                   className="mt-4 font-mono text-xs"
                 >
                   View all resources
                 </Button>
+
               </div>
             ) : (
               <div className="py-16 text-center">
