@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowSquareOutIcon, ToolboxIcon } from "@phosphor-icons/react";
+import { ArrowSquareOutIcon, BookmarkSimpleIcon, ToolboxIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 import { memo, useState } from "react";
 
@@ -8,6 +8,7 @@ import { CardIcon } from "@/components/card-icon";
 import { ResourceDialog } from "@/components/resource-dialog";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { useBookmarks } from "@/hooks/use-bookmarks";
 import { iconMap } from "@/lib/icons";
 import { internalTools } from "@/lib/tools-data";
 import { cn, getCategoryColor } from "@/lib/utils";
@@ -17,6 +18,8 @@ function CardBody({ tool }: ToolCardProps) {
   const isInternal = !!tool.slug;
   const Icon = (tool.icon && iconMap[tool.icon]) || ToolboxIcon;
   const colorClasses = getCategoryColor(tool.category);
+  const { isBookmarked, toggleBookmark } = useBookmarks();
+  const bookmarked = isBookmarked(tool);
 
   let toolNumber = "";
   if (isInternal) {
@@ -28,6 +31,12 @@ function CardBody({ tool }: ToolCardProps) {
       toolNumber = `${currentNumber}/${totalFormatted}`;
     }
   }
+
+  const handleBookmarkClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleBookmark(tool);
+  };
 
   return (
     <article className={cn("card group", colorClasses)} role="button" tabIndex={0}>
@@ -58,13 +67,37 @@ function CardBody({ tool }: ToolCardProps) {
           {tool.subtitle && <p className="card-subtitle">{tool.subtitle}</p>}
           <p className="card-description">{tool.description}</p>
 
-          {!isInternal && (
-            <div className="card-footer">
-              {tool.author ? (
-                <span className="card-author">{tool.author}</span>
-              ) : (
-                <div aria-hidden="true" />
-              )}
+          <div className="card-footer">
+            {tool.author ? (
+              <span className="card-author">{tool.author}</span>
+            ) : (
+              <div aria-hidden="true" />
+            )}
+            <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      type="button"
+                      className="group/bookmark p-1 text-current opacity-70 transition-opacity hover:opacity-100"
+                      onClick={handleBookmarkClick}
+                      aria-label={bookmarked ? "Remove bookmark" : "Save bookmark"}
+                    >
+                      <BookmarkSimpleIcon
+                        weight={bookmarked ? "fill" : "bold"}
+                        className={cn(
+                          "size-4 transition-transform group-hover/bookmark:scale-110",
+                          bookmarked && "fill-amber-500 text-amber-500",
+                        )}
+                      />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{bookmarked ? "Remove bookmark" : "Save bookmark"}</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+
               {!isInternal && (
                 <TooltipProvider>
                   <Tooltip>
@@ -73,7 +106,7 @@ function CardBody({ tool }: ToolCardProps) {
                         href={tool.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group/arrow"
+                        className="group/arrow p-1"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <ArrowSquareOutIcon weight="bold" className="card-link-icon" />
@@ -86,12 +119,13 @@ function CardBody({ tool }: ToolCardProps) {
                 </TooltipProvider>
               )}
             </div>
-          )}
+          </div>
         </div>
       </div>
     </article>
   );
 }
+
 
 function ToolCardComponent({ onTagClickAction, tool }: ToolCardProps) {
   const [open, setOpen] = useState(false);

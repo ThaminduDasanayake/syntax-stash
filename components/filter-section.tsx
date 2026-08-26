@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowsCounterClockwiseIcon, MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
+import { ArrowsCounterClockwiseIcon, BookmarkSimpleIcon, MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useDeferredValue, useMemo, useRef, useState } from "react";
 
@@ -9,7 +9,11 @@ import { TagFilterPopover, TagOption } from "@/components/tag-filter-popover";
 import ToolCard from "@/components/tool-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useBookmarks } from "@/hooks/use-bookmarks";
+import { cn, getResourceId } from "@/lib/utils";
 import { Tool } from "@/types";
+
+
 
 interface FilterSectionProps {
   initialCategory?: string;
@@ -30,6 +34,8 @@ function FilterSectionInner({
   const pathname = usePathname();
   const searchDebounceRef = useRef<NodeJS.Timeout | null>(null);
 
+  const { bookmarkedSet, bookmarksCount } = useBookmarks();
+
   // Read initial params from URL if present
   const initialTags = useMemo(() => {
     const tagParam = searchParams.get("tag");
@@ -48,19 +54,37 @@ function FilterSectionInner({
     return searchParams.get("category") || initialCategory || null;
   }, [initialCategory, searchParams]);
 
+  const initialSaved = useMemo(() => {
+    return searchParams.get("saved") === "true";
+  }, [searchParams]);
+
   const [activeCategory, setActiveCategory] = useState<string | null>(initialCat);
   const [selectedTags, setSelectedTags] = useState<string[]>(initialTags);
   const [matchMode, setMatchMode] = useState<"any" | "all">(initialMode);
   const [searchQuery, setSearchQuery] = useState(initialQuery);
+  const [savedOnly, setSavedOnly] = useState<boolean>(initialSaved);
 
   // Defer heavy list filtering so typing input response is instantaneous (0ms lag)
   const deferredSearchQuery = useDeferredValue(searchQuery);
 
   // Sync state to URL without full page reload
   const syncUrl = useCallback(
-    (cat: string | null, tags: string[], mode: "any" | "all", query: string) => {
+    (
+      cat: string | null,
+      tags: string[],
+      mode: "any" | "all",
+      query: string,
+      saved?: boolean,
+    ) => {
       if (typeof window === "undefined") return;
       const params = new URLSearchParams(window.location.search);
+      const isSaved = saved !== undefined ? saved : savedOnly;
+
+      if (isSaved) {
+        params.set("saved", "true");
+      } else {
+        params.delete("saved");
+      }
 
       if (cat && !initialCategory) {
         params.set("category", cat);
@@ -90,14 +114,18 @@ function FilterSectionInner({
       const newUrl = queryString ? `${pathname}?${queryString}` : pathname;
       window.history.replaceState(null, "", newUrl);
     },
-    [initialCategory, pathname],
+    [initialCategory, pathname, savedOnly],
   );
 
   // Calculate available tags and their counts scoped to current category
   const availableTags: TagOption[] = useMemo(() => {
-    const scopedItems = activeCategory
+    let scopedItems = activeCategory
       ? items.filter((tool) => tool.category === activeCategory)
       : items;
+
+    if (savedOnly) {
+      scopedItems = scopedItems.filter((tool) => bookmarkedSet.has(getResourceId(tool)));
+    }
 
     const counts = new Map<string, number>();
     for (const tool of scopedItems) {
@@ -111,12 +139,18 @@ function FilterSectionInner({
     return Array.from(counts.entries())
       .map(([name, count]) => ({ count, name }))
       .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
-  }, [activeCategory, items]);
+  }, [activeCategory, bookmarkedSet, items, savedOnly]);
 
   const handleCategoryClick = (category: string) => {
     const nextCategory = activeCategory === category ? null : category;
     setActiveCategory(nextCategory);
-    syncUrl(nextCategory, selectedTags, matchMode, searchQuery);
+    syncUrl(nextCategory, selectedTags, matchMode, searchQuery, savedOnly);
+  };
+
+  const handleToggleSavedOnly = () => {
+    const nextSaved = !savedOnly;
+    setSavedOnly(nextSaved);
+    syncUrl(activeCategory, selectedTags, matchMode, searchQuery, nextSaved);
   };
 
   const handleToggleTag = (tag: string) => {
@@ -124,17 +158,17 @@ function FilterSectionInner({
       ? selectedTags.filter((t) => t !== tag)
       : [...selectedTags, tag];
     setSelectedTags(next);
-    syncUrl(activeCategory, next, matchMode, searchQuery);
+    syncUrl(activeCategory, next, matchMode, searchQuery, savedOnly);
   };
 
   const handleClearTags = () => {
     setSelectedTags([]);
-    syncUrl(activeCategory, [], matchMode, searchQuery);
+    syncUrl(activeCategory, [], matchMode, searchQuery, savedOnly);
   };
 
   const handleMatchModeChange = (mode: "any" | "all") => {
     setMatchMode(mode);
-    syncUrl(activeCategory, selectedTags, mode, searchQuery);
+    syncUrl(activeCategory, selectedTags, mode, searchQuery, savedOnly);
   };
 
   const handleSearchChange = (value: string) => {
@@ -143,7 +177,7 @@ function FilterSectionInner({
       clearTimeout(searchDebounceRef.current);
     }
     searchDebounceRef.current = setTimeout(() => {
-      syncUrl(activeCategory, selectedTags, matchMode, value);
+      syncUrl(activeCategory, selectedTags, matchMode, value, savedOnly);
     }, 200);
   };
 
@@ -152,7 +186,7 @@ function FilterSectionInner({
       clearTimeout(searchDebounceRef.current);
     }
     setSearchQuery("");
-    syncUrl(activeCategory, selectedTags, matchMode, "");
+    syncUrl(activeCategory, selectedTags, matchMode, "", savedOnly);
   };
 
   const handleResetAll = () => {
@@ -163,13 +197,20 @@ function FilterSectionInner({
     setSelectedTags([]);
     setMatchMode("any");
     setSearchQuery("");
-    syncUrl(initialCategory || null, [], "any", "");
+    setSavedOnly(false);
+    syncUrl(initialCategory || null, [], "any", "", false);
   };
 
   const filteredItems = useMemo(() => {
     const query = deferredSearchQuery.toLowerCase().trim();
 
     return items.filter((tool) => {
+      // Saved filter
+      if (savedOnly) {
+        const id = getResourceId(tool);
+        if (!bookmarkedSet.has(id)) return false;
+      }
+
       // Category filter
       if (activeCategory && tool.category !== activeCategory) {
         return false;
@@ -198,7 +239,7 @@ function FilterSectionInner({
         tool.category.toLowerCase().includes(query)
       );
     });
-  }, [activeCategory, deferredSearchQuery, items, matchMode, selectedTags]);
+  }, [activeCategory, bookmarkedSet, deferredSearchQuery, items, matchMode, savedOnly, selectedTags]);
 
   // Group the filtered items by category
   const groupedItems = useMemo(() => {
@@ -237,6 +278,33 @@ function FilterSectionInner({
           </div>
 
           <div className="filter-pills">
+            <button
+              type="button"
+              onClick={handleToggleSavedOnly}
+              className={cn(
+                "group relative inline-flex h-7 items-center gap-1.5 border px-2.5 font-mono text-[11px] font-bold uppercase transition-all duration-150 focus-visible:outline-2 focus-visible:outline-primary cursor-pointer",
+                savedOnly
+                  ? "bg-amber-500 text-black border-amber-600 shadow-xs"
+                  : "bg-background/80 text-foreground border-ink/20 hover:border-amber-500/80 hover:bg-amber-500/10",
+              )}
+            >
+              <BookmarkSimpleIcon
+                weight={savedOnly || bookmarksCount > 0 ? "fill" : "bold"}
+                className={cn("size-3.5", savedOnly ? "text-black" : "text-amber-500")}
+              />
+              <span>Saved</span>
+              {bookmarksCount > 0 && (
+                <span
+                  className={cn(
+                    "ml-0.5 inline-flex items-center justify-center rounded-full px-1.5 py-0.2 text-[10px] font-extrabold leading-none",
+                    savedOnly ? "bg-black text-amber-500" : "bg-amber-500/20 text-amber-600 dark:text-amber-400",
+                  )}
+                >
+                  {bookmarksCount}
+                </span>
+              )}
+            </button>
+
             {categories.map((item, i) => {
               const isActive = activeCategory === item;
               return (
@@ -256,6 +324,7 @@ function FilterSectionInner({
             <span> of {items.length}</span>
           </div>
         </div>
+
 
         {/* Active Tag Chips Bar */}
         {selectedTags.length > 0 && (
@@ -307,22 +376,41 @@ function FilterSectionInner({
       <div className="card-body">
         <div className="section-inner">
           {Object.keys(groupedItems).length === 0 ? (
-            <div className="py-16 text-center">
-              <p className="font-mono text-sm opacity-60">
-                No {itemLabel.toLowerCase()} found matching your filters.
-              </p>
-              {(selectedTags.length > 0 || searchQuery || activeCategory) && (
+            savedOnly ? (
+              <div className="py-16 text-center">
+                <BookmarkSimpleIcon weight="fill" className="mx-auto mb-3 size-10 text-amber-500/50" />
+                <p className="font-mono text-base font-bold uppercase">No saved resources yet</p>
+                <p className="font-mono text-xs opacity-60 mt-1 max-w-sm mx-auto">
+                  Click the bookmark icon on any resource card to save it here for fast offline access.
+                </p>
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={handleResetAll}
+                  onClick={() => setSavedOnly(false)}
                   className="mt-4 font-mono text-xs"
                 >
-                  Reset all filters
+                  View all resources
                 </Button>
-              )}
-            </div>
+              </div>
+            ) : (
+              <div className="py-16 text-center">
+                <p className="font-mono text-sm opacity-60">
+                  No {itemLabel.toLowerCase()} found matching your filters.
+                </p>
+                {(selectedTags.length > 0 || searchQuery || activeCategory) && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleResetAll}
+                    className="mt-4 font-mono text-xs"
+                  >
+                    Reset all filters
+                  </Button>
+                )}
+              </div>
+            )
           ) : (
+
             Object.entries(groupedItems).map(([category, catItems]) => (
               <div key={category} className="cat-section w-full">
                 <div className="cat-divider flex flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:gap-4">

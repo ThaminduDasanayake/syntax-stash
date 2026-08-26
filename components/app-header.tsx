@@ -1,13 +1,14 @@
 "use client";
 
-import { ListIcon, MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
+import { BookmarkSimpleIcon, ListIcon, MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { Suspense, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Kbd } from "@/components/ui/kbd";
+import { useBookmarks } from "@/hooks/use-bookmarks";
 import { cn } from "@/lib/utils";
 import { HeaderProps } from "@/types";
 
@@ -18,12 +19,15 @@ const navLinks = {
   3: { exact: true, href: "/about", label: "About" },
 };
 
-export default function AppHeader({
+function AppHeaderInner({
   isScrolled,
   onSearchOpenAction,
 }: HeaderProps & { isScrolled?: boolean }) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
+  const { bookmarksCount } = useBookmarks();
+  const isSavedActive = pathname === "/resources" && searchParams?.get("saved") === "true";
 
   return (
     <>
@@ -41,7 +45,9 @@ export default function AppHeader({
           {/* Navigation Links */}
           <nav className={cn("nav-links", isOpen && "nav-links--open")}>
             {Object.values(navLinks).map((link) => {
-              const isActive = link.exact ? pathname === link.href : pathname.startsWith(link.href);
+              const isActive =
+                !isSavedActive &&
+                (link.exact ? pathname === link.href : pathname.startsWith(link.href));
 
               return (
                 <Link
@@ -54,6 +60,26 @@ export default function AppHeader({
                 </Link>
               );
             })}
+
+            <Link
+              href="/resources?saved=true"
+              onClick={() => setIsOpen(false)}
+              className={cn(
+                "nav-link inline-flex items-center gap-1.5",
+                isSavedActive && "nav-link--active",
+              )}
+            >
+              <BookmarkSimpleIcon
+                weight={bookmarksCount > 0 ? "fill" : "bold"}
+                className={cn("size-4", bookmarksCount > 0 && "text-amber-500")}
+              />
+              <span>Saved</span>
+              {bookmarksCount > 0 && (
+                <span className="bg-amber-500 text-black text-[10px] font-extrabold px-1.5 py-0.2 rounded-full leading-none">
+                  {bookmarksCount}
+                </span>
+              )}
+            </Link>
 
             <Button onClick={onSearchOpenAction} size="sm" aria-label="Search" className="nav-cta">
               <MagnifyingGlassIcon weight="bold" className="shrink-0" />
@@ -81,3 +107,12 @@ export default function AppHeader({
     </>
   );
 }
+
+export default function AppHeader(props: HeaderProps & { isScrolled?: boolean }) {
+  return (
+    <Suspense>
+      <AppHeaderInner {...props} />
+    </Suspense>
+  );
+}
+
