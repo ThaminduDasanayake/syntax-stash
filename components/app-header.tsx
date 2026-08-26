@@ -1,6 +1,6 @@
 "use client";
 
-import { BookmarkSimpleIcon, ListIcon, MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
+import { BookmarksSimpleIcon, ListIcon, MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -69,13 +69,13 @@ function AppHeaderInner({
                 isSavedActive && "nav-link--active",
               )}
             >
-              <BookmarkSimpleIcon
+              <BookmarksSimpleIcon
                 weight={bookmarksCount > 0 ? "fill" : "bold"}
-                className={cn("size-4", bookmarksCount > 0 && "text-amber-500")}
+                className="size-4 text-current"
               />
               <span>Saved</span>
               {bookmarksCount > 0 && (
-                <span className="bg-amber-500 text-black text-[10px] font-extrabold px-1.5 py-0.2 rounded-full leading-none">
+                <span className="bg-ink text-paper dark:bg-paper dark:text-ink inline-flex min-h-4.5 min-w-4.5 shrink-0 items-center justify-center rounded-full px-1 text-center text-[10px] leading-none font-extrabold">
                   {bookmarksCount}
                 </span>
               )}
@@ -115,4 +115,3 @@ export default function AppHeader(props: HeaderProps & { isScrolled?: boolean })
     </Suspense>
   );
 }
-

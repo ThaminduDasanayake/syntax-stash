@@ -263,11 +263,12 @@ export function ResourceDialog({ onTagClickAction, tool }: ToolCardProps) {
               variant={bookmarked ? "default" : "secondary"}
               size="sm"
               onClick={() => toggleBookmark(activeTool)}
-              className={cn("shrink-0 border-[1.5px]", bookmarked && "bg-amber-500 hover:bg-amber-600 text-black border-amber-600")}
+              className="shrink-0 border-[1.5px]"
             >
               <BookmarkSimpleIcon weight={bookmarked ? "fill" : "bold"} className="size-4" />
               {bookmarked ? "Saved" : "Save"}
             </Button>
+
             <CopyButton
               textToCopy={activeTool.url || ""}
               labelName="Copy Link"

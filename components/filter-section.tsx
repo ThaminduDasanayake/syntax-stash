@@ -346,8 +346,9 @@ function FilterSectionInner({
           {Object.keys(groupedItems).length === 0 ? (
             savedOnly ? (
               <div className="py-16 text-center">
-                <BookmarkSimpleIcon weight="fill" className="mx-auto mb-3 size-10 text-amber-500/50" />
+                <BookmarkSimpleIcon weight="fill" className="mx-auto mb-3 size-10 text-ink/40 dark:text-paper/40" />
                 <p className="font-mono text-base font-bold uppercase">No saved resources yet</p>
+
                 <p className="font-mono text-xs opacity-60 mt-1 max-w-sm mx-auto">
                   Click the bookmark icon on any resource card to save it here for fast offline access.
                 </p>

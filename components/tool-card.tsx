@@ -81,21 +81,21 @@ function CardBody({ tool }: ToolCardProps) {
                     <Button
                       variant="ghost"
                       size="icon-xs"
-                      className="group/bookmark border-none bg-transparent text-current opacity-70 transition-opacity hover:bg-transparent hover:opacity-100"
+                      className="group/bookmark border-none bg-transparent text-current hover:bg-transparent"
                       onClick={handleBookmarkClick}
-                      aria-label={bookmarked ? "Remove bookmark" : "Save bookmark"}
+                      aria-label={bookmarked ? "Remove" : "Save"}
                     >
                       <BookmarkSimpleIcon
                         weight={bookmarked ? "fill" : "bold"}
                         className={cn(
-                          "size-4 transition-transform group-hover/bookmark:scale-110",
-                          bookmarked && "fill-background-500 text-amber-500",
+                          "size-5 transition-transform group-hover/bookmark:scale-110",
+                          bookmarked ? "fill-current text-current" : "",
                         )}
                       />
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>{bookmarked ? "Remove bookmark" : "Save bookmark"}</p>
+                    <p>{bookmarked ? "Remove" : "Save"}</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
