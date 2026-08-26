@@ -59,11 +59,7 @@ function subscribe(callback: () => void) {
 }
 
 export function useBookmarks() {
-  const bookmarks = useSyncExternalStore(
-    subscribe,
-    getBookmarksFromStorage,
-    getServerSnapshot,
-  );
+  const bookmarks = useSyncExternalStore(subscribe, getBookmarksFromStorage, getServerSnapshot);
 
   const bookmarkedSet = useMemo(() => new Set(bookmarks), [bookmarks]);
 
@@ -117,23 +113,50 @@ export function useBookmarks() {
     downloadStringAsFile(data, "syntax-stash-bookmarks.json", "application/json");
   }, [bookmarks]);
 
-  const importBookmarks = useCallback((jsonContent: string): boolean => {
-    if (typeof window === "undefined") return false;
-    try {
-      const parsed = JSON.parse(jsonContent);
-      if (Array.isArray(parsed) && parsed.every((id) => typeof id === "string")) {
-        const merged = Array.from(new Set([...cachedBookmarks, ...parsed]));
+  const importBookmarks = useCallback(
+    (jsonContent: string): { count: number; error?: string; success: boolean } => {
+      if (typeof window === "undefined")
+        return { count: 0, error: "Window unavailable", success: false };
+      try {
+        const parsed = JSON.parse(jsonContent);
+        if (!Array.isArray(parsed)) {
+          return {
+            count: 0,
+            error: "JSON file must contain an array of bookmark IDs.",
+            success: false,
+          };
+        }
+        const validIds = parsed.filter(
+          (id): id is string => typeof id === "string" && id.trim().length > 0,
+        );
+        if (validIds.length === 0) {
+          return {
+            count: 0,
+            error: "No valid bookmark IDs found in the file.",
+            success: false,
+          };
+        }
+        const current = getBookmarksFromStorage();
+        const merged = Array.from(new Set([...current, ...validIds]));
+        const addedCount = merged.length - current.length;
+
         localStorage.setItem(BOOKMARKS_STORAGE_KEY, JSON.stringify(merged));
         cachedRawString = JSON.stringify(merged);
         cachedBookmarks = merged;
         window.dispatchEvent(new Event(BOOKMARKS_EVENT_KEY));
-        return true;
+        return { count: addedCount, success: true };
+      } catch (e) {
+        console.error("Failed to import bookmarks", e);
+        return {
+          count: 0,
+          error: "Invalid JSON format. Please verify the file syntax.",
+          success: false,
+        };
       }
-    } catch (e) {
-      console.error("Failed to import bookmarks", e);
-    }
-    return false;
-  }, []);
+    },
+    [],
+  );
+
 
   return {
     bookmarkedSet,
@@ -146,4 +169,3 @@ export function useBookmarks() {
     toggleBookmark,
   };
 }
-

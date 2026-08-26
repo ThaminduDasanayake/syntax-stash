@@ -1,6 +1,12 @@
 "use client";
 
-import { ArrowSquareOutIcon, BookmarkSimpleIcon, CaretLeftIcon, CaretRightIcon, XIcon } from "@phosphor-icons/react";
+import {
+  ArrowSquareOutIcon,
+  BookmarkSimpleIcon,
+  CaretLeftIcon,
+  CaretRightIcon,
+  XIcon,
+} from "@phosphor-icons/react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
@@ -19,7 +25,6 @@ export function ResourceDialog({ onTagClickAction, tool }: ToolCardProps) {
   const [ogError, setOgError] = useState(false);
   const { isBookmarked, toggleBookmark } = useBookmarks();
   const bookmarked = isBookmarked(activeTool);
-
 
   const handleSelectTool = (res: Tool) => {
     setOgError(false);
@@ -277,7 +282,6 @@ export function ResourceDialog({ onTagClickAction, tool }: ToolCardProps) {
               className="shrink-0 border-[1.5px]"
             />
           </div>
-
 
           <div className="modal-nav-row">
             <ButtonGroup>

@@ -1,6 +1,11 @@
 "use client";
 
-import { ArrowsCounterClockwiseIcon, BookmarkSimpleIcon, MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
+import {
+  ArrowsCounterClockwiseIcon,
+  BookmarkSimpleIcon,
+  MagnifyingGlassIcon,
+  XIcon,
+} from "@phosphor-icons/react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useDeferredValue, useMemo, useRef, useState } from "react";
 
@@ -49,16 +54,9 @@ function FilterSectionInner({
   // Defer heavy list filtering so typing input response is instantaneous (0ms lag)
   const deferredSearchQuery = useDeferredValue(searchQuery);
 
-
   // Sync state to URL without full page reload
   const syncUrl = useCallback(
-    (
-      cat: string | null,
-      tags: string[],
-      mode: "any" | "all",
-      query: string,
-      saved?: boolean,
-    ) => {
+    (cat: string | null, tags: string[], mode: "any" | "all", query: string, saved?: boolean) => {
       if (typeof window === "undefined") return;
       const params = new URLSearchParams(window.location.search);
       const isSaved = saved !== undefined ? saved : savedOnly;
@@ -100,7 +98,6 @@ function FilterSectionInner({
     },
     [initialCategory, pathname, savedOnly],
   );
-
 
   // Calculate available tags and their counts scoped to current category
   const availableTags: TagOption[] = useMemo(() => {
@@ -146,7 +143,6 @@ function FilterSectionInner({
     syncUrl(activeCategory, selectedTags, mode, searchQuery, savedOnly);
   };
 
-
   const handleSearchChange = (value: string) => {
     setSearchQuery(value);
     if (searchDebounceRef.current) {
@@ -172,7 +168,6 @@ function FilterSectionInner({
     setSearchQuery("");
     syncUrl(initialCategory || null, [], "any", "", false);
   };
-
 
   const filteredItems = useMemo(() => {
     const query = deferredSearchQuery.toLowerCase().trim();
@@ -212,7 +207,15 @@ function FilterSectionInner({
         tool.category.toLowerCase().includes(query)
       );
     });
-  }, [activeCategory, bookmarkedSet, deferredSearchQuery, items, matchMode, savedOnly, selectedTags]);
+  }, [
+    activeCategory,
+    bookmarkedSet,
+    deferredSearchQuery,
+    items,
+    matchMode,
+    savedOnly,
+    selectedTags,
+  ]);
 
   // Group the filtered items by category
   const groupedItems = useMemo(() => {
@@ -265,13 +268,11 @@ function FilterSectionInner({
             })}
           </div>
 
-
           <div className="filter-count">
             <span className="filter-count-num">{filteredItems.length}</span>
             <span> of {items.length}</span>
           </div>
         </div>
-
 
         {/* Active Tag Chips Bar */}
         {selectedTags.length > 0 && (
@@ -325,21 +326,26 @@ function FilterSectionInner({
           {Object.keys(groupedItems).length === 0 ? (
             savedOnly ? (
               <div className="py-16 text-center">
-                <BookmarkSimpleIcon weight="fill" className="mx-auto mb-3 size-10 text-ink/40 dark:text-paper/40" />
+                <BookmarkSimpleIcon
+                  weight="fill"
+                  className="text-ink/40 dark:text-paper/40 mx-auto mb-3 size-10"
+                />
                 <p className="font-mono text-base font-bold uppercase">No saved resources yet</p>
 
-                <p className="font-mono text-xs opacity-60 mt-1 max-w-sm mx-auto">
-                  Click the bookmark icon on any resource card to save it here for fast offline access.
+                <p className="mx-auto mt-1 max-w-sm font-mono text-xs opacity-60">
+                  Click the bookmark icon on any resource card to save it here for fast offline
+                  access.
                 </p>
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => syncUrl(activeCategory, selectedTags, matchMode, searchQuery, false)}
+                  onClick={() =>
+                    syncUrl(activeCategory, selectedTags, matchMode, searchQuery, false)
+                  }
                   className="mt-4 font-mono text-xs"
                 >
                   View all resources
                 </Button>
-
               </div>
             ) : (
               <div className="py-16 text-center">
@@ -359,7 +365,6 @@ function FilterSectionInner({
               </div>
             )
           ) : (
-
             Object.entries(groupedItems).map(([category, catItems]) => (
               <div key={category} className="cat-section w-full">
                 <div className="cat-divider flex flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:gap-4">

@@ -28,7 +28,6 @@ function AppHeaderInner({
   const { bookmarksCount } = useBookmarks();
   const isSavedActive = pathname === "/saved";
 
-
   return (
     <>
       <header className={cn("site-nav", isScrolled && "site-nav--scrolled")}>
@@ -75,12 +74,11 @@ function AppHeaderInner({
               />
               <span>Saved</span>
               {bookmarksCount > 0 && (
-                <span className="bg-ink text-paper dark:bg-paper dark:text-ink inline-flex min-h-4.5 min-w-4.5 shrink-0 items-center justify-center rounded-full px-1 text-center text-[10px] font-extrabold leading-none">
+                <span className="bg-ink text-paper dark:bg-paper dark:text-ink inline-flex min-h-4.5 min-w-4.5 shrink-0 items-center justify-center rounded-full px-1 text-center text-[10px] leading-none font-extrabold">
                   {bookmarksCount}
                 </span>
               )}
             </Link>
-
 
             <Button onClick={onSearchOpenAction} size="sm" aria-label="Search" className="nav-cta">
               <MagnifyingGlassIcon weight="bold" className="shrink-0" />

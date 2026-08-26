@@ -16,7 +16,9 @@ export function slugify(str: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
-export function getResourceId(target: { title?: string; slug?: string; url?: string } | string): string {
+export function getResourceId(
+  target: { title?: string; slug?: string; url?: string } | string,
+): string {
   if (typeof target === "string") return target;
   if (target.slug) return target.slug;
   if (target.url) return target.url;
