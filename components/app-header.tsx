@@ -70,25 +70,27 @@ function AppHeaderInner({
               );
             })}
 
-            <Link
-              href="/saved"
-              onClick={() => setIsOpen(false)}
-              className={cn(
-                "nav-link inline-flex items-center gap-1.5",
-                isSavedActive && "nav-link--active",
-              )}
-            >
-              <BookmarksSimpleIcon
-                weight={bookmarksCount > 0 ? "fill" : "bold"}
-                className="size-4 text-current"
-              />
-              <span>Saved</span>
-              {bookmarksCount > 0 && (
-                <span className="bg-ink text-paper dark:bg-paper dark:text-ink inline-flex min-h-4.5 min-w-4.5 shrink-0 items-center justify-center rounded-full px-1 text-center text-[10px] font-extrabold leading-none">
-                  {bookmarksCount}
-                </span>
-              )}
-            </Link>
+            {session && (
+              <Link
+                href="/saved"
+                onClick={() => setIsOpen(false)}
+                className={cn(
+                  "nav-link inline-flex items-center gap-1.5",
+                  isSavedActive && "nav-link--active",
+                )}
+              >
+                <BookmarksSimpleIcon
+                  weight={bookmarksCount > 0 ? "fill" : "bold"}
+                  className="size-4 text-current"
+                />
+                <span>Saved</span>
+                {bookmarksCount > 0 && (
+                  <span className="bg-ink text-paper dark:bg-paper dark:text-ink inline-flex min-h-4.5 min-w-4.5 shrink-0 items-center justify-center rounded-full px-1 text-center text-[10px] font-extrabold leading-none">
+                    {bookmarksCount}
+                  </span>
+                )}
+              </Link>
+            )}
 
             {session ? (
               <Button
