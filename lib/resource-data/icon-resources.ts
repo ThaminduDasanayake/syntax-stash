@@ -586,7 +586,7 @@ export const iconLinks: Tool[] = [
   },
   {
     title: "Smallbits",
-    category: CATEGORIES.frontend,
+    category: CATEGORIES.icons,
     description:
       "290+ pixelated icons on a limited 8×8 grid where every point counts. Free for personal and commercial use.",
     subtitle: "290+ pixelated icons on an 8×8 grid",

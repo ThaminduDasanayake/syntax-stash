@@ -414,7 +414,7 @@ export const frontendLinks: Tool[] = [
   {
     title: "Stack Match",
     author: "Alicia Sykes",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.frontend,
     description:
       "Compare 18+ frontend frameworks including React, Vue, Angular, Svelte. Interactive tool with performance metrics, bundle size analysis, and scoring system. Make data-driven decisions for your next project.",
     favicon: "https://stack-match.as93.net/apple-touch-icon.png",
@@ -447,7 +447,7 @@ export const frontendLinks: Tool[] = [
   {
     title: "Takumi",
     author: "Kane Wang",
-    category: CATEGORIES.dev,
+    category: CATEGORIES.frontend,
     description: "JSX to pixels in Rust. Node, Workers, browser. No headless Chrome.",
     ogImage:
       "https://raw.githubusercontent.com/kane50613/takumi/master/example/twitter-images/output/og-image.png",

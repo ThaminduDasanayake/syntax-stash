@@ -197,7 +197,7 @@ export const documentationLinks: Tool[] = [
   {
     title: "Matter.",
     author: "Hayk An",
-    category: CATEGORIES.frontend,
+    category: CATEGORIES.docs,
     description: "A task manager that highlights what matters most to you",
     favicon: "https://hihayk.github.io/matter/favicon.ico",
     ogImage: "https://raw.githubusercontent.com/hihayk/matter/master/docs/shot.png",
