@@ -5,6 +5,7 @@ import { Bricolage_Grotesque, Instrument_Serif, Inter, JetBrains_Mono } from "ne
 import { ReactNode } from "react";
 
 import AppLayout from "@/components/app-layout";
+import { SessionProvider } from "@/components/providers/session-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -79,13 +80,16 @@ export default function RootLayout({
       )}
     >
       <body className="antialiased">
-        <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
-          <TooltipProvider>
-            <AppLayout>{children}</AppLayout>
-            <Toaster />
-          </TooltipProvider>
-        </ThemeProvider>
+        <SessionProvider>
+          <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
+            <TooltipProvider>
+              <AppLayout>{children}</AppLayout>
+              <Toaster />
+            </TooltipProvider>
+          </ThemeProvider>
+        </SessionProvider>
       </body>
     </html>
   );
 }
+

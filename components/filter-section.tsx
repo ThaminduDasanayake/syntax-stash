@@ -56,7 +56,14 @@ function FilterSectionInner({
 
   // Sync state to URL without full page reload
   const syncUrl = useCallback(
-    (cat: string | null, tags: string[], mode: "any" | "all", query: string, saved?: boolean) => {
+    (
+      cat: string | null,
+      tags: string[],
+      mode: "any" | "all",
+      query: string,
+      saved?: boolean,
+      dispatchPopstate: boolean = true,
+    ) => {
       if (typeof window === "undefined") return;
       const params = new URLSearchParams(window.location.search);
       const isSaved = saved !== undefined ? saved : savedOnly;
@@ -94,7 +101,9 @@ function FilterSectionInner({
       const queryString = params.toString();
       const newUrl = queryString ? `${pathname}?${queryString}` : pathname;
       window.history.replaceState(null, "", newUrl);
-      window.dispatchEvent(new Event("popstate"));
+      if (dispatchPopstate) {
+        window.dispatchEvent(new Event("popstate"));
+      }
     },
     [initialCategory, pathname, savedOnly],
   );
@@ -149,8 +158,8 @@ function FilterSectionInner({
       clearTimeout(searchDebounceRef.current);
     }
     searchDebounceRef.current = setTimeout(() => {
-      syncUrl(activeCategory, selectedTags, matchMode, value, savedOnly);
-    }, 200);
+      syncUrl(activeCategory, selectedTags, matchMode, value, savedOnly, false);
+    }, 300);
   };
 
   const handleClearSearch = () => {

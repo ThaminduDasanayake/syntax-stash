@@ -1,14 +1,16 @@
 "use client";
 
-import { BookmarksSimpleIcon, ListIcon, MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
+import { BookmarksSimpleIcon, ListIcon, MagnifyingGlassIcon, SignOutIcon, UserIcon, XIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Suspense, useState } from "react";
 
+import { AuthModal } from "@/components/auth-modal";
 import { Button } from "@/components/ui/button";
 import { Kbd } from "@/components/ui/kbd";
-import { useBookmarks } from "@/hooks/use-bookmarks";
+import { resetBookmarkCache, useBookmarks } from "@/hooks/use-bookmarks";
+import { signOut, useSession } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import { HeaderProps } from "@/types";
 
@@ -25,11 +27,19 @@ function AppHeaderInner({
 }: HeaderProps & { isScrolled?: boolean }) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const { data: session } = useSession();
   const { bookmarksCount } = useBookmarks();
   const isSavedActive = pathname === "/saved";
 
+  const handleSignOut = async () => {
+    resetBookmarkCache();
+    await signOut();
+  };
+
   return (
     <>
+      <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
       <header className={cn("site-nav", isScrolled && "site-nav--scrolled")}>
         <div className="nav-inner">
           {/* Logo */}
@@ -74,11 +84,33 @@ function AppHeaderInner({
               />
               <span>Saved</span>
               {bookmarksCount > 0 && (
-                <span className="bg-ink text-paper dark:bg-paper dark:text-ink inline-flex min-h-4.5 min-w-4.5 shrink-0 items-center justify-center rounded-full px-1 text-center text-[10px] leading-none font-extrabold">
+                <span className="bg-ink text-paper dark:bg-paper dark:text-ink inline-flex min-h-4.5 min-w-4.5 shrink-0 items-center justify-center rounded-full px-1 text-center text-[10px] font-extrabold leading-none">
                   {bookmarksCount}
                 </span>
               )}
             </Link>
+
+            {session ? (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleSignOut}
+                className="font-mono text-xs font-bold uppercase tracking-wider text-muted-foreground hover:text-foreground"
+                title={`Signed in as ${session?.user?.name || session?.user?.email}`}
+              >
+                <SignOutIcon weight="bold" /> Sign Out
+              </Button>
+            ) : (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setAuthModalOpen(true)}
+                className="border-ink/40 font-mono text-xs font-bold tracking-wider"
+              >
+                <UserIcon weight="bold" /> Sign In
+              </Button>
+            )}
+
 
             <Button onClick={onSearchOpenAction} size="sm" aria-label="Search" className="nav-cta">
               <MagnifyingGlassIcon weight="bold" className="shrink-0" />

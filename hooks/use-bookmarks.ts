@@ -1,65 +1,78 @@
 "use client";
 
-import { useCallback, useMemo, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useMemo, useSyncExternalStore } from "react";
 
+import { useSession } from "@/lib/auth-client";
 import { downloadStringAsFile, getResourceId } from "@/lib/utils";
 import { Tool } from "@/types";
 
-const BOOKMARKS_STORAGE_KEY = "syntax_stash_bookmarks";
-const BOOKMARKS_EVENT_KEY = "syntax-stash-bookmarks-updated";
-
-const EMPTY_BOOKMARKS: string[] = [];
+const CLOUD_BOOKMARKS_EVENT_KEY = "syntax-stash-cloud-bookmarks-updated";
+const EMPTY_ARRAY: string[] = [];
 
 let cachedBookmarks: string[] = [];
-let cachedRawString: string | null = null;
+let isFetching = false;
 
-function getBookmarksFromStorage(): string[] {
-  if (typeof window === "undefined") return EMPTY_BOOKMARKS;
-  try {
-    const raw = localStorage.getItem(BOOKMARKS_STORAGE_KEY);
-    if (raw === cachedRawString) return cachedBookmarks;
-    cachedRawString = raw;
-    if (!raw) {
-      cachedBookmarks = EMPTY_BOOKMARKS;
-      return cachedBookmarks;
-    }
-    const parsed = JSON.parse(raw);
-    cachedBookmarks = Array.isArray(parsed) ? parsed : EMPTY_BOOKMARKS;
-    return cachedBookmarks;
-  } catch (e) {
-    console.error("Failed to parse bookmarks from localStorage", e);
-    return EMPTY_BOOKMARKS;
-  }
+function getSnapshot(): string[] {
+  return cachedBookmarks;
 }
 
 function getServerSnapshot(): string[] {
-  return EMPTY_BOOKMARKS;
+  return EMPTY_ARRAY;
+}
+
+export function notifySubscribers() {
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new Event(CLOUD_BOOKMARKS_EVENT_KEY));
+  }
+}
+
+export function resetBookmarkCache() {
+  cachedBookmarks = EMPTY_ARRAY;
+  notifySubscribers();
 }
 
 function subscribe(callback: () => void) {
   if (typeof window === "undefined") return () => {};
 
-  const handleStorage = (e: StorageEvent) => {
-    if (e.key === BOOKMARKS_STORAGE_KEY || e.key === null) {
-      callback();
-    }
-  };
-
-  const handleCustomEvent = () => {
-    callback();
-  };
-
-  window.addEventListener("storage", handleStorage);
-  window.addEventListener(BOOKMARKS_EVENT_KEY, handleCustomEvent);
+  window.addEventListener(CLOUD_BOOKMARKS_EVENT_KEY, callback);
+  window.addEventListener("focus", fetchCloudBookmarks);
 
   return () => {
-    window.removeEventListener("storage", handleStorage);
-    window.removeEventListener(BOOKMARKS_EVENT_KEY, handleCustomEvent);
+    window.removeEventListener(CLOUD_BOOKMARKS_EVENT_KEY, callback);
+    window.removeEventListener("focus", fetchCloudBookmarks);
   };
 }
 
+async function fetchCloudBookmarks() {
+  if (typeof window === "undefined" || isFetching) return;
+  isFetching = true;
+  try {
+    const res = await fetch("/api/bookmarks", { cache: "no-store" });
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data.bookmarks)) {
+        cachedBookmarks = data.bookmarks;
+        notifySubscribers();
+      }
+    } else if (res.status === 401) {
+      cachedBookmarks = EMPTY_ARRAY;
+      notifySubscribers();
+    }
+  } catch (e) {
+    console.error("Failed to fetch cloud bookmarks", e);
+  } finally {
+    isFetching = false;
+  }
+}
+
 export function useBookmarks() {
-  const bookmarks = useSyncExternalStore(subscribe, getBookmarksFromStorage, getServerSnapshot);
+  const { data: session } = useSession();
+  const userId = session?.user?.id;
+  const bookmarks = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+
+  useEffect(() => {
+    fetchCloudBookmarks();
+  }, [userId]);
 
   const bookmarkedSet = useMemo(() => new Set(bookmarks), [bookmarks]);
 
@@ -71,39 +84,59 @@ export function useBookmarks() {
     [bookmarkedSet],
   );
 
-  const toggleBookmark = useCallback((target: Tool | string) => {
-    if (typeof window === "undefined") return;
-    const id = getResourceId(target);
-    if (!id) return;
+  const toggleBookmark = useCallback(
+    async (target: Tool | string) => {
+      const id = getResourceId(target);
+      if (!id) return;
 
-    const current = getBookmarksFromStorage();
-    const set = new Set(current);
-    if (set.has(id)) {
-      set.delete(id);
-    } else {
-      set.add(id);
-    }
+      // Optimistic UI update
+      const currentSet = new Set(cachedBookmarks);
+      if (currentSet.has(id)) {
+        currentSet.delete(id);
+      } else {
+        currentSet.add(id);
+      }
+      cachedBookmarks = Array.from(currentSet);
+      notifySubscribers();
 
-    const updated = Array.from(set);
+      try {
+        const res = await fetch("/api/bookmarks", {
+          body: JSON.stringify({ resourceId: id }),
+          headers: { "Content-Type": "application/json" },
+          method: "POST",
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data.bookmarks)) {
+            cachedBookmarks = data.bookmarks;
+            notifySubscribers();
+          }
+        } else {
+          // Revert if unauthorized or failed
+          fetchCloudBookmarks();
+        }
+      } catch (e) {
+        console.error("Failed to sync bookmark to cloud", e);
+        fetchCloudBookmarks();
+      }
+    },
+    [],
+  );
+
+  const clearBookmarks = useCallback(async () => {
+    cachedBookmarks = EMPTY_ARRAY;
+    notifySubscribers();
+
     try {
-      localStorage.setItem(BOOKMARKS_STORAGE_KEY, JSON.stringify(updated));
-      cachedRawString = JSON.stringify(updated);
-      cachedBookmarks = updated;
-      window.dispatchEvent(new Event(BOOKMARKS_EVENT_KEY));
+      const res = await fetch("/api/bookmarks", { method: "DELETE" });
+      if (res.ok) {
+        const data = await res.json();
+        cachedBookmarks = data.bookmarks || EMPTY_ARRAY;
+        notifySubscribers();
+      }
     } catch (e) {
-      console.error("Failed to save bookmarks to localStorage", e);
-    }
-  }, []);
-
-  const clearBookmarks = useCallback(() => {
-    if (typeof window === "undefined") return;
-    try {
-      localStorage.removeItem(BOOKMARKS_STORAGE_KEY);
-      cachedRawString = null;
-      cachedBookmarks = [];
-      window.dispatchEvent(new Event(BOOKMARKS_EVENT_KEY));
-    } catch (e) {
-      console.error("Failed to clear bookmarks", e);
+      console.error("Failed to clear cloud bookmarks", e);
+      fetchCloudBookmarks();
     }
   }, []);
 
@@ -114,9 +147,7 @@ export function useBookmarks() {
   }, [bookmarks]);
 
   const importBookmarks = useCallback(
-    (jsonContent: string): { count: number; error?: string; success: boolean } => {
-      if (typeof window === "undefined")
-        return { count: 0, error: "Window unavailable", success: false };
+    async (jsonContent: string): Promise<{ count: number; error?: string; success: boolean }> => {
       try {
         const parsed = JSON.parse(jsonContent);
         if (!Array.isArray(parsed)) {
@@ -136,14 +167,15 @@ export function useBookmarks() {
             success: false,
           };
         }
-        const current = getBookmarksFromStorage();
-        const merged = Array.from(new Set([...current, ...validIds]));
-        const addedCount = merged.length - current.length;
 
-        localStorage.setItem(BOOKMARKS_STORAGE_KEY, JSON.stringify(merged));
-        cachedRawString = JSON.stringify(merged);
-        cachedBookmarks = merged;
-        window.dispatchEvent(new Event(BOOKMARKS_EVENT_KEY));
+        let addedCount = 0;
+        for (const id of validIds) {
+          if (!bookmarkedSet.has(id)) {
+            await toggleBookmark(id);
+            addedCount++;
+          }
+        }
+
         return { count: addedCount, success: true };
       } catch (e) {
         console.error("Failed to import bookmarks", e);
@@ -154,9 +186,8 @@ export function useBookmarks() {
         };
       }
     },
-    [],
+    [bookmarkedSet, toggleBookmark],
   );
-
 
   return {
     bookmarkedSet,
@@ -166,6 +197,7 @@ export function useBookmarks() {
     exportBookmarks,
     importBookmarks,
     isBookmarked,
+    refetchBookmarks: fetchCloudBookmarks,
     toggleBookmark,
   };
 }

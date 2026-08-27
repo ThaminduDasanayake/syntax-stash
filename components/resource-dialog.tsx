@@ -10,12 +10,14 @@ import {
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
+import { AuthModal } from "@/components/auth-modal";
 import { CardIcon } from "@/components/card-icon";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { CopyButton } from "@/components/ui/copy-button";
 import { DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { useBookmarks } from "@/hooks/use-bookmarks";
+import { useSession } from "@/lib/auth-client";
 import { resourceLinks } from "@/lib/resource-data";
 import { cn, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
 import { Tool, ToolCardProps } from "@/types";
@@ -23,8 +25,12 @@ import { Tool, ToolCardProps } from "@/types";
 export function ResourceDialog({ onTagClickAction, tool }: ToolCardProps) {
   const [activeTool, setActiveTool] = useState(tool);
   const [ogError, setOgError] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const { data: session } = useSession();
   const { isBookmarked, toggleBookmark } = useBookmarks();
   const bookmarked = isBookmarked(activeTool);
+
+
 
   const handleSelectTool = (res: Tool) => {
     setOgError(false);
@@ -267,12 +273,21 @@ export function ResourceDialog({ onTagClickAction, tool }: ToolCardProps) {
             <Button
               variant={bookmarked ? "default" : "secondary"}
               size="sm"
-              onClick={() => toggleBookmark(activeTool)}
+              onClick={() => {
+                if (!session) {
+                  setAuthModalOpen(true);
+                  return;
+                }
+                toggleBookmark(activeTool);
+              }}
+
               className="shrink-0 border-[1.5px]"
             >
               <BookmarkSimpleIcon weight={bookmarked ? "fill" : "bold"} className="size-4" />
               {bookmarked ? "Saved" : "Save"}
             </Button>
+            <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
+
 
             <CopyButton
               textToCopy={activeTool.url || ""}
