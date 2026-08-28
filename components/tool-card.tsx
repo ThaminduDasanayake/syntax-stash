@@ -103,7 +103,7 @@ function CardBody({ tool }: ToolCardProps) {
                         aria-label={bookmarked ? "Remove" : "Save"}
                       >
                         <BookmarkSimpleIcon
-                          weight={isBookmarkHovered ? "duotone" : bookmarked ? "fill" : "bold"}
+                          weight={bookmarked ? "fill" : isBookmarkHovered ? "duotone" : "bold"}
                           className={cn(
                             "size-5 transition-transform group-hover/bookmark:scale-110",
                             bookmarked ? "fill-current text-current opacity-100" : "",
