@@ -330,11 +330,11 @@
 }
 
 @utility nav-logo {
-  @apply flex items-center gap-2;
+  @apply flex items-center gap-2 shrink-0;
 }
 
 @utility nav-wordmark {
-  @apply font-display text-2xl font-black tracking-tight uppercase;
+  @apply font-display text-xl sm:text-2xl font-black tracking-tight uppercase whitespace-nowrap;
 
   @apply [&_em]:font-serif [&_em]:tracking-normal [&_em]:lowercase [&_em]:italic;
 }
@@ -342,7 +342,7 @@
 @utility nav-links {
   @apply bg-bg border-ink fixed top-16 right-0 left-0 z-60 hidden flex-col items-start gap-1 border-b-[1.5px] px-5 pt-5 pb-7;
 
-  @apply md:static md:z-auto md:flex md:flex-row md:items-center md:gap-6 md:border-none md:bg-transparent md:p-0;
+  @apply md:static md:z-auto md:flex md:flex-row md:items-center md:gap-3 lg:gap-5 xl:gap-6 md:border-none md:bg-transparent md:p-0;
 }
 
 @utility nav-links--open {
@@ -355,7 +355,7 @@
 }
 
 @utility nav-link {
-  @apply text-ink-mute text-display-sm hover:pointer-fine:text-ink w-full py-3 transition-colors duration-200 ease-out md:w-auto md:py-0;
+  @apply text-ink-mute text-display-sm hover:pointer-fine:text-ink w-full py-3 transition-colors duration-200 ease-out md:w-auto md:py-0 md:text-xs lg:text-sm;
 }
 
 @utility nav-link--active {
@@ -363,11 +363,11 @@
 }
 
 @utility nav-cta {
-  @apply mt-3 ml-0 w-full justify-center gap-2 px-4.5 py-3 md:mt-0 md:ml-3 md:w-auto md:px-4! md:py-2.25!;
+  @apply mt-3 ml-0 w-full justify-center gap-2 px-4.5 py-3 md:mt-0 md:ml-1.5 md:w-auto md:px-2.5! md:py-1.5! lg:ml-2 lg:px-3.5! lg:py-2!;
 }
 
 @utility nav-mobile-actions {
-  @apply mr-1 ml-auto flex items-center gap-2;
+  @apply mr-1 ml-auto flex items-center gap-2 shrink-0 md:ml-2 lg:ml-3;
 }
 
 @utility nav-hamburger {
