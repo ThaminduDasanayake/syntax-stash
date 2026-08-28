@@ -18,6 +18,12 @@ export const auth = betterAuth({
       verification: schema.verification,
     },
   }),
+  account: {
+    accountLinking: {
+      enabled: true,
+      updateUserInfoOnLink: true,
+    },
+  },
   emailAndPassword: {
     enabled: true,
   },
@@ -29,11 +35,13 @@ export const auth = betterAuth({
       clientId: process.env.GITHUB_CLIENT_ID || "github-placeholder-client-id",
       clientSecret:
         process.env.GITHUB_CLIENT_SECRET || "github-placeholder-client-secret",
+      overrideUserInfoOnSignIn: true,
     },
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID || "google-placeholder-client-id",
       clientSecret:
         process.env.GOOGLE_CLIENT_SECRET || "google-placeholder-client-secret",
+      overrideUserInfoOnSignIn: true,
     },
   },
 });
