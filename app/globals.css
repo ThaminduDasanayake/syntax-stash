@@ -342,7 +342,7 @@
 @utility nav-links {
   @apply bg-bg border-ink fixed top-16 right-0 left-0 z-60 hidden flex-col items-start gap-1 border-b-[1.5px] px-5 pt-5 pb-7;
 
-  @apply md:static md:z-auto md:flex md:flex-row md:items-center md:gap-3 lg:gap-5 xl:gap-6 md:border-none md:bg-transparent md:p-0;
+  @apply md:static md:z-auto md:flex md:flex-row md:items-center md:gap-2 lg:gap-4.5 xl:gap-6 md:border-none md:bg-transparent md:p-0;
 }
 
 @utility nav-links--open {
