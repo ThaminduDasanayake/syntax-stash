@@ -1,6 +1,13 @@
 "use client";
 
-import { BookmarksSimpleIcon, ListIcon, MagnifyingGlassIcon, SignOutIcon, UserIcon, XIcon } from "@phosphor-icons/react";
+import {
+  BookmarksSimpleIcon,
+  ListIcon,
+  MagnifyingGlassIcon,
+  SignOutIcon,
+  UserIcon,
+  XIcon,
+} from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -85,7 +92,7 @@ function AppHeaderInner({
                 />
                 <span>Saved</span>
                 {bookmarksCount > 0 && (
-                  <span className="bg-ink text-paper dark:bg-paper dark:text-ink inline-flex min-h-4.5 min-w-4.5 shrink-0 items-center justify-center rounded-full px-1 text-center text-[10px] font-extrabold leading-none">
+                  <span className="bg-ink text-paper dark:bg-paper dark:text-ink inline-flex min-h-4.5 min-w-4.5 shrink-0 items-center justify-center rounded-full px-1 text-center text-[10px] leading-none font-extrabold">
                     {bookmarksCount}
                   </span>
                 )}
@@ -97,7 +104,7 @@ function AppHeaderInner({
                 variant="ghost"
                 size="sm"
                 onClick={handleSignOut}
-                className="font-mono text-xs font-bold uppercase tracking-wider text-muted-foreground hover:text-foreground"
+                className="text-muted-foreground hover:text-foreground font-mono text-xs font-bold tracking-wider uppercase"
                 title={`Signed in as ${session?.user?.name || session?.user?.email}`}
               >
                 <SignOutIcon weight="bold" /> Sign Out
@@ -112,7 +119,6 @@ function AppHeaderInner({
                 <UserIcon weight="bold" /> Sign In
               </Button>
             )}
-
 
             <Button onClick={onSearchOpenAction} size="sm" aria-label="Search" className="nav-cta">
               <MagnifyingGlassIcon weight="bold" className="shrink-0" />

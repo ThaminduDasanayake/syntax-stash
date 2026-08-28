@@ -363,7 +363,7 @@
 }
 
 @utility nav-cta {
-  @apply mt-3 ml-0 w-full justify-center gap-2 px-4.5 py-3 md:ml-3 md:w-auto md:px-4! md:py-2.25!;
+  @apply mt-3 ml-0 w-full justify-center gap-2 px-4.5 py-3 md:mt-0 md:ml-3 md:w-auto md:px-4! md:py-2.25!;
 }
 
 @utility nav-mobile-actions {
