@@ -711,7 +711,7 @@
 
 /* Card */
 @utility card-grid {
-  @apply grid w-full grid-cols-1 gap-3.5 sm:grid-cols-2 sm:gap-4.5 md:grid-cols-3 lg:grid-cols-4;
+  @apply grid w-full grid-cols-1 gap-3.5 sm:grid-cols-2 sm:gap-4.5 lg:grid-cols-3 xl:grid-cols-4;
 }
 
 @utility card {
