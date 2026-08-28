@@ -330,11 +330,11 @@
 }
 
 @utility nav-logo {
-  @apply flex items-center gap-2 shrink-0;
+  @apply flex shrink-0 items-center gap-2;
 }
 
 @utility nav-wordmark {
-  @apply font-display text-xl sm:text-2xl font-black tracking-tight uppercase whitespace-nowrap;
+  @apply font-display text-xl font-black tracking-tight whitespace-nowrap uppercase sm:text-2xl;
 
   @apply [&_em]:font-serif [&_em]:tracking-normal [&_em]:lowercase [&_em]:italic;
 }
@@ -342,7 +342,7 @@
 @utility nav-links {
   @apply bg-bg border-ink fixed top-16 right-0 left-0 z-60 hidden flex-col items-start gap-1 border-b-[1.5px] px-5 pt-5 pb-7;
 
-  @apply md:static md:z-auto md:flex md:flex-row md:items-center md:gap-2 lg:gap-4.5 xl:gap-6 md:border-none md:bg-transparent md:p-0;
+  @apply lg:static lg:z-auto lg:flex lg:flex-row lg:items-center lg:gap-5 lg:border-none lg:bg-transparent lg:p-0 xl:gap-6;
 }
 
 @utility nav-links--open {
@@ -355,7 +355,7 @@
 }
 
 @utility nav-link {
-  @apply text-ink-mute text-display-sm hover:pointer-fine:text-ink w-full py-3 transition-colors duration-200 ease-out md:w-auto md:py-0 md:text-xs lg:text-sm;
+  @apply text-ink-mute text-display-sm hover:pointer-fine:text-ink w-full py-3 transition-colors duration-200 ease-out lg:w-auto lg:py-0 lg:text-sm;
 }
 
 @utility nav-link--active {
@@ -363,19 +363,19 @@
 }
 
 @utility nav-cta {
-  @apply mt-3 ml-0 w-full justify-center gap-2 px-4.5 py-3 md:mt-0 md:ml-1.5 md:w-auto md:px-2.5! md:py-1.5! lg:ml-2 lg:px-3.5! lg:py-2!;
+  @apply mt-3 ml-0 w-full justify-center gap-2 px-4.5 py-3 lg:mt-0 lg:ml-2 lg:w-auto lg:px-3.5! lg:py-2!;
 }
 
 @utility nav-mobile-actions {
-  @apply mr-1 ml-auto flex items-center gap-2 shrink-0 md:ml-2 lg:ml-3;
+  @apply mr-1 ml-auto flex shrink-0 items-center gap-2 lg:ml-3;
 }
 
 @utility nav-hamburger {
-  @apply cursor-pointer md:hidden;
+  @apply cursor-pointer lg:hidden;
 }
 
 @utility nav-backdrop {
-  @apply fixed top-16 right-0 bottom-0 left-0 z-50 block animate-[nav-backdrop-in_180ms_ease-out] bg-[#14110b6b] md:hidden;
+  @apply fixed top-16 right-0 bottom-0 left-0 z-50 block animate-[nav-backdrop-in_180ms_ease-out] bg-[#14110b6b] lg:hidden;
 }
 
 @keyframes nav-backdrop-in {

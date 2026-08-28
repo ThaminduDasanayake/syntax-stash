@@ -1,7 +1,6 @@
 "use client";
 
 import { GithubLogoIcon, GoogleLogoIcon } from "@phosphor-icons/react";
-import Link from "next/link";
 import { useMemo } from "react";
 
 import { FilterSection } from "@/components/filter-section";
@@ -85,15 +84,6 @@ export default function SavedPage() {
               <GoogleLogoIcon weight="bold" /> Sign In with Google
             </Button>
           </div>
-
-          {/*<div className="mt-8 flex justify-center gap-3 border-t border-ink/10 pt-6">*/}
-          {/*  <Button asChild variant="ghost" size="sm" className="font-mono text-xs uppercase opacity-70 hover:opacity-100">*/}
-          {/*    <Link href="/resources">Browse Resources</Link>*/}
-          {/*  </Button>*/}
-          {/*  <Button asChild variant="ghost" size="sm" className="font-mono text-xs uppercase opacity-70 hover:opacity-100">*/}
-          {/*    <Link href="/tools">Browse Tools</Link>*/}
-          {/*  </Button>*/}
-          {/*</div>*/}
         </div>
       ) : (
         <FilterSection

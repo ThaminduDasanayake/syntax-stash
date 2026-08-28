@@ -35,7 +35,7 @@ function AppHeaderInner({
                   variant="outline"
                   size="sm"
                   onClick={() => setAuthModalOpen(true)}
-                  className="border-ink/40 hidden font-mono text-xs font-bold tracking-wider md:inline-flex"
+                  className="border-ink/40 hidden font-mono text-xs font-bold tracking-wider lg:inline-flex"
                 >
                   <UserIcon weight="bold" /> Sign In
                 </Button>

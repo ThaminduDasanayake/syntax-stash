@@ -1,6 +1,6 @@
 "use client";
 
-import { MagnifyingGlassIcon, SignOutIcon } from "@phosphor-icons/react";
+import { BookmarksSimpleIcon, MagnifyingGlassIcon, SignOutIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { resetBookmarkCache } from "@/hooks/use-bookmarks";
+import { resetBookmarkCache, useBookmarks } from "@/hooks/use-bookmarks";
 import { signOut, useSession } from "@/lib/auth-client";
 
 import { NAV_LINKS } from "./constants";
@@ -24,6 +24,7 @@ interface UserMenuProps {
 
 export function UserMenu({ onSearchOpenAction }: UserMenuProps) {
   const { data: session } = useSession();
+  const { bookmarksCount } = useBookmarks();
 
   if (!session) return null;
 
@@ -76,7 +77,8 @@ export function UserMenu({ onSearchOpenAction }: UserMenuProps) {
 
         <DropdownMenuSeparator className="my-1" />
 
-        <div className="md:hidden">
+        {/* Navigation Links inside Dropdown for Mobile & Tablet (< lg) */}
+        <div className="lg:hidden">
           <DropdownMenuGroup>
             {NAV_LINKS.map((link) => (
               <DropdownMenuItem key={link.href} asChild>
@@ -85,6 +87,25 @@ export function UserMenu({ onSearchOpenAction }: UserMenuProps) {
                 </Link>
               </DropdownMenuItem>
             ))}
+            <DropdownMenuItem asChild>
+              <Link
+                href="/saved"
+                className="flex w-full cursor-pointer items-center justify-between py-1.5 font-medium"
+              >
+                <span className="flex items-center gap-2">
+                  <BookmarksSimpleIcon
+                    weight={bookmarksCount > 0 ? "fill" : "bold"}
+                    className="size-4 text-current"
+                  />
+                  Saved Stash
+                </span>
+                {bookmarksCount > 0 && (
+                  <span className="bg-ink text-paper dark:bg-paper dark:text-ink min-h-4 min-w-4 rounded-full px-1.5 text-center text-[10px] font-extrabold">
+                    {bookmarksCount}
+                  </span>
+                )}
+              </Link>
+            </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator className="my-1" />
           <DropdownMenuGroup>

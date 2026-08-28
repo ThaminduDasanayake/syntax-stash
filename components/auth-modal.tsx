@@ -1,6 +1,7 @@
 "use client";
 
-import { GithubLogoIcon, GoogleLogoIcon } from "@phosphor-icons/react";
+import { CircleNotchIcon, GithubLogoIcon, GoogleLogoIcon } from "@phosphor-icons/react";
+import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,15 +19,29 @@ interface AuthModalProps {
 }
 
 export function AuthModal({ onOpenChange, open }: AuthModalProps) {
-  const handleSocialSignIn = (provider: "github" | "google") => {
-    signIn.social({
-      callbackURL: "/saved",
-      provider,
-    });
+  const [loadingProvider, setLoadingProvider] = useState<"github" | "google" | null>(null);
+
+  const handleSocialSignIn = async (provider: "github" | "google") => {
+    setLoadingProvider(provider);
+    try {
+      await signIn.social({
+        callbackURL: "/saved",
+        provider,
+      });
+    } catch {
+      setLoadingProvider(null);
+    }
+  };
+
+  const handleOpenChange = (newOpen: boolean) => {
+    if (!newOpen) {
+      setLoadingProvider(null);
+    }
+    onOpenChange(newOpen);
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="border-ink border-2 sm:max-w-md">
         <DialogHeader className="text-center">
           <DialogTitle className="font-mono text-base font-extrabold uppercase tracking-wide">
@@ -41,19 +56,31 @@ export function AuthModal({ onOpenChange, open }: AuthModalProps) {
           <Button
             variant="outline"
             size="default"
+            disabled={loadingProvider !== null}
             onClick={() => handleSocialSignIn("github")}
             className="border-ink/40 font-mono text-xs font-bold tracking-wider uppercase transition-all hover:bg-ink hover:text-paper"
           >
-            <GithubLogoIcon weight="bold" className="size-4.5" /> Continue with GitHub
+            {loadingProvider === "github" ? (
+              <CircleNotchIcon weight="bold" className="size-4.5 animate-spin" />
+            ) : (
+              <GithubLogoIcon weight="bold" className="size-4.5" />
+            )}
+            <span>{loadingProvider === "github" ? "Connecting to GitHub..." : "Continue with GitHub"}</span>
           </Button>
 
           <Button
             variant="outline"
             size="default"
+            disabled={loadingProvider !== null}
             onClick={() => handleSocialSignIn("google")}
             className="border-ink/40 font-mono text-xs font-bold tracking-wider uppercase transition-all hover:bg-ink hover:text-paper"
           >
-            <GoogleLogoIcon weight="bold" className="size-4.5" /> Continue with Google
+            {loadingProvider === "google" ? (
+              <CircleNotchIcon weight="bold" className="size-4.5 animate-spin" />
+            ) : (
+              <GoogleLogoIcon weight="bold" className="size-4.5" />
+            )}
+            <span>{loadingProvider === "google" ? "Connecting to Google..." : "Continue with Google"}</span>
           </Button>
         </div>
       </DialogContent>

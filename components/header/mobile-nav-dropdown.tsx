@@ -23,7 +23,7 @@ export function MobileNavDropdown({
   onSignInAction,
 }: MobileNavDropdownProps) {
   return (
-    <div className="md:hidden">
+    <div className="lg:hidden">
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <button className="nav-hamburger" aria-label="Toggle navigation menu">
