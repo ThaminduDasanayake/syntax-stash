@@ -1,13 +1,5 @@
 export type ImageFormat =
-  | "png"
-  | "jpeg"
-  | "webp"
-  | "avif"
-  | "gif"
-  | "bmp"
-  | "tiff"
-  | "ico"
-  | "icns";
+  "png" | "jpeg" | "webp" | "avif" | "gif" | "bmp" | "tiff" | "ico" | "icns";
 export type ResizeMode = "original" | "custom" | "percentage";
 
 export interface ResizeOptions {

@@ -84,44 +84,41 @@ export function useBookmarks() {
     [bookmarkedSet],
   );
 
-  const toggleBookmark = useCallback(
-    async (target: Tool | string) => {
-      const id = getResourceId(target);
-      if (!id) return;
+  const toggleBookmark = useCallback(async (target: Tool | string) => {
+    const id = getResourceId(target);
+    if (!id) return;
 
-      // Optimistic UI update
-      const currentSet = new Set(cachedBookmarks);
-      if (currentSet.has(id)) {
-        currentSet.delete(id);
-      } else {
-        currentSet.add(id);
-      }
-      cachedBookmarks = Array.from(currentSet);
-      notifySubscribers();
+    // Optimistic UI update
+    const currentSet = new Set(cachedBookmarks);
+    if (currentSet.has(id)) {
+      currentSet.delete(id);
+    } else {
+      currentSet.add(id);
+    }
+    cachedBookmarks = Array.from(currentSet);
+    notifySubscribers();
 
-      try {
-        const res = await fetch("/api/bookmarks", {
-          body: JSON.stringify({ resourceId: id }),
-          headers: { "Content-Type": "application/json" },
-          method: "POST",
-        });
-        if (res.ok) {
-          const data = await res.json();
-          if (Array.isArray(data.bookmarks)) {
-            cachedBookmarks = data.bookmarks;
-            notifySubscribers();
-          }
-        } else {
-          // Revert if unauthorized or failed
-          fetchCloudBookmarks();
+    try {
+      const res = await fetch("/api/bookmarks", {
+        body: JSON.stringify({ resourceId: id }),
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data.bookmarks)) {
+          cachedBookmarks = data.bookmarks;
+          notifySubscribers();
         }
-      } catch (e) {
-        console.error("Failed to sync bookmark to cloud", e);
+      } else {
+        // Revert if unauthorized or failed
         fetchCloudBookmarks();
       }
-    },
-    [],
-  );
+    } catch (e) {
+      console.error("Failed to sync bookmark to cloud", e);
+      fetchCloudBookmarks();
+    }
+  }, []);
 
   const clearBookmarks = useCallback(async () => {
     cachedBookmarks = EMPTY_ARRAY;

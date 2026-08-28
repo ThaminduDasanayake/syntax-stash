@@ -5,10 +5,14 @@ import { db } from "@/lib/db";
 import * as schema from "@/lib/db/schema";
 
 export const auth = betterAuth({
+  account: {
+    accountLinking: {
+      enabled: true,
+      updateUserInfoOnLink: true,
+    },
+  },
   baseURL:
-    process.env.BETTER_AUTH_URL ||
-    process.env.NEXT_PUBLIC_APP_URL ||
-    "http://localhost:3000",
+    process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
   database: drizzleAdapter(db, {
     provider: "pg",
     schema: {
@@ -18,29 +22,19 @@ export const auth = betterAuth({
       verification: schema.verification,
     },
   }),
-  account: {
-    accountLinking: {
-      enabled: true,
-      updateUserInfoOnLink: true,
-    },
-  },
   emailAndPassword: {
     enabled: true,
   },
-  secret:
-    process.env.BETTER_AUTH_SECRET ||
-    "syntax-stash-default-development-secret-key-32chars",
+  secret: process.env.BETTER_AUTH_SECRET || "syntax-stash-default-development-secret-key-32chars",
   socialProviders: {
     github: {
       clientId: process.env.GITHUB_CLIENT_ID || "github-placeholder-client-id",
-      clientSecret:
-        process.env.GITHUB_CLIENT_SECRET || "github-placeholder-client-secret",
+      clientSecret: process.env.GITHUB_CLIENT_SECRET || "github-placeholder-client-secret",
       overrideUserInfoOnSignIn: true,
     },
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID || "google-placeholder-client-id",
-      clientSecret:
-        process.env.GOOGLE_CLIENT_SECRET || "google-placeholder-client-secret",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "google-placeholder-client-secret",
       overrideUserInfoOnSignIn: true,
     },
   },

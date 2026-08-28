@@ -48,7 +48,6 @@ function CardBody({ tool }: ToolCardProps) {
     toggleBookmark(tool);
   };
 
-
   return (
     <>
       <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
@@ -94,7 +93,7 @@ function CardBody({ tool }: ToolCardProps) {
                         variant="ghost"
                         size="icon-xs"
                         className={cn(
-                          "group/bookmark border-none bg-transparent text-current hover:bg-transparent transition-opacity duration-200",
+                          "group/bookmark border-none bg-transparent text-current transition-opacity duration-200 hover:bg-transparent",
                           bookmarked ? "opacity-100" : "opacity-80 group-hover:opacity-100",
                         )}
                         onMouseEnter={() => setIsBookmarkHovered(true)}
@@ -145,8 +144,6 @@ function CardBody({ tool }: ToolCardProps) {
     </>
   );
 }
-
-
 
 function ToolCardComponent({ onTagClickAction, tool }: ToolCardProps) {
   const [open, setOpen] = useState(false);

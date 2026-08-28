@@ -3,7 +3,6 @@
 import { ListIcon, MagnifyingGlassIcon, UserIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 
-import { NAV_LINKS } from "./constants";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,15 +12,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import { NAV_LINKS } from "./constants";
+
 interface MobileNavDropdownProps {
   onSearchOpenAction: () => void;
   onSignInAction: () => void;
 }
 
-export function MobileNavDropdown({
-  onSearchOpenAction,
-  onSignInAction,
-}: MobileNavDropdownProps) {
+export function MobileNavDropdown({ onSearchOpenAction, onSignInAction }: MobileNavDropdownProps) {
   return (
     <div className="lg:hidden">
       <DropdownMenu modal={false}>

@@ -44,11 +44,12 @@ export function AuthModal({ onOpenChange, open }: AuthModalProps) {
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="border-ink border-2 sm:max-w-md">
         <DialogHeader className="text-center">
-          <DialogTitle className="font-mono text-base font-extrabold uppercase tracking-wide">
+          <DialogTitle className="font-mono text-base font-extrabold tracking-wide uppercase">
             SIGN IN TO SYNTAX STASH
           </DialogTitle>
           <DialogDescription className="font-mono text-xs leading-relaxed opacity-80">
-            Sign in with Google or GitHub to save resources and sync your personal stash automatically across all your devices.
+            Sign in with Google or GitHub to save resources and sync your personal stash
+            automatically across all your devices.
           </DialogDescription>
         </DialogHeader>
 
@@ -58,14 +59,16 @@ export function AuthModal({ onOpenChange, open }: AuthModalProps) {
             size="default"
             disabled={loadingProvider !== null}
             onClick={() => handleSocialSignIn("github")}
-            className="border-ink/40 font-mono text-xs font-bold tracking-wider uppercase transition-all hover:bg-ink hover:text-paper"
+            className="border-ink/40 hover:bg-ink hover:text-paper font-mono text-xs font-bold tracking-wider uppercase transition-all"
           >
             {loadingProvider === "github" ? (
               <CircleNotchIcon weight="bold" className="size-4.5 animate-spin" />
             ) : (
               <GithubLogoIcon weight="bold" className="size-4.5" />
             )}
-            <span>{loadingProvider === "github" ? "Connecting to GitHub..." : "Continue with GitHub"}</span>
+            <span>
+              {loadingProvider === "github" ? "Connecting to GitHub..." : "Continue with GitHub"}
+            </span>
           </Button>
 
           <Button
@@ -73,14 +76,16 @@ export function AuthModal({ onOpenChange, open }: AuthModalProps) {
             size="default"
             disabled={loadingProvider !== null}
             onClick={() => handleSocialSignIn("google")}
-            className="border-ink/40 font-mono text-xs font-bold tracking-wider uppercase transition-all hover:bg-ink hover:text-paper"
+            className="border-ink/40 hover:bg-ink hover:text-paper font-mono text-xs font-bold tracking-wider uppercase transition-all"
           >
             {loadingProvider === "google" ? (
               <CircleNotchIcon weight="bold" className="size-4.5 animate-spin" />
             ) : (
               <GoogleLogoIcon weight="bold" className="size-4.5" />
             )}
-            <span>{loadingProvider === "google" ? "Connecting to Google..." : "Continue with Google"}</span>
+            <span>
+              {loadingProvider === "google" ? "Connecting to Google..." : "Continue with Google"}
+            </span>
           </Button>
         </div>
       </DialogContent>
