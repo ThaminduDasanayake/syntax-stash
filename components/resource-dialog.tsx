@@ -30,8 +30,6 @@ export function ResourceDialog({ onTagClickAction, tool }: ToolCardProps) {
   const { isBookmarked, toggleBookmark } = useBookmarks();
   const bookmarked = isBookmarked(activeTool);
 
-
-
   const handleSelectTool = (res: Tool) => {
     setOgError(false);
     setActiveTool(res);
@@ -287,7 +285,6 @@ export function ResourceDialog({ onTagClickAction, tool }: ToolCardProps) {
               {bookmarked ? "Saved" : "Save"}
             </Button>
             <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
-
 
             <CopyButton
               textToCopy={activeTool.url || ""}

@@ -1,11 +1,6 @@
 // Re-export shared JSON utilities used across tabs
 export type JsonValue =
-  | string
-  | number
-  | boolean
-  | null
-  | JsonValue[]
-  | { [key: string]: JsonValue };
+  string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
 
 export type JsonType = "object" | "array" | "string" | "number" | "boolean" | "null";
 
