@@ -88,7 +88,13 @@ export function AuthModal({ onOpenChange, open }: AuthModalProps) {
             {loadingProvider === "google" ? (
               <CircleNotchIcon weight="bold" className="size-4.5 animate-spin" />
             ) : (
-              <GoogleLogoIcon weight="bold" className="size-4.5" />
+              <Image
+                src="/google.svg"
+                alt="Google"
+                width={18}
+                height={18}
+                className="size-4.5 transition-all group-hover:invert"
+              />
             )}
             <span>
               {loadingProvider === "google" ? "Connecting to Google..." : "Continue with Google"}
