@@ -596,7 +596,7 @@
 }
 
 @utility featured-track {
-  @apply -mx-5 grid w-[calc(100%+2.5rem)] snap-x snap-mandatory scroll-pl-6 auto-cols-[290px] grid-flow-col gap-4 overflow-x-auto scroll-smooth px-6 pt-3 pb-6 md:-mx-8 md:w-[calc(100%+4rem)] md:scroll-pl-9 md:px-9;
+  @apply -mx-5 grid w-[calc(100%+2.5rem)] snap-x snap-mandatory scroll-pl-6 auto-cols-[287px] grid-flow-col gap-4 overflow-x-auto scroll-smooth px-6 pt-3 pb-6 md:-mx-8 md:w-[calc(100%+4rem)] md:scroll-pl-9 md:px-9;
 
   &::-webkit-scrollbar {
     height: 4px;
@@ -712,7 +712,7 @@
 
 /* Card */
 @utility card-grid {
-  @apply grid w-full grid-cols-1 gap-3.5 sm:grid-cols-2 sm:gap-4.5 lg:grid-cols-3 mid-xl:grid-cols-4;
+  @apply mid-xl:grid-cols-4 grid w-full grid-cols-1 gap-3.5 sm:grid-cols-2 sm:gap-4.5 lg:grid-cols-3;
 }
 
 @utility card {
