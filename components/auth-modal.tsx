@@ -1,6 +1,6 @@
 "use client";
 
-import { CircleNotchIcon, GoogleLogoIcon } from "@phosphor-icons/react";
+import { CircleNotchIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useState } from "react";
 

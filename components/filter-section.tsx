@@ -7,7 +7,15 @@ import {
   XIcon,
 } from "@phosphor-icons/react";
 import { usePathname, useSearchParams } from "next/navigation";
-import { Suspense, useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
+import {
+  Suspense,
+  useCallback,
+  useDeferredValue,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import { DotButton } from "@/components/dot-button";
 import { ResourceDialog } from "@/components/resource-dialog";

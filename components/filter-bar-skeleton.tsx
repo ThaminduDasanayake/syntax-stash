@@ -11,7 +11,9 @@ interface FilterBarSkeletonProps {
 
 const PILL_WIDTHS = ["w-14", "w-16", "w-18", "w-20", "w-22", "w-24"];
 
-export function FilterBarSkeleton({ searchPlaceholder = "Search saved stash..." }: FilterBarSkeletonProps) {
+export function FilterBarSkeleton({
+  searchPlaceholder = "Search saved stash...",
+}: FilterBarSkeletonProps) {
   return (
     <div className="filter-bar">
       <div className="filter-bar-inner">
@@ -37,7 +39,7 @@ export function FilterBarSkeleton({ searchPlaceholder = "Search saved stash..." 
         </div>
 
         <div className="filter-count">
-          <Skeleton className="h-3.5 w-14 bg-ink/15" />
+          <Skeleton className="bg-ink/15 h-3.5 w-14" />
         </div>
       </div>
     </div>
