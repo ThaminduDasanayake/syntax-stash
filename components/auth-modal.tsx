@@ -1,6 +1,7 @@
 "use client";
 
-import { CircleNotchIcon, GithubLogoIcon, GoogleLogoIcon } from "@phosphor-icons/react";
+import { CircleNotchIcon, GoogleLogoIcon } from "@phosphor-icons/react";
+import Image from "next/image";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -59,12 +60,18 @@ export function AuthModal({ onOpenChange, open }: AuthModalProps) {
             size="default"
             disabled={loadingProvider !== null}
             onClick={() => handleSocialSignIn("github")}
-            className="border-ink/40 hover:bg-ink hover:text-paper font-mono text-xs font-bold tracking-wider uppercase transition-all"
+            className="group border-ink/40 hover:bg-ink hover:text-paper font-mono text-xs font-bold tracking-wider uppercase transition-all"
           >
             {loadingProvider === "github" ? (
               <CircleNotchIcon weight="bold" className="size-4.5 animate-spin" />
             ) : (
-              <GithubLogoIcon weight="bold" className="size-4.5" />
+              <Image
+                src="/github.svg"
+                alt="GitHub"
+                width={18}
+                height={18}
+                className="size-4.5 transition-all group-hover:invert"
+              />
             )}
             <span>
               {loadingProvider === "github" ? "Connecting to GitHub..." : "Continue with GitHub"}

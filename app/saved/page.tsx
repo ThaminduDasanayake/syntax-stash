@@ -1,6 +1,7 @@
 "use client";
 
-import { GithubLogoIcon, GoogleLogoIcon } from "@phosphor-icons/react";
+import { GoogleLogoIcon } from "@phosphor-icons/react";
+import Image from "next/image";
 import { useMemo } from "react";
 
 import { FilterBarSkeleton } from "@/components/filter-bar-skeleton";
@@ -86,9 +87,16 @@ export default function SavedPage() {
               variant="outline"
               size="sm"
               onClick={() => handleOAuthSignIn("github")}
-              className="border-ink/40 hover:bg-ink hover:text-paper font-mono text-xs font-bold tracking-wider uppercase"
+              className="group border-ink/40 hover:bg-ink hover:text-paper font-mono text-xs font-bold tracking-wider uppercase"
             >
-              <GithubLogoIcon weight="bold" /> Sign In with GitHub
+              <Image
+                src="/github.svg"
+                alt="GitHub"
+                width={16}
+                height={16}
+                className="size-4 transition-all group-hover:invert"
+              />{" "}
+              Sign In with GitHub
             </Button>
             <Button
               variant="outline"
