@@ -20,6 +20,9 @@ export type Tool = {
 export type ToolCardProps = {
   tool: Tool;
   onTagClickAction?: (tag: string) => void;
+  onCardClick?: (tool: Tool) => void;
+  isBookmarked?: boolean;
+  onToggleBookmark?: (tool: Tool) => void;
 };
 
 export type HeaderProps = {
