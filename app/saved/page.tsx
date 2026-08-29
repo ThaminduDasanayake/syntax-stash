@@ -7,7 +7,6 @@ import { FilterSection } from "@/components/filter-section";
 import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
 import { ToolCardSkeleton } from "@/components/tool-card-skeleton";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { signIn } from "@/lib/auth-client";
 import { resourceLinks } from "@/lib/resource-data";
@@ -50,15 +49,11 @@ export default function SavedPage() {
                 <br />
                 <em>saved.</em>
               </h1>
-              <div className="lib-sub">
-                {isLoading ? (
-                  <Skeleton className="h-5 w-64 bg-ink/10" />
-                ) : bookmarksCount === 0 ? (
-                  "Your cloud-synced personal collection."
-                ) : (
-                  `${bookmarksCount} saved item${bookmarksCount === 1 ? "" : "s"} in your cloud collection.`
-                )}
-              </div>
+              <p className="lib-sub">
+                {bookmarksCount > 0
+                  ? `${bookmarksCount} saved item${bookmarksCount === 1 ? "" : "s"} in your cloud collection.`
+                  : "Your cloud-synced personal collection."}
+              </p>
             </div>
           </div>
         </div>
@@ -67,10 +62,6 @@ export default function SavedPage() {
       {isLoading ? (
         <div className="card-body">
           <div className="section-inner">
-            <div className="mb-8 flex w-full items-center gap-3">
-              <Skeleton className="h-4 w-32 bg-ink/10" />
-              <span className="h-0.5 flex-1 bg-primary/20" />
-            </div>
             <div className="card-grid w-full">
               {Array.from({ length: 8 }).map((_, i) => (
                 <ToolCardSkeleton key={i} />
