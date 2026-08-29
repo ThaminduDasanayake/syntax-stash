@@ -1,3 +1,4 @@
+import { FilterBarSkeleton } from "@/components/filter-bar-skeleton";
 import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
 import { ToolCardSkeleton } from "@/components/tool-card-skeleton";
 import { resourceCategories, resourceLinks } from "@/lib/resource-data";
@@ -20,6 +21,8 @@ export default function ResourcesLoading() {
           </p>
         </div>
       </header>
+
+      <FilterBarSkeleton searchPlaceholder="Search resources..." />
 
       <div className="card-body">
         <div className="section-inner">

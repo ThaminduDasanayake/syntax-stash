@@ -1,3 +1,4 @@
+import { FilterBarSkeleton } from "@/components/filter-bar-skeleton";
 import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
 import { ToolCardSkeleton } from "@/components/tool-card-skeleton";
 
@@ -17,6 +18,8 @@ export default function SavedLoading() {
           <p className="lib-sub">Your cloud-synced personal collection.</p>
         </div>
       </header>
+
+      <FilterBarSkeleton searchPlaceholder="Search saved stash..." />
 
       <div className="card-body">
         <div className="section-inner">

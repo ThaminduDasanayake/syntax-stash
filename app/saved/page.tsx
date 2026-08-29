@@ -3,6 +3,7 @@
 import { GithubLogoIcon, GoogleLogoIcon } from "@phosphor-icons/react";
 import { useMemo } from "react";
 
+import { FilterBarSkeleton } from "@/components/filter-bar-skeleton";
 import { FilterSection } from "@/components/filter-section";
 import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
 import { ToolCardSkeleton } from "@/components/tool-card-skeleton";
@@ -60,15 +61,18 @@ export default function SavedPage() {
       </header>
 
       {isLoading ? (
-        <div className="card-body">
-          <div className="section-inner">
-            <div className="card-grid w-full">
-              {Array.from({ length: 8 }).map((_, i) => (
-                <ToolCardSkeleton key={i} />
-              ))}
+        <>
+          <FilterBarSkeleton searchPlaceholder="Search saved stash..." />
+          <div className="card-body">
+            <div className="section-inner">
+              <div className="card-grid w-full">
+                {Array.from({ length: 8 }).map((_, i) => (
+                  <ToolCardSkeleton key={i} />
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        </>
       ) : bookmarksCount === 0 ? (
         <div className="mx-auto flex min-h-[45vh] flex-col items-center justify-center py-16 text-center">
           <p className="font-mono text-base font-bold uppercase">Your stash is empty</p>
