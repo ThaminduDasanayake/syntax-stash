@@ -1,10 +1,13 @@
 "use client";
 
-import { GithubLogoIcon, GoogleLogoIcon } from "@phosphor-icons/react";
+import { GoogleLogoIcon } from "@phosphor-icons/react";
+import Image from "next/image";
 import { useMemo } from "react";
 
+import { FilterBarSkeleton } from "@/components/filter-bar-skeleton";
 import { FilterSection } from "@/components/filter-section";
 import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
+import { ToolCardSkeleton } from "@/components/tool-card-skeleton";
 import { Button } from "@/components/ui/button";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { signIn } from "@/lib/auth-client";
@@ -16,7 +19,7 @@ import { Tool } from "@/types";
 const ALL_TOOLS: Tool[] = [...internalTools, ...resourceLinks];
 
 export default function SavedPage() {
-  const { bookmarkedSet, bookmarksCount } = useBookmarks();
+  const { bookmarkedSet, bookmarksCount, isLoading } = useBookmarks();
 
   const savedResources = useMemo(() => {
     return ALL_TOOLS.filter((item) => bookmarkedSet.has(getResourceId(item)));
@@ -49,17 +52,30 @@ export default function SavedPage() {
                 <em>saved.</em>
               </h1>
               <p className="lib-sub">
-                {bookmarksCount === 0
-                  ? "Your cloud-synced personal collection."
-                  : `${bookmarksCount} saved item${bookmarksCount === 1 ? "" : "s"} in your cloud collection.`}
+                {bookmarksCount > 0
+                  ? `${bookmarksCount} saved item${bookmarksCount === 1 ? "" : "s"} in your cloud collection.`
+                  : "Your cloud-synced personal collection."}
               </p>
             </div>
           </div>
         </div>
       </header>
 
-      {bookmarksCount === 0 ? (
-        <div className="mx-auto py-16 text-center">
+      {isLoading ? (
+        <>
+          <FilterBarSkeleton searchPlaceholder="Search saved stash..." />
+          <div className="card-body">
+            <div className="section-inner">
+              <div className="card-grid w-full">
+                {Array.from({ length: 8 }).map((_, i) => (
+                  <ToolCardSkeleton key={i} />
+                ))}
+              </div>
+            </div>
+          </div>
+        </>
+      ) : bookmarksCount === 0 ? (
+        <div className="mx-auto flex min-h-[45vh] flex-col items-center justify-center py-16 text-center">
           <p className="font-mono text-base font-bold uppercase">Your stash is empty</p>
           <p className="mt-1.5 max-w-sm font-mono text-xs opacity-60">
             Sign in with Google or GitHub to save tools and resources to your cloud account across
@@ -71,9 +87,16 @@ export default function SavedPage() {
               variant="outline"
               size="sm"
               onClick={() => handleOAuthSignIn("github")}
-              className="border-ink/40 hover:bg-ink hover:text-paper font-mono text-xs font-bold tracking-wider uppercase"
+              className="group border-ink/40 hover:bg-ink hover:text-paper font-mono text-xs font-bold tracking-wider uppercase"
             >
-              <GithubLogoIcon weight="bold" /> Sign In with GitHub
+              <Image
+                src="/github.svg"
+                alt="GitHub"
+                width={16}
+                height={16}
+                className="size-4 transition-all group-hover:invert"
+              />{" "}
+              Sign In with GitHub
             </Button>
             <Button
               variant="outline"

@@ -9,7 +9,7 @@ import { CardIcon } from "@/components/card-icon";
 import { ResourceDialog } from "@/components/resource-dialog";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { useSession } from "@/lib/auth-client";
 import { iconMap } from "@/lib/icons";
@@ -17,14 +17,19 @@ import { internalTools } from "@/lib/tools-data";
 import { cn, getCategoryColor } from "@/lib/utils";
 import { ToolCardProps } from "@/types";
 
-function CardBody({ tool }: ToolCardProps) {
+function CardBody({
+  isBookmarked: propIsBookmarked,
+  onToggleBookmark: propOnToggleBookmark,
+  tool,
+}: ToolCardProps) {
   const isInternal = !!tool.slug;
   const Icon = (tool.icon && iconMap[tool.icon]) || ToolboxIcon;
   const colorClasses = getCategoryColor(tool.category);
   const { data: session } = useSession();
   const [authModalOpen, setAuthModalOpen] = useState(false);
-  const { isBookmarked, toggleBookmark } = useBookmarks();
-  const bookmarked = isBookmarked(tool);
+  const { isBookmarked: hookIsBookmarked, toggleBookmark: hookToggleBookmark } = useBookmarks();
+  const bookmarked = propIsBookmarked !== undefined ? propIsBookmarked : hookIsBookmarked(tool);
+  const toggle = propOnToggleBookmark || hookToggleBookmark;
   const [isBookmarkHovered, setIsBookmarkHovered] = useState(false);
 
   let toolNumber = "";
@@ -45,12 +50,12 @@ function CardBody({ tool }: ToolCardProps) {
       setAuthModalOpen(true);
       return;
     }
-    toggleBookmark(tool);
+    toggle(tool);
   };
 
   return (
     <>
-      <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
+      {authModalOpen && <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />}
       <article className={cn("card group", colorClasses)} role="button" tabIndex={0}>
         <div className="card-inner">
           <div className="card-face">
@@ -86,55 +91,51 @@ function CardBody({ tool }: ToolCardProps) {
                 <div aria-hidden="true" />
               )}
               <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="icon-xs"
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon-xs"
+                      className={cn(
+                        "group/bookmark border-none bg-transparent text-current transition-opacity duration-200 hover:bg-transparent",
+                        bookmarked ? "opacity-100" : "opacity-80 group-hover:opacity-100",
+                      )}
+                      onMouseEnter={() => setIsBookmarkHovered(true)}
+                      onMouseLeave={() => setIsBookmarkHovered(false)}
+                      onClick={handleBookmarkClick}
+                      aria-label={bookmarked ? "Remove" : "Save"}
+                    >
+                      <BookmarkSimpleIcon
+                        weight={bookmarked ? "fill" : isBookmarkHovered ? "duotone" : "bold"}
                         className={cn(
-                          "group/bookmark border-none bg-transparent text-current transition-opacity duration-200 hover:bg-transparent",
-                          bookmarked ? "opacity-100" : "opacity-80 group-hover:opacity-100",
+                          "size-5 transition-transform group-hover/bookmark:scale-110",
+                          bookmarked ? "fill-current text-current opacity-100" : "",
                         )}
-                        onMouseEnter={() => setIsBookmarkHovered(true)}
-                        onMouseLeave={() => setIsBookmarkHovered(false)}
-                        onClick={handleBookmarkClick}
-                        aria-label={bookmarked ? "Remove" : "Save"}
-                      >
-                        <BookmarkSimpleIcon
-                          weight={bookmarked ? "fill" : isBookmarkHovered ? "duotone" : "bold"}
-                          className={cn(
-                            "size-5 transition-transform group-hover/bookmark:scale-110",
-                            bookmarked ? "fill-current text-current opacity-100" : "",
-                          )}
-                        />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>{bookmarked ? "Remove" : "Save"}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+                      />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{bookmarked ? "Remove" : "Save"}</p>
+                  </TooltipContent>
+                </Tooltip>
 
                 {!isInternal && (
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <a
-                          href={tool.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="group/arrow p-1"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <ArrowSquareOutIcon weight="bold" className="card-link-icon" />
-                        </a>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Open in new tab</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <a
+                        href={tool.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group/arrow p-1"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <ArrowSquareOutIcon weight="bold" className="card-link-icon" />
+                      </a>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Open in new tab</p>
+                    </TooltipContent>
+                  </Tooltip>
                 )}
               </div>
             </div>
@@ -145,16 +146,47 @@ function CardBody({ tool }: ToolCardProps) {
   );
 }
 
-function ToolCardComponent({ onTagClickAction, tool }: ToolCardProps) {
+function ToolCardComponent({
+  isBookmarked,
+  onCardClick,
+  onTagClickAction,
+  onToggleBookmark,
+  tool,
+}: ToolCardProps) {
   const [open, setOpen] = useState(false);
   const linkWrapperClass =
-    "block w-full h-full outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary text-left";
+    "block w-full h-full outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary text-left cursor-pointer";
+
+  const cardBodyProps = {
+    isBookmarked,
+    onToggleBookmark,
+    tool,
+  };
 
   if (tool.slug) {
     return (
       <Link href={`/tools/${tool.slug}`} className={linkWrapperClass}>
-        <CardBody tool={tool} />
+        <CardBody {...cardBodyProps} />
       </Link>
+    );
+  }
+
+  if (onCardClick) {
+    return (
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={() => onCardClick(tool)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onCardClick(tool);
+          }
+        }}
+        className={linkWrapperClass}
+      >
+        <CardBody {...cardBodyProps} />
+      </div>
     );
   }
 
@@ -162,7 +194,7 @@ function ToolCardComponent({ onTagClickAction, tool }: ToolCardProps) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <div className={linkWrapperClass}>
-          <CardBody tool={tool} />
+          <CardBody {...cardBodyProps} />
         </div>
       </DialogTrigger>
       {open && (

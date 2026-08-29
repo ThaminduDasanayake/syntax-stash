@@ -7,12 +7,22 @@ import {
   XIcon,
 } from "@phosphor-icons/react";
 import { usePathname, useSearchParams } from "next/navigation";
-import { Suspense, useCallback, useDeferredValue, useMemo, useRef, useState } from "react";
+import {
+  Suspense,
+  useCallback,
+  useDeferredValue,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import { DotButton } from "@/components/dot-button";
+import { ResourceDialog } from "@/components/resource-dialog";
 import { TagFilterPopover, TagOption } from "@/components/tag-filter-popover";
 import ToolCard from "@/components/tool-card";
 import { Button } from "@/components/ui/button";
+import { Dialog } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { getResourceId } from "@/lib/utils";
@@ -26,6 +36,8 @@ interface FilterSectionProps {
   itemLabel?: string;
 }
 
+const BATCH_SIZE = 36;
+
 function FilterSectionInner({
   categories,
   initialCategory,
@@ -36,6 +48,10 @@ function FilterSectionInner({
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const searchDebounceRef = useRef<NodeJS.Timeout | null>(null);
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
+
+  const [visibleLimit, setVisibleLimit] = useState(BATCH_SIZE);
+  const [activeDialogTool, setActiveDialogTool] = useState<Tool | null>(null);
 
   const { bookmarkedSet } = useBookmarks();
 
@@ -175,6 +191,7 @@ function FilterSectionInner({
       clearTimeout(searchDebounceRef.current);
     }
     setSearchQuery("");
+    setVisibleLimit(BATCH_SIZE);
     syncUrl(initialCategory || null, [], "any", "", false);
   };
 
@@ -226,9 +243,55 @@ function FilterSectionInner({
     selectedTags,
   ]);
 
-  // Group the filtered items by category
+  // Reset pagination limit during render when search or filter parameters change
+  const currentFilterKey = `${deferredSearchQuery}|${activeCategory}|${tagParam}|${matchMode}|${savedOnly}|${items.length}`;
+  const [prevFilterKey, setPrevFilterKey] = useState(currentFilterKey);
+
+  if (currentFilterKey !== prevFilterKey) {
+    setPrevFilterKey(currentFilterKey);
+    setVisibleLimit(BATCH_SIZE);
+  }
+
+  const hasMore = visibleLimit < filteredItems.length;
+
+  const handleLoadMore = useCallback(() => {
+    setVisibleLimit((prev) => Math.min(prev + BATCH_SIZE, filteredItems.length));
+  }, [filteredItems.length]);
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel || !hasMore) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          handleLoadMore();
+        }
+      },
+      { rootMargin: "600px 0px" },
+    );
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [handleLoadMore, hasMore]);
+
+  // Precompute category totals from full filteredItems
+  const categoryTotals = useMemo(() => {
+    const totals = new Map<string, number>();
+    for (const tool of filteredItems) {
+      totals.set(tool.category, (totals.get(tool.category) || 0) + 1);
+    }
+    return totals;
+  }, [filteredItems]);
+
+  // Only slice items up to visibleLimit for DOM rendering
+  const visibleItems = useMemo(() => {
+    return filteredItems.slice(0, visibleLimit);
+  }, [filteredItems, visibleLimit]);
+
+  // Group ONLY the visible items by category
   const groupedItems = useMemo(() => {
-    return filteredItems.reduce(
+    return visibleItems.reduce(
       (acc, tool) => {
         if (!acc[tool.category]) acc[tool.category] = [];
         acc[tool.category].push(tool);
@@ -236,7 +299,7 @@ function FilterSectionInner({
       },
       {} as Record<string, Tool[]>,
     );
-  }, [filteredItems]);
+  }, [visibleItems]);
 
   return (
     <>
@@ -386,7 +449,7 @@ function FilterSectionInner({
 
                   <div className="flex w-full items-center gap-3 sm:w-auto">
                     <span className="text-mono-xs sm:text-mono-sm text-ink-mute shrink-0 font-mono">
-                      {catItems.length} {itemLabel}
+                      {categoryTotals.get(category) ?? catItems.length} {itemLabel}
                     </span>
                     <span className="bg-primary h-0.5 flex-1 sm:hidden" />
                   </div>
@@ -397,11 +460,25 @@ function FilterSectionInner({
                       key={tool.url || tool.slug}
                       tool={tool}
                       onTagClickAction={handleToggleTag}
+                      onCardClick={setActiveDialogTool}
                     />
                   ))}
                 </div>
               </div>
             ))
+          )}
+
+          {hasMore && (
+            <div ref={sentinelRef} className="flex flex-col items-center justify-center py-10">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleLoadMore}
+                className="font-mono text-xs tracking-wider uppercase transition-all"
+              >
+                Load more ({filteredItems.length - visibleLimit} remaining)
+              </Button>
+            </div>
           )}
         </div>
       </div>
@@ -416,6 +493,24 @@ function FilterSectionInner({
           onMatchModeChange={handleMatchModeChange}
         />
       )}
+
+      <Dialog
+        open={!!activeDialogTool}
+        onOpenChange={(open) => {
+          if (!open) setActiveDialogTool(null);
+        }}
+      >
+        {activeDialogTool && (
+          <ResourceDialog
+            key={activeDialogTool.url || activeDialogTool.title}
+            tool={activeDialogTool}
+            onTagClickAction={(tag) => {
+              setActiveDialogTool(null);
+              handleToggleTag(tag);
+            }}
+          />
+        )}
+      </Dialog>
     </>
   );
 }

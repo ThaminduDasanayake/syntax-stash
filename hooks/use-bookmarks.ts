@@ -11,6 +11,7 @@ const EMPTY_ARRAY: string[] = [];
 
 let cachedBookmarks: string[] = [];
 let isFetching = false;
+let hasFetchedBookmarksOnce = false;
 
 function getSnapshot(): string[] {
   return cachedBookmarks;
@@ -28,6 +29,7 @@ export function notifySubscribers() {
 
 export function resetBookmarkCache() {
   cachedBookmarks = EMPTY_ARRAY;
+  hasFetchedBookmarksOnce = false;
   notifySubscribers();
 }
 
@@ -52,27 +54,29 @@ async function fetchCloudBookmarks() {
       const data = await res.json();
       if (Array.isArray(data.bookmarks)) {
         cachedBookmarks = data.bookmarks;
-        notifySubscribers();
       }
     } else if (res.status === 401) {
       cachedBookmarks = EMPTY_ARRAY;
-      notifySubscribers();
     }
   } catch (e) {
     console.error("Failed to fetch cloud bookmarks", e);
   } finally {
     isFetching = false;
+    hasFetchedBookmarksOnce = true;
+    notifySubscribers();
   }
 }
 
 export function useBookmarks() {
-  const { data: session } = useSession();
+  const { data: session, isPending: isSessionLoading } = useSession();
   const userId = session?.user?.id;
   const bookmarks = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   useEffect(() => {
     fetchCloudBookmarks();
   }, [userId]);
+
+  const isLoading = isSessionLoading || (Boolean(userId) && !hasFetchedBookmarksOnce);
 
   const bookmarkedSet = useMemo(() => new Set(bookmarks), [bookmarks]);
 
@@ -194,6 +198,7 @@ export function useBookmarks() {
     exportBookmarks,
     importBookmarks,
     isBookmarked,
+    isLoading,
     refetchBookmarks: fetchCloudBookmarks,
     toggleBookmark,
   };
