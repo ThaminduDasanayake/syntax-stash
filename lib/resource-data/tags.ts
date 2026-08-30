@@ -73,6 +73,7 @@ export const TAGS = {
   sql: "sql",
   svelte: "svelte",
   svg: "svg",
+  terminal: "terminal",
   textures: "textures",
   theme: "theme",
   tool: "tool",

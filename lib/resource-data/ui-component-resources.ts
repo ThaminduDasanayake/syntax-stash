@@ -956,6 +956,14 @@ export const uiLinks: Tool[] = [
     url: "https://www.termcn.dev/",
   },
   {
+    title: "TermUI Registry",
+    category: CATEGORIES.ui,
+    description: "shadcn-style terminal UI components for React + Ink",
+    ogImage: "https://raw.githubusercontent.com/Arindam200/termui/main/.github/assets/demo.png",
+    tags: [TAGS.terminal, TAGS["ui-component"]],
+    url: "https://arindam200.github.io/termui/",
+  },
+  {
     title: "Thinking orbs",
     author: "Jakub Antalik",
     category: CATEGORIES.ui,
