@@ -97,6 +97,16 @@ export const developmentLinks: Tool[] = [
     url: "https://awesome-privacy.xyz/",
   },
   {
+    title: "Balsa UI",
+    category: CATEGORIES.dev,
+    description: "Balsa UI is an agent-native, open-code component system for Vue and React.",
+    favicon: "https://balsa-ui.com/favicon.svg",
+    ogImage: "https://balsa-ui.com/og-image.webp",
+    subtitle: "Create Design Systems, Build with Agents",
+    tags: [TAGS.color, TAGS.designSystem, TAGS.theme, TAGS.typography],
+    url: "https://balsa-ui.com/",
+  },
+  {
     title: "BestAlternative",
     category: CATEGORIES.dev,
     description:
@@ -115,6 +125,16 @@ export const developmentLinks: Tool[] = [
     subtitle: "Free Online Design Tools for Developers & Designers",
     tags: [TAGS.tool],
     url: "https://better-t-stack.dev/",
+  },
+  {
+    title: "Bloop",
+    category: CATEGORIES.dev,
+    description:
+      "Create polished animated videos from images and clips for social media directly in your browser.",
+    favicon: "https://bloop.wtf/img/favicon.png",
+    ogImage: "https://bloop.wtf/img/seo-pages/examples.jpg",
+    subtitle: "Social Media Animation Generator",
+    url: "https://bloop.wtf/en",
   },
   {
     title: "BORED",
@@ -578,6 +598,18 @@ export const developmentLinks: Tool[] = [
     url: "https://immich.app/",
   },
   {
+    title: "ink",
+    author: "Arnold Francisca",
+    category: CATEGORIES.dev,
+    description:
+      "ink is a handwriting overlay tool by Arnold Francisca. Type a line, pick a hand, download a transparent PNG or ProRes MOV for your timeline.",
+    favicon: "https://ink.arnoldfrancisca.com/favicon.svg",
+    ogImage: "https://ink.arnoldfrancisca.com/og.png",
+    subtitle: "handwriting overlays",
+    tags: [TAGS.png, TAGS.typography, TAGS.video],
+    url: "https://ink.arnoldfrancisca.com/",
+  },
+  {
     title: "InputOutput",
     category: CATEGORIES.dev,
     description: "Simple web tools with no popups, no cookies, no tracking.",
@@ -661,6 +693,17 @@ export const developmentLinks: Tool[] = [
     ogImage: "https://framerusercontent.com/assets/jqkKeu8zA7KwIDAZFgsvnmE6A1U.png",
     tags: [TAGS.designSystem],
     url: "https://modulor.design/",
+  },
+  {
+    title: "Mole",
+    category: CATEGORIES.dev,
+    description:
+      "Mole is a native Mac app for cleaning caches, uninstalling and updating apps, analyzing disk space, and checking system status. Pay once, get lifetime updates.",
+    favicon: "https://mole.fit/img/mole-mark-de4ad137.png",
+    ogImage: "https://mole.fit/img/og-cover.jpg",
+    subtitle: "Native Mac Cleaner, App Manager, and System Monitor",
+    tags: [TAGS.development],
+    url: "https://mole.fit/",
   },
   {
     title: "Mux",
@@ -782,6 +825,16 @@ export const developmentLinks: Tool[] = [
     subtitle: "Convert, Measure & Generate in Seconds",
     tags: [TAGS.tool],
     url: "https://oualator.com/",
+  },
+  {
+    title: "Paper Studio",
+    author: "Design Minis",
+    category: CATEGORIES.dev,
+    description:
+      "Stack sheets of paper, drop artwork on them, and bend them the way real paper bends.",
+    favicon: "https://www.designminis.com/apple-icon.png",
+    subtitle: "paper stack simulator",
+    url: "https://www.designminis.com/paper-studio",
   },
   {
     title: "Photoroom",
@@ -1206,6 +1259,20 @@ export const developmentLinks: Tool[] = [
     description: "Build with Visual Studio Code, anywhere, anytime, entirely in your browser.",
     tags: [TAGS.tool],
     url: "https://vscode.dev/",
+  },
+  {
+    title: "Vorssaint",
+    author: "Vorssaint",
+    category: CATEGORIES.dev,
+    description:
+      "A free, open-source menu bar app built around your Mac. Install only the tools you use, remove the rest, and keep everything local.",
+    favicon:
+      "https://raw.githubusercontent.com/vorssaintapp/vorssaint-utils/main/docs/assets/readme/logo.svg",
+    ogImage:
+      "https://raw.githubusercontent.com/vorssaintapp/vorssaint-utils/main/docs/assets/readme/features-hub.png",
+    subtitle: "The modular Swiss Army knife for macOS",
+    tags: [TAGS.mac],
+    url: "https://vorssaint.com/",
   },
   {
     title: "Web Apps by 123apps",

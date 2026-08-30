@@ -159,6 +159,18 @@ export const uiLinks: Tool[] = [
     url: "https://buouui.com/",
   },
   {
+    title: "Canvas UI",
+    author: "David Haz",
+    category: CATEGORIES.ui,
+    description:
+      "An open source component library of creative html-in-canvas and WebGL effects for React, Solid, Preact, Vue, Svelte, and vanilla JS. Creative effects running over live HTML.",
+    favicon: "https://canvasui.dev/favicon.svg",
+    ogImage: "https://canvasui.dev/og.png",
+    subtitle: "Creative Canvas and WebGL Component Library",
+    tags: [TAGS.webgl, TAGS["ui-component"]],
+    url: "https://canvasui.dev/",
+  },
+  {
     title: "Clonify",
     category: CATEGORIES.ui,
     description:
@@ -923,6 +935,16 @@ export const uiLinks: Tool[] = [
     subtitle: "Shadcn Marketing Blocks",
     tags: [TAGS["ui-component"]],
     url: "https://tailark.com/",
+  },
+  {
+    title: "Tegaki",
+    author: "Gokhan Kurt",
+    category: CATEGORIES.ui,
+    description: "Animated handwriting from any font.",
+    favicon: "https://gkurt.com/tegaki/favicon.svg",
+    ogImage: "https://gkurt.com/tegaki/tegaki-card.png",
+    tags: [TAGS.animation, TAGS.typography, TAGS["ui-component"]],
+    url: "https://gkurt.com/tegaki/",
   },
   {
     title: "termcn",

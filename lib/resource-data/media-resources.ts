@@ -801,6 +801,17 @@ export const mediaLinks: Tool[] = [
     url: "https://pngfile.net/",
   },
   {
+    title: "Ransom note",
+    author: "Anish Gupta",
+    authorLink: "https://anishfn.vercel.app/",
+    category: CATEGORIES.media,
+    description: "Anything you type, in cut-out magazine letters.",
+    favicon: "https://anishfn.vercel.app/favicon.ico",
+    ogImage: "https://anishfn.qala.lol/experiments/ransom-note/opengraph-image",
+    tags: [TAGS.animation, TAGS.image],
+    url: "https://anishfn.vercel.app/experiments/ransom-note",
+  },
+  {
     title: "Rebrand",
     category: CATEGORIES.media,
     description:

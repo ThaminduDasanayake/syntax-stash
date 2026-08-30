@@ -100,7 +100,7 @@ export const typographyLinks: Tool[] = [
     title: "Dinamo Font Gauntlet",
     category: CATEGORIES.typography,
     description: "The Dinamo Font Gauntlet is a tool for proofing, generating and animating fonts.",
-    subtitle: "The Easiest Way to Make Fonts",
+    favicon: "https://fontgauntlet.com/static/media/favicon.ico",
     tags: [TAGS.typography],
     url: "https://fontgauntlet.com/",
   },
