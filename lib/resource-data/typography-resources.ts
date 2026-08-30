@@ -630,6 +630,16 @@ export const typographyLinks: Tool[] = [
     url: "https://myfffonts.accentgrave.net/",
   },
   {
+    title: "NBR Type",
+    author: "NoirBlancRouge",
+    category: CATEGORIES.typography,
+    description: "Independent type foundry. Retail & custom typefaces",
+    favicon: "https://noirblancrouge.com/wp-content/uploads/2026/03/favicon-80x80.png",
+    ogImage: "https://noirblancrouge.com/wp-content/themes/noirblancrouge/_/inc/images/nbrhome.jpg",
+    tags: [TAGS.typography],
+    url: "https://noirblancrouge.com/",
+  },
+  {
     title: "Nerd Fonts",
     category: CATEGORIES.typography,
     description:

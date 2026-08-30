@@ -894,6 +894,17 @@ export const developmentLinks: Tool[] = [
     url: "https://maps.rayon.design/",
   },
   {
+    title: "Recordly",
+    category: CATEGORIES.dev,
+    description:
+      "Recordly is an open‑source screen recorder for MacOS/Windows/Linux with auto-zoom, motion blur animated cursors, and minimal interface. Used to create product demos, guided walkthroughs and more. A free alternative to Screen Studio.",
+    favicon: "https://framerusercontent.com/images/tlpH1oytRnY59CDasEuBb61w.png",
+    ogImage: "https://framerusercontent.com/assets/mFY0SBsKQLeoyU6Ky9bMEDZ7Gk.png",
+    subtitle: "Open-source app for incredible screen recordings.",
+    tags: [TAGS["open-source"]],
+    url: "https://recordly.dev/",
+  },
+  {
     title: "Reflag",
     category: CATEGORIES.dev,
     className: "bg-foreground border-paper",
@@ -1048,6 +1059,17 @@ export const developmentLinks: Tool[] = [
       "Minimalist, end-to-end encrypted, self-hostable file and note sharing. Zero-knowledge server - files and notes are encrypted in the browser before upload. No accounts, no telemetry, built for speed and security.",
     subtitle: "Encrypted File & Note Sharing",
     url: "https://skysend.app/",
+  },
+  {
+    title: "Snapzy",
+    category: CATEGORIES.dev,
+    description:
+      "Snapzy is a native macOS app for capturing stunning screenshots and screen recordings. Create, edit, and share beautiful visuals in seconds.",
+    favicon: "https://snapzy.app/brand-logo.png",
+    ogImage: "https://snapzy.app/og-image.png",
+    subtitle: "Beautiful Screen Capture for macOS",
+    tags: [TAGS.mac, TAGS["open-source"]],
+    url: "https://snapzy.app/",
   },
   {
     title: "Super Designer",
