@@ -1,9 +1,9 @@
-import { Tool } from "@/types";
+import { Resource } from "@/types";
 
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const uiLinks: Tool[] = [
+export const uiLinks: Resource[] = [
   {
     title: "9ui",
     author: "Bora Baloglu",

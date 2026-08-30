@@ -4,9 +4,15 @@ import { notFound } from "next/navigation";
 import { ReactNode } from "react";
 
 import { iconMap } from "@/lib/icons";
-import { Tool } from "@/types";
+import { InternalTool } from "@/types";
 
-export function ToolLayout({ children, tool }: { children: ReactNode; tool: Tool | undefined }) {
+export function ToolLayout({
+  children,
+  tool,
+}: {
+  children: ReactNode;
+  tool: InternalTool | undefined;
+}) {
   if (!tool) {
     notFound();
   }

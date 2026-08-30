@@ -1,9 +1,9 @@
-import { Tool } from "@/types";
+import { Resource } from "@/types";
 
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const colorLinks: Tool[] = [
+export const colorLinks: Resource[] = [
   {
     title: "Actionable Color Palettes",
     author: "Csaba Kissi",

@@ -1,38 +1,30 @@
 "use client";
 
-import { BookmarkSimpleIcon, ToolboxIcon } from "@phosphor-icons/react";
-import Link from "next/link";
+import { ArrowSquareOutIcon, BookmarkSimpleIcon } from "@phosphor-icons/react";
 import { memo, useState } from "react";
 
 import { AuthModal } from "@/components/auth-modal";
+import { CardIcon } from "@/components/card-icon";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { useSession } from "@/lib/auth-client";
-import { iconMap } from "@/lib/icons";
-import { internalTools } from "@/lib/tools-data";
 import { cn, getCategoryColor } from "@/lib/utils";
-import { ToolCardProps } from "@/types";
+import { ResourceCardProps } from "@/types";
 
-function ToolCardComponent({
+function ResourceCardComponent({
   isBookmarked: propIsBookmarked,
+  onCardClick,
   onToggleBookmark: propOnToggleBookmark,
-  tool,
-}: ToolCardProps) {
-  const Icon = (tool.icon && iconMap[tool.icon]) || ToolboxIcon;
-  const colorClasses = getCategoryColor(tool.category);
+  resource,
+}: ResourceCardProps) {
+  const colorClasses = getCategoryColor(resource.category);
   const { data: session } = useSession();
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const { isBookmarked: hookIsBookmarked, toggleBookmark: hookToggleBookmark } = useBookmarks();
-  const bookmarked = propIsBookmarked !== undefined ? propIsBookmarked : hookIsBookmarked(tool);
+  const bookmarked = propIsBookmarked !== undefined ? propIsBookmarked : hookIsBookmarked(resource);
   const toggle = propOnToggleBookmark || hookToggleBookmark;
   const [isBookmarkHovered, setIsBookmarkHovered] = useState(false);
-
-  const totalTools = internalTools.length;
-  const toolIndex = internalTools.findIndex((t) => t.slug === tool.slug);
-  const currentNumber = toolIndex !== -1 ? String(toolIndex + 1).padStart(2, "0") : "01";
-  const totalFormatted = String(totalTools).padStart(2, "0");
-  const toolNumber = `${currentNumber}/${totalFormatted}`;
 
   const handleBookmarkClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -41,38 +33,48 @@ function ToolCardComponent({
       setAuthModalOpen(true);
       return;
     }
-    toggle(tool);
+    toggle(resource);
+  };
+
+  const handleCardClick = () => {
+    onCardClick?.(resource);
   };
 
   return (
     <>
       {authModalOpen && <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />}
-      <Link
-        href={`/tools/${tool.slug}`}
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={handleCardClick}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            handleCardClick();
+          }
+        }}
         className="focus-visible:outline-primary block h-full w-full cursor-pointer text-left outline-none focus-visible:outline-2 focus-visible:outline-offset-2"
       >
         <article className={cn("card group", colorClasses)}>
           <div className="card-inner">
             <div className="card-face">
               <div className="card-header">
-                <span className="card-meta">
-                  {tool.category}
-                  <span className="card-meta-sep">·</span>
-                  <span>{toolNumber}</span>
-                </span>
-
-                <div className="bg-background text-foreground card-icon-box">
-                  <Icon className="card-icon" />
-                </div>
+                <span className="card-meta">{resource.category}</span>
+                <CardIcon
+                  alt={resource.title}
+                  className={resource.className}
+                  favicon={resource.favicon}
+                />
               </div>
 
-              <h3 className="card-title">{tool.title}</h3>
+              <h3 className="card-title">{resource.title}</h3>
 
-              <p className="card-description">{tool.description}</p>
+              {resource.subtitle && <p className="card-subtitle">{resource.subtitle}</p>}
+              <p className="card-description">{resource.description}</p>
 
               <div className="card-footer">
-                {tool.highlight ? (
-                  <span className="card-author">{tool.highlight}</span>
+                {resource.author ? (
+                  <span className="card-author">{resource.author}</span>
                 ) : (
                   <div aria-hidden="true" />
                 )}
@@ -104,15 +106,33 @@ function ToolCardComponent({
                       <p>{bookmarked ? "Remove" : "Save"}</p>
                     </TooltipContent>
                   </Tooltip>
+
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <a
+                        href={resource.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group/arrow p-1"
+                        onClick={(e) => e.stopPropagation()}
+                        aria-label="Open in new tab"
+                      >
+                        <ArrowSquareOutIcon weight="bold" className="card-link-icon" />
+                      </a>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Open in new tab</p>
+                    </TooltipContent>
+                  </Tooltip>
                 </div>
               </div>
             </div>
           </div>
         </article>
-      </Link>
+      </div>
     </>
   );
 }
 
-export const ToolCard = memo(ToolCardComponent);
-export default ToolCard;
+export const ResourceCard = memo(ResourceCardComponent);
+export default ResourceCard;

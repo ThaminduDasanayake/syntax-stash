@@ -1,9 +1,9 @@
-import { Tool } from "@/types";
+import { Resource } from "@/types";
 
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const frontendLinks: Tool[] = [
+export const frontendLinks: Resource[] = [
   {
     title: "404 Animation Library",
     author: "Csaba Kissi",

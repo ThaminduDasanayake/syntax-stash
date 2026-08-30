@@ -1,9 +1,9 @@
-import { Tool } from "@/types";
+import { Resource } from "@/types";
 
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const dataLinks: Tool[] = [
+export const dataLinks: Resource[] = [
   {
     title: "actuallyEXPLAIN",
     category: CATEGORIES.data,

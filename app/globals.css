@@ -454,7 +454,7 @@
 }
 
 @utility hero-sub {
-  @apply text-ink-2 mb-5 max-w-[52ch] text-lg leading-relaxed sm:mb-7;
+  @apply text-ink-2 mb-5 max-w-[52ch] font-mono text-lg leading-relaxed sm:mb-7;
 }
 
 @utility hero-cta-row {

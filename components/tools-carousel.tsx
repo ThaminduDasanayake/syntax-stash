@@ -9,10 +9,10 @@ import ToolCard from "@/components/tool-card";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { internalTools } from "@/lib/tools-data";
-import { Tool } from "@/types";
+import { InternalTool } from "@/types";
 
 interface ToolsCarouselProps {
-  tools: Tool[];
+  tools: InternalTool[];
   totalCount: number;
 }
 

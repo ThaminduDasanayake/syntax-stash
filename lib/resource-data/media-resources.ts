@@ -1,9 +1,9 @@
-import { Tool } from "@/types";
+import { Resource } from "@/types";
 
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const mediaLinks: Tool[] = [
+export const mediaLinks: Resource[] = [
   {
     title: "3dsvg",
     category: CATEGORIES.media,

@@ -1,9 +1,9 @@
-import { Tool } from "@/types";
+import { Resource } from "@/types";
 
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const animationLinks: Tool[] = [
+export const animationLinks: Resource[] = [
   {
     title: "Animejs",
     category: CATEGORIES.animation,

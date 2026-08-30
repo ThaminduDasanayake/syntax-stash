@@ -1,9 +1,9 @@
-import { Tool } from "@/types";
+import { Resource } from "@/types";
 
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const iconLinks: Tool[] = [
+export const iconLinks: Resource[] = [
   {
     title: "Absurd Design",
     category: CATEGORIES.icons,

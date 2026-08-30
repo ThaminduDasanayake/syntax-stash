@@ -1,9 +1,9 @@
-import { Tool } from "@/types";
+import { Resource } from "@/types";
 
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const developmentLinks: Tool[] = [
+export const developmentLinks: Resource[] = [
   {
     title: "10 Minute Mail",
     author: "Devon Hillard",

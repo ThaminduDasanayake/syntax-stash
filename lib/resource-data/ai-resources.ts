@@ -1,9 +1,9 @@
-import { Tool } from "@/types";
+import { Resource } from "@/types";
 
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const aiLinks: Tool[] = [
+export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
   {
     title: "agentic-inbox",
     author: "Cloudflare",
@@ -16,6 +16,7 @@ export const aiLinks: Tool[] = [
   },
   {
     title: "agentmemory",
+    author: "Rohit Ghumare",
     category: CATEGORIES.ai,
     description:
       "Persistent memory for AI coding agents. Capture every session, recall it in the next one. Runs locally with zero external databases. Works with every MCP client.",

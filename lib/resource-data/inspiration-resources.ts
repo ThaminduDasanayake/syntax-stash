@@ -1,9 +1,9 @@
-import { Tool } from "@/types";
+import { Resource } from "@/types";
 
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const inspirationLinks: Tool[] = [
+export const inspirationLinks: Resource[] = [
   {
     title: "60fps",
     category: CATEGORIES.inspiration,

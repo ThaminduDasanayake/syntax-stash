@@ -19,18 +19,18 @@ import {
 
 import { DotButton } from "@/components/dot-button";
 import { ResourceDialog } from "@/components/resource-dialog";
+import StashCard from "@/components/stash-card";
 import { TagFilterPopover, TagOption } from "@/components/tag-filter-popover";
-import ToolCard from "@/components/tool-card";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { getResourceId } from "@/lib/utils";
-import { Tool } from "@/types";
+import { isResource, Resource, StashItem } from "@/types";
 
 interface FilterSectionProps {
   initialCategory?: string;
-  items: Tool[];
+  items: StashItem[];
   categories: string[];
   searchPlaceholder?: string;
   itemLabel?: string;
@@ -51,7 +51,7 @@ function FilterSectionInner({
   const sentinelRef = useRef<HTMLDivElement | null>(null);
 
   const [visibleLimit, setVisibleLimit] = useState(BATCH_SIZE);
-  const [activeDialogTool, setActiveDialogTool] = useState<Tool | null>(null);
+  const [activeDialogResource, setActiveDialogResource] = useState<Resource | null>(null);
 
   const { bookmarkedSet } = useBookmarks();
 
@@ -136,7 +136,7 @@ function FilterSectionInner({
 
     const counts = new Map<string, number>();
     for (const tool of scopedItems) {
-      if (tool.tags) {
+      if ("tags" in tool && tool.tags) {
         for (const tag of tool.tags) {
           counts.set(tag, (counts.get(tag) || 0) + 1);
         }
@@ -212,24 +212,28 @@ function FilterSectionInner({
 
       // Tag filter
       if (selectedTags.length > 0) {
-        const toolTags = tool.tags || [];
+        const itemTags = ("tags" in tool ? tool.tags : undefined) || [];
         if (matchMode === "all") {
-          const matchesAll = selectedTags.every((t) => toolTags.includes(t));
+          const matchesAll = selectedTags.every((t) => itemTags.includes(t));
           if (!matchesAll) return false;
         } else {
-          const matchesAny = selectedTags.some((t) => toolTags.includes(t));
+          const matchesAny = selectedTags.some((t) => itemTags.includes(t));
           if (!matchesAny) return false;
         }
       }
 
       // Search filter
       if (!query) return true;
+      const author = "author" in tool ? tool.author : undefined;
+      const subtitle = "subtitle" in tool ? tool.subtitle : undefined;
+      const tags = "tags" in tool ? tool.tags : undefined;
+
       return (
         tool.title.toLowerCase().includes(query) ||
-        tool.author?.toLowerCase().includes(query) ||
+        author?.toLowerCase().includes(query) ||
         tool.description?.toLowerCase().includes(query) ||
-        tool.subtitle?.toLowerCase().includes(query) ||
-        tool.tags?.some((tag) => tag.toLowerCase().includes(query)) ||
+        subtitle?.toLowerCase().includes(query) ||
+        tags?.some((tag: string) => tag.toLowerCase().includes(query)) ||
         tool.category.toLowerCase().includes(query)
       );
     });
@@ -297,7 +301,7 @@ function FilterSectionInner({
         acc[tool.category].push(tool);
         return acc;
       },
-      {} as Record<string, Tool[]>,
+      {} as Record<string, StashItem[]>,
     );
   }, [visibleItems]);
 
@@ -455,12 +459,16 @@ function FilterSectionInner({
                   </div>
                 </div>
                 <div className="card-grid">
-                  {catItems.map((tool) => (
-                    <ToolCard
-                      key={tool.url || tool.slug}
-                      tool={tool}
+                  {catItems.map((item) => (
+                    <StashCard
+                      key={"url" in item ? item.url : item.slug}
+                      item={item}
                       onTagClickAction={handleToggleTag}
-                      onCardClick={setActiveDialogTool}
+                      onCardClick={(clickedItem) => {
+                        if (isResource(clickedItem)) {
+                          setActiveDialogResource(clickedItem);
+                        }
+                      }}
                     />
                   ))}
                 </div>
@@ -495,17 +503,17 @@ function FilterSectionInner({
       )}
 
       <Dialog
-        open={!!activeDialogTool}
+        open={!!activeDialogResource}
         onOpenChange={(open) => {
-          if (!open) setActiveDialogTool(null);
+          if (!open) setActiveDialogResource(null);
         }}
       >
-        {activeDialogTool && (
+        {activeDialogResource && (
           <ResourceDialog
-            key={activeDialogTool.url || activeDialogTool.title}
-            tool={activeDialogTool}
+            key={activeDialogResource.url || activeDialogResource.title}
+            resource={activeDialogResource}
             onTagClickAction={(tag) => {
-              setActiveDialogTool(null);
+              setActiveDialogResource(null);
               handleToggleTag(tag);
             }}
           />
