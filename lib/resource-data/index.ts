@@ -1,4 +1,4 @@
-import { Tool } from "@/types";
+import { Resource } from "@/types";
 
 import { aiLinks } from "./ai-resources";
 import { animationLinks } from "./animation-resources";
@@ -35,7 +35,7 @@ export { mockupLinks } from "./mockup-resources";
 export { typographyLinks } from "./typography-resources";
 export { uiLinks } from "./ui-component-resources";
 
-export const resourceLinks: Tool[] = [
+export const resourceLinks: Resource[] = [
   ...aiLinks,
   ...animationLinks,
   ...backendLinks,

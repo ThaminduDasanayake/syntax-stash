@@ -20,17 +20,22 @@ import { useBookmarks } from "@/hooks/use-bookmarks";
 import { useSession } from "@/lib/auth-client";
 import { resourceLinks } from "@/lib/resource-data";
 import { cn, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
-import { Tool, ToolCardProps } from "@/types";
+import { Resource } from "@/types";
 
-export function ResourceDialog({ onTagClickAction, tool }: ToolCardProps) {
-  const [activeTool, setActiveTool] = useState(tool);
+export interface ResourceDialogProps {
+  onTagClickAction?: (tag: string) => void;
+  resource: Resource;
+}
+
+export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogProps) {
+  const [activeTool, setActiveTool] = useState(resource);
   const [ogError, setOgError] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const { data: session } = useSession();
   const { isBookmarked, toggleBookmark } = useBookmarks();
   const bookmarked = isBookmarked(activeTool);
 
-  const handleSelectTool = (res: Tool) => {
+  const handleSelectTool = (res: Resource) => {
     setOgError(false);
     setActiveTool(res);
   };
@@ -284,7 +289,7 @@ export function ResourceDialog({ onTagClickAction, tool }: ToolCardProps) {
               <BookmarkSimpleIcon weight={bookmarked ? "fill" : "bold"} className="size-4" />
               {bookmarked ? "Saved" : "Save"}
             </Button>
-            <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
+            {authModalOpen && <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />}
 
             <CopyButton
               textToCopy={activeTool.url || ""}

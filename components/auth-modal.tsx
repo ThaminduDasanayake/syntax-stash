@@ -93,7 +93,7 @@ export function AuthModal({ onOpenChange, open }: AuthModalProps) {
                 alt="Google"
                 width={18}
                 height={18}
-                className="size-4.5 transition-all group-hover:invert"
+                className="size-4.5 transition-all"
               />
             )}
             <span>

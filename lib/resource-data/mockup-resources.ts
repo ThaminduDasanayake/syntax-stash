@@ -1,9 +1,9 @@
-import { Tool } from "@/types";
+import { Resource } from "@/types";
 
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const mockupLinks: Tool[] = [
+export const mockupLinks: Resource[] = [
   {
     title: "Alex Paliotta",
     category: CATEGORIES.mockups,
@@ -240,6 +240,18 @@ export const mockupLinks: Tool[] = [
     subtitle: "Highres Photoshop Mockups for Creatives",
     tags: [TAGS.mockup],
     url: "https://www.mockupselection.com/",
+  },
+  {
+    title: "MockupShelf",
+    category: CATEGORIES.mockups,
+    description:
+      "MockupShelf offers free PSD mockups and online design tools for designers and businesses. Download mockups for branding, packaging, and presentations — no sign-up needed.",
+    favicon: "https://www.mockupshelf.com/wp-content/uploads/2025/10/Mockupshelf-icon.svg",
+    ogImage:
+      "https://www.mockupshelf.com/wp-content/uploads/2025/10/Mockupshelf-feature-image-2.jpg",
+    subtitle: "Free Online Tools & PSD Mockups for Designers",
+    tags: [TAGS.mockup],
+    url: "https://www.mockupshelf.com/",
   },
   {
     title: "Mockups Supply",

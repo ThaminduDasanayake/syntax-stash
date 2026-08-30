@@ -18,7 +18,7 @@ import {
 import { iconMap } from "@/lib/icons";
 import { resourceLinks } from "@/lib/resource-data";
 import { internalTools } from "@/lib/tools-data";
-import { CommandMenuProps, Tool } from "@/types";
+import { CommandMenuProps, isInternalTool, StashItem } from "@/types";
 
 function truncateWords(text: string = "", maxWords: number = 15) {
   if (!text) return "";
@@ -78,12 +78,12 @@ export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
     return () => document.removeEventListener("keydown", handler);
   }, [setOpenAction]);
 
-  function handleSelect(tool: Tool) {
+  function handleSelect(item: StashItem) {
     setOpenAction(false);
-    if (tool.slug) {
-      router.push(`/tools/${tool.slug}`);
-    } else if (tool.url) {
-      window.open(tool.url, "_blank", "noopener,noreferrer");
+    if (isInternalTool(item)) {
+      router.push(`/tools/${item.slug}`);
+    } else if ("url" in item && item.url) {
+      window.open(item.url, "_blank", "noopener,noreferrer");
     }
   }
 

@@ -1,9 +1,9 @@
-import { Tool } from "@/types";
+import { Resource } from "@/types";
 
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const designLinks: Tool[] = [
+export const designLinks: Resource[] = [
   {
     title: "[ graph ] ~~> [ easy ]",
     category: CATEGORIES.design,
@@ -672,6 +672,17 @@ export const designLinks: Tool[] = [
     description: "Build interactive experiences, websites, 3d, and apps using natural language.",
     tags: [TAGS.design],
     url: "https://omma.build/",
+  },
+  {
+    title: "OpenMotion",
+    category: CATEGORIES.design,
+    description:
+      "OpenMotion turns a prompt into editable motion scenes, with a real canvas and timeline to refine and export the result.",
+    favicon: "https://openmotion.design/assets/motion-icon.png",
+    ogImage: "https://openmotion.design/assets/openmotion-social-preview.png",
+    subtitle: "Build launch videos from a prompt",
+    tags: [TAGS.animation, TAGS.design],
+    url: "https://openmotion.design/",
   },
   {
     title: "OpenPencil",

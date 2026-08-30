@@ -14,15 +14,15 @@ import { signIn } from "@/lib/auth-client";
 import { resourceLinks } from "@/lib/resource-data";
 import { internalTools } from "@/lib/tools-data";
 import { getResourceId } from "@/lib/utils";
-import { Tool } from "@/types";
+import { StashItem } from "@/types";
 
-const ALL_TOOLS: Tool[] = [...internalTools, ...resourceLinks];
+const ALL_ITEMS: StashItem[] = [...internalTools, ...resourceLinks];
 
 export default function SavedPage() {
   const { bookmarkedSet, bookmarksCount, isLoading } = useBookmarks();
 
   const savedResources = useMemo(() => {
-    return ALL_TOOLS.filter((item) => bookmarkedSet.has(getResourceId(item)));
+    return ALL_ITEMS.filter((item) => bookmarkedSet.has(getResourceId(item)));
   }, [bookmarkedSet]);
 
   const savedCategories = useMemo(() => {

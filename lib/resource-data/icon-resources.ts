@@ -1,9 +1,9 @@
-import { Tool } from "@/types";
+import { Resource } from "@/types";
 
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const iconLinks: Tool[] = [
+export const iconLinks: Resource[] = [
   {
     title: "Absurd Design",
     category: CATEGORIES.icons,
@@ -381,6 +381,17 @@ export const iconLinks: Tool[] = [
     description: "Animated icons that move with intent.",
     tags: [TAGS.animation, TAGS.icons],
     url: "https://www.itshover.com/",
+  },
+  {
+    title: "Kitbitz",
+    category: CATEGORIES.icons,
+    description:
+      "2,000+ free hand-drawn illustrations for your projects. Download SVG and PNG assets, use ready-made Figma kits and components, browse with the Figma plugin, or connect through MCP. Free for commercial use under CC0.",
+    favicon: "https://kitbitz.art/kitbitz-favicon.png",
+    ogImage: "https://kitbitz.art/og/pages/home.webp",
+    subtitle: "2,000+ free hand-drawn illustrations",
+    tags: [TAGS.illustration, TAGS.png, TAGS.svg],
+    url: "https://kitbitz.art/",
   },
   {
     title: "Lineicons",

@@ -1,9 +1,9 @@
-import { Tool } from "@/types";
+import { Resource } from "@/types";
 
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const mediaLinks: Tool[] = [
+export const mediaLinks: Resource[] = [
   {
     title: "3dsvg",
     category: CATEGORIES.media,
@@ -799,6 +799,17 @@ export const mediaLinks: Tool[] = [
       "Download 100% free PNG images with transparent backgrounds! Browse thousands of high-resolution PNGs for designers, marketers & content creators. No attribution required!.",
     tags: [TAGS.design, TAGS.image],
     url: "https://pngfile.net/",
+  },
+  {
+    title: "Ransom note",
+    author: "Anish Gupta",
+    authorLink: "https://anishfn.vercel.app/",
+    category: CATEGORIES.media,
+    description: "Anything you type, in cut-out magazine letters.",
+    favicon: "https://anishfn.vercel.app/favicon.ico",
+    ogImage: "https://anishfn.qala.lol/experiments/ransom-note/opengraph-image",
+    tags: [TAGS.animation, TAGS.image],
+    url: "https://anishfn.vercel.app/experiments/ransom-note",
   },
   {
     title: "Rebrand",

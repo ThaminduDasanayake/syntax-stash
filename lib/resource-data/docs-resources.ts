@@ -1,9 +1,9 @@
-import { Tool } from "@/types";
+import { Resource } from "@/types";
 
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const documentationLinks: Tool[] = [
+export const documentationLinks: Resource[] = [
   {
     title: "Accept: text/markdown",
     category: CATEGORIES.docs,

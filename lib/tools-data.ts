@@ -1,4 +1,4 @@
-import { Tool } from "@/types";
+import { InternalTool } from "@/types";
 
 export const CATEGORIES = {
   data: "Data",
@@ -11,7 +11,7 @@ export type ToolCategoryValue = (typeof CATEGORIES)[keyof typeof CATEGORIES];
 
 export const toolCategories: ToolCategoryValue[] = Object.values(CATEGORIES);
 
-export const dataTools: Tool[] = [
+export const dataTools: InternalTool[] = [
   {
     title: "curl Command Builder",
     category: CATEGORIES.data,
@@ -117,7 +117,7 @@ export const dataTools: Tool[] = [
   },
 ];
 
-export const developmentTools: Tool[] = [
+export const developmentTools: InternalTool[] = [
   {
     title: ".gitignore Generator",
     category: CATEGORIES.dev,
@@ -244,7 +244,7 @@ export const developmentTools: Tool[] = [
   },
 ];
 
-export const frontendTools: Tool[] = [
+export const frontendTools: InternalTool[] = [
   {
     title: "Color Studio",
     category: CATEGORIES.frontend,
@@ -342,7 +342,7 @@ export const frontendTools: Tool[] = [
   },
 ];
 
-export const mediaTools: Tool[] = [
+export const mediaTools: InternalTool[] = [
   {
     title: "Document Extractor",
     category: CATEGORIES.media,
@@ -380,7 +380,7 @@ export const mediaTools: Tool[] = [
 ];
 
 // Internal Tools
-export const internalTools: Tool[] = [
+export const internalTools: InternalTool[] = [
   ...dataTools,
   ...developmentTools,
   ...frontendTools,

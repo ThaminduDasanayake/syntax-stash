@@ -1,9 +1,9 @@
-import { Tool } from "@/types";
+import { Resource } from "@/types";
 
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const uiLinks: Tool[] = [
+export const uiLinks: Resource[] = [
   {
     title: "9ui",
     author: "Bora Baloglu",
@@ -157,6 +157,18 @@ export const uiLinks: Tool[] = [
     ogImage: "https://buouui.com/og.jpg",
     tags: [TAGS["ui-component"]],
     url: "https://buouui.com/",
+  },
+  {
+    title: "Canvas UI",
+    author: "David Haz",
+    category: CATEGORIES.ui,
+    description:
+      "An open source component library of creative html-in-canvas and WebGL effects for React, Solid, Preact, Vue, Svelte, and vanilla JS. Creative effects running over live HTML.",
+    favicon: "https://canvasui.dev/favicon.svg",
+    ogImage: "https://canvasui.dev/og.png",
+    subtitle: "Creative Canvas and WebGL Component Library",
+    tags: [TAGS.webgl, TAGS["ui-component"]],
+    url: "https://canvasui.dev/",
   },
   {
     title: "Clonify",
@@ -925,6 +937,16 @@ export const uiLinks: Tool[] = [
     url: "https://tailark.com/",
   },
   {
+    title: "Tegaki",
+    author: "Gokhan Kurt",
+    category: CATEGORIES.ui,
+    description: "Animated handwriting from any font.",
+    favicon: "https://gkurt.com/tegaki/favicon.svg",
+    ogImage: "https://gkurt.com/tegaki/tegaki-card.png",
+    tags: [TAGS.animation, TAGS.typography, TAGS["ui-component"]],
+    url: "https://gkurt.com/tegaki/",
+  },
+  {
     title: "termcn",
     category: CATEGORIES.ui,
     description:
@@ -932,6 +954,14 @@ export const uiLinks: Tool[] = [
     subtitle: "Beautiful terminal UIs, made simple",
     tags: [TAGS.development, TAGS.ui],
     url: "https://www.termcn.dev/",
+  },
+  {
+    title: "TermUI Registry",
+    category: CATEGORIES.ui,
+    description: "shadcn-style terminal UI components for React + Ink",
+    ogImage: "https://raw.githubusercontent.com/Arindam200/termui/main/.github/assets/demo.png",
+    tags: [TAGS.terminal, TAGS["ui-component"]],
+    url: "https://arindam200.github.io/termui/",
   },
   {
     title: "Thinking orbs",

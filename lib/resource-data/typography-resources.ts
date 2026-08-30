@@ -1,9 +1,9 @@
-import { Tool } from "@/types";
+import { Resource } from "@/types";
 
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const typographyLinks: Tool[] = [
+export const typographyLinks: Resource[] = [
   {
     title: "Adobe Fonts",
     category: CATEGORIES.typography,
@@ -100,7 +100,7 @@ export const typographyLinks: Tool[] = [
     title: "Dinamo Font Gauntlet",
     category: CATEGORIES.typography,
     description: "The Dinamo Font Gauntlet is a tool for proofing, generating and animating fonts.",
-    subtitle: "The Easiest Way to Make Fonts",
+    favicon: "https://fontgauntlet.com/static/media/favicon.ico",
     tags: [TAGS.typography],
     url: "https://fontgauntlet.com/",
   },
@@ -628,6 +628,16 @@ export const typographyLinks: Tool[] = [
     description: "My own (libre) webfonts vault",
     tags: [TAGS.typography],
     url: "https://myfffonts.accentgrave.net/",
+  },
+  {
+    title: "NBR Type",
+    author: "NoirBlancRouge",
+    category: CATEGORIES.typography,
+    description: "Independent type foundry. Retail & custom typefaces",
+    favicon: "https://noirblancrouge.com/wp-content/uploads/2026/03/favicon-80x80.png",
+    ogImage: "https://noirblancrouge.com/wp-content/themes/noirblancrouge/_/inc/images/nbrhome.jpg",
+    tags: [TAGS.typography],
+    url: "https://noirblancrouge.com/",
   },
   {
     title: "Nerd Fonts",

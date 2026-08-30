@@ -1,9 +1,9 @@
-import { Tool } from "@/types";
+import { Resource } from "@/types";
 
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const educationLinks: Tool[] = [
+export const educationLinks: Resource[] = [
   {
     title: "30 Days Of Python",
     author: "Asabeneh",
