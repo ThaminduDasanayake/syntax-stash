@@ -38,8 +38,6 @@ export type Tool = StashItem;
 
 export type ToolCardProps = {
   tool: InternalTool;
-  isBookmarked?: boolean;
-  onToggleBookmark?: (tool: InternalTool) => void;
 };
 
 export type ResourceCardProps = {

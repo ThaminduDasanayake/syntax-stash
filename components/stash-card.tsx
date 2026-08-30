@@ -14,7 +14,7 @@ function StashCardComponent({
   onToggleBookmark,
 }: StashCardProps) {
   if (isInternalTool(item)) {
-    return <ToolCard tool={item} isBookmarked={isBookmarked} onToggleBookmark={onToggleBookmark} />;
+    return <ToolCard tool={item} />;
   }
 
   return (

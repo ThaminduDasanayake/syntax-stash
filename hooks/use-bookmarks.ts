@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useSyncExternalStore } from "react";
 
 import { useSession } from "@/lib/auth-client";
 import { downloadStringAsFile, getResourceId } from "@/lib/utils";
-import { StashItem } from "@/types";
+import { Resource } from "@/types";
 
 const CLOUD_BOOKMARKS_EVENT_KEY = "syntax-stash-cloud-bookmarks-updated";
 const EMPTY_ARRAY: string[] = [];
@@ -81,14 +81,14 @@ export function useBookmarks() {
   const bookmarkedSet = useMemo(() => new Set(bookmarks), [bookmarks]);
 
   const isBookmarked = useCallback(
-    (target: StashItem | string): boolean => {
+    (target: Resource | string): boolean => {
       const id = getResourceId(target);
       return bookmarkedSet.has(id);
     },
     [bookmarkedSet],
   );
 
-  const toggleBookmark = useCallback(async (target: StashItem | string) => {
+  const toggleBookmark = useCallback(async (target: Resource | string) => {
     const id = getResourceId(target);
     if (!id) return;
 
