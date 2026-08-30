@@ -553,7 +553,7 @@
 }
 
 @utility vault-card-dot {
-  @apply size-2 rounded-full border transition-colors;
+  @apply size-6 rounded-full border transition-colors;
 }
 
 @utility vault-card-count {

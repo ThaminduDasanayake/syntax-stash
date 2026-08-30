@@ -20,7 +20,7 @@ function ToolCardComponent({
   tool,
 }: ToolCardProps) {
   const Icon = (tool.icon && iconMap[tool.icon]) || ToolboxIcon;
-  const colorClasses = getCategoryColor(tool.category);
+  const colorClasses = getCategoryColor(tool.category, "tool");
   const { data: session } = useSession();
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const { isBookmarked: hookIsBookmarked, toggleBookmark: hookToggleBookmark } = useBookmarks();
