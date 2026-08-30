@@ -1,0 +1,42 @@
+name: Resource Health Check
+
+on:
+  schedule:
+    # Runs every Monday at 00:00 UTC
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Resource Health Check
+        id: checker
+        run: npm run check:resources
+
+      - name: Create GitHub Issue on Findings
+        if: steps.checker.outputs.has_findings == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DATE=$(date +'%b %d, %Y')
+          gh issue create \
+            --title "🔍 [Health Check] Resource Audit Report ($DATE)" \
+            --body-file health-report.md || \
+          echo "Issue creation failed or token lacks permissions."

@@ -63,6 +63,8 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     category: CATEGORIES.ai,
     description:
       "AnythingLLM is the AI application you've been seeking. Use any LLM to chat with your documents, enhance your productivity, and run the latest state-of-the-art LLMs completely privately with no technical setup.",
+    favicon: "https://anythingllm.com/images/brand/logo-mark.svg",
+    ogImage: "https://anythingllm.com/share-card.png",
     subtitle: "The all-in-one AI application for everyone",
     tags: [TAGS.ai],
     url: "https://anythingllm.com/",
@@ -79,9 +81,12 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
   },
   {
     title: "Awesome Claude",
+    author: "Awesome Claude Community",
     category: CATEGORIES.ai,
     description:
       "The curated directory of Claude AI resources: the Claude Code 2.1 cheatsheet, agent skills, top MCP servers, plugins, SDKs and integrations for developers.",
+    favicon: "https://awesomeclaude.ai/awesomeclaude.svg",
+    ogImage: "https://awesomeclaude.ai/og.png",
     subtitle: "Claude AI Tools, Cheatsheet, Skills & MCP Servers",
     tags: [TAGS.ai],
     url: "https://awesomeclaude.ai/",
@@ -109,8 +114,10 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     title: "Browser Use",
     category: CATEGORIES.ai,
     description:
-      "78,000+ GitHub stars. Trusted by Fortune 500. The #1 open-source browser automation platform.",
-    subtitle: "The way AI uses the internet",
+      "Browser Use Agents finish the task. Browser Infrastructure gives your code managed browsers that don't get blocked. 82% on Internal Bench Hard at 17¢ per solved task, $0.02 per browser hour.",
+    favicon: "https://browser-use.com/logo-primary.svg",
+    ogImage: "https://browser-use.com/og/home-og.png",
+    subtitle: "Browser Use Agents & Browser Infrastructure",
     tags: [TAGS.ai],
     url: "https://browser-use.com/",
   },

@@ -21,6 +21,10 @@ export interface Resource<TCategory extends string = string> extends BaseItem<TC
   ogImage?: string;
   subtitle?: string;
   tags?: string[];
+  customOgImage?: boolean;
+  customTitle?: boolean;
+  customSubtitle?: boolean;
+  ignoreAudit?: boolean;
 }
 
 export type StashItem = InternalTool | Resource;
