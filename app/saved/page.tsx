@@ -12,17 +12,13 @@ import { Button } from "@/components/ui/button";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { signIn } from "@/lib/auth-client";
 import { resourceLinks } from "@/lib/resource-data";
-import { internalTools } from "@/lib/tools-data";
 import { getResourceId } from "@/lib/utils";
-import { StashItem } from "@/types";
-
-const ALL_ITEMS: StashItem[] = [...internalTools, ...resourceLinks];
 
 export default function SavedPage() {
-  const { bookmarkedSet, bookmarksCount, isLoading } = useBookmarks();
+  const { bookmarkedSet, isLoading } = useBookmarks();
 
   const savedResources = useMemo(() => {
-    return ALL_ITEMS.filter((item) => bookmarkedSet.has(getResourceId(item)));
+    return resourceLinks.filter((item) => bookmarkedSet.has(getResourceId(item)));
   }, [bookmarkedSet]);
 
   const savedCategories = useMemo(() => {
@@ -52,8 +48,8 @@ export default function SavedPage() {
                 <em>saved.</em>
               </h1>
               <p className="lib-sub">
-                {bookmarksCount > 0
-                  ? `${bookmarksCount} saved item${bookmarksCount === 1 ? "" : "s"} in your cloud collection.`
+                {savedResources.length > 0
+                  ? `${savedResources.length} saved resource${savedResources.length === 1 ? "" : "s"} in your cloud collection.`
                   : "Your cloud-synced personal collection."}
               </p>
             </div>
@@ -74,7 +70,7 @@ export default function SavedPage() {
             </div>
           </div>
         </>
-      ) : bookmarksCount === 0 ? (
+      ) : savedResources.length === 0 ? (
         <div className="mx-auto flex min-h-[45vh] flex-col items-center justify-center py-16 text-center">
           <p className="font-mono text-base font-bold uppercase">Your stash is empty</p>
           <p className="mt-1.5 max-w-sm font-mono text-xs opacity-60">
@@ -113,7 +109,7 @@ export default function SavedPage() {
           items={savedResources}
           categories={savedCategories}
           searchPlaceholder="Search saved stash..."
-          itemLabel="Saved Items"
+          itemLabel="Saved Resources"
         />
       )}
     </div>

@@ -25,7 +25,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useBookmarks } from "@/hooks/use-bookmarks";
-import { getResourceId } from "@/lib/utils";
+import { getCategoryTheme, getResourceId } from "@/lib/utils";
 import { isResource, Resource, StashItem } from "@/types";
 
 interface FilterSectionProps {
@@ -336,6 +336,7 @@ function FilterSectionInner({
                 <DotButton
                   key={item}
                   isActive={isActive}
+                  theme={getCategoryTheme(item, itemLabel === "Tools" ? "tool" : "resource")}
                   index={i}
                   label={item}
                   onClick={() => handleCategoryClick(item)}

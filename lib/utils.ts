@@ -105,16 +105,27 @@ export const THEME_CONFIG: Record<
 const RESOURCE_VALUES: string[] = Object.values(RESOURCE_CATEGORIES);
 const TOOL_VALUES: string[] = Object.values(TOOL_CATEGORIES);
 
-export function getCategoryTheme(category: string): Theme {
-  const toolIdx = TOOL_VALUES.indexOf(category);
-  if (toolIdx !== -1) return THEMES[toolIdx % THEMES.length];
+export function getCategoryTheme(
+  category: string,
+  itemType: "resource" | "tool" = "resource",
+): Theme {
+  if (itemType === "tool") {
+    const toolIdx = TOOL_VALUES.indexOf(category);
+    if (toolIdx !== -1) return THEMES[toolIdx % THEMES.length];
+  }
 
   const resourceIdx = RESOURCE_VALUES.indexOf(category);
   if (resourceIdx !== -1) return THEMES[resourceIdx % THEMES.length];
 
+  const fallbackToolIdx = TOOL_VALUES.indexOf(category);
+  if (fallbackToolIdx !== -1) return THEMES[fallbackToolIdx % THEMES.length];
+
   return THEMES[0];
 }
 
-export function getCategoryColor(category: string): string {
-  return THEME_CONFIG[getCategoryTheme(category)].bg;
+export function getCategoryColor(
+  category: string,
+  itemType: "resource" | "tool" = "resource",
+): string {
+  return THEME_CONFIG[getCategoryTheme(category, itemType)].bg;
 }

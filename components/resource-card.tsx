@@ -19,6 +19,7 @@ function ResourceCardComponent({
   resource,
 }: ResourceCardProps) {
   const colorClasses = getCategoryColor(resource.category);
+  const isBlue = colorClasses.includes("bg-c-blue");
   const { data: session } = useSession();
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const { isBookmarked: hookIsBookmarked, toggleBookmark: hookToggleBookmark } = useBookmarks();
@@ -85,7 +86,8 @@ function ResourceCardComponent({
                         variant="ghost"
                         size="icon-xs"
                         className={cn(
-                          "group/bookmark border-none bg-transparent text-current transition-opacity duration-200 hover:bg-transparent",
+                          "group/bookmark border-none bg-transparent transition-opacity duration-200 hover:bg-transparent",
+                          isBlue ? "text-paper hover:text-paper" : "text-ink hover:text-ink",
                           bookmarked ? "opacity-100" : "opacity-80 group-hover:opacity-100",
                         )}
                         onMouseEnter={() => setIsBookmarkHovered(true)}
@@ -94,15 +96,15 @@ function ResourceCardComponent({
                         aria-label={bookmarked ? "Remove" : "Save"}
                       >
                         <BookmarkSimpleIcon
-                          weight={bookmarked ? "fill" : isBookmarkHovered ? "duotone" : "bold"}
+                          weight={bookmarked ? "fill" : isBookmarkHovered ? "duotone" : "regular"}
                           className={cn(
                             "size-5 transition-transform group-hover/bookmark:scale-110",
-                            bookmarked ? "fill-current text-current opacity-100" : "",
+                            bookmarked ? "fill-current opacity-100" : "",
                           )}
                         />
                       </Button>
                     </TooltipTrigger>
-                    <TooltipContent>
+                    <TooltipContent className={isBlue ? "bg-paper text-ink" : undefined}>
                       <p>{bookmarked ? "Remove" : "Save"}</p>
                     </TooltipContent>
                   </Tooltip>
@@ -120,7 +122,7 @@ function ResourceCardComponent({
                         <ArrowSquareOutIcon weight="bold" className="card-link-icon" />
                       </a>
                     </TooltipTrigger>
-                    <TooltipContent>
+                    <TooltipContent className={isBlue ? "bg-paper text-ink" : undefined}>
                       <p>Open in new tab</p>
                     </TooltipContent>
                   </Tooltip>
