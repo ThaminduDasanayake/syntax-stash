@@ -3,20 +3,36 @@ import path from "node:path";
 
 import * as cheerio from "cheerio";
 
-import { resourceLinks } from "../lib/resource-data";
-import { Resource } from "../types";
+import { resourceLinks } from "@/lib/resource-data";
+import { AUDIT_CONFIG } from "@/lib/resource-data/audit-config";
+import { Resource } from "@/types";
 
 interface AuditFinding {
-  type: "broken" | "redirect" | "metadata" | "title_change" | "blocked";
+  type: "broken" | "redirect" | "description_change" | "metadata" | "title_change" | "blocked";
   resourceTitle: string;
   category: string;
   url: string;
   details: string;
+  storedValue?: string;
   suggestion?: string;
   statusCode?: number;
 }
 
 const TITLE_DELIMITERS = [" - ", " – ", " — ", " : ", ": ", " · ", " • ", " | "];
+
+function normalizeUrlKey(rawUrl: string): string {
+  try {
+    const u = new URL(rawUrl);
+    return `${u.origin}${u.pathname.replace(/\/$/, "")}`.toLowerCase();
+  } catch {
+    return rawUrl.trim().toLowerCase().replace(/\/$/, "");
+  }
+}
+
+const skipDescSet = new Set(AUDIT_CONFIG.skipDescriptionChanges.map(normalizeUrlKey));
+const skipFaviconSet = new Set(AUDIT_CONFIG.skipFaviconChecks.map(normalizeUrlKey));
+const skipOgImageSet = new Set(AUDIT_CONFIG.skipOgImageChecks.map(normalizeUrlKey));
+const skipAllSet = new Set(AUDIT_CONFIG.skipAll.map(normalizeUrlKey));
 
 function normalizeText(text: string): string {
   return text
@@ -30,7 +46,7 @@ function normalizeText(text: string): string {
 function parseTitleAndSubtitle(
   rawTitle: string,
   existingTitle: string,
-): { isTitleMatch: boolean; candidateSubtitle?: string } {
+): { candidateSubtitle?: string; isTitleMatch: boolean } {
   const normRaw = normalizeText(rawTitle);
   const normExisting = normalizeText(existingTitle);
 
@@ -47,7 +63,11 @@ function parseTitleAndSubtitle(
 
       const matchIndex = parts.findIndex((part) => {
         const normPart = normalizeText(part);
-        return normPart === normExisting || normPart.includes(normExisting) || normExisting.includes(normPart);
+        return (
+          normPart === normExisting ||
+          normPart.includes(normExisting) ||
+          normExisting.includes(normPart)
+        );
       });
 
       if (matchIndex !== -1) {
@@ -62,7 +82,8 @@ function parseTitleAndSubtitle(
 }
 
 async function checkResource(resource: Resource): Promise<AuditFinding[]> {
-  if (resource.ignoreAudit) return [];
+  const normUrl = normalizeUrlKey(resource.url);
+  if (skipAllSet.has(normUrl)) return [];
 
   const findings: AuditFinding[] = [];
   const targetUrl = resource.url;
@@ -73,7 +94,8 @@ async function checkResource(resource: Resource): Promise<AuditFinding[]> {
 
     const res = await fetch(targetUrl, {
       headers: {
-        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
         "Accept-Language": "en-US,en;q=0.9",
         "User-Agent":
           "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
@@ -134,12 +156,22 @@ async function checkResource(resource: Resource): Promise<AuditFinding[]> {
     }
 
     // 4. Parse HTML Head
-    const htmlSnippet = await res.text().then((text) => text.slice(0, 75000));
+    const htmlSnippet = await res.text().then((text) => text.slice(0, 85000));
     const $ = cheerio.load(htmlSnippet);
 
     const scrapedTitle =
-      $('meta[property="og:title"]').attr("content")?.trim() ||
-      $("title").text().trim() ||
+      $('meta[property="og:title"]').attr("content")?.trim() || $("title").text().trim() || "";
+
+    const scrapedDescription =
+      $('meta[name="description"]').attr("content")?.trim() ||
+      $('meta[property="og:description"]').attr("content")?.trim() ||
+      $('meta[name="twitter:description"]').attr("content")?.trim() ||
+      "";
+
+    const scrapedFavicon =
+      $('link[rel="icon"]').attr("href")?.trim() ||
+      $('link[rel="shortcut icon"]').attr("href")?.trim() ||
+      $('link[rel="apple-touch-icon"]').attr("href")?.trim() ||
       "";
 
     const scrapedOgImage =
@@ -147,9 +179,46 @@ async function checkResource(resource: Resource): Promise<AuditFinding[]> {
       $('meta[name="twitter:image"]').attr("content")?.trim() ||
       "";
 
-    // Title / Subtitle Analysis
-    if (scrapedTitle && !resource.customTitle) {
-      const { candidateSubtitle, isTitleMatch } = parseTitleAndSubtitle(scrapedTitle, resource.title);
+    // --- Description Analysis ---
+    let cleanScrapedDesc = scrapedDescription;
+    if (targetUrl.includes("github.com")) {
+      cleanScrapedDesc = cleanScrapedDesc.replace(/\s*[-–—]\s*[\w.-]+\/[\w.-]+\s*$/, "").trim();
+    }
+
+    if (!resource.description && cleanScrapedDesc) {
+      // Always notify if description is missing in your resource data
+      findings.push({
+        category: resource.category,
+        details: "Missing description in resource data (found on website)",
+        resourceTitle: resource.title,
+        suggestion: cleanScrapedDesc,
+        type: "metadata",
+        url: targetUrl,
+      });
+    } else if (resource.description && cleanScrapedDesc && !skipDescSet.has(normUrl)) {
+      // Notify if description changed, unless the URL is in skipDescriptionChanges
+      const normStored = normalizeText(resource.description);
+      const normScraped = normalizeText(cleanScrapedDesc);
+
+      if (normStored !== normScraped) {
+        findings.push({
+          category: resource.category,
+          details: "Site description updated on webpage",
+          resourceTitle: resource.title,
+          storedValue: resource.description,
+          suggestion: cleanScrapedDesc,
+          type: "description_change",
+          url: targetUrl,
+        });
+      }
+    }
+
+    // --- Title / Subtitle Analysis ---
+    if (scrapedTitle) {
+      const { candidateSubtitle, isTitleMatch } = parseTitleAndSubtitle(
+        scrapedTitle,
+        resource.title,
+      );
 
       if (!isTitleMatch) {
         findings.push({
@@ -162,7 +231,6 @@ async function checkResource(resource: Resource): Promise<AuditFinding[]> {
         });
       } else if (
         !resource.subtitle &&
-        !resource.customSubtitle &&
         candidateSubtitle &&
         candidateSubtitle.length >= 8 &&
         candidateSubtitle.length <= 120
@@ -178,20 +246,41 @@ async function checkResource(resource: Resource): Promise<AuditFinding[]> {
       }
     }
 
-    // OpenGraph Image Discovery
-    if (!resource.ogImage && !resource.customOgImage && scrapedOgImage) {
+    // --- Favicon Discovery ---
+    if (scrapedFavicon && !skipFaviconSet.has(normUrl)) {
+      try {
+        const fullFavicon = new URL(scrapedFavicon, targetUrl).href;
+        if (!resource.favicon) {
+          findings.push({
+            category: resource.category,
+            details: "Available favicon discovered",
+            resourceTitle: resource.title,
+            suggestion: fullFavicon,
+            type: "metadata",
+            url: targetUrl,
+          });
+        }
+      } catch {
+        // invalid URL
+      }
+    }
+
+    // --- OpenGraph Image Discovery ---
+    if (scrapedOgImage && !skipOgImageSet.has(normUrl)) {
       try {
         const fullOgImage = new URL(scrapedOgImage, targetUrl).href;
-        findings.push({
-          category: resource.category,
-          details: `Available ogImage discovered`,
-          resourceTitle: resource.title,
-          suggestion: fullOgImage,
-          type: "metadata",
-          url: targetUrl,
-        });
+        if (!resource.ogImage) {
+          findings.push({
+            category: resource.category,
+            details: "Available ogImage discovered",
+            resourceTitle: resource.title,
+            suggestion: fullOgImage,
+            type: "metadata",
+            url: targetUrl,
+          });
+        }
       } catch {
-        // invalid URL ignore
+        // invalid URL
       }
     }
   } catch (err: unknown) {
@@ -226,7 +315,11 @@ async function checkResource(resource: Resource): Promise<AuditFinding[]> {
   return findings;
 }
 
-async function runPool<T, R>(items: T[], limit: number, iteratorFn: (item: T) => Promise<R>): Promise<R[]> {
+async function runPool<T, R>(
+  items: T[],
+  limit: number,
+  iteratorFn: (item: T) => Promise<R>,
+): Promise<R[]> {
   const results: R[] = [];
   const executing: Promise<void>[] = [];
 
@@ -250,6 +343,7 @@ async function runPool<T, R>(items: T[], limit: number, iteratorFn: (item: T) =>
 function generateMarkdownReport(findings: AuditFinding[]): string {
   const broken = findings.filter((f) => f.type === "broken");
   const redirects = findings.filter((f) => f.type === "redirect");
+  const descriptionChanges = findings.filter((f) => f.type === "description_change");
   const metadata = findings.filter((f) => f.type === "metadata");
   const titleChanges = findings.filter((f) => f.type === "title_change");
   const blocked = findings.filter((f) => f.type === "blocked");
@@ -284,8 +378,21 @@ function generateMarkdownReport(findings: AuditFinding[]): string {
     md += `\n`;
   }
 
+  if (descriptionChanges.length > 0) {
+    md += `### 📝 Description Changes (${descriptionChanges.length})\n`;
+    md += `The website description has been updated. If you prefer your stored description, add the URL to \`skipDescriptionChanges\` in \`lib/resource-data/audit-config.ts\`.\n\n`;
+    md += `| Resource | Category | Stored Description | Webpage Description |\n`;
+    md += `| :--- | :--- | :--- | :--- |\n`;
+    for (const item of descriptionChanges) {
+      const stored = item.storedValue?.replace(/\|/g, "-") || "";
+      const suggested = item.suggestion?.replace(/\|/g, "-") || "";
+      md += `| **${item.resourceTitle}** | \`${item.category}\` | ${stored} | ${suggested} |\n`;
+    }
+    md += `\n`;
+  }
+
   if (metadata.length > 0) {
-    md += `### 💡 Discovered Metadata & Suggestions (${metadata.length})\n`;
+    md += `### 💡 Discovered Metadata & Missing Assets (${metadata.length})\n`;
     md += `New assets or candidate subtitles discovered from website meta tags.\n\n`;
     md += `| Resource | Category | Type | Recommendation |\n`;
     md += `| :--- | :--- | :--- | :--- |\n`;
@@ -296,7 +403,7 @@ function generateMarkdownReport(findings: AuditFinding[]): string {
   }
 
   if (titleChanges.length > 0) {
-    md += `### 📝 Potential Rebrands / Title Changes (${titleChanges.length})\n`;
+    md += `### 🏷️ Potential Rebrands / Title Changes (${titleChanges.length})\n`;
     md += `The scraped webpage title differs significantly from the stored title.\n\n`;
     md += `| Resource | Category | Details |\n`;
     md += `| :--- | :--- | :--- |\n`;
@@ -322,7 +429,17 @@ function generateMarkdownReport(findings: AuditFinding[]): string {
 
 async function main() {
   const args = process.argv.slice(2);
-  const sampleArg = args.find((a) => a.startsWith("--sample="));
+  const sampleArgIdx = args.findIndex((a) => a === "--sample" || a.startsWith("--sample="));
+  let sampleSize: number | undefined;
+  if (sampleArgIdx !== -1) {
+    const val = args[sampleArgIdx].includes("=")
+      ? args[sampleArgIdx].split("=")[1]
+      : args[sampleArgIdx + 1];
+    sampleSize = parseInt(val, 10);
+  } else if (process.env.SAMPLE) {
+    sampleSize = parseInt(process.env.SAMPLE, 10);
+  }
+
   const categoryArg = args.find((a) => a.startsWith("--category="));
   const isDryRun = args.includes("--dry-run");
   const isVerbose = args.includes("--verbose");
@@ -334,11 +451,8 @@ async function main() {
     targets = targets.filter((r) => r.category.toLowerCase().includes(cat));
   }
 
-  if (sampleArg) {
-    const sampleSize = parseInt(sampleArg.split("=")[1], 10);
-    if (!isNaN(sampleSize)) {
-      targets = targets.slice(0, sampleSize);
-    }
+  if (sampleSize && !isNaN(sampleSize)) {
+    targets = targets.slice(0, sampleSize);
   }
 
   console.log(`Starting health check on ${targets.length} resources...`);
@@ -352,7 +466,9 @@ async function main() {
 
     if (isVerbose || findings.length > 0) {
       const statusIcon = findings.length === 0 ? "✅" : "⚠️";
-      console.log(`[${completed}/${targets.length}] ${statusIcon} ${resource.title} (${resource.url})`);
+      console.log(
+        `[${completed}/${targets.length}] ${statusIcon} ${resource.title} (${resource.url})`,
+      );
       for (const f of findings) {
         console.log(`   └─ [${f.type}] ${f.details}`);
       }

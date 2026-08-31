@@ -66,10 +66,10 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     title: "AnythingLLM",
     category: CATEGORIES.ai,
     description:
-      "AnythingLLM is the AI application you've been seeking. Use any LLM to chat with your documents, enhance your productivity, and run the latest state-of-the-art LLMs completely privately with no technical setup.",
+      "A free, private AI assistant that runs on your device. No accounts, no API keys, no token limits.",
     favicon: "https://anythingllm.com/images/brand/logo-mark.svg",
     ogImage: "https://anythingllm.com/share-card.png",
-    subtitle: "The all-in-one AI application for everyone",
+    subtitle: "On-device AI for productivity | Local & Private",
     tags: [TAGS.ai],
     url: "https://anythingllm.com/",
   },
