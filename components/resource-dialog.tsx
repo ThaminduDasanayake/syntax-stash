@@ -7,6 +7,7 @@ import {
   CaretRightIcon,
   XIcon,
 } from "@phosphor-icons/react";
+import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
@@ -171,7 +172,8 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
               const handleOgError = () => {
                 if (
                   activeTool.ogImage &&
-                  (activeTool.ogImage.startsWith("http://") || activeTool.ogImage.startsWith("https://")) &&
+                  (activeTool.ogImage.startsWith("http://") ||
+                    activeTool.ogImage.startsWith("https://")) &&
                   !activeTool.ogImage.startsWith("/api/proxy-image") &&
                   !isRetryingOgProxy
                 ) {
@@ -204,16 +206,57 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
             })()}
 
             <div className="modal-link">
-              <span className={cn("modal-heading", activeThemeStyles.label)}>Resource UrL</span>
-              <a
-                href={activeTool.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-mono text-xs break-all underline decoration-current/40 underline-offset-2 transition-all duration-150 ease-out hover:decoration-current"
-              >
-                {activeTool.url}
-              </a>
+              <span className={cn("modal-heading", activeThemeStyles.label)}>Resource URL</span>
+              <div className="flex items-center justify-between gap-2">
+                <a
+                  href={activeTool.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-xs break-all underline decoration-current/40 underline-offset-2 transition-all duration-150 ease-out hover:decoration-current"
+                >
+                  {activeTool.url}
+                </a>
+                <CopyButton
+                  textToCopy={activeTool.url || ""}
+                  iconOnly
+                  size="icon-xs"
+                  variant="ghost"
+                  className="text-muted-foreground hover:text-foreground shrink-0"
+                  aria-label="Copy Resource URL"
+                />
+              </div>
             </div>
+
+            {activeTool.gitHubLink && (
+              <div className="modal-link">
+                <span className={cn("modal-heading", activeThemeStyles.label)}>GitHub</span>
+                <div className="flex items-center justify-between gap-2">
+                  <a
+                    href={activeTool.gitHubLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 font-mono text-xs break-all underline decoration-current/40 underline-offset-2 transition-all duration-150 ease-out hover:decoration-current"
+                  >
+                    <Image
+                      src="/github.svg"
+                      alt="GitHub"
+                      width={18}
+                      height={18}
+                      className="size-4.5"
+                    />
+                    {activeTool.gitHubLink}
+                  </a>
+                  <CopyButton
+                    textToCopy={activeTool.gitHubLink}
+                    iconOnly
+                    size="icon-xs"
+                    variant="ghost"
+                    className="text-muted-foreground hover:text-foreground shrink-0"
+                    aria-label="Copy GitHub URL"
+                  />
+                </div>
+              </div>
+            )}
 
             {activeTool.tags && activeTool.tags.length > 0 && (
               <div className="modal-sections">
@@ -297,6 +340,30 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
                 Open resource <ArrowSquareOutIcon weight="bold" />
               </a>
             </Button>
+            {activeTool.gitHubLink && (
+              <Button
+                asChild
+                variant="secondary"
+                size="sm"
+                className="group shrink-0 border-[1.5px]"
+              >
+                <a
+                  href={activeTool.gitHubLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-mono-xs inline-flex items-center gap-1.5"
+                >
+                  <Image
+                    src="/github.svg"
+                    alt="GitHub"
+                    width={18}
+                    height={18}
+                    className="size-4.5 transition-all group-hover:invert"
+                  />
+                  GitHub
+                </a>
+              </Button>
+            )}
             <Button
               variant={bookmarked ? "default" : "secondary"}
               size="sm"
@@ -314,14 +381,6 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
               {bookmarked ? "Saved" : "Save"}
             </Button>
             {authModalOpen && <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />}
-
-            <CopyButton
-              textToCopy={activeTool.url || ""}
-              labelName="Copy Link"
-              variant="secondary"
-              size="sm"
-              className="shrink-0 border-[1.5px]"
-            />
           </div>
 
           <div className="modal-nav-row">

@@ -149,6 +149,7 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     description:
       "Your AI bill is mostly waste. Caveman finds it, cuts it with caching, compression and routing, and proves every dollar saved.",
     favicon: "https://caveman.so/favicon.svg",
+    gitHubLink: "https://github.com/JuliusBrussee/caveman",
     ogImage: "https://caveman.so/opengraph-image",
     subtitle: "The token-efficient stack for agent-native development",
     url: "https://caveman.so/",
