@@ -11,6 +11,8 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     description:
       "A self-hosted email client with an AI agent, running entirely on Cloudflare Workers.",
     favicon: "/github.svg",
+    ogImage:
+      "https://opengraph.githubassets.com/ae4da67dc6bd7c91e3cc19c37a9848baac3393638e9608d5f9a5349d393b807f/cloudflare/agentic-inbox",
     tags: [TAGS.ai],
     url: "https://github.com/cloudflare/agentic-inbox",
   },
@@ -43,6 +45,8 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     category: CATEGORIES.ai,
     description: "In-depth tutorials on LLMs, RAGs and real-world AI agent applications.",
     favicon: "/github.svg",
+    ogImage:
+      "https://opengraph.githubassets.com/6b54d143e106630cca3b3cc1263cab912884d114805911d9b9383c7bba42821e/patchy631/ai-engineering-hub",
     tags: [TAGS.ai],
     url: "https://github.com/patchy631/ai-engineering-hub",
   },
@@ -76,6 +80,8 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     description:
       "Build your autonomous hedge fund in minutes. AutoHedge harnesses the power of swarm intelligence and AI agents to automate market analysis, risk management, and trade execution.",
     favicon: "/github.svg",
+    ogImage:
+      "https://opengraph.githubassets.com/4215b1a22e1ca62f47aac7b4127b54e053679d63414e6139c9e2f34bd5f9d61a/The-Swarm-Corporation/AutoHedge",
     tags: [TAGS.ai],
     url: "https://github.com/The-Swarm-Corporation/AutoHedge",
   },
@@ -98,6 +104,8 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     description:
       "A curated list of modern Generative Artificial Intelligence projects and services.",
     favicon: "/github.svg",
+    ogImage:
+      "https://opengraph.githubassets.com/7becdfa0572ad40b84614e640fb865ed1eab4b9d114746228f5775a968197373/steven2358/awesome-generative-ai",
     tags: [TAGS.ai],
     url: "https://github.com/steven2358/awesome-generative-ai",
   },
@@ -136,6 +144,7 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     category: CATEGORIES.ai,
     description:
       "A compression primitive, a coding agent, and a managed efficiency layer for internal AI agents. From the team behind the 72.8k★ caveman.",
+    ogImage: "https://caveman.so/opengraph-image",
     subtitle: "The token-efficient stack for agent-native development",
     url: "https://caveman.so/",
   },

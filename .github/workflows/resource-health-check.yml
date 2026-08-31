@@ -30,13 +30,34 @@ jobs:
         id: checker
         run: npm run check:resources
 
-      - name: Create GitHub Issue on Findings
-        if: steps.checker.outputs.has_findings == 'true'
+      - name: Sync GitHub Audit Issue
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HAS_FINDINGS: ${{ steps.checker.outputs.has_findings }}
         run: |
           DATE=$(date +'%b %d, %Y')
-          gh issue create \
-            --title "🔍 [Health Check] Resource Audit Report ($DATE)" \
-            --body-file health-report.md || \
-          echo "Issue creation failed or token lacks permissions."
+          LABEL="resource-health-audit"
+
+          # Check if there is an existing open audit issue
+          EXISTING_ISSUE=$(gh issue list --state open --label "$LABEL" --json number -q '.[0].number' 2>/dev/null || echo "")
+
+          if [ "$HAS_FINDINGS" = "true" ]; then
+            if [ -n "$EXISTING_ISSUE" ]; then
+              echo "Updating existing open issue #$EXISTING_ISSUE..."
+              gh issue edit "$EXISTING_ISSUE" \
+                --title "🔍 [Health Check] Resource Audit Report ($DATE)" \
+                --body-file health-report.md
+            else
+              echo "Creating new audit issue..."
+              gh issue create \
+                --title "🔍 [Health Check] Resource Audit Report ($DATE)" \
+                --body-file health-report.md \
+                --label "$LABEL"
+            fi
+          else
+            echo "All resources healthy!"
+            if [ -n "$EXISTING_ISSUE" ]; then
+              echo "Closing resolved issue #$EXISTING_ISSUE..."
+              gh issue close "$EXISTING_ISSUE" --comment "✅ All resources verified active and healthy as of $DATE!"
+            fi
+          fi
