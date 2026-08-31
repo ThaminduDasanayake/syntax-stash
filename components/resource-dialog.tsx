@@ -7,9 +7,10 @@ import {
   CaretRightIcon,
   XIcon,
 } from "@phosphor-icons/react";
+import gsap from "gsap";
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { AuthModal } from "@/components/auth-modal";
 import { CardIcon } from "@/components/card-icon";
@@ -34,27 +35,131 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
   const [isRetryingOgProxy, setIsRetryingOgProxy] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [scrolledPastTitle, setScrolledPastTitle] = useState(false);
+  const dialogContentRef = useRef<HTMLDivElement>(null);
+  const titleAnchorRef = useRef<HTMLDivElement>(null);
+  const mobileTitleRef = useRef<HTMLHeadingElement>(null);
+  const mobileCategoryRef = useRef<HTMLSpanElement>(null);
+  const coordsRef = useRef({
+    restingX: 20,
+    restingY: 122,
+    stickDist: 104.5,
+    targetScale: 0.5,
+    targetX: 32,
+    targetY: 16,
+  });
   const { data: session } = useSession();
   const { isBookmarked, toggleBookmark } = useBookmarks();
   const bookmarked = isBookmarked(activeTool);
 
+  const measureCoords = useCallback(() => {
+    if (titleAnchorRef.current && dialogContentRef.current) {
+      const dialogRect = dialogContentRef.current.getBoundingClientRect();
+      const anchorRect = titleAnchorRef.current.getBoundingClientRect();
+      if (anchorRect.top > 0) {
+        const restingY = anchorRect.top - dialogRect.top;
+        const restingX = anchorRect.left - dialogRect.left;
+        const targetY = 16;
+        const targetX = 32;
+        const stickDist = Math.max(1, restingY - targetY);
+        const targetScale = 0.5;
+        coordsRef.current = { restingX, restingY, stickDist, targetScale, targetX, targetY };
+        return coordsRef.current;
+      }
+    }
+    return coordsRef.current;
+  }, []);
+
+  const resetMobileHeader = useCallback(() => {
+    const coords = measureCoords();
+    if (mobileTitleRef.current) {
+      gsap.killTweensOf(mobileTitleRef.current);
+      gsap.set(mobileTitleRef.current, {
+        scale: 1,
+        transformOrigin: "left top",
+        x: 0,
+        y: 0,
+      });
+      mobileTitleRef.current.style.top = `${coords.restingY}px`;
+      mobileTitleRef.current.style.left = `${coords.restingX}px`;
+      mobileTitleRef.current.style.width = "calc(100% - 40px)";
+      mobileTitleRef.current.style.whiteSpace = "normal";
+      mobileTitleRef.current.style.overflow = "visible";
+      mobileTitleRef.current.style.textOverflow = "clip";
+    }
+    if (mobileCategoryRef.current) {
+      gsap.killTweensOf(mobileCategoryRef.current);
+      gsap.set(mobileCategoryRef.current, { opacity: 1, y: 0 });
+    }
+  }, [measureCoords]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      resetMobileHeader();
+    }, 20);
+    return () => clearTimeout(timer);
+  }, [activeTool, resetMobileHeader]);
+
   const handleSelectTool = (res: Resource) => {
     setOgError(false);
     setIsRetryingOgProxy(false);
-    setScrolledPastTitle(false);
     setActiveTool(res);
+    resetMobileHeader();
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTop = 0;
     }
+    setTimeout(() => {
+      resetMobileHeader();
+    }, 20);
   };
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const scrollTop = e.currentTarget.scrollTop;
-    if (scrollTop > 100) {
-      if (!scrolledPastTitle) setScrolledPastTitle(true);
-    } else {
-      if (scrolledPastTitle) setScrolledPastTitle(false);
+    const { restingX, restingY, stickDist, targetScale, targetX, targetY } = coordsRef.current;
+
+    // Delay transition start until title has scrolled closer to the top bar
+    const startScroll = stickDist * 0.7;
+    const morphProgress = Math.min(
+      1,
+      Math.max(0, (scrollTop - startScroll) / (stickDist - startScroll)),
+    );
+
+    if (mobileTitleRef.current) {
+      // Hardware-accelerated GPU transform: zero reflow, zero font hinting stutter
+      const currentY = scrollTop < stickDist ? -scrollTop : targetY - restingY;
+      const currentX = (targetX - restingX) * morphProgress;
+      const currentScale = 1 - (1 - targetScale) * morphProgress;
+
+      gsap.to(mobileTitleRef.current, {
+        duration: 0.03,
+        ease: "none",
+        overwrite: "auto",
+        scale: currentScale,
+        transformOrigin: "left top",
+        x: currentX,
+        y: currentY,
+      });
+
+      if (morphProgress >= 0.95) {
+        mobileTitleRef.current.style.width = "calc((100% - 110px) / 0.5)";
+        mobileTitleRef.current.style.whiteSpace = "nowrap";
+        mobileTitleRef.current.style.overflow = "hidden";
+        mobileTitleRef.current.style.textOverflow = "ellipsis";
+      } else {
+        mobileTitleRef.current.style.width = "calc(100% - 40px)";
+        mobileTitleRef.current.style.whiteSpace = "normal";
+        mobileTitleRef.current.style.overflow = "visible";
+        mobileTitleRef.current.style.textOverflow = "clip";
+      }
+    }
+
+    if (mobileCategoryRef.current) {
+      gsap.to(mobileCategoryRef.current, {
+        duration: 0.03,
+        ease: "none",
+        opacity: Math.max(0, 1 - morphProgress * 1.8),
+        overwrite: "auto",
+        y: -14 * morphProgress,
+      });
     }
   };
 
@@ -188,7 +293,11 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
   );
 
   return (
-    <DialogContent showCloseButton={false} className="modal-panel flex! flex-col! gap-0! p-0!">
+    <DialogContent
+      ref={dialogContentRef}
+      showCloseButton={false}
+      className="modal-panel fixed! top-1/2! left-1/2! flex! -translate-x-1/2! -translate-y-1/2! flex-col! gap-0! overflow-hidden! p-0!"
+    >
       {/* Desktop Close Button */}
       <div className="modal-top-actions hidden md:flex">
         <DialogClose asChild>
@@ -198,10 +307,10 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
         </DialogClose>
       </div>
 
-      {/* Mobile Fixed Top Bar with Theme Color & Scroll Transition */}
+      {/* Mobile Fixed Top Bar - Pinned the full way, theme bg, NO BORDERS */}
       <div
         className={cn(
-          "z-30 flex shrink-0 items-center justify-between px-4 py-2.5 transition-colors duration-200 md:hidden",
+          "z-30 flex h-12 shrink-0 items-center justify-between border-0 px-4 shadow-none transition-colors duration-200 md:hidden",
           colorClasses,
         )}
       >
@@ -213,28 +322,13 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
             )}
           />
 
-          {/* Smooth vertical transition between Category and Title */}
-          <div className="relative h-5 min-w-0 flex-1 overflow-hidden">
+          <div className="relative h-5 min-w-0 flex-1">
+            {/* Category label */}
             <span
-              className={cn(
-                "text-mono-2xs absolute inset-0 flex items-center truncate font-bold tracking-wider uppercase transition-all duration-250 ease-out",
-                scrolledPastTitle
-                  ? "pointer-events-none -translate-y-full opacity-0"
-                  : "translate-y-0 opacity-90",
-              )}
+              ref={mobileCategoryRef}
+              className="text-mono-2xs pointer-events-none absolute inset-0 flex items-center truncate font-bold tracking-wider uppercase"
             >
               {activeTool.category}
-            </span>
-
-            <span
-              className={cn(
-                "font-display absolute inset-0 flex items-center truncate text-xs font-bold tracking-tight uppercase transition-all duration-250 ease-out",
-                scrolledPastTitle
-                  ? "translate-y-0 opacity-100"
-                  : "pointer-events-none translate-y-full opacity-0",
-              )}
-            >
-              {activeTool.title}
             </span>
           </div>
         </div>
@@ -247,6 +341,22 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
         </DialogClose>
       </div>
 
+      {/* The Single Mobile Morphing Title Element */}
+      <h2
+        ref={mobileTitleRef}
+        className="font-display text-foreground pointer-events-none absolute z-30 block font-extrabold tracking-tight uppercase [-webkit-font-smoothing:antialiased] will-change-transform select-none backface-hidden md:hidden"
+        style={{
+          fontSize: "clamp(30px, 2.5vw, 40px)",
+          left: "20px",
+          lineHeight: 1,
+          top: "122px",
+          transformOrigin: "left top",
+          width: "calc(100% - 40px)",
+        }}
+      >
+        {activeTool.title}
+      </h2>
+
       <DialogDescription className="sr-only">
         Details and documentation for {activeTool.title} — categorized under {activeTool.category}.
       </DialogDescription>
@@ -254,16 +364,16 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
       <div
         ref={scrollContainerRef}
         onScroll={handleScroll}
-        className="modal-body flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain [scrollbar-color:var(--line-2)_transparent] md:grid md:grid-cols-[340px_1fr] md:overflow-hidden md:[scrollbar-color:var(--line-2)_var(--bg-2)] [&::-webkit-scrollbar-track]:bg-transparent md:[&::-webkit-scrollbar-track]:bg-(--bg-2) [&::-webkit-scrollbar-track:hover]:bg-transparent md:[&::-webkit-scrollbar-track:hover]:bg-(--bg-2)"
+        className="modal-body md:[&::-webkit-scrollbar-track]:bg-bg-2 md:[&::-webkit-scrollbar-track:hover]:bg-bg-2 flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain [scrollbar-color:var(--line-2)_transparent] md:grid md:grid-cols-[340px_1fr] md:overflow-hidden md:[scrollbar-color:var(--line-2)_var(--bg-2)] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent"
       >
         {/* Left Side */}
         <div
           className={cn(
-            "modal-left flex shrink-0 flex-col border-b-2 px-5 pt-5 pb-6 md:overflow-y-auto md:border-r-2 md:border-b-0 md:px-7 md:py-8",
+            "modal-left flex shrink-0 flex-col border-b-2 px-5 pt-3 pb-6 md:overflow-y-auto md:border-r-2 md:border-b-0 md:px-7 md:py-8",
             colorClasses,
           )}
         >
-          {/* Desktop Category and Icon Header */}
+          {/* Desktop Category Header */}
           <div className="modal-cat-label hidden md:flex">
             <div className="flex min-w-0 items-center gap-2">
               <span
@@ -301,7 +411,19 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
             />
           </div>
 
-          <DialogTitle className="modal-title">{activeTool.title}</DialogTitle>
+          {/* Desktop Title */}
+          <DialogTitle className="modal-title hidden md:block">{activeTool.title}</DialogTitle>
+
+          {/* Mobile Spacer (same dimensions as headline, invisible) */}
+          <div
+            ref={titleAnchorRef}
+            className="modal-title pointer-events-none opacity-0 select-none md:hidden"
+            aria-hidden="true"
+          >
+            {activeTool.title}
+          </div>
+          {/* Mobile Accessibility Title */}
+          <DialogTitle className="sr-only md:hidden">{activeTool.title}</DialogTitle>
 
           {activeTool.subtitle && <p className="modal-subtitle">{activeTool.subtitle}</p>}
           <p className="modal-description">{activeTool.description}</p>

@@ -100,7 +100,11 @@ function parseTitleAndSubtitle(
 
       const matchIndex = parts.findIndex((part) => {
         const normPart = normalizeText(part);
-        return normPart === normExisting || normPart.includes(normExisting) || normExisting.includes(normPart);
+        return (
+          normPart === normExisting ||
+          normPart.includes(normExisting) ||
+          normExisting.includes(normPart)
+        );
       });
 
       if (matchIndex !== -1) {
@@ -127,7 +131,8 @@ async function checkResource(resource: Resource): Promise<AuditFinding[]> {
 
     const res = await fetch(targetUrl, {
       headers: {
-        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
         "Accept-Language": "en-US,en;q=0.9",
         "User-Agent":
           "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
@@ -192,9 +197,7 @@ async function checkResource(resource: Resource): Promise<AuditFinding[]> {
     const $ = cheerio.load(htmlSnippet);
 
     const scrapedTitle =
-      $('meta[property="og:title"]').attr("content")?.trim() ||
-      $("title").text().trim() ||
-      "";
+      $('meta[property="og:title"]').attr("content")?.trim() || $("title").text().trim() || "";
 
     const scrapedDescription =
       $('meta[name="description"]').attr("content")?.trim() ||
@@ -249,7 +252,10 @@ async function checkResource(resource: Resource): Promise<AuditFinding[]> {
 
     // --- Title / Subtitle Analysis ---
     if (scrapedTitle) {
-      const { candidateSubtitle, isTitleMatch } = parseTitleAndSubtitle(scrapedTitle, resource.title);
+      const { candidateSubtitle, isTitleMatch } = parseTitleAndSubtitle(
+        scrapedTitle,
+        resource.title,
+      );
 
       if (!isTitleMatch) {
         findings.push({
@@ -346,7 +352,11 @@ async function checkResource(resource: Resource): Promise<AuditFinding[]> {
   return findings;
 }
 
-async function runPool<T, R>(items: T[], limit: number, iteratorFn: (item: T) => Promise<R>): Promise<R[]> {
+async function runPool<T, R>(
+  items: T[],
+  limit: number,
+  iteratorFn: (item: T) => Promise<R>,
+): Promise<R[]> {
   const results: R[] = [];
   const executing: Promise<void>[] = [];
 
@@ -459,7 +469,9 @@ async function main() {
   const args = process.argv.slice(2);
 
   // 1. Sample argument parsing
-  const sampleArgIdx = args.findIndex((a) => a === "--sample" || a === "-s" || a.startsWith("--sample="));
+  const sampleArgIdx = args.findIndex(
+    (a) => a === "--sample" || a === "-s" || a.startsWith("--sample="),
+  );
   let sampleSize: number | undefined;
   if (sampleArgIdx !== -1) {
     const val = args[sampleArgIdx].includes("=")
@@ -507,12 +519,16 @@ async function main() {
     resolvedCategory = resolveCategory(categoryInput);
     if (!resolvedCategory) {
       const validCategories = Object.keys(CATEGORIES).join(", ");
-      console.error(`❌ Unknown category: "${categoryInput}".\nAvailable categories: ${validCategories}`);
+      console.error(
+        `❌ Unknown category: "${categoryInput}".\nAvailable categories: ${validCategories}`,
+      );
       process.exit(1);
     }
 
     targets = targets.filter(
-      (r) => r.category === resolvedCategory?.name || r.category.toLowerCase().includes(resolvedCategory!.slug),
+      (r) =>
+        r.category === resolvedCategory?.name ||
+        r.category.toLowerCase().includes(resolvedCategory!.slug),
     );
     console.log(`Filtering by category: ${resolvedCategory.name} (${targets.length} resources)`);
   }
