@@ -50,6 +50,7 @@ export const TAGS = {
   map: "map",
   markdown: "markdown",
   mockup: "mockup",
+  models: "models",
   newsletter: "newsletter",
   noCode: "no-code",
   "open-source": "open-source",

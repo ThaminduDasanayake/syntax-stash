@@ -31,7 +31,7 @@ export interface AuditConfig {
 
 export const AUDIT_CONFIG: AuditConfig = {
   skipAll: [],
-  skipDescriptionChanges: [],
+  skipDescriptionChanges: ["https://github.com/lllyasviel/Fooocus"],
   skipFaviconChecks: [],
   skipOgImageChecks: [],
 };

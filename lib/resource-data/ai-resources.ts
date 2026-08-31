@@ -113,7 +113,7 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     title: "Awesome LLM Apps",
     author: "Shubham Saboo",
     category: CATEGORIES.ai,
-    description: "100+ AI Agent & RAG apps you can actually run — clone, customize, ship.",
+    description: "100+ AI Agents, Agent Skills and RAG Apps - Free and Open Source.",
     favicon: "/github.svg",
     ogImage:
       "https://opengraph.githubassets.com/0fab0bfbe38390ee33d289d6332c87cf93420db938121f200dbbdb2d7428398a/Shubhamsaboo/awesome-llm-apps",
@@ -180,33 +180,36 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
   },
   {
     title: "Crawl4AI",
+    author: "UncleCode",
     category: CATEGORIES.ai,
-    description: "Open-source LLM-Friendly Web Crawler & Scraper",
+    description: "🚀🤖 Crawl4AI, Open-source LLM-Friendly Web Crawler & Scraper",
+    favicon: "https://docs.crawl4ai.com/img/favicon.ico",
+    gitHubLink: "https://github.com/unclecode/crawl4ai",
+    ogImage:
+      "https://opengraph.githubassets.com/3bbe7207bf920ac8f3863ecbbc938081d687a0615f5897d23c3189152b8439b2/unclecode/crawl4ai",
     tags: [TAGS.crawler, TAGS.llm, TAGS.scraper, TAGS["open-source"]],
     url: "https://docs.crawl4ai.com/",
   },
   {
     title: "Dify",
+    author: "LangGenius",
     category: CATEGORIES.ai,
     description:
-      "Unlock agentic workflow with Dify. Develop, deploy, and manage autonomous agents, RAG pipelines, and more for teams at any scale, effortlessly.",
-    subtitle: "Leading Agentic Workflow Builder",
+      "Dify is the platform for production-ready agentic workflows. Build agents, knowledge pipelines, models, and tools on one canvas, deployable on Cloud, in your VPC, or self-hosted.",
+    favicon: "https://dify.ai/favicon.svg",
+    gitHubLink: "https://github.com/langgenius/dify",
+    ogImage: "https://dify.ai/assets/og/default.png",
+    subtitle: "The Platform for Production-Ready Agentic Workflows",
     tags: [TAGS.ai],
     url: "https://dify.ai/",
-  },
-  {
-    title: "Distill",
-    category: CATEGORIES.ai,
-    description: "Articles about Machine Learning",
-    subtitle: "Latest articles about machine learning",
-    tags: [TAGS.ai, TAGS.education],
-    url: "https://distill.pub/",
   },
   {
     title: "ECC Tools",
     category: CATEGORIES.ai,
     description:
       "ECC is the open agent harness system behind a 210K+ stars OSS ecosystem: start with the repo, install the GitHub App for repo-native guidance, and add AgentShield and rollout layers when coordination gets harder.",
+    favicon: "https://ecc.tools/favicon.svg",
+    ogImage: "https://ecc.tools/og.png",
     subtitle: "Open Agent Harness System for GitHub App Automation and Security",
     url: "https://ecc.tools/",
   },
@@ -241,10 +244,12 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
   },
   {
     title: "Fooocus",
-    author: "lllyasviel",
+    author: "Lvmin Zhang",
     category: CATEGORIES.ai,
     description: "Focus on prompting and generating.",
     favicon: "/github.svg",
+    ogImage:
+      "https://opengraph.githubassets.com/9868c574f9cdec394ac001ba31725ef31a64017ed5c8d7ac7caff7d3682b04ee/lllyasviel/Fooocus",
     tags: [TAGS.ai],
     url: "https://github.com/lllyasviel/Fooocus",
   },
@@ -282,26 +287,35 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     title: "Hugging Bay",
     category: CATEGORIES.ai,
     description:
-      "Hugging Bay publishes open AI catalog metadata, source provenance, license records, neutral hosted-file inventory, answer packs, and recorded hashes. Canonical bundle verification and runtime readiness remain unknown.",
-    subtitle: "Open AI Artifact Metadata",
+      "Search open models, compare licenses, inspect source records, and download hosted files with published SHA-256 hashes. Check each artifact page for its current run status.",
+    favicon: "https://huggingbay.xyz/favicon.png",
+    ogImage: "https://huggingbay.xyz/hugging-bay-header.jpg",
+    subtitle: "Find And Download Open AI",
     tags: [TAGS.ai],
     url: "https://huggingbay.xyz/",
   },
   {
-    title: "hyperframes",
-    author: "heygen-com",
+    title: "HyperFrames",
+    author: "HeyGen",
     category: CATEGORIES.ai,
-    description: "Write HTML. Render video. Built for agents.",
-    favicon: "/github.svg",
+    description:
+      "HyperFrames lets AI agents compose videos by writing HTML, CSS & JS — originated by HeyGen, built for the community. Open source under Apache 2.0.",
+    favicon: "https://hyperframes.heygen.com/favicon.ico",
+    gitHubLink: "https://github.com/heygen-com/hyperframes",
+    ogImage: "https://www.heygen.com/images/heygen-logo.svg",
+    subtitle: "Edit Videos By Vibe-Coding",
     tags: [TAGS.ai],
-    url: "https://github.com/heygen-com/hyperframes",
+    url: "https://hyperframes.heygen.com/",
   },
   {
     title: "Kickbacks.ai",
     category: CATEGORIES.ai,
     description:
-      "Kickbacks.ai helps developers get paid for AI-agent wait states. Advertisers bid for a tiny sponsored status line; users get 50% of ad revenue.",
-    subtitle: "Get paid for waiting",
+      "Kickbacks.ai turns your AI agent's wait time into rewards. Advertisers bid for a tiny sponsored status line; developers earn 50% of the net ad revenue from ads shown on their machine.",
+    favicon:
+      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%232aa44f'/%3E%3Cstop offset='1' stop-color='%23147a34'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='4' y='4' width='120' height='120' rx='28' fill='url(%23g)'/%3E%3Ctext x='64' y='88' text-anchor='middle' font-family='Montserrat,Segoe UI,Arial,sans-serif' font-weight='800' font-size='66' fill='%23fff' letter-spacing='-3'%3EK$%3C/text%3E%3C/svg%3E",
+    ogImage: "https://kickbacks.ai/og-card.png",
+    subtitle: "Earn while you wait.",
     url: "https://kickbacks.ai/",
   },
   {
@@ -321,9 +335,23 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     author: "Langflow",
     category: CATEGORIES.ai,
     description:
-      "Low-code AI builder for agentic and RAG applications. Build AI applications with ease",
+      "Langflow is a low-code AI builder for agentic and retrieval-augmented generation (RAG) apps. Code in Python and use any LLM or vector database.",
+    favicon:
+      "https://raw.githubusercontent.com/langflow-ai/langflow/main/src/frontend/src/assets/LangflowLogo.svg",
+    gitHubLink: "https://github.com/langflow-ai/langflow",
+    ogImage: "https://www.langflow.org/images/og-image.png",
     tags: [TAGS.agents, TAGS.builder, TAGS.rag, TAGS["low-code"]],
     url: "https://www.langflow.org/",
+  },
+  {
+    title: "LightRAG",
+    author: "HKUDS",
+    category: CATEGORIES.ai,
+    description: "[EMNLP2025] LightRAG: Simple and Fast Retrieval-Augmented Generation",
+    favicon: "/github.svg",
+    ogImage:
+      "https://opengraph.githubassets.com/aef45a71ae41cf360958c1b7a8b1620868bb46fcd36296feacf8fe1267648cac/HKUDS/LightRAG",
+    url: "https://github.com/HKUDS/LightRAG",
   },
   {
     title: "LLM Gateway",
@@ -353,11 +381,15 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     url: "https://build.nvidia.com/models",
   },
   {
-    title: "MotionSites",
+    title: "MotionSites AI",
+    author: "MotionSites",
     category: CATEGORIES.ai,
     description:
-      "MotionSites is the premium library of AI beautiful website prompts, apps and animations for Lovable, Bolt, Cursor, and Claude",
-    subtitle: "Premium Website Prompts",
+      "Beautiful Website Prompts for Lovable, Bolt, Cursor, and Claude. Build Stunning 3d Websites With AI. Just copy, paste, and launch",
+    favicon: "https://motionsites.ai/favicon.png",
+    ogImage:
+      "https://storage.googleapis.com/gpt-engineer-file-uploads/OzagiQ9ZfuQNatpgQBgKibiYrtm2/social-images/social-1772948036264-1social.webp",
+    subtitle: "Official Premium AI Website Prompts",
     url: "https://motionsites.ai/",
   },
   {
@@ -369,14 +401,16 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     url: "https://karpathy.ai/zero-to-hero.html",
   },
   {
-    title: "ollama",
+    title: "Ollama",
     author: "Ollama",
     category: CATEGORIES.ai,
     description:
-      "Get up and running with Kimi-K2.6, GLM-5.1, MiniMax, DeepSeek, gpt-oss, Qwen, Gemma and other models.",
-    favicon: "/github.svg",
-    tags: [TAGS.ai],
-    url: "https://github.com/ollama/ollama",
+      "Ollama is the easiest way to automate your work using open models, while keeping your data safe.",
+    favicon: "https://ollama.com/public/ollama.png",
+    gitHubLink: "https://github.com/ollama/ollama",
+    ogImage: "https://ollama.com/public/og.png",
+    tags: [TAGS.ai, TAGS.models],
+    url: "https://ollama.com/",
   },
   {
     title: "OmniRoute",
@@ -393,16 +427,6 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     url: "https://omniroute.online/",
   },
   {
-    title: "Open-Generative-AI",
-    author: "Anil-matcha",
-    category: CATEGORIES.ai,
-    description:
-      "Open-source alternative to AI video platforms — Free AI image & video generation studio with 200+ models (Flux, Midjourney, Kling, Sora, Veo). No content filters. Self-hosted, MIT licensed.",
-    favicon: "/github.svg",
-    tags: [TAGS.ai],
-    url: "https://github.com/Anil-matcha/Open-Generative-AI",
-  },
-  {
     title: "Open-LLM-VTuber",
     author: "Open-LLM-VTuber",
     category: CATEGORIES.ai,
@@ -417,9 +441,24 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     author: "OpenDataLoader",
     category: CATEGORIES.ai,
     description:
-      "Convert PDFs to LLM-ready Markdown and JSON. #1 in benchmarks (0.90 overall). Bounding boxes for citations. Auto-tag untagged PDFs into Tagged PDFs as foundation for PDF/UA workflows. 100% local, open source (Apache-2.0).",
+      "Convert PDFs to LLM-ready Markdown and JSON. #1 in benchmarks (0.90 overall). Auto-tag untagged PDFs into Tagged PDFs as foundation for PDF/UA workflows. 100% local, open source (Apache-2.0).",
+    favicon: "https://opendataloader.org/logo-icon.webp",
+    gitHubLink: "https://github.com/opendataloader-project/opendataloader-pdf",
+    ogImage: "https://opendataloader.org/og-image.png",
     subtitle: "PDF Parser for AI-Ready Data | Auto-Tag PDFs for Accessibility",
     url: "https://opendataloader.org/",
+  },
+  {
+    title: "Open Generative AI",
+    author: "Anil Matcha",
+    category: CATEGORIES.ai,
+    description:
+      "Unrestricted Open-source alternative to AI video platforms — Free AI image & video generation studio with 500+ models (Flux, Midjourney, Kling, Sora, Veo). No content filters. Self-hosted, MIT licensed.",
+    favicon: "/github.svg",
+    ogImage:
+      "https://opengraph.githubassets.com/43b931633bf6dcb6281304eee843ac8377ecd8f685727db067dd6c7e33efda3e/Anil-matcha/Open-Generative-AI",
+    tags: [TAGS.ai],
+    url: "https://github.com/Anil-matcha/Open-Generative-AI",
   },
   {
     title: "OpenHands",
@@ -446,10 +485,13 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
   },
   {
     title: "Open WebUI",
-    author: "Open WebUI Team",
+    author: "Open WebUI",
     category: CATEGORIES.ai,
     description:
-      "Run AI on your own terms. Connect any model, extend with code, protect what matters—without compromise.",
+      "Run AI on your own terms. Connect any model, extend with code, and protect what matters without compromise.",
+    favicon: "https://openwebui.com/favicon.png",
+    gitHubLink: "https://github.com/open-webui/open-webui",
+    ogImage: "https://openwebui.com/og-image.png",
     subtitle: "Self-Hosted AI Platform",
     tags: [TAGS.llm, TAGS.platform, TAGS.selfHosted, TAGS.ui],
     url: "https://openwebui.com/",
@@ -479,6 +521,8 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     category: CATEGORIES.ai,
     description: "RAG-Anything: All-in-One RAG Framework",
     favicon: "/github.svg",
+    ogImage:
+      "https://opengraph.githubassets.com/ecc43d4b0b39773da22a5b7cb22e4b502604ec5f7f6e2fc42da4799995b49bf2/HKUDS/RAG-Anything",
     url: "https://github.com/hkuds/rag-anything",
   },
   {
@@ -553,13 +597,18 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     url: "https://varchive.ai/",
   },
   {
-    title: "Vibe-Trading",
+    title: "Vibe-Trading Wiki",
     author: "HKUDS",
     category: CATEGORIES.ai,
-    description: "Vibe-Trading: Your Personal Trading Agent",
-    favicon: "/github.svg",
+    description:
+      "Vibe-Trading is a natural-language finance research agent for market data, backtesting, swarm analysis, trade journals, and research artifacts.",
+    favicon: "https://vibetrading.wiki/assets/icon.png",
+    gitHubLink: "https://github.com/HKUDS/Vibe-Trading",
+    ogImage:
+      "https://opengraph.githubassets.com/639d9fb9c0062b5c3be63582499a1c651e4866b9671c31d9a4f977ecd16ca934/HKUDS/Vibe-Trading",
+    subtitle: "Finance Research Agent",
     tags: [TAGS.ai],
-    url: "https://github.com/HKUDS/Vibe-Trading",
+    url: "https://vibetrading.wiki/",
   },
   {
     title: "whisper",
