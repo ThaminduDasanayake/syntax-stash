@@ -41,7 +41,7 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
   },
   {
     title: "AI Engineering Hub",
-    author: "patchy631",
+    author: "Akshay Pachaar",
     category: CATEGORIES.ai,
     description: "In-depth tutorials on LLMs, RAGs and real-world AI agent applications.",
     favicon: "/github.svg",
@@ -219,6 +219,9 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     category: CATEGORIES.ai,
     description:
       "Like Next.js for web apps, but for agents. Markdown for instructions and skills, TypeScript for tools. Durable by default.",
+    favicon:
+      "https://vercel.com/vc-ap-vercel-marketing/_next/static/immutable/media/vercel-light.3_gxxexgi1nmy.svg",
+    ogImage: "https://lishhsx6kmthaacj.public.blob.vercel-storage.com/eve-og.png",
     subtitle: "The Agent Framework",
     tags: [TAGS.ai],
     url: "https://vercel.com/eve",
@@ -228,16 +231,23 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     author: "Fincept Corporation",
     category: CATEGORIES.ai,
     description:
-      "FinceptTerminal is a modern finance application offering advanced market analytics, investment research, and economic data tools, designed for interactive exploration and data-driven decision-making in a user-friendly environment.",
-    favicon: "/github.svg",
+      "Fincept Terminal Enterprise is the private edition: agentic research that plans and delegates, a quant lab with backtesting, derivatives and macro coverage, and a private dataroom — 41 modules on proprietary data. From $99 per user per month, against $27,000 for a Bloomberg seat.",
+    favicon: "https://avatars.githubusercontent.com/u/178755995?s=200&v=4",
+    gitHubLink: "https://github.com/Fincept-Corporation/FinceptTerminal",
+    ogImage: "https://fincept.in/capture.png",
+    subtitle: "The Private AI Research Terminal",
     tags: [TAGS.ai],
-    url: "https://github.com/Fincept-Corporation/FinceptTerminal",
+    url: "https://fincept.in/",
   },
   {
     title: "Flue",
+    author: "Astro",
     category: CATEGORIES.ai,
     description:
-      "Build durable AI agents and workflows with Flue's programmable TypeScript harness. Write once, deploy anywhere, use any LLM.",
+      "Build durable AI agents with Flue's programmable TypeScript harness. Write once, deploy anywhere, use any LLM.",
+    favicon: "https://flueframework.com/favicon.svg",
+    gitHubLink: "https://github.com/withastro/flue",
+    ogImage: "https://flueframework.com/og3.jpg",
     subtitle: "The Open Agent Framework",
     tags: [TAGS.ai],
     url: "https://flueframework.com/",
@@ -270,18 +280,10 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     category: CATEGORIES.ai,
     description: 'Official code repo for the O\'Reilly Book - "Hands-On Large Language Models"',
     favicon: "/github.svg",
-    tags: [TAGS.ai, TAGS.llm],
+    ogImage:
+      "https://opengraph.githubassets.com/47f1ee53b44f5139f770b72d601adc90ce9f464bf39e0097d85569233290cbe9/HandsOnLLM/Hands-On-Large-Language-Models",
+    tags: [TAGS.ai, TAGS.book, TAGS.llm],
     url: "https://github.com/handsOnLLM/Hands-On-Large-Language-Models",
-  },
-  {
-    title: "handson-ml3",
-    author: "ageron",
-    category: CATEGORIES.ai,
-    description:
-      "A series of Jupyter notebooks that walk you through the fundamentals of Machine Learning and Deep Learning in Python using Scikit-Learn, Keras and TensorFlow 2.",
-    favicon: "/github.svg",
-    tags: [TAGS.ai],
-    url: "https://github.com/ageron/handson-ml3",
   },
   {
     title: "Hugging Bay",
@@ -340,6 +342,7 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
       "https://raw.githubusercontent.com/langflow-ai/langflow/main/src/frontend/src/assets/LangflowLogo.svg",
     gitHubLink: "https://github.com/langflow-ai/langflow",
     ogImage: "https://www.langflow.org/images/og-image.png",
+    subtitle: "Low-code AI builder for agentic and RAG applications",
     tags: [TAGS.agents, TAGS.builder, TAGS.rag, TAGS["low-code"]],
     url: "https://www.langflow.org/",
   },
@@ -365,18 +368,38 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     url: "https://llmgateway.io/",
   },
   {
+    title: "Machine Learning Notebooks",
+    author: "Aurélien Geron",
+    category: CATEGORIES.ai,
+    description:
+      "A series of Jupyter notebooks that walk you through the fundamentals of Machine Learning and Deep Learning in Python using Scikit-Learn, Keras and TensorFlow 2.",
+    favicon: "/github.svg",
+    ogImage:
+      "https://opengraph.githubassets.com/89a652e72a310a785b1613feaf2edb0590a149a7310cfdf12bd1061c3104530f/ageron/handson-ml3",
+    subtitle: "3rd edition",
+    tags: [TAGS.ai, TAGS.book],
+    url: "https://github.com/ageron/handson-ml3",
+  },
+  {
     title: "Maxun",
+    author: "Maxun",
     category: CATEGORIES.ai,
     description:
       "The easiest AI-powered  web scraping, crawling, extraction, search platform. The best open-source Browse AI alternative.",
+    favicon: "https://www.maxun.dev/maxun_logo.svg",
+    gitHubLink: "https://github.com/getmaxun/maxun?ref=mx-website",
+    ogImage: "https://maxun.dev/maxun_prev.png",
     subtitle: "Scrape, Extract, Crawl, Search Web Data With No-Code",
     tags: [TAGS.ai],
     url: "https://www.maxun.dev/",
   },
   {
     title: "Models",
+    author: "NVIDIA",
     category: CATEGORIES.ai,
     description: "Experience the leading models to build enterprise generative AI apps now.",
+    favicon: "https://unpkg.com/@lobehub/icons-static-png@latest/dark/nvidia-color.png",
+    ogImage: "https://build.nvidia.com/opengraph-image.jpg",
     subtitle: "Try NVIDIA NIM APIs",
     url: "https://build.nvidia.com/models",
   },
@@ -391,14 +414,6 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
       "https://storage.googleapis.com/gpt-engineer-file-uploads/OzagiQ9ZfuQNatpgQBgKibiYrtm2/social-images/social-1772948036264-1social.webp",
     subtitle: "Official Premium AI Website Prompts",
     url: "https://motionsites.ai/",
-  },
-  {
-    title: "Neural Networks: Zero To Hero",
-    author: "Andrej Karpathy",
-    category: CATEGORIES.ai,
-    description: "A course by Andrej Karpathy on building neural networks, from scratch, in code.",
-    tags: [TAGS.ai, TAGS.education],
-    url: "https://karpathy.ai/zero-to-hero.html",
   },
   {
     title: "Ollama",
@@ -425,16 +440,6 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     subtitle: "Free AI Gateway for Multi-Provider LLMs",
     tags: [TAGS.ai],
     url: "https://omniroute.online/",
-  },
-  {
-    title: "Open-LLM-VTuber",
-    author: "Open-LLM-VTuber",
-    category: CATEGORIES.ai,
-    description:
-      "Talk to any LLM with hands-free voice interaction, voice interruption, and Live2D taking face running locally across platforms.",
-    favicon: "/github.svg",
-    tags: [TAGS.ai],
-    url: "https://github.com/Open-LLM-VTuber/Open-LLM-VTuber",
   },
   {
     title: "OpenDataLoader PDF",
@@ -467,7 +472,10 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     category: CATEGORIES.ai,
     description:
       "Meet OpenHands, the open-source, model-agnostic platform for cloud coding agents. Automate real engineering work securely and transparently. Build faster with full control.",
-    favicon: "/github.svg",
+    favicon: "https://www.openhands.dev/favicon.svg",
+    gitHubLink: "https://github.com/OpenHands/OpenHands",
+    ogImage:
+      "https://www.openhands.dev/assets/webflow/og/69161b32abf448a2df921a73_openhands_opengraph_01.png",
     subtitle: "The Open Platform for Cloud Coding Agents",
     tags: [TAGS.ai],
     url: "https://www.openhands.dev/",
@@ -503,17 +511,10 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     description:
       "OpenWiki is a CLI that writes and maintains agent documentation for your codebase.",
     favicon: "/github.svg",
+    ogImage:
+      "https://opengraph.githubassets.com/607d4fff6f755614ac5015db4f4ed2aedf8c15b3b0b7dacba2919a313f3723f4/langchain-ai/openwiki",
     tags: [TAGS.ai],
     url: "https://github.com/langchain-ai/openwiki",
-  },
-  {
-    title: "Prompt Explorer by Raycast",
-    author: "Raycast",
-    category: CATEGORIES.ai,
-    description: "Easily browse, share, and add prompts to Raycast.",
-    ogImage: "https://www.ray.so/_next/static/media/og-image.0xf6y8axn-d2x.png",
-    tags: [TAGS.ai],
-    url: "https://ray.so/prompts/code",
   },
   {
     title: "RAG-Anything",
@@ -527,31 +528,37 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
   },
   {
     title: "Ship Studio",
+    author: "Ship Studio",
     category: CATEGORIES.ai,
     description:
       "A free desktop app that runs on your machine and plugs into the subscriptions, GitHub account, and hosting you already pay for — agent, repo, and deploys in one window.",
+    favicon:
+      "https://raw.githubusercontent.com/ship-studio/ship-studio/main/public/ship_studio_icon.svg",
+    gitHubLink: "https://github.com/ship-studio/ship-studio",
+    ogImage: "https://www.ship.studio/og/home.png",
     subtitle: "Build it, ship it, host it without leaving the app",
     url: "https://www.ship.studio/",
   },
   {
-    title: "Sinceerly",
-    category: CATEGORIES.ai,
-    description: "Make your emails sound human",
-    url: "https://sinceerly.com/",
-  },
-  {
     title: "Taste Skill",
+    author: "Leon Lin",
     category: CATEGORIES.ai,
     description:
       "Taste Skill gives your AI coding agent good taste. Open-source skill files that stop Cursor, Claude Code, Codex & more from generating generic, boring frontends. Install in one command.",
+    favicon: "https://www.tasteskill.dev/apple-touch-icon.webp",
+    gitHubLink: "https://github.com/Leonxlnx/taste-skill",
+    ogImage: "https://www.tasteskill.dev/og-image.jpg",
     subtitle: "The Anti-Slop Frontend Framework for AI Agents",
     tags: [TAGS.ai],
     url: "https://www.tasteskill.dev/",
   },
   {
     title: "The Agent Skills Directory",
+    author: "Vercel",
     category: CATEGORIES.ai,
     description: "Discover and install skills for AI agents.",
+    favicon: "https://www.skills.sh/favicon.ico",
+    ogImage: "https://www.skills.sh/og.jpeg",
     url: "https://www.skills.sh/",
   },
   {
@@ -559,6 +566,9 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     category: CATEGORIES.ai,
     description:
       "Transform complex, unstructured data into clean, AI-ready inputs. Connect to any source, process 64+ file types, and power your GenAI projects. Start now.",
+    favicon: "https://unstructured.io/favicon.svg",
+    ogImage:
+      "https://cdn.sanity.io/images/d35hevy9/production/f19dac06a6b8d3e66fe818be470470e4cb954635-1200x628.jpg",
     subtitle: "Unstructured Data Platform for GenAI",
     tags: [TAGS.ai],
     url: "https://unstructured.io/",
@@ -616,6 +626,8 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     category: CATEGORIES.ai,
     description: "Robust Speech Recognition via Large-Scale Weak Supervision",
     favicon: "/github.svg",
+    ogImage:
+      "https://opengraph.githubassets.com/72a9a6bd48914970da526ad85f8f0b05f3e068f39e71b992b79009bf6d9d4685/openai/whisper",
     tags: [TAGS.ai],
     url: "https://github.com/openai/whisper",
   },

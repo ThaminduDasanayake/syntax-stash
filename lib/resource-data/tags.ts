@@ -12,6 +12,7 @@ export const TAGS = {
   backend: "backend",
   barcode: "barcode",
   blog: "blog",
+  book: "book",
   builder: "builder",
   cad: "cad",
   cheatsheet: "cheatsheet",
