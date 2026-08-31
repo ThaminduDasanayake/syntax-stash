@@ -127,8 +127,14 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
     const morphProgress = rawProgress * rawProgress * (3 - 2 * rawProgress);
 
     if (mobileTitleRef.current) {
-      // During rubber-band overscroll (scrollTop < 0), currentY tracks in lockstep with icon
-      const currentY = scrollTop < stickDist ? -scrollTop : targetY - restingY;
+      let currentY: number;
+      if (scrollTop <= 0 && titleAnchorRef.current && dialogContentRef.current) {
+        const dialogRect = dialogContentRef.current.getBoundingClientRect();
+        const anchorRect = titleAnchorRef.current.getBoundingClientRect();
+        currentY = anchorRect.top - dialogRect.top - restingY;
+      } else {
+        currentY = scrollTop < stickDist ? -scrollTop : targetY - restingY;
+      }
       const currentX = (targetX - restingX) * morphProgress;
       const currentScale = 1 - (1 - targetScale) * morphProgress;
 
@@ -247,6 +253,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
               target="_blank"
               rel="noopener noreferrer"
               className="text-mono-2xs sm:text-mono-xs inline-flex items-center gap-1.5"
+              aria-label="GitHub repository"
             >
               <Image
                 src="/github.svg"
@@ -255,7 +262,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
                 height={18}
                 className="size-4 transition-all group-hover:invert sm:size-4.5"
               />
-              GitHub
+              <span className="hidden sm:inline">GitHub</span>
             </a>
           </Button>
         )}
@@ -269,10 +276,11 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
             }
             toggleBookmark(activeTool);
           }}
+          aria-label={bookmarked ? "Saved" : "Save"}
           className="text-mono-2xs sm:text-mono-xs shrink-0 border-[1.5px] px-2.5 sm:px-4"
         >
           <BookmarkSimpleIcon weight={bookmarked ? "fill" : "bold"} className="size-4" />
-          {bookmarked ? "Saved" : "Save"}
+          <span className="hidden sm:inline">{bookmarked ? "Saved" : "Save"}</span>
         </Button>
       </div>
 
@@ -293,10 +301,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
     <DialogContent
       ref={dialogContentRef}
       showCloseButton={false}
-      className={cn(
-        "modal-panel fixed! top-1/2! left-1/2! flex! -translate-x-1/2! -translate-y-1/2! flex-col! gap-0! overflow-hidden! p-0!",
-        colorClasses,
-      )}
+      className="modal-panel bg-background fixed! top-1/2! left-1/2! flex! -translate-x-1/2! -translate-y-1/2! flex-col! gap-0! overflow-hidden! p-0!"
     >
       {/* Desktop Close Button */}
       <div className="modal-top-actions hidden md:flex">
@@ -364,7 +369,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
       <div
         ref={scrollContainerRef}
         onScroll={handleScroll}
-        className="modal-body md:[&::-webkit-scrollbar-track]:bg-bg-2 md:[&::-webkit-scrollbar-track:hover]:bg-bg-2 flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain [scrollbar-color:var(--line-2)_transparent] md:grid md:grid-cols-[340px_1fr] md:overflow-hidden md:[scrollbar-color:var(--line-2)_var(--bg-2)] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent"
+        className="modal-body flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-none [scrollbar-color:var(--line-2)_transparent] md:grid md:grid-cols-[340px_1fr] md:overflow-hidden md:overscroll-contain [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent"
       >
         {/* Left Side */}
         <div
@@ -373,14 +378,6 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
             colorClasses,
           )}
         >
-          {/* Overscroll bounce background filler for trackpad/mobile rubber-banding */}
-          <div
-            className={cn(
-              "pointer-events-none absolute inset-x-0 -top-120 h-120 md:hidden",
-              colorClasses,
-            )}
-            aria-hidden="true"
-          />
           {/* Desktop Category Header */}
           <div className="modal-cat-label hidden md:flex">
             <div className="flex min-w-0 items-center gap-2">
@@ -452,7 +449,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
 
         {/* Right Side */}
         <div className="modal-right bg-background flex flex-col md:overflow-hidden">
-          <div className="modal-content px-5 pt-5 pb-6 md:min-h-0 md:flex-1 md:overflow-y-auto md:overscroll-contain md:px-8 md:pt-20 md:pb-5">
+          <div className="modal-content px-5 pt-5 pb-6 [scrollbar-color:var(--line-2)_transparent] md:min-h-0 md:flex-1 md:overflow-y-auto md:overscroll-contain md:px-8 md:pt-20 md:pb-5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent">
             {(() => {
               const handleOgError = () => {
                 if (
