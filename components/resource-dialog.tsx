@@ -123,7 +123,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
         {/* Left Side */}
         <div className={cn("modal-left", colorClasses)}>
           <div className="modal-cat-label">
-            <div className="flex items-center gap-2">
+            <div className="flex min-w-0 items-center gap-2">
               <span
                 className={cn(
                   "modal-cat-dot",
@@ -132,21 +132,35 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
               ></span>
               <Link
                 href={`/resources/${activeTool.category}`}
-                className="modal-cat-name modal-cat-link"
+                className="modal-cat-name modal-cat-link truncate"
               >
                 {activeTool.category}
               </Link>
             </div>
 
-            <CardIcon
-              key={activeTool.url}
-              alt={activeTool.title}
-              className={activeTool.className}
-              favicon={activeTool.favicon}
-            />
+            {/* Desktop Icon in header */}
+            <div className="hidden md:block">
+              <CardIcon
+                key={`desktop-${activeTool.url}`}
+                alt={activeTool.title}
+                className={activeTool.className}
+                favicon={activeTool.favicon}
+              />
+            </div>
           </div>
 
-          <DialogTitle className="modal-title">{activeTool.title}</DialogTitle>
+          {/* Title row with mobile icon on the left */}
+          <div className="mb-4.5 flex items-start gap-3 md:block">
+            <div className="shrink-0 pt-0.5 md:hidden">
+              <CardIcon
+                key={`mobile-${activeTool.url}`}
+                alt={activeTool.title}
+                className={activeTool.className}
+                favicon={activeTool.favicon}
+              />
+            </div>
+            <DialogTitle className="modal-title mb-0 md:mb-4.5">{activeTool.title}</DialogTitle>
+          </div>
 
           {activeTool.subtitle && <p className="modal-subtitle">{activeTool.subtitle}</p>}
           <p className="modal-description">{activeTool.description}</p>
