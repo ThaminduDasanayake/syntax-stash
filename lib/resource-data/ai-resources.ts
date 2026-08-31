@@ -115,6 +115,8 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     category: CATEGORIES.ai,
     description: "100+ AI Agent & RAG apps you can actually run — clone, customize, ship.",
     favicon: "/github.svg",
+    ogImage:
+      "https://opengraph.githubassets.com/0fab0bfbe38390ee33d289d6332c87cf93420db938121f200dbbdb2d7428398a/Shubhamsaboo/awesome-llm-apps",
     tags: [TAGS.ai],
     url: "https://github.com/Shubhamsaboo/awesome-llm-apps",
   },
@@ -130,12 +132,14 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     url: "https://browser-use.com/",
   },
   {
-    title: "camofox-browser",
-    author: "jo-inc",
+    title: "Camofox Browser",
+    author: "jo inc",
     category: CATEGORIES.ai,
     description:
       "Stealth headless browser for AI agents — bypass Cloudflare, bot detection, and anti-scraping. Drop-in Puppeteer/Playwright replacement.",
     favicon: "/github.svg",
+    ogImage:
+      "https://opengraph.githubassets.com/40c133c27d499c9e269a93dabe5431d69a68ced134d2bc11a8ac4ba2a7a46c96/jo-inc/camofox-browser",
     tags: [TAGS.ai],
     url: "https://github.com/jo-inc/camofox-browser",
   },
@@ -143,20 +147,24 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     title: "Caveman",
     category: CATEGORIES.ai,
     description:
-      "A compression primitive, a coding agent, and a managed efficiency layer for internal AI agents. From the team behind the 72.8k★ caveman.",
+      "Your AI bill is mostly waste. Caveman finds it, cuts it with caching, compression and routing, and proves every dollar saved.",
+    favicon: "https://caveman.so/favicon.svg",
     ogImage: "https://caveman.so/opengraph-image",
     subtitle: "The token-efficient stack for agent-native development",
     url: "https://caveman.so/",
   },
   {
-    title: "claude-ads",
-    author: "AgriciDaniel",
+    title: "Claude Ads",
+    author: "Agrici Daniel",
     category: CATEGORIES.ai,
     description:
-      "Comprehensive paid advertising audit & optimization skill for Claude Code. 250+ checks across Google, Meta, YouTube, LinkedIn, TikTok, Microsoft & Apple Ads with weighted scoring, parallel agents, industry templates, and AI creative generation.",
-    favicon: "/github.svg",
+      "Free, open-source paid-media operations for Claude Code: audit 12 ad platforms with 33 skills, get an evidence-backed health score and a prioritized fix plan.",
+    favicon: "https://claude-ads.md/icon.svg",
+    gitHubLink: "https://github.com/AgriciDaniel/claude-ads",
+    ogImage: "https://claude-ads.md/opengraph-image",
+    subtitle: "Free PPC & Google Ads Audit Tool",
     tags: [TAGS.ai],
-    url: "https://github.com/AgriciDaniel/claude-ads",
+    url: "https://claude-ads.md/",
   },
   {
     title: "Claude Code Templates",
@@ -510,6 +518,18 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     subtitle: "Unstructured Data Platform for GenAI",
     tags: [TAGS.ai],
     url: "https://unstructured.io/",
+  },
+  {
+    title: "unwind ai",
+    author: "Unwind AI",
+    category: CATEGORIES.ai,
+    description: "Open-source Ecosystem for High-Leverage AI Builders",
+    favicon:
+      "https://media.beehiiv.com/cdn-cgi/image/fit=scale-down,format=auto,onerror=redirect,quality=80/uploads/publication/logo/84ac330c-894c-4f61-ac66-e747ce8b32eb/thumb_logo.png",
+    ogImage:
+      "https://media.beehiiv.com/cdn-cgi/image/fit=scale-down,format=auto,onerror=redirect,quality=80/uploads/publication/thumbnail/84ac330c-894c-4f61-ac66-e747ce8b32eb/landscape_UAI_new_banner.png",
+    tags: [TAGS.ai],
+    url: "https://www.theunwindai.com/",
   },
   {
     title: "v0",

@@ -34,9 +34,19 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           HAS_FINDINGS: ${{ steps.checker.outputs.has_findings }}
+          REPORT_PATH: ${{ steps.checker.outputs.report_path }}
         run: |
           DATE=$(date +'%b %d, %Y')
           LABEL="resource-health-audit"
+
+          # Determine the report file
+          REPORT_FILE="$REPORT_PATH"
+          if [ -z "$REPORT_FILE" ] || [ ! -f "$REPORT_FILE" ]; then
+            REPORT_FILE=$(find health-reports -name "health-report*.md" -type f 2>/dev/null | sort -r | head -n 1)
+          fi
+          if [ -z "$REPORT_FILE" ] || [ ! -f "$REPORT_FILE" ]; then
+            REPORT_FILE="health-report.md"
+          fi
 
           # Check if there is an existing open audit issue
           EXISTING_ISSUE=$(gh issue list --state open --label "$LABEL" --json number -q '.[0].number' 2>/dev/null || echo "")
@@ -46,12 +56,12 @@ jobs:
               echo "Updating existing open issue #$EXISTING_ISSUE..."
               gh issue edit "$EXISTING_ISSUE" \
                 --title "🔍 [Health Check] Resource Audit Report ($DATE)" \
-                --body-file health-report.md
+                --body-file "$REPORT_FILE"
             else
               echo "Creating new audit issue..."
               gh issue create \
                 --title "🔍 [Health Check] Resource Audit Report ($DATE)" \
-                --body-file health-report.md \
+                --body-file "$REPORT_FILE" \
                 --label "$LABEL"
             fi
           else

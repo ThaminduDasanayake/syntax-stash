@@ -3,7 +3,7 @@ import path from "node:path";
 
 import * as cheerio from "cheerio";
 
-import { resourceLinks } from "@/lib/resource-data";
+import { CATEGORIES, resourceLinks } from "@/lib/resource-data";
 import { AUDIT_CONFIG } from "@/lib/resource-data/audit-config";
 import { Resource } from "@/types";
 
@@ -43,6 +43,43 @@ function normalizeText(text: string): string {
     .trim();
 }
 
+function resolveCategory(input: string): { name: string; slug: string } | null {
+  const norm = input.trim().toLowerCase();
+
+  // 1. Direct key match (e.g. "ai", "ui", "dev", "docs")
+  if (norm in CATEGORIES) {
+    const key = norm as keyof typeof CATEGORIES;
+    return { name: CATEGORIES[key], slug: key };
+  }
+
+  // 2. Full or partial category value match (e.g. "ai & machine learning", "machine learning")
+  for (const [key, val] of Object.entries(CATEGORIES)) {
+    if (val.toLowerCase() === norm || val.toLowerCase().includes(norm) || norm.includes(key)) {
+      return { name: val, slug: key };
+    }
+  }
+
+  return null;
+}
+
+function getUniqueReportPath(dir: string, baseName: string): string {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+
+  const initialPath = path.join(dir, `${baseName}.md`);
+  if (!fs.existsSync(initialPath)) {
+    return initialPath;
+  }
+
+  let counter = 1;
+  while (fs.existsSync(path.join(dir, `${baseName}-${counter}.md`))) {
+    counter++;
+  }
+
+  return path.join(dir, `${baseName}-${counter}.md`);
+}
+
 function parseTitleAndSubtitle(
   rawTitle: string,
   existingTitle: string,
@@ -63,11 +100,7 @@ function parseTitleAndSubtitle(
 
       const matchIndex = parts.findIndex((part) => {
         const normPart = normalizeText(part);
-        return (
-          normPart === normExisting ||
-          normPart.includes(normExisting) ||
-          normExisting.includes(normPart)
-        );
+        return normPart === normExisting || normPart.includes(normExisting) || normExisting.includes(normPart);
       });
 
       if (matchIndex !== -1) {
@@ -94,8 +127,7 @@ async function checkResource(resource: Resource): Promise<AuditFinding[]> {
 
     const res = await fetch(targetUrl, {
       headers: {
-        Accept:
-          "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
         "Accept-Language": "en-US,en;q=0.9",
         "User-Agent":
           "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
@@ -160,7 +192,9 @@ async function checkResource(resource: Resource): Promise<AuditFinding[]> {
     const $ = cheerio.load(htmlSnippet);
 
     const scrapedTitle =
-      $('meta[property="og:title"]').attr("content")?.trim() || $("title").text().trim() || "";
+      $('meta[property="og:title"]').attr("content")?.trim() ||
+      $("title").text().trim() ||
+      "";
 
     const scrapedDescription =
       $('meta[name="description"]').attr("content")?.trim() ||
@@ -215,10 +249,7 @@ async function checkResource(resource: Resource): Promise<AuditFinding[]> {
 
     // --- Title / Subtitle Analysis ---
     if (scrapedTitle) {
-      const { candidateSubtitle, isTitleMatch } = parseTitleAndSubtitle(
-        scrapedTitle,
-        resource.title,
-      );
+      const { candidateSubtitle, isTitleMatch } = parseTitleAndSubtitle(scrapedTitle, resource.title);
 
       if (!isTitleMatch) {
         findings.push({
@@ -315,11 +346,7 @@ async function checkResource(resource: Resource): Promise<AuditFinding[]> {
   return findings;
 }
 
-async function runPool<T, R>(
-  items: T[],
-  limit: number,
-  iteratorFn: (item: T) => Promise<R>,
-): Promise<R[]> {
+async function runPool<T, R>(items: T[], limit: number, iteratorFn: (item: T) => Promise<R>): Promise<R[]> {
   const results: R[] = [];
   const executing: Promise<void>[] = [];
 
@@ -340,7 +367,7 @@ async function runPool<T, R>(
   return Promise.all(results);
 }
 
-function generateMarkdownReport(findings: AuditFinding[]): string {
+function generateMarkdownReport(findings: AuditFinding[], categoryName?: string): string {
   const broken = findings.filter((f) => f.type === "broken");
   const redirects = findings.filter((f) => f.type === "redirect");
   const descriptionChanges = findings.filter((f) => f.type === "description_change");
@@ -349,7 +376,8 @@ function generateMarkdownReport(findings: AuditFinding[]): string {
   const blocked = findings.filter((f) => f.type === "blocked");
 
   const date = new Date().toISOString().split("T")[0];
-  let md = `## 🔍 Syntax Stash Resource Health Check Report (${date})\n\n`;
+  const titleCategory = categoryName ? ` — ${categoryName}` : "";
+  let md = `## 🔍 Syntax Stash Resource Health Check Report${titleCategory} (${date})\n\n`;
 
   if (findings.length === 0) {
     md += `✅ All verified resources are active and healthy with no missing metadata detected!\n`;
@@ -429,7 +457,9 @@ function generateMarkdownReport(findings: AuditFinding[]): string {
 
 async function main() {
   const args = process.argv.slice(2);
-  const sampleArgIdx = args.findIndex((a) => a === "--sample" || a.startsWith("--sample="));
+
+  // 1. Sample argument parsing
+  const sampleArgIdx = args.findIndex((a) => a === "--sample" || a === "-s" || a.startsWith("--sample="));
   let sampleSize: number | undefined;
   if (sampleArgIdx !== -1) {
     const val = args[sampleArgIdx].includes("=")
@@ -440,15 +470,51 @@ async function main() {
     sampleSize = parseInt(process.env.SAMPLE, 10);
   }
 
-  const categoryArg = args.find((a) => a.startsWith("--category="));
+  // 2. Category argument parsing
+  const catArgIdx = args.findIndex(
+    (a) => a === "-c" || a === "--category" || a.startsWith("--category=") || a.startsWith("-c="),
+  );
+  let categoryInput: string | undefined;
+
+  if (catArgIdx !== -1) {
+    categoryInput = args[catArgIdx].includes("=")
+      ? args[catArgIdx].split("=")[1]
+      : args[catArgIdx + 1];
+  } else if (process.env.CATEGORY) {
+    categoryInput = process.env.CATEGORY;
+  } else {
+    // Check for positional argument (e.g. `npm run check:resources -- ai`)
+    for (let i = 0; i < args.length; i++) {
+      const a = args[i];
+      if (a.startsWith("-")) continue;
+      const prev = args[i - 1];
+      if (prev === "--sample" || prev === "-s" || prev === "--category" || prev === "-c") continue;
+      const resolved = resolveCategory(a);
+      if (resolved) {
+        categoryInput = a;
+        break;
+      }
+    }
+  }
+
   const isDryRun = args.includes("--dry-run");
   const isVerbose = args.includes("--verbose");
 
   let targets = [...resourceLinks];
+  let resolvedCategory: { name: string; slug: string } | null = null;
 
-  if (categoryArg) {
-    const cat = categoryArg.split("=")[1].toLowerCase();
-    targets = targets.filter((r) => r.category.toLowerCase().includes(cat));
+  if (categoryInput) {
+    resolvedCategory = resolveCategory(categoryInput);
+    if (!resolvedCategory) {
+      const validCategories = Object.keys(CATEGORIES).join(", ");
+      console.error(`❌ Unknown category: "${categoryInput}".\nAvailable categories: ${validCategories}`);
+      process.exit(1);
+    }
+
+    targets = targets.filter(
+      (r) => r.category === resolvedCategory?.name || r.category.toLowerCase().includes(resolvedCategory!.slug),
+    );
+    console.log(`Filtering by category: ${resolvedCategory.name} (${targets.length} resources)`);
   }
 
   if (sampleSize && !isNaN(sampleSize)) {
@@ -479,23 +545,27 @@ async function main() {
     allFindings.push(...findings);
   });
 
-  const reportMd = generateMarkdownReport(allFindings);
+  const reportMd = generateMarkdownReport(allFindings, resolvedCategory?.name);
 
   if (isDryRun) {
     console.log("\n================ HEALTH CHECK REPORT ================");
     console.log(reportMd);
     console.log("=====================================================\n");
   } else {
-    const reportPath = path.join(process.cwd(), "health-report.md");
-    fs.writeFileSync(reportPath, reportMd, "utf8");
-    console.log(`Report written to ${reportPath}`);
-  }
+    const reportsDir = path.join(process.cwd(), "health-reports");
+    const baseName = resolvedCategory ? `health-report-${resolvedCategory.slug}` : "health-report";
+    const reportPath = getUniqueReportPath(reportsDir, baseName);
 
-  // GitHub Actions output
-  const actionableCount = allFindings.filter((f) => f.type !== "blocked").length;
-  if (process.env.GITHUB_OUTPUT) {
-    fs.appendFileSync(process.env.GITHUB_OUTPUT, `has_findings=${actionableCount > 0}\n`);
-    fs.appendFileSync(process.env.GITHUB_OUTPUT, `total_findings=${allFindings.length}\n`);
+    fs.writeFileSync(reportPath, reportMd, "utf8");
+    console.log(`\nReport written to ${path.relative(process.cwd(), reportPath)}`);
+
+    // GitHub Actions output
+    const actionableCount = allFindings.filter((f) => f.type !== "blocked").length;
+    if (process.env.GITHUB_OUTPUT) {
+      fs.appendFileSync(process.env.GITHUB_OUTPUT, `has_findings=${actionableCount > 0}\n`);
+      fs.appendFileSync(process.env.GITHUB_OUTPUT, `total_findings=${allFindings.length}\n`);
+      fs.appendFileSync(process.env.GITHUB_OUTPUT, `report_path=${reportPath}\n`);
+    }
   }
 }
 

@@ -16,6 +16,7 @@ export interface Resource<TCategory extends string = string> extends BaseItem<TC
   url: string;
   author?: string;
   authorLink?: string;
+  gitHubLink?: string;
   className?: string;
   favicon?: string;
   ogImage?: string;

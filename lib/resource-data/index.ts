@@ -20,7 +20,7 @@ import { uiLinks } from "./ui-component-resources";
 export { aiLinks } from "./ai-resources";
 export { animationLinks } from "./animation-resources";
 export { backendLinks } from "./backend-resources";
-export { type CategoryValue, resourceCategories } from "./categories";
+export { CATEGORIES, type CategoryValue, resourceCategories } from "./categories";
 export { colorLinks } from "./color-resources";
 export { dataLinks } from "./data-resources";
 export { designLinks } from "./design-resources";
