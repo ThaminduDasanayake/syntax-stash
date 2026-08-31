@@ -116,31 +116,31 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
     const scrollTop = e.currentTarget.scrollTop;
     const { restingX, restingY, stickDist, targetScale, targetX, targetY } = coordsRef.current;
 
-    // Delay transition start until title has scrolled closer to the top bar
-    const startScroll = stickDist * 0.7;
-    const morphProgress = Math.min(
+    // 1. Give it a wider runway (e.g. 0.35 instead of 0.7)
+    const startScroll = stickDist * 0.35;
+    const rawProgress = Math.min(
       1,
       Math.max(0, (scrollTop - startScroll) / (stickDist - startScroll)),
     );
 
+    // 2. Smoothstep easing for a luxurious, natural feel
+    const morphProgress = rawProgress * rawProgress * (3 - 2 * rawProgress);
+
     if (mobileTitleRef.current) {
-      // Hardware-accelerated GPU transform: zero reflow, zero font hinting stutter
+      // During rubber-band overscroll (scrollTop < 0), currentY tracks in lockstep with icon
       const currentY = scrollTop < stickDist ? -scrollTop : targetY - restingY;
       const currentX = (targetX - restingX) * morphProgress;
       const currentScale = 1 - (1 - targetScale) * morphProgress;
 
-      gsap.to(mobileTitleRef.current, {
-        duration: 0.03,
-        ease: "none",
-        overwrite: "auto",
+      gsap.set(mobileTitleRef.current, {
         scale: currentScale,
         transformOrigin: "left top",
         x: currentX,
         y: currentY,
       });
 
-      if (morphProgress >= 0.95) {
-        mobileTitleRef.current.style.width = "calc((100% - 110px) / 0.5)";
+      if (morphProgress >= 0.98) {
+        mobileTitleRef.current.style.width = `calc((100% - 110px) / ${targetScale})`;
         mobileTitleRef.current.style.whiteSpace = "nowrap";
         mobileTitleRef.current.style.overflow = "hidden";
         mobileTitleRef.current.style.textOverflow = "ellipsis";
@@ -153,11 +153,8 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
     }
 
     if (mobileCategoryRef.current) {
-      gsap.to(mobileCategoryRef.current, {
-        duration: 0.03,
-        ease: "none",
+      gsap.set(mobileCategoryRef.current, {
         opacity: Math.max(0, 1 - morphProgress * 1.8),
-        overwrite: "auto",
         y: -14 * morphProgress,
       });
     }
@@ -296,7 +293,10 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
     <DialogContent
       ref={dialogContentRef}
       showCloseButton={false}
-      className="modal-panel fixed! top-1/2! left-1/2! flex! -translate-x-1/2! -translate-y-1/2! flex-col! gap-0! overflow-hidden! p-0!"
+      className={cn(
+        "modal-panel fixed! top-1/2! left-1/2! flex! -translate-x-1/2! -translate-y-1/2! flex-col! gap-0! overflow-hidden! p-0!",
+        colorClasses,
+      )}
     >
       {/* Desktop Close Button */}
       <div className="modal-top-actions hidden md:flex">
@@ -369,10 +369,18 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
         {/* Left Side */}
         <div
           className={cn(
-            "modal-left flex shrink-0 flex-col border-b-2 px-5 pt-3 pb-6 md:overflow-y-auto md:border-r-2 md:border-b-0 md:px-7 md:py-8",
+            "modal-left relative flex shrink-0 flex-col border-b-2 px-5 pt-3 pb-6 md:overflow-y-auto md:border-r-2 md:border-b-0 md:px-7 md:py-8",
             colorClasses,
           )}
         >
+          {/* Overscroll bounce background filler for trackpad/mobile rubber-banding */}
+          <div
+            className={cn(
+              "pointer-events-none absolute inset-x-0 -top-120 h-120 md:hidden",
+              colorClasses,
+            )}
+            aria-hidden="true"
+          />
           {/* Desktop Category Header */}
           <div className="modal-cat-label hidden md:flex">
             <div className="flex min-w-0 items-center gap-2">
@@ -443,7 +451,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
         </div>
 
         {/* Right Side */}
-        <div className="modal-right flex flex-col md:overflow-hidden">
+        <div className="modal-right bg-background flex flex-col md:overflow-hidden">
           <div className="modal-content px-5 pt-5 pb-6 md:min-h-0 md:flex-1 md:overflow-y-auto md:overscroll-contain md:px-8 md:pt-20 md:pb-5">
             {(() => {
               const handleOgError = () => {
