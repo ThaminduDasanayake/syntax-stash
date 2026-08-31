@@ -9,7 +9,7 @@ import {
 } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 import { AuthModal } from "@/components/auth-modal";
 import { CardIcon } from "@/components/card-icon";
@@ -33,6 +33,8 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
   const [ogError, setOgError] = useState(false);
   const [isRetryingOgProxy, setIsRetryingOgProxy] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [scrolledPastTitle, setScrolledPastTitle] = useState(false);
   const { data: session } = useSession();
   const { isBookmarked, toggleBookmark } = useBookmarks();
   const bookmarked = isBookmarked(activeTool);
@@ -40,7 +42,20 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
   const handleSelectTool = (res: Resource) => {
     setOgError(false);
     setIsRetryingOgProxy(false);
+    setScrolledPastTitle(false);
     setActiveTool(res);
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+    }
+  };
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const scrollTop = e.currentTarget.scrollTop;
+    if (scrollTop > 100) {
+      if (!scrolledPastTitle) setScrolledPastTitle(true);
+    } else {
+      if (scrolledPastTitle) setScrolledPastTitle(false);
+    }
   };
 
   const currentIndex = useMemo(() => {
@@ -123,7 +138,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
             asChild
             variant="secondary"
             size="sm"
-            className="group shrink-0 px-2.5 sm:px-4 border-[1.5px]"
+            className="group shrink-0 border-[1.5px] px-2.5 sm:px-4"
           >
             <a
               href={activeTool.gitHubLink}
@@ -152,7 +167,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
             }
             toggleBookmark(activeTool);
           }}
-          className="shrink-0 px-2.5 sm:px-4 text-mono-2xs sm:text-mono-xs border-[1.5px]"
+          className="text-mono-2xs sm:text-mono-xs shrink-0 border-[1.5px] px-2.5 sm:px-4"
         >
           <BookmarkSimpleIcon weight={bookmarked ? "fill" : "bold"} className="size-4" />
           {bookmarked ? "Saved" : "Save"}
@@ -173,10 +188,60 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
   );
 
   return (
-    <DialogContent showCloseButton={false} className="modal-panel flex! flex-col! p-0! gap-0!">
-      <div className="modal-top-actions">
+    <DialogContent showCloseButton={false} className="modal-panel flex! flex-col! gap-0! p-0!">
+      {/* Desktop Close Button */}
+      <div className="modal-top-actions hidden md:flex">
         <DialogClose asChild>
           <Button variant="secondary" size="icon" className="border-[1.5px]">
+            <XIcon weight="bold" />
+          </Button>
+        </DialogClose>
+      </div>
+
+      {/* Mobile Fixed Top Bar with Theme Color & Scroll Transition */}
+      <div
+        className={cn(
+          "z-30 flex shrink-0 items-center justify-between px-4 py-2.5 transition-colors duration-200 md:hidden",
+          colorClasses,
+        )}
+      >
+        <div className="flex min-w-0 flex-1 items-center gap-2 pr-3">
+          <span
+            className={cn(
+              "modal-cat-dot shrink-0",
+              colorClasses.includes("bg-c-blue") ? "bg-background" : "bg-foreground",
+            )}
+          />
+
+          {/* Smooth vertical transition between Category and Title */}
+          <div className="relative h-5 min-w-0 flex-1 overflow-hidden">
+            <span
+              className={cn(
+                "text-mono-2xs absolute inset-0 flex items-center truncate font-bold tracking-wider uppercase transition-all duration-250 ease-out",
+                scrolledPastTitle
+                  ? "pointer-events-none -translate-y-full opacity-0"
+                  : "translate-y-0 opacity-90",
+              )}
+            >
+              {activeTool.category}
+            </span>
+
+            <span
+              className={cn(
+                "font-display absolute inset-0 flex items-center truncate text-xs font-bold tracking-tight uppercase transition-all duration-250 ease-out",
+                scrolledPastTitle
+                  ? "translate-y-0 opacity-100"
+                  : "pointer-events-none translate-y-full opacity-0",
+              )}
+            >
+              {activeTool.title}
+            </span>
+          </div>
+        </div>
+
+        {/* Mobile Close Button */}
+        <DialogClose asChild>
+          <Button variant="secondary" size="icon" className="size-8 shrink-0 border-[1.5px]">
             <XIcon weight="bold" />
           </Button>
         </DialogClose>
@@ -186,10 +251,20 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
         Details and documentation for {activeTool.title} — categorized under {activeTool.category}.
       </DialogDescription>
 
-      <div className="modal-body flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain md:grid md:grid-cols-[340px_1fr] md:overflow-hidden">
+      <div
+        ref={scrollContainerRef}
+        onScroll={handleScroll}
+        className="modal-body flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain [scrollbar-color:var(--line-2)_transparent] md:grid md:grid-cols-[340px_1fr] md:overflow-hidden md:[scrollbar-color:var(--line-2)_var(--bg-2)] [&::-webkit-scrollbar-track]:bg-transparent md:[&::-webkit-scrollbar-track]:bg-(--bg-2) [&::-webkit-scrollbar-track:hover]:bg-transparent md:[&::-webkit-scrollbar-track:hover]:bg-(--bg-2)"
+      >
         {/* Left Side */}
-        <div className={cn("modal-left flex shrink-0 flex-col border-b-2 px-5 pt-5 pb-6 md:overflow-y-auto md:border-r-2 md:border-b-0 md:px-7 md:py-8", colorClasses)}>
-          <div className="modal-cat-label">
+        <div
+          className={cn(
+            "modal-left flex shrink-0 flex-col border-b-2 px-5 pt-5 pb-6 md:overflow-y-auto md:border-r-2 md:border-b-0 md:px-7 md:py-8",
+            colorClasses,
+          )}
+        >
+          {/* Desktop Category and Icon Header */}
+          <div className="modal-cat-label hidden md:flex">
             <div className="flex min-w-0 items-center gap-2">
               <span
                 className={cn(
@@ -410,16 +485,12 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
           </div>
 
           {/* Desktop Footer inside right column */}
-          <div className="hidden md:flex md:flex-col md:shrink-0">
-            {footerContent}
-          </div>
+          <div className="hidden md:flex md:shrink-0 md:flex-col">{footerContent}</div>
         </div>
       </div>
 
       {/* Mobile Docked Footer at bottom of modal */}
-      <div className="flex md:hidden flex-col shrink-0 border-t bg-paper z-20">
-        {footerContent}
-      </div>
+      <div className="bg-paper z-20 flex shrink-0 flex-col border-t md:hidden">{footerContent}</div>
 
       {authModalOpen && <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />}
     </DialogContent>
