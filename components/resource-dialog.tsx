@@ -105,8 +105,75 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
     return scoredResources;
   }, [activeTool, authorResources]);
 
+  const footerContent = (
+    <>
+      <div className="modal-launch flex items-center gap-1.5 sm:gap-2">
+        <Button asChild size="sm" className="flex-1 px-2.5 sm:px-4">
+          <a
+            href={activeTool.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-mono-2xs sm:text-mono-xs w-full border-[1.5px]"
+          >
+            Open resource <ArrowSquareOutIcon weight="bold" />
+          </a>
+        </Button>
+        {activeTool.gitHubLink && (
+          <Button
+            asChild
+            variant="secondary"
+            size="sm"
+            className="group shrink-0 px-2.5 sm:px-4 border-[1.5px]"
+          >
+            <a
+              href={activeTool.gitHubLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-mono-2xs sm:text-mono-xs inline-flex items-center gap-1.5"
+            >
+              <Image
+                src="/github.svg"
+                alt="GitHub"
+                width={18}
+                height={18}
+                className="size-4 transition-all group-hover:invert sm:size-4.5"
+              />
+              GitHub
+            </a>
+          </Button>
+        )}
+        <Button
+          variant={bookmarked ? "default" : "secondary"}
+          size="sm"
+          onClick={() => {
+            if (!session) {
+              setAuthModalOpen(true);
+              return;
+            }
+            toggleBookmark(activeTool);
+          }}
+          className="shrink-0 px-2.5 sm:px-4 text-mono-2xs sm:text-mono-xs border-[1.5px]"
+        >
+          <BookmarkSimpleIcon weight={bookmarked ? "fill" : "bold"} className="size-4" />
+          {bookmarked ? "Saved" : "Save"}
+        </Button>
+      </div>
+
+      <div className="modal-nav-row">
+        <ButtonGroup>
+          <Button variant="secondary" size="icon" onClick={handlePrev}>
+            <CaretLeftIcon />
+          </Button>
+          <Button variant="secondary" size="icon" onClick={handleNext}>
+            <CaretRightIcon />
+          </Button>
+        </ButtonGroup>
+      </div>
+    </>
+  );
+
   return (
-    <DialogContent showCloseButton={false} className="modal-panel">
+    <DialogContent showCloseButton={false} className="modal-panel flex! flex-col! p-0! gap-0!">
       <div className="modal-top-actions">
         <DialogClose asChild>
           <Button variant="secondary" size="icon" className="border-[1.5px]">
@@ -119,9 +186,9 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
         Details and documentation for {activeTool.title} — categorized under {activeTool.category}.
       </DialogDescription>
 
-      <div className="modal-body">
+      <div className="modal-body flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain md:grid md:grid-cols-[340px_1fr] md:overflow-hidden">
         {/* Left Side */}
-        <div className={cn("modal-left", colorClasses)}>
+        <div className={cn("modal-left flex shrink-0 flex-col border-b-2 px-5 pt-5 pb-6 md:overflow-y-auto md:border-r-2 md:border-b-0 md:px-7 md:py-8", colorClasses)}>
           <div className="modal-cat-label">
             <div className="flex min-w-0 items-center gap-2">
               <span
@@ -179,8 +246,8 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
         </div>
 
         {/* Right Side */}
-        <div className="modal-right">
-          <div className="modal-content">
+        <div className="modal-right flex flex-col md:overflow-hidden">
+          <div className="modal-content px-5 pt-5 pb-6 md:min-h-0 md:flex-1 md:overflow-y-auto md:overscroll-contain md:px-8 md:pt-20 md:pb-5">
             {(() => {
               const handleOgError = () => {
                 if (
@@ -342,71 +409,19 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
             )}
           </div>
 
-          <div className="modal-launch flex items-center gap-1.5 sm:gap-2">
-            <Button asChild size="sm" className="flex-1 px-2.5 sm:px-4">
-              <a
-                href={activeTool.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-mono-2xs sm:text-mono-xs w-full border-[1.5px]"
-              >
-                Open resource <ArrowSquareOutIcon weight="bold" />
-              </a>
-            </Button>
-            {activeTool.gitHubLink && (
-              <Button
-                asChild
-                variant="secondary"
-                size="sm"
-                className="group shrink-0 px-2.5 sm:px-4 border-[1.5px]"
-              >
-                <a
-                  href={activeTool.gitHubLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-mono-2xs sm:text-mono-xs inline-flex items-center gap-1.5"
-                >
-                  <Image
-                    src="/github.svg"
-                    alt="GitHub"
-                    width={18}
-                    height={18}
-                    className="size-4 transition-all group-hover:invert sm:size-4.5"
-                  />
-                  GitHub
-                </a>
-              </Button>
-            )}
-            <Button
-              variant={bookmarked ? "default" : "secondary"}
-              size="sm"
-              onClick={() => {
-                if (!session) {
-                  setAuthModalOpen(true);
-                  return;
-                }
-                toggleBookmark(activeTool);
-              }}
-              className="shrink-0 px-2.5 sm:px-4 text-mono-2xs sm:text-mono-xs border-[1.5px]"
-            >
-              <BookmarkSimpleIcon weight={bookmarked ? "fill" : "bold"} className="size-4" />
-              {bookmarked ? "Saved" : "Save"}
-            </Button>
-            {authModalOpen && <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />}
-          </div>
-
-          <div className="modal-nav-row">
-            <ButtonGroup>
-              <Button variant="secondary" size="icon" onClick={handlePrev}>
-                <CaretLeftIcon />
-              </Button>
-              <Button variant="secondary" size="icon" onClick={handleNext}>
-                <CaretRightIcon />
-              </Button>
-            </ButtonGroup>
+          {/* Desktop Footer inside right column */}
+          <div className="hidden md:flex md:flex-col md:shrink-0">
+            {footerContent}
           </div>
         </div>
       </div>
+
+      {/* Mobile Docked Footer at bottom of modal */}
+      <div className="flex md:hidden flex-col shrink-0 border-t bg-paper z-20">
+        {footerContent}
+      </div>
+
+      {authModalOpen && <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />}
     </DialogContent>
   );
 }

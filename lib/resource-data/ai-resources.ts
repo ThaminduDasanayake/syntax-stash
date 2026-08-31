@@ -174,6 +174,7 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     description:
       "Browse and install 1000+ pre-built components for Claude Code. AI agents, slash commands, MCP integrations, hooks, and settings. Free, open-source CLI tool.",
     favicon: "https://aitmpl.com/static/favicon/apple-touch-icon.png",
+    gitHubLink: "https://github.com/davila7/claude-code-templates",
     ogImage: "https://www.aitmpl.com/logo.png",
     subtitle: "1000+ Agents, Commands, Skills & MCP Integrations",
     tags: [TAGS.ai],
