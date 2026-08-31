@@ -149,18 +149,17 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
             </div>
           </div>
 
-          {/* Title row with mobile icon on the left */}
-          <div className="mb-4.5 flex items-start gap-3 md:block">
-            <div className="shrink-0 pt-0.5 md:hidden">
-              <CardIcon
-                key={`mobile-${activeTool.url}`}
-                alt={activeTool.title}
-                className={activeTool.className}
-                favicon={activeTool.favicon}
-              />
-            </div>
-            <DialogTitle className="modal-title mb-0 md:mb-4.5">{activeTool.title}</DialogTitle>
+          {/* Mobile Icon above Title */}
+          <div className="mb-3.5 block md:hidden">
+            <CardIcon
+              key={`mobile-${activeTool.url}`}
+              alt={activeTool.title}
+              className={activeTool.className}
+              favicon={activeTool.favicon}
+            />
           </div>
+
+          <DialogTitle className="modal-title">{activeTool.title}</DialogTitle>
 
           {activeTool.subtitle && <p className="modal-subtitle">{activeTool.subtitle}</p>}
           <p className="modal-description">{activeTool.description}</p>
@@ -343,13 +342,13 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
             )}
           </div>
 
-          <div className="modal-launch flex items-center gap-2">
-            <Button asChild size="sm" className="flex-1">
+          <div className="modal-launch flex items-center gap-1.5 sm:gap-2">
+            <Button asChild size="sm" className="flex-1 px-2.5 sm:px-4">
               <a
                 href={activeTool.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-mono-xs w-full border-[1.5px]"
+                className="text-mono-2xs sm:text-mono-xs w-full border-[1.5px]"
               >
                 Open resource <ArrowSquareOutIcon weight="bold" />
               </a>
@@ -359,20 +358,20 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
                 asChild
                 variant="secondary"
                 size="sm"
-                className="group shrink-0 border-[1.5px]"
+                className="group shrink-0 px-2.5 sm:px-4 border-[1.5px]"
               >
                 <a
                   href={activeTool.gitHubLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-mono-xs inline-flex items-center gap-1.5"
+                  className="text-mono-2xs sm:text-mono-xs inline-flex items-center gap-1.5"
                 >
                   <Image
                     src="/github.svg"
                     alt="GitHub"
                     width={18}
                     height={18}
-                    className="size-4.5 transition-all group-hover:invert"
+                    className="size-4 transition-all group-hover:invert sm:size-4.5"
                   />
                   GitHub
                 </a>
@@ -388,8 +387,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
                 }
                 toggleBookmark(activeTool);
               }}
-
-              className="shrink-0 border-[1.5px]"
+              className="shrink-0 px-2.5 sm:px-4 text-mono-2xs sm:text-mono-xs border-[1.5px]"
             >
               <BookmarkSimpleIcon weight={bookmarked ? "fill" : "bold"} className="size-4" />
               {bookmarked ? "Saved" : "Save"}
