@@ -30,6 +30,7 @@ export interface ResourceDialogProps {
 export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogProps) {
   const [activeTool, setActiveTool] = useState(resource);
   const [ogError, setOgError] = useState(false);
+  const [isRetryingOgProxy, setIsRetryingOgProxy] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const { data: session } = useSession();
   const { isBookmarked, toggleBookmark } = useBookmarks();
@@ -37,6 +38,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
 
   const handleSelectTool = (res: Resource) => {
     setOgError(false);
+    setIsRetryingOgProxy(false);
     setActiveTool(res);
   };
 
@@ -165,19 +167,41 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
         {/* Right Side */}
         <div className="modal-right">
           <div className="modal-content">
-            {activeTool.ogImage && !ogError && (
-              <div className="mb-5.5">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={activeTool.ogImage}
-                  alt={activeTool.title}
-                  className="h-auto w-full"
-                  loading="lazy"
-                  referrerPolicy="no-referrer"
-                  onError={() => setOgError(true)}
-                />
-              </div>
-            )}
+            {(() => {
+              const handleOgError = () => {
+                if (
+                  activeTool.ogImage &&
+                  (activeTool.ogImage.startsWith("http://") || activeTool.ogImage.startsWith("https://")) &&
+                  !activeTool.ogImage.startsWith("/api/proxy-image") &&
+                  !isRetryingOgProxy
+                ) {
+                  setIsRetryingOgProxy(true);
+                } else {
+                  setOgError(true);
+                }
+              };
+
+              const currentOgSrc =
+                isRetryingOgProxy && activeTool.ogImage
+                  ? `/api/proxy-image?url=${encodeURIComponent(activeTool.ogImage)}`
+                  : activeTool.ogImage;
+
+              if (!currentOgSrc || ogError) return null;
+
+              return (
+                <div className="mb-5.5">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={currentOgSrc}
+                    alt={activeTool.title}
+                    className="h-auto w-full"
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
+                    onError={handleOgError}
+                  />
+                </div>
+              );
+            })()}
 
             <div className="modal-link">
               <span className={cn("modal-heading", activeThemeStyles.label)}>Resource UrL</span>
