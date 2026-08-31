@@ -785,7 +785,7 @@
 }
 
 @utility modal-body {
-  @apply grid min-h-0 flex-1 grid-cols-1 overflow-hidden md:grid-cols-[340px_1fr];
+  @apply min-h-0 flex-1 overflow-y-auto overscroll-contain md:grid md:grid-cols-[340px_1fr] md:overflow-hidden;
 }
 
 @utility modal-left {
@@ -829,11 +829,11 @@
 }
 
 @utility modal-right {
-  @apply flex flex-col overflow-hidden;
+  @apply flex flex-col md:overflow-hidden;
 }
 
 @utility modal-content {
-  @apply min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pt-5 pb-3.5 md:px-8 md:pt-20 md:pb-5;
+  @apply px-5 pt-5 pb-6 md:min-h-0 md:flex-1 md:overflow-y-auto md:overscroll-contain md:px-8 md:pt-20 md:pb-5;
 }
 
 @utility modal-sections {
@@ -869,7 +869,7 @@
 }
 
 @utility modal-launch {
-  @apply flex px-8 py-5;
+  @apply flex px-4 py-3 sm:px-6 md:px-8 md:py-5;
 }
 
 @utility modal-nav-row {

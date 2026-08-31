@@ -1,0 +1,73 @@
+name: Resource Health Check
+
+on:
+  schedule:
+    # Runs every Monday at 00:00 UTC
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Resource Health Check
+        id: checker
+        run: npm run check:resources
+
+      - name: Sync GitHub Audit Issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HAS_FINDINGS: ${{ steps.checker.outputs.has_findings }}
+          REPORT_PATH: ${{ steps.checker.outputs.report_path }}
+        run: |
+          DATE=$(date +'%b %d, %Y')
+          LABEL="resource-health-audit"
+
+          # Determine the report file
+          REPORT_FILE="$REPORT_PATH"
+          if [ -z "$REPORT_FILE" ] || [ ! -f "$REPORT_FILE" ]; then
+            REPORT_FILE=$(find health-reports -name "health-report*.md" -type f 2>/dev/null | sort -r | head -n 1)
+          fi
+          if [ -z "$REPORT_FILE" ] || [ ! -f "$REPORT_FILE" ]; then
+            REPORT_FILE="health-report.md"
+          fi
+
+          # Check if there is an existing open audit issue
+          EXISTING_ISSUE=$(gh issue list --state open --label "$LABEL" --json number -q '.[0].number' 2>/dev/null || echo "")
+
+          if [ "$HAS_FINDINGS" = "true" ]; then
+            if [ -n "$EXISTING_ISSUE" ]; then
+              echo "Updating existing open issue #$EXISTING_ISSUE..."
+              gh issue edit "$EXISTING_ISSUE" \
+                --title "🔍 [Health Check] Resource Audit Report ($DATE)" \
+                --body-file "$REPORT_FILE"
+            else
+              echo "Creating new audit issue..."
+              gh issue create \
+                --title "🔍 [Health Check] Resource Audit Report ($DATE)" \
+                --body-file "$REPORT_FILE" \
+                --label "$LABEL"
+            fi
+          else
+            echo "All resources healthy!"
+            if [ -n "$EXISTING_ISSUE" ]; then
+              echo "Closing resolved issue #$EXISTING_ISSUE..."
+              gh issue close "$EXISTING_ISSUE" --comment "✅ All resources verified active and healthy as of $DATE!"
+            fi
+          fi
