@@ -3,12 +3,15 @@ import { Resource } from "@/types";
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const documentationLinks: Resource[] = [
+export const documentationLinks: Resource<typeof CATEGORIES.docs>[] = [
   {
     title: "Accept: text/markdown",
+    author: "Ben Word",
     category: CATEGORIES.docs,
     description:
       "Serve Markdown to AI agents and LLMs via the Accept: text/markdown header. Browsers get HTML, agents get clean Markdown.",
+    favicon: "https://acceptmarkdown.com/favicon.svg",
+    ogImage: "https://acceptmarkdown.com/open-graph/home.png",
     subtitle: "Serve Markdown to AI Agents with Accept Headers",
     tags: [TAGS.markdown, TAGS.tool],
     url: "https://acceptmarkdown.com/",
@@ -18,24 +21,54 @@ export const documentationLinks: Resource[] = [
     author: "Alexandrie Team",
     category: CATEGORIES.docs,
     description:
-      "Alexandrie is a modern note-taking and knowledge base application built for students & creators. Write, organize and render beautiful notes using extended Markdown in a fast, clean and distraction-free interface. Self-hostable with Docker.",
-    subtitle: "Modern Markdown Note-Taking & Knowledge Base App",
+      "Alexandrie is a fast, self-hostable Markdown workspace for notes, knowledge bases, collaboration, and public documentation.",
+    favicon: "https://alexandrie-hub.fr/Logo/Alexandrie-logo-light-crop.png",
+    gitHubLink: "https://github.com/Smaug6739/Alexandrie",
+    ogImage: "https://alexandrie-hub.fr/screenshots/mock/0.png",
     url: "https://alexandrie-hub.fr/",
+  },
+  {
+    title: "ANSItype",
+    author: "Ben Word",
+    category: CATEGORIES.docs,
+    description: "Generate ANSI/ASCII text with TheDraw fonts",
+    favicon: "https://ansitype.com/favicon.png",
+    ogImage: "https://ansitype.com/og-image.png",
+    subtitle: "FIGlet Alternative with TDF Fonts",
+    url: "https://ansitype.com/",
+  },
+  {
+    title: "Anypost",
+    author: "Anypost",
+    category: CATEGORIES.docs,
+    description:
+      "Send transactional and broadcast email from one modern API — 8 SDKs, Markdown sends, tags, tracking, and webhooks. As low as 8¢ per 1,000.",
+    favicon: "https://anypost.com/favicon.svg",
+    gitHubLink: "https://github.com/anypost",
+    ogImage: "https://anypost.com/brand/og.png",
+    subtitle: "Transactional and broadcast email service",
+    tags: [TAGS.email, TAGS.markdown],
+    url: "https://anypost.com/",
   },
   {
     title: "Anytype",
     category: CATEGORIES.docs,
     description:
       "Create notes, tasks, databases, and chats that only you can access. Your data stays on your device — fully owned, secure, and private. Free to start.",
+    favicon: "https://anytype.io/apple-touch-icon.png",
+    ogImage: "https://anytype.io/ogimage.jpg",
     subtitle: "A safe haven for digital collaboration",
     url: "https://anytype.io/",
   },
   {
     title: "DevDocs API Documentation",
+    author: "freeCodeCamp",
     category: CATEGORIES.docs,
     description:
       "Fast, offline, and free documentation browser for developers. Search 100+ docs in one web app: HTML, CSS, JavaScript, PHP, Ruby, Python, Go, C, C++…",
-    tags: [TAGS.tool],
+    favicon: "https://devdocs.io/images/apple-icon-160.png",
+    gitHubLink: "https://github.com/freeCodeCamp/devdocs",
+    tags: [TAGS["open-source"]],
     url: "https://devdocs.io/",
   },
   {
@@ -43,6 +76,9 @@ export const documentationLinks: Resource[] = [
     author: "Rico Sta. Cruz",
     category: CATEGORIES.docs,
     description: "A ridiculous collection of web development cheatsheets",
+    favicon: "https://devhints.io/assets/favicon.png",
+    gitHubLink: "https://github.com/rstacruz/cheatsheets",
+    ogImage: "https://assets.devhints.io/previews/index.jpg",
     subtitle: "TL;DR for developer documentation",
     tags: [TAGS.development, TAGS.education],
     url: "https://devhints.io/",
@@ -51,8 +87,12 @@ export const documentationLinks: Resource[] = [
     title: "docmd",
     category: CATEGORIES.docs,
     description:
-      "The zero-config documentation engine that starts instantly and scales with you, fast, SEO-friendly, and AI-ready by default.",
-    subtitle: "Build production-ready documentation from Markdown in seconds",
+      "Open-source documentation compiler. One Markdown source, one command — generates website, search, AI context, agent protocols, and knowledge formats together.",
+    favicon:
+      "https://raw.githubusercontent.com/docmd-io/docmd/main/packages/ui/assets/images/docmd-logo.png",
+    gitHubLink: "https://github.com/docmd-io/docmd",
+    ogImage: "https://docmd.io/assets/images/preview.webp",
+    subtitle: "Documentation for Humans and Machines",
     url: "https://docmd.io/",
   },
   {
@@ -64,9 +104,12 @@ export const documentationLinks: Resource[] = [
   },
   {
     title: "emailmd",
+    author: "Anypost",
     category: CATEGORIES.docs,
     description:
       "Turn markdown into responsive, email-safe HTML that renders perfectly across every client.",
+    favicon: "https://www.emailmd.dev/favicon.ico",
+    gitHubLink: "https://github.com/anypost/emailmd",
     subtitle: "Responsive Emails, Written in Markdown",
     tags: [TAGS.email, TAGS.markdown],
     url: "https://www.emailmd.dev/",
@@ -178,7 +221,7 @@ export const documentationLinks: Resource[] = [
     author: "Jasper Bernaers",
     category: CATEGORIES.docs,
     description:
-      "Free online Markdown editor with instant live preview — GitHub-style preview, README & blog templates, visual table generator, Mermaid diagrams, math, share links, export to HTML/MD/PDF. Auto-saves in your browser. No sign-up, no upload.",
+      "Free online Markdown editor with instant live preview — GitHub-style preview, document outline, resizable panes, README & blog templates, visual table generator, Mermaid diagrams, math, share links, export to HTML/MD/PDF. Auto-saves in your browser. No sign-up, no upload.",
     favicon: "https://jasperbernaers.com/favicon.svg",
     ogImage: "https://jasperbernaers.com/markdown-live-editor/og-image.png",
     subtitle: "Live Preview, GitHub Style, Templates & HTML/PDF Export",
@@ -191,6 +234,9 @@ export const documentationLinks: Resource[] = [
     category: CATEGORIES.docs,
     description:
       "Write your documentation in Markdown and create a professional static site in minutes – searchable, customizable, in 60+ languages, for all devices",
+    favicon: "https://squidfunk.github.io/mkdocs-material/assets/favicon.png",
+    gitHubLink: "https://github.com/squidfunk/mkdocs-material",
+    ogImage: "https://squidfunk.github.io/mkdocs-material/assets/images/social/index.png",
     tags: [TAGS.markdown, TAGS.tool],
     url: "https://squidfunk.github.io/mkdocs-material/",
   },
@@ -218,7 +264,7 @@ export const documentationLinks: Resource[] = [
     author: "Jasper Bernaers",
     category: CATEGORIES.docs,
     description:
-      "A free online notepad that opens instantly — just start typing. Autosaves in your browser, no login, no install, works offline. Line numbers, tabs and syntax highlighting when you need them, so it doubles as a Notepad++ alternative on any device.",
+      "A free online notepad that opens instantly — just start typing. Autosaves in your browser, no login, no install, works offline. Line numbers, tabs, syntax highlighting and a local AI writing assist (summarize, fix grammar, rewrite tone) that runs 100% on your device, so it doubles as a Notepad++ alternative on any device.",
     favicon: "https://jasperbernaers.com/favicon.svg",
     ogImage: "https://jasperbernaers.com/notepad/og-image.png",
     subtitle: "Free, Autosave, No Sign-Up | Notepad++ Alternative",
@@ -229,8 +275,11 @@ export const documentationLinks: Resource[] = [
     title: "OverAPI.com",
     category: CATEGORIES.docs,
     description: "OverAPI.com is a site collecting all the cheatsheets,all!",
+    favicon: "https://overapi.com/static/images/overapi-logo.png",
+    ogImage:
+      "https://lh3.googleusercontent.com/YsthzC-Dw5og9snWVX5mfD9cvURgRmxwMAgcvnrtxdAn-v2nIx8-DxzIZMT0xrTQdoURcQWBING4t6tW5VM4s5nl7w=s1280-w1280-h800",
     subtitle: "Collecting all the cheat sheets",
-    tags: [TAGS.development, TAGS.education],
+    tags: [TAGS.cheatsheet, TAGS.development],
     url: "https://overapi.com/",
   },
   {
@@ -246,10 +295,15 @@ export const documentationLinks: Resource[] = [
   },
   {
     title: "PDFCraft",
+    author: "PDFCraft Team",
     category: CATEGORIES.docs,
     description:
       "Free, Private & Browser-Based. Merge, edit, and edit PDF files online without uploading to servers.",
+    favicon: "https://pdfcraft.devtoolcafe.com/favicon.svg",
+    gitHubLink: "https://github.com/PDFCraftTool/pdfcraft",
+    ogImage: "https://pdfcraft.devtoolcafe.com/images/og-image.png",
     subtitle: "Professional PDF Tools",
+    tags: [TAGS.pdf],
     url: "https://pdfcraft.devtoolcafe.com/en/",
   },
   {
@@ -266,9 +320,13 @@ export const documentationLinks: Resource[] = [
   },
   {
     title: "Quarkdown",
+    author: "Giorgio Garofalo",
     category: CATEGORIES.docs,
     description:
       "Quarkdown is a modern, open-source, Markdown-based typesetting system for creating papers, presentations, knowledge bases and static websites.",
+    favicon: "https://quarkdown.com/favicon.svg",
+    gitHubLink: "https://github.com/iamgio/quarkdown",
+    ogImage: "https://quarkdown.com/og-image.jpg",
     subtitle: "Markdown with superpowers",
     tags: [TAGS.development],
     url: "https://quarkdown.com/",
@@ -287,7 +345,9 @@ export const documentationLinks: Resource[] = [
     category: CATEGORIES.docs,
     description:
       "Signature PDF is free online software for signing (individually or collaboratively), organizing, or compressing PDF files.",
-    favicon: "https://pdf.24eme.fr/logo.svg",
+    favicon: "https://pdf.24eme.fr/favicon.svg",
+    gitHubLink: "https://github.com/24eme/signaturepdf",
+    ogImage: "https://pdf.24eme.fr/logo.svg",
     subtitle: "Sign and manipulate PDFs freely",
     tags: [TAGS.pdf],
     url: "https://pdf.24eme.fr/",
@@ -309,11 +369,12 @@ export const documentationLinks: Resource[] = [
       "GitHub's #1 PDF application with 30M+ downloads. The next generation of the PDF Editor - private, open-source, and built to scale.",
     favicon:
       "https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/frontend/editor/src/core/assets/brand/branding-logo/logo-mark.svg",
+    gitHubLink: "https://github.com/Stirling-Tools/Stirling-PDF",
     ogImage:
       "https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/frontend/editor/src/core/assets/brand/modern-logo/Firstpage.png",
     subtitle: "PDF Processor",
     tags: [TAGS.pdf, TAGS.tool],
-    url: "https://stirling.com/",
+    url: "https://www.stirling.com/",
   },
   {
     title: "Text Cleaner",

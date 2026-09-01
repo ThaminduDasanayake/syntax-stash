@@ -3,7 +3,7 @@ import { Resource } from "@/types";
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const developmentLinks: Resource[] = [
+export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
   {
     title: "10 Minute Mail",
     author: "Devon Hillard",
@@ -975,7 +975,7 @@ export const developmentLinks: Resource[] = [
   {
     title: "RSSHub",
     author: "DIYgod",
-    category: CATEGORIES.data,
+    category: CATEGORIES.dev,
     description: "Everything is RSSible 🧡",
     favicon: "https://raw.githubusercontent.com/DIYgod/RSSHub/master/public/logo.svg",
     subtitle: "Everything is RSSible",

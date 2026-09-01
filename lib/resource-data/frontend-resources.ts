@@ -3,7 +3,7 @@ import { Resource } from "@/types";
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const frontendLinks: Resource[] = [
+export const frontendLinks: Resource<typeof CATEGORIES.frontend>[] = [
   {
     title: "404 Animation Library",
     author: "Csaba Kissi",

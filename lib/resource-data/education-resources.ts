@@ -3,7 +3,7 @@ import { Resource } from "@/types";
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const educationLinks: Resource[] = [
+export const educationLinks: Resource<typeof CATEGORIES.education>[] = [
   {
     title: "30 Days Of Python",
     author: "Asabeneh",
@@ -410,6 +410,7 @@ export const educationLinks: Resource[] = [
   },
   {
     title: "Free Code Camp",
+    author: "freeCodeCamp",
     category: CATEGORIES.education,
     description: "Learn to Code — For Free — Coding Courses for Busy People",
     favicon: "https://cdn.freecodecamp.org/platform/universal/fcc_puck_500.jpg",

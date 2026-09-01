@@ -7,9 +7,10 @@ import {
   CaretRightIcon,
   XIcon,
 } from "@phosphor-icons/react";
+import gsap from "gsap";
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { AuthModal } from "@/components/auth-modal";
 import { CardIcon } from "@/components/card-icon";
@@ -34,27 +35,134 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
   const [isRetryingOgProxy, setIsRetryingOgProxy] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [scrolledPastTitle, setScrolledPastTitle] = useState(false);
+  const dialogContentRef = useRef<HTMLDivElement>(null);
+  const titleAnchorRef = useRef<HTMLDivElement>(null);
+  const mobileTitleRef = useRef<HTMLHeadingElement>(null);
+  const mobileCategoryRef = useRef<HTMLSpanElement>(null);
+  const coordsRef = useRef({
+    restingX: 20,
+    restingY: 122,
+    stickDist: 104.5,
+    targetScale: 0.5,
+    targetX: 32,
+    targetY: 16,
+  });
   const { data: session } = useSession();
   const { isBookmarked, toggleBookmark } = useBookmarks();
   const bookmarked = isBookmarked(activeTool);
 
+  const measureCoords = useCallback(() => {
+    if (titleAnchorRef.current && dialogContentRef.current) {
+      const dialogRect = dialogContentRef.current.getBoundingClientRect();
+      const anchorRect = titleAnchorRef.current.getBoundingClientRect();
+      if (anchorRect.top > 0) {
+        const restingY = anchorRect.top - dialogRect.top;
+        const restingX = anchorRect.left - dialogRect.left;
+        const targetY = 16;
+        const targetX = 32;
+        const stickDist = Math.max(1, restingY - targetY);
+        const targetScale = 0.5;
+        coordsRef.current = { restingX, restingY, stickDist, targetScale, targetX, targetY };
+        return coordsRef.current;
+      }
+    }
+    return coordsRef.current;
+  }, []);
+
+  const resetMobileHeader = useCallback(() => {
+    const coords = measureCoords();
+    if (mobileTitleRef.current) {
+      gsap.killTweensOf(mobileTitleRef.current);
+      gsap.set(mobileTitleRef.current, {
+        scale: 1,
+        transformOrigin: "left top",
+        x: 0,
+        y: 0,
+      });
+      mobileTitleRef.current.style.top = `${coords.restingY}px`;
+      mobileTitleRef.current.style.left = `${coords.restingX}px`;
+      mobileTitleRef.current.style.width = "calc(100% - 40px)";
+      mobileTitleRef.current.style.whiteSpace = "normal";
+      mobileTitleRef.current.style.overflow = "visible";
+      mobileTitleRef.current.style.textOverflow = "clip";
+    }
+    if (mobileCategoryRef.current) {
+      gsap.killTweensOf(mobileCategoryRef.current);
+      gsap.set(mobileCategoryRef.current, { opacity: 1, y: 0 });
+    }
+  }, [measureCoords]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      resetMobileHeader();
+    }, 20);
+    return () => clearTimeout(timer);
+  }, [activeTool, resetMobileHeader]);
+
   const handleSelectTool = (res: Resource) => {
     setOgError(false);
     setIsRetryingOgProxy(false);
-    setScrolledPastTitle(false);
     setActiveTool(res);
+    resetMobileHeader();
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTop = 0;
     }
+    setTimeout(() => {
+      resetMobileHeader();
+    }, 20);
   };
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const scrollTop = e.currentTarget.scrollTop;
-    if (scrollTop > 100) {
-      if (!scrolledPastTitle) setScrolledPastTitle(true);
-    } else {
-      if (scrolledPastTitle) setScrolledPastTitle(false);
+    const { restingX, restingY, stickDist, targetScale, targetX, targetY } = coordsRef.current;
+
+    // 1. Give it a wider runway (e.g. 0.35 instead of 0.7)
+    const startScroll = stickDist * 0.35;
+    const rawProgress = Math.min(
+      1,
+      Math.max(0, (scrollTop - startScroll) / (stickDist - startScroll)),
+    );
+
+    // 2. Smoothstep easing for a luxurious, natural feel
+    const morphProgress = rawProgress * rawProgress * (3 - 2 * rawProgress);
+
+    if (mobileTitleRef.current) {
+      let currentY: number;
+      if (scrollTop <= 0 && titleAnchorRef.current && dialogContentRef.current) {
+        const dialogRect = dialogContentRef.current.getBoundingClientRect();
+        const anchorRect = titleAnchorRef.current.getBoundingClientRect();
+        currentY = anchorRect.top - dialogRect.top - restingY;
+      } else {
+        currentY = scrollTop < stickDist ? -scrollTop : targetY - restingY;
+      }
+      const currentX = (targetX - restingX) * morphProgress;
+      const currentScale = 1 - (1 - targetScale) * morphProgress;
+
+      gsap.set(mobileTitleRef.current, {
+        scale: currentScale,
+        transformOrigin: "left top",
+        x: currentX,
+        y: currentY,
+      });
+
+      if (morphProgress >= 0.98) {
+        mobileTitleRef.current.style.width = `calc((100% - 110px) / ${targetScale})`;
+        mobileTitleRef.current.style.whiteSpace = "nowrap";
+        mobileTitleRef.current.style.overflow = "hidden";
+        mobileTitleRef.current.style.textOverflow = "ellipsis";
+      } else {
+        mobileTitleRef.current.style.width = "calc(100% - 40px)";
+        mobileTitleRef.current.style.whiteSpace = "normal";
+        mobileTitleRef.current.style.overflow = "visible";
+        mobileTitleRef.current.style.textOverflow = "clip";
+      }
+    }
+
+    if (mobileCategoryRef.current) {
+      gsap.set(mobileCategoryRef.current, {
+        opacity: Math.max(0, 1 - morphProgress * 1.8),
+        y: -14 * morphProgress,
+      });
     }
   };
 
@@ -145,15 +253,16 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
               target="_blank"
               rel="noopener noreferrer"
               className="text-mono-2xs sm:text-mono-xs inline-flex items-center gap-1.5"
+              aria-label="GitHub repository"
             >
               <Image
                 src="/github.svg"
                 alt="GitHub"
-                width={18}
-                height={18}
-                className="size-4 transition-all group-hover:invert sm:size-4.5"
+                width={16}
+                height={16}
+                className="size-4 transition-all group-hover:invert"
               />
-              GitHub
+              <span className="hidden sm:inline">GitHub</span>
             </a>
           </Button>
         )}
@@ -167,10 +276,11 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
             }
             toggleBookmark(activeTool);
           }}
+          aria-label={bookmarked ? "Saved" : "Save"}
           className="text-mono-2xs sm:text-mono-xs shrink-0 border-[1.5px] px-2.5 sm:px-4"
         >
           <BookmarkSimpleIcon weight={bookmarked ? "fill" : "bold"} className="size-4" />
-          {bookmarked ? "Saved" : "Save"}
+          <span className="hidden sm:inline">{bookmarked ? "Saved" : "Save"}</span>
         </Button>
       </div>
 
@@ -188,7 +298,11 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
   );
 
   return (
-    <DialogContent showCloseButton={false} className="modal-panel flex! flex-col! gap-0! p-0!">
+    <DialogContent
+      ref={dialogContentRef}
+      showCloseButton={false}
+      className="modal-panel bg-background fixed! top-1/2! left-1/2! flex! -translate-x-1/2! -translate-y-1/2! flex-col! gap-0! overflow-hidden! p-0!"
+    >
       {/* Desktop Close Button */}
       <div className="modal-top-actions hidden md:flex">
         <DialogClose asChild>
@@ -198,10 +312,10 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
         </DialogClose>
       </div>
 
-      {/* Mobile Fixed Top Bar with Theme Color & Scroll Transition */}
+      {/* Mobile Fixed Top Bar - Pinned the full way, theme bg, NO BORDERS */}
       <div
         className={cn(
-          "z-30 flex shrink-0 items-center justify-between px-4 py-2.5 transition-colors duration-200 md:hidden",
+          "z-30 flex h-12 shrink-0 items-center justify-between border-0 px-4 shadow-none transition-colors duration-200 md:hidden",
           colorClasses,
         )}
       >
@@ -213,28 +327,13 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
             )}
           />
 
-          {/* Smooth vertical transition between Category and Title */}
-          <div className="relative h-5 min-w-0 flex-1 overflow-hidden">
+          <div className="relative h-5 min-w-0 flex-1">
+            {/* Category label */}
             <span
-              className={cn(
-                "text-mono-2xs absolute inset-0 flex items-center truncate font-bold tracking-wider uppercase transition-all duration-250 ease-out",
-                scrolledPastTitle
-                  ? "pointer-events-none -translate-y-full opacity-0"
-                  : "translate-y-0 opacity-90",
-              )}
+              ref={mobileCategoryRef}
+              className="text-mono-2xs pointer-events-none absolute inset-0 flex items-center truncate font-bold tracking-wider uppercase"
             >
               {activeTool.category}
-            </span>
-
-            <span
-              className={cn(
-                "font-display absolute inset-0 flex items-center truncate text-xs font-bold tracking-tight uppercase transition-all duration-250 ease-out",
-                scrolledPastTitle
-                  ? "translate-y-0 opacity-100"
-                  : "pointer-events-none translate-y-full opacity-0",
-              )}
-            >
-              {activeTool.title}
             </span>
           </div>
         </div>
@@ -247,6 +346,22 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
         </DialogClose>
       </div>
 
+      {/* The Single Mobile Morphing Title Element */}
+      <h2
+        ref={mobileTitleRef}
+        className="font-display text-foreground pointer-events-none absolute z-30 block font-extrabold tracking-tight uppercase [-webkit-font-smoothing:antialiased] will-change-transform select-none backface-hidden md:hidden"
+        style={{
+          fontSize: "clamp(30px, 2.5vw, 40px)",
+          left: "20px",
+          lineHeight: 1,
+          top: "122px",
+          transformOrigin: "left top",
+          width: "calc(100% - 40px)",
+        }}
+      >
+        {activeTool.title}
+      </h2>
+
       <DialogDescription className="sr-only">
         Details and documentation for {activeTool.title} — categorized under {activeTool.category}.
       </DialogDescription>
@@ -254,16 +369,16 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
       <div
         ref={scrollContainerRef}
         onScroll={handleScroll}
-        className="modal-body flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain [scrollbar-color:var(--line-2)_transparent] md:grid md:grid-cols-[340px_1fr] md:overflow-hidden md:[scrollbar-color:var(--line-2)_var(--bg-2)] [&::-webkit-scrollbar-track]:bg-transparent md:[&::-webkit-scrollbar-track]:bg-(--bg-2) [&::-webkit-scrollbar-track:hover]:bg-transparent md:[&::-webkit-scrollbar-track:hover]:bg-(--bg-2)"
+        className="modal-body flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-none [scrollbar-color:var(--line-2)_transparent] md:grid md:grid-cols-[340px_1fr] md:overflow-hidden md:overscroll-contain [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent"
       >
         {/* Left Side */}
         <div
           className={cn(
-            "modal-left flex shrink-0 flex-col border-b-2 px-5 pt-5 pb-6 md:overflow-y-auto md:border-r-2 md:border-b-0 md:px-7 md:py-8",
+            "modal-left relative flex shrink-0 flex-col border-b-2 px-5 pt-3 pb-6 md:overflow-y-auto md:border-r-2 md:border-b-0 md:px-7 md:py-8",
             colorClasses,
           )}
         >
-          {/* Desktop Category and Icon Header */}
+          {/* Desktop Category Header */}
           <div className="modal-cat-label hidden md:flex">
             <div className="flex min-w-0 items-center gap-2">
               <span
@@ -301,7 +416,19 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
             />
           </div>
 
-          <DialogTitle className="modal-title">{activeTool.title}</DialogTitle>
+          {/* Desktop Title */}
+          <DialogTitle className="modal-title hidden md:block">{activeTool.title}</DialogTitle>
+
+          {/* Mobile Spacer (same dimensions as headline, invisible) */}
+          <div
+            ref={titleAnchorRef}
+            className="modal-title pointer-events-none opacity-0 select-none md:hidden"
+            aria-hidden="true"
+          >
+            {activeTool.title}
+          </div>
+          {/* Mobile Accessibility Title */}
+          <DialogTitle className="sr-only md:hidden">{activeTool.title}</DialogTitle>
 
           {activeTool.subtitle && <p className="modal-subtitle">{activeTool.subtitle}</p>}
           <p className="modal-description">{activeTool.description}</p>
@@ -321,8 +448,8 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
         </div>
 
         {/* Right Side */}
-        <div className="modal-right flex flex-col md:overflow-hidden">
-          <div className="modal-content px-5 pt-5 pb-6 md:min-h-0 md:flex-1 md:overflow-y-auto md:overscroll-contain md:px-8 md:pt-20 md:pb-5">
+        <div className="modal-right bg-background flex flex-col md:overflow-hidden">
+          <div className="modal-content px-5 pt-5 pb-6 [scrollbar-color:var(--line-2)_transparent] md:min-h-0 md:flex-1 md:overflow-y-auto md:overscroll-contain md:px-8 md:pt-20 md:pb-5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent">
             {(() => {
               const handleOgError = () => {
                 if (
@@ -395,9 +522,9 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
                     <Image
                       src="/github.svg"
                       alt="GitHub"
-                      width={18}
-                      height={18}
-                      className="size-4.5"
+                      width={16}
+                      height={16}
+                      className="size-4"
                     />
                     {activeTool.gitHubLink}
                   </a>

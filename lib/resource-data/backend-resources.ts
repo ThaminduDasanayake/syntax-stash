@@ -3,7 +3,7 @@ import { Resource } from "@/types";
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const backendLinks: Resource[] = [
+export const backendLinks: Resource<typeof CATEGORIES.backend>[] = [
   {
     title: "Appwrite",
     author: "Appwrite",
@@ -490,9 +490,11 @@ export const backendLinks: Resource[] = [
   },
   {
     title: "Trigger.dev",
+    author: "Trigger.dev",
     category: CATEGORIES.backend,
     description:
       "Trigger.dev is the open source platform for building AI workflows in TypeScript. Long-running tasks with retries, queues, observability, and elastic scaling.",
+    gitHubLink: "https://github.com/triggerdotdev/trigger.dev",
     subtitle: "Build and deploy fully-managed AI agents and workflows.",
     url: "https://trigger.dev/",
   },

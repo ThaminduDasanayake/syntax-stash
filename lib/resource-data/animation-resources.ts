@@ -5,9 +5,14 @@ import { TAGS } from "./tags";
 
 export const animationLinks: Resource[] = [
   {
-    title: "Animejs",
+    title: "Anime.js",
+    author: "Julian Garnier",
     category: CATEGORIES.animation,
     description: "A fast, multipurpose and lightweight JavaScript animation library",
+    favicon: "https://animejs.com/assets/images/favicon.png",
+    gitHubLink: "https://github.com/juliangarnier/anime",
+    ogImage: "https://animejs.com/media/pages/home/066c76f87b-1787698629/generated-og-image.en.png",
+    subtitle: "JavaScript Animation Engine",
     tags: [TAGS.animation],
     url: "https://animejs.com/",
   },
@@ -16,30 +21,34 @@ export const animationLinks: Resource[] = [
     category: CATEGORIES.animation,
     description:
       "Animista is a CSS animation library and a place where you can play with a collection of ready-made CSS animations and download only those you will use.",
+    favicon: "https://animista.net/images/favicons/apple-touch-icon-180x180.png",
+    ogImage: "https://animista.net/animista-media-img.gif",
+    subtitle: "On-Demand CSS Animations Library",
     tags: [TAGS.animation],
     url: "https://animista.net/",
   },
   {
-    title: "Animmaster Lib",
-    category: CATEGORIES.animation,
-    description:
-      "Animmaster Lib — a modern frontend library of 300 PRO-level animated UI components with live video previews. Scroll animations, WebGL shaders, hero sections, sliders, menus and more — copy, paste, ship.",
-    tags: [TAGS.animation],
-    url: "https://animmasterlib.dev/",
-  },
-  {
     title: "Atropos",
+    author: "nolimits4web",
     category: CATEGORIES.animation,
     description:
       "Atropos is a lightweight, free and open-source JavaScript library to create stunning touch-friendly 3D parallax hover effects.",
+    favicon: "https://atroposjs.com/favicon.png",
+    gitHubLink: "https://github.com/nolimits4web/atropos/",
+    ogImage: "https://atroposjs.com/images/share-banner.png",
+    subtitle: "Stunning touch-friendly 3D parallax hover effects",
     tags: [TAGS.animation],
     url: "https://atroposjs.com/",
   },
   {
     title: "AutoAnimate",
+    author: "FormKit",
     category: CATEGORIES.animation,
     description:
       "A zero-config, drop-in animation utility that automatically adds smooth transitions to your web app. Use it with React, Solid, Vue, Svelte, or any other JavaScript application.",
+    favicon: "https://auto-animate.formkit.com/assets/favicon-C1f1LLf8.svg",
+    gitHubLink: "https://github.com/formkit/auto-animate",
+    ogImage: "https://cdn.formk.it/web-assets/auto-animate-og.png",
     subtitle: "Add motion to your apps with a single line of code",
     tags: [TAGS.animation],
     url: "https://auto-animate.formkit.com/",
