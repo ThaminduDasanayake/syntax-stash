@@ -43,6 +43,7 @@ export const mockupLinks: Resource<typeof CATEGORIES.mockups>[] = [
     description:
       "Free Mockups design resources on Craftwork: Get access to free mockups on Craftwork. Whether you need free logo mockups, app mockups, or website mockups, we.",
     favicon: "https://craftwork.design/favicon.svg",
+    ogImage: "https://cfw6.b-cdn.net/opengraph-image.png",
     subtitle: "Free Mockups Design Resources",
     tags: [TAGS.mockup],
     url: "https://craftwork.design/free/mockups",
@@ -61,7 +62,7 @@ export const mockupLinks: Resource<typeof CATEGORIES.mockups>[] = [
     title: "DekGrativ",
     category: CATEGORIES.mockups,
     description: "Sell digital assets for commercial projects with featured apparel mockups.",
-    favicon: "https://dekgrativ.com/cdn/shop/files/Logo_WEB-DekGrafis-New_2026.png",
+    favicon: "https://dekgrativ.com/cdn/shop/files/favicon-dekgrativ-96px.png",
     ogImage: "https://dekgrativ.com/cdn/shop/files/BANNER_SOCIALMEDIA.png",
     subtitle: "Find Apparel Mockup for Your Brand",
     tags: [TAGS.mockup],
@@ -72,6 +73,9 @@ export const mockupLinks: Resource<typeof CATEGORIES.mockups>[] = [
     category: CATEGORIES.mockups,
     description:
       "Elevate your designs with our high-quality mockups of digital devices, stationary, and more. Our easy to use PSD files will make your work standout.",
+    favicon:
+      "https://mockups.directory/cdn/shop/files/DirectoryFavicon_3af945e9-7353-44c3-9d84-c2608268eb31.png",
+    ogImage: "https://mockups.directory/cdn/shop/files/DirectorySocial.jpg",
     tags: [TAGS.mockup],
     url: "https://mockups.directory/",
   },
@@ -137,12 +141,26 @@ export const mockupLinks: Resource<typeof CATEGORIES.mockups>[] = [
   },
   {
     title: "ls.graphics",
+    author: "ls.graphics",
     category: CATEGORIES.mockups,
     description:
       "Discover a vast collection of free and premium mockups for Photoshop and Figma. Enhance your design projects with high-quality device and packaging mockups",
+    favicon: "https://www.ls.graphics/favicon.svg",
     subtitle: "Highest quality mockups for graphic and UI designers",
     tags: [TAGS.mockup],
     url: "https://www.ls.graphics/",
+  },
+  {
+    title: "mckp.live",
+    author: "ls.graphics",
+    category: CATEGORIES.mockups,
+    description:
+      "Beyond the screenshot. Render videos or embed live, interactive mockups anywhere — from your portfolio to your client's homepage.",
+    favicon: "https://www.ls.graphics/bannerMckpLogo.svg",
+    ogImage: "https://framerusercontent.com/assets/C4F4AGlgBJMFDj2oYONpCEG62OU.png",
+    subtitle: "Interactive Mockups That Move",
+    tags: [TAGS.mockup, TAGS.video],
+    url: "https://mckp.live/",
   },
   {
     title: "Minimal Mockups",
@@ -163,6 +181,18 @@ export const mockupLinks: Resource<typeof CATEGORIES.mockups>[] = [
     ogImage: "https://www.hellomocku.com/cdn/shop/files/Mocku_logotype_SEO-cover.svg",
     tags: [TAGS.mockup],
     url: "https://www.hellomocku.com/",
+  },
+  {
+    title: "Mockup.new",
+    author: "Mockuuups",
+    category: CATEGORIES.mockups,
+    description:
+      "Turn your screenshots into stunning device mockups. Use for your portfolio, presentation and social media.",
+    favicon: "https://mockup.new/favicon.png",
+    ogImage: "https://assets.mockuuups.com/mo/image/upload/mockup-new/share-image.png",
+    subtitle: "Free Mockup Generator",
+    tags: [TAGS.mockup],
+    url: "https://mockup.new/",
   },
   {
     title: "Mockup Cloud",
@@ -265,11 +295,15 @@ export const mockupLinks: Resource<typeof CATEGORIES.mockups>[] = [
     url: "https://www.mockups.supply/",
   },
   {
-    title: "Mockuuups Studio",
+    title: "Mockuuups",
+    author: "Mockuuups",
     category: CATEGORIES.mockups,
     description:
-      "Drag-and-drop tool for creating beautiful app previews or any marketing materials. Easily insert your screenshot into device and print mockups for free.",
-    subtitle: "Mockup Generator [5000+ Mockups]",
+      "Create iPhone, MacBook, and print mockups in seconds. Free online mockup generator with 5,200+ templates. Drag, drop, download.",
+    favicon:
+      "https://mockuuups.studio/web-cdn/wf/5b43a62ad35b4be92f8e996d/67604402c56ff32db7a77b14_webclip.png",
+    ogImage: "https://assets.mockuuups.com/mo/image/upload/v1732092900/og-artboard_n43lzg.jpg",
+    subtitle: "Free Mockup Generator — 5,200+ Mockups",
     tags: [TAGS.mockup],
     url: "https://mockuuups.studio/",
   },
@@ -277,7 +311,9 @@ export const mockupLinks: Resource<typeof CATEGORIES.mockups>[] = [
     title: "Morflax Studio",
     category: CATEGORIES.mockups,
     description:
-      "Create 3D mockups and motion graphics directly in your browser - devices, clothing, branding and abstract visuals. Export up to 4K. No installs.",
+      "The simple way to make 3D mockups, effects and motion. Build device, clothing and branding mockups, turn logos into 3D, animate and export up to 4K.",
+    favicon: "https://studio.morflax.com/favicon.jpg",
+    ogImage: "https://static.morflax.com/og/morflax_studio_facebook.jpg",
     subtitle: "3D Mockups & Motion in Your Browser",
     tags: [TAGS.animation, TAGS.design, TAGS.image],
     url: "https://studio.morflax.com/",
@@ -307,6 +343,9 @@ export const mockupLinks: Resource<typeof CATEGORIES.mockups>[] = [
     category: CATEGORIES.mockups,
     description:
       "We’re Pixelbuddha! And we do design things here: create premium resources, supply the rare stuff, and share freebies with the pro community.",
+    favicon: "https://pixelbuddha.net/og/logo.png",
+    ogImage:
+      "https://products.pixelbuddha.net/img-proxy/BqKvEPft2eD63eNDRVuK2Hr4257Aj1X19bfruAiWjYk/rs:fill:1200:630/el:1/f:jpg/czM6Ly9wYi1wcm9kdWN0cy1tZWRpYS9wcm9kdWN0LW1lZGlhLzYyYWY5OTgzMzI3YjRmNWJhYTIwZDk2N2Y1ZTIzYTQ5LmpwZw",
     subtitle: "Free Graphic Design Resources",
     tags: [TAGS.mockup, TAGS.textures, TAGS.typography],
     url: "https://pixelbuddha.net/",
@@ -347,12 +386,14 @@ export const mockupLinks: Resource<typeof CATEGORIES.mockups>[] = [
   },
   {
     title: "Screenshot Studio",
+    author: "Screenshot Studio",
     category: CATEGORIES.mockups,
     className: "bg-foreground border-paper",
     description:
-      "Free screenshot editor and mockup maker online — add gradient backgrounds, Safari and Chrome browser mockups, shadows, 3D effects, and animations to your screenshots. Import tweets and generate code snippets as images. Better free alternative to Pika Style and Shots.so. Export as PNG, JPG, or video. No signup needed.",
+      "Online screenshot editor and mockup maker that runs in your browser. Add gradient backgrounds, Safari and Chrome browser mockups, shadows, 3D effects, and animations. No signup.",
     favicon: "https://www.screenshot-studio.com/favicon.svg",
-    subtitle: "Free Screenshot Editor & Mockup Maker",
+    ogImage: "https://www.screenshot-studio.com/og.jpg",
+    subtitle: "Online Screenshot Editor & Mockup Maker",
     tags: [TAGS.mockup],
     url: "https://www.screenshot-studio.com/",
   },
@@ -369,11 +410,11 @@ export const mockupLinks: Resource<typeof CATEGORIES.mockups>[] = [
     title: "The Free Mockup",
     category: CATEGORIES.mockups,
     description:
-      "Download the web’s largest collection of free, high-quality mockups. Perfect for app/website presentations, product showcases, branding, and packaging. New assets added daily.",
+      "Download high-quality free mockups for app/website presentations, product showcases, branding, packaging, and more. New assets added daily.",
     favicon: "https://www.free-mockup.com/favicon.svg",
     ogImage:
       "https://www.free-mockup.com/wp-content/uploads/2026/05/free-mockup-com-social-sharing.jpg",
-    subtitle: "The Best Free Mockups",
+    subtitle: "The Web’s Largest Collection of Free Mockups",
     tags: [TAGS.mockup],
     url: "https://www.free-mockup.com/",
   },
@@ -390,9 +431,12 @@ export const mockupLinks: Resource<typeof CATEGORIES.mockups>[] = [
   },
   {
     title: "Ultramock",
+    author: "Ultramock",
     category: CATEGORIES.mockups,
     description:
       "Create premium, highly customizable videos, visuals and 3D mockups that showcase UI designs, websites and apps – for free!",
+    favicon: "https://www.ultramock.io/icon.png",
+    ogImage: "https://ultramock.io/META.jpg",
     subtitle: "Turn product screens into premium visuals",
     tags: [TAGS.mockup],
     url: "https://www.ultramock.io/",
@@ -401,8 +445,10 @@ export const mockupLinks: Resource<typeof CATEGORIES.mockups>[] = [
     title: "Unblast",
     category: CATEGORIES.mockups,
     description:
-      "Download free mockups, fonts, templates, textures, icons, and other graphics for everyday use.",
-    subtitle: "A Selective Library of High-Quality Creative Assets",
+      "Design resources, useful tools, and inspiration to help you create better work faster.",
+    favicon: "https://unblast.com/wp-content/themes/unblast-beta/images/favicon.svg",
+    ogImage: "https://unblast.com/wp-content/uploads/2020/05/unblast-social.jpg",
+    subtitle: "Free mockups, fonts, icons, and tools for creatives.",
     tags: [TAGS.mockup],
     url: "https://unblast.com/",
   },
