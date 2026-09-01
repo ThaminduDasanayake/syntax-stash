@@ -3,7 +3,7 @@ import { Resource } from "@/types";
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const backendLinks: Resource[] = [
+export const backendLinks: Resource<typeof CATEGORIES.backend>[] = [
   {
     title: "Appwrite",
     author: "Appwrite",

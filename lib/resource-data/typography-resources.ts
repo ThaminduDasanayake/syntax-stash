@@ -3,7 +3,7 @@ import { Resource } from "@/types";
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const typographyLinks: Resource[] = [
+export const typographyLinks: Resource<typeof CATEGORIES.typography>[] = [
   {
     title: "Adobe Fonts",
     category: CATEGORIES.typography,

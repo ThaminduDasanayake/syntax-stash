@@ -3,7 +3,7 @@ import { Resource } from "@/types";
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const uiLinks: Resource[] = [
+export const uiLinks: Resource<typeof CATEGORIES.ui>[] = [
   {
     title: "9ui",
     author: "Bora Baloglu",

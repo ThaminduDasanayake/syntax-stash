@@ -3,7 +3,7 @@ import { Resource } from "@/types";
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const mediaLinks: Resource[] = [
+export const mediaLinks: Resource<typeof CATEGORIES.media>[] = [
   {
     title: "3dsvg",
     category: CATEGORIES.media,

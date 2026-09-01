@@ -3,7 +3,7 @@ import { Resource } from "@/types";
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const iconLinks: Resource[] = [
+export const iconLinks: Resource<typeof CATEGORIES.icons>[] = [
   {
     title: "Absurd Design",
     category: CATEGORIES.icons,

@@ -258,9 +258,9 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
               <Image
                 src="/github.svg"
                 alt="GitHub"
-                width={18}
-                height={18}
-                className="size-4 transition-all group-hover:invert sm:size-4.5"
+                width={16}
+                height={16}
+                className="size-4 transition-all group-hover:invert"
               />
               <span className="hidden sm:inline">GitHub</span>
             </a>
@@ -522,9 +522,9 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
                     <Image
                       src="/github.svg"
                       alt="GitHub"
-                      width={18}
-                      height={18}
-                      className="size-4.5"
+                      width={16}
+                      height={16}
+                      className="size-4"
                     />
                     {activeTool.gitHubLink}
                   </a>

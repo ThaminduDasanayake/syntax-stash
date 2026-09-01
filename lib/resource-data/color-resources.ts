@@ -3,7 +3,7 @@ import { Resource } from "@/types";
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const colorLinks: Resource[] = [
+export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
   {
     title: "Actionable Color Palettes",
     author: "Csaba Kissi",

@@ -3,7 +3,7 @@ import { Resource } from "@/types";
 import { CATEGORIES } from "./categories";
 import { TAGS } from "./tags";
 
-export const mockupLinks: Resource[] = [
+export const mockupLinks: Resource<typeof CATEGORIES.mockups>[] = [
   {
     title: "Alex Paliotta",
     category: CATEGORIES.mockups,
