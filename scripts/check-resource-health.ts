@@ -196,8 +196,13 @@ async function checkResource(resource: Resource): Promise<AuditFinding[]> {
     const htmlSnippet = await res.text().then((text) => text.slice(0, 85000));
     const $ = cheerio.load(htmlSnippet);
 
-    const scrapedTitle =
-      $('meta[property="og:title"]').attr("content")?.trim() || $("title").text().trim() || "";
+    const htmlTitle = $("title").first().text().trim().replace(/\s+/g, " ");
+    const ogTitle =
+      $('meta[property="og:title"], meta[name="og:title"]')
+        .first()
+        .attr("content")
+        ?.trim()
+        .replace(/\s+/g, " ") || "";
 
     const scrapedDescription =
       $('meta[name="description"]').attr("content")?.trim() ||
@@ -251,18 +256,15 @@ async function checkResource(resource: Resource): Promise<AuditFinding[]> {
     }
 
     // --- Title / Subtitle Analysis ---
-    if (scrapedTitle) {
-      const { candidateSubtitle, isTitleMatch } = parseTitleAndSubtitle(
-        scrapedTitle,
-        resource.title,
-      );
+    if (htmlTitle && ogTitle && normalizeText(htmlTitle) === normalizeText(ogTitle)) {
+      const { candidateSubtitle, isTitleMatch } = parseTitleAndSubtitle(htmlTitle, resource.title);
 
       if (!isTitleMatch) {
         findings.push({
           category: resource.category,
-          details: `Title may have changed. Stored: "${resource.title}", Found: "${scrapedTitle}"`,
+          details: `Title may have changed (title, og:title). Stored: "${resource.title}", Found: "${htmlTitle}"`,
           resourceTitle: resource.title,
-          suggestion: scrapedTitle,
+          suggestion: htmlTitle,
           type: "title_change",
           url: targetUrl,
         });
@@ -274,7 +276,57 @@ async function checkResource(resource: Resource): Promise<AuditFinding[]> {
       ) {
         findings.push({
           category: resource.category,
-          details: `Candidate subtitle discovered from site title`,
+          details: "Candidate subtitle discovered from site title",
+          resourceTitle: resource.title,
+          suggestion: candidateSubtitle,
+          type: "metadata",
+          url: targetUrl,
+        });
+      }
+    } else {
+      let candidateSubtitle: string | undefined;
+
+      if (htmlTitle) {
+        const parsedHtml = parseTitleAndSubtitle(htmlTitle, resource.title);
+        if (!parsedHtml.isTitleMatch) {
+          findings.push({
+            category: resource.category,
+            details: `Title may have changed (title). Stored: "${resource.title}", Found: "${htmlTitle}"`,
+            resourceTitle: resource.title,
+            suggestion: htmlTitle,
+            type: "title_change",
+            url: targetUrl,
+          });
+        } else if (parsedHtml.candidateSubtitle) {
+          candidateSubtitle = parsedHtml.candidateSubtitle;
+        }
+      }
+
+      if (ogTitle) {
+        const parsedOg = parseTitleAndSubtitle(ogTitle, resource.title);
+        if (!parsedOg.isTitleMatch) {
+          findings.push({
+            category: resource.category,
+            details: `Title may have changed (og:title). Stored: "${resource.title}", Found: "${ogTitle}"`,
+            resourceTitle: resource.title,
+            suggestion: ogTitle,
+            type: "title_change",
+            url: targetUrl,
+          });
+        } else if (!candidateSubtitle && parsedOg.candidateSubtitle) {
+          candidateSubtitle = parsedOg.candidateSubtitle;
+        }
+      }
+
+      if (
+        !resource.subtitle &&
+        candidateSubtitle &&
+        candidateSubtitle.length >= 8 &&
+        candidateSubtitle.length <= 120
+      ) {
+        findings.push({
+          category: resource.category,
+          details: "Candidate subtitle discovered from site title",
           resourceTitle: resource.title,
           suggestion: candidateSubtitle,
           type: "metadata",
@@ -446,7 +498,8 @@ function generateMarkdownReport(findings: AuditFinding[], categoryName?: string)
     md += `| Resource | Category | Details |\n`;
     md += `| :--- | :--- | :--- |\n`;
     for (const item of titleChanges) {
-      md += `| **${item.resourceTitle}** | \`${item.category}\` | ${item.details} |\n`;
+      const details = item.details.replace(/\|/g, "-");
+      md += `| **${item.resourceTitle}** | \`${item.category}\` | ${details} |\n`;
     }
     md += `\n`;
   }
