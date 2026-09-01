@@ -8,7 +8,14 @@ import { AUDIT_CONFIG } from "@/lib/resource-data/audit-config";
 import { Resource } from "@/types";
 
 interface AuditFinding {
-  type: "broken" | "redirect" | "description_change" | "metadata" | "title_change" | "blocked";
+  type:
+    | "broken"
+    | "redirect"
+    | "description_change"
+    | "metadata"
+    | "title_change"
+    | "blocked"
+    | "github_issue";
   resourceTitle: string;
   category: string;
   url: string;
@@ -118,11 +125,105 @@ function parseTitleAndSubtitle(
   return { isTitleMatch: false };
 }
 
+async function checkGitHubLink(resource: Resource): Promise<AuditFinding[]> {
+  if (!resource.gitHubLink) return [];
+
+  const targetUrl = resource.gitHubLink;
+  const findings: AuditFinding[] = [];
+
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 9000);
+
+    const res = await fetch(targetUrl, {
+      headers: {
+        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+      },
+      method: "HEAD",
+      redirect: "manual",
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    // 1. Check for Redirects (301, 302, 307, 308) - e.g. repository transferred or renamed
+    if ([301, 302, 307, 308].includes(res.status)) {
+      const location = res.headers.get("location");
+      if (location) {
+        const resolved = new URL(location, targetUrl).href;
+        const cleanOld = targetUrl.replace(/\/$/, "").toLowerCase();
+        const cleanNew = resolved.replace(/\/$/, "").toLowerCase();
+
+        if (cleanOld !== cleanNew) {
+          findings.push({
+            category: resource.category,
+            details: `GitHub repository moved (HTTP ${res.status}) to: ${resolved}`,
+            resourceTitle: resource.title,
+            statusCode: res.status,
+            suggestion: resolved,
+            type: "github_issue",
+            url: targetUrl,
+          });
+        }
+      }
+      return findings;
+    }
+
+    // 2. Check for 404 (Repo deleted, renamed without redirect, or made private)
+    if (res.status === 404) {
+      findings.push({
+        category: resource.category,
+        details: "GitHub repository not found (HTTP 404)",
+        resourceTitle: resource.title,
+        statusCode: 404,
+        type: "github_issue",
+        url: targetUrl,
+      });
+      return findings;
+    }
+
+    // 3. Check for Server Error
+    if (res.status >= 500) {
+      findings.push({
+        category: resource.category,
+        details: `GitHub server error (HTTP ${res.status})`,
+        resourceTitle: resource.title,
+        statusCode: res.status,
+        type: "github_issue",
+        url: targetUrl,
+      });
+      return findings;
+    }
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err);
+    if (!message.includes("abort") && !message.includes("timeout")) {
+      findings.push({
+        category: resource.category,
+        details: `GitHub request error: ${message}`,
+        resourceTitle: resource.title,
+        type: "github_issue",
+        url: targetUrl,
+      });
+    }
+  }
+
+  return findings;
+}
+
 async function checkResource(resource: Resource): Promise<AuditFinding[]> {
   const normUrl = normalizeUrlKey(resource.url);
   if (skipAllSet.has(normUrl)) return [];
 
   const findings: AuditFinding[] = [];
+
+  // Audit GitHub repository link if provided
+  if (resource.gitHubLink) {
+    const ghFindings = await checkGitHubLink(resource);
+    findings.push(...ghFindings);
+  }
+
   const targetUrl = resource.url;
 
   try {
@@ -436,6 +537,7 @@ function generateMarkdownReport(findings: AuditFinding[], categoryName?: string)
   const metadata = findings.filter((f) => f.type === "metadata");
   const titleChanges = findings.filter((f) => f.type === "title_change");
   const blocked = findings.filter((f) => f.type === "blocked");
+  const githubIssues = findings.filter((f) => f.type === "github_issue");
 
   const date = new Date().toISOString().split("T")[0];
   const titleCategory = categoryName ? ` — ${categoryName}` : "";
@@ -511,6 +613,19 @@ function generateMarkdownReport(findings: AuditFinding[], categoryName?: string)
     md += `| :--- | :--- | :--- |\n`;
     for (const item of blocked) {
       md += `| **${item.resourceTitle}** | [Link](${item.url}) | ${item.details} |\n`;
+    }
+    md += `\n`;
+  }
+
+  if (githubIssues.length > 0) {
+    md += `### 🐙 GitHub Link Issues (${githubIssues.length})\n`;
+    md += `The following resources have moved, deleted, or inaccessible GitHub repository links.\n\n`;
+    md += `| Resource | Category | GitHub Link | Details | Suggested URL |\n`;
+    md += `| :--- | :--- | :--- | :--- | :--- |\n`;
+    for (const item of githubIssues) {
+      const details = item.details.replace(/\|/g, "-");
+      const suggestion = item.suggestion ? `\`${item.suggestion}\`` : "—";
+      md += `| **${item.resourceTitle}** | \`${item.category}\` | [Link](${item.url}) | ${details} | ${suggestion} |\n`;
     }
     md += `\n`;
   }

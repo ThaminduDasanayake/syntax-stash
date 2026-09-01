@@ -5,6 +5,7 @@ import {
   BookmarkSimpleIcon,
   CaretLeftIcon,
   CaretRightIcon,
+  StarIcon,
   XIcon,
 } from "@phosphor-icons/react";
 import gsap from "gsap";
@@ -20,6 +21,7 @@ import { CopyButton } from "@/components/ui/copy-button";
 import { DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { useSession } from "@/lib/auth-client";
+import { formatStarCount, getGitHubStars } from "@/lib/github";
 import { resourceLinks } from "@/lib/resource-data";
 import { cn, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
 import { Resource } from "@/types";
@@ -34,6 +36,8 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
   const [ogError, setOgError] = useState(false);
   const [isRetryingOgProxy, setIsRetryingOgProxy] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  const gitHubStars = getGitHubStars(activeTool.gitHubLink);
+  const formattedStars = gitHubStars !== null ? formatStarCount(gitHubStars) : null;
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const dialogContentRef = useRef<HTMLDivElement>(null);
   const titleAnchorRef = useRef<HTMLDivElement>(null);
@@ -263,6 +267,12 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
                 className="size-4 transition-all group-hover:invert"
               />
               <span className="hidden sm:inline">GitHub</span>
+              {formattedStars && (
+                <span className="text-muted-foreground group-hover:text-foreground inline-flex items-center gap-0.5 transition-colors">
+                  <StarIcon weight="fill" className="size-3 text-amber-500" />
+                  <span>{formattedStars}</span>
+                </span>
+              )}
             </a>
           </Button>
         )}
@@ -511,7 +521,18 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
 
             {activeTool.gitHubLink && (
               <div className="modal-link">
-                <span className={cn("modal-heading", activeThemeStyles.label)}>GitHub</span>
+                <div className="flex items-center justify-between">
+                  <span className={cn("modal-heading", activeThemeStyles.label)}>GitHub</span>
+                  {formattedStars && (
+                    <span
+                      className="text-muted-foreground inline-flex items-center gap-1 font-mono text-xs"
+                      title={`${gitHubStars?.toLocaleString()} GitHub stars`}
+                    >
+                      <StarIcon weight="fill" className="size-3.5 text-amber-500" />
+                      <span>{formattedStars}</span>
+                    </span>
+                  )}
+                </div>
                 <div className="flex items-center justify-between gap-2">
                   <a
                     href={activeTool.gitHubLink}
