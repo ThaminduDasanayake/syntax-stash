@@ -1,6 +1,6 @@
 "use client";
 
-import { ToolboxIcon } from "@phosphor-icons/react";
+import { StarIcon, ToolboxIcon } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -15,6 +15,7 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
+import { formatStarCount, getGitHubStars } from "@/lib/github";
 import { iconMap } from "@/lib/icons";
 import { resourceLinks } from "@/lib/resource-data";
 import { internalTools } from "@/lib/tools-data";
