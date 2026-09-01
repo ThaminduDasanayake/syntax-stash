@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowSquareOutIcon, BookmarkSimpleIcon } from "@phosphor-icons/react";
+import { ArrowSquareOutIcon, BookmarkSimpleIcon, StarIcon } from "@phosphor-icons/react";
 import { memo, useState } from "react";
 
 import { AuthModal } from "@/components/auth-modal";
@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { useSession } from "@/lib/auth-client";
+import { formatStarCount, getGitHubStars } from "@/lib/github";
 import { cn, getCategoryColor } from "@/lib/utils";
 import { ResourceCardProps } from "@/types";
 
@@ -20,6 +21,7 @@ function ResourceCardComponent({
 }: ResourceCardProps) {
   const colorClasses = getCategoryColor(resource.category);
   const isBlue = colorClasses.includes("bg-c-blue");
+  const stars = getGitHubStars(resource.gitHubLink);
   const { data: session } = useSession();
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const { isBookmarked: hookIsBookmarked, toggleBookmark: hookToggleBookmark } = useBookmarks();
@@ -74,11 +76,23 @@ function ResourceCardComponent({
               <p className="card-description">{resource.description}</p>
 
               <div className="card-footer">
-                {resource.author ? (
-                  <span className="card-author">{resource.author}</span>
-                ) : (
-                  <div aria-hidden="true" />
-                )}
+                <div className="flex min-w-0 items-center gap-2">
+                  {resource.author ? (
+                    <span className="card-author truncate">{resource.author}</span>
+                  ) : null}
+                  {stars !== null && (
+                    <span
+                      className={cn(
+                        "inline-flex shrink-0 items-center gap-1 font-mono text-[11px] font-medium",
+                        isBlue ? "text-paper/90" : "text-ink/80",
+                      )}
+                      title={`${stars.toLocaleString()} GitHub stars`}
+                    >
+                      <StarIcon weight="fill" className="size-3 text-amber-500" />
+                      <span>{formatStarCount(stars)}</span>
+                    </span>
+                  )}
+                </div>
                 <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
                   <Tooltip>
                     <TooltipTrigger asChild>

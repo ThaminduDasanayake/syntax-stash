@@ -25,7 +25,8 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check:resources": "tsx scripts/check-resource-health.ts"
+    "check:resources": "tsx scripts/check-resource-health.ts",
+    "sync:stars": "tsx scripts/sync-github-stars.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",
