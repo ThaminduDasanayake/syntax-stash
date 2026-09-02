@@ -38,6 +38,18 @@ interface FilterSectionProps {
 
 const BATCH_SIZE = 36;
 
+function formatItemCountLabel(count: number, label: string): string {
+  if (count === 1) {
+    if (label.endsWith("ies")) return label.slice(0, -3) + "y";
+    if (label.endsWith("s") || label.endsWith("S")) return label.slice(0, -1);
+    return label;
+  }
+  if (!label.endsWith("s") && !label.endsWith("S")) {
+    return label + "s";
+  }
+  return label;
+}
+
 function FilterSectionInner({
   categories,
   initialCategory,
@@ -442,39 +454,43 @@ function FilterSectionInner({
               </div>
             )
           ) : (
-            Object.entries(groupedItems).map(([category, catItems]) => (
-              <div key={category} className="cat-section w-full">
-                <div className="cat-divider flex flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:gap-4">
-                  <div className="flex w-full flex-col gap-1 sm:w-auto sm:flex-1 sm:flex-row sm:items-center sm:gap-4">
-                    <h2 className="font-mono text-lg font-extrabold tracking-widest uppercase sm:text-xl">
-                      {category}
-                    </h2>
-                    <span className="bg-primary hidden h-0.5 flex-1 sm:block" />
-                  </div>
+            Object.entries(groupedItems).map(([category, catItems]) => {
+              const count = categoryTotals.get(category) ?? catItems.length;
 
-                  <div className="flex w-full items-center gap-3 sm:w-auto">
-                    <span className="text-mono-xs sm:text-mono-sm text-ink-mute shrink-0 font-mono">
-                      {categoryTotals.get(category) ?? catItems.length} {itemLabel}
-                    </span>
-                    <span className="bg-primary h-0.5 flex-1 sm:hidden" />
+              return (
+                <div key={category} className="cat-section w-full">
+                  <div className="cat-divider flex flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:gap-4">
+                    <div className="flex w-full flex-col gap-1 sm:w-auto sm:flex-1 sm:flex-row sm:items-center sm:gap-4">
+                      <h2 className="font-mono text-lg font-extrabold tracking-widest uppercase sm:text-xl">
+                        {category}
+                      </h2>
+                      <span className="bg-primary hidden h-0.5 flex-1 sm:block" />
+                    </div>
+
+                    <div className="flex w-full items-center gap-3 sm:w-auto">
+                      <span className="text-mono-xs sm:text-mono-sm text-ink-mute shrink-0 font-mono">
+                        {count} {formatItemCountLabel(count, itemLabel)}
+                      </span>
+                      <span className="bg-primary h-0.5 flex-1 sm:hidden" />
+                    </div>
+                  </div>
+                  <div className="card-grid">
+                    {catItems.map((item) => (
+                      <StashCard
+                        key={"url" in item ? item.url : item.slug}
+                        item={item}
+                        onTagClickAction={handleToggleTag}
+                        onCardClick={(clickedItem) => {
+                          if (isResource(clickedItem)) {
+                            setActiveDialogResource(clickedItem);
+                          }
+                        }}
+                      />
+                    ))}
                   </div>
                 </div>
-                <div className="card-grid">
-                  {catItems.map((item) => (
-                    <StashCard
-                      key={"url" in item ? item.url : item.slug}
-                      item={item}
-                      onTagClickAction={handleToggleTag}
-                      onCardClick={(clickedItem) => {
-                        if (isResource(clickedItem)) {
-                          setActiveDialogResource(clickedItem);
-                        }
-                      }}
-                    />
-                  ))}
-                </div>
-              </div>
-            ))
+              );
+            })
           )}
 
           {hasMore && (

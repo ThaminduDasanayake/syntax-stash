@@ -145,8 +145,8 @@ export default async function AuthorPage({ params }: { params: Promise<Params> }
       <FilterSection
         categories={categories}
         items={resources}
-        itemLabel={`${name}'s Resources`}
-        searchPlaceholder={`Search resources by ${name}...`}
+        itemLabel={`Resources`}
+        searchPlaceholder={`Search resources ...`}
       />
     </div>
   );
