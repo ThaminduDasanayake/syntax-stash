@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 
+import { getAllAuthors } from "@/lib/authors";
 import { resourceCategories } from "@/lib/resource-data";
 import { siteConfig } from "@/lib/site-config";
 import { internalTools } from "@/lib/tools-data";
@@ -26,6 +27,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       priority: 0.7,
       url: `${baseUrl}/changelog`,
+    },
+    {
+      changeFrequency: "weekly",
+      lastModified: new Date(),
+      priority: 0.8,
+      url: `${baseUrl}/authors`,
     },
     {
       changeFrequency: "weekly",
@@ -57,5 +64,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${baseUrl}/resources/${slugify(cat)}`,
   }));
 
-  return [...staticRoutes, ...toolRoutes, ...resourceRoutes];
+  const authorRoutes: MetadataRoute.Sitemap = getAllAuthors().map((author) => ({
+    changeFrequency: "weekly",
+    lastModified: new Date(),
+    priority: 0.7,
+    url: `${baseUrl}/authors/${author.slug}`,
+  }));
+
+  return [...staticRoutes, ...toolRoutes, ...resourceRoutes, ...authorRoutes];
 }

@@ -149,7 +149,7 @@ export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
               return (
                 <CommandItem
                   key={tool.url}
-                  value={`${tool.title} ${tool.description ?? ""} ${tool.category}`}
+                  value={`${tool.title} ${tool.description ?? ""} ${tool.category}${tool.author ? ` ${tool.author}` : ""}`}
                   onSelect={() => handleSelect(tool)}
                 >
                   {/* Structural Level Indentation Logic */}
