@@ -8,6 +8,7 @@ export interface AuthorLinks {
   linkedin?: string;
   twitter?: string;
   website?: string;
+  youtube?: string;
 }
 
 export interface AuthorProfile {

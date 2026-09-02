@@ -77,6 +77,17 @@ export const frontendLinks: Resource<typeof CATEGORIES.frontend>[] = [
     url: "https://cssgridgenerator.io/",
   },
   {
+    title: "CSS Pattern",
+    author: "Temani Afif",
+    category: CATEGORIES.frontend,
+    description:
+      "A collection of 100+ background patterns powered by CSS gradients and modern CSS. All the best CSS Patterns are here! Look no further.",
+    favicon: "https://css-pattern.com/fav.png",
+    ogImage: "https://css-pattern.com/css-pattern.jpg",
+    subtitle: "Fancy backgrounds with CSS gradients",
+    url: "https://css-pattern.com/",
+  },
+  {
     title: "CSS Polka Dot Generator",
     author: "Brian Louis Ramirez",
     category: CATEGORIES.frontend,
@@ -98,6 +109,28 @@ export const frontendLinks: Resource<typeof CATEGORIES.frontend>[] = [
     subtitle: "A Visual Guide & Reference",
     tags: [TAGS.css],
     url: "https://www.fffuel.co/css-selectors/",
+  },
+  {
+    title: "CSS Shape",
+    author: "Temani Afif",
+    category: CATEGORIES.frontend,
+    description:
+      "The modern way to create CSS shapes using a minimal code and a single element. A collection of CSS-only shapes created by Temani Afif.",
+    favicon: "https://css-shape.com/fav.png",
+    ogImage: "https://css-shape.com/css-shapes.jpg",
+    subtitle: "The Ultimate CSS Shapes Collection",
+    url: "https://css-shape.com/",
+  },
+  {
+    title: "CSS Tip",
+    author: "Temani Afif",
+    category: CATEGORIES.frontend,
+    description:
+      "The best place to keep up to date with the new CSS features. Daily CSS tips and tricks to become a better web developer.",
+    favicon: "https://css-tip.com/img/fav.png",
+    ogImage: "https://css-tip.com/img/css-tip.jpg",
+    subtitle: "Learn CSS the easy way",
+    url: "https://css-tip.com/",
   },
   {
     title: "CSS Unit Converter",

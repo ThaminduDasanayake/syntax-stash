@@ -4,8 +4,10 @@ import {
   ArrowRightIcon,
   GithubLogoIcon,
   GlobeIcon,
+  LinkedinLogoIcon,
   MagnifyingGlassIcon,
   XLogoIcon,
+  YoutubeLogoIcon,
 } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
@@ -108,6 +110,12 @@ export function AuthorsDirectory({ authors }: AuthorsDirectoryProps) {
                     {author.links?.website && <GlobeIcon className="size-3.5" />}
                     {author.links?.github && <GithubLogoIcon weight="fill" className="size-3.5" />}
                     {author.links?.twitter && <XLogoIcon weight="bold" className="size-3.5" />}
+                    {author.links?.linkedin && (
+                      <LinkedinLogoIcon weight="fill" className="size-3.5" />
+                    )}
+                    {author.links?.youtube && (
+                      <YoutubeLogoIcon weight="fill" className="size-3.5" />
+                    )}
                   </div>
 
                   <span className="group-hover:text-ink text-muted-foreground inline-flex items-center gap-1 font-semibold transition-colors">

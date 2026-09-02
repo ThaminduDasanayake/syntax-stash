@@ -1,13 +1,5 @@
 import { AuthorProfile } from "@/lib/authors";
 
-/**
- * Registry of known authors with custom profile metadata and external links.
- * Keyed by the author's slug (e.g. "jasper-bernaers").
- *
- * You can add or edit any author's links (website, github, twitter, blog, linkedin) here.
- * Any author not explicitly defined in this map will automatically have a page generated
- * with any links found in their resource definitions.
- */
 export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
   "csaba-kissi": {
     links: {
@@ -16,6 +8,12 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
       website: "https://csaba.page",
     },
     name: "Csaba Kissi",
+  },
+  dasca: {
+    links: {
+      twitter: "https://x.com/dascaapp",
+    },
+    name: "DASCA",
   },
   fffuel: {
     links: {
@@ -48,6 +46,31 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
     },
     name: "Jasper Bernaers",
   },
+  "kamran-ahmed": {
+    links: {
+      github: "https://github.com/nilbuild",
+      linkedin: "https://www.linkedin.com/in/nilbuild",
+      twitter: "https://twitter.com/nilbuild",
+      website: "https://kamran.fyi/",
+      youtube: "https://youtube.com/@nilbuild",
+    },
+    name: "Kamran Ahmed",
+  },
+  "laura-escobar": {
+    links: {
+      linkedin: "https://www.linkedin.com/in/laurieesc",
+      twitter: "https://x.com/laurieesc",
+      website: "https://laurie.fyi/",
+    },
+    name: "Laura Escobar",
+  },
+  "matthias-martin": {
+    links: {
+      twitter: "https://x.com/RoyDigerhund",
+      website: "https://github.com/roydigerhund",
+    },
+    name: "Matthias Martin",
+  },
   "pablo-stanley": {
     links: {
       twitter: "https://x.com/pablostanley",
@@ -70,5 +93,15 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
       website: "https://realvjy.me",
     },
     name: "Vijay Verma",
+  },
+  "vineeth-tr": {
+    links: {
+      github: "https://github.com/vineethtrv",
+      linkedin: "https://www.linkedin.com/in/vineethtrv/",
+      twitter: "https://x.com/vineethtrv",
+      website: "https://vineethtrv.github.io/",
+      youtube: "https://www.youtube.com/user/vineethtrv",
+    },
+    name: "Vineeth TR",
   },
 };

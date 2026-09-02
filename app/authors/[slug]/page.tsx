@@ -6,6 +6,7 @@ import {
   GlobeIcon,
   LinkedinLogoIcon,
   XLogoIcon,
+  YoutubeLogoIcon,
 } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -132,6 +133,18 @@ export default async function AuthorPage({ params }: { params: Promise<Params> }
                   >
                     <LinkedinLogoIcon weight="fill" className="size-3.5" />
                     LinkedIn
+                    <ArrowSquareOutIcon className="size-3 opacity-60" />
+                  </a>
+                )}
+                {links.youtube && (
+                  <a
+                    href={links.youtube}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="border-ink/30 bg-background hover:bg-ink hover:text-paper inline-flex items-center gap-1.5 border px-3 py-1.5 font-mono text-xs font-bold uppercase transition-colors"
+                  >
+                    <YoutubeLogoIcon weight="fill" className="size-3.5" />
+                    YouTube
                     <ArrowSquareOutIcon className="size-3 opacity-60" />
                   </a>
                 )}
