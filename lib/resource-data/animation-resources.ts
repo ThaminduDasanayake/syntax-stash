@@ -78,10 +78,13 @@ export const animationLinks: Resource[] = [
     url: "https://beam.jakubantalik.com/",
   },
   {
-    title: "Brik",
+    title: "Brik AI",
     category: CATEGORIES.animation,
     description:
       "Build your tailor-made stack of AI-powered design tools for animations, 2D & 3D visuals, text effects, and images. Remix, share, export, and scale.",
+    favicon: "https://brik.space/favicon.svg",
+    ogImage: "https://brik.space/images/og/og-default.png",
+    subtitle: "Turn Creative Vision into Living Design Tools",
     tags: [TAGS.animation],
     url: "https://brik.space/",
   },
@@ -91,6 +94,8 @@ export const animationLinks: Resource[] = [
     category: CATEGORIES.animation,
     description:
       "The biggest collection of CSS-only loaders. More than 600 loading animations made by Temani Afif using a single element.",
+    favicon: "https://css-loaders.com/fav.png",
+    ogImage: "https://css-loaders.com/css-loader-banner.jpg",
     subtitle: "A collection of more than 600 loading animations",
     tags: [TAGS.animation],
     url: "https://css-loaders.com/",

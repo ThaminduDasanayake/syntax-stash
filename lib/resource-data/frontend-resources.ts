@@ -57,6 +57,18 @@ export const frontendLinks: Resource<typeof CATEGORIES.frontend>[] = [
     url: "https://flukeout.github.io/",
   },
   {
+    title: "CSS Generators",
+    author: "Temani Afif",
+    category: CATEGORIES.frontend,
+    description:
+      "A wide range of CSS Generators to build the future of the web. Add your setting, get your CSS code.",
+    favicon: "https://css-generators.com/fav.png",
+    ogImage: "https://css-generators.com/css-generators-banner.png",
+    subtitle: "Your CSS code with less effort",
+    tags: [TAGS.animation],
+    url: "https://css-generators.com/",
+  },
+  {
     title: "CSS Grid Generator",
     category: CATEGORIES.frontend,
     description:
