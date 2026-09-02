@@ -219,6 +219,8 @@ export const animationLinks: Resource[] = [
     title: "Grainrad",
     category: CATEGORIES.animation,
     description: "Grainrad - Free WebGPU-powered ASCII, dithering, and retro effects at 60fps",
+    favicon: "https://grainrad.com/apple-touch-icon.png",
+    ogImage: "https://grainrad.com/preview_thu.png",
     tags: [TAGS.animation],
     url: "https://grainrad.com/",
   },
@@ -227,6 +229,8 @@ export const animationLinks: Resource[] = [
     category: CATEGORIES.animation,
     description:
       "Supported by Webflow. Animate Anything - A wildly robust JavaScript animation library built for professionals.",
+    favicon: "https://gsap.com/apple-touch-icon.png",
+    ogImage: "https://gsap.com/GSAP-share-image.png",
     tags: [TAGS.animation],
     url: "https://gsap.com/",
   },
@@ -245,6 +249,8 @@ export const animationLinks: Resource[] = [
     category: CATEGORIES.animation,
     description:
       "Jitter is a collaborative motion design tool that lets you create professional animations in minutes, no matter your experience with motion.",
+    favicon: "https://jitter.video/icons/icon-48x48.png",
+    ogImage: "https://jitter.video/assets/homepage-2026-DXrOP74Y.png",
     subtitle: "A fast and simple motion design tool on the web",
     tags: [TAGS.animation],
     url: "https://jitter.video/",
@@ -266,6 +272,8 @@ export const animationLinks: Resource[] = [
     category: CATEGORIES.animation,
     description:
       "Effortlessly bring the smallest, free, ready-to-use motion graphics for the web, app, social, and designs. Create, edit, test, collaborate, and ship Lottie animations in no time!",
+    favicon: "https://lottiefiles.com/icons/favicon.svg",
+    ogImage: "https://stp-v4-cdn.lottiefiles.com/ogimage_Homepage_b5840ac00c.png",
     tags: [TAGS.animation],
     url: "https://lottiefiles.com/",
   },
@@ -287,6 +295,7 @@ export const animationLinks: Resource[] = [
     category: CATEGORIES.animation,
     description:
       "Create and ship animations to your products faster. Bring your websites and apps to life with the simplest editor for Lottie animations.",
+    favicon: "https://www.lottielab.com/apple-touch-icon.png",
     subtitle: "Create & edit Lottie animations",
     tags: [TAGS.animation],
     url: "https://www.lottielab.com/",
@@ -296,6 +305,8 @@ export const animationLinks: Resource[] = [
     author: "liabru",
     category: CATEGORIES.animation,
     description: "Matter.js is 2D rigid body JavaScript physics engine for the web",
+    favicon: "https://brm.io/img/icon/apple-touch-icon.png",
+    ogImage: "https://brm.io/matter-js/img/matter-js.svg",
     tags: [TAGS.animation],
     url: "https://brm.io/matter-js/",
   },
@@ -304,6 +315,8 @@ export const animationLinks: Resource[] = [
     category: CATEGORIES.animation,
     description:
       "Motion (prev Framer Motion) is a fast, production-grade animation library for React, JavaScript and Vue. Build smooth UI animations at a tiny footprint.",
+    favicon: "https://motion.dev/favicon.svg",
+    ogImage: "https://images.motion.dev/og/fresh/v1/site/home-3jhn8b0abpu66.png",
     subtitle: "JavaScript & React animation library",
     tags: [TAGS.animation],
     url: "https://motion.dev/",
