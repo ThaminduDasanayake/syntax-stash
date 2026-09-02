@@ -35,7 +35,7 @@ export interface ResourceDialogProps {
 export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogProps) {
   const [activeTool, setActiveTool] = useState(resource);
   const [ogError, setOgError] = useState(false);
-  const [isRetryingOgProxy, setIsRetryingOgProxy] = useState(false);
+  const [useDirectOgFallback, setUseDirectOgFallback] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const gitHubStars = getGitHubStars(activeTool.gitHubLink);
   const formattedStars = gitHubStars !== null ? formatStarCount(gitHubStars) : null;
@@ -106,7 +106,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
 
   const handleSelectTool = (res: Resource) => {
     setOgError(false);
-    setIsRetryingOgProxy(false);
+    setUseDirectOgFallback(false);
     setActiveTool(res);
     resetMobileHeader();
     if (scrollContainerRef.current) {
@@ -460,26 +460,25 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
         <div className="modal-right bg-background flex flex-col md:overflow-hidden">
           <div className="modal-content px-5 pt-5 pb-6 [scrollbar-color:var(--line-2)_transparent] md:min-h-0 md:flex-1 md:overflow-y-auto md:overscroll-contain md:px-8 md:pt-20 md:pb-5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent">
             {(() => {
+              if (!activeTool.ogImage || ogError) return null;
+
+              const isExternalOg =
+                (activeTool.ogImage.startsWith("http://") ||
+                  activeTool.ogImage.startsWith("https://")) &&
+                !activeTool.ogImage.startsWith("/api/proxy-image");
+
               const handleOgError = () => {
-                if (
-                  activeTool.ogImage &&
-                  (activeTool.ogImage.startsWith("http://") ||
-                    activeTool.ogImage.startsWith("https://")) &&
-                  !activeTool.ogImage.startsWith("/api/proxy-image") &&
-                  !isRetryingOgProxy
-                ) {
-                  setIsRetryingOgProxy(true);
+                if (isExternalOg && !useDirectOgFallback) {
+                  setUseDirectOgFallback(true);
                 } else {
                   setOgError(true);
                 }
               };
 
               const currentOgSrc =
-                isRetryingOgProxy && activeTool.ogImage
+                isExternalOg && !useDirectOgFallback
                   ? `/api/proxy-image?url=${encodeURIComponent(activeTool.ogImage)}`
                   : activeTool.ogImage;
-
-              if (!currentOgSrc || ogError) return null;
 
               return (
                 <div className="mb-5.5">
