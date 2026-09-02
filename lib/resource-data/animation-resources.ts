@@ -152,6 +152,7 @@ export const animationLinks: Resource[] = [
   },
   {
     title: "Easing Graphs",
+    author: "Lochie Axon",
     category: CATEGORIES.animation,
     description: "A curated collection of easing graphs",
     favicon: "https://www.easing.dev/logo.svg",
@@ -212,6 +213,8 @@ export const animationLinks: Resource[] = [
     description:
       "Free split-flap display emulator for any TV. The classic flip-board look, without the $3,500 hardware.",
     favicon: "/github.svg",
+    ogImage:
+      "https://opengraph.githubassets.com/baa7433f1bdde269f0a58eee23818c91bad29033f2e79a2acca349c79f803233/magnum6actual/flipoff",
     tags: [TAGS.animation],
     url: "https://github.com/magnum6actual/flipoff",
   },
@@ -323,25 +326,37 @@ export const animationLinks: Resource[] = [
   },
   {
     title: "Rive",
+    author: "Rive",
+    authorLink: "https://github.com/rive-app",
     category: CATEGORIES.animation,
     description:
       "Behind Spotify Wrapped, Duolingo, and products reaching 2 billion users. Design, animate, and code in one place. Ship everywhere.",
+    favicon: "https://framerusercontent.com/images/jMyKrhKKXqpc15qYqC3A0pZELw.png",
+    ogImage: "https://framerusercontent.com/images/yEWMbP7UtsS81SlkoxTasfabvc.png",
     subtitle: "The interactive experience engine",
     tags: [TAGS.animation],
     url: "https://rive.app/",
   },
   {
     title: "Shaders",
+    author: "Shader Effects Inc.",
     category: CATEGORIES.animation,
     description:
       "Component library for creative WebGPU effects in modern frontend frameworks. Compose interactive visuals for Vue, React, Svelte, Solid & JS.",
+    favicon: "https://shaders.com/icon.svg",
+    ogImage: "https://shaders.com/og.jpg",
+    subtitle: "The design platform for web shaders",
     tags: [TAGS.animation],
     url: "https://shaders.com/",
   },
   {
     title: "Smooothy",
+    author: "Federico Valla",
     category: CATEGORIES.animation,
     description: "Smooth configurable extendable slider made for animation.",
+    favicon: "https://smooothy.vercel.app/favicon_svg.svg",
+    gitHubLink: "https://github.com/vallafederico/smooothy",
+    ogImage: "https://smooothy.vercel.app/og_img1.jpg",
     tags: [TAGS.animation],
     url: "https://smooothy.vercel.app/",
   },
@@ -350,6 +365,10 @@ export const animationLinks: Resource[] = [
     category: CATEGORIES.animation,
     description:
       "Spline is a free 3D design software with real-time collaboration to create web interactive experiences in the browser. Easy 3d modeling, animation, textures, and more.",
+    favicon:
+      "https://spline.design/_next/image?url=%2F_next%2Fstatic%2Fimmutable%2Fmedia%2Fspline_logo.18-bh7nan-wgm.png&w=128&q=75",
+    ogImage:
+      "https://spline.design/_next/static/immutable/media/spline_image_banner.2at491x3fx670.png",
     subtitle: "3D Design tool in the browser with real-time collaboration",
     tags: [TAGS.animation],
     url: "https://spline.design/",
@@ -371,6 +390,8 @@ export const animationLinks: Resource[] = [
     category: CATEGORIES.animation,
     description:
       "Create impressive SVG animations and more. Add them easily to your website or app. Get started for free!",
+    favicon: "https://www.svgator.com/favicon.svg",
+    ogImage: "https://cdn.svgator.com/assets/og-images/main-page-og.jpg",
     subtitle: "Free Animation Maker Online",
     tags: [TAGS.animation, TAGS.svg],
     url: "https://www.svgator.com/",
@@ -391,15 +412,21 @@ export const animationLinks: Resource[] = [
     category: CATEGORIES.animation,
     description:
       "SVG Studio — a free, browser-based SVG animation editor. No sign-up, no telemetry, no subscription.",
+    favicon: "https://www.svgstudio.org/images/favicon.svg",
+    ogImage: "https://www.svgstudio.org/images/social-2.png",
     subtitle: "Animate Everything",
     tags: [TAGS.animation, TAGS.svg],
     url: "https://www.svgstudio.org/",
   },
   {
     title: "Swishy",
+    author: "Swishy",
     category: CATEGORIES.animation,
     description:
       "Swishy is the leading AI motion designer and AI animator platform. Create professional motion graphics, animated typefaces, and stunning video animations without After Effects. Export to MP4, MOV, and GIF instantly.",
+    favicon: "https://www.swishy.ai/icon.svg",
+    ogImage: "https://www.swishy.ai/og-image.png",
+    subtitle: "AI Motion Designer & Animator | Create Stunning Animations",
     tags: [TAGS.animation],
     url: "https://www.swishy.ai/",
   },
@@ -417,8 +444,12 @@ export const animationLinks: Resource[] = [
   },
   {
     title: "Torph",
+    author: "Lochie Axon",
     category: CATEGORIES.animation,
     description: "Dependency-free animated text component.",
+    favicon: "https://torph.lochie.me/icon.svg",
+    gitHubLink: "https://github.com/lochie/torph",
+    ogImage: "https://torph.lochie.me/opengraph-image.png",
     subtitle: "Dependency-Free Text Morphing",
     tags: [TAGS.animation, TAGS.typography],
     url: "https://torph.lochie.me/",
@@ -439,10 +470,35 @@ export const animationLinks: Resource[] = [
     title: "Unicorn Studio",
     category: CATEGORIES.animation,
     description:
-      "Create enchanting WebGL effects, motion, and interactivity — in minutes, not hours. Unicorn Studio makes WebGL easy for designers to embed in Framer, Webflow, or any website.",
+      "Create interactive motion and real-time graphics for the web. Stack layers on a real-time canvas, shape them with effects and motion, expose controls, and ship.",
+    favicon: "https://www.unicorn.studio/favicon.png",
     ogImage: "https://www.unicorn.studio/images/ogg2.png",
-    subtitle: "No-code WebGL Tool",
+    subtitle: "Interactive Motion & Real-Time Graphics",
     tags: [TAGS.animation, TAGS.noCode],
     url: "https://www.unicorn.studio/",
+  },
+  {
+    title: "Video for Web",
+    author: "Lochie Axon",
+    category: CATEGORIES.animation,
+    description:
+      "Seamless online playback by encoding videos into ideal formats, ensuring smooth streaming, fast loading times, and minimal bandwidth usage across devices.",
+    favicon: "https://compress.lochie.me/logo.svg",
+    ogImage: "https://compress.lochie.me/opengraph-image.png",
+    subtitle: "Optimized Video Encoding for Seamless Playback",
+    tags: [TAGS.video],
+    url: "https://compress.lochie.me/",
+  },
+  {
+    title: "WebHaptics",
+    author: "Lochie Axon",
+    category: CATEGORIES.animation,
+    description: "Haptic feedback for the mobile web.",
+    favicon:
+      "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%F0%9F%AB%A8</text></svg>",
+    gitHubLink: "https://github.com/lochie/web-haptics",
+    ogImage: "https://haptics.lochie.me/og.png",
+    tags: [TAGS.animation],
+    url: "https://haptics.lochie.me/",
   },
 ];

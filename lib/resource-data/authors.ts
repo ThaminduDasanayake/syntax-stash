@@ -15,6 +15,15 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
     },
     name: "DASCA",
   },
+  "federico-valla": {
+    links: {
+      github: "https://github.com/vallafederico",
+      linkedin: "https://www.linkedin.com/in/federicovalla/",
+      twitter: "https://x.com/ffmfed",
+      website: "https://www.federic.ooo/",
+    },
+    name: "Federico Valla",
+  },
   fffuel: {
     links: {
       twitter: "https://x.com/fffuel_co",
@@ -64,6 +73,13 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
     },
     name: "Laura Escobar",
   },
+  "lochie-axon": {
+    links: {
+      twitter: "https://x.com/lochieaxon",
+      website: "https://www.lochieaxon.com/",
+    },
+    name: "Lochie Axon",
+  },
   "matthias-martin": {
     links: {
       twitter: "https://x.com/RoyDigerhund",
@@ -77,6 +93,14 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
       website: "https://pablostanley.com",
     },
     name: "Pablo Stanley",
+  },
+  rive: {
+    links: {
+      github: "https://github.com/rive-app",
+      twitter: "https://twitter.com/rive_app",
+      youtube: "https://www.youtube.com/@Rive_app",
+    },
+    name: "Rive",
   },
   vercel: {
     links: {
