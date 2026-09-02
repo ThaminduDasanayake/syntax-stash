@@ -21,6 +21,7 @@ import { CopyButton } from "@/components/ui/copy-button";
 import { DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { useSession } from "@/lib/auth-client";
+import { slugifyAuthor } from "@/lib/authors";
 import { formatStarCount, getGitHubStars } from "@/lib/github";
 import { resourceLinks } from "@/lib/resource-data";
 import { cn, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
@@ -34,7 +35,7 @@ export interface ResourceDialogProps {
 export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogProps) {
   const [activeTool, setActiveTool] = useState(resource);
   const [ogError, setOgError] = useState(false);
-  const [isRetryingOgProxy, setIsRetryingOgProxy] = useState(false);
+  const [useDirectOgFallback, setUseDirectOgFallback] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const gitHubStars = getGitHubStars(activeTool.gitHubLink);
   const formattedStars = gitHubStars !== null ? formatStarCount(gitHubStars) : null;
@@ -105,7 +106,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
 
   const handleSelectTool = (res: Resource) => {
     setOgError(false);
-    setIsRetryingOgProxy(false);
+    setUseDirectOgFallback(false);
     setActiveTool(res);
     resetMobileHeader();
     if (scrollContainerRef.current) {
@@ -445,14 +446,12 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
 
           {activeTool.author && (
             <p className="modal-author">
-              <a
-                href={activeTool.authorLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="modal-author-link"
+              <Link
+                href={`/authors/${slugifyAuthor(activeTool.author)}`}
+                className="modal-author-link hover:underline"
               >
                 {activeTool.author}
-              </a>
+              </Link>
             </p>
           )}
         </div>
@@ -461,26 +460,25 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
         <div className="modal-right bg-background flex flex-col md:overflow-hidden">
           <div className="modal-content px-5 pt-5 pb-6 [scrollbar-color:var(--line-2)_transparent] md:min-h-0 md:flex-1 md:overflow-y-auto md:overscroll-contain md:px-8 md:pt-20 md:pb-5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent">
             {(() => {
+              if (!activeTool.ogImage || ogError) return null;
+
+              const isExternalOg =
+                (activeTool.ogImage.startsWith("http://") ||
+                  activeTool.ogImage.startsWith("https://")) &&
+                !activeTool.ogImage.startsWith("/api/proxy-image");
+
               const handleOgError = () => {
-                if (
-                  activeTool.ogImage &&
-                  (activeTool.ogImage.startsWith("http://") ||
-                    activeTool.ogImage.startsWith("https://")) &&
-                  !activeTool.ogImage.startsWith("/api/proxy-image") &&
-                  !isRetryingOgProxy
-                ) {
-                  setIsRetryingOgProxy(true);
+                if (isExternalOg && !useDirectOgFallback) {
+                  setUseDirectOgFallback(true);
                 } else {
                   setOgError(true);
                 }
               };
 
               const currentOgSrc =
-                isRetryingOgProxy && activeTool.ogImage
+                isExternalOg && !useDirectOgFallback
                   ? `/api/proxy-image?url=${encodeURIComponent(activeTool.ogImage)}`
                   : activeTool.ogImage;
-
-              if (!currentOgSrc || ogError) return null;
 
               return (
                 <div className="mb-5.5">
@@ -586,11 +584,19 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
             )}
 
             {/* Author Resources Section */}
-            {authorResources.length > 0 && (
+            {authorResources.length > 0 && activeTool.author && (
               <div className="mb-5.5">
-                <span className={cn("modal-heading", activeThemeStyles.label)}>
-                  More by {activeTool.author}
-                </span>
+                <div className="mb-2 flex items-center justify-between">
+                  <span className={cn("modal-heading mb-0!", activeThemeStyles.label)}>
+                    More by {activeTool.author}
+                  </span>
+                  <Link
+                    href={`/authors/${slugifyAuthor(activeTool.author)}`}
+                    className="text-muted-foreground hover:text-foreground font-mono text-[11px] font-semibold hover:underline"
+                  >
+                    View all ({authorResources.length + 1}) →
+                  </Link>
+                </div>
                 <div className="modal-related-chips">
                   {authorResources.map((res) => {
                     const styles = THEME_CONFIG[getCategoryTheme(res.category)];

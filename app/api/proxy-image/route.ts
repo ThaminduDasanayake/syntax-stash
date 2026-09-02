@@ -41,18 +41,56 @@ export async function GET(request: NextRequest) {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 9000);
 
+    const upstreamHeaders: Record<string, string> = {
+      Accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "Accept-Language": "en-US,en;q=0.9",
+      "User-Agent":
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    };
+
+    // Forward conditional headers for ETag / 304 validation
+    const ifNoneMatch = request.headers.get("if-none-match");
+    if (ifNoneMatch) {
+      upstreamHeaders["If-None-Match"] = ifNoneMatch;
+    }
+
+    const ifModifiedSince = request.headers.get("if-modified-since");
+    if (ifModifiedSince) {
+      upstreamHeaders["If-Modified-Since"] = ifModifiedSince;
+    }
+
     const upstreamRes = await fetch(parsedUrl.href, {
-      headers: {
-        Accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.9",
-        "User-Agent":
-          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
-      },
+      headers: upstreamHeaders,
       redirect: "follow",
       signal: controller.signal,
     });
 
     clearTimeout(timeoutId);
+
+    const responseHeaders: Record<string, string> = {
+      "Access-Control-Allow-Origin": "*",
+      "Cache-Control": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400",
+      "Cross-Origin-Resource-Policy": "cross-origin",
+    };
+
+    // Forward upstream validation headers
+    const etag = upstreamRes.headers.get("etag");
+    if (etag) {
+      responseHeaders["ETag"] = etag;
+    }
+
+    const lastModified = upstreamRes.headers.get("last-modified");
+    if (lastModified) {
+      responseHeaders["Last-Modified"] = lastModified;
+    }
+
+    // Upstream confirmed image is unchanged
+    if (upstreamRes.status === 304) {
+      return new NextResponse(null, {
+        headers: responseHeaders,
+        status: 304,
+      });
+    }
 
     if (!upstreamRes.ok) {
       return new NextResponse(`Upstream returned ${upstreamRes.status}`, {
@@ -61,15 +99,12 @@ export async function GET(request: NextRequest) {
     }
 
     const contentType = upstreamRes.headers.get("content-type") || "image/png";
+    responseHeaders["Content-Type"] = contentType;
+
     const imageBuffer = await upstreamRes.arrayBuffer();
 
     return new NextResponse(imageBuffer, {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Cache-Control": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400",
-        "Content-Type": contentType,
-        "Cross-Origin-Resource-Policy": "cross-origin",
-      },
+      headers: responseHeaders,
       status: 200,
     });
   } catch (err: unknown) {

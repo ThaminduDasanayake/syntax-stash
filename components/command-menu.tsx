@@ -1,6 +1,6 @@
 "use client";
 
-import { ToolboxIcon } from "@phosphor-icons/react";
+import { StarIcon, ToolboxIcon } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -15,6 +15,7 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
+import { formatStarCount, getGitHubStars } from "@/lib/github";
 import { iconMap } from "@/lib/icons";
 import { resourceLinks } from "@/lib/resource-data";
 import { internalTools } from "@/lib/tools-data";
@@ -142,42 +143,57 @@ export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
           <CommandSeparator />
 
           <CommandGroup heading="Resources">
-            {resourceLinks.map((tool) => (
-              <CommandItem
-                key={tool.url}
-                value={`${tool.title} ${tool.description ?? ""} ${tool.category}`}
-                onSelect={() => handleSelect(tool)}
-              >
-                {/* Structural Level Indentation Logic */}
-                {"isSubItem" in tool && tool.isSubItem ? (
-                  <div className="border-muted-foreground/40 bg-background text-muted-foreground ml-4 flex h-8 w-8 shrink-0 items-center justify-center border border-dashed font-mono text-xs">
-                    &gt;
-                  </div>
-                ) : (
-                  <CardIcon
-                    alt={tool.title}
-                    favicon={tool.favicon}
-                    className="border-border bg-background flex h-10 w-10 shrink-0 items-center justify-center border-2! p-0.5!"
-                  />
-                )}
-                <div className="ml-1 flex min-w-0 flex-1 flex-col">
-                  <span className="text-foreground mb-1 block text-sm font-bold tracking-tight uppercase">
-                    <Highlight text={tool.title} query={search} />
-                  </span>
-                  {tool.url && (
-                    <span className="block truncate font-mono text-[10px] font-semibold">
-                      {tool.url}
-                    </span>
-                  )}
-                  <span className="text-muted-foreground/80 mt-1 block font-mono text-xs leading-relaxed font-medium whitespace-normal">
-                    <Highlight
-                      text={truncateWords(`[ ${tool.category} ] // ${tool.description}`, 15)}
-                      query={search}
+            {resourceLinks.map((tool) => {
+              const stars = getGitHubStars(tool.gitHubLink);
+
+              return (
+                <CommandItem
+                  key={tool.url}
+                  value={`${tool.title} ${tool.description ?? ""} ${tool.category}`}
+                  onSelect={() => handleSelect(tool)}
+                >
+                  {/* Structural Level Indentation Logic */}
+                  {"isSubItem" in tool && tool.isSubItem ? (
+                    <div className="border-muted-foreground/40 bg-background text-muted-foreground ml-4 flex h-8 w-8 shrink-0 items-center justify-center border border-dashed font-mono text-xs">
+                      &gt;
+                    </div>
+                  ) : (
+                    <CardIcon
+                      alt={tool.title}
+                      favicon={tool.favicon}
+                      className="border-border bg-background flex h-10 w-10 shrink-0 items-center justify-center border-2! p-0.5!"
                     />
-                  </span>
-                </div>
-              </CommandItem>
-            ))}
+                  )}
+                  <div className="ml-1 flex min-w-0 flex-1 flex-col">
+                    <div className="mb-1 flex items-center justify-between gap-2">
+                      <span className="text-foreground block truncate text-sm font-bold tracking-tight uppercase">
+                        <Highlight text={tool.title} query={search} />
+                      </span>
+                      {stars !== null && (
+                        <span
+                          className="text-muted-foreground inline-flex shrink-0 items-center gap-1 font-mono text-[11px]"
+                          title={`${stars.toLocaleString()} GitHub stars`}
+                        >
+                          <StarIcon weight="fill" className="size-3 text-amber-500" />
+                          <span>{formatStarCount(stars)}</span>
+                        </span>
+                      )}
+                    </div>
+                    {tool.url && (
+                      <span className="block truncate font-mono text-[10px] font-semibold">
+                        {tool.url}
+                      </span>
+                    )}
+                    <span className="text-muted-foreground/80 mt-1 block font-mono text-xs leading-relaxed font-medium whitespace-normal">
+                      <Highlight
+                        text={truncateWords(`[ ${tool.category} ] // ${tool.description}`, 15)}
+                        query={search}
+                      />
+                    </span>
+                  </div>
+                </CommandItem>
+              );
+            })}
           </CommandGroup>
         </CommandList>
       </Command>

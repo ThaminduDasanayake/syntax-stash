@@ -3,6 +3,7 @@ import path from "node:path";
 
 import * as cheerio from "cheerio";
 
+import { parseGitHubRepo } from "@/lib/github";
 import { CATEGORIES, resourceLinks } from "@/lib/resource-data";
 import { AUDIT_CONFIG } from "@/lib/resource-data/audit-config";
 import { Resource } from "@/types";
@@ -196,6 +197,21 @@ async function checkGitHubLink(resource: Resource): Promise<AuditFinding[]> {
       });
       return findings;
     }
+
+    // 4. Check for missing author in resource data
+    if (!resource.author) {
+      const parsed = parseGitHubRepo(targetUrl);
+      if (parsed?.owner) {
+        findings.push({
+          category: resource.category,
+          details: "Missing author in resource data (found on GitHub)",
+          resourceTitle: resource.title,
+          suggestion: parsed.owner,
+          type: "metadata",
+          url: targetUrl,
+        });
+      }
+    }
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err);
     if (!message.includes("abort") && !message.includes("timeout")) {
@@ -204,6 +220,93 @@ async function checkGitHubLink(resource: Resource): Promise<AuditFinding[]> {
         details: `GitHub request error: ${message}`,
         resourceTitle: resource.title,
         type: "github_issue",
+        url: targetUrl,
+      });
+    }
+  }
+
+  return findings;
+}
+
+async function checkAuthorLink(resource: Resource): Promise<AuditFinding[]> {
+  if (!resource.authorLink) return [];
+
+  const targetUrl = resource.authorLink;
+  const findings: AuditFinding[] = [];
+
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 9000);
+
+    const res = await fetch(targetUrl, {
+      headers: {
+        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+      },
+      method: "HEAD",
+      redirect: "manual",
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    // 1. Check for Redirects (301, 302, 307, 308)
+    if ([301, 302, 307, 308].includes(res.status)) {
+      const location = res.headers.get("location");
+      if (location) {
+        const resolved = new URL(location, targetUrl).href;
+        const cleanOld = targetUrl.replace(/\/$/, "").toLowerCase();
+        const cleanNew = resolved.replace(/\/$/, "").toLowerCase();
+
+        if (cleanOld !== cleanNew) {
+          findings.push({
+            category: resource.category,
+            details: `Author link moved with HTTP ${res.status} to: ${resolved}`,
+            resourceTitle: resource.title,
+            statusCode: res.status,
+            suggestion: resolved,
+            type: "redirect",
+            url: targetUrl,
+          });
+        }
+      }
+      return findings;
+    }
+
+    // 2. Check for Dead / 404
+    if (res.status === 404) {
+      findings.push({
+        category: resource.category,
+        details: "Author link dead / not found (HTTP 404)",
+        resourceTitle: resource.title,
+        statusCode: 404,
+        type: "broken",
+        url: targetUrl,
+      });
+      return findings;
+    }
+
+    // 3. Check for Server Error
+    if (res.status >= 500) {
+      findings.push({
+        category: resource.category,
+        details: `Author link server error (HTTP ${res.status})`,
+        resourceTitle: resource.title,
+        statusCode: res.status,
+        type: "broken",
+        url: targetUrl,
+      });
+      return findings;
+    }
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err);
+    if (!message.includes("abort") && !message.includes("timeout")) {
+      findings.push({
+        category: resource.category,
+        details: `Author link request error: ${message}`,
+        resourceTitle: resource.title,
+        type: "broken",
         url: targetUrl,
       });
     }
@@ -222,6 +325,12 @@ async function checkResource(resource: Resource): Promise<AuditFinding[]> {
   if (resource.gitHubLink) {
     const ghFindings = await checkGitHubLink(resource);
     findings.push(...ghFindings);
+  }
+
+  // Audit Author link if provided
+  if (resource.authorLink) {
+    const authorLinkFindings = await checkAuthorLink(resource);
+    findings.push(...authorLinkFindings);
   }
 
   const targetUrl = resource.url;
@@ -320,6 +429,12 @@ async function checkResource(resource: Resource): Promise<AuditFinding[]> {
     const scrapedOgImage =
       $('meta[property="og:image"]').attr("content")?.trim() ||
       $('meta[name="twitter:image"]').attr("content")?.trim() ||
+      "";
+
+    const scrapedAuthor =
+      $('meta[name="author"]').attr("content")?.trim() ||
+      $('meta[property="article:author"]').attr("content")?.trim() ||
+      $('meta[name="twitter:creator"]').attr("content")?.trim() ||
       "";
 
     // --- Description Analysis ---
@@ -472,6 +587,26 @@ async function checkResource(resource: Resource): Promise<AuditFinding[]> {
       } catch {
         // invalid URL
       }
+    }
+
+    // --- Author Discovery ---
+    let cleanAuthor = scrapedAuthor.replace(/^@/, "").trim();
+    if (cleanAuthor.startsWith("http://") || cleanAuthor.startsWith("https://")) {
+      cleanAuthor = "";
+    }
+    if (cleanAuthor.length < 2 || cleanAuthor.length > 60) {
+      cleanAuthor = "";
+    }
+
+    if (!resource.author && cleanAuthor) {
+      findings.push({
+        category: resource.category,
+        details: "Missing author in resource data (found on website)",
+        resourceTitle: resource.title,
+        suggestion: cleanAuthor,
+        type: "metadata",
+        url: targetUrl,
+      });
     }
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err);

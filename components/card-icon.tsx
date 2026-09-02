@@ -2,6 +2,9 @@ import { useState } from "react";
 
 import { cn } from "@/lib/utils";
 
+// In-memory set of favicons successfully loaded during the session
+const loadedFavicons = new Set<string>();
+
 export function CardIcon({
   alt,
   className = "bg-background",
@@ -11,19 +14,26 @@ export function CardIcon({
   className?: string;
   favicon?: string;
 }) {
+  const isExternal =
+    favicon &&
+    (favicon.startsWith("http://") || favicon.startsWith("https://")) &&
+    !favicon.startsWith("/api/proxy-image");
+
+  const [useDirectFallback, setUseDirectFallback] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [isRetryingWithProxy, setIsRetryingWithProxy] = useState(false);
 
   const handleError = () => {
-    if (
-      favicon &&
-      (favicon.startsWith("http://") || favicon.startsWith("https://")) &&
-      !favicon.startsWith("/api/proxy-image") &&
-      !isRetryingWithProxy
-    ) {
-      setIsRetryingWithProxy(true);
+    // If the proxy fails (e.g. timeout or blocked host), fall back to direct URL
+    if (isExternal && !useDirectFallback) {
+      setUseDirectFallback(true);
     } else {
       setHasError(true);
+    }
+  };
+
+  const handleLoad = () => {
+    if (favicon) {
+      loadedFavicons.add(favicon);
     }
   };
 
@@ -31,9 +41,11 @@ export function CardIcon({
     return <div className={cn(className, "card-icon-box p-1")} />;
   }
 
-  const currentSrc = isRetryingWithProxy
-    ? `/api/proxy-image?url=${encodeURIComponent(favicon)}`
-    : favicon;
+  // Route external favicons through our caching proxy for fast SWR caching and CORS stability
+  const currentSrc =
+    isExternal && !useDirectFallback
+      ? `/api/proxy-image?url=${encodeURIComponent(favicon)}`
+      : favicon;
 
   return (
     <div className={cn(className, "card-icon-box p-1")}>
@@ -45,6 +57,7 @@ export function CardIcon({
         referrerPolicy="no-referrer"
         className="h-full w-full object-contain"
         onError={handleError}
+        onLoad={handleLoad}
       />
     </div>
   );

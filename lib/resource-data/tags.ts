@@ -29,6 +29,7 @@ export const TAGS = {
   editor: "editor",
   education: "education",
   email: "email",
+  flutter: "flutter",
   freelance: "freelance",
   git: "git",
   gradient: "gradient",

@@ -351,6 +351,7 @@ export const educationLinks: Resource<typeof CATEGORIES.education>[] = [
   },
   {
     title: "Developer Roadmaps",
+    author: "Kamran Ahmed",
     category: CATEGORIES.education,
     description:
       "Community driven roadmaps, articles and guides for developers to grow in their career.",
