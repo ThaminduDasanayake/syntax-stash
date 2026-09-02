@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowSquareOutIcon, BookmarkSimpleIcon, StarIcon } from "@phosphor-icons/react";
+import Link from "next/link";
 import { memo, useState } from "react";
 
 import { AuthModal } from "@/components/auth-modal";
@@ -9,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { useSession } from "@/lib/auth-client";
+import { slugifyAuthor } from "@/lib/authors";
 import { formatStarCount, getGitHubStars } from "@/lib/github";
 import { cn, getCategoryColor } from "@/lib/utils";
 import { ResourceCardProps } from "@/types";
@@ -78,7 +80,13 @@ function ResourceCardComponent({
               <div className="card-footer">
                 <div className="flex min-w-0 items-center gap-2">
                   {resource.author ? (
-                    <span className="card-author truncate">{resource.author}</span>
+                    <Link
+                      href={`/authors/${slugifyAuthor(resource.author)}`}
+                      className="card-author truncate hover:underline"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {resource.author}
+                    </Link>
                   ) : null}
                   {stars !== null && (
                     <span

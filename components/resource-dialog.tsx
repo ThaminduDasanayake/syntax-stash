@@ -21,6 +21,7 @@ import { CopyButton } from "@/components/ui/copy-button";
 import { DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { useSession } from "@/lib/auth-client";
+import { slugifyAuthor } from "@/lib/authors";
 import { formatStarCount, getGitHubStars } from "@/lib/github";
 import { resourceLinks } from "@/lib/resource-data";
 import { cn, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
@@ -445,14 +446,12 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
 
           {activeTool.author && (
             <p className="modal-author">
-              <a
-                href={activeTool.authorLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="modal-author-link"
+              <Link
+                href={`/authors/${slugifyAuthor(activeTool.author)}`}
+                className="modal-author-link hover:underline"
               >
                 {activeTool.author}
-              </a>
+              </Link>
             </p>
           )}
         </div>
@@ -586,11 +585,19 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
             )}
 
             {/* Author Resources Section */}
-            {authorResources.length > 0 && (
+            {authorResources.length > 0 && activeTool.author && (
               <div className="mb-5.5">
-                <span className={cn("modal-heading", activeThemeStyles.label)}>
-                  More by {activeTool.author}
-                </span>
+                <div className="mb-2 flex items-center justify-between">
+                  <span className={cn("modal-heading mb-0!", activeThemeStyles.label)}>
+                    More by {activeTool.author}
+                  </span>
+                  <Link
+                    href={`/authors/${slugifyAuthor(activeTool.author)}`}
+                    className="text-muted-foreground hover:text-foreground font-mono text-[11px] font-semibold hover:underline"
+                  >
+                    View all ({authorResources.length + 1}) →
+                  </Link>
+                </div>
                 <div className="modal-related-chips">
                   {authorResources.map((res) => {
                     const styles = THEME_CONFIG[getCategoryTheme(res.category)];
