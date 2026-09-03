@@ -1,6 +1,7 @@
-import * as cheerio from "cheerio";
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
+
+import * as cheerio from "cheerio";
 
 interface ScrapedLiveMeta {
   description?: string;
@@ -130,7 +131,12 @@ async function scrapeLiveMetadata(toolUrl: string): Promise<ScrapedLiveMeta> {
         const gh = new URL(href);
         if (gh.hostname.includes("github.com")) {
           const parts = gh.pathname.split("/").filter(Boolean);
-          if (parts.length >= 2 && !["topics", "features", "explore", "trending", "pricing", "marketplace"].includes(parts[0])) {
+          if (
+            parts.length >= 2 &&
+            !["explore", "features", "marketplace", "pricing", "topics", "trending"].includes(
+              parts[0],
+            )
+          ) {
             gitHubLink = `https://github.com/${parts[0]}/${parts[1]}`;
           }
         }
@@ -140,7 +146,7 @@ async function scrapeLiveMetadata(toolUrl: string): Promise<ScrapedLiveMeta> {
     }
   });
 
-  return { description, favicon, gitHubLink, ogImage, title };
+  return { title, description, favicon, gitHubLink, ogImage };
 }
 
 async function scrapeDesignMinisToolPage(detailUrl: string): Promise<{
@@ -183,7 +189,10 @@ async function scrapeDesignMinisToolPage(detailUrl: string): Promise<{
       }
     } else if (dt.includes("categories")) {
       const catText = dd.text().trim();
-      categories = catText.split(",").map((c) => c.trim()).filter(Boolean);
+      categories = catText
+        .split(",")
+        .map((c) => c.trim())
+        .filter(Boolean);
     } else if (dt.includes("platforms")) {
       platforms = dd.text().trim();
     } else if (dt.includes("pricing")) {
@@ -249,7 +258,9 @@ async function main() {
     const [category = "General", pricing = "Free"] = metaText.split("·").map((s) => s.trim());
 
     // Live URL
-    let liveUrl = item.find('a[aria-label^="Open"]').attr("href") || item.find('a[target="_blank"]').attr("href");
+    let liveUrl =
+      item.find('a[aria-label^="Open"]').attr("href") ||
+      item.find('a[target="_blank"]').attr("href");
 
     if (!liveUrl) {
       liveUrl = designMinisUrl;
@@ -260,13 +271,13 @@ async function main() {
     }
 
     toolsRaw.push({
+      title,
       category,
       designMinisSlug: slug,
       designMinisUrl,
       liveUrl: cleanUrl(liveUrl),
       pricing,
       screenshot,
-      title,
     });
   });
 
@@ -302,8 +313,13 @@ async function main() {
             : [tool.category];
 
         const extracted: ExtractedTool = {
+          title: tool.title,
           addedDate: dmDetail.addedDate,
-          author: dmDetail.author || (isHostedOnDesignMinis ? { name: "Kosta Motresku", url: "https://x.com/MotreskuKosta" } : undefined),
+          author:
+            dmDetail.author ||
+            (isHostedOnDesignMinis
+              ? { name: "Kosta Motresku", url: "https://x.com/MotreskuKosta" }
+              : undefined),
           categories: finalCategories,
           description: finalDescription,
           designMinisSlug: tool.designMinisSlug,
@@ -315,12 +331,11 @@ async function main() {
           platforms: dmDetail.platforms || "Web",
           pricing: dmDetail.pricing || tool.pricing,
           screenshot: tool.screenshot,
-          title: tool.title,
           url: tool.liveUrl,
         };
 
         return extracted;
-      })
+      }),
     );
 
     results.push(...batchResults);

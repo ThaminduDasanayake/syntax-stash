@@ -1,6 +1,7 @@
-import * as cheerio from "cheerio";
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
+
+import * as cheerio from "cheerio";
 
 interface InputTool {
   addedDate?: string;
@@ -82,7 +83,10 @@ function resolveUrl(relativeOrAbsolute: string, baseUrl: string): string {
   }
 }
 
-async function fetchHtml(url: string, timeoutMs = 12000): Promise<{ finalUrl: string; html: string } | null> {
+async function fetchHtml(
+  url: string,
+  timeoutMs = 12000,
+): Promise<{ finalUrl: string; html: string } | null> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
@@ -107,7 +111,11 @@ async function fetchHtml(url: string, timeoutMs = 12000): Promise<{ finalUrl: st
   }
 }
 
-function extractFullMetadata(html: string, targetUrl: string, fallbackTool: InputTool): CompleteScrapedTool {
+function extractFullMetadata(
+  html: string,
+  targetUrl: string,
+  fallbackTool: InputTool,
+): CompleteScrapedTool {
   const $ = cheerio.load(html);
 
   const meta: Record<string, string> = {};
@@ -139,7 +147,10 @@ function extractFullMetadata(html: string, targetUrl: string, fallbackTool: Inpu
 
     if (property && property.startsWith("og:")) {
       openGraph[property] = content;
-    } else if ((name && name.startsWith("twitter:")) || (property && property.startsWith("twitter:"))) {
+    } else if (
+      (name && name.startsWith("twitter:")) ||
+      (property && property.startsWith("twitter:"))
+    ) {
       const key = name || property || "";
       twitter[key] = content;
     } else if (name) {
@@ -218,7 +229,16 @@ function extractFullMetadata(html: string, targetUrl: string, fallbackTool: Inpu
             const parts = gh.pathname.split("/").filter(Boolean);
             if (
               parts.length >= 2 &&
-              !["topics", "features", "explore", "trending", "pricing", "marketplace", "login", "signup"].includes(parts[0])
+              ![
+                "explore",
+                "features",
+                "login",
+                "marketplace",
+                "pricing",
+                "signup",
+                "topics",
+                "trending",
+              ].includes(parts[0])
             ) {
               gitHubLink = `https://github.com/${parts[0]}/${parts[1]}`;
             }
@@ -325,6 +345,7 @@ function extractFullMetadata(html: string, targetUrl: string, fallbackTool: Inpu
   }
 
   return {
+    title,
     author,
     authorUrl,
     categories: fallbackTool.categories,
@@ -342,7 +363,6 @@ function extractFullMetadata(html: string, targetUrl: string, fallbackTool: Inpu
     ogImage,
     originalTitle: fallbackTool.title,
     pricing: fallbackTool.pricing,
-    title,
     url: cleanUrl(targetUrl),
   };
 }
@@ -353,7 +373,9 @@ async function main() {
   const tools: InputTool[] = JSON.parse(rawData);
 
   console.log(`🚀 Loaded ${tools.length} tool URLs from data/designminis-tools.json`);
-  console.log("🌐 Extracting full Meta, OpenGraph, Twitter, and Icon metadata from each tool URL...\n");
+  console.log(
+    "🌐 Extracting full Meta, OpenGraph, Twitter, and Icon metadata from each tool URL...\n",
+  );
 
   const results: CompleteScrapedTool[] = [];
   const CONCURRENCY = 5;
@@ -369,8 +391,11 @@ async function main() {
         const fetchResult = await fetchHtml(targetUrl, 12000);
 
         if (!fetchResult) {
-          console.warn(`  ⚠️ Failed to fetch live HTML for ${targetUrl}, generating fallback structure.`);
+          console.warn(
+            `  ⚠️ Failed to fetch live HTML for ${targetUrl}, generating fallback structure.`,
+          );
           return {
+            title: tool.title,
             author: tool.author?.name || "Unknown",
             authorUrl: tool.author?.url,
             categories: tool.categories,
@@ -381,21 +406,20 @@ async function main() {
               headings: { h1: [tool.title], h2: [] },
               icons: tool.favicon ? [{ href: tool.favicon, rel: "icon" }] : [],
               jsonLd: [],
-              meta: { description: tool.description || "", title: tool.title },
+              meta: { title: tool.title, description: tool.description || "" },
               openGraph: tool.ogImage ? { "og:image": tool.ogImage, "og:title": tool.title } : {},
               twitter: {},
             },
             ogImage: tool.ogImage || tool.screenshot,
             originalTitle: tool.title,
             pricing: tool.pricing,
-            title: tool.title,
             url: targetUrl,
           };
         }
 
         const metadata = extractFullMetadata(fetchResult.html, fetchResult.finalUrl, tool);
         return metadata;
-      })
+      }),
     );
 
     results.push(...batchResults);
@@ -404,7 +428,9 @@ async function main() {
   const outPath = path.resolve(process.cwd(), "data/designminis-full-web-metadata.json");
   await fs.writeFile(outPath, JSON.stringify(results, null, 2), "utf-8");
 
-  console.log(`\n🎉 Successfully extracted full Web Extractor metadata for ${results.length} websites!`);
+  console.log(
+    `\n🎉 Successfully extracted full Web Extractor metadata for ${results.length} websites!`,
+  );
   console.log(`📁 Saved to: ${outPath}`);
 }
 
