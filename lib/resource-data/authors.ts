@@ -4,6 +4,7 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
   "csaba-kissi": {
     links: {
       github: "https://github.com/csaba-kissi",
+      linkedin: "https://www.linkedin.com/in/csaba-kissi/",
       twitter: "https://x.com/csaba_kissi",
       website: "https://csaba.page",
     },
@@ -38,6 +39,24 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
       website: "https://firecrawl.dev",
     },
     name: "Firecrawl",
+  },
+  "george-hastings": {
+    links: {
+      github: "https://github.com/georgehastings",
+      linkedin: "https://www.linkedin.com/in/george-hastings-a6874514/",
+      twitter: "https://x.com/soulegit",
+      website: "https://georgehastings.com/",
+    },
+    name: "George Hastings",
+  },
+  "gilbert-pellegrom": {
+    links: {
+      github: "https://github.com/gilbitron",
+      linkedin: "https://www.linkedin.com/in/gilbert-pellegrom",
+      twitter: "https://x.com/gilbitron",
+      website: "https://gilbitron.me/",
+    },
+    name: "Gilbert Pellegrom",
   },
   "hayk-an": {
     links: {
@@ -80,6 +99,14 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
     },
     name: "Lochie Axon",
   },
+  "mackenzie-child": {
+    links: {
+      twitter: "https://x.com/mackenziechild",
+      website: "https://www.mackenziechild.me/",
+      youtube: "https://www.youtube.com/@mackenziechild",
+    },
+    name: "Mackenzie Child",
+  },
   "matthias-martin": {
     links: {
       twitter: "https://x.com/RoyDigerhund",
@@ -93,6 +120,13 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
       website: "https://pablostanley.com",
     },
     name: "Pablo Stanley",
+  },
+  "pixel-symphony": {
+    links: {
+      twitter: "https://x.com/Pixel0Symphony",
+      website: "https://pixelsymphony.art/",
+    },
+    name: "Pixel Symphony",
   },
   rive: {
     links: {

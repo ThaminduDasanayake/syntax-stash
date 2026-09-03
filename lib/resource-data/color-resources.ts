@@ -13,10 +13,25 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     url: "https://colorpalettes.colorion.co/",
   },
   {
-    title: "Colir",
+    title: "Chromatic Profiles",
+    author: "Pixel Symphony",
     category: CATEGORIES.colors,
     description:
+      "Colorists in the Colorist Archive: browse chromatic profiles, artwork palettes, and generative color studies across artists, periods, and collections.",
+    favicon: "https://meditationsincolor.com/apple-touch-icon.png",
+    ogImage: "https://meditationsincolor.com/assets/mic-logo-1024.png",
+    subtitle: "Meditations in Color",
+    tags: [TAGS.color],
+    url: "https://meditationsincolor.com/colorists",
+  },
+  {
+    title: "Colir",
+    category: CATEGORIES.colors,
+    className: "bg-foreground border-paper",
+    description:
       "Create unique, professional gradients with curve-based control. Real-time WebGL rendering, 12 blend modes, and advanced visual effects.",
+    favicon: "https://colir.space/Logos/logo.svg",
+    ogImage: "https://colir.space/Templates/OG_colir.png",
     subtitle: "Gradients",
     tags: [TAGS.color],
     url: "https://colir.space/",
@@ -34,9 +49,12 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
   },
   {
     title: "ColorFlow",
+    author: "ColorFlow",
     category: CATEGORIES.colors,
     description:
       "Create stunning mesh gradients with ColorFlow. Professional gradient editor with real-time preview, customizable control points, and export options. Perfect for designers and developers.",
+    favicon: "https://colorflow.ls.graphics/apple-touch-icon.png",
+    ogImage: "https://colorflow.ls.graphics/og-image.jpg",
     subtitle: "Advanced Mesh Gradient Generator & Editor",
     tags: [TAGS.color],
     url: "https://colorflow.ls.graphics/",
@@ -65,9 +83,10 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     title: "Color Hunt",
     category: CATEGORIES.colors,
     description:
-      "Find the perfect trendy color palettes and get color inspiration for your next design or art project.",
+      "Discover the newest hand-picked color palettes of Color Hunt. Get color inspiration for your design and art projects.",
+    favicon: "https://colorhunt.co/img/colorhunt-favicon.svg",
     ogImage: "https://colorhunt.co/img/color-hunt-og.png",
-    subtitle: "The Most Popular Color Palettes of 2026",
+    subtitle: "Color Palettes for Designers and Artists",
     tags: [TAGS.color],
     url: "https://colorhunt.co/",
   },
@@ -87,6 +106,9 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     category: CATEGORIES.colors,
     description:
       "Generate color palettes instantly from any website effortlessly. Enter a URL to explore color schemes and combinations directly from the site's design. No sign-up required. Try it now!",
+    favicon: "https://colorize.design/favicon.svg",
+    ogImage: "https://colorize.design/og-image.jpg",
+    subtitle: "Extract Color Palettes from Any Website - Free Color Palette Generator",
     tags: [TAGS.color],
     url: "https://colorize.design/",
   },
@@ -96,6 +118,7 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     category: CATEGORIES.colors,
     description:
       "Color Lab is your all-in-one color and UI toolkit. Create stunning palettes, convert between HEX, RGB, HSL, and design custom themes with the built-in Shadcn UI Theme Generator – ideal for designers and frontend developers.",
+    favicon: "https://tools.ui-layouts.com/favicon.ico",
     ogImage: "https://tools.ui-layouts.com/color-lab-og.jpg",
     subtitle: "Generate Color Palettes, Convert Codes & Build Shadcn Themes",
     tags: [TAGS.color],
@@ -104,8 +127,11 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
   {
     title: "Colormind",
     category: CATEGORIES.colors,
+    className:
+      "bg-foreground border-paper overflow-hidden [&>img]:translate-x-[16%] [&>img]:-translate-y-[9%] [&>img]:scale-125",
     description:
       "Generate color combinations in one click. Colormind creates cohesive color schemes using a deep neural net.",
+    favicon: "https://colormind.io/img/logo_nav.svg",
     subtitle: "The AI powered color palette generator",
     tags: [TAGS.color],
     url: "https://colormind.io/",
@@ -164,8 +190,11 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
   },
   {
     title: "Coolors",
+    author: "Fabrizio Bianchi",
+    authorLink: "https://fabrizio.io/",
     category: CATEGORIES.colors,
     description: "Generate or browse beautiful color combinations for your designs.",
+    favicon: "https://coolors.co/assets/img/favicon.png",
     ogImage: "https://coolors.co/assets/img/og_image.png",
     subtitle: "The super fast color palettes generator!",
     tags: [TAGS.color],
@@ -176,6 +205,11 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     category: CATEGORIES.colors,
     description:
       "As a free CSS gradient generator tool, this website lets you create a colorful gradient background for your website, blog, or social media profile.",
+    favicon: "https://cssgradient.io/icon.svg",
+    gitHubLink: "https://github.com/balshaer/gradients-css",
+    ogImage:
+      "https://cssgradient.imgix.net/2bJFIYjQAMqSz44evG5Pel/f973f26f3b70726a8e1aed05da781625/css-gradient.png",
+    subtitle: "Generator, Maker, and Background",
     tags: [TAGS.color],
     url: "https://cssgradient.io/",
   },
@@ -191,14 +225,6 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     url: "https://gradientscss.vercel.app/",
   },
   {
-    title: "Gradienty",
-    category: CATEGORIES.colors,
-    description:
-      "Easily create beautiful Tailwind CSS gradients with Gradienty - a CSS generator. Choose from ready-made gradients or customize your own for eye-catching backgrounds, text effects, and glassmorphism designs. Perfect for websites, apps, and more. Try it for free now!",
-    tags: [TAGS.color],
-    url: "https://gradienty.codes/",
-  },
-  {
     title: "Graduum",
     author: "Niklaus Gerber",
     category: CATEGORIES.colors,
@@ -212,9 +238,14 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
   },
   {
     title: "Happy Hues",
+    author: "Mackenzie Child",
     category: CATEGORIES.colors,
     description:
       "See color palette inspiration on a real example website. As you click on different palettes every color on this site updates to give you context of how that color could be used for your design or illustration projects.",
+    favicon:
+      "https://cdn.prod.website-files.com/5dd40aa8049df8748c72d0ee/5dd9b92056a2d6ed5e537c61_happy-hues-apple-icon.png",
+    ogImage:
+      "https://cdn.prod.website-files.com/5dd40aa8049df8748c72d0ee/5ddd471cbe5e6601554a2a4d_happy-hues.jpeg",
     subtitle: "Curated colors in context",
     tags: [TAGS.color],
     url: "https://www.happyhues.co/",
@@ -241,7 +272,6 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
   {
     title: "ImageColorPicker.com",
     category: CATEGORIES.colors,
-    className: "bg-foreground border-paper",
     description:
       "Upload an image, paste from clipboard, or enter a URL to instantly pick colors. Get HEX, RGB, HSL codes free — no signup required.",
     favicon: "https://imagecolorpicker.com/favicon.svg",
@@ -252,8 +282,11 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
   },
   {
     title: "Ingradients",
+    author: "Gilbert Pellegrom",
     category: CATEGORIES.colors,
     description: "Hand-picked mesh gradients for your next design project.",
+    favicon:
+      "https://framerusercontent.com/modules/reOxh1U6VCuZnfou6x2m/eJmnQAJafZ0DjECK4JSI/assets/oYzfVi4pX5vTuybl3rTEXooXk.png",
     ogImage:
       "https://framerusercontent.com/modules/reOxh1U6VCuZnfou6x2m/eJmnQAJafZ0DjECK4JSI/assets/S3wd0yoFBBYAKv1E4nAuhoWxC8.jpg",
     tags: [TAGS.color, TAGS.gradient],
@@ -261,21 +294,15 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
   },
   {
     title: "Khroma",
+    author: "George Hastings",
     category: CATEGORIES.colors,
     description:
       "Khroma is the fastest way to discover, search, and save color combos and palettes you'll love. Discover a personalized AI-powered color tool for designers to find the perfect color scheme.",
+    favicon: "https://www.khroma.co/assets/icons/fav.png",
+    ogImage: "https://www.khroma.co/assets/images/social.png",
+    subtitle: "AI Color Tool for Designers | Discover and Save Color Palettes",
     tags: [TAGS.color],
     url: "https://www.khroma.co/",
-  },
-  {
-    title: "Meditations in Color",
-    author: "Pixel Symphony",
-    category: CATEGORIES.colors,
-    description:
-      "Colorists in the Colorist Archive: browse chromatic profiles, artwork palettes, and generative color studies across artists, periods, and collections.",
-    subtitle: "Chromatic Profiles",
-    tags: [TAGS.color],
-    url: "https://meditationsincolor.com/colorists",
   },
   {
     title: "Mesh Gradient",
@@ -286,9 +313,23 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     url: "https://meshgradient.com/",
   },
   {
+    title: "Movie Poster Archive",
+    author: "Pixel Symphony",
+    category: CATEGORIES.colors,
+    description:
+      "A searchable chromatic archive of movie poster design. Directors, their film posters, and the color systems inside them.",
+    favicon: "https://meditationsincolor.com/apple-touch-icon.png",
+    subtitle: "Meditations in Color",
+    tags: [TAGS.color],
+    url: "https://meditationsincolor.com/movies",
+  },
+  {
     title: "mymind",
+    author: "mymind",
+    authorLink: "https://mymind.com/",
     category: CATEGORIES.colors,
     description: "A collection of unique color combinations for your design projects.",
+    favicon: "https://static.accelerator.net/134/0.107.0/images/apple-touch-icon.png",
     ogImage: "https://static.accelerator.net/134/0.107.0/colors/images/mymind-colors-twitter.jpg",
     subtitle: "Mindfully curated color palettes",
     tags: [TAGS.color],
@@ -449,6 +490,15 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     ogImage: "https://thegoodcolors.com/og-poster.png",
     tags: [TAGS.color],
     url: "https://thegoodcolors.com/",
+  },
+  {
+    title: "The Palette Studio",
+    author: "Pixel Symphony",
+    category: CATEGORIES.colors,
+    favicon: "https://meditationsincolor.com/apple-touch-icon.png",
+    subtitle: "Meditations in Color",
+    tags: [TAGS.color],
+    url: "https://meditationsincolor.com/palette-studio",
   },
   {
     title: "Two Color Combinations",
