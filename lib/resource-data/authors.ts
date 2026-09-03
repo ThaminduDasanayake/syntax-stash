@@ -107,12 +107,29 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
     },
     name: "Mackenzie Child",
   },
+  "marijana-pavlinic": {
+    links: {
+      github: "https://github.com/marijanapav",
+      linkedin: "https://www.linkedin.com/in/marijana-pavlinic/",
+      twitter: "https://x.com/marijanapav",
+      website: "https://marijanapav.com/",
+    },
+    name: "Marijana Pavlinić",
+  },
   "matthias-martin": {
     links: {
       twitter: "https://x.com/RoyDigerhund",
       website: "https://github.com/roydigerhund",
     },
     name: "Matthias Martin",
+  },
+  "oleksandr-yeromin": {
+    links: {
+      github: "https://github.com/oleksand4rux-del",
+      linkedin: "https://www.linkedin.com/in/oleksand4r/",
+      website: "https://www.yrmn.me/",
+    },
+    name: "Oleksandr Yeromin",
   },
   "pablo-stanley": {
     links: {

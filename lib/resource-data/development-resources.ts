@@ -131,7 +131,7 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
     category: CATEGORIES.dev,
     description:
       "Create polished animated videos from images and clips for social media directly in your browser.",
-    favicon: "https://bloop.wtf/img/favicon.png",
+    favicon: "https://bloop.wtf/favicon.svg",
     ogImage: "https://bloop.wtf/img/seo-pages/examples.jpg",
     subtitle: "Social Media Animation Generator",
     url: "https://bloop.wtf/en",
@@ -254,6 +254,16 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
     subtitle: "Your notes. Your server. Your rules.",
     tags: [TAGS.selfHosted],
     url: "https://crumbs.bretzel.app/",
+  },
+  {
+    title: "Cutting mat bg generator",
+    author: "Marijana Pavlinić",
+    category: CATEGORIES.dev,
+    description:
+      "Fully customizable SVG cutting mat. Adjust size, grid, ticks, colors, and typography. Use it for backgrounds, and wallpapers.",
+    // favicon: "https://www.designminis.com/apple-icon.png",
+    ogImage: "https://cutting-mat-generator.vercel.app/og.png",
+    url: "https://cutting-mat-generator.vercel.app/",
   },
   {
     title: "delphitools",
@@ -659,6 +669,17 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
     url: "https://www.koefo.com/",
   },
   {
+    title: "Light Rails",
+    category: CATEGORIES.dev,
+    description:
+      "Light Rails — a generative pattern studio: wire patterns into mockups, then into a showreel.",
+    favicon:
+      "data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ctext x=%2716%27 y=%2724%27 font-size=%2724%27 text-anchor=%27middle%27%3E%E2%9C%A6%3C/text%3E%3C/svg%3E",
+    ogImage: "https://light-stroke-rail.vercel.app/og.png",
+    subtitle: "Pattern studio",
+    url: "https://light-stroke-rail.vercel.app/",
+  },
+  {
     title: "listmonk",
     category: CATEGORIES.dev,
     description:
@@ -833,7 +854,7 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
     description:
       "Stack sheets of paper, drop artwork on them, and bend them the way real paper bends.",
     favicon: "https://www.designminis.com/apple-icon.png",
-    subtitle: "paper stack simulator",
+    subtitle: "Paper stack simulator",
     url: "https://www.designminis.com/paper-studio",
   },
   {
@@ -1122,6 +1143,16 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
     url: "https://terraink.app/",
   },
   {
+    title: "Text to ASCII",
+    author: "Marijana Pavlinić",
+    category: CATEGORIES.dev,
+    description: "Convert text to ASCII art with multiple font styles",
+    favicon: "https://text-to-ascii-tool.vercel.app/icon.png",
+    ogImage:
+      "https://raw.githubusercontent.com/marijanapav/text-to-ascii/main/assets/readme-header.png",
+    url: "https://text-to-ascii-tool.vercel.app/",
+  },
+  {
     title: "The Design System Guide",
     category: CATEGORIES.dev,
     description: "Set Up a Design System. Guide, Resources, Useful Tools, Checklists",
@@ -1345,6 +1376,15 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
     subtitle: "Build Your Perfect Workout",
     tags: [TAGS.inspiration],
     url: "https://www.workout.cool/en",
+  },
+  {
+    title: "Workspaces",
+    category: CATEGORIES.dev,
+    description:
+      "A weekly tour of real desk setups from designers, founders, and builders. Every Saturday.",
+    favicon: "https://workspaces.xyz/favicon.svg",
+    ogImage: "https://workspaces.xyz/og/default.jpg",
+    url: "https://workspaces.xyz/",
   },
   {
     title: "ZenNotes",

@@ -5,6 +5,17 @@ import { TAGS } from "./tags";
 
 export const designLinks: Resource<typeof CATEGORIES.design>[] = [
   {
+    title: "",
+    author: "",
+    category: CATEGORIES.design,
+    description: "",
+    favicon: "",
+    gitHubLink: "",
+    ogImage: "",
+    subtitle: "",
+    url: "",
+  },
+  {
     title: "[ graph ] ~~> [ easy ]",
     category: CATEGORIES.design,
     description: "Convert Graph::Easy and DOT notation to ASCII art, box art, and more.",
@@ -204,6 +215,18 @@ export const designLinks: Resource<typeof CATEGORIES.design>[] = [
     subtitle: "UX/UI kits, illustrations, mockups, fonts and more",
     tags: [TAGS.design, TAGS.ui],
     url: "https://craftwork.design/",
+  },
+  {
+    title: "CURSOR LAB",
+    author: "Oleksandr Yeromin",
+    category: CATEGORIES.design,
+    description:
+      "27 custom cursors you can tune live, then copy as JS, React, or CSS with your own values baked in.",
+    favicon: "https://cursor-lab-ui.vercel.app/assets/logo.png",
+    gitHubLink: "https://github.com/oleksand4rux-del/cursor-lab",
+    ogImage: "https://cursor-lab-ui.vercel.app/assets/og.png",
+    subtitle: "Custom cursors, tuned and copied",
+    url: "https://cursor-lab-ui.vercel.app/",
   },
   {
     title: "Design.dev",
@@ -510,6 +533,18 @@ export const designLinks: Resource<typeof CATEGORIES.design>[] = [
     url: "https://freedesignstuff.com/",
   },
   {
+    title: "GEOMETRIC",
+    author: "Shinichi",
+    authorLink: "https://x.com/shinichi_neb",
+    category: CATEGORIES.design,
+    description:
+      "Turn images, videos, and sound into living geometric art — entirely in your browser.",
+    favicon: "https://geometric-art.com/icon.svg",
+    ogImage: "https://geometric-art.com/og-flux.png",
+    subtitle: "Image + Motion Art Studio",
+    url: "https://geometric-art.com/en/easy",
+  },
+  {
     title: "getdesign.md",
     category: CATEGORIES.design,
     description:
@@ -592,6 +627,16 @@ export const designLinks: Resource<typeof CATEGORIES.design>[] = [
       "Linearity’s AI design generator turns one prompt into a full set of editable, on-brand campaign assets. Every format, every channel, ready to ship.",
     subtitle: "AI Design Generator: Editable, On-Brand Campaigns",
     url: "https://www.linearity.io/",
+  },
+  {
+    title: "Liquid Orb Editor",
+    author: "LerSent",
+    category: CATEGORIES.design,
+    description:
+      "A continuously iteratively maintained real-time WebGPU liquid glass ball editor, supporting Web and SwiftUI/Metal export, and using OpenAI Codex to assist in development and verification.",
+    favicon: "https://lersent001.github.io/orb/assets/poster-0qKU1qpL.png",
+    gitHubLink: "https://github.com/LerSent001/orb",
+    url: "https://lersent001.github.io/orb/",
   },
   {
     title: "Logo Lattice",
@@ -823,11 +868,44 @@ export const designLinks: Resource<typeof CATEGORIES.design>[] = [
     url: "https://image-video-shader.figma.site/",
   },
   {
+    title: "Refract",
+    author: "Design Minis",
+    category: CATEGORIES.design,
+    description:
+      "Drop in an image and see it through fluted, cross, block, ripple or rain glass. Real refraction with colour split and edge light. No account, nothing uploaded.",
+    favicon: "https://www.designminis.com/apple-icon.png",
+    ogImage: "https://www.designminis.com/refract/opening.jpg",
+    subtitle: "Put an image behind textured glass",
+    url: "https://www.designminis.com/refract",
+  },
+  {
     title: "Sharpen",
     category: CATEGORIES.design,
     description: "Millions of practice design prompts to challenge you to think outside the box.",
     subtitle: "Design Challenge Generator",
     url: "https://sharpen.design/",
+  },
+  {
+    title: "Shatter",
+    author: "Design Minis",
+    category: CATEGORIES.design,
+    description:
+      "Drop an image and break a sheet of glass over it. Real 3D shards, chamfered edges catching a studio light, and every fragment showing somewhere else in the picture. Exports a PNG.",
+    favicon: "https://www.designminis.com/apple-icon.png",
+    ogImage: "https://www.designminis.com/shatter/opening.jpg",
+    subtitle: "Break an image behind a sheet of glass",
+    url: "https://www.designminis.com/shatter",
+  },
+  {
+    title: "Signal",
+    author: "Design Minis",
+    category: CATEGORIES.design,
+    description:
+      "Drop an image and glitch it: torn bands, channel splits, ghosting, scanlines, static, and pixel sorting. Exports a PNG.",
+    favicon: "https://www.designminis.com/apple-icon.png",
+    ogImage: "https://www.designminis.com/signal/opening.jpg",
+    subtitle: "Break an image the way a bad signal does",
+    url: "https://www.designminis.com/signal",
   },
   {
     title: "Sprrrint",
