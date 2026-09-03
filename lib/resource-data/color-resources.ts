@@ -13,6 +13,26 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     url: "https://colorpalettes.colorion.co/",
   },
   {
+    title: "AniMaps",
+    author: "Sarthak Navalekar",
+    category: CATEGORIES.colors,
+    description:
+      "Build animated route maps in React, then export them as video or share them. A travelling marker traces your journey across the map.",
+    favicon: "https://feralui.dev/apple-touch-icon.png",
+    ogImage: "https://feralui.dev/og-hero.png",
+    url: "https://feralui.dev/animaps",
+  },
+  {
+    title: "Blinds",
+    author: "Sarthak Navalekar",
+    category: CATEGORIES.colors,
+    description:
+      "An expanding gallery of slats on real springs for React. Hover to open a panel with momentum, watch neighbours squeeze aside, pin with a click, or let autoplay drive.",
+    favicon: "https://feralui.dev/apple-touch-icon.png",
+    ogImage: "https://feralui.dev/og-hero.png",
+    url: "https://feralui.dev/blinds",
+  },
+  {
     title: "Chromatic Profiles",
     author: "Pixel Symphony",
     category: CATEGORIES.colors,
@@ -178,6 +198,15 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     url: "https://colorpalette.pro/",
   },
   {
+    title: "Colour Contrast Checker",
+    author: "Alex Clapperton",
+    category: CATEGORIES.colors,
+    description: "Check the contrast between different colour combinations against WCAG standards.",
+    favicon: "https://colourcontrast.cc/favicons/apple-touch-icon.png",
+    gitHubLink: "https://github.com/Pushedskydiver/Colour-Contrast-Checker",
+    url: "https://colourcontrast.cc/",
+  },
+  {
     title: "Contrast Report",
     author: "Adam Chaboryk",
     category: CATEGORIES.colors,
@@ -214,6 +243,39 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     url: "https://cssgradient.io/",
   },
   {
+    title: "Font Freezer",
+    author: "Anton Gridz",
+    authorLink: "https://antongridz.com/",
+    category: CATEGORIES.colors,
+    description:
+      "Freeze OpenType features and variable axes into static font files. No coding required.",
+    favicon: "https://fontfreezer.com/static/favicon.svg",
+    ogImage: "https://fontfreezer.com/static/img/og-image.png",
+    url: "https://fontfreezer.com/",
+  },
+  {
+    title: "Free Gradient Generator",
+    author: "Sarthak Navalekar",
+    category: CATEGORIES.colors,
+    description:
+      "Free online gradient generator. Blend soft mesh, grainy, and animated gradients from traditional Japanese colours, then export as SVG, PNG, or MP4 video. No signup.",
+    favicon: "https://feralui.dev/apple-touch-icon.png",
+    ogImage: "https://feralui.dev/og-hero.png",
+    subtitle: "Mesh, grainy and animated gradients",
+    tags: [TAGS.color, TAGS.gradient],
+    url: "https://feralui.dev/gradients",
+  },
+  {
+    title: "Fur",
+    author: "Sarthak Navalekar",
+    category: CATEGORIES.colors,
+    description:
+      "A pettable coat of fur rendered strand by strand on canvas, that parts and reacts to your cursor and touch.",
+    favicon: "https://feralui.dev/apple-touch-icon.png",
+    ogImage: "https://feralui.dev/og-hero.png",
+    url: "https://feralui.dev/fur",
+  },
+  {
     title: "Gradient Colors Collection",
     author: "GradientsCSS",
     category: CATEGORIES.colors,
@@ -223,6 +285,16 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     ogImage: "https://gradientscss.vercel.app/favicon/banner.jpg",
     tags: [TAGS.color],
     url: "https://gradientscss.vercel.app/",
+  },
+  {
+    title: "GradLab",
+    author: "Superbobo",
+    category: CATEGORIES.colors,
+    description:
+      "GradLab is a free online gradient generator — create animated mesh gradients and download as PNG, MP4 video, or standalone HTML. No sign-up, no watermark. Also known as GradientLab.",
+    ogImage: "https://www.gradlab.app/og-image.png",
+    subtitle: "Free Gradient Generator | Download PNG, MP4 & HTML",
+    url: "https://www.gradlab.app/",
   },
   {
     title: "Graduum",
@@ -259,6 +331,16 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     ogImage: "https://harmonizer.evilmartians.com/social-image.png",
     tags: [TAGS.color],
     url: "https://harmonizer.evilmartians.com/",
+  },
+  {
+    title: "Hologram",
+    author: "Sarthak Navalekar",
+    category: CATEGORIES.colors,
+    description:
+      "A foil holographic trading card for React that catches and scatters light as you tilt it, like a real Pokemon-style foil.",
+    favicon: "https://feralui.dev/apple-touch-icon.png",
+    ogImage: "https://feralui.dev/og-hero.png",
+    url: "https://feralui.dev/hologram",
   },
   {
     title: "Hypercolor",
@@ -313,6 +395,16 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     url: "https://meshgradient.com/",
   },
   {
+    title: "MotionView",
+    author: "Sarthak Navalekar",
+    category: CATEGORIES.colors,
+    description:
+      "Free motion template studio. Drop in a few images, pick a motion like Carousel or Orbit, tune the dials, and export a seamless MP4 loop. No signup.",
+    favicon: "https://feralui.dev/apple-touch-icon.png",
+    ogImage: "https://feralui.dev/og-hero.png",
+    url: "https://feralui.dev/motionview",
+  },
+  {
     title: "Movie Poster Archive",
     author: "Pixel Symphony",
     category: CATEGORIES.colors,
@@ -357,6 +449,17 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     url: "https://oklch.com/",
   },
   {
+    title: "Orrery",
+    author: "Noor Mtir",
+    category: CATEGORIES.colors,
+    description:
+      "An immersive, cinematic Solar System simulator with procedural gradient shader planets, responsive camera orbits, and poetic first-person planetary monologues.",
+    favicon: "https://cosmos.nourmtir22.workers.dev/favicon.svg",
+    ogImage: "https://cosmos.nourmtir22.workers.dev/og-image.png",
+    subtitle: "Cinematic Solar System Experience",
+    url: "https://cosmos.nourmtir22.workers.dev/",
+  },
+  {
     title: "Palette Maker",
     category: CATEGORIES.colors,
     description:
@@ -374,6 +477,14 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     subtitle: "The Color Scheme Designer",
     tags: [TAGS.color],
     url: "https://paletton.com/",
+  },
+  {
+    title: "Paperlab",
+    author: "Noor Mtir",
+    category: CATEGORIES.colors,
+    description:
+      "Physical, realistic paper as a React component. Real 3D geometry that peels, unrolls, folds and hangs — preset-driven, serializable, agent-first.",
+    url: "https://paperlab.nawwara.studio/editor/",
   },
   {
     title: "Photo Gradient",
@@ -409,6 +520,16 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     ogImage: "https://meodai.github.io/poline/socialfb.png",
     subtitle: "Esoteric Color Palette Generation Library",
     url: "https://meodai.github.io/poline/",
+  },
+  {
+    title: "PullCord",
+    author: "Sarthak Navalekar",
+    category: CATEGORIES.colors,
+    description:
+      "A ceiling pull-cord React component with a real Verlet-integration rope that hangs and swings. Give it a tug to toggle light and dark.",
+    favicon: "https://feralui.dev/apple-touch-icon.png",
+    ogImage: "https://feralui.dev/og-hero.png",
+    url: "https://feralui.dev/pullcord",
   },
   {
     title: "Radix Colors",

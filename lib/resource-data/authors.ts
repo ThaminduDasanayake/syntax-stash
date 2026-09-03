@@ -1,6 +1,15 @@
 import { AuthorProfile } from "@/lib/authors";
 
 export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
+  "arnold-francisca": {
+    links: {
+      github: "https://github.com/arnoldfrancisca",
+      linkedin: "https://www.linkedin.com/in/arnold-francisca-b28243193",
+      twitter: "https://x.com/arno1dfrancisca",
+      website: "https://arnoldfrancisca.com/",
+    },
+    name: "Arnold Francisca",
+  },
   "csaba-kissi": {
     links: {
       github: "https://github.com/csaba-kissi",
@@ -123,6 +132,15 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
     },
     name: "Matthias Martin",
   },
+  "noor-mtir": {
+    links: {
+      github: "https://github.com/NourMtir0722",
+      linkedin: "https://www.linkedin.com/in/nourmtir",
+      twitter: "https://x.com/noormtir",
+      website: "https://nawwara.studio/",
+    },
+    name: "Noor Mtir",
+  },
   "oleksandr-yeromin": {
     links: {
       github: "https://github.com/oleksand4rux-del",
@@ -152,6 +170,14 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
       youtube: "https://www.youtube.com/@Rive_app",
     },
     name: "Rive",
+  },
+  "sarthak-navalekar": {
+    links: {
+      github: "https://github.com/mortspace",
+      linkedin: "https://www.linkedin.com/in/sarthak-navalekar/",
+      twitter: "https://x.com/SolutionB2u",
+    },
+    name: "Oleksandr Yeromin",
   },
   vercel: {
     links: {
