@@ -1,9 +1,19 @@
 import { AuthorProfile } from "@/lib/authors";
 
 export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
+  "arnold-francisca": {
+    links: {
+      github: "https://github.com/arnoldfrancisca",
+      linkedin: "https://www.linkedin.com/in/arnold-francisca-b28243193",
+      twitter: "https://x.com/arno1dfrancisca",
+      website: "https://arnoldfrancisca.com/",
+    },
+    name: "Arnold Francisca",
+  },
   "csaba-kissi": {
     links: {
       github: "https://github.com/csaba-kissi",
+      linkedin: "https://www.linkedin.com/in/csaba-kissi/",
       twitter: "https://x.com/csaba_kissi",
       website: "https://csaba.page",
     },
@@ -14,6 +24,15 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
       twitter: "https://x.com/dascaapp",
     },
     name: "DASCA",
+  },
+  "federico-valla": {
+    links: {
+      github: "https://github.com/vallafederico",
+      linkedin: "https://www.linkedin.com/in/federicovalla/",
+      twitter: "https://x.com/ffmfed",
+      website: "https://www.federic.ooo/",
+    },
+    name: "Federico Valla",
   },
   fffuel: {
     links: {
@@ -29,6 +48,24 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
       website: "https://firecrawl.dev",
     },
     name: "Firecrawl",
+  },
+  "george-hastings": {
+    links: {
+      github: "https://github.com/georgehastings",
+      linkedin: "https://www.linkedin.com/in/george-hastings-a6874514/",
+      twitter: "https://x.com/soulegit",
+      website: "https://georgehastings.com/",
+    },
+    name: "George Hastings",
+  },
+  "gilbert-pellegrom": {
+    links: {
+      github: "https://github.com/gilbitron",
+      linkedin: "https://www.linkedin.com/in/gilbert-pellegrom",
+      twitter: "https://x.com/gilbitron",
+      website: "https://gilbitron.me/",
+    },
+    name: "Gilbert Pellegrom",
   },
   "hayk-an": {
     links: {
@@ -64,6 +101,30 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
     },
     name: "Laura Escobar",
   },
+  "lochie-axon": {
+    links: {
+      twitter: "https://x.com/lochieaxon",
+      website: "https://www.lochieaxon.com/",
+    },
+    name: "Lochie Axon",
+  },
+  "mackenzie-child": {
+    links: {
+      twitter: "https://x.com/mackenziechild",
+      website: "https://www.mackenziechild.me/",
+      youtube: "https://www.youtube.com/@mackenziechild",
+    },
+    name: "Mackenzie Child",
+  },
+  "marijana-pavlinic": {
+    links: {
+      github: "https://github.com/marijanapav",
+      linkedin: "https://www.linkedin.com/in/marijana-pavlinic/",
+      twitter: "https://x.com/marijanapav",
+      website: "https://marijanapav.com/",
+    },
+    name: "Marijana Pavlinić",
+  },
   "matthias-martin": {
     links: {
       twitter: "https://x.com/RoyDigerhund",
@@ -71,12 +132,52 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
     },
     name: "Matthias Martin",
   },
+  "noor-mtir": {
+    links: {
+      github: "https://github.com/NourMtir0722",
+      linkedin: "https://www.linkedin.com/in/nourmtir",
+      twitter: "https://x.com/noormtir",
+      website: "https://nawwara.studio/",
+    },
+    name: "Noor Mtir",
+  },
+  "oleksandr-yeromin": {
+    links: {
+      github: "https://github.com/oleksand4rux-del",
+      linkedin: "https://www.linkedin.com/in/oleksand4r/",
+      website: "https://www.yrmn.me/",
+    },
+    name: "Oleksandr Yeromin",
+  },
   "pablo-stanley": {
     links: {
       twitter: "https://x.com/pablostanley",
       website: "https://pablostanley.com",
     },
     name: "Pablo Stanley",
+  },
+  "pixel-symphony": {
+    links: {
+      twitter: "https://x.com/Pixel0Symphony",
+      website: "https://pixelsymphony.art/",
+    },
+    name: "Pixel Symphony",
+  },
+  rive: {
+    links: {
+      github: "https://github.com/rive-app",
+      twitter: "https://twitter.com/rive_app",
+      youtube: "https://www.youtube.com/@Rive_app",
+    },
+    name: "Rive",
+  },
+  "sarthak-navalekar": {
+    links: {
+      github: "https://github.com/mortspace",
+      linkedin: "https://www.linkedin.com/in/sarthak-navalekar/",
+      twitter: "https://x.com/SolutionB2u",
+    },
+    name: "Oleksandr Yeromin",
   },
   vercel: {
     links: {

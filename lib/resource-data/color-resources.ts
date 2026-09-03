@@ -13,10 +13,45 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     url: "https://colorpalettes.colorion.co/",
   },
   {
-    title: "Colir",
+    title: "AniMaps",
+    author: "Sarthak Navalekar",
     category: CATEGORIES.colors,
     description:
+      "Build animated route maps in React, then export them as video or share them. A travelling marker traces your journey across the map.",
+    favicon: "https://feralui.dev/apple-touch-icon.png",
+    ogImage: "https://feralui.dev/og-hero.png",
+    url: "https://feralui.dev/animaps",
+  },
+  {
+    title: "Blinds",
+    author: "Sarthak Navalekar",
+    category: CATEGORIES.colors,
+    description:
+      "An expanding gallery of slats on real springs for React. Hover to open a panel with momentum, watch neighbours squeeze aside, pin with a click, or let autoplay drive.",
+    favicon: "https://feralui.dev/apple-touch-icon.png",
+    ogImage: "https://feralui.dev/og-hero.png",
+    url: "https://feralui.dev/blinds",
+  },
+  {
+    title: "Chromatic Profiles",
+    author: "Pixel Symphony",
+    category: CATEGORIES.colors,
+    description:
+      "Colorists in the Colorist Archive: browse chromatic profiles, artwork palettes, and generative color studies across artists, periods, and collections.",
+    favicon: "https://meditationsincolor.com/apple-touch-icon.png",
+    ogImage: "https://meditationsincolor.com/assets/mic-logo-1024.png",
+    subtitle: "Meditations in Color",
+    tags: [TAGS.color],
+    url: "https://meditationsincolor.com/colorists",
+  },
+  {
+    title: "Colir",
+    category: CATEGORIES.colors,
+    className: "bg-foreground border-paper",
+    description:
       "Create unique, professional gradients with curve-based control. Real-time WebGL rendering, 12 blend modes, and advanced visual effects.",
+    favicon: "https://colir.space/Logos/logo.svg",
+    ogImage: "https://colir.space/Templates/OG_colir.png",
     subtitle: "Gradients",
     tags: [TAGS.color],
     url: "https://colir.space/",
@@ -34,9 +69,12 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
   },
   {
     title: "ColorFlow",
+    author: "ColorFlow",
     category: CATEGORIES.colors,
     description:
       "Create stunning mesh gradients with ColorFlow. Professional gradient editor with real-time preview, customizable control points, and export options. Perfect for designers and developers.",
+    favicon: "https://colorflow.ls.graphics/apple-touch-icon.png",
+    ogImage: "https://colorflow.ls.graphics/og-image.jpg",
     subtitle: "Advanced Mesh Gradient Generator & Editor",
     tags: [TAGS.color],
     url: "https://colorflow.ls.graphics/",
@@ -65,9 +103,10 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     title: "Color Hunt",
     category: CATEGORIES.colors,
     description:
-      "Find the perfect trendy color palettes and get color inspiration for your next design or art project.",
+      "Discover the newest hand-picked color palettes of Color Hunt. Get color inspiration for your design and art projects.",
+    favicon: "https://colorhunt.co/img/colorhunt-favicon.svg",
     ogImage: "https://colorhunt.co/img/color-hunt-og.png",
-    subtitle: "The Most Popular Color Palettes of 2026",
+    subtitle: "Color Palettes for Designers and Artists",
     tags: [TAGS.color],
     url: "https://colorhunt.co/",
   },
@@ -87,6 +126,9 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     category: CATEGORIES.colors,
     description:
       "Generate color palettes instantly from any website effortlessly. Enter a URL to explore color schemes and combinations directly from the site's design. No sign-up required. Try it now!",
+    favicon: "https://colorize.design/favicon.svg",
+    ogImage: "https://colorize.design/og-image.jpg",
+    subtitle: "Extract Color Palettes from Any Website - Free Color Palette Generator",
     tags: [TAGS.color],
     url: "https://colorize.design/",
   },
@@ -96,6 +138,7 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     category: CATEGORIES.colors,
     description:
       "Color Lab is your all-in-one color and UI toolkit. Create stunning palettes, convert between HEX, RGB, HSL, and design custom themes with the built-in Shadcn UI Theme Generator – ideal for designers and frontend developers.",
+    favicon: "https://tools.ui-layouts.com/favicon.ico",
     ogImage: "https://tools.ui-layouts.com/color-lab-og.jpg",
     subtitle: "Generate Color Palettes, Convert Codes & Build Shadcn Themes",
     tags: [TAGS.color],
@@ -104,8 +147,11 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
   {
     title: "Colormind",
     category: CATEGORIES.colors,
+    className:
+      "bg-foreground border-paper overflow-hidden [&>img]:translate-x-[16%] [&>img]:-translate-y-[9%] [&>img]:scale-125",
     description:
       "Generate color combinations in one click. Colormind creates cohesive color schemes using a deep neural net.",
+    favicon: "https://colormind.io/img/logo_nav.svg",
     subtitle: "The AI powered color palette generator",
     tags: [TAGS.color],
     url: "https://colormind.io/",
@@ -152,6 +198,15 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     url: "https://colorpalette.pro/",
   },
   {
+    title: "Colour Contrast Checker",
+    author: "Alex Clapperton",
+    category: CATEGORIES.colors,
+    description: "Check the contrast between different colour combinations against WCAG standards.",
+    favicon: "https://colourcontrast.cc/favicons/apple-touch-icon.png",
+    gitHubLink: "https://github.com/Pushedskydiver/Colour-Contrast-Checker",
+    url: "https://colourcontrast.cc/",
+  },
+  {
     title: "Contrast Report",
     author: "Adam Chaboryk",
     category: CATEGORIES.colors,
@@ -164,8 +219,11 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
   },
   {
     title: "Coolors",
+    author: "Fabrizio Bianchi",
+    authorLink: "https://fabrizio.io/",
     category: CATEGORIES.colors,
     description: "Generate or browse beautiful color combinations for your designs.",
+    favicon: "https://coolors.co/assets/img/favicon.png",
     ogImage: "https://coolors.co/assets/img/og_image.png",
     subtitle: "The super fast color palettes generator!",
     tags: [TAGS.color],
@@ -176,8 +234,46 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     category: CATEGORIES.colors,
     description:
       "As a free CSS gradient generator tool, this website lets you create a colorful gradient background for your website, blog, or social media profile.",
+    favicon: "https://cssgradient.io/icon.svg",
+    gitHubLink: "https://github.com/balshaer/gradients-css",
+    ogImage:
+      "https://cssgradient.imgix.net/2bJFIYjQAMqSz44evG5Pel/f973f26f3b70726a8e1aed05da781625/css-gradient.png",
+    subtitle: "Generator, Maker, and Background",
     tags: [TAGS.color],
     url: "https://cssgradient.io/",
+  },
+  {
+    title: "Font Freezer",
+    author: "Anton Gridz",
+    authorLink: "https://antongridz.com/",
+    category: CATEGORIES.colors,
+    description:
+      "Freeze OpenType features and variable axes into static font files. No coding required.",
+    favicon: "https://fontfreezer.com/static/favicon.svg",
+    ogImage: "https://fontfreezer.com/static/img/og-image.png",
+    url: "https://fontfreezer.com/",
+  },
+  {
+    title: "Free Gradient Generator",
+    author: "Sarthak Navalekar",
+    category: CATEGORIES.colors,
+    description:
+      "Free online gradient generator. Blend soft mesh, grainy, and animated gradients from traditional Japanese colours, then export as SVG, PNG, or MP4 video. No signup.",
+    favicon: "https://feralui.dev/apple-touch-icon.png",
+    ogImage: "https://feralui.dev/og-hero.png",
+    subtitle: "Mesh, grainy and animated gradients",
+    tags: [TAGS.color, TAGS.gradient],
+    url: "https://feralui.dev/gradients",
+  },
+  {
+    title: "Fur",
+    author: "Sarthak Navalekar",
+    category: CATEGORIES.colors,
+    description:
+      "A pettable coat of fur rendered strand by strand on canvas, that parts and reacts to your cursor and touch.",
+    favicon: "https://feralui.dev/apple-touch-icon.png",
+    ogImage: "https://feralui.dev/og-hero.png",
+    url: "https://feralui.dev/fur",
   },
   {
     title: "Gradient Colors Collection",
@@ -191,12 +287,14 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     url: "https://gradientscss.vercel.app/",
   },
   {
-    title: "Gradienty",
+    title: "GradLab",
+    author: "Superbobo",
     category: CATEGORIES.colors,
     description:
-      "Easily create beautiful Tailwind CSS gradients with Gradienty - a CSS generator. Choose from ready-made gradients or customize your own for eye-catching backgrounds, text effects, and glassmorphism designs. Perfect for websites, apps, and more. Try it for free now!",
-    tags: [TAGS.color],
-    url: "https://gradienty.codes/",
+      "GradLab is a free online gradient generator — create animated mesh gradients and download as PNG, MP4 video, or standalone HTML. No sign-up, no watermark. Also known as GradientLab.",
+    ogImage: "https://www.gradlab.app/og-image.png",
+    subtitle: "Free Gradient Generator | Download PNG, MP4 & HTML",
+    url: "https://www.gradlab.app/",
   },
   {
     title: "Graduum",
@@ -212,9 +310,14 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
   },
   {
     title: "Happy Hues",
+    author: "Mackenzie Child",
     category: CATEGORIES.colors,
     description:
       "See color palette inspiration on a real example website. As you click on different palettes every color on this site updates to give you context of how that color could be used for your design or illustration projects.",
+    favicon:
+      "https://cdn.prod.website-files.com/5dd40aa8049df8748c72d0ee/5dd9b92056a2d6ed5e537c61_happy-hues-apple-icon.png",
+    ogImage:
+      "https://cdn.prod.website-files.com/5dd40aa8049df8748c72d0ee/5ddd471cbe5e6601554a2a4d_happy-hues.jpeg",
     subtitle: "Curated colors in context",
     tags: [TAGS.color],
     url: "https://www.happyhues.co/",
@@ -230,6 +333,16 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     url: "https://harmonizer.evilmartians.com/",
   },
   {
+    title: "Hologram",
+    author: "Sarthak Navalekar",
+    category: CATEGORIES.colors,
+    description:
+      "A foil holographic trading card for React that catches and scatters light as you tilt it, like a real Pokemon-style foil.",
+    favicon: "https://feralui.dev/apple-touch-icon.png",
+    ogImage: "https://feralui.dev/og-hero.png",
+    url: "https://feralui.dev/hologram",
+  },
+  {
     title: "Hypercolor",
     category: CATEGORIES.colors,
     description:
@@ -241,7 +354,6 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
   {
     title: "ImageColorPicker.com",
     category: CATEGORIES.colors,
-    className: "bg-foreground border-paper",
     description:
       "Upload an image, paste from clipboard, or enter a URL to instantly pick colors. Get HEX, RGB, HSL codes free — no signup required.",
     favicon: "https://imagecolorpicker.com/favicon.svg",
@@ -252,8 +364,11 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
   },
   {
     title: "Ingradients",
+    author: "Gilbert Pellegrom",
     category: CATEGORIES.colors,
     description: "Hand-picked mesh gradients for your next design project.",
+    favicon:
+      "https://framerusercontent.com/modules/reOxh1U6VCuZnfou6x2m/eJmnQAJafZ0DjECK4JSI/assets/oYzfVi4pX5vTuybl3rTEXooXk.png",
     ogImage:
       "https://framerusercontent.com/modules/reOxh1U6VCuZnfou6x2m/eJmnQAJafZ0DjECK4JSI/assets/S3wd0yoFBBYAKv1E4nAuhoWxC8.jpg",
     tags: [TAGS.color, TAGS.gradient],
@@ -261,21 +376,15 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
   },
   {
     title: "Khroma",
+    author: "George Hastings",
     category: CATEGORIES.colors,
     description:
       "Khroma is the fastest way to discover, search, and save color combos and palettes you'll love. Discover a personalized AI-powered color tool for designers to find the perfect color scheme.",
+    favicon: "https://www.khroma.co/assets/icons/fav.png",
+    ogImage: "https://www.khroma.co/assets/images/social.png",
+    subtitle: "AI Color Tool for Designers | Discover and Save Color Palettes",
     tags: [TAGS.color],
     url: "https://www.khroma.co/",
-  },
-  {
-    title: "Meditations in Color",
-    author: "Pixel Symphony",
-    category: CATEGORIES.colors,
-    description:
-      "Colorists in the Colorist Archive: browse chromatic profiles, artwork palettes, and generative color studies across artists, periods, and collections.",
-    subtitle: "Chromatic Profiles",
-    tags: [TAGS.color],
-    url: "https://meditationsincolor.com/colorists",
   },
   {
     title: "Mesh Gradient",
@@ -286,9 +395,33 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     url: "https://meshgradient.com/",
   },
   {
+    title: "MotionView",
+    author: "Sarthak Navalekar",
+    category: CATEGORIES.colors,
+    description:
+      "Free motion template studio. Drop in a few images, pick a motion like Carousel or Orbit, tune the dials, and export a seamless MP4 loop. No signup.",
+    favicon: "https://feralui.dev/apple-touch-icon.png",
+    ogImage: "https://feralui.dev/og-hero.png",
+    url: "https://feralui.dev/motionview",
+  },
+  {
+    title: "Movie Poster Archive",
+    author: "Pixel Symphony",
+    category: CATEGORIES.colors,
+    description:
+      "A searchable chromatic archive of movie poster design. Directors, their film posters, and the color systems inside them.",
+    favicon: "https://meditationsincolor.com/apple-touch-icon.png",
+    subtitle: "Meditations in Color",
+    tags: [TAGS.color],
+    url: "https://meditationsincolor.com/movies",
+  },
+  {
     title: "mymind",
+    author: "mymind",
+    authorLink: "https://mymind.com/",
     category: CATEGORIES.colors,
     description: "A collection of unique color combinations for your design projects.",
+    favicon: "https://static.accelerator.net/134/0.107.0/images/apple-touch-icon.png",
     ogImage: "https://static.accelerator.net/134/0.107.0/colors/images/mymind-colors-twitter.jpg",
     subtitle: "Mindfully curated color palettes",
     tags: [TAGS.color],
@@ -316,6 +449,17 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     url: "https://oklch.com/",
   },
   {
+    title: "Orrery",
+    author: "Noor Mtir",
+    category: CATEGORIES.colors,
+    description:
+      "An immersive, cinematic Solar System simulator with procedural gradient shader planets, responsive camera orbits, and poetic first-person planetary monologues.",
+    favicon: "https://cosmos.nourmtir22.workers.dev/favicon.svg",
+    ogImage: "https://cosmos.nourmtir22.workers.dev/og-image.png",
+    subtitle: "Cinematic Solar System Experience",
+    url: "https://cosmos.nourmtir22.workers.dev/",
+  },
+  {
     title: "Palette Maker",
     category: CATEGORIES.colors,
     description:
@@ -333,6 +477,14 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     subtitle: "The Color Scheme Designer",
     tags: [TAGS.color],
     url: "https://paletton.com/",
+  },
+  {
+    title: "Paperlab",
+    author: "Noor Mtir",
+    category: CATEGORIES.colors,
+    description:
+      "Physical, realistic paper as a React component. Real 3D geometry that peels, unrolls, folds and hangs — preset-driven, serializable, agent-first.",
+    url: "https://paperlab.nawwara.studio/editor/",
   },
   {
     title: "Photo Gradient",
@@ -368,6 +520,16 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     ogImage: "https://meodai.github.io/poline/socialfb.png",
     subtitle: "Esoteric Color Palette Generation Library",
     url: "https://meodai.github.io/poline/",
+  },
+  {
+    title: "PullCord",
+    author: "Sarthak Navalekar",
+    category: CATEGORIES.colors,
+    description:
+      "A ceiling pull-cord React component with a real Verlet-integration rope that hangs and swings. Give it a tug to toggle light and dark.",
+    favicon: "https://feralui.dev/apple-touch-icon.png",
+    ogImage: "https://feralui.dev/og-hero.png",
+    url: "https://feralui.dev/pullcord",
   },
   {
     title: "Radix Colors",
@@ -449,6 +611,15 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     ogImage: "https://thegoodcolors.com/og-poster.png",
     tags: [TAGS.color],
     url: "https://thegoodcolors.com/",
+  },
+  {
+    title: "The Palette Studio",
+    author: "Pixel Symphony",
+    category: CATEGORIES.colors,
+    favicon: "https://meditationsincolor.com/apple-touch-icon.png",
+    subtitle: "Meditations in Color",
+    tags: [TAGS.color],
+    url: "https://meditationsincolor.com/palette-studio",
   },
   {
     title: "Two Color Combinations",
