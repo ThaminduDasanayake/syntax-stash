@@ -438,16 +438,17 @@ export function SubmitForm() {
                 <span className="text-muted-foreground text-[10px] font-bold uppercase">
                   Theme:
                 </span>
-                <span className="hero-eyebrow-dots flex items-center gap-1.5">
+                <span className="hero-eyebrow-dots">
                   <button
                     type="button"
                     onClick={() => setCustomTheme("orange")}
                     title="Orange theme"
                     aria-label="Select orange theme"
                     className={cn(
-                      "bg-c-orange size-3.5 cursor-pointer rounded-none transition-transform hover:scale-125",
-                      activeTheme === "orange" &&
-                        "ring-foreground scale-110 ring-2 ring-offset-1 ring-offset-paper",
+                      "bg-c-orange size-3.5 cursor-pointer transition-opacity hover:opacity-80",
+                      activeTheme === "orange"
+                        ? "opacity-100 ring-1 ring-inset ring-ink"
+                        : "opacity-60",
                     )}
                   />
                   <button
@@ -456,9 +457,10 @@ export function SubmitForm() {
                     title="Blue theme"
                     aria-label="Select blue theme"
                     className={cn(
-                      "bg-c-blue size-3.5 cursor-pointer rounded-none transition-transform hover:scale-125",
-                      activeTheme === "blue" &&
-                        "ring-foreground scale-110 ring-2 ring-offset-1 ring-offset-paper",
+                      "bg-c-blue size-3.5 cursor-pointer transition-opacity hover:opacity-80",
+                      activeTheme === "blue"
+                        ? "opacity-100 ring-1 ring-inset ring-ink"
+                        : "opacity-60",
                     )}
                   />
                   <button
@@ -467,9 +469,10 @@ export function SubmitForm() {
                     title="Pink theme"
                     aria-label="Select pink theme"
                     className={cn(
-                      "bg-c-pink size-3.5 cursor-pointer rounded-none transition-transform hover:scale-125",
-                      activeTheme === "pink" &&
-                        "ring-foreground scale-110 ring-2 ring-offset-1 ring-offset-paper",
+                      "bg-c-pink size-3.5 cursor-pointer transition-opacity hover:opacity-80",
+                      activeTheme === "pink"
+                        ? "opacity-100 ring-1 ring-inset ring-ink"
+                        : "opacity-60",
                     )}
                   />
                   <button
@@ -478,9 +481,10 @@ export function SubmitForm() {
                     title="Green theme"
                     aria-label="Select green theme"
                     className={cn(
-                      "bg-c-green size-3.5 cursor-pointer rounded-none transition-transform hover:scale-125",
-                      activeTheme === "green" &&
-                        "ring-foreground scale-110 ring-2 ring-offset-1 ring-offset-paper",
+                      "bg-c-green size-3.5 cursor-pointer transition-opacity hover:opacity-80",
+                      activeTheme === "green"
+                        ? "opacity-100 ring-1 ring-inset ring-ink"
+                        : "opacity-60",
                     )}
                   />
                 </span>
