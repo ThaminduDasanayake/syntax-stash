@@ -129,6 +129,7 @@ export function SubmitForm() {
 
       const res = await fetch("/api/submissions", {
         body: JSON.stringify({
+          title: title.trim(),
           author: author.trim() || undefined,
           authorLink: authorLink.trim() || undefined,
           category,
@@ -139,7 +140,6 @@ export function SubmitForm() {
           ogImage: ogImage.trim() || undefined,
           subtitle: subtitle.trim() || undefined,
           tags: tags.trim() || undefined,
-          title: title.trim(),
           url: url.trim(),
           website_trap: honeypot,
         }),

@@ -124,6 +124,7 @@ export function AdminSubmissionsClient() {
     setEditingId(sub.id);
     setEditForm({
       title: sub.title,
+      subtitle: sub.subtitle || "",
       adminNotes: sub.adminNotes || "",
       author: sub.author || "",
       authorLink: sub.authorLink || "",
@@ -140,6 +141,7 @@ export function AdminSubmissionsClient() {
   const generateTsCode = (sub: Submission) => {
     let code = "  {\n";
     code += `    title: "${sub.title.replace(/"/g, '\\"')}",\n`;
+    if (sub.subtitle) code += `    subtitle: "${sub.subtitle.replace(/"/g, '\\"')}",\n`;
     code += `    category: CATEGORIES.${sub.category.toLowerCase().replace(/[^a-z0-9]/g, "") || "tools"},\n`;
     code += `    description: "${sub.description.replace(/"/g, '\\"')}",\n`;
     code += `    url: "${sub.url}",\n`;
@@ -148,7 +150,17 @@ export function AdminSubmissionsClient() {
     if (sub.author) code += `    author: "${sub.author.replace(/"/g, '\\"')}",\n`;
     if (sub.authorLink) code += `    authorLink: "${sub.authorLink}",\n`;
     if (sub.gitHubLink) code += `    gitHubLink: "${sub.gitHubLink}",\n`;
-    code += "    tags: [],\n";
+    const parsedTags = sub.tags
+      ? sub.tags
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean)
+      : [];
+    if (parsedTags.length > 0) {
+      code += `    tags: [${parsedTags.map((t) => `"${t.replace(/"/g, '\\"')}"`).join(", ")}],\n`;
+    } else {
+      code += "    tags: [],\n";
+    }
     code += "  },";
     return code;
   };
@@ -265,6 +277,18 @@ export function AdminSubmissionsClient() {
                         />
                       </div>
                       <div>
+                        <label className="text-muted-foreground text-[10px] font-bold uppercase">Subtitle</label>
+                        <Input
+                          value={editForm.subtitle || ""}
+                          onChange={(e) => setEditForm({ ...editForm, subtitle: e.target.value })}
+                          placeholder="e.g. Modern React UI library"
+                          className="font-mono text-xs"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                      <div>
                         <label className="text-muted-foreground text-[10px] font-bold uppercase">Category</label>
                         <select
                           value={editForm.category || sub.category}
@@ -278,15 +302,14 @@ export function AdminSubmissionsClient() {
                           ))}
                         </select>
                       </div>
-                    </div>
-
-                    <div>
-                      <label className="text-muted-foreground text-[10px] font-bold uppercase">URL</label>
-                      <Input
-                        value={editForm.url || ""}
-                        onChange={(e) => setEditForm({ ...editForm, url: e.target.value })}
-                        className="font-mono text-xs"
-                      />
+                      <div>
+                        <label className="text-muted-foreground text-[10px] font-bold uppercase">URL</label>
+                        <Input
+                          value={editForm.url || ""}
+                          onChange={(e) => setEditForm({ ...editForm, url: e.target.value })}
+                          className="font-mono text-xs"
+                        />
+                      </div>
                     </div>
 
                     <div>
@@ -297,6 +320,25 @@ export function AdminSubmissionsClient() {
                         rows={2}
                         className="border-input bg-background text-foreground flex w-full rounded border p-2 font-mono text-xs"
                       />
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                      <div>
+                        <label className="text-muted-foreground text-[10px] font-bold uppercase">Favicon URL</label>
+                        <Input
+                          value={editForm.favicon || ""}
+                          onChange={(e) => setEditForm({ ...editForm, favicon: e.target.value })}
+                          className="font-mono text-xs"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-muted-foreground text-[10px] font-bold uppercase">OG Image URL</label>
+                        <Input
+                          value={editForm.ogImage || ""}
+                          onChange={(e) => setEditForm({ ...editForm, ogImage: e.target.value })}
+                          className="font-mono text-xs"
+                        />
+                      </div>
                     </div>
 
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -328,10 +370,11 @@ export function AdminSubmissionsClient() {
                         />
                       </div>
                       <div>
-                        <label className="text-muted-foreground text-[10px] font-bold uppercase">Favicon URL</label>
+                        <label className="text-muted-foreground text-[10px] font-bold uppercase">Tags (comma separated)</label>
                         <Input
-                          value={editForm.favicon || ""}
-                          onChange={(e) => setEditForm({ ...editForm, favicon: e.target.value })}
+                          value={editForm.tags || ""}
+                          onChange={(e) => setEditForm({ ...editForm, tags: e.target.value })}
+                          placeholder="react, tailwind, ui"
                           className="font-mono text-xs"
                         />
                       </div>
@@ -374,6 +417,11 @@ export function AdminSubmissionsClient() {
                       <div className="min-w-0 flex-1 space-y-1">
                         <div className="flex flex-wrap items-center gap-2">
                           <h3 className="text-foreground text-sm font-bold tracking-tight">{sub.title}</h3>
+                          {sub.subtitle && (
+                            <span className="text-muted-foreground text-xs font-normal">
+                              — {sub.subtitle}
+                            </span>
+                          )}
                           <span className="border-line text-muted-foreground rounded border px-1.5 py-0.5 text-[10px] uppercase font-bold">
                             {sub.category}
                           </span>
@@ -389,6 +437,16 @@ export function AdminSubmissionsClient() {
                         </a>
 
                         <p className="text-muted-foreground text-xs leading-relaxed">{sub.description}</p>
+
+                        {sub.tags && (
+                          <div className="flex flex-wrap gap-1 pt-0.5">
+                            {sub.tags.split(",").map((tag) => tag.trim()).filter(Boolean).map((tag) => (
+                              <span key={tag} className="bg-surface border-line/60 rounded border px-1.5 py-0.2 text-[10px] text-muted-foreground">
+                                #{tag}
+                              </span>
+                            ))}
+                          </div>
+                        )}
 
                         <div className="flex flex-wrap items-center gap-4 pt-1 text-[11px]">
                           {sub.author && (
@@ -418,6 +476,17 @@ export function AdminSubmissionsClient() {
                               className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1 font-semibold underline"
                             >
                               GitHub Repo <ArrowSquareOutIcon className="size-3" />
+                            </a>
+                          )}
+
+                          {sub.ogImage && (
+                            <a
+                              href={sub.ogImage}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1 text-[11px] underline"
+                            >
+                              OG Image <ArrowSquareOutIcon className="size-3" />
                             </a>
                           )}
                         </div>
