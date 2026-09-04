@@ -4,6 +4,7 @@ import { BookmarksSimpleIcon, MagnifyingGlassIcon } from "@phosphor-icons/react"
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { SubmitToolDialog } from "@/components/submit-tool-dialog";
 import { Button } from "@/components/ui/button";
 import { Kbd } from "@/components/ui/kbd";
 import { useBookmarks } from "@/hooks/use-bookmarks";
@@ -38,6 +39,12 @@ export function DesktopNav({ onSearchOpenAction }: DesktopNavProps) {
           </Link>
         );
       })}
+
+      <SubmitToolDialog>
+        <button type="button" className="nav-link cursor-pointer">
+          Submit
+        </button>
+      </SubmitToolDialog>
 
       {session && (
         <Link

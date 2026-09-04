@@ -3,9 +3,15 @@
 import { ArrowUpIcon, ArrowUpRightIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 
+import { SubmitToolDialog } from "@/components/submit-tool-dialog";
+import { isAdmin } from "@/lib/admin";
+import { useSession } from "@/lib/auth-client";
 import { siteConfig } from "@/lib/site-config";
 
 export default function Footer() {
+  const { data: session } = useSession();
+  const isUserAdmin = isAdmin(session?.user?.email);
+
   const scrollToTop = () => {
     window.scrollTo({ behavior: "smooth", top: 0 });
   };
@@ -56,6 +62,14 @@ export default function Footer() {
                 </span>
                 ]
               </a>
+              <SubmitToolDialog>
+                <button
+                  type="button"
+                  className="after:bg-paper relative inline-block cursor-pointer transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
+                >
+                  [ Submit Resource ]
+                </button>
+              </SubmitToolDialog>
               <Link
                 href="/about"
                 className="after:bg-paper relative inline-block transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
@@ -74,6 +88,14 @@ export default function Footer() {
               >
                 [ Changelog ]
               </Link>
+              {isUserAdmin && (
+                <Link
+                  href="/admin/submissions"
+                  className="text-c-orange after:bg-c-orange relative inline-block transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
+                >
+                  [ Admin ]
+                </Link>
+              )}
             </div>
 
             <button
