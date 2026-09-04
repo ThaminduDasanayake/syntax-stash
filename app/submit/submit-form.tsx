@@ -5,9 +5,12 @@ import {
   CheckCircleIcon,
   CheckIcon,
   CircleNotchIcon,
+  ImageIcon,
   SparkleIcon,
+  TagIcon,
   XIcon,
 } from "@phosphor-icons/react";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -29,6 +32,7 @@ export function SubmitForm() {
   // Form State
   const [url, setUrl] = useState("");
   const [title, setTitle] = useState("");
+  const [subtitle, setSubtitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState<string>(resourceCategories[0] || "Generators");
   const [author, setAuthor] = useState("");
@@ -36,6 +40,7 @@ export function SubmitForm() {
   const [gitHubLink, setGitHubLink] = useState("");
   const [favicon, setFavicon] = useState("");
   const [ogImage, setOgImage] = useState("");
+  const [tags, setTags] = useState("");
   const [notes, setNotes] = useState("");
   const [honeypot, setHoneypot] = useState(""); // anti-spam trap
 
@@ -54,6 +59,7 @@ export function SubmitForm() {
   const resetForm = () => {
     setUrl("");
     setTitle("");
+    setSubtitle("");
     setDescription("");
     setCategory(resourceCategories[0] || "Generators");
     setAuthor("");
@@ -61,6 +67,7 @@ export function SubmitForm() {
     setGitHubLink("");
     setFavicon("");
     setOgImage("");
+    setTags("");
     setNotes("");
     setHoneypot("");
     setCustomTheme(null);
@@ -122,7 +129,6 @@ export function SubmitForm() {
 
       const res = await fetch("/api/submissions", {
         body: JSON.stringify({
-          title: title.trim(),
           author: author.trim() || undefined,
           authorLink: authorLink.trim() || undefined,
           category,
@@ -131,6 +137,9 @@ export function SubmitForm() {
           gitHubLink: gitHubLink.trim() || undefined,
           notes: notes.trim() || undefined,
           ogImage: ogImage.trim() || undefined,
+          subtitle: subtitle.trim() || undefined,
+          tags: tags.trim() || undefined,
+          title: title.trim(),
           url: url.trim(),
           website_trap: honeypot,
         }),
@@ -255,7 +264,7 @@ export function SubmitForm() {
             </div>
           </div>
 
-          {/* Section 2: Title & Category */}
+          {/* Section 2: Title, Subtitle, & Category */}
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             <div className="space-y-2">
               <Label className="text-foreground font-mono text-xs font-bold uppercase">
@@ -288,6 +297,22 @@ export function SubmitForm() {
             </div>
           </div>
 
+          {/* Subtitle / Tagline */}
+          <div className="space-y-2">
+            <Label className="text-foreground font-mono text-xs font-bold uppercase">
+              Subtitle / Tagline (Optional)
+            </Label>
+            <div className="h-9">
+              <InputField
+                placeholder="e.g. The AI powered color palette generator"
+                value={subtitle}
+                onChange={(e) => setSubtitle(e.target.value)}
+                containerClassName="h-9"
+                className="font-mono text-xs"
+              />
+            </div>
+          </div>
+
           {/* Section 3: Description */}
           <div className="space-y-2">
             <Label className="text-foreground font-mono text-xs font-bold uppercase">
@@ -303,7 +328,92 @@ export function SubmitForm() {
             />
           </div>
 
-          {/* Section 4: Creator Attribution */}
+          {/* Section 4: Visuals & Media (Favicon & OG Image) */}
+          <div className="border-line/40 space-y-4 border-t pt-5">
+            <div>
+              <h4 className="text-foreground font-mono text-xs font-bold tracking-tight uppercase">
+                Visual Assets & Media
+              </h4>
+              <p className="text-muted-foreground text-[11px]">
+                Favicon icon and OpenGraph preview banner image.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                    Favicon URL
+                  </Label>
+                  {favicon && (
+                    <span className="text-muted-foreground inline-flex items-center gap-1 text-[10px]">
+                      <CardIcon alt="icon preview" favicon={favicon} className="size-4.5" />
+                      <span>Loaded</span>
+                    </span>
+                  )}
+                </div>
+                <div className="h-9">
+                  <InputField
+                    type="url"
+                    placeholder="https://example.com/favicon.ico"
+                    value={favicon}
+                    onChange={(e) => setFavicon(e.target.value)}
+                    containerClassName="h-9"
+                    className="font-mono text-xs"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                    OG Image URL
+                  </Label>
+                  {ogImage && (
+                    <span className="text-muted-foreground inline-flex items-center gap-1 text-[10px]">
+                      <ImageIcon className="size-3.5" />
+                      <span>Image set</span>
+                    </span>
+                  )}
+                </div>
+                <div className="h-9">
+                  <InputField
+                    type="url"
+                    placeholder="https://example.com/og.png"
+                    value={ogImage}
+                    onChange={(e) => setOgImage(e.target.value)}
+                    containerClassName="h-9"
+                    className="font-mono text-xs"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* OG Image Preview Thumbnail */}
+            {ogImage && (
+              <div className="border-line/40 bg-paper/60 flex items-center gap-3 border p-2.5">
+                <div className="border-line/60 relative h-14 w-24 shrink-0 overflow-hidden border bg-black/10">
+                  <Image
+                    src={ogImage}
+                    alt="OG Image Preview"
+                    fill
+                    unoptimized
+                    className="object-cover"
+                  />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <span className="text-muted-foreground block text-[10px] font-bold uppercase">
+                    OG Image Banner
+                  </span>
+                  <span className="text-foreground/80 block truncate font-mono text-[11px]">
+                    {ogImage}
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Section 5: Creator Attribution */}
           <div className="border-line/40 space-y-4 border-t pt-5">
             <div>
               <h4 className="text-foreground font-mono text-xs font-bold tracking-tight uppercase">
@@ -348,30 +458,47 @@ export function SubmitForm() {
             </div>
           </div>
 
-          {/* Section 5: Additional Details */}
+          {/* Section 6: Additional Details & Tags */}
           <div className="border-line/40 space-y-4 border-t pt-5">
             <div>
               <h4 className="text-foreground font-mono text-xs font-bold tracking-tight uppercase">
-                Additional Details
+                Additional Details & Tags
               </h4>
               <p className="text-muted-foreground text-[11px]">
-                Optional repository link and submitter notes.
+                Repository link, topic tags, and note for reviewer.
               </p>
             </div>
 
-            <div className="space-y-2">
-              <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                GitHub Repository (Optional)
-              </Label>
-              <div className="h-9">
-                <InputField
-                  type="url"
-                  placeholder="https://github.com/owner/repo"
-                  value={gitHubLink}
-                  onChange={(e) => setGitHubLink(e.target.value)}
-                  containerClassName="h-9"
-                  className="font-mono text-xs"
-                />
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                  GitHub Repository (Optional)
+                </Label>
+                <div className="h-9">
+                  <InputField
+                    type="url"
+                    placeholder="https://github.com/owner/repo"
+                    value={gitHubLink}
+                    onChange={(e) => setGitHubLink(e.target.value)}
+                    containerClassName="h-9"
+                    className="font-mono text-xs"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                  Tags / Keywords (Optional)
+                </Label>
+                <div className="h-9">
+                  <InputField
+                    placeholder="e.g. color, gradient, generator"
+                    value={tags}
+                    onChange={(e) => setTags(e.target.value)}
+                    containerClassName="h-9"
+                    className="font-mono text-xs"
+                  />
+                </div>
               </div>
             </div>
 
@@ -503,20 +630,41 @@ export function SubmitForm() {
 
                     <h3 className="card-title">{title || "Resource Title"}</h3>
 
+                    {subtitle && <p className="card-subtitle">{subtitle}</p>}
+
                     <p className="card-description">
                       {description ||
                         "Your tool's description will appear here. It explains the features, purpose, and utility for developers."}
                     </p>
 
+                    {/* Tags preview if any */}
+                    {tags && (
+                      <div className="mt-2 flex flex-wrap items-center gap-1">
+                        {tags
+                          .split(",")
+                          .map((t) => t.trim())
+                          .filter(Boolean)
+                          .slice(0, 3)
+                          .map((t) => (
+                            <span
+                              key={t}
+                              className={cn(
+                                "inline-flex items-center gap-0.5 rounded px-1.5 py-0.2 text-[9px] font-mono",
+                                isBlue ? "bg-paper/20 text-paper" : "bg-ink/10 text-ink",
+                              )}
+                            >
+                              <TagIcon className="size-2.5" />
+                              {t}
+                            </span>
+                          ))}
+                      </div>
+                    )}
+
                     <div className="card-footer">
                       <div className="flex min-w-0 items-center gap-2">
                         {author ? (
                           <span className="card-author truncate">{author}</span>
-                        ) : (
-                          <span className="text-muted-foreground/80 font-mono text-[11px] italic">
-                            Anonymous
-                          </span>
-                        )}
+                        ) : null}
                       </div>
 
                       <div className="flex items-center gap-2">

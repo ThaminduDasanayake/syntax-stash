@@ -31,6 +31,7 @@ export async function POST(req: Request) {
       notes,
       ogImage,
       pricing = "Free",
+      subtitle,
       tags,
       url,
     } = body;
@@ -79,6 +80,7 @@ export async function POST(req: Request) {
       status: "pending",
       submitterEmail: session?.user?.email || null,
       submitterName: session?.user?.name || null,
+      subtitle: subtitle ? String(subtitle).trim() : null,
       tags: tags ? (Array.isArray(tags) ? tags.join(", ") : String(tags).trim()) : null,
       url: String(url).trim(),
       userId: session?.user?.id || null,

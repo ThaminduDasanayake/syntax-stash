@@ -87,6 +87,7 @@ export const submission = pgTable(
     status: text("status").notNull().default("pending"), // 'pending' | 'approved' | 'rejected'
     submitterEmail: text("submitter_email"),
     submitterName: text("submitter_name"),
+    subtitle: text("subtitle"),
     tags: text("tags"),
 
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
