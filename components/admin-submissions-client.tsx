@@ -132,30 +132,25 @@ export function AdminSubmissionsClient() {
       favicon: sub.favicon || "",
       gitHubLink: sub.gitHubLink || "",
       ogImage: sub.ogImage || "",
-      pricing: sub.pricing || "Free",
       tags: sub.tags || "",
       url: sub.url,
     });
   };
 
   const generateTsCode = (sub: Submission) => {
-    const lines = [
-      `    category: CATEGORIES.${sub.category.toLowerCase().replace(/[^a-z0-9]/g, "") || "tools"},`,
-      `    description: "${sub.description.replace(/"/g, '\\"')}",`,
-      `    title: "${sub.title.replace(/"/g, '\\"')}",`,
-      `    url: "${sub.url}",`,
-      "  {",
-    ];
-
-    if (sub.favicon) lines.push(`    favicon: "${sub.favicon}",`);
-    if (sub.ogImage) lines.push(`    ogImage: "${sub.ogImage}",`);
-    if (sub.author) lines.push(`    author: "${sub.author.replace(/"/g, '\\"')}",`);
-    if (sub.authorLink) lines.push(`    authorLink: "${sub.authorLink}",`);
-    if (sub.gitHubLink) lines.push(`    gitHubLink: "${sub.gitHubLink}",`);
-    lines.push("    tags: [],");
-    lines.push("  },");
-
-    return lines.join("\n");
+    let code = "  {\n";
+    code += `    title: "${sub.title.replace(/"/g, '\\"')}",\n`;
+    code += `    category: CATEGORIES.${sub.category.toLowerCase().replace(/[^a-z0-9]/g, "") || "tools"},\n`;
+    code += `    description: "${sub.description.replace(/"/g, '\\"')}",\n`;
+    code += `    url: "${sub.url}",\n`;
+    if (sub.favicon) code += `    favicon: "${sub.favicon}",\n`;
+    if (sub.ogImage) code += `    ogImage: "${sub.ogImage}",\n`;
+    if (sub.author) code += `    author: "${sub.author.replace(/"/g, '\\"')}",\n`;
+    if (sub.authorLink) code += `    authorLink: "${sub.authorLink}",\n`;
+    if (sub.gitHubLink) code += `    gitHubLink: "${sub.gitHubLink}",\n`;
+    code += "    tags: [],\n";
+    code += "  },";
+    return code;
   };
 
   const handleCopyTsCode = (sub: Submission) => {
@@ -382,7 +377,6 @@ export function AdminSubmissionsClient() {
                           <span className="border-line text-muted-foreground rounded border px-1.5 py-0.5 text-[10px] uppercase font-bold">
                             {sub.category}
                           </span>
-                          <span className="text-muted-foreground text-[10px]">({sub.pricing})</span>
                         </div>
 
                         <a

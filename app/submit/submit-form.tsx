@@ -11,9 +11,19 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { CardIcon } from "@/components/card-icon";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { InputField } from "@/components/ui/input-field";
+import { Label } from "@/components/ui/label";
+import { SelectField } from "@/components/ui/select-field";
+import { Textarea } from "@/components/ui/textarea";
 import { resourceCategories } from "@/lib/resource-data";
+import { cn } from "@/lib/utils";
+
+const CATEGORY_OPTIONS = resourceCategories.map((cat) => ({
+  label: cat,
+  value: cat,
+}));
 
 export function SubmitForm() {
   // Form State
@@ -26,7 +36,6 @@ export function SubmitForm() {
   const [gitHubLink, setGitHubLink] = useState("");
   const [favicon, setFavicon] = useState("");
   const [ogImage, setOgImage] = useState("");
-  const [pricing, setPricing] = useState("Free");
   const [notes, setNotes] = useState("");
   const [honeypot, setHoneypot] = useState(""); // anti-spam trap
 
@@ -46,7 +55,6 @@ export function SubmitForm() {
     setGitHubLink("");
     setFavicon("");
     setOgImage("");
-    setPricing("Free");
     setNotes("");
     setHoneypot("");
     setErrorMsg(null);
@@ -116,7 +124,6 @@ export function SubmitForm() {
           gitHubLink: gitHubLink.trim() || undefined,
           notes: notes.trim() || undefined,
           ogImage: ogImage.trim() || undefined,
-          pricing,
           url: url.trim(),
           website_trap: honeypot,
         }),
@@ -134,7 +141,8 @@ export function SubmitForm() {
 
       setIsSubmitted(true);
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Failed to submit tool. Please try again.";
+      const message =
+        err instanceof Error ? err.message : "Failed to submit tool. Please try again.";
       setErrorMsg(message);
     } finally {
       setIsSubmitting(false);
@@ -143,7 +151,7 @@ export function SubmitForm() {
 
   if (isSubmitted) {
     return (
-      <div className="border-line/80 bg-surface/40 mx-auto max-w-2xl rounded border p-8 text-center font-mono sm:p-12">
+      <div className="border-line bg-paper/60 mx-auto max-w-2xl border p-8 text-center font-mono sm:p-12">
         <div className="bg-primary/10 text-primary mx-auto mb-5 grid size-16 place-items-center rounded-full">
           <CheckCircleIcon weight="fill" className="size-9" />
         </div>
@@ -175,11 +183,11 @@ export function SubmitForm() {
 
   return (
     <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
-      {/* Form Section (7 cols) */}
-      <div className="border-line/70 bg-surface/30 rounded border p-6 font-mono text-xs sm:p-8 lg:col-span-7">
+      {/* Left Column: Form (7 cols) */}
+      <div className="border-line bg-paper/40 border p-6 font-mono text-xs sm:p-8 lg:col-span-7">
         <form onSubmit={handleSubmit} className="space-y-6">
           {errorMsg && (
-            <div className="border-destructive/40 bg-destructive/10 text-destructive rounded border p-4 text-xs font-semibold leading-relaxed">
+            <div className="border-destructive/40 bg-destructive/10 text-destructive border p-4 text-xs leading-relaxed font-semibold">
               ⚠️ {errorMsg}
             </div>
           )}
@@ -196,42 +204,48 @@ export function SubmitForm() {
             aria-hidden="true"
           />
 
-          {/* Section 1: URL & Auto-detect */}
+          {/* Section 1: Tool URL with Auto-Fill */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <label className="text-foreground font-bold uppercase">
+              <Label className="text-foreground font-mono text-xs font-bold uppercase">
                 Tool URL <span className="text-destructive">*</span>
-              </label>
+              </Label>
               <span className="text-muted-foreground text-[10px]">
-                Paste link to auto-fill details
+                Paste link to auto-detect details
               </span>
             </div>
-            <div className="flex gap-2.5">
-              <Input
-                type="url"
-                placeholder="https://example.com"
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !title) {
-                    e.preventDefault();
-                    handleAutoDetect();
-                  }
-                }}
-                required
-                className="font-mono text-xs"
-              />
+            <div className="flex gap-2">
+              <div className="h-9 flex-1">
+                <InputField
+                  type="url"
+                  placeholder="https://example.com"
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !title) {
+                      e.preventDefault();
+                      handleAutoDetect();
+                    }
+                  }}
+                  required
+                  containerClassName="h-9"
+                  className="font-mono text-xs"
+                />
+              </div>
               <Button
                 type="button"
                 variant="outline"
                 onClick={handleAutoDetect}
                 disabled={isDetecting || !url.trim()}
-                className="shrink-0 gap-1.5 font-mono text-xs font-bold uppercase"
+                className={cn(
+                  "h-8 shrink-0 gap-1.5 font-mono text-xs font-bold uppercase",
+                  !url && "cursor-not-allowed",
+                )}
               >
                 {isDetecting ? (
                   <CircleNotchIcon className="size-3.5 animate-spin" />
                 ) : (
-                  <SparkleIcon weight="fill" className="size-3.5 text-primary" />
+                  <SparkleIcon weight="fill" className="text-primary size-3.5" />
                 )}
                 {isDetecting ? "Fetching..." : "Auto-Fill"}
               </Button>
@@ -239,142 +253,138 @@ export function SubmitForm() {
           </div>
 
           {/* Section 2: Title & Category */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             <div className="space-y-2">
-              <label className="text-foreground block font-bold uppercase">
+              <Label className="text-foreground font-mono text-xs font-bold uppercase">
                 Title <span className="text-destructive">*</span>
-              </label>
-              <Input
-                placeholder="e.g. Color Studio"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-                className="font-mono text-xs"
-              />
+              </Label>
+              <div className="h-9">
+                <InputField
+                  placeholder="e.g. Color Studio"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  required
+                  containerClassName="h-9"
+                  className="font-mono text-xs"
+                />
+              </div>
             </div>
 
             <div className="space-y-2">
-              <label className="text-foreground block font-bold uppercase">
+              <Label className="text-foreground font-mono text-xs font-bold uppercase">
                 Category <span className="text-destructive">*</span>
-              </label>
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="border-input bg-background text-foreground focus-visible:ring-ring flex h-9 w-full rounded border px-3 py-1 font-mono text-xs shadow-xs transition-colors focus-visible:ring-1 focus-visible:outline-hidden"
-              >
-                {resourceCategories.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
-                  </option>
-                ))}
-              </select>
+              </Label>
+              <div className="h-9">
+                <SelectField
+                  value={category}
+                  onValueChange={setCategory}
+                  options={CATEGORY_OPTIONS}
+                  triggerClassName="h-9 font-mono text-xs"
+                />
+              </div>
             </div>
           </div>
 
           {/* Section 3: Description */}
           <div className="space-y-2">
-            <label className="text-foreground block font-bold uppercase">
+            <Label className="text-foreground font-mono text-xs font-bold uppercase">
               Description <span className="text-destructive">*</span>
-            </label>
-            <textarea
+            </Label>
+            <Textarea
               placeholder="Briefly explain what this tool or resource does..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
               rows={4}
-              className="border-input bg-background text-foreground placeholder:text-muted-foreground focus-visible:ring-ring flex w-full rounded border px-3 py-2.5 font-mono text-xs leading-relaxed shadow-xs transition-colors focus-visible:ring-1 focus-visible:outline-hidden"
+              className="bg-paper min-h-[100px] font-mono text-xs leading-relaxed"
             />
           </div>
 
-          {/* Section 4: Author Information */}
-          <div className="border-line/40 border-t pt-5">
-            <div className="mb-4">
-              <h4 className="text-foreground font-bold tracking-tight uppercase">
+          {/* Section 4: Creator Attribution */}
+          <div className="border-line/40 space-y-4 border-t pt-5">
+            <div>
+              <h4 className="text-foreground font-mono text-xs font-bold tracking-tight uppercase">
                 Creator Attribution
               </h4>
               <p className="text-muted-foreground text-[11px]">
-                Give credit to the author, designer, or team who made it.
+                Give credit to the author, designer, or organization who built it.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div className="space-y-2">
-                <label className="text-foreground block font-bold uppercase">
+                <Label className="text-foreground font-mono text-xs font-bold uppercase">
                   Creator / Author Name
-                </label>
-                <Input
-                  placeholder="e.g. Jane Doe"
-                  value={author}
-                  onChange={(e) => setAuthor(e.target.value)}
-                  className="font-mono text-xs"
-                />
+                </Label>
+                <div className="h-9">
+                  <InputField
+                    placeholder="e.g. Jane Doe"
+                    value={author}
+                    onChange={(e) => setAuthor(e.target.value)}
+                    containerClassName="h-9"
+                    className="font-mono text-xs"
+                  />
+                </div>
               </div>
 
               <div className="space-y-2">
-                <label className="text-foreground block font-bold uppercase">
+                <Label className="text-foreground font-mono text-xs font-bold uppercase">
                   Creator Profile / Website
-                </label>
-                <Input
-                  type="url"
-                  placeholder="https://x.com/janedoe"
-                  value={authorLink}
-                  onChange={(e) => setAuthorLink(e.target.value)}
-                  className="font-mono text-xs"
-                />
+                </Label>
+                <div className="h-9">
+                  <InputField
+                    type="url"
+                    placeholder="https://x.com/janedoe"
+                    value={authorLink}
+                    onChange={(e) => setAuthorLink(e.target.value)}
+                    containerClassName="h-9"
+                    className="font-mono text-xs"
+                  />
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Section 5: Extra Details */}
-          <div className="border-line/40 border-t pt-5">
-            <div className="mb-4">
-              <h4 className="text-foreground font-bold tracking-tight uppercase">
+          {/* Section 5: Additional Details */}
+          <div className="border-line/40 space-y-4 border-t pt-5">
+            <div>
+              <h4 className="text-foreground font-mono text-xs font-bold tracking-tight uppercase">
                 Additional Details
               </h4>
               <p className="text-muted-foreground text-[11px]">
-                Optional metadata and pricing information.
+                Optional repository link and submitter notes.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div className="space-y-2">
-                <label className="text-foreground block font-bold uppercase">
-                  GitHub Repository (Optional)
-                </label>
-                <Input
+            <div className="space-y-2">
+              <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                GitHub Repository (Optional)
+              </Label>
+              <div className="h-9">
+                <InputField
                   type="url"
                   placeholder="https://github.com/owner/repo"
                   value={gitHubLink}
                   onChange={(e) => setGitHubLink(e.target.value)}
+                  containerClassName="h-9"
                   className="font-mono text-xs"
                 />
               </div>
-
-              <div className="space-y-2">
-                <label className="text-foreground block font-bold uppercase">Pricing Model</label>
-                <select
-                  value={pricing}
-                  onChange={(e) => setPricing(e.target.value)}
-                  className="border-input bg-background text-foreground focus-visible:ring-ring flex h-9 w-full rounded border px-3 py-1 font-mono text-xs shadow-xs transition-colors focus-visible:ring-1 focus-visible:outline-hidden"
-                >
-                  <option value="Free">Free</option>
-                  <option value="Freemium">Freemium</option>
-                  <option value="Open Source">Open Source</option>
-                  <option value="Paid">Paid</option>
-                </select>
-              </div>
             </div>
 
-            <div className="mt-4 space-y-2">
-              <label className="text-muted-foreground block font-bold uppercase">
+            <div className="space-y-2 pt-1">
+              <Label className="text-muted-foreground font-mono text-xs font-bold uppercase">
                 Note for Moderator (Optional)
-              </label>
-              <Input
-                placeholder="Why do you recommend this tool? Any special context?"
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                className="font-mono text-xs"
-              />
+              </Label>
+              <div className="h-9">
+                <InputField
+                  placeholder="Why do you recommend this tool? Any special context?"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  containerClassName="h-9"
+                  className="font-mono text-xs"
+                />
+              </div>
             </div>
           </div>
 
@@ -408,26 +418,26 @@ export function SubmitForm() {
         </form>
       </div>
 
-      {/* Sidebar & Live Preview Section (5 cols) */}
+      {/* Right Column: Live Preview & Guidelines (5 cols) */}
       <div className="space-y-6 lg:col-span-5">
         <div className="sticky top-24 space-y-6">
           {/* Live Preview Card */}
-          <div className="border-line/80 bg-surface/40 rounded border p-5 font-mono text-xs">
-            <div className="text-muted-foreground mb-3 flex items-center justify-between font-bold uppercase tracking-wider">
+          <div className="border-line bg-paper/50 border p-5 font-mono text-xs">
+            <div className="text-muted-foreground mb-3 flex items-center justify-between font-bold tracking-wider uppercase">
               <span>Live Card Preview</span>
               {url && (
                 <a
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-primary hover:underline inline-flex items-center gap-1"
+                  className="text-primary inline-flex items-center gap-1 text-[11px] hover:underline"
                 >
                   Visit Link <ArrowSquareOutIcon className="size-3" />
                 </a>
               )}
             </div>
 
-            <div className="border-line/50 bg-background/90 rounded border p-4 shadow-sm">
+            <div className="border-line bg-paper border p-4 shadow-xs">
               <div className="flex items-start gap-3.5">
                 <CardIcon
                   alt={title || "Preview"}
@@ -439,9 +449,9 @@ export function SubmitForm() {
                     <span className="text-foreground text-sm font-bold tracking-tight">
                       {title || "Resource Title"}
                     </span>
-                    <span className="border-line text-muted-foreground rounded border px-1.5 py-0.5 text-[10px] font-bold uppercase">
+                    <Badge variant="outline" className="font-mono text-[10px] font-bold uppercase">
                       {category}
-                    </span>
+                    </Badge>
                   </div>
 
                   <p className="text-muted-foreground mt-1.5 line-clamp-3 text-xs leading-relaxed">
@@ -449,7 +459,7 @@ export function SubmitForm() {
                       "Your tool's description will appear here. It explains the purpose, features, and target audience."}
                   </p>
 
-                  <div className="border-line/30 mt-3 flex flex-wrap items-center justify-between gap-2 border-t pt-2 text-[11px]">
+                  <div className="border-line/40 mt-3 flex flex-wrap items-center justify-between gap-2 border-t pt-2 text-[11px]">
                     {author ? (
                       <div className="text-muted-foreground flex items-center gap-1">
                         <GlobeIcon className="size-3" />
@@ -459,9 +469,11 @@ export function SubmitForm() {
                       <span className="text-muted-foreground/60 italic">No author specified</span>
                     )}
 
-                    <span className="text-muted-foreground text-[10px] uppercase font-bold">
-                      {pricing}
-                    </span>
+                    {gitHubLink && (
+                      <span className="text-muted-foreground text-[10px] font-semibold">
+                        Open Source
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -469,25 +481,25 @@ export function SubmitForm() {
           </div>
 
           {/* Guidelines Box */}
-          <div className="border-line/60 bg-surface/20 rounded border p-5 font-mono text-xs">
+          <div className="border-line bg-paper/30 border p-5 font-mono text-xs">
             <h4 className="text-foreground font-bold tracking-tight uppercase">
               Submission Guidelines
             </h4>
             <ul className="text-muted-foreground mt-3 space-y-2 leading-relaxed">
               <li className="flex items-start gap-2">
-                <span className="text-emerald-500 font-bold">✓</span>
+                <span className="font-bold text-emerald-600">✓</span>
                 <span>Useful to frontend/backend developers, designers, or indie creators.</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-emerald-500 font-bold">✓</span>
+                <span className="font-bold text-emerald-600">✓</span>
                 <span>Free, freemium, or open-source developer tooling.</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-emerald-500 font-bold">✓</span>
+                <span className="font-bold text-emerald-600">✓</span>
                 <span>High-quality, active websites with reliable uptime.</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-rose-500 font-bold">✗</span>
+                <span className="font-bold text-rose-600">✗</span>
                 <span>No spam, duplicate links, or purely promotional landing pages.</span>
               </li>
             </ul>
