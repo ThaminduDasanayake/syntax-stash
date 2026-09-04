@@ -6,16 +6,21 @@ import {
   CircleNotchIcon,
   ClipboardTextIcon,
   FloppyDiskIcon,
+  GithubLogoIcon,
   GlobeIcon,
+  LinkedinLogoIcon,
   PencilSimpleIcon,
   TrashIcon,
   XCircleIcon,
+  XLogoIcon,
+  YoutubeLogoIcon,
 } from "@phosphor-icons/react";
 import { useCallback, useEffect, useState } from "react";
 
 import { CardIcon } from "@/components/card-icon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { slugifyAuthor } from "@/lib/authors";
 import { Submission } from "@/lib/db/schema";
 import { resourceCategories } from "@/lib/resource-data";
 
@@ -124,22 +129,27 @@ export function AdminSubmissionsClient() {
     setEditingId(sub.id);
     setEditForm({
       title: sub.title,
-      subtitle: sub.subtitle || "",
       adminNotes: sub.adminNotes || "",
       author: sub.author || "",
+      authorGitHub: sub.authorGitHub || "",
       authorLink: sub.authorLink || "",
+      authorLinkedIn: sub.authorLinkedIn || "",
+      authorTwitter: sub.authorTwitter || "",
+      authorWebsite: sub.authorWebsite || "",
+      authorYouTube: sub.authorYouTube || "",
       category: sub.category,
       description: sub.description,
       favicon: sub.favicon || "",
       gitHubLink: sub.gitHubLink || "",
       ogImage: sub.ogImage || "",
+      subtitle: sub.subtitle || "",
       tags: sub.tags || "",
       url: sub.url,
     });
   };
 
   const generateTsCode = (sub: Submission) => {
-    let code = "  {\n";
+    let code = "  // --- Resource Entry ---\n  {\n";
     code += `    title: "${sub.title.replace(/"/g, '\\"')}",\n`;
     if (sub.subtitle) code += `    subtitle: "${sub.subtitle.replace(/"/g, '\\"')}",\n`;
     code += `    category: CATEGORIES.${sub.category.toLowerCase().replace(/[^a-z0-9]/g, "") || "tools"},\n`;
@@ -148,7 +158,8 @@ export function AdminSubmissionsClient() {
     if (sub.favicon) code += `    favicon: "${sub.favicon}",\n`;
     if (sub.ogImage) code += `    ogImage: "${sub.ogImage}",\n`;
     if (sub.author) code += `    author: "${sub.author.replace(/"/g, '\\"')}",\n`;
-    if (sub.authorLink) code += `    authorLink: "${sub.authorLink}",\n`;
+    const resolvedWebsite = sub.authorWebsite || sub.authorLink;
+    if (resolvedWebsite) code += `    authorLink: "${resolvedWebsite}",\n`;
     if (sub.gitHubLink) code += `    gitHubLink: "${sub.gitHubLink}",\n`;
     const parsedTags = sub.tags
       ? sub.tags
@@ -162,6 +173,29 @@ export function AdminSubmissionsClient() {
       code += "    tags: [],\n";
     }
     code += "  },";
+
+    // If author and social links exist, append Authors Registry snippet
+    const hasSocial =
+      sub.authorTwitter ||
+      sub.authorGitHub ||
+      sub.authorWebsite ||
+      sub.authorYouTube ||
+      sub.authorLinkedIn;
+    if (sub.author && hasSocial) {
+      const slug = slugifyAuthor(sub.author);
+      code += `\n\n  // --- Authors Registry Entry (lib/resource-data/authors.ts) ---\n`;
+      code += `  "${slug}": {\n`;
+      code += `    name: "${sub.author.replace(/"/g, '\\"')}",\n`;
+      code += `    links: {\n`;
+      if (sub.authorGitHub) code += `      github: "${sub.authorGitHub}",\n`;
+      if (sub.authorLinkedIn) code += `      linkedin: "${sub.authorLinkedIn}",\n`;
+      if (sub.authorTwitter) code += `      twitter: "${sub.authorTwitter}",\n`;
+      if (resolvedWebsite) code += `      website: "${resolvedWebsite}",\n`;
+      if (sub.authorYouTube) code += `      youtube: "${sub.authorYouTube}",\n`;
+      code += `    },\n`;
+      code += `  },`;
+    }
+
     return code;
   };
 
@@ -343,7 +377,7 @@ export function AdminSubmissionsClient() {
 
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                       <div>
-                        <label className="text-muted-foreground text-[10px] font-bold uppercase">Author</label>
+                        <label className="text-muted-foreground text-[10px] font-bold uppercase">Author Name</label>
                         <Input
                           value={editForm.author || ""}
                           onChange={(e) => setEditForm({ ...editForm, author: e.target.value })}
@@ -351,10 +385,16 @@ export function AdminSubmissionsClient() {
                         />
                       </div>
                       <div>
-                        <label className="text-muted-foreground text-[10px] font-bold uppercase">Author Link</label>
+                        <label className="text-muted-foreground text-[10px] font-bold uppercase">Author Website / Portfolio</label>
                         <Input
-                          value={editForm.authorLink || ""}
-                          onChange={(e) => setEditForm({ ...editForm, authorLink: e.target.value })}
+                          value={editForm.authorWebsite || editForm.authorLink || ""}
+                          onChange={(e) =>
+                            setEditForm({
+                              ...editForm,
+                              authorLink: e.target.value,
+                              authorWebsite: e.target.value,
+                            })
+                          }
                           className="font-mono text-xs"
                         />
                       </div>
@@ -362,7 +402,49 @@ export function AdminSubmissionsClient() {
 
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                       <div>
-                        <label className="text-muted-foreground text-[10px] font-bold uppercase">GitHub Link</label>
+                        <label className="text-muted-foreground text-[10px] font-bold uppercase">Author X / Twitter</label>
+                        <Input
+                          value={editForm.authorTwitter || ""}
+                          onChange={(e) => setEditForm({ ...editForm, authorTwitter: e.target.value })}
+                          placeholder="https://x.com/username"
+                          className="font-mono text-xs"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-muted-foreground text-[10px] font-bold uppercase">Author GitHub Profile</label>
+                        <Input
+                          value={editForm.authorGitHub || ""}
+                          onChange={(e) => setEditForm({ ...editForm, authorGitHub: e.target.value })}
+                          placeholder="https://github.com/username"
+                          className="font-mono text-xs"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                      <div>
+                        <label className="text-muted-foreground text-[10px] font-bold uppercase">Author YouTube Channel</label>
+                        <Input
+                          value={editForm.authorYouTube || ""}
+                          onChange={(e) => setEditForm({ ...editForm, authorYouTube: e.target.value })}
+                          placeholder="https://youtube.com/@channel"
+                          className="font-mono text-xs"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-muted-foreground text-[10px] font-bold uppercase">Author LinkedIn Profile</label>
+                        <Input
+                          value={editForm.authorLinkedIn || ""}
+                          onChange={(e) => setEditForm({ ...editForm, authorLinkedIn: e.target.value })}
+                          placeholder="https://linkedin.com/in/username"
+                          className="font-mono text-xs"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                      <div>
+                        <label className="text-muted-foreground text-[10px] font-bold uppercase">Project GitHub Repo</label>
                         <Input
                           value={editForm.gitHubLink || ""}
                           onChange={(e) => setEditForm({ ...editForm, gitHubLink: e.target.value })}
@@ -448,24 +530,68 @@ export function AdminSubmissionsClient() {
                           </div>
                         )}
 
-                        <div className="flex flex-wrap items-center gap-4 pt-1 text-[11px]">
+                        <div className="flex flex-wrap items-center gap-3 pt-1.5 text-[11px]">
                           {sub.author && (
-                            <span className="text-muted-foreground flex items-center gap-1">
-                              <GlobeIcon className="size-3" />
-                              By{" "}
-                              {sub.authorLink ? (
-                                <a
-                                  href={sub.authorLink}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-foreground hover:underline font-bold"
-                                >
-                                  {sub.author}
-                                </a>
-                              ) : (
-                                <span className="text-foreground font-bold">{sub.author}</span>
-                              )}
-                            </span>
+                            <div className="flex items-center gap-1.5 font-semibold text-foreground">
+                              <span>By {sub.author}</span>
+                              <div className="flex items-center gap-1 text-muted-foreground">
+                                {(sub.authorWebsite || sub.authorLink) && (
+                                  <a
+                                    href={sub.authorWebsite || sub.authorLink || "#"}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hover:text-primary p-0.5"
+                                    title="Author Website"
+                                  >
+                                    <GlobeIcon className="size-3.5" />
+                                  </a>
+                                )}
+                                {sub.authorTwitter && (
+                                  <a
+                                    href={sub.authorTwitter}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hover:text-primary p-0.5"
+                                    title="Author X / Twitter"
+                                  >
+                                    <XLogoIcon weight="bold" className="size-3.5" />
+                                  </a>
+                                )}
+                                {sub.authorGitHub && (
+                                  <a
+                                    href={sub.authorGitHub}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hover:text-primary p-0.5"
+                                    title="Author GitHub Profile"
+                                  >
+                                    <GithubLogoIcon weight="fill" className="size-3.5" />
+                                  </a>
+                                )}
+                                {sub.authorYouTube && (
+                                  <a
+                                    href={sub.authorYouTube}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hover:text-primary p-0.5"
+                                    title="Author YouTube Channel"
+                                  >
+                                    <YoutubeLogoIcon weight="fill" className="size-3.5" />
+                                  </a>
+                                )}
+                                {sub.authorLinkedIn && (
+                                  <a
+                                    href={sub.authorLinkedIn}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hover:text-primary p-0.5"
+                                    title="Author LinkedIn Profile"
+                                  >
+                                    <LinkedinLogoIcon weight="fill" className="size-3.5" />
+                                  </a>
+                                )}
+                              </div>
+                            </div>
                           )}
 
                           {sub.gitHubLink && (

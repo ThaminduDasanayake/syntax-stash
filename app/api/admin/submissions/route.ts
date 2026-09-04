@@ -74,11 +74,17 @@ export async function PATCH(req: Request) {
       updatedData.reviewedAt = new Date();
     }
     if (updates.title !== undefined) updatedData.title = updates.title;
+    if (updates.subtitle !== undefined) updatedData.subtitle = updates.subtitle;
     if (updates.url !== undefined) updatedData.url = updates.url;
     if (updates.description !== undefined) updatedData.description = updates.description;
     if (updates.category !== undefined) updatedData.category = updates.category;
     if (updates.author !== undefined) updatedData.author = updates.author;
     if (updates.authorLink !== undefined) updatedData.authorLink = updates.authorLink;
+    if (updates.authorWebsite !== undefined) updatedData.authorWebsite = updates.authorWebsite;
+    if (updates.authorTwitter !== undefined) updatedData.authorTwitter = updates.authorTwitter;
+    if (updates.authorGitHub !== undefined) updatedData.authorGitHub = updates.authorGitHub;
+    if (updates.authorYouTube !== undefined) updatedData.authorYouTube = updates.authorYouTube;
+    if (updates.authorLinkedIn !== undefined) updatedData.authorLinkedIn = updates.authorLinkedIn;
     if (updates.gitHubLink !== undefined) updatedData.gitHubLink = updates.gitHubLink;
     if (updates.favicon !== undefined) updatedData.favicon = updates.favicon;
     if (updates.ogImage !== undefined) updatedData.ogImage = updates.ogImage;

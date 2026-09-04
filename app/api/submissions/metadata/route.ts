@@ -108,12 +108,12 @@ export async function GET(request: NextRequest) {
     const firstP = $("main p, article p, body p").first().text().trim();
     const description = metaDesc || ogDesc || twitterDesc || (firstP.length > 20 && firstP.length < 300 ? firstP : "");
 
-    // Author
-    let author =
-      $('meta[name="author"]').attr("content")?.trim() ||
-      $('meta[name="twitter:creator"]').attr("content")?.trim() ||
-      $('meta[property="article:author"]').attr("content")?.trim() ||
-      "";
+    // Author and Social Links
+    const twitterCreator = $('meta[name="twitter:creator"]').attr("content")?.trim();
+    const articleAuthor = $('meta[property="article:author"]').attr("content")?.trim();
+    const metaAuthor = $('meta[name="author"]').attr("content")?.trim();
+
+    let author = metaAuthor || twitterCreator || articleAuthor || "";
 
     // Scan og:description for "Built by X"
     if (!author && ogDesc) {
@@ -125,6 +125,68 @@ export async function GET(request: NextRequest) {
 
     if (author.startsWith("@vercel") || author.startsWith("@nextjs")) {
       author = "";
+    }
+
+    // Author Social Links
+    let authorTwitter: string | undefined;
+    let authorGitHub: string | undefined;
+    let authorYouTube: string | undefined;
+    let authorLinkedIn: string | undefined;
+    let authorWebsite: string | undefined;
+
+    if (twitterCreator && twitterCreator.startsWith("@") && !["@github", "@nextjs", "@vercel"].includes(twitterCreator.toLowerCase())) {
+      authorTwitter = `https://x.com/${twitterCreator.replace(/^@/, "")}`;
+    }
+
+    // Scan page links for social profiles
+    $("a[href]").each((_, el) => {
+      const href = $(el).attr("href");
+      if (!href) return;
+
+      try {
+        const fullHref = resolveUrl(href, finalUrl);
+        const linkUrl = new URL(fullHref);
+        const host = linkUrl.hostname.toLowerCase();
+        const pathname = linkUrl.pathname;
+
+        // Twitter / X
+        if (!authorTwitter && (host.includes("twitter.com") || host.includes("x.com"))) {
+          if (!pathname.includes("/intent/") && !pathname.includes("/share") && pathname.length > 1) {
+            authorTwitter = fullHref;
+          }
+        }
+
+        // GitHub
+        if (host.includes("github.com")) {
+          const parts = pathname.split("/").filter(Boolean);
+          if (
+            parts.length === 1 &&
+            !["about", "explore", "features", "login", "marketplace", "pricing", "signup", "topics", "trending"].includes(parts[0])
+          ) {
+            if (!authorGitHub) authorGitHub = `https://github.com/${parts[0]}`;
+          }
+        }
+
+        // YouTube
+        if (!authorYouTube && (host.includes("youtube.com") || host.includes("youtu.be"))) {
+          if (pathname.includes("/@") || pathname.includes("/channel/") || pathname.includes("/c/")) {
+            authorYouTube = fullHref;
+          }
+        }
+
+        // LinkedIn
+        if (!authorLinkedIn && host.includes("linkedin.com")) {
+          if (pathname.includes("/in/") || pathname.includes("/company/")) {
+            authorLinkedIn = fullHref;
+          }
+        }
+      } catch {
+        // ignore invalid urls
+      }
+    });
+
+    if (articleAuthor && (articleAuthor.startsWith("http://") || articleAuthor.startsWith("https://"))) {
+      authorWebsite = articleAuthor;
     }
 
     // Favicon
@@ -163,7 +225,7 @@ export async function GET(request: NextRequest) {
 
     const ogImage = rawOgImg ? resolveUrl(rawOgImg.trim(), finalUrl) : undefined;
 
-    // GitHub Link discovery
+    // GitHub Repo Link discovery
     let gitHubLink: string | undefined;
     $('a[href*="github.com"]').each((_, el) => {
       const href = $(el).attr("href");
@@ -190,6 +252,11 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       title,
       author,
+      authorGitHub,
+      authorLinkedIn,
+      authorTwitter,
+      authorWebsite,
+      authorYouTube,
       category: suggestedCategory,
       description,
       favicon,

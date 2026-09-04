@@ -23,7 +23,12 @@ export async function POST(req: Request) {
     const {
       title,
       author,
+      authorGitHub,
       authorLink,
+      authorLinkedIn,
+      authorTwitter,
+      authorWebsite,
+      authorYouTube,
       category,
       description,
       favicon,
@@ -65,11 +70,18 @@ export async function POST(req: Request) {
 
     const submissionId = randomUUID();
 
+    const resolvedAuthorWebsite = authorWebsite || authorLink;
+
     await db.insert(submission).values({
       id: submissionId,
       title: String(title).trim(),
       author: author ? String(author).trim() : null,
-      authorLink: authorLink ? String(authorLink).trim() : null,
+      authorGitHub: authorGitHub ? String(authorGitHub).trim() : null,
+      authorLink: resolvedAuthorWebsite ? String(resolvedAuthorWebsite).trim() : null,
+      authorLinkedIn: authorLinkedIn ? String(authorLinkedIn).trim() : null,
+      authorTwitter: authorTwitter ? String(authorTwitter).trim() : null,
+      authorWebsite: resolvedAuthorWebsite ? String(resolvedAuthorWebsite).trim() : null,
+      authorYouTube: authorYouTube ? String(authorYouTube).trim() : null,
       category: String(category).trim(),
       description: String(description).trim(),
       favicon: favicon ? String(favicon).trim() : null,

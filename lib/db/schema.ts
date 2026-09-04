@@ -72,7 +72,12 @@ export const submission = pgTable(
     title: text("title").notNull(),
     adminNotes: text("admin_notes"),
     author: text("author"),
+    authorGitHub: text("author_github"),
     authorLink: text("author_link"),
+    authorLinkedIn: text("author_linkedin"),
+    authorTwitter: text("author_twitter"),
+    authorWebsite: text("author_website"),
+    authorYouTube: text("author_youtube"),
     category: text("category").notNull(),
 
     createdAt: timestamp("created_at").notNull().defaultNow(),

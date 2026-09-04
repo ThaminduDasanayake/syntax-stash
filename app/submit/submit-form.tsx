@@ -5,10 +5,15 @@ import {
   CheckCircleIcon,
   CheckIcon,
   CircleNotchIcon,
+  GithubLogoIcon,
+  GlobeIcon,
   ImageIcon,
+  LinkedinLogoIcon,
   SparkleIcon,
   TagIcon,
   XIcon,
+  XLogoIcon,
+  YoutubeLogoIcon,
 } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -36,7 +41,11 @@ export function SubmitForm() {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState<string>(resourceCategories[0] || "Generators");
   const [author, setAuthor] = useState("");
-  const [authorLink, setAuthorLink] = useState("");
+  const [authorWebsite, setAuthorWebsite] = useState("");
+  const [authorTwitter, setAuthorTwitter] = useState("");
+  const [authorGitHub, setAuthorGitHub] = useState("");
+  const [authorYouTube, setAuthorYouTube] = useState("");
+  const [authorLinkedIn, setAuthorLinkedIn] = useState("");
   const [gitHubLink, setGitHubLink] = useState("");
   const [favicon, setFavicon] = useState("");
   const [ogImage, setOgImage] = useState("");
@@ -63,7 +72,11 @@ export function SubmitForm() {
     setDescription("");
     setCategory(resourceCategories[0] || "Generators");
     setAuthor("");
-    setAuthorLink("");
+    setAuthorWebsite("");
+    setAuthorTwitter("");
+    setAuthorGitHub("");
+    setAuthorYouTube("");
+    setAuthorLinkedIn("");
     setGitHubLink("");
     setFavicon("");
     setOgImage("");
@@ -103,6 +116,11 @@ export function SubmitForm() {
       if (data.favicon) setFavicon(data.favicon);
       if (data.ogImage) setOgImage(data.ogImage);
       if (data.author) setAuthor(data.author);
+      if (data.authorWebsite) setAuthorWebsite(data.authorWebsite);
+      if (data.authorTwitter) setAuthorTwitter(data.authorTwitter);
+      if (data.authorGitHub) setAuthorGitHub(data.authorGitHub);
+      if (data.authorYouTube) setAuthorYouTube(data.authorYouTube);
+      if (data.authorLinkedIn) setAuthorLinkedIn(data.authorLinkedIn);
       if (data.gitHubLink) setGitHubLink(data.gitHubLink);
       if (data.category && resourceCategories.includes(data.category)) {
         setCategory(data.category);
@@ -127,11 +145,18 @@ export function SubmitForm() {
       setIsSubmitting(true);
       setErrorMsg(null);
 
+      const resolvedAuthorLink = authorWebsite || authorTwitter || authorGitHub;
+
       const res = await fetch("/api/submissions", {
         body: JSON.stringify({
           title: title.trim(),
           author: author.trim() || undefined,
-          authorLink: authorLink.trim() || undefined,
+          authorGitHub: authorGitHub.trim() || undefined,
+          authorLink: resolvedAuthorLink.trim() || undefined,
+          authorLinkedIn: authorLinkedIn.trim() || undefined,
+          authorTwitter: authorTwitter.trim() || undefined,
+          authorWebsite: authorWebsite.trim() || undefined,
+          authorYouTube: authorYouTube.trim() || undefined,
           category,
           description: description.trim(),
           favicon: favicon.trim() || undefined,
@@ -417,14 +442,14 @@ export function SubmitForm() {
           <div className="border-line/40 space-y-4 border-t pt-5">
             <div>
               <h4 className="text-foreground font-mono text-xs font-bold tracking-tight uppercase">
-                Creator Attribution
+                Creator Attribution & Links
               </h4>
               <p className="text-muted-foreground text-[11px]">
-                Give credit to the author, designer, or organization who built it.
+                Give credit to the author, designer, or organization who built it with their social profiles.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label className="text-foreground font-mono text-xs font-bold uppercase">
                   Creator / Author Name
@@ -441,15 +466,79 @@ export function SubmitForm() {
               </div>
 
               <div className="space-y-2">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Creator Profile / Website
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <GlobeIcon className="text-muted-foreground size-3.5" /> Website / Portfolio
+                </Label>
+                <div className="h-9">
+                  <InputField
+                    type="url"
+                    placeholder="https://janedoe.com"
+                    value={authorWebsite}
+                    onChange={(e) => setAuthorWebsite(e.target.value)}
+                    containerClassName="h-9"
+                    className="font-mono text-xs"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <XLogoIcon weight="bold" className="text-muted-foreground size-3.5" /> X / Twitter Profile
                 </Label>
                 <div className="h-9">
                   <InputField
                     type="url"
                     placeholder="https://x.com/janedoe"
-                    value={authorLink}
-                    onChange={(e) => setAuthorLink(e.target.value)}
+                    value={authorTwitter}
+                    onChange={(e) => setAuthorTwitter(e.target.value)}
+                    containerClassName="h-9"
+                    className="font-mono text-xs"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <GithubLogoIcon weight="fill" className="text-muted-foreground size-3.5" /> GitHub Profile
+                </Label>
+                <div className="h-9">
+                  <InputField
+                    type="url"
+                    placeholder="https://github.com/janedoe"
+                    value={authorGitHub}
+                    onChange={(e) => setAuthorGitHub(e.target.value)}
+                    containerClassName="h-9"
+                    className="font-mono text-xs"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <YoutubeLogoIcon weight="fill" className="text-muted-foreground size-3.5" /> YouTube Channel
+                </Label>
+                <div className="h-9">
+                  <InputField
+                    type="url"
+                    placeholder="https://youtube.com/@janedoe"
+                    value={authorYouTube}
+                    onChange={(e) => setAuthorYouTube(e.target.value)}
+                    containerClassName="h-9"
+                    className="font-mono text-xs"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <LinkedinLogoIcon weight="fill" className="text-muted-foreground size-3.5" /> LinkedIn Profile
+                </Label>
+                <div className="h-9">
+                  <InputField
+                    type="url"
+                    placeholder="https://linkedin.com/in/janedoe"
+                    value={authorLinkedIn}
+                    onChange={(e) => setAuthorLinkedIn(e.target.value)}
                     containerClassName="h-9"
                     className="font-mono text-xs"
                   />
