@@ -3,9 +3,12 @@
 import {
   ArrowSquareOutIcon,
   CheckCircleIcon,
+  CheckIcon,
   CircleNotchIcon,
+  CrossIcon,
   GlobeIcon,
   SparkleIcon,
+  XIcon,
 } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useState } from "react";
@@ -18,7 +21,6 @@ import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
 import { resourceCategories } from "@/lib/resource-data";
-import { cn } from "@/lib/utils";
 
 const CATEGORY_OPTIONS = resourceCategories.map((cat) => ({
   label: cat,
@@ -237,10 +239,7 @@ export function SubmitForm() {
                 variant="outline"
                 onClick={handleAutoDetect}
                 disabled={isDetecting || !url.trim()}
-                className={cn(
-                  "h-8 shrink-0 gap-1.5 font-mono text-xs font-bold uppercase",
-                  !url && "cursor-not-allowed",
-                )}
+                className="h-8 shrink-0 gap-1.5 font-mono text-xs font-bold uppercase"
               >
                 {isDetecting ? (
                   <CircleNotchIcon className="size-3.5 animate-spin" />
@@ -296,7 +295,7 @@ export function SubmitForm() {
               onChange={(e) => setDescription(e.target.value)}
               required
               rows={4}
-              className="bg-paper min-h-[100px] font-mono text-xs leading-relaxed"
+              className="bg-paper min-h-25 font-mono text-xs leading-relaxed"
             />
           </div>
 
@@ -487,19 +486,27 @@ export function SubmitForm() {
             </h4>
             <ul className="text-muted-foreground mt-3 space-y-2 leading-relaxed">
               <li className="flex items-start gap-2">
-                <span className="font-bold text-emerald-600">✓</span>
+                <span className="font-bold text-emerald-600">
+                  <CheckIcon weight="bold" className="size-4" />
+                </span>
                 <span>Useful to frontend/backend developers, designers, or indie creators.</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="font-bold text-emerald-600">✓</span>
+                <span className="font-bold text-emerald-600">
+                  <CheckIcon weight="bold" className="size-4" />
+                </span>
                 <span>Free, freemium, or open-source developer tooling.</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="font-bold text-emerald-600">✓</span>
+                <span className="font-bold text-emerald-600">
+                  <CheckIcon weight="bold" className="size-4" />
+                </span>
                 <span>High-quality, active websites with reliable uptime.</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="font-bold text-rose-600">✗</span>
+                <span className="font-bold text-rose-600">
+                  <XIcon weight="bold" className="size-4" />
+                </span>
                 <span>No spam, duplicate links, or purely promotional landing pages.</span>
               </li>
             </ul>
