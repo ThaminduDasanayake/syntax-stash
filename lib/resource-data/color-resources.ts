@@ -152,6 +152,7 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     description:
       "Generate color combinations in one click. Colormind creates cohesive color schemes using a deep neural net.",
     favicon: "https://colormind.io/img/logo_nav.svg",
+    ogImage: "https://colormind.io/img/logo.png",
     subtitle: "The AI powered color palette generator",
     tags: [TAGS.color],
     url: "https://colormind.io/",

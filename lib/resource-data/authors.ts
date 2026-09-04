@@ -132,6 +132,15 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
     },
     name: "Matthias Martin",
   },
+  "microlink-hq": {
+    links: {
+      github: "https://github.com/microlinkhq",
+      linkedin: "https://www.linkedin.com/company/microlinkhq",
+      twitter: "https://x.com/microlinkhq",
+      website: "https://microlink.io/",
+    },
+    name: "Microlink HQ",
+  },
   "noor-mtir": {
     links: {
       github: "https://github.com/NourMtir0722",
