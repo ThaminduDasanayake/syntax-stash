@@ -5,15 +5,12 @@ import {
   CheckCircleIcon,
   CheckIcon,
   CircleNotchIcon,
-  GithubLogoIcon,
   GlobeIcon,
   ImageIcon,
-  LinkedinLogoIcon,
   SparkleIcon,
   TagIcon,
   XIcon,
   XLogoIcon,
-  YoutubeLogoIcon,
 } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -182,7 +179,8 @@ export function SubmitForm() {
 
       setIsSubmitted(true);
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Failed to submit tool. Please try again.";
+      const message =
+        err instanceof Error ? err.message : "Failed to submit tool. Please try again.";
       setErrorMsg(message);
     } finally {
       setIsSubmitting(false);
@@ -227,7 +225,7 @@ export function SubmitForm() {
       <div className="border-line bg-paper/40 border p-6 font-mono text-xs sm:p-8 lg:col-span-7">
         <form onSubmit={handleSubmit} className="space-y-6">
           {errorMsg && (
-            <div className="border-destructive/40 bg-destructive/10 text-destructive border p-4 text-xs font-semibold leading-relaxed">
+            <div className="border-destructive/40 bg-destructive/10 text-destructive border p-4 text-xs leading-relaxed font-semibold">
               ⚠️ {errorMsg}
             </div>
           )}
@@ -277,12 +275,12 @@ export function SubmitForm() {
                 variant="outline"
                 onClick={handleAutoDetect}
                 disabled={isDetecting || !url.trim()}
-                className="h-9 shrink-0 gap-1.5 font-mono text-xs font-bold uppercase"
+                className="h-8 shrink-0 gap-1.5 font-mono text-xs font-bold uppercase"
               >
                 {isDetecting ? (
                   <CircleNotchIcon className="size-3.5 animate-spin" />
                 ) : (
-                  <SparkleIcon weight="fill" className="size-3.5 text-primary" />
+                  <SparkleIcon weight="fill" className="text-primary size-3.5" />
                 )}
                 {isDetecting ? "Fetching..." : "Auto-Fill"}
               </Button>
@@ -349,7 +347,7 @@ export function SubmitForm() {
               onChange={(e) => setDescription(e.target.value)}
               required
               rows={4}
-              className="bg-paper min-h-[100px] font-mono text-xs leading-relaxed"
+              className="bg-paper min-h-25 font-mono text-xs leading-relaxed"
             />
           </div>
 
@@ -396,7 +394,7 @@ export function SubmitForm() {
                   </Label>
                   {ogImage && (
                     <span className="text-muted-foreground inline-flex items-center gap-1 text-[10px]">
-                      <ImageIcon className="size-3.5" />
+                      <ImageIcon className="size-4.5" />
                       <span>Image set</span>
                     </span>
                   )}
@@ -445,7 +443,8 @@ export function SubmitForm() {
                 Creator Attribution & Links
               </h4>
               <p className="text-muted-foreground text-[11px]">
-                Give credit to the author, designer, or organization who built it with their social profiles.
+                Give credit to the author, designer, or organization who built it with their social
+                profiles.
               </p>
             </div>
 
@@ -483,7 +482,8 @@ export function SubmitForm() {
 
               <div className="space-y-2">
                 <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                  <XLogoIcon weight="bold" className="text-muted-foreground size-3.5" /> X / Twitter Profile
+                  <XLogoIcon weight="bold" className="text-muted-foreground size-3.5" /> X / Twitter
+                  Profile
                 </Label>
                 <div className="h-9">
                   <InputField
@@ -499,7 +499,14 @@ export function SubmitForm() {
 
               <div className="space-y-2">
                 <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                  <GithubLogoIcon weight="fill" className="text-muted-foreground size-3.5" /> GitHub Profile
+                  <Image
+                    src="/github.svg"
+                    alt="GitHub"
+                    width={14}
+                    height={14}
+                    className="size-3.5 dark:invert"
+                  />
+                  <span>GitHub Profile</span>
                 </Label>
                 <div className="h-9">
                   <InputField
@@ -515,7 +522,14 @@ export function SubmitForm() {
 
               <div className="space-y-2">
                 <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                  <YoutubeLogoIcon weight="fill" className="text-muted-foreground size-3.5" /> YouTube Channel
+                  <Image
+                    src="/youtube.svg"
+                    alt="YouTube"
+                    width={14}
+                    height={14}
+                    className="size-3.5"
+                  />
+                  <span>YouTube Channel</span>
                 </Label>
                 <div className="h-9">
                   <InputField
@@ -531,7 +545,14 @@ export function SubmitForm() {
 
               <div className="space-y-2">
                 <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                  <LinkedinLogoIcon weight="fill" className="text-muted-foreground size-3.5" /> LinkedIn Profile
+                  <Image
+                    src="/linkedin.svg"
+                    alt="LinkedIn"
+                    width={14}
+                    height={14}
+                    className="size-3.5"
+                  />
+                  <span>LinkedIn Profile</span>
                 </Label>
                 <div className="h-9">
                   <InputField
@@ -560,8 +581,15 @@ export function SubmitForm() {
 
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div className="space-y-2">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  GitHub Repository (Optional)
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <Image
+                    src="/github.svg"
+                    alt="GitHub"
+                    width={14}
+                    height={14}
+                    className="size-3.5 dark:invert"
+                  />
+                  <span>GitHub Repository (Optional)</span>
                 </Label>
                 <div className="h-9">
                   <InputField
@@ -663,7 +691,7 @@ export function SubmitForm() {
                     className={cn(
                       "bg-c-orange size-3.5 cursor-pointer transition-opacity hover:opacity-80",
                       activeTheme === "orange"
-                        ? "opacity-100 ring-1 ring-inset ring-ink"
+                        ? "ring-ink opacity-100 ring-1 ring-inset"
                         : "opacity-60",
                     )}
                   />
@@ -675,7 +703,7 @@ export function SubmitForm() {
                     className={cn(
                       "bg-c-blue size-3.5 cursor-pointer transition-opacity hover:opacity-80",
                       activeTheme === "blue"
-                        ? "opacity-100 ring-1 ring-inset ring-ink"
+                        ? "ring-ink opacity-100 ring-1 ring-inset"
                         : "opacity-60",
                     )}
                   />
@@ -687,7 +715,7 @@ export function SubmitForm() {
                     className={cn(
                       "bg-c-pink size-3.5 cursor-pointer transition-opacity hover:opacity-80",
                       activeTheme === "pink"
-                        ? "opacity-100 ring-1 ring-inset ring-ink"
+                        ? "ring-ink opacity-100 ring-1 ring-inset"
                         : "opacity-60",
                     )}
                   />
@@ -699,7 +727,7 @@ export function SubmitForm() {
                     className={cn(
                       "bg-c-green size-3.5 cursor-pointer transition-opacity hover:opacity-80",
                       activeTheme === "green"
-                        ? "opacity-100 ring-1 ring-inset ring-ink"
+                        ? "ring-ink opacity-100 ring-1 ring-inset"
                         : "opacity-60",
                     )}
                   />
@@ -708,7 +736,7 @@ export function SubmitForm() {
             </div>
 
             {/* Exact Real Syntax Stash Card */}
-            <div className="mx-auto w-full max-w-[340px]">
+            <div className="mx-auto w-full max-w-80">
               <article className={cn("card group", themeClasses)}>
                 <div className="card-inner">
                   <div className="card-face">
@@ -738,7 +766,7 @@ export function SubmitForm() {
                             <span
                               key={t}
                               className={cn(
-                                "inline-flex items-center gap-0.5 rounded px-1.5 py-0.2 text-[9px] font-mono",
+                                "py-0.2 inline-flex items-center gap-0.5 rounded px-1.5 font-mono text-[9px]",
                                 isBlue ? "bg-paper/20 text-paper" : "bg-ink/10 text-ink",
                               )}
                             >
@@ -751,9 +779,7 @@ export function SubmitForm() {
 
                     <div className="card-footer">
                       <div className="flex min-w-0 items-center gap-2">
-                        {author ? (
-                          <span className="card-author truncate">{author}</span>
-                        ) : null}
+                        {author ? <span className="card-author truncate">{author}</span> : null}
                       </div>
 
                       <div className="flex items-center gap-2">

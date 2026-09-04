@@ -193,9 +193,15 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
 
   const authorResources = useMemo(() => {
     if (!activeTool.author) return [];
-    return resourceLinks.filter(
-      (r) => r.author === activeTool.author && r.title !== activeTool.title,
-    );
+    const currentAuthors = Array.isArray(activeTool.author)
+      ? activeTool.author
+      : [activeTool.author];
+
+    return resourceLinks.filter((r) => {
+      if (r.title === activeTool.title || !r.author) return false;
+      const rAuthors = Array.isArray(r.author) ? r.author : [r.author];
+      return currentAuthors.some((ca) => rAuthors.includes(ca));
+    });
   }, [activeTool]);
 
   const relatedResources = useMemo(() => {
@@ -445,13 +451,27 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
           <p className="modal-description">{activeTool.description}</p>
 
           {activeTool.author && (
-            <p className="modal-author">
-              <Link
-                href={`/authors/${slugifyAuthor(activeTool.author)}`}
-                className="modal-author-link hover:underline"
-              >
-                {activeTool.author}
-              </Link>
+            <p className="modal-author flex flex-wrap items-center gap-1">
+              {Array.isArray(activeTool.author) ? (
+                activeTool.author.map((authorName, index) => (
+                  <span key={authorName} className="inline-flex items-center">
+                    {index > 0 && <span className="opacity-60 mr-1">&</span>}
+                    <Link
+                      href={`/authors/${slugifyAuthor(authorName)}`}
+                      className="modal-author-link hover:underline"
+                    >
+                      {authorName}
+                    </Link>
+                  </span>
+                ))
+              ) : (
+                <Link
+                  href={`/authors/${slugifyAuthor(activeTool.author)}`}
+                  className="modal-author-link hover:underline"
+                >
+                  {activeTool.author}
+                </Link>
+              )}
             </p>
           )}
         </div>
@@ -588,14 +608,16 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
               <div className="mb-5.5">
                 <div className="mb-2 flex items-center justify-between">
                   <span className={cn("modal-heading mb-0!", activeThemeStyles.label)}>
-                    More by {activeTool.author}
+                    More by {Array.isArray(activeTool.author) ? activeTool.author.join(" & ") : activeTool.author}
                   </span>
-                  <Link
-                    href={`/authors/${slugifyAuthor(activeTool.author)}`}
-                    className="text-muted-foreground hover:text-foreground font-mono text-[11px] font-semibold hover:underline"
-                  >
-                    View all ({authorResources.length + 1}) →
-                  </Link>
+                  {!Array.isArray(activeTool.author) ? (
+                    <Link
+                      href={`/authors/${slugifyAuthor(activeTool.author)}`}
+                      className="text-muted-foreground hover:text-foreground font-mono text-[11px] font-semibold hover:underline"
+                    >
+                      View all ({authorResources.length + 1}) →
+                    </Link>
+                  ) : null}
                 </div>
                 <div className="modal-related-chips">
                   {authorResources.map((res) => {

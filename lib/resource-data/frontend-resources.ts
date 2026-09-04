@@ -421,7 +421,10 @@ export const frontendLinks: Resource<typeof CATEGORIES.frontend>[] = [
   {
     title: "Shape Divider App",
     category: CATEGORIES.frontend,
+    className: "bg-foreground border-paper",
     description: "Create fully responsive shape dividers for your next web project",
+    favicon: "https://www.shapedivider.app/img/logo_500x500.18aca7aa.png",
+    ogImage: "https://shapedivider.app/static/assets/images/shape_divider_app_share.png",
     tags: [TAGS.css, TAGS.html, TAGS.shapes, TAGS.svg],
     url: "https://www.shapedivider.app/",
   },
@@ -488,6 +491,19 @@ export const frontendLinks: Resource<typeof CATEGORIES.frontend>[] = [
     subtitle: "Design engine for vibe coding",
     tags: [TAGS.ai, TAGS.development, TAGS.ui],
     url: "https://styleseed-demo.vercel.app/",
+  },
+  {
+    title: "Tabbied",
+    author: ["Sy Hong", "Ye Joo Park"],
+    category: CATEGORIES.frontend,
+    description:
+      "Explore a growing library of 295 customizable patterns and 57 free website templates, ready to edit, download, and use.",
+    favicon: "https://tabbied.com/apple-touch-icon.png",
+    gitHubLink: "https://github.com/tabbied-design/tabbied/",
+    ogImage: "https://tabbied.com/images/logo_tabbied_v3.svg",
+    subtitle: "Free generative patterns and website templates",
+    tags: [TAGS.patterns],
+    url: "https://tabbied.com/",
   },
   {
     title: "Takumi",

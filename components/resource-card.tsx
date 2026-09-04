@@ -80,13 +80,30 @@ function ResourceCardComponent({
               <div className="card-footer">
                 <div className="flex min-w-0 items-center gap-2">
                   {resource.author ? (
-                    <Link
-                      href={`/authors/${slugifyAuthor(resource.author)}`}
-                      className="card-author truncate hover:underline"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      {resource.author}
-                    </Link>
+                    <div className="card-author flex min-w-0 items-center truncate">
+                      {Array.isArray(resource.author) ? (
+                        resource.author.map((authorName, index) => (
+                          <span key={authorName} className="inline-flex items-center truncate">
+                            {index > 0 && <span className="opacity-60 mx-1">&</span>}
+                            <Link
+                              href={`/authors/${slugifyAuthor(authorName)}`}
+                              className="truncate hover:underline"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              {authorName}
+                            </Link>
+                          </span>
+                        ))
+                      ) : (
+                        <Link
+                          href={`/authors/${slugifyAuthor(resource.author)}`}
+                          className="truncate hover:underline"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {resource.author}
+                        </Link>
+                      )}
+                    </div>
                   ) : null}
                   {stars !== null && (
                     <span

@@ -240,9 +240,13 @@ function FilterSectionInner({
       const subtitle = "subtitle" in tool ? tool.subtitle : undefined;
       const tags = "tags" in tool ? tool.tags : undefined;
 
+      const authorMatches = Array.isArray(author)
+        ? author.some((a) => a.toLowerCase().includes(query))
+        : author?.toLowerCase().includes(query);
+
       return (
         tool.title.toLowerCase().includes(query) ||
-        author?.toLowerCase().includes(query) ||
+        authorMatches ||
         tool.description?.toLowerCase().includes(query) ||
         subtitle?.toLowerCase().includes(query) ||
         tags?.some((tag: string) => tag.toLowerCase().includes(query)) ||

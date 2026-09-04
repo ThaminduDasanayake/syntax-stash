@@ -223,6 +223,12 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
     },
     name: "Sarthak Navalekar",
   },
+  "sy-hong": {
+    links: {
+      website: "https://syunghong.com/",
+    },
+    name: "Sy Hong",
+  },
   vercel: {
     links: {
       github: "https://github.com/vercel",
@@ -257,5 +263,12 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
       website: "https://willnewton.dev/",
     },
     name: "Will Newton",
+  },
+  "ye-joo-park": {
+    links: {
+      github: "https://github.com/subwaymatch",
+      website: "https://park.is/",
+    },
+    name: "Ye Joo Park",
   },
 };

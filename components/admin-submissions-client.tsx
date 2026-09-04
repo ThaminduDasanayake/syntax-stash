@@ -6,15 +6,13 @@ import {
   CircleNotchIcon,
   ClipboardTextIcon,
   FloppyDiskIcon,
-  GithubLogoIcon,
   GlobeIcon,
-  LinkedinLogoIcon,
   PencilSimpleIcon,
   TrashIcon,
   XCircleIcon,
   XLogoIcon,
-  YoutubeLogoIcon,
 } from "@phosphor-icons/react";
+import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
 import { CardIcon } from "@/components/card-icon";
@@ -402,7 +400,10 @@ export function AdminSubmissionsClient() {
 
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                       <div>
-                        <label className="text-muted-foreground text-[10px] font-bold uppercase">Author X / Twitter</label>
+                        <label className="text-muted-foreground flex items-center gap-1.5 text-[10px] font-bold uppercase">
+                          <XLogoIcon weight="bold" className="size-3 text-muted-foreground" />
+                          <span>Author X / Twitter</span>
+                        </label>
                         <Input
                           value={editForm.authorTwitter || ""}
                           onChange={(e) => setEditForm({ ...editForm, authorTwitter: e.target.value })}
@@ -411,7 +412,16 @@ export function AdminSubmissionsClient() {
                         />
                       </div>
                       <div>
-                        <label className="text-muted-foreground text-[10px] font-bold uppercase">Author GitHub Profile</label>
+                        <label className="text-muted-foreground flex items-center gap-1.5 text-[10px] font-bold uppercase">
+                          <Image
+                            src="/github.svg"
+                            alt="GitHub"
+                            width={12}
+                            height={12}
+                            className="size-3 dark:invert"
+                          />
+                          <span>Author GitHub Profile</span>
+                        </label>
                         <Input
                           value={editForm.authorGitHub || ""}
                           onChange={(e) => setEditForm({ ...editForm, authorGitHub: e.target.value })}
@@ -423,7 +433,16 @@ export function AdminSubmissionsClient() {
 
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                       <div>
-                        <label className="text-muted-foreground text-[10px] font-bold uppercase">Author YouTube Channel</label>
+                        <label className="text-muted-foreground flex items-center gap-1.5 text-[10px] font-bold uppercase">
+                          <Image
+                            src="/youtube.svg"
+                            alt="YouTube"
+                            width={12}
+                            height={12}
+                            className="size-3"
+                          />
+                          <span>Author YouTube Channel</span>
+                        </label>
                         <Input
                           value={editForm.authorYouTube || ""}
                           onChange={(e) => setEditForm({ ...editForm, authorYouTube: e.target.value })}
@@ -432,7 +451,16 @@ export function AdminSubmissionsClient() {
                         />
                       </div>
                       <div>
-                        <label className="text-muted-foreground text-[10px] font-bold uppercase">Author LinkedIn Profile</label>
+                        <label className="text-muted-foreground flex items-center gap-1.5 text-[10px] font-bold uppercase">
+                          <Image
+                            src="/linkedin.svg"
+                            alt="LinkedIn"
+                            width={12}
+                            height={12}
+                            className="size-3"
+                          />
+                          <span>Author LinkedIn Profile</span>
+                        </label>
                         <Input
                           value={editForm.authorLinkedIn || ""}
                           onChange={(e) => setEditForm({ ...editForm, authorLinkedIn: e.target.value })}
@@ -444,7 +472,16 @@ export function AdminSubmissionsClient() {
 
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                       <div>
-                        <label className="text-muted-foreground text-[10px] font-bold uppercase">Project GitHub Repo</label>
+                        <label className="text-muted-foreground flex items-center gap-1.5 text-[10px] font-bold uppercase">
+                          <Image
+                            src="/github.svg"
+                            alt="GitHub"
+                            width={12}
+                            height={12}
+                            className="size-3 dark:invert"
+                          />
+                          <span>Project GitHub Repo</span>
+                        </label>
                         <Input
                           value={editForm.gitHubLink || ""}
                           onChange={(e) => setEditForm({ ...editForm, gitHubLink: e.target.value })}
@@ -562,10 +599,16 @@ export function AdminSubmissionsClient() {
                                     href={sub.authorGitHub}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="hover:text-primary p-0.5"
+                                    className="hover:opacity-80 p-0.5 inline-flex items-center"
                                     title="Author GitHub Profile"
                                   >
-                                    <GithubLogoIcon weight="fill" className="size-3.5" />
+                                    <Image
+                                      src="/github.svg"
+                                      alt="GitHub"
+                                      width={14}
+                                      height={14}
+                                      className="size-3.5 dark:invert"
+                                    />
                                   </a>
                                 )}
                                 {sub.authorYouTube && (
@@ -573,10 +616,16 @@ export function AdminSubmissionsClient() {
                                     href={sub.authorYouTube}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="hover:text-primary p-0.5"
+                                    className="hover:opacity-80 p-0.5 inline-flex items-center"
                                     title="Author YouTube Channel"
                                   >
-                                    <YoutubeLogoIcon weight="fill" className="size-3.5" />
+                                    <Image
+                                      src="/youtube.svg"
+                                      alt="YouTube"
+                                      width={14}
+                                      height={14}
+                                      className="size-3.5"
+                                    />
                                   </a>
                                 )}
                                 {sub.authorLinkedIn && (
@@ -584,10 +633,16 @@ export function AdminSubmissionsClient() {
                                     href={sub.authorLinkedIn}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="hover:text-primary p-0.5"
+                                    className="hover:opacity-80 p-0.5 inline-flex items-center"
                                     title="Author LinkedIn Profile"
                                   >
-                                    <LinkedinLogoIcon weight="fill" className="size-3.5" />
+                                    <Image
+                                      src="/linkedin.svg"
+                                      alt="LinkedIn"
+                                      width={14}
+                                      height={14}
+                                      className="size-3.5"
+                                    />
                                   </a>
                                 )}
                               </div>
