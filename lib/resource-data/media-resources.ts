@@ -119,6 +119,7 @@ export const mediaLinks: Resource<typeof CATEGORIES.media>[] = [
   },
   {
     title: "Book of Shapes",
+    author: "Nikolaj Sokolowski",
     category: CATEGORIES.media,
     description:
       "A curated gallery of generative patterns. Discover, customize, and download unique algorithmic art.",

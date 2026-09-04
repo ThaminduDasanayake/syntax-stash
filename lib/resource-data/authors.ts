@@ -150,6 +150,14 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
     },
     name: "Microlink HQ",
   },
+  "nikolaj-sokolowski": {
+    links: {
+      linkedin: "https://www.linkedin.com/in/nikolaj-sokolowski-8661a2300/",
+      twitter: "https://x.com/Threeaio",
+      website: "https://nikolaj-sokolowski.de/",
+    },
+    name: "Nikolaj Sokolowski",
+  },
   "noor-mtir": {
     links: {
       github: "https://github.com/NourMtir0722",
@@ -240,5 +248,14 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
       youtube: "https://www.youtube.com/user/vineethtrv",
     },
     name: "Vineeth TR",
+  },
+  "will-newton": {
+    links: {
+      github: "https://github.com/williamnewton",
+      linkedin: "https://www.linkedin.com/in/williamnewton/",
+      twitter: "https://x.com/willdjthrill",
+      website: "https://willnewton.dev/",
+    },
+    name: "Will Newton",
   },
 };

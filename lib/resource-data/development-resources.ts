@@ -441,6 +441,15 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
     url: "https://ditto.site/",
   },
   {
+    title: "Dot Grid Background",
+    author: "Will Newton",
+    category: CATEGORIES.dev,
+    description:
+      "A cursor-reactive dot grid with a settings-gear jig — dial rows, spacing, breathing, and refraction, or flip it to a fullscreen pattern. Dots breathe slowly and refract away from the pointer.",
+    favicon: "https://playground.willnewton.dev/favicon.ico",
+    url: "https://playground.willnewton.dev/p/dot-grid-background",
+  },
+  {
     title: "Dub",
     author: "Dub Inc",
     category: CATEGORIES.dev,
@@ -1192,6 +1201,18 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
       "Minimalist, end-to-end encrypted, self-hostable file and note sharing. Zero-knowledge server - files and notes are encrypted in the browser before upload. No accounts, no telemetry, built for speed and security.",
     subtitle: "Encrypted File & Note Sharing",
     url: "https://skysend.app/",
+  },
+  {
+    title: "Slop Finder",
+    author: "Will Newton",
+    category: CATEGORIES.dev,
+    description:
+      "A Chrome extension that highlights the tells of LLM prose on any page you read. No network calls.",
+    favicon: "https://williamnewton.github.io/slopfinder/logo.svg",
+    gitHubLink: "https://github.com/williamnewton/slopfinder",
+    ogImage: "https://willnewton.dev/previews/slopfinder.gif",
+    subtitle: "Every AI cliché, caught in the act",
+    url: "https://williamnewton.github.io/slopfinder/",
   },
   {
     title: "Snapzy",

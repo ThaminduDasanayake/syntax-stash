@@ -69,7 +69,7 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
   },
   {
     title: "ColorFlow",
-    author: "ColorFlow",
+    author: "LS Graphics",
     category: CATEGORIES.colors,
     description:
       "Create stunning mesh gradients with ColorFlow. Professional gradient editor with real-time preview, customizable control points, and export options. Perfect for designers and developers.",
@@ -585,8 +585,11 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
   },
   {
     title: "Shader Gradient",
+    author: "Yongmin Ruucm",
     category: CATEGORIES.colors,
     description: "Create beautiful moving gradients on Framer, Figma and React",
+    favicon: "https://framerusercontent.com/images/ddKsbSCnuwitwNKu4sRpXTfamkk.png",
+    ogImage: "https://framerusercontent.com/images/ha9u6Qtcp2kivmMTouWYSaaXZ9g.png",
     tags: [TAGS.color],
     url: "https://shadergradient.co/",
   },
