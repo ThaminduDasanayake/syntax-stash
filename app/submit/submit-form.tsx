@@ -484,20 +484,11 @@ export function SubmitForm() {
                     )}
                   />
                 </span>
-                {customTheme && (
-                  <button
-                    type="button"
-                    onClick={() => setCustomTheme(null)}
-                    className="text-muted-foreground hover:text-foreground text-[10px] underline"
-                  >
-                    Auto
-                  </button>
-                )}
               </div>
             </div>
 
             {/* Exact Real Syntax Stash Card */}
-            <div className="w-full">
+            <div className="mx-auto w-full max-w-[340px]">
               <article className={cn("card group", themeClasses)}>
                 <div className="card-inner">
                   <div className="card-face">
