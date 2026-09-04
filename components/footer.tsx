@@ -3,7 +3,6 @@
 import { ArrowUpIcon, ArrowUpRightIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 
-import { SubmitToolDialog } from "@/components/submit-tool-dialog";
 import { isAdmin } from "@/lib/admin";
 import { useSession } from "@/lib/auth-client";
 import { siteConfig } from "@/lib/site-config";
@@ -62,14 +61,12 @@ export default function Footer() {
                 </span>
                 ]
               </a>
-              <SubmitToolDialog>
-                <button
-                  type="button"
-                  className="after:bg-paper relative inline-block cursor-pointer transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
-                >
-                  [ Submit Resource ]
-                </button>
-              </SubmitToolDialog>
+              <Link
+                href="/submit"
+                className="after:bg-paper relative inline-block transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
+              >
+                [ Submit Resource ]
+              </Link>
               <Link
                 href="/about"
                 className="after:bg-paper relative inline-block transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"

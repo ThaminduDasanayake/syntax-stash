@@ -1,10 +1,8 @@
 "use client";
 
-import { ListIcon, MagnifyingGlassIcon, PlusIcon, UserIcon } from "@phosphor-icons/react";
+import { ListIcon, MagnifyingGlassIcon, UserIcon } from "@phosphor-icons/react";
 import Link from "next/link";
-import { useState } from "react";
 
-import { SubmitToolDialog } from "@/components/submit-tool-dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,12 +20,8 @@ interface MobileNavDropdownProps {
 }
 
 export function MobileNavDropdown({ onSearchOpenAction, onSignInAction }: MobileNavDropdownProps) {
-  const [submitDialogOpen, setSubmitDialogOpen] = useState(false);
-
   return (
     <div className="lg:hidden">
-      <SubmitToolDialog open={submitDialogOpen} onOpenChange={setSubmitDialogOpen} />
-
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <button className="nav-hamburger" aria-label="Toggle navigation menu">
@@ -43,16 +37,6 @@ export function MobileNavDropdown({ onSearchOpenAction, onSignInAction }: Mobile
                 </Link>
               </DropdownMenuItem>
             ))}
-          </DropdownMenuGroup>
-          <DropdownMenuSeparator className="my-1" />
-          <DropdownMenuGroup>
-            <DropdownMenuItem
-              onSelect={() => setSubmitDialogOpen(true)}
-              className="cursor-pointer py-1.5 font-medium"
-            >
-              <PlusIcon weight="bold" className="mr-2 size-4" />
-              Submit a Resource
-            </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator className="my-1" />
           <DropdownMenuGroup>
