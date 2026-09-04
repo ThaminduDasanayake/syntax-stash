@@ -5,8 +5,6 @@ import {
   CheckCircleIcon,
   CheckIcon,
   CircleNotchIcon,
-  CrossIcon,
-  GlobeIcon,
   SparkleIcon,
   XIcon,
 } from "@phosphor-icons/react";
@@ -14,13 +12,13 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { CardIcon } from "@/components/card-icon";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
 import { resourceCategories } from "@/lib/resource-data";
+import { cn, getCategoryTheme, Theme, THEME_CONFIG } from "@/lib/utils";
 
 const CATEGORY_OPTIONS = resourceCategories.map((cat) => ({
   label: cat,
@@ -41,6 +39,12 @@ export function SubmitForm() {
   const [notes, setNotes] = useState("");
   const [honeypot, setHoneypot] = useState(""); // anti-spam trap
 
+  // Theme Override State for Card Preview
+  const [customTheme, setCustomTheme] = useState<Theme | null>(null);
+  const activeTheme: Theme = customTheme ?? getCategoryTheme(category);
+  const themeClasses = THEME_CONFIG[activeTheme].bg;
+  const isBlue = activeTheme === "blue";
+
   // Request State
   const [isDetecting, setIsDetecting] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -59,6 +63,7 @@ export function SubmitForm() {
     setOgImage("");
     setNotes("");
     setHoneypot("");
+    setCustomTheme(null);
     setErrorMsg(null);
     setIsSubmitted(false);
   };
@@ -143,8 +148,7 @@ export function SubmitForm() {
 
       setIsSubmitted(true);
     } catch (err: unknown) {
-      const message =
-        err instanceof Error ? err.message : "Failed to submit tool. Please try again.";
+      const message = err instanceof Error ? err.message : "Failed to submit tool. Please try again.";
       setErrorMsg(message);
     } finally {
       setIsSubmitting(false);
@@ -189,7 +193,7 @@ export function SubmitForm() {
       <div className="border-line bg-paper/40 border p-6 font-mono text-xs sm:p-8 lg:col-span-7">
         <form onSubmit={handleSubmit} className="space-y-6">
           {errorMsg && (
-            <div className="border-destructive/40 bg-destructive/10 text-destructive border p-4 text-xs leading-relaxed font-semibold">
+            <div className="border-destructive/40 bg-destructive/10 text-destructive border p-4 text-xs font-semibold leading-relaxed">
               ⚠️ {errorMsg}
             </div>
           )}
@@ -239,12 +243,12 @@ export function SubmitForm() {
                 variant="outline"
                 onClick={handleAutoDetect}
                 disabled={isDetecting || !url.trim()}
-                className="h-8 shrink-0 gap-1.5 font-mono text-xs font-bold uppercase"
+                className="h-9 shrink-0 gap-1.5 font-mono text-xs font-bold uppercase"
               >
                 {isDetecting ? (
                   <CircleNotchIcon className="size-3.5 animate-spin" />
                 ) : (
-                  <SparkleIcon weight="fill" className="text-primary size-3.5" />
+                  <SparkleIcon weight="fill" className="size-3.5 text-primary" />
                 )}
                 {isDetecting ? "Fetching..." : "Auto-Fill"}
               </Button>
@@ -295,7 +299,7 @@ export function SubmitForm() {
               onChange={(e) => setDescription(e.target.value)}
               required
               rows={4}
-              className="bg-paper min-h-25 font-mono text-xs leading-relaxed"
+              className="bg-paper min-h-[100px] font-mono text-xs leading-relaxed"
             />
           </div>
 
@@ -417,65 +421,129 @@ export function SubmitForm() {
         </form>
       </div>
 
-      {/* Right Column: Live Preview & Guidelines (5 cols) */}
+      {/* Right Column: Live Real Card Preview & Guidelines (5 cols) */}
       <div className="space-y-6 lg:col-span-5">
         <div className="sticky top-24 space-y-6">
-          {/* Live Preview Card */}
+          {/* Header with Hero Eyebrow Theme Switcher */}
           <div className="border-line bg-paper/50 border p-5 font-mono text-xs">
-            <div className="text-muted-foreground mb-3 flex items-center justify-between font-bold tracking-wider uppercase">
-              <span>Live Card Preview</span>
-              {url && (
-                <a
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary inline-flex items-center gap-1 text-[11px] hover:underline"
-                >
-                  Visit Link <ArrowSquareOutIcon className="size-3" />
-                </a>
-              )}
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-2 border-b pb-3">
+              <div className="flex items-center gap-2">
+                <span className="text-foreground font-bold tracking-wider uppercase">
+                  Card Preview
+                </span>
+              </div>
+
+              {/* Hero Eyebrow Theme Dots Switcher */}
+              <div className="flex items-center gap-2">
+                <span className="text-muted-foreground text-[10px] font-bold uppercase">
+                  Theme:
+                </span>
+                <span className="hero-eyebrow-dots flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => setCustomTheme("orange")}
+                    title="Orange theme"
+                    aria-label="Select orange theme"
+                    className={cn(
+                      "bg-c-orange size-3.5 cursor-pointer rounded-none transition-transform hover:scale-125",
+                      activeTheme === "orange" &&
+                        "ring-foreground scale-110 ring-2 ring-offset-1 ring-offset-paper",
+                    )}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setCustomTheme("blue")}
+                    title="Blue theme"
+                    aria-label="Select blue theme"
+                    className={cn(
+                      "bg-c-blue size-3.5 cursor-pointer rounded-none transition-transform hover:scale-125",
+                      activeTheme === "blue" &&
+                        "ring-foreground scale-110 ring-2 ring-offset-1 ring-offset-paper",
+                    )}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setCustomTheme("pink")}
+                    title="Pink theme"
+                    aria-label="Select pink theme"
+                    className={cn(
+                      "bg-c-pink size-3.5 cursor-pointer rounded-none transition-transform hover:scale-125",
+                      activeTheme === "pink" &&
+                        "ring-foreground scale-110 ring-2 ring-offset-1 ring-offset-paper",
+                    )}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setCustomTheme("green")}
+                    title="Green theme"
+                    aria-label="Select green theme"
+                    className={cn(
+                      "bg-c-green size-3.5 cursor-pointer rounded-none transition-transform hover:scale-125",
+                      activeTheme === "green" &&
+                        "ring-foreground scale-110 ring-2 ring-offset-1 ring-offset-paper",
+                    )}
+                  />
+                </span>
+                {customTheme && (
+                  <button
+                    type="button"
+                    onClick={() => setCustomTheme(null)}
+                    className="text-muted-foreground hover:text-foreground text-[10px] underline"
+                  >
+                    Auto
+                  </button>
+                )}
+              </div>
             </div>
 
-            <div className="border-line bg-paper border p-4 shadow-xs">
-              <div className="flex items-start gap-3.5">
-                <CardIcon
-                  alt={title || "Preview"}
-                  favicon={favicon || undefined}
-                  className="size-11 shrink-0"
-                />
-                <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-foreground text-sm font-bold tracking-tight">
-                      {title || "Resource Title"}
-                    </span>
-                    <Badge variant="outline" className="font-mono text-[10px] font-bold uppercase">
-                      {category}
-                    </Badge>
-                  </div>
+            {/* Exact Real Syntax Stash Card */}
+            <div className="w-full">
+              <article className={cn("card group", themeClasses)}>
+                <div className="card-inner">
+                  <div className="card-face">
+                    <div className="card-header">
+                      <span className="card-meta">{category}</span>
+                      <CardIcon alt={title || "Preview"} favicon={favicon || undefined} />
+                    </div>
 
-                  <p className="text-muted-foreground mt-1.5 line-clamp-3 text-xs leading-relaxed">
-                    {description ||
-                      "Your tool's description will appear here. It explains the purpose, features, and target audience."}
-                  </p>
+                    <h3 className="card-title">{title || "Resource Title"}</h3>
 
-                  <div className="border-line/40 mt-3 flex flex-wrap items-center justify-between gap-2 border-t pt-2 text-[11px]">
-                    {author ? (
-                      <div className="text-muted-foreground flex items-center gap-1">
-                        <GlobeIcon className="size-3" />
-                        <span>By {author}</span>
+                    <p className="card-description">
+                      {description ||
+                        "Your tool's description will appear here. It explains the features, purpose, and utility for developers."}
+                    </p>
+
+                    <div className="card-footer">
+                      <div className="flex min-w-0 items-center gap-2">
+                        {author ? (
+                          <span className="card-author truncate">{author}</span>
+                        ) : (
+                          <span className="text-muted-foreground/80 font-mono text-[11px] italic">
+                            Anonymous
+                          </span>
+                        )}
                       </div>
-                    ) : (
-                      <span className="text-muted-foreground/60 italic">No author specified</span>
-                    )}
 
-                    {gitHubLink && (
-                      <span className="text-muted-foreground text-[10px] font-semibold">
-                        Open Source
-                      </span>
-                    )}
+                      <div className="flex items-center gap-2">
+                        {url && (
+                          <a
+                            href={url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={cn(
+                              "inline-flex items-center justify-center p-1 transition-transform hover:scale-110",
+                              isBlue ? "text-paper" : "text-ink",
+                            )}
+                            title="Open Link"
+                          >
+                            <ArrowSquareOutIcon weight="bold" className="size-4" />
+                          </a>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </article>
             </div>
           </div>
 
