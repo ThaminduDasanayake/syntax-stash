@@ -5,6 +5,14 @@ import { TAGS } from "./tags";
 
 export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
   {
+    title: "3D ASCII Object Viewer",
+    author: "Phileas Dazeley-Gaist",
+    category: CATEGORIES.dev,
+    description: "A browser-based 3D object ASCII viewer and converter.",
+    ogImage: "https://phileasdg.github.io/media/pages/playgrounds/ASCII3D.png",
+    url: "https://phileasdg.github.io/ASCII3D/",
+  },
+  {
     title: "10 Minute Mail",
     author: "Devon Hillard",
     category: CATEGORIES.dev,
@@ -46,6 +54,17 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
       "zA lightweight JavaScript library that runs Node.js, Next.js, Vite, and Express entirely in the browser. ~250KB gzipped, instant startup, no server required.",
     subtitle: "Node.js in your browser",
     url: "https://almostnode.dev/",
+  },
+  {
+    title: "animus",
+    author: "Kacem Mathlouthi",
+    category: CATEGORIES.dev,
+    description:
+      "animus turns any question into a narrated, animated explainer video, so the idea actually clicks and stays.",
+    favicon: "https://tryanimus.app/logo.svg",
+    ogImage: "https://tryanimus.app/og.png",
+    subtitle: "Turn any question into a video that makes it click",
+    url: "https://tryanimus.app/",
   },
   {
     title: "annyang!",
@@ -98,13 +117,37 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
   },
   {
     title: "Balsa UI",
+    author: "Pedro Balsamão",
     category: CATEGORIES.dev,
     description: "Balsa UI is an agent-native, open-code component system for Vue and React.",
     favicon: "https://balsa-ui.com/favicon.svg",
+    gitHubLink: "https://github.com/pedrobalsa/balsa-ui",
     ogImage: "https://balsa-ui.com/og-image.webp",
     subtitle: "Create Design Systems, Build with Agents",
     tags: [TAGS.color, TAGS.designSystem, TAGS.theme, TAGS.typography],
     url: "https://balsa-ui.com/",
+  },
+  {
+    title: "Beeps",
+    author: "Ryan Reid",
+    category: CATEGORIES.dev,
+    description:
+      "Generate a coherent set of interface sounds — tap, toggle, success, error, notification and more — synthesized in the browser with Web Audio. No sample library, no hosted audio, no licensing. Exports as WAV, an inline data URI, a zero-dependency synthesis function, JSON, or markdown that tells a coding agent when to play what.",
+    favicon: "https://www.beeps.studio/favicon.svg",
+    ogImage: "https://www.beeps.studio/og.png",
+    subtitle: "UI sounds your agent can actually specify",
+    url: "https://www.beeps.studio/",
+  },
+  {
+    title: "benday",
+    author: "Kacem Mathlouthi",
+    category: CATEGORIES.dev,
+    description:
+      "Turn any logo into an animated dot-field thinking indicator for AI and agent UIs. An open-code shadcn primitive with 21 presets — no package to depend on.",
+    favicon: "https://benday.kacemmathlouthi.dev/favicon.svg",
+    ogImage: "https://benday.kacemmathlouthi.dev/og.png",
+    subtitle: "your logo, halftoned into a thinking indicator",
+    url: "https://benday.kacemmathlouthi.dev/",
   },
   {
     title: "BestAlternative",
@@ -273,6 +316,17 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
     subtitle: "privacy-first browser tools",
     tags: [TAGS.tool],
     url: "https://delphi.tools/",
+  },
+  {
+    title: "Depths",
+    author: "Ryan Reid",
+    category: CATEGORIES.dev,
+    description:
+      "Generate a six-level elevation scale of layered box-shadows from one light source — key, ambient and contact layers, mapped to semantic tokens like shadow-raised and shadow-modal, honest about dark mode. Exports as CSS variables, a Tailwind v4 theme, DTCG design tokens, or markdown that tells a coding agent which surface gets which shadow.",
+    favicon: "https://depths-delta.vercel.app/favicon.svg",
+    ogImage: "https://depths-delta.vercel.app/api/og",
+    subtitle: "Elevation and shadow tokens your agent can read",
+    url: "https://depths-delta.vercel.app/",
   },
   {
     title: "Design System Checklist",
@@ -570,6 +624,15 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
     url: "https://grep.app/",
   },
   {
+    title: "Hatchery",
+    author: "Design Minis",
+    category: CATEGORIES.dev,
+    description: "Overlap textured shapes and let the ink invert where they meet.",
+    favicon: "https://www.designminis.com/apple-icon.png",
+    subtitle: "Pattern composer",
+    url: "https://www.designminis.com/hatchery",
+  },
+  {
     title: "Home Assistant",
     author: "Home Assistant",
     category: CATEGORIES.dev,
@@ -591,6 +654,15 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
       "https://static.open-design.ai/cdn-cgi/image/width=2400,quality=82,format=auto/https://static.open-design.ai/landing/assets/html-video/banner.png",
     subtitle: "HTML to video, programmatic video for coding agents",
     url: "https://open-design.ai/html-video/",
+  },
+  {
+    title: "Hypergraph Plotter",
+    author: "Phileas Dazeley-Gaist",
+    category: CATEGORIES.dev,
+    description:
+      "An interactive client-side web application for layout, plotting, and visualizing mathematical hypergraphs. Features custom force-directed simulation, circular and grid layouts, and custom subset boundaries.",
+    ogImage: "https://phileasdg.github.io/hypergraph-plotter/preview.png",
+    url: "https://phileasdg.github.io/hypergraph-plotter/",
   },
   {
     title: "ilovecreatives",
@@ -704,6 +776,16 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
     description: "Enter in two locations to make the drive fun.",
     tags: [TAGS.map],
     url: "https://makemydrivefun.com/",
+  },
+  {
+    title: "Marbler",
+    author: "Phileas Dazeley-Gaist",
+    category: CATEGORIES.dev,
+    description:
+      "Create unique, fluid art with Marbler, an interactive digital marbling tool. Drop and comb digital ink to generate beautiful, high-resolution abstract images.",
+    ogImage: "https://phileasdg.github.io/media/pages/playgrounds/marbler.png",
+    subtitle: "Interactive Digital Marbling Art Generator",
+    url: "https://phileasdg.github.io/marbler/",
   },
   {
     title: "Modulor",
@@ -858,6 +940,14 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
     url: "https://www.designminis.com/paper-studio",
   },
   {
+    title: "Parchment",
+    author: "Phileas Dazeley-Gaist",
+    category: CATEGORIES.dev,
+    description: "A no fuss Markdown editor with LaTeX and syntax highlighting support.",
+    ogImage: "https://phileasdg.github.io/media/pages/playgrounds/parchment.png",
+    url: "https://phileasdg.github.io/parchment/",
+  },
+  {
     title: "Photoroom",
     category: CATEGORIES.dev,
     description:
@@ -905,6 +995,28 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
       "https://raw.githubusercontent.com/marceloprates/prettymaps/refs/heads/main/pictures/app_placeholder.png",
     tags: [TAGS.map, TAGS.png, TAGS.svg],
     url: "https://prettymaps.streamlit.app/",
+  },
+  {
+    title: "Prisma",
+    author: "Shady Red Pilgrim",
+    category: CATEGORIES.dev,
+    description:
+      "Convert, compress, and tweak images and PDFs on an infinite node canvas, right in your browser. No uploads, no account, no server.",
+    favicon: "https://prisma.zip/icon.svg",
+    ogImage: "https://prisma.zip/opengraph-image.png",
+    subtitle: "Convert files on a canvas",
+    url: "https://prisma.zip/",
+  },
+  {
+    title: "Ramps",
+    author: "Ryan Reid",
+    category: CATEGORIES.dev,
+    description:
+      "The color ramp generator built for handing off: every palette is readable by an agent as plain text or JSON, with no JavaScript. Perceptually-even OKLCH ramps, derived accents, a matched neutral, status colors, and usage-first semantic tokens for light and dark, with WCAG AA or AAA enforced rather than merely reported. Export to CSS, Tailwind v4, Figma variables, or JSON.",
+    favicon: "https://www.ramps.studio/favicon.svg",
+    ogImage: "https://www.ramps.studio/api/og",
+    subtitle: "Color ramps and semantic tokens your agent can read",
+    url: "https://www.ramps.studio/",
   },
   {
     title: "RayonMaps",
@@ -1093,6 +1205,17 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
     url: "https://snapzy.app/",
   },
   {
+    title: "Springs",
+    author: "Ryan Reid",
+    category: CATEGORIES.dev,
+    description:
+      "The motion token generator built for handing off: every set is readable by an agent as plain text or JSON. Cubic-bezier and spring easings previewed on real UI rather than on a dot, each with its own duration and a derived, deliberately faster exit. Exports to CSS, Tailwind, Framer Motion and DTCG — with the cost of each conversion measured rather than hidden.",
+    favicon: "https://www.springs.studio/favicon.svg",
+    ogImage: "https://www.springs.studio/og.png",
+    subtitle: "Easings and semantic tokens your agent can reads",
+    url: "https://www.springs.studio/",
+  },
+  {
     title: "Super Designer",
     category: CATEGORIES.dev,
     description:
@@ -1102,6 +1225,15 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
     subtitle: "Free Online Design Tools for Developers & Designers",
     tags: [TAGS.design, TAGS.tool],
     url: "https://superdesigner.co/",
+  },
+  {
+    title: "Synapse",
+    author: "Phileas Dazeley-Gaist",
+    category: CATEGORIES.dev,
+    description: "A networked Markdown notetaking tool with some fancy features.",
+    ogImage: "https://phileasdg.github.io/media/pages/playgrounds/synapse.png",
+    subtitle: "Networked Notebook",
+    url: "https://phileasdg.github.io/synapse",
   },
   {
     title: "Table Format Converter",
@@ -1326,6 +1458,14 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
     subtitle: "The modular Swiss Army knife for macOS",
     tags: [TAGS.mac],
     url: "https://vorssaint.com/",
+  },
+  {
+    title: "Weaving Pattern Visualizer",
+    author: "Phileas Dazeley-Gaist",
+    category: CATEGORIES.dev,
+    description: "A creative tool for weaving pattern design and exploration in the browser.",
+    ogImage: "https://phileasdg.github.io/media/pages/playgrounds/weaver.png",
+    url: "https://phileasdg.github.io/weaver/",
   },
   {
     title: "Web Apps by 123apps",
