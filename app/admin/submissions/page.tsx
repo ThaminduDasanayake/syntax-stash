@@ -1,4 +1,5 @@
 import { ShieldWarningIcon } from "@phosphor-icons/react/ssr";
+import { desc } from "drizzle-orm";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import Link from "next/link";
@@ -7,6 +8,8 @@ import { AdminSubmissionsClient } from "@/components/admin-submissions-client";
 import { Button } from "@/components/ui/button";
 import { isAdmin } from "@/lib/admin";
 import { auth } from "@/lib/auth";
+import { db } from "@/lib/db";
+import { Submission, submission } from "@/lib/db/schema";
 
 export const metadata: Metadata = {
   title: "Admin Moderation Queue — Syntax Stash",
@@ -52,8 +55,25 @@ export default async function AdminSubmissionsPage() {
     );
   }
 
+  // Pre-fetch initial submissions for instant server-rendered display (no second spinner/loading flicker)
+  let initialSubmissions: Submission[] = [];
+  let initialCounts = { all: 0, approved: 0, pending: 0, rejected: 0 };
+
+  try {
+    const all = await db.select().from(submission).orderBy(desc(submission.createdAt));
+    initialCounts = {
+      all: all.length,
+      approved: all.filter((s) => s.status === "approved").length,
+      pending: all.filter((s) => s.status === "pending").length,
+      rejected: all.filter((s) => s.status === "rejected").length,
+    };
+    initialSubmissions = all.filter((s) => s.status === "pending");
+  } catch (err) {
+    console.error("Failed to preload submissions in server component:", err);
+  }
+
   return (
-    <div className="container mx-auto max-w-5xl px-4 py-8 sm:py-12">
+    <div className="container mx-auto max-w-6xl px-4 py-8 sm:py-12">
       {/* Header */}
       <div className="border-line/60 mb-8 border-b pb-6 font-mono">
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -77,7 +97,10 @@ export default async function AdminSubmissionsPage() {
         </div>
       </div>
 
-      <AdminSubmissionsClient />
+      <AdminSubmissionsClient
+        initialSubmissions={initialSubmissions}
+        initialCounts={initialCounts}
+      />
     </div>
   );
 }
