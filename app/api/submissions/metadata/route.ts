@@ -273,9 +273,30 @@ export async function GET(request: NextRequest) {
     let author = metaAuthor || twitterCreator || articleAuthor || "";
 
     if (!author && ogDesc) {
-      const match = ogDesc.match(/(?:built|made|created)\s+by\s+([^,.;]+)/i);
+      const match = ogDesc.match(/(?:built|made|created|developed|designed)\s+by\s+([^,.;]+)/i);
       if (match && match[1]) {
         author = match[1].trim();
+      }
+    }
+
+    // Body / Footer / Byline DOM Search for creator attribution
+    if (!author) {
+      const footerOrBylineText = $(
+        "footer, .footer, [class*='footer'], [class*='byline'], [class*='author'], [class*='credit'], [aria-label*='author' i], [aria-label*='created' i]",
+      )
+        .text()
+        .replace(/\s+/g, " ");
+
+      const bylineMatch = footerOrBylineText.match(
+        /(?:built|made|created|developed|designed)\s+by\s+([A-Za-zÀ-ÿ0-9\s._-]{2,40})/i,
+      );
+
+      if (bylineMatch && bylineMatch[1]) {
+        const candidate = bylineMatch[1].trim();
+        // Ignore generic labels
+        if (!["a community", "ai", "our team", "the"].includes(candidate.toLowerCase())) {
+          author = candidate;
+        }
       }
     }
 
