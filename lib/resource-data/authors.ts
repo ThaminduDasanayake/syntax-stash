@@ -49,6 +49,13 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
     },
     name: "Firecrawl",
   },
+  "fran-perez": {
+    links: {
+      linkedin: "https://www.linkedin.com/in/franperezfer/",
+      website: "https://franperez.me/",
+    },
+    name: "Fran Pérez",
+  },
   "george-hastings": {
     links: {
       github: "https://github.com/georgehastings",
@@ -109,6 +116,14 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
       website: "https://laurie.fyi/",
     },
     name: "Laura Escobar",
+  },
+  "lauri-paronen": {
+    links: {
+      github: "https://github.com/lauriparonen",
+      linkedin: "https://www.linkedin.com/in/lauri-paronen-4b0651291",
+      website: "https://lauriparonen.com/",
+    },
+    name: "Lauri Paronen",
   },
   "lochie-axon": {
     links: {

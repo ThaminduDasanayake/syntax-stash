@@ -853,6 +853,17 @@ export const typographyLinks: Resource<typeof CATEGORIES.typography>[] = [
     url: "https://typefaceapp.com/",
   },
   {
+    title: "Typescale AI",
+    author: "Typescale AI",
+    category: CATEGORIES.typography,
+    description:
+      "Generate modular type scales and design tokens instantly. Preview in real layouts, tune line-height, and export clean CSS/JSON for your design system.",
+    favicon: "https://typescale.ai/logo.svg",
+    ogImage: "https://typescale.ai/logo.svg",
+    subtitle: "Typography Scale & Design Tokens Generator",
+    url: "https://typescale.ai",
+  },
+  {
     title: "Typograph Studio",
     category: CATEGORIES.typography,
     description: "Generate typefaces in seconds. No licenses, no limits.",

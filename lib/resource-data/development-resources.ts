@@ -47,6 +47,18 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
     url: "https://adguard.com/",
   },
   {
+    title: "Alembic",
+    author: "Lauri Paronen",
+    authorLink: "https://lauriparonen.com/",
+    category: CATEGORIES.dev,
+    description: "A platform for distilling thoughts into beautiful, shareable micro-essay images",
+    favicon: "https://alembic.space/apple-touch-icon.png",
+    ogImage: "https://alembic.space/og-image.png",
+    subtitle: "make your ideas matter",
+    tags: [],
+    url: "https://alembic.space",
+  },
+  {
     title: "almostnode",
     author: "Macaly",
     category: CATEGORIES.dev,
