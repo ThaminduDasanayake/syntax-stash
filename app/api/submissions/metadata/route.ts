@@ -44,6 +44,12 @@ function suggestCategory(text: string): string {
   return "Other";
 }
 
+export interface CandidateOption {
+  label: string;
+  type: string;
+  url: string;
+}
+
 export async function GET(request: NextRequest) {
   const urlParam = request.nextUrl.searchParams.get("url");
 
@@ -94,28 +100,178 @@ export async function GET(request: NextRequest) {
     const finalUrl = res.url || parsedUrl.href;
     const $ = cheerio.load(html);
 
-    // Title
+    // 1. Title Extraction & Candidates
     const docTitle = $("title").first().text().trim();
     const ogTitle = $('meta[property="og:title"]').attr("content")?.trim();
     const twitterTitle = $('meta[name="twitter:title"]').attr("content")?.trim();
     const h1Title = $("h1").first().text().trim();
-    const title = (ogTitle || twitterTitle || docTitle || h1Title || parsedUrl.hostname).replace(/\s+/g, " ");
+    const title = (ogTitle || twitterTitle || docTitle || h1Title || parsedUrl.hostname)
+      .replace(/\s+/g, " ")
+      .trim();
 
-    // Description (prioritize meta description for concise SEO copy)
+    // 2. JSON-LD Extraction
+    let jsonLdDesc = "";
+    let jsonLdImage = "";
+    $('script[type="application/ld+json"]').each((_, el) => {
+      try {
+        const parsed = JSON.parse($(el).text().trim());
+        const data = Array.isArray(parsed) ? parsed[0] : parsed;
+        if (data && typeof data === "object") {
+          if (!jsonLdDesc && typeof data.description === "string") {
+            jsonLdDesc = data.description.trim();
+          }
+          if (!jsonLdImage) {
+            if (typeof data.image === "string") {
+              jsonLdImage = data.image.trim();
+            } else if (Array.isArray(data.image) && typeof data.image[0] === "string") {
+              jsonLdImage = data.image[0].trim();
+            } else if (data.image && typeof data.image === "object" && typeof data.image.url === "string") {
+              jsonLdImage = data.image.url.trim();
+            }
+          }
+        }
+      } catch {
+        // ignore malformed JSON-LD
+      }
+    });
+
+    // 3. Description & Subtitle Extraction
     const metaDesc = $('meta[name="description"]').attr("content")?.trim();
     const ogDesc = $('meta[property="og:description"]').attr("content")?.trim();
     const twitterDesc = $('meta[name="twitter:description"]').attr("content")?.trim();
     const firstP = $("main p, article p, body p").first().text().trim();
-    const description = metaDesc || ogDesc || twitterDesc || (firstP.length > 20 && firstP.length < 300 ? firstP : "");
 
-    // Author and Social Links
+    const description =
+      ogDesc ||
+      metaDesc ||
+      twitterDesc ||
+      jsonLdDesc ||
+      (firstP.length > 20 && firstP.length < 300 ? firstP : "");
+
+    // Subtitle / Tagline heuristic:
+    // If twitterDesc is short (< 100 chars) and different from description, or h2 tagline
+    let subtitle = "";
+    if (twitterDesc && twitterDesc !== description && twitterDesc.length < 120) {
+      subtitle = twitterDesc;
+    } else if (metaDesc && metaDesc !== description && metaDesc.length < 120) {
+      subtitle = metaDesc;
+    }
+
+    // 4. Favicons Multi-Discovery & Quality Ranking
+    const faviconCandidates: { label: string; type: string; url: string; weight: number }[] = [];
+    const seenFavicons = new Set<string>();
+
+    const addFavicon = (href: string | undefined, label: string, type: string, weight: number) => {
+      if (!href) return;
+      const full = resolveUrl(href.trim(), finalUrl);
+      if (full && !seenFavicons.has(full)) {
+        seenFavicons.add(full);
+        faviconCandidates.push({ label, type, url: full, weight });
+      }
+    };
+
+    // Vector SVG icons (highest priority)
+    $('link[rel="icon"][type="image/svg+xml"], link[rel="icon"][href*=".svg"]').each((_, el) => {
+      addFavicon($(el).attr("href"), "Vector SVG (Sharpest)", "SVG", 100);
+    });
+
+    // Apple touch icon (high resolution PNG)
+    $('link[rel="apple-touch-icon"], link[rel="apple-touch-icon-precomposed"]').each((_, el) => {
+      const sizes = $(el).attr("sizes") || "180x180";
+      addFavicon($(el).attr("href"), `Apple Touch Icon (${sizes})`, "PNG", 85);
+    });
+
+    // High-res PNG icons
+    $('link[rel="icon"][type="image/png"]').each((_, el) => {
+      const sizes = $(el).attr("sizes") || "PNG";
+      addFavicon($(el).attr("href"), `PNG Favicon (${sizes})`, "PNG", 75);
+    });
+
+    // Standard icons
+    $('link[rel="icon"]').each((_, el) => {
+      const href = $(el).attr("href");
+      const isIco = href?.toLowerCase().endsWith(".ico");
+      addFavicon(
+        href,
+        isIco ? "Standard Favicon (.ico)" : "Standard Favicon",
+        isIco ? "ICO" : "Icon",
+        isIco ? 40 : 60,
+      );
+    });
+
+    // Shortcut icons
+    $('link[rel="shortcut icon"]').each((_, el) => {
+      addFavicon($(el).attr("href"), "Shortcut Icon", "ICO", 35);
+    });
+
+    // Fallback origin favicon.ico
+    try {
+      const u = new URL(finalUrl);
+      addFavicon(`${u.origin}/favicon.ico`, "Default /favicon.ico", "ICO", 20);
+    } catch {
+      // ignore
+    }
+
+    faviconCandidates.sort((a, b) => b.weight - a.weight);
+    const faviconOptions: CandidateOption[] = faviconCandidates.map(({ label, type, url }) => ({
+      label,
+      type,
+      url,
+    }));
+    const favicon = faviconOptions[0]?.url || "";
+
+    // 5. OG Image Multi-Discovery & Quality Ranking
+    const ogImageCandidates: { label: string; type: string; url: string; weight: number }[] = [];
+    const seenOgImages = new Set<string>();
+
+    const addOgImage = (href: string | undefined, label: string, type: string, weight: number) => {
+      if (!href) return;
+      const full = resolveUrl(href.trim(), finalUrl);
+      if (full && !seenOgImages.has(full)) {
+        seenOgImages.add(full);
+        ogImageCandidates.push({ label, type, url: full, weight });
+      }
+    };
+
+    // Twitter image (typically 1200x630 summary card)
+    const twImg =
+      $('meta[name="twitter:image"]').attr("content") ||
+      $('meta[name="twitter:image:src"]').attr("content");
+    addOgImage(twImg, "Twitter Summary Card (1200x630 HD)", "Twitter", 95);
+
+    // OpenGraph image
+    const ogImg =
+      $('meta[property="og:image"]').attr("content") ||
+      $('meta[property="og:image:url"]').attr("content") ||
+      $('meta[property="og:image:secure_url"]').attr("content");
+    addOgImage(ogImg, "OpenGraph Banner Image", "OpenGraph", 90);
+
+    // Large format OG Image
+    const ogImgLarge = $('meta[property="og:image:large"]').attr("content");
+    addOgImage(ogImgLarge, "Large Banner Image", "High-Res", 85);
+
+    // JSON-LD Image
+    addOgImage(jsonLdImage, "Structured Data (JSON-LD) Image", "JSON-LD", 75);
+
+    // Thumbnail / Logo
+    const thumbImg = $('meta[name="thumbnail"]').attr("content");
+    addOgImage(thumbImg, "Site Thumbnail", "Thumbnail", 60);
+
+    ogImageCandidates.sort((a, b) => b.weight - a.weight);
+    const ogImageOptions: CandidateOption[] = ogImageCandidates.map(({ label, type, url }) => ({
+      label,
+      type,
+      url,
+    }));
+    const ogImage = ogImageOptions[0]?.url || "";
+
+    // 6. Creator Attribution & Social Links
     const twitterCreator = $('meta[name="twitter:creator"]').attr("content")?.trim();
     const articleAuthor = $('meta[property="article:author"]').attr("content")?.trim();
     const metaAuthor = $('meta[name="author"]').attr("content")?.trim();
 
     let author = metaAuthor || twitterCreator || articleAuthor || "";
 
-    // Scan og:description for "Built by X"
     if (!author && ogDesc) {
       const match = ogDesc.match(/(?:built|made|created)\s+by\s+([^,.;]+)/i);
       if (match && match[1]) {
@@ -127,14 +283,17 @@ export async function GET(request: NextRequest) {
       author = "";
     }
 
-    // Author Social Links
     let authorTwitter: string | undefined;
     let authorGitHub: string | undefined;
     let authorYouTube: string | undefined;
     let authorLinkedIn: string | undefined;
     let authorWebsite: string | undefined;
 
-    if (twitterCreator && twitterCreator.startsWith("@") && !["@github", "@nextjs", "@vercel"].includes(twitterCreator.toLowerCase())) {
+    if (
+      twitterCreator &&
+      twitterCreator.startsWith("@") &&
+      !["@github", "@nextjs", "@vercel"].includes(twitterCreator.toLowerCase())
+    ) {
       authorTwitter = `https://x.com/${twitterCreator.replace(/^@/, "")}`;
     }
 
@@ -161,7 +320,9 @@ export async function GET(request: NextRequest) {
           const parts = pathname.split("/").filter(Boolean);
           if (
             parts.length === 1 &&
-            !["about", "explore", "features", "login", "marketplace", "pricing", "signup", "topics", "trending"].includes(parts[0])
+            !["about", "explore", "features", "login", "marketplace", "pricing", "signup", "topics", "trending"].includes(
+              parts[0],
+            )
           ) {
             if (!authorGitHub) authorGitHub = `https://github.com/${parts[0]}`;
           }
@@ -185,47 +346,14 @@ export async function GET(request: NextRequest) {
       }
     });
 
-    if (articleAuthor && (articleAuthor.startsWith("http://") || articleAuthor.startsWith("https://"))) {
+    if (
+      articleAuthor &&
+      (articleAuthor.startsWith("http://") || articleAuthor.startsWith("https://"))
+    ) {
       authorWebsite = articleAuthor;
     }
 
-    // Favicon
-    const iconSelectors = [
-      'link[rel="apple-touch-icon"]',
-      'link[rel="icon"]',
-      'link[rel="icon"][type="image/png"]',
-      'link[rel="icon"][type="image/svg+xml"]',
-      'link[rel="shortcut icon"]',
-    ];
-
-    let favicon = "";
-    for (const sel of iconSelectors) {
-      const href = $(sel).attr("href");
-      if (href) {
-        favicon = resolveUrl(href, finalUrl);
-        break;
-      }
-    }
-
-    if (!favicon) {
-      try {
-        const u = new URL(finalUrl);
-        favicon = `${u.origin}/favicon.ico`;
-      } catch {
-        // ignore
-      }
-    }
-
-    // OG Image
-    const rawOgImg =
-      $('meta[property="og:image"]').attr("content") ||
-      $('meta[property="og:image:url"]').attr("content") ||
-      $('meta[name="twitter:image"]').attr("content") ||
-      $('meta[name="twitter:image:src"]').attr("content");
-
-    const ogImage = rawOgImg ? resolveUrl(rawOgImg.trim(), finalUrl) : undefined;
-
-    // GitHub Repo Link discovery
+    // 7. GitHub Repository Discovery
     let gitHubLink: string | undefined;
     $('a[href*="github.com"]').each((_, el) => {
       const href = $(el).attr("href");
@@ -236,7 +364,9 @@ export async function GET(request: NextRequest) {
             const parts = gh.pathname.split("/").filter(Boolean);
             if (
               parts.length >= 2 &&
-              !["explore", "features", "login", "marketplace", "pricing", "signup", "topics", "trending"].includes(parts[0])
+              !["explore", "features", "login", "marketplace", "pricing", "signup", "topics", "trending"].includes(
+                parts[0],
+              )
             ) {
               gitHubLink = `https://github.com/${parts[0]}/${parts[1]}`;
             }
@@ -260,8 +390,11 @@ export async function GET(request: NextRequest) {
       category: suggestedCategory,
       description,
       favicon,
+      faviconOptions,
       gitHubLink,
       ogImage,
+      ogImageOptions,
+      subtitle: subtitle || undefined,
       url: finalUrl,
     });
   } catch (err: unknown) {

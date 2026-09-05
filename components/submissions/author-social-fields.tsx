@@ -41,43 +41,46 @@ export function AuthorSocialFields({
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {/* Author Name */}
-        <div className="space-y-2">
-          <Label className="text-foreground font-mono text-xs font-bold uppercase">
-            Creator / Author Name
-          </Label>
-          <div className="h-9">
-            <InputField
-              placeholder="e.g. Jane Doe"
-              value={values.author || ""}
-              onChange={(e) => onChange("author", e.target.value)}
-              disabled={disabled}
-              containerClassName="h-9"
-              className="font-mono text-xs"
-            />
+      <div className="space-y-4">
+        {/* Row 1: Name and Website / Portfolio side-by-side */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {/* Author Name */}
+          <div className="space-y-2">
+            <Label className="text-foreground font-mono text-xs font-bold uppercase">
+              Creator / Author Name
+            </Label>
+            <div className="h-9">
+              <InputField
+                placeholder="e.g. Jane Doe"
+                value={values.author || ""}
+                onChange={(e) => onChange("author", e.target.value)}
+                disabled={disabled}
+                containerClassName="h-9"
+                className="font-mono text-xs"
+              />
+            </div>
+          </div>
+
+          {/* Website / Portfolio */}
+          <div className="space-y-2">
+            <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+              <GlobeIcon className="text-muted-foreground size-3.5" /> Website / Portfolio
+            </Label>
+            <div className="h-9">
+              <InputField
+                type="url"
+                placeholder="https://janedoe.com"
+                value={values.authorWebsite || ""}
+                onChange={(e) => onChange("authorWebsite", e.target.value)}
+                disabled={disabled}
+                containerClassName="h-9"
+                className="font-mono text-xs"
+              />
+            </div>
           </div>
         </div>
 
-        {/* Website / Portfolio */}
-        <div className="space-y-2">
-          <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-            <GlobeIcon className="text-muted-foreground size-3.5" /> Website / Portfolio
-          </Label>
-          <div className="h-9">
-            <InputField
-              type="url"
-              placeholder="https://janedoe.com"
-              value={values.authorWebsite || ""}
-              onChange={(e) => onChange("authorWebsite", e.target.value)}
-              disabled={disabled}
-              containerClassName="h-9"
-              className="font-mono text-xs"
-            />
-          </div>
-        </div>
-
-        {/* X / Twitter */}
+        {/* Row 2: X / Twitter (Separate Line) */}
         <div className="space-y-2">
           <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
             <XLogoIcon weight="bold" className="text-muted-foreground size-3.5" /> X / Twitter
@@ -96,7 +99,7 @@ export function AuthorSocialFields({
           </div>
         </div>
 
-        {/* GitHub */}
+        {/* Row 3: GitHub (Separate Line) */}
         <div className="space-y-2">
           <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
             <Image
@@ -121,7 +124,7 @@ export function AuthorSocialFields({
           </div>
         </div>
 
-        {/* YouTube */}
+        {/* Row 4: YouTube (Separate Line) */}
         <div className="space-y-2">
           <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
             <Image
@@ -146,7 +149,7 @@ export function AuthorSocialFields({
           </div>
         </div>
 
-        {/* LinkedIn */}
+        {/* Row 5: LinkedIn (Separate Line) */}
         <div className="space-y-2">
           <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
             <Image

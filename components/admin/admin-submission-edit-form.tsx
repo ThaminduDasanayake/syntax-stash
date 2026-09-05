@@ -1,11 +1,11 @@
 "use client";
 
 import {
+  ArrowsClockwiseIcon,
   CheckCircleIcon,
   CircleNotchIcon,
   FloppyDiskIcon,
   PencilSimpleIcon,
-  SparkleIcon,
   TrashIcon,
   XIcon,
 } from "@phosphor-icons/react";
@@ -66,6 +66,8 @@ export function AdminSubmissionEditForm({
   });
 
   const [isDetecting, setIsDetecting] = useState(false);
+  const [faviconOptions, setFaviconOptions] = useState<{ label: string; type?: string; url: string }[]>([]);
+  const [ogImageOptions, setOgImageOptions] = useState<{ label: string; type?: string; url: string }[]>([]);
 
   const handleAuthorFieldChange = (field: keyof AuthorSocialValues, value: string) => {
     if (field === "authorWebsite") {
@@ -92,27 +94,32 @@ export function AdminSubmissionEditForm({
       const data = await res.json();
 
       if (res.ok && !data.error) {
+        if (data.faviconOptions) setFaviconOptions(data.faviconOptions);
+        if (data.ogImageOptions) setOgImageOptions(data.ogImageOptions);
+
         setEditForm((prev) => ({
           ...prev,
-          title: data.title || prev.title,
-          author: data.author || prev.author,
-          authorGitHub: data.authorGitHub || prev.authorGitHub,
-          authorLinkedIn: data.authorLinkedIn || prev.authorLinkedIn,
-          authorTwitter: data.authorTwitter || prev.authorTwitter,
-          authorWebsite: data.authorWebsite || prev.authorWebsite,
-          authorYouTube: data.authorYouTube || prev.authorYouTube,
+          title: prev.title || data.title,
+          author: prev.author || data.author,
+          authorGitHub: prev.authorGitHub || data.authorGitHub,
+          authorLinkedIn: prev.authorLinkedIn || data.authorLinkedIn,
+          authorTwitter: prev.authorTwitter || data.authorTwitter,
+          authorWebsite: prev.authorWebsite || data.authorWebsite,
+          authorYouTube: prev.authorYouTube || data.authorYouTube,
           category:
-            data.category && resourceCategories.includes(data.category)
+            prev.category ||
+            (data.category && resourceCategories.includes(data.category)
               ? data.category
-              : prev.category,
-          description: data.description || prev.description,
+              : prev.category),
+          description: prev.description || data.description,
           favicon: data.favicon || prev.favicon,
-          gitHubLink: data.gitHubLink || prev.gitHubLink,
+          gitHubLink: prev.gitHubLink || data.gitHubLink,
           ogImage: data.ogImage || prev.ogImage,
+          subtitle: prev.subtitle || data.subtitle,
         }));
       }
     } catch (err) {
-      console.error("Metadata auto-detect failed:", err);
+      console.error("Metadata re-sync failed:", err);
     } finally {
       setIsDetecting(false);
     }
@@ -164,14 +171,14 @@ export function AdminSubmissionEditForm({
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
         {/* Form Controls Column */}
         <div className="space-y-6 lg:col-span-7">
-          {/* Section 1: Tool URL with Auto-Fill */}
+          {/* Section 1: Tool URL with Live Re-Sync */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label className="text-foreground font-mono text-xs font-bold uppercase">
                 Tool URL <span className="text-destructive">*</span>
               </Label>
               <span className="text-muted-foreground text-[10px]">
-                Auto-sync metadata from website
+                Scan live site for latest metadata & assets
               </span>
             </div>
             <div className="flex gap-2">
@@ -196,9 +203,9 @@ export function AdminSubmissionEditForm({
                 {isDetecting ? (
                   <CircleNotchIcon className="size-3.5 animate-spin" />
                 ) : (
-                  <SparkleIcon weight="fill" className="text-primary size-3.5" />
+                  <ArrowsClockwiseIcon weight="bold" className="text-primary size-3.5" />
                 )}
-                {isDetecting ? "Fetching..." : "Auto-Fill"}
+                {isDetecting ? "Syncing..." : "Re-sync Metadata"}
               </Button>
             </div>
           </div>
@@ -268,7 +275,9 @@ export function AdminSubmissionEditForm({
           {/* Section 4: Visuals & Media */}
           <MediaAssetFields
             favicon={editForm.favicon}
+            faviconOptions={faviconOptions}
             ogImage={editForm.ogImage}
+            ogImageOptions={ogImageOptions}
             onFaviconChange={(val) => setEditForm((prev) => ({ ...prev, favicon: val }))}
             onOgImageChange={(val) => setEditForm((prev) => ({ ...prev, ogImage: val }))}
           />

@@ -43,7 +43,9 @@ export function SubmitForm() {
   const [authorLinkedIn, setAuthorLinkedIn] = useState("");
   const [gitHubLink, setGitHubLink] = useState("");
   const [favicon, setFavicon] = useState("");
+  const [faviconOptions, setFaviconOptions] = useState<{ label: string; type?: string; url: string }[]>([]);
   const [ogImage, setOgImage] = useState("");
+  const [ogImageOptions, setOgImageOptions] = useState<{ label: string; type?: string; url: string }[]>([]);
   const [tags, setTags] = useState("");
   const [notes, setNotes] = useState("");
   const [honeypot, setHoneypot] = useState(""); // anti-spam trap
@@ -68,7 +70,9 @@ export function SubmitForm() {
     setAuthorLinkedIn("");
     setGitHubLink("");
     setFavicon("");
+    setFaviconOptions([]);
     setOgImage("");
+    setOgImageOptions([]);
     setTags("");
     setNotes("");
     setHoneypot("");
@@ -123,9 +127,12 @@ export function SubmitForm() {
       }
 
       if (data.title) setTitle(data.title);
+      if (data.subtitle) setSubtitle(data.subtitle);
       if (data.description) setDescription(data.description);
       if (data.favicon) setFavicon(data.favicon);
+      if (data.faviconOptions) setFaviconOptions(data.faviconOptions);
       if (data.ogImage) setOgImage(data.ogImage);
+      if (data.ogImageOptions) setOgImageOptions(data.ogImageOptions);
       if (data.author) setAuthor(data.author);
       if (data.authorWebsite) setAuthorWebsite(data.authorWebsite);
       if (data.authorTwitter) setAuthorTwitter(data.authorTwitter);
@@ -368,7 +375,9 @@ export function SubmitForm() {
           {/* Section 4: Visuals & Media (Favicon & OG Image) */}
           <MediaAssetFields
             favicon={favicon}
+            faviconOptions={faviconOptions}
             ogImage={ogImage}
+            ogImageOptions={ogImageOptions}
             onFaviconChange={setFavicon}
             onOgImageChange={setOgImage}
           />
