@@ -37,6 +37,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       changeFrequency: "weekly",
       lastModified: new Date(),
+      priority: 0.8,
+      url: `${baseUrl}/submit`,
+    },
+    {
+      changeFrequency: "weekly",
+      lastModified: new Date(),
       priority: 0.9,
       url: `${baseUrl}/resources`,
     },

@@ -231,7 +231,10 @@ async function checkGitHubLink(resource: Resource): Promise<AuditFinding[]> {
 async function checkAuthorLink(resource: Resource): Promise<AuditFinding[]> {
   if (!resource.authorLink) return [];
 
-  const targetUrl = resource.authorLink;
+  const rawLinks = Array.isArray(resource.authorLink) ? resource.authorLink : [resource.authorLink];
+  const targetUrl = rawLinks[0];
+  if (!targetUrl) return [];
+
   const findings: AuditFinding[] = [];
 
   try {

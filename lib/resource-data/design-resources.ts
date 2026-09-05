@@ -431,7 +431,7 @@ export const designLinks: Resource<typeof CATEGORIES.design>[] = [
     favicon: "https://www.durves.com/favicon.a02a46ad.svg",
     ogImage: "https://www.durves.com/ogImage.2cead86d.png",
     subtitle: "Design Pattern Tool",
-    tags: [TAGS.design],
+    tags: [TAGS.patterns],
     url: "https://www.durves.com/",
   },
   {

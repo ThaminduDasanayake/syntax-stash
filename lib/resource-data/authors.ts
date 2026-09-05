@@ -83,6 +83,15 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
     },
     name: "Jasper Bernaers",
   },
+  "kacem-mathlouthi": {
+    links: {
+      github: "https://github.com/KacemMathlouthi",
+      linkedin: "https://www.linkedin.com/in/kacem-mathlouthi/",
+      twitter: "https://x.com/KacemMathlouthi",
+      website: "https://kacemmathlouthi.dev/",
+    },
+    name: "Kacem Mathlouthi",
+  },
   "kamran-ahmed": {
     links: {
       github: "https://github.com/nilbuild",
@@ -132,6 +141,23 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
     },
     name: "Matthias Martin",
   },
+  "microlink-hq": {
+    links: {
+      github: "https://github.com/microlinkhq",
+      linkedin: "https://www.linkedin.com/company/microlinkhq",
+      twitter: "https://x.com/microlinkhq",
+      website: "https://microlink.io/",
+    },
+    name: "Microlink HQ",
+  },
+  "nikolaj-sokolowski": {
+    links: {
+      linkedin: "https://www.linkedin.com/in/nikolaj-sokolowski-8661a2300/",
+      twitter: "https://x.com/Threeaio",
+      website: "https://nikolaj-sokolowski.de/",
+    },
+    name: "Nikolaj Sokolowski",
+  },
   "noor-mtir": {
     links: {
       github: "https://github.com/NourMtir0722",
@@ -156,6 +182,15 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
     },
     name: "Pablo Stanley",
   },
+  "phileas-dazeley-gaist": {
+    links: {
+      github: "https://github.com/phileasdg",
+      linkedin: "https://www.linkedin.com/in/phileas",
+      website: "https://phileasdg.github.io/",
+      youtube: "https://www.youtube.com/@phileasdg",
+    },
+    name: "Phileas Dazeley-Gaist",
+  },
   "pixel-symphony": {
     links: {
       twitter: "https://x.com/Pixel0Symphony",
@@ -171,13 +206,28 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
     },
     name: "Rive",
   },
+  "Ryan Reid": {
+    links: {
+      github: "https://github.com/imryanreid",
+      linkedin: "https://www.linkedin.com/in/imryanreid/",
+      twitter: "https://x.com/imryanreid",
+      website: "https://www.ry.studio/",
+    },
+    name: "Ryan Reid",
+  },
   "sarthak-navalekar": {
     links: {
       github: "https://github.com/mortspace",
       linkedin: "https://www.linkedin.com/in/sarthak-navalekar/",
       twitter: "https://x.com/SolutionB2u",
     },
-    name: "Oleksandr Yeromin",
+    name: "Sarthak Navalekar",
+  },
+  "sy-hong": {
+    links: {
+      website: "https://syunghong.com/",
+    },
+    name: "Sy Hong",
   },
   vercel: {
     links: {
@@ -204,5 +254,21 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
       youtube: "https://www.youtube.com/user/vineethtrv",
     },
     name: "Vineeth TR",
+  },
+  "will-newton": {
+    links: {
+      github: "https://github.com/williamnewton",
+      linkedin: "https://www.linkedin.com/in/williamnewton/",
+      twitter: "https://x.com/willdjthrill",
+      website: "https://willnewton.dev/",
+    },
+    name: "Will Newton",
+  },
+  "ye-joo-park": {
+    links: {
+      github: "https://github.com/subwaymatch",
+      website: "https://park.is/",
+    },
+    name: "Ye Joo Park",
   },
 };

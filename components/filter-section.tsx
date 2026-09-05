@@ -77,7 +77,14 @@ function FilterSectionInner({
   }, [tagParam]);
   const matchMode = searchParams.get("mode") === "all" ? "all" : "any";
 
-  const [searchQuery, setSearchQuery] = useState(() => searchParams.get("q") || "");
+  const qParam = searchParams.get("q") || "";
+  const [prevQParam, setPrevQParam] = useState(qParam);
+  const [searchQuery, setSearchQuery] = useState(qParam);
+
+  if (qParam !== prevQParam) {
+    setPrevQParam(qParam);
+    setSearchQuery(qParam);
+  }
 
   // Defer heavy list filtering so typing input response is instantaneous (0ms lag)
   const deferredSearchQuery = useDeferredValue(searchQuery);
@@ -240,9 +247,13 @@ function FilterSectionInner({
       const subtitle = "subtitle" in tool ? tool.subtitle : undefined;
       const tags = "tags" in tool ? tool.tags : undefined;
 
+      const authorMatches = Array.isArray(author)
+        ? author.some((a) => a.toLowerCase().includes(query))
+        : author?.toLowerCase().includes(query);
+
       return (
         tool.title.toLowerCase().includes(query) ||
-        author?.toLowerCase().includes(query) ||
+        authorMatches ||
         tool.description?.toLowerCase().includes(query) ||
         subtitle?.toLowerCase().includes(query) ||
         tags?.some((tag: string) => tag.toLowerCase().includes(query)) ||

@@ -40,6 +40,16 @@ export const dataLinks: Resource<typeof CATEGORIES.data>[] = [
     url: "https://apilayer.com/",
   },
   {
+    title: "Automated Web Performance Insights",
+    author: "Microlink HQ",
+    category: CATEGORIES.data,
+    description:
+      "Track web speed & website quality over time. Monitor website performance automatically. Get Lighthouse-powered speed insights & quality metrics in real-time. Track Core Web Vitals, SEO scores & more.",
+    favicon: "https://cdn.microlink.io/logo/favicon.svg",
+    ogImage: "https://microlink.io/images/og/insights.png",
+    url: "https://microlink.io/insights",
+  },
+  {
     title: "Awesome Public Datasets",
     author: "AwesomeData",
     category: CATEGORIES.data,
@@ -73,6 +83,16 @@ export const dataLinks: Resource<typeof CATEGORIES.data>[] = [
     url: "https://behindtheemail.com/",
   },
   {
+    title: "browserless",
+    author: "Microlink HQ",
+    category: CATEGORIES.data,
+    description: "The headless Chrome/Chromium performance driver for Node.js",
+    favicon: "https://browserless.js.org/static/logo.png",
+    gitHubLink: "https://github.com/microlinkhq/browserless",
+    ogImage: "https://browserless.js.org/static/banner.jpg",
+    url: "https://browserless.js.org/",
+  },
+  {
     title: "ByteByteGo",
     category: CATEGORIES.data,
     description: "Everything you need to take your system design skill to the next level",
@@ -80,6 +100,17 @@ export const dataLinks: Resource<typeof CATEGORIES.data>[] = [
     ogImage: "https://bytebytego.com/social2.png",
     subtitle: "Technical Interview Prep",
     url: "https://bytebytego.com/",
+  },
+  {
+    title: "Embed API for Any URL",
+    author: "Microlink HQ",
+    category: CATEGORIES.data,
+    description:
+      "Embed API for any URL — get a ready-to-paste iframe and oEmbed payload in one HTTPS call. 300+ providers including YouTube, Spotify, Twitter, TikTok, Figma. Free tier, optional React / Vue / Vanilla JS SDK.",
+    favicon: "https://cdn.microlink.io/logo/favicon.svg",
+    ogImage: "https://microlink.io/images/og/embed.png",
+    subtitle: "oEmbed for 300+ Providers",
+    url: "https://microlink.io/embed",
   },
   {
     title: "Env File Editor",
@@ -93,6 +124,17 @@ export const dataLinks: Resource<typeof CATEGORIES.data>[] = [
     url: "https://jasperbernaers.com/env-editor/",
   },
   {
+    title: "File Conversion API",
+    author: "Microlink HQ",
+    category: CATEGORIES.data,
+    description:
+      "Convert PDFs, Word documents, spreadsheets and slide decks into HTML, Markdown or clean text with one API call. No local toolchain. 25 free requests/day.",
+    favicon: "https://cdn.microlink.io/logo/favicon.svg",
+    ogImage: "https://microlink.io/images/og/file-conversion.png",
+    subtitle: "Files to Markdown & Text",
+    url: "https://microlink.io/file-conversion",
+  },
+  {
     title: "Free Fake Data Generator",
     author: "Jasper Bernaers",
     category: CATEGORIES.data,
@@ -104,6 +146,16 @@ export const dataLinks: Resource<typeof CATEGORIES.data>[] = [
     url: "https://jasperbernaers.com/fake-data/",
   },
   {
+    title: "Free Online Tools for Developers",
+    author: "Microlink HQ",
+    category: CATEGORIES.data,
+    description:
+      "A curated collection of free developer tools by Microlink. Screenshot generators, metadata debuggers, and more. No login required.",
+    favicon: "https://cdn.microlink.io/logo/favicon.svg",
+    ogImage: "https://microlink.io/images/og/tools.png",
+    url: "https://microlink.io/tools",
+  },
+  {
     title: "Free Public APIs",
     category: CATEGORIES.data,
     description:
@@ -111,6 +163,16 @@ export const dataLinks: Resource<typeof CATEGORIES.data>[] = [
     favicon: "https://www.freepublicapis.com/favicon.ico",
     tags: [TAGS.data],
     url: "https://www.freepublicapis.com/",
+  },
+  {
+    title: "Google Search API (SERP) for AI Agents",
+    author: "Microlink HQ",
+    category: CATEGORIES.data,
+    description:
+      "Scrape Google Search results in ~1s. A reliable Google SERP API delivering normalized JSON for RAG pipelines, LLM tools, and developer workflows.",
+    favicon: "https://cdn.microlink.io/logo/favicon.svg",
+    ogImage: "https://microlink.io/images/og/search.png",
+    url: "https://microlink.io/search",
   },
   {
     title: "Hoppscotch",
@@ -121,6 +183,17 @@ export const dataLinks: Resource<typeof CATEGORIES.data>[] = [
     subtitle: "Open source API development ecosystem",
     tags: [TAGS.tool],
     url: "https://hoppscotch.io/",
+  },
+  {
+    title: "HTML to PDF API",
+    author: "Microlink HQ",
+    category: CATEGORIES.data,
+    description:
+      "Convert HTML or any URL to PDF with a single REST API call. Features custom margins, headless control, and edge caching. 25 free requests/day.",
+    favicon: "https://cdn.microlink.io/logo/favicon.svg",
+    ogImage: "https://microlink.io/images/og/pdf.png",
+    subtitle: "Convert URL to PDF Document",
+    url: "https://microlink.io/pdf",
   },
   {
     title: "JSON For You",
@@ -194,6 +267,17 @@ export const dataLinks: Resource<typeof CATEGORIES.data>[] = [
     url: "https://modelcontextprotocol.io/",
   },
   {
+    title: "Media Extraction API",
+    author: "Microlink HQ",
+    category: CATEGORIES.data,
+    description:
+      "Extract direct video and audio file URLs from any web page, with dimensions, duration and type. Real browser detection, proxy support, edge caching. 25 free requests/day.",
+    favicon: "https://cdn.microlink.io/logo/favicon.svg",
+    ogImage: "https://microlink.io/images/og/media.png",
+    subtitle: "Video & Audio File URLs",
+    url: "https://microlink.io/media",
+  },
+  {
     title: "Microlink",
     author: "Microlink HQ",
     category: CATEGORIES.data,
@@ -231,6 +315,74 @@ export const dataLinks: Resource<typeof CATEGORIES.data>[] = [
     url: "https://publicapis.dev/",
   },
   {
+    title: "Rendered HTML API",
+    author: "Microlink HQ",
+    category: CATEGORIES.data,
+    description:
+      "Get the fully rendered HTML of any URL after JavaScript executes. Real browser rendering, CSS selector scoping, proxy support and edge caching. 25 free requests/day.",
+    favicon: "https://cdn.microlink.io/logo/favicon.svg",
+    ogImage: "https://microlink.io/images/og/html.png",
+    subtitle: "HTML After JavaScript",
+    url: "https://microlink.io/html",
+  },
+  {
+    title: "unavatar.io",
+    author: "Microlink HQ",
+    category: CATEGORIES.data,
+    description:
+      "Universal avatars API: resolve user avatars by username, email, or domain from GitHub, Gravatar, X, Google, Instagram, and 74+ providers. The same endpoint also returns logos, favicons, app store icons, and cover art — with dashboard analytics for usage, provider mix, and billing.",
+    favicon: "https://unavatar.io/favicon.svg",
+    gitHubLink: "https://github.com/microlinkhq/unavatar",
+    ogImage: "https://unavatar.io/api/og",
+    subtitle:
+      "The universal avatars API for username, email, and domain — plus logos, icons & artwork",
+    url: "https://unavatar.io/",
+  },
+  {
+    title: "URL to Markdown API",
+    author: "Microlink HQ",
+    category: CATEGORIES.data,
+    description:
+      "Convert any web page to clean markdown. Built for AI agents, RAG pipelines, and LLM ingestion reducing token usage by 80%. No login required.",
+    favicon: "https://cdn.microlink.io/logo/favicon.svg",
+    ogImage: "https://microlink.io/images/og/markdown.png",
+    subtitle: "Free, no login required",
+    url: "https://microlink.io/markdown",
+  },
+  {
+    title: "URL to Text API",
+    author: "Microlink HQ",
+    category: CATEGORIES.data,
+    description:
+      "Extract clean, readable plain text from any URL. Boilerplate removed, JavaScript rendered, documents supported. Built for LLM pipelines. 25 free requests/day.",
+    favicon: "https://cdn.microlink.io/logo/favicon.svg",
+    ogImage: "https://microlink.io/images/og/text.png",
+    subtitle: "Clean, LLM-Ready Page Content",
+    url: "https://microlink.io/text",
+  },
+  {
+    title: "Website Logo API",
+    author: "Microlink HQ",
+    category: CATEGORIES.data,
+    description:
+      "Get the logo behind any URL — page markup, DNS BIMI records and favicons, plus brand palettes with WCAG-aware color pairs. 25 free requests/day.",
+    favicon: "https://cdn.microlink.io/logo/favicon.svg",
+    ogImage: "https://microlink.io/images/og/logo.png",
+    subtitle: "Logos, Favicons & Brand Colors",
+    url: "https://microlink.io/logo",
+  },
+  {
+    title: "Website Metadata API",
+    author: "Microlink HQ",
+    category: CATEGORIES.data,
+    description:
+      "Website metadata API - 25 req/day free - that turns any URL to metadata: Open Graph, JSON-LD, Twitter Cards, link preview & URL preview in one JSON call.",
+    favicon: "https://cdn.microlink.io/logo/favicon.svg",
+    ogImage: "https://microlink.io/images/og/metadata.png",
+    subtitle: "URL to Metadata & Link Preview",
+    url: "https://microlink.io/metadata",
+  },
+  {
     title: "Website Screenshot API",
     author: "Microlink HQ",
     category: CATEGORIES.data,
@@ -239,7 +391,6 @@ export const dataLinks: Resource<typeof CATEGORIES.data>[] = [
     favicon: "https://cdn.microlink.io/logo/favicon.svg",
     ogImage: "https://microlink.io/images/og/screenshot.png",
     subtitle: "Convert URL to Image",
-    tags: [TAGS.data],
     url: "https://microlink.io/screenshot",
   },
 ];

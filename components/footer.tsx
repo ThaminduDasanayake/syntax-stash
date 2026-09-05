@@ -3,9 +3,12 @@
 import { ArrowUpIcon, ArrowUpRightIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 
+import { usePendingSubmissions } from "@/hooks/use-pending-submissions";
 import { siteConfig } from "@/lib/site-config";
 
 export default function Footer() {
+  const { count: pendingCount, isUserAdmin } = usePendingSubmissions();
+
   const scrollToTop = () => {
     window.scrollTo({ behavior: "smooth", top: 0 });
   };
@@ -57,6 +60,12 @@ export default function Footer() {
                 ]
               </a>
               <Link
+                href="/submit"
+                className="after:bg-paper relative inline-block transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
+              >
+                [ Submit Resource ]
+              </Link>
+              <Link
                 href="/about"
                 className="after:bg-paper relative inline-block transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
               >
@@ -74,6 +83,14 @@ export default function Footer() {
               >
                 [ Changelog ]
               </Link>
+              {isUserAdmin && (
+                <Link
+                  href="/admin/submissions"
+                  className="text-c-orange after:bg-c-orange relative inline-block transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
+                >
+                  [ Admin{pendingCount > 0 ? ` (${pendingCount})` : ""} ]
+                </Link>
+              )}
             </div>
 
             <button

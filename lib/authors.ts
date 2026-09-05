@@ -51,17 +51,22 @@ export function getAllAuthors(): AuthorWithResources[] {
   for (const resource of resourceLinks) {
     if (!resource.author) continue;
 
-    const trimmedAuthor = resource.author.trim();
-    const slug = slugifyAuthor(trimmedAuthor);
+    const rawAuthors = Array.isArray(resource.author) ? resource.author : [resource.author];
 
-    if (!authorMap.has(slug)) {
-      authorMap.set(slug, {
-        name: trimmedAuthor,
-        resources: [],
-      });
+    for (const authorItem of rawAuthors) {
+      if (!authorItem) continue;
+      const trimmedAuthor = authorItem.trim();
+      const slug = slugifyAuthor(trimmedAuthor);
+
+      if (!authorMap.has(slug)) {
+        authorMap.set(slug, {
+          name: trimmedAuthor,
+          resources: [],
+        });
+      }
+
+      authorMap.get(slug)?.resources.push(resource);
     }
-
-    authorMap.get(slug)?.resources.push(resource);
   }
 
   const result: AuthorWithResources[] = [];
@@ -75,10 +80,15 @@ export function getAllAuthors(): AuthorWithResources[] {
     if (!fallbackLinks?.website) {
       const resourceWithAuthorLink = resources.find((r) => r.authorLink);
       if (resourceWithAuthorLink?.authorLink) {
-        fallbackLinks = {
-          ...fallbackLinks,
-          website: resourceWithAuthorLink.authorLink,
-        };
+        const rawLink = Array.isArray(resourceWithAuthorLink.authorLink)
+          ? resourceWithAuthorLink.authorLink[0]
+          : resourceWithAuthorLink.authorLink;
+        if (rawLink) {
+          fallbackLinks = {
+            ...fallbackLinks,
+            website: rawLink,
+          };
+        }
       }
     }
 

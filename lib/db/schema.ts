@@ -1,4 +1,4 @@
-import { boolean, pgTable, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
+import { boolean, index, pgTable, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -64,7 +64,50 @@ export const bookmark = pgTable(
   (table) => [uniqueIndex("user_resource_idx").on(table.userId, table.resourceId)],
 );
 
+export const submission = pgTable(
+  "submission",
+  {
+    id: text("id").primaryKey(),
+    // Tool metadata
+    title: text("title").notNull(),
+    adminNotes: text("admin_notes"),
+    author: text("author"),
+    authorGitHub: text("author_github"),
+    authorLink: text("author_link"),
+    authorLinkedIn: text("author_linkedin"),
+    authorTwitter: text("author_twitter"),
+    authorWebsite: text("author_website"),
+    authorYouTube: text("author_youtube"),
+    category: text("category").notNull(),
+
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    description: text("description").notNull(),
+    favicon: text("favicon"),
+    gitHubLink: text("github_link"),
+    notes: text("notes"),
+    ogImage: text("og_image"),
+    pricing: text("pricing").default("Free"),
+    reviewedAt: timestamp("reviewed_at"),
+    // Status & Moderation
+    status: text("status").notNull().default("pending"), // 'pending' | 'approved' | 'rejected'
+    submitterEmail: text("submitter_email"),
+    submitterName: text("submitter_name"),
+    subtitle: text("subtitle"),
+    tags: text("tags"),
+
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
+    url: text("url").notNull(),
+    userId: text("user_id").references(() => user.id, { onDelete: "set null" }),
+  },
+  (table) => [
+    index("submission_created_at_idx").on(table.createdAt),
+    index("submission_status_idx").on(table.status),
+  ],
+);
+
 export type User = typeof user.$inferSelect;
 export type NewUser = typeof user.$inferInsert;
 export type Bookmark = typeof bookmark.$inferSelect;
 export type NewBookmark = typeof bookmark.$inferInsert;
+export type Submission = typeof submission.$inferSelect;
+export type NewSubmission = typeof submission.$inferInsert;

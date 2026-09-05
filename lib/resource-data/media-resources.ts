@@ -119,6 +119,7 @@ export const mediaLinks: Resource<typeof CATEGORIES.media>[] = [
   },
   {
     title: "Book of Shapes",
+    author: "Nikolaj Sokolowski",
     category: CATEGORIES.media,
     description:
       "A curated gallery of generative patterns. Discover, customize, and download unique algorithmic art.",
@@ -884,7 +885,8 @@ export const mediaLinks: Resource<typeof CATEGORIES.media>[] = [
   },
   {
     title: "Spherium",
-    author: "Spherium",
+    author: "Javier Crocco",
+    authorLink: "https://www.javiercrocco.com/",
     category: CATEGORIES.media,
     description:
       "Create stunning, customizable 3D globes and maps directly in your browser. Export high-quality SVGs for your designs. The ultimate WebGL map generator for professionals.",

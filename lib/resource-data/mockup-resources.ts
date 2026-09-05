@@ -140,8 +140,8 @@ export const mockupLinks: Resource<typeof CATEGORIES.mockups>[] = [
     url: "https://limitype.com/",
   },
   {
-    title: "ls.graphics",
-    author: "ls.graphics",
+    title: "LS Graphics",
+    author: "LS Graphics",
     category: CATEGORIES.mockups,
     description:
       "Discover a vast collection of free and premium mockups for Photoshop and Figma. Enhance your design projects with high-quality device and packaging mockups",
@@ -152,7 +152,7 @@ export const mockupLinks: Resource<typeof CATEGORIES.mockups>[] = [
   },
   {
     title: "mckp.live",
-    author: "ls.graphics",
+    author: "LS Graphics",
     category: CATEGORIES.mockups,
     description:
       "Beyond the screenshot. Render videos or embed live, interactive mockups anywhere — from your portfolio to your client's homepage.",
