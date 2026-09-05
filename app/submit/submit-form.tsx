@@ -1,29 +1,27 @@
 "use client";
 
 import {
-  ArrowSquareOutIcon,
   CheckCircleIcon,
   CheckIcon,
   CircleNotchIcon,
-  GlobeIcon,
-  ImageIcon,
   SparkleIcon,
-  TagIcon,
   XIcon,
-  XLogoIcon,
 } from "@phosphor-icons/react";
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-import { CardIcon } from "@/components/card-icon";
+import {
+  AuthorSocialFields,
+  AuthorSocialValues,
+  MediaAssetFields,
+  ResourceCardPreview,
+} from "@/components/submissions";
 import { Button } from "@/components/ui/button";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
 import { resourceCategories } from "@/lib/resource-data";
-import { cn, getCategoryTheme, Theme, THEME_CONFIG } from "@/lib/utils";
 
 const CATEGORY_OPTIONS = resourceCategories.map((cat) => ({
   label: cat,
@@ -50,12 +48,6 @@ export function SubmitForm() {
   const [notes, setNotes] = useState("");
   const [honeypot, setHoneypot] = useState(""); // anti-spam trap
 
-  // Theme Override State for Card Preview
-  const [customTheme, setCustomTheme] = useState<Theme | null>(null);
-  const activeTheme: Theme = customTheme ?? getCategoryTheme(category);
-  const themeClasses = THEME_CONFIG[activeTheme].bg;
-  const isBlue = activeTheme === "blue";
-
   // Request State
   const [isDetecting, setIsDetecting] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -80,9 +72,31 @@ export function SubmitForm() {
     setTags("");
     setNotes("");
     setHoneypot("");
-    setCustomTheme(null);
     setErrorMsg(null);
     setIsSubmitted(false);
+  };
+
+  const handleAuthorFieldChange = (field: keyof AuthorSocialValues, value: string) => {
+    switch (field) {
+      case "author":
+        setAuthor(value);
+        break;
+      case "authorWebsite":
+        setAuthorWebsite(value);
+        break;
+      case "authorTwitter":
+        setAuthorTwitter(value);
+        break;
+      case "authorGitHub":
+        setAuthorGitHub(value);
+        break;
+      case "authorYouTube":
+        setAuthorYouTube(value);
+        break;
+      case "authorLinkedIn":
+        setAuthorLinkedIn(value);
+        break;
+    }
   };
 
   const handleAutoDetect = async () => {
@@ -352,221 +366,25 @@ export function SubmitForm() {
           </div>
 
           {/* Section 4: Visuals & Media (Favicon & OG Image) */}
-          <div className="border-line/40 space-y-4 border-t pt-5">
-            <div>
-              <h4 className="text-foreground font-mono text-xs font-bold tracking-tight uppercase">
-                Visual Assets & Media
-              </h4>
-              <p className="text-muted-foreground text-[11px]">
-                Favicon icon and OpenGraph preview banner image.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                    Favicon URL
-                  </Label>
-                  {favicon && (
-                    <span className="text-muted-foreground inline-flex items-center gap-1 text-[10px]">
-                      <CardIcon alt="icon preview" favicon={favicon} className="size-4.5" />
-                      <span>Loaded</span>
-                    </span>
-                  )}
-                </div>
-                <div className="h-9">
-                  <InputField
-                    type="url"
-                    placeholder="https://example.com/favicon.ico"
-                    value={favicon}
-                    onChange={(e) => setFavicon(e.target.value)}
-                    containerClassName="h-9"
-                    className="font-mono text-xs"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                    OG Image URL
-                  </Label>
-                  {ogImage && (
-                    <span className="text-muted-foreground inline-flex items-center gap-1 text-[10px]">
-                      <ImageIcon className="size-4.5" />
-                      <span>Image set</span>
-                    </span>
-                  )}
-                </div>
-                <div className="h-9">
-                  <InputField
-                    type="url"
-                    placeholder="https://example.com/og.png"
-                    value={ogImage}
-                    onChange={(e) => setOgImage(e.target.value)}
-                    containerClassName="h-9"
-                    className="font-mono text-xs"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* OG Image Preview Thumbnail */}
-            {ogImage && (
-              <div className="border-line/40 bg-paper/60 flex items-center gap-3 border p-2.5">
-                <div className="border-line/60 relative h-14 w-24 shrink-0 overflow-hidden border bg-black/10">
-                  <Image
-                    src={ogImage}
-                    alt="OG Image Preview"
-                    fill
-                    unoptimized
-                    className="object-cover"
-                  />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <span className="text-muted-foreground block text-[10px] font-bold uppercase">
-                    OG Image Banner
-                  </span>
-                  <span className="text-foreground/80 block truncate font-mono text-[11px]">
-                    {ogImage}
-                  </span>
-                </div>
-              </div>
-            )}
-          </div>
+          <MediaAssetFields
+            favicon={favicon}
+            ogImage={ogImage}
+            onFaviconChange={setFavicon}
+            onOgImageChange={setOgImage}
+          />
 
           {/* Section 5: Creator Attribution */}
-          <div className="border-line/40 space-y-4 border-t pt-5">
-            <div>
-              <h4 className="text-foreground font-mono text-xs font-bold tracking-tight uppercase">
-                Creator Attribution & Links
-              </h4>
-              <p className="text-muted-foreground text-[11px]">
-                Give credit to the author, designer, or organization who built it with their social
-                profiles.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div className="space-y-2">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Creator / Author Name
-                </Label>
-                <div className="h-9">
-                  <InputField
-                    placeholder="e.g. Jane Doe"
-                    value={author}
-                    onChange={(e) => setAuthor(e.target.value)}
-                    containerClassName="h-9"
-                    className="font-mono text-xs"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                  <GlobeIcon className="text-muted-foreground size-3.5" /> Website / Portfolio
-                </Label>
-                <div className="h-9">
-                  <InputField
-                    type="url"
-                    placeholder="https://janedoe.com"
-                    value={authorWebsite}
-                    onChange={(e) => setAuthorWebsite(e.target.value)}
-                    containerClassName="h-9"
-                    className="font-mono text-xs"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                  <XLogoIcon weight="bold" className="text-muted-foreground size-3.5" /> X / Twitter
-                  Profile
-                </Label>
-                <div className="h-9">
-                  <InputField
-                    type="url"
-                    placeholder="https://x.com/janedoe"
-                    value={authorTwitter}
-                    onChange={(e) => setAuthorTwitter(e.target.value)}
-                    containerClassName="h-9"
-                    className="font-mono text-xs"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                  <Image
-                    src="/github.svg"
-                    alt="GitHub"
-                    width={14}
-                    height={14}
-                    className="size-3.5 dark:invert"
-                  />
-                  <span>GitHub Profile</span>
-                </Label>
-                <div className="h-9">
-                  <InputField
-                    type="url"
-                    placeholder="https://github.com/janedoe"
-                    value={authorGitHub}
-                    onChange={(e) => setAuthorGitHub(e.target.value)}
-                    containerClassName="h-9"
-                    className="font-mono text-xs"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                  <Image
-                    src="/youtube.svg"
-                    alt="YouTube"
-                    width={14}
-                    height={14}
-                    className="size-3.5"
-                  />
-                  <span>YouTube Channel</span>
-                </Label>
-                <div className="h-9">
-                  <InputField
-                    type="url"
-                    placeholder="https://youtube.com/@janedoe"
-                    value={authorYouTube}
-                    onChange={(e) => setAuthorYouTube(e.target.value)}
-                    containerClassName="h-9"
-                    className="font-mono text-xs"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                  <Image
-                    src="/linkedin.svg"
-                    alt="LinkedIn"
-                    width={14}
-                    height={14}
-                    className="size-3.5"
-                  />
-                  <span>LinkedIn Profile</span>
-                </Label>
-                <div className="h-9">
-                  <InputField
-                    type="url"
-                    placeholder="https://linkedin.com/in/janedoe"
-                    value={authorLinkedIn}
-                    onChange={(e) => setAuthorLinkedIn(e.target.value)}
-                    containerClassName="h-9"
-                    className="font-mono text-xs"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+          <AuthorSocialFields
+            values={{
+              author,
+              authorGitHub,
+              authorLinkedIn,
+              authorTwitter,
+              authorWebsite,
+              authorYouTube,
+            }}
+            onChange={handleAuthorFieldChange}
+          />
 
           {/* Section 6: Additional Details & Tags */}
           <div className="border-line/40 space-y-4 border-t pt-5">
@@ -581,15 +399,8 @@ export function SubmitForm() {
 
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div className="space-y-2">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                  <Image
-                    src="/github.svg"
-                    alt="GitHub"
-                    width={14}
-                    height={14}
-                    className="size-3.5 dark:invert"
-                  />
-                  <span>GitHub Repository (Optional)</span>
+                <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                  GitHub Repository (Optional)
                 </Label>
                 <div className="h-9">
                   <InputField
@@ -668,142 +479,16 @@ export function SubmitForm() {
       {/* Right Column: Live Real Card Preview & Guidelines (5 cols) */}
       <div className="space-y-6 lg:col-span-5">
         <div className="sticky top-24 space-y-6">
-          {/* Header with Hero Eyebrow Theme Switcher */}
-          <div className="border-line bg-paper/50 border p-5 font-mono text-xs">
-            <div className="mb-4 flex flex-wrap items-center justify-between gap-2 border-b pb-3">
-              <div className="flex items-center gap-2">
-                <span className="text-foreground font-bold tracking-wider uppercase">
-                  Card Preview
-                </span>
-              </div>
-
-              {/* Hero Eyebrow Theme Dots Switcher */}
-              <div className="flex items-center gap-2">
-                <span className="text-muted-foreground text-[10px] font-bold uppercase">
-                  Theme:
-                </span>
-                <span className="hero-eyebrow-dots">
-                  <button
-                    type="button"
-                    onClick={() => setCustomTheme("orange")}
-                    title="Orange theme"
-                    aria-label="Select orange theme"
-                    className={cn(
-                      "bg-c-orange size-3.5 cursor-pointer transition-opacity hover:opacity-80",
-                      activeTheme === "orange"
-                        ? "ring-ink opacity-100 ring-1 ring-inset"
-                        : "opacity-60",
-                    )}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setCustomTheme("blue")}
-                    title="Blue theme"
-                    aria-label="Select blue theme"
-                    className={cn(
-                      "bg-c-blue size-3.5 cursor-pointer transition-opacity hover:opacity-80",
-                      activeTheme === "blue"
-                        ? "ring-ink opacity-100 ring-1 ring-inset"
-                        : "opacity-60",
-                    )}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setCustomTheme("pink")}
-                    title="Pink theme"
-                    aria-label="Select pink theme"
-                    className={cn(
-                      "bg-c-pink size-3.5 cursor-pointer transition-opacity hover:opacity-80",
-                      activeTheme === "pink"
-                        ? "ring-ink opacity-100 ring-1 ring-inset"
-                        : "opacity-60",
-                    )}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setCustomTheme("green")}
-                    title="Green theme"
-                    aria-label="Select green theme"
-                    className={cn(
-                      "bg-c-green size-3.5 cursor-pointer transition-opacity hover:opacity-80",
-                      activeTheme === "green"
-                        ? "ring-ink opacity-100 ring-1 ring-inset"
-                        : "opacity-60",
-                    )}
-                  />
-                </span>
-              </div>
-            </div>
-
-            {/* Exact Real Syntax Stash Card */}
-            <div className="mx-auto w-full max-w-80">
-              <article className={cn("card group", themeClasses)}>
-                <div className="card-inner">
-                  <div className="card-face">
-                    <div className="card-header">
-                      <span className="card-meta">{category}</span>
-                      <CardIcon alt={title || "Preview"} favicon={favicon || undefined} />
-                    </div>
-
-                    <h3 className="card-title">{title || "Resource Title"}</h3>
-
-                    {subtitle && <p className="card-subtitle">{subtitle}</p>}
-
-                    <p className="card-description">
-                      {description ||
-                        "Your tool's description will appear here. It explains the features, purpose, and utility for developers."}
-                    </p>
-
-                    {/* Tags preview if any */}
-                    {tags && (
-                      <div className="mt-2 flex flex-wrap items-center gap-1">
-                        {tags
-                          .split(",")
-                          .map((t) => t.trim())
-                          .filter(Boolean)
-                          .slice(0, 3)
-                          .map((t) => (
-                            <span
-                              key={t}
-                              className={cn(
-                                "py-0.2 inline-flex items-center gap-0.5 rounded px-1.5 font-mono text-[9px]",
-                                isBlue ? "bg-paper/20 text-paper" : "bg-ink/10 text-ink",
-                              )}
-                            >
-                              <TagIcon className="size-2.5" />
-                              {t}
-                            </span>
-                          ))}
-                      </div>
-                    )}
-
-                    <div className="card-footer">
-                      <div className="flex min-w-0 items-center gap-2">
-                        {author ? <span className="card-author truncate">{author}</span> : null}
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        {url && (
-                          <a
-                            href={url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={cn(
-                              "inline-flex items-center justify-center p-1 transition-transform hover:scale-110",
-                              isBlue ? "text-paper" : "text-ink",
-                            )}
-                            title="Open Link"
-                          >
-                            <ArrowSquareOutIcon weight="bold" className="size-4" />
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
-            </div>
-          </div>
+          <ResourceCardPreview
+            author={author}
+            category={category}
+            description={description}
+            favicon={favicon}
+            subtitle={subtitle}
+            tags={tags}
+            title={title}
+            url={url}
+          />
 
           {/* Guidelines Box */}
           <div className="border-line bg-paper/30 border p-5 font-mono text-xs">

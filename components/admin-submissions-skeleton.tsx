@@ -79,9 +79,9 @@ export function AdminSubmissionsSkeleton() {
     <div className="space-y-6" aria-hidden="true">
       {/* Top Header & Search */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-wrap items-center gap-1.5 border-b pb-2 sm:border-b-0 sm:pb-0">
+        <div className="flex flex-wrap items-center gap-2 border-b pb-3 sm:border-b-0 sm:pb-0">
           {[1, 2, 3, 4].map((i) => (
-            <Skeleton key={i} className="bg-ink/10 h-8 w-24 rounded" />
+            <Skeleton key={i} className="bg-ink/10 h-8 w-28 rounded-md" />
           ))}
         </div>
 
