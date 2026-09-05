@@ -23,7 +23,7 @@ export function AdminStatusTabs({
 }: AdminStatusTabsProps) {
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-      <div className="flex flex-wrap items-center gap-2 border-b pb-3 sm:border-b-0 sm:pb-0 font-mono">
+      <div className="flex flex-wrap items-center gap-2 border-b pb-3 font-mono sm:border-b-0 sm:pb-0">
         {TABS.map((tab) => {
           const conf = TAB_CONFIG[tab];
           const isActive = activeTab === tab;
@@ -34,7 +34,7 @@ export function AdminStatusTabs({
               variant={isActive ? "default" : "outline"}
               onClick={() => onTabChange(tab)}
               className={cn(
-                "h-8 gap-2 rounded-md font-mono text-xs font-bold uppercase transition-all duration-150 active:scale-95",
+                "h-8 gap-2 rounded-md border-[1.5px] font-mono text-xs font-bold uppercase transition-all duration-150 active:scale-95",
                 isActive ? conf.activeClasses : conf.inactiveClasses,
               )}
             >
@@ -48,7 +48,7 @@ export function AdminStatusTabs({
               <span>{conf.label}</span>
               <span
                 className={cn(
-                  "min-w-4.5 rounded px-1.5 py-0.2 text-center text-[10px] font-extrabold font-mono",
+                  "py-0.2 min-w-4.5 rounded px-1.5 text-center font-mono text-[10px] font-extrabold",
                   isActive ? conf.badgeActive : conf.badgeInactive,
                 )}
               >
@@ -59,7 +59,7 @@ export function AdminStatusTabs({
         })}
       </div>
 
-      <div className="w-full sm:w-64 font-mono">
+      <div className="w-full font-mono sm:w-64">
         <Input
           placeholder="Search submissions..."
           value={searchQuery}

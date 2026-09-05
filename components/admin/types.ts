@@ -32,23 +32,20 @@ export const STATUS_CONFIG: Record<
   }
 > = {
   approved: {
-    badge: "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30",
-    button:
-      "border-emerald-600/80 text-emerald-700 hover:bg-emerald-500/20 dark:text-emerald-300 dark:border-emerald-500/40",
+    badge: "bg-emerald-500/15 text-emerald-700 border border-emerald-600/60",
+    button: "border-emerald-600/60 text-emerald-700 hover:bg-emerald-500/20",
     dotColor: "bg-emerald-500",
     label: "Approved",
   },
   pending: {
-    badge: "bg-amber-500/15 text-amber-800 dark:text-amber-300 border border-amber-500/30",
-    button:
-      "border-amber-600/80 text-amber-800 hover:bg-amber-500/20 dark:text-amber-300 dark:border-amber-500/40",
+    badge: "bg-amber-500/15 text-amber-800 border border-amber-600/60",
+    button: "border-amber-600/60 text-amber-800 hover:bg-amber-500/20",
     dotColor: "bg-amber-500",
     label: "Pending",
   },
   rejected: {
-    badge: "bg-rose-500/15 text-rose-700 dark:text-rose-300 border border-rose-500/30",
-    button:
-      "border-rose-600/80 text-rose-700 hover:bg-rose-500/20 dark:text-rose-300 dark:border-rose-500/40",
+    badge: "bg-rose-500/15 text-rose-700 border border-rose-600/60",
+    button: "border-rose-600/60 text-rose-700 hover:bg-rose-500/20",
     dotColor: "bg-rose-500",
     label: "Rejected",
   },
@@ -66,9 +63,8 @@ export const TAB_CONFIG: Record<
   }
 > = {
   all: {
-    activeClasses:
-      "bg-ink text-paper hover:bg-ink/90 hover:text-paper dark:bg-paper dark:text-ink dark:hover:bg-paper/90 dark:hover:text-ink border-ink/40 dark:border-paper/40",
-    badgeActive: "bg-paper/20 text-paper dark:bg-ink/20 dark:text-ink",
+    activeClasses: "bg-ink text-paper hover:bg-ink/90 hover:text-paper border-ink",
+    badgeActive: "bg-paper/20 text-paper",
     badgeInactive: "bg-muted text-muted-foreground",
     dotColor: "bg-muted-foreground",
     inactiveClasses:
@@ -77,32 +73,32 @@ export const TAB_CONFIG: Record<
   },
   approved: {
     activeClasses:
-      "bg-emerald-600 text-white hover:bg-emerald-600/90 hover:text-white dark:bg-emerald-500 dark:text-ink dark:hover:bg-emerald-500/90 dark:hover:text-ink border-emerald-700/40",
-    badgeActive: "bg-white/25 text-white dark:bg-ink/20 dark:text-ink",
-    badgeInactive: "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300",
+      "bg-emerald-600 text-paper hover:bg-emerald-600/90 hover:text-paper border-emerald-700/60",
+    badgeActive: "bg-paper/25 text-paper",
+    badgeInactive: "bg-emerald-500/20 text-emerald-700",
     dotColor: "bg-emerald-500",
     inactiveClasses:
-      "bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 hover:text-emerald-800 dark:text-emerald-300 dark:hover:text-emerald-200 border-emerald-500/30",
+      "bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 hover:text-emerald-800 border-emerald-600/60",
     label: "Approved",
   },
   pending: {
     activeClasses:
-      "bg-amber-500 text-ink hover:bg-amber-500/90 hover:text-ink dark:bg-amber-500 dark:text-ink dark:hover:bg-amber-500/90 dark:hover:text-ink border-amber-600/40 font-black",
+      "bg-amber-500 text-ink hover:bg-amber-500/90 hover:text-ink border-amber-600/60 font-black",
     badgeActive: "bg-ink/20 text-ink",
-    badgeInactive: "bg-amber-500/20 text-amber-800 dark:text-amber-300",
+    badgeInactive: "bg-amber-500/20 text-amber-800",
     dotColor: "bg-amber-500",
     inactiveClasses:
-      "bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 hover:text-amber-900 dark:text-amber-300 dark:hover:text-amber-200 border-amber-500/30",
+      "bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 hover:text-amber-900 border-amber-600/60",
     label: "Pending",
   },
   rejected: {
     activeClasses:
-      "bg-rose-600 text-white hover:bg-rose-600/90 hover:text-white dark:bg-rose-500 dark:text-ink dark:hover:bg-rose-500/90 dark:hover:text-ink border-rose-700/40",
-    badgeActive: "bg-white/25 text-white dark:bg-ink/20 dark:text-ink",
-    badgeInactive: "bg-rose-500/20 text-rose-700 dark:text-rose-300",
+      "bg-rose-600 text-paper hover:bg-rose-600/90 hover:text-paper border-rose-700/60",
+    badgeActive: "bg-paper/25 text-paper",
+    badgeInactive: "bg-rose-500/20 text-rose-700",
     dotColor: "bg-rose-500",
     inactiveClasses:
-      "bg-rose-500/10 hover:bg-rose-500/20 text-rose-700 hover:text-rose-800 dark:text-rose-300 dark:hover:text-rose-200 border-rose-500/30",
+      "bg-rose-500/10 hover:bg-rose-500/20 text-rose-700 hover:text-rose-800 border-rose-600/60",
     label: "Rejected",
   },
 };
