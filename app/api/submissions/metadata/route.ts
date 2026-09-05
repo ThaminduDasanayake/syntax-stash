@@ -1,7 +1,7 @@
 import * as cheerio from "cheerio";
 import { NextRequest, NextResponse } from "next/server";
 
-import { resourceCategories } from "@/lib/resource-data";
+import { CATEGORIES, CategoryValue, resourceCategories } from "@/lib/resource-data";
 
 const BLOCKED_HOSTS = new Set(["0.0.0.0", "127.0.0.1", "::1", "localhost"]);
 
@@ -26,22 +26,189 @@ function resolveUrl(relativeOrAbsolute: string, baseUrl: string): string {
   }
 }
 
-function suggestCategory(text: string): string {
+function suggestCategory(text: string): CategoryValue {
   const lower = text.toLowerCase();
+
+  // 1. Direct category name match
   for (const cat of resourceCategories) {
     if (lower.includes(cat.toLowerCase())) {
       return cat;
     }
   }
-  if (lower.includes("color") || lower.includes("palette") || lower.includes("gradient")) return "Colors";
-  if (lower.includes("font") || lower.includes("type") || lower.includes("typography")) return "Typography";
-  if (lower.includes("icon") || lower.includes("svg") || lower.includes("symbol")) return "Icons";
-  if (lower.includes("animation") || lower.includes("motion") || lower.includes("transition")) return "Animations";
-  if (lower.includes("component") || lower.includes("ui") || lower.includes("design system")) return "Components";
-  if (lower.includes("illustrat") || lower.includes("draw") || lower.includes("art")) return "Illustrations";
-  if (lower.includes("background") || lower.includes("pattern") || lower.includes("mesh")) return "Backgrounds";
 
-  return "Other";
+  // 2. Keyword-based heuristics mapped directly to official categories
+  if (
+    lower.includes("color") ||
+    lower.includes("palette") ||
+    lower.includes("gradient") ||
+    lower.includes("contrast") ||
+    lower.includes("hex") ||
+    lower.includes("hsl")
+  ) {
+    return CATEGORIES.colors;
+  }
+
+  if (
+    lower.includes("font") ||
+    lower.includes("typeface") ||
+    lower.includes("typography") ||
+    lower.includes("variable font") ||
+    lower.includes("glyph")
+  ) {
+    return CATEGORIES.typography;
+  }
+
+  if (
+    lower.includes("icon") ||
+    lower.includes("svg") ||
+    lower.includes("symbol") ||
+    lower.includes("illustration") ||
+    lower.includes("doodle") ||
+    lower.includes("vector")
+  ) {
+    return CATEGORIES.icons;
+  }
+
+  if (
+    lower.includes("animation") ||
+    lower.includes("motion") ||
+    lower.includes("transition") ||
+    lower.includes("gsap") ||
+    lower.includes("lottie") ||
+    lower.includes("framer-motion") ||
+    lower.includes("canvas") ||
+    lower.includes("three.js") ||
+    lower.includes("webgl")
+  ) {
+    return CATEGORIES.animation;
+  }
+
+  if (
+    lower.includes("component") ||
+    lower.includes("ui kit") ||
+    lower.includes("design system") ||
+    lower.includes("radix") ||
+    lower.includes("tailwind") ||
+    lower.includes("shadcn") ||
+    lower.includes("react-aria") ||
+    lower.includes("widget")
+  ) {
+    return CATEGORIES.ui;
+  }
+
+  if (
+    lower.includes("ai ") ||
+    lower.includes("gpt") ||
+    lower.includes("llm") ||
+    lower.includes("artificial intelligence") ||
+    lower.includes("machine learning") ||
+    lower.includes("prompt") ||
+    lower.includes("openai") ||
+    lower.includes("claude") ||
+    lower.includes("gemini")
+  ) {
+    return CATEGORIES.ai;
+  }
+
+  if (
+    lower.includes("mockup") ||
+    lower.includes("presentation") ||
+    lower.includes("device frame") ||
+    lower.includes("screenshot") ||
+    lower.includes("showcase")
+  ) {
+    return CATEGORIES.mockups;
+  }
+
+  if (
+    lower.includes("database") ||
+    lower.includes("api") ||
+    lower.includes("sql") ||
+    lower.includes("graphql") ||
+    lower.includes("rest") ||
+    lower.includes("schema") ||
+    lower.includes("json")
+  ) {
+    return CATEGORIES.data;
+  }
+
+  if (
+    lower.includes("backend") ||
+    lower.includes("serverless") ||
+    lower.includes("infrastructure") ||
+    lower.includes("auth") ||
+    lower.includes("docker") ||
+    lower.includes("deployment") ||
+    lower.includes("cloud")
+  ) {
+    return CATEGORIES.backend;
+  }
+
+  if (
+    lower.includes("documentation") ||
+    lower.includes("markdown") ||
+    lower.includes("docs") ||
+    lower.includes("cheat sheet") ||
+    lower.includes("reference") ||
+    lower.includes("readme")
+  ) {
+    return CATEGORIES.docs;
+  }
+
+  if (
+    lower.includes("learn") ||
+    lower.includes("tutorial") ||
+    lower.includes("course") ||
+    lower.includes("education") ||
+    lower.includes("community") ||
+    lower.includes("handbook")
+  ) {
+    return CATEGORIES.education;
+  }
+
+  if (
+    lower.includes("inspiration") ||
+    lower.includes("gallery") ||
+    lower.includes("showcase") ||
+    lower.includes("portfolio") ||
+    lower.includes("directory")
+  ) {
+    return CATEGORIES.inspiration;
+  }
+
+  if (
+    lower.includes("image") ||
+    lower.includes("audio") ||
+    lower.includes("video") ||
+    lower.includes("texture") ||
+    lower.includes("sound") ||
+    lower.includes("media")
+  ) {
+    return CATEGORIES.media;
+  }
+
+  if (
+    lower.includes("ux") ||
+    lower.includes("accessibility") ||
+    lower.includes("wireframe") ||
+    lower.includes("figma") ||
+    lower.includes("design token")
+  ) {
+    return CATEGORIES.design;
+  }
+
+  if (
+    lower.includes("frontend") ||
+    lower.includes("css") ||
+    lower.includes("html") ||
+    lower.includes("javascript") ||
+    lower.includes("typescript") ||
+    lower.includes("bundle")
+  ) {
+    return CATEGORIES.frontend;
+  }
+
+  return CATEGORIES.dev;
 }
 
 export interface CandidateOption {
