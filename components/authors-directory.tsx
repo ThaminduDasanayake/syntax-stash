@@ -2,13 +2,11 @@
 
 import {
   ArrowRightIcon,
-  GithubLogoIcon,
   GlobeIcon,
-  LinkedinLogoIcon,
   MagnifyingGlassIcon,
   XLogoIcon,
-  YoutubeLogoIcon,
 } from "@phosphor-icons/react";
+import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
@@ -108,13 +106,33 @@ export function AuthorsDirectory({ authors }: AuthorsDirectoryProps) {
                 <div className="border-t-line/60 mt-5 flex items-center justify-between border-t pt-3 font-mono text-[11px]">
                   <div className="text-muted-foreground flex items-center gap-2">
                     {author.links?.website && <GlobeIcon className="size-3.5" />}
-                    {author.links?.github && <GithubLogoIcon weight="fill" className="size-3.5" />}
+                    {author.links?.github && (
+                      <Image
+                        src="/github.svg"
+                        alt="GitHub"
+                        width={14}
+                        height={14}
+                        className="size-3.5 opacity-70 dark:invert"
+                      />
+                    )}
                     {author.links?.twitter && <XLogoIcon weight="bold" className="size-3.5" />}
                     {author.links?.linkedin && (
-                      <LinkedinLogoIcon weight="fill" className="size-3.5" />
+                      <Image
+                        src="/linkedin.svg"
+                        alt="LinkedIn"
+                        width={14}
+                        height={14}
+                        className="size-3.5"
+                      />
                     )}
                     {author.links?.youtube && (
-                      <YoutubeLogoIcon weight="fill" className="size-3.5" />
+                      <Image
+                        src="/youtube.svg"
+                        alt="YouTube"
+                        width={14}
+                        height={14}
+                        className="size-3.5"
+                      />
                     )}
                   </div>
 

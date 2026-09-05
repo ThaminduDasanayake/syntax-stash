@@ -3,13 +3,11 @@
 import { ArrowUpIcon, ArrowUpRightIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 
-import { isAdmin } from "@/lib/admin";
-import { useSession } from "@/lib/auth-client";
+import { usePendingSubmissions } from "@/hooks/use-pending-submissions";
 import { siteConfig } from "@/lib/site-config";
 
 export default function Footer() {
-  const { data: session } = useSession();
-  const isUserAdmin = isAdmin(session?.user?.email);
+  const { count: pendingCount, isUserAdmin } = usePendingSubmissions();
 
   const scrollToTop = () => {
     window.scrollTo({ behavior: "smooth", top: 0 });
@@ -90,7 +88,7 @@ export default function Footer() {
                   href="/admin/submissions"
                   className="text-c-orange after:bg-c-orange relative inline-block transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
                 >
-                  [ Admin ]
+                  [ Admin{pendingCount > 0 ? ` (${pendingCount})` : ""} ]
                 </Link>
               )}
             </div>

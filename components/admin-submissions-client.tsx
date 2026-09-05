@@ -3,7 +3,6 @@
 import {
   ArrowSquareOutIcon,
   CheckCircleIcon,
-  CircleNotchIcon,
   ClipboardTextIcon,
   FloppyDiskIcon,
   GlobeIcon,
@@ -15,6 +14,7 @@ import {
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
+import { AdminSubmissionsCardsSkeleton } from "@/components/admin-submissions-skeleton";
 import { CardIcon } from "@/components/card-icon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -250,9 +250,7 @@ export function AdminSubmissionsClient() {
 
       {/* Content List */}
       {isLoading ? (
-        <div className="flex items-center justify-center py-16">
-          <CircleNotchIcon className="size-8 animate-spin text-primary" />
-        </div>
+        <AdminSubmissionsCardsSkeleton count={3} />
       ) : filteredSubmissions.length === 0 ? (
         <div className="border-line/70 bg-surface/30 rounded border p-12 text-center font-mono">
           <p className="text-muted-foreground text-sm font-semibold">
