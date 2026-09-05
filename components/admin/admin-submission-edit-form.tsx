@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  ArrowCounterClockwiseIcon,
   ArrowsClockwiseIcon,
   CheckCircleIcon,
   CircleNotchIcon,
@@ -24,8 +25,9 @@ import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
 import { Submission } from "@/lib/db/schema";
 import { resourceCategories } from "@/lib/resource-data";
+import { cn } from "@/lib/utils";
 
-import { CATEGORY_OPTIONS, STATUS_OPTIONS } from "./types";
+import { CATEGORY_OPTIONS, STATUS_CONFIG, STATUS_OPTIONS, SubmissionStatus } from "./types";
 
 interface AdminSubmissionEditFormProps {
   isWorking: boolean;
@@ -139,14 +141,19 @@ export function AdminSubmissionEditForm({
                 Editing: {editForm.title || sub.title}
               </h3>
               <span
-                className={`rounded px-2 py-0.5 text-[10px] font-bold uppercase ${
-                  editForm.status === "approved"
-                    ? "bg-emerald-500/20 text-emerald-600 dark:text-emerald-400"
-                    : editForm.status === "rejected"
-                      ? "bg-rose-500/20 text-rose-600 dark:text-rose-400"
-                      : "bg-amber-500/20 text-amber-600 dark:text-amber-400"
-                }`}
+                className={cn(
+                  "flex items-center gap-1.5 rounded px-2 py-0.5 text-[10px] font-bold uppercase",
+                  STATUS_CONFIG[(editForm.status || sub.status) as SubmissionStatus]?.badge ||
+                    "bg-muted text-muted-foreground",
+                )}
               >
+                <span
+                  className={cn(
+                    "size-1.5 rounded-full",
+                    STATUS_CONFIG[(editForm.status || sub.status) as SubmissionStatus]?.dotColor ||
+                      "bg-muted-foreground",
+                  )}
+                />
                 {editForm.status || sub.status}
               </span>
             </div>
@@ -412,6 +419,18 @@ export function AdminSubmissionEditForm({
           <Button size="sm" variant="outline" onClick={onCancel} className="text-xs uppercase">
             Cancel
           </Button>
+
+          {sub.status === "rejected" && (
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => onSave(sub.id, editForm, "pending")}
+              disabled={isWorking}
+              className="border-amber-500/80 text-amber-700 hover:bg-amber-500/20 dark:text-amber-300 gap-1.5 text-xs font-bold uppercase"
+            >
+              <ArrowCounterClockwiseIcon weight="duotone" className="size-4" /> Move to Pending & Save
+            </Button>
+          )}
 
           {sub.status !== "approved" && (
             <Button

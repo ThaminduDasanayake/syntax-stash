@@ -31,7 +31,7 @@ export function MediaAssetFields({
   onOgImageChange,
 }: MediaAssetFieldsProps) {
   return (
-    <div className={cn("border-line/40 space-y-5 border-t pt-4 font-mono text-xs", className)}>
+    <div className={cn("border-line space-y-5 border-t pt-4 font-mono text-xs", className)}>
       <div>
         <h4 className="text-foreground font-mono text-xs font-bold tracking-tight uppercase">
           Visual Assets & Media
@@ -88,7 +88,7 @@ export function MediaAssetFields({
               options={ogImageOptions}
               disabled={disabled}
               renderPreview={(option) => (
-                <div className="border-line/60 relative h-6 w-10 shrink-0 overflow-hidden rounded border bg-black/10">
+                <div className="border-line relative h-6 w-10 shrink-0 overflow-hidden rounded border bg-black/10">
                   <Image
                     src={option.url}
                     alt="OG option preview"
@@ -103,8 +103,8 @@ export function MediaAssetFields({
 
           {/* OG Image Preview Thumbnail */}
           {ogImage && (
-            <div className="border-line/60 bg-paper/60 mt-2.5 overflow-hidden rounded border p-3">
-              <div className="border-line/40 relative aspect-[1.91/1] w-full overflow-hidden rounded border bg-black/5">
+            <div className="border-line bg-paper/60 mt-2.5 overflow-hidden rounded border p-3">
+              <div className="border-line relative aspect-[1.91/1] w-full overflow-hidden rounded border bg-black/5">
                 <Image
                   src={ogImage}
                   alt="OG Image Preview"

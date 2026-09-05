@@ -48,9 +48,7 @@ export function SelectField({
       }}
       disabled={disabled}
     >
-      <SelectTrigger
-        className={cn("bg-input! border-accent! w-full cursor-pointer", triggerClassName)}
-      >
+      <SelectTrigger className={cn("w-full cursor-pointer", triggerClassName)}>
         <SelectValue placeholder={placeholder}>{selectedLabel}</SelectValue>
       </SelectTrigger>
       <SelectContent className="shadow-none">

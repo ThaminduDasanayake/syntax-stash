@@ -57,7 +57,10 @@ export function AdminSubmissionsClient({
     fetchSubmissions(activeTab);
   }, [activeTab, fetchSubmissions]);
 
-  const handleUpdateStatus = async (id: string, newStatus: "approved" | "rejected") => {
+  const handleUpdateStatus = async (
+    id: string,
+    newStatus: "approved" | "rejected" | "pending",
+  ) => {
     try {
       setActionLoadingId(id);
       const res = await fetch("/api/admin/submissions", {

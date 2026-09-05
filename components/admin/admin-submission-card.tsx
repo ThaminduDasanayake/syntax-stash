@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  ArrowCounterClockwiseIcon,
   ArrowSquareOutIcon,
   CheckCircleIcon,
   ClipboardTextIcon,
@@ -15,6 +16,9 @@ import Image from "next/image";
 import { CardIcon } from "@/components/card-icon";
 import { Button } from "@/components/ui/button";
 import { Submission } from "@/lib/db/schema";
+import { cn } from "@/lib/utils";
+
+import { STATUS_CONFIG, SubmissionStatus } from "./types";
 
 interface AdminSubmissionCardProps {
   copied: boolean;
@@ -22,7 +26,7 @@ interface AdminSubmissionCardProps {
   onCopyTs: () => void;
   onDelete: () => void;
   onEdit: () => void;
-  onUpdateStatus: (status: "approved" | "rejected") => void;
+  onUpdateStatus: (status: "approved" | "rejected" | "pending") => void;
   submission: Submission;
 }
 
@@ -36,19 +40,22 @@ export function AdminSubmissionCard({
   submission: sub,
 }: AdminSubmissionCardProps) {
   return (
-    <div className="border-line/70 bg-surface/40 hover:bg-surface/70 rounded-lg border p-5 font-mono text-xs transition-colors">
+    <div className="border-line bg-surface/40 hover:bg-surface/70 rounded-lg border p-5 font-mono text-xs transition-colors">
       {/* Status & Submitter meta header */}
-      <div className="border-line/40 mb-3 flex flex-wrap items-center justify-between gap-2 border-b pb-2.5">
+      <div className="border-line mb-3 flex flex-wrap items-center justify-between gap-2 border-b pb-2.5">
         <div className="flex items-center gap-2">
           <span
-            className={`rounded px-2 py-0.5 text-[10px] font-bold uppercase ${
-              sub.status === "approved"
-                ? "bg-emerald-500/20 text-emerald-600 dark:text-emerald-400"
-                : sub.status === "rejected"
-                  ? "bg-rose-500/20 text-rose-600 dark:text-rose-400"
-                  : "bg-amber-500/20 text-amber-600 dark:text-amber-400"
-            }`}
+            className={cn(
+              "flex items-center gap-1.5 rounded px-2 py-0.5 text-[10px] font-bold uppercase",
+              STATUS_CONFIG[sub.status as SubmissionStatus]?.badge || "bg-muted text-muted-foreground",
+            )}
           >
+            <span
+              className={cn(
+                "size-1.5 rounded-full",
+                STATUS_CONFIG[sub.status as SubmissionStatus]?.dotColor || "bg-muted-foreground",
+              )}
+            />
             {sub.status}
           </span>
           <span className="text-muted-foreground text-[11px]">
@@ -75,11 +82,9 @@ export function AdminSubmissionCard({
             <div className="flex flex-wrap items-center gap-2">
               <h3 className="text-foreground text-sm font-bold tracking-tight">{sub.title}</h3>
               {sub.subtitle && (
-                <span className="text-muted-foreground text-xs font-normal">
-                  — {sub.subtitle}
-                </span>
+                <span className="text-muted-foreground text-xs font-normal">— {sub.subtitle}</span>
               )}
-              <span className="border-line text-muted-foreground rounded border px-1.5 py-0.5 text-[10px] uppercase font-bold">
+              <span className="border-line text-muted-foreground rounded border px-1.5 py-0.5 text-[10px] font-bold uppercase">
                 {sub.category}
               </span>
             </div>
@@ -88,7 +93,7 @@ export function AdminSubmissionCard({
               href={sub.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary hover:underline inline-flex items-center gap-1 text-[11px] font-medium break-all"
+              className="text-primary inline-flex items-center gap-1 text-[11px] font-medium break-all hover:underline"
             >
               {sub.url} <ArrowSquareOutIcon className="size-3" />
             </a>
@@ -104,7 +109,7 @@ export function AdminSubmissionCard({
                   .map((tag) => (
                     <span
                       key={tag}
-                      className="bg-surface border-line/60 rounded border px-1.5 py-0.2 text-[10px] text-muted-foreground"
+                      className="bg-surface border-line py-0.2 text-muted-foreground rounded border px-1.5 text-[10px]"
                     >
                       #{tag}
                     </span>
@@ -114,9 +119,9 @@ export function AdminSubmissionCard({
 
             <div className="flex flex-wrap items-center gap-3 pt-1.5 text-[11px]">
               {sub.author && (
-                <div className="flex items-center gap-1.5 font-semibold text-foreground">
+                <div className="text-foreground flex items-center gap-1.5 font-semibold">
                   <span>By {sub.author}</span>
-                  <div className="flex items-center gap-1 text-muted-foreground">
+                  <div className="text-muted-foreground flex items-center gap-1">
                     {(sub.authorWebsite || sub.authorLink) && (
                       <a
                         href={sub.authorWebsite || sub.authorLink || "#"}
@@ -144,7 +149,7 @@ export function AdminSubmissionCard({
                         href={sub.authorGitHub}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:opacity-80 p-0.5 inline-flex items-center"
+                        className="inline-flex items-center p-0.5 hover:opacity-80"
                         title="Author GitHub Profile"
                       >
                         <Image
@@ -152,7 +157,7 @@ export function AdminSubmissionCard({
                           alt="GitHub"
                           width={14}
                           height={14}
-                          className="size-3.5 dark:invert"
+                          className="size-3.5"
                         />
                       </a>
                     )}
@@ -161,7 +166,7 @@ export function AdminSubmissionCard({
                         href={sub.authorYouTube}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:opacity-80 p-0.5 inline-flex items-center"
+                        className="inline-flex items-center p-0.5 hover:opacity-80"
                         title="Author YouTube Channel"
                       >
                         <Image
@@ -178,7 +183,7 @@ export function AdminSubmissionCard({
                         href={sub.authorLinkedIn}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:opacity-80 p-0.5 inline-flex items-center"
+                        className="inline-flex items-center p-0.5 hover:opacity-80"
                         title="Author LinkedIn Profile"
                       >
                         <Image
@@ -231,15 +236,15 @@ export function AdminSubmissionCard({
         </div>
 
         {/* Action Buttons Bar */}
-        <div className="border-line/40 mt-4 flex flex-wrap items-center justify-between gap-2 border-t pt-3">
+        <div className="border-line mt-4 flex flex-wrap items-center justify-between gap-2 border-t pt-3">
           <div className="flex items-center gap-2">
             <Button
               size="sm"
               variant="outline"
               onClick={onCopyTs}
-              className="gap-1 text-[11px] uppercase font-bold"
+              className="gap-1 text-[11px] font-bold uppercase"
             >
-              <ClipboardTextIcon className="size-3.5" />
+              <ClipboardTextIcon weight="duotone" />
               {copied ? "Copied!" : "Copy TypeScript"}
             </Button>
             <Button
@@ -248,7 +253,7 @@ export function AdminSubmissionCard({
               onClick={onEdit}
               className="gap-1 text-[11px] uppercase"
             >
-              <PencilSimpleIcon className="size-3.5" /> Edit
+              <PencilSimpleIcon weight="duotone" /> Edit
             </Button>
           </div>
 
@@ -256,11 +261,29 @@ export function AdminSubmissionCard({
             {sub.status !== "approved" && (
               <Button
                 size="sm"
+                variant="outline"
                 onClick={() => onUpdateStatus("approved")}
                 disabled={isWorking}
-                className="bg-emerald-600 hover:bg-emerald-700 text-white gap-1 text-[11px] uppercase font-bold"
+                className={cn(
+                  "gap-1.5 text-[11px] font-bold uppercase transition-all duration-150 active:scale-95",
+                  STATUS_CONFIG.approved.button,
+                )}
               >
-                <CheckCircleIcon weight="fill" className="size-3.5" /> Approve
+                <CheckCircleIcon weight="duotone" className="size-4" /> Approve
+              </Button>
+            )}
+            {sub.status === "rejected" && (
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => onUpdateStatus("pending")}
+                disabled={isWorking}
+                className={cn(
+                  "gap-1.5 text-[11px] font-bold uppercase transition-all duration-150 active:scale-95",
+                  STATUS_CONFIG.pending.button,
+                )}
+              >
+                <ArrowCounterClockwiseIcon weight="duotone" className="size-4" /> Move to Pending
               </Button>
             )}
             {sub.status !== "rejected" && (
@@ -269,17 +292,20 @@ export function AdminSubmissionCard({
                 variant="outline"
                 onClick={() => onUpdateStatus("rejected")}
                 disabled={isWorking}
-                className="border-rose-500/40 text-rose-600 hover:bg-rose-500/10 gap-1 text-[11px] uppercase"
+                className={cn(
+                  "gap-1.5 text-[11px] font-bold uppercase transition-all duration-150 active:scale-95",
+                  STATUS_CONFIG.rejected.button,
+                )}
               >
-                <XCircleIcon className="size-3.5" /> Reject
+                <XCircleIcon weight="duotone" className="size-4" /> Reject
               </Button>
             )}
             <Button
-              size="sm"
-              variant="ghost"
+              size="icon-lg"
+              variant="destructive"
               onClick={onDelete}
               disabled={isWorking}
-              className="text-muted-foreground hover:text-destructive p-2"
+              className="border-destructive/80 h-10"
               aria-label="Delete submission"
             >
               <TrashIcon className="size-4" />

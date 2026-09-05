@@ -20,6 +20,40 @@ export const STATUS_OPTIONS = [
   { label: "Rejected", value: "rejected" },
 ];
 
+export type SubmissionStatus = "approved" | "pending" | "rejected";
+
+export const STATUS_CONFIG: Record<
+  SubmissionStatus,
+  {
+    badge: string;
+    button: string;
+    dotColor: string;
+    label: string;
+  }
+> = {
+  approved: {
+    badge: "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30",
+    button:
+      "border-emerald-600/80 text-emerald-700 hover:bg-emerald-500/20 dark:text-emerald-300 dark:border-emerald-500/40",
+    dotColor: "bg-emerald-500",
+    label: "Approved",
+  },
+  pending: {
+    badge: "bg-amber-500/15 text-amber-800 dark:text-amber-300 border border-amber-500/30",
+    button:
+      "border-amber-600/80 text-amber-800 hover:bg-amber-500/20 dark:text-amber-300 dark:border-amber-500/40",
+    dotColor: "bg-amber-500",
+    label: "Pending",
+  },
+  rejected: {
+    badge: "bg-rose-500/15 text-rose-700 dark:text-rose-300 border border-rose-500/30",
+    button:
+      "border-rose-600/80 text-rose-700 hover:bg-rose-500/20 dark:text-rose-300 dark:border-rose-500/40",
+    dotColor: "bg-rose-500",
+    label: "Rejected",
+  },
+};
+
 export const TAB_CONFIG: Record<
   TabStatus,
   {

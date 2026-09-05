@@ -30,7 +30,7 @@ export function AuthorSocialFields({
   values,
 }: AuthorSocialFieldsProps) {
   return (
-    <div className={cn("border-line/40 space-y-4 border-t pt-4 font-mono text-xs", className)}>
+    <div className={cn("border-line space-y-4 border-t pt-4 font-mono text-xs", className)}>
       <div>
         <h4 className="text-foreground font-mono text-xs font-bold tracking-tight uppercase">
           Creator Attribution & Links
@@ -127,13 +127,7 @@ export function AuthorSocialFields({
         {/* Row 4: YouTube (Separate Line) */}
         <div className="space-y-2">
           <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-            <Image
-              src="/youtube.svg"
-              alt="YouTube"
-              width={14}
-              height={14}
-              className="size-3.5"
-            />
+            <Image src="/youtube.svg" alt="YouTube" width={14} height={14} className="size-3.5" />
             <span>YouTube Channel</span>
           </Label>
           <div className="h-9">
@@ -152,13 +146,7 @@ export function AuthorSocialFields({
         {/* Row 5: LinkedIn (Separate Line) */}
         <div className="space-y-2">
           <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-            <Image
-              src="/linkedin.svg"
-              alt="LinkedIn"
-              width={14}
-              height={14}
-              className="size-3.5"
-            />
+            <Image src="/linkedin.svg" alt="LinkedIn" width={14} height={14} className="size-3.5" />
             <span>LinkedIn Profile</span>
           </Label>
           <div className="h-9">

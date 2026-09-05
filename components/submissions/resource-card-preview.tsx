@@ -38,7 +38,7 @@ export function ResourceCardPreview({
   return (
     <div className={cn("border-line bg-paper/50 border p-5 font-mono text-xs", className)}>
       {/* Header with Hero Eyebrow Theme Switcher */}
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-2 border-b pb-3">
+      <div className="border-line mb-4 flex flex-wrap items-center justify-between gap-2 border-b pb-3">
         <span className="text-foreground font-bold tracking-wider uppercase">Card Preview</span>
 
         <div className="flex items-center gap-2">

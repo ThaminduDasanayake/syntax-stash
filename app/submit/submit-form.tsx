@@ -367,7 +367,7 @@ export function SubmitForm() {
           />
 
           {/* Section 6: Additional Details & Tags */}
-          <div className="border-line/40 space-y-4 border-t pt-5">
+          <div className="border-line space-y-4 border-t pt-5">
             <div>
               <h4 className="text-foreground font-mono text-xs font-bold tracking-tight uppercase">
                 Additional Details & Tags
@@ -427,13 +427,13 @@ export function SubmitForm() {
           </div>
 
           {/* Actions */}
-          <div className="border-line/40 flex items-center justify-end gap-3 border-t pt-6">
+          <div className="border-line flex items-center justify-end gap-3 border-t pt-6">
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={resetForm}
-              className="font-mono text-xs uppercase"
+              className="border-[1.5px] font-mono text-xs uppercase"
             >
               Reset
             </Button>
@@ -441,7 +441,7 @@ export function SubmitForm() {
               type="submit"
               size="sm"
               disabled={isSubmitting}
-              className="font-mono text-xs font-bold uppercase"
+              className="border-[1.5px] font-mono text-xs font-bold uppercase"
             >
               {isSubmitting ? (
                 <>
