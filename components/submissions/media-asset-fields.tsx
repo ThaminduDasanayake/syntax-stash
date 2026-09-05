@@ -103,8 +103,8 @@ export function MediaAssetFields({
 
           {/* OG Image Preview Thumbnail */}
           {ogImage && (
-            <div className="border-line/40 bg-paper/60 mt-2.5 flex items-center gap-3 rounded border p-2.5">
-              <div className="border-line/60 relative h-12 w-20 shrink-0 overflow-hidden rounded border bg-black/10">
+            <div className="border-line/60 bg-paper/60 mt-2.5 overflow-hidden rounded border p-3">
+              <div className="border-line/40 relative aspect-[1.91/1] w-full overflow-hidden rounded border bg-black/5">
                 <Image
                   src={ogImage}
                   alt="OG Image Preview"
@@ -113,12 +113,9 @@ export function MediaAssetFields({
                   className="object-cover"
                 />
               </div>
-              <div className="min-w-0 flex-1">
-                <span className="text-muted-foreground block text-[10px] font-bold uppercase">
-                  OG Image Banner
-                </span>
-                <span className="text-foreground/80 block truncate font-mono text-[11px]">
-                  {ogImage}
+              <div className="mt-2 flex items-center justify-between px-0.5">
+                <span className="text-muted-foreground text-[10px] font-bold tracking-wider uppercase">
+                  OG Image Banner Preview
                 </span>
               </div>
             </div>

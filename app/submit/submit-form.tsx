@@ -1,18 +1,14 @@
 "use client";
 
-import {
-  CheckCircleIcon,
-  CheckIcon,
-  CircleNotchIcon,
-  SparkleIcon,
-  XIcon,
-} from "@phosphor-icons/react";
-import Link from "next/link";
+import { CheckIcon, CircleNotchIcon, SparkleIcon, XIcon } from "@phosphor-icons/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 import {
   AuthorSocialFields,
   AuthorSocialValues,
+  CandidateOption,
   MediaAssetFields,
   ResourceCardPreview,
 } from "@/components/submissions";
@@ -29,6 +25,8 @@ const CATEGORY_OPTIONS = resourceCategories.map((cat) => ({
 }));
 
 export function SubmitForm() {
+  const router = useRouter();
+
   // Form State
   const [url, setUrl] = useState("");
   const [title, setTitle] = useState("");
@@ -43,9 +41,9 @@ export function SubmitForm() {
   const [authorLinkedIn, setAuthorLinkedIn] = useState("");
   const [gitHubLink, setGitHubLink] = useState("");
   const [favicon, setFavicon] = useState("");
-  const [faviconOptions, setFaviconOptions] = useState<{ label: string; type?: string; url: string }[]>([]);
+  const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
   const [ogImage, setOgImage] = useState("");
-  const [ogImageOptions, setOgImageOptions] = useState<{ label: string; type?: string; url: string }[]>([]);
+  const [ogImageOptions, setOgImageOptions] = useState<CandidateOption[]>([]);
   const [tags, setTags] = useState("");
   const [notes, setNotes] = useState("");
   const [honeypot, setHoneypot] = useState(""); // anti-spam trap
@@ -53,8 +51,6 @@ export function SubmitForm() {
   // Request State
   const [isDetecting, setIsDetecting] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const resetForm = () => {
     setUrl("");
@@ -76,8 +72,6 @@ export function SubmitForm() {
     setTags("");
     setNotes("");
     setHoneypot("");
-    setErrorMsg(null);
-    setIsSubmitted(false);
   };
 
   const handleAuthorFieldChange = (field: keyof AuthorSocialValues, value: string) => {
@@ -105,13 +99,12 @@ export function SubmitForm() {
 
   const handleAutoDetect = async () => {
     if (!url.trim()) {
-      setErrorMsg("Please enter a URL first.");
+      toast.error("Please enter a URL first.");
       return;
     }
 
     try {
       setIsDetecting(true);
-      setErrorMsg(null);
 
       let targetUrl = url.trim();
       if (!targetUrl.startsWith("http://") && !targetUrl.startsWith("https://")) {
@@ -143,9 +136,10 @@ export function SubmitForm() {
       if (data.category && resourceCategories.includes(data.category)) {
         setCategory(data.category);
       }
+      toast.success("Metadata auto-filled from website!");
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Could not fetch metadata from URL.";
-      setErrorMsg(message);
+      toast.error(message);
     } finally {
       setIsDetecting(false);
     }
@@ -155,13 +149,12 @@ export function SubmitForm() {
     e.preventDefault();
 
     if (!url.trim() || !title.trim() || !description.trim() || !category) {
-      setErrorMsg("Please fill in all required fields (URL, Title, Category, Description).");
+      toast.error("Please fill in all required fields (URL, Title, Category, Description).");
       return;
     }
 
     try {
       setIsSubmitting(true);
-      setErrorMsg(null);
 
       const resolvedAuthorLink = authorWebsite || authorTwitter || authorGitHub;
 
@@ -194,63 +187,41 @@ export function SubmitForm() {
 
       const data = await res.json();
 
+      if (res.status === 409 || data.code === "ALREADY_EXISTS") {
+        const toolTitle = data.title || title.trim();
+        const targetUrl = toolTitle
+          ? `/resources?q=${encodeURIComponent(toolTitle)}`
+          : "/resources";
+
+        toast.info(`"${toolTitle}" is already in Syntax Stash!`, {
+          action: {
+            label: "View Resource",
+            onClick: () => router.push(targetUrl),
+          },
+        });
+        return;
+      }
+
       if (!res.ok || data.error) {
         throw new Error(data.error || "Failed to submit tool.");
       }
 
-      setIsSubmitted(true);
+      toast.success(data.message || "Tool submitted for review!");
+      resetForm();
     } catch (err: unknown) {
       const message =
         err instanceof Error ? err.message : "Failed to submit tool. Please try again.";
-      setErrorMsg(message);
+      toast.error(message);
     } finally {
       setIsSubmitting(false);
     }
   };
-
-  if (isSubmitted) {
-    return (
-      <div className="border-line bg-paper/60 mx-auto max-w-2xl border p-8 text-center font-mono sm:p-12">
-        <div className="bg-primary/10 text-primary mx-auto mb-5 grid size-16 place-items-center rounded-full">
-          <CheckCircleIcon weight="fill" className="size-9" />
-        </div>
-        <h2 className="text-foreground text-2xl font-bold tracking-tight uppercase sm:text-3xl">
-          Submission Received!
-        </h2>
-        <p className="text-muted-foreground mt-3 text-xs leading-relaxed sm:text-sm">
-          Thank you for contributing! Your submission for{" "}
-          <strong className="text-foreground">{title}</strong> has been added to the moderation
-          queue. We will review and publish it soon.
-        </p>
-
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={resetForm}
-            className="font-mono text-xs uppercase"
-          >
-            Submit Another Resource
-          </Button>
-          <Button asChild size="sm" className="font-mono text-xs font-bold uppercase">
-            <Link href="/">Back to Stash</Link>
-          </Button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
       {/* Left Column: Form (7 cols) */}
       <div className="border-line bg-paper/40 border p-6 font-mono text-xs sm:p-8 lg:col-span-7">
         <form onSubmit={handleSubmit} className="space-y-6">
-          {errorMsg && (
-            <div className="border-destructive/40 bg-destructive/10 text-destructive border p-4 text-xs leading-relaxed font-semibold">
-              ⚠️ {errorMsg}
-            </div>
-          )}
-
           {/* Invisible Honeypot Anti-Bot Field */}
           <input
             type="text"

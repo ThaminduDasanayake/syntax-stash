@@ -77,7 +77,14 @@ function FilterSectionInner({
   }, [tagParam]);
   const matchMode = searchParams.get("mode") === "all" ? "all" : "any";
 
-  const [searchQuery, setSearchQuery] = useState(() => searchParams.get("q") || "");
+  const qParam = searchParams.get("q") || "";
+  const [prevQParam, setPrevQParam] = useState(qParam);
+  const [searchQuery, setSearchQuery] = useState(qParam);
+
+  if (qParam !== prevQParam) {
+    setPrevQParam(qParam);
+    setSearchQuery(qParam);
+  }
 
   // Defer heavy list filtering so typing input response is instantaneous (0ms lag)
   const deferredSearchQuery = useDeferredValue(searchQuery);
