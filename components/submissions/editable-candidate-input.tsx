@@ -5,16 +5,8 @@ import * as React from "react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/components/ui/input-group";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 
 export interface CandidateOption {
@@ -107,9 +99,7 @@ export function EditableCandidateInput({
                         )}
                       >
                         {/* Optional Custom Preview */}
-                        {renderPreview && (
-                          <div className="shrink-0">{renderPreview(option)}</div>
-                        )}
+                        {renderPreview && <div className="shrink-0">{renderPreview(option)}</div>}
 
                         {/* Text and URL details */}
                         <div className="min-w-0 flex-1">

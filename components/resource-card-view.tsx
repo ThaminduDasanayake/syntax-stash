@@ -53,8 +53,7 @@ export function ResourceCardView({
 
   const resolvedCategory = category || "Generators";
   const themeClasses =
-    propThemeClasses ??
-    (theme ? THEME_CONFIG[theme].bg : getCategoryColor(resolvedCategory));
+    propThemeClasses ?? (theme ? THEME_CONFIG[theme].bg : getCategoryColor(resolvedCategory));
   const isBlue = themeClasses.includes("bg-c-blue") || theme === "blue";
 
   // Parse tags if provided as comma-separated string or array
@@ -121,54 +120,52 @@ export function ResourceCardView({
             <div className="flex min-w-0 items-center gap-2">
               {author ? (
                 <div className="card-author flex min-w-0 items-center truncate">
-                  {Array.isArray(author) ? (
-                    author.map((authorName, index) => {
-                      const href =
-                        typeof authorHref === "function"
-                          ? authorHref(authorName)
-                          : typeof authorHref === "string"
-                            ? authorHref
-                            : null;
+                  {Array.isArray(author)
+                    ? author.map((authorName, index) => {
+                        const href =
+                          typeof authorHref === "function"
+                            ? authorHref(authorName)
+                            : typeof authorHref === "string"
+                              ? authorHref
+                              : null;
 
-                      return (
-                        <span key={authorName} className="inline-flex items-center truncate">
-                          {index > 0 && <span className="mx-1 opacity-60">&</span>}
-                          {href ? (
-                            <Link
-                              href={href}
-                              className="truncate hover:underline"
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              {authorName}
-                            </Link>
-                          ) : (
-                            <span className="truncate">{authorName}</span>
-                          )}
-                        </span>
-                      );
-                    })
-                  ) : (
-                    (() => {
-                      const href =
-                        typeof authorHref === "function"
-                          ? authorHref(author)
-                          : typeof authorHref === "string"
-                            ? authorHref
-                            : null;
+                        return (
+                          <span key={authorName} className="inline-flex items-center truncate">
+                            {index > 0 && <span className="mx-1 opacity-60">&</span>}
+                            {href ? (
+                              <Link
+                                href={href}
+                                className="truncate hover:underline"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                {authorName}
+                              </Link>
+                            ) : (
+                              <span className="truncate">{authorName}</span>
+                            )}
+                          </span>
+                        );
+                      })
+                    : (() => {
+                        const href =
+                          typeof authorHref === "function"
+                            ? authorHref(author)
+                            : typeof authorHref === "string"
+                              ? authorHref
+                              : null;
 
-                      return href ? (
-                        <Link
-                          href={href}
-                          className="truncate hover:underline"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          {author}
-                        </Link>
-                      ) : (
-                        <span className="truncate">{author}</span>
-                      );
-                    })()
-                  )}
+                        return href ? (
+                          <Link
+                            href={href}
+                            className="truncate hover:underline"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            {author}
+                          </Link>
+                        ) : (
+                          <span className="truncate">{author}</span>
+                        );
+                      })()}
                 </div>
               ) : null}
 
@@ -205,13 +202,7 @@ export function ResourceCardView({
                     aria-label={isBookmarked ? "Remove" : "Save"}
                   >
                     <BookmarkSimpleIcon
-                      weight={
-                        isBookmarked
-                          ? "fill"
-                          : isBookmarkHovered
-                            ? "duotone"
-                            : "regular"
-                      }
+                      weight={isBookmarked ? "fill" : isBookmarkHovered ? "duotone" : "regular"}
                       className={cn(
                         "size-5 transition-transform group-hover/bookmark:scale-110",
                         isBookmarked ? "fill-current opacity-100" : "",
@@ -231,10 +222,7 @@ export function ResourceCardView({
                       href={url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={cn(
-                        "group/arrow p-1",
-                        isBlue ? "text-paper" : "text-ink",
-                      )}
+                      className={cn("group/arrow p-1", isBlue ? "text-paper" : "text-ink")}
                       onClick={(e) => e.stopPropagation()}
                       aria-label="Open in new tab"
                     >
@@ -243,7 +231,7 @@ export function ResourceCardView({
                   ) : (
                     <span
                       className={cn(
-                        "group/arrow p-1 opacity-60 cursor-not-allowed",
+                        "group/arrow cursor-not-allowed p-1 opacity-60",
                         isBlue ? "text-paper" : "text-ink",
                       )}
                       aria-label="Open in new tab"

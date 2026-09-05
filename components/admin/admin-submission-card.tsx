@@ -47,7 +47,8 @@ export function AdminSubmissionCard({
           <span
             className={cn(
               "flex items-center gap-1.5 rounded px-2 py-0.5 text-[10px] font-bold uppercase",
-              STATUS_CONFIG[sub.status as SubmissionStatus]?.badge || "bg-muted text-muted-foreground",
+              STATUS_CONFIG[sub.status as SubmissionStatus]?.badge ||
+                "bg-muted text-muted-foreground",
             )}
           >
             <span

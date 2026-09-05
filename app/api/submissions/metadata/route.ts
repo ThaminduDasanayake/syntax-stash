@@ -257,10 +257,7 @@ export async function GET(request: NextRequest) {
     clearTimeout(timeoutId);
 
     if (!res.ok) {
-      return NextResponse.json(
-        { error: `Website returned status ${res.status}` },
-        { status: 502 },
-      );
+      return NextResponse.json({ error: `Website returned status ${res.status}` }, { status: 502 });
     }
 
     const html = await res.text();
@@ -292,7 +289,11 @@ export async function GET(request: NextRequest) {
               jsonLdImage = data.image.trim();
             } else if (Array.isArray(data.image) && typeof data.image[0] === "string") {
               jsonLdImage = data.image[0].trim();
-            } else if (data.image && typeof data.image === "object" && typeof data.image.url === "string") {
+            } else if (
+              data.image &&
+              typeof data.image === "object" &&
+              typeof data.image.url === "string"
+            ) {
               jsonLdImage = data.image.url.trim();
             }
           }
@@ -498,7 +499,11 @@ export async function GET(request: NextRequest) {
 
         // Twitter / X
         if (!authorTwitter && (host.includes("twitter.com") || host.includes("x.com"))) {
-          if (!pathname.includes("/intent/") && !pathname.includes("/share") && pathname.length > 1) {
+          if (
+            !pathname.includes("/intent/") &&
+            !pathname.includes("/share") &&
+            pathname.length > 1
+          ) {
             authorTwitter = fullHref;
           }
         }
@@ -508,9 +513,17 @@ export async function GET(request: NextRequest) {
           const parts = pathname.split("/").filter(Boolean);
           if (
             parts.length === 1 &&
-            !["about", "explore", "features", "login", "marketplace", "pricing", "signup", "topics", "trending"].includes(
-              parts[0],
-            )
+            ![
+              "about",
+              "explore",
+              "features",
+              "login",
+              "marketplace",
+              "pricing",
+              "signup",
+              "topics",
+              "trending",
+            ].includes(parts[0])
           ) {
             if (!authorGitHub) authorGitHub = `https://github.com/${parts[0]}`;
           }
@@ -518,7 +531,11 @@ export async function GET(request: NextRequest) {
 
         // YouTube
         if (!authorYouTube && (host.includes("youtube.com") || host.includes("youtu.be"))) {
-          if (pathname.includes("/@") || pathname.includes("/channel/") || pathname.includes("/c/")) {
+          if (
+            pathname.includes("/@") ||
+            pathname.includes("/channel/") ||
+            pathname.includes("/c/")
+          ) {
             authorYouTube = fullHref;
           }
         }
@@ -552,9 +569,16 @@ export async function GET(request: NextRequest) {
             const parts = gh.pathname.split("/").filter(Boolean);
             if (
               parts.length >= 2 &&
-              !["explore", "features", "login", "marketplace", "pricing", "signup", "topics", "trending"].includes(
-                parts[0],
-              )
+              ![
+                "explore",
+                "features",
+                "login",
+                "marketplace",
+                "pricing",
+                "signup",
+                "topics",
+                "trending",
+              ].includes(parts[0])
             ) {
               gitHubLink = `https://github.com/${parts[0]}/${parts[1]}`;
             }

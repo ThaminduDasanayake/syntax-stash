@@ -20,8 +20,7 @@ function ResourceCardComponent({
   const { data: session } = useSession();
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const { isBookmarked: hookIsBookmarked, toggleBookmark: hookToggleBookmark } = useBookmarks();
-  const bookmarked =
-    propIsBookmarked !== undefined ? propIsBookmarked : hookIsBookmarked(resource);
+  const bookmarked = propIsBookmarked !== undefined ? propIsBookmarked : hookIsBookmarked(resource);
   const toggle = propOnToggleBookmark || hookToggleBookmark;
 
   const handleBookmarkClick = (e: React.MouseEvent) => {

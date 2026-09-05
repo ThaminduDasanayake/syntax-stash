@@ -27,10 +27,7 @@ export async function GET(request: NextRequest) {
     const statusParam = request.nextUrl.searchParams.get("status") || "pending";
 
     // Fetch all submissions to compute status counts
-    const allSubmissions = await db
-      .select()
-      .from(submission)
-      .orderBy(desc(submission.createdAt));
+    const allSubmissions = await db.select().from(submission).orderBy(desc(submission.createdAt));
 
     const counts = {
       all: allSubmissions.length,
@@ -92,10 +89,7 @@ export async function PATCH(req: Request) {
     if (updates.tags !== undefined) updatedData.tags = updates.tags;
     if (updates.adminNotes !== undefined) updatedData.adminNotes = updates.adminNotes;
 
-    await db
-      .update(submission)
-      .set(updatedData)
-      .where(eq(submission.id, id));
+    await db.update(submission).set(updatedData).where(eq(submission.id, id));
 
     return NextResponse.json({ message: "Submission updated successfully.", success: true });
   } catch (error) {

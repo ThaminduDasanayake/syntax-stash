@@ -65,7 +65,10 @@ export async function POST(req: Request) {
     try {
       const parsed = new URL(url.trim());
       if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
-        return NextResponse.json({ error: "Invalid URL protocol. Use HTTP or HTTPS." }, { status: 400 });
+        return NextResponse.json(
+          { error: "Invalid URL protocol. Use HTTP or HTTPS." },
+          { status: 400 },
+        );
       }
     } catch {
       return NextResponse.json({ error: "Invalid URL format." }, { status: 400 });
@@ -90,9 +93,7 @@ export async function POST(req: Request) {
 
     // 4. Duplicate Check B: Existing Submissions database
     const allSubmissions = await db.select().from(submission);
-    const dbMatch = allSubmissions.find(
-      (s) => normalizeUrl(s.url) === normalizedInputUrl,
-    );
+    const dbMatch = allSubmissions.find((s) => normalizeUrl(s.url) === normalizedInputUrl);
 
     if (dbMatch) {
       if (dbMatch.status === "approved") {
@@ -222,6 +223,9 @@ export async function POST(req: Request) {
     });
   } catch (error) {
     console.error("POST /api/submissions error:", error);
-    return NextResponse.json({ error: "Failed to submit tool. Please try again." }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to submit tool. Please try again." },
+      { status: 500 },
+    );
   }
 }

@@ -455,7 +455,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
               {Array.isArray(activeTool.author) ? (
                 activeTool.author.map((authorName, index) => (
                   <span key={authorName} className="inline-flex items-center">
-                    {index > 0 && <span className="opacity-60 mr-1">&</span>}
+                    {index > 0 && <span className="mr-1 opacity-60">&</span>}
                     <Link
                       href={`/authors/${slugifyAuthor(authorName)}`}
                       className="modal-author-link hover:underline"
@@ -608,7 +608,10 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
               <div className="mb-5.5">
                 <div className="mb-2 flex items-center justify-between">
                   <span className={cn("modal-heading mb-0!", activeThemeStyles.label)}>
-                    More by {Array.isArray(activeTool.author) ? activeTool.author.join(" & ") : activeTool.author}
+                    More by{" "}
+                    {Array.isArray(activeTool.author)
+                      ? activeTool.author.join(" & ")
+                      : activeTool.author}
                   </span>
                   {!Array.isArray(activeTool.author) ? (
                     <Link

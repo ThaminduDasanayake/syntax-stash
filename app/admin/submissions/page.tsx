@@ -79,7 +79,7 @@ export default async function AdminSubmissionsPage() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <div className="text-primary flex items-center gap-2 text-xs font-bold tracking-widest uppercase">
-              <span className="size-2 rounded-full bg-primary" />
+              <span className="bg-primary size-2 rounded-full" />
               <span>Admin Panel</span>
             </div>
             <h1 className="text-foreground mt-1 text-2xl font-bold tracking-tight uppercase sm:text-3xl">

@@ -40,9 +40,7 @@ export function usePendingSubmissions() {
       ) {
         const diff = newCount - prevCountRef.current;
         toast.info(
-          diff === 1
-            ? "New tool submitted for review!"
-            : `${diff} new tools submitted for review!`,
+          diff === 1 ? "New tool submitted for review!" : `${diff} new tools submitted for review!`,
           {
             action: {
               label: "Review",

@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  ArrowRightIcon,
-  GlobeIcon,
-  MagnifyingGlassIcon,
-  XLogoIcon,
-} from "@phosphor-icons/react";
+import { ArrowRightIcon, GlobeIcon, MagnifyingGlassIcon, XLogoIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";

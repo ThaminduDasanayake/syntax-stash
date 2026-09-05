@@ -9,7 +9,7 @@ export default function AdminSubmissionsLoading() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">
-              <Skeleton className="size-2 rounded-full bg-primary" />
+              <Skeleton className="bg-primary size-2 rounded-full" />
               <Skeleton className="bg-ink/15 h-3.5 w-24 rounded" />
             </div>
             <Skeleton className="bg-ink/15 mt-2 h-8 w-72 rounded" />

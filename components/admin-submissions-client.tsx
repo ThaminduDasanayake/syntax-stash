@@ -69,10 +69,7 @@ export function AdminSubmissionsClient({
     fetchSubmissions(activeTab);
   }, [activeTab, fetchSubmissions]);
 
-  const handleUpdateStatus = async (
-    id: string,
-    newStatus: "approved" | "rejected" | "pending",
-  ) => {
+  const handleUpdateStatus = async (id: string, newStatus: "approved" | "rejected" | "pending") => {
     try {
       setActionLoadingId(id);
       const res = await fetch("/api/admin/submissions", {
@@ -220,16 +217,12 @@ export function AdminSubmissionsClient({
             <AlertDialogTitle>Delete Submission</AlertDialogTitle>
             <AlertDialogDescription>
               Are you sure you want to permanently delete{" "}
-              <strong className="text-foreground">
-                &ldquo;{deletingSubmission?.title}&rdquo;
-              </strong>
+              <strong className="text-foreground">&ldquo;{deletingSubmission?.title}&rdquo;</strong>
               ? This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={Boolean(actionLoadingId)}>
-              Cancel
-            </AlertDialogCancel>
+            <AlertDialogCancel disabled={Boolean(actionLoadingId)}>Cancel</AlertDialogCancel>
             <AlertDialogAction
               onClick={(e) => {
                 e.preventDefault();

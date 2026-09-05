@@ -33,7 +33,11 @@ interface AdminSubmissionEditFormProps {
   isWorking: boolean;
   onCancel: () => void;
   onDelete: () => void;
-  onSave: (id: string, formData: Partial<Submission>, status?: "approved" | "rejected" | "pending") => void;
+  onSave: (
+    id: string,
+    formData: Partial<Submission>,
+    status?: "approved" | "rejected" | "pending",
+  ) => void;
   submission: Submission;
 }
 
@@ -68,8 +72,12 @@ export function AdminSubmissionEditForm({
   });
 
   const [isDetecting, setIsDetecting] = useState(false);
-  const [faviconOptions, setFaviconOptions] = useState<{ label: string; type?: string; url: string }[]>([]);
-  const [ogImageOptions, setOgImageOptions] = useState<{ label: string; type?: string; url: string }[]>([]);
+  const [faviconOptions, setFaviconOptions] = useState<
+    { label: string; type?: string; url: string }[]
+  >([]);
+  const [ogImageOptions, setOgImageOptions] = useState<
+    { label: string; type?: string; url: string }[]
+  >([]);
 
   const handleAuthorFieldChange = (field: keyof AuthorSocialValues, value: string) => {
     if (field === "authorWebsite") {
@@ -426,9 +434,10 @@ export function AdminSubmissionEditForm({
               variant="outline"
               onClick={() => onSave(sub.id, editForm, "pending")}
               disabled={isWorking}
-              className="border-amber-500/80 text-amber-700 hover:bg-amber-500/20 dark:text-amber-300 gap-1.5 text-xs font-bold uppercase"
+              className="gap-1.5 border-amber-500/80 text-xs font-bold text-amber-700 uppercase hover:bg-amber-500/20 dark:text-amber-300"
             >
-              <ArrowCounterClockwiseIcon weight="duotone" className="size-4" /> Move to Pending & Save
+              <ArrowCounterClockwiseIcon weight="duotone" className="size-4" /> Move to Pending &
+              Save
             </Button>
           )}
 
@@ -437,7 +446,7 @@ export function AdminSubmissionEditForm({
               size="sm"
               onClick={() => onSave(sub.id, editForm, "approved")}
               disabled={isWorking}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white gap-1.5 text-xs font-bold uppercase"
+              className="gap-1.5 bg-emerald-600 text-xs font-bold text-white uppercase hover:bg-emerald-700"
             >
               <CheckCircleIcon weight="fill" className="size-4" /> Approve & Save
             </Button>
