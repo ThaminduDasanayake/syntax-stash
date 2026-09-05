@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 
 import {
   AdminStatusTabs,
@@ -11,6 +12,16 @@ import {
   TabStatus,
 } from "@/components/admin";
 import { AdminSubmissionsCardsSkeleton } from "@/components/admin-submissions-skeleton";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Submission } from "@/lib/db/schema";
 
 interface AdminSubmissionsClientProps {
@@ -28,6 +39,7 @@ export function AdminSubmissionsClient({
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [deletingSubmission, setDeletingSubmission] = useState<Submission | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [actionLoadingId, setActionLoadingId] = useState<string | null>(null);
 
@@ -79,20 +91,26 @@ export function AdminSubmissionsClient({
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to permanently delete this submission?")) return;
+  const handleConfirmDelete = async () => {
+    if (!deletingSubmission) return;
+    const id = deletingSubmission.id;
 
     try {
       setActionLoadingId(id);
       const res = await fetch(`/api/admin/submissions?id=${id}`, { method: "DELETE" });
       if (res.ok) {
+        toast.success("Submission permanently deleted.");
         if (editingId === id) setEditingId(null);
         await fetchSubmissions(activeTab);
+      } else {
+        toast.error("Failed to delete submission.");
       }
     } catch (err) {
       console.error("Failed to delete submission:", err);
+      toast.error("Failed to delete submission.");
     } finally {
       setActionLoadingId(null);
+      setDeletingSubmission(null);
     }
   };
 
@@ -173,7 +191,7 @@ export function AdminSubmissionsClient({
                 submission={sub}
                 isWorking={actionLoadingId === sub.id}
                 onCancel={() => setEditingId(null)}
-                onDelete={() => handleDelete(sub.id)}
+                onDelete={() => setDeletingSubmission(sub)}
                 onSave={handleSaveEdit}
               />
             ) : (
@@ -184,13 +202,46 @@ export function AdminSubmissionsClient({
                 isWorking={actionLoadingId === sub.id}
                 onCopyTs={() => handleCopyTsCode(sub)}
                 onEdit={() => setEditingId(sub.id)}
-                onDelete={() => handleDelete(sub.id)}
+                onDelete={() => setDeletingSubmission(sub)}
                 onUpdateStatus={(status) => handleUpdateStatus(sub.id, status)}
               />
             ),
           )}
         </div>
       )}
+
+      {/* Custom Confirmation Alert Dialog */}
+      <AlertDialog
+        open={Boolean(deletingSubmission)}
+        onOpenChange={(open) => !open && setDeletingSubmission(null)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Submission</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to permanently delete{" "}
+              <strong className="text-foreground">
+                &ldquo;{deletingSubmission?.title}&rdquo;
+              </strong>
+              ? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={Boolean(actionLoadingId)}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={(e) => {
+                e.preventDefault();
+                handleConfirmDelete();
+              }}
+              disabled={Boolean(actionLoadingId)}
+            >
+              {actionLoadingId ? "Deleting..." : "Delete Permanently"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
