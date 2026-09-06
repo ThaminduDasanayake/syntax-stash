@@ -1,12 +1,44 @@
 # Syntax Stash — Tasks & Backlog
 
-## Pending Tasks
+## Database Schema & Normalization Roadmap
+
+### Implemented Entities
+- [x] **`author` Table**: Dedicated table for creators/maintainers (`id`, `name`, `slug`, `website`, `twitter`, `github`, `youtube`, `linkedin`, `blog`). Includes creator combobox autocomplete and auto-fill in all submission and resource forms.
+- [x] **`category` Table**: Dedicated table for taxonomy (`id`, `name`, `slug`, `description`, `icon`, `themeColor`, `order`). Linked to `resource.categoryId` with full relational integrity, dynamic routing support, and seed automation.
+
+### Future Schema Additions
+- [ ] **`tag` & `resource_tag` (Normalized Many-to-Many)**:
+  - **Context:** Transition from `tags: text("tags")` string storage to dedicated `tag` entity (`id`, `name`, `slug`, `is_featured`) and `resource_tag` join table (`resource_id`, `tag_id`).
+  - **Benefits:** Enables `/tags/[slug]` dynamic routes, instant indexed tag aggregations/counts without regex scans, and tag renaming/merging.
+- [ ] **`collection` & `collection_item` (Custom User Stashes / Folders)**:
+  - **Context:** Expand beyond basic binary `bookmark` table.
+  - **Schema:**
+    - `collection`: `id`, `user_id`, `name`, `slug`, `description`, `is_public`, `created_at`
+    - `collection_item`: `id`, `collection_id`, `resource_id`, `order`, `note`, `added_at`
+  - **Benefits:** Allows users to create shareable curated lists (e.g. "My 2026 Next.js Stack", "Best UI Component Libraries").
+- [ ] **`github_repo_stats` (Live Repository Metrics)**:
+  - **Context:** Move from static `lib/resource-data/github-stars.json` cache into Postgres.
+  - **Schema:** `id`, `resource_id`, `owner`, `repo`, `stars`, `forks`, `open_issues`, `license`, `last_pushed_at`, `synced_at`.
+  - **Benefits:** Dynamic SQL sorting by star count (`ORDER BY stars DESC`), license filtering, and star trajectory analytics.
+- [ ] **`resource_health` (URL & Uptime Auditing Log)**:
+  - **Context:** Move from local CLI script `scripts/check-resource-health.ts` into scheduled database health logging.
+  - **Schema:** `id`, `resource_id`, `status_code`, `status` (`healthy` | `broken` | `redirected`), `last_checked_at`, `error_message`.
+  - **Benefits:** Automated background health checks with live dead-link warnings in the Admin Dashboard.
+
+### Properties Retained on Existing Tables (Do NOT Normalize)
+- **`pricing`**: Kept as direct column/enum (`"Free" | "Freemium" | "Paid" | "Open Source"`) on `resource` and `submission` to avoid over-engineering.
+- **`favicon` & `ogImage`**: Kept as direct asset URLs on `resource`.
+- **Ephemeral Submission Fields**: Kept flat on `submission` (`submitterEmail`, `submitterName`, `notes`, `adminNotes`, `status`).
+
+---
+
+## Active & Pending Tasks
 
 - [x] **Migrate Resources to Database & 1-Click Submission Approvals**
-  - **Context:** Resources and authors are now stored in Neon Postgres with Next.js edge caching (`unstable_cache` + `React.cache`) and instant 1-click submission approvals.
+  - **Context:** Resources, authors, and categories are stored in Neon Postgres with Next.js edge caching (`unstable_cache` + `React.cache`) and instant 1-click submission approvals.
   - **Completed:**
-    - [x] **Step 1: Database Schema Definition** (`author` and `resource` tables with `github` column, relations, and indices).
-    - [x] **Step 2: Automated Seeding Script** (`scripts/seed-resources.ts` seeded 1,286 tools and 320 authors).
+    - [x] **Step 1: Database Schema Definition** (`author`, `category`, and `resource` tables with foreign keys, relations, and indices).
+    - [x] **Step 2: Automated Seeding Script** (`scripts/seed-resources.ts` seeds 16 categories, 320 authors, and 1,286 tools).
     - [x] **Step 3: Data Access Layer & Edge Caching** (`lib/resources.ts` with fallback to static data and Next.js edge caching).
     - [x] **Step 4: 1-Click Submission Approval** (`PATCH /api/admin/submissions` auto-publishes to database and revalidates cache).
     - [ ] **Step 5: Admin Live Resource Manager (`/admin/resources`)** (Dedicated web UI to edit existing catalog tools).

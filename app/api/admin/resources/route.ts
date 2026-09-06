@@ -1,4 +1,4 @@
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, ilike, or } from "drizzle-orm";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
@@ -7,7 +7,7 @@ import { isAdmin } from "@/lib/admin";
 import { auth } from "@/lib/auth";
 import { slugifyAuthor } from "@/lib/authors";
 import { db } from "@/lib/db";
-import { author, resource } from "@/lib/db/schema";
+import { author, category, resource } from "@/lib/db/schema";
 
 async function verifyAdmin() {
   const reqHeaders = await headers();
@@ -40,6 +40,10 @@ export async function GET() {
         authorWebsite: author.website,
         authorYoutube: author.youtube,
         category: resource.category,
+        categoryIcon: category.icon,
+        categoryId: resource.categoryId,
+        categoryName: category.name,
+        categorySlug: category.slug,
         createdAt: resource.createdAt,
         description: resource.description,
         favicon: resource.favicon,
@@ -52,16 +56,24 @@ export async function GET() {
       })
       .from(resource)
       .leftJoin(author, eq(resource.authorId, author.id))
+      .leftJoin(category, eq(resource.categoryId, category.id))
       .orderBy(desc(resource.createdAt));
 
     const categoryCounts: Record<string, number> = {};
-    for (const r of rows) {
-      categoryCounts[r.category] = (categoryCounts[r.category] || 0) + 1;
-    }
+    const resources = rows.map((r) => {
+      const catName = r.categoryName || r.category;
+      categoryCounts[catName] = (categoryCounts[catName] || 0) + 1;
+      return {
+        ...r,
+        category: catName,
+        createdAt: r.createdAt.toISOString(),
+        updatedAt: r.updatedAt.toISOString(),
+      };
+    });
 
     return NextResponse.json({
       categoryCounts,
-      resources: rows,
+      resources,
       total: rows.length,
     });
   } catch (error) {
@@ -87,7 +99,7 @@ export async function POST(req: Request) {
       authorTwitter,
       authorWebsite,
       authorYoutube,
-      category,
+      category: categoryInput,
       description,
       favicon,
       github,
@@ -97,7 +109,7 @@ export async function POST(req: Request) {
       url,
     } = body;
 
-    if (!title || !url || !category || !description) {
+    if (!title || !url || !categoryInput || !description) {
       return NextResponse.json(
         { error: "Title, URL, category, and description are required." },
         { status: 400 },
@@ -150,13 +162,26 @@ export async function POST(req: Request) {
       }
     }
 
-    // 2. Insert into resource table
+    // 2. Resolve Category ID
+    let categoryRecordId: string | null = null;
+    let canonicalCategoryName = categoryInput.trim();
+    const [foundCat] = await db
+      .select()
+      .from(category)
+      .where(or(ilike(category.name, canonicalCategoryName), ilike(category.slug, canonicalCategoryName)));
+    if (foundCat) {
+      categoryRecordId = foundCat.id;
+      canonicalCategoryName = foundCat.name;
+    }
+
+    // 3. Insert into resource table
     const resourceId = crypto.randomUUID();
     await db.insert(resource).values({
       id: resourceId,
       title: title.trim(),
       authorId: authorRecordId,
-      category,
+      category: canonicalCategoryName,
+      categoryId: categoryRecordId,
       description: description.trim(),
       favicon: favicon?.trim() || null,
       github: github?.trim() || null,
@@ -166,7 +191,7 @@ export async function POST(req: Request) {
       url: url.trim(),
     });
 
-    // 3. Purge edge cache
+    // 4. Purge edge cache
     revalidateTag("resources", "max");
     revalidatePath("/");
     revalidatePath("/resources");
@@ -249,9 +274,22 @@ export async function PATCH(req: Request) {
       updatedAt: new Date(),
     };
 
+    if (updates.category !== undefined) {
+      const catQuery = updates.category.trim();
+      const [foundCat] = await db
+        .select()
+        .from(category)
+        .where(or(ilike(category.name, catQuery), ilike(category.slug, catQuery)));
+      if (foundCat) {
+        updatedData.categoryId = foundCat.id;
+        updatedData.category = foundCat.name;
+      } else {
+        updatedData.category = updates.category;
+      }
+    }
+
     if (updates.title !== undefined) updatedData.title = updates.title.trim();
     if (updates.subtitle !== undefined) updatedData.subtitle = updates.subtitle?.trim() || null;
-    if (updates.category !== undefined) updatedData.category = updates.category;
     if (updates.description !== undefined) updatedData.description = updates.description.trim();
     if (updates.url !== undefined) updatedData.url = updates.url.trim();
     if (updates.favicon !== undefined) updatedData.favicon = updates.favicon?.trim() || null;

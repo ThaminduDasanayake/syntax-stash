@@ -3,14 +3,14 @@ import { unstable_cache } from "next/cache";
 import { cache } from "react";
 
 import { db } from "@/lib/db";
-import { author, resource } from "@/lib/db/schema";
+import { author, category, resource } from "@/lib/db/schema";
 import { resourceLinks as STATIC_FALLBACK_RESOURCES } from "@/lib/resource-data";
 import { Resource } from "@/types";
 
 /**
  * Fetches all live catalog resources from Neon Postgres, cached at the Next.js Edge.
  * Cache Tag: "resources"
- * Revalidated on-demand when an admin approves/edits/deletes a tool.
+ * Revalidated on-demand when an admin approves/edits/delete a tool.
  * Gracefully falls back to bundled static data if the database is temporarily unreachable.
  */
 export const getAllResources = cache(
@@ -31,6 +31,10 @@ export const getAllResources = cache(
             authorWebsite: author.website,
             authorYoutube: author.youtube,
             category: resource.category,
+            categoryIcon: category.icon,
+            categoryId: resource.categoryId,
+            categoryName: category.name,
+            categorySlug: category.slug,
             createdAt: resource.createdAt,
             description: resource.description,
             favicon: resource.favicon,
@@ -42,6 +46,7 @@ export const getAllResources = cache(
           })
           .from(resource)
           .leftJoin(author, eq(resource.authorId, author.id))
+          .leftJoin(category, eq(resource.categoryId, category.id))
           .orderBy(desc(resource.createdAt));
 
         if (!rows || rows.length === 0) {
@@ -52,7 +57,7 @@ export const getAllResources = cache(
           return {
             title: r.title,
             author: r.authorName || undefined,
-            category: r.category,
+            category: r.categoryName || r.category,
             description: r.description || undefined,
             favicon: r.favicon || undefined,
             github: r.github || undefined,
@@ -105,6 +110,10 @@ export const getAllAdminResources = cache(
             authorWebsite: author.website,
             authorYoutube: author.youtube,
             category: resource.category,
+            categoryIcon: category.icon,
+            categoryId: resource.categoryId,
+            categoryName: category.name,
+            categorySlug: category.slug,
             createdAt: resource.createdAt,
             description: resource.description,
             favicon: resource.favicon,
@@ -117,13 +126,16 @@ export const getAllAdminResources = cache(
           })
           .from(resource)
           .leftJoin(author, eq(resource.authorId, author.id))
+          .leftJoin(category, eq(resource.categoryId, category.id))
           .orderBy(desc(resource.createdAt));
 
         const categoryCounts: Record<string, number> = {};
         const resources = rows.map((r) => {
-          categoryCounts[r.category] = (categoryCounts[r.category] || 0) + 1;
+          const catName = r.categoryName || r.category;
+          categoryCounts[catName] = (categoryCounts[catName] || 0) + 1;
           return {
             ...r,
+            category: catName,
             createdAt: r.createdAt.toISOString(),
             updatedAt: r.updatedAt.toISOString(),
           };

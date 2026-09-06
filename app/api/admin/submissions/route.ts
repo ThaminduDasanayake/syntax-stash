@@ -1,4 +1,4 @@
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, ilike, or } from "drizzle-orm";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
@@ -7,7 +7,7 @@ import { isAdmin } from "@/lib/admin";
 import { auth } from "@/lib/auth";
 import { slugifyAuthor } from "@/lib/authors";
 import { db } from "@/lib/db";
-import { author, resource, submission } from "@/lib/db/schema";
+import { author, category, resource, submission } from "@/lib/db/schema";
 
 async function verifyAdmin() {
   const reqHeaders = await headers();
@@ -137,7 +137,20 @@ export async function PATCH(req: Request) {
           }
         }
 
-        // 2. Insert or Update in Live Resource Catalog
+        // 2. Resolve Category ID
+        let categoryRecordId: string | null = null;
+        if (sub.category && sub.category.trim()) {
+          const catQuery = sub.category.trim();
+          const [foundCat] = await db
+            .select()
+            .from(category)
+            .where(or(ilike(category.name, catQuery), ilike(category.slug, catQuery)));
+          if (foundCat) {
+            categoryRecordId = foundCat.id;
+          }
+        }
+
+        // 3. Insert or Update in Live Resource Catalog
         const [existingResource] = await db
           .select()
           .from(resource)
@@ -150,6 +163,7 @@ export async function PATCH(req: Request) {
               title: sub.title,
               authorId: authorRecordId,
               category: sub.category,
+              categoryId: categoryRecordId,
               description: sub.description,
               favicon: sub.favicon || null,
               github: sub.github || null,
@@ -165,6 +179,7 @@ export async function PATCH(req: Request) {
             title: sub.title,
             authorId: authorRecordId,
             category: sub.category,
+            categoryId: categoryRecordId,
             description: sub.description,
             favicon: sub.favicon || null,
             github: sub.github || null,
@@ -175,7 +190,7 @@ export async function PATCH(req: Request) {
           });
         }
 
-        // 3. Purge Next.js Edge Data Cache for instant live update
+        // 4. Purge Next.js Edge Data Cache for instant live update
         revalidateTag("resources", "max");
         revalidatePath("/");
         revalidatePath("/resources");

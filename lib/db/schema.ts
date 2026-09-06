@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { boolean, index, pgTable, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
+import { boolean, index, integer, pgTable, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -86,6 +86,26 @@ export const author = pgTable(
   ],
 );
 
+export const category = pgTable(
+  "category",
+  {
+    id: text("id").primaryKey(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    description: text("description"),
+    icon: text("icon"),
+    name: text("name").notNull().unique(),
+    order: integer("order").notNull().default(0),
+    slug: text("slug").notNull().unique(),
+    themeColor: text("theme_color"),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  },
+  (table) => [
+    index("category_order_idx").on(table.order),
+    uniqueIndex("category_name_idx").on(table.name),
+    uniqueIndex("category_slug_idx").on(table.slug),
+  ],
+);
+
 export const resource = pgTable(
   "resource",
   {
@@ -93,6 +113,7 @@ export const resource = pgTable(
     title: text("title").notNull(),
     authorId: text("author_id").references(() => author.id, { onDelete: "set null" }),
     category: text("category").notNull(),
+    categoryId: text("category_id").references(() => category.id, { onDelete: "restrict" }),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     description: text("description").notNull(),
     favicon: text("favicon"),
@@ -105,6 +126,7 @@ export const resource = pgTable(
   },
   (table) => [
     index("resource_author_id_idx").on(table.authorId),
+    index("resource_category_id_idx").on(table.categoryId),
     index("resource_category_idx").on(table.category),
     index("resource_created_at_idx").on(table.createdAt),
     uniqueIndex("resource_url_idx").on(table.url),
@@ -115,10 +137,18 @@ export const authorRelations = relations(author, ({ many }) => ({
   resources: many(resource),
 }));
 
+export const categoryRelations = relations(category, ({ many }) => ({
+  resources: many(resource),
+}));
+
 export const resourceRelations = relations(resource, ({ one }) => ({
   author: one(author, {
     fields: [resource.authorId],
     references: [author.id],
+  }),
+  category: one(category, {
+    fields: [resource.categoryId],
+    references: [category.id],
   }),
 }));
 
@@ -136,6 +166,7 @@ export const submission = pgTable(
     authorWebsite: text("author_website"),
     authorYouTube: text("author_youtube"),
     category: text("category").notNull(),
+    categoryId: text("category_id").references(() => category.id, { onDelete: "set null" }),
 
     createdAt: timestamp("created_at").notNull().defaultNow(),
     description: text("description").notNull(),
@@ -157,6 +188,7 @@ export const submission = pgTable(
     userId: text("user_id").references(() => user.id, { onDelete: "set null" }),
   },
   (table) => [
+    index("submission_category_id_idx").on(table.categoryId),
     index("submission_created_at_idx").on(table.createdAt),
     index("submission_status_idx").on(table.status),
   ],
@@ -168,6 +200,8 @@ export type Bookmark = typeof bookmark.$inferSelect;
 export type NewBookmark = typeof bookmark.$inferInsert;
 export type Author = typeof author.$inferSelect;
 export type NewAuthor = typeof author.$inferInsert;
+export type Category = typeof category.$inferSelect;
+export type NewCategory = typeof category.$inferInsert;
 export type DbResource = typeof resource.$inferSelect;
 export type NewDbResource = typeof resource.$inferInsert;
 export type Submission = typeof submission.$inferSelect;
