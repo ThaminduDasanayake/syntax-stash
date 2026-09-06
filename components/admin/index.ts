@@ -1,3 +1,4 @@
+export * from "./admin-authors-client";
 export * from "./admin-categories-client";
 export * from "./admin-nav";
 export * from "./admin-resource-card";

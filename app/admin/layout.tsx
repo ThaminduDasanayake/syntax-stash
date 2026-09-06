@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { isAdmin } from "@/lib/admin";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { category, resource, submission, tag } from "@/lib/db/schema";
+import { author, category, resource, submission, tag } from "@/lib/db/schema";
 
 export const metadata: Metadata = {
   title: "Admin Suite — Syntax Stash",
@@ -61,6 +61,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
   let totalResourcesCount = 0;
   let categoriesCount = 0;
   let tagsCount = 0;
+  let authorsCount = 0;
 
   try {
     const pendingRows = await db
@@ -71,11 +72,13 @@ export default async function AdminLayout({ children }: { children: ReactNode })
     const resourceRows = await db.select({ val: count() }).from(resource);
     const categoryRows = await db.select({ val: count() }).from(category);
     const tagRows = await db.select({ val: count() }).from(tag);
+    const authorRows = await db.select({ val: count() }).from(author);
 
     pendingSubmissionsCount = pendingRows[0]?.val || 0;
     totalResourcesCount = resourceRows[0]?.val || 0;
     categoriesCount = categoryRows[0]?.val || 0;
     tagsCount = tagRows[0]?.val || 0;
+    authorsCount = authorRows[0]?.val || 0;
   } catch (err) {
     console.error("Failed to load admin layout counts:", err);
   }
@@ -83,6 +86,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
   return (
     <div className="container mx-auto max-w-6xl px-4 py-8 sm:py-12">
       <AdminNav
+        authorsCount={authorsCount}
         categoriesCount={categoriesCount}
         pendingSubmissionsCount={pendingSubmissionsCount}
         tagsCount={tagsCount}

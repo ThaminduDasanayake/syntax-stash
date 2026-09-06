@@ -1,12 +1,19 @@
 "use client";
 
-import { FoldersIcon, StackIcon, TagIcon, TrayIcon } from "@phosphor-icons/react";
+import {
+  FoldersIcon,
+  StackIcon,
+  TagIcon,
+  TrayIcon,
+  UserCircleIcon,
+} from "@phosphor-icons/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 
 interface AdminNavProps {
+  authorsCount?: number;
   categoriesCount?: number;
   pendingSubmissionsCount?: number;
   tagsCount?: number;
@@ -15,6 +22,7 @@ interface AdminNavProps {
 }
 
 export function AdminNav({
+  authorsCount,
   categoriesCount,
   pendingSubmissionsCount,
   tagsCount,
@@ -27,6 +35,7 @@ export function AdminNav({
   const isResources = pathname.startsWith("/admin/resources");
   const isCategories = pathname.startsWith("/admin/categories");
   const isTags = pathname.startsWith("/admin/tags");
+  const isAuthors = pathname.startsWith("/admin/authors");
 
   let pageTitle = "Resource Submissions Queue";
   let pageSubtitle = "Review, edit, approve, and manage community resource submissions.";
@@ -40,6 +49,9 @@ export function AdminNav({
   } else if (isTags) {
     pageTitle = "Tags Manager";
     pageSubtitle = "Manage canonical resource tags, slug identifiers, and featured tag highlights.";
+  } else if (isAuthors) {
+    pageTitle = "Authors Manager";
+    pageSubtitle = "Manage verified creator profiles, social links, and resource attributions.";
   }
 
   return (
@@ -164,6 +176,31 @@ export function AdminNav({
               )}
             >
               {tagsCount}
+            </span>
+          )}
+        </Link>
+
+        <Link
+          href="/admin/authors"
+          className={cn(
+            "flex items-center gap-2 rounded px-3.5 py-1.5 text-xs font-bold uppercase transition-all duration-150",
+            isAuthors
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "border-line bg-surface/50 text-muted-foreground hover:bg-surface hover:text-foreground border",
+          )}
+        >
+          <UserCircleIcon weight={isAuthors ? "fill" : "bold"} className="size-4" />
+          <span>Authors</span>
+          {authorsCount !== undefined && authorsCount > 0 && (
+            <span
+              className={cn(
+                "rounded-full px-1.5 py-0.5 text-[10px] font-extrabold leading-none",
+                isAuthors
+                  ? "bg-primary-foreground text-primary"
+                  : "bg-surface-elevated text-muted-foreground border border-border",
+              )}
+            >
+              {authorsCount}
             </span>
           )}
         </Link>
