@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { isAdmin } from "@/lib/admin";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { resource, submission } from "@/lib/db/schema";
+import { category, resource, submission, tag } from "@/lib/db/schema";
 
 export const metadata: Metadata = {
   title: "Admin Suite — Syntax Stash",
@@ -59,6 +59,8 @@ export default async function AdminLayout({ children }: { children: ReactNode })
   // Pre-fetch count badges for the persistent AdminNav header
   let pendingSubmissionsCount = 0;
   let totalResourcesCount = 0;
+  let categoriesCount = 0;
+  let tagsCount = 0;
 
   try {
     const pendingRows = await db
@@ -67,18 +69,23 @@ export default async function AdminLayout({ children }: { children: ReactNode })
       .where(eq(submission.status, "pending"));
 
     const resourceRows = await db.select({ val: count() }).from(resource);
+    const categoryRows = await db.select({ val: count() }).from(category);
+    const tagRows = await db.select({ val: count() }).from(tag);
 
     pendingSubmissionsCount = pendingRows[0]?.val || 0;
     totalResourcesCount = resourceRows[0]?.val || 0;
+    categoriesCount = categoryRows[0]?.val || 0;
+    tagsCount = tagRows[0]?.val || 0;
   } catch (err) {
     console.error("Failed to load admin layout counts:", err);
   }
 
-
   return (
     <div className="container mx-auto max-w-6xl px-4 py-8 sm:py-12">
       <AdminNav
+        categoriesCount={categoriesCount}
         pendingSubmissionsCount={pendingSubmissionsCount}
+        tagsCount={tagsCount}
         totalResourcesCount={totalResourcesCount}
         userEmail={userEmail}
       />
