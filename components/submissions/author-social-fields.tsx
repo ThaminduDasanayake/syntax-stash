@@ -3,6 +3,7 @@
 import { GlobeIcon, XLogoIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 
+import { AuthorCombobox, AuthorOption } from "@/components/submissions/author-combobox";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
@@ -19,6 +20,7 @@ export interface AuthorSocialValues {
 export interface AuthorSocialFieldsProps {
   className?: string;
   disabled?: boolean;
+  onBatchChange?: (updates: Partial<AuthorSocialValues>) => void;
   onChange: (field: keyof AuthorSocialValues, value: string) => void;
   values: AuthorSocialValues;
 }
@@ -26,9 +28,31 @@ export interface AuthorSocialFieldsProps {
 export function AuthorSocialFields({
   className,
   disabled = false,
+  onBatchChange,
   onChange,
   values,
 }: AuthorSocialFieldsProps) {
+  const handleSelectAuthor = (selected: AuthorOption) => {
+    const updates: Partial<AuthorSocialValues> = {
+      author: selected.name,
+    };
+    if (selected.links?.website) updates.authorWebsite = selected.links.website;
+    if (selected.links?.twitter) updates.authorTwitter = selected.links.twitter;
+    if (selected.links?.github) updates.authorGitHub = selected.links.github;
+    if (selected.links?.youtube) updates.authorYouTube = selected.links.youtube;
+    if (selected.links?.linkedin) updates.authorLinkedIn = selected.links.linkedin;
+
+    if (onBatchChange) {
+      onBatchChange(updates);
+    } else {
+      for (const [key, val] of Object.entries(updates)) {
+        if (val !== undefined && val !== null) {
+          onChange(key as keyof AuthorSocialValues, val);
+        }
+      }
+    }
+  };
+
   return (
     <div className={cn("border-line space-y-4 border-t pt-4 font-mono text-xs", className)}>
       <div>
@@ -44,16 +68,17 @@ export function AuthorSocialFields({
       <div className="space-y-4">
         {/* Row 1: Name and Website / Portfolio side-by-side */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {/* Author Name */}
+          {/* Author Name with Combobox */}
           <div className="space-y-2">
             <Label className="text-foreground font-mono text-xs font-bold uppercase">
               Creator / Author Name
             </Label>
             <div className="h-9">
-              <InputField
+              <AuthorCombobox
                 placeholder="e.g. Jane Doe"
                 value={values.author || ""}
-                onChange={(e) => onChange("author", e.target.value)}
+                onChange={(value) => onChange("author", value)}
+                onSelectAuthor={handleSelectAuthor}
                 disabled={disabled}
                 containerClassName="h-9"
                 className="font-mono text-xs"

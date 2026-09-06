@@ -97,6 +97,15 @@ export function SubmitForm() {
     }
   };
 
+  const handleAuthorBatchChange = (updates: Partial<AuthorSocialValues>) => {
+    if (updates.author !== undefined) setAuthor(updates.author || "");
+    if (updates.authorWebsite !== undefined) setAuthorWebsite(updates.authorWebsite || "");
+    if (updates.authorTwitter !== undefined) setAuthorTwitter(updates.authorTwitter || "");
+    if (updates.authorGitHub !== undefined) setAuthorGitHub(updates.authorGitHub || "");
+    if (updates.authorYouTube !== undefined) setAuthorYouTube(updates.authorYouTube || "");
+    if (updates.authorLinkedIn !== undefined) setAuthorLinkedIn(updates.authorLinkedIn || "");
+  };
+
   const handleAutoDetect = async () => {
     if (!url.trim()) {
       toast.error("Please enter a URL first.");
@@ -361,6 +370,7 @@ export function SubmitForm() {
               authorYouTube,
             }}
             onChange={handleAuthorFieldChange}
+            onBatchChange={handleAuthorBatchChange}
           />
 
           {/* Section 6: Additional Details & Tags */}

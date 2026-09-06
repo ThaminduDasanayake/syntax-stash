@@ -85,6 +85,13 @@ export function AdminSubmissionEditForm({
     }));
   };
 
+  const handleAuthorBatchChange = (updates: Partial<AuthorSocialValues>) => {
+    setEditForm((prev) => ({
+      ...prev,
+      ...updates,
+    }));
+  };
+
   const handleAutoDetect = async () => {
     const targetUrl = editForm.url?.trim();
     if (!targetUrl) return;
@@ -299,6 +306,7 @@ export function AdminSubmissionEditForm({
               authorYouTube: editForm.authorYouTube,
             }}
             onChange={handleAuthorFieldChange}
+            onBatchChange={handleAuthorBatchChange}
           />
 
           {/* Section 6: Repo, Tags & Admin Moderation */}

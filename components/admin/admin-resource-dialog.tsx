@@ -133,6 +133,18 @@ export function AdminResourceDialog({
     }
   };
 
+  const handleAuthorBatchChange = (updates: Partial<AuthorSocialValues>) => {
+    setFormData((prev) => ({
+      ...prev,
+      ...(updates.author !== undefined && { authorName: updates.author || "" }),
+      ...(updates.authorWebsite !== undefined && { authorWebsite: updates.authorWebsite || "" }),
+      ...(updates.authorTwitter !== undefined && { authorTwitter: updates.authorTwitter || "" }),
+      ...(updates.authorGitHub !== undefined && { authorGithub: updates.authorGitHub || "" }),
+      ...(updates.authorYouTube !== undefined && { authorYoutube: updates.authorYouTube || "" }),
+      ...(updates.authorLinkedIn !== undefined && { authorLinkedin: updates.authorLinkedIn || "" }),
+    }));
+  };
+
   const handleAutoDetect = async () => {
     const targetUrl = formData.url?.trim();
     if (!targetUrl) return;
@@ -362,6 +374,7 @@ export function AdminResourceDialog({
               <AuthorSocialFields
                 values={authorValues}
                 onChange={handleAuthorFieldChange}
+                onBatchChange={handleAuthorBatchChange}
                 disabled={isWorking}
               />
 
