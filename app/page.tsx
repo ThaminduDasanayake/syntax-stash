@@ -5,7 +5,8 @@ import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
 import ToolCard from "@/components/tool-card";
 import { ToolsCarousel } from "@/components/tools-carousel";
 import { Button } from "@/components/ui/button";
-import { resourceCategories, resourceLinks } from "@/lib/resource-data";
+import { resourceCategories } from "@/lib/resource-data";
+import { getAllResources } from "@/lib/resources";
 import {
   dataTools,
   developmentTools,
@@ -51,7 +52,8 @@ const THEME_HOVER_MAP: Record<
   },
 };
 
-export default function Home() {
+export default async function Home() {
+  const resourceLinks = await getAllResources();
   const topTools = [
     ...dataTools.slice(0, 2),
     ...developmentTools.slice(0, 2),

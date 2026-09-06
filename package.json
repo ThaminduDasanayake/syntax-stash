@@ -28,6 +28,7 @@
     "check:resources": "tsx scripts/check-resource-health.ts",
     "sync:stars": "tsx scripts/sync-github-stars.ts",
     "db:push": "drizzle-kit push",
+    "db:seed": "tsx scripts/seed-resources.ts",
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {

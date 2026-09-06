@@ -45,10 +45,11 @@ export function slugifyAuthor(name: string): string {
  * Merges with explicit author profiles from AUTHORS_REGISTRY when available.
  * Sorted by resource count descending.
  */
-export function getAllAuthors(): AuthorWithResources[] {
+export function getAllAuthors(customResources?: Resource[]): AuthorWithResources[] {
   const authorMap = new Map<string, { name: string; resources: Resource[] }>();
+  const list = customResources && customResources.length > 0 ? customResources : resourceLinks;
 
-  for (const resource of resourceLinks) {
+  for (const resource of list) {
     if (!resource.author) continue;
 
     const rawAuthors = Array.isArray(resource.author) ? resource.author : [resource.author];
@@ -110,8 +111,8 @@ export function getAllAuthors(): AuthorWithResources[] {
 /**
  * Finds a specific author by their slug, along with their curated resources.
  */
-export function getAuthorBySlug(slug: string): AuthorWithResources | null {
+export function getAuthorBySlug(slug: string, customResources?: Resource[]): AuthorWithResources | null {
   const normalizedSlug = slug.toLowerCase().trim();
-  const allAuthors = getAllAuthors();
+  const allAuthors = getAllAuthors(customResources);
   return allAuthors.find((a) => a.slug === normalizedSlug) || null;
 }

@@ -105,3 +105,28 @@ export const TAB_CONFIG: Record<
 
 // eslint-disable-next-line perfectionist/sort-arrays
 export const TABS: TabStatus[] = ["pending", "approved", "rejected", "all"];
+
+export interface AdminResourceItem {
+  authorBlog?: string | null;
+  authorGithub?: string | null;
+  authorId?: string | null;
+  authorLinkedin?: string | null;
+  authorName?: string | null;
+  authorSlug?: string | null;
+  authorTwitter?: string | null;
+  authorWebsite?: string | null;
+  authorYoutube?: string | null;
+  category: string;
+  createdAt: string | Date;
+  description: string;
+  favicon?: string | null;
+  github?: string | null;
+  id: string;
+  ogImage?: string | null;
+  subtitle?: string | null;
+  tags?: string | null;
+  title: string;
+  updatedAt: string | Date;
+  url: string;
+}
+

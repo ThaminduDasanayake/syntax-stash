@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 
 import { FilterSection } from "@/components/filter-section";
 import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
-import { resourceCategories, resourceLinks } from "@/lib/resource-data";
+import { resourceCategories } from "@/lib/resource-data";
+import { getAllResources } from "@/lib/resources";
 
 export const metadata: Metadata = {
   title: "Resources",
@@ -10,7 +11,9 @@ export const metadata: Metadata = {
   description: "A curated list of developer resources — frameworks, tools, and references.",
 };
 
-export default function ResourcesPage() {
+export default async function ResourcesPage() {
+  const resourceLinks = await getAllResources();
+
   return (
     <div className="lib-page">
       {/* Header */}

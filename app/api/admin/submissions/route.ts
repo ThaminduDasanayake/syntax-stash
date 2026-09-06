@@ -1,11 +1,13 @@
 import { desc, eq } from "drizzle-orm";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 import { isAdmin } from "@/lib/admin";
 import { auth } from "@/lib/auth";
+import { slugifyAuthor } from "@/lib/authors";
 import { db } from "@/lib/db";
-import { submission } from "@/lib/db/schema";
+import { author, resource, submission } from "@/lib/db/schema";
 
 async function verifyAdmin() {
   const reqHeaders = await headers();
@@ -91,7 +93,103 @@ export async function PATCH(req: Request) {
 
     await db.update(submission).set(updatedData).where(eq(submission.id, id));
 
-    return NextResponse.json({ message: "Submission updated successfully.", success: true });
+    // Fetch the updated full submission record
+    const [sub] = await db.select().from(submission).where(eq(submission.id, id));
+
+    if (sub) {
+      if (sub.status === "approved") {
+        // 1. Resolve or Create Author
+        let authorRecordId: string | null = null;
+        if (sub.author && sub.author.trim()) {
+          const authorName = sub.author.trim();
+          const authorSlug = slugifyAuthor(authorName);
+
+          const [existingAuthor] = await db
+            .select()
+            .from(author)
+            .where(eq(author.slug, authorSlug));
+
+          if (existingAuthor) {
+            authorRecordId = existingAuthor.id;
+            // Optionally backfill missing links on existing author
+            await db
+              .update(author)
+              .set({
+                github: existingAuthor.github || sub.authorGitHub || null,
+                linkedin: existingAuthor.linkedin || sub.authorLinkedIn || null,
+                twitter: existingAuthor.twitter || sub.authorTwitter || null,
+                updatedAt: new Date(),
+                website: existingAuthor.website || sub.authorWebsite || sub.authorLink || null,
+                youtube: existingAuthor.youtube || sub.authorYouTube || null,
+              })
+              .where(eq(author.id, existingAuthor.id));
+          } else {
+            authorRecordId = crypto.randomUUID();
+            await db.insert(author).values({
+              id: authorRecordId,
+              github: sub.authorGitHub || null,
+              linkedin: sub.authorLinkedIn || null,
+              name: authorName,
+              slug: authorSlug,
+              twitter: sub.authorTwitter || null,
+              website: sub.authorWebsite || sub.authorLink || null,
+              youtube: sub.authorYouTube || null,
+            });
+          }
+        }
+
+        // 2. Insert or Update in Live Resource Catalog
+        const [existingResource] = await db
+          .select()
+          .from(resource)
+          .where(eq(resource.url, sub.url));
+
+        if (existingResource) {
+          await db
+            .update(resource)
+            .set({
+              title: sub.title,
+              authorId: authorRecordId,
+              category: sub.category,
+              description: sub.description,
+              favicon: sub.favicon || null,
+              github: sub.gitHubLink || null, // Renamed github column
+              ogImage: sub.ogImage || null,
+              subtitle: sub.subtitle || null,
+              tags: sub.tags || null,
+              updatedAt: new Date(),
+            })
+            .where(eq(resource.id, existingResource.id));
+        } else {
+          await db.insert(resource).values({
+            id: crypto.randomUUID(),
+            title: sub.title,
+            authorId: authorRecordId,
+            category: sub.category,
+            description: sub.description,
+            favicon: sub.favicon || null,
+            github: sub.gitHubLink || null, // Renamed github column
+            ogImage: sub.ogImage || null,
+            subtitle: sub.subtitle || null,
+            tags: sub.tags || null,
+            url: sub.url,
+          });
+        }
+
+        // 3. Purge Next.js Edge Data Cache for instant live update
+        revalidateTag("resources", "max");
+        revalidatePath("/");
+        revalidatePath("/resources");
+      } else {
+        // If status was changed to rejected or pending, remove from live catalog if present
+        await db.delete(resource).where(eq(resource.url, sub.url));
+        revalidateTag("resources", "max");
+        revalidatePath("/");
+        revalidatePath("/resources");
+      }
+    }
+
+    return NextResponse.json({ message: "Submission updated and synchronized successfully.", success: true });
   } catch (error) {
     console.error("PATCH /api/admin/submissions error:", error);
     return NextResponse.json({ error: "Failed to update submission." }, { status: 500 });
@@ -108,6 +206,15 @@ export async function DELETE(request: NextRequest) {
     const id = request.nextUrl.searchParams.get("id");
     if (!id) {
       return NextResponse.json({ error: "Missing submission ID." }, { status: 400 });
+    }
+
+    // Check if the submission was published to resource table
+    const [sub] = await db.select().from(submission).where(eq(submission.id, id));
+    if (sub?.url) {
+      await db.delete(resource).where(eq(resource.url, sub.url));
+      revalidateTag("resources", "max");
+      revalidatePath("/");
+      revalidatePath("/resources");
     }
 
     await db.delete(submission).where(eq(submission.id, id));

@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { FilterSection } from "@/components/filter-section";
-import { resourceCategories, resourceLinks } from "@/lib/resource-data";
+import { resourceCategories } from "@/lib/resource-data";
+import { getAllResources } from "@/lib/resources";
 import { slugify } from "@/lib/utils";
 
 type Params = { slug: string };
@@ -33,6 +34,8 @@ export default async function ResourceCategoryPage({ params }: { params: Promise
 
   const category = resourceCategories.find((c) => slugify(c) === slug);
   if (!category) notFound();
+
+  const resourceLinks = await getAllResources();
 
   return (
     <div className="res-page">
