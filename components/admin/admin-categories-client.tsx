@@ -475,7 +475,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
             <div>
               <InputField
                 label="Category Name *"
-                placeholder="e.g. AI Tools"
+                placeholder="e.g. AI & Machine Learning"
                 value={formData.name}
                 onChange={(e) => handleNameChange(e.target.value)}
                 required
@@ -497,7 +497,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
                 )}
               </div>
               <InputField
-                placeholder="e.g. ai-tools"
+                placeholder="e.g. ai"
                 value={formData.slug}
                 onChange={(e) => {
                   setAutoSlug(false);

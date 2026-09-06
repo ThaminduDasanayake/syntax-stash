@@ -195,12 +195,12 @@ export function SubmitForm() {
       const data = await res.json();
 
       if (res.status === 409 || data.code === "ALREADY_EXISTS") {
-        const toolTitle = data.title || title.trim();
-        const targetUrl = toolTitle
-          ? `/resources?q=${encodeURIComponent(toolTitle)}`
+        const resourceTitle = data.title || title.trim();
+        const targetUrl = resourceTitle
+          ? `/resources?q=${encodeURIComponent(resourceTitle)}`
           : "/resources";
 
-        toast.info(`"${toolTitle}" is already in Syntax Stash!`, {
+        toast.info(`"${resourceTitle}" is already in Syntax Stash!`, {
           action: {
             label: "View Resource",
             onClick: () => router.push(targetUrl),
@@ -210,14 +210,14 @@ export function SubmitForm() {
       }
 
       if (!res.ok || data.error) {
-        throw new Error(data.error || "Failed to submit tool.");
+        throw new Error(data.error || "Failed to submit resource.");
       }
 
-      toast.success(data.message || "Tool submitted for review!");
+      toast.success(data.message || "Resource submitted for review!");
       resetForm();
     } catch (err: unknown) {
       const message =
-        err instanceof Error ? err.message : "Failed to submit tool. Please try again.";
+        err instanceof Error ? err.message : "Failed to submit resource. Please try again.";
       toast.error(message);
     } finally {
       setIsSubmitting(false);
@@ -241,11 +241,11 @@ export function SubmitForm() {
             aria-hidden="true"
           />
 
-          {/* Section 1: Tool URL with Auto-Fill */}
+          {/* Section 1: Resource URL with Auto-Fill */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                Tool URL <span className="text-destructive">*</span>
+                Resource URL <span className="text-destructive">*</span>
               </Label>
               <span className="text-muted-foreground text-[10px]">
                 Paste link to auto-detect details
@@ -421,7 +421,7 @@ export function SubmitForm() {
               </Label>
               <div className="h-9">
                 <InputField
-                  placeholder="Why do you recommend this tool? Any special context?"
+                  placeholder="Why do you recommend this resource? Any special context?"
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   containerClassName="h-9"

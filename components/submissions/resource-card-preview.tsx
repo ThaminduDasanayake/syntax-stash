@@ -31,7 +31,13 @@ export function ResourceCardPreview({
   url,
 }: ResourceCardPreviewProps) {
   const [customTheme, setCustomTheme] = useState<Theme | null>(null);
+  const [prevCategory, setPrevCategory] = useState(category);
   const [isBookmarked, setIsBookmarked] = useState(false);
+
+  if (category !== prevCategory) {
+    setPrevCategory(category);
+    setCustomTheme(null);
+  }
 
   const activeTheme: Theme = customTheme ?? getCategoryTheme(category || "Generators");
 

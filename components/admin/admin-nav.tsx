@@ -28,18 +28,18 @@ export function AdminNav({
   const isCategories = pathname.startsWith("/admin/categories");
   const isTags = pathname.startsWith("/admin/tags");
 
-  let pageTitle = "Tool Submissions Queue";
-  let pageSubtitle = "Review, edit, approve, and manage community tool submissions.";
+  let pageTitle = "Resource Submissions Queue";
+  let pageSubtitle = "Review, edit, approve, and manage community resource submissions.";
 
   if (isResources) {
     pageTitle = "Live Resource Manager";
-    pageSubtitle = "Browse, search, edit, create, and manage live published tools in the catalog.";
+    pageSubtitle = "Browse, search, edit, create, and manage live published resources in the catalog.";
   } else if (isCategories) {
     pageTitle = "Category Manager";
-    pageSubtitle = "Create, organize, style, and manage first-class tool categories.";
+    pageSubtitle = "Create, organize, style, and manage first-class resource categories.";
   } else if (isTags) {
     pageTitle = "Tags Manager";
-    pageSubtitle = "Manage canonical tool tags, slug identifiers, and featured tag highlights.";
+    pageSubtitle = "Manage canonical resource tags, slug identifiers, and featured tag highlights.";
   }
 
   return (

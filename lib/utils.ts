@@ -102,22 +102,41 @@ export const THEME_CONFIG: Record<
   },
 };
 
-const RESOURCE_VALUES: string[] = Object.values(RESOURCE_CATEGORIES);
-const TOOL_VALUES: string[] = Object.values(TOOL_CATEGORIES);
+const RESOURCE_ENTRIES = Object.entries(RESOURCE_CATEGORIES);
+const TOOL_ENTRIES = Object.entries(TOOL_CATEGORIES);
 
 export function getCategoryTheme(
   category: string,
   itemType: "resource" | "tool" = "resource",
 ): Theme {
+  if (!category) return THEMES[0];
+  const normalized = category.trim().toLowerCase();
+  const slug = slugify(normalized);
+
   if (itemType === "tool") {
-    const toolIdx = TOOL_VALUES.indexOf(category);
+    const toolIdx = TOOL_ENTRIES.findIndex(
+      ([key, val]) =>
+        key.toLowerCase() === slug ||
+        val.toLowerCase() === normalized ||
+        slugify(val) === slug,
+    );
     if (toolIdx !== -1) return THEMES[toolIdx % THEMES.length];
   }
 
-  const resourceIdx = RESOURCE_VALUES.indexOf(category);
+  const resourceIdx = RESOURCE_ENTRIES.findIndex(
+    ([key, val]) =>
+      key.toLowerCase() === slug ||
+      val.toLowerCase() === normalized ||
+      slugify(val) === slug,
+  );
   if (resourceIdx !== -1) return THEMES[resourceIdx % THEMES.length];
 
-  const fallbackToolIdx = TOOL_VALUES.indexOf(category);
+  const fallbackToolIdx = TOOL_ENTRIES.findIndex(
+    ([key, val]) =>
+      key.toLowerCase() === slug ||
+      val.toLowerCase() === normalized ||
+      slugify(val) === slug,
+  );
   if (fallbackToolIdx !== -1) return THEMES[fallbackToolIdx % THEMES.length];
 
   return THEMES[0];

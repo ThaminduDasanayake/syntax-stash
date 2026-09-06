@@ -165,11 +165,11 @@ export function AdminResourcesClient({
 
       if (!res.ok || !data.success) {
         setResources(previousResources);
-        toast.error(data.error || "Failed to delete tool. Restoring.");
+        toast.error(data.error || "Failed to delete resource. Restoring.");
       }
     } catch {
       setResources(previousResources);
-      toast.error("Network error. Tool restoration applied.");
+      toast.error("Network error. Resource restoration applied.");
     } finally {
       setIsWorking(false);
     }
@@ -186,13 +186,13 @@ export function AdminResourcesClient({
 
   return (
     <div>
-      {/* Control Bar: Search, Category Filter, Sort, Add Tool */}
+      {/* Control Bar: Search, Category Filter, Sort, Add Resource */}
       <div className="border-line bg-surface/50 mb-6 space-y-4 rounded-lg border p-4 font-mono text-xs">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           {/* Search Bar */}
           <div className="relative flex-1">
             <InputField
-              placeholder="Search live tools by name, description, tags, author, URL..."
+              placeholder="Search live resources by name, description, tags, author, URL..."
               value={searchQuery}
               onChange={(e) => handleSearchChange(e.target.value)}
               prefix={<MagnifyingGlassIcon className="text-muted-foreground size-4" />}
@@ -232,7 +232,7 @@ export function AdminResourcesClient({
             >
               <Link href="/admin/resources/new">
                 <PlusIcon className="size-4" />
-                <span>Add New Tool</span>
+                <span>Add New Resource</span>
               </Link>
             </Button>
           </div>
@@ -270,7 +270,7 @@ export function AdminResourcesClient({
           <div className="text-muted-foreground text-[11px]">
             Showing{" "}
             <strong className="text-foreground">{filteredAndSortedResources.length}</strong> of{" "}
-            <strong className="text-foreground">{resources.length}</strong> tools
+            <strong className="text-foreground">{resources.length}</strong> resources
             {searchQuery && (
               <span>
                 {" "}

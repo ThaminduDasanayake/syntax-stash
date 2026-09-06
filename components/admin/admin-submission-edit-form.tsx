@@ -185,11 +185,11 @@ export function AdminSubmissionEditForm({
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
         {/* Form Controls Column */}
         <div className="space-y-6 lg:col-span-7">
-          {/* Section 1: Tool URL with Live Re-Sync */}
+          {/* Section 1: Resource URL with Live Re-Sync */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                Tool URL <span className="text-destructive">*</span>
+                Resource URL <span className="text-destructive">*</span>
               </Label>
               <span className="text-muted-foreground text-[10px]">
                 Scan live site for latest metadata & assets

@@ -7,7 +7,7 @@ import { db } from "@/lib/db";
 import { author, category, resource, resourceTag, tag } from "@/lib/db/schema";
 
 export const metadata: Metadata = {
-  title: "Edit Tool — Syntax Stash Admin",
+  title: "Edit Resource — Syntax Stash Admin",
   robots: {
     follow: false,
     index: false,

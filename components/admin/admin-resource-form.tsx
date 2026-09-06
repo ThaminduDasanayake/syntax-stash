@@ -35,10 +35,7 @@ interface AdminResourceFormProps {
   mode?: "create" | "edit";
 }
 
-export function AdminResourceForm({
-  initialData,
-  mode = "create",
-}: AdminResourceFormProps) {
+export function AdminResourceForm({ initialData, mode = "create" }: AdminResourceFormProps) {
   const router = useRouter();
   const isEdit = mode === "edit" || Boolean(initialData?.id);
 
@@ -156,7 +153,7 @@ export function AdminResourceForm({
     e.preventDefault();
 
     if (!formData.title?.trim()) {
-      toast.error("Tool title is required.");
+      toast.error("Resource title is required.");
       return;
     }
     if (!formData.url?.trim()) {
@@ -232,28 +229,29 @@ export function AdminResourceForm({
               className="border-line hover:bg-surface h-8 gap-1 px-2.5 text-xs font-bold uppercase"
             >
               <Link href="/admin/resources">
-                <ArrowLeftIcon className="size-3.5" />
-                <span>Back to Tools</span>
+                <ArrowLeftIcon weight="bold" />
+                <span>Back to Resources</span>
               </Link>
             </Button>
             <span className="text-muted-foreground">/</span>
-            <span className="text-muted-foreground uppercase font-bold text-[11px]">
-              {isEdit ? "Edit Tool" : "New Tool"}
+            <span className="text-muted-foreground text-[11px] font-bold uppercase">
+              {isEdit ? "Edit Resource" : "New Resource"}
             </span>
           </div>
           <h1 className="text-foreground text-2xl font-bold tracking-tight uppercase">
             {isEdit ? (
               <>
-                Edit Tool: <span className="text-primary">{formData.title || initialData?.title}</span>
+                Edit Resource:{" "}
+                <span className="text-primary">{formData.title || initialData?.title}</span>
               </>
             ) : (
-              "Add New Tool to Catalog"
+              "Add New Resource to Catalog"
             )}
           </h1>
-          <p className="text-muted-foreground text-xs font-mono">
+          <p className="text-muted-foreground font-mono text-xs">
             {isEdit
-              ? "Update tool details, category assignment, author attributions, and media assets."
-              : "Create and publish a new verified tool directly into the live Syntax Stash catalog."}
+              ? "Update resource details, category assignment, author attributions, and media assets."
+              : "Create and publish a new verified resource directly into the live Syntax Stash catalog."}
           </p>
         </div>
 
@@ -277,170 +275,147 @@ export function AdminResourceForm({
           >
             {isSubmitting ? (
               <>
-                <CircleNotchIcon className="size-4 animate-spin" />
+                <CircleNotchIcon weight="bold" className="size-4 animate-spin" />
                 <span>Saving...</span>
               </>
             ) : isEdit ? (
               <>
-                <FloppyDiskIcon className="size-4" />
+                <FloppyDiskIcon weight="duotone" className="size-4" />
                 <span>Save Changes</span>
               </>
             ) : (
               <>
-                <PlusIcon className="size-4" />
-                <span>Publish Tool</span>
+                <PlusIcon weight="bold" className="size-4" />
+                <span>Publish Resource</span>
               </>
             )}
           </Button>
         </div>
       </div>
 
-      {/* Main Form Layout */}
+      {/* Main Form Layout: Form (7 cols) + Real Card Preview (5 cols) */}
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
-          {/* Left Column: Form Fields (7 cols) */}
+          {/* Left Column: Form Controls (7 cols) */}
           <div className="space-y-6 lg:col-span-7">
-            {/* Section: Basic Information */}
-            <div className="border-line bg-surface/40 space-y-5 rounded-lg border p-5">
-              <h2 className="text-foreground border-line border-b pb-2 text-xs font-bold uppercase tracking-wider">
-                1. Basic Information
-              </h2>
-
-              {/* Website URL + Auto Detect */}
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                    Website URL *
-                  </Label>
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="ghost"
-                    onClick={handleAutoDetect}
-                    disabled={isDetecting || !formData.url?.trim()}
-                    className="text-primary hover:bg-primary/10 h-6 gap-1 px-2 text-[11px]"
-                  >
-                    {isDetecting ? (
-                      <>
-                        <CircleNotchIcon className="size-3 animate-spin" />
-                        <span>Detecting...</span>
-                      </>
-                    ) : (
-                      <>
-                        <ArrowsClockwiseIcon className="size-3" />
-                        <span>Auto-Detect Metadata</span>
-                      </>
-                    )}
-                  </Button>
+            {/* Section 1: Resource URL with Auto-Detect */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                  Resource URL <span className="text-destructive">*</span>
+                </Label>
+                <span className="text-muted-foreground text-[10px]">
+                  Scan live site for latest metadata & assets
+                </span>
+              </div>
+              <div className="flex gap-2">
+                <div className="h-9 flex-1">
+                  <InputField
+                    type="url"
+                    value={formData.url || ""}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, url: e.target.value }))}
+                    placeholder="https://example.com"
+                    containerClassName="h-9"
+                    className="font-mono text-xs"
+                    required
+                  />
                 </div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleAutoDetect}
+                  disabled={isDetecting || !formData.url?.trim()}
+                  className="h-8 shrink-0 gap-1.5 font-mono text-xs font-bold uppercase"
+                >
+                  {isDetecting ? (
+                    <CircleNotchIcon weight="bold" className="size-3.5 animate-spin" />
+                  ) : (
+                    <ArrowsClockwiseIcon weight="bold" className="text-primary size-3.5" />
+                  )}
+                  {isDetecting ? "Detecting..." : "Auto-Detect"}
+                </Button>
+              </div>
+            </div>
+
+            {/* Section 2: Title, Category, & Subtitle */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                  Title <span className="text-destructive">*</span>
+                </Label>
+                <div className="h-9">
+                  <InputField
+                    value={formData.title || ""}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
+                    placeholder="e.g. Radix UI"
+                    containerClassName="h-9"
+                    className="font-mono text-xs"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                  Category <span className="text-destructive">*</span>
+                </Label>
+                <div className="h-9">
+                  <SelectField
+                    value={formData.category || defaultCategory}
+                    onValueChange={(val) => setFormData((prev) => ({ ...prev, category: val }))}
+                    options={CATEGORY_OPTIONS}
+                    triggerClassName="h-9 font-mono text-xs"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                Subtitle / Tagline (Optional)
+              </Label>
+              <div className="h-9">
                 <InputField
-                  placeholder="https://example.com"
-                  value={formData.url || ""}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, url: e.target.value }))}
-                  required
+                  value={formData.subtitle || ""}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, subtitle: e.target.value }))}
+                  placeholder="e.g. Unstyled, accessible UI components for React"
+                  containerClassName="h-9"
                   className="font-mono text-xs"
                 />
               </div>
-
-              {/* Title & Subtitle */}
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div className="space-y-2">
-                  <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                    Title *
-                  </Label>
-                  <InputField
-                    placeholder="e.g. Radix UI"
-                    value={formData.title || ""}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
-                    required
-                    className="font-mono text-xs"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                    Subtitle
-                  </Label>
-                  <InputField
-                    placeholder="e.g. Unstyled UI primitives"
-                    value={formData.subtitle || ""}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, subtitle: e.target.value }))}
-                    className="font-mono text-xs"
-                  />
-                </div>
-              </div>
-
-              {/* Category Select */}
-              <div className="space-y-2">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Category *
-                </Label>
-                <SelectField
-                  value={formData.category || CATEGORY_OPTIONS[0].value}
-                  onValueChange={(val) => setFormData((prev) => ({ ...prev, category: val }))}
-                  options={CATEGORY_OPTIONS}
-                  triggerClassName="h-10 font-mono text-xs"
-                  placeholder="Select a category..."
-                />
-                <p className="text-muted-foreground text-[11px]">
-                  Select the primary category where this tool will be listed.
-                </p>
-              </div>
-
-              {/* Description */}
-              <div className="space-y-2">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Description *
-                </Label>
-                <Textarea
-                  placeholder="A concise, helpful description of the tool..."
-                  value={formData.description || ""}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, description: e.target.value }))
-                  }
-                  required
-                  rows={3}
-                  className="font-sans text-xs"
-                />
-              </div>
-
-              {/* Canonical Tags */}
-              <div className="space-y-2">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Tags (Canonical Catalog)
-                </Label>
-                <TagPicker
-                  allowCustom={false}
-                  value={formData.tags || ""}
-                  onChange={(val) => setFormData((prev) => ({ ...prev, tags: val }))}
-                  placeholder="Type to search and select tags..."
-                />
-              </div>
             </div>
 
-            {/* Section: Author Attributions */}
-            <div className="border-line bg-surface/40 space-y-4 rounded-lg border p-5">
-              <h2 className="text-foreground border-line border-b pb-2 text-xs font-bold uppercase tracking-wider">
-                2. Creator & Social Links
-              </h2>
-              <AuthorSocialFields
-                values={authorValues}
-                onChange={handleAuthorFieldChange}
-                onBatchChange={handleAuthorBatchChange}
+            {/* Section 3: Description */}
+            <div className="space-y-2">
+              <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                Description <span className="text-destructive">*</span>
+              </Label>
+              <Textarea
+                value={formData.description || ""}
+                onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
+                rows={3}
+                className="bg-paper min-h-20 font-mono text-xs leading-relaxed"
+                placeholder="A concise, helpful description of the resource..."
+                required
               />
             </div>
 
-            {/* Section: Media Assets & Repository */}
-            <div className="border-line bg-surface/40 space-y-4 rounded-lg border p-5">
-              <h2 className="text-foreground border-line border-b pb-2 text-xs font-bold uppercase tracking-wider">
-                3. Media Assets & GitHub
-              </h2>
+            {/* Section 4: Visuals & Media Assets */}
+            <MediaAssetFields
+              favicon={formData.favicon || ""}
+              faviconOptions={faviconOptions}
+              ogImage={formData.ogImage || ""}
+              ogImageOptions={ogImageOptions}
+              onFaviconChange={(val) => setFormData((prev) => ({ ...prev, favicon: val }))}
+              onOgImageChange={(val) => setFormData((prev) => ({ ...prev, ogImage: val }))}
+            />
 
-              {/* GitHub Repo URL */}
-              <div className="space-y-2">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  GitHub Repository URL
-                </Label>
+            {/* Section 5: GitHub Repository URL */}
+            <div className="space-y-2">
+              <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                GitHub Repository URL (Optional)
+              </Label>
+              <div className="h-9">
                 <InputField
                   placeholder="https://github.com/owner/repo"
                   value={formData.github || ""}
@@ -454,20 +429,32 @@ export function AdminResourceForm({
                       className="size-3.5 dark:invert"
                     />
                   }
+                  containerClassName="h-9"
                   className="font-mono text-xs"
                 />
-                <p className="text-muted-foreground text-[11px]">
-                  Enables live star badge and direct repository link.
-                </p>
               </div>
+              <p className="text-muted-foreground text-[10px]">
+                Enables live star badge and direct repository link.
+              </p>
+            </div>
 
-              <MediaAssetFields
-                favicon={formData.favicon || ""}
-                faviconOptions={faviconOptions}
-                ogImage={formData.ogImage || ""}
-                ogImageOptions={ogImageOptions}
-                onFaviconChange={(val) => setFormData((prev) => ({ ...prev, favicon: val }))}
-                onOgImageChange={(val) => setFormData((prev) => ({ ...prev, ogImage: val }))}
+            {/* Section 6: Creator Attribution */}
+            <AuthorSocialFields
+              values={authorValues}
+              onChange={handleAuthorFieldChange}
+              onBatchChange={handleAuthorBatchChange}
+            />
+
+            {/* Section 7: Canonical Tags */}
+            <div className="space-y-2">
+              <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                Canonical Tags
+              </Label>
+              <TagPicker
+                allowCustom={false}
+                value={formData.tags || ""}
+                onChange={(val) => setFormData((prev) => ({ ...prev, tags: val }))}
+                placeholder="Type to search and select tags..."
               />
             </div>
           </div>
@@ -477,7 +464,7 @@ export function AdminResourceForm({
             <div className="sticky top-20 space-y-6">
               {/* Card Preview */}
               <div className="border-line bg-surface/40 space-y-4 rounded-lg border p-5">
-                <h2 className="text-foreground border-line border-b pb-2 text-xs font-bold uppercase tracking-wider">
+                <h2 className="text-foreground border-line border-b pb-2 text-xs font-bold tracking-wider uppercase">
                   Live Catalog Card Preview
                 </h2>
                 <ResourceCardPreview
@@ -492,13 +479,13 @@ export function AdminResourceForm({
                 />
               </div>
 
-              {/* Publishing Controls Box */}
+              {/* Publishing Summary Box */}
               <div className="border-line bg-surface/40 space-y-4 rounded-lg border p-5">
-                <h2 className="text-foreground border-line border-b pb-2 text-xs font-bold uppercase tracking-wider">
+                <h2 className="text-foreground border-line border-b pb-2 text-xs font-bold tracking-wider uppercase">
                   Publishing Summary
                 </h2>
 
-                <div className="space-y-2 text-[11px] text-muted-foreground">
+                <div className="text-muted-foreground space-y-2 text-[11px]">
                   <div className="flex justify-between">
                     <span>Category:</span>
                     <strong className="text-foreground">{formData.category || "None"}</strong>
@@ -513,11 +500,15 @@ export function AdminResourceForm({
                   </div>
                   <div className="flex justify-between">
                     <span>Repository:</span>
-                    <strong className="text-foreground">{formData.github ? "Linked" : "None"}</strong>
+                    <strong className="text-foreground">
+                      {formData.github ? "Linked" : "None"}
+                    </strong>
                   </div>
                   <div className="flex justify-between">
                     <span>Favicon:</span>
-                    <strong className="text-foreground">{formData.favicon ? "Provided" : "Default"}</strong>
+                    <strong className="text-foreground">
+                      {formData.favicon ? "Provided" : "Default"}
+                    </strong>
                   </div>
                 </div>
 
@@ -525,22 +516,22 @@ export function AdminResourceForm({
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full h-10 gap-1.5 text-xs font-bold uppercase"
+                    className="h-10 w-full gap-1.5 text-xs font-bold uppercase"
                   >
                     {isSubmitting ? (
                       <>
-                        <CircleNotchIcon className="size-4 animate-spin" />
+                        <CircleNotchIcon weight="bold" className="size-4 animate-spin" />
                         <span>Saving to Database...</span>
                       </>
                     ) : isEdit ? (
                       <>
-                        <FloppyDiskIcon className="size-4" />
-                        <span>Save & Update Tool</span>
+                        <FloppyDiskIcon weight="duotone" className="size-4" />
+                        <span>Save Changes</span>
                       </>
                     ) : (
                       <>
-                        <PlusIcon className="size-4" />
-                        <span>Publish Tool to Catalog</span>
+                        <PlusIcon weight="bold" className="size-4" />
+                        <span>Publish Resource</span>
                       </>
                     )}
                   </Button>
