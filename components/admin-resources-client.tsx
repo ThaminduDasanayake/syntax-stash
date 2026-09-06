@@ -10,12 +10,13 @@ import {
   SlidersHorizontalIcon,
   XIcon,
 } from "@phosphor-icons/react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import {
   AdminResourceCard,
-  AdminResourceDialog,
   AdminResourceItem,
   CATEGORY_OPTIONS,
 } from "@/components/admin";
@@ -51,16 +52,14 @@ export function AdminResourcesClient({
   _initialCategoryCounts = {},
   initialResources = [],
 }: AdminResourcesClientProps) {
-
+  const router = useRouter();
   const [resources, setResources] = useState<AdminResourceItem[]>(initialResources);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [sortBy, setSortBy] = useState<string>("newest");
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Dialog & Action states
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editingResource, setEditingResource] = useState<AdminResourceItem | null>(null);
+  // Deletion state
   const [deletingResource, setDeletingResource] = useState<AdminResourceItem | null>(null);
   const [isWorking, setIsWorking] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -145,96 +144,6 @@ export function AdminResourcesClient({
     }
   };
 
-  // Open Create Dialog
-  const handleOpenCreate = () => {
-    setEditingResource(null);
-    setIsDialogOpen(true);
-  };
-
-  // Open Edit Dialog
-  const handleOpenEdit = (res: AdminResourceItem) => {
-    setEditingResource(res);
-    setIsDialogOpen(true);
-  };
-
-  // Create / Update Handler
-  const handleSaveResource = async (formData: Partial<AdminResourceItem>) => {
-    try {
-      setIsWorking(true);
-      const isEdit = Boolean(formData.id);
-
-      if (isEdit) {
-        const res = await fetch("/api/admin/resources", {
-          body: JSON.stringify(formData),
-          headers: { "Content-Type": "application/json" },
-          method: "PATCH",
-        });
-        const data = await res.json();
-
-        if (res.ok && data.success) {
-          setResources((prev) =>
-            prev.map((item) =>
-              item.id === formData.id
-                ? ({
-                    ...item,
-                    ...formData,
-                    updatedAt: new Date(),
-                  } as AdminResourceItem)
-                : item,
-            ),
-          );
-          setIsDialogOpen(false);
-          toast.success(`"${formData.title}" updated successfully.`);
-        } else {
-          toast.error(data.error || "Failed to update tool.");
-        }
-      } else {
-        const res = await fetch("/api/admin/resources", {
-          body: JSON.stringify(formData),
-          headers: { "Content-Type": "application/json" },
-          method: "POST",
-        });
-        const data = await res.json();
-
-        if (res.ok && data.success) {
-          const newTool: AdminResourceItem = {
-            id: data.id || crypto.randomUUID(),
-            title: formData.title || "",
-            authorBlog: formData.authorBlog || null,
-            authorGithub: formData.authorGithub || null,
-            authorId: null,
-            authorLinkedin: formData.authorLinkedin || null,
-            authorName: formData.authorName || null,
-            authorSlug: null,
-            authorTwitter: formData.authorTwitter || null,
-            authorWebsite: formData.authorWebsite || null,
-            authorYoutube: formData.authorYoutube || null,
-            category: formData.category || "Generators",
-            createdAt: new Date(),
-            description: formData.description || "",
-            favicon: formData.favicon || null,
-            github: formData.github || null,
-            ogImage: formData.ogImage || null,
-            subtitle: formData.subtitle || null,
-            tags: formData.tags || null,
-            updatedAt: new Date(),
-            url: formData.url || "",
-          };
-
-          setResources((prev) => [newTool, ...prev]);
-          setIsDialogOpen(false);
-          toast.success(`"${formData.title}" created & published to catalog.`);
-        } else {
-          toast.error(data.error || "Failed to create tool.");
-        }
-      }
-    } catch {
-      toast.error("An error occurred while saving tool.");
-    } finally {
-      setIsWorking(false);
-    }
-  };
-
   // Delete Handler with optimistic UI
   const handleConfirmDelete = async () => {
     if (!deletingResource) return;
@@ -248,6 +157,7 @@ export function AdminResourcesClient({
     toast.success(`"${target.title}" deleted from catalog.`);
 
     try {
+      setIsWorking(true);
       const res = await fetch(`/api/admin/resources?id=${encodeURIComponent(target.id)}`, {
         method: "DELETE",
       });
@@ -260,6 +170,8 @@ export function AdminResourcesClient({
     } catch {
       setResources(previousResources);
       toast.error("Network error. Tool restoration applied.");
+    } finally {
+      setIsWorking(false);
     }
   };
 
@@ -314,12 +226,14 @@ export function AdminResourcesClient({
             </Button>
 
             <Button
+              asChild
               size="sm"
-              onClick={handleOpenCreate}
               className="h-9 gap-1.5 px-3.5 text-xs font-bold uppercase"
             >
-              <PlusIcon className="size-4" />
-              <span>Add New Tool</span>
+              <Link href="/admin/resources/new">
+                <PlusIcon className="size-4" />
+                <span>Add New Tool</span>
+              </Link>
             </Button>
           </div>
         </div>
@@ -375,7 +289,7 @@ export function AdminResourcesClient({
               <AdminResourceCard
                 key={item.id}
                 resource={item}
-                onEdit={() => handleOpenEdit(item)}
+                onEdit={() => router.push(`/admin/resources/${item.id}`)}
                 onDelete={() => setDeletingResource(item)}
                 isWorking={isWorking}
               />
@@ -468,15 +382,6 @@ export function AdminResourcesClient({
         </div>
       )}
 
-      {/* Edit / Create Dialog */}
-      <AdminResourceDialog
-        open={isDialogOpen}
-        onOpenChange={setIsDialogOpen}
-        resource={editingResource}
-        onSave={handleSaveResource}
-        isWorking={isWorking}
-      />
-
       {/* Deletion Confirmation AlertDialog */}
       <AlertDialog
         open={Boolean(deletingResource)}
@@ -512,3 +417,4 @@ export function AdminResourcesClient({
     </div>
   );
 }
+
