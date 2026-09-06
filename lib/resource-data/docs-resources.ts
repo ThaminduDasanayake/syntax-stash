@@ -23,7 +23,7 @@ export const documentationLinks: Resource<typeof CATEGORIES.docs>[] = [
     description:
       "Alexandrie is a fast, self-hostable Markdown workspace for notes, knowledge bases, collaboration, and public documentation.",
     favicon: "https://alexandrie-hub.fr/Logo/Alexandrie-logo-light-crop.png",
-    gitHubLink: "https://github.com/Smaug6739/Alexandrie",
+    github: "https://github.com/Smaug6739/Alexandrie",
     ogImage: "https://alexandrie-hub.fr/screenshots/mock/0.png",
     url: "https://alexandrie-hub.fr/",
   },
@@ -44,7 +44,7 @@ export const documentationLinks: Resource<typeof CATEGORIES.docs>[] = [
     description:
       "Send transactional and broadcast email from one modern API — 8 SDKs, Markdown sends, tags, tracking, and webhooks. As low as 8¢ per 1,000.",
     favicon: "https://anypost.com/favicon.svg",
-    gitHubLink: "https://github.com/anypost",
+    github: "https://github.com/anypost",
     ogImage: "https://anypost.com/brand/og.png",
     subtitle: "Transactional and broadcast email service",
     tags: [TAGS.email, TAGS.markdown],
@@ -67,7 +67,7 @@ export const documentationLinks: Resource<typeof CATEGORIES.docs>[] = [
     description:
       "Fast, offline, and free documentation browser for developers. Search 100+ docs in one web app: HTML, CSS, JavaScript, PHP, Ruby, Python, Go, C, C++…",
     favicon: "https://devdocs.io/images/apple-icon-160.png",
-    gitHubLink: "https://github.com/freeCodeCamp/devdocs",
+    github: "https://github.com/freeCodeCamp/devdocs",
     tags: [TAGS["open-source"]],
     url: "https://devdocs.io/",
   },
@@ -77,7 +77,7 @@ export const documentationLinks: Resource<typeof CATEGORIES.docs>[] = [
     category: CATEGORIES.docs,
     description: "A ridiculous collection of web development cheatsheets",
     favicon: "https://devhints.io/assets/favicon.png",
-    gitHubLink: "https://github.com/rstacruz/cheatsheets",
+    github: "https://github.com/rstacruz/cheatsheets",
     ogImage: "https://assets.devhints.io/previews/index.jpg",
     subtitle: "TL;DR for developer documentation",
     tags: [TAGS.development, TAGS.education],
@@ -90,7 +90,7 @@ export const documentationLinks: Resource<typeof CATEGORIES.docs>[] = [
       "Open-source documentation compiler. One Markdown source, one command — generates website, search, AI context, agent protocols, and knowledge formats together.",
     favicon:
       "https://raw.githubusercontent.com/docmd-io/docmd/main/packages/ui/assets/images/docmd-logo.png",
-    gitHubLink: "https://github.com/docmd-io/docmd",
+    github: "https://github.com/docmd-io/docmd",
     ogImage: "https://docmd.io/assets/images/preview.webp",
     subtitle: "Documentation for Humans and Machines",
     url: "https://docmd.io/",
@@ -109,7 +109,7 @@ export const documentationLinks: Resource<typeof CATEGORIES.docs>[] = [
     description:
       "Turn markdown into responsive, email-safe HTML that renders perfectly across every client.",
     favicon: "https://www.emailmd.dev/favicon.ico",
-    gitHubLink: "https://github.com/anypost/emailmd",
+    github: "https://github.com/anypost/emailmd",
     subtitle: "Responsive Emails, Written in Markdown",
     tags: [TAGS.email, TAGS.markdown],
     url: "https://www.emailmd.dev/",
@@ -235,7 +235,7 @@ export const documentationLinks: Resource<typeof CATEGORIES.docs>[] = [
     description:
       "Write your documentation in Markdown and create a professional static site in minutes – searchable, customizable, in 60+ languages, for all devices",
     favicon: "https://squidfunk.github.io/mkdocs-material/assets/favicon.png",
-    gitHubLink: "https://github.com/squidfunk/mkdocs-material",
+    github: "https://github.com/squidfunk/mkdocs-material",
     ogImage: "https://squidfunk.github.io/mkdocs-material/assets/images/social/index.png",
     tags: [TAGS.markdown, TAGS.tool],
     url: "https://squidfunk.github.io/mkdocs-material/",
@@ -300,7 +300,7 @@ export const documentationLinks: Resource<typeof CATEGORIES.docs>[] = [
     description:
       "Free, Private & Browser-Based. Merge, edit, and edit PDF files online without uploading to servers.",
     favicon: "https://pdfcraft.devtoolcafe.com/favicon.svg",
-    gitHubLink: "https://github.com/PDFCraftTool/pdfcraft",
+    github: "https://github.com/PDFCraftTool/pdfcraft",
     ogImage: "https://pdfcraft.devtoolcafe.com/images/og-image.png",
     subtitle: "Professional PDF Tools",
     tags: [TAGS.pdf],
@@ -325,7 +325,7 @@ export const documentationLinks: Resource<typeof CATEGORIES.docs>[] = [
     description:
       "Quarkdown is a modern, open-source, Markdown-based typesetting system for creating papers, presentations, knowledge bases and static websites.",
     favicon: "https://quarkdown.com/favicon.svg",
-    gitHubLink: "https://github.com/iamgio/quarkdown",
+    github: "https://github.com/iamgio/quarkdown",
     ogImage: "https://quarkdown.com/og-image.jpg",
     subtitle: "Markdown with superpowers",
     tags: [TAGS.development],
@@ -346,7 +346,7 @@ export const documentationLinks: Resource<typeof CATEGORIES.docs>[] = [
     description:
       "Signature PDF is free online software for signing (individually or collaboratively), organizing, or compressing PDF files.",
     favicon: "https://pdf.24eme.fr/favicon.svg",
-    gitHubLink: "https://github.com/24eme/signaturepdf",
+    github: "https://github.com/24eme/signaturepdf",
     ogImage: "https://pdf.24eme.fr/logo.svg",
     subtitle: "Sign and manipulate PDFs freely",
     tags: [TAGS.pdf],
@@ -369,7 +369,7 @@ export const documentationLinks: Resource<typeof CATEGORIES.docs>[] = [
       "GitHub's #1 PDF application with 30M+ downloads. The next generation of the PDF Editor - private, open-source, and built to scale.",
     favicon:
       "https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/frontend/editor/src/core/assets/brand/branding-logo/logo-mark.svg",
-    gitHubLink: "https://github.com/Stirling-Tools/Stirling-PDF",
+    github: "https://github.com/Stirling-Tools/Stirling-PDF",
     ogImage:
       "https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/frontend/editor/src/core/assets/brand/modern-logo/Firstpage.png",
     subtitle: "PDF Processor",

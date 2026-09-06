@@ -53,15 +53,14 @@ export function AdminSubmissionEditForm({
     adminNotes: sub.adminNotes || "",
     author: sub.author || "",
     authorGitHub: sub.authorGitHub || "",
-    authorLink: sub.authorLink || "",
     authorLinkedIn: sub.authorLinkedIn || "",
     authorTwitter: sub.authorTwitter || "",
-    authorWebsite: sub.authorWebsite || sub.authorLink || "",
+    authorWebsite: sub.authorWebsite || "",
     authorYouTube: sub.authorYouTube || "",
     category: sub.category,
     description: sub.description,
     favicon: sub.favicon || "",
-    gitHubLink: sub.gitHubLink || "",
+    github: sub.github || "",
     notes: sub.notes || "",
     ogImage: sub.ogImage || "",
     pricing: sub.pricing || "Free",
@@ -80,18 +79,10 @@ export function AdminSubmissionEditForm({
   >([]);
 
   const handleAuthorFieldChange = (field: keyof AuthorSocialValues, value: string) => {
-    if (field === "authorWebsite") {
-      setEditForm((prev) => ({
-        ...prev,
-        authorLink: value,
-        authorWebsite: value,
-      }));
-    } else {
-      setEditForm((prev) => ({
-        ...prev,
-        [field]: value,
-      }));
-    }
+    setEditForm((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
   };
 
   const handleAutoDetect = async () => {
@@ -123,7 +114,7 @@ export function AdminSubmissionEditForm({
               : prev.category),
           description: prev.description || data.description,
           favicon: data.favicon || prev.favicon,
-          gitHubLink: prev.gitHubLink || data.gitHubLink,
+          github: prev.github || data.github,
           ogImage: data.ogImage || prev.ogImage,
           subtitle: prev.subtitle || data.subtitle,
         }));
@@ -304,7 +295,7 @@ export function AdminSubmissionEditForm({
               authorGitHub: editForm.authorGitHub,
               authorLinkedIn: editForm.authorLinkedIn,
               authorTwitter: editForm.authorTwitter,
-              authorWebsite: editForm.authorWebsite || editForm.authorLink,
+              authorWebsite: editForm.authorWebsite,
               authorYouTube: editForm.authorYouTube,
             }}
             onChange={handleAuthorFieldChange}
@@ -329,8 +320,8 @@ export function AdminSubmissionEditForm({
                 <div className="h-9">
                   <InputField
                     type="url"
-                    value={editForm.gitHubLink || ""}
-                    onChange={(e) => setEditForm({ ...editForm, gitHubLink: e.target.value })}
+                    value={editForm.github || ""}
+                    onChange={(e) => setEditForm({ ...editForm, github: e.target.value })}
                     placeholder="https://github.com/owner/repo"
                     containerClassName="h-9"
                     className="font-mono text-xs"

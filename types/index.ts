@@ -15,8 +15,7 @@ export interface InternalTool<TCategory extends string = string> extends BaseIte
 export interface Resource<TCategory extends string = string> extends BaseItem<TCategory> {
   url: string;
   author?: string | string[];
-  authorLink?: string | string[];
-  gitHubLink?: string;
+  github?: string;
   className?: string;
   favicon?: string;
   ogImage?: string;

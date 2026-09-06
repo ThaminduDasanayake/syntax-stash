@@ -14,7 +14,7 @@ interface InputTool {
   designMinisSlug?: string;
   designMinisUrl?: string;
   favicon?: string;
-  gitHubLink?: string;
+  github?: string;
   isHostedOnDesignMinis?: boolean;
   ogImage?: string;
   platforms?: string;
@@ -49,7 +49,7 @@ export interface CompleteScrapedTool {
   categories?: string[];
   description: string;
   favicon: string;
-  gitHubLink?: string;
+  github?: string;
   metadata: WebMetadata;
   ogImage?: string;
   originalTitle: string;
@@ -218,11 +218,11 @@ function extractFullMetadata(
   });
 
   // 7. GitHub Link discovery
-  let gitHubLink = fallbackTool.gitHubLink;
-  if (!gitHubLink) {
+  let github = fallbackTool.github;
+  if (!github) {
     $('a[href*="github.com"]').each((_, el) => {
       const href = $(el).attr("href");
-      if (href && !gitHubLink) {
+      if (href && !github) {
         try {
           const gh = new URL(href);
           if (gh.hostname.includes("github.com")) {
@@ -240,7 +240,7 @@ function extractFullMetadata(
                 "trending",
               ].includes(parts[0])
             ) {
-              gitHubLink = `https://github.com/${parts[0]}/${parts[1]}`;
+              github = `https://github.com/${parts[0]}/${parts[1]}`;
             }
           }
         } catch {
@@ -351,7 +351,7 @@ function extractFullMetadata(
     categories: fallbackTool.categories,
     description,
     favicon,
-    gitHubLink,
+    github,
     metadata: {
       headings: { h1, h2 },
       icons,
@@ -401,7 +401,7 @@ async function main() {
             categories: tool.categories,
             description: tool.description || "",
             favicon: tool.favicon || "",
-            gitHubLink: tool.gitHubLink,
+            github: tool.github,
             metadata: {
               headings: { h1: [tool.title], h2: [] },
               icons: tool.favicon ? [{ href: tool.favicon, rel: "icon" }] : [],

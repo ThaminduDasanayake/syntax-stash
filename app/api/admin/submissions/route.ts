@@ -78,13 +78,12 @@ export async function PATCH(req: Request) {
     if (updates.description !== undefined) updatedData.description = updates.description;
     if (updates.category !== undefined) updatedData.category = updates.category;
     if (updates.author !== undefined) updatedData.author = updates.author;
-    if (updates.authorLink !== undefined) updatedData.authorLink = updates.authorLink;
     if (updates.authorWebsite !== undefined) updatedData.authorWebsite = updates.authorWebsite;
     if (updates.authorTwitter !== undefined) updatedData.authorTwitter = updates.authorTwitter;
     if (updates.authorGitHub !== undefined) updatedData.authorGitHub = updates.authorGitHub;
     if (updates.authorYouTube !== undefined) updatedData.authorYouTube = updates.authorYouTube;
     if (updates.authorLinkedIn !== undefined) updatedData.authorLinkedIn = updates.authorLinkedIn;
-    if (updates.gitHubLink !== undefined) updatedData.gitHubLink = updates.gitHubLink;
+    if (updates.github !== undefined) updatedData.github = updates.github;
     if (updates.favicon !== undefined) updatedData.favicon = updates.favicon;
     if (updates.ogImage !== undefined) updatedData.ogImage = updates.ogImage;
     if (updates.pricing !== undefined) updatedData.pricing = updates.pricing;
@@ -119,7 +118,7 @@ export async function PATCH(req: Request) {
                 linkedin: existingAuthor.linkedin || sub.authorLinkedIn || null,
                 twitter: existingAuthor.twitter || sub.authorTwitter || null,
                 updatedAt: new Date(),
-                website: existingAuthor.website || sub.authorWebsite || sub.authorLink || null,
+                website: existingAuthor.website || sub.authorWebsite || null,
                 youtube: existingAuthor.youtube || sub.authorYouTube || null,
               })
               .where(eq(author.id, existingAuthor.id));
@@ -132,7 +131,7 @@ export async function PATCH(req: Request) {
               name: authorName,
               slug: authorSlug,
               twitter: sub.authorTwitter || null,
-              website: sub.authorWebsite || sub.authorLink || null,
+              website: sub.authorWebsite || null,
               youtube: sub.authorYouTube || null,
             });
           }
@@ -153,7 +152,7 @@ export async function PATCH(req: Request) {
               category: sub.category,
               description: sub.description,
               favicon: sub.favicon || null,
-              github: sub.gitHubLink || null, // Renamed github column
+              github: sub.github || null,
               ogImage: sub.ogImage || null,
               subtitle: sub.subtitle || null,
               tags: sub.tags || null,
@@ -168,7 +167,7 @@ export async function PATCH(req: Request) {
             category: sub.category,
             description: sub.description,
             favicon: sub.favicon || null,
-            github: sub.gitHubLink || null, // Renamed github column
+            github: sub.github || null,
             ogImage: sub.ogImage || null,
             subtitle: sub.subtitle || null,
             tags: sub.tags || null,

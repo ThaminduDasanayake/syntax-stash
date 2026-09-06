@@ -49,7 +49,6 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
   {
     title: "Alembic",
     author: "Lauri Paronen",
-    authorLink: "https://lauriparonen.com/",
     category: CATEGORIES.dev,
     description: "A platform for distilling thoughts into beautiful, shareable micro-essay images",
     favicon: "https://alembic.space/apple-touch-icon.png",
@@ -133,7 +132,7 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
     category: CATEGORIES.dev,
     description: "Balsa UI is an agent-native, open-code component system for Vue and React.",
     favicon: "https://balsa-ui.com/favicon.svg",
-    gitHubLink: "https://github.com/pedrobalsa/balsa-ui",
+    github: "https://github.com/pedrobalsa/balsa-ui",
     ogImage: "https://balsa-ui.com/og-image.webp",
     subtitle: "Create Design Systems, Build with Agents",
     tags: [TAGS.color, TAGS.designSystem, TAGS.theme, TAGS.typography],
@@ -1221,7 +1220,7 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
     description:
       "A Chrome extension that highlights the tells of LLM prose on any page you read. No network calls.",
     favicon: "https://williamnewton.github.io/slopfinder/logo.svg",
-    gitHubLink: "https://github.com/williamnewton/slopfinder",
+    github: "https://github.com/williamnewton/slopfinder",
     ogImage: "https://willnewton.dev/previews/slopfinder.gif",
     subtitle: "Every AI cliché, caught in the act",
     url: "https://williamnewton.github.io/slopfinder/",
@@ -1430,7 +1429,6 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
   {
     title: "Trendshift",
     author: "Julian Li",
-    authorLink: "https://julianli.co/",
     category: CATEGORIES.dev,
     description:
       "Live trending repositories caught as they rise, not after they peak. An alternative to GitHub Trending",

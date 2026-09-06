@@ -711,7 +711,7 @@ export async function GET(request: NextRequest) {
     }
 
     // 7. GitHub Repository Discovery (High-Confidence Heuristic Matching)
-    let gitHubLink: string | undefined;
+    let github: string | undefined;
     const repoCandidates: { repoUrl: string; score: number }[] = [];
     const domainClean = domainStem.toLowerCase().replace(/[^a-z0-9]/g, "");
     const titleClean = title.toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -782,10 +782,13 @@ export async function GET(request: NextRequest) {
           score += 25;
         }
 
-        if (isNavOrHeader) score += 20;
-        if (isSponsorOrAd) score -= 80;
-        if (isFeedOrList) score -= 50;
-        if (gh.searchParams.has("utm_source")) score -= 90;
+        if (repoClean === domainClean || ownerClean === domainClean) score += 50;
+        if (titleClean.includes(repoClean) || repoClean.includes(titleClean)) score += 40;
+        if (domainClean.includes(repoClean) || repoClean.includes(domainClean)) score += 30;
+
+        if (isNavOrHeader) score += 15;
+        if (isSponsorOrAd) score -= 40;
+        if (isFeedOrList) score -= 30;
 
         repoCandidates.push({ repoUrl: `https://github.com/${owner}/${repo}`, score });
       } catch {
@@ -796,7 +799,7 @@ export async function GET(request: NextRequest) {
     repoCandidates.sort((a, b) => b.score - a.score);
     // Only accept if positive confidence score
     if (repoCandidates.length > 0 && repoCandidates[0].score > 20) {
-      gitHubLink = repoCandidates[0].repoUrl;
+      github = repoCandidates[0].repoUrl;
     }
 
     const suggestedCategory = suggestCategory(`${title} ${description}`);
@@ -813,7 +816,7 @@ export async function GET(request: NextRequest) {
       description,
       favicon,
       faviconOptions,
-      gitHubLink,
+      github,
       ogImage,
       ogImageOptions,
       subtitle: subtitle || undefined,

@@ -75,30 +75,13 @@ export function getAllAuthors(customResources?: Resource[]): AuthorWithResources
   for (const [slug, { name, resources }] of authorMap.entries()) {
     const registryEntry = AUTHORS_REGISTRY[slug];
     const displayName = registryEntry?.name || name;
-
-    // Discover website link from resource.authorLink if not in registry
-    let fallbackLinks: AuthorLinks | undefined = registryEntry?.links;
-    if (!fallbackLinks?.website) {
-      const resourceWithAuthorLink = resources.find((r) => r.authorLink);
-      if (resourceWithAuthorLink?.authorLink) {
-        const rawLink = Array.isArray(resourceWithAuthorLink.authorLink)
-          ? resourceWithAuthorLink.authorLink[0]
-          : resourceWithAuthorLink.authorLink;
-        if (rawLink) {
-          fallbackLinks = {
-            ...fallbackLinks,
-            website: rawLink,
-          };
-        }
-      }
-    }
-
+    const links: AuthorLinks | undefined = registryEntry?.links;
     const categories = Array.from(new Set(resources.map((r) => r.category)));
 
     result.push({
       categories,
       count: resources.length,
-      links: fallbackLinks,
+      links,
       name: displayName,
       resources,
       slug,

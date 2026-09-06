@@ -37,7 +37,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
   const [ogError, setOgError] = useState(false);
   const [useDirectOgFallback, setUseDirectOgFallback] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
-  const gitHubStars = getGitHubStars(activeTool.gitHubLink);
+  const gitHubStars = getGitHubStars(activeTool.github);
   const formattedStars = gitHubStars !== null ? formatStarCount(gitHubStars) : null;
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const dialogContentRef = useRef<HTMLDivElement>(null);
@@ -252,7 +252,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
             Open resource <ArrowSquareOutIcon weight="bold" />
           </a>
         </Button>
-        {activeTool.gitHubLink && (
+        {activeTool.github && (
           <Button
             asChild
             variant="secondary"
@@ -260,7 +260,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
             className="group shrink-0 border-[1.5px] px-2.5 sm:px-4"
           >
             <a
-              href={activeTool.gitHubLink}
+              href={activeTool.github}
               target="_blank"
               rel="noopener noreferrer"
               className="text-mono-2xs sm:text-mono-xs inline-flex items-center gap-1.5"
@@ -537,7 +537,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
               </div>
             </div>
 
-            {activeTool.gitHubLink && (
+            {activeTool.github && (
               <div className="modal-link">
                 <div className="flex items-center justify-between">
                   <span className={cn("modal-heading", activeThemeStyles.label)}>GitHub</span>
@@ -553,7 +553,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
                 </div>
                 <div className="flex items-center justify-between gap-2">
                   <a
-                    href={activeTool.gitHubLink}
+                    href={activeTool.github}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 font-mono text-xs break-all underline decoration-current/40 underline-offset-2 transition-all duration-150 ease-out hover:decoration-current"
@@ -565,10 +565,10 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
                       height={16}
                       className="size-4"
                     />
-                    {activeTool.gitHubLink}
+                    {activeTool.github}
                   </a>
                   <CopyButton
-                    textToCopy={activeTool.gitHubLink}
+                    textToCopy={activeTool.github}
                     iconOnly
                     size="icon-xs"
                     variant="ghost"

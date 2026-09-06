@@ -39,7 +39,7 @@ export function SubmitForm() {
   const [authorGitHub, setAuthorGitHub] = useState("");
   const [authorYouTube, setAuthorYouTube] = useState("");
   const [authorLinkedIn, setAuthorLinkedIn] = useState("");
-  const [gitHubLink, setGitHubLink] = useState("");
+  const [github, setGithub] = useState("");
   const [favicon, setFavicon] = useState("");
   const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
   const [ogImage, setOgImage] = useState("");
@@ -64,7 +64,7 @@ export function SubmitForm() {
     setAuthorGitHub("");
     setAuthorYouTube("");
     setAuthorLinkedIn("");
-    setGitHubLink("");
+    setGithub("");
     setFavicon("");
     setFaviconOptions([]);
     setOgImage("");
@@ -132,7 +132,7 @@ export function SubmitForm() {
       if (data.authorGitHub) setAuthorGitHub(data.authorGitHub);
       if (data.authorYouTube) setAuthorYouTube(data.authorYouTube);
       if (data.authorLinkedIn) setAuthorLinkedIn(data.authorLinkedIn);
-      if (data.gitHubLink) setGitHubLink(data.gitHubLink);
+      if (data.github) setGithub(data.github);
       if (data.category && resourceCategories.includes(data.category)) {
         setCategory(data.category);
       }
@@ -156,14 +156,11 @@ export function SubmitForm() {
     try {
       setIsSubmitting(true);
 
-      const resolvedAuthorLink = authorWebsite || authorTwitter || authorGitHub;
-
       const res = await fetch("/api/submissions", {
         body: JSON.stringify({
           title: title.trim(),
           author: author.trim() || undefined,
           authorGitHub: authorGitHub.trim() || undefined,
-          authorLink: resolvedAuthorLink.trim() || undefined,
           authorLinkedIn: authorLinkedIn.trim() || undefined,
           authorTwitter: authorTwitter.trim() || undefined,
           authorWebsite: authorWebsite.trim() || undefined,
@@ -171,7 +168,7 @@ export function SubmitForm() {
           category,
           description: description.trim(),
           favicon: favicon.trim() || undefined,
-          gitHubLink: gitHubLink.trim() || undefined,
+          github: github.trim() || undefined,
           notes: notes.trim() || undefined,
           ogImage: ogImage.trim() || undefined,
           subtitle: subtitle.trim() || undefined,
@@ -386,8 +383,8 @@ export function SubmitForm() {
                   <InputField
                     type="url"
                     placeholder="https://github.com/owner/repo"
-                    value={gitHubLink}
-                    onChange={(e) => setGitHubLink(e.target.value)}
+                    value={github}
+                    onChange={(e) => setGithub(e.target.value)}
                     containerClassName="h-9"
                     className="font-mono text-xs"
                   />

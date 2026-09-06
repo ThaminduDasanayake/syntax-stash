@@ -205,7 +205,7 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     category: CATEGORIES.colors,
     description: "Check the contrast between different colour combinations against WCAG standards.",
     favicon: "https://colourcontrast.cc/favicons/apple-touch-icon.png",
-    gitHubLink: "https://github.com/Pushedskydiver/Colour-Contrast-Checker",
+    github: "https://github.com/Pushedskydiver/Colour-Contrast-Checker",
     url: "https://colourcontrast.cc/",
   },
   {
@@ -222,7 +222,6 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
   {
     title: "Coolors",
     author: "Fabrizio Bianchi",
-    authorLink: "https://fabrizio.io/",
     category: CATEGORIES.colors,
     description: "Generate or browse beautiful color combinations for your designs.",
     favicon: "https://coolors.co/assets/img/favicon.png",
@@ -237,7 +236,7 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     description:
       "As a free CSS gradient generator tool, this website lets you create a colorful gradient background for your website, blog, or social media profile.",
     favicon: "https://cssgradient.io/icon.svg",
-    gitHubLink: "https://github.com/balshaer/gradients-css",
+    github: "https://github.com/balshaer/gradients-css",
     ogImage:
       "https://cssgradient.imgix.net/2bJFIYjQAMqSz44evG5Pel/f973f26f3b70726a8e1aed05da781625/css-gradient.png",
     subtitle: "Generator, Maker, and Background",
@@ -247,7 +246,6 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
   {
     title: "Font Freezer",
     author: "Anton Gridz",
-    authorLink: "https://antongridz.com/",
     category: CATEGORIES.colors,
     description:
       "Freeze OpenType features and variable axes into static font files. No coding required.",
@@ -420,7 +418,6 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
   {
     title: "mymind",
     author: "mymind",
-    authorLink: "https://mymind.com/",
     category: CATEGORIES.colors,
     description: "A collection of unique color combinations for your design projects.",
     favicon: "https://static.accelerator.net/134/0.107.0/images/apple-touch-icon.png",

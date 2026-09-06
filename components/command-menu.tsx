@@ -144,7 +144,7 @@ export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
 
           <CommandGroup heading="Resources">
             {resourceLinks.map((tool) => {
-              const stars = getGitHubStars(tool.gitHubLink);
+              const stars = getGitHubStars(tool.github);
 
               return (
                 <CommandItem

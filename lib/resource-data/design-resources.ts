@@ -5,17 +5,6 @@ import { TAGS } from "./tags";
 
 export const designLinks: Resource<typeof CATEGORIES.design>[] = [
   {
-    title: "",
-    author: "",
-    category: CATEGORIES.design,
-    description: "",
-    favicon: "",
-    gitHubLink: "",
-    ogImage: "",
-    subtitle: "",
-    url: "",
-  },
-  {
     title: "[ graph ] ~~> [ easy ]",
     category: CATEGORIES.design,
     description: "Convert Graph::Easy and DOT notation to ASCII art, box art, and more.",
@@ -227,7 +216,7 @@ export const designLinks: Resource<typeof CATEGORIES.design>[] = [
     description:
       "27 custom cursors you can tune live, then copy as JS, React, or CSS with your own values baked in.",
     favicon: "https://cursor-lab-ui.vercel.app/assets/logo.png",
-    gitHubLink: "https://github.com/oleksand4rux-del/cursor-lab",
+    github: "https://github.com/oleksand4rux-del/cursor-lab",
     ogImage: "https://cursor-lab-ui.vercel.app/assets/og.png",
     subtitle: "Custom cursors, tuned and copied",
     url: "https://cursor-lab-ui.vercel.app/",
@@ -539,7 +528,6 @@ export const designLinks: Resource<typeof CATEGORIES.design>[] = [
   {
     title: "GEOMETRIC",
     author: "Shinichi",
-    authorLink: "https://x.com/shinichi_neb",
     category: CATEGORIES.design,
     description:
       "Turn images, videos, and sound into living geometric art — entirely in your browser.",
@@ -652,7 +640,7 @@ export const designLinks: Resource<typeof CATEGORIES.design>[] = [
     description:
       "A continuously iteratively maintained real-time WebGPU liquid glass ball editor, supporting Web and SwiftUI/Metal export, and using OpenAI Codex to assist in development and verification.",
     favicon: "https://lersent001.github.io/orb/assets/poster-0qKU1qpL.png",
-    gitHubLink: "https://github.com/LerSent001/orb",
+    github: "https://github.com/LerSent001/orb",
     url: "https://lersent001.github.io/orb/",
   },
   {

@@ -13,9 +13,9 @@
     - [ ] **Step 6: Update Audit & GitHub Star Scripts** (Update health check and star sync scripts to query/update DB).
     - [x] **Step 7: Verification & Testing** (`0 errors, 0 warnings`, build verified across 402 static pages).
 
-- [ ] **Backfill Missing `gitHubLink`s for Open-Source Resources**
-  - **Context:** Currently, ~38 resources have `gitHubLink` populated. Many other open-source tools, UI libraries, and developer utilities have public repositories that can be linked.
+- [ ] **Backfill Missing `github` links for Open-Source Resources**
+  - **Context:** Currently, ~38 resources have `github` populated. Many other open-source tools, UI libraries, and developer utilities have public repositories that can be linked.
   - **Action Items:**
-    - Add `gitHubLink: "https://github.com/..."` to open-source entries as you come across them, or build an automated discovery script to scan site HTML for GitHub links.
+    - Add `github: "https://github.com/..."` to open-source entries as you come across them, or build an automated discovery script to scan site HTML for GitHub links.
     - Run `npm run sync:stars` to fetch star counts for newly added repositories.
     - Verify that the star badge renders on the cards, modal launch button, modal link section, and `Cmd + K` search.

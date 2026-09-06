@@ -814,7 +814,6 @@ export const mediaLinks: Resource<typeof CATEGORIES.media>[] = [
   {
     title: "Ransom note",
     author: "Anish Gupta",
-    authorLink: "https://anishfn.vercel.app/",
     category: CATEGORIES.media,
     description: "Anything you type, in cut-out magazine letters.",
     favicon: "https://anishfn.vercel.app/favicon.ico",
@@ -896,7 +895,6 @@ export const mediaLinks: Resource<typeof CATEGORIES.media>[] = [
   {
     title: "Spherium",
     author: "Javier Crocco",
-    authorLink: "https://www.javiercrocco.com/",
     category: CATEGORIES.media,
     description:
       "Create stunning, customizable 3D globes and maps directly in your browser. Export high-quality SVGs for your designs. The ultimate WebGL map generator for professionals.",

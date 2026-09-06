@@ -97,12 +97,12 @@ async function main() {
   const repoMap = new Map<string, RepoEntry>();
 
   for (const res of resourceLinks) {
-    if (!res.gitHubLink) continue;
-    const parsed = parseGitHubRepo(res.gitHubLink);
+    if (!res.github) continue;
+    const parsed = parseGitHubRepo(res.github);
     if (parsed && !repoMap.has(parsed.fullName)) {
       repoMap.set(parsed.fullName, {
         ...parsed,
-        url: res.gitHubLink,
+        url: res.github,
       });
     }
   }

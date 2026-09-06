@@ -6,7 +6,7 @@ import * as cheerio from "cheerio";
 interface ScrapedLiveMeta {
   description?: string;
   favicon?: string;
-  gitHubLink?: string;
+  github?: string;
   ogImage?: string;
   title?: string;
 }
@@ -22,7 +22,7 @@ interface ExtractedTool {
   designMinisSlug: string;
   designMinisUrl: string;
   favicon?: string;
-  gitHubLink?: string;
+  github?: string;
   isHostedOnDesignMinis: boolean;
   ogImage?: string;
   platforms?: string;
@@ -123,10 +123,10 @@ async function scrapeLiveMetadata(toolUrl: string): Promise<ScrapedLiveMeta> {
   }
 
   // GitHub Link discovery
-  let gitHubLink: string | undefined;
+  let github: string | undefined;
   $('a[href*="github.com"]').each((_, el) => {
     const href = $(el).attr("href");
-    if (href && !gitHubLink) {
+    if (href && !github) {
       try {
         const gh = new URL(href);
         if (gh.hostname.includes("github.com")) {
@@ -137,7 +137,7 @@ async function scrapeLiveMetadata(toolUrl: string): Promise<ScrapedLiveMeta> {
               parts[0],
             )
           ) {
-            gitHubLink = `https://github.com/${parts[0]}/${parts[1]}`;
+            github = `https://github.com/${parts[0]}/${parts[1]}`;
           }
         }
       } catch {
@@ -146,7 +146,7 @@ async function scrapeLiveMetadata(toolUrl: string): Promise<ScrapedLiveMeta> {
     }
   });
 
-  return { title, description, favicon, gitHubLink, ogImage };
+  return { title, description, favicon, github, ogImage };
 }
 
 async function scrapeDesignMinisToolPage(detailUrl: string): Promise<{
@@ -325,7 +325,7 @@ async function main() {
           designMinisSlug: tool.designMinisSlug,
           designMinisUrl: tool.designMinisUrl,
           favicon: liveMeta.favicon,
-          gitHubLink: liveMeta.gitHubLink,
+          github: liveMeta.github,
           isHostedOnDesignMinis,
           ogImage: liveMeta.ogImage || tool.screenshot,
           platforms: dmDetail.platforms || "Web",

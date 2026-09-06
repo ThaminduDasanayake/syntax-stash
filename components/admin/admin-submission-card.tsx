@@ -123,9 +123,9 @@ export function AdminSubmissionCard({
                 <div className="text-foreground flex items-center gap-1.5 font-semibold">
                   <span>By {sub.author}</span>
                   <div className="text-muted-foreground flex items-center gap-1">
-                    {(sub.authorWebsite || sub.authorLink) && (
+                    {sub.authorWebsite && (
                       <a
-                        href={sub.authorWebsite || sub.authorLink || "#"}
+                        href={sub.authorWebsite}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="hover:text-primary p-0.5"
@@ -200,9 +200,9 @@ export function AdminSubmissionCard({
                 </div>
               )}
 
-              {sub.gitHubLink && (
+              {sub.github && (
                 <a
-                  href={sub.gitHubLink}
+                  href={sub.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1 font-semibold underline"

@@ -16,7 +16,7 @@ function ResourceCardComponent({
   onToggleBookmark: propOnToggleBookmark,
   resource,
 }: ResourceCardProps) {
-  const stars = getGitHubStars(resource.gitHubLink);
+  const stars = getGitHubStars(resource.github);
   const { data: session } = useSession();
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const { isBookmarked: hookIsBookmarked, toggleBookmark: hookToggleBookmark } = useBookmarks();

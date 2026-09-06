@@ -48,11 +48,6 @@ async function seed() {
   for (const item of resourceLinks) {
     if (!item.author) continue;
     const authorNames = Array.isArray(item.author) ? item.author : [item.author];
-    const authorLinks = Array.isArray(item.authorLink)
-      ? item.authorLink
-      : item.authorLink
-        ? [item.authorLink]
-        : [];
 
     for (let i = 0; i < authorNames.length; i++) {
       const name = authorNames[i]?.trim();
@@ -60,28 +55,10 @@ async function seed() {
       const slug = slugifyAuthor(name);
 
       if (!authorsMap.has(slug)) {
-        const link = authorLinks[i] || authorLinks[0];
-        let website: string | undefined;
-        let twitter: string | undefined;
-        let github: string | undefined;
-
-        if (link) {
-          if (link.includes("twitter.com") || link.includes("x.com")) {
-            twitter = link;
-          } else if (link.includes("github.com")) {
-            github = link;
-          } else if (link.startsWith("http")) {
-            website = link;
-          }
-        }
-
         authorsMap.set(slug, {
           id: crypto.randomUUID(),
           name,
           slug,
-          ...(website ? { website } : {}),
-          ...(twitter ? { twitter } : {}),
-          ...(github ? { github } : {}),
         });
       }
     }
@@ -133,7 +110,7 @@ async function seed() {
       category: item.category,
       description: item.description || "",
       favicon: item.favicon || null,
-      github: item.gitHubLink || null, // Renamed from gitHubLink to github
+      github: item.github || null,
       ogImage: item.ogImage || null,
       subtitle: item.subtitle || null,
       tags: item.tags && item.tags.length > 0 ? item.tags.join(",") : null,

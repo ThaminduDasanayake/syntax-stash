@@ -10,7 +10,7 @@ export const dataLinks: Resource<typeof CATEGORIES.data>[] = [
     description:
       "A visualizer that helps you understand complex PostgreSQL queries in a diagram and dictionarized form. Paste your code and check.",
     favicon: "https://actuallyexplain.vercel.app/ae-logo.svg",
-    gitHubLink: "https://github.com/freenandes/actuallyexplain",
+    github: "https://github.com/freenandes/actuallyexplain",
     ogImage: "https://actuallyexplain.vercel.app/preview.png",
     subtitle: "Visual SQL Logic Mapper",
     url: "https://actuallyexplain.vercel.app/",
@@ -33,7 +33,7 @@ export const dataLinks: Resource<typeof CATEGORIES.data>[] = [
     description:
       "APILayer is a unified API marketplace with 40+ production-ready APIs for finance, geolocation, weather, data, and AI. Trusted by 2.2M+ developers.",
     favicon: "https://apilayer.com/wp-content/themes/hello-theme-child/assets/favicon.ico",
-    gitHubLink: "https://github.com/public-apis/public-apis",
+    github: "https://github.com/public-apis/public-apis",
     ogImage: "https://apilayer.com/wp-content/uploads/2026/03/logo.png",
     subtitle: "40+ Production-Ready APIs, One Account, One Key",
     tags: [TAGS.data],
@@ -88,7 +88,7 @@ export const dataLinks: Resource<typeof CATEGORIES.data>[] = [
     category: CATEGORIES.data,
     description: "The headless Chrome/Chromium performance driver for Node.js",
     favicon: "https://browserless.js.org/static/logo.png",
-    gitHubLink: "https://github.com/microlinkhq/browserless",
+    github: "https://github.com/microlinkhq/browserless",
     ogImage: "https://browserless.js.org/static/banner.jpg",
     url: "https://browserless.js.org/",
   },
@@ -201,7 +201,7 @@ export const dataLinks: Resource<typeof CATEGORIES.data>[] = [
     description:
       "Online JSON view, format, minify, validate and compare. It also provides graph view to preview JSON data, semantic comparing two JSON diffs, convert JSON to CSV or CSV to JSON and support jq online.",
     favicon: "https://json4u.com/icon.svg",
-    gitHubLink: "https://github.com/loggerhead/json4u",
+    github: "https://github.com/loggerhead/json4u",
     ogImage: "https://json4u.com/example/graph.webp",
     subtitle: "The best online JSON tool",
     url: "https://json4u.com/",
@@ -213,7 +213,7 @@ export const dataLinks: Resource<typeof CATEGORIES.data>[] = [
     description:
       "JSON Hero makes reading and understand JSON files easy by giving you a clean and beautiful UI packed with extra features.",
     favicon: "https://jsonhero.io/favicon.ico",
-    gitHubLink: "https://github.com/triggerdotdev/jsonhero-web",
+    github: "https://github.com/triggerdotdev/jsonhero-web",
     ogImage: "https://jsonhero.io/build/_assets/opengraph-P6EWTI3J.png",
     subtitle: "A beautiful JSON viewer for the web",
     tags: [TAGS.tool],
@@ -260,7 +260,7 @@ export const dataLinks: Resource<typeof CATEGORIES.data>[] = [
       "Official and community Model Context Protocol server implementations for AI tool integrations.",
     favicon:
       "https://modelcontextprotocol.io/mintlify-assets/_mintlify/favicons/mcp/ebiVJzri-bsiCfVZ/_generated/favicon/android-chrome-192x192.png",
-    gitHubLink: "https://github.com/modelcontextprotocol/servers",
+    github: "https://github.com/modelcontextprotocol/servers",
     ogImage:
       "https://raw.githubusercontent.com/modelcontextprotocol/docs/2eb6171ddbfeefde349dc3b8d5e2b87414c26250/images/og-image.png",
     tags: [TAGS.data],
@@ -284,7 +284,7 @@ export const dataLinks: Resource<typeof CATEGORIES.data>[] = [
     description:
       "A single API for turning any URL into data. Built for apps, agents, and AI. Powered by real browsers. Try it, no signup.",
     favicon: "https://cdn.microlink.io/logo/favicon.svg",
-    gitHubLink: "https://github.com/microlinkhq",
+    github: "https://github.com/microlinkhq",
     ogImage: "https://microlink.io/images/og/home.png",
     subtitle: "The web, transformed",
     tags: [TAGS.data],
@@ -308,7 +308,7 @@ export const dataLinks: Resource<typeof CATEGORIES.data>[] = [
     description:
       "A collection of public APIs for developers, categorized and crowdsourced. Animals, books, cryptocurrencies, development, music, weather and much more.",
     favicon: "https://publicapis.dev/favicon-pa/safari-pinned-tab.svg",
-    gitHubLink: "https://github.com/marcelscruz/public-apis",
+    github: "https://github.com/marcelscruz/public-apis",
     ogImage: "https://publicapis.dev/og",
     subtitle: "A Collaborative List Of 1400+ Public APIs For Developers",
     tags: [TAGS.data],
@@ -332,7 +332,7 @@ export const dataLinks: Resource<typeof CATEGORIES.data>[] = [
     description:
       "Universal avatars API: resolve user avatars by username, email, or domain from GitHub, Gravatar, X, Google, Instagram, and 74+ providers. The same endpoint also returns logos, favicons, app store icons, and cover art — with dashboard analytics for usage, provider mix, and billing.",
     favicon: "https://unavatar.io/favicon.svg",
-    gitHubLink: "https://github.com/microlinkhq/unavatar",
+    github: "https://github.com/microlinkhq/unavatar",
     ogImage: "https://unavatar.io/api/og",
     subtitle:
       "The universal avatars API for username, email, and domain — plus logos, icons & artwork",

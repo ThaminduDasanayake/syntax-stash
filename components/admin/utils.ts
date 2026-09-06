@@ -27,17 +27,16 @@ export function generateTsCode(sub: Submission): string {
     return matchedTagKey ? `TAGS.${matchedTagKey}` : `"${tag.replace(/"/g, '\\"')}"`;
   });
 
-  const resolvedWebsite = sub.authorWebsite || sub.authorLink;
+  const resolvedWebsite = sub.authorWebsite;
 
   // Alphabetical property order
   let code = "  {\n";
   code += `    title: "${sub.title.replace(/"/g, '\\"')}",\n`;
   if (sub.author) code += `    author: "${sub.author.replace(/"/g, '\\"')}",\n`;
-  if (resolvedWebsite) code += `    authorLink: "${resolvedWebsite}",\n`;
   code += `    category: CATEGORIES.${categoryKey},\n`;
   code += `    description:\n      "${sub.description.replace(/"/g, '\\"')}",\n`;
   if (sub.favicon) code += `    favicon: "${sub.favicon}",\n`;
-  if (sub.gitHubLink) code += `    gitHubLink: "${sub.gitHubLink}",\n`;
+  if (sub.github) code += `    github: "${sub.github}",\n`;
   if (sub.ogImage) code += `    ogImage:\n      "${sub.ogImage}",\n`;
   if (sub.subtitle) code += `    subtitle: "${sub.subtitle.replace(/"/g, '\\"')}",\n`;
   if (formattedTags.length > 0) {

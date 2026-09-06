@@ -163,7 +163,7 @@ export function AdminResourceDialog({
                 : "Generators",
           description: prev.description || data.description || "",
           favicon: data.favicon || prev.favicon || "",
-          github: prev.github || data.gitHubLink || "",
+          github: prev.github || data.github || "",
           ogImage: data.ogImage || prev.ogImage || "",
           subtitle: prev.subtitle || data.subtitle || "",
         }));

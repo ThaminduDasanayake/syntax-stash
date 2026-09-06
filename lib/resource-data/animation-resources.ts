@@ -10,7 +10,7 @@ export const animationLinks: Resource[] = [
     category: CATEGORIES.animation,
     description: "A fast, multipurpose and lightweight JavaScript animation library",
     favicon: "https://animejs.com/assets/images/favicon.png",
-    gitHubLink: "https://github.com/juliangarnier/anime",
+    github: "https://github.com/juliangarnier/anime",
     ogImage: "https://animejs.com/media/pages/home/066c76f87b-1787698629/generated-og-image.en.png",
     subtitle: "JavaScript Animation Engine",
     tags: [TAGS.animation],
@@ -34,7 +34,7 @@ export const animationLinks: Resource[] = [
     description:
       "Atropos is a lightweight, free and open-source JavaScript library to create stunning touch-friendly 3D parallax hover effects.",
     favicon: "https://atroposjs.com/favicon.png",
-    gitHubLink: "https://github.com/nolimits4web/atropos/",
+    github: "https://github.com/nolimits4web/atropos/",
     ogImage: "https://atroposjs.com/images/share-banner.png",
     subtitle: "Stunning touch-friendly 3D parallax hover effects",
     tags: [TAGS.animation],
@@ -47,7 +47,7 @@ export const animationLinks: Resource[] = [
     description:
       "A zero-config, drop-in animation utility that automatically adds smooth transitions to your web app. Use it with React, Solid, Vue, Svelte, or any other JavaScript application.",
     favicon: "https://auto-animate.formkit.com/assets/favicon-C1f1LLf8.svg",
-    gitHubLink: "https://github.com/formkit/auto-animate",
+    github: "https://github.com/formkit/auto-animate",
     ogImage: "https://cdn.formk.it/web-assets/auto-animate-og.png",
     subtitle: "Add motion to your apps with a single line of code",
     tags: [TAGS.animation],
@@ -108,7 +108,7 @@ export const animationLinks: Resource[] = [
     description:
       "CSS Loader is a collection of different types of loaders, spinners and their source code. Pure CSS spinners with no image dependencies. Easily customizable CSS animations for loading states.",
     favicon: "https://cssloaders.github.io/images/apple-touch-icon.png",
-    gitHubLink: "https://github.com/vineethtrv/css-loader",
+    github: "https://github.com/vineethtrv/css-loader",
     ogImage: "https://vineethtrv.github.io/assets/images/Loader-screen.png",
     tags: [TAGS.animation],
     url: "https://cssloaders.github.io/",
@@ -132,7 +132,7 @@ export const animationLinks: Resource[] = [
     description:
       "Driver.js is a lightweight, no-dependency JavaScript library for building product tours, feature highlights, hints and contextual help. It is just ~5kb and MIT licensed.",
     favicon: "https://driverjs.com/apple-touch-icon.png",
-    gitHubLink: "https://github.com/nilbuild/driver.js",
+    github: "https://github.com/nilbuild/driver.js",
     ogImage: "https://driverjs.com/og-img.png",
     subtitle: "Product Tours & Highlights in Vanilla JS",
     tags: [TAGS.animation],
@@ -167,7 +167,7 @@ export const animationLinks: Resource[] = [
     description:
       "Generate and customize CSS easing functions with ease and magical precision using Easing Wizard 🧙",
     favicon: "https://easingwizard.com/favicon.svg",
-    gitHubLink: "https://github.com/roydigerhund/easingwizard",
+    github: "https://github.com/roydigerhund/easingwizard",
     ogImage: "https://easingwizard.com/share-image.png",
     subtitle: "CSS Easing Editor and Generator",
     tags: [TAGS.animation],
@@ -327,7 +327,6 @@ export const animationLinks: Resource[] = [
   {
     title: "Rive",
     author: "Rive",
-    authorLink: "https://github.com/rive-app",
     category: CATEGORIES.animation,
     description:
       "Behind Spotify Wrapped, Duolingo, and products reaching 2 billion users. Design, animate, and code in one place. Ship everywhere.",
@@ -355,7 +354,7 @@ export const animationLinks: Resource[] = [
     category: CATEGORIES.animation,
     description: "Smooth configurable extendable slider made for animation.",
     favicon: "https://smooothy.vercel.app/favicon_svg.svg",
-    gitHubLink: "https://github.com/vallafederico/smooothy",
+    github: "https://github.com/vallafederico/smooothy",
     ogImage: "https://smooothy.vercel.app/og_img1.jpg",
     tags: [TAGS.animation],
     url: "https://smooothy.vercel.app/",
@@ -448,7 +447,7 @@ export const animationLinks: Resource[] = [
     category: CATEGORIES.animation,
     description: "Dependency-free animated text component.",
     favicon: "https://torph.lochie.me/icon.svg",
-    gitHubLink: "https://github.com/lochie/torph",
+    github: "https://github.com/lochie/torph",
     ogImage: "https://torph.lochie.me/opengraph-image.png",
     subtitle: "Dependency-Free Text Morphing",
     tags: [TAGS.animation, TAGS.typography],
@@ -496,7 +495,7 @@ export const animationLinks: Resource[] = [
     description: "Haptic feedback for the mobile web.",
     favicon:
       "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%F0%9F%AB%A8</text></svg>",
-    gitHubLink: "https://github.com/lochie/web-haptics",
+    github: "https://github.com/lochie/web-haptics",
     ogImage: "https://haptics.lochie.me/og.png",
     tags: [TAGS.animation],
     url: "https://haptics.lochie.me/",

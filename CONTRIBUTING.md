@@ -44,7 +44,7 @@ All curated resource links are stored in `lib/resource-data/`.
      url: "https://example.com",
      category: "Frontend & UI",
      author: "Author Name",
-     authorLink: "https://github.com/author",
+     github: "https://github.com/author/example-tool",
      tags: ["css", "ui", "react"],
    }
    ```

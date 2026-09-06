@@ -1,6 +1,21 @@
 import { AuthorProfile } from "@/lib/authors";
 
 export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
+  "anish-gupta": {
+    links: {
+      github: "https://github.com/anishfn",
+      linkedin: "https://linkedin.com/in/anishfn",
+      twitter: "https://x.com/anishfn",
+      website: "https://anishfn.vercel.app/",
+    },
+    name: "Anish Gupta",
+  },
+  "anton-gridz": {
+    links: {
+      website: "https://antongridz.com/",
+    },
+    name: "Anton Gridz",
+  },
   "arnold-francisca": {
     links: {
       github: "https://github.com/arnoldfrancisca",
@@ -24,6 +39,14 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
       twitter: "https://x.com/dascaapp",
     },
     name: "DASCA",
+  },
+  "fabrizio-bianchi": {
+    links: {
+      github: "https://github.com/fabrizio-bianchi",
+      twitter: "https://x.com/_fbrz",
+      website: "https://fabrizio.io/",
+    },
+    name: "Fabrizio Bianchi",
   },
   "federico-valla": {
     links: {
@@ -98,6 +121,13 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
       website: "https://jasperbernaers.com",
     },
     name: "Jasper Bernaers",
+  },
+  "javier-crocco": {
+    links: {
+      twitter: "https://x.com/javiercrocco",
+      website: "https://www.javiercrocco.com/",
+    },
+    name: "Javier Crocco",
   },
   "julian-li": {
     links: {
@@ -190,6 +220,14 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
     },
     name: "Microlink HQ",
   },
+  mymind: {
+    links: {
+      twitter: "https://x.com/mymind",
+      website: "https://mymind.com/",
+      youtube: "https://www.youtube.com/@takebackmymind",
+    },
+    name: "mymind",
+  },
   "nikolaj-sokolowski": {
     links: {
       linkedin: "https://www.linkedin.com/in/nikolaj-sokolowski-8661a2300/",
@@ -214,6 +252,15 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
       website: "https://www.yrmn.me/",
     },
     name: "Oleksandr Yeromin",
+  },
+  openhands: {
+    links: {
+      github: "https://github.com/OpenHands",
+      linkedin: "https://www.linkedin.com/company/103318432/",
+      twitter: "https://x.com/OpenHandsDev",
+      website: "https://www.openhands.dev/",
+    },
+    name: "OpenHands",
   },
   "pablo-stanley": {
     links: {
@@ -242,6 +289,7 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
     links: {
       github: "https://github.com/rive-app",
       twitter: "https://x.com/rive_app",
+      website: "https://rive.app/",
       youtube: "https://www.youtube.com/@Rive_app",
     },
     name: "Rive",
@@ -262,6 +310,10 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
       twitter: "https://x.com/SolutionB2u",
     },
     name: "Sarthak Navalekar",
+  },
+  shinichi: {
+    links: { twitter: "https://x.com/shinichi_neb" },
+    name: "Shinichi",
   },
   "syung-hong": {
     links: {

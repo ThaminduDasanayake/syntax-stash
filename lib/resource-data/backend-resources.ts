@@ -494,7 +494,7 @@ export const backendLinks: Resource<typeof CATEGORIES.backend>[] = [
     category: CATEGORIES.backend,
     description:
       "Trigger.dev is the open source platform for building AI workflows in TypeScript. Long-running tasks with retries, queues, observability, and elastic scaling.",
-    gitHubLink: "https://github.com/triggerdotdev/trigger.dev",
+    github: "https://github.com/triggerdotdev/trigger.dev",
     subtitle: "Build and deploy fully-managed AI agents and workflows.",
     url: "https://trigger.dev/",
   },

@@ -23,7 +23,7 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     description:
       "Persistent memory for AI coding agents. Capture every session, recall it in the next one. Runs locally with zero external databases. Works with every MCP client.",
     favicon: "https://www.agent-memory.dev/icon.svg",
-    gitHubLink: "https://github.com/rohitg00/agentmemory",
+    github: "https://github.com/rohitg00/agentmemory",
     ogImage:
       "https://opengraph.githubassets.com/3f39d8c755703def7ddb8895187d372e8fcab2397135aac3e1bec717cdcd3aa7/rohitg00/agentmemory",
     subtitle: "Persistent memory for AI coding agents",
@@ -150,7 +150,7 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     description:
       "Your AI bill is mostly waste. Caveman finds it, cuts it with caching, compression and routing, and proves every dollar saved.",
     favicon: "https://caveman.so/favicon.svg",
-    gitHubLink: "https://github.com/JuliusBrussee/caveman",
+    github: "https://github.com/JuliusBrussee/caveman",
     ogImage: "https://caveman.so/opengraph-image",
     subtitle: "The token-efficient stack for agent-native development",
     url: "https://caveman.so/",
@@ -162,7 +162,7 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     description:
       "Free, open-source paid-media operations for Claude Code: audit 12 ad platforms with 33 skills, get an evidence-backed health score and a prioritized fix plan.",
     favicon: "https://claude-ads.md/icon.svg",
-    gitHubLink: "https://github.com/AgriciDaniel/claude-ads",
+    github: "https://github.com/AgriciDaniel/claude-ads",
     ogImage: "https://claude-ads.md/opengraph-image",
     subtitle: "Free PPC & Google Ads Audit Tool",
     tags: [TAGS.ai],
@@ -175,7 +175,7 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     description:
       "Browse and install 1000+ pre-built components for Claude Code. AI agents, slash commands, MCP integrations, hooks, and settings. Free, open-source CLI tool.",
     favicon: "https://aitmpl.com/static/favicon/apple-touch-icon.png",
-    gitHubLink: "https://github.com/davila7/claude-code-templates",
+    github: "https://github.com/davila7/claude-code-templates",
     ogImage: "https://www.aitmpl.com/logo.png",
     subtitle: "1000+ Agents, Commands, Skills & MCP Integrations",
     tags: [TAGS.ai],
@@ -187,7 +187,7 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     category: CATEGORIES.ai,
     description: "🚀🤖 Crawl4AI, Open-source LLM-Friendly Web Crawler & Scraper",
     favicon: "https://docs.crawl4ai.com/img/favicon.ico",
-    gitHubLink: "https://github.com/unclecode/crawl4ai",
+    github: "https://github.com/unclecode/crawl4ai",
     ogImage:
       "https://opengraph.githubassets.com/3bbe7207bf920ac8f3863ecbbc938081d687a0615f5897d23c3189152b8439b2/unclecode/crawl4ai",
     tags: [TAGS.crawler, TAGS.llm, TAGS.scraper, TAGS["open-source"]],
@@ -200,7 +200,7 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     description:
       "Dify is the platform for production-ready agentic workflows. Build agents, knowledge pipelines, models, and tools on one canvas, deployable on Cloud, in your VPC, or self-hosted.",
     favicon: "https://dify.ai/favicon.svg",
-    gitHubLink: "https://github.com/langgenius/dify",
+    github: "https://github.com/langgenius/dify",
     ogImage: "https://dify.ai/assets/og/default.png",
     subtitle: "The Platform for Production-Ready Agentic Workflows",
     tags: [TAGS.ai],
@@ -236,7 +236,7 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     description:
       "Fincept Terminal Enterprise is the private edition: agentic research that plans and delegates, a quant lab with backtesting, derivatives and macro coverage, and a private dataroom — 41 modules on proprietary data. From $99 per user per month, against $27,000 for a Bloomberg seat.",
     favicon: "https://avatars.githubusercontent.com/u/178755995?s=200&v=4",
-    gitHubLink: "https://github.com/Fincept-Corporation/FinceptTerminal",
+    github: "https://github.com/Fincept-Corporation/FinceptTerminal",
     ogImage: "https://fincept.in/capture.png",
     subtitle: "The Private AI Research Terminal",
     tags: [TAGS.ai],
@@ -249,7 +249,7 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     description:
       "Build durable AI agents with Flue's programmable TypeScript harness. Write once, deploy anywhere, use any LLM.",
     favicon: "https://flueframework.com/favicon.svg",
-    gitHubLink: "https://github.com/withastro/flue",
+    github: "https://github.com/withastro/flue",
     ogImage: "https://flueframework.com/og3.jpg",
     subtitle: "The Open Agent Framework",
     tags: [TAGS.ai],
@@ -306,7 +306,7 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     description:
       "HyperFrames lets AI agents compose videos by writing HTML, CSS & JS — originated by HeyGen, built for the community. Open source under Apache 2.0.",
     favicon: "https://hyperframes.heygen.com/favicon.ico",
-    gitHubLink: "https://github.com/heygen-com/hyperframes",
+    github: "https://github.com/heygen-com/hyperframes",
     ogImage: "https://www.heygen.com/images/heygen-logo.svg",
     subtitle: "Edit Videos By Vibe-Coding",
     tags: [TAGS.ai],
@@ -343,7 +343,7 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
       "Langflow is a low-code AI builder for agentic and retrieval-augmented generation (RAG) apps. Code in Python and use any LLM or vector database.",
     favicon:
       "https://raw.githubusercontent.com/langflow-ai/langflow/main/src/frontend/src/assets/LangflowLogo.svg",
-    gitHubLink: "https://github.com/langflow-ai/langflow",
+    github: "https://github.com/langflow-ai/langflow",
     ogImage: "https://www.langflow.org/images/og-image.png",
     subtitle: "Low-code AI builder for agentic and RAG applications",
     tags: [TAGS.agents, TAGS.builder, TAGS.rag, TAGS["low-code"]],
@@ -390,7 +390,7 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     description:
       "The easiest AI-powered  web scraping, crawling, extraction, search platform. The best open-source Browse AI alternative.",
     favicon: "https://www.maxun.dev/maxun_logo.svg",
-    gitHubLink: "https://github.com/getmaxun/maxun?ref=mx-website",
+    github: "https://github.com/getmaxun/maxun?ref=mx-website",
     ogImage: "https://maxun.dev/maxun_prev.png",
     subtitle: "Scrape, Extract, Crawl, Search Web Data With No-Code",
     tags: [TAGS.ai],
@@ -425,7 +425,7 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     description:
       "Ollama is the easiest way to automate your work using open models, while keeping your data safe.",
     favicon: "https://ollama.com/public/ollama.png",
-    gitHubLink: "https://github.com/ollama/ollama",
+    github: "https://github.com/ollama/ollama",
     ogImage: "https://ollama.com/public/og.png",
     tags: [TAGS.ai, TAGS.models],
     url: "https://ollama.com/",
@@ -451,7 +451,7 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     description:
       "Convert PDFs to LLM-ready Markdown and JSON. #1 in benchmarks (0.90 overall). Auto-tag untagged PDFs into Tagged PDFs as foundation for PDF/UA workflows. 100% local, open source (Apache-2.0).",
     favicon: "https://opendataloader.org/logo-icon.webp",
-    gitHubLink: "https://github.com/opendataloader-project/opendataloader-pdf",
+    github: "https://github.com/opendataloader-project/opendataloader-pdf",
     ogImage: "https://opendataloader.org/og-image.png",
     subtitle: "PDF Parser for AI-Ready Data | Auto-Tag PDFs for Accessibility",
     url: "https://opendataloader.org/",
@@ -471,12 +471,11 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
   {
     title: "OpenHands",
     author: "OpenHands",
-    authorLink: "https://github.com/OpenHands",
     category: CATEGORIES.ai,
     description:
       "Meet OpenHands, the open-source, model-agnostic platform for cloud coding agents. Automate real engineering work securely and transparently. Build faster with full control.",
     favicon: "https://www.openhands.dev/favicon.svg",
-    gitHubLink: "https://github.com/OpenHands/OpenHands",
+    github: "https://github.com/OpenHands/OpenHands",
     ogImage:
       "https://www.openhands.dev/assets/webflow/og/69161b32abf448a2df921a73_openhands_opengraph_01.png",
     subtitle: "The Open Platform for Cloud Coding Agents",
@@ -501,7 +500,7 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     description:
       "Run AI on your own terms. Connect any model, extend with code, and protect what matters without compromise.",
     favicon: "https://openwebui.com/favicon.png",
-    gitHubLink: "https://github.com/open-webui/open-webui",
+    github: "https://github.com/open-webui/open-webui",
     ogImage: "https://openwebui.com/og-image.png",
     subtitle: "Self-Hosted AI Platform",
     tags: [TAGS.llm, TAGS.platform, TAGS.selfHosted, TAGS.ui],
@@ -537,7 +536,7 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
       "A free desktop app that runs on your machine and plugs into the subscriptions, GitHub account, and hosting you already pay for — agent, repo, and deploys in one window.",
     favicon:
       "https://raw.githubusercontent.com/ship-studio/ship-studio/main/public/ship_studio_icon.svg",
-    gitHubLink: "https://github.com/ship-studio/ship-studio",
+    github: "https://github.com/ship-studio/ship-studio",
     ogImage: "https://www.ship.studio/og/home.png",
     subtitle: "Build it, ship it, host it without leaving the app",
     url: "https://www.ship.studio/",
@@ -549,7 +548,7 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     description:
       "Taste Skill gives your AI coding agent good taste. Open-source skill files that stop Cursor, Claude Code, Codex & more from generating generic, boring frontends. Install in one command.",
     favicon: "https://www.tasteskill.dev/apple-touch-icon.webp",
-    gitHubLink: "https://github.com/Leonxlnx/taste-skill",
+    github: "https://github.com/Leonxlnx/taste-skill",
     ogImage: "https://www.tasteskill.dev/og-image.jpg",
     subtitle: "The Anti-Slop Frontend Framework for AI Agents",
     tags: [TAGS.ai],
@@ -616,7 +615,7 @@ export const aiLinks: Resource<typeof CATEGORIES.ai>[] = [
     description:
       "Vibe-Trading is a natural-language finance research agent for market data, backtesting, swarm analysis, trade journals, and research artifacts.",
     favicon: "https://vibetrading.wiki/assets/icon.png",
-    gitHubLink: "https://github.com/HKUDS/Vibe-Trading",
+    github: "https://github.com/HKUDS/Vibe-Trading",
     ogImage:
       "https://opengraph.githubassets.com/639d9fb9c0062b5c3be63582499a1c651e4866b9671c31d9a4f977ecd16ca934/HKUDS/Vibe-Trading",
     subtitle: "Finance Research Agent",

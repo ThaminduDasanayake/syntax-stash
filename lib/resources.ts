@@ -49,22 +49,13 @@ export const getAllResources = cache(
       }
 
       return rows.map((r) => {
-        const resolvedAuthorLink =
-          r.authorWebsite ||
-          r.authorTwitter ||
-          r.authorGithub ||
-          r.authorLinkedin ||
-          r.authorBlog ||
-          undefined;
-
         return {
           title: r.title,
           author: r.authorName || undefined,
-          authorLink: resolvedAuthorLink,
           category: r.category,
           description: r.description || undefined,
           favicon: r.favicon || undefined,
-          gitHubLink: r.github || undefined,
+          github: r.github || undefined,
           ogImage: r.ogImage || undefined,
           subtitle: r.subtitle || undefined,
           tags: r.tags
