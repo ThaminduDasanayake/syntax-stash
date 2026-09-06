@@ -16,68 +16,69 @@ import { Resource } from "@/types";
 export const getAllResources = cache(
   unstable_cache(
     async (): Promise<Resource[]> => {
-    try {
-      const rows = await db
-        .select({
-          id: resource.id,
-          title: resource.title,
-          authorBlog: author.blog,
-          authorGithub: author.github,
-          authorId: resource.authorId,
-          authorLinkedin: author.linkedin,
-          authorName: author.name,
-          authorSlug: author.slug,
-          authorTwitter: author.twitter,
-          authorWebsite: author.website,
-          authorYoutube: author.youtube,
-          category: resource.category,
-          createdAt: resource.createdAt,
-          description: resource.description,
-          favicon: resource.favicon,
-          github: resource.github,
-          ogImage: resource.ogImage,
-          subtitle: resource.subtitle,
-          tags: resource.tags,
-          url: resource.url,
-        })
-        .from(resource)
-        .leftJoin(author, eq(resource.authorId, author.id))
-        .orderBy(desc(resource.createdAt));
+      try {
+        const rows = await db
+          .select({
+            id: resource.id,
+            title: resource.title,
+            authorBlog: author.blog,
+            authorGithub: author.github,
+            authorId: resource.authorId,
+            authorLinkedin: author.linkedin,
+            authorName: author.name,
+            authorSlug: author.slug,
+            authorTwitter: author.twitter,
+            authorWebsite: author.website,
+            authorYoutube: author.youtube,
+            category: resource.category,
+            createdAt: resource.createdAt,
+            description: resource.description,
+            favicon: resource.favicon,
+            github: resource.github,
+            ogImage: resource.ogImage,
+            subtitle: resource.subtitle,
+            tags: resource.tags,
+            url: resource.url,
+          })
+          .from(resource)
+          .leftJoin(author, eq(resource.authorId, author.id))
+          .orderBy(desc(resource.createdAt));
 
-      if (!rows || rows.length === 0) {
+        if (!rows || rows.length === 0) {
+          return STATIC_FALLBACK_RESOURCES;
+        }
+
+        return rows.map((r) => {
+          return {
+            title: r.title,
+            author: r.authorName || undefined,
+            category: r.category,
+            description: r.description || undefined,
+            favicon: r.favicon || undefined,
+            github: r.github || undefined,
+            ogImage: r.ogImage || undefined,
+            subtitle: r.subtitle || undefined,
+            tags: r.tags
+              ? r.tags
+                  .split(",")
+                  .map((t) => t.trim())
+                  .filter(Boolean)
+              : undefined,
+            url: r.url,
+          };
+        });
+      } catch (err) {
+        console.error("Database query failed in getAllResources(), serving static fallback:", err);
         return STATIC_FALLBACK_RESOURCES;
       }
-
-      return rows.map((r) => {
-        return {
-          title: r.title,
-          author: r.authorName || undefined,
-          category: r.category,
-          description: r.description || undefined,
-          favicon: r.favicon || undefined,
-          github: r.github || undefined,
-          ogImage: r.ogImage || undefined,
-          subtitle: r.subtitle || undefined,
-          tags: r.tags
-            ? r.tags
-                .split(",")
-                .map((t) => t.trim())
-                .filter(Boolean)
-            : undefined,
-          url: r.url,
-        };
-      });
-    } catch (err) {
-      console.error("Database query failed in getAllResources(), serving static fallback:", err);
-      return STATIC_FALLBACK_RESOURCES;
-    }
-  },
-  ["all-resources-cache"],
-  {
-    revalidate: 86400, // 24 hours fallback TTL
-    tags: ["resources"],
-  },
-));
+    },
+    ["all-resources-cache"],
+    {
+      revalidate: 86400, // 24 hours fallback TTL
+      tags: ["resources"],
+    },
+  ),
+);
 
 /**
  * Fetches all live catalog resources for Admin management, cached at the Next.js Edge.
@@ -85,7 +86,10 @@ export const getAllResources = cache(
  */
 export const getAllAdminResources = cache(
   unstable_cache(
-    async (): Promise<{ categoryCounts: Record<string, number>; resources: import("@/components/admin/types").AdminResourceItem[] }> => {
+    async (): Promise<{
+      categoryCounts: Record<string, number>;
+      resources: import("@/components/admin/types").AdminResourceItem[];
+    }> => {
       try {
         const rows = await db
           .select({
@@ -138,20 +142,3 @@ export const getAllAdminResources = cache(
     },
   ),
 );
-
-/**
- * Check if a resource exists by URL.
- */
-export async function getResourceByUrl(url: string) {
-  try {
-    const existing = await db
-      .select()
-      .from(resource)
-      .where(eq(resource.url, url))
-      .limit(1);
-    return existing[0] || null;
-  } catch {
-    return null;
-  }
-}
-

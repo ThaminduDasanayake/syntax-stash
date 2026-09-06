@@ -1,10 +1,10 @@
 import { loadEnvConfig } from "@next/env";
 
-loadEnvConfig(process.cwd());
+import { slugifyAuthor } from "@/lib/authors";
+import { resourceLinks } from "@/lib/resource-data";
+import { AUTHORS_REGISTRY } from "@/lib/resource-data/authors";
 
-import { slugifyAuthor } from "../lib/authors";
-import { resourceLinks } from "../lib/resource-data";
-import { AUTHORS_REGISTRY } from "../lib/resource-data/authors";
+loadEnvConfig(process.cwd());
 
 async function seed() {
   const { db } = await import("../lib/db");

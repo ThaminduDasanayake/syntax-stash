@@ -4,6 +4,8 @@ import path from "node:path";
 import { parseGitHubRepo } from "@/lib/github";
 import { resourceLinks } from "@/lib/resource-data";
 
+import { runPool } from "./pool";
+
 interface RepoEntry {
   owner: string;
   repo: string;
@@ -64,31 +66,6 @@ async function fetchRepoStars(
       stars: null,
     };
   }
-}
-
-async function runPool<T, R>(
-  items: T[],
-  limit: number,
-  iteratorFn: (item: T) => Promise<R>,
-): Promise<R[]> {
-  const results: R[] = [];
-  const executing: Promise<void>[] = [];
-
-  for (const item of items) {
-    const p = Promise.resolve().then(() => iteratorFn(item));
-    results.push(p as unknown as R);
-
-    const e: Promise<void> = p.then(() => {
-      executing.splice(executing.indexOf(e), 1);
-    });
-    executing.push(e);
-
-    if (executing.length >= limit) {
-      await Promise.race(executing);
-    }
-  }
-
-  return Promise.all(results);
 }
 
 async function main() {

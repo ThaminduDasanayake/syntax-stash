@@ -8,6 +8,8 @@ import { CATEGORIES, resourceLinks } from "@/lib/resource-data";
 import { AUDIT_CONFIG } from "@/lib/resource-data/audit-config";
 import { Resource } from "@/types";
 
+import { runPool } from "./pool";
+
 interface AuditFinding {
   type:
     | "broken"
@@ -546,31 +548,6 @@ async function checkResource(resource: Resource): Promise<AuditFinding[]> {
   }
 
   return findings;
-}
-
-async function runPool<T, R>(
-  items: T[],
-  limit: number,
-  iteratorFn: (item: T) => Promise<R>,
-): Promise<R[]> {
-  const results: R[] = [];
-  const executing: Promise<void>[] = [];
-
-  for (const item of items) {
-    const p = Promise.resolve().then(() => iteratorFn(item));
-    results.push(p as unknown as R);
-
-    const e: Promise<void> = p.then(() => {
-      executing.splice(executing.indexOf(e), 1);
-    });
-    executing.push(e);
-
-    if (executing.length >= limit) {
-      await Promise.race(executing);
-    }
-  }
-
-  return Promise.all(results);
 }
 
 function generateMarkdownReport(findings: AuditFinding[], categoryName?: string): string {
