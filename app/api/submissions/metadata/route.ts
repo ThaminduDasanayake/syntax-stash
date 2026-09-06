@@ -607,6 +607,33 @@ export async function GET(request: NextRequest) {
       if (!href) return;
 
       try {
+        // Mailto extraction for personal portfolio domains (e.g. hello@theshiva.xyz -> https://theshiva.xyz)
+        if (href.startsWith("mailto:")) {
+          const email = href.replace(/^mailto:/i, "").split("?")[0].trim();
+          const emailParts = email.split("@");
+          if (emailParts.length === 2) {
+            const domain = emailParts[1]?.toLowerCase();
+            const genericDomains = [
+              "gmail.com",
+              "hotmail.com",
+              "icloud.com",
+              "live.com",
+              "mail.com",
+              "me.com",
+              "outlook.com",
+              "proton.me",
+              "protonmail.com",
+              "yahoo.com",
+            ];
+            if (domain && !genericDomains.includes(domain) && !finalUrl.toLowerCase().includes(domain)) {
+              if (!authorWebsite) {
+                authorWebsite = `https://${domain}`;
+              }
+            }
+          }
+          return;
+        }
+
         const fullHref = resolveUrl(href, finalUrl);
         const linkUrl = new URL(fullHref);
         const host = linkUrl.hostname.toLowerCase();
@@ -617,7 +644,7 @@ export async function GET(request: NextRequest) {
         const isFooterOrNav = $(el).closest("footer, nav, header, [class*='footer'], [class*='social'], [class*='nav']").length > 0;
 
         // Twitter / X (Targeting user profile, excluding tweets, status, share links)
-        if (host.includes("twitter.com") || host.includes("x.com")) {
+        if (host.includes("twitter.com") || host.includes("x.com") || host === "t.co" || aria.includes("twitter") || aria.includes("x logo")) {
           const isStatusOrIntent =
             pathname.includes("/status/") ||
             pathname.includes("/i/") ||
@@ -651,8 +678,9 @@ export async function GET(request: NextRequest) {
           }
         }
 
-        // GitHub User Profile
-        if (host.includes("github.com") && parts.length === 1) {
+        // GitHub User Profile (Including shorteners like git.new, git.io, hub.new)
+        const isGithubHost = host.includes("github.com") || host === "git.new" || host === "git.io" || host === "hub.new";
+        if (isGithubHost && parts.length === 1) {
           const username = parts[0];
           if (
             ![
@@ -716,17 +744,35 @@ export async function GET(request: NextRequest) {
     const domainClean = domainStem.toLowerCase().replace(/[^a-z0-9]/g, "");
     const titleClean = title.toLowerCase().replace(/[^a-z0-9]/g, "");
 
-    $('a[href*="github.com"]').each((_, el) => {
+    $('a[href*="github.com"], a[href*="git.new"], a[href*="git.io"], a[href*="hub.new"], a[aria-label*="github" i], a[title*="github" i]').each((_, el) => {
       const href = $(el).attr("href");
       if (!href) return;
       try {
-        const gh = new URL(href, finalUrl);
-        if (!gh.hostname.includes("github.com")) return;
+        const fullHref = resolveUrl(href, finalUrl);
+        const gh = new URL(fullHref);
+        const isGh = gh.hostname.includes("github.com") || gh.hostname === "git.new" || gh.hostname === "git.io" || gh.hostname === "hub.new";
+        if (!isGh) return;
 
         const parts = gh.pathname.split("/").filter(Boolean);
-        if (parts.length < 2) return;
+        if (parts.length === 0) return;
 
-        const [owner, repo] = [parts[0], parts[1]];
+        let repoUrl = "";
+        let owner = "";
+        let repo = "";
+
+        if (gh.hostname !== "github.com" && parts.length === 1) {
+          // e.g. https://git.new/Tokokino
+          repoUrl = fullHref;
+          owner = parts[0];
+          repo = parts[0];
+        } else if (parts.length >= 2) {
+          owner = parts[0];
+          repo = parts[1];
+          repoUrl = `https://github.com/${owner}/${repo}`;
+        } else {
+          return;
+        }
+
         if (
           [
             "about",
@@ -790,7 +836,7 @@ export async function GET(request: NextRequest) {
         if (isSponsorOrAd) score -= 40;
         if (isFeedOrList) score -= 30;
 
-        repoCandidates.push({ repoUrl: `https://github.com/${owner}/${repo}`, score });
+        repoCandidates.push({ repoUrl, score });
       } catch {
         // ignore
       }
