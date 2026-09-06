@@ -216,7 +216,7 @@ export async function DELETE(request: NextRequest) {
     if (linkedResources.length > 0) {
       return NextResponse.json(
         {
-          error: `Cannot delete category: ${linkedResources.length} tool(s) are currently assigned to it. Reassign them first.`,
+          error: `Cannot delete category: ${linkedResources.length} resource(s) are currently assigned to it. Reassign them first.`,
         },
         { status: 400 },
       );

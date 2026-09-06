@@ -376,7 +376,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
                 <TableHead className="uppercase">Name & Slug</TableHead>
                 <TableHead className="uppercase">Description</TableHead>
                 <TableHead className="uppercase">Theme / Icon</TableHead>
-                <TableHead className="text-center uppercase">Assigned Tools</TableHead>
+                <TableHead className="text-center uppercase">Assigned Resources</TableHead>
                 <TableHead className="w-24 text-right uppercase">Actions</TableHead>
               </TableRow>
             </TableHeader>
@@ -426,7 +426,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
                       variant={cat.toolCount > 0 ? "default" : "secondary"}
                       className="font-mono text-[10px]"
                     >
-                      {cat.toolCount} {cat.toolCount === 1 ? "tool" : "tools"}
+                      {cat.toolCount} {cat.toolCount === 1 ? "resource" : "resources"}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
@@ -467,7 +467,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
             <DialogDescription className="text-xs">
               {editingCategory
                 ? "Update the category's display metadata, slug, and styling."
-                : "Add a new first-class category for grouping tools and resources."}
+                : "Add a new first-class category for grouping resources."}
             </DialogDescription>
           </DialogHeader>
 
@@ -511,7 +511,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
             <div>
               <InputField
                 label="Description"
-                placeholder="Short summary of tools in this category..."
+                placeholder="Short summary of resources in this category..."
                 value={formData.description}
                 onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
                 className="font-mono text-xs"
@@ -607,8 +607,8 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
               <strong className="text-foreground">/{deletingCategory?.slug}</strong>?
               {deletingCategory && deletingCategory.toolCount > 0 && (
                 <span className="text-destructive mt-2 block font-semibold">
-                  Warning: {deletingCategory.toolCount} tool(s) are currently assigned to this
-                  category. Deleting it will fail until those tools are reassigned.
+                  Warning: {deletingCategory.toolCount} resource(s) are currently assigned to this
+                  category. Deleting it will fail until those resources are reassigned.
                 </span>
               )}
             </AlertDialogDescription>

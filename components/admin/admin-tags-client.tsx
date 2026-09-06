@@ -438,7 +438,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
               <TableRow className="border-line hover:bg-transparent">
                 <TableHead className="w-12 text-center uppercase">Featured</TableHead>
                 <TableHead className="uppercase">Tag Name & Slug</TableHead>
-                <TableHead className="text-center uppercase">Usage (Assigned Tools)</TableHead>
+                <TableHead className="text-center uppercase">Usage (Assigned Resources)</TableHead>
                 <TableHead className="w-24 text-right uppercase">Actions</TableHead>
               </TableRow>
             </TableHeader>
@@ -479,7 +479,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
                       variant={tagItem.toolCount > 0 ? "default" : "secondary"}
                       className="font-mono text-[10px]"
                     >
-                      {tagItem.toolCount} {tagItem.toolCount === 1 ? "tool" : "tools"}
+                      {tagItem.toolCount} {tagItem.toolCount === 1 ? "resource" : "resources"}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
@@ -520,7 +520,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
             <DialogDescription className="text-xs">
               {editingTag
                 ? "Update tag name, slug identifier, or featured status."
-                : "Add a new tag for categorizing and discovering tools."}
+                : "Add a new tag for categorizing and discovering resources."}
             </DialogDescription>
           </DialogHeader>
 
@@ -620,8 +620,8 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
               <strong className="text-foreground">#{deletingTag?.slug}</strong>?
               {deletingTag && deletingTag.toolCount > 0 && (
                 <span className="text-amber-600 dark:text-amber-400 mt-2 block font-semibold">
-                  Note: This tag is currently attached to {deletingTag.toolCount} tool(s). Deleting
-                  it will remove the tag association from those tools.
+                  Note: This tag is currently attached to {deletingTag.toolCount} resource(s). Deleting
+                  it will remove the tag association from those resources.
                 </span>
               )}
             </AlertDialogDescription>

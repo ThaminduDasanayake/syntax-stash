@@ -86,71 +86,63 @@ export const getAllResources = cache(
 );
 
 /**
- * Fetches all live catalog resources for Admin management, cached at the Next.js Edge.
- * Cache Tag: "resources"
+ * Fetches all live catalog resources for Admin management directly from Neon Postgres.
  */
 export const getAllAdminResources = cache(
-  unstable_cache(
-    async (): Promise<{
-      categoryCounts: Record<string, number>;
-      resources: import("@/components/admin/types").AdminResourceItem[];
-    }> => {
-      try {
-        const rows = await db
-          .select({
-            id: resource.id,
-            title: resource.title,
-            authorBlog: author.blog,
-            authorGithub: author.github,
-            authorId: resource.authorId,
-            authorLinkedin: author.linkedin,
-            authorName: author.name,
-            authorSlug: author.slug,
-            authorTwitter: author.twitter,
-            authorWebsite: author.website,
-            authorYoutube: author.youtube,
-            category: resource.category,
-            categoryIcon: category.icon,
-            categoryId: resource.categoryId,
-            categoryName: category.name,
-            categorySlug: category.slug,
-            createdAt: resource.createdAt,
-            description: resource.description,
-            favicon: resource.favicon,
-            github: resource.github,
-            ogImage: resource.ogImage,
-            subtitle: resource.subtitle,
-            tags: resource.tags,
-            updatedAt: resource.updatedAt,
-            url: resource.url,
-          })
-          .from(resource)
-          .leftJoin(author, eq(resource.authorId, author.id))
-          .leftJoin(category, eq(resource.categoryId, category.id))
-          .orderBy(desc(resource.createdAt));
+  async (): Promise<{
+    categoryCounts: Record<string, number>;
+    resources: import("@/components/admin/types").AdminResourceItem[];
+  }> => {
+    try {
+      const rows = await db
+        .select({
+          id: resource.id,
+          title: resource.title,
+          authorBlog: author.blog,
+          authorGithub: author.github,
+          authorId: resource.authorId,
+          authorLinkedin: author.linkedin,
+          authorName: author.name,
+          authorSlug: author.slug,
+          authorTwitter: author.twitter,
+          authorWebsite: author.website,
+          authorYoutube: author.youtube,
+          category: resource.category,
+          categoryIcon: category.icon,
+          categoryId: resource.categoryId,
+          categoryName: category.name,
+          categorySlug: category.slug,
+          createdAt: resource.createdAt,
+          description: resource.description,
+          favicon: resource.favicon,
+          github: resource.github,
+          ogImage: resource.ogImage,
+          subtitle: resource.subtitle,
+          tags: resource.tags,
+          updatedAt: resource.updatedAt,
+          url: resource.url,
+        })
+        .from(resource)
+        .leftJoin(author, eq(resource.authorId, author.id))
+        .leftJoin(category, eq(resource.categoryId, category.id))
+        .orderBy(desc(resource.createdAt));
 
-        const categoryCounts: Record<string, number> = {};
-        const resources = rows.map((r) => {
-          const catName = r.categoryName || r.category;
-          categoryCounts[catName] = (categoryCounts[catName] || 0) + 1;
-          return {
-            ...r,
-            category: catName,
-            createdAt: r.createdAt.toISOString(),
-            updatedAt: r.updatedAt.toISOString(),
-          };
-        });
+      const categoryCounts: Record<string, number> = {};
+      const resources = rows.map((r) => {
+        const catName = r.categoryName || r.category;
+        categoryCounts[catName] = (categoryCounts[catName] || 0) + 1;
+        return {
+          ...r,
+          category: catName,
+          createdAt: r.createdAt.toISOString(),
+          updatedAt: r.updatedAt.toISOString(),
+        };
+      });
 
-        return { categoryCounts, resources };
-      } catch (err) {
-        console.error("Database query failed in getAllAdminResources():", err);
-        return { categoryCounts: {}, resources: [] };
-      }
-    },
-    ["admin-all-resources-cache"],
-    {
-      revalidate: 86400,
-      tags: ["resources"],
-    },
-  ),
+      return { categoryCounts, resources };
+    } catch (err) {
+      console.error("Database query failed in getAllAdminResources():", err);
+      return { categoryCounts: {}, resources: [] };
+    }
+  },
 );
