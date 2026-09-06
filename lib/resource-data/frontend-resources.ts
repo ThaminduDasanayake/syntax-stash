@@ -17,6 +17,16 @@ export const frontendLinks: Resource<typeof CATEGORIES.frontend>[] = [
     url: "https://404.colorion.co/",
   },
   {
+    title: "<css-doodle />",
+    author: "Yuan Chuan",
+    category: CATEGORIES.frontend,
+    description: "A web component for drawing patterns with CSS",
+    favicon: "https://css-doodle.com/favicon.png",
+    gitHubLink: "https://github.com/css-doodle/css-doodle",
+    tags: [TAGS.patterns],
+    url: "https://css-doodle.com/",
+  },
+  {
     title: "Apache ECharts",
     category: CATEGORIES.frontend,
     description: "A powerful, interactive charting and visualization library for browser",
@@ -438,6 +448,19 @@ export const frontendLinks: Resource<typeof CATEGORIES.frontend>[] = [
     url: "https://hihayk.github.io/shaper/",
   },
   {
+    title: "Shapes",
+    author: "Yuan Chuan",
+    category: CATEGORIES.frontend,
+    description:
+      "This tool is for discovering new CSS polygon shapes generated with css-doodle and mathematical functions",
+    favicon: "https://css-doodle.com/svg/favicon.png",
+    gitHubLink: "https://github.com/css-doodle/shapes",
+    ogImage: "https://raw.githubusercontent.com/css-doodle/shapes/main/screenshot.png",
+    subtitle: "Discover CSS polygon shapes",
+    tags: [TAGS.patterns],
+    url: "https://css-doodle.com/shapes/",
+  },
+  {
     title: "soundcn",
     author: "soundcn",
     category: CATEGORIES.frontend,
@@ -493,8 +516,18 @@ export const frontendLinks: Resource<typeof CATEGORIES.frontend>[] = [
     url: "https://styleseed-demo.vercel.app/",
   },
   {
+    title: "SVG playground",
+    author: "Yuan Chuan",
+    category: CATEGORIES.frontend,
+    favicon: "https://css-doodle.com/svg/favicon.png",
+    gitHubLink: "https://github.com/css-doodle/svg",
+    ogImage: "https://raw.githubusercontent.com/css-doodle/svg/main/screenshot.png",
+    tags: [TAGS.patterns],
+    url: "https://css-doodle.com/svg/",
+  },
+  {
     title: "Tabbied",
-    author: ["Sy Hong", "Ye Joo Park"],
+    author: ["Syung Hong", "Ye Joo Park"],
     category: CATEGORIES.frontend,
     description:
       "Explore a growing library of 295 customizable patterns and 57 free website templates, ready to edit, download, and use.",

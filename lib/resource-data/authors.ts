@@ -117,11 +117,18 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
     },
     name: "Kacem Mathlouthi",
   },
+  "kailash-saravanan": {
+    links: {
+      linkedin: "https://linkedin.com/in/kailash-saravanan-8034671bb",
+      twitter: "https://x.com/kail_designs",
+    },
+    name: "Kailash Saravanan",
+  },
   "kamran-ahmed": {
     links: {
       github: "https://github.com/nilbuild",
       linkedin: "https://www.linkedin.com/in/nilbuild",
-      twitter: "https://twitter.com/nilbuild",
+      twitter: "https://x.com/nilbuild",
       website: "https://kamran.fyi/",
       youtube: "https://youtube.com/@nilbuild",
     },
@@ -234,7 +241,7 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
   rive: {
     links: {
       github: "https://github.com/rive-app",
-      twitter: "https://twitter.com/rive_app",
+      twitter: "https://x.com/rive_app",
       youtube: "https://www.youtube.com/@Rive_app",
     },
     name: "Rive",
@@ -256,11 +263,12 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
     },
     name: "Sarthak Navalekar",
   },
-  "sy-hong": {
+  "syung-hong": {
     links: {
+      linkedin: "https://www.linkedin.com/in/syhong/",
       website: "https://syunghong.com/",
     },
-    name: "Sy Hong",
+    name: "Syung Hong",
   },
   vercel: {
     links: {
@@ -303,5 +311,13 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
       website: "https://park.is/",
     },
     name: "Ye Joo Park",
+  },
+  "yuan-chuan": {
+    links: {
+      github: "https://github.com/yuanchuan",
+      twitter: "https://x.com/yuanchuan23",
+      website: "https://yuanchuan.dev/",
+    },
+    name: "Yuan Chuan",
   },
 };

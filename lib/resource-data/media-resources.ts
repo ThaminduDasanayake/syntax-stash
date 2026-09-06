@@ -140,6 +140,16 @@ export const mediaLinks: Resource<typeof CATEGORIES.media>[] = [
     url: "https://bottts.com/",
   },
   {
+    title: "Brandmark Logo Maker",
+    category: CATEGORIES.media,
+    description:
+      "Create a unique logo, business card and social media graphics in less than a minute. Build your brand identity with our generative AI.",
+    favicon: "https://brandmark.io/favicons/project/apple-touch-icon.png",
+    ogImage: "https://brandmark.io/images/logo.svg",
+    subtitle: "The most advanced AI logo design tool",
+    url: "https://brandmark.io/",
+  },
+  {
     title: "Bulk Image Resizer",
     author: "Jasper Bernaers",
     category: CATEGORIES.media,

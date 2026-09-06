@@ -125,10 +125,14 @@ export const designLinks: Resource<typeof CATEGORIES.design>[] = [
   },
   {
     title: "Backgrounds Supply",
+    author: "Kailash Saravanan",
     category: CATEGORIES.design,
     description:
       "A huge collection of handcrafted and AI-generated backgrounds, wallpapers, and gradients to elevate your designs, apps, and client projects.",
+    favicon: "https://framerusercontent.com/images/DfGkNKL18eLeAzWGv0ECJOvQo.png",
+    ogImage: "https://framerusercontent.com/images/SEOWQkPZ6lpanbYiwIAvmtzL2vI.png",
     subtitle: "Jaw-Dropping Backgrounds for Your Projects",
+    tags: [TAGS.image],
     url: "https://www.backgrounds.supply/",
   },
   {
@@ -552,6 +556,19 @@ export const designLinks: Resource<typeof CATEGORIES.design>[] = [
     subtitle: "DESIGN.md collection for AI coding agents",
     tags: [TAGS.design],
     url: "https://getdesign.md/",
+  },
+  {
+    title: "Gradient Background Generator",
+    author: "Kailash Saravanan",
+    category: CATEGORIES.design,
+    description:
+      "Gradient Lab is a free gradient background generator with 20+ animated shader modes. Tune colors live, export a PNG or 4K MP4 video, or embed a live animated gradient directly into your website with no watermark or signup required.",
+    favicon: "https://framerusercontent.com/images/DfGkNKL18eLeAzWGv0ECJOvQo.png",
+    ogImage:
+      "https://backgrounds.supply/api/og?title=The+animated+gradient+background+generator.&eyebrow=Free+tool&pills=30%2B+shaders%2CExport+MP4+%26+PNG%2CNo+watermark",
+    subtitle: "Jaw-Dropping Backgrounds for Your Projects",
+    tags: [TAGS.gradient],
+    url: "https://backgrounds.supply/gradient-lab",
   },
   {
     title: "Graphite",

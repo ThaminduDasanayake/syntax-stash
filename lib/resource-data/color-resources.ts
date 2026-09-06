@@ -524,6 +524,15 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
     url: "https://meodai.github.io/poline/",
   },
   {
+    title: "Poolors",
+    category: CATEGORIES.colors,
+    description: "Poolors generates color palettes using the colors least-used by designers",
+    favicon: "https://poolors.com/favicon-32x32.png",
+    subtitle: "Generate unique color palettes",
+    tags: [TAGS.color],
+    url: "https://poolors.com/",
+  },
+  {
     title: "PullCord",
     author: "Sarthak Navalekar",
     category: CATEGORIES.colors,
