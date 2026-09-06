@@ -1,9 +1,14 @@
 "use client";
 
-import { GoogleLogoIcon } from "@phosphor-icons/react";
+import {
+  BookmarkSimpleIcon,
+  FolderSimpleIcon,
+  GoogleLogoIcon,
+} from "@phosphor-icons/react";
 import Image from "next/image";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
+import { CollectionsView } from "@/components/collections/collections-view";
 import { FilterBarSkeleton } from "@/components/filter-bar-skeleton";
 import { FilterSection } from "@/components/filter-section";
 import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
@@ -12,9 +17,12 @@ import { Button } from "@/components/ui/button";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { signIn } from "@/lib/auth-client";
 import { resourceLinks } from "@/lib/resource-data";
-import { getResourceId } from "@/lib/utils";
+import { cn, getResourceId } from "@/lib/utils";
+
+type StashTab = "bookmarks" | "collections";
 
 export default function SavedPage() {
+  const [activeTab, setActiveTab] = useState<StashTab>("bookmarks");
   const { bookmarkedSet, isLoading } = useBookmarks();
 
   const savedResources = useMemo(() => {
@@ -48,16 +56,50 @@ export default function SavedPage() {
                 <em>saved.</em>
               </h1>
               <p className="lib-sub">
-                {savedResources.length > 0
-                  ? `${savedResources.length} saved resource${savedResources.length === 1 ? "" : "s"} in your cloud collection.`
-                  : "Your cloud-synced personal collection."}
+                Your cloud-synced personal bookmarks and custom curated collections.
               </p>
+            </div>
+
+            {/* Tab Navigation */}
+            <div className="border-line bg-surface/60 inline-flex items-center rounded-lg border p-1 font-mono text-xs">
+              <button
+                type="button"
+                onClick={() => setActiveTab("bookmarks")}
+                className={cn(
+                  "flex items-center gap-1.5 rounded-md px-3.5 py-1.5 font-bold uppercase transition-colors",
+                  activeTab === "bookmarks"
+                    ? "bg-primary text-primary-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground",
+                )}
+              >
+                <BookmarkSimpleIcon className="size-3.5" />
+                <span>Bookmarks ({savedResources.length})</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveTab("collections")}
+                className={cn(
+                  "flex items-center gap-1.5 rounded-md px-3.5 py-1.5 font-bold uppercase transition-colors",
+                  activeTab === "collections"
+                    ? "bg-primary text-primary-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground",
+                )}
+              >
+                <FolderSimpleIcon className="size-3.5" />
+                <span>Collections</span>
+              </button>
             </div>
           </div>
         </div>
       </header>
 
-      {isLoading ? (
+      {/* Main Body */}
+      {activeTab === "collections" ? (
+        <div className="section-inner py-6">
+          <CollectionsView />
+        </div>
+      ) : isLoading ? (
         <>
           <FilterBarSkeleton searchPlaceholder="Search saved stash..." />
           <div className="card-body">

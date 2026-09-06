@@ -4,12 +4,14 @@ import { slugifyAuthor } from "@/lib/authors";
 import { CATEGORY_DEFINITIONS } from "@/lib/categories";
 import { resourceLinks } from "@/lib/resource-data";
 import { AUTHORS_REGISTRY } from "@/lib/resource-data/authors";
+import { TAGS } from "@/lib/resource-data/tags";
+import { normalizeTag } from "@/lib/tags";
 
 loadEnvConfig(process.cwd());
 
 async function seed() {
   const { db } = await import("../lib/db");
-  const { author, category, resource } = await import("../lib/db/schema");
+  const { author, category, resource, resourceTag, tag } = await import("../lib/db/schema");
 
   console.log("🚀 Starting database seeding for Syntax Stash...");
 
@@ -51,7 +53,59 @@ async function seed() {
   }
   console.log(`✅ Seeded ${existingCategories.length} categories.`);
 
-  // 2. Collect and deduplicate all authors from AUTHORS_REGISTRY and resourceLinks
+  // 2. Seed Tags
+  console.log("📦 Collecting and seeding tags...");
+  const tagsMap = new Map<string, { id: string; name: string; slug: string }>();
+
+  // From predefined TAGS dictionary
+  for (const [key, val] of Object.entries(TAGS)) {
+    const slug = normalizeTag(val || key);
+    if (!slug) continue;
+    tagsMap.set(slug, {
+      id: crypto.randomUUID(),
+      name: val || key,
+      slug,
+    });
+  }
+
+  // From resource links
+  for (const item of resourceLinks) {
+    if (!item.tags) continue;
+    const tagsArray = Array.isArray(item.tags)
+      ? item.tags
+      : typeof item.tags === "string"
+        ? (item.tags as string).split(",")
+        : [];
+
+    for (const rawTag of tagsArray) {
+      const slug = normalizeTag(rawTag);
+      if (!slug) continue;
+      if (!tagsMap.has(slug)) {
+        tagsMap.set(slug, {
+          id: crypto.randomUUID(),
+          name: rawTag.trim(),
+          slug,
+        });
+      }
+    }
+  }
+
+  console.log(`📦 Found ${tagsMap.size} unique tags to seed.`);
+  const tagList = Array.from(tagsMap.values());
+  const tagChunkSize = 50;
+  for (let i = 0; i < tagList.length; i += tagChunkSize) {
+    const chunk = tagList.slice(i, i + tagChunkSize);
+    await db.insert(tag).values(chunk).onConflictDoNothing({ target: tag.slug });
+  }
+
+  const existingTags = await db.select().from(tag);
+  const tagSlugToId = new Map<string, string>();
+  for (const t of existingTags) {
+    tagSlugToId.set(t.slug, t.id);
+  }
+  console.log(`✅ Seeded ${existingTags.length} tags.`);
+
+  // 3. Collect and deduplicate all authors from AUTHORS_REGISTRY and resourceLinks
   const authorsMap = new Map<
     string,
     {
@@ -124,9 +178,10 @@ async function seed() {
     slugToIdMap.set(a.slug, a.id);
   }
 
-  // 3. Prepare Resources
+  // 4. Prepare Resources & Tag Associations
   console.log(`📦 Preparing ${resourceLinks.length} resources to seed...`);
   const resourceValues: (typeof resource.$inferInsert)[] = [];
+  const resourceTagPairs: { resourceId: string; tagId: string }[] = [];
   const seenUrls = new Set<string>();
 
   for (const item of resourceLinks) {
@@ -143,9 +198,26 @@ async function seed() {
     }
 
     const categoryId = categoryNameToId.get(item.category.trim().toLowerCase()) || null;
+    const resourceId = crypto.randomUUID();
+
+    const tagsArray = item.tags
+      ? Array.isArray(item.tags)
+        ? item.tags
+        : typeof item.tags === "string"
+          ? (item.tags as string).split(",")
+          : []
+      : [];
+
+    for (const rawTag of tagsArray) {
+      const tagSlug = normalizeTag(rawTag);
+      const tagId = tagSlugToId.get(tagSlug);
+      if (tagId) {
+        resourceTagPairs.push({ resourceId, tagId });
+      }
+    }
 
     resourceValues.push({
-      id: crypto.randomUUID(),
+      id: resourceId,
       title: item.title,
       authorId,
       category: item.category,
@@ -155,7 +227,7 @@ async function seed() {
       github: item.github || null,
       ogImage: item.ogImage || null,
       subtitle: item.subtitle || null,
-      tags: item.tags && item.tags.length > 0 ? item.tags.join(",") : null,
+      tags: tagsArray.length > 0 ? tagsArray.join(",") : null,
       url: item.url,
     });
   }
@@ -174,9 +246,50 @@ async function seed() {
   }
 
   console.log("\n");
-  const totalInDb = await db.select().from(resource);
+
+  // Fetch actual DB resources to match real IDs for tag pairs in case of conflict resolution
+  const dbResources = await db.select({ id: resource.id, url: resource.url }).from(resource);
+  const urlToDbResourceId = new Map<string, string>();
+  for (const r of dbResources) {
+    urlToDbResourceId.set(r.url, r.id);
+  }
+
+  const verifiedResourceTagPairs: (typeof resourceTag.$inferInsert)[] = [];
+  const pairSet = new Set<string>();
+
+  for (const item of resourceLinks) {
+    const realResourceId = urlToDbResourceId.get(item.url);
+    if (!realResourceId || !item.tags) continue;
+
+    const tagsArray = Array.isArray(item.tags)
+      ? item.tags
+      : typeof item.tags === "string"
+        ? (item.tags as string).split(",")
+        : [];
+
+    for (const rawTag of tagsArray) {
+      const tagSlug = normalizeTag(rawTag);
+      const tagId = tagSlugToId.get(tagSlug);
+      if (tagId) {
+        const key = `${realResourceId}_${tagId}`;
+        if (!pairSet.has(key)) {
+          pairSet.add(key);
+          verifiedResourceTagPairs.push({ resourceId: realResourceId, tagId });
+        }
+      }
+    }
+  }
+
+  // Batch insert resourceTag pairs
+  console.log(`📦 Inserting ${verifiedResourceTagPairs.length} resource-tag relations...`);
+  const tagPairChunkSize = 150;
+  for (let i = 0; i < verifiedResourceTagPairs.length; i += tagPairChunkSize) {
+    const chunk = verifiedResourceTagPairs.slice(i, i + tagPairChunkSize);
+    await db.insert(resourceTag).values(chunk).onConflictDoNothing();
+  }
+
   console.log(
-    `🎉 Seeding complete! Database now contains ${totalInDb.length} live resources across ${existingCategories.length} categories and ${existingAuthors.length} authors.`,
+    `🎉 Seeding complete! Database now contains ${dbResources.length} live resources across ${existingCategories.length} categories, ${existingAuthors.length} authors, and ${existingTags.length} tags with ${verifiedResourceTagPairs.length} tag links.`,
   );
 }
 
@@ -186,3 +299,4 @@ seed()
     console.error("❌ Seeding failed:", err);
     process.exit(1);
   });
+

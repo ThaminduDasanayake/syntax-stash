@@ -5,17 +5,10 @@
 ### Implemented Entities
 - [x] **`author` Table**: Dedicated table for creators/maintainers (`id`, `name`, `slug`, `website`, `twitter`, `github`, `youtube`, `linkedin`, `blog`). Includes creator combobox autocomplete and auto-fill in all submission and resource forms.
 - [x] **`category` Table**: Dedicated table for taxonomy (`id`, `name`, `slug`, `description`, `icon`, `themeColor`, `order`). Linked to `resource.categoryId` with full relational integrity, dynamic routing support, and seed automation.
+- [x] **`tag` & `resource_tag` Tables**: Normalized many-to-many tag relations (`tag`, `resource_tag`) with automated seed routines, database tag aggregation API, and dynamic `/tags/[slug]` routing.
+- [x] **`collection` & `collection_item` Tables**: User-owned custom stashes/folders (`collection`, `collection_item`) with full CRUD APIs (`/api/collections`), client hook (`useCollections`), and tabbed UI integration on `/saved`.
 
 ### Future Schema Additions
-- [ ] **`tag` & `resource_tag` (Normalized Many-to-Many)**:
-  - **Context:** Transition from `tags: text("tags")` string storage to dedicated `tag` entity (`id`, `name`, `slug`, `is_featured`) and `resource_tag` join table (`resource_id`, `tag_id`).
-  - **Benefits:** Enables `/tags/[slug]` dynamic routes, instant indexed tag aggregations/counts without regex scans, and tag renaming/merging.
-- [ ] **`collection` & `collection_item` (Custom User Stashes / Folders)**:
-  - **Context:** Expand beyond basic binary `bookmark` table.
-  - **Schema:**
-    - `collection`: `id`, `user_id`, `name`, `slug`, `description`, `is_public`, `created_at`
-    - `collection_item`: `id`, `collection_id`, `resource_id`, `order`, `note`, `added_at`
-  - **Benefits:** Allows users to create shareable curated lists (e.g. "My 2026 Next.js Stack", "Best UI Component Libraries").
 - [ ] **`github_repo_stats` (Live Repository Metrics)**:
   - **Context:** Move from static `lib/resource-data/github-stars.json` cache into Postgres.
   - **Schema:** `id`, `resource_id`, `owner`, `repo`, `stars`, `forks`, `open_issues`, `license`, `last_pushed_at`, `synced_at`.

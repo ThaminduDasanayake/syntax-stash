@@ -1,5 +1,14 @@
 import { relations } from "drizzle-orm";
-import { boolean, index, integer, pgTable, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  index,
+  integer,
+  pgTable,
+  primaryKey,
+  text,
+  timestamp,
+  uniqueIndex,
+} from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -106,6 +115,22 @@ export const category = pgTable(
   ],
 );
 
+export const tag = pgTable(
+  "tag",
+  {
+    id: text("id").primaryKey(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    isFeatured: boolean("is_featured").notNull().default(false),
+    name: text("name").notNull(),
+    slug: text("slug").notNull().unique(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  },
+  (table) => [
+    index("tag_name_idx").on(table.name),
+    uniqueIndex("tag_slug_idx").on(table.slug),
+  ],
+);
+
 export const resource = pgTable(
   "resource",
   {
@@ -133,6 +158,69 @@ export const resource = pgTable(
   ],
 );
 
+export const resourceTag = pgTable(
+  "resource_tag",
+  {
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    resourceId: text("resource_id")
+      .notNull()
+      .references(() => resource.id, { onDelete: "cascade" }),
+    tagId: text("tag_id")
+      .notNull()
+      .references(() => tag.id, { onDelete: "cascade" }),
+  },
+  (table) => [
+    index("resource_tag_resource_id_idx").on(table.resourceId),
+    index("resource_tag_tag_id_idx").on(table.tagId),
+    primaryKey({ columns: [table.resourceId, table.tagId] }),
+  ],
+);
+
+export const collection = pgTable(
+  "collection",
+  {
+    id: text("id").primaryKey(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    description: text("description"),
+    isPublic: boolean("is_public").notNull().default(false),
+    name: text("name").notNull(),
+    slug: text("slug").notNull(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+  },
+  (table) => [
+    index("collection_user_id_idx").on(table.userId),
+    uniqueIndex("collection_user_slug_idx").on(table.userId, table.slug),
+  ],
+);
+
+export const collectionItem = pgTable(
+  "collection_item",
+  {
+    id: text("id").primaryKey(),
+    addedAt: timestamp("added_at").notNull().defaultNow(),
+    collectionId: text("collection_id")
+      .notNull()
+      .references(() => collection.id, { onDelete: "cascade" }),
+    note: text("note"),
+    order: integer("order").notNull().default(0),
+    resourceId: text("resource_id")
+      .notNull()
+      .references(() => resource.id, { onDelete: "cascade" }),
+  },
+  (table) => [
+    index("collection_item_collection_id_idx").on(table.collectionId),
+    uniqueIndex("collection_resource_unique_idx").on(table.collectionId, table.resourceId),
+  ],
+);
+
+export const userRelations = relations(user, ({ many }) => ({
+  bookmarks: many(bookmark),
+  collections: many(collection),
+}));
+
 export const authorRelations = relations(author, ({ many }) => ({
   resources: many(resource),
 }));
@@ -141,7 +229,11 @@ export const categoryRelations = relations(category, ({ many }) => ({
   resources: many(resource),
 }));
 
-export const resourceRelations = relations(resource, ({ one }) => ({
+export const tagRelations = relations(tag, ({ many }) => ({
+  resourceTags: many(resourceTag),
+}));
+
+export const resourceRelations = relations(resource, ({ many, one }) => ({
   author: one(author, {
     fields: [resource.authorId],
     references: [author.id],
@@ -149,6 +241,38 @@ export const resourceRelations = relations(resource, ({ one }) => ({
   category: one(category, {
     fields: [resource.categoryId],
     references: [category.id],
+  }),
+  collectionItems: many(collectionItem),
+  resourceTags: many(resourceTag),
+}));
+
+export const resourceTagRelations = relations(resourceTag, ({ one }) => ({
+  resource: one(resource, {
+    fields: [resourceTag.resourceId],
+    references: [resource.id],
+  }),
+  tag: one(tag, {
+    fields: [resourceTag.tagId],
+    references: [tag.id],
+  }),
+}));
+
+export const collectionRelations = relations(collection, ({ many, one }) => ({
+  items: many(collectionItem),
+  user: one(user, {
+    fields: [collection.userId],
+    references: [user.id],
+  }),
+}));
+
+export const collectionItemRelations = relations(collectionItem, ({ one }) => ({
+  collection: one(collection, {
+    fields: [collectionItem.collectionId],
+    references: [collection.id],
+  }),
+  resource: one(resource, {
+    fields: [collectionItem.resourceId],
+    references: [resource.id],
   }),
 }));
 
@@ -202,7 +326,16 @@ export type Author = typeof author.$inferSelect;
 export type NewAuthor = typeof author.$inferInsert;
 export type Category = typeof category.$inferSelect;
 export type NewCategory = typeof category.$inferInsert;
+export type Tag = typeof tag.$inferSelect;
+export type NewTag = typeof tag.$inferInsert;
+export type ResourceTag = typeof resourceTag.$inferSelect;
+export type NewResourceTag = typeof resourceTag.$inferInsert;
+export type Collection = typeof collection.$inferSelect;
+export type NewCollection = typeof collection.$inferInsert;
+export type CollectionItem = typeof collectionItem.$inferSelect;
+export type NewCollectionItem = typeof collectionItem.$inferInsert;
 export type DbResource = typeof resource.$inferSelect;
 export type NewDbResource = typeof resource.$inferInsert;
 export type Submission = typeof submission.$inferSelect;
 export type NewSubmission = typeof submission.$inferInsert;
+
