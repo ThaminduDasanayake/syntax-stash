@@ -15,6 +15,7 @@ import {
   CandidateOption,
   MediaAssetFields,
   ResourceCardPreview,
+  TagPicker,
 } from "@/components/submissions";
 import { Button } from "@/components/ui/button";
 import {
@@ -357,17 +358,15 @@ export function AdminResourceDialog({
               {/* Tags */}
               <div className="space-y-2">
                 <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Tags (comma separated)
+                  Canonical Tags (Select Only)
                 </Label>
-                <div className="h-9">
-                  <InputField
-                    placeholder="react, css, frontend, ai"
-                    value={formData.tags || ""}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, tags: e.target.value }))}
-                    containerClassName="h-9"
-                    className="font-mono text-xs"
-                  />
-                </div>
+                <TagPicker
+                  value={formData.tags || ""}
+                  onChange={(val) => setFormData((prev) => ({ ...prev, tags: val }))}
+                  disabled={isWorking}
+                  allowCustom={false}
+                  placeholder="Search and select canonical tags..."
+                />
               </div>
 
               {/* Author & Social Attributions */}

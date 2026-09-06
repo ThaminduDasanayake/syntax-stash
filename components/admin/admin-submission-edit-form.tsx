@@ -17,6 +17,7 @@ import {
   AuthorSocialValues,
   MediaAssetFields,
   ResourceCardPreview,
+  TagPicker,
 } from "@/components/submissions";
 import { Button } from "@/components/ui/button";
 import { InputField } from "@/components/ui/input-field";
@@ -339,17 +340,14 @@ export function AdminSubmissionEditForm({
 
               <div className="space-y-2">
                 <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Tags / Keywords (comma separated)
+                  Canonical Tags (Select Only)
                 </Label>
-                <div className="h-9">
-                  <InputField
-                    value={editForm.tags || ""}
-                    onChange={(e) => setEditForm({ ...editForm, tags: e.target.value })}
-                    placeholder="react, tailwind, ui"
-                    containerClassName="h-9"
-                    className="font-mono text-xs"
-                  />
-                </div>
+                <TagPicker
+                  value={editForm.tags || ""}
+                  onChange={(val) => setEditForm({ ...editForm, tags: val })}
+                  allowCustom={false}
+                  placeholder="Search and select canonical tags..."
+                />
               </div>
             </div>
 

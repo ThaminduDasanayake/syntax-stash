@@ -11,6 +11,7 @@ import {
   CandidateOption,
   MediaAssetFields,
   ResourceCardPreview,
+  TagPicker,
 } from "@/components/submissions";
 import { Button } from "@/components/ui/button";
 import { InputField } from "@/components/ui/input-field";
@@ -405,15 +406,12 @@ export function SubmitForm() {
                 <Label className="text-foreground font-mono text-xs font-bold uppercase">
                   Tags / Keywords (Optional)
                 </Label>
-                <div className="h-9">
-                  <InputField
-                    placeholder="e.g. color, gradient, generator"
-                    value={tags}
-                    onChange={(e) => setTags(e.target.value)}
-                    containerClassName="h-9"
-                    className="font-mono text-xs"
-                  />
-                </div>
+                <TagPicker
+                  value={tags}
+                  onChange={setTags}
+                  allowCustom={true}
+                  placeholder="Select tags or type custom..."
+                />
               </div>
             </div>
 
