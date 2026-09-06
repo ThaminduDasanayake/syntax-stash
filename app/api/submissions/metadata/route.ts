@@ -264,14 +264,102 @@ export async function GET(request: NextRequest) {
     const finalUrl = res.url || parsedUrl.href;
     const $ = cheerio.load(html);
 
-    // 1. Title Extraction & Candidates
+    // 1. Title & Subtitle Extraction
     const docTitle = $("title").first().text().trim();
     const ogTitle = $('meta[property="og:title"]').attr("content")?.trim();
+    const ogSiteName = $('meta[property="og:site_name"]').attr("content")?.trim();
     const twitterTitle = $('meta[name="twitter:title"]').attr("content")?.trim();
     const h1Title = $("h1").first().text().trim();
-    const title = (ogTitle || twitterTitle || docTitle || h1Title || parsedUrl.hostname)
+
+    const rawTitle = (docTitle || ogTitle || twitterTitle || h1Title || parsedUrl.hostname)
       .replace(/\s+/g, " ")
       .trim();
+
+    // Domain name stem for brand matching (e.g. "trendshift" from "trendshift.io" or "www.trendshift.com")
+    const domainHost = parsedUrl.hostname.replace(/^www\./, "").toLowerCase();
+    const domainStem = domainHost.split(".")[0]?.toLowerCase() || "";
+
+    let title = rawTitle;
+    let subtitle = "";
+
+    // Candidate delimiters to split multi-part title strings.
+    // ' | ' is intentionally given highest priority as the primary SEO separator between Brand and Tagline.
+    // eslint-disable-next-line perfectionist/sort-arrays
+    const titleDelimiters = [" | ", " — ", " – ", " - ", " : ", " · ", " • "];
+    let titleParts: string[] = [];
+
+    // Find the highest-priority matching delimiter
+    for (const delimiter of titleDelimiters) {
+      if (rawTitle.includes(delimiter)) {
+        const parts = rawTitle
+          .split(delimiter)
+          .map((p) => p.trim())
+          .filter(Boolean);
+        if (parts.length >= 2) {
+          titleParts = parts;
+          break;
+        }
+      }
+    }
+
+    if (titleParts.length >= 2) {
+      const firstPart = titleParts[0];
+      const lastPart = titleParts[titleParts.length - 1];
+
+      const cleanPart = (str: string) => str.toLowerCase().replace(/[^a-z0-9]/g, "");
+      const cleanStem = cleanPart(domainStem);
+      const cleanSiteName = ogSiteName ? cleanPart(ogSiteName) : "";
+
+      const firstClean = cleanPart(firstPart);
+      const lastClean = cleanPart(lastPart);
+
+      // Check if candidate matches domain or og:site_name (Exact or high-confidence match)
+      const isExactBrand = (clean: string, original: string) => {
+        if (!clean) return false;
+        if (cleanStem.length > 2 && (clean === cleanStem || clean === `${cleanStem}app` || clean === `${cleanStem}io` || clean === `${cleanStem}dev`)) return true;
+        if (cleanSiteName.length > 2 && (clean === cleanSiteName || original.toLowerCase() === ogSiteName?.toLowerCase())) return true;
+        return false;
+      };
+
+      const lastMatchesBrand = isExactBrand(lastClean, lastPart);
+      const firstMatchesBrand = isExactBrand(firstClean, firstPart);
+
+      if (lastMatchesBrand && !firstMatchesBrand) {
+        // "Live trending GitHub repositories — daily momentum ranking | Trendshift" -> Title: "Trendshift", Subtitle: "Live trending GitHub repositories — daily momentum ranking"
+        title = lastPart;
+        subtitle = titleParts.slice(0, -1).join(" — ");
+      } else if (firstMatchesBrand && !lastMatchesBrand) {
+        // "Trendshift | Live trending GitHub repositories — daily momentum ranking" -> Title: "Trendshift", Subtitle: "Live trending GitHub repositories — daily momentum ranking"
+        title = firstPart;
+        subtitle = titleParts.slice(1).join(" — ");
+      } else {
+        // Fallback length heuristics: if last part is very short (< 25 chars) and first part is long (> 30 chars), it's brand-last
+        if (lastPart.length <= 25 && firstPart.length > 30) {
+          title = lastPart;
+          subtitle = titleParts.slice(0, -1).join(" — ");
+        } else {
+          // Default brand-first
+          title = firstPart;
+          subtitle = titleParts.slice(1).join(" — ");
+        }
+      }
+    } else if (rawTitle.includes(":")) {
+      // Fallback: If title has a colon without outer spaces (e.g., "AgentMemory: Persistent Memory")
+      const colonParts = rawTitle
+        .split(":")
+        .map((p) => p.trim())
+        .filter(Boolean);
+      if (colonParts.length >= 2 && colonParts[0].length <= 30) {
+        title = colonParts[0];
+        subtitle = colonParts.slice(1).join(": ");
+      }
+    }
+
+    // If og:site_name is present and title is very long (> 50 chars), fallback title to og:site_name
+    if (ogSiteName && title.length > 50 && ogSiteName.length < 35) {
+      subtitle = subtitle || title;
+      title = ogSiteName;
+    }
 
     // 2. JSON-LD Extraction
     let jsonLdDesc = "";
@@ -303,27 +391,19 @@ export async function GET(request: NextRequest) {
       }
     });
 
-    // 3. Description & Subtitle Extraction
+    // 3. Description Extraction (Prioritizing meta description & JSON-LD)
     const metaDesc = $('meta[name="description"]').attr("content")?.trim();
     const ogDesc = $('meta[property="og:description"]').attr("content")?.trim();
     const twitterDesc = $('meta[name="twitter:description"]').attr("content")?.trim();
     const firstP = $("main p, article p, body p").first().text().trim();
 
+    // Standard priority: standard meta description > twitter desc > og desc > jsonLd > first paragraph
     const description =
-      ogDesc ||
       metaDesc ||
       twitterDesc ||
+      ogDesc ||
       jsonLdDesc ||
       (firstP.length > 20 && firstP.length < 300 ? firstP : "");
-
-    // Subtitle / Tagline heuristic:
-    // If twitterDesc is short (< 100 chars) and different from description, or h2 tagline
-    let subtitle = "";
-    if (twitterDesc && twitterDesc !== description && twitterDesc.length < 120) {
-      subtitle = twitterDesc;
-    } else if (metaDesc && metaDesc !== description && metaDesc.length < 120) {
-      subtitle = metaDesc;
-    }
 
     // 4. Favicons Multi-Discovery & Quality Ranking
     const faviconCandidates: { label: string; type: string; url: string; weight: number }[] = [];
@@ -439,11 +519,57 @@ export async function GET(request: NextRequest) {
     const metaAuthor = $('meta[name="author"]').attr("content")?.trim();
 
     let author = metaAuthor || twitterCreator || articleAuthor || "";
+    let authorWebsite: string | undefined;
+    let authorTwitter: string | undefined;
+    let authorGitHub: string | undefined;
+    let authorYouTube: string | undefined;
+    let authorLinkedIn: string | undefined;
+
+    if (
+      articleAuthor &&
+      (articleAuthor.startsWith("http://") || articleAuthor.startsWith("https://"))
+    ) {
+      authorWebsite = articleAuthor;
+    }
+
+    if (
+      twitterCreator &&
+      twitterCreator.startsWith("@") &&
+      !["@github", "@nextjs", "@vercel"].includes(twitterCreator.toLowerCase())
+    ) {
+      authorTwitter = `https://x.com/${twitterCreator.replace(/^@/, "")}`;
+    }
+
+    // Direct HTML scan for linked creator: e.g. "created by <a href="...">Julian Li</a>"
+    if (!author) {
+      const htmlCreatorMatch = html.match(
+        /(?:built|made|created|developed|designed)\s+by(?:\s*<!--.*?-->|\s*<span[^>]*>.*?<\/span>)*\s*<a[^>]*href=["']([^"']+)["'][^>]*>([^<]+)<\/a>/i,
+      );
+      if (htmlCreatorMatch && htmlCreatorMatch[2]?.trim()) {
+        const rawName = htmlCreatorMatch[2].trim();
+        const rawHref = htmlCreatorMatch[1]?.trim();
+        if (rawName.length >= 2 && rawName.length <= 40) {
+          author = rawName;
+          if (rawHref) {
+            const resolvedHref = resolveUrl(rawHref, finalUrl);
+            if (resolvedHref.includes("twitter.com") || resolvedHref.includes("x.com")) {
+              authorTwitter = resolvedHref;
+            } else if (resolvedHref.includes("github.com")) {
+              authorGitHub = resolvedHref;
+            } else if (resolvedHref.startsWith("http")) {
+              authorWebsite = resolvedHref;
+            }
+          }
+        }
+      }
+    }
 
     if (!author && ogDesc) {
       const match = ogDesc.match(/(?:built|made|created|developed|designed)\s+by\s+([^,.;]+)/i);
       if (match && match[1]) {
-        author = match[1].trim();
+        author = match[1]
+          .replace(/\s+(with|using|in|at|on|for|from|and)\b.*$/i, "")
+          .trim();
       }
     }
 
@@ -456,13 +582,13 @@ export async function GET(request: NextRequest) {
         .replace(/\s+/g, " ");
 
       const bylineMatch = footerOrBylineText.match(
-        /(?:built|made|created|developed|designed)\s+by\s+([A-Za-zÀ-ÿ0-9\s._-]{2,40})/i,
+        /(?:built|made|created|developed|designed)\s+by\s+([A-Za-zÀ-ÿ0-9\s._-]+?)(?:\s+(?:with|using|in|at|on|for|from|and)\b|[^\w\sÀ-ÿ._-]|$)/i,
       );
 
       if (bylineMatch && bylineMatch[1]) {
         const candidate = bylineMatch[1].trim();
         // Ignore generic labels
-        if (!["a community", "ai", "our team", "the"].includes(candidate.toLowerCase())) {
+        if (!["a community", "ai", "our team", "the"].includes(candidate.toLowerCase()) && candidate.length >= 2 && candidate.length <= 40) {
           author = candidate;
         }
       }
@@ -472,21 +598,10 @@ export async function GET(request: NextRequest) {
       author = "";
     }
 
-    let authorTwitter: string | undefined;
-    let authorGitHub: string | undefined;
-    let authorYouTube: string | undefined;
-    let authorLinkedIn: string | undefined;
-    let authorWebsite: string | undefined;
+    // Scan page links for social profiles with relevance scoring
+    const twitterCandidates: { score: number; url: string }[] = [];
+    const githubUserCandidates: { score: number; url: string }[] = [];
 
-    if (
-      twitterCreator &&
-      twitterCreator.startsWith("@") &&
-      !["@github", "@nextjs", "@vercel"].includes(twitterCreator.toLowerCase())
-    ) {
-      authorTwitter = `https://x.com/${twitterCreator.replace(/^@/, "")}`;
-    }
-
-    // Scan page links for social profiles
     $("a[href]").each((_, el) => {
       const href = $(el).attr("href");
       if (!href) return;
@@ -496,36 +611,70 @@ export async function GET(request: NextRequest) {
         const linkUrl = new URL(fullHref);
         const host = linkUrl.hostname.toLowerCase();
         const pathname = linkUrl.pathname;
+        const parts = pathname.split("/").filter(Boolean);
+        const text = $(el).text().trim().toLowerCase();
+        const aria = ($(el).attr("aria-label") || "").toLowerCase();
+        const isFooterOrNav = $(el).closest("footer, nav, header, [class*='footer'], [class*='social'], [class*='nav']").length > 0;
 
-        // Twitter / X
-        if (!authorTwitter && (host.includes("twitter.com") || host.includes("x.com"))) {
-          if (
-            !pathname.includes("/intent/") &&
-            !pathname.includes("/share") &&
-            pathname.length > 1
-          ) {
-            authorTwitter = fullHref;
+        // Twitter / X (Targeting user profile, excluding tweets, status, share links)
+        if (host.includes("twitter.com") || host.includes("x.com")) {
+          const isStatusOrIntent =
+            pathname.includes("/status/") ||
+            pathname.includes("/i/") ||
+            pathname.includes("/intent/") ||
+            pathname.includes("/share") ||
+            pathname.includes("/search") ||
+            pathname.includes("/hashtag/");
+
+          if (!isStatusOrIntent && parts.length === 1) {
+            const username = parts[0].replace(/^@/, "");
+            if (
+              ![
+                "explore",
+                "home",
+                "i",
+                "intent",
+                "messages",
+                "notifications",
+                "privacy",
+                "search",
+                "settings",
+                "share",
+                "tos",
+              ].includes(username.toLowerCase())
+            ) {
+              let score = 10;
+              if (isFooterOrNav) score += 50;
+              if (text.includes("twitter") || text.includes("x") || aria.includes("twitter") || aria.includes("x")) score += 30;
+              twitterCandidates.push({ score, url: `https://x.com/${username}` });
+            }
           }
         }
 
-        // GitHub
-        if (host.includes("github.com")) {
-          const parts = pathname.split("/").filter(Boolean);
+        // GitHub User Profile
+        if (host.includes("github.com") && parts.length === 1) {
+          const username = parts[0];
           if (
-            parts.length === 1 &&
             ![
               "about",
               "explore",
               "features",
               "login",
               "marketplace",
+              "orgs",
               "pricing",
               "signup",
+              "site",
+              "sponsors",
               "topics",
               "trending",
-            ].includes(parts[0])
+              "users",
+            ].includes(username.toLowerCase())
           ) {
-            if (!authorGitHub) authorGitHub = `https://github.com/${parts[0]}`;
+            let score = 10;
+            if (isFooterOrNav) score += 50;
+            if (text.includes("github") || aria.includes("github")) score += 30;
+            githubUserCandidates.push({ score, url: `https://github.com/${username}` });
           }
         }
 
@@ -551,43 +700,104 @@ export async function GET(request: NextRequest) {
       }
     });
 
-    if (
-      articleAuthor &&
-      (articleAuthor.startsWith("http://") || articleAuthor.startsWith("https://"))
-    ) {
-      authorWebsite = articleAuthor;
+    twitterCandidates.sort((a, b) => b.score - a.score);
+    githubUserCandidates.sort((a, b) => b.score - a.score);
+
+    if (!authorTwitter && twitterCandidates.length > 0) {
+      authorTwitter = twitterCandidates[0].url;
+    }
+    if (!authorGitHub && githubUserCandidates.length > 0) {
+      authorGitHub = githubUserCandidates[0].url;
     }
 
-    // 7. GitHub Repository Discovery
+    // 7. GitHub Repository Discovery (High-Confidence Heuristic Matching)
     let gitHubLink: string | undefined;
+    const repoCandidates: { repoUrl: string; score: number }[] = [];
+    const domainClean = domainStem.toLowerCase().replace(/[^a-z0-9]/g, "");
+    const titleClean = title.toLowerCase().replace(/[^a-z0-9]/g, "");
+
     $('a[href*="github.com"]').each((_, el) => {
       const href = $(el).attr("href");
-      if (href && !gitHubLink) {
-        try {
-          const gh = new URL(href);
-          if (gh.hostname.includes("github.com")) {
-            const parts = gh.pathname.split("/").filter(Boolean);
-            if (
-              parts.length >= 2 &&
-              ![
-                "explore",
-                "features",
-                "login",
-                "marketplace",
-                "pricing",
-                "signup",
-                "topics",
-                "trending",
-              ].includes(parts[0])
-            ) {
-              gitHubLink = `https://github.com/${parts[0]}/${parts[1]}`;
-            }
-          }
-        } catch {
-          // ignore
+      if (!href) return;
+      try {
+        const gh = new URL(href, finalUrl);
+        if (!gh.hostname.includes("github.com")) return;
+
+        const parts = gh.pathname.split("/").filter(Boolean);
+        if (parts.length < 2) return;
+
+        const [owner, repo] = [parts[0], parts[1]];
+        if (
+          [
+            "about",
+            "explore",
+            "features",
+            "login",
+            "marketplace",
+            "orgs",
+            "pricing",
+            "signup",
+            "site",
+            "sponsors",
+            "topics",
+            "trending",
+            "users",
+          ].includes(owner.toLowerCase())
+        ) {
+          return;
         }
+
+        const repoClean = repo.toLowerCase().replace(/[^a-z0-9]/g, "");
+        const ownerClean = owner.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+        const text = $(el).text().trim().toLowerCase();
+        const aria = ($(el).attr("aria-label") || "").toLowerCase();
+        const titleAttr = ($(el).attr("title") || "").toLowerCase();
+
+        const isSponsorOrAd = $(el).closest("[class*='sponsor'], [class*='ad'], [class*='featured'], [class*='partner']").length > 0;
+        const isFeedOrList = $(el).closest("[class*='feed'], [class*='mention'], [class*='item'], [class*='row'], [class*='card']").length > 0;
+        const isNavOrHeader = $(el).closest("header, nav, [class*='header'], [class*='nav'], [class*='hero']").length > 0;
+
+        let score = 0;
+
+        // Brand & domain matching (High confidence)
+        if (repoClean === domainClean || repoClean === titleClean) {
+          score += 100;
+        } else if (repoClean.includes(domainClean) || repoClean.includes(titleClean)) {
+          score += 70;
+        } else if (ownerClean === domainClean || ownerClean === titleClean) {
+          score += 60;
+        }
+
+        // Context phrases indicating source code repository
+        if (
+          text.includes("source") ||
+          text.includes("github") ||
+          text.includes("star") ||
+          text.includes("repo") ||
+          aria.includes("github") ||
+          aria.includes("source") ||
+          titleAttr.includes("github")
+        ) {
+          score += 25;
+        }
+
+        if (isNavOrHeader) score += 20;
+        if (isSponsorOrAd) score -= 80;
+        if (isFeedOrList) score -= 50;
+        if (gh.searchParams.has("utm_source")) score -= 90;
+
+        repoCandidates.push({ repoUrl: `https://github.com/${owner}/${repo}`, score });
+      } catch {
+        // ignore
       }
     });
+
+    repoCandidates.sort((a, b) => b.score - a.score);
+    // Only accept if positive confidence score
+    if (repoCandidates.length > 0 && repoCandidates[0].score > 20) {
+      gitHubLink = repoCandidates[0].repoUrl;
+    }
 
     const suggestedCategory = suggestCategory(`${title} ${description}`);
 

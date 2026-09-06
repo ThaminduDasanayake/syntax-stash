@@ -56,6 +56,15 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
     },
     name: "Fran Pérez",
   },
+  "gal-shir": {
+    links: {
+      linkedin: "https://www.linkedin.com/in/galshir/",
+      twitter: "https://x.com/galshirart",
+      website: "https://galshir.com/",
+      youtube: "https://www.youtube.com/galshir",
+    },
+    name: "Gal Shir",
+  },
   "george-hastings": {
     links: {
       github: "https://github.com/georgehastings",
@@ -89,6 +98,15 @@ export const AUTHORS_REGISTRY: Record<string, AuthorProfile> = {
       website: "https://jasperbernaers.com",
     },
     name: "Jasper Bernaers",
+  },
+  "julian-li": {
+    links: {
+      github: "https://github.com/liweiyi88",
+      linkedin: "https://www.linkedin.com/in/jweiyi/",
+      twitter: "https://x.com/liweiyi88",
+      website: "https://julianli.co/",
+    },
+    name: "Julian Li",
   },
   "kacem-mathlouthi": {
     links: {

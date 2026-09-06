@@ -101,6 +101,7 @@ export const colorLinks: Resource<typeof CATEGORIES.colors>[] = [
   },
   {
     title: "Color Hunt",
+    author: "Gal Shir",
     category: CATEGORIES.colors,
     description:
       "Discover the newest hand-picked color palettes of Color Hunt. Get color inspiration for your design and art projects.",

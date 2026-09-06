@@ -67,7 +67,7 @@ export default async function AdminSubmissionsPage() {
       pending: all.filter((s) => s.status === "pending").length,
       rejected: all.filter((s) => s.status === "rejected").length,
     };
-    initialSubmissions = all.filter((s) => s.status === "pending");
+    initialSubmissions = all;
   } catch (err) {
     console.error("Failed to preload submissions in server component:", err);
   }

@@ -1428,6 +1428,19 @@ export const developmentLinks: Resource<typeof CATEGORIES.dev>[] = [
     url: "https://transmute.sh/",
   },
   {
+    title: "Trendshift",
+    author: "Julian Li",
+    authorLink: "https://julianli.co/",
+    category: CATEGORIES.dev,
+    description:
+      "Live trending repositories caught as they rise, not after they peak. An alternative to GitHub Trending",
+    favicon: "https://trendshift.io/apple-icon.png",
+    ogImage: "https://trendshift.io/opengraph-image",
+    subtitle: "Live trending GitHub repositories — daily momentum ranking",
+    tags: [],
+    url: "https://trendshift.io",
+  },
+  {
     title: "TUIStudio",
     category: CATEGORIES.dev,
     description:
