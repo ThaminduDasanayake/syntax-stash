@@ -7,7 +7,8 @@ import { isAdmin } from "@/lib/admin";
 import { auth } from "@/lib/auth";
 import { slugifyAuthor } from "@/lib/authors";
 import { db } from "@/lib/db";
-import { author, category, resource } from "@/lib/db/schema";
+import { author, category, resource, resourceTag, tag } from "@/lib/db/schema";
+import { normalizeTag } from "@/lib/tags";
 
 async function verifyAdmin() {
   const reqHeaders = await headers();
@@ -17,6 +18,34 @@ async function verifyAdmin() {
     return null;
   }
   return session.user;
+}
+
+interface AdminResourceRecord {
+  authorBlog: string | null;
+  authorGithub: string | null;
+  authorId: string | null;
+  authorLinkedin: string | null;
+  authorName: string | null;
+  authorSlug: string | null;
+  authorTwitter: string | null;
+  authorWebsite: string | null;
+  authorYoutube: string | null;
+  category: string;
+  categoryIcon: string | null;
+  categoryId: string;
+  categoryName: string | null;
+  categorySlug: string | null;
+  createdAt: string;
+  description: string;
+  favicon: string | null;
+  github: string | null;
+  id: string;
+  ogImage: string | null;
+  subtitle: string | null;
+  tags: string[];
+  title: string;
+  updatedAt: string;
+  url: string;
 }
 
 export async function GET() {
@@ -39,7 +68,6 @@ export async function GET() {
         authorTwitter: author.twitter,
         authorWebsite: author.website,
         authorYoutube: author.youtube,
-        category: resource.category,
         categoryIcon: category.icon,
         categoryId: resource.categoryId,
         categoryName: category.name,
@@ -50,31 +78,68 @@ export async function GET() {
         github: resource.github,
         ogImage: resource.ogImage,
         subtitle: resource.subtitle,
-        tags: resource.tags,
+        tagName: tag.name,
         updatedAt: resource.updatedAt,
         url: resource.url,
       })
       .from(resource)
       .leftJoin(author, eq(resource.authorId, author.id))
       .leftJoin(category, eq(resource.categoryId, category.id))
+      .leftJoin(resourceTag, eq(resource.id, resourceTag.resourceId))
+      .leftJoin(tag, eq(resourceTag.tagId, tag.id))
       .orderBy(desc(resource.createdAt));
 
     const categoryCounts: Record<string, number> = {};
-    const resources = rows.map((r) => {
-      const catName = r.categoryName || r.category;
-      categoryCounts[catName] = (categoryCounts[catName] || 0) + 1;
-      return {
-        ...r,
-        category: catName,
-        createdAt: r.createdAt.toISOString(),
-        updatedAt: r.updatedAt.toISOString(),
-      };
-    });
+    const resourceMap = new Map<string, AdminResourceRecord>();
+
+    for (const r of rows) {
+      const catName = r.categoryName || "Generators";
+      if (!resourceMap.has(r.id)) {
+        categoryCounts[catName] = (categoryCounts[catName] || 0) + 1;
+        resourceMap.set(r.id, {
+          id: r.id,
+          title: r.title,
+          authorBlog: r.authorBlog,
+          authorGithub: r.authorGithub,
+          authorId: r.authorId,
+          authorLinkedin: r.authorLinkedin,
+          authorName: r.authorName,
+          authorSlug: r.authorSlug,
+          authorTwitter: r.authorTwitter,
+          authorWebsite: r.authorWebsite,
+          authorYoutube: r.authorYoutube,
+          category: catName,
+          categoryIcon: r.categoryIcon,
+          categoryId: r.categoryId,
+          categoryName: r.categoryName,
+          categorySlug: r.categorySlug,
+          createdAt: r.createdAt.toISOString(),
+          description: r.description,
+          favicon: r.favicon,
+          github: r.github,
+          ogImage: r.ogImage,
+          subtitle: r.subtitle,
+          tags: r.tagName ? [r.tagName] : [],
+          updatedAt: r.updatedAt.toISOString(),
+          url: r.url,
+        });
+      } else if (r.tagName) {
+        const entry = resourceMap.get(r.id);
+        if (entry && !entry.tags.includes(r.tagName)) {
+          entry.tags.push(r.tagName);
+        }
+      }
+    }
+
+    const resources = Array.from(resourceMap.values()).map((r) => ({
+      ...r,
+      tags: r.tags.join(", "),
+    }));
 
     return NextResponse.json({
       categoryCounts,
       resources,
-      total: rows.length,
+      total: resources.length,
     });
   } catch (error) {
     console.error("GET /api/admin/resources error:", error);
@@ -163,15 +228,22 @@ export async function POST(req: Request) {
     }
 
     // 2. Resolve Category ID
-    let categoryRecordId: string | null = null;
-    let canonicalCategoryName = categoryInput.trim();
+    let categoryRecordId: string;
+    const catQuery = categoryInput.trim();
     const [foundCat] = await db
       .select()
       .from(category)
-      .where(or(ilike(category.name, canonicalCategoryName), ilike(category.slug, canonicalCategoryName)));
+      .where(or(ilike(category.name, catQuery), ilike(category.slug, catQuery)));
+
     if (foundCat) {
       categoryRecordId = foundCat.id;
-      canonicalCategoryName = foundCat.name;
+    } else {
+      categoryRecordId = crypto.randomUUID();
+      await db.insert(category).values({
+        id: categoryRecordId,
+        name: catQuery,
+        slug: normalizeTag(catQuery),
+      });
     }
 
     // 3. Insert into resource table
@@ -180,18 +252,51 @@ export async function POST(req: Request) {
       id: resourceId,
       title: title.trim(),
       authorId: authorRecordId,
-      category: canonicalCategoryName,
       categoryId: categoryRecordId,
       description: description.trim(),
       favicon: favicon?.trim() || null,
       github: github?.trim() || null,
       ogImage: ogImage?.trim() || null,
       subtitle: subtitle?.trim() || null,
-      tags: tags?.trim() || null,
       url: url.trim(),
     });
 
-    // 4. Purge edge cache
+    // 4. Resolve and insert tags into resourceTag junction table
+    if (tags && typeof tags === "string" && tags.trim()) {
+      const rawTags = tags
+        .split(",")
+        .map((t) => t.trim())
+        .filter(Boolean);
+
+      for (const rawTag of rawTags) {
+        const tagSlug = normalizeTag(rawTag);
+        if (!tagSlug) continue;
+
+        let tagRecordId: string;
+        const [existingTag] = await db.select().from(tag).where(eq(tag.slug, tagSlug));
+        if (!existingTag) {
+          const newTagId = crypto.randomUUID();
+          await db.insert(tag).values({
+            id: newTagId,
+            name: rawTag,
+            slug: tagSlug,
+          });
+          tagRecordId = newTagId;
+        } else {
+          tagRecordId = existingTag.id;
+        }
+
+        await db
+          .insert(resourceTag)
+          .values({
+            resourceId,
+            tagId: tagRecordId,
+          })
+          .onConflictDoNothing();
+      }
+    }
+
+    // 5. Purge edge cache
     revalidateTag("resources", "max");
     revalidatePath("/");
     revalidatePath("/resources");
@@ -215,7 +320,18 @@ export async function PATCH(req: Request) {
     }
 
     const body = await req.json();
-    const { id, authorBlog, authorGithub, authorLinkedin, authorName, authorTwitter, authorWebsite, authorYoutube, ...updates } = body;
+    const {
+      id,
+      authorBlog,
+      authorGithub,
+      authorLinkedin,
+      authorName,
+      authorTwitter,
+      authorWebsite,
+      authorYoutube,
+      tags,
+      ...updates
+    } = body;
 
     if (!id || typeof id !== "string") {
       return NextResponse.json({ error: "Resource ID is required." }, { status: 400 });
@@ -282,9 +398,6 @@ export async function PATCH(req: Request) {
         .where(or(ilike(category.name, catQuery), ilike(category.slug, catQuery)));
       if (foundCat) {
         updatedData.categoryId = foundCat.id;
-        updatedData.category = foundCat.name;
-      } else {
-        updatedData.category = updates.category;
       }
     }
 
@@ -295,11 +408,49 @@ export async function PATCH(req: Request) {
     if (updates.favicon !== undefined) updatedData.favicon = updates.favicon?.trim() || null;
     if (updates.ogImage !== undefined) updatedData.ogImage = updates.ogImage?.trim() || null;
     if (updates.github !== undefined) updatedData.github = updates.github?.trim() || null;
-    if (updates.tags !== undefined) updatedData.tags = updates.tags?.trim() || null;
 
     await db.update(resource).set(updatedData).where(eq(resource.id, id));
 
-    // 3. Purge edge cache
+    // 3. Update tags if provided
+    if (tags !== undefined) {
+      await db.delete(resourceTag).where(eq(resourceTag.resourceId, id));
+
+      if (typeof tags === "string" && tags.trim()) {
+        const rawTags = tags
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean);
+
+        for (const rawTag of rawTags) {
+          const tagSlug = normalizeTag(rawTag);
+          if (!tagSlug) continue;
+
+          let tagRecordId: string;
+          const [existingTag] = await db.select().from(tag).where(eq(tag.slug, tagSlug));
+          if (!existingTag) {
+            const newTagId = crypto.randomUUID();
+            await db.insert(tag).values({
+              id: newTagId,
+              name: rawTag,
+              slug: tagSlug,
+            });
+            tagRecordId = newTagId;
+          } else {
+            tagRecordId = existingTag.id;
+          }
+
+          await db
+            .insert(resourceTag)
+            .values({
+              resourceId: id,
+              tagId: tagRecordId,
+            })
+            .onConflictDoNothing();
+        }
+      }
+    }
+
+    // 4. Purge edge cache
     revalidateTag("resources", "max");
     revalidatePath("/");
     revalidatePath("/resources");

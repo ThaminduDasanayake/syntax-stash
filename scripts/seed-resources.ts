@@ -220,14 +220,12 @@ async function seed() {
       id: resourceId,
       title: item.title,
       authorId,
-      category: item.category,
-      categoryId,
+      categoryId: categoryId!,
       description: item.description || "",
       favicon: item.favicon || null,
       github: item.github || null,
       ogImage: item.ogImage || null,
       subtitle: item.subtitle || null,
-      tags: tagsArray.length > 0 ? tagsArray.join(",") : null,
       url: item.url,
     });
   }

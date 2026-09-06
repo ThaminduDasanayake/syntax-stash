@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { collection, collectionItem, resource } from "@/lib/db/schema";
+import { category, collection, collectionItem, resource } from "@/lib/db/schema";
 import { slugify } from "@/lib/utils";
 
 interface RouteParams {
@@ -38,19 +38,19 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
         resource: {
           id: resource.id,
           title: resource.title,
-          category: resource.category,
+          category: category.name,
           description: resource.description,
           favicon: resource.favicon,
           github: resource.github,
           ogImage: resource.ogImage,
           subtitle: resource.subtitle,
-          tags: resource.tags,
           url: resource.url,
         },
         resourceId: collectionItem.resourceId,
       })
       .from(collectionItem)
       .leftJoin(resource, eq(collectionItem.resourceId, resource.id))
+      .leftJoin(category, eq(resource.categoryId, category.id))
       .where(eq(collectionItem.collectionId, id))
       .orderBy(asc(collectionItem.order), asc(collectionItem.addedAt));
 

@@ -66,7 +66,9 @@ export const bookmark = pgTable(
   {
     id: text("id").primaryKey(),
     createdAt: timestamp("created_at").notNull().defaultNow(),
-    resourceId: text("resource_id").notNull(),
+    resourceId: text("resource_id")
+      .notNull()
+      .references(() => resource.id, { onDelete: "cascade" }),
     userId: text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
@@ -137,22 +139,21 @@ export const resource = pgTable(
     id: text("id").primaryKey(),
     title: text("title").notNull(),
     authorId: text("author_id").references(() => author.id, { onDelete: "set null" }),
-    category: text("category").notNull(),
-    categoryId: text("category_id").references(() => category.id, { onDelete: "restrict" }),
+    categoryId: text("category_id")
+      .notNull()
+      .references(() => category.id, { onDelete: "restrict" }),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     description: text("description").notNull(),
     favicon: text("favicon"),
     github: text("github"),
     ogImage: text("og_image"),
     subtitle: text("subtitle"),
-    tags: text("tags"),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
     url: text("url").notNull().unique(),
   },
   (table) => [
     index("resource_author_id_idx").on(table.authorId),
     index("resource_category_id_idx").on(table.categoryId),
-    index("resource_category_idx").on(table.category),
     index("resource_created_at_idx").on(table.createdAt),
     uniqueIndex("resource_url_idx").on(table.url),
   ],

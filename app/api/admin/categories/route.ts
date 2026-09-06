@@ -173,14 +173,6 @@ export async function PATCH(req: Request) {
 
     await db.update(category).set(updates).where(eq(category.id, id));
 
-    // Also update category string on linked resources if category name changed
-    if (updates.name && updates.name !== existing.name) {
-      await db
-        .update(resource)
-        .set({ category: updates.name })
-        .where(eq(resource.categoryId, id));
-    }
-
     revalidateTag("resources", "max");
     revalidatePath("/resources");
     revalidatePath("/admin/categories");

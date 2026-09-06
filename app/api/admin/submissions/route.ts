@@ -7,7 +7,7 @@ import { isAdmin } from "@/lib/admin";
 import { auth } from "@/lib/auth";
 import { slugifyAuthor } from "@/lib/authors";
 import { db } from "@/lib/db";
-import { author, category, resource, submission } from "@/lib/db/schema";
+import { author, category, resource, resourceTag, submission, tag } from "@/lib/db/schema";
 
 async function verifyAdmin() {
   const reqHeaders = await headers();
@@ -138,16 +138,22 @@ export async function PATCH(req: Request) {
         }
 
         // 2. Resolve Category ID
-        let categoryRecordId: string | null = null;
-        if (sub.category && sub.category.trim()) {
-          const catQuery = sub.category.trim();
-          const [foundCat] = await db
-            .select()
-            .from(category)
-            .where(or(ilike(category.name, catQuery), ilike(category.slug, catQuery)));
-          if (foundCat) {
-            categoryRecordId = foundCat.id;
-          }
+        let categoryRecordId: string;
+        const catQuery = sub.category ? sub.category.trim() : "Developer Tools & Utilities";
+        const [foundCat] = await db
+          .select()
+          .from(category)
+          .where(or(ilike(category.name, catQuery), ilike(category.slug, catQuery)));
+
+        if (foundCat) {
+          categoryRecordId = foundCat.id;
+        } else {
+          categoryRecordId = crypto.randomUUID();
+          await db.insert(category).values({
+            id: categoryRecordId,
+            name: catQuery,
+            slug: slugifyAuthor(catQuery),
+          });
         }
 
         // 3. Insert or Update in Live Resource Catalog
@@ -156,41 +162,78 @@ export async function PATCH(req: Request) {
           .from(resource)
           .where(eq(resource.url, sub.url));
 
+        let liveResourceId: string;
+
         if (existingResource) {
+          liveResourceId = existingResource.id;
           await db
             .update(resource)
             .set({
               title: sub.title,
               authorId: authorRecordId,
-              category: sub.category,
               categoryId: categoryRecordId,
               description: sub.description,
               favicon: sub.favicon || null,
               github: sub.github || null,
               ogImage: sub.ogImage || null,
               subtitle: sub.subtitle || null,
-              tags: sub.tags || null,
               updatedAt: new Date(),
             })
             .where(eq(resource.id, existingResource.id));
         } else {
+          liveResourceId = crypto.randomUUID();
           await db.insert(resource).values({
-            id: crypto.randomUUID(),
+            id: liveResourceId,
             title: sub.title,
             authorId: authorRecordId,
-            category: sub.category,
             categoryId: categoryRecordId,
             description: sub.description,
             favicon: sub.favicon || null,
             github: sub.github || null,
             ogImage: sub.ogImage || null,
             subtitle: sub.subtitle || null,
-            tags: sub.tags || null,
             url: sub.url,
           });
         }
 
-        // 4. Purge Next.js Edge Data Cache for instant live update
+        // 4. Update tags in resourceTag junction table
+        if (sub.tags && typeof sub.tags === "string" && sub.tags.trim()) {
+          await db.delete(resourceTag).where(eq(resourceTag.resourceId, liveResourceId));
+
+          const rawTags = sub.tags
+            .split(",")
+            .map((t) => t.trim())
+            .filter(Boolean);
+
+          for (const rawTag of rawTags) {
+            const tagSlug = slugifyAuthor(rawTag);
+            if (!tagSlug) continue;
+
+            let tagRecordId: string;
+            const [existingTag] = await db.select().from(tag).where(eq(tag.slug, tagSlug));
+            if (!existingTag) {
+              const newTagId = crypto.randomUUID();
+              await db.insert(tag).values({
+                id: newTagId,
+                name: rawTag,
+                slug: tagSlug,
+              });
+              tagRecordId = newTagId;
+            } else {
+              tagRecordId = existingTag.id;
+            }
+
+            await db
+              .insert(resourceTag)
+              .values({
+                resourceId: liveResourceId,
+                tagId: tagRecordId,
+              })
+              .onConflictDoNothing();
+          }
+        }
+
+        // 5. Purge Next.js Edge Data Cache for instant live update
         revalidateTag("resources", "max");
         revalidatePath("/");
         revalidatePath("/resources");

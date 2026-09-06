@@ -2,7 +2,6 @@ import { loadEnvConfig } from "@next/env";
 import { eq } from "drizzle-orm";
 
 import { CATEGORY_DEFINITIONS } from "@/lib/categories";
-import { slugify } from "@/lib/utils";
 
 loadEnvConfig(process.cwd());
 
@@ -46,16 +45,13 @@ async function backfillCategories() {
     .select({
       id: resource.id,
       title: resource.title,
-      category: resource.category,
       categoryId: resource.categoryId,
     })
     .from(resource);
 
   console.log(`🔍 Inspecting ${resourcesToUpdate.length} total resources in the database...`);
 
-  let updatedCount = 0;
   let alreadyLinkedCount = 0;
-  let createdCategoryCount = 0;
 
   for (const res of resourcesToUpdate) {
     // If it already has a valid categoryId pointing to an existing category, verify it
@@ -63,55 +59,10 @@ async function backfillCategories() {
       alreadyLinkedCount++;
       continue;
     }
-
-    const rawCategoryName = (res.category || "").trim();
-    if (!rawCategoryName) {
-      console.warn(`  ⚠️ Resource "${res.title}" (${res.id}) has no category string. Skipping.`);
-      continue;
-    }
-
-    let matchedCategory =
-      categoryMap.get(rawCategoryName.toLowerCase()) ||
-      categoryMap.get(slugify(rawCategoryName).toLowerCase());
-
-    // If the category doesn't exist yet, create it on the fly
-    if (!matchedCategory) {
-      const newCatId = crypto.randomUUID();
-      const newCatSlug = slugify(rawCategoryName);
-      const [newCat] = await db
-        .insert(category)
-        .values({
-          id: newCatId,
-          name: rawCategoryName,
-          order: allCategories.length + createdCategoryCount + 1,
-          slug: newCatSlug,
-        })
-        .returning();
-
-      matchedCategory = newCat;
-      categoryMap.set(rawCategoryName.toLowerCase(), newCat);
-      categoryMap.set(newCatSlug.toLowerCase(), newCat);
-      createdCategoryCount++;
-      console.log(`  ✨ Created missing category: "${rawCategoryName}" (${newCatSlug})`);
-    }
-
-    // Update resource with categoryId and canonical category name
-    await db
-      .update(resource)
-      .set({
-        category: matchedCategory.name,
-        categoryId: matchedCategory.id,
-        updatedAt: new Date(),
-      })
-      .where(eq(resource.id, res.id));
-
-    updatedCount++;
   }
 
   console.log("\n🎉 Category backfill summary:");
-  console.log(`   - Already linked resources: ${alreadyLinkedCount}`);
-  console.log(`   - Newly linked resources: ${updatedCount}`);
-  console.log(`   - New categories created: ${createdCategoryCount}`);
+  console.log(`   - Linked resources: ${alreadyLinkedCount}`);
   console.log(`   - Total resources: ${resourcesToUpdate.length}`);
 }
 
