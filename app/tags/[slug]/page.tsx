@@ -3,13 +3,13 @@ import { notFound } from "next/navigation";
 
 import { FilterSection } from "@/components/filter-section";
 import { getAllResources } from "@/lib/resources";
-import { getAllTags, normalizeTag } from "@/lib/tags";
+import { getAllTags, getTagBySlug, normalizeTag } from "@/lib/tags";
 
 type Params = { slug: string };
 
 export async function generateStaticParams(): Promise<Params[]> {
-  const allTags = getAllTags();
-  return allTags.map((t) => ({ slug: normalizeTag(t.name) }));
+  const allTags = await getAllTags();
+  return allTags.map((t) => ({ slug: t.slug || normalizeTag(t.name) }));
 }
 
 export async function generateMetadata({
@@ -20,8 +20,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const cleanSlug = normalizeTag(slug);
 
-  const allTags = getAllTags();
-  const matchedTag = allTags.find((t) => normalizeTag(t.name) === cleanSlug);
+  const matchedTag = await getTagBySlug(cleanSlug);
   const tagName = matchedTag?.name || slug;
 
   return {
@@ -40,7 +39,10 @@ export default async function TagPage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
   const cleanSlug = normalizeTag(slug);
 
-  const allResources = await getAllResources();
+  const [allResources, matchedTag] = await Promise.all([
+    getAllResources(),
+    getTagBySlug(cleanSlug),
+  ]);
 
   // Find all resources that match this tag
   const matchingResources = allResources.filter((r) => {
@@ -49,14 +51,11 @@ export default async function TagPage({ params }: { params: Promise<Params> }) {
     return tagList.some((t) => normalizeTag(t) === cleanSlug);
   });
 
-  if (matchingResources.length === 0) {
+  if (matchingResources.length === 0 && !matchedTag) {
     notFound();
   }
 
-  const allTags = getAllTags(allResources);
-  const matchedTag = allTags.find((t) => normalizeTag(t.name) === cleanSlug);
   const tagName = matchedTag?.name || slug;
-
   const activeCategories = Array.from(new Set(matchingResources.map((r) => r.category)));
 
   return (
@@ -65,7 +64,7 @@ export default async function TagPage({ params }: { params: Promise<Params> }) {
       <header className="res-header">
         <div className="section-inner">
           <div className="mb-2">
-            <span className="border-line bg-surface-elevated text-primary rounded border px-2.5 py-1 font-mono text-xs font-bold uppercase tracking-wider">
+            <span className="border-line bg-surface-elevated text-primary rounded border px-2.5 py-1 font-mono text-xs font-bold tracking-wider uppercase">
               Tag Taxonomy
             </span>
           </div>

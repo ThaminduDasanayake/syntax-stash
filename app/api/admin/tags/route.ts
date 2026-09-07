@@ -93,6 +93,7 @@ export async function POST(req: Request) {
     });
 
     revalidateTag("resources", "max");
+    revalidateTag("tags", "max");
     revalidatePath("/admin/tags");
     revalidatePath("/tags");
 
@@ -143,6 +144,7 @@ export async function PATCH(req: Request) {
     await db.update(tag).set(updates).where(eq(tag.id, id));
 
     revalidateTag("resources", "max");
+    revalidateTag("tags", "max");
     revalidatePath("/admin/tags");
     revalidatePath("/tags");
 
@@ -171,6 +173,7 @@ export async function DELETE(request: NextRequest) {
     await db.delete(tag).where(eq(tag.id, id));
 
     revalidateTag("resources", "max");
+    revalidateTag("tags", "max");
     revalidatePath("/admin/tags");
     revalidatePath("/tags");
 

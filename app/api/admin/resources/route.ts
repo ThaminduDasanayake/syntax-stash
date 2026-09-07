@@ -316,6 +316,8 @@ export async function POST(req: Request) {
 
     // 5. Purge edge cache
     revalidateTag("resources", "max");
+    revalidateTag("categories", "max");
+    revalidateTag("tags", "max");
     revalidatePath("/");
     revalidatePath("/resources");
 
@@ -491,6 +493,8 @@ export async function PATCH(req: Request) {
 
     // 4. Purge edge cache
     revalidateTag("resources", "max");
+    revalidateTag("categories", "max");
+    revalidateTag("tags", "max");
     revalidatePath("/");
     revalidatePath("/resources");
 
@@ -516,6 +520,8 @@ export async function DELETE(request: NextRequest) {
     await db.delete(resource).where(eq(resource.id, id));
 
     revalidateTag("resources", "max");
+    revalidateTag("categories", "max");
+    revalidateTag("tags", "max");
     revalidatePath("/");
     revalidatePath("/resources");
 

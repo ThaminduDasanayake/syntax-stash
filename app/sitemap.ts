@@ -3,6 +3,7 @@ import type { MetadataRoute } from "next";
 import { getAllAuthors } from "@/lib/authors";
 import { getAllCategories } from "@/lib/categories";
 import { siteConfig } from "@/lib/site-config";
+import { getAllTags, normalizeTag } from "@/lib/tags";
 import { internalTools } from "@/lib/tools-data";
 import { slugify } from "@/lib/utils";
 
@@ -63,12 +64,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${baseUrl}/tools/${tool.slug}`,
     }));
 
-  const categories = await getAllCategories();
+  const [categories, tags] = await Promise.all([
+    getAllCategories(),
+    getAllTags(),
+  ]);
+
   const resourceRoutes: MetadataRoute.Sitemap = categories.map((cat) => ({
     changeFrequency: "weekly",
     lastModified: new Date(),
     priority: 0.7,
     url: `${baseUrl}/resources/${cat.slug || slugify(cat.name)}`,
+  }));
+
+  const tagRoutes: MetadataRoute.Sitemap = tags.map((t) => ({
+    changeFrequency: "weekly",
+    lastModified: new Date(),
+    priority: 0.6,
+    url: `${baseUrl}/tags/${t.slug || normalizeTag(t.name)}`,
   }));
 
   const authorRoutes: MetadataRoute.Sitemap = getAllAuthors().map((author) => ({
@@ -78,5 +90,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `${baseUrl}/authors/${author.slug}`,
   }));
 
-  return [...staticRoutes, ...toolRoutes, ...resourceRoutes, ...authorRoutes];
+  return [...staticRoutes, ...toolRoutes, ...resourceRoutes, ...tagRoutes, ...authorRoutes];
 }
