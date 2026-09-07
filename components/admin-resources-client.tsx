@@ -620,6 +620,7 @@ export function AdminResourcesClient({
           <ResourceDialog
             key={previewResource.id || previewResource.url}
             resource={adminItemToResource(previewResource)}
+            allResources={resources.map(adminItemToResource)}
           />
         )}
       </Dialog>

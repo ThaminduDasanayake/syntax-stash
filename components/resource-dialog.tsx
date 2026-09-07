@@ -23,17 +23,37 @@ import { useBookmarks } from "@/hooks/use-bookmarks";
 import { useSession } from "@/lib/auth-client";
 import { slugifyAuthor } from "@/lib/authors";
 import { formatStarCount, getGitHubStars } from "@/lib/github";
-import { resourceLinks } from "@/lib/resource-data";
 import { cn, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
 import { Resource } from "@/types";
 
 export interface ResourceDialogProps {
+  allResources?: Resource[];
   onTagClickAction?: (tag: string) => void;
   resource: Resource;
 }
 
-export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogProps) {
+export function ResourceDialog({
+  allResources,
+  onTagClickAction,
+  resource,
+}: ResourceDialogProps) {
   const [activeTool, setActiveTool] = useState(resource);
+  const [fetchedResources, setFetchedResources] = useState<Resource[]>([]);
+
+  useEffect(() => {
+    if (!allResources || allResources.length === 0) {
+      fetch("/api/resources")
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.resources && Array.isArray(data.resources)) {
+            setFetchedResources(data.resources);
+          }
+        })
+        .catch(() => {});
+    }
+  }, [allResources]);
+
+  const resourcePool = allResources && allResources.length > 0 ? allResources : fetchedResources;
   const [ogError, setOgError] = useState(false);
   const [useDirectOgFallback, setUseDirectOgFallback] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
@@ -172,19 +192,19 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
   };
 
   const currentIndex = useMemo(() => {
-    return resourceLinks.findIndex((r) => r.title === activeTool.title);
-  }, [activeTool]);
+    return resourcePool.findIndex((r) => r.title === activeTool.title);
+  }, [activeTool, resourcePool]);
 
   const handleNext = () => {
-    if (currentIndex === -1) return;
-    const nextIndex = (currentIndex + 1) % resourceLinks.length;
-    handleSelectTool(resourceLinks[nextIndex]);
+    if (currentIndex === -1 || resourcePool.length === 0) return;
+    const nextIndex = (currentIndex + 1) % resourcePool.length;
+    handleSelectTool(resourcePool[nextIndex]);
   };
 
   const handlePrev = () => {
-    if (currentIndex === -1) return;
-    const prevIndex = (currentIndex - 1 + resourceLinks.length) % resourceLinks.length;
-    handleSelectTool(resourceLinks[prevIndex]);
+    if (currentIndex === -1 || resourcePool.length === 0) return;
+    const prevIndex = (currentIndex - 1 + resourcePool.length) % resourcePool.length;
+    handleSelectTool(resourcePool[prevIndex]);
   };
 
   const activeTheme = getCategoryTheme(activeTool.category);
@@ -197,16 +217,16 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
       ? activeTool.author
       : [activeTool.author];
 
-    return resourceLinks.filter((r) => {
+    return resourcePool.filter((r) => {
       if (r.title === activeTool.title || !r.author) return false;
       const rAuthors = Array.isArray(r.author) ? r.author : [r.author];
       return currentAuthors.some((ca) => rAuthors.includes(ca));
     });
-  }, [activeTool]);
+  }, [activeTool, resourcePool]);
 
   const relatedResources = useMemo(() => {
     const activeTags = activeTool.tags || [];
-    const scoredResources = resourceLinks
+    const scoredResources = resourcePool
       .filter(
         (r) => r.title !== activeTool.title && !authorResources.some((ar) => ar.title === r.title),
       )
@@ -226,7 +246,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
       .map((item) => item.resource);
 
     if (scoredResources.length === 0) {
-      return resourceLinks
+      return resourcePool
         .filter(
           (r) =>
             r.category === activeTool.category &&
@@ -237,7 +257,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
     }
 
     return scoredResources;
-  }, [activeTool, authorResources]);
+  }, [activeTool, authorResources, resourcePool]);
 
   const footerContent = (
     <>

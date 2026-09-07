@@ -4,14 +4,12 @@ import { cache } from "react";
 
 import { db } from "@/lib/db";
 import { author, category, resource, resourceTag, tag } from "@/lib/db/schema";
-import { resourceLinks as STATIC_FALLBACK_RESOURCES } from "@/lib/resource-data";
 import { Resource } from "@/types";
 
 /**
  * Fetches all live catalog resources from Neon Postgres, cached at the Next.js Edge.
  * Cache Tag: "resources"
  * Revalidated on-demand when an admin approves/edits/deletes a tool.
- * Gracefully falls back to bundled static data if the database is temporarily unreachable.
  */
 export const getAllResources = cache(
   unstable_cache(
@@ -51,7 +49,7 @@ export const getAllResources = cache(
           .orderBy(asc(category.order), asc(category.name), asc(resource.title));
 
         if (!rows || rows.length === 0) {
-          return STATIC_FALLBACK_RESOURCES;
+          return [];
         }
 
         const resourceMap = new Map<
@@ -103,8 +101,8 @@ export const getAllResources = cache(
           (a, b) => a.category.localeCompare(b.category) || a.title.localeCompare(b.title),
         );
       } catch (err) {
-        console.error("Database query failed in getAllResources(), serving static fallback:", err);
-        return STATIC_FALLBACK_RESOURCES;
+        console.error("Database query failed in getAllResources():", err);
+        return [];
       }
     },
     ["all-resources-cache"],

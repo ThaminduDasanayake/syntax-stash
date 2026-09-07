@@ -1,5 +1,3 @@
-import { resourceLinks } from "@/lib/resource-data";
-import { TAGS } from "@/lib/resource-data/tags";
 import { Resource } from "@/types";
 
 export interface TagInfo {
@@ -26,16 +24,8 @@ export function normalizeTag(tag: string): string {
 export function getAllTags(customResources?: Resource[]): TagInfo[] {
   const tagCounts = new Map<string, number>();
 
-  // 1. Initialize with all canonical predefined tags from TAGS dictionary
-  for (const tagValue of Object.values(TAGS)) {
-    const normalized = normalizeTag(tagValue);
-    if (normalized) {
-      tagCounts.set(normalized, 0);
-    }
-  }
-
-  // 2. Count occurrences across all live resources
-  const list = customResources && customResources.length > 0 ? customResources : resourceLinks;
+  // Count occurrences across all live resources
+  const list = customResources || [];
   for (const item of list) {
     if (!item.tags) continue;
     const tagsArray = Array.isArray(item.tags)

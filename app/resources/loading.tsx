@@ -1,7 +1,6 @@
 import { FilterBarSkeleton } from "@/components/filter-bar-skeleton";
 import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
 import { ToolCardSkeleton } from "@/components/tool-card-skeleton";
-import { resourceCategories, resourceLinks } from "@/lib/resource-data";
 
 export default function ResourcesLoading() {
   return (
@@ -16,9 +15,7 @@ export default function ResourcesLoading() {
             <br />
             <em>stash.</em>
           </h1>
-          <p className="lib-sub">
-            {resourceLinks.length} curated links across {resourceCategories.length} categories.
-          </p>
+          <p className="lib-sub">Curated links across categories.</p>
         </div>
       </header>
 

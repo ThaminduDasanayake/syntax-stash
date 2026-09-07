@@ -3,11 +3,12 @@ import path from "node:path";
 
 import * as cheerio from "cheerio";
 
+import { CATEGORIES } from "@/lib/categories";
 import { parseGitHubRepo } from "@/lib/github";
-import { CATEGORIES, resourceLinks } from "@/lib/resource-data";
-import { AUDIT_CONFIG } from "@/lib/resource-data/audit-config";
+import { getAllResources } from "@/lib/resources";
 import { Resource } from "@/types";
 
+import { AUDIT_CONFIG } from "./audit-config";
 import { runPool } from "./pool";
 
 interface AuditFinding {
@@ -592,7 +593,7 @@ function generateMarkdownReport(findings: AuditFinding[], categoryName?: string)
 
   if (descriptionChanges.length > 0) {
     md += `### 📝 Description Changes (${descriptionChanges.length})\n`;
-    md += `The website description has been updated. If you prefer your stored description, add the URL to \`skipDescriptionChanges\` in \`lib/resource-data/audit-config.ts\`.\n\n`;
+    md += `The website description has been updated. If you prefer your stored description, add the URL to \`skipDescriptionChanges\` in \`scripts/audit-config.ts\`.\n\n`;
     md += `| Resource | Category | Stored Description | Webpage Description |\n`;
     md += `| :--- | :--- | :--- | :--- |\n`;
     for (const item of descriptionChanges) {
@@ -700,7 +701,8 @@ async function main() {
   const isDryRun = args.includes("--dry-run");
   const isVerbose = args.includes("--verbose");
 
-  let targets = [...resourceLinks];
+  const allRes = await getAllResources();
+  let targets = [...allRes];
   let resolvedCategory: { name: string; slug: string } | null = null;
 
   if (categoryInput) {

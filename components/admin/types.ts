@@ -1,4 +1,4 @@
-import { resourceCategories } from "@/lib/resource-data";
+import { resourceCategories } from "@/lib/categories";
 
 export type TabStatus = "all" | "approved" | "pending" | "rejected";
 

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { getAllAuthors } from "@/lib/authors";
-import { resourceCategories } from "@/lib/resource-data";
+import { resourceCategories } from "@/lib/categories";
 import { siteConfig } from "@/lib/site-config";
 import { internalTools } from "@/lib/tools-data";
 import { slugify } from "@/lib/utils";

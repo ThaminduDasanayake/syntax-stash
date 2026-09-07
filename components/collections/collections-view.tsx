@@ -37,8 +37,8 @@ import {
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useCollections,UserCollection } from "@/hooks/use-collections";
-import { resourceCategories } from "@/lib/resource-data";
+import { useCollections, UserCollection } from "@/hooks/use-collections";
+import { resourceCategories } from "@/lib/categories";
 import { Resource } from "@/types";
 
 export function CollectionsView() {

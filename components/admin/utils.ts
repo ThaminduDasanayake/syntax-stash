@@ -1,7 +1,6 @@
 import { slugifyAuthor } from "@/lib/authors";
+import { CATEGORIES } from "@/lib/categories";
 import { Submission } from "@/lib/db/schema";
-import { CATEGORIES } from "@/lib/resource-data/categories";
-import { TAGS } from "@/lib/resource-data/tags";
 import { Resource } from "@/types";
 
 import { AdminResourceItem } from "./types";
@@ -13,7 +12,7 @@ export function generateTsCode(sub: Submission): string {
     sub.category.toLowerCase().replace(/[^a-z0-9]/g, "") ||
     "dev";
 
-  // Parse and resolve tags against TAGS object
+  // Parse tags
   const parsedTags = sub.tags
     ? sub.tags
         .split(",")
@@ -21,14 +20,7 @@ export function generateTsCode(sub: Submission): string {
         .filter(Boolean)
     : [];
 
-  const formattedTags = parsedTags.map((tag) => {
-    const matchedTagKey = Object.entries(TAGS).find(
-      ([key, val]) =>
-        key.toLowerCase() === tag.toLowerCase() || val.toLowerCase() === tag.toLowerCase(),
-    )?.[0];
-
-    return matchedTagKey ? `TAGS.${matchedTagKey}` : `"${tag.replace(/"/g, '\\"')}"`;
-  });
+  const formattedTags = parsedTags.map((tag) => `"${tag.replace(/"/g, '\\"')}"`);
 
   const resolvedWebsite = sub.authorWebsite;
 
@@ -59,7 +51,7 @@ export function generateTsCode(sub: Submission): string {
 
   if (sub.author && hasSocial) {
     const slug = slugifyAuthor(sub.author);
-    code += `\n\n  // Authors Registry Entry (lib/resource-data/authors.ts)\n`;
+    code += `\n\n  // Author Entry\n`;
     code += `  "${slug}": {\n`;
     code += `    name: "${sub.author.replace(/"/g, '\\"')}",\n`;
     code += `    links: {\n`;

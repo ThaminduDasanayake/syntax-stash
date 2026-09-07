@@ -1,8 +1,11 @@
 import fs from "node:fs";
 import path from "node:path";
 
+import { isNotNull } from "drizzle-orm";
+
+import { db } from "@/lib/db";
+import { resource } from "@/lib/db/schema";
 import { parseGitHubRepo } from "@/lib/github";
-import { resourceLinks } from "@/lib/resource-data";
 
 import { runPool } from "./pool";
 
@@ -13,7 +16,7 @@ interface RepoEntry {
   url: string;
 }
 
-const STARS_FILE_PATH = path.join(process.cwd(), "lib/resource-data/github-stars.json");
+const STARS_FILE_PATH = path.join(process.cwd(), "lib/github-stars.json");
 
 async function fetchRepoStars(
   entry: RepoEntry,
@@ -69,11 +72,15 @@ async function fetchRepoStars(
 }
 
 async function main() {
-  console.log("🌟 Scanning resourceLinks for GitHub repositories...");
+  console.log("🌟 Scanning database resources for GitHub repositories...");
 
   const repoMap = new Map<string, RepoEntry>();
+  const rows = await db
+    .select({ github: resource.github })
+    .from(resource)
+    .where(isNotNull(resource.github));
 
-  for (const res of resourceLinks) {
+  for (const res of rows) {
     if (!res.github) continue;
     const parsed = parseGitHubRepo(res.github);
     if (parsed && !repoMap.has(parsed.fullName)) {

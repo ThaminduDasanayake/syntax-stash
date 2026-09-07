@@ -18,7 +18,7 @@ import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
-import { resourceCategories } from "@/lib/resource-data";
+import { resourceCategories } from "@/lib/categories";
 
 const CATEGORY_OPTIONS = resourceCategories.map((cat) => ({
   label: cat,

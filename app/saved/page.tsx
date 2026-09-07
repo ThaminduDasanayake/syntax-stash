@@ -6,7 +6,7 @@ import {
   GoogleLogoIcon,
 } from "@phosphor-icons/react";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { CollectionsView } from "@/components/collections/collections-view";
 import { FilterBarSkeleton } from "@/components/filter-bar-skeleton";
@@ -16,22 +16,38 @@ import { ToolCardSkeleton } from "@/components/tool-card-skeleton";
 import { Button } from "@/components/ui/button";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { signIn } from "@/lib/auth-client";
-import { resourceLinks } from "@/lib/resource-data";
 import { cn, getResourceId } from "@/lib/utils";
+import { Resource } from "@/types";
 
 type StashTab = "bookmarks" | "collections";
 
 export default function SavedPage() {
   const [activeTab, setActiveTab] = useState<StashTab>("bookmarks");
-  const { bookmarkedSet, isLoading } = useBookmarks();
+  const { bookmarkedSet, isLoading: isBookmarksLoading } = useBookmarks();
+  const [allResources, setAllResources] = useState<Resource[]>([]);
+  const [isResourcesLoading, setIsResourcesLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/resources")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.resources && Array.isArray(data.resources)) {
+          setAllResources(data.resources);
+        }
+      })
+      .catch((err) => console.error("Failed to load resources for saved page:", err))
+      .finally(() => setIsResourcesLoading(false));
+  }, []);
 
   const savedResources = useMemo(() => {
-    return resourceLinks.filter((item) => bookmarkedSet.has(getResourceId(item)));
-  }, [bookmarkedSet]);
+    return allResources.filter((item) => bookmarkedSet.has(getResourceId(item)));
+  }, [allResources, bookmarkedSet]);
 
   const savedCategories = useMemo(() => {
     return Array.from(new Set(savedResources.map((r) => r.category)));
   }, [savedResources]);
+
+  const isLoading = isBookmarksLoading || isResourcesLoading;
 
   const handleOAuthSignIn = (provider: "github" | "google") => {
     signIn.social({

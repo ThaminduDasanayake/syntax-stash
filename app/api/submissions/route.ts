@@ -6,8 +6,7 @@ import { NextResponse } from "next/server";
 
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { submission } from "@/lib/db/schema";
-import { resourceLinks } from "@/lib/resource-data";
+import { resource, submission } from "@/lib/db/schema";
 import { normalizeUrl } from "@/lib/url-utils";
 
 export async function POST(req: Request) {
@@ -76,7 +75,8 @@ export async function POST(req: Request) {
     const normalizedInputUrl = normalizeUrl(url);
 
     // 3. Duplicate Check A: Live Catalog resources
-    const catalogMatch = resourceLinks.find((r) => normalizeUrl(r.url) === normalizedInputUrl);
+    const allLiveResources = await db.select({ title: resource.title, url: resource.url }).from(resource);
+    const catalogMatch = allLiveResources.find((r) => normalizeUrl(r.url) === normalizedInputUrl);
     if (catalogMatch) {
       return NextResponse.json(
         {

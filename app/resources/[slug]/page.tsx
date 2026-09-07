@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { FilterSection } from "@/components/filter-section";
-import { resourceCategories } from "@/lib/resource-data";
+import { resourceCategories } from "@/lib/categories";
 import { getAllResources } from "@/lib/resources";
 import { slugify } from "@/lib/utils";
 

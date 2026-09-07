@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { FilterSection } from "@/components/filter-section";
 import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
-import { resourceCategories } from "@/lib/resource-data";
+import { resourceCategories } from "@/lib/categories";
 import { getAllResources } from "@/lib/resources";
 
 export const metadata: Metadata = {

@@ -1,5 +1,3 @@
-import { resourceLinks } from "@/lib/resource-data";
-import { AUTHORS_REGISTRY } from "@/lib/resource-data/authors";
 import { Resource } from "@/types";
 
 export interface AuthorLinks {
@@ -42,12 +40,11 @@ export function slugifyAuthor(name: string): string {
 
 /**
  * Retrieves all unique authors with their resources across the stash.
- * Merges with explicit author profiles from AUTHORS_REGISTRY when available.
  * Sorted by resource count descending.
  */
 export function getAllAuthors(customResources?: Resource[]): AuthorWithResources[] {
   const authorMap = new Map<string, { name: string; resources: Resource[] }>();
-  const list = customResources && customResources.length > 0 ? customResources : resourceLinks;
+  const list = customResources || [];
 
   for (const resource of list) {
     if (!resource.author) continue;
@@ -80,16 +77,12 @@ export function getAllAuthors(customResources?: Resource[]): AuthorWithResources
   const result: AuthorWithResources[] = [];
 
   for (const [slug, { name, resources }] of authorMap.entries()) {
-    const registryEntry = AUTHORS_REGISTRY[slug];
-    const displayName = registryEntry?.name || name;
-    const links: AuthorLinks | undefined = registryEntry?.links;
     const categories = Array.from(new Set(resources.map((r) => r.category)));
 
     result.push({
       categories,
       count: resources.length,
-      links,
-      name: displayName,
+      name,
       resources,
       slug,
     });

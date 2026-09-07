@@ -24,8 +24,8 @@ import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
+import { resourceCategories } from "@/lib/categories";
 import { Submission } from "@/lib/db/schema";
-import { resourceCategories } from "@/lib/resource-data";
 import { cn } from "@/lib/utils";
 
 import { CATEGORY_OPTIONS, STATUS_CONFIG, STATUS_OPTIONS, SubmissionStatus } from "./types";

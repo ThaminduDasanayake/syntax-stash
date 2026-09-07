@@ -5,7 +5,7 @@ import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
 import ToolCard from "@/components/tool-card";
 import { ToolsCarousel } from "@/components/tools-carousel";
 import { Button } from "@/components/ui/button";
-import { resourceCategories } from "@/lib/resource-data";
+import { resourceCategories } from "@/lib/categories";
 import { getAllResources } from "@/lib/resources";
 import {
   dataTools,

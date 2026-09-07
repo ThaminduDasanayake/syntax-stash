@@ -1,7 +1,7 @@
 import * as cheerio from "cheerio";
 import { NextRequest, NextResponse } from "next/server";
 
-import { CATEGORIES, CategoryValue, resourceCategories } from "@/lib/resource-data";
+import { CATEGORIES, CategoryValue, resourceCategories } from "@/lib/categories";
 
 const BLOCKED_HOSTS = new Set(["0.0.0.0", "127.0.0.1", "::1", "localhost"]);
 

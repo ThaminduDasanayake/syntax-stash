@@ -1,9 +1,8 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+import { CATEGORIES as RESOURCE_CATEGORIES } from "@/lib/categories";
 import { CATEGORIES as TOOL_CATEGORIES } from "@/lib/tools-data";
-
-import { CATEGORIES as RESOURCE_CATEGORIES } from "./resource-data/categories";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

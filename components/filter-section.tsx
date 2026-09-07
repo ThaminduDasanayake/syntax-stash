@@ -65,6 +65,8 @@ function FilterSectionInner({
   const [visibleLimit, setVisibleLimit] = useState(BATCH_SIZE);
   const [activeDialogResource, setActiveDialogResource] = useState<Resource | null>(null);
 
+  const allResourceItems = useMemo(() => items.filter(isResource), [items]);
+
   const { bookmarkedSet } = useBookmarks();
 
   // Derive filter state directly from searchParams for instant navigation sync
@@ -562,6 +564,7 @@ function FilterSectionInner({
           <ResourceDialog
             key={activeDialogResource.url || activeDialogResource.title}
             resource={activeDialogResource}
+            allResources={allResourceItems}
             onTagClickAction={(tag) => {
               setActiveDialogResource(null);
               handleToggleTag(tag);

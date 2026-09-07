@@ -17,9 +17,8 @@ import {
 } from "@/components/ui/command";
 import { formatStarCount, getGitHubStars } from "@/lib/github";
 import { iconMap } from "@/lib/icons";
-import { resourceLinks } from "@/lib/resource-data";
 import { internalTools } from "@/lib/tools-data";
-import { CommandMenuProps, isInternalTool, StashItem } from "@/types";
+import { CommandMenuProps, isInternalTool, Resource, StashItem } from "@/types";
 
 function truncateWords(text: string = "", maxWords: number = 15) {
   if (!text) return "";
@@ -66,6 +65,18 @@ function Highlight({ query, text }: { text: string; query: string }) {
 export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
   const router = useRouter();
   const [search, setSearch] = useState("");
+  const [resources, setResources] = useState<Resource[]>([]);
+
+  useEffect(() => {
+    fetch("/api/resources")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.resources && Array.isArray(data.resources)) {
+          setResources(data.resources);
+        }
+      })
+      .catch((err) => console.error("Failed to load resources in command menu:", err));
+  }, []);
 
   // Register ⌘K / Ctrl+K
   useEffect(() => {
@@ -143,7 +154,7 @@ export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
           <CommandSeparator />
 
           <CommandGroup heading="Resources">
-            {resourceLinks.map((tool) => {
+            {resources.map((tool) => {
               const stars = getGitHubStars(tool.github);
 
               return (
