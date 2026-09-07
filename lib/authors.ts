@@ -5,6 +5,7 @@ import { cache } from "react";
 import { db } from "@/lib/db";
 import { author, resource } from "@/lib/db/schema";
 import { getAllResources } from "@/lib/resources";
+import { slugifyAuthor } from "@/lib/utils";
 import { Resource } from "@/types";
 
 export interface AuthorLinks {
@@ -33,19 +34,7 @@ export interface AuthorWithResources {
   slug: string;
 }
 
-/**
- * Normalizes and converts an author name into a clean, URL-friendly slug.
- * Handles diacritics / accents (e.g. "falk schröter" -> "falk-schroter").
- */
-export function slugifyAuthor(name: string): string {
-  return name
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
+export { slugifyAuthor };
 
 /**
  * Derives authors in-memory from a resource list (fallback / offline mode).
@@ -62,7 +51,10 @@ export function getAuthorsFromResources(list: Resource[]): AuthorWithResources[]
       if (!authorItem) continue;
       const splitAuthors =
         typeof authorItem === "string" && authorItem.includes(",")
-          ? authorItem.split(",").map((a) => a.trim()).filter(Boolean)
+          ? authorItem
+              .split(",")
+              .map((a) => a.trim())
+              .filter(Boolean)
           : [authorItem.trim()];
 
       for (const trimmedAuthor of splitAuthors) {
@@ -177,9 +169,8 @@ export async function getAuthorBySlug(
   const normalizedSlug = slug.toLowerCase().trim();
   const allAuthors = await getAllAuthors(customResources);
   return (
-    allAuthors.find(
-      (a) => a.slug === normalizedSlug || slugifyAuthor(a.name) === normalizedSlug,
-    ) || null
+    allAuthors.find((a) => a.slug === normalizedSlug || slugifyAuthor(a.name) === normalizedSlug) ||
+    null
   );
 }
 

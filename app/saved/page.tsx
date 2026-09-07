@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  BookmarkSimpleIcon,
-  FolderSimpleIcon,
-  GoogleLogoIcon,
-} from "@phosphor-icons/react";
+import { BookmarkSimpleIcon, FolderSimpleIcon, GoogleLogoIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 

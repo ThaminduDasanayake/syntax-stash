@@ -77,9 +77,7 @@ export function useCollections() {
       const data = await res.json();
 
       if (res.ok && data.collection) {
-        setCollections((prev) =>
-          prev.map((c) => (c.id === id ? { ...c, ...data.collection } : c)),
-        );
+        setCollections((prev) => prev.map((c) => (c.id === id ? { ...c, ...data.collection } : c)));
         toast.success("Collection updated.");
         return data.collection;
       } else {

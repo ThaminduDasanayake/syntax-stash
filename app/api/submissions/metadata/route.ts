@@ -26,8 +26,16 @@ function resolveUrl(relativeOrAbsolute: string, baseUrl: string): string {
   }
 }
 
-function findCategoryByKeywords(categories: CategoryItem[], slugMatch: string, nameFallback: string): string {
-  const match = categories.find((c) => c.slug.toLowerCase() === slugMatch.toLowerCase() || c.name.toLowerCase().includes(slugMatch.toLowerCase()));
+function findCategoryByKeywords(
+  categories: CategoryItem[],
+  slugMatch: string,
+  nameFallback: string,
+): string {
+  const match = categories.find(
+    (c) =>
+      c.slug.toLowerCase() === slugMatch.toLowerCase() ||
+      c.name.toLowerCase().includes(slugMatch.toLowerCase()),
+  );
   return match?.name || nameFallback;
 }
 
@@ -36,7 +44,10 @@ function suggestCategory(text: string, categories: CategoryItem[]): string {
 
   // 1. Direct category name or slug match
   for (const cat of categories) {
-    if (lower.includes(cat.name.toLowerCase()) || (cat.slug && lower.includes(cat.slug.toLowerCase()))) {
+    if (
+      lower.includes(cat.name.toLowerCase()) ||
+      (cat.slug && lower.includes(cat.slug.toLowerCase()))
+    ) {
       return cat.name;
     }
   }
@@ -213,7 +224,9 @@ function suggestCategory(text: string, categories: CategoryItem[]): string {
     return findCategoryByKeywords(categories, "frontend", "Frontend & UI");
   }
 
-  const devMatch = categories.find((c) => c.slug === "dev" || c.name.toLowerCase().includes("developer"));
+  const devMatch = categories.find(
+    (c) => c.slug === "dev" || c.name.toLowerCase().includes("developer"),
+  );
   return devMatch?.name || categories[0]?.name || "Developer Tools & Utilities";
 }
 
@@ -322,8 +335,19 @@ export async function GET(request: NextRequest) {
       // Check if candidate matches domain or og:site_name (Exact or high-confidence match)
       const isExactBrand = (clean: string, original: string) => {
         if (!clean) return false;
-        if (cleanStem.length > 2 && (clean === cleanStem || clean === `${cleanStem}app` || clean === `${cleanStem}io` || clean === `${cleanStem}dev`)) return true;
-        if (cleanSiteName.length > 2 && (clean === cleanSiteName || original.toLowerCase() === ogSiteName?.toLowerCase())) return true;
+        if (
+          cleanStem.length > 2 &&
+          (clean === cleanStem ||
+            clean === `${cleanStem}app` ||
+            clean === `${cleanStem}io` ||
+            clean === `${cleanStem}dev`)
+        )
+          return true;
+        if (
+          cleanSiteName.length > 2 &&
+          (clean === cleanSiteName || original.toLowerCase() === ogSiteName?.toLowerCase())
+        )
+          return true;
         return false;
       };
 
@@ -573,9 +597,7 @@ export async function GET(request: NextRequest) {
     if (!author && ogDesc) {
       const match = ogDesc.match(/(?:built|made|created|developed|designed)\s+by\s+([^,.;]+)/i);
       if (match && match[1]) {
-        author = match[1]
-          .replace(/\s+(with|using|in|at|on|for|from|and)\b.*$/i, "")
-          .trim();
+        author = match[1].replace(/\s+(with|using|in|at|on|for|from|and)\b.*$/i, "").trim();
       }
     }
 
@@ -594,7 +616,11 @@ export async function GET(request: NextRequest) {
       if (bylineMatch && bylineMatch[1]) {
         const candidate = bylineMatch[1].trim();
         // Ignore generic labels
-        if (!["a community", "ai", "our team", "the"].includes(candidate.toLowerCase()) && candidate.length >= 2 && candidate.length <= 40) {
+        if (
+          !["a community", "ai", "our team", "the"].includes(candidate.toLowerCase()) &&
+          candidate.length >= 2 &&
+          candidate.length <= 40
+        ) {
           author = candidate;
         }
       }
@@ -615,7 +641,10 @@ export async function GET(request: NextRequest) {
       try {
         // Mailto extraction for personal portfolio domains (e.g. hello@theshiva.xyz -> https://theshiva.xyz)
         if (href.startsWith("mailto:")) {
-          const email = href.replace(/^mailto:/i, "").split("?")[0].trim();
+          const email = href
+            .replace(/^mailto:/i, "")
+            .split("?")[0]
+            .trim();
           const emailParts = email.split("@");
           if (emailParts.length === 2) {
             const domain = emailParts[1]?.toLowerCase();
@@ -631,7 +660,11 @@ export async function GET(request: NextRequest) {
               "protonmail.com",
               "yahoo.com",
             ];
-            if (domain && !genericDomains.includes(domain) && !finalUrl.toLowerCase().includes(domain)) {
+            if (
+              domain &&
+              !genericDomains.includes(domain) &&
+              !finalUrl.toLowerCase().includes(domain)
+            ) {
               if (!authorWebsite) {
                 authorWebsite = `https://${domain}`;
               }
@@ -647,10 +680,18 @@ export async function GET(request: NextRequest) {
         const parts = pathname.split("/").filter(Boolean);
         const text = $(el).text().trim().toLowerCase();
         const aria = ($(el).attr("aria-label") || "").toLowerCase();
-        const isFooterOrNav = $(el).closest("footer, nav, header, [class*='footer'], [class*='social'], [class*='nav']").length > 0;
+        const isFooterOrNav =
+          $(el).closest("footer, nav, header, [class*='footer'], [class*='social'], [class*='nav']")
+            .length > 0;
 
         // Twitter / X (Targeting user profile, excluding tweets, status, share links)
-        if (host.includes("twitter.com") || host.includes("x.com") || host === "t.co" || aria.includes("twitter") || aria.includes("x logo")) {
+        if (
+          host.includes("twitter.com") ||
+          host.includes("x.com") ||
+          host === "t.co" ||
+          aria.includes("twitter") ||
+          aria.includes("x logo")
+        ) {
           const isStatusOrIntent =
             pathname.includes("/status/") ||
             pathname.includes("/i/") ||
@@ -678,14 +719,24 @@ export async function GET(request: NextRequest) {
             ) {
               let score = 10;
               if (isFooterOrNav) score += 50;
-              if (text.includes("twitter") || text.includes("x") || aria.includes("twitter") || aria.includes("x")) score += 30;
+              if (
+                text.includes("twitter") ||
+                text.includes("x") ||
+                aria.includes("twitter") ||
+                aria.includes("x")
+              )
+                score += 30;
               twitterCandidates.push({ score, url: `https://x.com/${username}` });
             }
           }
         }
 
         // GitHub User Profile (Including shorteners like git.new, git.io, hub.new)
-        const isGithubHost = host.includes("github.com") || host === "git.new" || host === "git.io" || host === "hub.new";
+        const isGithubHost =
+          host.includes("github.com") ||
+          host === "git.new" ||
+          host === "git.io" ||
+          host === "hub.new";
         if (isGithubHost && parts.length === 1) {
           const username = parts[0];
           if (
@@ -750,13 +801,19 @@ export async function GET(request: NextRequest) {
     const domainClean = domainStem.toLowerCase().replace(/[^a-z0-9]/g, "");
     const titleClean = title.toLowerCase().replace(/[^a-z0-9]/g, "");
 
-    $('a[href*="github.com"], a[href*="git.new"], a[href*="git.io"], a[href*="hub.new"], a[aria-label*="github" i], a[title*="github" i]').each((_, el) => {
+    $(
+      'a[href*="github.com"], a[href*="git.new"], a[href*="git.io"], a[href*="hub.new"], a[aria-label*="github" i], a[title*="github" i]',
+    ).each((_, el) => {
       const href = $(el).attr("href");
       if (!href) return;
       try {
         const fullHref = resolveUrl(href, finalUrl);
         const gh = new URL(fullHref);
-        const isGh = gh.hostname.includes("github.com") || gh.hostname === "git.new" || gh.hostname === "git.io" || gh.hostname === "hub.new";
+        const isGh =
+          gh.hostname.includes("github.com") ||
+          gh.hostname === "git.new" ||
+          gh.hostname === "git.io" ||
+          gh.hostname === "hub.new";
         if (!isGh) return;
 
         const parts = gh.pathname.split("/").filter(Boolean);
@@ -806,9 +863,17 @@ export async function GET(request: NextRequest) {
         const aria = ($(el).attr("aria-label") || "").toLowerCase();
         const titleAttr = ($(el).attr("title") || "").toLowerCase();
 
-        const isSponsorOrAd = $(el).closest("[class*='sponsor'], [class*='ad'], [class*='featured'], [class*='partner']").length > 0;
-        const isFeedOrList = $(el).closest("[class*='feed'], [class*='mention'], [class*='item'], [class*='row'], [class*='card']").length > 0;
-        const isNavOrHeader = $(el).closest("header, nav, [class*='header'], [class*='nav'], [class*='hero']").length > 0;
+        const isSponsorOrAd =
+          $(el).closest(
+            "[class*='sponsor'], [class*='ad'], [class*='featured'], [class*='partner']",
+          ).length > 0;
+        const isFeedOrList =
+          $(el).closest(
+            "[class*='feed'], [class*='mention'], [class*='item'], [class*='row'], [class*='card']",
+          ).length > 0;
+        const isNavOrHeader =
+          $(el).closest("header, nav, [class*='header'], [class*='nav'], [class*='hero']").length >
+          0;
 
         let score = 0;
 

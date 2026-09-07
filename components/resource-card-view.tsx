@@ -73,7 +73,12 @@ export function ResourceCardView({
     if (!author) return [];
     if (Array.isArray(author)) {
       return author.flatMap((a) =>
-        typeof a === "string" ? a.split(",").map((x) => x.trim()).filter(Boolean) : [],
+        typeof a === "string"
+          ? a
+              .split(",")
+              .map((x) => x.trim())
+              .filter(Boolean)
+          : [],
       );
     }
     if (typeof author === "string") {

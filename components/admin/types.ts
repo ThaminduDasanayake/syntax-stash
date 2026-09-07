@@ -122,4 +122,3 @@ export interface AdminResourceItem {
   updatedAt: string | Date;
   url: string;
 }
-

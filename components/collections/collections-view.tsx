@@ -115,7 +115,7 @@ export function CollectionsView() {
     return (
       <div className="space-y-6">
         {/* Header inside specific collection */}
-        <div className="border-line flex flex-col gap-3 border-b pb-4 sm:flex-row sm:items-center sm:justify-between font-mono">
+        <div className="border-line flex flex-col gap-3 border-b pb-4 font-mono sm:flex-row sm:items-center sm:justify-between">
           <div className="space-y-1">
             <Button
               size="sm"
@@ -126,19 +126,19 @@ export function CollectionsView() {
               <ArrowLeftIcon className="size-3.5" />
               <span>All Collections</span>
             </Button>
-            <h2 className="text-foreground pt-1 text-xl font-bold uppercase tracking-tight flex items-center gap-2">
-              <FolderOpenIcon className="size-5 text-primary" />
+            <h2 className="text-foreground flex items-center gap-2 pt-1 text-xl font-bold tracking-tight uppercase">
+              <FolderOpenIcon className="text-primary size-5" />
               <span>{activeCollection.name}</span>
             </h2>
             {activeCollection.description && (
-              <p className="text-muted-foreground text-xs font-sans">
+              <p className="text-muted-foreground font-sans text-xs">
                 {activeCollection.description}
               </p>
             )}
           </div>
 
           <div className="flex items-center gap-2 text-xs">
-            <span className="border-line bg-surface rounded border px-2 py-0.5 text-[10px] uppercase font-bold text-muted-foreground flex items-center gap-1">
+            <span className="border-line bg-surface text-muted-foreground flex items-center gap-1 rounded border px-2 py-0.5 text-[10px] font-bold uppercase">
               {activeCollection.isPublic ? (
                 <>
                   <GlobeIcon className="size-3" /> Public Stash
@@ -183,7 +183,7 @@ export function CollectionsView() {
       {/* Top Controls */}
       <div className="border-line flex flex-wrap items-center justify-between gap-3 border-b pb-4 font-mono">
         <div>
-          <h2 className="text-foreground text-sm font-bold uppercase tracking-wider">
+          <h2 className="text-foreground text-sm font-bold tracking-wider uppercase">
             Custom Stash Folders
           </h2>
           <p className="text-muted-foreground text-xs">
@@ -204,7 +204,10 @@ export function CollectionsView() {
       {isLoading ? (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="border-line bg-surface/40 h-32 animate-pulse rounded-lg border" />
+            <div
+              key={i}
+              className="border-line bg-surface/40 h-32 animate-pulse rounded-lg border"
+            />
           ))}
         </div>
       ) : collections.length === 0 ? (
@@ -212,7 +215,8 @@ export function CollectionsView() {
           <FolderPlusIcon className="text-muted-foreground/60 size-10" />
           <p className="text-foreground mt-3 font-bold uppercase">No collections yet</p>
           <p className="text-muted-foreground mt-1 max-w-sm">
-            Create custom folders like &quot;Next.js Stack&quot; or &quot;UI Primitives&quot; to organize your favorite tools.
+            Create custom folders like &quot;Next.js Stack&quot; or &quot;UI Primitives&quot; to
+            organize your favorite tools.
           </p>
           <Button
             size="sm"
@@ -224,7 +228,7 @@ export function CollectionsView() {
           </Button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 font-mono text-xs">
+        <div className="grid grid-cols-1 gap-4 font-mono text-xs sm:grid-cols-2 lg:grid-cols-3">
           {collections.map((col) => (
             <div
               key={col.id}
@@ -233,18 +237,22 @@ export function CollectionsView() {
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <FolderSimpleIcon className="size-5 text-primary" />
+                    <FolderSimpleIcon className="text-primary size-5" />
                     <h3 className="text-foreground font-bold tracking-tight">{col.name}</h3>
                   </div>
 
-                  <span className="border-line bg-surface rounded border px-1.5 py-0.5 text-[9px] uppercase font-bold text-muted-foreground flex items-center gap-1">
-                    {col.isPublic ? <GlobeIcon className="size-2.5" /> : <LockIcon className="size-2.5" />}
+                  <span className="border-line bg-surface text-muted-foreground flex items-center gap-1 rounded border px-1.5 py-0.5 text-[9px] font-bold uppercase">
+                    {col.isPublic ? (
+                      <GlobeIcon className="size-2.5" />
+                    ) : (
+                      <LockIcon className="size-2.5" />
+                    )}
                     {col.isPublic ? "Public" : "Private"}
                   </span>
                 </div>
 
                 {col.description && (
-                  <p className="text-muted-foreground line-clamp-2 text-xs font-sans leading-relaxed">
+                  <p className="text-muted-foreground line-clamp-2 font-sans text-xs leading-relaxed">
                     {col.description}
                   </p>
                 )}
@@ -285,11 +293,11 @@ export function CollectionsView() {
       <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
         <DialogContent className="font-mono text-xs sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-foreground flex items-center gap-2 text-base font-bold uppercase tracking-tight">
-              <FolderPlusIcon className="size-5 text-primary" />
+            <DialogTitle className="text-foreground flex items-center gap-2 text-base font-bold tracking-tight uppercase">
+              <FolderPlusIcon className="text-primary size-5" />
               <span>Create New Collection</span>
             </DialogTitle>
-            <DialogDescription className="text-muted-foreground text-xs font-mono">
+            <DialogDescription className="text-muted-foreground font-mono text-xs">
               Create a custom folder to organize, group, and curate your favorite developer tools.
             </DialogDescription>
           </DialogHeader>
@@ -327,7 +335,7 @@ export function CollectionsView() {
                 type="checkbox"
                 checked={newColPublic}
                 onChange={(e) => setNewColPublic(e.target.checked)}
-                className="size-4 cursor-pointer accent-primary"
+                className="accent-primary size-4 cursor-pointer"
               />
               <label htmlFor="isPublicCheck" className="cursor-pointer text-xs select-none">
                 Make this collection public (shareable link)
@@ -364,7 +372,10 @@ export function CollectionsView() {
       </Dialog>
 
       {/* Delete Confirmation AlertDialog */}
-      <AlertDialog open={Boolean(deletingCol)} onOpenChange={(open) => !open && setDeletingCol(null)}>
+      <AlertDialog
+        open={Boolean(deletingCol)}
+        onOpenChange={(open) => !open && setDeletingCol(null)}
+      >
         <AlertDialogContent className="font-mono text-xs sm:max-w-md">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-destructive font-mono text-base font-bold uppercase">

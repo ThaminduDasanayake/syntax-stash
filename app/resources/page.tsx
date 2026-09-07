@@ -12,10 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ResourcesPage() {
-  const [categoryItems, resourceLinks] = await Promise.all([
-    getAllCategories(),
-    getAllResources(),
-  ]);
+  const [categoryItems, resourceLinks] = await Promise.all([getAllCategories(), getAllResources()]);
   const categories = categoryItems.map((c) => c.name);
 
   return (

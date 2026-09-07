@@ -127,10 +127,7 @@ export const tag = pgTable(
     slug: text("slug").notNull().unique(),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
-  (table) => [
-    index("tag_name_idx").on(table.name),
-    uniqueIndex("tag_slug_idx").on(table.slug),
-  ],
+  (table) => [index("tag_name_idx").on(table.name), uniqueIndex("tag_slug_idx").on(table.slug)],
 );
 
 export const resource = pgTable(
@@ -339,4 +336,3 @@ export type DbResource = typeof resource.$inferSelect;
 export type NewDbResource = typeof resource.$inferInsert;
 export type Submission = typeof submission.$inferSelect;
 export type NewSubmission = typeof submission.$inferInsert;
-

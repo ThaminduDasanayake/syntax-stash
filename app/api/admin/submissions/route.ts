@@ -8,6 +8,7 @@ import { auth } from "@/lib/auth";
 import { slugifyAuthor } from "@/lib/authors";
 import { db } from "@/lib/db";
 import { author, category, resource, resourceTag, submission, tag } from "@/lib/db/schema";
+import { normalizeTag } from "@/lib/tags";
 
 async function verifyAdmin() {
   const reqHeaders = await headers();
@@ -105,7 +106,10 @@ export async function PATCH(req: Request) {
 
           // Ensure every individual author exists in author table
           const splitAuthors = authorName.includes(",")
-            ? authorName.split(",").map((a: string) => a.trim()).filter(Boolean)
+            ? authorName
+                .split(",")
+                .map((a: string) => a.trim())
+                .filter(Boolean)
             : [authorName];
 
           for (const singleName of splitAuthors) {
@@ -227,7 +231,7 @@ export async function PATCH(req: Request) {
             .filter(Boolean);
 
           for (const rawTag of rawTags) {
-            const tagSlug = slugifyAuthor(rawTag);
+            const tagSlug = normalizeTag(rawTag);
             if (!tagSlug) continue;
 
             let tagRecordId: string;
@@ -256,18 +260,31 @@ export async function PATCH(req: Request) {
 
         // 5. Purge Next.js Edge Data Cache for instant live update
         revalidateTag("resources", "max");
+        revalidateTag("categories", "max");
+        revalidateTag("tags", "max");
+        revalidateTag("authors", "max");
         revalidatePath("/");
         revalidatePath("/resources");
+        revalidatePath("/authors");
+        revalidatePath("/tags");
       } else {
         // If status was changed to rejected or pending, remove from live catalog if present
         await db.delete(resource).where(eq(resource.url, sub.url));
         revalidateTag("resources", "max");
+        revalidateTag("categories", "max");
+        revalidateTag("tags", "max");
+        revalidateTag("authors", "max");
         revalidatePath("/");
         revalidatePath("/resources");
+        revalidatePath("/authors");
+        revalidatePath("/tags");
       }
     }
 
-    return NextResponse.json({ message: "Submission updated and synchronized successfully.", success: true });
+    return NextResponse.json({
+      message: "Submission updated and synchronized successfully.",
+      success: true,
+    });
   } catch (error) {
     console.error("PATCH /api/admin/submissions error:", error);
     return NextResponse.json({ error: "Failed to update submission." }, { status: 500 });
@@ -291,8 +308,13 @@ export async function DELETE(request: NextRequest) {
     if (sub?.url) {
       await db.delete(resource).where(eq(resource.url, sub.url));
       revalidateTag("resources", "max");
+      revalidateTag("categories", "max");
+      revalidateTag("tags", "max");
+      revalidateTag("authors", "max");
       revalidatePath("/");
       revalidatePath("/resources");
+      revalidatePath("/authors");
+      revalidatePath("/tags");
     }
 
     await db.delete(submission).where(eq(submission.id, id));

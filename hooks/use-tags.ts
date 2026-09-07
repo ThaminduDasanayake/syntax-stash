@@ -2,7 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { normalizeTag, TagItem } from "@/lib/tags";
+import type { TagItem } from "@/lib/tags";
+import { normalizeTag } from "@/lib/utils";
 
 let cachedTags: TagItem[] | null = null;
 const listeners = new Set<(tags: TagItem[]) => void>();

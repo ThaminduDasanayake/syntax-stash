@@ -46,7 +46,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { normalizeTag } from "@/lib/tags";
+import { normalizeTag } from "@/lib/utils";
 
 export interface AdminTagItem {
   createdAt?: Date | string;
@@ -375,7 +375,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
         </div>
 
         {/* Filter and Sort bar */}
-        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border/40 pt-3">
+        <div className="border-border/40 flex flex-wrap items-center justify-between gap-3 border-t pt-3">
           <div className="flex flex-wrap items-center gap-3">
             <div className="flex items-center gap-1.5">
               <FunnelIcon className="text-muted-foreground size-3.5" />
@@ -450,7 +450,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
                       type="button"
                       onClick={() => handleToggleFeatured(tagItem)}
                       title={tagItem.isFeatured ? "Unmark featured" : "Mark as featured"}
-                      className="text-muted-foreground hover:text-amber-500 transition-colors p-1"
+                      className="text-muted-foreground p-1 transition-colors hover:text-amber-500"
                     >
                       <StarIcon
                         weight={tagItem.isFeatured ? "fill" : "regular"}
@@ -467,7 +467,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
                       {tagItem.isFeatured && (
                         <Badge
                           variant="outline"
-                          className="border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400 text-[10px]"
+                          className="border-amber-500/30 bg-amber-500/10 text-[10px] text-amber-600 dark:text-amber-400"
                         >
                           Featured
                         </Badge>
@@ -514,7 +514,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="font-mono sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-base font-bold uppercase tracking-tight">
+            <DialogTitle className="text-base font-bold tracking-tight uppercase">
               {editingTag ? `Edit Tag: #${editingTag.name}` : "Create New Tag"}
             </DialogTitle>
             <DialogDescription className="text-xs">
@@ -543,7 +543,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
                   <button
                     type="button"
                     onClick={() => setAutoSlug(!autoSlug)}
-                    className="text-[10px] text-primary hover:underline"
+                    className="text-primary text-[10px] hover:underline"
                   >
                     {autoSlug ? "Manual Slug" : "Auto Slug"}
                   </button>
@@ -609,7 +609,10 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
       </Dialog>
 
       {/* Delete Confirmation Alert Dialog */}
-      <AlertDialog open={Boolean(deletingTag)} onOpenChange={(open) => !open && setDeletingTag(null)}>
+      <AlertDialog
+        open={Boolean(deletingTag)}
+        onOpenChange={(open) => !open && setDeletingTag(null)}
+      >
         <AlertDialogContent className="font-mono text-xs">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-destructive font-mono uppercase">
@@ -619,9 +622,9 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
               Are you sure you want to delete tag{" "}
               <strong className="text-foreground">#{deletingTag?.slug}</strong>?
               {deletingTag && deletingTag.toolCount > 0 && (
-                <span className="text-amber-600 dark:text-amber-400 mt-2 block font-semibold">
-                  Note: This tag is currently attached to {deletingTag.toolCount} resource(s). Deleting
-                  it will remove the tag association from those resources.
+                <span className="mt-2 block font-semibold text-amber-600 dark:text-amber-400">
+                  Note: This tag is currently attached to {deletingTag.toolCount} resource(s).
+                  Deleting it will remove the tag association from those resources.
                 </span>
               )}
             </AlertDialogDescription>

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { CategoryItem } from "@/lib/categories";
+import type { CategoryItem } from "@/lib/categories";
 
 let cachedCategories: CategoryItem[] | null = null;
 const listeners = new Set<(cats: CategoryItem[]) => void>();

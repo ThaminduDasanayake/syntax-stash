@@ -230,7 +230,6 @@ async function checkGitHubLink(resource: Resource): Promise<AuditFinding[]> {
   return findings;
 }
 
-
 async function checkResource(resource: Resource): Promise<AuditFinding[]> {
   const normUrl = normalizeUrlKey(resource.url);
   if (skipAllSet.has(normUrl)) return [];

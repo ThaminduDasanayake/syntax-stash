@@ -21,9 +21,8 @@ import { CopyButton } from "@/components/ui/copy-button";
 import { DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { useSession } from "@/lib/auth-client";
-import { slugifyAuthor } from "@/lib/authors";
 import { formatStarCount, getGitHubStars } from "@/lib/github";
-import { cn, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
+import { cn, getCategoryTheme, slugifyAuthor, THEME_CONFIG } from "@/lib/utils";
 import { Resource } from "@/types";
 
 export interface ResourceDialogProps {
@@ -32,11 +31,7 @@ export interface ResourceDialogProps {
   resource: Resource;
 }
 
-export function ResourceDialog({
-  allResources,
-  onTagClickAction,
-  resource,
-}: ResourceDialogProps) {
+export function ResourceDialog({ allResources, onTagClickAction, resource }: ResourceDialogProps) {
   const [activeTool, setActiveTool] = useState(resource);
   const [fetchedResources, setFetchedResources] = useState<Resource[]>([]);
 
@@ -470,33 +465,42 @@ export function ResourceDialog({
           {activeTool.subtitle && <p className="modal-subtitle">{activeTool.subtitle}</p>}
           <p className="modal-description">{activeTool.description}</p>
 
-          {activeTool.author && (() => {
-            const authorList: string[] = Array.isArray(activeTool.author)
-              ? activeTool.author.flatMap((a) =>
-                  typeof a === "string" ? a.split(",").map((x) => x.trim()).filter(Boolean) : [],
-                )
-              : typeof activeTool.author === "string"
-                ? activeTool.author.split(",").map((x) => x.trim()).filter(Boolean)
-                : [];
+          {activeTool.author &&
+            (() => {
+              const authorList: string[] = Array.isArray(activeTool.author)
+                ? activeTool.author.flatMap((a) =>
+                    typeof a === "string"
+                      ? a
+                          .split(",")
+                          .map((x) => x.trim())
+                          .filter(Boolean)
+                      : [],
+                  )
+                : typeof activeTool.author === "string"
+                  ? activeTool.author
+                      .split(",")
+                      .map((x) => x.trim())
+                      .filter(Boolean)
+                  : [];
 
-            if (authorList.length === 0) return null;
+              if (authorList.length === 0) return null;
 
-            return (
-              <p className="modal-author flex flex-wrap items-center gap-1">
-                {authorList.map((authorName, index) => (
-                  <span key={authorName} className="inline-flex items-center">
-                    {index > 0 && <span className="mr-1 opacity-60">&</span>}
-                    <Link
-                      href={`/authors/${slugifyAuthor(authorName)}`}
-                      className="modal-author-link hover:underline"
-                    >
-                      {authorName}
-                    </Link>
-                  </span>
-                ))}
-              </p>
-            );
-          })()}
+              return (
+                <p className="modal-author flex flex-wrap items-center gap-1">
+                  {authorList.map((authorName, index) => (
+                    <span key={authorName} className="inline-flex items-center">
+                      {index > 0 && <span className="mr-1 opacity-60">&</span>}
+                      <Link
+                        href={`/authors/${slugifyAuthor(authorName)}`}
+                        className="modal-author-link hover:underline"
+                      >
+                        {authorName}
+                      </Link>
+                    </span>
+                  ))}
+                </p>
+              );
+            })()}
         </div>
 
         {/* Right Side */}

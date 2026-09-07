@@ -48,7 +48,7 @@ async function verifyTables() {
 
   // 2. Integrity Checks on `resource`
   console.log("\n🛡️  Resource Integrity Checks:");
-  
+
   // Check for orphaned categoryId in resource
   const orphanedCategory = await db
     .select({
@@ -89,7 +89,9 @@ async function verifyTables() {
     .leftJoin(resource, eq(resourceTag.resourceId, resource.id))
     .where(isNull(resource.id));
 
-  console.log(`  • resource_tag rows pointing to non-existent resources: ${orphanedResourceTags.length}`);
+  console.log(
+    `  • resource_tag rows pointing to non-existent resources: ${orphanedResourceTags.length}`,
+  );
 
   const orphanedTagLinks = await db
     .select({
@@ -120,7 +122,10 @@ async function verifyTables() {
     .leftJoin(tag, eq(resourceTag.tagId, tag.id))
     .limit(15);
 
-  const sampleMap = new Map<string, { author: string; category: string; tags: string[]; title: string }>();
+  const sampleMap = new Map<
+    string,
+    { author: string; category: string; tags: string[]; title: string }
+  >();
   for (const row of sampleRows) {
     if (!sampleMap.has(row.id)) {
       sampleMap.set(row.id, {
@@ -135,7 +140,9 @@ async function verifyTables() {
   }
 
   for (const [, data] of Array.from(sampleMap.entries()).slice(0, 3)) {
-    console.log(`  • [${data.category}] "${data.title}" by ${data.author} | Tags: [${data.tags.join(", ")}]`);
+    console.log(
+      `  • [${data.category}] "${data.title}" by ${data.author} | Tags: [${data.tags.join(", ")}]`,
+    );
   }
 
   console.log("\n=========================================");

@@ -40,8 +40,7 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
   const isEdit = mode === "edit" || Boolean(initialData?.id);
   const { categoryOptions } = useCategories();
 
-  const defaultCategory =
-    initialData?.category || categoryOptions[0]?.value || "";
+  const defaultCategory = initialData?.category || categoryOptions[0]?.value || "";
 
   const [formData, setFormData] = useState<Partial<AdminResourceItem>>({
     id: initialData?.id || undefined,
@@ -72,7 +71,6 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
   const handleAuthorFieldChange = (_field: keyof AuthorSocialValues, value: string) => {
     setFormData((prev) => ({ ...prev, authorName: value }));
   };
-
 
   const handleAutoDetect = async () => {
     const targetUrl = formData.url?.trim();
@@ -408,10 +406,7 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
             </div>
 
             {/* Section 6: Creator Attribution */}
-            <AuthorSocialFields
-              values={authorValues}
-              onChange={handleAuthorFieldChange}
-            />
+            <AuthorSocialFields values={authorValues} onChange={handleAuthorFieldChange} />
 
             {/* Section 7: Canonical Tags */}
             <div className="space-y-2">

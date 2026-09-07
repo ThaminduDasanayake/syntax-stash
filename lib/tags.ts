@@ -4,6 +4,7 @@ import { cache } from "react";
 
 import { db } from "@/lib/db";
 import { resourceTag, tag } from "@/lib/db/schema";
+import { normalizeTag } from "@/lib/utils";
 import { Resource } from "@/types";
 
 export interface TagItem {
@@ -17,17 +18,7 @@ export interface TagItem {
 // Backward compatibility alias
 export type TagInfo = TagItem;
 
-/**
- * Normalizes a tag string into a clean, lowercased, kebab-cased tag.
- */
-export function normalizeTag(rawTag: string): string {
-  return rawTag
-    .toLowerCase()
-    .trim()
-    .replace(/^#+/, "")
-    .replace(/\s+/g, "-")
-    .replace(/[^a-z0-9-_]/g, "");
-}
+export { normalizeTag };
 
 /**
  * Derives tags in-memory from a resource list (fallback / helper mode).

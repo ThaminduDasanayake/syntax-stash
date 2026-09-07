@@ -53,7 +53,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { slugifyAuthor } from "@/lib/authors";
+import { slugifyAuthor } from "@/lib/utils";
 
 export interface AdminAuthorItem {
   blog: string | null;

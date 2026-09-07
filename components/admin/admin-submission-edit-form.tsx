@@ -243,14 +243,14 @@ export function AdminSubmissionEditForm({
               <Label className="text-foreground font-mono text-xs font-bold uppercase">
                 Category <span className="text-destructive">*</span>
               </Label>
-                <div className="h-9">
-                  <SelectField
-                    value={editForm.category || sub.category}
-                    onValueChange={(val) => setEditForm({ ...editForm, category: val })}
-                    options={categoryOptions}
-                    triggerClassName="h-9 font-mono text-xs"
-                  />
-                </div>
+              <div className="h-9">
+                <SelectField
+                  value={editForm.category || sub.category}
+                  onValueChange={(val) => setEditForm({ ...editForm, category: val })}
+                  options={categoryOptions}
+                  triggerClassName="h-9 font-mono text-xs"
+                />
+              </div>
             </div>
           </div>
 

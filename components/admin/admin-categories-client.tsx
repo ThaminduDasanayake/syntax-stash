@@ -316,11 +316,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
               <span className="hidden sm:inline">Sync</span>
             </Button>
 
-            <Button
-              size="sm"
-              onClick={handleOpenAdd}
-              className="h-9 text-xs font-bold uppercase"
-            >
+            <Button size="sm" onClick={handleOpenAdd} className="h-9 text-xs font-bold uppercase">
               <PlusIcon className="size-3.5" weight="bold" />
               <span>New Category</span>
             </Button>
@@ -328,7 +324,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
         </div>
 
         {/* Counter Summary */}
-        <div className="text-muted-foreground flex items-center justify-between border-t border-border/40 pt-2 text-[11px]">
+        <div className="text-muted-foreground border-border/40 flex items-center justify-between border-t pt-2 text-[11px]">
           <span>
             Displaying <strong className="text-foreground">{filteredCategories.length}</strong> of{" "}
             {categories.length} categories
@@ -409,7 +405,9 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
                             className="size-3 rounded-full border border-black/20 dark:border-white/20"
                             style={{ backgroundColor: cat.themeColor }}
                           />
-                          <span className="text-[10px] text-muted-foreground">{cat.themeColor}</span>
+                          <span className="text-muted-foreground text-[10px]">
+                            {cat.themeColor}
+                          </span>
                         </div>
                       ) : (
                         <span className="text-muted-foreground text-[10px] opacity-60">None</span>
@@ -461,7 +459,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="font-mono sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-base font-bold uppercase tracking-tight">
+            <DialogTitle className="text-base font-bold tracking-tight uppercase">
               {editingCategory ? `Edit Category: ${editingCategory.name}` : "Create New Category"}
             </DialogTitle>
             <DialogDescription className="text-xs">
@@ -490,7 +488,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
                   <button
                     type="button"
                     onClick={() => setAutoSlug(!autoSlug)}
-                    className="text-[10px] text-primary hover:underline"
+                    className="text-primary text-[10px] hover:underline"
                   >
                     {autoSlug ? "Manual Slug" : "Auto Slug"}
                   </button>

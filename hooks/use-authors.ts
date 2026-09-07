@@ -2,7 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { AuthorWithResources, slugifyAuthor } from "@/lib/authors";
+import type { AuthorWithResources } from "@/lib/authors";
+import { slugifyAuthor } from "@/lib/utils";
 
 let cachedAuthors: AuthorWithResources[] | null = null;
 const listeners = new Set<(authors: AuthorWithResources[]) => void>();

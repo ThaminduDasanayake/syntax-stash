@@ -198,7 +198,10 @@ export async function POST(req: Request) {
 
       // Ensure every individual author exists in author table
       const splitAuthors = name.includes(",")
-        ? name.split(",").map((a: string) => a.trim()).filter(Boolean)
+        ? name
+            .split(",")
+            .map((a: string) => a.trim())
+            .filter(Boolean)
         : [name];
 
       for (const singleName of splitAuthors) {
@@ -373,7 +376,10 @@ export async function PATCH(req: Request) {
 
         // Ensure every individual author exists in author table
         const splitAuthors = name.includes(",")
-          ? name.split(",").map((a: string) => a.trim()).filter(Boolean)
+          ? name
+              .split(",")
+              .map((a: string) => a.trim())
+              .filter(Boolean)
           : [name];
 
         for (const singleName of splitAuthors) {
@@ -400,7 +406,8 @@ export async function PATCH(req: Request) {
             .set({
               blog: authorBlog !== undefined ? authorBlog || null : existingAuthor.blog,
               github: authorGithub !== undefined ? authorGithub || null : existingAuthor.github,
-              linkedin: authorLinkedin !== undefined ? authorLinkedin || null : existingAuthor.linkedin,
+              linkedin:
+                authorLinkedin !== undefined ? authorLinkedin || null : existingAuthor.linkedin,
               name,
               twitter: authorTwitter !== undefined ? authorTwitter || null : existingAuthor.twitter,
               updatedAt: new Date(),

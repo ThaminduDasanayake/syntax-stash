@@ -84,10 +84,7 @@ export async function POST(req: Request) {
     const cleanSlug = slug?.trim() ? slugify(slug.trim()) : slugify(cleanName);
 
     // Check for existing slug or name
-    const [existing] = await db
-      .select()
-      .from(category)
-      .where(eq(category.slug, cleanSlug));
+    const [existing] = await db.select().from(category).where(eq(category.slug, cleanSlug));
 
     if (existing) {
       return NextResponse.json(

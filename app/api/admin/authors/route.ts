@@ -76,9 +76,10 @@ export async function POST(req: Request) {
     }
 
     const cleanName = name.trim();
-    const cleanSlug = customSlug && typeof customSlug === "string" && customSlug.trim()
-      ? slugifyAuthor(customSlug.trim())
-      : slugifyAuthor(cleanName);
+    const cleanSlug =
+      customSlug && typeof customSlug === "string" && customSlug.trim()
+        ? slugifyAuthor(customSlug.trim())
+        : slugifyAuthor(cleanName);
 
     if (!cleanSlug) {
       return NextResponse.json({ error: "Invalid author slug generated." }, { status: 400 });
@@ -86,7 +87,10 @@ export async function POST(req: Request) {
 
     const [existing] = await db.select().from(author).where(eq(author.slug, cleanSlug));
     if (existing) {
-      return NextResponse.json({ error: `An author with slug "${cleanSlug}" already exists.` }, { status: 409 });
+      return NextResponse.json(
+        { error: `An author with slug "${cleanSlug}" already exists.` },
+        { status: 409 },
+      );
     }
 
     const newAuthorId = crypto.randomUUID();
@@ -165,7 +169,10 @@ export async function PATCH(req: Request) {
       if (cleanSlug !== existing.slug) {
         const [slugConflict] = await db.select().from(author).where(eq(author.slug, cleanSlug));
         if (slugConflict && slugConflict.id !== id) {
-          return NextResponse.json({ error: `Slug "${cleanSlug}" is already taken by another author.` }, { status: 409 });
+          return NextResponse.json(
+            { error: `Slug "${cleanSlug}" is already taken by another author.` },
+            { status: 409 },
+          );
         }
         updateData.slug = cleanSlug;
       }

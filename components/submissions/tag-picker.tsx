@@ -3,8 +3,8 @@
 import { HashIcon, PlusIcon, TagIcon, XIcon } from "@phosphor-icons/react";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
-import { normalizeTag, TagInfo } from "@/lib/tags";
-import { cn } from "@/lib/utils";
+import type { TagInfo } from "@/lib/tags";
+import { cn, normalizeTag } from "@/lib/utils";
 
 export interface TagPickerProps {
   allowCustom?: boolean;
@@ -131,10 +131,7 @@ export function TagPicker({
     if (Array.isArray(value)) {
       raw = value.map(normalizeTag).filter(Boolean);
     } else if (typeof value === "string") {
-      raw = value
-        .split(",")
-        .map(normalizeTag)
-        .filter(Boolean);
+      raw = value.split(",").map(normalizeTag).filter(Boolean);
     }
     return Array.from(new Set(raw)).sort((a, b) => a.localeCompare(b));
   }, [value]);
@@ -149,9 +146,7 @@ export function TagPicker({
     if (!cleanQuery) {
       return unselected.slice(0, 10);
     }
-    return unselected
-      .filter((t) => t.name.includes(cleanQuery))
-      .slice(0, 10);
+    return unselected.filter((t) => t.name.includes(cleanQuery)).slice(0, 10);
   }, [allTags, cleanQuery, selectedTags]);
 
   const exactMatchExists = allTags.some((t) => t.name === cleanQuery);
@@ -339,7 +334,7 @@ export function TagPicker({
                   {tagItem.count > 0 && (
                     <span
                       className={cn(
-                        "rounded-none border px-1 py-0.2 text-[10px]",
+                        "py-0.2 rounded-none border px-1 text-[10px]",
                         isHighlighted
                           ? "border-primary-foreground/40 bg-primary-foreground/20 text-primary-foreground"
                           : "border-border bg-muted/40 text-muted-foreground",
@@ -366,7 +361,8 @@ export function TagPicker({
               >
                 <PlusIcon className="size-3" />
                 <span>
-                  + Add &quot;<strong className="text-foreground">{cleanQuery}</strong>&quot; as custom tag
+                  + Add &quot;<strong className="text-foreground">{cleanQuery}</strong>&quot; as
+                  custom tag
                 </span>
               </li>
             )}

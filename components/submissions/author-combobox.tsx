@@ -396,7 +396,7 @@ export function AuthorCombobox({
                     {typeof author.count === "number" && author.count > 0 && (
                       <span
                         className={cn(
-                          "rounded-none border px-1 py-0.2 text-[10px]",
+                          "py-0.2 rounded-none border px-1 text-[10px]",
                           isHighlighted
                             ? "border-primary-foreground/40 bg-primary-foreground/20 text-primary-foreground"
                             : "border-border bg-muted/40 text-muted-foreground",
@@ -476,4 +476,3 @@ export function AuthorCombobox({
     </div>
   );
 }
-

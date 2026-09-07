@@ -1,5 +1,5 @@
-import { slugifyAuthor } from "@/lib/authors";
 import { Submission } from "@/lib/db/schema";
+import { slugifyAuthor } from "@/lib/utils";
 import { Resource } from "@/types";
 
 import { AdminResourceItem } from "./types";
@@ -79,4 +79,3 @@ export function adminItemToResource(item: AdminResourceItem): Resource {
     url: item.url,
   };
 }
-

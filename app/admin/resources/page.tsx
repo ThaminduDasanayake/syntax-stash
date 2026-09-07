@@ -15,11 +15,6 @@ export default async function AdminResourcesPage() {
   const { categoryCounts, resources } = await getAllAdminResources();
 
   return (
-    <AdminResourcesClient
-      _initialCategoryCounts={categoryCounts}
-      initialResources={resources}
-    />
+    <AdminResourcesClient _initialCategoryCounts={categoryCounts} initialResources={resources} />
   );
 }
-
-

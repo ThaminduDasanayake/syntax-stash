@@ -10,7 +10,7 @@ import { useState } from "react";
 
 import { ResourceCardView } from "@/components/resource-card-view";
 import { Button } from "@/components/ui/button";
-import { slugifyAuthor } from "@/lib/authors";
+import { slugifyAuthor } from "@/lib/utils";
 
 import { AdminResourceItem } from "./types";
 
@@ -110,4 +110,3 @@ export function AdminResourceCard({
     </div>
   );
 }
-

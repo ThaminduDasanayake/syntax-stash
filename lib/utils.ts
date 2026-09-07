@@ -14,6 +14,32 @@ export function slugify(str: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
+/**
+ * Normalizes and converts an author name into a clean, URL-friendly slug.
+ * Handles diacritics / accents (e.g. "falk schröter" -> "falk-schroter").
+ */
+export function slugifyAuthor(name: string): string {
+  return name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+/**
+ * Normalizes a tag string into a clean, lowercased, kebab-cased tag.
+ */
+export function normalizeTag(rawTag: string): string {
+  return rawTag
+    .toLowerCase()
+    .trim()
+    .replace(/^#+/, "")
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-_]/g, "");
+}
+
 export function getResourceId(
   target: { title?: string; slug?: string; url?: string } | string,
 ): string {
@@ -113,9 +139,7 @@ export function getCategoryTheme(
   if (itemType === "tool") {
     const toolIdx = TOOL_ENTRIES.findIndex(
       ([key, val]) =>
-        key.toLowerCase() === slug ||
-        val.toLowerCase() === normalized ||
-        slugify(val) === slug,
+        key.toLowerCase() === slug || val.toLowerCase() === normalized || slugify(val) === slug,
     );
     if (toolIdx !== -1) return THEMES[toolIdx % THEMES.length];
   }

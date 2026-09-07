@@ -3,12 +3,14 @@
 ## Database Schema & Normalization Roadmap
 
 ### Implemented Entities
+
 - [x] **`author` Table**: Dedicated table for creators/maintainers (`id`, `name`, `slug`, `website`, `twitter`, `github`, `youtube`, `linkedin`, `blog`). Includes creator combobox autocomplete and auto-fill in all submission and resource forms.
 - [x] **`category` Table**: Dedicated table for taxonomy (`id`, `name`, `slug`, `description`, `icon`, `themeColor`, `order`). Linked to `resource.categoryId` with full relational integrity, dynamic routing support, and seed automation.
 - [x] **`tag` & `resource_tag` Tables**: Normalized many-to-many tag relations (`tag`, `resource_tag`) with automated seed routines, database tag aggregation API, and dynamic `/tags/[slug]` routing.
 - [x] **`collection` & `collection_item` Tables**: User-owned custom stashes/folders (`collection`, `collection_item`) with full CRUD APIs (`/api/collections`), client hook (`useCollections`), and tabbed UI integration on `/saved`.
 
 ### Future Schema Additions
+
 - [ ] **`github_repo_stats` (Live Repository Metrics)**:
   - **Context:** Move from static `lib/resource-data/github-stars.json` cache into Postgres.
   - **Schema:** `id`, `resource_id`, `owner`, `repo`, `stars`, `forks`, `open_issues`, `license`, `last_pushed_at`, `synced_at`.
@@ -19,6 +21,7 @@
   - **Benefits:** Automated background health checks with live dead-link warnings in the Admin Dashboard.
 
 ### Properties Retained on Existing Tables (Do NOT Normalize)
+
 - **`pricing`**: Kept as direct column/enum (`"Free" | "Freemium" | "Paid" | "Open Source"`) on `resource` and `submission` to avoid over-engineering.
 - **`favicon` & `ogImage`**: Kept as direct asset URLs on `resource`.
 - **Ephemeral Submission Fields**: Kept flat on `submission` (`submitterEmail`, `submitterName`, `notes`, `adminNotes`, `status`).

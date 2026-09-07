@@ -59,9 +59,7 @@ export default async function AdminEditResourcePage({ params }: EditPageProps) {
   }
 
   const first = rows[0];
-  const tagsList = rows
-    .map((r) => r.tagName)
-    .filter((t): t is string => Boolean(t));
+  const tagsList = rows.map((r) => r.tagName).filter((t): t is string => Boolean(t));
 
   const initialData = {
     ...first,

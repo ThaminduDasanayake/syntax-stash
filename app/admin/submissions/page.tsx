@@ -31,11 +31,6 @@ export default async function AdminSubmissionsPage() {
   }
 
   return (
-    <AdminSubmissionsClient
-      initialSubmissions={initialSubmissions}
-      initialCounts={initialCounts}
-    />
+    <AdminSubmissionsClient initialSubmissions={initialSubmissions} initialCounts={initialCounts} />
   );
 }
-
-

@@ -45,7 +45,7 @@ export function AdminSubmissionCard({
   return (
     <div
       className={cn(
-        "border-line bg-surface/40 hover:bg-surface/70 rounded-lg border p-5 font-mono text-xs transition-colors border-l-[3px]",
+        "border-line bg-surface/40 hover:bg-surface/70 rounded-lg border border-l-[3px] p-5 font-mono text-xs transition-colors",
         themeStyles.border,
       )}
     >
@@ -95,17 +95,18 @@ export function AdminSubmissionCard({
               )}
               <span
                 className={cn(
-                  "inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider",
+                  "inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase",
                   themeStyles.soft,
                   themeStyles.label,
                   themeStyles.border,
                 )}
               >
-                <span className={cn("size-1.5 rounded-full", themeStyles.dotActive || themeStyles.dot)} />
+                <span
+                  className={cn("size-1.5 rounded-full", themeStyles.dotActive || themeStyles.dot)}
+                />
                 {sub.category}
               </span>
             </div>
-
 
             <a
               href={sub.url}

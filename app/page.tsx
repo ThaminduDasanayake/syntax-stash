@@ -53,10 +53,7 @@ const THEME_HOVER_MAP: Record<
 };
 
 export default async function Home() {
-  const [categories, resourceLinks] = await Promise.all([
-    getAllCategories(),
-    getAllResources(),
-  ]);
+  const [categories, resourceLinks] = await Promise.all([getAllCategories(), getAllResources()]);
   const resourceCategories = categories.map((c) => c.name);
   const topTools = [
     ...dataTools.slice(0, 2),

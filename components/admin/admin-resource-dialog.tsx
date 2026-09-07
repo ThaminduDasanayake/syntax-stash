@@ -164,7 +164,12 @@ export function AdminResourceDialog({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.title?.trim() || !formData.url?.trim() || !formData.category || !formData.description?.trim()) {
+    if (
+      !formData.title?.trim() ||
+      !formData.url?.trim() ||
+      !formData.category ||
+      !formData.description?.trim()
+    ) {
       return;
     }
     await onSave(formData);
@@ -197,7 +202,7 @@ export function AdminResourceDialog({
                 </>
               )}
             </DialogTitle>
-            <DialogDescription className="text-muted-foreground text-xs font-mono">
+            <DialogDescription className="text-muted-foreground font-mono text-xs">
               {isEdit
                 ? "Update tool details, category, author attributions, and media assets."
                 : "Create and publish a new tool directly into the live Syntax Stash catalog."}
@@ -275,7 +280,9 @@ export function AdminResourceDialog({
                     <InputField
                       placeholder="e.g. The React Framework"
                       value={formData.subtitle || ""}
-                      onChange={(e) => setFormData((prev) => ({ ...prev, subtitle: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({ ...prev, subtitle: e.target.value }))
+                      }
                       containerClassName="h-9"
                       className="font-mono text-xs"
                     />
@@ -322,10 +329,12 @@ export function AdminResourceDialog({
                 <Textarea
                   placeholder="Describe the tool, its core features, and use case..."
                   value={formData.description || ""}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, description: e.target.value }))
+                  }
                   required
                   rows={3}
-                  className="font-mono text-xs resize-none"
+                  className="resize-none font-mono text-xs"
                 />
               </div>
 
@@ -369,7 +378,9 @@ export function AdminResourceDialog({
                   title={formData.title || "Tool Title"}
                   subtitle={formData.subtitle || "Tool Subtitle"}
                   category={formData.category || "Generators"}
-                  description={formData.description || "A concise description of the tool will appear here..."}
+                  description={
+                    formData.description || "A concise description of the tool will appear here..."
+                  }
                   favicon={formData.favicon}
                   tags={formData.tags}
                   author={formData.authorName}

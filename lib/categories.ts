@@ -17,6 +17,13 @@ export interface CategoryItem {
   themeColor: string | null;
 }
 
+// Backward compatibility aliases
+export type CategoryKey = string;
+export type CategoryValue = string;
+export const CATEGORIES: Record<string, string> = {};
+export const CATEGORY_DEFINITIONS: CategoryItem[] = [];
+export const resourceCategories: string[] = [];
+
 /**
  * Fetches all active categories directly from the Neon Postgres category table.
  * Cached at Next.js edge and revalidated on tag "categories".
@@ -81,9 +88,7 @@ export async function getCategoryByName(name: string): Promise<CategoryItem | nu
   const categories = await getAllCategories();
   const clean = name.trim().toLowerCase();
   return (
-    categories.find(
-      (c) => c.name.toLowerCase() === clean || c.slug.toLowerCase() === clean,
-    ) || null
+    categories.find((c) => c.name.toLowerCase() === clean || c.slug.toLowerCase() === clean) || null
   );
 }
 

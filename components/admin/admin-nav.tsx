@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  FoldersIcon,
-  StackIcon,
-  TagIcon,
-  TrayIcon,
-  UserCircleIcon,
-} from "@phosphor-icons/react";
+import { FoldersIcon, StackIcon, TagIcon, TrayIcon, UserCircleIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -42,7 +36,8 @@ export function AdminNav({
 
   if (isResources) {
     pageTitle = "Live Resource Manager";
-    pageSubtitle = "Browse, search, edit, create, and manage live published resources in the catalog.";
+    pageSubtitle =
+      "Browse, search, edit, create, and manage live published resources in the catalog.";
   } else if (isCategories) {
     pageTitle = "Category Manager";
     pageSubtitle = "Create, organize, style, and manage first-class resource categories.";
@@ -65,9 +60,7 @@ export function AdminNav({
           <h1 className="text-foreground mt-1 text-2xl font-bold tracking-tight uppercase sm:text-3xl">
             {pageTitle}
           </h1>
-          <p className="text-muted-foreground mt-1 text-xs">
-            {pageSubtitle}
-          </p>
+          <p className="text-muted-foreground mt-1 text-xs">{pageSubtitle}</p>
         </div>
 
         {userEmail && (
@@ -79,7 +72,7 @@ export function AdminNav({
       </div>
 
       {/* Admin Module Switcher Tabs */}
-      <div className="mt-6 flex flex-wrap items-center gap-2 border-t border-border/40 pt-4">
+      <div className="border-border/40 mt-6 flex flex-wrap items-center gap-2 border-t pt-4">
         <Link
           href="/admin/submissions"
           className={cn(
@@ -94,10 +87,10 @@ export function AdminNav({
           {pendingSubmissionsCount !== undefined && pendingSubmissionsCount > 0 && (
             <span
               className={cn(
-                "rounded-full px-1.5 py-0.5 text-[10px] font-extrabold leading-none",
+                "rounded-full px-1.5 py-0.5 text-[10px] leading-none font-extrabold",
                 isSubmissions
                   ? "bg-primary-foreground text-primary"
-                  : "bg-amber-500/20 text-amber-700 border border-amber-600/40",
+                  : "border border-amber-600/40 bg-amber-500/20 text-amber-700",
               )}
             >
               {pendingSubmissionsCount}
@@ -119,10 +112,10 @@ export function AdminNav({
           {totalResourcesCount !== undefined && totalResourcesCount > 0 && (
             <span
               className={cn(
-                "rounded-full px-1.5 py-0.5 text-[10px] font-extrabold leading-none",
+                "rounded-full px-1.5 py-0.5 text-[10px] leading-none font-extrabold",
                 isResources
                   ? "bg-primary-foreground text-primary"
-                  : "bg-surface-elevated text-muted-foreground border border-border",
+                  : "bg-surface-elevated text-muted-foreground border-border border",
               )}
             >
               {totalResourcesCount}
@@ -144,10 +137,10 @@ export function AdminNav({
           {categoriesCount !== undefined && categoriesCount > 0 && (
             <span
               className={cn(
-                "rounded-full px-1.5 py-0.5 text-[10px] font-extrabold leading-none",
+                "rounded-full px-1.5 py-0.5 text-[10px] leading-none font-extrabold",
                 isCategories
                   ? "bg-primary-foreground text-primary"
-                  : "bg-surface-elevated text-muted-foreground border border-border",
+                  : "bg-surface-elevated text-muted-foreground border-border border",
               )}
             >
               {categoriesCount}
@@ -169,10 +162,10 @@ export function AdminNav({
           {tagsCount !== undefined && tagsCount > 0 && (
             <span
               className={cn(
-                "rounded-full px-1.5 py-0.5 text-[10px] font-extrabold leading-none",
+                "rounded-full px-1.5 py-0.5 text-[10px] leading-none font-extrabold",
                 isTags
                   ? "bg-primary-foreground text-primary"
-                  : "bg-surface-elevated text-muted-foreground border border-border",
+                  : "bg-surface-elevated text-muted-foreground border-border border",
               )}
             >
               {tagsCount}
@@ -194,10 +187,10 @@ export function AdminNav({
           {authorsCount !== undefined && authorsCount > 0 && (
             <span
               className={cn(
-                "rounded-full px-1.5 py-0.5 text-[10px] font-extrabold leading-none",
+                "rounded-full px-1.5 py-0.5 text-[10px] leading-none font-extrabold",
                 isAuthors
                   ? "bg-primary-foreground text-primary"
-                  : "bg-surface-elevated text-muted-foreground border border-border",
+                  : "bg-surface-elevated text-muted-foreground border-border border",
               )}
             >
               {authorsCount}

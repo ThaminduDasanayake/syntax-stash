@@ -22,11 +22,7 @@ import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
-import {
-  adminItemToResource,
-  AdminResourceCard,
-  AdminResourceItem,
-} from "@/components/admin";
+import { adminItemToResource, AdminResourceCard, AdminResourceItem } from "@/components/admin";
 import { ResourceDialog } from "@/components/resource-dialog";
 import {
   AlertDialog,

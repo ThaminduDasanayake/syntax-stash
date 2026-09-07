@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 
 import { Input } from "@/components/ui/input";
-import { AuthorWithResources } from "@/lib/authors";
+import type { AuthorWithResources } from "@/lib/authors";
 
 interface AuthorsDirectoryProps {
   authors: AuthorWithResources[];
