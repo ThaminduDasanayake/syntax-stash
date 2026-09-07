@@ -1,4 +1,4 @@
-import githubStarsData from "@/lib/resource-data/github-stars.json";
+import githubStarsData from "@/lib/github-stars.json";
 
 const githubStars: Record<string, number> = githubStarsData;
 

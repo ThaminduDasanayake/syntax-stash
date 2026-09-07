@@ -17,17 +17,18 @@ import {
   AuthorSocialValues,
   MediaAssetFields,
   ResourceCardPreview,
+  TagPicker,
 } from "@/components/submissions";
 import { Button } from "@/components/ui/button";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
+import { useCategories } from "@/hooks/use-categories";
 import { Submission } from "@/lib/db/schema";
-import { resourceCategories } from "@/lib/resource-data";
 import { cn } from "@/lib/utils";
 
-import { CATEGORY_OPTIONS, STATUS_CONFIG, STATUS_OPTIONS, SubmissionStatus } from "./types";
+import { STATUS_CONFIG, STATUS_OPTIONS, SubmissionStatus } from "./types";
 
 interface AdminSubmissionEditFormProps {
   isWorking: boolean;
@@ -48,20 +49,20 @@ export function AdminSubmissionEditForm({
   onSave,
   submission: sub,
 }: AdminSubmissionEditFormProps) {
+  const { categoryOptions } = useCategories();
   const [editForm, setEditForm] = useState<Partial<Submission>>({
     title: sub.title,
     adminNotes: sub.adminNotes || "",
     author: sub.author || "",
     authorGitHub: sub.authorGitHub || "",
-    authorLink: sub.authorLink || "",
     authorLinkedIn: sub.authorLinkedIn || "",
     authorTwitter: sub.authorTwitter || "",
-    authorWebsite: sub.authorWebsite || sub.authorLink || "",
+    authorWebsite: sub.authorWebsite || "",
     authorYouTube: sub.authorYouTube || "",
     category: sub.category,
     description: sub.description,
     favicon: sub.favicon || "",
-    gitHubLink: sub.gitHubLink || "",
+    github: sub.github || "",
     notes: sub.notes || "",
     ogImage: sub.ogImage || "",
     pricing: sub.pricing || "Free",
@@ -80,18 +81,17 @@ export function AdminSubmissionEditForm({
   >([]);
 
   const handleAuthorFieldChange = (field: keyof AuthorSocialValues, value: string) => {
-    if (field === "authorWebsite") {
-      setEditForm((prev) => ({
-        ...prev,
-        authorLink: value,
-        authorWebsite: value,
-      }));
-    } else {
-      setEditForm((prev) => ({
-        ...prev,
-        [field]: value,
-      }));
-    }
+    setEditForm((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const handleAuthorBatchChange = (updates: Partial<AuthorSocialValues>) => {
+    setEditForm((prev) => ({
+      ...prev,
+      ...updates,
+    }));
   };
 
   const handleAutoDetect = async () => {
@@ -116,14 +116,10 @@ export function AdminSubmissionEditForm({
           authorTwitter: prev.authorTwitter || data.authorTwitter,
           authorWebsite: prev.authorWebsite || data.authorWebsite,
           authorYouTube: prev.authorYouTube || data.authorYouTube,
-          category:
-            prev.category ||
-            (data.category && resourceCategories.includes(data.category)
-              ? data.category
-              : prev.category),
+          category: prev.category || data.category || sub.category,
           description: prev.description || data.description,
           favicon: data.favicon || prev.favicon,
-          gitHubLink: prev.gitHubLink || data.gitHubLink,
+          github: prev.github || data.github,
           ogImage: data.ogImage || prev.ogImage,
           subtitle: prev.subtitle || data.subtitle,
         }));
@@ -186,11 +182,11 @@ export function AdminSubmissionEditForm({
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
         {/* Form Controls Column */}
         <div className="space-y-6 lg:col-span-7">
-          {/* Section 1: Tool URL with Live Re-Sync */}
+          {/* Section 1: Resource URL with Live Re-Sync */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                Tool URL <span className="text-destructive">*</span>
+                Resource URL <span className="text-destructive">*</span>
               </Label>
               <span className="text-muted-foreground text-[10px]">
                 Scan live site for latest metadata & assets
@@ -251,7 +247,7 @@ export function AdminSubmissionEditForm({
                 <SelectField
                   value={editForm.category || sub.category}
                   onValueChange={(val) => setEditForm({ ...editForm, category: val })}
-                  options={CATEGORY_OPTIONS}
+                  options={categoryOptions}
                   triggerClassName="h-9 font-mono text-xs"
                 />
               </div>
@@ -304,10 +300,11 @@ export function AdminSubmissionEditForm({
               authorGitHub: editForm.authorGitHub,
               authorLinkedIn: editForm.authorLinkedIn,
               authorTwitter: editForm.authorTwitter,
-              authorWebsite: editForm.authorWebsite || editForm.authorLink,
+              authorWebsite: editForm.authorWebsite,
               authorYouTube: editForm.authorYouTube,
             }}
             onChange={handleAuthorFieldChange}
+            onBatchChange={handleAuthorBatchChange}
           />
 
           {/* Section 6: Repo, Tags & Admin Moderation */}
@@ -329,8 +326,8 @@ export function AdminSubmissionEditForm({
                 <div className="h-9">
                   <InputField
                     type="url"
-                    value={editForm.gitHubLink || ""}
-                    onChange={(e) => setEditForm({ ...editForm, gitHubLink: e.target.value })}
+                    value={editForm.github || ""}
+                    onChange={(e) => setEditForm({ ...editForm, github: e.target.value })}
                     placeholder="https://github.com/owner/repo"
                     containerClassName="h-9"
                     className="font-mono text-xs"
@@ -340,17 +337,14 @@ export function AdminSubmissionEditForm({
 
               <div className="space-y-2">
                 <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Tags / Keywords (comma separated)
+                  Canonical Tags (Select Only)
                 </Label>
-                <div className="h-9">
-                  <InputField
-                    value={editForm.tags || ""}
-                    onChange={(e) => setEditForm({ ...editForm, tags: e.target.value })}
-                    placeholder="react, tailwind, ui"
-                    containerClassName="h-9"
-                    className="font-mono text-xs"
-                  />
-                </div>
+                <TagPicker
+                  value={editForm.tags || ""}
+                  onChange={(val) => setEditForm({ ...editForm, tags: val })}
+                  allowCustom={false}
+                  placeholder="Search and select canonical tags..."
+                />
               </div>
             </div>
 

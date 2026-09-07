@@ -3,10 +3,13 @@ import path from "node:path";
 
 import * as cheerio from "cheerio";
 
+import { CategoryItem, getAllCategories } from "@/lib/categories";
 import { parseGitHubRepo } from "@/lib/github";
-import { CATEGORIES, resourceLinks } from "@/lib/resource-data";
-import { AUDIT_CONFIG } from "@/lib/resource-data/audit-config";
+import { getAllResources } from "@/lib/resources";
 import { Resource } from "@/types";
+
+import { AUDIT_CONFIG } from "./audit-config";
+import { runPool } from "./pool";
 
 interface AuditFinding {
   type:
@@ -51,19 +54,18 @@ function normalizeText(text: string): string {
     .trim();
 }
 
-function resolveCategory(input: string): { name: string; slug: string } | null {
+async function resolveCategory(input: string): Promise<{ name: string; slug: string } | null> {
   const norm = input.trim().toLowerCase();
+  const categories = await getAllCategories();
 
-  // 1. Direct key match (e.g. "ai", "ui", "dev", "docs")
-  if (norm in CATEGORIES) {
-    const key = norm as keyof typeof CATEGORIES;
-    return { name: CATEGORIES[key], slug: key };
-  }
-
-  // 2. Full or partial category value match (e.g. "ai & machine learning", "machine learning")
-  for (const [key, val] of Object.entries(CATEGORIES)) {
-    if (val.toLowerCase() === norm || val.toLowerCase().includes(norm) || norm.includes(key)) {
-      return { name: val, slug: key };
+  for (const cat of categories) {
+    if (
+      cat.slug.toLowerCase() === norm ||
+      cat.name.toLowerCase() === norm ||
+      cat.name.toLowerCase().includes(norm) ||
+      norm.includes(cat.slug.toLowerCase())
+    ) {
+      return { name: cat.name, slug: cat.slug };
     }
   }
 
@@ -127,9 +129,9 @@ function parseTitleAndSubtitle(
 }
 
 async function checkGitHubLink(resource: Resource): Promise<AuditFinding[]> {
-  if (!resource.gitHubLink) return [];
+  if (!resource.github) return [];
 
-  const targetUrl = resource.gitHubLink;
+  const targetUrl = resource.github;
   const findings: AuditFinding[] = [];
 
   try {
@@ -228,96 +230,6 @@ async function checkGitHubLink(resource: Resource): Promise<AuditFinding[]> {
   return findings;
 }
 
-async function checkAuthorLink(resource: Resource): Promise<AuditFinding[]> {
-  if (!resource.authorLink) return [];
-
-  const rawLinks = Array.isArray(resource.authorLink) ? resource.authorLink : [resource.authorLink];
-  const targetUrl = rawLinks[0];
-  if (!targetUrl) return [];
-
-  const findings: AuditFinding[] = [];
-
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 9000);
-
-    const res = await fetch(targetUrl, {
-      headers: {
-        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "User-Agent":
-          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
-      },
-      method: "HEAD",
-      redirect: "manual",
-      signal: controller.signal,
-    });
-
-    clearTimeout(timeoutId);
-
-    // 1. Check for Redirects (301, 302, 307, 308)
-    if ([301, 302, 307, 308].includes(res.status)) {
-      const location = res.headers.get("location");
-      if (location) {
-        const resolved = new URL(location, targetUrl).href;
-        const cleanOld = targetUrl.replace(/\/$/, "").toLowerCase();
-        const cleanNew = resolved.replace(/\/$/, "").toLowerCase();
-
-        if (cleanOld !== cleanNew) {
-          findings.push({
-            category: resource.category,
-            details: `Author link moved with HTTP ${res.status} to: ${resolved}`,
-            resourceTitle: resource.title,
-            statusCode: res.status,
-            suggestion: resolved,
-            type: "redirect",
-            url: targetUrl,
-          });
-        }
-      }
-      return findings;
-    }
-
-    // 2. Check for Dead / 404
-    if (res.status === 404) {
-      findings.push({
-        category: resource.category,
-        details: "Author link dead / not found (HTTP 404)",
-        resourceTitle: resource.title,
-        statusCode: 404,
-        type: "broken",
-        url: targetUrl,
-      });
-      return findings;
-    }
-
-    // 3. Check for Server Error
-    if (res.status >= 500) {
-      findings.push({
-        category: resource.category,
-        details: `Author link server error (HTTP ${res.status})`,
-        resourceTitle: resource.title,
-        statusCode: res.status,
-        type: "broken",
-        url: targetUrl,
-      });
-      return findings;
-    }
-  } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : String(err);
-    if (!message.includes("abort") && !message.includes("timeout")) {
-      findings.push({
-        category: resource.category,
-        details: `Author link request error: ${message}`,
-        resourceTitle: resource.title,
-        type: "broken",
-        url: targetUrl,
-      });
-    }
-  }
-
-  return findings;
-}
-
 async function checkResource(resource: Resource): Promise<AuditFinding[]> {
   const normUrl = normalizeUrlKey(resource.url);
   if (skipAllSet.has(normUrl)) return [];
@@ -325,15 +237,9 @@ async function checkResource(resource: Resource): Promise<AuditFinding[]> {
   const findings: AuditFinding[] = [];
 
   // Audit GitHub repository link if provided
-  if (resource.gitHubLink) {
+  if (resource.github) {
     const ghFindings = await checkGitHubLink(resource);
     findings.push(...ghFindings);
-  }
-
-  // Audit Author link if provided
-  if (resource.authorLink) {
-    const authorLinkFindings = await checkAuthorLink(resource);
-    findings.push(...authorLinkFindings);
   }
 
   const targetUrl = resource.url;
@@ -643,31 +549,6 @@ async function checkResource(resource: Resource): Promise<AuditFinding[]> {
   return findings;
 }
 
-async function runPool<T, R>(
-  items: T[],
-  limit: number,
-  iteratorFn: (item: T) => Promise<R>,
-): Promise<R[]> {
-  const results: R[] = [];
-  const executing: Promise<void>[] = [];
-
-  for (const item of items) {
-    const p = Promise.resolve().then(() => iteratorFn(item));
-    results.push(p as unknown as R);
-
-    const e: Promise<void> = p.then(() => {
-      executing.splice(executing.indexOf(e), 1);
-    });
-    executing.push(e);
-
-    if (executing.length >= limit) {
-      await Promise.race(executing);
-    }
-  }
-
-  return Promise.all(results);
-}
-
 function generateMarkdownReport(findings: AuditFinding[], categoryName?: string): string {
   const broken = findings.filter((f) => f.type === "broken");
   const redirects = findings.filter((f) => f.type === "redirect");
@@ -710,7 +591,7 @@ function generateMarkdownReport(findings: AuditFinding[], categoryName?: string)
 
   if (descriptionChanges.length > 0) {
     md += `### 📝 Description Changes (${descriptionChanges.length})\n`;
-    md += `The website description has been updated. If you prefer your stored description, add the URL to \`skipDescriptionChanges\` in \`lib/resource-data/audit-config.ts\`.\n\n`;
+    md += `The website description has been updated. If you prefer your stored description, add the URL to \`skipDescriptionChanges\` in \`scripts/audit-config.ts\`.\n\n`;
     md += `| Resource | Category | Stored Description | Webpage Description |\n`;
     md += `| :--- | :--- | :--- | :--- |\n`;
     for (const item of descriptionChanges) {
@@ -807,7 +688,7 @@ async function main() {
       if (a.startsWith("-")) continue;
       const prev = args[i - 1];
       if (prev === "--sample" || prev === "-s" || prev === "--category" || prev === "-c") continue;
-      const resolved = resolveCategory(a);
+      const resolved = await resolveCategory(a);
       if (resolved) {
         categoryInput = a;
         break;
@@ -818,13 +699,15 @@ async function main() {
   const isDryRun = args.includes("--dry-run");
   const isVerbose = args.includes("--verbose");
 
-  let targets = [...resourceLinks];
+  const allRes = await getAllResources();
+  let targets = [...allRes];
   let resolvedCategory: { name: string; slug: string } | null = null;
 
   if (categoryInput) {
-    resolvedCategory = resolveCategory(categoryInput);
+    resolvedCategory = await resolveCategory(categoryInput);
     if (!resolvedCategory) {
-      const validCategories = Object.keys(CATEGORIES).join(", ");
+      const categories = await getAllCategories();
+      const validCategories = categories.map((c: CategoryItem) => c.slug).join(", ");
       console.error(
         `❌ Unknown category: "${categoryInput}".\nAvailable categories: ${validCategories}`,
       );

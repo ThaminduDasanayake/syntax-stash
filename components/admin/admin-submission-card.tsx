@@ -16,7 +16,7 @@ import Image from "next/image";
 import { CardIcon } from "@/components/card-icon";
 import { Button } from "@/components/ui/button";
 import { Submission } from "@/lib/db/schema";
-import { cn } from "@/lib/utils";
+import { cn, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
 
 import { STATUS_CONFIG, SubmissionStatus } from "./types";
 
@@ -39,8 +39,16 @@ export function AdminSubmissionCard({
   onUpdateStatus,
   submission: sub,
 }: AdminSubmissionCardProps) {
+  const theme = getCategoryTheme(sub.category);
+  const themeStyles = THEME_CONFIG[theme];
+
   return (
-    <div className="border-line bg-surface/40 hover:bg-surface/70 rounded-lg border p-5 font-mono text-xs transition-colors">
+    <div
+      className={cn(
+        "border-line bg-surface/40 hover:bg-surface/70 rounded-lg border border-l-[3px] p-5 font-mono text-xs transition-colors",
+        themeStyles.border,
+      )}
+    >
       {/* Status & Submitter meta header */}
       <div className="border-line mb-3 flex flex-wrap items-center justify-between gap-2 border-b pb-2.5">
         <div className="flex items-center gap-2">
@@ -85,7 +93,17 @@ export function AdminSubmissionCard({
               {sub.subtitle && (
                 <span className="text-muted-foreground text-xs font-normal">— {sub.subtitle}</span>
               )}
-              <span className="border-line text-muted-foreground rounded border px-1.5 py-0.5 text-[10px] font-bold uppercase">
+              <span
+                className={cn(
+                  "inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase",
+                  themeStyles.soft,
+                  themeStyles.label,
+                  themeStyles.border,
+                )}
+              >
+                <span
+                  className={cn("size-1.5 rounded-full", themeStyles.dotActive || themeStyles.dot)}
+                />
                 {sub.category}
               </span>
             </div>
@@ -123,9 +141,9 @@ export function AdminSubmissionCard({
                 <div className="text-foreground flex items-center gap-1.5 font-semibold">
                   <span>By {sub.author}</span>
                   <div className="text-muted-foreground flex items-center gap-1">
-                    {(sub.authorWebsite || sub.authorLink) && (
+                    {sub.authorWebsite && (
                       <a
-                        href={sub.authorWebsite || sub.authorLink || "#"}
+                        href={sub.authorWebsite}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="hover:text-primary p-0.5"
@@ -200,9 +218,9 @@ export function AdminSubmissionCard({
                 </div>
               )}
 
-              {sub.gitHubLink && (
+              {sub.github && (
                 <a
-                  href={sub.gitHubLink}
+                  href={sub.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1 font-semibold underline"

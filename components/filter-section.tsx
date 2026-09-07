@@ -65,6 +65,8 @@ function FilterSectionInner({
   const [visibleLimit, setVisibleLimit] = useState(BATCH_SIZE);
   const [activeDialogResource, setActiveDialogResource] = useState<Resource | null>(null);
 
+  const allResourceItems = useMemo(() => items.filter(isResource), [items]);
+
   const { bookmarkedSet } = useBookmarks();
 
   // Derive filter state directly from searchParams for instant navigation sync
@@ -217,7 +219,7 @@ function FilterSectionInner({
   const filteredItems = useMemo(() => {
     const query = deferredSearchQuery.toLowerCase().trim();
 
-    return items.filter((tool) => {
+    const filtered = items.filter((tool) => {
       // Saved filter
       if (savedOnly) {
         const id = getResourceId(tool);
@@ -260,9 +262,21 @@ function FilterSectionInner({
         tool.category.toLowerCase().includes(query)
       );
     });
+
+    // Sort by category alphabetical order (matching categories list or A → Z), then title (A → Z)
+    return filtered.sort((a, b) => {
+      if (a.category !== b.category) {
+        const indexA = categories.indexOf(a.category);
+        const indexB = categories.indexOf(b.category);
+        if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+        return a.category.localeCompare(b.category);
+      }
+      return a.title.localeCompare(b.title);
+    });
   }, [
     activeCategory,
     bookmarkedSet,
+    categories,
     deferredSearchQuery,
     items,
     matchMode,
@@ -316,17 +330,27 @@ function FilterSectionInner({
     return filteredItems.slice(0, visibleLimit);
   }, [filteredItems, visibleLimit]);
 
-  // Group ONLY the visible items by category
+  // Group visible items by category, strictly preserving category sequence
   const groupedItems = useMemo(() => {
-    return visibleItems.reduce(
-      (acc, tool) => {
-        if (!acc[tool.category]) acc[tool.category] = [];
-        acc[tool.category].push(tool);
-        return acc;
-      },
-      {} as Record<string, StashItem[]>,
-    );
-  }, [visibleItems]);
+    const map: Record<string, StashItem[]> = {};
+    for (const tool of visibleItems) {
+      if (!map[tool.category]) map[tool.category] = [];
+      map[tool.category].push(tool);
+    }
+
+    const sortedCategories = Object.keys(map).sort((a, b) => {
+      const indexA = categories.indexOf(a);
+      const indexB = categories.indexOf(b);
+      if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+      return a.localeCompare(b);
+    });
+
+    const result: Record<string, StashItem[]> = {};
+    for (const cat of sortedCategories) {
+      result[cat] = map[cat];
+    }
+    return result;
+  }, [categories, visibleItems]);
 
   return (
     <>
@@ -540,6 +564,7 @@ function FilterSectionInner({
           <ResourceDialog
             key={activeDialogResource.url || activeDialogResource.title}
             resource={activeDialogResource}
+            allResources={allResourceItems}
             onTagClickAction={(tag) => {
               setActiveDialogResource(null);
               handleToggleTag(tag);

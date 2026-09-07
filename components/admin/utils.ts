@@ -1,30 +1,38 @@
-import { slugifyAuthor } from "@/lib/authors";
 import { Submission } from "@/lib/db/schema";
+import { slugifyAuthor } from "@/lib/utils";
+import { Resource } from "@/types";
+
+import { AdminResourceItem } from "./types";
 
 export function generateTsCode(sub: Submission): string {
-  let code = "  // --- Resource Entry ---\n  {\n";
-  code += `    title: "${sub.title.replace(/"/g, '\\"')}",\n`;
-  if (sub.subtitle) code += `    subtitle: "${sub.subtitle.replace(/"/g, '\\"')}",\n`;
-  code += `    category: CATEGORIES.${sub.category.toLowerCase().replace(/[^a-z0-9]/g, "") || "tools"},\n`;
-  code += `    description: "${sub.description.replace(/"/g, '\\"')}",\n`;
-  code += `    url: "${sub.url}",\n`;
-  if (sub.favicon) code += `    favicon: "${sub.favicon}",\n`;
-  if (sub.ogImage) code += `    ogImage: "${sub.ogImage}",\n`;
-  if (sub.author) code += `    author: "${sub.author.replace(/"/g, '\\"')}",\n`;
-  const resolvedWebsite = sub.authorWebsite || sub.authorLink;
-  if (resolvedWebsite) code += `    authorLink: "${resolvedWebsite}",\n`;
-  if (sub.gitHubLink) code += `    gitHubLink: "${sub.gitHubLink}",\n`;
+  // Parse tags
   const parsedTags = sub.tags
     ? sub.tags
         .split(",")
         .map((t) => t.trim())
         .filter(Boolean)
     : [];
-  if (parsedTags.length > 0) {
-    code += `    tags: [${parsedTags.map((t) => `"${t.replace(/"/g, '\\"')}"`).join(", ")}],\n`;
+
+  const formattedTags = parsedTags.map((tag) => `"${tag.replace(/"/g, '\\"')}"`);
+
+  const resolvedWebsite = sub.authorWebsite;
+
+  // Alphabetical property order
+  let code = "  {\n";
+  code += `    title: "${sub.title.replace(/"/g, '\\"')}",\n`;
+  if (sub.author) code += `    author: "${sub.author.replace(/"/g, '\\"')}",\n`;
+  code += `    category: "${sub.category.replace(/"/g, '\\"')}",\n`;
+  code += `    description:\n      "${sub.description.replace(/"/g, '\\"')}",\n`;
+  if (sub.favicon) code += `    favicon: "${sub.favicon}",\n`;
+  if (sub.github) code += `    github: "${sub.github}",\n`;
+  if (sub.ogImage) code += `    ogImage:\n      "${sub.ogImage}",\n`;
+  if (sub.subtitle) code += `    subtitle: "${sub.subtitle.replace(/"/g, '\\"')}",\n`;
+  if (formattedTags.length > 0) {
+    code += `    tags: [${formattedTags.join(", ")}],\n`;
   } else {
     code += "    tags: [],\n";
   }
+  code += `    url: "${sub.url}",\n`;
   code += "  },";
 
   const hasSocial =
@@ -33,9 +41,10 @@ export function generateTsCode(sub: Submission): string {
     sub.authorWebsite ||
     sub.authorYouTube ||
     sub.authorLinkedIn;
+
   if (sub.author && hasSocial) {
     const slug = slugifyAuthor(sub.author);
-    code += `\n\n  // --- Authors Registry Entry (lib/resource-data/authors.ts) ---\n`;
+    code += `\n\n  // Author Entry\n`;
     code += `  "${slug}": {\n`;
     code += `    name: "${sub.author.replace(/"/g, '\\"')}",\n`;
     code += `    links: {\n`;
@@ -49,4 +58,24 @@ export function generateTsCode(sub: Submission): string {
   }
 
   return code;
+}
+
+export function adminItemToResource(item: AdminResourceItem): Resource {
+  return {
+    title: item.title,
+    author: item.authorName || undefined,
+    category: item.category,
+    description: item.description,
+    favicon: item.favicon || undefined,
+    github: item.github || undefined,
+    ogImage: item.ogImage || undefined,
+    subtitle: item.subtitle || undefined,
+    tags: item.tags
+      ? item.tags
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean)
+      : undefined,
+    url: item.url,
+  };
 }

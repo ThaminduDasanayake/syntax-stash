@@ -772,7 +772,7 @@
 }
 
 @utility card-link-icon {
-  @apply size-5 shrink-0 opacity-80 transition-all duration-200 group-hover:opacity-100 group-hover/arrow:scale-125;
+  @apply size-4 shrink-0 opacity-80 transition-all duration-200 group-hover:opacity-100 group-hover/arrow:scale-125;
 }
 
 /* Resource Modal */

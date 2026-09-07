@@ -6,8 +6,7 @@ import { NextResponse } from "next/server";
 
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { submission } from "@/lib/db/schema";
-import { resourceLinks } from "@/lib/resource-data";
+import { resource, submission } from "@/lib/db/schema";
 import { normalizeUrl } from "@/lib/url-utils";
 
 export async function POST(req: Request) {
@@ -27,7 +26,6 @@ export async function POST(req: Request) {
       title,
       author,
       authorGitHub,
-      authorLink,
       authorLinkedIn,
       authorTwitter,
       authorWebsite,
@@ -35,7 +33,7 @@ export async function POST(req: Request) {
       category,
       description,
       favicon,
-      gitHubLink,
+      github,
       notes,
       ogImage,
       pricing = "Free",
@@ -75,10 +73,12 @@ export async function POST(req: Request) {
     }
 
     const normalizedInputUrl = normalizeUrl(url);
-    const resolvedAuthorWebsite = authorWebsite || authorLink;
 
     // 3. Duplicate Check A: Live Catalog resources
-    const catalogMatch = resourceLinks.find((r) => normalizeUrl(r.url) === normalizedInputUrl);
+    const allLiveResources = await db
+      .select({ title: resource.title, url: resource.url })
+      .from(resource);
+    const catalogMatch = allLiveResources.find((r) => normalizeUrl(r.url) === normalizedInputUrl);
     if (catalogMatch) {
       return NextResponse.json(
         {
@@ -116,15 +116,14 @@ export async function POST(req: Request) {
             title: String(title).trim(),
             author: author ? String(author).trim() : null,
             authorGitHub: authorGitHub ? String(authorGitHub).trim() : null,
-            authorLink: resolvedAuthorWebsite ? String(resolvedAuthorWebsite).trim() : null,
             authorLinkedIn: authorLinkedIn ? String(authorLinkedIn).trim() : null,
             authorTwitter: authorTwitter ? String(authorTwitter).trim() : null,
-            authorWebsite: resolvedAuthorWebsite ? String(resolvedAuthorWebsite).trim() : null,
+            authorWebsite: authorWebsite ? String(authorWebsite).trim() : null,
             authorYouTube: authorYouTube ? String(authorYouTube).trim() : null,
             category: String(category).trim(),
             description: String(description).trim(),
             favicon: favicon ? String(favicon).trim() : null,
-            gitHubLink: gitHubLink ? String(gitHubLink).trim() : null,
+            github: github ? String(github).trim() : null,
             notes: notes ? String(notes).trim() : dbMatch.notes,
             ogImage: ogImage ? String(ogImage).trim() : null,
             pricing: pricing ? String(pricing).trim() : "Free",
@@ -154,15 +153,14 @@ export async function POST(req: Request) {
             title: String(title).trim(),
             author: author ? String(author).trim() : null,
             authorGitHub: authorGitHub ? String(authorGitHub).trim() : null,
-            authorLink: resolvedAuthorWebsite ? String(resolvedAuthorWebsite).trim() : null,
             authorLinkedIn: authorLinkedIn ? String(authorLinkedIn).trim() : null,
             authorTwitter: authorTwitter ? String(authorTwitter).trim() : null,
-            authorWebsite: resolvedAuthorWebsite ? String(resolvedAuthorWebsite).trim() : null,
+            authorWebsite: authorWebsite ? String(authorWebsite).trim() : null,
             authorYouTube: authorYouTube ? String(authorYouTube).trim() : null,
             category: String(category).trim(),
             description: String(description).trim(),
             favicon: favicon ? String(favicon).trim() : null,
-            gitHubLink: gitHubLink ? String(gitHubLink).trim() : null,
+            github: github ? String(github).trim() : null,
             notes: notes ? String(notes).trim() : dbMatch.notes,
             ogImage: ogImage ? String(ogImage).trim() : null,
             pricing: pricing ? String(pricing).trim() : "Free",
@@ -195,15 +193,14 @@ export async function POST(req: Request) {
       title: String(title).trim(),
       author: author ? String(author).trim() : null,
       authorGitHub: authorGitHub ? String(authorGitHub).trim() : null,
-      authorLink: resolvedAuthorWebsite ? String(resolvedAuthorWebsite).trim() : null,
       authorLinkedIn: authorLinkedIn ? String(authorLinkedIn).trim() : null,
       authorTwitter: authorTwitter ? String(authorTwitter).trim() : null,
-      authorWebsite: resolvedAuthorWebsite ? String(resolvedAuthorWebsite).trim() : null,
+      authorWebsite: authorWebsite ? String(authorWebsite).trim() : null,
       authorYouTube: authorYouTube ? String(authorYouTube).trim() : null,
       category: String(category).trim(),
       description: String(description).trim(),
       favicon: favicon ? String(favicon).trim() : null,
-      gitHubLink: gitHubLink ? String(gitHubLink).trim() : null,
+      github: github ? String(github).trim() : null,
       notes: notes ? String(notes).trim() : null,
       ogImage: ogImage ? String(ogImage).trim() : null,
       pricing: pricing ? String(pricing).trim() : "Free",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import {
@@ -30,12 +30,11 @@ interface AdminSubmissionsClientProps {
 }
 
 export function AdminSubmissionsClient({
-  initialCounts = { all: 0, approved: 0, pending: 0, rejected: 0 },
+  _initialCounts,
   initialSubmissions = [],
-}: AdminSubmissionsClientProps) {
+}: AdminSubmissionsClientProps & { _initialCounts?: SubmissionCounts }) {
   const [activeTab, setActiveTab] = useState<TabStatus>("pending");
-  const [submissions, setSubmissions] = useState<Submission[]>(initialSubmissions);
-  const [counts, setCounts] = useState<SubmissionCounts>(initialCounts);
+  const [allSubmissions, setAllSubmissions] = useState<Submission[]>(initialSubmissions);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -43,33 +42,57 @@ export function AdminSubmissionsClient({
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [actionLoadingId, setActionLoadingId] = useState<string | null>(null);
 
-  const isInitialMountRef = useRef(true);
-
-  const fetchSubmissions = useCallback(async (status: TabStatus) => {
+  // Background refresh handler (used if initial submissions were not preloaded)
+  const refreshSubmissions = useCallback(async () => {
     try {
       setIsLoading(true);
-      const res = await fetch(`/api/admin/submissions?status=${status}`);
+      const res = await fetch(`/api/admin/submissions?status=all`);
       const data = await res.json();
-      if (res.ok) {
-        setSubmissions(data.submissions || []);
-        if (data.counts) setCounts(data.counts);
+      if (res.ok && data.submissions) {
+        setAllSubmissions(data.submissions);
       }
     } catch (err) {
-      console.error("Failed to fetch submissions:", err);
+      console.error("Failed to refresh submissions:", err);
     } finally {
       setIsLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    if (isInitialMountRef.current) {
-      isInitialMountRef.current = false;
-      return;
+    if (initialSubmissions.length === 0) {
+      refreshSubmissions();
     }
-    fetchSubmissions(activeTab);
-  }, [activeTab, fetchSubmissions]);
+  }, [initialSubmissions.length, refreshSubmissions]);
 
+  // Compute counts dynamically from cached in-memory submissions
+  const counts: SubmissionCounts = {
+    all: allSubmissions.length,
+    approved: allSubmissions.filter((s) => s.status === "approved").length,
+    pending: allSubmissions.filter((s) => s.status === "pending").length,
+    rejected: allSubmissions.filter((s) => s.status === "rejected").length,
+  };
+
+  // Optimistic Status Update: Instant UI response + Toast + Background API persistence
   const handleUpdateStatus = async (id: string, newStatus: "approved" | "rejected" | "pending") => {
+    const target = allSubmissions.find((s) => s.id === id);
+    const previousSubmissions = allSubmissions;
+    const itemTitle = target?.title ? `"${target.title}"` : "Submission";
+
+    // 1. Optimistically update in-memory state
+    setAllSubmissions((prev) =>
+      prev.map((s) => (s.id === id ? { ...s, status: newStatus, updatedAt: new Date() } : s)),
+    );
+
+    // 2. Immediate feedback toast
+    if (newStatus === "approved") {
+      toast.success(`${itemTitle} approved successfully.`);
+    } else if (newStatus === "rejected") {
+      toast.warning(`${itemTitle} marked as rejected.`);
+    } else {
+      toast.info(`${itemTitle} moved back to pending queue.`);
+    }
+
+    // 3. Background API sync with rollback on failure
     try {
       setActionLoadingId(id);
       const res = await fetch("/api/admin/submissions", {
@@ -78,44 +101,87 @@ export function AdminSubmissionsClient({
         method: "PATCH",
       });
 
-      if (res.ok) {
-        await fetchSubmissions(activeTab);
+      if (!res.ok) {
+        throw new Error("Failed to update status on server");
       }
     } catch (err) {
       console.error("Failed to update status:", err);
+      setAllSubmissions(previousSubmissions);
+      toast.error(`Failed to update status for ${itemTitle}. Reverted changes.`);
     } finally {
       setActionLoadingId(null);
     }
   };
 
+  // Optimistic Delete: Instant UI removal + Toast + Background API call
   const handleConfirmDelete = async () => {
     if (!deletingSubmission) return;
-    const id = deletingSubmission.id;
+    const target = deletingSubmission;
+    const previousSubmissions = allSubmissions;
+    const itemTitle = `"${target.title}"`;
 
+    // 1. Optimistically remove from state
+    setAllSubmissions((prev) => prev.filter((s) => s.id !== target.id));
+    if (editingId === target.id) setEditingId(null);
+    setDeletingSubmission(null);
+
+    // 2. Immediate feedback toast
+    toast.success(`${itemTitle} permanently deleted.`);
+
+    // 3. Background API sync
     try {
-      setActionLoadingId(id);
-      const res = await fetch(`/api/admin/submissions?id=${id}`, { method: "DELETE" });
-      if (res.ok) {
-        toast.success("Submission permanently deleted.");
-        if (editingId === id) setEditingId(null);
-        await fetchSubmissions(activeTab);
-      } else {
-        toast.error("Failed to delete submission.");
+      setActionLoadingId(target.id);
+      const res = await fetch(`/api/admin/submissions?id=${target.id}`, { method: "DELETE" });
+      if (!res.ok) {
+        throw new Error("Failed to delete submission on server");
       }
     } catch (err) {
       console.error("Failed to delete submission:", err);
-      toast.error("Failed to delete submission.");
+      setAllSubmissions(previousSubmissions);
+      toast.error(`Failed to delete ${itemTitle}. Reverted changes.`);
     } finally {
       setActionLoadingId(null);
-      setDeletingSubmission(null);
     }
   };
 
+  // Optimistic Edit & Save: Instant UI update + Toast + Background API call
   const handleSaveEdit = async (
     id: string,
     formData: Partial<Submission>,
     overrideStatus?: "approved" | "rejected" | "pending",
   ) => {
+    const target = allSubmissions.find((s) => s.id === id);
+    const previousSubmissions = allSubmissions;
+    const itemTitle = `"${formData.title || target?.title || "Submission"}"`;
+
+    // 1. Optimistically update state
+    setAllSubmissions((prev) =>
+      prev.map((s) =>
+        s.id === id
+          ? {
+              ...s,
+              ...formData,
+              ...(overrideStatus ? { status: overrideStatus } : {}),
+              updatedAt: new Date(),
+            }
+          : s,
+      ),
+    );
+
+    setEditingId(null);
+
+    // 2. Immediate feedback toast
+    if (overrideStatus === "approved") {
+      toast.success(`${itemTitle} updated and approved.`);
+    } else if (overrideStatus === "rejected") {
+      toast.warning(`${itemTitle} updated and rejected.`);
+    } else if (overrideStatus === "pending") {
+      toast.info(`${itemTitle} updated and moved to pending.`);
+    } else {
+      toast.success(`Changes saved for ${itemTitle}.`);
+    }
+
+    // 3. Background API sync
     try {
       setActionLoadingId(id);
       const payload = {
@@ -130,12 +196,13 @@ export function AdminSubmissionsClient({
         method: "PATCH",
       });
 
-      if (res.ok) {
-        setEditingId(null);
-        await fetchSubmissions(activeTab);
+      if (!res.ok) {
+        throw new Error("Failed to save edits on server");
       }
     } catch (err) {
       console.error("Failed to save edits:", err);
+      setAllSubmissions(previousSubmissions);
+      toast.error(`Failed to save edits for ${itemTitle}. Reverted changes.`);
     } finally {
       setActionLoadingId(null);
     }
@@ -145,10 +212,13 @@ export function AdminSubmissionsClient({
     const code = generateTsCode(sub);
     navigator.clipboard.writeText(code);
     setCopiedId(sub.id);
+    toast.info(`TypeScript entry copied for "${sub.title}".`);
     setTimeout(() => setCopiedId(null), 2000);
   };
 
-  const filteredSubmissions = submissions.filter((sub) => {
+  // Instant client-side filtering by active tab and search query
+  const filteredSubmissions = allSubmissions.filter((sub) => {
+    if (activeTab !== "all" && sub.status !== activeTab) return false;
     if (!searchQuery.trim()) return true;
     const q = searchQuery.toLowerCase();
     return (

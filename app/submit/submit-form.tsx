@@ -11,35 +11,32 @@ import {
   CandidateOption,
   MediaAssetFields,
   ResourceCardPreview,
+  TagPicker,
 } from "@/components/submissions";
 import { Button } from "@/components/ui/button";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
-import { resourceCategories } from "@/lib/resource-data";
-
-const CATEGORY_OPTIONS = resourceCategories.map((cat) => ({
-  label: cat,
-  value: cat,
-}));
+import { useCategories } from "@/hooks/use-categories";
 
 export function SubmitForm() {
   const router = useRouter();
+  const { categoryOptions } = useCategories();
 
   // Form State
   const [url, setUrl] = useState("");
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState<string>(resourceCategories[0] || "Generators");
+  const [category, setCategory] = useState<string>("");
   const [author, setAuthor] = useState("");
   const [authorWebsite, setAuthorWebsite] = useState("");
   const [authorTwitter, setAuthorTwitter] = useState("");
   const [authorGitHub, setAuthorGitHub] = useState("");
   const [authorYouTube, setAuthorYouTube] = useState("");
   const [authorLinkedIn, setAuthorLinkedIn] = useState("");
-  const [gitHubLink, setGitHubLink] = useState("");
+  const [github, setGithub] = useState("");
   const [favicon, setFavicon] = useState("");
   const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
   const [ogImage, setOgImage] = useState("");
@@ -57,14 +54,14 @@ export function SubmitForm() {
     setTitle("");
     setSubtitle("");
     setDescription("");
-    setCategory(resourceCategories[0] || "Generators");
+    setCategory(categoryOptions[0]?.value || "");
     setAuthor("");
     setAuthorWebsite("");
     setAuthorTwitter("");
     setAuthorGitHub("");
     setAuthorYouTube("");
     setAuthorLinkedIn("");
-    setGitHubLink("");
+    setGithub("");
     setFavicon("");
     setFaviconOptions([]);
     setOgImage("");
@@ -95,6 +92,15 @@ export function SubmitForm() {
         setAuthorLinkedIn(value);
         break;
     }
+  };
+
+  const handleAuthorBatchChange = (updates: Partial<AuthorSocialValues>) => {
+    if (updates.author !== undefined) setAuthor(updates.author || "");
+    if (updates.authorWebsite !== undefined) setAuthorWebsite(updates.authorWebsite || "");
+    if (updates.authorTwitter !== undefined) setAuthorTwitter(updates.authorTwitter || "");
+    if (updates.authorGitHub !== undefined) setAuthorGitHub(updates.authorGitHub || "");
+    if (updates.authorYouTube !== undefined) setAuthorYouTube(updates.authorYouTube || "");
+    if (updates.authorLinkedIn !== undefined) setAuthorLinkedIn(updates.authorLinkedIn || "");
   };
 
   const handleAutoDetect = async () => {
@@ -132,8 +138,8 @@ export function SubmitForm() {
       if (data.authorGitHub) setAuthorGitHub(data.authorGitHub);
       if (data.authorYouTube) setAuthorYouTube(data.authorYouTube);
       if (data.authorLinkedIn) setAuthorLinkedIn(data.authorLinkedIn);
-      if (data.gitHubLink) setGitHubLink(data.gitHubLink);
-      if (data.category && resourceCategories.includes(data.category)) {
+      if (data.github) setGithub(data.github);
+      if (data.category) {
         setCategory(data.category);
       }
       toast.success("Metadata auto-filled from website!");
@@ -156,14 +162,11 @@ export function SubmitForm() {
     try {
       setIsSubmitting(true);
 
-      const resolvedAuthorLink = authorWebsite || authorTwitter || authorGitHub;
-
       const res = await fetch("/api/submissions", {
         body: JSON.stringify({
           title: title.trim(),
           author: author.trim() || undefined,
           authorGitHub: authorGitHub.trim() || undefined,
-          authorLink: resolvedAuthorLink.trim() || undefined,
           authorLinkedIn: authorLinkedIn.trim() || undefined,
           authorTwitter: authorTwitter.trim() || undefined,
           authorWebsite: authorWebsite.trim() || undefined,
@@ -171,7 +174,7 @@ export function SubmitForm() {
           category,
           description: description.trim(),
           favicon: favicon.trim() || undefined,
-          gitHubLink: gitHubLink.trim() || undefined,
+          github: github.trim() || undefined,
           notes: notes.trim() || undefined,
           ogImage: ogImage.trim() || undefined,
           subtitle: subtitle.trim() || undefined,
@@ -188,12 +191,12 @@ export function SubmitForm() {
       const data = await res.json();
 
       if (res.status === 409 || data.code === "ALREADY_EXISTS") {
-        const toolTitle = data.title || title.trim();
-        const targetUrl = toolTitle
-          ? `/resources?q=${encodeURIComponent(toolTitle)}`
+        const resourceTitle = data.title || title.trim();
+        const targetUrl = resourceTitle
+          ? `/resources?q=${encodeURIComponent(resourceTitle)}`
           : "/resources";
 
-        toast.info(`"${toolTitle}" is already in Syntax Stash!`, {
+        toast.info(`"${resourceTitle}" is already in Syntax Stash!`, {
           action: {
             label: "View Resource",
             onClick: () => router.push(targetUrl),
@@ -203,14 +206,14 @@ export function SubmitForm() {
       }
 
       if (!res.ok || data.error) {
-        throw new Error(data.error || "Failed to submit tool.");
+        throw new Error(data.error || "Failed to submit resource.");
       }
 
-      toast.success(data.message || "Tool submitted for review!");
+      toast.success(data.message || "Resource submitted for review!");
       resetForm();
     } catch (err: unknown) {
       const message =
-        err instanceof Error ? err.message : "Failed to submit tool. Please try again.";
+        err instanceof Error ? err.message : "Failed to submit resource. Please try again.";
       toast.error(message);
     } finally {
       setIsSubmitting(false);
@@ -234,11 +237,11 @@ export function SubmitForm() {
             aria-hidden="true"
           />
 
-          {/* Section 1: Tool URL with Auto-Fill */}
+          {/* Section 1: Resource URL with Auto-Fill */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                Tool URL <span className="text-destructive">*</span>
+                Resource URL <span className="text-destructive">*</span>
               </Label>
               <span className="text-muted-foreground text-[10px]">
                 Paste link to auto-detect details
@@ -303,9 +306,9 @@ export function SubmitForm() {
               </Label>
               <div className="h-9">
                 <SelectField
-                  value={category}
+                  value={category || (categoryOptions[0]?.value ?? "")}
                   onValueChange={setCategory}
-                  options={CATEGORY_OPTIONS}
+                  options={categoryOptions}
                   triggerClassName="h-9 font-mono text-xs"
                 />
               </div>
@@ -364,6 +367,7 @@ export function SubmitForm() {
               authorYouTube,
             }}
             onChange={handleAuthorFieldChange}
+            onBatchChange={handleAuthorBatchChange}
           />
 
           {/* Section 6: Additional Details & Tags */}
@@ -386,8 +390,8 @@ export function SubmitForm() {
                   <InputField
                     type="url"
                     placeholder="https://github.com/owner/repo"
-                    value={gitHubLink}
-                    onChange={(e) => setGitHubLink(e.target.value)}
+                    value={github}
+                    onChange={(e) => setGithub(e.target.value)}
                     containerClassName="h-9"
                     className="font-mono text-xs"
                   />
@@ -398,15 +402,12 @@ export function SubmitForm() {
                 <Label className="text-foreground font-mono text-xs font-bold uppercase">
                   Tags / Keywords (Optional)
                 </Label>
-                <div className="h-9">
-                  <InputField
-                    placeholder="e.g. color, gradient, generator"
-                    value={tags}
-                    onChange={(e) => setTags(e.target.value)}
-                    containerClassName="h-9"
-                    className="font-mono text-xs"
-                  />
-                </div>
+                <TagPicker
+                  value={tags}
+                  onChange={setTags}
+                  allowCustom={true}
+                  placeholder="Select tags or type custom..."
+                />
               </div>
             </div>
 
@@ -416,7 +417,7 @@ export function SubmitForm() {
               </Label>
               <div className="h-9">
                 <InputField
-                  placeholder="Why do you recommend this tool? Any special context?"
+                  placeholder="Why do you recommend this resource? Any special context?"
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   containerClassName="h-9"

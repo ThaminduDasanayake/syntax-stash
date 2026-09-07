@@ -1,5 +1,3 @@
-import { resourceCategories } from "@/lib/resource-data";
-
 export type TabStatus = "all" | "approved" | "pending" | "rejected";
 
 export interface SubmissionCounts {
@@ -8,11 +6,6 @@ export interface SubmissionCounts {
   pending: number;
   rejected: number;
 }
-
-export const CATEGORY_OPTIONS = resourceCategories.map((cat) => ({
-  label: cat,
-  value: cat,
-}));
 
 export const STATUS_OPTIONS = [
   { label: "Approved", value: "approved" },
@@ -105,3 +98,27 @@ export const TAB_CONFIG: Record<
 
 // eslint-disable-next-line perfectionist/sort-arrays
 export const TABS: TabStatus[] = ["pending", "approved", "rejected", "all"];
+
+export interface AdminResourceItem {
+  authorBlog?: string | null;
+  authorGithub?: string | null;
+  authorId?: string | null;
+  authorLinkedin?: string | null;
+  authorName?: string | null;
+  authorSlug?: string | null;
+  authorTwitter?: string | null;
+  authorWebsite?: string | null;
+  authorYoutube?: string | null;
+  category: string;
+  createdAt: string | Date;
+  description: string;
+  favicon?: string | null;
+  github?: string | null;
+  id: string;
+  ogImage?: string | null;
+  subtitle?: string | null;
+  tags?: string | null;
+  title: string;
+  updatedAt: string | Date;
+  url: string;
+}

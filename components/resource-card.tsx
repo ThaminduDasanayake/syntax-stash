@@ -6,8 +6,8 @@ import { AuthModal } from "@/components/auth-modal";
 import { ResourceCardView } from "@/components/resource-card-view";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { useSession } from "@/lib/auth-client";
-import { slugifyAuthor } from "@/lib/authors";
 import { getGitHubStars } from "@/lib/github";
+import { slugifyAuthor } from "@/lib/utils";
 import { ResourceCardProps } from "@/types";
 
 function ResourceCardComponent({
@@ -16,7 +16,7 @@ function ResourceCardComponent({
   onToggleBookmark: propOnToggleBookmark,
   resource,
 }: ResourceCardProps) {
-  const stars = getGitHubStars(resource.gitHubLink);
+  const stars = getGitHubStars(resource.github);
   const { data: session } = useSession();
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const { isBookmarked: hookIsBookmarked, toggleBookmark: hookToggleBookmark } = useBookmarks();

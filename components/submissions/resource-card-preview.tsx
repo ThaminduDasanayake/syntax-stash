@@ -27,11 +27,16 @@ export function ResourceCardPreview({
   description,
   favicon,
   subtitle,
-  tags,
   url,
 }: ResourceCardPreviewProps) {
   const [customTheme, setCustomTheme] = useState<Theme | null>(null);
+  const [prevCategory, setPrevCategory] = useState(category);
   const [isBookmarked, setIsBookmarked] = useState(false);
+
+  if (category !== prevCategory) {
+    setPrevCategory(category);
+    setCustomTheme(null);
+  }
 
   const activeTheme: Theme = customTheme ?? getCategoryTheme(category || "Generators");
 
@@ -97,8 +102,8 @@ export function ResourceCardPreview({
           favicon={favicon}
           isBookmarked={isBookmarked}
           onBookmarkClick={() => setIsBookmarked((prev) => !prev)}
+          showTags={false}
           subtitle={subtitle}
-          tags={tags}
           theme={activeTheme}
           title={title}
           url={url}

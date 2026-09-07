@@ -38,8 +38,6 @@ export function SelectField({
   triggerClassName,
   value,
 }: SelectFieldProps) {
-  const selectedLabel = options.find((opt) => opt.value === value)?.label;
-
   const selectComponent = (
     <Select
       value={value}
@@ -49,7 +47,7 @@ export function SelectField({
       disabled={disabled}
     >
       <SelectTrigger className={cn("w-full cursor-pointer", triggerClassName)}>
-        <SelectValue placeholder={placeholder}>{selectedLabel}</SelectValue>
+        <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent className="shadow-none">
         {options.map((opt) => (

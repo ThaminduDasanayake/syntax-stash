@@ -2,7 +2,7 @@
 
 import { ArrowSquareOutIcon, BookmarkSimpleIcon, StarIcon, TagIcon } from "@phosphor-icons/react";
 import Link from "next/link";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { CardIcon } from "@/components/card-icon";
 import { Button } from "@/components/ui/button";
@@ -21,6 +21,7 @@ export interface ResourceCardViewProps {
   isBookmarked?: boolean;
   onBookmarkClick?: (e: React.MouseEvent) => void;
   onCardClick?: () => void;
+  showTags?: boolean;
   stars?: number | null;
   subtitle?: string | null;
   tags?: string | string[] | null;
@@ -42,6 +43,7 @@ export function ResourceCardView({
   isBookmarked = false,
   onBookmarkClick,
   onCardClick,
+  showTags = false,
   stars = null,
   subtitle,
   tags,
@@ -65,6 +67,28 @@ export function ResourceCardView({
           .map((t) => t.trim())
           .filter(Boolean)
       : [];
+
+  // Parse authors supporting comma-separated strings or arrays
+  const authorList: string[] = useMemo(() => {
+    if (!author) return [];
+    if (Array.isArray(author)) {
+      return author.flatMap((a) =>
+        typeof a === "string"
+          ? a
+              .split(",")
+              .map((x) => x.trim())
+              .filter(Boolean)
+          : [],
+      );
+    }
+    if (typeof author === "string") {
+      return author
+        .split(",")
+        .map((x) => x.trim())
+        .filter(Boolean);
+    }
+    return [];
+  }, [author]);
 
   const handleCardClick = () => {
     onCardClick?.();
@@ -96,8 +120,8 @@ export function ResourceCardView({
               "Tool description preview will appear here. It explains the features, purpose, and utility for developers."}
           </p>
 
-          {/* Tags (if any) */}
-          {parsedTags.length > 0 && (
+          {/* Tags (if any & enabled) */}
+          {showTags && parsedTags.length > 0 && (
             <div className="mt-2 flex flex-wrap items-center gap-1">
               {parsedTags.slice(0, 3).map((t) => (
                 <span
@@ -118,54 +142,33 @@ export function ResourceCardView({
           <div className="card-footer">
             {/* Left: Author & GitHub Stars */}
             <div className="flex min-w-0 items-center gap-2">
-              {author ? (
+              {authorList.length > 0 ? (
                 <div className="card-author flex min-w-0 items-center truncate">
-                  {Array.isArray(author)
-                    ? author.map((authorName, index) => {
-                        const href =
-                          typeof authorHref === "function"
-                            ? authorHref(authorName)
-                            : typeof authorHref === "string"
-                              ? authorHref
-                              : null;
+                  {authorList.map((authorName, index) => {
+                    const href =
+                      typeof authorHref === "function"
+                        ? authorHref(authorName)
+                        : typeof authorHref === "string"
+                          ? authorHref
+                          : null;
 
-                        return (
-                          <span key={authorName} className="inline-flex items-center truncate">
-                            {index > 0 && <span className="mx-1 opacity-60">&</span>}
-                            {href ? (
-                              <Link
-                                href={href}
-                                className="truncate hover:underline"
-                                onClick={(e) => e.stopPropagation()}
-                              >
-                                {authorName}
-                              </Link>
-                            ) : (
-                              <span className="truncate">{authorName}</span>
-                            )}
-                          </span>
-                        );
-                      })
-                    : (() => {
-                        const href =
-                          typeof authorHref === "function"
-                            ? authorHref(author)
-                            : typeof authorHref === "string"
-                              ? authorHref
-                              : null;
-
-                        return href ? (
+                    return (
+                      <span key={authorName} className="inline-flex items-center truncate">
+                        {index > 0 && <span className="mx-1 opacity-60">&</span>}
+                        {href ? (
                           <Link
                             href={href}
                             className="truncate hover:underline"
                             onClick={(e) => e.stopPropagation()}
                           >
-                            {author}
+                            {authorName}
                           </Link>
                         ) : (
-                          <span className="truncate">{author}</span>
-                        );
-                      })()}
+                          <span className="truncate">{authorName}</span>
+                        )}
+                      </span>
+                    );
+                  })}
                 </div>
               ) : null}
 
@@ -204,7 +207,7 @@ export function ResourceCardView({
                     <BookmarkSimpleIcon
                       weight={isBookmarked ? "fill" : isBookmarkHovered ? "duotone" : "regular"}
                       className={cn(
-                        "size-5 transition-transform group-hover/bookmark:scale-110",
+                        "size-4.5 transition-transform group-hover/bookmark:scale-110",
                         isBookmarked ? "fill-current opacity-100" : "",
                       )}
                     />

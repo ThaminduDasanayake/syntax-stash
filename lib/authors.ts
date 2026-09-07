@@ -1,5 +1,11 @@
-import { resourceLinks } from "@/lib/resource-data";
-import { AUTHORS_REGISTRY } from "@/lib/resource-data/authors";
+import { asc, count, desc, eq } from "drizzle-orm";
+import { revalidateTag, unstable_cache } from "next/cache";
+import { cache } from "react";
+
+import { db } from "@/lib/db";
+import { author, resource } from "@/lib/db/schema";
+import { getAllResources } from "@/lib/resources";
+import { slugifyAuthor } from "@/lib/utils";
 import { Resource } from "@/types";
 
 export interface AuthorLinks {
@@ -12,12 +18,14 @@ export interface AuthorLinks {
 }
 
 export interface AuthorProfile {
+  id?: string;
   links?: AuthorLinks;
   name: string;
   slug?: string;
 }
 
 export interface AuthorWithResources {
+  id?: string;
   categories: string[];
   count: number;
   links?: AuthorLinks;
@@ -26,79 +34,54 @@ export interface AuthorWithResources {
   slug: string;
 }
 
-/**
- * Normalizes and converts an author name into a clean, URL-friendly slug.
- * Handles diacritics / accents (e.g. "falk schröter" -> "falk-schroter").
- */
-export function slugifyAuthor(name: string): string {
-  return name
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
+export { slugifyAuthor };
 
 /**
- * Retrieves all unique authors with their resources across the stash.
- * Merges with explicit author profiles from AUTHORS_REGISTRY when available.
- * Sorted by resource count descending.
+ * Derives authors in-memory from a resource list (fallback / offline mode).
  */
-export function getAllAuthors(): AuthorWithResources[] {
+export function getAuthorsFromResources(list: Resource[]): AuthorWithResources[] {
   const authorMap = new Map<string, { name: string; resources: Resource[] }>();
 
-  for (const resource of resourceLinks) {
-    if (!resource.author) continue;
+  for (const item of list) {
+    if (!item.author) continue;
 
-    const rawAuthors = Array.isArray(resource.author) ? resource.author : [resource.author];
+    const rawAuthors = Array.isArray(item.author) ? item.author : [item.author];
 
     for (const authorItem of rawAuthors) {
       if (!authorItem) continue;
-      const trimmedAuthor = authorItem.trim();
-      const slug = slugifyAuthor(trimmedAuthor);
+      const splitAuthors =
+        typeof authorItem === "string" && authorItem.includes(",")
+          ? authorItem
+              .split(",")
+              .map((a) => a.trim())
+              .filter(Boolean)
+          : [authorItem.trim()];
 
-      if (!authorMap.has(slug)) {
-        authorMap.set(slug, {
-          name: trimmedAuthor,
-          resources: [],
-        });
+      for (const trimmedAuthor of splitAuthors) {
+        if (!trimmedAuthor) continue;
+        const slug = slugifyAuthor(trimmedAuthor);
+
+        if (!authorMap.has(slug)) {
+          authorMap.set(slug, {
+            name: trimmedAuthor,
+            resources: [],
+          });
+        }
+
+        authorMap.get(slug)?.resources.push(item);
       }
-
-      authorMap.get(slug)?.resources.push(resource);
     }
   }
 
   const result: AuthorWithResources[] = [];
 
   for (const [slug, { name, resources }] of authorMap.entries()) {
-    const registryEntry = AUTHORS_REGISTRY[slug];
-    const displayName = registryEntry?.name || name;
-
-    // Discover website link from resource.authorLink if not in registry
-    let fallbackLinks: AuthorLinks | undefined = registryEntry?.links;
-    if (!fallbackLinks?.website) {
-      const resourceWithAuthorLink = resources.find((r) => r.authorLink);
-      if (resourceWithAuthorLink?.authorLink) {
-        const rawLink = Array.isArray(resourceWithAuthorLink.authorLink)
-          ? resourceWithAuthorLink.authorLink[0]
-          : resourceWithAuthorLink.authorLink;
-        if (rawLink) {
-          fallbackLinks = {
-            ...fallbackLinks,
-            website: rawLink,
-          };
-        }
-      }
-    }
-
     const categories = Array.from(new Set(resources.map((r) => r.category)));
 
     result.push({
       categories,
       count: resources.length,
-      links: fallbackLinks,
-      name: displayName,
+      name,
       resources,
       slug,
     });
@@ -108,10 +91,96 @@ export function getAllAuthors(): AuthorWithResources[] {
 }
 
 /**
- * Finds a specific author by their slug, along with their curated resources.
+ * Fetches all canonical authors directly from Neon Postgres with resource counts and social links.
+ * Cached at Next.js edge and revalidated on tag "authors".
  */
-export function getAuthorBySlug(slug: string): AuthorWithResources | null {
+export const getAllAuthors = cache(
+  unstable_cache(
+    async (customResources?: Resource[]): Promise<AuthorWithResources[]> => {
+      if (customResources && customResources.length > 0) {
+        return getAuthorsFromResources(customResources);
+      }
+
+      try {
+        const rows = await db
+          .select({
+            id: author.id,
+            blog: author.blog,
+            github: author.github,
+            linkedin: author.linkedin,
+            name: author.name,
+            resourceCount: count(resource.id),
+            slug: author.slug,
+            twitter: author.twitter,
+            website: author.website,
+            youtube: author.youtube,
+          })
+          .from(author)
+          .leftJoin(resource, eq(author.id, resource.authorId))
+          .groupBy(author.id)
+          .orderBy(desc(count(resource.id)), asc(author.name));
+
+        const allResources = await getAllResources();
+
+        return rows.map((r) => {
+          const authorResources = allResources.filter(
+            (res) =>
+              res.author === r.name ||
+              (Array.isArray(res.author) && res.author.includes(r.name)) ||
+              slugifyAuthor(typeof res.author === "string" ? res.author : "") === r.slug,
+          );
+
+          const categories = Array.from(new Set(authorResources.map((res) => res.category)));
+
+          return {
+            id: r.id,
+            categories,
+            count: Number(r.resourceCount) || authorResources.length || 0,
+            links: {
+              blog: r.blog || undefined,
+              github: r.github || undefined,
+              linkedin: r.linkedin || undefined,
+              twitter: r.twitter || undefined,
+              website: r.website || undefined,
+              youtube: r.youtube || undefined,
+            },
+            name: r.name,
+            resources: authorResources,
+            slug: r.slug,
+          };
+        });
+      } catch (error) {
+        console.error("Database query failed in getAllAuthors():", error);
+        return [];
+      }
+    },
+    ["all-authors"],
+    { revalidate: 3600, tags: ["authors"] },
+  ),
+);
+
+/**
+ * Finds a specific author by their slug, along with their curated resources and social links.
+ */
+export async function getAuthorBySlug(
+  slug: string,
+  customResources?: Resource[],
+): Promise<AuthorWithResources | null> {
   const normalizedSlug = slug.toLowerCase().trim();
-  const allAuthors = getAllAuthors();
-  return allAuthors.find((a) => a.slug === normalizedSlug) || null;
+  const allAuthors = await getAllAuthors(customResources);
+  return (
+    allAuthors.find((a) => a.slug === normalizedSlug || slugifyAuthor(a.name) === normalizedSlug) ||
+    null
+  );
+}
+
+/**
+ * Helper to revalidate the cached authors tag.
+ */
+export function invalidateAuthorCache() {
+  try {
+    revalidateTag("authors", "max");
+  } catch {
+    // Ignore outside request context
+  }
 }

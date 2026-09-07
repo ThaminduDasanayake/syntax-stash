@@ -17,8 +17,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function AuthorsPage() {
-  const authors = getAllAuthors();
+export default async function AuthorsPage() {
+  const authors = await getAllAuthors();
 
   return (
     <div className="lib-page">

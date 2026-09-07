@@ -21,23 +21,38 @@ import { CopyButton } from "@/components/ui/copy-button";
 import { DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { useSession } from "@/lib/auth-client";
-import { slugifyAuthor } from "@/lib/authors";
 import { formatStarCount, getGitHubStars } from "@/lib/github";
-import { resourceLinks } from "@/lib/resource-data";
-import { cn, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
+import { cn, getCategoryTheme, slugifyAuthor, THEME_CONFIG } from "@/lib/utils";
 import { Resource } from "@/types";
 
 export interface ResourceDialogProps {
+  allResources?: Resource[];
   onTagClickAction?: (tag: string) => void;
   resource: Resource;
 }
 
-export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogProps) {
+export function ResourceDialog({ allResources, onTagClickAction, resource }: ResourceDialogProps) {
   const [activeTool, setActiveTool] = useState(resource);
+  const [fetchedResources, setFetchedResources] = useState<Resource[]>([]);
+
+  useEffect(() => {
+    if (!allResources || allResources.length === 0) {
+      fetch("/api/resources")
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.resources && Array.isArray(data.resources)) {
+            setFetchedResources(data.resources);
+          }
+        })
+        .catch(() => {});
+    }
+  }, [allResources]);
+
+  const resourcePool = allResources && allResources.length > 0 ? allResources : fetchedResources;
   const [ogError, setOgError] = useState(false);
   const [useDirectOgFallback, setUseDirectOgFallback] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
-  const gitHubStars = getGitHubStars(activeTool.gitHubLink);
+  const gitHubStars = getGitHubStars(activeTool.github);
   const formattedStars = gitHubStars !== null ? formatStarCount(gitHubStars) : null;
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const dialogContentRef = useRef<HTMLDivElement>(null);
@@ -172,19 +187,19 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
   };
 
   const currentIndex = useMemo(() => {
-    return resourceLinks.findIndex((r) => r.title === activeTool.title);
-  }, [activeTool]);
+    return resourcePool.findIndex((r) => r.title === activeTool.title);
+  }, [activeTool, resourcePool]);
 
   const handleNext = () => {
-    if (currentIndex === -1) return;
-    const nextIndex = (currentIndex + 1) % resourceLinks.length;
-    handleSelectTool(resourceLinks[nextIndex]);
+    if (currentIndex === -1 || resourcePool.length === 0) return;
+    const nextIndex = (currentIndex + 1) % resourcePool.length;
+    handleSelectTool(resourcePool[nextIndex]);
   };
 
   const handlePrev = () => {
-    if (currentIndex === -1) return;
-    const prevIndex = (currentIndex - 1 + resourceLinks.length) % resourceLinks.length;
-    handleSelectTool(resourceLinks[prevIndex]);
+    if (currentIndex === -1 || resourcePool.length === 0) return;
+    const prevIndex = (currentIndex - 1 + resourcePool.length) % resourcePool.length;
+    handleSelectTool(resourcePool[prevIndex]);
   };
 
   const activeTheme = getCategoryTheme(activeTool.category);
@@ -197,16 +212,16 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
       ? activeTool.author
       : [activeTool.author];
 
-    return resourceLinks.filter((r) => {
+    return resourcePool.filter((r) => {
       if (r.title === activeTool.title || !r.author) return false;
       const rAuthors = Array.isArray(r.author) ? r.author : [r.author];
       return currentAuthors.some((ca) => rAuthors.includes(ca));
     });
-  }, [activeTool]);
+  }, [activeTool, resourcePool]);
 
   const relatedResources = useMemo(() => {
     const activeTags = activeTool.tags || [];
-    const scoredResources = resourceLinks
+    const scoredResources = resourcePool
       .filter(
         (r) => r.title !== activeTool.title && !authorResources.some((ar) => ar.title === r.title),
       )
@@ -226,7 +241,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
       .map((item) => item.resource);
 
     if (scoredResources.length === 0) {
-      return resourceLinks
+      return resourcePool
         .filter(
           (r) =>
             r.category === activeTool.category &&
@@ -237,7 +252,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
     }
 
     return scoredResources;
-  }, [activeTool, authorResources]);
+  }, [activeTool, authorResources, resourcePool]);
 
   const footerContent = (
     <>
@@ -252,7 +267,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
             Open resource <ArrowSquareOutIcon weight="bold" />
           </a>
         </Button>
-        {activeTool.gitHubLink && (
+        {activeTool.github && (
           <Button
             asChild
             variant="secondary"
@@ -260,7 +275,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
             className="group shrink-0 border-[1.5px] px-2.5 sm:px-4"
           >
             <a
-              href={activeTool.gitHubLink}
+              href={activeTool.github}
               target="_blank"
               rel="noopener noreferrer"
               className="text-mono-2xs sm:text-mono-xs inline-flex items-center gap-1.5"
@@ -450,30 +465,42 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
           {activeTool.subtitle && <p className="modal-subtitle">{activeTool.subtitle}</p>}
           <p className="modal-description">{activeTool.description}</p>
 
-          {activeTool.author && (
-            <p className="modal-author flex flex-wrap items-center gap-1">
-              {Array.isArray(activeTool.author) ? (
-                activeTool.author.map((authorName, index) => (
-                  <span key={authorName} className="inline-flex items-center">
-                    {index > 0 && <span className="mr-1 opacity-60">&</span>}
-                    <Link
-                      href={`/authors/${slugifyAuthor(authorName)}`}
-                      className="modal-author-link hover:underline"
-                    >
-                      {authorName}
-                    </Link>
-                  </span>
-                ))
-              ) : (
-                <Link
-                  href={`/authors/${slugifyAuthor(activeTool.author)}`}
-                  className="modal-author-link hover:underline"
-                >
-                  {activeTool.author}
-                </Link>
-              )}
-            </p>
-          )}
+          {activeTool.author &&
+            (() => {
+              const authorList: string[] = Array.isArray(activeTool.author)
+                ? activeTool.author.flatMap((a) =>
+                    typeof a === "string"
+                      ? a
+                          .split(",")
+                          .map((x) => x.trim())
+                          .filter(Boolean)
+                      : [],
+                  )
+                : typeof activeTool.author === "string"
+                  ? activeTool.author
+                      .split(",")
+                      .map((x) => x.trim())
+                      .filter(Boolean)
+                  : [];
+
+              if (authorList.length === 0) return null;
+
+              return (
+                <p className="modal-author flex flex-wrap items-center gap-1">
+                  {authorList.map((authorName, index) => (
+                    <span key={authorName} className="inline-flex items-center">
+                      {index > 0 && <span className="mr-1 opacity-60">&</span>}
+                      <Link
+                        href={`/authors/${slugifyAuthor(authorName)}`}
+                        className="modal-author-link hover:underline"
+                      >
+                        {authorName}
+                      </Link>
+                    </span>
+                  ))}
+                </p>
+              );
+            })()}
         </div>
 
         {/* Right Side */}
@@ -537,7 +564,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
               </div>
             </div>
 
-            {activeTool.gitHubLink && (
+            {activeTool.github && (
               <div className="modal-link">
                 <div className="flex items-center justify-between">
                   <span className={cn("modal-heading", activeThemeStyles.label)}>GitHub</span>
@@ -553,7 +580,7 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
                 </div>
                 <div className="flex items-center justify-between gap-2">
                   <a
-                    href={activeTool.gitHubLink}
+                    href={activeTool.github}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 font-mono text-xs break-all underline decoration-current/40 underline-offset-2 transition-all duration-150 ease-out hover:decoration-current"
@@ -565,10 +592,10 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
                       height={16}
                       className="size-4"
                     />
-                    {activeTool.gitHubLink}
+                    {activeTool.github}
                   </a>
                   <CopyButton
-                    textToCopy={activeTool.gitHubLink}
+                    textToCopy={activeTool.github}
                     iconOnly
                     size="icon-xs"
                     variant="ghost"
@@ -582,23 +609,25 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
             {activeTool.tags && activeTool.tags.length > 0 && (
               <div className="modal-sections">
                 <div className="flex flex-wrap gap-1.5">
-                  {activeTool.tags.map((tag) => (
-                    <Button
-                      key={tag}
-                      variant="outline"
-                      size="xs"
-                      onClick={() => onTagClickAction?.(tag)}
-                      className={cn(
-                        "text-mono-xs h-6 rounded-none border-[1.5px] px-2 py-0 font-bold transition-all duration-150 hover:-translate-y-0.5 hover:shadow-xs",
-                        activeThemeStyles.label,
-                        activeThemeStyles.border,
-                        activeThemeStyles.soft,
-                      )}
-                      title={`Filter by #${tag}`}
-                    >
-                      #{tag}
-                    </Button>
-                  ))}
+                  {[...activeTool.tags]
+                    .sort((a, b) => a.localeCompare(b))
+                    .map((tag) => (
+                      <Button
+                        key={tag}
+                        variant="outline"
+                        size="xs"
+                        onClick={() => onTagClickAction?.(tag)}
+                        className={cn(
+                          "text-mono-xs h-6 rounded-none border-[1.5px] px-2 py-0 font-bold transition-all duration-150 hover:-translate-y-0.5 hover:shadow-xs",
+                          activeThemeStyles.label,
+                          activeThemeStyles.border,
+                          activeThemeStyles.soft,
+                        )}
+                        title={`Filter by #${tag}`}
+                      >
+                        #{tag}
+                      </Button>
+                    ))}
                 </div>
               </div>
             )}

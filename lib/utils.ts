@@ -3,8 +3,6 @@ import { twMerge } from "tailwind-merge";
 
 import { CATEGORIES as TOOL_CATEGORIES } from "@/lib/tools-data";
 
-import { CATEGORIES as RESOURCE_CATEGORIES } from "./resource-data/categories";
-
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -14,6 +12,32 @@ export function slugify(str: string): string {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
+}
+
+/**
+ * Normalizes and converts an author name into a clean, URL-friendly slug.
+ * Handles diacritics / accents (e.g. "falk schröter" -> "falk-schroter").
+ */
+export function slugifyAuthor(name: string): string {
+  return name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+/**
+ * Normalizes a tag string into a clean, lowercased, kebab-cased tag.
+ */
+export function normalizeTag(rawTag: string): string {
+  return rawTag
+    .toLowerCase()
+    .trim()
+    .replace(/^#+/, "")
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-_]/g, "");
 }
 
 export function getResourceId(
@@ -102,25 +126,32 @@ export const THEME_CONFIG: Record<
   },
 };
 
-const RESOURCE_VALUES: string[] = Object.values(RESOURCE_CATEGORIES);
-const TOOL_VALUES: string[] = Object.values(TOOL_CATEGORIES);
+const TOOL_ENTRIES = Object.entries(TOOL_CATEGORIES);
 
 export function getCategoryTheme(
   category: string,
   itemType: "resource" | "tool" = "resource",
 ): Theme {
+  if (!category) return THEMES[0];
+  const normalized = category.trim().toLowerCase();
+  const slug = slugify(normalized);
+
   if (itemType === "tool") {
-    const toolIdx = TOOL_VALUES.indexOf(category);
+    const toolIdx = TOOL_ENTRIES.findIndex(
+      ([key, val]) =>
+        key.toLowerCase() === slug || val.toLowerCase() === normalized || slugify(val) === slug,
+    );
     if (toolIdx !== -1) return THEMES[toolIdx % THEMES.length];
   }
 
-  const resourceIdx = RESOURCE_VALUES.indexOf(category);
-  if (resourceIdx !== -1) return THEMES[resourceIdx % THEMES.length];
-
-  const fallbackToolIdx = TOOL_VALUES.indexOf(category);
-  if (fallbackToolIdx !== -1) return THEMES[fallbackToolIdx % THEMES.length];
-
-  return THEMES[0];
+  // Consistent deterministic hash for any category name
+  let hash = 0;
+  for (let i = 0; i < normalized.length; i++) {
+    hash = (hash << 5) - hash + normalized.charCodeAt(i);
+    hash |= 0;
+  }
+  const index = Math.abs(hash) % THEMES.length;
+  return THEMES[index];
 }
 
 export function getCategoryColor(
