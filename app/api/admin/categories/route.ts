@@ -5,7 +5,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { isAdmin } from "@/lib/admin";
 import { auth } from "@/lib/auth";
-import { CATEGORY_DEFINITIONS } from "@/lib/categories";
 import { db } from "@/lib/db";
 import { category, resource } from "@/lib/db/schema";
 import { slugify } from "@/lib/utils";
@@ -47,12 +46,8 @@ export async function GET() {
 
     if (!rows || rows.length === 0) {
       return NextResponse.json({
-        categories: CATEGORY_DEFINITIONS.map((def) => ({
-          ...def,
-          id: def.slug,
-          toolCount: 0,
-        })),
-        total: CATEGORY_DEFINITIONS.length,
+        categories: [],
+        total: 0,
       });
     }
 
@@ -114,6 +109,7 @@ export async function POST(req: Request) {
       updatedAt: new Date(),
     });
 
+    revalidateTag("categories", "max");
     revalidateTag("resources", "max");
     revalidatePath("/resources");
     revalidatePath("/admin/categories");
@@ -173,6 +169,7 @@ export async function PATCH(req: Request) {
 
     await db.update(category).set(updates).where(eq(category.id, id));
 
+    revalidateTag("categories", "max");
     revalidateTag("resources", "max");
     revalidatePath("/resources");
     revalidatePath("/admin/categories");
@@ -216,6 +213,7 @@ export async function DELETE(request: NextRequest) {
 
     await db.delete(category).where(eq(category.id, id));
 
+    revalidateTag("categories", "max");
     revalidateTag("resources", "max");
     revalidatePath("/resources");
     revalidatePath("/admin/categories");

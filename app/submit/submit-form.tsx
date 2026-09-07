@@ -18,22 +18,18 @@ import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
-import { resourceCategories } from "@/lib/categories";
-
-const CATEGORY_OPTIONS = resourceCategories.map((cat) => ({
-  label: cat,
-  value: cat,
-}));
+import { useCategories } from "@/hooks/use-categories";
 
 export function SubmitForm() {
   const router = useRouter();
+  const { categoryOptions } = useCategories();
 
   // Form State
   const [url, setUrl] = useState("");
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState<string>(resourceCategories[0] || "Generators");
+  const [category, setCategory] = useState<string>("");
   const [author, setAuthor] = useState("");
   const [authorWebsite, setAuthorWebsite] = useState("");
   const [authorTwitter, setAuthorTwitter] = useState("");
@@ -58,7 +54,7 @@ export function SubmitForm() {
     setTitle("");
     setSubtitle("");
     setDescription("");
-    setCategory(resourceCategories[0] || "Generators");
+    setCategory(categoryOptions[0]?.value || "");
     setAuthor("");
     setAuthorWebsite("");
     setAuthorTwitter("");
@@ -143,7 +139,7 @@ export function SubmitForm() {
       if (data.authorYouTube) setAuthorYouTube(data.authorYouTube);
       if (data.authorLinkedIn) setAuthorLinkedIn(data.authorLinkedIn);
       if (data.github) setGithub(data.github);
-      if (data.category && resourceCategories.includes(data.category)) {
+      if (data.category) {
         setCategory(data.category);
       }
       toast.success("Metadata auto-filled from website!");
@@ -310,9 +306,9 @@ export function SubmitForm() {
               </Label>
               <div className="h-9">
                 <SelectField
-                  value={category}
+                  value={category || (categoryOptions[0]?.value ?? "")}
                   onValueChange={setCategory}
-                  options={CATEGORY_OPTIONS}
+                  options={categoryOptions}
                   triggerClassName="h-9 font-mono text-xs"
                 />
               </div>

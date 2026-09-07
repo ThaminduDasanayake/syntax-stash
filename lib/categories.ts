@@ -1,194 +1,99 @@
-export const CATEGORIES = {
-  ai: "AI & Machine Learning",
-  animation: "Animation & Motion",
-  backend: "Backend & Infrastructure",
-  colors: "Color & Gradients",
-  data: "Data & APIs",
-  design: "Design & UX",
-  dev: "Developer Tools & Utilities",
-  docs: "Documentation & Markdown",
-  education: "Education & Community",
-  frontend: "Frontend & UI",
-  icons: "Icons & Illustrations",
-  inspiration: "Inspiration & Galleries",
-  media: "Media & Assets",
-  mockups: "Mockups & Presentations",
-  typography: "Typography",
-  ui: "UI Components & Libraries",
-} as const;
+import { asc, count, eq } from "drizzle-orm";
+import { revalidateTag, unstable_cache } from "next/cache";
+import { cache } from "react";
 
-export type CategoryKey = keyof typeof CATEGORIES;
-export type CategoryValue = (typeof CATEGORIES)[keyof typeof CATEGORIES];
-export const resourceCategories: CategoryValue[] = Object.values(CATEGORIES);
+import { db } from "@/lib/db";
+import { category, resource } from "@/lib/db/schema";
+import { slugify } from "@/lib/utils";
 
-export interface CategoryDefinition {
-  description: string;
-  icon: string;
+export interface CategoryItem {
+  description: string | null;
+  icon: string | null;
+  id: string;
   name: string;
   order: number;
+  resourceCount?: number;
   slug: string;
-  themeColor: string;
-}
-
-export const CATEGORY_DEFINITIONS: CategoryDefinition[] = [
-  {
-    description: "Color palette generators, color picker utilities, gradient creators, contrast checkers, and color systems.",
-    icon: "Palette",
-    name: CATEGORIES.colors,
-    order: 4,
-    slug: "colors",
-    themeColor: "pink",
-  },
-  {
-    description: "CSS frameworks, frontend build tools, React hooks, state management, and modern DOM helpers.",
-    icon: "Code",
-    name: CATEGORIES.frontend,
-    order: 10,
-    slug: "frontend",
-    themeColor: "teal",
-  },
-  {
-    description: "Curated AI models, machine learning APIs, LLM tools, prompts, and intelligent assistants for developers.",
-    icon: "Sparkles",
-    name: CATEGORIES.ai,
-    order: 1,
-    slug: "ai",
-    themeColor: "purple",
-  },
-  {
-    description: "Databases, serverless infrastructure, backend-as-a-service, edge runtimes, and hosting platforms.",
-    icon: "Server",
-    name: CATEGORIES.backend,
-    order: 3,
-    slug: "backend",
-    themeColor: "blue",
-  },
-  {
-    description: "Design showcases, landing page galleries, awards sites, UI animations, and web design inspiration.",
-    icon: "Compass",
-    name: CATEGORIES.inspiration,
-    order: 12,
-    slug: "inspiration",
-    themeColor: "yellow",
-  },
-  {
-    description: "Design systems, UI kits, design guidelines, prototyping platforms, accessibility tools, and UX heuristics.",
-    icon: "Layout",
-    name: CATEGORIES.design,
-    order: 6,
-    slug: "design",
-    themeColor: "rose",
-  },
-  {
-    description: "Device frame mockups, 3D presentation tools, app screenshot generators, and portfolio showcases.",
-    icon: "Monitor",
-    name: CATEGORIES.mockups,
-    order: 14,
-    slug: "mockups",
-    themeColor: "violet",
-  },
-  {
-    description: "Documentation generators, markdown editors, changelogs, knowledge base builders, and API doc tools.",
-    icon: "BookOpen",
-    name: CATEGORIES.docs,
-    order: 8,
-    slug: "docs",
-    themeColor: "emerald",
-  },
-  {
-    description: "Free stock photos, vector graphics, royalty-free audio, video background assets, and media optimizers.",
-    icon: "Image",
-    name: CATEGORIES.media,
-    order: 13,
-    slug: "media",
-    themeColor: "fuchsia",
-  },
-  {
-    description: "Free web fonts, typography scale calculators, font pair finders, variable fonts, and glyph inspectors.",
-    icon: "Type",
-    name: CATEGORIES.typography,
-    order: 15,
-    slug: "typography",
-    themeColor: "stone",
-  },
-  {
-    description: "Interactive tutorials, interactive coding platforms, web dev cheat sheets, courses, and tech communities.",
-    icon: "GraduationCap",
-    name: CATEGORIES.education,
-    order: 9,
-    slug: "education",
-    themeColor: "green",
-  },
-  {
-    description: "Pre-built component libraries, UI kits, headless primitives, accessible widgets, and web components.",
-    icon: "Layers",
-    name: CATEGORIES.ui,
-    order: 16,
-    slug: "ui",
-    themeColor: "sky",
-  },
-  {
-    description: "Productivity utilities, CLI tools, regex testers, JSON tools, linters, debuggers, and browser extensions.",
-    icon: "Wrench",
-    name: CATEGORIES.dev,
-    order: 7,
-    slug: "dev",
-    themeColor: "amber",
-  },
-  {
-    description: "Public APIs, mock data generators, GraphQL tools, web scrapers, data formatters, and datasets.",
-    icon: "Database",
-    name: CATEGORIES.data,
-    order: 5,
-    slug: "data",
-    themeColor: "cyan",
-  },
-  {
-    description: "SVG icon packs, custom icon generators, vector illustrations, 3D assets, and emoji libraries.",
-    icon: "Smile",
-    name: CATEGORIES.icons,
-    order: 11,
-    slug: "icons",
-    themeColor: "orange",
-  },
-  {
-    description: "Web animation libraries, physics engines, micro-interactions, scroll animations, and canvas visualizers.",
-    icon: "Activity",
-    name: CATEGORIES.animation,
-    order: 2,
-    slug: "animation",
-    themeColor: "indigo",
-  },
-];
-
-/**
- * Maps a category name or slug to its canonical category name.
- */
-export function resolveCategoryName(input: string): string | null {
-  if (!input) return null;
-  const clean = input.trim().toLowerCase();
-
-  for (const def of CATEGORY_DEFINITIONS) {
-    if (def.slug.toLowerCase() === clean || def.name.toLowerCase() === clean) {
-      return def.name;
-    }
-  }
-
-  return null;
+  themeColor: string | null;
 }
 
 /**
- * Maps a category name or slug to its URL-friendly slug.
+ * Fetches all active categories directly from the Neon Postgres category table.
+ * Cached at Next.js edge and revalidated on tag "categories".
  */
-export function resolveCategorySlug(input: string): string | null {
-  if (!input) return null;
-  const clean = input.trim().toLowerCase();
+export const getAllCategories = cache(
+  unstable_cache(
+    async (): Promise<CategoryItem[]> => {
+      try {
+        const rows = await db
+          .select({
+            id: category.id,
+            description: category.description,
+            icon: category.icon,
+            name: category.name,
+            order: category.order,
+            resourceCount: count(resource.id),
+            slug: category.slug,
+            themeColor: category.themeColor,
+          })
+          .from(category)
+          .leftJoin(resource, eq(category.id, resource.categoryId))
+          .groupBy(category.id)
+          .orderBy(asc(category.order), asc(category.name));
 
-  for (const def of CATEGORY_DEFINITIONS) {
-    if (def.slug.toLowerCase() === clean || def.name.toLowerCase() === clean) {
-      return def.slug;
-    }
+        return rows.map((r) => ({
+          id: r.id,
+          description: r.description,
+          icon: r.icon,
+          name: r.name,
+          order: r.order,
+          resourceCount: Number(r.resourceCount) || 0,
+          slug: r.slug,
+          themeColor: r.themeColor,
+        }));
+      } catch (error) {
+        console.error("Database query failed in getAllCategories():", error);
+        return [];
+      }
+    },
+    ["all-categories"],
+    { revalidate: 3600, tags: ["categories"] },
+  ),
+);
+
+/**
+ * Retrieves a category by either its slug or formatted name.
+ */
+export async function getCategoryBySlug(slug: string): Promise<CategoryItem | null> {
+  const categories = await getAllCategories();
+  const clean = slug.trim().toLowerCase();
+  return (
+    categories.find(
+      (c) => c.slug.toLowerCase() === clean || slugify(c.name).toLowerCase() === clean,
+    ) || null
+  );
+}
+
+/**
+ * Retrieves a category by name.
+ */
+export async function getCategoryByName(name: string): Promise<CategoryItem | null> {
+  const categories = await getAllCategories();
+  const clean = name.trim().toLowerCase();
+  return (
+    categories.find(
+      (c) => c.name.toLowerCase() === clean || c.slug.toLowerCase() === clean,
+    ) || null
+  );
+}
+
+/**
+ * Helper to revalidate the cached categories tag.
+ */
+export function invalidateCategoryCache() {
+  try {
+    revalidateTag("categories", "max");
+  } catch {
+    // Ignore outside request context
   }
-
-  return null;
 }

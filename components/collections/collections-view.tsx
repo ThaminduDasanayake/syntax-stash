@@ -38,7 +38,6 @@ import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useCollections, UserCollection } from "@/hooks/use-collections";
-import { resourceCategories } from "@/lib/categories";
 import { Resource } from "@/types";
 
 export function CollectionsView() {
@@ -109,8 +108,7 @@ export function CollectionsView() {
   };
 
   const collectionCategories = useMemo(() => {
-    const cats = Array.from(new Set(collectionItems.map((r) => r.category)));
-    return cats.length > 0 ? cats : resourceCategories;
+    return Array.from(new Set(collectionItems.map((r) => r.category)));
   }, [collectionItems]);
 
   if (activeCollection) {

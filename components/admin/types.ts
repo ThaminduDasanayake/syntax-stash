@@ -1,5 +1,3 @@
-import { resourceCategories } from "@/lib/categories";
-
 export type TabStatus = "all" | "approved" | "pending" | "rejected";
 
 export interface SubmissionCounts {
@@ -8,11 +6,6 @@ export interface SubmissionCounts {
   pending: number;
   rejected: number;
 }
-
-export const CATEGORY_OPTIONS = resourceCategories.map((cat) => ({
-  label: cat,
-  value: cat,
-}));
 
 export const STATUS_OPTIONS = [
   { label: "Approved", value: "approved" },

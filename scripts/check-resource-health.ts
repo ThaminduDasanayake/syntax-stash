@@ -3,7 +3,7 @@ import path from "node:path";
 
 import * as cheerio from "cheerio";
 
-import { CATEGORIES } from "@/lib/categories";
+import { CategoryItem, getAllCategories } from "@/lib/categories";
 import { parseGitHubRepo } from "@/lib/github";
 import { getAllResources } from "@/lib/resources";
 import { Resource } from "@/types";
@@ -54,19 +54,18 @@ function normalizeText(text: string): string {
     .trim();
 }
 
-function resolveCategory(input: string): { name: string; slug: string } | null {
+async function resolveCategory(input: string): Promise<{ name: string; slug: string } | null> {
   const norm = input.trim().toLowerCase();
+  const categories = await getAllCategories();
 
-  // 1. Direct key match (e.g. "ai", "ui", "dev", "docs")
-  if (norm in CATEGORIES) {
-    const key = norm as keyof typeof CATEGORIES;
-    return { name: CATEGORIES[key], slug: key };
-  }
-
-  // 2. Full or partial category value match (e.g. "ai & machine learning", "machine learning")
-  for (const [key, val] of Object.entries(CATEGORIES)) {
-    if (val.toLowerCase() === norm || val.toLowerCase().includes(norm) || norm.includes(key)) {
-      return { name: val, slug: key };
+  for (const cat of categories) {
+    if (
+      cat.slug.toLowerCase() === norm ||
+      cat.name.toLowerCase() === norm ||
+      cat.name.toLowerCase().includes(norm) ||
+      norm.includes(cat.slug.toLowerCase())
+    ) {
+      return { name: cat.name, slug: cat.slug };
     }
   }
 
@@ -690,7 +689,7 @@ async function main() {
       if (a.startsWith("-")) continue;
       const prev = args[i - 1];
       if (prev === "--sample" || prev === "-s" || prev === "--category" || prev === "-c") continue;
-      const resolved = resolveCategory(a);
+      const resolved = await resolveCategory(a);
       if (resolved) {
         categoryInput = a;
         break;
@@ -706,9 +705,10 @@ async function main() {
   let resolvedCategory: { name: string; slug: string } | null = null;
 
   if (categoryInput) {
-    resolvedCategory = resolveCategory(categoryInput);
+    resolvedCategory = await resolveCategory(categoryInput);
     if (!resolvedCategory) {
-      const validCategories = Object.keys(CATEGORIES).join(", ");
+      const categories = await getAllCategories();
+      const validCategories = categories.map((c: CategoryItem) => c.slug).join(", ");
       console.error(
         `❌ Unknown category: "${categoryInput}".\nAvailable categories: ${validCategories}`,
       );

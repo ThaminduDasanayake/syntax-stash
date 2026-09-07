@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { FilterSection } from "@/components/filter-section";
-import { resourceCategories } from "@/lib/categories";
 import { getAllResources } from "@/lib/resources";
 import { getAllTags, normalizeTag } from "@/lib/tags";
 
@@ -80,7 +79,7 @@ export default async function TagPage({ params }: { params: Promise<Params> }) {
 
       <FilterSection
         items={matchingResources}
-        categories={activeCategories.length > 0 ? activeCategories : resourceCategories}
+        categories={activeCategories}
         searchPlaceholder={`Search within #${tagName}...`}
         itemLabel={`#${tagName} Tools`}
       />

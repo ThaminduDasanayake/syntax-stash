@@ -1,7 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-import { CATEGORIES as RESOURCE_CATEGORIES } from "@/lib/categories";
 import { CATEGORIES as TOOL_CATEGORIES } from "@/lib/tools-data";
 
 export function cn(...inputs: ClassValue[]) {
@@ -101,7 +100,6 @@ export const THEME_CONFIG: Record<
   },
 };
 
-const RESOURCE_ENTRIES = Object.entries(RESOURCE_CATEGORIES);
 const TOOL_ENTRIES = Object.entries(TOOL_CATEGORIES);
 
 export function getCategoryTheme(
@@ -122,23 +120,14 @@ export function getCategoryTheme(
     if (toolIdx !== -1) return THEMES[toolIdx % THEMES.length];
   }
 
-  const resourceIdx = RESOURCE_ENTRIES.findIndex(
-    ([key, val]) =>
-      key.toLowerCase() === slug ||
-      val.toLowerCase() === normalized ||
-      slugify(val) === slug,
-  );
-  if (resourceIdx !== -1) return THEMES[resourceIdx % THEMES.length];
-
-  const fallbackToolIdx = TOOL_ENTRIES.findIndex(
-    ([key, val]) =>
-      key.toLowerCase() === slug ||
-      val.toLowerCase() === normalized ||
-      slugify(val) === slug,
-  );
-  if (fallbackToolIdx !== -1) return THEMES[fallbackToolIdx % THEMES.length];
-
-  return THEMES[0];
+  // Consistent deterministic hash for any category name
+  let hash = 0;
+  for (let i = 0; i < normalized.length; i++) {
+    hash = (hash << 5) - hash + normalized.charCodeAt(i);
+    hash |= 0;
+  }
+  const index = Math.abs(hash) % THEMES.length;
+  return THEMES[index];
 }
 
 export function getCategoryColor(

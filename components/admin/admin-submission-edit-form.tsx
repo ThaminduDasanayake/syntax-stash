@@ -24,11 +24,11 @@ import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
-import { resourceCategories } from "@/lib/categories";
+import { useCategories } from "@/hooks/use-categories";
 import { Submission } from "@/lib/db/schema";
 import { cn } from "@/lib/utils";
 
-import { CATEGORY_OPTIONS, STATUS_CONFIG, STATUS_OPTIONS, SubmissionStatus } from "./types";
+import { STATUS_CONFIG, STATUS_OPTIONS, SubmissionStatus } from "./types";
 
 interface AdminSubmissionEditFormProps {
   isWorking: boolean;
@@ -49,6 +49,7 @@ export function AdminSubmissionEditForm({
   onSave,
   submission: sub,
 }: AdminSubmissionEditFormProps) {
+  const { categoryOptions } = useCategories();
   const [editForm, setEditForm] = useState<Partial<Submission>>({
     title: sub.title,
     adminNotes: sub.adminNotes || "",
@@ -115,11 +116,7 @@ export function AdminSubmissionEditForm({
           authorTwitter: prev.authorTwitter || data.authorTwitter,
           authorWebsite: prev.authorWebsite || data.authorWebsite,
           authorYouTube: prev.authorYouTube || data.authorYouTube,
-          category:
-            prev.category ||
-            (data.category && resourceCategories.includes(data.category)
-              ? data.category
-              : prev.category),
+          category: prev.category || data.category || sub.category,
           description: prev.description || data.description,
           favicon: data.favicon || prev.favicon,
           github: prev.github || data.github,
@@ -246,14 +243,14 @@ export function AdminSubmissionEditForm({
               <Label className="text-foreground font-mono text-xs font-bold uppercase">
                 Category <span className="text-destructive">*</span>
               </Label>
-              <div className="h-9">
-                <SelectField
-                  value={editForm.category || sub.category}
-                  onValueChange={(val) => setEditForm({ ...editForm, category: val })}
-                  options={CATEGORY_OPTIONS}
-                  triggerClassName="h-9 font-mono text-xs"
-                />
-              </div>
+                <div className="h-9">
+                  <SelectField
+                    value={editForm.category || sub.category}
+                    onValueChange={(val) => setEditForm({ ...editForm, category: val })}
+                    options={categoryOptions}
+                    triggerClassName="h-9 font-mono text-xs"
+                  />
+                </div>
             </div>
           </div>
 

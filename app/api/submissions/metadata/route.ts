@@ -1,7 +1,7 @@
 import * as cheerio from "cheerio";
 import { NextRequest, NextResponse } from "next/server";
 
-import { CATEGORIES, CategoryValue, resourceCategories } from "@/lib/categories";
+import { CategoryItem, getAllCategories } from "@/lib/categories";
 
 const BLOCKED_HOSTS = new Set(["0.0.0.0", "127.0.0.1", "::1", "localhost"]);
 
@@ -26,17 +26,22 @@ function resolveUrl(relativeOrAbsolute: string, baseUrl: string): string {
   }
 }
 
-function suggestCategory(text: string): CategoryValue {
+function findCategoryByKeywords(categories: CategoryItem[], slugMatch: string, nameFallback: string): string {
+  const match = categories.find((c) => c.slug.toLowerCase() === slugMatch.toLowerCase() || c.name.toLowerCase().includes(slugMatch.toLowerCase()));
+  return match?.name || nameFallback;
+}
+
+function suggestCategory(text: string, categories: CategoryItem[]): string {
   const lower = text.toLowerCase();
 
-  // 1. Direct category name match
-  for (const cat of resourceCategories) {
-    if (lower.includes(cat.toLowerCase())) {
-      return cat;
+  // 1. Direct category name or slug match
+  for (const cat of categories) {
+    if (lower.includes(cat.name.toLowerCase()) || (cat.slug && lower.includes(cat.slug.toLowerCase()))) {
+      return cat.name;
     }
   }
 
-  // 2. Keyword-based heuristics mapped directly to official categories
+  // 2. Keyword-based heuristics mapped dynamically to database categories
   if (
     lower.includes("color") ||
     lower.includes("palette") ||
@@ -45,7 +50,7 @@ function suggestCategory(text: string): CategoryValue {
     lower.includes("hex") ||
     lower.includes("hsl")
   ) {
-    return CATEGORIES.colors;
+    return findCategoryByKeywords(categories, "colors", "Color & Gradients");
   }
 
   if (
@@ -55,7 +60,7 @@ function suggestCategory(text: string): CategoryValue {
     lower.includes("variable font") ||
     lower.includes("glyph")
   ) {
-    return CATEGORIES.typography;
+    return findCategoryByKeywords(categories, "typography", "Typography");
   }
 
   if (
@@ -66,7 +71,7 @@ function suggestCategory(text: string): CategoryValue {
     lower.includes("doodle") ||
     lower.includes("vector")
   ) {
-    return CATEGORIES.icons;
+    return findCategoryByKeywords(categories, "icons", "Icons & Illustrations");
   }
 
   if (
@@ -80,7 +85,7 @@ function suggestCategory(text: string): CategoryValue {
     lower.includes("three.js") ||
     lower.includes("webgl")
   ) {
-    return CATEGORIES.animation;
+    return findCategoryByKeywords(categories, "animation", "Animation & Motion");
   }
 
   if (
@@ -93,7 +98,7 @@ function suggestCategory(text: string): CategoryValue {
     lower.includes("react-aria") ||
     lower.includes("widget")
   ) {
-    return CATEGORIES.ui;
+    return findCategoryByKeywords(categories, "ui", "UI Components & Libraries");
   }
 
   if (
@@ -107,7 +112,7 @@ function suggestCategory(text: string): CategoryValue {
     lower.includes("claude") ||
     lower.includes("gemini")
   ) {
-    return CATEGORIES.ai;
+    return findCategoryByKeywords(categories, "ai", "AI & Machine Learning");
   }
 
   if (
@@ -117,7 +122,7 @@ function suggestCategory(text: string): CategoryValue {
     lower.includes("screenshot") ||
     lower.includes("showcase")
   ) {
-    return CATEGORIES.mockups;
+    return findCategoryByKeywords(categories, "mockups", "Mockups & Presentations");
   }
 
   if (
@@ -129,7 +134,7 @@ function suggestCategory(text: string): CategoryValue {
     lower.includes("schema") ||
     lower.includes("json")
   ) {
-    return CATEGORIES.data;
+    return findCategoryByKeywords(categories, "data", "Data & APIs");
   }
 
   if (
@@ -141,7 +146,7 @@ function suggestCategory(text: string): CategoryValue {
     lower.includes("deployment") ||
     lower.includes("cloud")
   ) {
-    return CATEGORIES.backend;
+    return findCategoryByKeywords(categories, "backend", "Backend & Infrastructure");
   }
 
   if (
@@ -152,7 +157,7 @@ function suggestCategory(text: string): CategoryValue {
     lower.includes("reference") ||
     lower.includes("readme")
   ) {
-    return CATEGORIES.docs;
+    return findCategoryByKeywords(categories, "docs", "Documentation & Markdown");
   }
 
   if (
@@ -163,7 +168,7 @@ function suggestCategory(text: string): CategoryValue {
     lower.includes("community") ||
     lower.includes("handbook")
   ) {
-    return CATEGORIES.education;
+    return findCategoryByKeywords(categories, "education", "Education & Community");
   }
 
   if (
@@ -173,7 +178,7 @@ function suggestCategory(text: string): CategoryValue {
     lower.includes("portfolio") ||
     lower.includes("directory")
   ) {
-    return CATEGORIES.inspiration;
+    return findCategoryByKeywords(categories, "inspiration", "Inspiration & Galleries");
   }
 
   if (
@@ -184,7 +189,7 @@ function suggestCategory(text: string): CategoryValue {
     lower.includes("sound") ||
     lower.includes("media")
   ) {
-    return CATEGORIES.media;
+    return findCategoryByKeywords(categories, "media", "Media & Assets");
   }
 
   if (
@@ -194,7 +199,7 @@ function suggestCategory(text: string): CategoryValue {
     lower.includes("figma") ||
     lower.includes("design token")
   ) {
-    return CATEGORIES.design;
+    return findCategoryByKeywords(categories, "design", "Design & UX");
   }
 
   if (
@@ -205,10 +210,11 @@ function suggestCategory(text: string): CategoryValue {
     lower.includes("typescript") ||
     lower.includes("bundle")
   ) {
-    return CATEGORIES.frontend;
+    return findCategoryByKeywords(categories, "frontend", "Frontend & UI");
   }
 
-  return CATEGORIES.dev;
+  const devMatch = categories.find((c) => c.slug === "dev" || c.name.toLowerCase().includes("developer"));
+  return devMatch?.name || categories[0]?.name || "Developer Tools & Utilities";
 }
 
 export interface CandidateOption {
@@ -848,7 +854,8 @@ export async function GET(request: NextRequest) {
       github = repoCandidates[0].repoUrl;
     }
 
-    const suggestedCategory = suggestCategory(`${title} ${description}`);
+    const categories = await getAllCategories();
+    const suggestedCategory = suggestCategory(`${title} ${description}`, categories);
 
     return NextResponse.json({
       title,

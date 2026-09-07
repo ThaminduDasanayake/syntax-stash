@@ -26,9 +26,9 @@ import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
-import { resourceCategories } from "@/lib/categories";
+import { useCategories } from "@/hooks/use-categories";
 
-import { AdminResourceItem, CATEGORY_OPTIONS } from "./types";
+import { AdminResourceItem } from "./types";
 
 interface AdminResourceFormProps {
   initialData?: Partial<AdminResourceItem> | null;
@@ -38,12 +38,10 @@ interface AdminResourceFormProps {
 export function AdminResourceForm({ initialData, mode = "create" }: AdminResourceFormProps) {
   const router = useRouter();
   const isEdit = mode === "edit" || Boolean(initialData?.id);
+  const { categoryOptions } = useCategories();
 
   const defaultCategory =
-    initialData?.category &&
-    resourceCategories.includes(initialData.category as (typeof resourceCategories)[number])
-      ? initialData.category
-      : CATEGORY_OPTIONS[0]?.value || "AI & Machine Learning";
+    initialData?.category || categoryOptions[0]?.value || "";
 
   const [formData, setFormData] = useState<Partial<AdminResourceItem>>({
     id: initialData?.id || undefined,
@@ -56,7 +54,7 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
     authorTwitter: initialData?.authorTwitter || "",
     authorWebsite: initialData?.authorWebsite || "",
     authorYoutube: initialData?.authorYoutube || "",
-    category: defaultCategory,
+    category: initialData?.category || defaultCategory,
     description: initialData?.description || "",
     favicon: initialData?.favicon || "",
     github: initialData?.github || "",
@@ -101,13 +99,7 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
           authorTwitter: prev.authorTwitter || data.authorTwitter || "",
           authorWebsite: prev.authorWebsite || data.authorWebsite || "",
           authorYoutube: prev.authorYoutube || data.authorYouTube || "",
-          category:
-            prev.category &&
-            resourceCategories.includes(prev.category as (typeof resourceCategories)[number])
-              ? prev.category
-              : data.category && resourceCategories.includes(data.category)
-                ? data.category
-                : defaultCategory,
+          category: prev.category || data.category || defaultCategory,
           description: prev.description || data.description || "",
           favicon: data.favicon || prev.favicon || "",
           github: prev.github || data.github || "",
@@ -340,7 +332,7 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
                   <SelectField
                     value={formData.category || defaultCategory}
                     onValueChange={(val) => setFormData((prev) => ({ ...prev, category: val }))}
-                    options={CATEGORY_OPTIONS}
+                    options={categoryOptions}
                     triggerClassName="h-9 font-mono text-xs"
                   />
                 </div>

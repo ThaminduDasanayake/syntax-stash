@@ -29,9 +29,9 @@ import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
-import { resourceCategories } from "@/lib/categories";
+import { useCategories } from "@/hooks/use-categories";
 
-import { AdminResourceItem, CATEGORY_OPTIONS } from "./types";
+import { AdminResourceItem } from "./types";
 
 interface AdminResourceDialogProps {
   isWorking?: boolean;
@@ -49,6 +49,7 @@ export function AdminResourceDialog({
   resource,
 }: AdminResourceDialogProps) {
   const isEdit = Boolean(resource?.id);
+  const { categoryOptions } = useCategories();
 
   const [formData, setFormData] = useState<Partial<AdminResourceItem>>({
     title: "",
@@ -59,7 +60,7 @@ export function AdminResourceDialog({
     authorTwitter: "",
     authorWebsite: "",
     authorYoutube: "",
-    category: "Generators",
+    category: "",
     description: "",
     favicon: "",
     github: "",
@@ -85,7 +86,7 @@ export function AdminResourceDialog({
         authorTwitter: resource.authorTwitter || "",
         authorWebsite: resource.authorWebsite || "",
         authorYoutube: resource.authorYoutube || "",
-        category: resource.category || "Generators",
+        category: resource.category || (categoryOptions[0]?.value ?? ""),
         description: resource.description || "",
         favicon: resource.favicon || "",
         github: resource.github || "",
@@ -104,7 +105,7 @@ export function AdminResourceDialog({
         authorTwitter: "",
         authorWebsite: "",
         authorYoutube: "",
-        category: "Generators",
+        category: categoryOptions[0]?.value ?? "",
         description: "",
         favicon: "",
         github: "",
@@ -116,7 +117,7 @@ export function AdminResourceDialog({
     }
     setFaviconOptions([]);
     setOgImageOptions([]);
-  }, [open, resource]);
+  }, [categoryOptions, open, resource]);
 
   const handleAuthorFieldChange = (field: keyof AuthorSocialValues, value: string) => {
     if (field === "author") {
@@ -146,12 +147,7 @@ export function AdminResourceDialog({
           authorTwitter: prev.authorTwitter || data.authorTwitter || "",
           authorWebsite: prev.authorWebsite || data.authorWebsite || "",
           authorYoutube: prev.authorYoutube || data.authorYouTube || "",
-          category:
-            prev.category && resourceCategories.includes(prev.category as (typeof resourceCategories)[number])
-              ? prev.category
-              : data.category && resourceCategories.includes(data.category)
-                ? data.category
-                : "Generators",
+          category: prev.category || data.category || (categoryOptions[0]?.value ?? ""),
           description: prev.description || data.description || "",
           favicon: data.favicon || prev.favicon || "",
           github: prev.github || data.github || "",
@@ -294,9 +290,9 @@ export function AdminResourceDialog({
                     Category *
                   </Label>
                   <SelectField
-                    value={formData.category || "Generators"}
+                    value={formData.category || (categoryOptions[0]?.value ?? "")}
                     onValueChange={(val) => setFormData((prev) => ({ ...prev, category: val }))}
-                    options={CATEGORY_OPTIONS}
+                    options={categoryOptions}
                     triggerClassName="h-9 font-mono text-xs"
                   />
                 </div>

@@ -1,17 +1,10 @@
 import { slugifyAuthor } from "@/lib/authors";
-import { CATEGORIES } from "@/lib/categories";
 import { Submission } from "@/lib/db/schema";
 import { Resource } from "@/types";
 
 import { AdminResourceItem } from "./types";
 
 export function generateTsCode(sub: Submission): string {
-  // Find category key in CATEGORIES
-  const categoryKey =
-    Object.entries(CATEGORIES).find(([, val]) => val === sub.category)?.[0] ||
-    sub.category.toLowerCase().replace(/[^a-z0-9]/g, "") ||
-    "dev";
-
   // Parse tags
   const parsedTags = sub.tags
     ? sub.tags
@@ -28,7 +21,7 @@ export function generateTsCode(sub: Submission): string {
   let code = "  {\n";
   code += `    title: "${sub.title.replace(/"/g, '\\"')}",\n`;
   if (sub.author) code += `    author: "${sub.author.replace(/"/g, '\\"')}",\n`;
-  code += `    category: CATEGORIES.${categoryKey},\n`;
+  code += `    category: "${sub.category.replace(/"/g, '\\"')}",\n`;
   code += `    description:\n      "${sub.description.replace(/"/g, '\\"')}",\n`;
   if (sub.favicon) code += `    favicon: "${sub.favicon}",\n`;
   if (sub.github) code += `    github: "${sub.github}",\n`;

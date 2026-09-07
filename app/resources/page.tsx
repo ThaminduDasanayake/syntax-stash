@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { FilterSection } from "@/components/filter-section";
 import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
-import { resourceCategories } from "@/lib/categories";
+import { getAllCategories } from "@/lib/categories";
 import { getAllResources } from "@/lib/resources";
 
 export const metadata: Metadata = {
@@ -12,7 +12,11 @@ export const metadata: Metadata = {
 };
 
 export default async function ResourcesPage() {
-  const resourceLinks = await getAllResources();
+  const [categoryItems, resourceLinks] = await Promise.all([
+    getAllCategories(),
+    getAllResources(),
+  ]);
+  const categories = categoryItems.map((c) => c.name);
 
   return (
     <div className="lib-page">
@@ -28,14 +32,14 @@ export default async function ResourcesPage() {
             <em>stash.</em>
           </h1>
           <p className="lib-sub">
-            {resourceLinks.length} curated links across {resourceCategories.length} categories.
+            {resourceLinks.length} curated links across {categories.length} categories.
           </p>
         </div>
       </header>
 
       <FilterSection
         items={resourceLinks}
-        categories={resourceCategories}
+        categories={categories}
         searchPlaceholder="Search resources..."
         itemLabel="Resources"
       />

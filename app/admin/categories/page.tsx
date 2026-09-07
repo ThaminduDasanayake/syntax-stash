@@ -2,7 +2,6 @@ import { asc, count, eq } from "drizzle-orm";
 import type { Metadata } from "next";
 
 import { AdminCategoriesClient } from "@/components/admin/admin-categories-client";
-import { CATEGORY_DEFINITIONS } from "@/lib/categories";
 import { db } from "@/lib/db";
 import { category, resource } from "@/lib/db/schema";
 
@@ -33,20 +32,10 @@ export default async function AdminCategoriesPage() {
     .groupBy(category.id)
     .orderBy(asc(category.order), asc(category.name));
 
-  let categories = rows.map((r) => ({
+  const categories = rows.map((r) => ({
     ...r,
     toolCount: Number(r.toolCount) || 0,
   }));
-
-  if (categories.length === 0) {
-    categories = CATEGORY_DEFINITIONS.map((def) => ({
-      ...def,
-      id: def.slug,
-      createdAt: new Date(),
-      toolCount: 0,
-      updatedAt: new Date(),
-    }));
-  }
 
   return <AdminCategoriesClient initialCategories={categories} />;
 }

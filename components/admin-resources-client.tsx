@@ -26,7 +26,6 @@ import {
   adminItemToResource,
   AdminResourceCard,
   AdminResourceItem,
-  CATEGORY_OPTIONS,
 } from "@/components/admin";
 import { ResourceDialog } from "@/components/resource-dialog";
 import {
@@ -43,6 +42,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { InputField } from "@/components/ui/input-field";
 import { SelectField } from "@/components/ui/select-field";
+import { useCategories } from "@/hooks/use-categories";
 import { cn, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
 
 const SORT_OPTIONS = [
@@ -62,6 +62,7 @@ export function AdminResourcesClient({
   initialResources = [],
 }: AdminResourcesClientProps) {
   const router = useRouter();
+  const { categories } = useCategories();
   const [resources, setResources] = useState<AdminResourceItem[]>(initialResources);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -204,11 +205,18 @@ export function AdminResourcesClient({
   };
 
   // Category filter options
+  const allCategoryNames = useMemo(() => {
+    const fromResources = Array.from(new Set(resources.map((r) => r.category))).filter(Boolean);
+    const dbCatNames = categories.map((c) => c.name);
+    const combined = Array.from(new Set([...dbCatNames, ...fromResources]));
+    return combined.sort((a, b) => a.localeCompare(b));
+  }, [categories, resources]);
+
   const categoryFilterOptions = [
     { label: `All Categories (${resources.length})`, value: "all" },
-    ...CATEGORY_OPTIONS.map((opt) => ({
-      label: `${opt.label} (${resources.filter((r) => r.category === opt.value).length})`,
-      value: opt.value,
+    ...allCategoryNames.map((cat) => ({
+      label: `${cat} (${resources.filter((r) => r.category === cat).length})`,
+      value: cat,
     })),
   ];
 

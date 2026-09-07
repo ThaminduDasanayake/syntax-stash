@@ -1,12 +1,12 @@
 import type { MetadataRoute } from "next";
 
 import { getAllAuthors } from "@/lib/authors";
-import { resourceCategories } from "@/lib/categories";
+import { getAllCategories } from "@/lib/categories";
 import { siteConfig } from "@/lib/site-config";
 import { internalTools } from "@/lib/tools-data";
 import { slugify } from "@/lib/utils";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteConfig.url;
 
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -63,11 +63,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${baseUrl}/tools/${tool.slug}`,
     }));
 
-  const resourceRoutes: MetadataRoute.Sitemap = resourceCategories.map((cat) => ({
+  const categories = await getAllCategories();
+  const resourceRoutes: MetadataRoute.Sitemap = categories.map((cat) => ({
     changeFrequency: "weekly",
     lastModified: new Date(),
     priority: 0.7,
-    url: `${baseUrl}/resources/${slugify(cat)}`,
+    url: `${baseUrl}/resources/${cat.slug || slugify(cat.name)}`,
   }));
 
   const authorRoutes: MetadataRoute.Sitemap = getAllAuthors().map((author) => ({
