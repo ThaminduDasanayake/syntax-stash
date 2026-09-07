@@ -84,7 +84,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
   }
 
   return (
-    <div className="container mx-auto max-w-6xl px-4 py-8 sm:py-12">
+    <div className="container mx-auto max-w-7xl px-4 py-8 sm:py-12">
       <AdminNav
         authorsCount={authorsCount}
         categoriesCount={categoriesCount}

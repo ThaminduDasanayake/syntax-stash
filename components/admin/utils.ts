@@ -2,6 +2,9 @@ import { slugifyAuthor } from "@/lib/authors";
 import { Submission } from "@/lib/db/schema";
 import { CATEGORIES } from "@/lib/resource-data/categories";
 import { TAGS } from "@/lib/resource-data/tags";
+import { Resource } from "@/types";
+
+import { AdminResourceItem } from "./types";
 
 export function generateTsCode(sub: Submission): string {
   // Find category key in CATEGORIES
@@ -71,3 +74,24 @@ export function generateTsCode(sub: Submission): string {
 
   return code;
 }
+
+export function adminItemToResource(item: AdminResourceItem): Resource {
+  return {
+    title: item.title,
+    author: item.authorName || undefined,
+    category: item.category,
+    description: item.description,
+    favicon: item.favicon || undefined,
+    github: item.github || undefined,
+    ogImage: item.ogImage || undefined,
+    subtitle: item.subtitle || undefined,
+    tags: item.tags
+      ? item.tags
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean)
+      : undefined,
+    url: item.url,
+  };
+}
+

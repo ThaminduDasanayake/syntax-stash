@@ -204,7 +204,7 @@ export function ResourceCardView({
                     <BookmarkSimpleIcon
                       weight={isBookmarked ? "fill" : isBookmarkHovered ? "duotone" : "regular"}
                       className={cn(
-                        "size-5 transition-transform group-hover/bookmark:scale-110",
+                        "size-4.5 transition-transform group-hover/bookmark:scale-110",
                         isBookmarked ? "fill-current opacity-100" : "",
                       )}
                     />
