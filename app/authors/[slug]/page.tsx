@@ -8,18 +8,17 @@ import { FilterSection } from "@/components/filter-section";
 import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
 import { Button } from "@/components/ui/button";
 import { getAllAuthors, getAuthorBySlug } from "@/lib/authors";
-import { getAllResources } from "@/lib/resources";
 
 type Params = { slug: string };
 
-export function generateStaticParams(): Params[] {
-  return getAllAuthors().map((author) => ({ slug: author.slug }));
+export async function generateStaticParams(): Promise<Params[]> {
+  const authors = await getAllAuthors();
+  return authors.map((author) => ({ slug: author.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { slug } = await params;
-  const resources = await getAllResources();
-  const authorData = getAuthorBySlug(slug, resources);
+  const authorData = await getAuthorBySlug(slug);
   if (!authorData) return {};
 
   return {
@@ -36,8 +35,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 
 export default async function AuthorPage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
-  const allResources = await getAllResources();
-  const authorData = getAuthorBySlug(slug, allResources);
+  const authorData = await getAuthorBySlug(slug);
 
   if (!authorData) notFound();
 

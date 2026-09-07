@@ -318,8 +318,10 @@ export async function POST(req: Request) {
     revalidateTag("resources", "max");
     revalidateTag("categories", "max");
     revalidateTag("tags", "max");
+    revalidateTag("authors", "max");
     revalidatePath("/");
     revalidatePath("/resources");
+    revalidatePath("/authors");
 
     return NextResponse.json({
       id: resourceId,
@@ -495,8 +497,10 @@ export async function PATCH(req: Request) {
     revalidateTag("resources", "max");
     revalidateTag("categories", "max");
     revalidateTag("tags", "max");
+    revalidateTag("authors", "max");
     revalidatePath("/");
     revalidatePath("/resources");
+    revalidatePath("/authors");
 
     return NextResponse.json({ message: "Resource updated successfully.", success: true });
   } catch (error) {
@@ -522,8 +526,10 @@ export async function DELETE(request: NextRequest) {
     revalidateTag("resources", "max");
     revalidateTag("categories", "max");
     revalidateTag("tags", "max");
+    revalidateTag("authors", "max");
     revalidatePath("/");
     revalidatePath("/resources");
+    revalidatePath("/authors");
 
     return NextResponse.json({ message: "Resource deleted.", success: true });
   } catch (error) {

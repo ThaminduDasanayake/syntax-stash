@@ -64,7 +64,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${baseUrl}/tools/${tool.slug}`,
     }));
 
-  const [categories, tags] = await Promise.all([
+  const [authors, categories, tags] = await Promise.all([
+    getAllAuthors(),
     getAllCategories(),
     getAllTags(),
   ]);
@@ -83,7 +84,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `${baseUrl}/tags/${t.slug || normalizeTag(t.name)}`,
   }));
 
-  const authorRoutes: MetadataRoute.Sitemap = getAllAuthors().map((author) => ({
+  const authorRoutes: MetadataRoute.Sitemap = authors.map((author) => ({
     changeFrequency: "weekly",
     lastModified: new Date(),
     priority: 0.7,

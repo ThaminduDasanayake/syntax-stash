@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { AuthorsDirectory } from "@/components/authors-directory";
 import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
 import { getAllAuthors } from "@/lib/authors";
-import { getAllResources } from "@/lib/resources";
 
 export const metadata: Metadata = {
   title: "Authors & Creators — Syntax Stash",
@@ -19,8 +18,7 @@ export const metadata: Metadata = {
 };
 
 export default async function AuthorsPage() {
-  const resources = await getAllResources();
-  const authors = getAllAuthors(resources);
+  const authors = await getAllAuthors();
 
   return (
     <div className="lib-page">
