@@ -56,17 +56,24 @@ export function getAllAuthors(customResources?: Resource[]): AuthorWithResources
 
     for (const authorItem of rawAuthors) {
       if (!authorItem) continue;
-      const trimmedAuthor = authorItem.trim();
-      const slug = slugifyAuthor(trimmedAuthor);
+      const splitAuthors =
+        typeof authorItem === "string" && authorItem.includes(",")
+          ? authorItem.split(",").map((a) => a.trim()).filter(Boolean)
+          : [authorItem.trim()];
 
-      if (!authorMap.has(slug)) {
-        authorMap.set(slug, {
-          name: trimmedAuthor,
-          resources: [],
-        });
+      for (const trimmedAuthor of splitAuthors) {
+        if (!trimmedAuthor) continue;
+        const slug = slugifyAuthor(trimmedAuthor);
+
+        if (!authorMap.has(slug)) {
+          authorMap.set(slug, {
+            name: trimmedAuthor,
+            resources: [],
+          });
+        }
+
+        authorMap.get(slug)?.resources.push(resource);
       }
-
-      authorMap.get(slug)?.resources.push(resource);
     }
   }
 

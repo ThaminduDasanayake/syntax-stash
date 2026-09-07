@@ -1,4 +1,4 @@
-import { count, desc, eq } from "drizzle-orm";
+import { asc, count, eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
@@ -19,7 +19,7 @@ export async function GET() {
       .from(tag)
       .leftJoin(resourceTag, eq(tag.id, resourceTag.tagId))
       .groupBy(tag.id, tag.name, tag.slug, tag.isFeatured)
-      .orderBy(desc(count(resourceTag.resourceId)), tag.name);
+      .orderBy(asc(tag.name));
 
     if (dbTags && dbTags.length > 0) {
       return NextResponse.json({

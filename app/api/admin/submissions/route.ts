@@ -97,11 +97,32 @@ export async function PATCH(req: Request) {
 
     if (sub) {
       if (sub.status === "approved") {
-        // 1. Resolve or Create Author
+        // 1. Resolve or Create Author(s)
         let authorRecordId: string | null = null;
         if (sub.author && sub.author.trim()) {
           const authorName = sub.author.trim();
           const authorSlug = slugifyAuthor(authorName);
+
+          // Ensure every individual author exists in author table
+          const splitAuthors = authorName.includes(",")
+            ? authorName.split(",").map((a: string) => a.trim()).filter(Boolean)
+            : [authorName];
+
+          for (const singleName of splitAuthors) {
+            const singleSlug = slugifyAuthor(singleName);
+            if (!singleSlug) continue;
+            const [singleExisting] = await db
+              .select()
+              .from(author)
+              .where(eq(author.slug, singleSlug));
+            if (!singleExisting) {
+              await db.insert(author).values({
+                id: crypto.randomUUID(),
+                name: singleName,
+                slug: singleSlug,
+              });
+            }
+          }
 
           const [existingAuthor] = await db
             .select()

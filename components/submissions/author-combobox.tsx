@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckIcon, GlobeIcon, UserIcon, XIcon, XLogoIcon } from "@phosphor-icons/react";
+import { GlobeIcon, UserIcon, XIcon, XLogoIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
@@ -22,33 +22,55 @@ export interface AuthorOption {
   slug: string;
 }
 
-interface AuthorComboboxProps {
+export interface AuthorComboboxProps {
   className?: string;
   containerClassName?: string;
   disabled?: boolean;
+  maxAuthors?: number;
   onChange: (value: string) => void;
   onSelectAuthor?: (author: AuthorOption) => void;
   placeholder?: string;
-  value: string;
+  value: string | string[] | null | undefined;
 }
 
 // Global module cache to prevent duplicate requests across renders
 let cachedAuthors: AuthorOption[] | null = null;
 let fetchPromise: Promise<AuthorOption[]> | null = null;
 
-async function fetchAuthorList(): Promise<AuthorOption[]> {
-  if (cachedAuthors) return cachedAuthors;
+// Cross-tab synchronization channel
+let authorsChannel: BroadcastChannel | null = null;
+if (typeof window !== "undefined" && "BroadcastChannel" in window) {
+  try {
+    authorsChannel = new BroadcastChannel("syntax-stash-authors");
+  } catch {
+    // Fallback if BroadcastChannel is not permitted in sandbox
+  }
+}
+
+export function invalidateAuthorCache() {
+  cachedAuthors = null;
+  fetchPromise = null;
+  try {
+    authorsChannel?.postMessage({ type: "AUTHORS_INVALIDATE" });
+  } catch {
+    // Ignore cross-tab messaging failure
+  }
+}
+
+export async function fetchAuthorList(forceRefresh = false): Promise<AuthorOption[]> {
+  if (!forceRefresh && cachedAuthors) return cachedAuthors;
   if (fetchPromise) return fetchPromise;
 
   fetchPromise = (async () => {
     try {
-      const res = await fetch("/api/authors");
+      const res = await fetch("/api/authors", { cache: "no-store" });
       if (!res.ok) throw new Error("Failed to load authors");
       const data = await res.json();
-      cachedAuthors = data.authors || [];
+      const list: AuthorOption[] = data.authors || [];
+      cachedAuthors = list.sort((a, b) => a.name.localeCompare(b.name));
       return cachedAuthors!;
     } catch {
-      return [];
+      return cachedAuthors || [];
     } finally {
       fetchPromise = null;
     }
@@ -61,15 +83,16 @@ export function AuthorCombobox({
   className,
   containerClassName,
   disabled = false,
+  maxAuthors = 10,
   onChange,
   onSelectAuthor,
-  placeholder = "e.g. Jane Doe",
+  placeholder = "Search creators or type a name...",
   value,
 }: AuthorComboboxProps) {
   const [authors, setAuthors] = useState<AuthorOption[]>(cachedAuthors || []);
+  const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
-  const [selectedNotification, setSelectedNotification] = useState<string | null>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -77,32 +100,113 @@ export function AuthorCombobox({
 
   useEffect(() => {
     let mounted = true;
-    if (!cachedAuthors) {
-      fetchAuthorList().then((list) => {
+
+    const syncAuthors = (force = false) => {
+      fetchAuthorList(force).then((list) => {
         if (mounted && list.length > 0) {
           setAuthors(list);
         }
       });
+    };
+
+    // 1. Initial Load
+    syncAuthors();
+
+    // 2. Cross-tab real-time listener (when author created/edited in another tab)
+    const handleBroadcast = (event: MessageEvent) => {
+      if (event.data?.type === "AUTHORS_INVALIDATE") {
+        cachedAuthors = null;
+        fetchPromise = null;
+        syncAuthors(true);
+      }
+    };
+
+    if (authorsChannel) {
+      authorsChannel.addEventListener("message", handleBroadcast);
     }
+
+    // 3. Tab focus / visibility change (when user returns to this tab from another window/tab)
+    const handleFocus = () => {
+      syncAuthors(true);
+    };
+
+    window.addEventListener("focus", handleFocus);
+    document.addEventListener("visibilitychange", handleFocus);
+
     return () => {
       mounted = false;
+      if (authorsChannel) {
+        authorsChannel.removeEventListener("message", handleBroadcast);
+      }
+      window.removeEventListener("focus", handleFocus);
+      document.removeEventListener("visibilitychange", handleFocus);
     };
   }, []);
 
-  // Filter authors based on search query
-  const query = value.trim().toLowerCase();
-  const filteredAuthors = useMemo(() => {
-    if (!query) {
-      // Return top 8 most popular creators if no query
-      return authors.slice(0, 8);
+  // Parse current selected authors into an array
+  const selectedAuthors: string[] = useMemo(() => {
+    if (!value) return [];
+    if (Array.isArray(value)) {
+      return value.map((v) => (typeof v === "string" ? v.trim() : "")).filter(Boolean);
     }
-    return authors
-      .filter((a) => a.name.toLowerCase().includes(query) || a.slug.includes(query))
-      .slice(0, 8);
-  }, [authors, query]);
+    if (typeof value === "string") {
+      return value
+        .split(",")
+        .map((v) => v.trim())
+        .filter(Boolean);
+    }
+    return [];
+  }, [value]);
 
-  // Check if current typed value exactly matches an author in list
-  const exactMatch = authors.some((a) => a.name.toLowerCase() === query);
+  const cleanQuery = query.trim().toLowerCase();
+
+  // Filter available author suggestions (excluding already selected ones) in alphabetical order
+  const filteredAuthors = useMemo(() => {
+    const selectedLower = new Set(selectedAuthors.map((a) => a.toLowerCase()));
+    const unselected = authors.filter((a) => !selectedLower.has(a.name.toLowerCase()));
+
+    if (!cleanQuery) {
+      return unselected.slice(0, 10);
+    }
+    return unselected
+      .filter((a) => a.name.toLowerCase().includes(cleanQuery) || a.slug.includes(cleanQuery))
+      .slice(0, 10);
+  }, [authors, cleanQuery, selectedAuthors]);
+
+  // Check if current typed value exactly matches an author in list or is already selected
+  const exactMatch = authors.some((a) => a.name.toLowerCase() === cleanQuery);
+  const isAlreadySelected = selectedAuthors.some((a) => a.toLowerCase() === cleanQuery);
+
+  const emitChange = (newAuthors: string[]) => {
+    onChange(newAuthors.join(", "));
+  };
+
+  const addAuthor = (authorName: string, authorOption?: AuthorOption) => {
+    const trimmed = authorName.trim();
+    if (!trimmed) return;
+    if (selectedAuthors.some((a) => a.toLowerCase() === trimmed.toLowerCase())) return;
+    if (selectedAuthors.length >= maxAuthors) return;
+
+    const nextAuthors = [...selectedAuthors, trimmed];
+    emitChange(nextAuthors);
+    setQuery("");
+    setIsOpen(false);
+    setHighlightedIndex(-1);
+
+    if (authorOption && onSelectAuthor) {
+      onSelectAuthor(authorOption);
+    }
+
+    inputRef.current?.focus();
+  };
+
+  const removeAuthor = (authorToRemove: string) => {
+    const nextAuthors = selectedAuthors.filter(
+      (a) => a.toLowerCase() !== authorToRemove.toLowerCase(),
+    );
+    emitChange(nextAuthors);
+    inputRef.current?.focus();
+  };
 
   // Close dropdown on click outside
   useEffect(() => {
@@ -117,27 +221,26 @@ export function AuthorCombobox({
     };
   }, []);
 
-  const handleSelect = (author: AuthorOption) => {
-    onChange(author.name);
-    setIsOpen(false);
-    setHighlightedIndex(-1);
-
-    if (onSelectAuthor) {
-      onSelectAuthor(author);
-    }
-
-    const linkCount = author.links
-      ? Object.values(author.links).filter(Boolean).length
-      : 0;
-
-    if (linkCount > 0) {
-      setSelectedNotification(`Auto-filled ${linkCount} profile links for ${author.name}`);
-      setTimeout(() => setSelectedNotification(null), 3500);
-    }
-  };
-
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (disabled) return;
+
+    // Remove last author on Backspace if query is empty
+    if (e.key === "Backspace" && !query && selectedAuthors.length > 0) {
+      const lastAuthor = selectedAuthors[selectedAuthors.length - 1];
+      if (lastAuthor) {
+        removeAuthor(lastAuthor);
+      }
+      return;
+    }
+
+    // Comma or Enter to add creator
+    if (e.key === "," || (e.key === "Enter" && !isOpen)) {
+      e.preventDefault();
+      if (query.trim()) {
+        addAuthor(query.trim());
+      }
+      return;
+    }
 
     if (!isOpen) {
       if (e.key === "ArrowDown" || e.key === "ArrowUp") {
@@ -147,7 +250,8 @@ export function AuthorCombobox({
       return;
     }
 
-    const totalItems = filteredAuthors.length + (!exactMatch && query ? 1 : 0);
+    const showCustomOption = cleanQuery && !exactMatch && !isAlreadySelected;
+    const totalItems = filteredAuthors.length + (showCustomOption ? 1 : 0);
 
     if (e.key === "ArrowDown") {
       e.preventDefault();
@@ -159,12 +263,13 @@ export function AuthorCombobox({
       e.preventDefault();
       if (highlightedIndex >= 0 && highlightedIndex < filteredAuthors.length) {
         const item = filteredAuthors[highlightedIndex];
-        if (item) handleSelect(item);
-      } else if (highlightedIndex === filteredAuthors.length && !exactMatch && query) {
-        // Selected "+ Use custom name"
-        setIsOpen(false);
+        if (item) addAuthor(item.name, item);
+      } else if (showCustomOption && highlightedIndex === filteredAuthors.length) {
+        addAuthor(query.trim());
       } else if (filteredAuthors.length === 1 && filteredAuthors[0]) {
-        handleSelect(filteredAuthors[0]);
+        addAuthor(filteredAuthors[0].name, filteredAuthors[0]);
+      } else if (query.trim()) {
+        addAuthor(query.trim());
       } else {
         setIsOpen(false);
       }
@@ -187,77 +292,97 @@ export function AuthorCombobox({
 
   return (
     <div ref={containerRef} className={cn("relative w-full", containerClassName)}>
-      <div className="relative">
+      <div
+        onClick={() => inputRef.current?.focus()}
+        className={cn(
+          "border-border bg-input/30 focus-within:border-primary/80 focus-within:ring-primary/20 flex min-h-9 w-full flex-wrap items-center gap-1.5 rounded-none border-2 p-1.5 font-mono text-xs transition-colors focus-within:ring-2",
+          disabled && "cursor-not-allowed opacity-50",
+          className,
+        )}
+      >
+        {/* Selected Author Badges */}
+        {selectedAuthors.map((authName) => (
+          <span
+            key={authName}
+            className="border-border bg-muted/80 text-foreground inline-flex items-center gap-1 rounded-none border px-2 py-0.5 font-mono text-[11px] font-medium"
+          >
+            <UserIcon className="text-primary size-3 shrink-0" />
+            <span className="max-w-40 truncate">{authName}</span>
+            {!disabled && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  removeAuthor(authName);
+                }}
+                className="text-muted-foreground hover:text-destructive p-0.5 transition-colors focus-visible:outline-none"
+                aria-label={`Remove ${authName}`}
+              >
+                <XIcon className="size-3" />
+              </button>
+            )}
+          </span>
+        ))}
+
+        {/* Search Input */}
         <input
           ref={inputRef}
           type="text"
-          value={value}
+          value={query}
           onChange={(e) => {
-            onChange(e.target.value);
+            setQuery(e.target.value);
             setIsOpen(true);
             setHighlightedIndex(-1);
           }}
           onKeyDown={handleKeyDown}
           onFocus={() => {
-            if (!disabled && (filteredAuthors.length > 0 || !exactMatch)) {
+            if (!disabled) {
               setIsOpen(true);
             }
           }}
-          disabled={disabled}
-          placeholder={placeholder}
-          className={cn(
-            "border-border bg-input/30 placeholder:text-muted-foreground focus-visible:border-primary/80 focus-visible:ring-primary/20 h-9 w-full rounded-none border-2 px-3 py-1.5 font-mono text-xs transition-colors focus-visible:outline-none focus-visible:ring-2",
-            value ? "pr-8" : "",
-            className,
-          )}
+          disabled={disabled || selectedAuthors.length >= maxAuthors}
+          placeholder={selectedAuthors.length === 0 ? placeholder : "Add another author..."}
+          className="placeholder:text-muted-foreground min-w-28 flex-1 bg-transparent px-1.5 py-0.5 font-mono text-xs focus-visible:outline-none"
         />
 
-        {value && !disabled && (
+        {selectedAuthors.length > 0 && !disabled && (
           <button
             type="button"
-            onClick={() => {
-              onChange("");
+            onClick={(e) => {
+              e.stopPropagation();
+              emitChange([]);
+              setQuery("");
               inputRef.current?.focus();
             }}
-            className="text-muted-foreground hover:text-foreground absolute top-1/2 right-2.5 -translate-y-1/2 p-0.5"
-            tabIndex={-1}
-            aria-label="Clear creator name"
+            className="text-muted-foreground hover:text-foreground ml-auto p-1 transition-colors"
+            aria-label="Clear all authors"
+            title="Clear all authors"
           >
             <XIcon className="size-3.5" />
           </button>
         )}
       </div>
 
-      {/* Auto-fill notification badge */}
-      {selectedNotification && (
-        <p className="text-primary mt-1 flex items-center gap-1 font-mono text-[11px] transition-all">
-          <CheckIcon className="size-3" weight="bold" /> {selectedNotification}
-        </p>
-      )}
-
       {/* Dropdown Menu */}
       {isOpen && !disabled && (
         <div className="border-border bg-popover text-popover-foreground absolute z-50 mt-1 max-h-60 w-full overflow-hidden rounded-none border-2 shadow-lg">
           <div className="border-border/60 text-muted-foreground bg-muted/40 border-b px-2.5 py-1 font-mono text-[10px] font-bold tracking-wider uppercase">
-            {query ? "Matching Creators" : "Suggested Creators"}
+            {cleanQuery ? "Matching Creators" : "Suggested Creators (A-Z)"}
           </div>
 
           <ul ref={dropdownRef} className="max-h-48 overflow-y-auto py-1 font-mono text-xs">
             {filteredAuthors.map((author, index) => {
-              const isSelected = author.name.toLowerCase() === query;
               const isHighlighted = index === highlightedIndex;
-              const hasLinks =
-                author.links && Object.values(author.links).some(Boolean);
+              const hasLinks = author.links && Object.values(author.links).some(Boolean);
 
               return (
                 <li
                   key={author.slug}
                   onMouseEnter={() => setHighlightedIndex(index)}
-                  onClick={() => handleSelect(author)}
+                  onClick={() => addAuthor(author.name, author)}
                   className={cn(
                     "flex cursor-pointer items-center justify-between gap-2 px-2.5 py-1.5 transition-colors",
                     isHighlighted ? "bg-primary text-primary-foreground" : "hover:bg-muted/60",
-                    isSelected && !isHighlighted ? "text-primary font-semibold" : "",
                   )}
                 >
                   <div className="flex items-center gap-2 truncate">
@@ -289,9 +414,7 @@ export function AuthorCombobox({
                         <GlobeIcon
                           className={cn(
                             "size-3",
-                            isHighlighted
-                              ? "text-primary-foreground"
-                              : "text-muted-foreground",
+                            isHighlighted ? "text-primary-foreground" : "text-muted-foreground",
                           )}
                         />
                       )}
@@ -299,9 +422,7 @@ export function AuthorCombobox({
                         <XLogoIcon
                           className={cn(
                             "size-3",
-                            isHighlighted
-                              ? "text-primary-foreground"
-                              : "text-muted-foreground",
+                            isHighlighted ? "text-primary-foreground" : "text-muted-foreground",
                           )}
                         />
                       )}
@@ -313,9 +434,7 @@ export function AuthorCombobox({
                           height={12}
                           className={cn(
                             "size-3",
-                            isHighlighted
-                              ? "brightness-0 invert"
-                              : "opacity-60 dark:invert",
+                            isHighlighted ? "brightness-0 invert" : "opacity-60 dark:invert",
                           )}
                         />
                       )}
@@ -325,11 +444,11 @@ export function AuthorCombobox({
               );
             })}
 
-            {/* If query has no exact match, offer "+ Use custom name" */}
-            {!exactMatch && query && (
+            {/* If query has no exact match and is not already selected, offer "+ Add as new creator" */}
+            {cleanQuery && !exactMatch && !isAlreadySelected && (
               <li
                 onMouseEnter={() => setHighlightedIndex(filteredAuthors.length)}
-                onClick={() => setIsOpen(false)}
+                onClick={() => addAuthor(query.trim())}
                 className={cn(
                   "border-border/40 text-muted-foreground hover:text-foreground flex cursor-pointer items-center gap-2 border-t px-2.5 py-2 transition-colors",
                   highlightedIndex === filteredAuthors.length
@@ -337,7 +456,18 @@ export function AuthorCombobox({
                     : "hover:bg-muted/60",
                 )}
               >
-                <span>+ Use &quot;<strong className="text-foreground">{value}</strong>&quot; as new creator</span>
+                <span>
+                  + Add &quot;<strong className="text-foreground">{query.trim()}</strong>&quot; as
+                  creator
+                </span>
+              </li>
+            )}
+
+            {filteredAuthors.length === 0 && (!cleanQuery || exactMatch || isAlreadySelected) && (
+              <li className="text-muted-foreground px-2.5 py-2 text-center text-xs">
+                {selectedAuthors.length >= maxAuthors
+                  ? `Maximum limit of ${maxAuthors} authors reached.`
+                  : "No more authors to suggest."}
               </li>
             )}
           </ul>
@@ -346,3 +476,4 @@ export function AuthorCombobox({
     </div>
   );
 }
+

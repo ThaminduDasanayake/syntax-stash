@@ -121,29 +121,7 @@ export function AdminResourceDialog({
   const handleAuthorFieldChange = (field: keyof AuthorSocialValues, value: string) => {
     if (field === "author") {
       setFormData((prev) => ({ ...prev, authorName: value }));
-    } else if (field === "authorWebsite") {
-      setFormData((prev) => ({ ...prev, authorWebsite: value }));
-    } else if (field === "authorTwitter") {
-      setFormData((prev) => ({ ...prev, authorTwitter: value }));
-    } else if (field === "authorGitHub") {
-      setFormData((prev) => ({ ...prev, authorGithub: value }));
-    } else if (field === "authorYouTube") {
-      setFormData((prev) => ({ ...prev, authorYoutube: value }));
-    } else if (field === "authorLinkedIn") {
-      setFormData((prev) => ({ ...prev, authorLinkedin: value }));
     }
-  };
-
-  const handleAuthorBatchChange = (updates: Partial<AuthorSocialValues>) => {
-    setFormData((prev) => ({
-      ...prev,
-      ...(updates.author !== undefined && { authorName: updates.author || "" }),
-      ...(updates.authorWebsite !== undefined && { authorWebsite: updates.authorWebsite || "" }),
-      ...(updates.authorTwitter !== undefined && { authorTwitter: updates.authorTwitter || "" }),
-      ...(updates.authorGitHub !== undefined && { authorGithub: updates.authorGitHub || "" }),
-      ...(updates.authorYouTube !== undefined && { authorYoutube: updates.authorYouTube || "" }),
-      ...(updates.authorLinkedIn !== undefined && { authorLinkedin: updates.authorLinkedIn || "" }),
-    }));
   };
 
   const handleAutoDetect = async () => {
@@ -369,11 +347,10 @@ export function AdminResourceDialog({
                 />
               </div>
 
-              {/* Author & Social Attributions */}
+              {/* Author Attribution */}
               <AuthorSocialFields
                 values={authorValues}
                 onChange={handleAuthorFieldChange}
-                onBatchChange={handleAuthorBatchChange}
                 disabled={isWorking}
               />
 

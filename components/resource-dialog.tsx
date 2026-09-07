@@ -450,10 +450,20 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
           {activeTool.subtitle && <p className="modal-subtitle">{activeTool.subtitle}</p>}
           <p className="modal-description">{activeTool.description}</p>
 
-          {activeTool.author && (
-            <p className="modal-author flex flex-wrap items-center gap-1">
-              {Array.isArray(activeTool.author) ? (
-                activeTool.author.map((authorName, index) => (
+          {activeTool.author && (() => {
+            const authorList: string[] = Array.isArray(activeTool.author)
+              ? activeTool.author.flatMap((a) =>
+                  typeof a === "string" ? a.split(",").map((x) => x.trim()).filter(Boolean) : [],
+                )
+              : typeof activeTool.author === "string"
+                ? activeTool.author.split(",").map((x) => x.trim()).filter(Boolean)
+                : [];
+
+            if (authorList.length === 0) return null;
+
+            return (
+              <p className="modal-author flex flex-wrap items-center gap-1">
+                {authorList.map((authorName, index) => (
                   <span key={authorName} className="inline-flex items-center">
                     {index > 0 && <span className="mr-1 opacity-60">&</span>}
                     <Link
@@ -463,17 +473,10 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
                       {authorName}
                     </Link>
                   </span>
-                ))
-              ) : (
-                <Link
-                  href={`/authors/${slugifyAuthor(activeTool.author)}`}
-                  className="modal-author-link hover:underline"
-                >
-                  {activeTool.author}
-                </Link>
-              )}
-            </p>
-          )}
+                ))}
+              </p>
+            );
+          })()}
         </div>
 
         {/* Right Side */}
@@ -582,23 +585,25 @@ export function ResourceDialog({ onTagClickAction, resource }: ResourceDialogPro
             {activeTool.tags && activeTool.tags.length > 0 && (
               <div className="modal-sections">
                 <div className="flex flex-wrap gap-1.5">
-                  {activeTool.tags.map((tag) => (
-                    <Button
-                      key={tag}
-                      variant="outline"
-                      size="xs"
-                      onClick={() => onTagClickAction?.(tag)}
-                      className={cn(
-                        "text-mono-xs h-6 rounded-none border-[1.5px] px-2 py-0 font-bold transition-all duration-150 hover:-translate-y-0.5 hover:shadow-xs",
-                        activeThemeStyles.label,
-                        activeThemeStyles.border,
-                        activeThemeStyles.soft,
-                      )}
-                      title={`Filter by #${tag}`}
-                    >
-                      #{tag}
-                    </Button>
-                  ))}
+                  {[...activeTool.tags]
+                    .sort((a, b) => a.localeCompare(b))
+                    .map((tag) => (
+                      <Button
+                        key={tag}
+                        variant="outline"
+                        size="xs"
+                        onClick={() => onTagClickAction?.(tag)}
+                        className={cn(
+                          "text-mono-xs h-6 rounded-none border-[1.5px] px-2 py-0 font-bold transition-all duration-150 hover:-translate-y-0.5 hover:shadow-xs",
+                          activeThemeStyles.label,
+                          activeThemeStyles.border,
+                          activeThemeStyles.soft,
+                        )}
+                        title={`Filter by #${tag}`}
+                      >
+                        #{tag}
+                      </Button>
+                    ))}
                 </div>
               </div>
             )}

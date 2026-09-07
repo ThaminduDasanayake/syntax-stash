@@ -190,11 +190,29 @@ export async function POST(req: Request) {
       );
     }
 
-    // 1. Resolve or Create Author
+    // 1. Resolve or Create Author(s)
     let authorRecordId: string | null = null;
     if (authorName && authorName.trim()) {
       const name = authorName.trim();
       const slug = slugifyAuthor(name);
+
+      // Ensure every individual author exists in author table
+      const splitAuthors = name.includes(",")
+        ? name.split(",").map((a: string) => a.trim()).filter(Boolean)
+        : [name];
+
+      for (const singleName of splitAuthors) {
+        const singleSlug = slugifyAuthor(singleName);
+        if (!singleSlug) continue;
+        const [singleExisting] = await db.select().from(author).where(eq(author.slug, singleSlug));
+        if (!singleExisting) {
+          await db.insert(author).values({
+            id: crypto.randomUUID(),
+            name: singleName,
+            slug: singleSlug,
+          });
+        }
+      }
 
       const [existingAuthor] = await db.select().from(author).where(eq(author.slug, slug));
       if (existingAuthor) {
@@ -342,12 +360,33 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ error: "Resource not found." }, { status: 404 });
     }
 
-    // 1. Resolve or update author if author fields are modified
+    // 1. Resolve or update author(s) if author fields are modified
     let authorRecordId = existingResource.authorId;
     if (authorName !== undefined) {
       if (authorName && authorName.trim()) {
         const name = authorName.trim();
         const slug = slugifyAuthor(name);
+
+        // Ensure every individual author exists in author table
+        const splitAuthors = name.includes(",")
+          ? name.split(",").map((a: string) => a.trim()).filter(Boolean)
+          : [name];
+
+        for (const singleName of splitAuthors) {
+          const singleSlug = slugifyAuthor(singleName);
+          if (!singleSlug) continue;
+          const [singleExisting] = await db
+            .select()
+            .from(author)
+            .where(eq(author.slug, singleSlug));
+          if (!singleExisting) {
+            await db.insert(author).values({
+              id: crypto.randomUUID(),
+              name: singleName,
+              slug: singleSlug,
+            });
+          }
+        }
 
         const [existingAuthor] = await db.select().from(author).where(eq(author.slug, slug));
         if (existingAuthor) {

@@ -20,19 +20,40 @@ export interface TagPickerProps {
 let cachedTags: TagInfo[] | null = null;
 let fetchTagsPromise: Promise<TagInfo[]> | null = null;
 
-async function fetchTagList(): Promise<TagInfo[]> {
-  if (cachedTags) return cachedTags;
+// Cross-tab synchronization channel
+let tagsChannel: BroadcastChannel | null = null;
+if (typeof window !== "undefined" && "BroadcastChannel" in window) {
+  try {
+    tagsChannel = new BroadcastChannel("syntax-stash-tags");
+  } catch {
+    // Fallback if BroadcastChannel is not permitted in sandbox
+  }
+}
+
+export function invalidateTagCache() {
+  cachedTags = null;
+  fetchTagsPromise = null;
+  try {
+    tagsChannel?.postMessage({ type: "TAGS_INVALIDATE" });
+  } catch {
+    // Ignore
+  }
+}
+
+export async function fetchTagList(forceRefresh = false): Promise<TagInfo[]> {
+  if (!forceRefresh && cachedTags) return cachedTags;
   if (fetchTagsPromise) return fetchTagsPromise;
 
   fetchTagsPromise = (async () => {
     try {
-      const res = await fetch("/api/tags");
+      const res = await fetch("/api/tags", { cache: "no-store" });
       if (!res.ok) throw new Error("Failed to load tags");
       const data = await res.json();
-      cachedTags = data.tags || [];
+      const tagsList: TagInfo[] = data.tags || [];
+      cachedTags = tagsList.sort((a, b) => a.name.localeCompare(b.name));
       return cachedTags!;
     } catch {
-      return [];
+      return cachedTags || [];
     } finally {
       fetchTagsPromise = null;
     }
@@ -61,36 +82,70 @@ export function TagPicker({
 
   useEffect(() => {
     let mounted = true;
-    if (!cachedTags) {
-      fetchTagList().then((list) => {
+
+    const syncTags = (force = false) => {
+      fetchTagList(force).then((list) => {
         if (mounted && list.length > 0) {
           setAllTags(list);
         }
       });
+    };
+
+    // 1. Initial Load
+    syncTags();
+
+    // 2. Cross-tab real-time listener (when tags created/updated in another tab)
+    const handleBroadcast = (event: MessageEvent) => {
+      if (event.data?.type === "TAGS_INVALIDATE") {
+        cachedTags = null;
+        fetchTagsPromise = null;
+        syncTags(true);
+      }
+    };
+
+    if (tagsChannel) {
+      tagsChannel.addEventListener("message", handleBroadcast);
     }
+
+    // 3. Tab focus / visibility change
+    const handleFocus = () => {
+      syncTags(true);
+    };
+
+    window.addEventListener("focus", handleFocus);
+    document.addEventListener("visibilitychange", handleFocus);
+
     return () => {
       mounted = false;
+      if (tagsChannel) {
+        tagsChannel.removeEventListener("message", handleBroadcast);
+      }
+      window.removeEventListener("focus", handleFocus);
+      document.removeEventListener("visibilitychange", handleFocus);
     };
   }, []);
 
-  // Parse current selected tags into an array
+  // Parse current selected tags into an array, sorted alphabetically
   const selectedTags: string[] = useMemo(() => {
+    let raw: string[] = [];
     if (Array.isArray(value)) {
-      return value.map(normalizeTag).filter(Boolean);
-    }
-    if (typeof value === "string") {
-      return value
+      raw = value.map(normalizeTag).filter(Boolean);
+    } else if (typeof value === "string") {
+      raw = value
         .split(",")
         .map(normalizeTag)
         .filter(Boolean);
     }
-    return [];
+    return Array.from(new Set(raw)).sort((a, b) => a.localeCompare(b));
   }, [value]);
 
-  // Filter available suggestions based on query and already selected tags
+  // Filter available suggestions based on query and already selected tags, strictly in alphabetical order
   const cleanQuery = normalizeTag(query);
   const filteredSuggestions = useMemo(() => {
-    const unselected = allTags.filter((t) => !selectedTags.includes(t.name));
+    const unselected = allTags
+      .filter((t) => !selectedTags.includes(t.name))
+      .sort((a, b) => a.name.localeCompare(b.name));
+
     if (!cleanQuery) {
       return unselected.slice(0, 10);
     }
@@ -104,7 +159,10 @@ export function TagPicker({
   const canAddCustom = allowCustom && cleanQuery && !exactMatchExists && !isAlreadySelected;
 
   const emitChange = (newTags: string[]) => {
-    onChange(newTags.join(", "));
+    const sorted = [...new Set(newTags.map(normalizeTag).filter(Boolean))].sort((a, b) =>
+      a.localeCompare(b),
+    );
+    onChange(sorted.join(", "));
   };
 
   const addTag = (tagName: string) => {

@@ -21,6 +21,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
+import { invalidateAuthorCache } from "@/components/submissions/author-combobox";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -226,6 +227,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
             ),
           );
           toast.success(`"${formData.name}" updated successfully.`);
+          invalidateAuthorCache();
           setIsModalOpen(false);
         } else {
           toast.error(data.error || "Failed to update author.");
@@ -242,6 +244,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
         if (res.ok && data.success) {
           setAuthors((prev) => [data.author, ...prev]);
           toast.success(`"${formData.name}" created successfully.`);
+          invalidateAuthorCache();
           setIsModalOpen(false);
         } else {
           toast.error(data.error || "Failed to create author.");
@@ -272,6 +275,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
     setDeletingAuthor(null);
 
     toast.success(`"${target.name}" deleted.`);
+    invalidateAuthorCache();
 
     try {
       setIsWorking(true);

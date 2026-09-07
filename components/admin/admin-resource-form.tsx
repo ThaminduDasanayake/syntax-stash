@@ -71,33 +71,10 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
   const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
   const [ogImageOptions, setOgImageOptions] = useState<CandidateOption[]>([]);
 
-  const handleAuthorFieldChange = (field: keyof AuthorSocialValues, value: string) => {
-    if (field === "author") {
-      setFormData((prev) => ({ ...prev, authorName: value }));
-    } else if (field === "authorWebsite") {
-      setFormData((prev) => ({ ...prev, authorWebsite: value }));
-    } else if (field === "authorTwitter") {
-      setFormData((prev) => ({ ...prev, authorTwitter: value }));
-    } else if (field === "authorGitHub") {
-      setFormData((prev) => ({ ...prev, authorGithub: value }));
-    } else if (field === "authorYouTube") {
-      setFormData((prev) => ({ ...prev, authorYoutube: value }));
-    } else if (field === "authorLinkedIn") {
-      setFormData((prev) => ({ ...prev, authorLinkedin: value }));
-    }
+  const handleAuthorFieldChange = (_field: keyof AuthorSocialValues, value: string) => {
+    setFormData((prev) => ({ ...prev, authorName: value }));
   };
 
-  const handleAuthorBatchChange = (updates: Partial<AuthorSocialValues>) => {
-    setFormData((prev) => ({
-      ...prev,
-      ...(updates.author !== undefined && { authorName: updates.author || "" }),
-      ...(updates.authorGitHub !== undefined && { authorGithub: updates.authorGitHub || "" }),
-      ...(updates.authorLinkedIn !== undefined && { authorLinkedin: updates.authorLinkedIn || "" }),
-      ...(updates.authorTwitter !== undefined && { authorTwitter: updates.authorTwitter || "" }),
-      ...(updates.authorWebsite !== undefined && { authorWebsite: updates.authorWebsite || "" }),
-      ...(updates.authorYouTube !== undefined && { authorYoutube: updates.authorYouTube || "" }),
-    }));
-  };
 
   const handleAutoDetect = async () => {
     const targetUrl = formData.url?.trim();
@@ -442,7 +419,6 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
             <AuthorSocialFields
               values={authorValues}
               onChange={handleAuthorFieldChange}
-              onBatchChange={handleAuthorBatchChange}
             />
 
             {/* Section 7: Canonical Tags */}

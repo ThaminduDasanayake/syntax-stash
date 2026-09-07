@@ -27,7 +27,6 @@ export function ResourceCardPreview({
   description,
   favicon,
   subtitle,
-  tags,
   url,
 }: ResourceCardPreviewProps) {
   const [customTheme, setCustomTheme] = useState<Theme | null>(null);
@@ -103,8 +102,8 @@ export function ResourceCardPreview({
           favicon={favicon}
           isBookmarked={isBookmarked}
           onBookmarkClick={() => setIsBookmarked((prev) => !prev)}
+          showTags={false}
           subtitle={subtitle}
-          tags={tags}
           theme={activeTheme}
           title={title}
           url={url}
