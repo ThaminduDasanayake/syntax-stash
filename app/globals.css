@@ -29,7 +29,7 @@
   --ink-mute: oklch(48.5% 0.022 75);
   --ink-faint: oklch(64.5% 0.022 75);
 
-  /* 8-Color Curated Neo-Brutalist Palette in Rainbow Order (OKLCH) */
+  /* 8-Color Curated Neo-Brutalist Theme Palette (OKLCH) */
   --red: oklch(42% 0.21 27);
   --orange: oklch(75% 0.16 70);
   --yellow: oklch(93.5% 0.16 102);

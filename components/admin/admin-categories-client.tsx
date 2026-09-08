@@ -1,9 +1,7 @@
-/* eslint-disable perfectionist/sort-objects, perfectionist/sort-arrays */
 "use client";
 
 import {
   ArrowsClockwiseIcon,
-  CheckCircleIcon,
   CheckIcon,
   CopyIcon,
   EyeIcon,
@@ -12,11 +10,10 @@ import {
   PaletteIcon,
   PencilSimpleIcon,
   PlusIcon,
-  SparkleIcon,
   TrashIcon,
   XIcon,
 } from "@phosphor-icons/react";
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import {
@@ -48,23 +45,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  cn,
-  getCategoryTheme,
-  slugify,
-  type Theme,
-  THEME_CONFIG,
-  THEMES,
-} from "@/lib/utils";
+import { cn, slugify, type Theme, THEME_CONFIG, THEMES } from "@/lib/utils";
 
 export interface AdminCategoryItem {
   createdAt?: Date | string;
-  description: string | null;
   id: string;
   name: string;
-  order: number;
   slug: string;
-  themeColor: string | null;
   toolCount: number;
   updatedAt?: Date | string;
 }
@@ -73,98 +60,102 @@ interface AdminCategoriesClientProps {
   initialCategories: AdminCategoryItem[];
 }
 
-const RAINBOW_THEMES: {
-  theme: Theme;
-  name: string;
+export const CATEGORY_THEMES: {
+  description: string;
   hex: string;
+  name: string;
   oklch: string;
   textColor: "text-ink" | "text-paper";
-  description: string;
+  theme: Theme;
 }[] = [
   {
-    theme: "red",
-    name: "Cardinal Red",
+    description: "1st: AI & Machine Learning",
     hex: "#9B111E",
+    name: "Cardinal Red",
     oklch: "oklch(42% 0.21 27)",
     textColor: "text-paper",
-    description: "1st: AI & Machine Learning",
+    theme: "red",
   },
   {
-    theme: "orange",
-    name: "Amber Honey",
+    description: "2nd: Animations & Motion",
     hex: "#E8A52B",
+    name: "Amber Honey",
     oklch: "oklch(75% 0.16 70)",
     textColor: "text-ink",
-    description: "2nd: Animations & Motion",
+    theme: "orange",
   },
   {
-    theme: "yellow",
-    name: "Lemon Sun",
+    description: "3rd: Backend & Databases",
     hex: "#FFF064",
+    name: "Lemon Sun",
     oklch: "oklch(93.5% 0.16 102)",
     textColor: "text-ink",
-    description: "3rd: Backend & Databases",
+    theme: "yellow",
   },
   {
-    theme: "green",
-    name: "Fresh Grass",
+    description: "4th: Components & UI",
     hex: "#88CB02",
+    name: "Fresh Grass",
     oklch: "oklch(76% 0.20 135)",
     textColor: "text-ink",
-    description: "4th: Components & UI",
+    theme: "green",
   },
   {
-    theme: "cyan",
-    name: "Blue Slush",
+    description: "5th: CSS & Styling",
     hex: "#9DD6FA",
+    name: "Blue Slush",
     oklch: "oklch(84% 0.09 232)",
     textColor: "text-ink",
-    description: "5th: CSS & Styling",
+    theme: "cyan",
   },
   {
-    theme: "blue",
-    name: "Cobalt Electric",
+    description: "6th: Documentation & DevOps",
     hex: "#2A47B8",
+    name: "Cobalt Electric",
     oklch: "oklch(42% 0.19 265)",
     textColor: "text-paper",
-    description: "6th: Documentation & DevOps",
+    theme: "blue",
   },
   {
-    theme: "purple",
-    name: "Berry Plum",
+    description: "7th: Icons & Logos",
     hex: "#683557",
+    name: "Berry Plum",
     oklch: "oklch(43% 0.11 348)",
     textColor: "text-paper",
-    description: "7th: Icons & Logos",
+    theme: "purple",
   },
   {
-    theme: "pink",
-    name: "Cyber Lilac",
+    description: "8th: Testing & QA",
     hex: "#C9A4F0",
+    name: "Cyber Lilac",
     oklch: "oklch(75% 0.14 310)",
     textColor: "text-ink",
-    description: "8th: Testing & QA",
+    theme: "pink",
   },
 ];
 
-function resolveCategoryTheme(
-  themeColor: string | null | undefined,
-  categoryName: string,
-): Theme {
-  if (themeColor) {
-    const clean = themeColor.toLowerCase().trim();
-    if (THEMES.includes(clean as Theme)) {
-      return clean as Theme;
-    }
-    const match = RAINBOW_THEMES.find((t) => t.hex.toLowerCase() === clean);
-    if (match) return match.theme;
+/**
+ * Computes a category's theme deterministically from its alphabetical sequence.
+ */
+export function getAlphabeticalTheme(catName: string, allCategories: AdminCategoryItem[]): Theme {
+  if (!catName.trim()) return THEMES[0];
+  const sorted = [...allCategories].sort((a, b) => a.name.localeCompare(b.name));
+  const idx = sorted.findIndex((c) => c.name.toLowerCase().trim() === catName.toLowerCase().trim());
+  if (idx !== -1) {
+    return THEMES[idx % THEMES.length];
   }
-  return getCategoryTheme(categoryName);
+
+  // Calculate projected position for a new category
+  const projected = [...sorted, { name: catName } as AdminCategoryItem].sort((a, b) =>
+    a.name.localeCompare(b.name),
+  );
+  const projectedIdx = projected.findIndex(
+    (c) => c.name.toLowerCase().trim() === catName.toLowerCase().trim(),
+  );
+  return THEMES[(projectedIdx !== -1 ? projectedIdx : sorted.length) % THEMES.length];
 }
 
-export function AdminCategoriesClient({
-  initialCategories = [],
-}: AdminCategoriesClientProps) {
+export function AdminCategoriesClient({ initialCategories = [] }: AdminCategoriesClientProps) {
   const [categories, setCategories] = useState<AdminCategoryItem[]>(initialCategories);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedThemeFilter, setSelectedThemeFilter] = useState<Theme | "all">("all");
@@ -176,38 +167,35 @@ export function AdminCategoriesClient({
   const [deletingCategory, setDeletingCategory] = useState<AdminCategoryItem | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Form fields
+  // Form fields (only name; slug and theme are strictly auto-generated)
   const [formData, setFormData] = useState({
-    description: "",
     name: "",
-    order: 0,
-    slug: "",
-    themeColor: "red",
   });
-  const [autoSlug, setAutoSlug] = useState(true);
 
-  // Active theme in form
-  const currentFormTheme: Theme = resolveCategoryTheme(formData.themeColor, formData.name);
+  // Active theme computed dynamically from alphabetical position
+  const currentFormTheme: Theme = getAlphabeticalTheme(formData.name || "A", categories);
+  const currentFormThemeMeta = CATEGORY_THEMES.find((t) => t.theme === currentFormTheme);
 
-  // Filtered categories
+  // Filtered categories (always maintained in alphabetical order)
+  const sortedCategories = useMemo(() => {
+    return [...categories].sort((a, b) => a.name.localeCompare(b.name));
+  }, [categories]);
+
   const filteredCategories = useMemo(() => {
-    let result = categories;
+    let result = sortedCategories;
 
     if (selectedThemeFilter !== "all") {
       result = result.filter(
-        (c) => resolveCategoryTheme(c.themeColor, c.name) === selectedThemeFilter,
+        (c) => getAlphabeticalTheme(c.name, sortedCategories) === selectedThemeFilter,
       );
     }
 
     if (!searchQuery.trim()) return result;
     const q = searchQuery.toLowerCase().trim();
     return result.filter(
-      (c) =>
-        c.name.toLowerCase().includes(q) ||
-        c.slug.toLowerCase().includes(q) ||
-        c.description?.toLowerCase().includes(q),
+      (c) => c.name.toLowerCase().includes(q) || c.slug.toLowerCase().includes(q),
     );
-  }, [categories, searchQuery, selectedThemeFilter]);
+  }, [searchQuery, selectedThemeFilter, sortedCategories]);
 
   // Copy to clipboard
   const handleCopy = (text: string, label: string) => {
@@ -237,16 +225,9 @@ export function AdminCategoriesClient({
   // Open Add Dialog
   const handleOpenAdd = () => {
     setEditingCategory(null);
-    const nextOrder = categories.length + 1;
-    const defaultTheme = THEMES[categories.length % THEMES.length];
     setFormData({
-      description: "",
       name: "",
-      order: nextOrder,
-      slug: "",
-      themeColor: defaultTheme,
     });
-    setAutoSlug(true);
     setIsDialogOpen(true);
   };
 
@@ -254,31 +235,9 @@ export function AdminCategoriesClient({
   const handleOpenEdit = (categoryItem: AdminCategoryItem) => {
     setEditingCategory(categoryItem);
     setFormData({
-      description: categoryItem.description || "",
       name: categoryItem.name,
-      order: categoryItem.order,
-      slug: categoryItem.slug,
-      themeColor: categoryItem.themeColor || resolveCategoryTheme(null, categoryItem.name),
     });
-    setAutoSlug(false);
     setIsDialogOpen(true);
-  };
-
-  // Handle Form Name Change (auto slug)
-  const handleNameChange = (newName: string) => {
-    const slug = autoSlug ? slugify(newName) : formData.slug;
-    setFormData((prev) => ({
-      ...prev,
-      name: newName,
-      slug,
-    }));
-  };
-
-  // Auto detect rainbow theme based on alphabetical position / category name
-  const handleAutoDetectTheme = () => {
-    const detected = resolveCategoryTheme(null, formData.name || "category");
-    setFormData((prev) => ({ ...prev, themeColor: detected }));
-    toast.info(`Assigned ${detected.toUpperCase()} theme based on alphabetical sequence.`);
   };
 
   // Submit Add / Edit Form
@@ -291,18 +250,14 @@ export function AdminCategoriesClient({
 
     try {
       setIsSubmitting(true);
-      const cleanSlug = formData.slug.trim() || slugify(formData.name);
+      const cleanName = formData.name.trim();
 
       if (editingCategory) {
         // PATCH
         const res = await fetch("/api/admin/categories", {
           body: JSON.stringify({
             id: editingCategory.id,
-            description: formData.description.trim() || null,
-            name: formData.name.trim(),
-            order: Number(formData.order) || 0,
-            slug: cleanSlug,
-            themeColor: formData.themeColor.trim() || null,
+            name: cleanName,
           }),
           headers: { "Content-Type": "application/json" },
           method: "PATCH",
@@ -314,30 +269,24 @@ export function AdminCategoriesClient({
           return;
         }
 
+        const updatedSlug = slugify(cleanName);
         setCategories((prev) =>
           prev.map((c) =>
             c.id === editingCategory.id
               ? {
                   ...c,
-                  description: formData.description.trim() || null,
-                  name: formData.name.trim(),
-                  order: Number(formData.order) || 0,
-                  slug: cleanSlug,
-                  themeColor: formData.themeColor.trim() || null,
+                  name: cleanName,
+                  slug: updatedSlug,
                 }
               : c,
           ),
         );
-        toast.success(`Category "${formData.name}" updated successfully.`);
+        toast.success(`Category "${cleanName}" updated successfully.`);
       } else {
         // POST
         const res = await fetch("/api/admin/categories", {
           body: JSON.stringify({
-            description: formData.description.trim() || null,
-            name: formData.name.trim(),
-            order: Number(formData.order) || 0,
-            slug: cleanSlug,
-            themeColor: formData.themeColor.trim() || null,
+            name: cleanName,
           }),
           headers: { "Content-Type": "application/json" },
           method: "POST",
@@ -353,15 +302,14 @@ export function AdminCategoriesClient({
           ...prev,
           {
             id: data.id,
-            description: formData.description.trim() || null,
-            name: formData.name.trim(),
-            order: Number(formData.order) || 0,
-            slug: cleanSlug,
-            themeColor: formData.themeColor.trim() || null,
+            createdAt: new Date().toISOString(),
+            name: cleanName,
+            slug: data.slug || slugify(cleanName),
             toolCount: 0,
+            updatedAt: new Date().toISOString(),
           },
         ]);
-        toast.success(`Category "${formData.name}" created successfully.`);
+        toast.success(`Category "${cleanName}" created successfully.`);
       }
 
       setIsDialogOpen(false);
@@ -401,13 +349,13 @@ export function AdminCategoriesClient({
 
   return (
     <div className="font-mono">
-      {/* Control Bar & Palette Overview */}
+      {/* Control Bar & Theme Overview */}
       <div className="border-line bg-surface/50 mb-6 space-y-4 rounded-lg border p-4 text-xs">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           {/* Search */}
           <div className="relative flex-1">
             <InputField
-              placeholder="Search categories by name, slug, or description..."
+              placeholder="Search categories by name or slug..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               prefix={<MagnifyingGlassIcon className="text-muted-foreground size-4" />}
@@ -447,31 +395,36 @@ export function AdminCategoriesClient({
           </div>
         </div>
 
-        {/* Rainbow Theme Filter Tabs */}
-        <div className="border-border/40 border-t pt-3">
-          <div className="mb-2 flex items-center justify-between">
-            <span className="text-muted-foreground flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider">
+        {/* Theme Palette & Quick Filter Tabs */}
+        <div className="border-border space-y-2 border-t pt-3">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="text-muted-foreground flex items-center gap-1.5 text-[11px] font-bold tracking-wider uppercase">
               <PaletteIcon className="size-3.5" />
-              <span>Rainbow Theme Filter:</span>
-            </span>
+              <span>Category Theme Palette</span>
+            </div>
             <span className="text-muted-foreground text-[10px]">
-              {filteredCategories.length} of {categories.length} displayed
+              Themes cycle sequentially through the 8 colors in alphabetical order
             </span>
           </div>
 
-          <div className="no-scrollbar flex items-center gap-1.5 overflow-x-auto pb-1">
-            <Button
-              size="xs"
-              variant={selectedThemeFilter === "all" ? "default" : "outline"}
+          <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-4 lg:grid-cols-9">
+            <button
+              type="button"
               onClick={() => setSelectedThemeFilter("all")}
-              className="h-7 text-[11px] uppercase font-bold"
+              className={cn(
+                "flex items-center justify-between rounded border px-2 py-1.5 text-left font-mono text-[10px] font-bold uppercase transition-colors",
+                selectedThemeFilter === "all"
+                  ? "border-ink bg-ink text-paper"
+                  : "border-line bg-surface hover:border-ink/50 text-foreground",
+              )}
             >
-              All ({categories.length})
-            </Button>
+              <span>All Categories</span>
+              <span className="font-normal opacity-75">({categories.length})</span>
+            </button>
 
-            {RAINBOW_THEMES.map((item) => {
-              const count = categories.filter(
-                (c) => resolveCategoryTheme(c.themeColor, c.name) === item.theme,
+            {CATEGORY_THEMES.map((item) => {
+              const count = sortedCategories.filter(
+                (c) => getAlphabeticalTheme(c.name, sortedCategories) === item.theme,
               ).length;
               const isSelected = selectedThemeFilter === item.theme;
 
@@ -479,24 +432,22 @@ export function AdminCategoriesClient({
                 <button
                   key={item.theme}
                   type="button"
-                  onClick={() =>
-                    setSelectedThemeFilter(isSelected ? "all" : item.theme)
-                  }
+                  onClick={() => setSelectedThemeFilter(isSelected ? "all" : item.theme)}
                   className={cn(
-                    "flex h-7 items-center gap-1.5 rounded border px-2 font-mono text-[11px] font-bold uppercase transition-all",
+                    "flex items-center justify-between rounded border px-2 py-1.5 text-left font-mono text-[10px] font-bold uppercase transition-colors",
                     isSelected
-                      ? cn("border-ink scale-105 shadow-xs ring-1 ring-ink", THEME_CONFIG[item.theme].bg)
-                      : "bg-surface border-line hover:border-ink/50 text-foreground",
+                      ? cn("border-ink ring-ink shadow-xs ring-2", THEME_CONFIG[item.theme].bg)
+                      : "border-line bg-surface hover:border-ink/50 text-foreground",
                   )}
                 >
-                  <span
-                    className={cn(
-                      "size-2 rounded-full border border-black/25",
-                      THEME_CONFIG[item.theme].bg,
-                    )}
-                  />
-                  <span>{item.name.split(" ")[0]}</span>
-                  <span className="text-[10px] opacity-75">({count})</span>
+                  <div className="flex items-center gap-1.5 truncate">
+                    <span
+                      className="size-2 rounded-full border border-black/20"
+                      style={{ backgroundColor: item.hex }}
+                    />
+                    <span className="truncate">{item.theme}</span>
+                  </div>
+                  <span className="font-normal opacity-75">({count})</span>
                 </button>
               );
             })}
@@ -538,75 +489,61 @@ export function AdminCategoriesClient({
           <Table className="text-xs">
             <TableHeader className="bg-surface">
               <TableRow className="border-line hover:bg-transparent">
-                <TableHead className="w-12 text-center uppercase">Order</TableHead>
-                <TableHead className="uppercase">Name & Slug</TableHead>
-                <TableHead className="uppercase">Description</TableHead>
-                <TableHead className="uppercase">Theme & Contrast</TableHead>
+                <TableHead className="w-10 text-center uppercase">#</TableHead>
+                <TableHead className="uppercase">Name</TableHead>
+                <TableHead className="uppercase">Slug</TableHead>
+                <TableHead className="uppercase">Theme</TableHead>
                 <TableHead className="text-center uppercase">Assigned Resources</TableHead>
                 <TableHead className="w-24 text-right uppercase">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredCategories.map((cat) => {
-                const assignedTheme = resolveCategoryTheme(cat.themeColor, cat.name);
-                const themeMeta = RAINBOW_THEMES.find((t) => t.theme === assignedTheme);
+              {filteredCategories.map((cat, idx) => {
+                const assignedTheme = getAlphabeticalTheme(cat.name, sortedCategories);
+                const themeMeta = CATEGORY_THEMES.find((t) => t.theme === assignedTheme);
 
                 return (
                   <TableRow key={cat.id} className="border-line hover:bg-surface/50">
-                    {/* Order */}
-                    <TableCell className="text-center font-bold">
+                    {/* Index */}
+                    <TableCell className="text-muted-foreground text-center font-bold">
                       <Badge variant="outline" className="font-mono text-[10px]">
-                        #{cat.order}
+                        #{idx + 1}
                       </Badge>
                     </TableCell>
 
-                    {/* Name & Slug */}
+                    {/* Name */}
                     <TableCell>
-                      <div className="flex flex-col gap-0.5">
-                        <span className="text-foreground font-bold">{cat.name}</span>
-                        <div className="flex items-center gap-1">
-                          <span className="text-muted-foreground text-[10px] tracking-wide">
-                            /{cat.slug}
-                          </span>
-                          <button
-                            type="button"
-                            onClick={() => handleCopy(cat.slug, "Slug")}
-                            className="text-muted-foreground hover:text-foreground opacity-60 hover:opacity-100"
-                            title="Copy slug"
-                          >
-                            <CopyIcon className="size-3" />
-                          </button>
-                        </div>
+                      <span className="text-foreground font-bold">{cat.name}</span>
+                    </TableCell>
+
+                    {/* Slug */}
+                    <TableCell>
+                      <div className="flex items-center gap-1.5 font-mono">
+                        <Badge variant="secondary" className="px-1.5 py-0 text-[11px] font-normal">
+                          {cat.slug}
+                        </Badge>
+                        <button
+                          type="button"
+                          onClick={() => handleCopy(cat.slug, "Slug")}
+                          className="text-muted-foreground hover:text-foreground cursor-pointer p-0.5 opacity-60 hover:opacity-100"
+                          title="Copy slug"
+                        >
+                          <CopyIcon className="size-3" />
+                        </button>
                       </div>
                     </TableCell>
 
-                    {/* Description */}
-                    <TableCell className="max-w-xs">
-                      <p className="text-muted-foreground line-clamp-2 text-xs">
-                        {cat.description || <span className="italic opacity-50">No description</span>}
-                      </p>
-                    </TableCell>
-
-                    {/* Theme & Contrast */}
+                    {/* Theme */}
                     <TableCell>
-                      <div className="flex flex-col gap-1">
-                        <div className="flex items-center gap-2">
-                          <span
-                            className={cn(
-                              "border-ink inline-flex items-center gap-1.5 border px-2 py-0.5 text-[11px] font-bold uppercase shadow-2xs",
-                              THEME_CONFIG[assignedTheme].bg,
-                            )}
-                          >
-                            <span className="size-1.5 rounded-full bg-current" />
-                            <span>{themeMeta?.name || assignedTheme}</span>
-                          </span>
-
-                          <span className="text-emerald-700 dark:text-emerald-400 inline-flex items-center gap-0.5 text-[10px] font-bold">
-                            <CheckCircleIcon weight="fill" className="size-3" />
-                            <span>AAA</span>
-                          </span>
-                        </div>
-                      </div>
+                      <span
+                        className={cn(
+                          "border-ink inline-flex items-center gap-1.5 border px-2 py-0.5 text-[11px] font-bold uppercase shadow-2xs",
+                          THEME_CONFIG[assignedTheme].bg,
+                        )}
+                      >
+                        <span className="size-1.5 rounded-full bg-current" />
+                        <span>{themeMeta?.name || assignedTheme}</span>
+                      </span>
                     </TableCell>
 
                     {/* Resource Count */}
@@ -651,15 +588,15 @@ export function AdminCategoriesClient({
 
       {/* Add / Edit Category Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="font-mono sm:max-w-xl">
+        <DialogContent className="font-mono sm:max-w-lg">
           <DialogHeader>
             <DialogTitle className="text-base font-bold tracking-tight uppercase">
               {editingCategory ? `Edit Category: ${editingCategory.name}` : "Create New Category"}
             </DialogTitle>
             <DialogDescription className="text-xs">
               {editingCategory
-                ? "Update display metadata, rainbow theme assignments, and URL routing."
-                : "Add a first-class catalog category with automatic rainbow spectrum theme."}
+                ? "Update category name. Routing slug and theme will automatically adjust."
+                : "Add a category to the catalog. Routing slug and theme are automatically calculated."}
             </DialogDescription>
           </DialogHeader>
 
@@ -668,120 +605,27 @@ export function AdminCategoriesClient({
             <div>
               <InputField
                 label="Category Name *"
-                placeholder="e.g. AI & Machine Learning"
+                placeholder="e.g. Artificial Intelligence"
                 value={formData.name}
-                onChange={(e) => handleNameChange(e.target.value)}
+                onChange={(e) => setFormData({ name: e.target.value })}
                 required
                 className="font-mono text-xs"
               />
             </div>
 
-            {/* Slug */}
-            <div>
-              <div className="mb-1 flex items-center justify-between">
-                <label className="text-muted-foreground text-xs font-semibold">Slug *</label>
-                {!editingCategory && (
-                  <button
-                    type="button"
-                    onClick={() => setAutoSlug(!autoSlug)}
-                    className="text-primary text-[10px] hover:underline"
-                  >
-                    {autoSlug ? "Manual Slug" : "Auto Slug"}
-                  </button>
-                )}
-              </div>
-              <InputField
-                placeholder="e.g. ai"
-                value={formData.slug}
-                onChange={(e) => {
-                  setAutoSlug(false);
-                  setFormData((prev) => ({ ...prev, slug: e.target.value }));
-                }}
-                required
-                className="font-mono text-xs"
-              />
+            {/* Auto-Generated Slug (Read-only Preview) */}
+            <div className="border-line bg-surface/40 flex items-center justify-between rounded border px-3 py-2 text-xs">
+              <span className="text-muted-foreground text-[10px] font-bold tracking-wider uppercase">
+                Generated Route URL:
+              </span>
+              <span className="text-foreground font-bold">/{slugify(formData.name) || "slug"}</span>
             </div>
 
-            {/* Description */}
-            <div>
-              <InputField
-                label="Description"
-                placeholder="Short summary of resources in this category..."
-                value={formData.description}
-                onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
-                className="font-mono text-xs"
-              />
-            </div>
-
-            {/* 8-Color Rainbow Theme Selector */}
-            <div className="border-line bg-surface/40 space-y-2.5 rounded-lg border p-3">
-              <div className="flex items-center justify-between">
-                <label className="text-foreground text-xs font-bold uppercase tracking-wide">
-                  Rainbow Theme Assignment
-                </label>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="xs"
-                  onClick={handleAutoDetectTheme}
-                  className="h-6 text-[10px] uppercase font-bold"
-                >
-                  <SparkleIcon className="size-3" />
-                  <span>Auto-Detect</span>
-                </Button>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                {RAINBOW_THEMES.map((themeItem) => {
-                  const isSelected = currentFormTheme === themeItem.theme;
-
-                  return (
-                    <button
-                      key={themeItem.theme}
-                      type="button"
-                      onClick={() =>
-                        setFormData((prev) => ({ ...prev, themeColor: themeItem.theme }))
-                      }
-                      className={cn(
-                        "flex flex-col items-start rounded border p-2 text-left font-mono text-[10px] transition-all",
-                        isSelected
-                          ? cn("border-ink scale-102 shadow-xs ring-2 ring-ink", THEME_CONFIG[themeItem.theme].bg)
-                          : "bg-surface border-line hover:border-ink/50 text-foreground",
-                      )}
-                    >
-                      <div className="flex w-full items-center justify-between">
-                        <span className="font-bold">{themeItem.name}</span>
-                        {isSelected && <CheckIcon weight="bold" className="size-3" />}
-                      </div>
-                      <span className="opacity-75">{themeItem.description}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Display Order */}
-            <div>
-              <InputField
-                label="Display Order Index"
-                type="number"
-                placeholder="0"
-                value={String(formData.order)}
-                onChange={(e) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    order: parseInt(e.target.value, 10) || 0,
-                  }))
-                }
-                className="font-mono text-xs"
-              />
-            </div>
-
-            {/* Live Card Preview */}
+            {/* Auto-Assigned Theme Preview */}
             <div className="border-line bg-surface/30 space-y-2 rounded-lg border p-3">
-              <div className="flex items-center gap-1.5 text-muted-foreground text-[11px] font-bold uppercase tracking-wider">
+              <div className="text-muted-foreground flex items-center gap-1.5 text-[11px] font-bold tracking-wider uppercase">
                 <EyeIcon className="size-3.5" />
-                <span>Live Component Preview</span>
+                <span>Assigned Theme</span>
               </div>
 
               <div className="border-ink bg-bg space-y-2 border-2 p-3">
@@ -795,16 +639,12 @@ export function AdminCategoriesClient({
                     {formData.name || "Category Name"}
                   </span>
                   <span className="text-muted-foreground font-mono text-[10px]">
-                    Theme: {currentFormTheme.toUpperCase()}
+                    {currentFormThemeMeta?.name} ({currentFormTheme.toUpperCase()})
                   </span>
                 </div>
 
                 <p className="text-foreground text-xs font-bold">
-                  {formData.name || "Untitled Category"} Sample Resource
-                </p>
-                <p className="text-muted-foreground line-clamp-2 text-[11px]">
-                  {formData.description ||
-                    "This is how items under this category will render on the catalog."}
+                  {formData.name || "Untitled Category"} Sample Resource Card
                 </p>
               </div>
             </div>

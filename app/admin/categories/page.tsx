@@ -18,18 +18,15 @@ export default async function AdminCategoriesPage() {
     .select({
       id: category.id,
       createdAt: category.createdAt,
-      description: category.description,
       name: category.name,
-      order: category.order,
       slug: category.slug,
-      themeColor: category.themeColor,
       toolCount: count(resource.id),
       updatedAt: category.updatedAt,
     })
     .from(category)
     .leftJoin(resource, eq(category.id, resource.categoryId))
     .groupBy(category.id)
-    .orderBy(asc(category.order), asc(category.name));
+    .orderBy(asc(category.name));
 
   const categories = rows.map((r) => ({
     ...r,

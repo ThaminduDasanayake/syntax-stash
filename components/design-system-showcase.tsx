@@ -98,7 +98,7 @@ const COLOR_SWATCHES: ColorSwatchInfo[] = [
   {
     theme: "cyan",
     name: "Blue Slush",
-    source: "Color Studio (Rainbow Ice Pop)",
+    source: "Color Studio (Ice Pop)",
     oklch: "oklch(84% 0.09 232)",
     hex: "#9dd6fa",
     tintHex: "#e4f2fc",

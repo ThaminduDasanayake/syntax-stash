@@ -185,7 +185,7 @@ const TOOL_ENTRIES = Object.entries(TOOL_CATEGORIES);
 
 /**
  * Curated list of standard categories in alphabetical order (starting with AI).
- * Themes are assigned in the 8-color rainbow sequence (Red -> Pink) and repeat.
+ * Themes are assigned in the 8-color theme sequence (Red -> Pink) and repeat.
  */
 /* eslint-disable perfectionist/sort-objects */
 export const ALPHABETICAL_CATEGORY_THEMES: Record<string, Theme> = {
@@ -274,7 +274,7 @@ export function getCategoryTheme(
 ): Theme {
   if (!category) return THEMES[0];
 
-  // If explicit index is provided, use it directly in rainbow sequence
+  // If explicit index is provided, use it directly in theme sequence
   if (typeof index === "number" && index >= 0) {
     return THEMES[index % THEMES.length];
   }

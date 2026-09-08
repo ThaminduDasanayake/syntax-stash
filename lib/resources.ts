@@ -45,7 +45,7 @@ export const getAllResources = cache(
           .leftJoin(category, eq(resource.categoryId, category.id))
           .leftJoin(resourceTag, eq(resource.id, resourceTag.resourceId))
           .leftJoin(tag, eq(resourceTag.tagId, tag.id))
-          .orderBy(asc(category.order), asc(category.name), asc(resource.title));
+          .orderBy(asc(category.name), asc(resource.title));
 
         if (!rows || rows.length === 0) {
           return [];

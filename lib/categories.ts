@@ -7,13 +7,10 @@ import { category, resource } from "@/lib/db/schema";
 import { slugify } from "@/lib/utils";
 
 export interface CategoryItem {
-  description: string | null;
   id: string;
   name: string;
-  order: number;
   resourceCount?: number;
   slug: string;
-  themeColor: string | null;
 }
 
 // Backward compatibility aliases
@@ -34,26 +31,20 @@ export const getAllCategories = cache(
         const rows = await db
           .select({
             id: category.id,
-            description: category.description,
             name: category.name,
-            order: category.order,
             resourceCount: count(resource.id),
             slug: category.slug,
-            themeColor: category.themeColor,
           })
           .from(category)
           .leftJoin(resource, eq(category.id, resource.categoryId))
           .groupBy(category.id)
-          .orderBy(asc(category.order), asc(category.name));
+          .orderBy(asc(category.name));
 
         return rows.map((r) => ({
           id: r.id,
-          description: r.description,
           name: r.name,
-          order: r.order,
           resourceCount: Number(r.resourceCount) || 0,
           slug: r.slug,
-          themeColor: r.themeColor,
         }));
       } catch (error) {
         console.error("Database query failed in getAllCategories():", error);
