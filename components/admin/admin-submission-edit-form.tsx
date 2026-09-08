@@ -13,6 +13,7 @@ import {
 import { useState } from "react";
 
 import {
+  AuthorOption,
   AuthorSocialFields,
   AuthorSocialValues,
   MediaAssetFields,
@@ -28,6 +29,7 @@ import { useCategories } from "@/hooks/use-categories";
 import { Submission } from "@/lib/db/schema";
 import { cn } from "@/lib/utils";
 
+import { AdminAuthorDialog } from "./admin-author-dialog";
 import { STATUS_CONFIG, STATUS_OPTIONS, SubmissionStatus } from "./types";
 
 interface AdminSubmissionEditFormProps {
@@ -80,6 +82,10 @@ export function AdminSubmissionEditForm({
     { label: string; type?: string; url: string }[]
   >([]);
 
+  // Inline Author Creation
+  const [isCreateAuthorOpen, setIsCreateAuthorOpen] = useState(false);
+  const [createAuthorInitialName, setCreateAuthorInitialName] = useState("");
+
   const handleAuthorFieldChange = (field: keyof AuthorSocialValues, value: string) => {
     setEditForm((prev) => ({
       ...prev,
@@ -92,6 +98,23 @@ export function AdminSubmissionEditForm({
       ...prev,
       ...updates,
     }));
+  };
+
+  const handleSelectAuthorOption = (authorOption: AuthorOption) => {
+    setEditForm((prev) => ({
+      ...prev,
+      author: authorOption.name,
+      authorGitHub: authorOption.links?.github || prev.authorGitHub || "",
+      authorLinkedIn: authorOption.links?.linkedin || prev.authorLinkedIn || "",
+      authorTwitter: authorOption.links?.twitter || prev.authorTwitter || "",
+      authorWebsite: authorOption.links?.website || prev.authorWebsite || "",
+      authorYouTube: authorOption.links?.youtube || prev.authorYouTube || "",
+    }));
+  };
+
+  const handleRequestCreateAuthor = (name: string) => {
+    setCreateAuthorInitialName(name);
+    setIsCreateAuthorOpen(true);
   };
 
   const handleAutoDetect = async () => {
@@ -305,6 +328,9 @@ export function AdminSubmissionEditForm({
             }}
             onChange={handleAuthorFieldChange}
             onBatchChange={handleAuthorBatchChange}
+            onRequestCreateAuthor={handleRequestCreateAuthor}
+            onSelectAuthorOption={handleSelectAuthorOption}
+            allowCustom={false}
           />
 
           {/* Section 6: Repo, Tags & Admin Moderation */}
@@ -456,6 +482,25 @@ export function AdminSubmissionEditForm({
           </Button>
         </div>
       </div>
+
+      {/* Inline Create Author Modal */}
+      <AdminAuthorDialog
+        open={isCreateAuthorOpen}
+        onOpenChange={setIsCreateAuthorOpen}
+        initialName={createAuthorInitialName}
+        onCreated={(newAuthor) => {
+          setEditForm((prev) => ({
+            ...prev,
+            author: newAuthor.name,
+            authorGitHub: newAuthor.github || "",
+            authorLinkedIn: newAuthor.linkedin || "",
+            authorTwitter: newAuthor.twitter || "",
+            authorWebsite: newAuthor.website || "",
+            authorYouTube: newAuthor.youtube || "",
+          }));
+          setIsCreateAuthorOpen(false);
+        }}
+      />
     </div>
   );
 }

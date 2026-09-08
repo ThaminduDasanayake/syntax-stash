@@ -14,6 +14,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import {
+  AuthorOption,
   AuthorSocialFields,
   AuthorSocialValues,
   CandidateOption,
@@ -28,6 +29,7 @@ import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
 
+import { AdminAuthorDialog } from "./admin-author-dialog";
 import { AdminResourceItem } from "./types";
 
 interface AdminResourceFormProps {
@@ -68,8 +70,35 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
   const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
   const [ogImageOptions, setOgImageOptions] = useState<CandidateOption[]>([]);
 
+  // Author Creation Modal State
+  const [isCreateAuthorOpen, setIsCreateAuthorOpen] = useState(false);
+  const [createAuthorInitialName, setCreateAuthorInitialName] = useState("");
+
   const handleAuthorFieldChange = (_field: keyof AuthorSocialValues, value: string) => {
-    setFormData((prev) => ({ ...prev, authorName: value }));
+    setFormData((prev) => ({
+      ...prev,
+      authorName: value,
+      ...(value ? {} : { authorId: null }),
+    }));
+  };
+
+  const handleSelectAuthorOption = (authorOption: AuthorOption) => {
+    setFormData((prev) => ({
+      ...prev,
+      authorBlog: authorOption.links?.blog || "",
+      authorGithub: authorOption.links?.github || "",
+      authorId: authorOption.id || prev.authorId || null,
+      authorLinkedin: authorOption.links?.linkedin || "",
+      authorName: authorOption.name,
+      authorTwitter: authorOption.links?.twitter || "",
+      authorWebsite: authorOption.links?.website || "",
+      authorYoutube: authorOption.links?.youtube || "",
+    }));
+  };
+
+  const handleRequestCreateAuthor = (name: string) => {
+    setCreateAuthorInitialName(name);
+    setIsCreateAuthorOpen(true);
   };
 
   const handleAutoDetect = async () => {
@@ -406,7 +435,13 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
             </div>
 
             {/* Section 6: Creator Attribution */}
-            <AuthorSocialFields values={authorValues} onChange={handleAuthorFieldChange} />
+            <AuthorSocialFields
+              values={authorValues}
+              onChange={handleAuthorFieldChange}
+              onRequestCreateAuthor={handleRequestCreateAuthor}
+              onSelectAuthorOption={handleSelectAuthorOption}
+              allowCustom={false}
+            />
 
             {/* Section 7: Canonical Tags */}
             <div className="space-y-2">
@@ -504,6 +539,27 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
           </div>
         </div>
       </form>
+
+      {/* Inline Create Author Modal */}
+      <AdminAuthorDialog
+        open={isCreateAuthorOpen}
+        onOpenChange={setIsCreateAuthorOpen}
+        initialName={createAuthorInitialName}
+        onCreated={(newAuthor) => {
+          setFormData((prev) => ({
+            ...prev,
+            authorBlog: newAuthor.blog || "",
+            authorGithub: newAuthor.github || "",
+            authorId: newAuthor.id,
+            authorLinkedin: newAuthor.linkedin || "",
+            authorName: newAuthor.name,
+            authorTwitter: newAuthor.twitter || "",
+            authorWebsite: newAuthor.website || "",
+            authorYoutube: newAuthor.youtube || "",
+          }));
+          setIsCreateAuthorOpen(false);
+        }}
+      />
     </div>
   );
 }

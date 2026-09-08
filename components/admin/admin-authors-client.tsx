@@ -5,7 +5,6 @@ import {
   ArrowSquareOutIcon,
   CaretLeftIcon,
   CaretRightIcon,
-  CheckIcon,
   GlobeIcon,
   MagnifyingGlassIcon,
   PencilSimpleIcon,
@@ -21,6 +20,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
+import { AdminAuthorDialog } from "@/components/admin/admin-author-dialog";
 import { invalidateAuthorCache } from "@/components/submissions/author-combobox";
 import {
   AlertDialog,
@@ -34,16 +34,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { InputField } from "@/components/ui/input-field";
-import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import {
   Table,
@@ -53,7 +44,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { slugifyAuthor } from "@/lib/utils";
 
 export interface AdminAuthorItem {
   blog: string | null;
@@ -99,19 +89,6 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
   const [editingAuthor, setEditingAuthor] = useState<AdminAuthorItem | null>(null);
   const [deletingAuthor, setDeletingAuthor] = useState<AdminAuthorItem | null>(null);
 
-  // Form State
-  const [formData, setFormData] = useState({
-    blog: "",
-    github: "",
-    linkedin: "",
-    name: "",
-    slug: "",
-    twitter: "",
-    website: "",
-    youtube: "",
-  });
-  const [autoSlug, setAutoSlug] = useState(true);
-
   // Refresh from API
   const handleRefresh = async () => {
     try {
@@ -134,127 +111,13 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
   // Open Create Modal
   const handleOpenCreate = () => {
     setEditingAuthor(null);
-    setFormData({
-      blog: "",
-      github: "",
-      linkedin: "",
-      name: "",
-      slug: "",
-      twitter: "",
-      website: "",
-      youtube: "",
-    });
-    setAutoSlug(true);
     setIsModalOpen(true);
   };
 
   // Open Edit Modal
   const handleOpenEdit = (authorItem: AdminAuthorItem) => {
     setEditingAuthor(authorItem);
-    setFormData({
-      blog: authorItem.blog || "",
-      github: authorItem.github || "",
-      linkedin: authorItem.linkedin || "",
-      name: authorItem.name,
-      slug: authorItem.slug,
-      twitter: authorItem.twitter || "",
-      website: authorItem.website || "",
-      youtube: authorItem.youtube || "",
-    });
-    setAutoSlug(false);
     setIsModalOpen(true);
-  };
-
-  // Auto-slug on name typing
-  const handleNameChange = (val: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      name: val,
-      slug: autoSlug ? slugifyAuthor(val) : prev.slug,
-    }));
-  };
-
-  // Submit Save/Create
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!formData.name.trim()) {
-      toast.error("Author name is required.");
-      return;
-    }
-    if (!formData.slug.trim()) {
-      toast.error("Author slug is required.");
-      return;
-    }
-
-    try {
-      setIsWorking(true);
-      if (editingAuthor) {
-        // PATCH
-        const res = await fetch("/api/admin/authors", {
-          body: JSON.stringify({
-            id: editingAuthor.id,
-            blog: formData.blog,
-            github: formData.github,
-            linkedin: formData.linkedin,
-            name: formData.name,
-            slug: formData.slug,
-            twitter: formData.twitter,
-            website: formData.website,
-            youtube: formData.youtube,
-          }),
-          headers: { "Content-Type": "application/json" },
-          method: "PATCH",
-        });
-        const data = await res.json();
-
-        if (res.ok && data.success) {
-          setAuthors((prev) =>
-            prev.map((a) =>
-              a.id === editingAuthor.id
-                ? {
-                    ...a,
-                    blog: formData.blog.trim() || null,
-                    github: formData.github.trim() || null,
-                    linkedin: formData.linkedin.trim() || null,
-                    name: formData.name.trim(),
-                    slug: formData.slug.trim(),
-                    twitter: formData.twitter.trim() || null,
-                    website: formData.website.trim() || null,
-                    youtube: formData.youtube.trim() || null,
-                  }
-                : a,
-            ),
-          );
-          toast.success(`"${formData.name}" updated successfully.`);
-          invalidateAuthorCache();
-          setIsModalOpen(false);
-        } else {
-          toast.error(data.error || "Failed to update author.");
-        }
-      } else {
-        // POST
-        const res = await fetch("/api/admin/authors", {
-          body: JSON.stringify(formData),
-          headers: { "Content-Type": "application/json" },
-          method: "POST",
-        });
-        const data = await res.json();
-
-        if (res.ok && data.success) {
-          setAuthors((prev) => [data.author, ...prev]);
-          toast.success(`"${formData.name}" created successfully.`);
-          invalidateAuthorCache();
-          setIsModalOpen(false);
-        } else {
-          toast.error(data.error || "Failed to create author.");
-        }
-      }
-    } catch {
-      toast.error("Network error while saving author.");
-    } finally {
-      setIsWorking(false);
-    }
   };
 
   // Delete Author
@@ -693,168 +556,16 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
       </div>
 
       {/* Create / Edit Author Modal */}
-      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="border-line bg-paper max-h-[90vh] min-w-2xl overflow-y-auto font-mono text-xs">
-          <DialogHeader>
-            <DialogTitle className="text-foreground text-base font-bold uppercase">
-              {editingAuthor ? `Edit Author: ${editingAuthor.name}` : "Create New Author"}
-            </DialogTitle>
-            <DialogDescription className="text-muted-foreground text-xs">
-              {editingAuthor
-                ? "Update author name, slug, website, and linked social profiles."
-                : "Add a new creator to the Syntax Stash directory."}
-            </DialogDescription>
-          </DialogHeader>
-
-          <form onSubmit={handleSubmit} className="space-y-4 pt-2 text-xs">
-            {/* Row 1: Name and Slug Side-by-Side */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <InputField
-                label="Author / Creator Name *"
-                placeholder="e.g. Vercel or Lee Robinson"
-                value={formData.name}
-                onChange={(e) => handleNameChange(e.target.value)}
-                required
-                className="font-mono text-xs"
-              />
-
-              <div className="space-y-2">
-                <div className="mb-2 flex items-center justify-between">
-                  <Label>Slug *</Label>
-                  {!editingAuthor && (
-                    <button
-                      type="button"
-                      onClick={() => setAutoSlug(!autoSlug)}
-                      className="text-primary text-[10px] hover:underline"
-                    >
-                      {autoSlug ? "Manual Slug" : "Auto Slug"}
-                    </button>
-                  )}
-                </div>
-                <InputField
-                  placeholder="e.g. vercel"
-                  value={formData.slug}
-                  onChange={(e) => {
-                    setAutoSlug(false);
-                    setFormData((prev) => ({ ...prev, slug: e.target.value }));
-                  }}
-                  required
-                  className="font-mono text-xs"
-                />
-              </div>
-            </div>
-
-            {/* URLs Sequentially One After the Other with Icons in Labels */}
-            <div className="border-line/60 space-y-3.5 border-t pt-3">
-              <div className="space-y-1.5">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
-                  <GlobeIcon className="text-muted-foreground size-4" />
-                  <span>Website / Portfolio URL</span>
-                </Label>
-                <InputField
-                  placeholder="https://example.com"
-                  value={formData.website}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, website: e.target.value }))}
-                  className="font-mono text-xs"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
-                  <Image src="/github.svg" alt="GitHub" width={16} height={16} />
-                  <span>GitHub (Username or URL)</span>
-                </Label>
-                <InputField
-                  placeholder="https://github.com/username"
-                  value={formData.github}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, github: e.target.value }))}
-                  className="font-mono text-xs"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
-                  <XLogoIcon weight="bold" className="text-muted-foreground size-4" />
-                  <span>Twitter / X (@username or URL)</span>
-                </Label>
-                <InputField
-                  placeholder="@username or https://x.com/..."
-                  value={formData.twitter}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, twitter: e.target.value }))}
-                  className="font-mono text-xs"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
-                  <Image src="/linkedin.svg" alt="LinkedIn" width={16} height={16} />
-                  <span>LinkedIn (Username or URL)</span>
-                </Label>
-                <InputField
-                  placeholder="username or https://linkedin.com/in/..."
-                  value={formData.linkedin}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, linkedin: e.target.value }))}
-                  className="font-mono text-xs"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
-                  <Image src="/youtube.svg" alt="YouTube" width={16} height={16} />
-                  <span>YouTube Channel URL</span>
-                </Label>
-                <InputField
-                  placeholder="https://youtube.com/@channel"
-                  value={formData.youtube}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, youtube: e.target.value }))}
-                  className="font-mono text-xs"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
-                  <GlobeIcon className="text-muted-foreground size-4" />
-                  <span>Blog URL</span>
-                </Label>
-                <InputField
-                  placeholder="https://example.com/blog"
-                  value={formData.blog}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, blog: e.target.value }))}
-                  className="font-mono text-xs"
-                />
-              </div>
-            </div>
-
-            <DialogFooter className="gap-2 pt-2">
-              <Button
-                type="button"
-                variant="ghost"
-                onClick={() => setIsModalOpen(false)}
-                disabled={isWorking}
-                className="font-mono text-xs uppercase"
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                disabled={isWorking}
-                className="font-mono text-xs font-bold uppercase"
-              >
-                {isWorking ? (
-                  "Saving..."
-                ) : editingAuthor ? (
-                  "Save Changes"
-                ) : (
-                  <span className="flex items-center gap-1">
-                    <CheckIcon weight="bold" className="size-3.5" />
-                    <span>Create Author</span>
-                  </span>
-                )}
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
+      {/* Create / Edit Author Modal */}
+      <AdminAuthorDialog
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        author={editingAuthor}
+        onCreated={(newAuthor) => setAuthors((prev) => [newAuthor, ...prev])}
+        onUpdated={(updatedAuthor) =>
+          setAuthors((prev) => prev.map((a) => (a.id === updatedAuthor.id ? updatedAuthor : a)))
+        }
+      />
 
       {/* Delete Confirmation Alert */}
       <AlertDialog

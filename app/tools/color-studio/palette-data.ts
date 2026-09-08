@@ -319,7 +319,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Ice Pop",
+    name: "Rainbow Ice Pop",
     colors: [
       { name: "Cherry Red", hex: "#F62024", colSpan: "col-span-3", textColor: "black" },
       { name: "Pink Lemonade", hex: "#FF6F91", colSpan: "col-span-1", textColor: "black" },

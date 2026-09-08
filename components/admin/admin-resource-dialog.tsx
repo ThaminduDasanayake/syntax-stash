@@ -10,6 +10,7 @@ import {
 import { useEffect, useState } from "react";
 
 import {
+  AuthorOption,
   AuthorSocialFields,
   AuthorSocialValues,
   CandidateOption,
@@ -31,6 +32,7 @@ import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
 
+import { AdminAuthorDialog } from "./admin-author-dialog";
 import { AdminResourceItem } from "./types";
 
 interface AdminResourceDialogProps {
@@ -55,6 +57,7 @@ export function AdminResourceDialog({
     title: "",
     authorBlog: "",
     authorGithub: "",
+    authorId: null,
     authorLinkedin: "",
     authorName: "",
     authorTwitter: "",
@@ -73,6 +76,10 @@ export function AdminResourceDialog({
   const [isDetecting, setIsDetecting] = useState(false);
   const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
   const [ogImageOptions, setOgImageOptions] = useState<CandidateOption[]>([]);
+
+  // Author Creation Modal State
+  const [isCreateAuthorOpen, setIsCreateAuthorOpen] = useState(false);
+  const [createAuthorInitialName, setCreateAuthorInitialName] = useState("");
 
   useEffect(() => {
     if (resource) {
@@ -121,8 +128,31 @@ export function AdminResourceDialog({
 
   const handleAuthorFieldChange = (field: keyof AuthorSocialValues, value: string) => {
     if (field === "author") {
-      setFormData((prev) => ({ ...prev, authorName: value }));
+      setFormData((prev) => ({
+        ...prev,
+        authorName: value,
+        ...(value ? {} : { authorId: null }),
+      }));
     }
+  };
+
+  const handleSelectAuthorOption = (authorOption: AuthorOption) => {
+    setFormData((prev) => ({
+      ...prev,
+      authorBlog: authorOption.links?.blog || "",
+      authorGithub: authorOption.links?.github || "",
+      authorId: authorOption.id || prev.authorId || null,
+      authorLinkedin: authorOption.links?.linkedin || "",
+      authorName: authorOption.name,
+      authorTwitter: authorOption.links?.twitter || "",
+      authorWebsite: authorOption.links?.website || "",
+      authorYoutube: authorOption.links?.youtube || "",
+    }));
+  };
+
+  const handleRequestCreateAuthor = (name: string) => {
+    setCreateAuthorInitialName(name);
+    setIsCreateAuthorOpen(true);
   };
 
   const handleAutoDetect = async () => {
@@ -356,6 +386,9 @@ export function AdminResourceDialog({
               <AuthorSocialFields
                 values={authorValues}
                 onChange={handleAuthorFieldChange}
+                onRequestCreateAuthor={handleRequestCreateAuthor}
+                onSelectAuthorOption={handleSelectAuthorOption}
+                allowCustom={false}
                 disabled={isWorking}
               />
 
@@ -424,6 +457,27 @@ export function AdminResourceDialog({
           </div>
         </form>
       </DialogContent>
+
+      {/* Inline Create Author Modal */}
+      <AdminAuthorDialog
+        open={isCreateAuthorOpen}
+        onOpenChange={setIsCreateAuthorOpen}
+        initialName={createAuthorInitialName}
+        onCreated={(newAuthor) => {
+          setFormData((prev) => ({
+            ...prev,
+            authorBlog: newAuthor.blog || "",
+            authorGithub: newAuthor.github || "",
+            authorId: newAuthor.id,
+            authorLinkedin: newAuthor.linkedin || "",
+            authorName: newAuthor.name,
+            authorTwitter: newAuthor.twitter || "",
+            authorWebsite: newAuthor.website || "",
+            authorYoutube: newAuthor.youtube || "",
+          }));
+          setIsCreateAuthorOpen(false);
+        }}
+      />
     </Dialog>
   );
 }
