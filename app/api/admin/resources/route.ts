@@ -31,7 +31,6 @@ interface AdminResourceRecord {
   authorWebsite: string | null;
   authorYoutube: string | null;
   category: string;
-  categoryIcon: string | null;
   categoryId: string;
   categoryName: string | null;
   categorySlug: string | null;
@@ -68,7 +67,6 @@ export async function GET() {
         authorTwitter: author.twitter,
         authorWebsite: author.website,
         authorYoutube: author.youtube,
-        categoryIcon: category.icon,
         categoryId: resource.categoryId,
         categoryName: category.name,
         categorySlug: category.slug,
@@ -109,7 +107,6 @@ export async function GET() {
           authorWebsite: r.authorWebsite,
           authorYoutube: r.authorYoutube,
           category: catName,
-          categoryIcon: r.categoryIcon,
           categoryId: r.categoryId,
           categoryName: r.categoryName,
           categorySlug: r.categorySlug,

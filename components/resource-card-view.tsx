@@ -56,7 +56,11 @@ export function ResourceCardView({
   const resolvedCategory = category || "Generators";
   const themeClasses =
     propThemeClasses ?? (theme ? THEME_CONFIG[theme].bg : getCategoryColor(resolvedCategory));
-  const isBlue = themeClasses.includes("bg-c-blue") || theme === "blue";
+  const isDarkTheme =
+    themeClasses.includes("text-paper") ||
+    theme === "blue" ||
+    theme === "purple" ||
+    theme === "red";
 
   // Parse tags if provided as comma-separated string or array
   const parsedTags: string[] = Array.isArray(tags)
@@ -128,7 +132,7 @@ export function ResourceCardView({
                   key={t}
                   className={cn(
                     "py-0.2 inline-flex items-center gap-0.5 rounded px-1.5 font-mono text-[9px]",
-                    isBlue ? "bg-paper/20 text-paper" : "bg-ink/10 text-ink",
+                    isDarkTheme ? "bg-paper/20 text-paper" : "bg-ink/10 text-ink",
                   )}
                 >
                   <TagIcon className="size-2.5" />
@@ -176,7 +180,7 @@ export function ResourceCardView({
                 <span
                   className={cn(
                     "inline-flex shrink-0 items-center gap-1 font-mono text-[11px] font-medium",
-                    isBlue ? "text-paper/90" : "text-ink/80",
+                    isDarkTheme ? "text-paper/90" : "text-ink/80",
                   )}
                   title={`${stars.toLocaleString()} GitHub stars`}
                 >
@@ -196,7 +200,7 @@ export function ResourceCardView({
                     size="icon-xs"
                     className={cn(
                       "group/bookmark border-none bg-transparent transition-opacity duration-200 hover:bg-transparent",
-                      isBlue ? "text-paper hover:text-paper" : "text-ink hover:text-ink",
+                      isDarkTheme ? "text-paper hover:text-paper" : "text-ink hover:text-ink",
                       isBookmarked ? "opacity-100" : "opacity-80 group-hover:opacity-100",
                     )}
                     onMouseEnter={() => setIsBookmarkHovered(true)}
@@ -213,7 +217,7 @@ export function ResourceCardView({
                     />
                   </Button>
                 </TooltipTrigger>
-                <TooltipContent className={isBlue ? "bg-paper text-ink" : undefined}>
+                <TooltipContent className={isDarkTheme ? "bg-paper text-ink" : undefined}>
                   <p>{isBookmarked ? "Remove" : "Save"}</p>
                 </TooltipContent>
               </Tooltip>
@@ -225,7 +229,7 @@ export function ResourceCardView({
                       href={url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={cn("group/arrow p-1", isBlue ? "text-paper" : "text-ink")}
+                      className={cn("group/arrow p-1", isDarkTheme ? "text-paper" : "text-ink")}
                       onClick={(e) => e.stopPropagation()}
                       aria-label="Open in new tab"
                     >
@@ -235,7 +239,7 @@ export function ResourceCardView({
                     <span
                       className={cn(
                         "group/arrow cursor-not-allowed p-1 opacity-60",
-                        isBlue ? "text-paper" : "text-ink",
+                        isDarkTheme ? "text-paper" : "text-ink",
                       )}
                       aria-label="Open in new tab"
                     >
@@ -243,7 +247,7 @@ export function ResourceCardView({
                     </span>
                   )}
                 </TooltipTrigger>
-                <TooltipContent className={isBlue ? "bg-paper text-ink" : undefined}>
+                <TooltipContent className={isDarkTheme ? "bg-paper text-ink" : undefined}>
                   <p>Open in new tab</p>
                 </TooltipContent>
               </Tooltip>

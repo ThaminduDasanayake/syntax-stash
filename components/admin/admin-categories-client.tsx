@@ -1,12 +1,18 @@
+/* eslint-disable perfectionist/sort-objects, perfectionist/sort-arrays */
 "use client";
 
 import {
   ArrowsClockwiseIcon,
+  CheckCircleIcon,
   CheckIcon,
+  CopyIcon,
+  EyeIcon,
   FoldersIcon,
   MagnifyingGlassIcon,
+  PaletteIcon,
   PencilSimpleIcon,
   PlusIcon,
+  SparkleIcon,
   TrashIcon,
   XIcon,
 } from "@phosphor-icons/react";
@@ -42,12 +48,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { slugify } from "@/lib/utils";
+import {
+  cn,
+  getCategoryTheme,
+  slugify,
+  type Theme,
+  THEME_CONFIG,
+  THEMES,
+} from "@/lib/utils";
 
 export interface AdminCategoryItem {
   createdAt?: Date | string;
   description: string | null;
-  icon: string | null;
   id: string;
   name: string;
   order: number;
@@ -61,9 +73,101 @@ interface AdminCategoriesClientProps {
   initialCategories: AdminCategoryItem[];
 }
 
-export function AdminCategoriesClient({ initialCategories = [] }: AdminCategoriesClientProps) {
+const RAINBOW_THEMES: {
+  theme: Theme;
+  name: string;
+  hex: string;
+  oklch: string;
+  textColor: "text-ink" | "text-paper";
+  description: string;
+}[] = [
+  {
+    theme: "red",
+    name: "Cardinal Red",
+    hex: "#9B111E",
+    oklch: "oklch(42% 0.21 27)",
+    textColor: "text-paper",
+    description: "1st: AI & Machine Learning",
+  },
+  {
+    theme: "orange",
+    name: "Amber Honey",
+    hex: "#E8A52B",
+    oklch: "oklch(75% 0.16 70)",
+    textColor: "text-ink",
+    description: "2nd: Animations & Motion",
+  },
+  {
+    theme: "yellow",
+    name: "Lemon Sun",
+    hex: "#FFF064",
+    oklch: "oklch(93.5% 0.16 102)",
+    textColor: "text-ink",
+    description: "3rd: Backend & Databases",
+  },
+  {
+    theme: "green",
+    name: "Fresh Grass",
+    hex: "#88CB02",
+    oklch: "oklch(76% 0.20 135)",
+    textColor: "text-ink",
+    description: "4th: Components & UI",
+  },
+  {
+    theme: "cyan",
+    name: "Blue Slush",
+    hex: "#9DD6FA",
+    oklch: "oklch(84% 0.09 232)",
+    textColor: "text-ink",
+    description: "5th: CSS & Styling",
+  },
+  {
+    theme: "blue",
+    name: "Cobalt Electric",
+    hex: "#2A47B8",
+    oklch: "oklch(42% 0.19 265)",
+    textColor: "text-paper",
+    description: "6th: Documentation & DevOps",
+  },
+  {
+    theme: "purple",
+    name: "Berry Plum",
+    hex: "#683557",
+    oklch: "oklch(43% 0.11 348)",
+    textColor: "text-paper",
+    description: "7th: Icons & Logos",
+  },
+  {
+    theme: "pink",
+    name: "Cyber Lilac",
+    hex: "#C9A4F0",
+    oklch: "oklch(75% 0.14 310)",
+    textColor: "text-ink",
+    description: "8th: Testing & QA",
+  },
+];
+
+function resolveCategoryTheme(
+  themeColor: string | null | undefined,
+  categoryName: string,
+): Theme {
+  if (themeColor) {
+    const clean = themeColor.toLowerCase().trim();
+    if (THEMES.includes(clean as Theme)) {
+      return clean as Theme;
+    }
+    const match = RAINBOW_THEMES.find((t) => t.hex.toLowerCase() === clean);
+    if (match) return match.theme;
+  }
+  return getCategoryTheme(categoryName);
+}
+
+export function AdminCategoriesClient({
+  initialCategories = [],
+}: AdminCategoriesClientProps) {
   const [categories, setCategories] = useState<AdminCategoryItem[]>(initialCategories);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedThemeFilter, setSelectedThemeFilter] = useState<Theme | "all">("all");
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   // Dialog state
@@ -75,26 +179,41 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
   // Form fields
   const [formData, setFormData] = useState({
     description: "",
-    icon: "",
     name: "",
     order: 0,
     slug: "",
-    themeColor: "",
+    themeColor: "red",
   });
   const [autoSlug, setAutoSlug] = useState(true);
 
+  // Active theme in form
+  const currentFormTheme: Theme = resolveCategoryTheme(formData.themeColor, formData.name);
+
   // Filtered categories
   const filteredCategories = useMemo(() => {
-    if (!searchQuery.trim()) return categories;
+    let result = categories;
+
+    if (selectedThemeFilter !== "all") {
+      result = result.filter(
+        (c) => resolveCategoryTheme(c.themeColor, c.name) === selectedThemeFilter,
+      );
+    }
+
+    if (!searchQuery.trim()) return result;
     const q = searchQuery.toLowerCase().trim();
-    return categories.filter(
+    return result.filter(
       (c) =>
         c.name.toLowerCase().includes(q) ||
         c.slug.toLowerCase().includes(q) ||
-        c.description?.toLowerCase().includes(q) ||
-        c.icon?.toLowerCase().includes(q),
+        c.description?.toLowerCase().includes(q),
     );
-  }, [categories, searchQuery]);
+  }, [categories, searchQuery, selectedThemeFilter]);
+
+  // Copy to clipboard
+  const handleCopy = (text: string, label: string) => {
+    navigator.clipboard.writeText(text);
+    toast.success(`Copied ${label} "${text}" to clipboard.`);
+  };
 
   // Refresh
   const handleRefresh = async () => {
@@ -104,7 +223,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
       const data = await res.json();
       if (res.ok && data.categories) {
         setCategories(data.categories);
-        toast.info("Categories refreshed.");
+        toast.info("Categories refreshed successfully.");
       } else {
         toast.error(data.error || "Failed to refresh categories.");
       }
@@ -118,13 +237,14 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
   // Open Add Dialog
   const handleOpenAdd = () => {
     setEditingCategory(null);
+    const nextOrder = categories.length + 1;
+    const defaultTheme = THEMES[categories.length % THEMES.length];
     setFormData({
       description: "",
-      icon: "",
       name: "",
-      order: categories.length + 1,
+      order: nextOrder,
       slug: "",
-      themeColor: "#6366F1",
+      themeColor: defaultTheme,
     });
     setAutoSlug(true);
     setIsDialogOpen(true);
@@ -135,11 +255,10 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
     setEditingCategory(categoryItem);
     setFormData({
       description: categoryItem.description || "",
-      icon: categoryItem.icon || "",
       name: categoryItem.name,
       order: categoryItem.order,
       slug: categoryItem.slug,
-      themeColor: categoryItem.themeColor || "",
+      themeColor: categoryItem.themeColor || resolveCategoryTheme(null, categoryItem.name),
     });
     setAutoSlug(false);
     setIsDialogOpen(true);
@@ -147,14 +266,22 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
 
   // Handle Form Name Change (auto slug)
   const handleNameChange = (newName: string) => {
+    const slug = autoSlug ? slugify(newName) : formData.slug;
     setFormData((prev) => ({
       ...prev,
       name: newName,
-      slug: autoSlug ? slugify(newName) : prev.slug,
+      slug,
     }));
   };
 
-  // Submit Add or Edit
+  // Auto detect rainbow theme based on alphabetical position / category name
+  const handleAutoDetectTheme = () => {
+    const detected = resolveCategoryTheme(null, formData.name || "category");
+    setFormData((prev) => ({ ...prev, themeColor: detected }));
+    toast.info(`Assigned ${detected.toUpperCase()} theme based on alphabetical sequence.`);
+  };
+
+  // Submit Add / Edit Form
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim()) {
@@ -164,16 +291,17 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
 
     try {
       setIsSubmitting(true);
+      const cleanSlug = formData.slug.trim() || slugify(formData.name);
+
       if (editingCategory) {
         // PATCH
         const res = await fetch("/api/admin/categories", {
           body: JSON.stringify({
             id: editingCategory.id,
             description: formData.description.trim() || null,
-            icon: formData.icon.trim() || null,
             name: formData.name.trim(),
             order: Number(formData.order) || 0,
-            slug: formData.slug.trim() || slugify(formData.name),
+            slug: cleanSlug,
             themeColor: formData.themeColor.trim() || null,
           }),
           headers: { "Content-Type": "application/json" },
@@ -192,10 +320,9 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
               ? {
                   ...c,
                   description: formData.description.trim() || null,
-                  icon: formData.icon.trim() || null,
                   name: formData.name.trim(),
                   order: Number(formData.order) || 0,
-                  slug: formData.slug.trim() || slugify(formData.name),
+                  slug: cleanSlug,
                   themeColor: formData.themeColor.trim() || null,
                 }
               : c,
@@ -207,10 +334,9 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
         const res = await fetch("/api/admin/categories", {
           body: JSON.stringify({
             description: formData.description.trim() || null,
-            icon: formData.icon.trim() || null,
             name: formData.name.trim(),
             order: Number(formData.order) || 0,
-            slug: formData.slug.trim() || slugify(formData.name),
+            slug: cleanSlug,
             themeColor: formData.themeColor.trim() || null,
           }),
           headers: { "Content-Type": "application/json" },
@@ -228,10 +354,9 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
           {
             id: data.id,
             description: formData.description.trim() || null,
-            icon: formData.icon.trim() || null,
             name: formData.name.trim(),
             order: Number(formData.order) || 0,
-            slug: formData.slug.trim() || slugify(formData.name),
+            slug: cleanSlug,
             themeColor: formData.themeColor.trim() || null,
             toolCount: 0,
           },
@@ -253,7 +378,6 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
     const target = deletingCategory;
     const previous = categories;
 
-    // Optimistic delete
     setCategories((prev) => prev.filter((c) => c.id !== target.id));
     setDeletingCategory(null);
 
@@ -277,13 +401,13 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
 
   return (
     <div className="font-mono">
-      {/* Control Bar */}
+      {/* Control Bar & Palette Overview */}
       <div className="border-line bg-surface/50 mb-6 space-y-4 rounded-lg border p-4 text-xs">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           {/* Search */}
           <div className="relative flex-1">
             <InputField
-              placeholder="Search categories by name, slug, description, or icon..."
+              placeholder="Search categories by name, slug, or description..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               prefix={<MagnifyingGlassIcon className="text-muted-foreground size-4" />}
@@ -323,17 +447,60 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
           </div>
         </div>
 
-        {/* Counter Summary */}
-        <div className="text-muted-foreground border-border/40 flex items-center justify-between border-t pt-2 text-[11px]">
-          <span>
-            Displaying <strong className="text-foreground">{filteredCategories.length}</strong> of{" "}
-            {categories.length} categories
-          </span>
-          {searchQuery && (
-            <span className="text-primary text-[10px] tracking-wider uppercase">
-              Filtered by: &ldquo;{searchQuery}&rdquo;
+        {/* Rainbow Theme Filter Tabs */}
+        <div className="border-border/40 border-t pt-3">
+          <div className="mb-2 flex items-center justify-between">
+            <span className="text-muted-foreground flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider">
+              <PaletteIcon className="size-3.5" />
+              <span>Rainbow Theme Filter:</span>
             </span>
-          )}
+            <span className="text-muted-foreground text-[10px]">
+              {filteredCategories.length} of {categories.length} displayed
+            </span>
+          </div>
+
+          <div className="no-scrollbar flex items-center gap-1.5 overflow-x-auto pb-1">
+            <Button
+              size="xs"
+              variant={selectedThemeFilter === "all" ? "default" : "outline"}
+              onClick={() => setSelectedThemeFilter("all")}
+              className="h-7 text-[11px] uppercase font-bold"
+            >
+              All ({categories.length})
+            </Button>
+
+            {RAINBOW_THEMES.map((item) => {
+              const count = categories.filter(
+                (c) => resolveCategoryTheme(c.themeColor, c.name) === item.theme,
+              ).length;
+              const isSelected = selectedThemeFilter === item.theme;
+
+              return (
+                <button
+                  key={item.theme}
+                  type="button"
+                  onClick={() =>
+                    setSelectedThemeFilter(isSelected ? "all" : item.theme)
+                  }
+                  className={cn(
+                    "flex h-7 items-center gap-1.5 rounded border px-2 font-mono text-[11px] font-bold uppercase transition-all",
+                    isSelected
+                      ? cn("border-ink scale-105 shadow-xs ring-1 ring-ink", THEME_CONFIG[item.theme].bg)
+                      : "bg-surface border-line hover:border-ink/50 text-foreground",
+                  )}
+                >
+                  <span
+                    className={cn(
+                      "size-2 rounded-full border border-black/25",
+                      THEME_CONFIG[item.theme].bg,
+                    )}
+                  />
+                  <span>{item.name.split(" ")[0]}</span>
+                  <span className="text-[10px] opacity-75">({count})</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
@@ -343,18 +510,21 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
           <FoldersIcon className="text-muted-foreground/60 mb-3 size-10" />
           <h3 className="text-foreground text-sm font-bold uppercase">No Categories Found</h3>
           <p className="text-muted-foreground mt-1 max-w-sm text-xs">
-            {searchQuery
-              ? `No categories match query "${searchQuery}". Try a different term.`
+            {searchQuery || selectedThemeFilter !== "all"
+              ? "No categories match the active filter criteria. Try clearing search or theme filters."
               : "No categories currently exist. Create your first category above."}
           </p>
-          {searchQuery ? (
+          {searchQuery || selectedThemeFilter !== "all" ? (
             <Button
               variant="outline"
               size="sm"
-              onClick={() => setSearchQuery("")}
+              onClick={() => {
+                setSearchQuery("");
+                setSelectedThemeFilter("all");
+              }}
               className="mt-4 text-xs uppercase"
             >
-              Clear Search
+              Reset Filters
             </Button>
           ) : (
             <Button size="sm" onClick={handleOpenAdd} className="mt-4 text-xs uppercase">
@@ -371,85 +541,109 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
                 <TableHead className="w-12 text-center uppercase">Order</TableHead>
                 <TableHead className="uppercase">Name & Slug</TableHead>
                 <TableHead className="uppercase">Description</TableHead>
-                <TableHead className="uppercase">Theme / Icon</TableHead>
+                <TableHead className="uppercase">Theme & Contrast</TableHead>
                 <TableHead className="text-center uppercase">Assigned Resources</TableHead>
                 <TableHead className="w-24 text-right uppercase">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredCategories.map((cat) => (
-                <TableRow key={cat.id} className="border-line hover:bg-surface/50">
-                  <TableCell className="text-center font-bold">
-                    <Badge variant="outline" className="font-mono text-[10px]">
-                      {cat.order}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex flex-col gap-0.5">
-                      <span className="text-foreground font-bold">{cat.name}</span>
-                      <span className="text-muted-foreground text-[10px] tracking-wide">
-                        /{cat.slug}
-                      </span>
-                    </div>
-                  </TableCell>
-                  <TableCell className="max-w-xs">
-                    <p className="text-muted-foreground line-clamp-2 text-xs">
-                      {cat.description || <span className="italic opacity-50">No description</span>}
-                    </p>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      {cat.themeColor ? (
-                        <div className="flex items-center gap-1.5">
+              {filteredCategories.map((cat) => {
+                const assignedTheme = resolveCategoryTheme(cat.themeColor, cat.name);
+                const themeMeta = RAINBOW_THEMES.find((t) => t.theme === assignedTheme);
+
+                return (
+                  <TableRow key={cat.id} className="border-line hover:bg-surface/50">
+                    {/* Order */}
+                    <TableCell className="text-center font-bold">
+                      <Badge variant="outline" className="font-mono text-[10px]">
+                        #{cat.order}
+                      </Badge>
+                    </TableCell>
+
+                    {/* Name & Slug */}
+                    <TableCell>
+                      <div className="flex flex-col gap-0.5">
+                        <span className="text-foreground font-bold">{cat.name}</span>
+                        <div className="flex items-center gap-1">
+                          <span className="text-muted-foreground text-[10px] tracking-wide">
+                            /{cat.slug}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => handleCopy(cat.slug, "Slug")}
+                            className="text-muted-foreground hover:text-foreground opacity-60 hover:opacity-100"
+                            title="Copy slug"
+                          >
+                            <CopyIcon className="size-3" />
+                          </button>
+                        </div>
+                      </div>
+                    </TableCell>
+
+                    {/* Description */}
+                    <TableCell className="max-w-xs">
+                      <p className="text-muted-foreground line-clamp-2 text-xs">
+                        {cat.description || <span className="italic opacity-50">No description</span>}
+                      </p>
+                    </TableCell>
+
+                    {/* Theme & Contrast */}
+                    <TableCell>
+                      <div className="flex flex-col gap-1">
+                        <div className="flex items-center gap-2">
                           <span
-                            className="size-3 rounded-full border border-black/20 dark:border-white/20"
-                            style={{ backgroundColor: cat.themeColor }}
-                          />
-                          <span className="text-muted-foreground text-[10px]">
-                            {cat.themeColor}
+                            className={cn(
+                              "border-ink inline-flex items-center gap-1.5 border px-2 py-0.5 text-[11px] font-bold uppercase shadow-2xs",
+                              THEME_CONFIG[assignedTheme].bg,
+                            )}
+                          >
+                            <span className="size-1.5 rounded-full bg-current" />
+                            <span>{themeMeta?.name || assignedTheme}</span>
+                          </span>
+
+                          <span className="text-emerald-700 dark:text-emerald-400 inline-flex items-center gap-0.5 text-[10px] font-bold">
+                            <CheckCircleIcon weight="fill" className="size-3" />
+                            <span>AAA</span>
                           </span>
                         </div>
-                      ) : (
-                        <span className="text-muted-foreground text-[10px] opacity-60">None</span>
-                      )}
-                      {cat.icon && (
-                        <Badge variant="secondary" className="px-1.5 py-0 text-[10px]">
-                          {cat.icon}
-                        </Badge>
-                      )}
-                    </div>
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <Badge
-                      variant={cat.toolCount > 0 ? "default" : "secondary"}
-                      className="font-mono text-[10px]"
-                    >
-                      {cat.toolCount} {cat.toolCount === 1 ? "resource" : "resources"}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex items-center justify-end gap-1">
-                      <Button
-                        size="icon-xs"
-                        variant="ghost"
-                        onClick={() => handleOpenEdit(cat)}
-                        title={`Edit ${cat.name}`}
+                      </div>
+                    </TableCell>
+
+                    {/* Resource Count */}
+                    <TableCell className="text-center">
+                      <Badge
+                        variant={cat.toolCount > 0 ? "default" : "secondary"}
+                        className="font-mono text-[10px]"
                       >
-                        <PencilSimpleIcon className="size-3.5" />
-                      </Button>
-                      <Button
-                        size="icon-xs"
-                        variant="ghost"
-                        className="text-destructive hover:bg-destructive/10"
-                        onClick={() => setDeletingCategory(cat)}
-                        title={`Delete ${cat.name}`}
-                      >
-                        <TrashIcon className="size-3.5" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
+                        {cat.toolCount} {cat.toolCount === 1 ? "resource" : "resources"}
+                      </Badge>
+                    </TableCell>
+
+                    {/* Actions */}
+                    <TableCell className="text-right">
+                      <div className="flex items-center justify-end gap-1">
+                        <Button
+                          size="icon-xs"
+                          variant="ghost"
+                          onClick={() => handleOpenEdit(cat)}
+                          title={`Edit ${cat.name}`}
+                        >
+                          <PencilSimpleIcon className="size-3.5" />
+                        </Button>
+                        <Button
+                          size="icon-xs"
+                          variant="ghost"
+                          className="text-destructive hover:bg-destructive/10"
+                          onClick={() => setDeletingCategory(cat)}
+                          title={`Delete ${cat.name}`}
+                        >
+                          <TrashIcon className="size-3.5" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </div>
@@ -457,19 +651,20 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
 
       {/* Add / Edit Category Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="font-mono sm:max-w-md">
+        <DialogContent className="font-mono sm:max-w-xl">
           <DialogHeader>
             <DialogTitle className="text-base font-bold tracking-tight uppercase">
               {editingCategory ? `Edit Category: ${editingCategory.name}` : "Create New Category"}
             </DialogTitle>
             <DialogDescription className="text-xs">
               {editingCategory
-                ? "Update the category's display metadata, slug, and styling."
-                : "Add a new first-class category for grouping resources."}
+                ? "Update display metadata, rainbow theme assignments, and URL routing."
+                : "Add a first-class catalog category with automatic rainbow spectrum theme."}
             </DialogDescription>
           </DialogHeader>
 
           <form onSubmit={handleSubmit} className="space-y-4 pt-2 text-xs">
+            {/* Name */}
             <div>
               <InputField
                 label="Category Name *"
@@ -481,6 +676,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
               />
             </div>
 
+            {/* Slug */}
             <div>
               <div className="mb-1 flex items-center justify-between">
                 <label className="text-muted-foreground text-xs font-semibold">Slug *</label>
@@ -506,6 +702,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
               />
             </div>
 
+            {/* Description */}
             <div>
               <InputField
                 label="Description"
@@ -516,36 +713,54 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <InputField
-                  label="Icon (Identifier)"
-                  placeholder="e.g. Robot, Code, Palette"
-                  value={formData.icon}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, icon: e.target.value }))}
-                  className="font-mono text-xs"
-                />
+            {/* 8-Color Rainbow Theme Selector */}
+            <div className="border-line bg-surface/40 space-y-2.5 rounded-lg border p-3">
+              <div className="flex items-center justify-between">
+                <label className="text-foreground text-xs font-bold uppercase tracking-wide">
+                  Rainbow Theme Assignment
+                </label>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="xs"
+                  onClick={handleAutoDetectTheme}
+                  className="h-6 text-[10px] uppercase font-bold"
+                >
+                  <SparkleIcon className="size-3" />
+                  <span>Auto-Detect</span>
+                </Button>
               </div>
 
-              <div>
-                <InputField
-                  label="Theme Color"
-                  placeholder="e.g. #3B82F6"
-                  value={formData.themeColor}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, themeColor: e.target.value }))}
-                  prefix={
-                    formData.themeColor ? (
-                      <span
-                        className="size-3 rounded-full border border-black/20"
-                        style={{ backgroundColor: formData.themeColor }}
-                      />
-                    ) : undefined
-                  }
-                  className="font-mono text-xs"
-                />
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {RAINBOW_THEMES.map((themeItem) => {
+                  const isSelected = currentFormTheme === themeItem.theme;
+
+                  return (
+                    <button
+                      key={themeItem.theme}
+                      type="button"
+                      onClick={() =>
+                        setFormData((prev) => ({ ...prev, themeColor: themeItem.theme }))
+                      }
+                      className={cn(
+                        "flex flex-col items-start rounded border p-2 text-left font-mono text-[10px] transition-all",
+                        isSelected
+                          ? cn("border-ink scale-102 shadow-xs ring-2 ring-ink", THEME_CONFIG[themeItem.theme].bg)
+                          : "bg-surface border-line hover:border-ink/50 text-foreground",
+                      )}
+                    >
+                      <div className="flex w-full items-center justify-between">
+                        <span className="font-bold">{themeItem.name}</span>
+                        {isSelected && <CheckIcon weight="bold" className="size-3" />}
+                      </div>
+                      <span className="opacity-75">{themeItem.description}</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
+            {/* Display Order */}
             <div>
               <InputField
                 label="Display Order Index"
@@ -553,12 +768,48 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
                 placeholder="0"
                 value={String(formData.order)}
                 onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, order: parseInt(e.target.value, 10) || 0 }))
+                  setFormData((prev) => ({
+                    ...prev,
+                    order: parseInt(e.target.value, 10) || 0,
+                  }))
                 }
                 className="font-mono text-xs"
               />
             </div>
 
+            {/* Live Card Preview */}
+            <div className="border-line bg-surface/30 space-y-2 rounded-lg border p-3">
+              <div className="flex items-center gap-1.5 text-muted-foreground text-[11px] font-bold uppercase tracking-wider">
+                <EyeIcon className="size-3.5" />
+                <span>Live Component Preview</span>
+              </div>
+
+              <div className="border-ink bg-bg space-y-2 border-2 p-3">
+                <div className="flex items-center justify-between">
+                  <span
+                    className={cn(
+                      "border-ink border px-2 py-0.5 text-[10px] font-bold uppercase",
+                      THEME_CONFIG[currentFormTheme].bg,
+                    )}
+                  >
+                    {formData.name || "Category Name"}
+                  </span>
+                  <span className="text-muted-foreground font-mono text-[10px]">
+                    Theme: {currentFormTheme.toUpperCase()}
+                  </span>
+                </div>
+
+                <p className="text-foreground text-xs font-bold">
+                  {formData.name || "Untitled Category"} Sample Resource
+                </p>
+                <p className="text-muted-foreground line-clamp-2 text-[11px]">
+                  {formData.description ||
+                    "This is how items under this category will render on the catalog."}
+                </p>
+              </div>
+            </div>
+
+            {/* Footer Actions */}
             <DialogFooter className="mt-4 pt-2">
               <Button
                 type="button"

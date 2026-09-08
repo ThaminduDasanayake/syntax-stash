@@ -19,7 +19,6 @@ export default async function AdminCategoriesPage() {
       id: category.id,
       createdAt: category.createdAt,
       description: category.description,
-      icon: category.icon,
       name: category.name,
       order: category.order,
       slug: category.slug,

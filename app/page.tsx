@@ -17,6 +17,7 @@ import {
 } from "@/lib/tools-data";
 import { cn, getCategoryTheme, slugify, type Theme, THEME_CONFIG } from "@/lib/utils";
 
+/* eslint-disable perfectionist/sort-objects */
 const THEME_HOVER_MAP: Record<
   Theme,
   {
@@ -26,20 +27,20 @@ const THEME_HOVER_MAP: Record<
     text: string;
   }
 > = {
+  red: {
+    card: "hover:bg-c-red hover:border-red-deep hover:text-paper",
+    dot: "group-hover:bg-paper group-hover:border-paper",
+    footer: "group-hover:border-paper/25 group-hover:text-paper/85",
+    text: "group-hover:text-paper",
+  },
   orange: {
     card: "hover:bg-c-orange hover:border-orange-deep hover:text-ink",
     dot: "group-hover:bg-ink group-hover:border-ink",
     footer: "group-hover:border-ink/20 group-hover:text-ink/80",
     text: "group-hover:text-ink",
   },
-  blue: {
-    card: "hover:bg-c-blue hover:border-blue-deep hover:text-paper",
-    dot: "group-hover:bg-paper group-hover:border-paper",
-    footer: "group-hover:border-paper/25 group-hover:text-paper/85",
-    text: "group-hover:text-paper",
-  },
-  pink: {
-    card: "hover:bg-c-pink hover:border-pink-deep hover:text-ink",
+  yellow: {
+    card: "hover:bg-c-yellow hover:border-yellow-deep hover:text-ink",
     dot: "group-hover:bg-ink group-hover:border-ink",
     footer: "group-hover:border-ink/20 group-hover:text-ink/80",
     text: "group-hover:text-ink",
@@ -50,7 +51,32 @@ const THEME_HOVER_MAP: Record<
     footer: "group-hover:border-ink/20 group-hover:text-ink/80",
     text: "group-hover:text-ink",
   },
+  cyan: {
+    card: "hover:bg-c-cyan hover:border-cyan-deep hover:text-ink",
+    dot: "group-hover:bg-ink group-hover:border-ink",
+    footer: "group-hover:border-ink/20 group-hover:text-ink/80",
+    text: "group-hover:text-ink",
+  },
+  blue: {
+    card: "hover:bg-c-blue hover:border-blue-deep hover:text-paper",
+    dot: "group-hover:bg-paper group-hover:border-paper",
+    footer: "group-hover:border-paper/25 group-hover:text-paper/85",
+    text: "group-hover:text-paper",
+  },
+  purple: {
+    card: "hover:bg-c-purple hover:border-purple-deep hover:text-paper",
+    dot: "group-hover:bg-paper group-hover:border-paper",
+    footer: "group-hover:border-paper/25 group-hover:text-paper/85",
+    text: "group-hover:text-paper",
+  },
+  pink: {
+    card: "hover:bg-c-pink hover:border-pink-deep hover:text-ink",
+    dot: "group-hover:bg-ink group-hover:border-ink",
+    footer: "group-hover:border-ink/20 group-hover:text-ink/80",
+    text: "group-hover:text-ink",
+  },
 };
+/* eslint-enable perfectionist/sort-objects */
 
 export default async function Home() {
   const [categories, resourceLinks] = await Promise.all([getAllCategories(), getAllResources()]);

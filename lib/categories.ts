@@ -8,7 +8,6 @@ import { slugify } from "@/lib/utils";
 
 export interface CategoryItem {
   description: string | null;
-  icon: string | null;
   id: string;
   name: string;
   order: number;
@@ -36,7 +35,6 @@ export const getAllCategories = cache(
           .select({
             id: category.id,
             description: category.description,
-            icon: category.icon,
             name: category.name,
             order: category.order,
             resourceCount: count(resource.id),
@@ -51,7 +49,6 @@ export const getAllCategories = cache(
         return rows.map((r) => ({
           id: r.id,
           description: r.description,
-          icon: r.icon,
           name: r.name,
           order: r.order,
           resourceCount: Number(r.resourceCount) || 0,

@@ -103,7 +103,6 @@ export const category = pgTable(
     id: text("id").primaryKey(),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     description: text("description"),
-    icon: text("icon"),
     name: text("name").notNull().unique(),
     order: integer("order").notNull().default(0),
     slug: text("slug").notNull().unique(),

@@ -31,7 +31,6 @@ export async function GET() {
         id: category.id,
         createdAt: category.createdAt,
         description: category.description,
-        icon: category.icon,
         name: category.name,
         order: category.order,
         slug: category.slug,
@@ -74,7 +73,7 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { description, icon, name, order, slug, themeColor } = body;
+    const { description, name, order, slug, themeColor } = body;
 
     if (!name || typeof name !== "string" || !name.trim()) {
       return NextResponse.json({ error: "Category name is required." }, { status: 400 });
@@ -98,7 +97,6 @@ export async function POST(req: Request) {
       id: categoryId,
       createdAt: new Date(),
       description: description?.trim() || null,
-      icon: icon?.trim() || null,
       name: cleanName,
       order: typeof order === "number" ? order : 0,
       slug: cleanSlug,
@@ -130,7 +128,7 @@ export async function PATCH(req: Request) {
     }
 
     const body = await req.json();
-    const { id, description, icon, name, order, slug, themeColor } = body;
+    const { id, description, name, order, slug, themeColor } = body;
 
     if (!id || typeof id !== "string") {
       return NextResponse.json({ error: "Category ID is required." }, { status: 400 });
@@ -153,9 +151,6 @@ export async function PATCH(req: Request) {
     }
     if (description !== undefined) {
       updates.description = description?.trim() || null;
-    }
-    if (icon !== undefined) {
-      updates.icon = icon?.trim() || null;
     }
     if (themeColor !== undefined) {
       updates.themeColor = themeColor?.trim() || null;

@@ -16,51 +16,68 @@
 }
 
 :root {
-  --bg: #ede9dd;
-  --bg-2: #e5e0d2;
-  --bg-3: #dad3c1;
-  --paper: #f5f1e5;
+  --bg: oklch(92.5% 0.015 85);
+  --bg-2: oklch(90.2% 0.018 85);
+  --bg-3: oklch(86.5% 0.022 85);
+  --paper: oklch(95.5% 0.012 85);
 
-  --line: #cfc8b5;
-  --line-2: #b8af98;
+  --line: oklch(82.5% 0.02 85);
+  --line-2: oklch(74.5% 0.025 85);
 
-  --ink: #14110b;
-  --ink-2: #1a150d;
-  --ink-mute: #6b6354;
-  --ink-faint: #9a927f;
+  --ink: oklch(15.5% 0.015 65);
+  --ink-2: oklch(18% 0.015 65);
+  --ink-mute: oklch(48.5% 0.022 75);
+  --ink-faint: oklch(64.5% 0.022 75);
 
-  --orange: #e8a52b;
-  --blue: #2a47b8;
-  --pink: #c9a4f0;
-  --green: #5daa2e;
-  --yellow: #ffe600;
-  --purple: #8b5cf6;
-  --cyan: #00f0ff;
-  --red: #ef4444;
+  /* 8-Color Curated Neo-Brutalist Palette in Rainbow Order (OKLCH) */
+  --red: oklch(42% 0.21 27);
+  --orange: oklch(75% 0.16 70);
+  --yellow: oklch(93.5% 0.16 102);
+  --green: oklch(76% 0.20 135);
+  --cyan: oklch(84% 0.09 232);
+  --blue: oklch(42% 0.19 265);
+  --purple: oklch(43% 0.11 348);
+  --pink: oklch(75% 0.14 310);
 
-  --orange-tint: #f4dda5;
-  --blue-tint: #c8d2ee;
-  --pink-tint: #ecddf8;
-  --green-tint: #cfe4b7;
-  --orange-tint-2: #ebc568;
-  --blue-tint-2: #94a4dc;
-  --pink-tint-2: #d9beec;
-  --green-tint-2: #a8cd86;
-  --orange-deep: #b87e00;
-  --orange-soft: #ebc568;
-  --blue-deep: #1a2a7a;
-  --blue-soft: #94a4dc;
-  --pink-deep: #6b35b8;
-  --pink-soft: #e4d1f8;
-  --green-deep: #3d8a1a;
-  --green-soft: #c4e4a8;
-  --yellow-deep: #a38400;
-  --purple-deep: #5b21b6;
-  --cyan-deep: #007a87;
-  --red-deep: #991b1b;
-  --sec-1: #f1ecdf;
-  --sec-2: #e7e1d1;
-  --sec-3: #dcd4be;
+  --red-tint: oklch(91% 0.05 27);
+  --orange-tint: oklch(91% 0.07 70);
+  --yellow-tint: oklch(96.5% 0.06 102);
+  --green-tint: oklch(93% 0.07 135);
+  --cyan-tint: oklch(94% 0.04 232);
+  --blue-tint: oklch(87% 0.06 265);
+  --purple-tint: oklch(90% 0.04 348);
+  --pink-tint: oklch(92% 0.05 310);
+
+  --red-tint-2: oklch(76% 0.10 27);
+  --orange-tint-2: oklch(84% 0.11 70);
+  --yellow-tint-2: oklch(90% 0.11 102);
+  --green-tint-2: oklch(85% 0.12 135);
+  --cyan-tint-2: oklch(88% 0.07 232);
+  --blue-tint-2: oklch(72% 0.11 265);
+  --purple-tint-2: oklch(75% 0.08 348);
+  --pink-tint-2: oklch(82% 0.09 310);
+
+  --red-deep: oklch(28% 0.16 27);
+  --orange-deep: oklch(58% 0.16 70);
+  --yellow-deep: oklch(70% 0.15 102);
+  --green-deep: oklch(45% 0.18 135);
+  --cyan-deep: oklch(60% 0.12 232);
+  --blue-deep: oklch(28% 0.18 265);
+  --purple-deep: oklch(30% 0.1 348);
+  --pink-deep: oklch(45% 0.18 310);
+
+  --red-soft: oklch(80% 0.09 27);
+  --orange-soft: oklch(84% 0.11 70);
+  --yellow-soft: oklch(90% 0.11 102);
+  --green-soft: oklch(89% 0.08 135);
+  --cyan-soft: oklch(88% 0.07 232);
+  --blue-soft: oklch(72% 0.11 265);
+  --purple-soft: oklch(75% 0.08 348);
+  --pink-soft: oklch(88% 0.06 310);
+
+  --sec-1: oklch(94% 0.014 85);
+  --sec-2: oklch(91% 0.017 85);
+  --sec-3: oklch(87% 0.021 85);
 
   /* Tailwind Semantic Mappings */
   --background: var(--paper);
@@ -122,30 +139,54 @@
   --color-ink-2: var(--ink-2);
   --color-ink-mute: var(--ink-mute);
   --color-ink-faint: var(--ink-faint);
-  --color-c-orange: var(--orange);
-  --color-c-blue: var(--blue);
-  --color-c-pink: var(--pink);
-  --color-c-green: var(--green);
-  --color-c-yellow: var(--yellow);
-  --color-c-purple: var(--purple);
-  --color-c-cyan: var(--cyan);
   --color-c-red: var(--red);
+  --color-c-orange: var(--orange);
+  --color-c-yellow: var(--yellow);
+  --color-c-green: var(--green);
+  --color-c-cyan: var(--cyan);
+  --color-c-blue: var(--blue);
+  --color-c-purple: var(--purple);
+  --color-c-pink: var(--pink);
+
+  --color-red-tint: var(--red-tint);
+  --color-red-tint-2: var(--red-tint-2);
+  --color-red-soft: var(--red-soft);
+  --color-red-deep: var(--red-deep);
+
   --color-orange-tint: var(--orange-tint);
   --color-orange-tint-2: var(--orange-tint-2);
   --color-orange-soft: var(--orange-soft);
   --color-orange-deep: var(--orange-deep);
-  --color-blue-tint: var(--blue-tint);
-  --color-blue-tint-2: var(--blue-tint-2);
-  --color-blue-soft: var(--blue-soft);
-  --color-blue-deep: var(--blue-deep);
-  --color-pink-tint: var(--pink-tint);
-  --color-pink-tint-2: var(--pink-tint-2);
-  --color-pink-soft: var(--pink-soft);
-  --color-pink-deep: var(--pink-deep);
+
+  --color-yellow-tint: var(--yellow-tint);
+  --color-yellow-tint-2: var(--yellow-tint-2);
+  --color-yellow-soft: var(--yellow-soft);
+  --color-yellow-deep: var(--yellow-deep);
+
   --color-green-tint: var(--green-tint);
   --color-green-tint-2: var(--green-tint-2);
   --color-green-soft: var(--green-soft);
   --color-green-deep: var(--green-deep);
+
+  --color-cyan-tint: var(--cyan-tint);
+  --color-cyan-tint-2: var(--cyan-tint-2);
+  --color-cyan-soft: var(--cyan-soft);
+  --color-cyan-deep: var(--cyan-deep);
+
+  --color-blue-tint: var(--blue-tint);
+  --color-blue-tint-2: var(--blue-tint-2);
+  --color-blue-soft: var(--blue-soft);
+  --color-blue-deep: var(--blue-deep);
+
+  --color-purple-tint: var(--purple-tint);
+  --color-purple-tint-2: var(--purple-tint-2);
+  --color-purple-soft: var(--purple-soft);
+  --color-purple-deep: var(--purple-deep);
+
+  --color-pink-tint: var(--pink-tint);
+  --color-pink-tint-2: var(--pink-tint-2);
+  --color-pink-soft: var(--pink-soft);
+  --color-pink-deep: var(--pink-deep);
 
   /* Typography */
   --font-sans: var(--font-sans);
@@ -237,12 +278,40 @@
   }
 }
 
+@utility theme-red {
+  --theme: var(--red);
+  --theme-deep: var(--red-deep);
+  --theme-text: var(--paper);
+  --theme-tint: var(--red-tint);
+  --theme-tint2: var(--red-tint-2);
+}
 @utility theme-orange {
   --theme: var(--orange);
   --theme-deep: var(--orange-deep);
   --theme-text: var(--ink);
   --theme-tint: var(--orange-tint);
   --theme-tint2: var(--orange-tint-2);
+}
+@utility theme-yellow {
+  --theme: var(--yellow);
+  --theme-deep: var(--yellow-deep);
+  --theme-text: var(--ink);
+  --theme-tint: var(--yellow-tint);
+  --theme-tint2: var(--yellow-tint-2);
+}
+@utility theme-green {
+  --theme: var(--green);
+  --theme-deep: var(--green-deep);
+  --theme-text: var(--ink);
+  --theme-tint: var(--green-tint);
+  --theme-tint2: var(--green-tint-2);
+}
+@utility theme-cyan {
+  --theme: var(--cyan);
+  --theme-deep: var(--cyan-deep);
+  --theme-text: var(--ink);
+  --theme-tint: var(--cyan-tint);
+  --theme-tint2: var(--cyan-tint-2);
 }
 @utility theme-blue {
   --theme: var(--blue);
@@ -251,19 +320,19 @@
   --theme-tint: var(--blue-tint);
   --theme-tint2: var(--blue-tint-2);
 }
+@utility theme-purple {
+  --theme: var(--purple);
+  --theme-deep: var(--purple-deep);
+  --theme-text: var(--paper);
+  --theme-tint: var(--purple-tint);
+  --theme-tint2: var(--purple-tint-2);
+}
 @utility theme-pink {
   --theme: var(--pink);
   --theme-deep: var(--pink-deep);
   --theme-text: var(--ink);
   --theme-tint: var(--pink-tint);
   --theme-tint2: var(--pink-tint-2);
-}
-@utility theme-green {
-  --theme: var(--green);
-  --theme-deep: var(--green-deep);
-  --theme-text: var(--ink);
-  --theme-tint: var(--green-tint);
-  --theme-tint2: var(--green-tint-2);
 }
 
 @utility flex-center {
