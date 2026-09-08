@@ -10,6 +10,7 @@ import {
   PaletteIcon,
   PencilSimpleIcon,
   PlusIcon,
+  SlidersHorizontalIcon,
   TrashIcon,
   XIcon,
 } from "@phosphor-icons/react";
@@ -37,6 +38,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { InputField } from "@/components/ui/input-field";
+import { SelectField } from "@/components/ui/select-field";
 import {
   Table,
   TableBody,
@@ -69,6 +71,15 @@ export interface AdminCategoryItem {
 interface AdminCategoriesClientProps {
   initialCategories: AdminCategoryItem[];
 }
+
+const SORT_OPTIONS = [
+  { label: "Fewest Resources", value: "resources-asc" },
+  { label: "Most Resources", value: "resources-desc" },
+  { label: "Name (A → Z)", value: "name-asc" },
+  { label: "Name (Z → A)", value: "name-desc" },
+  { label: "Recently Added", value: "created-desc" },
+  { label: "Recently Updated", value: "updated-desc" },
+];
 
 export const CATEGORY_THEMES: {
   description: string;
@@ -169,6 +180,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
   const [categories, setCategories] = useState<AdminCategoryItem[]>(initialCategories);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedThemeFilter, setSelectedThemeFilter] = useState<Theme | "all">("all");
+  const [sortBy, setSortBy] = useState<string>("name-asc");
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   // Dialog state
@@ -188,13 +200,13 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
   const currentFormTheme: Theme = getAlphabeticalTheme(formData.name || "A", categories);
   const currentFormThemeMeta = CATEGORY_THEMES.find((t) => t.theme === currentFormTheme);
 
-  // Filtered categories (always maintained in alphabetical order)
+  // Canonical alphabetical sequence for deterministic theme assignment
   const sortedCategories = useMemo(() => {
     return [...categories].sort((a, b) => a.name.localeCompare(b.name));
   }, [categories]);
 
   const filteredCategories = useMemo(() => {
-    let result = sortedCategories;
+    let result = categories;
 
     if (selectedThemeFilter !== "all") {
       result = result.filter(
@@ -202,12 +214,38 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
       );
     }
 
-    if (!searchQuery.trim()) return result;
-    const q = searchQuery.toLowerCase().trim();
-    return result.filter(
-      (c) => c.name.toLowerCase().includes(q) || c.slug.toLowerCase().includes(q),
-    );
-  }, [searchQuery, selectedThemeFilter, sortedCategories]);
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase().trim();
+      result = result.filter(
+        (c) => c.name.toLowerCase().includes(q) || c.slug.toLowerCase().includes(q),
+      );
+    }
+
+    const sorted = [...result];
+    if (sortBy === "name-asc") {
+      sorted.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortBy === "name-desc") {
+      sorted.sort((a, b) => b.name.localeCompare(a.name));
+    } else if (sortBy === "updated-desc") {
+      sorted.sort((a, b) => {
+        const timeA = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
+        const timeB = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
+        return timeB - timeA || a.name.localeCompare(b.name);
+      });
+    } else if (sortBy === "created-desc") {
+      sorted.sort((a, b) => {
+        const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+        const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+        return timeB - timeA || a.name.localeCompare(b.name);
+      });
+    } else if (sortBy === "resources-desc") {
+      sorted.sort((a, b) => b.toolCount - a.toolCount || a.name.localeCompare(b.name));
+    } else if (sortBy === "resources-asc") {
+      sorted.sort((a, b) => a.toolCount - b.toolCount || a.name.localeCompare(b.name));
+    }
+
+    return sorted;
+  }, [categories, searchQuery, selectedThemeFilter, sortBy, sortedCategories]);
 
   // Copy to clipboard
   const handleCopy = (text: string, label: string) => {
@@ -283,6 +321,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
                   ...c,
                   name: cleanName,
                   slug: updatedSlug,
+                  updatedAt: new Date().toISOString(),
                 }
               : c,
           ),
@@ -396,6 +435,18 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
                 <XIcon className="size-3.5" />
               </button>
             )}
+          </div>
+
+          {/* Sort Dropdown */}
+          <div className="flex items-center gap-1.5">
+            <SlidersHorizontalIcon className="text-muted-foreground size-3.5" />
+            <span className="text-muted-foreground text-[11px] font-bold uppercase">Sort:</span>
+            <SelectField
+              value={sortBy}
+              onValueChange={setSortBy}
+              options={SORT_OPTIONS}
+              triggerClassName="h-9 font-mono text-xs min-w-[170px]"
+            />
           </div>
 
           {/* Action Buttons */}

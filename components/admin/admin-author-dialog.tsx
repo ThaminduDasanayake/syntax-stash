@@ -143,6 +143,7 @@ export function AdminAuthorDialog({
             resourceCount: author.resourceCount ?? 0,
             slug: formData.slug.trim(),
             twitter: formData.twitter.trim() || null,
+            updatedAt: new Date().toISOString(),
             website: formData.website.trim() || null,
             youtube: formData.youtube.trim() || null,
           };

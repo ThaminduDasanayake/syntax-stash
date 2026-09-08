@@ -85,6 +85,8 @@ const SORT_OPTIONS = [
   { label: "Most Used", value: "usage-desc" },
   { label: "Name (A → Z)", value: "name-asc" },
   { label: "Name (Z → A)", value: "name-desc" },
+  { label: "Recently Added", value: "created-desc" },
+  { label: "Recently Updated", value: "updated-desc" },
 ];
 
 export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
@@ -135,6 +137,18 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
       sorted.sort((a, b) => b.toolCount - a.toolCount || a.name.localeCompare(b.name));
     } else if (sortBy === "usage-asc") {
       sorted.sort((a, b) => a.toolCount - b.toolCount || a.name.localeCompare(b.name));
+    } else if (sortBy === "updated-desc") {
+      sorted.sort((a, b) => {
+        const timeA = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
+        const timeB = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
+        return timeB - timeA || a.name.localeCompare(b.name);
+      });
+    } else if (sortBy === "created-desc") {
+      sorted.sort((a, b) => {
+        const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+        const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+        return timeB - timeA || a.name.localeCompare(b.name);
+      });
     } else if (sortBy === "name-asc") {
       sorted.sort((a, b) => a.name.localeCompare(b.name));
     } else if (sortBy === "name-desc") {
@@ -262,6 +276,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
                   slug: formData.slug.trim()
                     ? normalizeTag(formData.slug)
                     : normalizeTag(formData.name),
+                  updatedAt: new Date().toISOString(),
                 }
               : t,
           ),

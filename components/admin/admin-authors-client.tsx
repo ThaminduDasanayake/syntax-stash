@@ -71,6 +71,8 @@ const SORT_OPTIONS = [
   { label: "Most Resources", value: "resources-desc" },
   { label: "Name (A → Z)", value: "name-asc" },
   { label: "Name (Z → A)", value: "name-desc" },
+  { label: "Recently Added", value: "created-desc" },
+  { label: "Recently Updated", value: "updated-desc" },
 ];
 
 export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientProps) {
@@ -187,6 +189,18 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
       sorted.sort((a, b) => b.resourceCount - a.resourceCount || a.name.localeCompare(b.name));
     } else if (sortBy === "resources-asc") {
       sorted.sort((a, b) => a.resourceCount - b.resourceCount || a.name.localeCompare(b.name));
+    } else if (sortBy === "updated-desc") {
+      sorted.sort((a, b) => {
+        const timeA = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
+        const timeB = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
+        return timeB - timeA || a.name.localeCompare(b.name);
+      });
+    } else if (sortBy === "created-desc") {
+      sorted.sort((a, b) => {
+        const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+        const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+        return timeB - timeA || a.name.localeCompare(b.name);
+      });
     } else if (sortBy === "name-asc") {
       sorted.sort((a, b) => a.name.localeCompare(b.name));
     } else if (sortBy === "name-desc") {
