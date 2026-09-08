@@ -184,83 +184,209 @@ export const THEME_CONFIG: Record<
 const TOOL_ENTRIES = Object.entries(TOOL_CATEGORIES);
 
 /**
+ * Dedicated 4-color theme mapping for Inbuilt Tools:
+ * 1. Data -> Red (THEMES[0])
+ * 2. Developer Tools & Utilities -> Orange (THEMES[1])
+ * 3. Frontend & UI -> Yellow (THEMES[2])
+ * 4. Media & Assets -> Green (THEMES[3])
+ */
+/* eslint-disable perfectionist/sort-objects */
+export const TOOL_CATEGORY_THEMES: Record<string, Theme> = {
+  // 1. Data -> Red
+  data: "red",
+  "data-apis": "red",
+
+  // 2. Developer Tools & Utilities -> Orange
+  dev: "orange",
+  "developer-tools": "orange",
+  "developer-tools-utilities": "orange",
+  devtools: "orange",
+  tools: "orange",
+  utilities: "orange",
+
+  // 3. Frontend & UI -> Yellow
+  frontend: "yellow",
+  "frontend-ui": "yellow",
+  ui: "yellow",
+
+  // 4. Media & Assets -> Green
+  media: "green",
+  "media-assets": "green",
+  assets: "green",
+};
+/* eslint-enable perfectionist/sort-objects */
+
+/**
  * Curated list of standard categories in alphabetical order (starting with AI).
  * Themes are assigned in the 8-color theme sequence (Red -> Pink) and repeat.
  */
 /* eslint-disable perfectionist/sort-objects */
 export const ALPHABETICAL_CATEGORY_THEMES: Record<string, Theme> = {
-  // 1. A: AI & Machine Learning -> Red (THEMES[0])
+  // 1. AI & Machine Learning -> Red (THEMES[0])
   ai: "red",
-  "artificial-intelligence": "red",
   "ai-machine-learning": "red",
   "ai-models": "red",
+  "artificial-intelligence": "red",
   llm: "red",
   models: "red",
 
-  // 2. A: Animations & Motion -> Orange (THEMES[1])
+  // 2. Animation & Motion -> Orange (THEMES[1])
+  animation: "orange",
+  "animation-motion": "orange",
   animations: "orange",
-  motion: "orange",
   "animations-motion": "orange",
   canvas: "orange",
   interactive: "orange",
+  motion: "orange",
 
-  // 3. B: Backend & Databases -> Yellow (THEMES[2])
+  // 3. Backend & Infrastructure -> Yellow (THEMES[2])
+  auth: "yellow",
   backend: "yellow",
-  boilerplates: "yellow",
+  "backend-infrastructure": "yellow",
   boilerplate: "yellow",
+  boilerplates: "yellow",
+  cloud: "yellow",
   databases: "yellow",
   "databases-backend": "yellow",
-  sql: "yellow",
+  docker: "yellow",
+  infrastructure: "yellow",
   orm: "yellow",
+  serverless: "yellow",
+  sql: "yellow",
 
-  // 4. C: Components & UI -> Green (THEMES[3])
-  components: "green",
-  "components-ui": "green",
-  ui: "green",
-  libraries: "green",
-  extensions: "green",
+  // 4. Color & Gradients -> Green (THEMES[3])
+  color: "green",
+  "color-gradients": "green",
+  "color-palettes": "green",
+  colors: "green",
+  "colors-gradients": "green",
+  "colors-palettes": "green",
+  gradients: "green",
+  palette: "green",
+  palettes: "green",
 
-  // 5. C: CSS & Styling -> Cyan (THEMES[4])
-  css: "cyan",
-  styling: "cyan",
-  "styling-css": "cyan",
-  "styling-ui": "cyan",
-  tailwind: "cyan",
-  cheatsheets: "cyan",
-  "cheat-sheets": "cyan",
+  // 5. Data & APIs -> Cyan (THEMES[4])
+  api: "cyan",
+  apis: "cyan",
+  data: "cyan",
+  "data-apis": "cyan",
+  graphql: "cyan",
+  json: "cyan",
+  rest: "cyan",
+  schema: "cyan",
 
-  // 6. D: Documentation & DevOps -> Blue (THEMES[5])
-  documentation: "blue",
-  docs: "blue",
-  devops: "blue",
-  "developer-tools": "blue",
-  "developer-tools-utilities": "blue",
-  dev: "blue",
-  infrastructure: "blue",
-  cloud: "blue",
-  data: "blue",
+  // 6. Design & UX -> Blue (THEMES[5])
+  accessibility: "blue",
+  design: "blue",
+  "design-systems": "blue",
+  "design-ux": "blue",
+  figma: "blue",
+  ui_ux: "blue",
+  "ui-ux": "blue",
+  ux: "blue",
+  wireframe: "blue",
 
-  // 7. I: Icons & Logos -> Purple (THEMES[6])
-  icons: "purple",
-  logos: "purple",
-  "icons-logos": "purple",
-  assets: "purple",
-  media: "purple",
-  "media-assets": "purple",
-  design: "purple",
-  "design-systems": "purple",
+  // 7. Developer Tools & Utilities -> Purple (THEMES[6])
+  dev: "purple",
+  "developer-tools": "purple",
+  "developer-tools-utilities": "purple",
+  devtools: "purple",
+  tools: "purple",
+  utilities: "purple",
 
-  // 8. T: Testing & QA -> Pink (THEMES[7])
-  testing: "pink",
-  qa: "pink",
-  "testing-qa": "pink",
+  // 8. Documentation & Markdown -> Pink (THEMES[7])
+  "cheat-sheets": "pink",
+  cheatsheets: "pink",
+  docs: "pink",
+  documentation: "pink",
+  "documentation-markdown": "pink",
+  markdown: "pink",
+  readme: "pink",
+  reference: "pink",
+
+  // --- Cycle 2 (repeating 8 colors) ---
+
+  // 9. Education & Community -> Red (THEMES[0])
+  community: "red",
+  course: "red",
+  education: "red",
+  "education-community": "red",
+  handbook: "red",
+  learn: "red",
+  tutorial: "red",
+
+  // 10. Frontend & UI -> Orange (THEMES[1])
+  bundle: "orange",
+  css: "orange",
+  frontend: "orange",
+  "frontend-ui": "orange",
+  html: "orange",
+  javascript: "orange",
+  styling: "orange",
+  "styling-css": "orange",
+  "styling-ui": "orange",
+  tailwind: "orange",
+  typescript: "orange",
+
+  // 11. Icons & Illustrations -> Yellow (THEMES[2])
+  assets: "yellow",
+  icons: "yellow",
+  "icons-illustrations": "yellow",
+  "icons-logos": "yellow",
+  illustrations: "yellow",
+  logos: "yellow",
+  svg: "yellow",
+
+  // 12. Inspiration & Galleries -> Green (THEMES[3])
+  directory: "green",
+  galleries: "green",
+  gallery: "green",
+  inspiration: "green",
+  "inspiration-galleries": "green",
+  portfolio: "green",
+  showcase: "green",
+
+  // 13. Media & Assets -> Cyan (THEMES[4])
+  audio: "cyan",
+  image: "cyan",
+  media: "cyan",
+  "media-assets": "cyan",
+  sound: "cyan",
+  texture: "cyan",
+  video: "cyan",
+
+  // 14. Mockups & Presentations -> Blue (THEMES[5])
+  mockup: "blue",
+  mockups: "blue",
+  "mockups-presentations": "blue",
+  presentation: "blue",
+  presentations: "blue",
+  preview: "blue",
+  prototype: "blue",
+
+  // 15. Typography -> Purple (THEMES[6])
+  font: "purple",
+  fonts: "purple",
+  type: "purple",
+  typography: "purple",
+
+  // 16. UI Components & Libraries -> Pink (THEMES[7])
+  components: "pink",
+  "components-ui": "pink",
+  extensions: "pink",
+  libraries: "pink",
+  ui: "pink",
+  "ui-components": "pink",
+  "ui-components-libraries": "pink",
+
+  // Extra common utility categories
   "build-tools": "pink",
-  performance: "pink",
-  security: "pink",
   generators: "pink",
-  tools: "pink",
-  typography: "pink",
-  utilities: "pink",
+  performance: "pink",
+  qa: "pink",
+  security: "pink",
+  testing: "pink",
+  "testing-qa": "pink",
 };
 /* eslint-enable perfectionist/sort-objects */
 
@@ -273,6 +399,45 @@ export function getCategoryTheme(
   allCategories?: string[],
 ): Theme {
   if (!category) return THEMES[0];
+
+  const normalized = category.trim().toLowerCase();
+  const slug = slugify(normalized);
+
+  // If itemType is "tool", use the dedicated 4-color tool category order (Red, Orange, Yellow, Green)
+  if (itemType === "tool") {
+    // If explicit index is provided, use it directly in theme sequence
+    if (typeof index === "number" && index >= 0) {
+      return THEMES[index % THEMES.length];
+    }
+
+    // If list of tool categories is provided, find its index
+    if (Array.isArray(allCategories) && allCategories.length > 0) {
+      const foundIdx = allCategories.findIndex(
+        (c) => c.toLowerCase().trim() === category.toLowerCase().trim(),
+      );
+      if (foundIdx !== -1) {
+        return THEMES[foundIdx % THEMES.length];
+      }
+    }
+
+    if (TOOL_CATEGORY_THEMES[slug]) {
+      return TOOL_CATEGORY_THEMES[slug];
+    }
+    if (TOOL_CATEGORY_THEMES[normalized]) {
+      return TOOL_CATEGORY_THEMES[normalized];
+    }
+    for (const [key, theme] of Object.entries(TOOL_CATEGORY_THEMES)) {
+      if (slug === key || slug.startsWith(`${key}-`) || slug.endsWith(`-${key}`)) {
+        return theme;
+      }
+    }
+    const toolIdx = TOOL_ENTRIES.findIndex(
+      ([key, val]) =>
+        key.toLowerCase() === slug || val.toLowerCase() === normalized || slugify(val) === slug,
+    );
+    if (toolIdx !== -1) return THEMES[toolIdx % THEMES.length];
+    return THEMES[0];
+  }
 
   // If explicit index is provided, use it directly in theme sequence
   if (typeof index === "number" && index >= 0) {
@@ -289,10 +454,7 @@ export function getCategoryTheme(
     }
   }
 
-  const normalized = category.trim().toLowerCase();
-  const slug = slugify(normalized);
-
-  // Check explicit alphabetical theme map first
+  // Check explicit alphabetical theme map for resources
   if (ALPHABETICAL_CATEGORY_THEMES[slug]) {
     return ALPHABETICAL_CATEGORY_THEMES[slug];
   }
@@ -305,14 +467,6 @@ export function getCategoryTheme(
     if (slug === key || slug.startsWith(`${key}-`) || slug.endsWith(`-${key}`)) {
       return theme;
     }
-  }
-
-  if (itemType === "tool") {
-    const toolIdx = TOOL_ENTRIES.findIndex(
-      ([key, val]) =>
-        key.toLowerCase() === slug || val.toLowerCase() === normalized || slugify(val) === slug,
-    );
-    if (toolIdx !== -1) return THEMES[toolIdx % THEMES.length];
   }
 
   // Consistent deterministic hash for any unrecognized category name

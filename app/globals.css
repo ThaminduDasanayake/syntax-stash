@@ -32,45 +32,45 @@
   /* 8-Color Curated Neo-Brutalist Theme Palette (OKLCH) */
   --red: oklch(42% 0.21 27);
   --orange: oklch(75% 0.16 70);
-  --yellow: oklch(93.5% 0.16 102);
-  --green: oklch(76% 0.20 135);
-  --cyan: oklch(84% 0.09 232);
+  --yellow: oklch(0.8366 0.1711 91.6);
+  --green: oklch(0.74 0.205 136.2);
+  --cyan: oklch(0.82 0.11 220);
   --blue: oklch(42% 0.19 265);
   --purple: oklch(43% 0.11 348);
   --pink: oklch(75% 0.14 310);
 
   --red-tint: oklch(91% 0.05 27);
   --orange-tint: oklch(91% 0.07 70);
-  --yellow-tint: oklch(96.5% 0.06 102);
-  --green-tint: oklch(93% 0.07 135);
-  --cyan-tint: oklch(94% 0.04 232);
+  --yellow-tint: oklch(95% 0.05 91.6);
+  --green-tint: oklch(94% 0.05 136.2);
+  --cyan-tint: oklch(95% 0.04 220);
   --blue-tint: oklch(87% 0.06 265);
   --purple-tint: oklch(90% 0.04 348);
   --pink-tint: oklch(92% 0.05 310);
 
-  --red-tint-2: oklch(76% 0.10 27);
+  --red-tint-2: oklch(76% 0.1 27);
   --orange-tint-2: oklch(84% 0.11 70);
-  --yellow-tint-2: oklch(90% 0.11 102);
-  --green-tint-2: oklch(85% 0.12 135);
-  --cyan-tint-2: oklch(88% 0.07 232);
+  --yellow-tint-2: oklch(89% 0.09 91.6);
+  --green-tint-2: oklch(86% 0.1 136.2);
+  --cyan-tint-2: oklch(88% 0.07 220);
   --blue-tint-2: oklch(72% 0.11 265);
   --purple-tint-2: oklch(75% 0.08 348);
   --pink-tint-2: oklch(82% 0.09 310);
 
   --red-deep: oklch(28% 0.16 27);
   --orange-deep: oklch(58% 0.16 70);
-  --yellow-deep: oklch(70% 0.15 102);
-  --green-deep: oklch(45% 0.18 135);
-  --cyan-deep: oklch(60% 0.12 232);
+  --yellow-deep: oklch(56% 0.15 91.6);
+  --green-deep: oklch(44% 0.15 136.2);
+  --cyan-deep: oklch(46% 0.14 220);
   --blue-deep: oklch(28% 0.18 265);
   --purple-deep: oklch(30% 0.1 348);
   --pink-deep: oklch(45% 0.18 310);
 
   --red-soft: oklch(80% 0.09 27);
   --orange-soft: oklch(84% 0.11 70);
-  --yellow-soft: oklch(90% 0.11 102);
-  --green-soft: oklch(89% 0.08 135);
-  --cyan-soft: oklch(88% 0.07 232);
+  --yellow-soft: oklch(90% 0.08 91.6);
+  --green-soft: oklch(88% 0.08 136.2);
+  --cyan-soft: oklch(89% 0.06 220);
   --blue-soft: oklch(72% 0.11 265);
   --purple-soft: oklch(75% 0.08 348);
   --pink-soft: oklch(88% 0.06 310);

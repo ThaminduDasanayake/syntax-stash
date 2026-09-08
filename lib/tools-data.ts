@@ -249,7 +249,7 @@ export const frontendTools: InternalTool[] = [
     title: "Color Studio",
     category: CATEGORIES.frontend,
     description:
-      "Convert between HEX/RGB/HSL/OKLCH, generate harmonic palettes, and check WCAG contrast — all in one tabbed studio.",
+      "Browse curated 2, 3, and 4-color palettes in bento grid layouts with instant CSS variable and Tailwind CSS @theme export.",
     highlight: "Studio",
     icon: "palette",
     slug: "color-studio",
@@ -258,7 +258,7 @@ export const frontendTools: InternalTool[] = [
     title: "CSS Studio",
     category: CATEGORIES.frontend,
     description:
-      "Border-radius, box-shadow, glassmorphism, cubic-bezier, CSS keyframes, and GSAP animations — all in one tabbed studio.",
+      "Border-radius, aspect-ratio, box-shadow, glassmorphism, cubic-bezier, CSS keyframes, and GSAP animations — all in one tabbed studio.",
     highlight: "Studio",
     icon: "file-css",
     slug: "css-studio",
