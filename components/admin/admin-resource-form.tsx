@@ -20,6 +20,7 @@ import {
   CandidateOption,
   MediaAssetFields,
   ResourceCardPreview,
+  SuggestedAuthorData,
   TagPicker,
 } from "@/components/submissions";
 import { Button } from "@/components/ui/button";
@@ -87,6 +88,7 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
   const [ogImageOptions, setOgImageOptions] = useState<CandidateOption[]>([]);
+  const [suggestedAuthor, setSuggestedAuthor] = useState<SuggestedAuthorData | null>(null);
 
   // Author Creation Modal State
   const [isCreateAuthorOpen, setIsCreateAuthorOpen] = useState(false);
@@ -123,6 +125,20 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
     setIsCreateAuthorOpen(true);
   };
 
+  const handleAcceptSuggestedAuthor = (suggested: SuggestedAuthorData) => {
+    setFormData((prev) => ({
+      ...prev,
+      authorBlog: suggested.blog || prev.authorBlog || "",
+      authorGithub: suggested.github || prev.authorGithub || "",
+      authorLinkedin: suggested.linkedin || prev.authorLinkedin || "",
+      authorName: suggested.name,
+      authorTwitter: suggested.twitter || prev.authorTwitter || "",
+      authorWebsite: suggested.website || prev.authorWebsite || "",
+      authorYoutube: suggested.youtube || prev.authorYoutube || "",
+    }));
+    setSuggestedAuthor(null);
+  };
+
   const handleAutoDetect = async () => {
     const targetUrl = formData.url?.trim();
     if (!targetUrl) {
@@ -139,15 +155,21 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
         if (data.faviconOptions) setFaviconOptions(data.faviconOptions);
         if (data.ogImageOptions) setOgImageOptions(data.ogImageOptions);
 
+        if (data.author && data.author.trim()) {
+          setSuggestedAuthor({
+            blog: data.authorBlog || "",
+            github: data.authorGitHub || "",
+            linkedin: data.authorLinkedIn || "",
+            name: data.author.trim(),
+            twitter: data.authorTwitter || "",
+            website: data.authorWebsite || "",
+            youtube: data.authorYouTube || "",
+          });
+        }
+
         setFormData((prev) => ({
           ...prev,
           title: prev.title || data.title || "",
-          authorGithub: prev.authorGithub || data.authorGitHub || "",
-          authorLinkedin: prev.authorLinkedin || data.authorLinkedIn || "",
-          authorName: prev.authorName || data.author || "",
-          authorTwitter: prev.authorTwitter || data.authorTwitter || "",
-          authorWebsite: prev.authorWebsite || data.authorWebsite || "",
-          authorYoutube: prev.authorYoutube || data.authorYouTube || "",
           category: prev.category || data.category || defaultCategory,
           description: prev.description || data.description || "",
           favicon: data.favicon || prev.favicon || "",
@@ -473,6 +495,9 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
               onChange={handleAuthorFieldChange}
               onRequestCreateAuthor={handleRequestCreateAuthor}
               onSelectAuthorOption={handleSelectAuthorOption}
+              suggestedAuthor={suggestedAuthor}
+              onAcceptSuggestedAuthor={handleAcceptSuggestedAuthor}
+              onDismissSuggestedAuthor={() => setSuggestedAuthor(null)}
               allowCustom={false}
             />
 

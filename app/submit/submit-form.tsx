@@ -11,6 +11,7 @@ import {
   CandidateOption,
   MediaAssetFields,
   ResourceCardPreview,
+  SuggestedAuthorData,
   TagPicker,
 } from "@/components/submissions";
 import { Button } from "@/components/ui/button";
@@ -41,6 +42,7 @@ export function SubmitForm() {
   const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
   const [ogImage, setOgImage] = useState("");
   const [ogImageOptions, setOgImageOptions] = useState<CandidateOption[]>([]);
+  const [suggestedAuthor, setSuggestedAuthor] = useState<SuggestedAuthorData | null>(null);
   const [tags, setTags] = useState("");
   const [notes, setNotes] = useState("");
   const [honeypot, setHoneypot] = useState(""); // anti-spam trap
@@ -66,6 +68,7 @@ export function SubmitForm() {
     setFaviconOptions([]);
     setOgImage("");
     setOgImageOptions([]);
+    setSuggestedAuthor(null);
     setTags("");
     setNotes("");
     setHoneypot("");
@@ -103,6 +106,16 @@ export function SubmitForm() {
     if (updates.authorLinkedIn !== undefined) setAuthorLinkedIn(updates.authorLinkedIn || "");
   };
 
+  const handleAcceptSuggestedAuthor = (suggested: SuggestedAuthorData) => {
+    setAuthor(suggested.name);
+    if (suggested.website) setAuthorWebsite(suggested.website);
+    if (suggested.twitter) setAuthorTwitter(suggested.twitter);
+    if (suggested.github) setAuthorGitHub(suggested.github);
+    if (suggested.youtube) setAuthorYouTube(suggested.youtube);
+    if (suggested.linkedin) setAuthorLinkedIn(suggested.linkedin);
+    setSuggestedAuthor(null);
+  };
+
   const handleAutoDetect = async () => {
     if (!url.trim()) {
       toast.error("Please enter a URL first.");
@@ -132,12 +145,17 @@ export function SubmitForm() {
       if (data.faviconOptions) setFaviconOptions(data.faviconOptions);
       if (data.ogImage) setOgImage(data.ogImage);
       if (data.ogImageOptions) setOgImageOptions(data.ogImageOptions);
-      if (data.author) setAuthor(data.author);
-      if (data.authorWebsite) setAuthorWebsite(data.authorWebsite);
-      if (data.authorTwitter) setAuthorTwitter(data.authorTwitter);
-      if (data.authorGitHub) setAuthorGitHub(data.authorGitHub);
-      if (data.authorYouTube) setAuthorYouTube(data.authorYouTube);
-      if (data.authorLinkedIn) setAuthorLinkedIn(data.authorLinkedIn);
+      if (data.author && data.author.trim()) {
+        setSuggestedAuthor({
+          blog: data.authorBlog || "",
+          github: data.authorGitHub || "",
+          linkedin: data.authorLinkedIn || "",
+          name: data.author.trim(),
+          twitter: data.authorTwitter || "",
+          website: data.authorWebsite || "",
+          youtube: data.authorYouTube || "",
+        });
+      }
       if (data.github) setGithub(data.github);
       if (data.category) {
         setCategory(data.category);
@@ -368,6 +386,9 @@ export function SubmitForm() {
             }}
             onChange={handleAuthorFieldChange}
             onBatchChange={handleAuthorBatchChange}
+            suggestedAuthor={suggestedAuthor}
+            onAcceptSuggestedAuthor={handleAcceptSuggestedAuthor}
+            onDismissSuggestedAuthor={() => setSuggestedAuthor(null)}
           />
 
           {/* Section 6: Additional Details & Tags */}

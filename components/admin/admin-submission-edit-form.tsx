@@ -18,6 +18,7 @@ import {
   AuthorSocialValues,
   MediaAssetFields,
   ResourceCardPreview,
+  SuggestedAuthorData,
   TagPicker,
 } from "@/components/submissions";
 import { Button } from "@/components/ui/button";
@@ -106,6 +107,7 @@ export function AdminSubmissionEditForm({
   const [ogImageOptions, setOgImageOptions] = useState<
     { label: string; type?: string; url: string }[]
   >([]);
+  const [suggestedAuthor, setSuggestedAuthor] = useState<SuggestedAuthorData | null>(null);
 
   // Inline Author Creation
   const [isCreateAuthorOpen, setIsCreateAuthorOpen] = useState(false);
@@ -165,6 +167,19 @@ export function AdminSubmissionEditForm({
     setIsCreateAuthorOpen(true);
   };
 
+  const handleAcceptSuggestedAuthor = (suggested: SuggestedAuthorData) => {
+    setEditForm((prev) => ({
+      ...prev,
+      author: suggested.name,
+      authorGitHub: suggested.github || prev.authorGitHub || "",
+      authorLinkedIn: suggested.linkedin || prev.authorLinkedIn || "",
+      authorTwitter: suggested.twitter || prev.authorTwitter || "",
+      authorWebsite: suggested.website || prev.authorWebsite || "",
+      authorYouTube: suggested.youtube || prev.authorYouTube || "",
+    }));
+    setSuggestedAuthor(null);
+  };
+
   const handleAutoDetect = async () => {
     const targetUrl = editForm.url?.trim();
     if (!targetUrl) return;
@@ -178,15 +193,21 @@ export function AdminSubmissionEditForm({
         if (data.faviconOptions) setFaviconOptions(data.faviconOptions);
         if (data.ogImageOptions) setOgImageOptions(data.ogImageOptions);
 
+        if (data.author && data.author.trim()) {
+          setSuggestedAuthor({
+            blog: data.authorBlog || "",
+            github: data.authorGitHub || "",
+            linkedin: data.authorLinkedIn || "",
+            name: data.author.trim(),
+            twitter: data.authorTwitter || "",
+            website: data.authorWebsite || "",
+            youtube: data.authorYouTube || "",
+          });
+        }
+
         setEditForm((prev) => ({
           ...prev,
           title: prev.title || data.title,
-          author: prev.author || data.author,
-          authorGitHub: prev.authorGitHub || data.authorGitHub,
-          authorLinkedIn: prev.authorLinkedIn || data.authorLinkedIn,
-          authorTwitter: prev.authorTwitter || data.authorTwitter,
-          authorWebsite: prev.authorWebsite || data.authorWebsite,
-          authorYouTube: prev.authorYouTube || data.authorYouTube,
           category: prev.category || data.category || sub.category,
           description: prev.description || data.description,
           favicon: data.favicon || prev.favicon,
@@ -378,7 +399,11 @@ export function AdminSubmissionEditForm({
             onBatchChange={handleAuthorBatchChange}
             onRequestCreateAuthor={handleRequestCreateAuthor}
             onSelectAuthorOption={handleSelectAuthorOption}
+            suggestedAuthor={suggestedAuthor}
+            onAcceptSuggestedAuthor={handleAcceptSuggestedAuthor}
+            onDismissSuggestedAuthor={() => setSuggestedAuthor(null)}
             allowCustom={false}
+            disabled={isWorking}
           />
 
           {/* Section 6: Repo, Tags & Admin Moderation */}
