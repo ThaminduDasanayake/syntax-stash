@@ -3,6 +3,7 @@
 import {
   ArrowsClockwiseIcon,
   ArrowSquareOutIcon,
+  ArticleIcon,
   CaretLeftIcon,
   CaretRightIcon,
   GlobeIcon,
@@ -408,6 +409,17 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                           <GlobeIcon className="size-3.5" />
                         </a>
                       )}
+                      {authorItem.blog && (
+                        <a
+                          href={authorItem.blog}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="border-line bg-paper/60 text-muted-foreground hover:text-primary hover:border-primary/50 flex size-6 items-center justify-center rounded border transition-colors"
+                          title={`Blog: ${authorItem.blog}`}
+                        >
+                          <ArticleIcon className="size-3.5" />
+                        </a>
+                      )}
                       {authorItem.github && (
                         <a
                           href={
@@ -423,9 +435,9 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                           <Image
                             src="/github.svg"
                             alt="GitHub"
-                            width={12}
-                            height={12}
-                            className="size-3 opacity-70 hover:opacity-100 dark:invert"
+                            width={14}
+                            height={14}
+                            className="size-3.5 opacity-70 hover:opacity-100 dark:invert"
                           />
                         </a>
                       )}
@@ -453,10 +465,16 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                           }
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="border-line bg-paper/60 text-muted-foreground hover:text-primary hover:border-primary/50 flex size-6 items-center justify-center rounded border text-[10px] font-bold transition-colors"
+                          className="border-line bg-paper/60 text-muted-foreground hover:text-primary hover:border-primary/50 flex size-6 items-center justify-center rounded border transition-colors"
                           title={`LinkedIn: ${authorItem.linkedin}`}
                         >
-                          in
+                          <Image
+                            src="/linkedin.svg"
+                            alt="LinkedIn"
+                            width={14}
+                            height={14}
+                            className="size-3.5 opacity-70 hover:opacity-100"
+                          />
                         </a>
                       )}
                       {authorItem.youtube && (
@@ -468,13 +486,20 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                           }
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="border-line bg-paper/60 text-muted-foreground hover:text-primary hover:border-primary/50 flex size-6 items-center justify-center rounded border text-[10px] font-bold transition-colors"
+                          className="border-line bg-paper/60 text-muted-foreground hover:text-primary hover:border-primary/50 flex size-6 items-center justify-center rounded border transition-colors"
                           title={`YouTube: ${authorItem.youtube}`}
                         >
-                          yt
+                          <Image
+                            src="/youtube.svg"
+                            alt="YouTube"
+                            width={14}
+                            height={14}
+                            className="size-3.5 opacity-70 hover:opacity-100"
+                          />
                         </a>
                       )}
                       {!authorItem.website &&
+                        !authorItem.blog &&
                         !authorItem.github &&
                         !authorItem.twitter &&
                         !authorItem.linkedin &&
