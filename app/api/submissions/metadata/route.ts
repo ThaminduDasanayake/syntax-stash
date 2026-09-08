@@ -641,69 +641,91 @@ export async function GET(request: NextRequest) {
         "maintained by",
       ];
 
-      $("p, span, div, li, small, footer, [class*='author'], [class*='byline'], [class*='credit']").each(
-        (_, el) => {
-          if (author) return;
-          const $el = $(el);
-          const textContent = $el.text().replace(/\s+/g, " ").trim();
+      const processAttributionElement = ($el: ReturnType<typeof $>) => {
+        if (author) return;
+        const textContent = $el.text().replace(/\s+/g, " ").trim();
 
-          const hasKeyword = attributionKeywords.some((kw) =>
-            textContent.toLowerCase().includes(kw),
-          );
-          if (!hasKeyword) return;
+        // Real creator attribution lines are concise bylines (< 120 chars), not long paragraphs/testimonials
+        if (textContent.length > 120) return;
 
-          // Check if there is an <a> tag inside or adjacent to the attribution keyword
-          const $links = $el.find("a");
-          if ($links.length > 0) {
-            $links.each((_, linkEl) => {
-              if (author) return;
-              const $link = $(linkEl);
-              const linkText = $link.text().replace(/\s+/g, " ").trim();
-              const linkHref = $link.attr("href")?.trim();
+        const hasKeyword = attributionKeywords.some((kw) =>
+          textContent.toLowerCase().includes(kw),
+        );
+        if (!hasKeyword) return;
 
-              // Check if linkText is an action button (like "Follow Us", "Watch Us")
-              const isActionButton =
-                /^(?:follow|watch|join|subscribe|star|share|contact|support|sponsor|view on|buy me a coffee|github|twitter|youtube|linkedin|discord|x\.com)\b/i.test(
-                  linkText,
-                );
+        // Check if there is an <a> tag inside or adjacent to the attribution keyword
+        const $links = $el.find("a");
+        if ($links.length > 0) {
+          $links.each((_, linkEl) => {
+            if (author) return;
+            const $link = $(linkEl);
+            const linkText = $link.text().replace(/\s+/g, " ").trim();
+            const linkHref = $link.attr("href")?.trim();
 
-              if (!isActionButton) {
-                const cleaned = cleanAuthorName(linkText);
-                if (cleaned) {
-                  author = cleaned;
-                  if (linkHref) {
-                    const resolved = resolveUrl(linkHref, finalUrl);
-                    if (resolved.includes("twitter.com") || resolved.includes("x.com")) {
-                      authorTwitter = resolved;
-                    } else if (resolved.includes("github.com")) {
-                      authorGitHub = resolved;
-                    } else if (resolved.includes("youtube.com")) {
-                      authorYouTube = resolved;
-                    } else if (resolved.includes("linkedin.com")) {
-                      authorLinkedIn = resolved;
-                    } else if (resolved.startsWith("http")) {
-                      authorWebsite = resolved;
-                    }
+            // Check if linkText is an action button (like "Follow Us", "Watch Us")
+            const isActionButton =
+              /^(?:follow|watch|join|subscribe|star|share|contact|support|sponsor|view on|buy me a coffee|github|twitter|youtube|linkedin|discord|x\.com)\b/i.test(
+                linkText,
+              );
+
+            if (!isActionButton) {
+              const cleaned = cleanAuthorName(linkText);
+              if (cleaned) {
+                author = cleaned;
+                if (linkHref) {
+                  const resolved = resolveUrl(linkHref, finalUrl);
+                  if (resolved.includes("twitter.com") || resolved.includes("x.com")) {
+                    authorTwitter = resolved;
+                  } else if (resolved.includes("github.com")) {
+                    authorGitHub = resolved;
+                  } else if (resolved.includes("youtube.com")) {
+                    authorYouTube = resolved;
+                  } else if (resolved.includes("linkedin.com")) {
+                    authorLinkedIn = resolved;
+                  } else if (resolved.startsWith("http")) {
+                    authorWebsite = resolved;
                   }
                 }
               }
-            });
-          }
+            }
+          });
+        }
 
-          // If no link, check for text right after "made by" / "created by" in this specific element
-          if (!author) {
-            const match = textContent.match(
-              /(?:built|made|created|developed|designed|maintained|curated|crafted)\s+by\s+([^,.;|•·–—]+)/i,
-            );
-            if (match && match[1]) {
-              const cleaned = cleanAuthorName(match[1]);
-              if (cleaned) {
-                author = cleaned;
-              }
+        // If no link, check for text right after "made by" / "created by" in this specific element
+        if (!author) {
+          const match = textContent.match(
+            /(?:built|made|created|developed|designed|maintained|curated|crafted)\s+by\s+([^,.;|•·–—]+)/i,
+          );
+          if (match && match[1]) {
+            const cleaned = cleanAuthorName(match[1]);
+            if (cleaned) {
+              author = cleaned;
             }
           }
-        },
-      );
+        }
+      };
+
+      // Pass 1: Prioritize dedicated footer & attribution/credit containers
+      $("footer, [class*='footer'], [id*='footer'], [class*='credit'], [class*='byline'], [class*='attribution']").find("p, span, div, li, small, a").each((_, el) => {
+        if (author) return;
+        processAttributionElement($(el));
+      });
+
+      // Pass 2: If not found in footer, scan general page (excluding cards, testimonials, reviews, features, nav)
+      if (!author) {
+        $("p, span, small, [class*='author'], [class*='byline'], [class*='credit']").each((_, el) => {
+          if (author) return;
+          const $el = $(el);
+          if (
+            $el.closest(
+              "[class*='testimonial'], [class*='review'], [class*='card'], [class*='feature'], [class*='pricing'], [class*='quote'], [class*='carousel'], nav, header",
+            ).length > 0
+          ) {
+            return;
+          }
+          processAttributionElement($el);
+        });
+      }
     }
 
     // Fallback: OpenGraph description match
