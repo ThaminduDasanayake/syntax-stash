@@ -26,6 +26,64 @@ function resolveUrl(relativeOrAbsolute: string, baseUrl: string): string {
   }
 }
 
+function cleanAuthorName(raw: string): string {
+  if (!raw) return "";
+
+  let name = raw.trim();
+
+  // Strip leading attribution prefix if present
+  name = name.replace(
+    /^(?:built|made|created|developed|designed|maintained|curated|by|author:?)\s+/i,
+    "",
+  );
+
+  // Strip trailing action calls, button labels, and noise that get attached when elements are concatenated
+  // e.g. "Pixel PointFollow UsWatch Us" -> "Pixel Point"
+  // e.g. "Alex BarashkovFollow on Twitter" -> "Alex Barashkov"
+  name = name.replace(
+    /(?:follow|watch|join|subscribe|star|share|contact|support|sponsor|view on|buy me a coffee|github|twitter|youtube|linkedin|discord|x\.com)\b.*$/i,
+    "",
+  );
+
+  // Strip trailing conjunctions / locations e.g. "Jane Doe in New York", "John Doe with Next.js"
+  name = name.replace(/\s+(?:with|using|in|at|on|for|from|and)\b.*$/i, "");
+
+  // Strip trailing delimiters / noise
+  name = name.replace(/[|•·–—-].*$/, "");
+
+  // Clean extra whitespace
+  name = name.replace(/\s+/g, " ").trim();
+
+  // Remove quotes
+  name = name.replace(/^["'`“”‘’]+|["'`“”‘’]+$/g, "").trim();
+
+  // Validate length and discard generic terms
+  const lower = name.toLowerCase();
+  const genericBlocked = [
+    "a community",
+    "admin",
+    "ai",
+    "author",
+    "community",
+    "creator",
+    "developer",
+    "github",
+    "nextjs",
+    "our team",
+    "the",
+    "the team",
+    "unknown",
+    "vercel",
+    "wordpress",
+  ];
+
+  if (name.length < 2 || name.length > 40 || genericBlocked.includes(lower)) {
+    return "";
+  }
+
+  return name;
+}
+
 function findCategoryByKeywords(
   categories: CategoryItem[],
   slugMatch: string,
@@ -548,7 +606,7 @@ export async function GET(request: NextRequest) {
     const articleAuthor = $('meta[property="article:author"]').attr("content")?.trim();
     const metaAuthor = $('meta[name="author"]').attr("content")?.trim();
 
-    let author = metaAuthor || twitterCreator || articleAuthor || "";
+    let author = cleanAuthorName(metaAuthor || "") || cleanAuthorName(articleAuthor || "");
     let authorWebsite: string | undefined;
     let authorTwitter: string | undefined;
     let authorGitHub: string | undefined;
@@ -570,59 +628,89 @@ export async function GET(request: NextRequest) {
       authorTwitter = `https://x.com/${twitterCreator.replace(/^@/, "")}`;
     }
 
-    // Direct HTML scan for linked creator: e.g. "created by <a href="...">Julian Li</a>"
+    // Direct DOM scan for linked creator: e.g. "<p><span>Made by</span> <a href="...">Pixel Point</a></p>"
     if (!author) {
-      const htmlCreatorMatch = html.match(
-        /(?:built|made|created|developed|designed)\s+by(?:\s*<!--.*?-->|\s*<span[^>]*>.*?<\/span>)*\s*<a[^>]*href=["']([^"']+)["'][^>]*>([^<]+)<\/a>/i,
-      );
-      if (htmlCreatorMatch && htmlCreatorMatch[2]?.trim()) {
-        const rawName = htmlCreatorMatch[2].trim();
-        const rawHref = htmlCreatorMatch[1]?.trim();
-        if (rawName.length >= 2 && rawName.length <= 40) {
-          author = rawName;
-          if (rawHref) {
-            const resolvedHref = resolveUrl(rawHref, finalUrl);
-            if (resolvedHref.includes("twitter.com") || resolvedHref.includes("x.com")) {
-              authorTwitter = resolvedHref;
-            } else if (resolvedHref.includes("github.com")) {
-              authorGitHub = resolvedHref;
-            } else if (resolvedHref.startsWith("http")) {
-              authorWebsite = resolvedHref;
+      const attributionKeywords = [
+        "built by",
+        "crafted by",
+        "created by",
+        "curated by",
+        "designed by",
+        "developed by",
+        "made by",
+        "maintained by",
+      ];
+
+      $("p, span, div, li, small, footer, [class*='author'], [class*='byline'], [class*='credit']").each(
+        (_, el) => {
+          if (author) return;
+          const $el = $(el);
+          const textContent = $el.text().replace(/\s+/g, " ").trim();
+
+          const hasKeyword = attributionKeywords.some((kw) =>
+            textContent.toLowerCase().includes(kw),
+          );
+          if (!hasKeyword) return;
+
+          // Check if there is an <a> tag inside or adjacent to the attribution keyword
+          const $links = $el.find("a");
+          if ($links.length > 0) {
+            $links.each((_, linkEl) => {
+              if (author) return;
+              const $link = $(linkEl);
+              const linkText = $link.text().replace(/\s+/g, " ").trim();
+              const linkHref = $link.attr("href")?.trim();
+
+              // Check if linkText is an action button (like "Follow Us", "Watch Us")
+              const isActionButton =
+                /^(?:follow|watch|join|subscribe|star|share|contact|support|sponsor|view on|buy me a coffee|github|twitter|youtube|linkedin|discord|x\.com)\b/i.test(
+                  linkText,
+                );
+
+              if (!isActionButton) {
+                const cleaned = cleanAuthorName(linkText);
+                if (cleaned) {
+                  author = cleaned;
+                  if (linkHref) {
+                    const resolved = resolveUrl(linkHref, finalUrl);
+                    if (resolved.includes("twitter.com") || resolved.includes("x.com")) {
+                      authorTwitter = resolved;
+                    } else if (resolved.includes("github.com")) {
+                      authorGitHub = resolved;
+                    } else if (resolved.includes("youtube.com")) {
+                      authorYouTube = resolved;
+                    } else if (resolved.includes("linkedin.com")) {
+                      authorLinkedIn = resolved;
+                    } else if (resolved.startsWith("http")) {
+                      authorWebsite = resolved;
+                    }
+                  }
+                }
+              }
+            });
+          }
+
+          // If no link, check for text right after "made by" / "created by" in this specific element
+          if (!author) {
+            const match = textContent.match(
+              /(?:built|made|created|developed|designed|maintained|curated|crafted)\s+by\s+([^,.;|•·–—]+)/i,
+            );
+            if (match && match[1]) {
+              const cleaned = cleanAuthorName(match[1]);
+              if (cleaned) {
+                author = cleaned;
+              }
             }
           }
-        }
-      }
-    }
-
-    if (!author && ogDesc) {
-      const match = ogDesc.match(/(?:built|made|created|developed|designed)\s+by\s+([^,.;]+)/i);
-      if (match && match[1]) {
-        author = match[1].replace(/\s+(with|using|in|at|on|for|from|and)\b.*$/i, "").trim();
-      }
-    }
-
-    // Body / Footer / Byline DOM Search for creator attribution
-    if (!author) {
-      const footerOrBylineText = $(
-        "footer, .footer, [class*='footer'], [class*='byline'], [class*='author'], [class*='credit'], [aria-label*='author' i], [aria-label*='created' i]",
-      )
-        .text()
-        .replace(/\s+/g, " ");
-
-      const bylineMatch = footerOrBylineText.match(
-        /(?:built|made|created|developed|designed)\s+by\s+([A-Za-zÀ-ÿ0-9\s._-]+?)(?:\s+(?:with|using|in|at|on|for|from|and)\b|[^\w\sÀ-ÿ._-]|$)/i,
+        },
       );
+    }
 
-      if (bylineMatch && bylineMatch[1]) {
-        const candidate = bylineMatch[1].trim();
-        // Ignore generic labels
-        if (
-          !["a community", "ai", "our team", "the"].includes(candidate.toLowerCase()) &&
-          candidate.length >= 2 &&
-          candidate.length <= 40
-        ) {
-          author = candidate;
-        }
+    // Fallback: OpenGraph description match
+    if (!author && ogDesc) {
+      const match = ogDesc.match(/(?:built|made|created|developed|designed|crafted|curated)\s+by\s+([^,.;|•·–—]+)/i);
+      if (match && match[1]) {
+        author = cleanAuthorName(match[1]);
       }
     }
 

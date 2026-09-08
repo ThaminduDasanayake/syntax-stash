@@ -1,4 +1,4 @@
-import { CheckIcon, PlusIcon, SparkleIcon, XIcon } from "@phosphor-icons/react";
+import { InfoIcon, PlusIcon } from "@phosphor-icons/react";
 
 import { AuthorCombobox, AuthorOption } from "@/components/submissions/author-combobox";
 import { Button } from "@/components/ui/button";
@@ -43,10 +43,7 @@ export function AuthorSocialFields({
   allowCustom = true,
   className,
   disabled = false,
-  onAcceptSuggestedAuthor,
-  onBatchChange,
   onChange,
-  onDismissSuggestedAuthor,
   onRequestCreateAuthor,
   onSelectAuthorOption,
   suggestedAuthor,
@@ -61,26 +58,6 @@ export function AuthorSocialFields({
     Boolean(suggestedAuthor?.name?.trim()) &&
     suggestedAuthor?.name?.trim().toLowerCase() !== (values.author || "").trim().toLowerCase();
 
-  const handleApplySuggestion = () => {
-    if (!suggestedAuthor) return;
-    if (onAcceptSuggestedAuthor) {
-      onAcceptSuggestedAuthor(suggestedAuthor);
-    } else {
-      onChange("author", suggestedAuthor.name);
-      if (onBatchChange) {
-        onBatchChange({
-          author: suggestedAuthor.name,
-          authorGitHub: suggestedAuthor.github || values.authorGitHub,
-          authorLinkedIn: suggestedAuthor.linkedin || values.authorLinkedIn,
-          authorTwitter: suggestedAuthor.twitter || values.authorTwitter,
-          authorWebsite: suggestedAuthor.website || values.authorWebsite,
-          authorYouTube: suggestedAuthor.youtube || values.authorYouTube,
-        });
-      }
-    }
-    onDismissSuggestedAuthor?.();
-  };
-
   return (
     <div className={cn("border-line space-y-2 font-mono text-xs", className)}>
       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -90,30 +67,14 @@ export function AuthorSocialFields({
           </Label>
 
           {hasSuggestion && suggestedAuthor && (
-            <div className="border-amber-500/40 bg-amber-500/10 text-amber-700 dark:text-amber-300 inline-flex items-center gap-1.5 rounded border px-2 py-0.5 text-[11px] font-mono animate-in fade-in duration-200">
-              <SparkleIcon weight="fill" className="text-amber-500 size-3 shrink-0" />
+            <div className="animate-in fade-in inline-flex items-center gap-1.5 rounded border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 font-mono text-[11px] text-amber-700 duration-200 dark:text-amber-300">
+              <InfoIcon weight="fill" className="size-4 shrink-0 text-blue-500" />
               <span>
-                Found: <strong className="font-bold underline underline-offset-2">{suggestedAuthor.name}</strong>
+                Found:{" "}
+                <strong className="font-bold underline underline-offset-2">
+                  {suggestedAuthor.name}
+                </strong>
               </span>
-              <button
-                type="button"
-                onClick={handleApplySuggestion}
-                className="bg-amber-500/20 hover:bg-amber-500/30 text-amber-800 dark:text-amber-200 ml-1 inline-flex cursor-pointer items-center gap-0.5 rounded px-1.5 py-0.2 text-[10px] font-bold uppercase transition-colors"
-                title={`Apply suggested creator "${suggestedAuthor.name}"`}
-              >
-                <CheckIcon weight="bold" className="size-2.5" />
-                <span>Apply</span>
-              </button>
-              {onDismissSuggestedAuthor && (
-                <button
-                  type="button"
-                  onClick={onDismissSuggestedAuthor}
-                  className="text-amber-700/60 hover:text-amber-800 dark:text-amber-300/60 dark:hover:text-amber-200 ml-0.5 cursor-pointer p-0.5"
-                  title="Dismiss suggestion"
-                >
-                  <XIcon className="size-2.5" />
-                </button>
-              )}
             </div>
           )}
         </div>
