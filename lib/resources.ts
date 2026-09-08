@@ -38,6 +38,7 @@ export const getAllResources = cache(
             ogImage: resource.ogImage,
             subtitle: resource.subtitle,
             tagName: tag.name,
+            updatedAt: resource.updatedAt,
             url: resource.url,
           })
           .from(resource)
@@ -56,6 +57,7 @@ export const getAllResources = cache(
           {
             author?: string;
             category: string;
+            createdAt?: string;
             description?: string;
             favicon?: string;
             github?: string;
@@ -63,6 +65,7 @@ export const getAllResources = cache(
             subtitle?: string;
             tags: string[];
             title: string;
+            updatedAt?: string;
             url: string;
           }
         >();
@@ -74,12 +77,14 @@ export const getAllResources = cache(
               title: r.title,
               author: r.authorName || undefined,
               category: catName,
+              createdAt: r.createdAt ? new Date(r.createdAt).toISOString() : undefined,
               description: r.description || undefined,
               favicon: r.favicon || undefined,
               github: r.github || undefined,
               ogImage: r.ogImage || undefined,
               subtitle: r.subtitle || undefined,
               tags: r.tagName ? [r.tagName] : [],
+              updatedAt: r.updatedAt ? new Date(r.updatedAt).toISOString() : undefined,
               url: r.url,
             });
           } else if (r.tagName) {

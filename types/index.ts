@@ -2,25 +2,29 @@ import type { IconName } from "@/lib/icons";
 
 export interface BaseItem<TCategory extends string = string> {
   category: TCategory;
+  createdAt?: Date | string;
   description?: string;
   title: string;
+  updatedAt?: Date | string;
 }
 
 export interface InternalTool<TCategory extends string = string> extends BaseItem<TCategory> {
+  highlight?: string;
   icon: IconName;
   slug: string;
-  highlight?: string;
 }
 
 export interface Resource<TCategory extends string = string> extends BaseItem<TCategory> {
-  url: string;
   author?: string | string[];
-  github?: string;
   className?: string;
+  createdAt?: Date | string;
   favicon?: string;
+  github?: string;
   ogImage?: string;
   subtitle?: string;
   tags?: string[];
+  updatedAt?: Date | string;
+  url: string;
 }
 
 export type StashItem = InternalTool | Resource;
