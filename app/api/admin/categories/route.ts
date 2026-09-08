@@ -98,8 +98,8 @@ export async function POST(req: Request) {
       updatedAt: new Date(),
     });
 
-    revalidateTag("categories", "max");
-    revalidateTag("resources", "max");
+    revalidateTag("categories", { expire: 0 });
+    revalidateTag("resources", { expire: 0 });
     revalidatePath("/resources");
     revalidatePath("/admin/categories");
 
@@ -161,8 +161,8 @@ export async function PATCH(req: Request) {
 
     await db.update(category).set(updates).where(eq(category.id, id));
 
-    revalidateTag("categories", "max");
-    revalidateTag("resources", "max");
+    revalidateTag("categories", { expire: 0 });
+    revalidateTag("resources", { expire: 0 });
     revalidatePath("/resources");
     revalidatePath("/admin/categories");
 
@@ -205,8 +205,8 @@ export async function DELETE(request: NextRequest) {
 
     await db.delete(category).where(eq(category.id, id));
 
-    revalidateTag("categories", "max");
-    revalidateTag("resources", "max");
+    revalidateTag("categories", { expire: 0 });
+    revalidateTag("resources", { expire: 0 });
     revalidatePath("/resources");
     revalidatePath("/admin/categories");
 

@@ -85,7 +85,7 @@ export async function getCategoryByName(name: string): Promise<CategoryItem | nu
  */
 export function invalidateCategoryCache() {
   try {
-    revalidateTag("categories", "max");
+    revalidateTag("categories", { expire: 0 });
   } catch {
     // Ignore outside request context
   }

@@ -411,10 +411,10 @@ export async function PATCH(req: Request) {
     }
 
     // 4. Purge edge cache
-    revalidateTag("resources", "max");
-    revalidateTag("categories", "max");
-    revalidateTag("tags", "max");
-    revalidateTag("authors", "max");
+    revalidateTag("resources", { expire: 0 });
+    revalidateTag("categories", { expire: 0 });
+    revalidateTag("tags", { expire: 0 });
+    revalidateTag("authors", { expire: 0 });
     revalidatePath("/");
     revalidatePath("/resources");
     revalidatePath("/authors");
@@ -440,10 +440,10 @@ export async function DELETE(request: NextRequest) {
 
     await db.delete(resource).where(eq(resource.id, id));
 
-    revalidateTag("resources", "max");
-    revalidateTag("categories", "max");
-    revalidateTag("tags", "max");
-    revalidateTag("authors", "max");
+    revalidateTag("resources", { expire: 0 });
+    revalidateTag("categories", { expire: 0 });
+    revalidateTag("tags", { expire: 0 });
+    revalidateTag("authors", { expire: 0 });
     revalidatePath("/");
     revalidatePath("/resources");
     revalidatePath("/authors");
