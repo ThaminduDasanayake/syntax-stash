@@ -13,10 +13,12 @@ import {
 import { useState } from "react";
 
 import {
+  AuthorOption,
   AuthorSocialFields,
   AuthorSocialValues,
   MediaAssetFields,
   ResourceCardPreview,
+  SuggestedAuthorData,
   TagPicker,
 } from "@/components/submissions";
 import { Button } from "@/components/ui/button";
@@ -28,7 +30,33 @@ import { useCategories } from "@/hooks/use-categories";
 import { Submission } from "@/lib/db/schema";
 import { cn } from "@/lib/utils";
 
+import { AdminAuthorDialog } from "./admin-author-dialog";
+import {
+  AdminConfirmEditDialog,
+  computeFieldChanges,
+  FieldDiff,
+} from "./admin-confirm-edit-dialog";
 import { STATUS_CONFIG, STATUS_OPTIONS, SubmissionStatus } from "./types";
+
+const SUBMISSION_FIELD_LABELS: Record<string, string> = {
+  title: "Title",
+  adminNotes: "Internal Admin Notes",
+  author: "Author / Creator",
+  authorGitHub: "Author GitHub",
+  authorLinkedIn: "Author LinkedIn",
+  authorTwitter: "Author Twitter / X",
+  authorWebsite: "Author Website",
+  authorYouTube: "Author YouTube",
+  category: "Category",
+  description: "Description",
+  favicon: "Favicon URL",
+  github: "GitHub Repository",
+  ogImage: "OpenGraph Image",
+  status: "Moderation Status",
+  subtitle: "Subtitle / Tagline",
+  tags: "Canonical Tags",
+  url: "Resource URL",
+};
 
 interface AdminSubmissionEditFormProps {
   isWorking: boolean;
@@ -79,6 +107,34 @@ export function AdminSubmissionEditForm({
   const [ogImageOptions, setOgImageOptions] = useState<
     { label: string; type?: string; url: string }[]
   >([]);
+  const [suggestedAuthor, setSuggestedAuthor] = useState<SuggestedAuthorData | null>(null);
+
+  // Inline Author Creation
+  const [isCreateAuthorOpen, setIsCreateAuthorOpen] = useState(false);
+  const [createAuthorInitialName, setCreateAuthorInitialName] = useState("");
+
+  // Confirmation Dialog State
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
+  const [pendingSaveAction, setPendingSaveAction] = useState<(() => void) | null>(null);
+
+  const handleRequestSave = (status?: "approved" | "rejected" | "pending") => {
+    const updatedPayload: Partial<Submission> = {
+      ...editForm,
+      ...(status ? { status } : {}),
+    };
+    const diffs = computeFieldChanges(sub, updatedPayload, SUBMISSION_FIELD_LABELS);
+    setPendingChanges(diffs);
+    setPendingSaveAction(() => () => onSave(sub.id, editForm, status));
+    setIsConfirmOpen(true);
+  };
+
+  const handleConfirmSave = () => {
+    if (pendingSaveAction) {
+      pendingSaveAction();
+    }
+    setIsConfirmOpen(false);
+  };
 
   const handleAuthorFieldChange = (field: keyof AuthorSocialValues, value: string) => {
     setEditForm((prev) => ({
@@ -94,6 +150,36 @@ export function AdminSubmissionEditForm({
     }));
   };
 
+  const handleSelectAuthorOption = (authorOption: AuthorOption) => {
+    setEditForm((prev) => ({
+      ...prev,
+      author: authorOption.name,
+      authorGitHub: authorOption.links?.github || prev.authorGitHub || "",
+      authorLinkedIn: authorOption.links?.linkedin || prev.authorLinkedIn || "",
+      authorTwitter: authorOption.links?.twitter || prev.authorTwitter || "",
+      authorWebsite: authorOption.links?.website || prev.authorWebsite || "",
+      authorYouTube: authorOption.links?.youtube || prev.authorYouTube || "",
+    }));
+  };
+
+  const handleRequestCreateAuthor = (name: string) => {
+    setCreateAuthorInitialName(name);
+    setIsCreateAuthorOpen(true);
+  };
+
+  const handleAcceptSuggestedAuthor = (suggested: SuggestedAuthorData) => {
+    setEditForm((prev) => ({
+      ...prev,
+      author: suggested.name,
+      authorGitHub: suggested.github || prev.authorGitHub || "",
+      authorLinkedIn: suggested.linkedin || prev.authorLinkedIn || "",
+      authorTwitter: suggested.twitter || prev.authorTwitter || "",
+      authorWebsite: suggested.website || prev.authorWebsite || "",
+      authorYouTube: suggested.youtube || prev.authorYouTube || "",
+    }));
+    setSuggestedAuthor(null);
+  };
+
   const handleAutoDetect = async () => {
     const targetUrl = editForm.url?.trim();
     if (!targetUrl) return;
@@ -107,15 +193,21 @@ export function AdminSubmissionEditForm({
         if (data.faviconOptions) setFaviconOptions(data.faviconOptions);
         if (data.ogImageOptions) setOgImageOptions(data.ogImageOptions);
 
+        if (data.author && data.author.trim()) {
+          setSuggestedAuthor({
+            blog: data.authorBlog || "",
+            github: data.authorGitHub || "",
+            linkedin: data.authorLinkedIn || "",
+            name: data.author.trim(),
+            twitter: data.authorTwitter || "",
+            website: data.authorWebsite || "",
+            youtube: data.authorYouTube || "",
+          });
+        }
+
         setEditForm((prev) => ({
           ...prev,
           title: prev.title || data.title,
-          author: prev.author || data.author,
-          authorGitHub: prev.authorGitHub || data.authorGitHub,
-          authorLinkedIn: prev.authorLinkedIn || data.authorLinkedIn,
-          authorTwitter: prev.authorTwitter || data.authorTwitter,
-          authorWebsite: prev.authorWebsite || data.authorWebsite,
-          authorYouTube: prev.authorYouTube || data.authorYouTube,
           category: prev.category || data.category || sub.category,
           description: prev.description || data.description,
           favicon: data.favicon || prev.favicon,
@@ -305,6 +397,13 @@ export function AdminSubmissionEditForm({
             }}
             onChange={handleAuthorFieldChange}
             onBatchChange={handleAuthorBatchChange}
+            onRequestCreateAuthor={handleRequestCreateAuthor}
+            onSelectAuthorOption={handleSelectAuthorOption}
+            suggestedAuthor={suggestedAuthor}
+            onAcceptSuggestedAuthor={handleAcceptSuggestedAuthor}
+            onDismissSuggestedAuthor={() => setSuggestedAuthor(null)}
+            allowCustom={false}
+            disabled={isWorking}
           />
 
           {/* Section 6: Repo, Tags & Admin Moderation */}
@@ -426,7 +525,7 @@ export function AdminSubmissionEditForm({
             <Button
               size="sm"
               variant="outline"
-              onClick={() => onSave(sub.id, editForm, "pending")}
+              onClick={() => handleRequestSave("pending")}
               disabled={isWorking}
               className="gap-1.5 border-amber-500/80 text-xs font-bold text-amber-700 uppercase hover:bg-amber-500/20 dark:text-amber-300"
             >
@@ -438,7 +537,7 @@ export function AdminSubmissionEditForm({
           {sub.status !== "approved" && (
             <Button
               size="sm"
-              onClick={() => onSave(sub.id, editForm, "approved")}
+              onClick={() => handleRequestSave("approved")}
               disabled={isWorking}
               className="gap-1.5 bg-emerald-600 text-xs font-bold text-white uppercase hover:bg-emerald-700"
             >
@@ -448,7 +547,7 @@ export function AdminSubmissionEditForm({
 
           <Button
             size="sm"
-            onClick={() => onSave(sub.id, editForm)}
+            onClick={() => handleRequestSave()}
             disabled={isWorking}
             className="gap-1.5 text-xs font-bold uppercase"
           >
@@ -456,6 +555,37 @@ export function AdminSubmissionEditForm({
           </Button>
         </div>
       </div>
+
+      {/* Inline Create Author Modal */}
+      <AdminAuthorDialog
+        open={isCreateAuthorOpen}
+        onOpenChange={setIsCreateAuthorOpen}
+        initialName={createAuthorInitialName}
+        onCreated={(newAuthor) => {
+          setEditForm((prev) => ({
+            ...prev,
+            author: newAuthor.name,
+            authorGitHub: newAuthor.github || "",
+            authorLinkedIn: newAuthor.linkedin || "",
+            authorTwitter: newAuthor.twitter || "",
+            authorWebsite: newAuthor.website || "",
+            authorYouTube: newAuthor.youtube || "",
+          }));
+          setIsCreateAuthorOpen(false);
+        }}
+      />
+
+      {/* Confirmation Dialog for Submission Updates */}
+      <AdminConfirmEditDialog
+        open={isConfirmOpen}
+        onOpenChange={setIsConfirmOpen}
+        title="Confirm Submission Updates"
+        description="Review the list of changed submission details before saving changes."
+        itemTitle={editForm.title || sub.title}
+        changes={pendingChanges}
+        onConfirm={handleConfirmSave}
+        isWorking={isWorking}
+      />
     </div>
   );
 }

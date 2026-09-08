@@ -30,19 +30,15 @@ export async function GET() {
       .select({
         id: category.id,
         createdAt: category.createdAt,
-        description: category.description,
-        icon: category.icon,
         name: category.name,
-        order: category.order,
         slug: category.slug,
-        themeColor: category.themeColor,
         toolCount: count(resource.id),
         updatedAt: category.updatedAt,
       })
       .from(category)
       .leftJoin(resource, eq(category.id, resource.categoryId))
       .groupBy(category.id)
-      .orderBy(asc(category.order), asc(category.name));
+      .orderBy(asc(category.name));
 
     if (!rows || rows.length === 0) {
       return NextResponse.json({
@@ -74,21 +70,21 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { description, icon, name, order, slug, themeColor } = body;
+    const { name } = body;
 
     if (!name || typeof name !== "string" || !name.trim()) {
       return NextResponse.json({ error: "Category name is required." }, { status: 400 });
     }
 
     const cleanName = name.trim();
-    const cleanSlug = slug?.trim() ? slugify(slug.trim()) : slugify(cleanName);
+    const cleanSlug = slugify(cleanName);
 
     // Check for existing slug or name
     const [existing] = await db.select().from(category).where(eq(category.slug, cleanSlug));
 
     if (existing) {
       return NextResponse.json(
-        { error: `A category with slug "${cleanSlug}" already exists.` },
+        { error: `A category with name/slug "${cleanName}" already exists.` },
         { status: 409 },
       );
     }
@@ -97,23 +93,20 @@ export async function POST(req: Request) {
     await db.insert(category).values({
       id: categoryId,
       createdAt: new Date(),
-      description: description?.trim() || null,
-      icon: icon?.trim() || null,
       name: cleanName,
-      order: typeof order === "number" ? order : 0,
       slug: cleanSlug,
-      themeColor: themeColor?.trim() || null,
       updatedAt: new Date(),
     });
 
-    revalidateTag("categories", "max");
-    revalidateTag("resources", "max");
+    revalidateTag("categories", { expire: 0 });
+    revalidateTag("resources", { expire: 0 });
     revalidatePath("/resources");
     revalidatePath("/admin/categories");
 
     return NextResponse.json({
       id: categoryId,
       message: "Category created successfully.",
+      slug: cleanSlug,
       success: true,
     });
   } catch (error) {
@@ -130,7 +123,7 @@ export async function PATCH(req: Request) {
     }
 
     const body = await req.json();
-    const { id, description, icon, name, order, slug, themeColor } = body;
+    const { id, name } = body;
 
     if (!id || typeof id !== "string") {
       return NextResponse.json({ error: "Category ID is required." }, { status: 400 });
@@ -146,28 +139,30 @@ export async function PATCH(req: Request) {
     };
 
     if (name !== undefined && name.trim()) {
-      updates.name = name.trim();
-    }
-    if (slug !== undefined && slug.trim()) {
-      updates.slug = slugify(slug.trim());
-    }
-    if (description !== undefined) {
-      updates.description = description?.trim() || null;
-    }
-    if (icon !== undefined) {
-      updates.icon = icon?.trim() || null;
-    }
-    if (themeColor !== undefined) {
-      updates.themeColor = themeColor?.trim() || null;
-    }
-    if (order !== undefined) {
-      updates.order = typeof order === "number" ? order : parseInt(order, 10) || 0;
+      const cleanName = name.trim();
+      const cleanSlug = slugify(cleanName);
+
+      // Verify no other category has this slug
+      const [duplicate] = await db
+        .select()
+        .from(category)
+        .where(eq(category.slug, cleanSlug));
+
+      if (duplicate && duplicate.id !== id) {
+        return NextResponse.json(
+          { error: `Another category with name "${cleanName}" already exists.` },
+          { status: 409 },
+        );
+      }
+
+      updates.name = cleanName;
+      updates.slug = cleanSlug;
     }
 
     await db.update(category).set(updates).where(eq(category.id, id));
 
-    revalidateTag("categories", "max");
-    revalidateTag("resources", "max");
+    revalidateTag("categories", { expire: 0 });
+    revalidateTag("resources", { expire: 0 });
     revalidatePath("/resources");
     revalidatePath("/admin/categories");
 
@@ -210,8 +205,8 @@ export async function DELETE(request: NextRequest) {
 
     await db.delete(category).where(eq(category.id, id));
 
-    revalidateTag("categories", "max");
-    revalidateTag("resources", "max");
+    revalidateTag("categories", { expire: 0 });
+    revalidateTag("resources", { expire: 0 });
     revalidatePath("/resources");
     revalidatePath("/admin/categories");
 

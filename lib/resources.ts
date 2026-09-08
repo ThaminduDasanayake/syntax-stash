@@ -28,7 +28,6 @@ export const getAllResources = cache(
             authorTwitter: author.twitter,
             authorWebsite: author.website,
             authorYoutube: author.youtube,
-            categoryIcon: category.icon,
             categoryId: resource.categoryId,
             categoryName: category.name,
             categorySlug: category.slug,
@@ -39,6 +38,7 @@ export const getAllResources = cache(
             ogImage: resource.ogImage,
             subtitle: resource.subtitle,
             tagName: tag.name,
+            updatedAt: resource.updatedAt,
             url: resource.url,
           })
           .from(resource)
@@ -46,7 +46,7 @@ export const getAllResources = cache(
           .leftJoin(category, eq(resource.categoryId, category.id))
           .leftJoin(resourceTag, eq(resource.id, resourceTag.resourceId))
           .leftJoin(tag, eq(resourceTag.tagId, tag.id))
-          .orderBy(asc(category.order), asc(category.name), asc(resource.title));
+          .orderBy(asc(category.name), asc(resource.title));
 
         if (!rows || rows.length === 0) {
           return [];
@@ -57,6 +57,7 @@ export const getAllResources = cache(
           {
             author?: string;
             category: string;
+            createdAt?: string;
             description?: string;
             favicon?: string;
             github?: string;
@@ -64,6 +65,7 @@ export const getAllResources = cache(
             subtitle?: string;
             tags: string[];
             title: string;
+            updatedAt?: string;
             url: string;
           }
         >();
@@ -75,12 +77,14 @@ export const getAllResources = cache(
               title: r.title,
               author: r.authorName || undefined,
               category: catName,
+              createdAt: r.createdAt ? new Date(r.createdAt).toISOString() : undefined,
               description: r.description || undefined,
               favicon: r.favicon || undefined,
               github: r.github || undefined,
               ogImage: r.ogImage || undefined,
               subtitle: r.subtitle || undefined,
               tags: r.tagName ? [r.tagName] : [],
+              updatedAt: r.updatedAt ? new Date(r.updatedAt).toISOString() : undefined,
               url: r.url,
             });
           } else if (r.tagName) {
@@ -135,7 +139,6 @@ export const getAllAdminResources = cache(
           authorTwitter: author.twitter,
           authorWebsite: author.website,
           authorYoutube: author.youtube,
-          categoryIcon: category.icon,
           categoryId: resource.categoryId,
           categoryName: category.name,
           categorySlug: category.slug,

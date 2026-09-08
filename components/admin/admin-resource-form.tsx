@@ -14,11 +14,13 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import {
+  AuthorOption,
   AuthorSocialFields,
   AuthorSocialValues,
   CandidateOption,
   MediaAssetFields,
   ResourceCardPreview,
+  SuggestedAuthorData,
   TagPicker,
 } from "@/components/submissions";
 import { Button } from "@/components/ui/button";
@@ -28,7 +30,26 @@ import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
 
+import { AdminAuthorDialog } from "./admin-author-dialog";
+import {
+  AdminConfirmEditDialog,
+  computeFieldChanges,
+  FieldDiff,
+} from "./admin-confirm-edit-dialog";
 import { AdminResourceItem } from "./types";
+
+const RESOURCE_FIELD_LABELS: Record<string, string> = {
+  title: "Title",
+  authorName: "Creator / Author",
+  category: "Category",
+  description: "Description",
+  favicon: "Favicon URL",
+  github: "GitHub Repository URL",
+  ogImage: "OpenGraph Image",
+  subtitle: "Subtitle / Tagline",
+  tags: "Canonical Tags",
+  url: "Website URL",
+};
 
 interface AdminResourceFormProps {
   initialData?: Partial<AdminResourceItem> | null;
@@ -67,9 +88,55 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
   const [ogImageOptions, setOgImageOptions] = useState<CandidateOption[]>([]);
+  const [suggestedAuthor, setSuggestedAuthor] = useState<SuggestedAuthorData | null>(null);
+
+  // Author Creation Modal State
+  const [isCreateAuthorOpen, setIsCreateAuthorOpen] = useState(false);
+  const [createAuthorInitialName, setCreateAuthorInitialName] = useState("");
+
+  // Confirmation Dialog State
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
 
   const handleAuthorFieldChange = (_field: keyof AuthorSocialValues, value: string) => {
-    setFormData((prev) => ({ ...prev, authorName: value }));
+    setFormData((prev) => ({
+      ...prev,
+      authorName: value,
+      ...(value ? {} : { authorId: null }),
+    }));
+  };
+
+  const handleSelectAuthorOption = (authorOption: AuthorOption) => {
+    setFormData((prev) => ({
+      ...prev,
+      authorBlog: authorOption.links?.blog || "",
+      authorGithub: authorOption.links?.github || "",
+      authorId: authorOption.id || prev.authorId || null,
+      authorLinkedin: authorOption.links?.linkedin || "",
+      authorName: authorOption.name,
+      authorTwitter: authorOption.links?.twitter || "",
+      authorWebsite: authorOption.links?.website || "",
+      authorYoutube: authorOption.links?.youtube || "",
+    }));
+  };
+
+  const handleRequestCreateAuthor = (name: string) => {
+    setCreateAuthorInitialName(name);
+    setIsCreateAuthorOpen(true);
+  };
+
+  const handleAcceptSuggestedAuthor = (suggested: SuggestedAuthorData) => {
+    setFormData((prev) => ({
+      ...prev,
+      authorBlog: suggested.blog || prev.authorBlog || "",
+      authorGithub: suggested.github || prev.authorGithub || "",
+      authorLinkedin: suggested.linkedin || prev.authorLinkedin || "",
+      authorName: suggested.name,
+      authorTwitter: suggested.twitter || prev.authorTwitter || "",
+      authorWebsite: suggested.website || prev.authorWebsite || "",
+      authorYoutube: suggested.youtube || prev.authorYoutube || "",
+    }));
+    setSuggestedAuthor(null);
   };
 
   const handleAutoDetect = async () => {
@@ -88,15 +155,21 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
         if (data.faviconOptions) setFaviconOptions(data.faviconOptions);
         if (data.ogImageOptions) setOgImageOptions(data.ogImageOptions);
 
+        if (data.author && data.author.trim()) {
+          setSuggestedAuthor({
+            blog: data.authorBlog || "",
+            github: data.authorGitHub || "",
+            linkedin: data.authorLinkedIn || "",
+            name: data.author.trim(),
+            twitter: data.authorTwitter || "",
+            website: data.authorWebsite || "",
+            youtube: data.authorYouTube || "",
+          });
+        }
+
         setFormData((prev) => ({
           ...prev,
           title: prev.title || data.title || "",
-          authorGithub: prev.authorGithub || data.authorGitHub || "",
-          authorLinkedin: prev.authorLinkedin || data.authorLinkedIn || "",
-          authorName: prev.authorName || data.author || "",
-          authorTwitter: prev.authorTwitter || data.authorTwitter || "",
-          authorWebsite: prev.authorWebsite || data.authorWebsite || "",
-          authorYoutube: prev.authorYoutube || data.authorYouTube || "",
           category: prev.category || data.category || defaultCategory,
           description: prev.description || data.description || "",
           favicon: data.favicon || prev.favicon || "",
@@ -113,6 +186,39 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
       toast.error("Network error while detecting metadata.");
     } finally {
       setIsDetecting(false);
+    }
+  };
+
+  const executeSave = async () => {
+    try {
+      setIsSubmitting(true);
+      const endpoint = "/api/admin/resources";
+      const method = isEdit ? "PATCH" : "POST";
+
+      const res = await fetch(endpoint, {
+        body: JSON.stringify(formData),
+        headers: { "Content-Type": "application/json" },
+        method,
+      });
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        setIsConfirmOpen(false);
+        toast.success(
+          isEdit
+            ? `"${formData.title}" updated successfully.`
+            : `"${formData.title}" published to live catalog!`,
+        );
+        router.push("/admin/resources");
+        router.refresh();
+      } else {
+        toast.error(data.error || "Failed to save resource.");
+      }
+    } catch (err) {
+      console.error("Save resource error:", err);
+      toast.error("Network error while saving resource.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -136,34 +242,12 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
       return;
     }
 
-    try {
-      setIsSubmitting(true);
-      const endpoint = "/api/admin/resources";
-      const method = isEdit ? "PATCH" : "POST";
-
-      const res = await fetch(endpoint, {
-        body: JSON.stringify(formData),
-        headers: { "Content-Type": "application/json" },
-        method,
-      });
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        toast.success(
-          isEdit
-            ? `"${formData.title}" updated successfully.`
-            : `"${formData.title}" published to live catalog!`,
-        );
-        router.push("/admin/resources");
-        router.refresh();
-      } else {
-        toast.error(data.error || "Failed to save resource.");
-      }
-    } catch (err) {
-      console.error("Save resource error:", err);
-      toast.error("Network error while saving resource.");
-    } finally {
-      setIsSubmitting(false);
+    if (isEdit) {
+      const diffs = computeFieldChanges(initialData, formData, RESOURCE_FIELD_LABELS);
+      setPendingChanges(diffs);
+      setIsConfirmOpen(true);
+    } else {
+      await executeSave();
     }
   };
 
@@ -406,7 +490,16 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
             </div>
 
             {/* Section 6: Creator Attribution */}
-            <AuthorSocialFields values={authorValues} onChange={handleAuthorFieldChange} />
+            <AuthorSocialFields
+              values={authorValues}
+              onChange={handleAuthorFieldChange}
+              onRequestCreateAuthor={handleRequestCreateAuthor}
+              onSelectAuthorOption={handleSelectAuthorOption}
+              suggestedAuthor={suggestedAuthor}
+              onAcceptSuggestedAuthor={handleAcceptSuggestedAuthor}
+              onDismissSuggestedAuthor={() => setSuggestedAuthor(null)}
+              allowCustom={false}
+            />
 
             {/* Section 7: Canonical Tags */}
             <div className="space-y-2">
@@ -504,6 +597,39 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
           </div>
         </div>
       </form>
+
+      {/* Inline Create Author Modal */}
+      <AdminAuthorDialog
+        open={isCreateAuthorOpen}
+        onOpenChange={setIsCreateAuthorOpen}
+        initialName={createAuthorInitialName}
+        onCreated={(newAuthor) => {
+          setFormData((prev) => ({
+            ...prev,
+            authorBlog: newAuthor.blog || "",
+            authorGithub: newAuthor.github || "",
+            authorId: newAuthor.id,
+            authorLinkedin: newAuthor.linkedin || "",
+            authorName: newAuthor.name,
+            authorTwitter: newAuthor.twitter || "",
+            authorWebsite: newAuthor.website || "",
+            authorYoutube: newAuthor.youtube || "",
+          }));
+          setIsCreateAuthorOpen(false);
+        }}
+      />
+
+      {/* Confirmation Dialog for Resource Edits */}
+      <AdminConfirmEditDialog
+        open={isConfirmOpen}
+        onOpenChange={setIsConfirmOpen}
+        title="Confirm Resource Updates"
+        itemTitle={formData.title || initialData?.title || "Resource"}
+        changes={pendingChanges}
+        isWorking={isSubmitting}
+        onConfirm={executeSave}
+        confirmLabel="Confirm & Save Resource"
+      />
     </div>
   );
 }

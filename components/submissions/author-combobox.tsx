@@ -17,17 +17,20 @@ export interface AuthorLinks {
 
 export interface AuthorOption {
   count?: number;
+  id?: string;
   links?: AuthorLinks | null;
   name: string;
   slug: string;
 }
 
 export interface AuthorComboboxProps {
+  allowCustom?: boolean;
   className?: string;
   containerClassName?: string;
   disabled?: boolean;
   maxAuthors?: number;
   onChange: (value: string) => void;
+  onRequestCreateAuthor?: (authorName: string) => void;
   onSelectAuthor?: (author: AuthorOption) => void;
   placeholder?: string;
   value: string | string[] | null | undefined;
@@ -80,11 +83,13 @@ export async function fetchAuthorList(forceRefresh = false): Promise<AuthorOptio
 }
 
 export function AuthorCombobox({
+  allowCustom = true,
   className,
   containerClassName,
   disabled = false,
   maxAuthors = 10,
   onChange,
+  onRequestCreateAuthor,
   onSelectAuthor,
   placeholder = "Search creators or type a name...",
   value,
@@ -237,7 +242,13 @@ export function AuthorCombobox({
     if (e.key === "," || (e.key === "Enter" && !isOpen)) {
       e.preventDefault();
       if (query.trim()) {
-        addAuthor(query.trim());
+        if (onRequestCreateAuthor) {
+          onRequestCreateAuthor(query.trim());
+          setQuery("");
+          setIsOpen(false);
+        } else if (allowCustom) {
+          addAuthor(query.trim());
+        }
       }
       return;
     }
@@ -250,7 +261,8 @@ export function AuthorCombobox({
       return;
     }
 
-    const showCustomOption = cleanQuery && !exactMatch && !isAlreadySelected;
+    const showCustomOption =
+      cleanQuery && !exactMatch && !isAlreadySelected && (allowCustom || Boolean(onRequestCreateAuthor));
     const totalItems = filteredAuthors.length + (showCustomOption ? 1 : 0);
 
     if (e.key === "ArrowDown") {
@@ -265,11 +277,25 @@ export function AuthorCombobox({
         const item = filteredAuthors[highlightedIndex];
         if (item) addAuthor(item.name, item);
       } else if (showCustomOption && highlightedIndex === filteredAuthors.length) {
-        addAuthor(query.trim());
+        if (onRequestCreateAuthor) {
+          const q = query.trim();
+          setQuery("");
+          setIsOpen(false);
+          onRequestCreateAuthor(q);
+        } else if (allowCustom) {
+          addAuthor(query.trim());
+        }
       } else if (filteredAuthors.length === 1 && filteredAuthors[0]) {
         addAuthor(filteredAuthors[0].name, filteredAuthors[0]);
       } else if (query.trim()) {
-        addAuthor(query.trim());
+        if (onRequestCreateAuthor) {
+          const q = query.trim();
+          setQuery("");
+          setIsOpen(false);
+          onRequestCreateAuthor(q);
+        } else if (allowCustom) {
+          addAuthor(query.trim());
+        }
       } else {
         setIsOpen(false);
       }
@@ -444,8 +470,31 @@ export function AuthorCombobox({
               );
             })}
 
-            {/* If query has no exact match and is not already selected, offer "+ Add as new creator" */}
-            {cleanQuery && !exactMatch && !isAlreadySelected && (
+            {/* If query has no exact match and is not already selected */}
+            {cleanQuery && !exactMatch && !isAlreadySelected && onRequestCreateAuthor && (
+              <li
+                onMouseEnter={() => setHighlightedIndex(filteredAuthors.length)}
+                onClick={() => {
+                  const q = query.trim();
+                  setQuery("");
+                  setIsOpen(false);
+                  onRequestCreateAuthor(q);
+                }}
+                className={cn(
+                  "border-border/40 text-muted-foreground hover:text-foreground flex cursor-pointer items-center gap-2 border-t px-2.5 py-2 transition-colors",
+                  highlightedIndex === filteredAuthors.length
+                    ? "bg-primary text-primary-foreground"
+                    : "hover:bg-muted/60",
+                )}
+              >
+                <span>
+                  + Create &quot;<strong className="text-foreground">{query.trim()}</strong>&quot; as
+                  new author
+                </span>
+              </li>
+            )}
+
+            {cleanQuery && !exactMatch && !isAlreadySelected && !onRequestCreateAuthor && allowCustom && (
               <li
                 onMouseEnter={() => setHighlightedIndex(filteredAuthors.length)}
                 onClick={() => addAuthor(query.trim())}

@@ -31,7 +31,6 @@ interface AdminResourceRecord {
   authorWebsite: string | null;
   authorYoutube: string | null;
   category: string;
-  categoryIcon: string | null;
   categoryId: string;
   categoryName: string | null;
   categorySlug: string | null;
@@ -68,7 +67,6 @@ export async function GET() {
         authorTwitter: author.twitter,
         authorWebsite: author.website,
         authorYoutube: author.youtube,
-        categoryIcon: category.icon,
         categoryId: resource.categoryId,
         categoryName: category.name,
         categorySlug: category.slug,
@@ -109,7 +107,6 @@ export async function GET() {
           authorWebsite: r.authorWebsite,
           authorYoutube: r.authorYoutube,
           category: catName,
-          categoryIcon: r.categoryIcon,
           categoryId: r.categoryId,
           categoryName: r.categoryName,
           categorySlug: r.categorySlug,
@@ -157,13 +154,8 @@ export async function POST(req: Request) {
     const body = await req.json();
     const {
       title,
-      authorBlog,
-      authorGithub,
-      authorLinkedin,
+      authorId,
       authorName,
-      authorTwitter,
-      authorWebsite,
-      authorYoutube,
       category: categoryInput,
       description,
       favicon,
@@ -190,61 +182,25 @@ export async function POST(req: Request) {
       );
     }
 
-    // 1. Resolve or Create Author(s)
+    // 1. Resolve Author (Strictly from existing author records)
     let authorRecordId: string | null = null;
-    if (authorName && authorName.trim()) {
-      const name = authorName.trim();
-      const slug = slugifyAuthor(name);
-
-      // Ensure every individual author exists in author table
-      const splitAuthors = name.includes(",")
-        ? name
-            .split(",")
-            .map((a: string) => a.trim())
-            .filter(Boolean)
-        : [name];
-
-      for (const singleName of splitAuthors) {
-        const singleSlug = slugifyAuthor(singleName);
-        if (!singleSlug) continue;
-        const [singleExisting] = await db.select().from(author).where(eq(author.slug, singleSlug));
-        if (!singleExisting) {
-          await db.insert(author).values({
-            id: crypto.randomUUID(),
-            name: singleName,
-            slug: singleSlug,
-          });
-        }
-      }
-
-      const [existingAuthor] = await db.select().from(author).where(eq(author.slug, slug));
+    if (authorId && typeof authorId === "string" && authorId.trim()) {
+      const [existingAuthor] = await db
+        .select()
+        .from(author)
+        .where(eq(author.id, authorId.trim()));
       if (existingAuthor) {
         authorRecordId = existingAuthor.id;
-        await db
-          .update(author)
-          .set({
-            blog: existingAuthor.blog || authorBlog || null,
-            github: existingAuthor.github || authorGithub || null,
-            linkedin: existingAuthor.linkedin || authorLinkedin || null,
-            twitter: existingAuthor.twitter || authorTwitter || null,
-            updatedAt: new Date(),
-            website: existingAuthor.website || authorWebsite || null,
-            youtube: existingAuthor.youtube || authorYoutube || null,
-          })
-          .where(eq(author.id, existingAuthor.id));
-      } else {
-        authorRecordId = crypto.randomUUID();
-        await db.insert(author).values({
-          id: authorRecordId,
-          blog: authorBlog || null,
-          github: authorGithub || null,
-          linkedin: authorLinkedin || null,
-          name,
-          slug,
-          twitter: authorTwitter || null,
-          website: authorWebsite || null,
-          youtube: authorYoutube || null,
-        });
+      }
+    } else if (authorName && typeof authorName === "string" && authorName.trim()) {
+      const name = authorName.trim();
+      const slug = slugifyAuthor(name);
+      const [existingAuthor] = await db
+        .select()
+        .from(author)
+        .where(or(eq(author.slug, slug), ilike(author.name, name)));
+      if (existingAuthor) {
+        authorRecordId = existingAuthor.id;
       }
     }
 
@@ -347,13 +303,8 @@ export async function PATCH(req: Request) {
     const body = await req.json();
     const {
       id,
-      authorBlog,
-      authorGithub,
-      authorLinkedin,
+      authorId,
       authorName,
-      authorTwitter,
-      authorWebsite,
-      authorYoutube,
       tags,
       ...updates
     } = body;
@@ -367,68 +318,27 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ error: "Resource not found." }, { status: 404 });
     }
 
-    // 1. Resolve or update author(s) if author fields are modified
+    // 1. Resolve author strictly from existing authors
     let authorRecordId = existingResource.authorId;
-    if (authorName !== undefined) {
-      if (authorName && authorName.trim()) {
+    if (authorId !== undefined) {
+      if (authorId && typeof authorId === "string" && authorId.trim()) {
+        const [existingAuthor] = await db
+          .select()
+          .from(author)
+          .where(eq(author.id, authorId.trim()));
+        authorRecordId = existingAuthor ? existingAuthor.id : null;
+      } else {
+        authorRecordId = null;
+      }
+    } else if (authorName !== undefined) {
+      if (authorName && typeof authorName === "string" && authorName.trim()) {
         const name = authorName.trim();
         const slug = slugifyAuthor(name);
-
-        // Ensure every individual author exists in author table
-        const splitAuthors = name.includes(",")
-          ? name
-              .split(",")
-              .map((a: string) => a.trim())
-              .filter(Boolean)
-          : [name];
-
-        for (const singleName of splitAuthors) {
-          const singleSlug = slugifyAuthor(singleName);
-          if (!singleSlug) continue;
-          const [singleExisting] = await db
-            .select()
-            .from(author)
-            .where(eq(author.slug, singleSlug));
-          if (!singleExisting) {
-            await db.insert(author).values({
-              id: crypto.randomUUID(),
-              name: singleName,
-              slug: singleSlug,
-            });
-          }
-        }
-
-        const [existingAuthor] = await db.select().from(author).where(eq(author.slug, slug));
-        if (existingAuthor) {
-          authorRecordId = existingAuthor.id;
-          await db
-            .update(author)
-            .set({
-              blog: authorBlog !== undefined ? authorBlog || null : existingAuthor.blog,
-              github: authorGithub !== undefined ? authorGithub || null : existingAuthor.github,
-              linkedin:
-                authorLinkedin !== undefined ? authorLinkedin || null : existingAuthor.linkedin,
-              name,
-              twitter: authorTwitter !== undefined ? authorTwitter || null : existingAuthor.twitter,
-              updatedAt: new Date(),
-              website: authorWebsite !== undefined ? authorWebsite || null : existingAuthor.website,
-              youtube: authorYoutube !== undefined ? authorYoutube || null : existingAuthor.youtube,
-            })
-            .where(eq(author.id, existingAuthor.id));
-        } else {
-          authorRecordId = crypto.randomUUID();
-          await db.insert(author).values({
-            id: authorRecordId,
-            blog: authorBlog || null,
-            github: authorGithub || null,
-            linkedin: authorLinkedin || null,
-            name,
-            slug,
-            twitter: authorTwitter || null,
-            website: authorWebsite || null,
-            youtube: authorYoutube || null,
-          });
-        }
+        const [existingAuthor] = await db
+          .select()
+          .from(author)
+          .where(or(eq(author.slug, slug), ilike(author.name, name)));
+        authorRecordId = existingAuthor ? existingAuthor.id : null;
       } else {
         authorRecordId = null;
       }
@@ -501,10 +411,10 @@ export async function PATCH(req: Request) {
     }
 
     // 4. Purge edge cache
-    revalidateTag("resources", "max");
-    revalidateTag("categories", "max");
-    revalidateTag("tags", "max");
-    revalidateTag("authors", "max");
+    revalidateTag("resources", { expire: 0 });
+    revalidateTag("categories", { expire: 0 });
+    revalidateTag("tags", { expire: 0 });
+    revalidateTag("authors", { expire: 0 });
     revalidatePath("/");
     revalidatePath("/resources");
     revalidatePath("/authors");
@@ -530,10 +440,10 @@ export async function DELETE(request: NextRequest) {
 
     await db.delete(resource).where(eq(resource.id, id));
 
-    revalidateTag("resources", "max");
-    revalidateTag("categories", "max");
-    revalidateTag("tags", "max");
-    revalidateTag("authors", "max");
+    revalidateTag("resources", { expire: 0 });
+    revalidateTag("categories", { expire: 0 });
+    revalidateTag("tags", { expire: 0 });
+    revalidateTag("authors", { expire: 0 });
     revalidatePath("/");
     revalidatePath("/resources");
     revalidatePath("/authors");

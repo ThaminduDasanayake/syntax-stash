@@ -263,8 +263,8 @@ function FilterSectionInner({
       );
     });
 
-    // Sort by category alphabetical order (matching categories list or A → Z), then title (A → Z)
-    return filtered.sort((a, b) => {
+    // Sort items: category order (matching categories list), then title (A → Z)
+    const sorted = [...filtered].sort((a, b) => {
       if (a.category !== b.category) {
         const indexA = categories.indexOf(a.category);
         const indexB = categories.indexOf(b.category);
@@ -273,6 +273,8 @@ function FilterSectionInner({
       }
       return a.title.localeCompare(b.title);
     });
+
+    return sorted;
   }, [
     activeCategory,
     bookmarkedSet,
@@ -383,7 +385,7 @@ function FilterSectionInner({
                 <DotButton
                   key={item}
                   isActive={isActive}
-                  theme={getCategoryTheme(item, itemLabel === "Tools" ? "tool" : "resource")}
+                  theme={getCategoryTheme(item, itemLabel === "Tools" ? "tool" : "resource", i, categories)}
                   index={i}
                   label={item}
                   onClick={() => handleCategoryClick(item)}
@@ -392,7 +394,8 @@ function FilterSectionInner({
             })}
           </div>
 
-          <div className="filter-count">
+          {/* Item Count */}
+          <div className="filter-count sm:ml-auto">
             <span className="filter-count-num">{filteredItems.length}</span>
             <span> of {items.length}</span>
           </div>

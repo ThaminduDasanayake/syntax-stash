@@ -44,6 +44,7 @@ import { cn, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
 const SORT_OPTIONS = [
   { label: "Oldest First", value: "oldest" },
   { label: "Recently Added", value: "newest" },
+  { label: "Recently Updated", value: "updated-desc" },
   { label: "Title (A → Z)", value: "title-asc" },
   { label: "Title (Z → A)", value: "title-desc" },
 ];
@@ -105,6 +106,12 @@ export function AdminResourcesClient({
       sorted.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     } else if (sortBy === "oldest") {
       sorted.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+    } else if (sortBy === "updated-desc") {
+      sorted.sort((a, b) => {
+        const timeA = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
+        const timeB = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
+        return timeB - timeA || a.title.localeCompare(b.title);
+      });
     } else if (sortBy === "title-asc") {
       sorted.sort((a, b) => a.title.localeCompare(b.title));
     } else if (sortBy === "title-desc") {

@@ -120,7 +120,7 @@ export async function getTagByName(name: string): Promise<TagItem | null> {
  */
 export function invalidateTagCache() {
   try {
-    revalidateTag("tags", "max");
+    revalidateTag("tags", { expire: 0 });
   } catch {
     // Ignore outside request context
   }

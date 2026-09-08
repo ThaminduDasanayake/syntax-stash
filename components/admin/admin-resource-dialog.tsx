@@ -10,11 +10,13 @@ import {
 import { useEffect, useState } from "react";
 
 import {
+  AuthorOption,
   AuthorSocialFields,
   AuthorSocialValues,
   CandidateOption,
   MediaAssetFields,
   ResourceCardPreview,
+  SuggestedAuthorData,
   TagPicker,
 } from "@/components/submissions";
 import { Button } from "@/components/ui/button";
@@ -31,7 +33,26 @@ import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
 
+import { AdminAuthorDialog } from "./admin-author-dialog";
+import {
+  AdminConfirmEditDialog,
+  computeFieldChanges,
+  FieldDiff,
+} from "./admin-confirm-edit-dialog";
 import { AdminResourceItem } from "./types";
+
+const RESOURCE_FIELD_LABELS: Record<string, string> = {
+  title: "Title",
+  authorName: "Creator / Author",
+  category: "Category",
+  description: "Description",
+  favicon: "Favicon URL",
+  github: "GitHub Repository URL",
+  ogImage: "OpenGraph Image",
+  subtitle: "Subtitle / Tagline",
+  tags: "Canonical Tags",
+  url: "Website URL",
+};
 
 interface AdminResourceDialogProps {
   isWorking?: boolean;
@@ -55,6 +76,7 @@ export function AdminResourceDialog({
     title: "",
     authorBlog: "",
     authorGithub: "",
+    authorId: null,
     authorLinkedin: "",
     authorName: "",
     authorTwitter: "",
@@ -73,6 +95,15 @@ export function AdminResourceDialog({
   const [isDetecting, setIsDetecting] = useState(false);
   const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
   const [ogImageOptions, setOgImageOptions] = useState<CandidateOption[]>([]);
+  const [suggestedAuthor, setSuggestedAuthor] = useState<SuggestedAuthorData | null>(null);
+
+  // Author Creation Modal State
+  const [isCreateAuthorOpen, setIsCreateAuthorOpen] = useState(false);
+  const [createAuthorInitialName, setCreateAuthorInitialName] = useState("");
+
+  // Confirmation Dialog State
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
 
   useEffect(() => {
     if (resource) {
@@ -117,12 +148,50 @@ export function AdminResourceDialog({
     }
     setFaviconOptions([]);
     setOgImageOptions([]);
+    setSuggestedAuthor(null);
   }, [categoryOptions, open, resource]);
 
   const handleAuthorFieldChange = (field: keyof AuthorSocialValues, value: string) => {
     if (field === "author") {
-      setFormData((prev) => ({ ...prev, authorName: value }));
+      setFormData((prev) => ({
+        ...prev,
+        authorName: value,
+        ...(value ? {} : { authorId: null }),
+      }));
     }
+  };
+
+  const handleSelectAuthorOption = (authorOption: AuthorOption) => {
+    setFormData((prev) => ({
+      ...prev,
+      authorBlog: authorOption.links?.blog || "",
+      authorGithub: authorOption.links?.github || "",
+      authorId: authorOption.id || prev.authorId || null,
+      authorLinkedin: authorOption.links?.linkedin || "",
+      authorName: authorOption.name,
+      authorTwitter: authorOption.links?.twitter || "",
+      authorWebsite: authorOption.links?.website || "",
+      authorYoutube: authorOption.links?.youtube || "",
+    }));
+  };
+
+  const handleRequestCreateAuthor = (name: string) => {
+    setCreateAuthorInitialName(name);
+    setIsCreateAuthorOpen(true);
+  };
+
+  const handleAcceptSuggestedAuthor = (suggested: SuggestedAuthorData) => {
+    setFormData((prev) => ({
+      ...prev,
+      authorBlog: suggested.blog || prev.authorBlog || "",
+      authorGithub: suggested.github || prev.authorGithub || "",
+      authorLinkedin: suggested.linkedin || prev.authorLinkedin || "",
+      authorName: suggested.name,
+      authorTwitter: suggested.twitter || prev.authorTwitter || "",
+      authorWebsite: suggested.website || prev.authorWebsite || "",
+      authorYoutube: suggested.youtube || prev.authorYoutube || "",
+    }));
+    setSuggestedAuthor(null);
   };
 
   const handleAutoDetect = async () => {
@@ -138,15 +207,21 @@ export function AdminResourceDialog({
         if (data.faviconOptions) setFaviconOptions(data.faviconOptions);
         if (data.ogImageOptions) setOgImageOptions(data.ogImageOptions);
 
+        if (data.author && data.author.trim()) {
+          setSuggestedAuthor({
+            blog: data.authorBlog || "",
+            github: data.authorGitHub || "",
+            linkedin: data.authorLinkedIn || "",
+            name: data.author.trim(),
+            twitter: data.authorTwitter || "",
+            website: data.authorWebsite || "",
+            youtube: data.authorYouTube || "",
+          });
+        }
+
         setFormData((prev) => ({
           ...prev,
           title: prev.title || data.title || "",
-          authorGithub: prev.authorGithub || data.authorGitHub || "",
-          authorLinkedin: prev.authorLinkedin || data.authorLinkedIn || "",
-          authorName: prev.authorName || data.author || "",
-          authorTwitter: prev.authorTwitter || data.authorTwitter || "",
-          authorWebsite: prev.authorWebsite || data.authorWebsite || "",
-          authorYoutube: prev.authorYoutube || data.authorYouTube || "",
           category: prev.category || data.category || (categoryOptions[0]?.value ?? ""),
           description: prev.description || data.description || "",
           favicon: data.favicon || prev.favicon || "",
@@ -162,6 +237,11 @@ export function AdminResourceDialog({
     }
   };
 
+  const executeSave = async () => {
+    await onSave(formData);
+    setIsConfirmOpen(false);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (
@@ -172,7 +252,14 @@ export function AdminResourceDialog({
     ) {
       return;
     }
-    await onSave(formData);
+
+    if (isEdit && resource) {
+      const diffs = computeFieldChanges(resource, formData, RESOURCE_FIELD_LABELS);
+      setPendingChanges(diffs);
+      setIsConfirmOpen(true);
+    } else {
+      await executeSave();
+    }
   };
 
   const authorValues: AuthorSocialValues = {
@@ -356,6 +443,12 @@ export function AdminResourceDialog({
               <AuthorSocialFields
                 values={authorValues}
                 onChange={handleAuthorFieldChange}
+                onRequestCreateAuthor={handleRequestCreateAuthor}
+                onSelectAuthorOption={handleSelectAuthorOption}
+                suggestedAuthor={suggestedAuthor}
+                onAcceptSuggestedAuthor={handleAcceptSuggestedAuthor}
+                onDismissSuggestedAuthor={() => setSuggestedAuthor(null)}
+                allowCustom={false}
                 disabled={isWorking}
               />
 
@@ -424,6 +517,39 @@ export function AdminResourceDialog({
           </div>
         </form>
       </DialogContent>
+
+      {/* Inline Create Author Modal */}
+      <AdminAuthorDialog
+        open={isCreateAuthorOpen}
+        onOpenChange={setIsCreateAuthorOpen}
+        initialName={createAuthorInitialName}
+        onCreated={(newAuthor) => {
+          setFormData((prev) => ({
+            ...prev,
+            authorBlog: newAuthor.blog || "",
+            authorGithub: newAuthor.github || "",
+            authorId: newAuthor.id,
+            authorLinkedin: newAuthor.linkedin || "",
+            authorName: newAuthor.name,
+            authorTwitter: newAuthor.twitter || "",
+            authorWebsite: newAuthor.website || "",
+            authorYoutube: newAuthor.youtube || "",
+          }));
+          setIsCreateAuthorOpen(false);
+        }}
+      />
+
+      {/* Confirmation Dialog for Edits */}
+      <AdminConfirmEditDialog
+        open={isConfirmOpen}
+        onOpenChange={setIsConfirmOpen}
+        title="Confirm Resource Updates"
+        description="Review the list of changed properties below before saving changes to this resource."
+        itemTitle={formData.title || resource?.title}
+        changes={pendingChanges}
+        onConfirm={executeSave}
+        isWorking={isWorking}
+      />
     </Dialog>
   );
 }

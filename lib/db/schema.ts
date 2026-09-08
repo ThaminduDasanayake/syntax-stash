@@ -102,16 +102,11 @@ export const category = pgTable(
   {
     id: text("id").primaryKey(),
     createdAt: timestamp("created_at").notNull().defaultNow(),
-    description: text("description"),
-    icon: text("icon"),
     name: text("name").notNull().unique(),
-    order: integer("order").notNull().default(0),
     slug: text("slug").notNull().unique(),
-    themeColor: text("theme_color"),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
   (table) => [
-    index("category_order_idx").on(table.order),
     uniqueIndex("category_name_idx").on(table.name),
     uniqueIndex("category_slug_idx").on(table.slug),
   ],

@@ -22,14 +22,10 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   return {
     title: category.name,
     alternates: { canonical: `/resources/${slug}` },
-    description:
-      category.description ||
-      `Curated web development resources, tools, and documentation for ${category.name}.`,
+    description: `Curated web development resources, tools, and documentation for ${category.name}.`,
     openGraph: {
       title: `${category.name} Resources — syntax-stash`,
-      description:
-        category.description ||
-        `Curated web development resources, tools, and documentation for ${category.name}.`,
+      description: `Curated web development resources, tools, and documentation for ${category.name}.`,
       url: `/resources/${slug}`,
     },
   };
@@ -52,7 +48,7 @@ export default async function ResourceCategoryPage({ params }: { params: Promise
         <div className="section-inner">
           <h1 className="res-headline">{category.name}</h1>
           <p className="res-sub">
-            {category.description || `Curated resources for ${category.name.toLowerCase()}.`}
+            Curated resources for {category.name.toLowerCase()}.
           </p>
         </div>
       </header>
