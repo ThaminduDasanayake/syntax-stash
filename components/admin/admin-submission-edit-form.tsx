@@ -30,7 +30,32 @@ import { Submission } from "@/lib/db/schema";
 import { cn } from "@/lib/utils";
 
 import { AdminAuthorDialog } from "./admin-author-dialog";
+import {
+  AdminConfirmEditDialog,
+  computeFieldChanges,
+  FieldDiff,
+} from "./admin-confirm-edit-dialog";
 import { STATUS_CONFIG, STATUS_OPTIONS, SubmissionStatus } from "./types";
+
+const SUBMISSION_FIELD_LABELS: Record<string, string> = {
+  title: "Title",
+  adminNotes: "Internal Admin Notes",
+  author: "Author / Creator",
+  authorGitHub: "Author GitHub",
+  authorLinkedIn: "Author LinkedIn",
+  authorTwitter: "Author Twitter / X",
+  authorWebsite: "Author Website",
+  authorYouTube: "Author YouTube",
+  category: "Category",
+  description: "Description",
+  favicon: "Favicon URL",
+  github: "GitHub Repository",
+  ogImage: "OpenGraph Image",
+  status: "Moderation Status",
+  subtitle: "Subtitle / Tagline",
+  tags: "Canonical Tags",
+  url: "Resource URL",
+};
 
 interface AdminSubmissionEditFormProps {
   isWorking: boolean;
@@ -85,6 +110,29 @@ export function AdminSubmissionEditForm({
   // Inline Author Creation
   const [isCreateAuthorOpen, setIsCreateAuthorOpen] = useState(false);
   const [createAuthorInitialName, setCreateAuthorInitialName] = useState("");
+
+  // Confirmation Dialog State
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
+  const [pendingSaveAction, setPendingSaveAction] = useState<(() => void) | null>(null);
+
+  const handleRequestSave = (status?: "approved" | "rejected" | "pending") => {
+    const updatedPayload: Partial<Submission> = {
+      ...editForm,
+      ...(status ? { status } : {}),
+    };
+    const diffs = computeFieldChanges(sub, updatedPayload, SUBMISSION_FIELD_LABELS);
+    setPendingChanges(diffs);
+    setPendingSaveAction(() => () => onSave(sub.id, editForm, status));
+    setIsConfirmOpen(true);
+  };
+
+  const handleConfirmSave = () => {
+    if (pendingSaveAction) {
+      pendingSaveAction();
+    }
+    setIsConfirmOpen(false);
+  };
 
   const handleAuthorFieldChange = (field: keyof AuthorSocialValues, value: string) => {
     setEditForm((prev) => ({
@@ -452,7 +500,7 @@ export function AdminSubmissionEditForm({
             <Button
               size="sm"
               variant="outline"
-              onClick={() => onSave(sub.id, editForm, "pending")}
+              onClick={() => handleRequestSave("pending")}
               disabled={isWorking}
               className="gap-1.5 border-amber-500/80 text-xs font-bold text-amber-700 uppercase hover:bg-amber-500/20 dark:text-amber-300"
             >
@@ -464,7 +512,7 @@ export function AdminSubmissionEditForm({
           {sub.status !== "approved" && (
             <Button
               size="sm"
-              onClick={() => onSave(sub.id, editForm, "approved")}
+              onClick={() => handleRequestSave("approved")}
               disabled={isWorking}
               className="gap-1.5 bg-emerald-600 text-xs font-bold text-white uppercase hover:bg-emerald-700"
             >
@@ -474,7 +522,7 @@ export function AdminSubmissionEditForm({
 
           <Button
             size="sm"
-            onClick={() => onSave(sub.id, editForm)}
+            onClick={() => handleRequestSave()}
             disabled={isWorking}
             className="gap-1.5 text-xs font-bold uppercase"
           >
@@ -500,6 +548,18 @@ export function AdminSubmissionEditForm({
           }));
           setIsCreateAuthorOpen(false);
         }}
+      />
+
+      {/* Confirmation Dialog for Submission Updates */}
+      <AdminConfirmEditDialog
+        open={isConfirmOpen}
+        onOpenChange={setIsConfirmOpen}
+        title="Confirm Submission Updates"
+        description="Review the list of changed submission details before saving changes."
+        itemTitle={editForm.title || sub.title}
+        changes={pendingChanges}
+        onConfirm={handleConfirmSave}
+        isWorking={isWorking}
       />
     </div>
   );

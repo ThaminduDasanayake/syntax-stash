@@ -1,6 +1,7 @@
 export * from "./admin-author-dialog";
 export * from "./admin-authors-client";
 export * from "./admin-categories-client";
+export * from "./admin-confirm-edit-dialog";
 export * from "./admin-nav";
 export * from "./admin-resource-card";
 export * from "./admin-resource-dialog";

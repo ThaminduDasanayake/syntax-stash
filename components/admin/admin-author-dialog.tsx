@@ -20,6 +20,22 @@ import { Label } from "@/components/ui/label";
 import { slugifyAuthor } from "@/lib/utils";
 
 import { AdminAuthorItem } from "./admin-authors-client";
+import {
+  AdminConfirmEditDialog,
+  computeFieldChanges,
+  FieldDiff,
+} from "./admin-confirm-edit-dialog";
+
+const AUTHOR_FIELD_LABELS: Record<string, string> = {
+  blog: "Blog URL",
+  github: "GitHub URL",
+  linkedin: "LinkedIn Profile",
+  name: "Author Name",
+  slug: "Author Slug",
+  twitter: "Twitter / X Profile",
+  website: "Website / Portfolio URL",
+  youtube: "YouTube Channel",
+};
 
 export interface AdminAuthorDialogProps {
   author?: AdminAuthorItem | Partial<AdminAuthorItem> | null;
@@ -52,6 +68,8 @@ export function AdminAuthorDialog({
   });
   const [autoSlug, setAutoSlug] = useState(true);
   const [isWorking, setIsWorking] = useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
 
   useEffect(() => {
     if (open) {
@@ -92,18 +110,7 @@ export function AdminAuthorDialog({
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!formData.name.trim()) {
-      toast.error("Author name is required.");
-      return;
-    }
-    if (!formData.slug.trim()) {
-      toast.error("Author slug is required.");
-      return;
-    }
-
+  const executeSave = async () => {
     try {
       setIsWorking(true);
       if (isEdit && author?.id) {
@@ -142,6 +149,7 @@ export function AdminAuthorDialog({
           toast.success(`"${formData.name}" updated successfully.`);
           invalidateAuthorCache();
           onUpdated?.(updatedItem);
+          setIsConfirmOpen(false);
           onOpenChange(false);
         } else {
           toast.error(data.error || "Failed to update author.");
@@ -168,6 +176,27 @@ export function AdminAuthorDialog({
       toast.error("Network error while saving author.");
     } finally {
       setIsWorking(false);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!formData.name.trim()) {
+      toast.error("Author name is required.");
+      return;
+    }
+    if (!formData.slug.trim()) {
+      toast.error("Author slug is required.");
+      return;
+    }
+
+    if (isEdit && author) {
+      const diffs = computeFieldChanges(author, formData, AUTHOR_FIELD_LABELS);
+      setPendingChanges(diffs);
+      setIsConfirmOpen(true);
+    } else {
+      await executeSave();
     }
   };
 
@@ -333,6 +362,18 @@ export function AdminAuthorDialog({
           </DialogFooter>
         </form>
       </DialogContent>
+
+      {/* Confirmation Dialog for Edits */}
+      <AdminConfirmEditDialog
+        open={isConfirmOpen}
+        onOpenChange={setIsConfirmOpen}
+        title="Confirm Author Updates"
+        description="Review the list of changed author properties before saving changes to this creator profile."
+        itemTitle={formData.name || (typeof author?.name === "string" ? author.name : "")}
+        changes={pendingChanges}
+        onConfirm={executeSave}
+        isWorking={isWorking}
+      />
     </Dialog>
   );
 }

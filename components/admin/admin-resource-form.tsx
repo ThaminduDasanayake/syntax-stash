@@ -30,7 +30,25 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
 
 import { AdminAuthorDialog } from "./admin-author-dialog";
+import {
+  AdminConfirmEditDialog,
+  computeFieldChanges,
+  FieldDiff,
+} from "./admin-confirm-edit-dialog";
 import { AdminResourceItem } from "./types";
+
+const RESOURCE_FIELD_LABELS: Record<string, string> = {
+  title: "Title",
+  authorName: "Creator / Author",
+  category: "Category",
+  description: "Description",
+  favicon: "Favicon URL",
+  github: "GitHub Repository URL",
+  ogImage: "OpenGraph Image",
+  subtitle: "Subtitle / Tagline",
+  tags: "Canonical Tags",
+  url: "Website URL",
+};
 
 interface AdminResourceFormProps {
   initialData?: Partial<AdminResourceItem> | null;
@@ -73,6 +91,10 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
   // Author Creation Modal State
   const [isCreateAuthorOpen, setIsCreateAuthorOpen] = useState(false);
   const [createAuthorInitialName, setCreateAuthorInitialName] = useState("");
+
+  // Confirmation Dialog State
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
 
   const handleAuthorFieldChange = (_field: keyof AuthorSocialValues, value: string) => {
     setFormData((prev) => ({
@@ -145,6 +167,39 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
     }
   };
 
+  const executeSave = async () => {
+    try {
+      setIsSubmitting(true);
+      const endpoint = "/api/admin/resources";
+      const method = isEdit ? "PATCH" : "POST";
+
+      const res = await fetch(endpoint, {
+        body: JSON.stringify(formData),
+        headers: { "Content-Type": "application/json" },
+        method,
+      });
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        setIsConfirmOpen(false);
+        toast.success(
+          isEdit
+            ? `"${formData.title}" updated successfully.`
+            : `"${formData.title}" published to live catalog!`,
+        );
+        router.push("/admin/resources");
+        router.refresh();
+      } else {
+        toast.error(data.error || "Failed to save resource.");
+      }
+    } catch (err) {
+      console.error("Save resource error:", err);
+      toast.error("Network error while saving resource.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -165,34 +220,12 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
       return;
     }
 
-    try {
-      setIsSubmitting(true);
-      const endpoint = "/api/admin/resources";
-      const method = isEdit ? "PATCH" : "POST";
-
-      const res = await fetch(endpoint, {
-        body: JSON.stringify(formData),
-        headers: { "Content-Type": "application/json" },
-        method,
-      });
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        toast.success(
-          isEdit
-            ? `"${formData.title}" updated successfully.`
-            : `"${formData.title}" published to live catalog!`,
-        );
-        router.push("/admin/resources");
-        router.refresh();
-      } else {
-        toast.error(data.error || "Failed to save resource.");
-      }
-    } catch (err) {
-      console.error("Save resource error:", err);
-      toast.error("Network error while saving resource.");
-    } finally {
-      setIsSubmitting(false);
+    if (isEdit) {
+      const diffs = computeFieldChanges(initialData, formData, RESOURCE_FIELD_LABELS);
+      setPendingChanges(diffs);
+      setIsConfirmOpen(true);
+    } else {
+      await executeSave();
     }
   };
 
@@ -559,6 +592,18 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
           }));
           setIsCreateAuthorOpen(false);
         }}
+      />
+
+      {/* Confirmation Dialog for Resource Edits */}
+      <AdminConfirmEditDialog
+        open={isConfirmOpen}
+        onOpenChange={setIsConfirmOpen}
+        title="Confirm Resource Updates"
+        itemTitle={formData.title || initialData?.title || "Resource"}
+        changes={pendingChanges}
+        isWorking={isSubmitting}
+        onConfirm={executeSave}
+        confirmLabel="Confirm & Save Resource"
       />
     </div>
   );

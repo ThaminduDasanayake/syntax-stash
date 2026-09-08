@@ -33,7 +33,25 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
 
 import { AdminAuthorDialog } from "./admin-author-dialog";
+import {
+  AdminConfirmEditDialog,
+  computeFieldChanges,
+  FieldDiff,
+} from "./admin-confirm-edit-dialog";
 import { AdminResourceItem } from "./types";
+
+const RESOURCE_FIELD_LABELS: Record<string, string> = {
+  title: "Title",
+  authorName: "Creator / Author",
+  category: "Category",
+  description: "Description",
+  favicon: "Favicon URL",
+  github: "GitHub Repository URL",
+  ogImage: "OpenGraph Image",
+  subtitle: "Subtitle / Tagline",
+  tags: "Canonical Tags",
+  url: "Website URL",
+};
 
 interface AdminResourceDialogProps {
   isWorking?: boolean;
@@ -80,6 +98,10 @@ export function AdminResourceDialog({
   // Author Creation Modal State
   const [isCreateAuthorOpen, setIsCreateAuthorOpen] = useState(false);
   const [createAuthorInitialName, setCreateAuthorInitialName] = useState("");
+
+  // Confirmation Dialog State
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
 
   useEffect(() => {
     if (resource) {
@@ -192,6 +214,11 @@ export function AdminResourceDialog({
     }
   };
 
+  const executeSave = async () => {
+    await onSave(formData);
+    setIsConfirmOpen(false);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (
@@ -202,7 +229,14 @@ export function AdminResourceDialog({
     ) {
       return;
     }
-    await onSave(formData);
+
+    if (isEdit && resource) {
+      const diffs = computeFieldChanges(resource, formData, RESOURCE_FIELD_LABELS);
+      setPendingChanges(diffs);
+      setIsConfirmOpen(true);
+    } else {
+      await executeSave();
+    }
   };
 
   const authorValues: AuthorSocialValues = {
@@ -477,6 +511,18 @@ export function AdminResourceDialog({
           }));
           setIsCreateAuthorOpen(false);
         }}
+      />
+
+      {/* Confirmation Dialog for Edits */}
+      <AdminConfirmEditDialog
+        open={isConfirmOpen}
+        onOpenChange={setIsConfirmOpen}
+        title="Confirm Resource Updates"
+        description="Review the list of changed properties below before saving changes to this resource."
+        itemTitle={formData.title || resource?.title}
+        changes={pendingChanges}
+        onConfirm={executeSave}
+        isWorking={isWorking}
       />
     </Dialog>
   );

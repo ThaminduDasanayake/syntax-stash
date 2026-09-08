@@ -47,6 +47,16 @@ import {
 } from "@/components/ui/table";
 import { cn, slugify, type Theme, THEME_CONFIG, THEMES } from "@/lib/utils";
 
+import {
+  AdminConfirmEditDialog,
+  computeFieldChanges,
+  FieldDiff,
+} from "./admin-confirm-edit-dialog";
+
+const CATEGORY_FIELD_LABELS: Record<string, string> = {
+  name: "Category Name",
+};
+
 export interface AdminCategoryItem {
   createdAt?: Date | string;
   id: string;
@@ -166,6 +176,8 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
   const [editingCategory, setEditingCategory] = useState<AdminCategoryItem | null>(null);
   const [deletingCategory, setDeletingCategory] = useState<AdminCategoryItem | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
 
   // Form fields (only name; slug and theme are strictly auto-generated)
   const [formData, setFormData] = useState({
@@ -240,14 +252,8 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
     setIsDialogOpen(true);
   };
 
-  // Submit Add / Edit Form
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.name.trim()) {
-      toast.error("Category name is required.");
-      return;
-    }
-
+  // Execute Save
+  const executeSave = async () => {
     try {
       setIsSubmitting(true);
       const cleanName = formData.name.trim();
@@ -282,6 +288,8 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
           ),
         );
         toast.success(`Category "${cleanName}" updated successfully.`);
+        setIsConfirmOpen(false);
+        setIsDialogOpen(false);
       } else {
         // POST
         const res = await fetch("/api/admin/categories", {
@@ -310,13 +318,29 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
           },
         ]);
         toast.success(`Category "${cleanName}" created successfully.`);
+        setIsDialogOpen(false);
       }
-
-      setIsDialogOpen(false);
     } catch {
       toast.error("Network error while saving category.");
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  // Submit Add / Edit Form
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name.trim()) {
+      toast.error("Category name is required.");
+      return;
+    }
+
+    if (editingCategory) {
+      const diffs = computeFieldChanges(editingCategory, formData, CATEGORY_FIELD_LABELS);
+      setPendingChanges(diffs);
+      setIsConfirmOpen(true);
+    } else {
+      await executeSave();
     }
   };
 
@@ -713,6 +737,18 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Confirmation Dialog for Category Updates */}
+      <AdminConfirmEditDialog
+        open={isConfirmOpen}
+        onOpenChange={setIsConfirmOpen}
+        title="Confirm Category Updates"
+        description="Review the list of changed category properties before saving changes."
+        itemTitle={formData.name || editingCategory?.name}
+        changes={pendingChanges}
+        onConfirm={executeSave}
+        isWorking={isSubmitting}
+      />
     </div>
   );
 }

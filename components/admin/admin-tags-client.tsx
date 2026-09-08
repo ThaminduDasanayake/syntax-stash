@@ -48,6 +48,18 @@ import {
 } from "@/components/ui/table";
 import { normalizeTag } from "@/lib/utils";
 
+import {
+  AdminConfirmEditDialog,
+  computeFieldChanges,
+  FieldDiff,
+} from "./admin-confirm-edit-dialog";
+
+const TAG_FIELD_LABELS: Record<string, string> = {
+  isFeatured: "Featured Status",
+  name: "Tag Name",
+  slug: "Tag Slug",
+};
+
 export interface AdminTagItem {
   createdAt?: Date | string;
   id: string;
@@ -87,6 +99,8 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
   const [editingTag, setEditingTag] = useState<AdminTagItem | null>(null);
   const [deletingTag, setDeletingTag] = useState<AdminTagItem | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
 
   // Form state
   const [formData, setFormData] = useState({
@@ -215,14 +229,8 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
     }
   };
 
-  // Submit Add or Edit
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.name.trim()) {
-      toast.error("Tag name is required.");
-      return;
-    }
-
+  // Execute Save
+  const executeSave = async () => {
     try {
       setIsSubmitting(true);
       if (editingTag) {
@@ -259,6 +267,8 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
           ),
         );
         toast.success(`Tag "${formData.name}" updated successfully.`);
+        setIsConfirmOpen(false);
+        setIsDialogOpen(false);
       } else {
         // POST
         const res = await fetch("/api/admin/tags", {
@@ -288,13 +298,29 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
           },
         ]);
         toast.success(`Tag "${formData.name}" created successfully.`);
+        setIsDialogOpen(false);
       }
-
-      setIsDialogOpen(false);
     } catch {
       toast.error("Network error while saving tag.");
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  // Submit Add or Edit
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name.trim()) {
+      toast.error("Tag name is required.");
+      return;
+    }
+
+    if (editingTag) {
+      const diffs = computeFieldChanges(editingTag, formData, TAG_FIELD_LABELS);
+      setPendingChanges(diffs);
+      setIsConfirmOpen(true);
+    } else {
+      await executeSave();
     }
   };
 
@@ -640,6 +666,18 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Confirmation Dialog for Tag Updates */}
+      <AdminConfirmEditDialog
+        open={isConfirmOpen}
+        onOpenChange={setIsConfirmOpen}
+        title="Confirm Tag Updates"
+        description="Review the list of changed tag properties before saving changes."
+        itemTitle={formData.name ? `#${formData.name}` : editingTag ? `#${editingTag.name}` : undefined}
+        changes={pendingChanges}
+        onConfirm={executeSave}
+        isWorking={isSubmitting}
+      />
     </div>
   );
 }
