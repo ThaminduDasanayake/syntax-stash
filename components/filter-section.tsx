@@ -4,7 +4,6 @@ import {
   ArrowsCounterClockwiseIcon,
   BookmarkSimpleIcon,
   MagnifyingGlassIcon,
-  SlidersHorizontalIcon,
   XIcon,
 } from "@phosphor-icons/react";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -25,7 +24,6 @@ import { TagFilterPopover, TagOption } from "@/components/tag-filter-popover";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { SelectField } from "@/components/ui/select-field";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { getCategoryTheme, getResourceId } from "@/lib/utils";
 import { isResource, Resource, StashItem } from "@/types";
@@ -39,13 +37,6 @@ interface FilterSectionProps {
 }
 
 const BATCH_SIZE = 36;
-
-const LIVE_SORT_OPTIONS = [
-  { label: "Category Order", value: "category" },
-  { label: "Name (A → Z)", value: "alpha" },
-  { label: "Recently Added", value: "newest" },
-  { label: "Recently Updated", value: "updated" },
-];
 
 function formatItemCountLabel(count: number, label: string): string {
   if (count === 1) {
@@ -87,8 +78,6 @@ function FilterSectionInner({
     return tagParam ? tagParam.split(",").filter(Boolean) : [];
   }, [tagParam]);
   const matchMode = searchParams.get("mode") === "all" ? "all" : "any";
-  const sortParam = searchParams.get("sort") || "category";
-  const sortBy = sortParam;
 
   const qParam = searchParams.get("q") || "";
   const [prevQParam, setPrevQParam] = useState(qParam);
@@ -110,7 +99,6 @@ function FilterSectionInner({
       mode: "any" | "all",
       query: string,
       saved?: boolean,
-      sortVal?: string,
       dispatchPopstate: boolean = true,
     ) => {
       if (typeof window === "undefined") return;
@@ -147,13 +135,6 @@ function FilterSectionInner({
         params.delete("q");
       }
 
-      const activeSort = sortVal !== undefined ? sortVal : (sortParam || "category");
-      if (activeSort && activeSort !== "category") {
-        params.set("sort", activeSort);
-      } else {
-        params.delete("sort");
-      }
-
       const queryString = params.toString();
       const newUrl = queryString ? `${pathname}?${queryString}` : pathname;
       window.history.replaceState(null, "", newUrl);
@@ -161,7 +142,7 @@ function FilterSectionInner({
         window.dispatchEvent(new Event("popstate"));
       }
     },
-    [initialCategory, pathname, savedOnly, sortParam],
+    [initialCategory, pathname, savedOnly],
   );
 
   // Calculate available tags and their counts scoped to current category
@@ -208,17 +189,13 @@ function FilterSectionInner({
     syncUrl(activeCategory, selectedTags, mode, searchQuery, savedOnly);
   };
 
-  const handleSortChange = (value: string) => {
-    syncUrl(activeCategory, selectedTags, matchMode, searchQuery, savedOnly, value);
-  };
-
   const handleSearchChange = (value: string) => {
     setSearchQuery(value);
     if (searchDebounceRef.current) {
       clearTimeout(searchDebounceRef.current);
     }
     searchDebounceRef.current = setTimeout(() => {
-      syncUrl(activeCategory, selectedTags, matchMode, value, savedOnly, undefined, false);
+      syncUrl(activeCategory, selectedTags, matchMode, value, savedOnly, false);
     }, 300);
   };
 
@@ -236,7 +213,7 @@ function FilterSectionInner({
     }
     setSearchQuery("");
     setVisibleLimit(BATCH_SIZE);
-    syncUrl(initialCategory || null, [], "any", "", false, "category");
+    syncUrl(initialCategory || null, [], "any", "", false);
   };
 
   const filteredItems = useMemo(() => {
@@ -286,34 +263,16 @@ function FilterSectionInner({
       );
     });
 
-    // Sort items according to active sort option
-    const sorted = [...filtered];
-    if (sortBy === "updated") {
-      sorted.sort((a, b) => {
-        const timeA = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
-        const timeB = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
-        return timeB - timeA || a.title.localeCompare(b.title);
-      });
-    } else if (sortBy === "newest") {
-      sorted.sort((a, b) => {
-        const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
-        const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-        return timeB - timeA || a.title.localeCompare(b.title);
-      });
-    } else if (sortBy === "alpha") {
-      sorted.sort((a, b) => a.title.localeCompare(b.title));
-    } else {
-      // Default: category alphabetical order (matching categories list or A → Z), then title (A → Z)
-      sorted.sort((a, b) => {
-        if (a.category !== b.category) {
-          const indexA = categories.indexOf(a.category);
-          const indexB = categories.indexOf(b.category);
-          if (indexA !== -1 && indexB !== -1) return indexA - indexB;
-          return a.category.localeCompare(b.category);
-        }
-        return a.title.localeCompare(b.title);
-      });
-    }
+    // Sort items: category order (matching categories list), then title (A → Z)
+    const sorted = [...filtered].sort((a, b) => {
+      if (a.category !== b.category) {
+        const indexA = categories.indexOf(a.category);
+        const indexB = categories.indexOf(b.category);
+        if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+        return a.category.localeCompare(b.category);
+      }
+      return a.title.localeCompare(b.title);
+    });
 
     return sorted;
   }, [
@@ -325,11 +284,10 @@ function FilterSectionInner({
     matchMode,
     savedOnly,
     selectedTags,
-    sortBy,
   ]);
 
   // Reset pagination limit during render when search or filter parameters change
-  const currentFilterKey = `${deferredSearchQuery}|${activeCategory}|${tagParam}|${matchMode}|${savedOnly}|${sortBy}|${items.length}`;
+  const currentFilterKey = `${deferredSearchQuery}|${activeCategory}|${tagParam}|${matchMode}|${savedOnly}|${items.length}`;
   const [prevFilterKey, setPrevFilterKey] = useState(currentFilterKey);
 
   if (currentFilterKey !== prevFilterKey) {
@@ -382,22 +340,19 @@ function FilterSectionInner({
       map[tool.category].push(tool);
     }
 
-    const sortedCategories =
-      sortBy === "category"
-        ? Object.keys(map).sort((a, b) => {
-            const indexA = categories.indexOf(a);
-            const indexB = categories.indexOf(b);
-            if (indexA !== -1 && indexB !== -1) return indexA - indexB;
-            return a.localeCompare(b);
-          })
-        : Object.keys(map);
+    const sortedCategories = Object.keys(map).sort((a, b) => {
+      const indexA = categories.indexOf(a);
+      const indexB = categories.indexOf(b);
+      if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+      return a.localeCompare(b);
+    });
 
     const result: Record<string, StashItem[]> = {};
     for (const cat of sortedCategories) {
       result[cat] = map[cat];
     }
     return result;
-  }, [categories, sortBy, visibleItems]);
+  }, [categories, visibleItems]);
 
   return (
     <>
@@ -439,22 +394,10 @@ function FilterSectionInner({
             })}
           </div>
 
-          {/* Sort Selector & Count */}
-          <div className="flex items-center gap-2.5 sm:ml-auto">
-            <div className="flex items-center gap-1.5">
-              <SlidersHorizontalIcon weight="bold" className="text-ink size-3.5" />
-              <SelectField
-                value={sortBy}
-                onValueChange={handleSortChange}
-                options={LIVE_SORT_OPTIONS}
-                triggerClassName="h-10 border-[1.5px]! border-ink bg-transparent font-mono text-xs font-bold uppercase min-w-[155px]"
-              />
-            </div>
-
-            <div className="filter-count">
-              <span className="filter-count-num">{filteredItems.length}</span>
-              <span> of {items.length}</span>
-            </div>
+          {/* Item Count */}
+          <div className="filter-count sm:ml-auto">
+            <span className="filter-count-num">{filteredItems.length}</span>
+            <span> of {items.length}</span>
           </div>
         </div>
 
