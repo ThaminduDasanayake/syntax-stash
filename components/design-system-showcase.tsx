@@ -539,7 +539,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
                             e.stopPropagation();
                             handleCopy(swatch.oklch);
                           }}
-                          className="inline-flex items-center gap-1 font-bold hover:underline text-[11px]"
+                          className="inline-flex items-center gap-1 text-[11px] font-bold hover:underline"
                           title="Copy OKLCH code"
                         >
                           {swatch.oklch}
@@ -568,9 +568,12 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
                         </span>
                       </div>
 
-                      <div className="flex items-center justify-between text-[10px] pt-1">
+                      <div className="flex items-center justify-between pt-1 text-[10px]">
                         <span className="text-ink-mute">Source:</span>
-                        <span className="text-ink-2 font-medium truncate max-w-[160px]" title={swatch.source}>
+                        <span
+                          className="text-ink-2 max-w-[160px] truncate font-medium"
+                          title={swatch.source}
+                        >
                           {swatch.source}
                         </span>
                       </div>
@@ -738,9 +741,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
                     size="sm"
                     variant="default"
                     className="w-full font-mono text-xs"
-                    onClick={() =>
-                      handleCopy(JSON.stringify(THEME_CONFIG[selectedTheme], null, 2))
-                    }
+                    onClick={() => handleCopy(JSON.stringify(THEME_CONFIG[selectedTheme], null, 2))}
                   >
                     <CopyIcon className="mr-2 size-4" />
                     Copy Theme Config JSON

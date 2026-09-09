@@ -688,7 +688,9 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
         onOpenChange={setIsConfirmOpen}
         title="Confirm Tag Updates"
         description="Review the list of changed tag properties before saving changes."
-        itemTitle={formData.name ? `#${formData.name}` : editingTag ? `#${editingTag.name}` : undefined}
+        itemTitle={
+          formData.name ? `#${formData.name}` : editingTag ? `#${editingTag.name}` : undefined
+        }
         changes={pendingChanges}
         onConfirm={executeSave}
         isWorking={isSubmitting}

@@ -385,7 +385,12 @@ function FilterSectionInner({
                 <DotButton
                   key={item}
                   isActive={isActive}
-                  theme={getCategoryTheme(item, itemLabel === "Tools" ? "tool" : "resource", i, categories)}
+                  theme={getCategoryTheme(
+                    item,
+                    itemLabel === "Tools" ? "tool" : "resource",
+                    i,
+                    categories,
+                  )}
                   index={i}
                   label={item}
                   onClick={() => handleCategoryClick(item)}

@@ -262,7 +262,10 @@ export function AuthorCombobox({
     }
 
     const showCustomOption =
-      cleanQuery && !exactMatch && !isAlreadySelected && (allowCustom || Boolean(onRequestCreateAuthor));
+      cleanQuery &&
+      !exactMatch &&
+      !isAlreadySelected &&
+      (allowCustom || Boolean(onRequestCreateAuthor));
     const totalItems = filteredAuthors.length + (showCustomOption ? 1 : 0);
 
     if (e.key === "ArrowDown") {
@@ -488,29 +491,33 @@ export function AuthorCombobox({
                 )}
               >
                 <span>
-                  + Create &quot;<strong className="text-foreground">{query.trim()}</strong>&quot; as
-                  new author
+                  + Create &quot;<strong className="text-foreground">{query.trim()}</strong>&quot;
+                  as new author
                 </span>
               </li>
             )}
 
-            {cleanQuery && !exactMatch && !isAlreadySelected && !onRequestCreateAuthor && allowCustom && (
-              <li
-                onMouseEnter={() => setHighlightedIndex(filteredAuthors.length)}
-                onClick={() => addAuthor(query.trim())}
-                className={cn(
-                  "border-border/40 text-muted-foreground hover:text-foreground flex cursor-pointer items-center gap-2 border-t px-2.5 py-2 transition-colors",
-                  highlightedIndex === filteredAuthors.length
-                    ? "bg-primary text-primary-foreground"
-                    : "hover:bg-muted/60",
-                )}
-              >
-                <span>
-                  + Add &quot;<strong className="text-foreground">{query.trim()}</strong>&quot; as
-                  creator
-                </span>
-              </li>
-            )}
+            {cleanQuery &&
+              !exactMatch &&
+              !isAlreadySelected &&
+              !onRequestCreateAuthor &&
+              allowCustom && (
+                <li
+                  onMouseEnter={() => setHighlightedIndex(filteredAuthors.length)}
+                  onClick={() => addAuthor(query.trim())}
+                  className={cn(
+                    "border-border/40 text-muted-foreground hover:text-foreground flex cursor-pointer items-center gap-2 border-t px-2.5 py-2 transition-colors",
+                    highlightedIndex === filteredAuthors.length
+                      ? "bg-primary text-primary-foreground"
+                      : "hover:bg-muted/60",
+                  )}
+                >
+                  <span>
+                    + Add &quot;<strong className="text-foreground">{query.trim()}</strong>&quot; as
+                    creator
+                  </span>
+                </li>
+              )}
 
             {filteredAuthors.length === 0 && (!cleanQuery || exactMatch || isAlreadySelected) && (
               <li className="text-muted-foreground px-2.5 py-2 text-center text-xs">
