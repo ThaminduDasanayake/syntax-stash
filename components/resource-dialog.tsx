@@ -554,9 +554,7 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
             {activeTool.github && (
               <div className="mb-5.5 flex flex-col items-start">
                 <div className="flex w-full items-center gap-5">
-                  <span className={cn("text-display-2xs", activeThemeStyles.label)}>
-                    GitHub
-                  </span>
+                  <span className={cn("text-display-2xs", activeThemeStyles.label)}>GitHub</span>
                   {formattedStars && (
                     <span
                       className="text-muted-foreground inline-flex items-center gap-1 font-mono text-xs leading-none"

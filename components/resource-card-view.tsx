@@ -157,7 +157,7 @@ export function ResourceCardView({
         {/* Row 1: Inline favicon + title */}
         <div className="flex min-w-0 items-center gap-2">
           {/* Small 24px favicon squircle beside the title */}
-          <div className="border-primary/50 flex size-6 shrink-0 items-center justify-center overflow-hidden rounded-md border bg-white/5 p-0.5">
+          <div className="border-primary/50 flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-[30%] border bg-white/5 p-0.5">
             {faviconSrc ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
@@ -165,7 +165,7 @@ export function ResourceCardView({
                 alt=""
                 loading="lazy"
                 referrerPolicy="no-referrer"
-                className="h-full w-full rounded-sm object-contain"
+                className="h-full w-full rounded-[25%] object-contain"
                 onError={(e) => {
                   const img = e.currentTarget;
                   if (!img.getAttribute("data-fallback") && favicon) {
@@ -182,11 +182,11 @@ export function ResourceCardView({
           </div>
 
           <h3
-            title={title || "Resource Title"}
+            title={title || ""}
             className="min-w-0 flex-1 truncate font-mono text-base font-bold tracking-tight text-white"
           >
             <span className="after:bg-primary relative inline after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-left after:scale-x-0 after:transition-transform after:duration-300 after:ease-out group-hover:after:scale-x-100 motion-reduce:after:transition-none">
-              {title || "Resource Title"}
+              {title || ""}
             </span>
           </h3>
         </div>
