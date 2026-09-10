@@ -2,7 +2,6 @@ import { ArrowUpRightIcon, GithubLogo } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
@@ -18,10 +17,6 @@ export default function AboutPage() {
       {/* Hero Section */}
       <section className="border-border bg-background border-b-2 px-6 py-24 sm:px-12 lg:px-24">
         <div className="mx-auto flex w-full max-w-7xl flex-col items-center text-center">
-          <div className="hero-eyebrow mb-8">
-            <HeroEyebrowDots />
-            THE STORY BEHIND THE STASH
-          </div>
           <h1 className="hero-headline mb-8">
             CURATED FOR
             <br />

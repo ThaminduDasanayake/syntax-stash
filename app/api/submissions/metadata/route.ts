@@ -648,9 +648,7 @@ export async function GET(request: NextRequest) {
         // Real creator attribution lines are concise bylines (< 120 chars), not long paragraphs/testimonials
         if (textContent.length > 120) return;
 
-        const hasKeyword = attributionKeywords.some((kw) =>
-          textContent.toLowerCase().includes(kw),
-        );
+        const hasKeyword = attributionKeywords.some((kw) => textContent.toLowerCase().includes(kw));
         if (!hasKeyword) return;
 
         // Check if there is an <a> tag inside or adjacent to the attribution keyword
@@ -706,31 +704,39 @@ export async function GET(request: NextRequest) {
       };
 
       // Pass 1: Prioritize dedicated footer & attribution/credit containers
-      $("footer, [class*='footer'], [id*='footer'], [class*='credit'], [class*='byline'], [class*='attribution']").find("p, span, div, li, small, a").each((_, el) => {
-        if (author) return;
-        processAttributionElement($(el));
-      });
+      $(
+        "footer, [class*='footer'], [id*='footer'], [class*='credit'], [class*='byline'], [class*='attribution']",
+      )
+        .find("p, span, div, li, small, a")
+        .each((_, el) => {
+          if (author) return;
+          processAttributionElement($(el));
+        });
 
       // Pass 2: If not found in footer, scan general page (excluding cards, testimonials, reviews, features, nav)
       if (!author) {
-        $("p, span, small, [class*='author'], [class*='byline'], [class*='credit']").each((_, el) => {
-          if (author) return;
-          const $el = $(el);
-          if (
-            $el.closest(
-              "[class*='testimonial'], [class*='review'], [class*='card'], [class*='feature'], [class*='pricing'], [class*='quote'], [class*='carousel'], nav, header",
-            ).length > 0
-          ) {
-            return;
-          }
-          processAttributionElement($el);
-        });
+        $("p, span, small, [class*='author'], [class*='byline'], [class*='credit']").each(
+          (_, el) => {
+            if (author) return;
+            const $el = $(el);
+            if (
+              $el.closest(
+                "[class*='testimonial'], [class*='review'], [class*='card'], [class*='feature'], [class*='pricing'], [class*='quote'], [class*='carousel'], nav, header",
+              ).length > 0
+            ) {
+              return;
+            }
+            processAttributionElement($el);
+          },
+        );
       }
     }
 
     // Fallback: OpenGraph description match
     if (!author && ogDesc) {
-      const match = ogDesc.match(/(?:built|made|created|developed|designed|crafted|curated)\s+by\s+([^,.;|•·–—]+)/i);
+      const match = ogDesc.match(
+        /(?:built|made|created|developed|designed|crafted|curated)\s+by\s+([^,.;|•·–—]+)/i,
+      );
       if (match && match[1]) {
         author = cleanAuthorName(match[1]);
       }

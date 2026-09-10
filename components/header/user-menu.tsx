@@ -74,7 +74,7 @@ export function UserMenu({ onSearchOpenAction }: UserMenuProps) {
 
             {isUserAdmin && pendingCount > 0 && (
               <AvatarBadge
-                className="bg-c-orange text-ink ring-ink px-1 font-mono text-[10px] font-bold"
+                className="bg-primary text-primary-foreground px-1 font-mono text-[10px] font-bold"
                 aria-label={`${pendingCount} pending submissions`}
               >
                 {pendingCount > 99 ? "99+" : pendingCount}
@@ -224,7 +224,7 @@ export function UserMenu({ onSearchOpenAction }: UserMenuProps) {
                     Admin Queue
                   </span>
                   {pendingCount > 0 && (
-                    <span className="bg-c-orange text-ink rounded-full border-[1.5px] px-1 text-center font-mono text-[10px] font-bold">
+                    <span className="bg-primary text-primary-foreground rounded-full px-1 text-center font-mono text-[10px] font-bold">
                       {pendingCount}
                     </span>
                   )}

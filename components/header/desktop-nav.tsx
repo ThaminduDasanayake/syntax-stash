@@ -60,7 +60,7 @@ export function DesktopNav({ onSearchOpenAction }: DesktopNavProps) {
             Saved
           </span>
           {bookmarksCount > 0 && (
-            <span className="bg-ink text-paper inline-flex min-h-4 min-w-4 shrink-0 items-center justify-center rounded-full px-1 text-center text-[10px] leading-none font-extrabold no-underline">
+            <span className="bg-primary text-primary-foreground inline-flex min-h-4 min-w-4 shrink-0 items-center justify-center rounded-full px-1.5 text-center text-[10px] leading-none font-extrabold no-underline shadow-xs">
               {bookmarksCount}
             </span>
           )}

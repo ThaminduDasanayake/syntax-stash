@@ -1,8 +1,7 @@
 import { ArrowRightIcon, CompassIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 
-import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
-import ToolCard from "@/components/tool-card";
+import { HeroWorkbench } from "@/components/hero-workbench";
 import { ToolsCarousel } from "@/components/tools-carousel";
 import { Button } from "@/components/ui/button";
 import { getAllCategories } from "@/lib/categories";
@@ -15,68 +14,7 @@ import {
   mediaTools,
   toolCategories,
 } from "@/lib/tools-data";
-import { cn, getCategoryTheme, slugify, type Theme, THEME_CONFIG } from "@/lib/utils";
-
-/* eslint-disable perfectionist/sort-objects */
-const THEME_HOVER_MAP: Record<
-  Theme,
-  {
-    card: string;
-    dot: string;
-    footer: string;
-    text: string;
-  }
-> = {
-  red: {
-    card: "hover:bg-c-red hover:border-red-deep hover:text-paper",
-    dot: "group-hover:bg-paper group-hover:border-paper",
-    footer: "group-hover:border-paper/25 group-hover:text-paper/85",
-    text: "group-hover:text-paper",
-  },
-  orange: {
-    card: "hover:bg-c-orange hover:border-orange-deep hover:text-ink",
-    dot: "group-hover:bg-ink group-hover:border-ink",
-    footer: "group-hover:border-ink/20 group-hover:text-ink/80",
-    text: "group-hover:text-ink",
-  },
-  yellow: {
-    card: "hover:bg-c-yellow hover:border-yellow-deep hover:text-ink",
-    dot: "group-hover:bg-ink group-hover:border-ink",
-    footer: "group-hover:border-ink/20 group-hover:text-ink/80",
-    text: "group-hover:text-ink",
-  },
-  green: {
-    card: "hover:bg-c-green hover:border-green-deep hover:text-ink",
-    dot: "group-hover:bg-ink group-hover:border-ink",
-    footer: "group-hover:border-ink/20 group-hover:text-ink/80",
-    text: "group-hover:text-ink",
-  },
-  cyan: {
-    card: "hover:bg-c-cyan hover:border-cyan-deep hover:text-ink",
-    dot: "group-hover:bg-ink group-hover:border-ink",
-    footer: "group-hover:border-ink/20 group-hover:text-ink/80",
-    text: "group-hover:text-ink",
-  },
-  blue: {
-    card: "hover:bg-c-blue hover:border-blue-deep hover:text-paper",
-    dot: "group-hover:bg-paper group-hover:border-paper",
-    footer: "group-hover:border-paper/25 group-hover:text-paper/85",
-    text: "group-hover:text-paper",
-  },
-  purple: {
-    card: "hover:bg-c-purple hover:border-purple-deep hover:text-paper",
-    dot: "group-hover:bg-paper group-hover:border-paper",
-    footer: "group-hover:border-paper/25 group-hover:text-paper/85",
-    text: "group-hover:text-paper",
-  },
-  pink: {
-    card: "hover:bg-c-pink hover:border-pink-deep hover:text-ink",
-    dot: "group-hover:bg-ink group-hover:border-ink",
-    footer: "group-hover:border-ink/20 group-hover:text-ink/80",
-    text: "group-hover:text-ink",
-  },
-};
-/* eslint-enable perfectionist/sort-objects */
+import { cn, getCategoryTheme, slugify, THEME_CONFIG } from "@/lib/utils";
 
 export default async function Home() {
   const [categories, resourceLinks] = await Promise.all([getAllCategories(), getAllResources()]);
@@ -90,21 +28,12 @@ export default async function Home() {
   const totalCategories = new Set([...toolCategories, ...resourceCategories]).size;
   const formattedCategories = String(totalCategories).padStart(2, "0");
 
-  const heroTool1 = internalTools.find((t) => t.slug === "curl-builder") || internalTools[3];
-  const heroTool2 = internalTools.find((t) => t.slug === "gitignore-generator") || internalTools[2];
-  const heroTool3 = internalTools.find((t) => t.slug === "regex-studio") || internalTools[1];
-  const heroTool4 = internalTools.find((t) => t.slug === "qr-generator") || internalTools[0];
-
   return (
     <>
       {/* Hero Section */}
       <section className="hero">
-        <div className="hero-inner">
+        <div className="hero-inner items-center">
           <div className="hero-copy">
-            <div className="hero-eyebrow">
-              <HeroEyebrowDots />A REFERENCE &amp; WORKBENCH FOR MODERN WEB DEVELOPMENT
-            </div>
-
             <h1 className="hero-headline">
               Architecture, craft & utilities
               <br />
@@ -132,28 +61,9 @@ export default async function Home() {
             </div>
           </div>
 
-          {/* Hero Stack */}
-          <div className="hero-stack">
-            <div className="hero-card">
-              <div className="hero-card-wrap">
-                <ToolCard tool={heroTool1} />
-              </div>
-            </div>
-            <div className="hero-card">
-              <div className="hero-card-wrap">
-                <ToolCard tool={heroTool2} />
-              </div>
-            </div>
-            <div className="hero-card">
-              <div className="hero-card-wrap">
-                <ToolCard tool={heroTool3} />
-              </div>
-            </div>
-            <div className="hero-card">
-              <div className="hero-card-wrap">
-                <ToolCard tool={heroTool4} />
-              </div>
-            </div>
+          {/* Interactive Hero Workbench */}
+          <div className="flex w-full max-w-xl justify-center lg:max-w-none">
+            <HeroWorkbench />
           </div>
         </div>
       </section>
@@ -174,14 +84,17 @@ export default async function Home() {
             <p className="stat-label">CURATED RESOURCES</p>
           </div>
           <div className="stat-item">
-            <h2 className="stat-num">100%</h2>
+            <h2 className="stat-num flex items-center gap-2">
+              <span className="bg-accent inline-block size-2.5 shrink-0 animate-pulse rounded-full" />
+              100%
+            </h2>
             <p className="stat-label">OPEN SOURCE</p>
           </div>
         </div>
       </section>
 
       {/* Why this matters */}
-      <section className="border-border bg-background border-b-2 px-6 py-24 sm:px-12 lg:px-24">
+      <section className="bg-background border-b border-white/[0.08] px-6 py-24 sm:px-12 lg:px-24">
         <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-24">
           <div>
             <h2 className="flex flex-col gap-0 text-6xl tracking-tighter sm:text-7xl">
@@ -193,7 +106,7 @@ export default async function Home() {
 
           <div className="flex flex-col gap-12 font-mono text-sm leading-relaxed opacity-90">
             <div className="flex gap-6">
-              <span className="font-bold">01</span>
+              <span className="text-primary font-mono text-base font-extrabold">01</span>
               <p>
                 The frontend revolution gave developers a vocabulary for building on the web.{" "}
                 <strong>React, Tailwind, TypeScript</strong> — these became the working tools of
@@ -201,8 +114,8 @@ export default async function Home() {
                 and fragmentation that follows.
               </p>
             </div>
-            <div className="border-border/50 flex gap-6 border-t-2 pt-12">
-              <span className="font-bold">02</span>
+            <div className="flex gap-6 border-t border-white/[0.08] pt-12">
+              <span className="text-primary font-mono text-base font-extrabold">02</span>
               <p>
                 AI assistants now generate the estimate, the summary, the first draft of the code.
                 The old patterns haven&apos;t gone; they&apos;ve been{" "}
@@ -210,8 +123,8 @@ export default async function Home() {
                 that delivers them. But foundational understanding requires tactile interaction.
               </p>
             </div>
-            <div className="border-border/50 flex gap-6 border-t-2 pt-12">
-              <span className="font-bold">03</span>
+            <div className="flex gap-6 border-t border-white/[0.08] pt-12">
+              <span className="text-primary font-mono text-base font-extrabold">03</span>
               <p>
                 What follows is a working library:{" "}
                 <strong>each card teaches by letting you feel the effect</strong>. Not a textbook. A
@@ -223,7 +136,7 @@ export default async function Home() {
       </section>
 
       {/* Curated Resource Vault Spotlight */}
-      <section className="border-border bg-background border-b-2 px-6 py-24 sm:px-12 lg:px-24">
+      <section className="bg-background border-b border-white/[0.08] px-6 py-24 sm:px-12 lg:px-24">
         <div className="mx-auto w-full max-w-7xl">
           <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div>
@@ -250,24 +163,33 @@ export default async function Home() {
               const count = resourceLinks.filter((r) => r.category === category).length;
               const theme = getCategoryTheme(category);
               const themeConfig = THEME_CONFIG[theme];
-              const hoverTheme = THEME_HOVER_MAP[theme];
 
               return (
                 <Link
                   key={category}
                   href={`/resources/${slug}`}
-                  className={cn("group vault-card", hoverTheme.card)}
+                  className="group border-border/60 bg-card hover:border-border relative isolate flex min-h-[120px] flex-col justify-between overflow-hidden rounded-lg border p-4 transition-colors select-none"
                 >
-                  <div className="vault-card-header">
-                    <div className="flex items-center gap-1.5">
+                  <div
+                    aria-hidden="true"
+                    className="from-brand-orange/[0.08] via-brand-purple/[0.04] pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-20 bg-gradient-to-t to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                  />
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex min-w-0 items-center gap-1.5">
                       <span
-                        className={cn("vault-card-dot", themeConfig.dotInactive, hoverTheme.dot)}
+                        aria-hidden="true"
+                        className={cn("size-1.5 shrink-0 rounded-[1px]", themeConfig.dot)}
                       />
+                      <h3 className="text-foreground after:bg-primary relative min-w-0 truncate font-mono text-sm font-semibold after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-left after:scale-x-0 after:transition-transform after:duration-300 after:ease-out group-hover:after:scale-x-100 motion-reduce:after:transition-none">
+                        {category}
+                      </h3>
                     </div>
-                    <span className={cn("vault-card-count", hoverTheme.text)}>{count} items</span>
+                    <span className="text-muted-foreground/60 font-mono text-[11px] tabular-nums">
+                      {count} items
+                    </span>
                   </div>
-                  <h3 className={cn("vault-card-title", hoverTheme.text)}>{category}</h3>
-                  <div className={cn("vault-card-footer", hoverTheme.footer)}>
+
+                  <div className="text-muted-foreground/70 group-hover:text-primary mt-4 flex items-center justify-between font-mono text-xs transition-colors">
                     <span>Browse vault</span>
                     <ArrowRightIcon
                       weight="bold"
@@ -279,7 +201,7 @@ export default async function Home() {
             })}
           </div>
 
-          <div className="border-border mt-10 flex items-center justify-between border-t-2 pt-8">
+          <div className="mt-10 flex items-center justify-between border-t border-white/[0.08] pt-8">
             <Button asChild size="sm" variant="default">
               <Link href="/resources" className="text-display-xs">
                 EXPLORE ALL {resourceLinks.length} RESOURCES{" "}

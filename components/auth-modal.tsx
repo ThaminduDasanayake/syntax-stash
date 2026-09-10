@@ -43,12 +43,12 @@ export function AuthModal({ onOpenChange, open }: AuthModalProps) {
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="border-ink border-2 sm:max-w-md">
+      <DialogContent className="sm:max-w-md">
         <DialogHeader className="text-center">
-          <DialogTitle className="font-mono text-base font-extrabold tracking-wide uppercase">
-            SIGN IN TO SYNTAX STASH
+          <DialogTitle className="text-foreground text-lg font-bold tracking-tight">
+            Sign in to Syntax Stash
           </DialogTitle>
-          <DialogDescription className="font-mono text-xs leading-relaxed opacity-80">
+          <DialogDescription className="text-muted-foreground text-sm leading-relaxed">
             Sign in with Google or GitHub to save resources and sync your personal stash
             automatically across all your devices.
           </DialogDescription>
@@ -60,7 +60,7 @@ export function AuthModal({ onOpenChange, open }: AuthModalProps) {
             size="default"
             disabled={loadingProvider !== null}
             onClick={() => handleSocialSignIn("github")}
-            className="group border-ink/40 hover:bg-ink hover:text-paper font-mono text-xs font-bold tracking-wider uppercase transition-all"
+            className="group rounded-full font-medium transition-all"
           >
             {loadingProvider === "github" ? (
               <CircleNotchIcon weight="bold" className="size-4.5 animate-spin" />
@@ -70,7 +70,7 @@ export function AuthModal({ onOpenChange, open }: AuthModalProps) {
                 alt="GitHub"
                 width={18}
                 height={18}
-                className="size-4.5 transition-all group-hover:invert"
+                className="size-4.5 transition-all group-hover:scale-105"
               />
             )}
             <span>
@@ -83,7 +83,7 @@ export function AuthModal({ onOpenChange, open }: AuthModalProps) {
             size="default"
             disabled={loadingProvider !== null}
             onClick={() => handleSocialSignIn("google")}
-            className="border-ink/40 hover:bg-ink hover:text-paper font-mono text-xs font-bold tracking-wider uppercase transition-all"
+            className="rounded-full font-medium transition-all"
           >
             {loadingProvider === "google" ? (
               <CircleNotchIcon weight="bold" className="size-4.5 animate-spin" />

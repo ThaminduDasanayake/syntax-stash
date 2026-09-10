@@ -44,10 +44,12 @@ function ResourceCardComponent({
         favicon={resource.favicon}
         iconClassName={resource.className}
         isBookmarked={bookmarked}
+        ogImage={resource.ogImage}
         onBookmarkClick={handleBookmarkClick}
         onCardClick={onCardClick ? () => onCardClick(resource) : undefined}
         stars={stars}
         subtitle={resource.subtitle}
+        tags={resource.tags}
         title={resource.title}
         url={resource.url}
       />

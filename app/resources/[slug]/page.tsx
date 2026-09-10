@@ -47,9 +47,7 @@ export default async function ResourceCategoryPage({ params }: { params: Promise
       <header className="res-header">
         <div className="section-inner">
           <h1 className="res-headline">{category.name}</h1>
-          <p className="res-sub">
-            Curated resources for {category.name.toLowerCase()}.
-          </p>
+          <p className="res-sub">Curated resources for {category.name.toLowerCase()}.</p>
         </div>
       </header>
 

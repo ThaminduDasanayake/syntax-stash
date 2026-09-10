@@ -60,8 +60,10 @@ function formatDiffValue(val: unknown): string {
  * Normalizes two values and returns whether they are meaningfully different.
  */
 function isDifferent(valA: unknown, valB: unknown): boolean {
-  const normA = valA === null || valA === undefined ? "" : typeof valA === "string" ? valA.trim() : valA;
-  const normB = valB === null || valB === undefined ? "" : typeof valB === "string" ? valB.trim() : valB;
+  const normA =
+    valA === null || valA === undefined ? "" : typeof valA === "string" ? valA.trim() : valA;
+  const normB =
+    valB === null || valB === undefined ? "" : typeof valB === "string" ? valB.trim() : valB;
   return normA !== normB;
 }
 
@@ -122,14 +124,17 @@ export function AdminConfirmEditDialog({
       <DialogContent className="border-line bg-paper max-h-[90vh] max-w-2xl overflow-y-auto font-mono text-xs sm:max-w-2xl">
         <DialogHeader className="border-line border-b pb-4">
           <div className="flex items-center gap-2">
-            <div className="bg-primary/10 text-primary flex size-8 shrink-0 items-center justify-center rounded-md border border-primary/20">
+            <div className="bg-primary/10 text-primary border-primary/20 flex size-8 shrink-0 items-center justify-center rounded-md border">
               <ShieldCheckIcon weight="duotone" className="size-5" />
             </div>
             <div>
               <DialogTitle className="text-foreground flex flex-wrap items-center gap-2 text-base font-bold uppercase">
                 <span>{title}</span>
                 {hasChanges && (
-                  <Badge variant="outline" className="border-primary/40 bg-primary/10 text-primary text-[10px] font-bold">
+                  <Badge
+                    variant="outline"
+                    className="border-primary/40 bg-primary/10 text-primary text-[10px] font-bold"
+                  >
                     {changes.length} {changes.length === 1 ? "field modified" : "fields modified"}
                   </Badge>
                 )}
@@ -155,7 +160,7 @@ export function AdminConfirmEditDialog({
             </div>
           ) : (
             <div className="space-y-3">
-              <div className="text-muted-foreground text-[11px] font-bold uppercase tracking-wider">
+              <div className="text-muted-foreground text-[11px] font-bold tracking-wider uppercase">
                 Modified Attributes:
               </div>
 
@@ -167,7 +172,10 @@ export function AdminConfirmEditDialog({
                   const isNewEmpty = newFormatted.startsWith("—");
 
                   return (
-                    <div key={change.field} className="grid grid-cols-1 gap-2 p-3 sm:grid-cols-12 sm:items-center">
+                    <div
+                      key={change.field}
+                      className="grid grid-cols-1 gap-2 p-3 sm:grid-cols-12 sm:items-center"
+                    >
                       {/* Field Name */}
                       <div className="sm:col-span-4">
                         <span className="text-foreground font-bold tracking-tight uppercase">
@@ -190,7 +198,7 @@ export function AdminConfirmEditDialog({
                           )}
                           title="Previous Value"
                         >
-                          <span className="text-[10px] uppercase opacity-70 block font-bold">
+                          <span className="block text-[10px] font-bold uppercase opacity-70">
                             Old:
                           </span>
                           <span>{oldFormatted}</span>
@@ -208,7 +216,7 @@ export function AdminConfirmEditDialog({
                           )}
                           title="New Value"
                         >
-                          <span className="text-[10px] uppercase opacity-70 block font-bold">
+                          <span className="block text-[10px] font-bold uppercase opacity-70">
                             New:
                           </span>
                           <span>{newFormatted}</span>

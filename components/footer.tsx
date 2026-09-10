@@ -14,7 +14,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-ink text-paper border-ink selection:bg-c-orange selection:text-ink relative border-t-2 pt-16 pb-6">
+    <footer className="bg-ink text-paper border-ink selection:bg-primary selection:text-primary-foreground relative border-t-2 pt-16 pb-6">
       <div className="mx-auto flex w-full max-w-7xl flex-col px-6 sm:px-12 lg:px-16">
         <div className="pb-12">
           <div className="flex max-w-2xl flex-col gap-3">
@@ -61,32 +61,32 @@ export default function Footer() {
               </a>
               <Link
                 href="/design-system"
-                className="after:bg-paper relative inline-block transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
+                className="after:bg-primary relative inline-block transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
               >
                 [ Design System ]
               </Link>
               <Link
                 href="/about"
-                className="after:bg-paper relative inline-block transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
+                className="after:bg-primary relative inline-block transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
               >
                 [ About ]
               </Link>
               <Link
                 href="/authors"
-                className="after:bg-paper relative inline-block transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
+                className="after:bg-primary relative inline-block transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
               >
                 [ Authors ]
               </Link>
               <Link
                 href="/changelog"
-                className="after:bg-paper relative inline-block transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
+                className="after:bg-primary relative inline-block transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
               >
                 [ Changelog ]
               </Link>
               {isUserAdmin && (
                 <Link
                   href="/admin/submissions"
-                  className="text-c-orange after:bg-c-orange relative inline-block transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
+                  className="after:bg-primary text-paper relative inline-block font-bold transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
                 >
                   [ Admin{pendingCount > 0 ? ` (${pendingCount})` : ""} ]
                 </Link>
@@ -109,7 +109,7 @@ export default function Footer() {
 
       <div className="my-6 w-full overflow-hidden leading-none select-none">
         <h1 className="font-display text-paper w-full text-center text-[14.5vw] font-black tracking-tighter whitespace-nowrap uppercase sm:text-[14vw] lg:text-[13.5vw]">
-          SYNTAX<span className="text-c-orange">.</span>STASH
+          SYNTAX<span className="text-primary">.</span>STASH
         </h1>
       </div>
 
@@ -122,7 +122,7 @@ export default function Footer() {
             href={siteConfig.links.authorLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-paper hover:text-c-orange underline underline-offset-2 transition-colors"
+            className="text-paper underline underline-offset-2 transition-colors hover:text-white"
           >
             {siteConfig.author.name}
           </a>

@@ -25,7 +25,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useBookmarks } from "@/hooks/use-bookmarks";
-import { getCategoryTheme, getResourceId } from "@/lib/utils";
+import { getResourceId } from "@/lib/utils";
 import { isResource, Resource, StashItem } from "@/types";
 
 interface FilterSectionProps {
@@ -264,7 +264,8 @@ function FilterSectionInner({
     });
 
     // Sort items: category order (matching categories list), then title (A → Z)
-    const sorted = [...filtered].sort((a, b) => {
+
+    return [...filtered].sort((a, b) => {
       if (a.category !== b.category) {
         const indexA = categories.indexOf(a.category);
         const indexB = categories.indexOf(b.category);
@@ -273,8 +274,6 @@ function FilterSectionInner({
       }
       return a.title.localeCompare(b.title);
     });
-
-    return sorted;
   }, [
     activeCategory,
     bookmarkedSet,
@@ -379,14 +378,12 @@ function FilterSectionInner({
           </div>
 
           <div className="filter-pills">
-            {categories.map((item, i) => {
+            {categories.map((item) => {
               const isActive = activeCategory === item;
               return (
                 <DotButton
                   key={item}
                   isActive={isActive}
-                  theme={getCategoryTheme(item, itemLabel === "Tools" ? "tool" : "resource", i, categories)}
-                  index={i}
                   label={item}
                   onClick={() => handleCategoryClick(item)}
                 />
@@ -403,9 +400,9 @@ function FilterSectionInner({
 
         {/* Active Tag Chips Bar */}
         {selectedTags.length > 0 && (
-          <div className="border-t-ink/15 mx-auto mt-2 max-w-7xl border-t px-4 pt-2 sm:px-6 md:px-8">
+          <div className="border-border/60 mx-auto mt-2 max-w-7xl border-t px-4 pt-2 sm:px-6 md:px-8">
             <div className="no-scrollbar flex items-center gap-1.5 overflow-x-auto py-0.5 sm:flex-wrap sm:gap-2">
-              <span className="text-mono-2xs text-ink-mute shrink-0 font-bold tracking-wider uppercase">
+              <span className="text-mono-2xs text-muted-foreground shrink-0 font-bold tracking-wider uppercase">
                 Active:
               </span>
               {selectedTags.map((tag) => (
@@ -413,12 +410,12 @@ function FilterSectionInner({
                   key={tag}
                   size="xs"
                   variant="outline"
-                  className="group text-mono-2xs shrink-0 px-2 py-0.5"
+                  className="group text-mono-2xs border-brand-purple/30 bg-brand-purple/10 text-foreground hover:border-brand-purple/60 hover:bg-brand-purple/20 shrink-0 rounded-lg px-2 py-0.5"
                   onClick={() => handleToggleTag(tag)}
                   aria-label={`Remove tag ${tag}`}
                 >
-                  <span>#{tag}</span>
-                  <XIcon weight="bold" className="group-hover:text-destructive" />
+                  <span className="text-brand-purple font-semibold">#{tag}</span>
+                  <XIcon weight="bold" className="group-hover:text-destructive size-3" />
                 </Button>
               ))}
 
@@ -427,11 +424,11 @@ function FilterSectionInner({
                   variant="outline"
                   size="xs"
                   onClick={() => handleMatchModeChange(matchMode === "any" ? "all" : "any")}
-                  className="text-mono-2xs shrink-0 px-2 py-0.5"
+                  className="text-mono-2xs border-border/70 bg-card shrink-0 rounded-lg px-2 py-0.5"
                   title="Click to toggle match mode"
                 >
                   <ArrowsCounterClockwiseIcon weight="bold" />
-                  Mode: <span className="text-ink font-bold">{matchMode.toUpperCase()}</span>
+                  Mode: <span className="text-primary font-bold">{matchMode.toUpperCase()}</span>
                 </Button>
               )}
 
@@ -455,11 +452,11 @@ function FilterSectionInner({
               <div className="py-16 text-center">
                 <BookmarkSimpleIcon
                   weight="fill"
-                  className="text-ink/40 dark:text-paper/40 mx-auto mb-3 size-10"
+                  className="text-muted-foreground/40 mx-auto mb-3 size-10"
                 />
                 <p className="font-mono text-base font-bold uppercase">No saved resources yet</p>
 
-                <p className="mx-auto mt-1 max-w-sm font-mono text-xs opacity-60">
+                <p className="text-muted-foreground mx-auto mt-1 max-w-sm font-mono text-xs">
                   Click the bookmark icon on any resource card to save it here for fast offline
                   access.
                 </p>
@@ -502,14 +499,14 @@ function FilterSectionInner({
                       <h2 className="font-mono text-lg font-extrabold tracking-widest uppercase sm:text-xl">
                         {category}
                       </h2>
-                      <span className="bg-primary hidden h-0.5 flex-1 sm:block" />
+                      <span className="bg-border/80 hidden h-px flex-1 sm:block" />
                     </div>
 
                     <div className="flex w-full items-center gap-3 sm:w-auto">
-                      <span className="text-mono-xs sm:text-mono-sm text-ink-mute shrink-0 font-mono">
+                      <span className="text-mono-xs sm:text-mono-sm text-muted-foreground shrink-0 font-mono">
                         {count} {formatItemCountLabel(count, itemLabel)}
                       </span>
-                      <span className="bg-primary h-0.5 flex-1 sm:hidden" />
+                      <span className="bg-border/80 h-px flex-1 sm:hidden" />
                     </div>
                   </div>
                   <div className="card-grid">
@@ -537,7 +534,7 @@ function FilterSectionInner({
                 variant="outline"
                 size="sm"
                 onClick={handleLoadMore}
-                className="font-mono text-xs tracking-wider uppercase transition-all"
+                className="border-border/80 bg-card hover:bg-muted hover:text-foreground rounded-xl border font-mono text-xs tracking-wider uppercase transition-all"
               >
                 Load more ({filteredItems.length - visibleLimit} remaining)
               </Button>

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 
 import { FilterSection } from "@/components/filter-section";
-import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
 import { internalTools, toolCategories } from "@/lib/tools-data";
 
 export const metadata: Metadata = {
@@ -17,9 +16,6 @@ export default function ToolsPage() {
       {/* Mini-Hero */}
       <header className="lib-header">
         <div className="section-inner">
-          <div className="hero-eyebrow">
-            <HeroEyebrowDots />
-          </div>
           <h1 className="lib-headline">
             THE TOOLS
             <br />

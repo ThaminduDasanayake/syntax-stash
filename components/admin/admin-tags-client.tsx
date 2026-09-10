@@ -495,7 +495,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
                     >
                       <StarIcon
                         weight={tagItem.isFeatured ? "fill" : "regular"}
-                        className={`size-4 ${tagItem.isFeatured ? "text-amber-500" : "opacity-40"}`}
+                        className={`size-4 ${tagItem.isFeatured ? "text-star" : "opacity-40"}`}
                       />
                     </button>
                   </TableCell>
@@ -688,7 +688,9 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
         onOpenChange={setIsConfirmOpen}
         title="Confirm Tag Updates"
         description="Review the list of changed tag properties before saving changes."
-        itemTitle={formData.name ? `#${formData.name}` : editingTag ? `#${editingTag.name}` : undefined}
+        itemTitle={
+          formData.name ? `#${formData.name}` : editingTag ? `#${editingTag.name}` : undefined
+        }
         changes={pendingChanges}
         onConfirm={executeSave}
         isWorking={isSubmitting}

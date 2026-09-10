@@ -185,10 +185,7 @@ export async function POST(req: Request) {
     // 1. Resolve Author (Strictly from existing author records)
     let authorRecordId: string | null = null;
     if (authorId && typeof authorId === "string" && authorId.trim()) {
-      const [existingAuthor] = await db
-        .select()
-        .from(author)
-        .where(eq(author.id, authorId.trim()));
+      const [existingAuthor] = await db.select().from(author).where(eq(author.id, authorId.trim()));
       if (existingAuthor) {
         authorRecordId = existingAuthor.id;
       }
@@ -301,13 +298,7 @@ export async function PATCH(req: Request) {
     }
 
     const body = await req.json();
-    const {
-      id,
-      authorId,
-      authorName,
-      tags,
-      ...updates
-    } = body;
+    const { id, authorId, authorName, tags, ...updates } = body;
 
     if (!id || typeof id !== "string") {
       return NextResponse.json({ error: "Resource ID is required." }, { status: 400 });

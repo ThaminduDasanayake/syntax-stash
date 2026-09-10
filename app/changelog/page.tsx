@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 
-import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
 import { formatInlineMarkdown, getChangelog } from "@/lib/changelog";
 import { siteConfig } from "@/lib/site-config";
 
@@ -19,10 +18,6 @@ export default function ChangelogPage() {
       {/* Header */}
       <header className="lib-header">
         <div className="section-inner">
-          <div className="hero-eyebrow mb-4">
-            <HeroEyebrowDots />
-            RELEASE NOTES & UPDATES
-          </div>
           <h1 className="lib-headline">
             THE PROJECT
             <br />
@@ -43,7 +38,9 @@ export default function ChangelogPage() {
                     key={entry.version}
                     href={`#${entry.version}`}
                     className={`border-border flex items-center gap-1.5 border-2 px-3 py-1 font-mono text-xs font-bold transition-all hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] ${
-                      isLatest ? "bg-c-blue text-paper" : "bg-card text-foreground hover:bg-muted"
+                      isLatest
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-card text-foreground hover:bg-muted"
                     }`}
                   >
                     <span>{entry.version}</span>
@@ -85,7 +82,7 @@ export default function ChangelogPage() {
                     <div
                       className={`border-border absolute top-8 -left-6 h-4 w-4 rounded-full border-2 sm:-left-10 ${
                         isLatest
-                          ? "bg-c-blue shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                          ? "bg-primary shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
                           : "bg-muted-foreground/30"
                       } transition-transform group-hover:scale-125`}
                     />
@@ -101,11 +98,11 @@ export default function ChangelogPage() {
                       {/* Card Header */}
                       <div className="flex flex-wrap items-center justify-between gap-4 border-b-2 border-current/15 pb-4">
                         <div className="flex flex-wrap items-center gap-3">
-                          <span className="bg-c-blue text-paper border-border border px-3.5 py-1 font-mono text-sm font-bold tracking-wider uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                          <span className="bg-primary text-primary-foreground border-border border px-3.5 py-1 font-mono text-sm font-bold tracking-wider uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                             {entry.version}
                           </span>
                           {isLatest && (
-                            <span className="border-border bg-c-orange text-ink border px-2.5 py-1 font-mono text-xs font-extrabold tracking-widest uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                            <span className="border-border bg-muted text-foreground border px-2.5 py-1 font-mono text-xs font-extrabold tracking-widest uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                               ★ LATEST RELEASE
                             </span>
                           )}
@@ -125,7 +122,7 @@ export default function ChangelogPage() {
                             <ul className="flex flex-col gap-2.5 font-mono text-sm leading-relaxed opacity-90">
                               {section.items.map((item, itemIdx) => (
                                 <li key={itemIdx} className="flex items-start gap-3">
-                                  <span className="text-c-blue font-bold select-none">→</span>
+                                  <span className="text-primary font-bold select-none">→</span>
                                   <span
                                     dangerouslySetInnerHTML={{
                                       __html: formatInlineMarkdown(item),

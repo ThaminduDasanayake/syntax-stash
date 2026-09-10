@@ -18,7 +18,10 @@ export function FilterBarSkeleton({
     <div className="filter-bar">
       <div className="filter-bar-inner">
         <div className="filter-search-wrap">
-          <MagnifyingGlassIcon weight="bold" className="filter-search-icon text-ink/40" />
+          <MagnifyingGlassIcon
+            weight="bold"
+            className="filter-search-icon text-muted-foreground/50"
+          />
           <Input
             className="filter-search cursor-not-allowed opacity-70"
             placeholder={searchPlaceholder}
@@ -30,16 +33,15 @@ export function FilterBarSkeleton({
           {PILL_WIDTHS.map((width, i) => (
             <div
               key={i}
-              className="filter-pill border-ink/20 flex items-center gap-2 border-[1.5px] bg-transparent opacity-60"
+              className="filter-pill border-border/60 bg-card/60 flex items-center border opacity-60"
             >
-              <span className="filter-pill-dot border-ink/30 bg-ink/10" />
-              <Skeleton className={`h-2.5 ${width} bg-ink/15`} />
+              <Skeleton className={`h-2.5 ${width} bg-muted/60`} />
             </div>
           ))}
         </div>
 
         <div className="filter-count">
-          <Skeleton className="bg-ink/15 h-3.5 w-14" />
+          <Skeleton className="bg-muted/60 h-3.5 w-14" />
         </div>
       </div>
     </div>

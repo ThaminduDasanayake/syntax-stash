@@ -5,7 +5,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { FilterSection } from "@/components/filter-section";
-import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
 import { Button } from "@/components/ui/button";
 import { getAllAuthors, getAuthorBySlug } from "@/lib/authors";
 
@@ -87,10 +86,6 @@ export default async function AuthorPage({ params }: { params: Promise<Params> }
             >
               <ArrowLeftIcon className="size-3.5" /> All Authors
             </Link>
-          </div>
-
-          <div className="hero-eyebrow">
-            <HeroEyebrowDots />
           </div>
 
           <div className="flex w-full flex-col gap-5 md:flex-row md:items-end md:justify-between">

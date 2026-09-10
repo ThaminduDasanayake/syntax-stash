@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 
 import { FilterSection } from "@/components/filter-section";
-import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
 import { getAllCategories } from "@/lib/categories";
 import { getAllResources } from "@/lib/resources";
 
@@ -20,9 +19,6 @@ export default async function ResourcesPage() {
       {/* Header */}
       <header className="lib-header">
         <div className="section-inner">
-          <div className="hero-eyebrow">
-            <HeroEyebrowDots />
-          </div>
           <h1 className="lib-headline">
             THE RESOURCES
             <br />

@@ -34,6 +34,8 @@
   "dependencies": {
     "@base-ui/react": "^1.5.0",
     "@gsap/react": "^2.1.2",
+    "@hugeicons/core-free-icons": "^4.3.2",
+    "@hugeicons/react": "^1.1.10",
     "@neondatabase/serverless": "^1.1.0",
     "@phosphor-icons/react": "^2.1.10",
     "better-auth": "^1.7.2",
@@ -42,6 +44,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
+    "cn": "^0.2.6",
     "cron-parser": "^5.5.0",
     "cronstrue": "^3.14.0",
     "drizzle-orm": "^0.45.2",

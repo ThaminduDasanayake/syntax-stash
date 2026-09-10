@@ -143,10 +143,7 @@ export async function PATCH(req: Request) {
       const cleanSlug = slugify(cleanName);
 
       // Verify no other category has this slug
-      const [duplicate] = await db
-        .select()
-        .from(category)
-        .where(eq(category.slug, cleanSlug));
+      const [duplicate] = await db.select().from(category).where(eq(category.slug, cleanSlug));
 
       if (duplicate && duplicate.id !== id) {
         return NextResponse.json(
