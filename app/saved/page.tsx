@@ -7,7 +7,6 @@ import { useEffect, useMemo, useState } from "react";
 import { CollectionsView } from "@/components/collections/collections-view";
 import { FilterBarSkeleton } from "@/components/filter-bar-skeleton";
 import { FilterSection } from "@/components/filter-section";
-import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
 import { ToolCardSkeleton } from "@/components/tool-card-skeleton";
 import { Button } from "@/components/ui/button";
 import { useBookmarks } from "@/hooks/use-bookmarks";
@@ -57,9 +56,6 @@ export default function SavedPage() {
       {/* Header */}
       <header className="lib-header">
         <div className="section-inner">
-          <div className="hero-eyebrow">
-            <HeroEyebrowDots />
-          </div>
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
               <h1 className="lib-headline">

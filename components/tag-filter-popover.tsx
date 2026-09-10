@@ -79,17 +79,17 @@ function TagFilterContent({
       </div>
 
       {/* Match Mode Toggle */}
-      <div className="border-border bg-muted/60 flex items-center justify-between border-b px-4 py-2 sm:px-3 sm:py-1.5">
+      <div className="border-b border-border/60 bg-muted/40 flex items-center justify-between px-4 py-2 sm:px-3 sm:py-1.5">
         <span className="text-muted-foreground font-mono text-xs sm:text-[11px]">Match:</span>
         <div className="flex items-center gap-1.5 sm:gap-1">
           <button
             type="button"
             onClick={() => onMatchModeChange("any")}
             className={cn(
-              "cursor-pointer rounded-none border px-2.5 py-1 font-mono text-xs uppercase transition-colors sm:px-2 sm:py-0.5 sm:text-[10px]",
+              "cursor-pointer rounded-full border px-3 py-1 font-mono text-xs uppercase transition-all sm:px-2.5 sm:py-0.5 sm:text-[10px]",
               matchMode === "any"
-                ? "border-primary bg-primary text-primary-foreground font-bold"
-                : "border-border bg-background text-muted-foreground hover:text-foreground",
+                ? "border-primary bg-primary text-primary-foreground font-bold shadow-xs"
+                : "border-border/70 bg-card text-muted-foreground hover:bg-muted hover:text-foreground",
             )}
           >
             Any (OR)
@@ -98,10 +98,10 @@ function TagFilterContent({
             type="button"
             onClick={() => onMatchModeChange("all")}
             className={cn(
-              "cursor-pointer rounded-none border px-2.5 py-1 font-mono text-xs uppercase transition-colors sm:px-2 sm:py-0.5 sm:text-[10px]",
+              "cursor-pointer rounded-full border px-3 py-1 font-mono text-xs uppercase transition-all sm:px-2.5 sm:py-0.5 sm:text-[10px]",
               matchMode === "all"
-                ? "border-primary bg-primary text-primary-foreground font-bold"
-                : "border-border bg-background text-muted-foreground hover:text-foreground",
+                ? "border-primary bg-primary text-primary-foreground font-bold shadow-xs"
+                : "border-border/70 bg-card text-muted-foreground hover:bg-muted hover:text-foreground",
             )}
           >
             All (AND)
@@ -110,7 +110,7 @@ function TagFilterContent({
       </div>
 
       {/* Tag Search & List */}
-      <Command className="bg-popover rounded-none border-none">
+      <Command className="bg-popover rounded-2xl border-none">
         <CommandInput
           placeholder="Search tags..."
           value={search}
@@ -118,7 +118,7 @@ function TagFilterContent({
           className="text-mono-xs h-10 border-none py-2.5 sm:h-9 sm:py-2"
         />
 
-        <CommandList className="no-scrollbar max-h-72 overflow-y-auto p-1 sm:max-h-60">
+        <CommandList className="no-scrollbar max-h-72 overflow-y-auto p-1.5 sm:max-h-60">
           {filteredTags.length === 0 ? (
             <CommandEmpty className="text-muted-foreground py-8 text-center font-mono text-xs">
               No tags found.
@@ -133,19 +133,19 @@ function TagFilterContent({
                     value={tag.name}
                     onSelect={() => onToggleTag(tag.name)}
                     className={cn(
-                      "flex cursor-pointer items-center justify-between rounded-none border-l-2 px-3 py-2.5 font-mono text-xs transition-colors sm:px-2.5 sm:py-1.5",
+                      "flex cursor-pointer items-center justify-between rounded-xl px-3 py-2 font-mono text-xs transition-colors sm:px-2.5 sm:py-1.5",
                       isChecked
-                        ? "border-primary bg-primary/10 text-foreground font-bold"
-                        : "hover:bg-muted/60 text-foreground/80 border-transparent",
+                        ? "bg-brand-purple/10 text-foreground font-bold"
+                        : "hover:bg-muted/60 text-foreground/80",
                     )}
                   >
                     <div className="flex items-center gap-2.5 sm:gap-2">
                       <div
                         className={cn(
-                          "flex size-4 items-center justify-center rounded-none border transition-colors sm:size-3.5",
+                          "flex size-4 items-center justify-center rounded-md border transition-colors sm:size-3.5",
                           isChecked
-                            ? "border-primary bg-primary text-primary-foreground"
-                            : "border-muted-foreground/40 bg-background",
+                            ? "border-brand-purple bg-brand-purple text-paper"
+                            : "border-border bg-card",
                         )}
                       >
                         {isChecked && <CheckIcon weight="bold" className="size-3 sm:size-2.5" />}
@@ -185,17 +185,22 @@ export function TagFilterPopover({
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
-            variant={hasSelected ? "default" : "outline"}
+            variant="ghost"
             size="icon-lg"
             aria-label="Filter by tags"
-            className="border-ink bg-background text-ink hover:border-ink hover:bg-primary hover:text-primary-foreground group relative size-10 rounded-none border-[1.5px] shadow-md transition-all duration-200 hover:-translate-y-1 hover:shadow-lg active:translate-y-0 sm:size-11"
+            className={cn(
+              "group relative size-11 rounded-full border shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg active:scale-95 sm:size-12",
+              hasSelected
+                ? "border-brand-purple/50 bg-brand-purple/15 text-brand-purple hover:bg-brand-purple/25"
+                : "border-border/80 bg-card text-muted-foreground hover:border-border hover:bg-muted hover:text-foreground",
+            )}
           >
             <TagIcon
               weight={hasSelected ? "fill" : "bold"}
-              className="size-4.5 transition-transform duration-200 group-hover:scale-110"
+              className="size-5 transition-transform duration-200 group-hover:scale-105"
             />
             {hasSelected && (
-              <span className="border-background bg-primary text-primary-foreground absolute -top-1.5 -right-1.5 flex size-5 items-center justify-center rounded-full border font-mono text-[10px] font-bold shadow-xs">
+              <span className="border-background bg-primary text-primary-foreground absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full border font-mono text-[10px] font-bold shadow-xs">
                 {selectedTags.length}
               </span>
             )}
@@ -218,7 +223,7 @@ export function TagFilterPopover({
         <SheetContent
           side="bottom"
           showCloseButton={false}
-          className="border-ink bg-popover z-70 max-h-[85vh] rounded-t-none border-t-[1.5px] p-0 shadow-2xl"
+          className="border-border bg-popover z-70 max-h-[85vh] rounded-t-3xl border-t p-0 shadow-2xl"
         >
           <SheetHeader className="sr-only">
             <SheetTitle>Filter Resources by Tags</SheetTitle>
@@ -245,7 +250,7 @@ export function TagFilterPopover({
         side="top"
         align="end"
         sideOffset={12}
-        className="border-ink bg-popover text-popover-foreground z-70 w-80 rounded-none border-[1.5px] p-0 shadow-2xl"
+        className="border-border bg-popover text-popover-foreground z-70 w-80 rounded-2xl border p-0 shadow-2xl"
       >
         <TagFilterContent
           availableTags={availableTags}

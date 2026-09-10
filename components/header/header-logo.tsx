@@ -6,7 +6,7 @@ export function HeaderLogo() {
     <Link href="/" className="nav-logo">
       <Image width={36} height={36} src="/logo.svg" alt="logo" priority />
       <span className="nav-wordmark">
-        SYNTAX<em>.stash</em>
+        SYNTAX<span className="text-primary">.</span><em>stash</em>
       </span>
     </Link>
   );

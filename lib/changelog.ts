@@ -21,12 +21,12 @@ export function formatInlineMarkdown(text: string): string {
     .replace(
       /\[([^\]]+)]\(([^)]+)\)/g,
       (_, text, url) =>
-        `<a href="${url}" target="_blank" rel="noopener noreferrer" class="underline hover:text-c-green transition-colors">${text}</a>`,
+        `<a href="${url}" target="_blank" rel="noopener noreferrer" class="underline hover:text-foreground transition-colors">${text}</a>`,
     )
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
     .replace(
       /`([^`]+)`/g,
-      '<code class="bg-card border border-border px-1.5 py-0.5 font-mono text-xs text-c-green">$1</code>',
+      '<code class="bg-card border border-border px-1.5 py-0.5 font-mono text-xs text-foreground">$1</code>',
     );
 }
 

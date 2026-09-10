@@ -100,7 +100,7 @@ export function ToolsCarousel({ tools, totalCount }: ToolsCarouselProps) {
             <ButtonGroup>
               <Button
                 variant="secondary"
-                className="h-10 w-10 border-[1.5px]"
+                className="h-9 w-9"
                 size="icon"
                 onClick={() => handleScroll("left")}
                 disabled={!canScrollLeft}
@@ -110,7 +110,7 @@ export function ToolsCarousel({ tools, totalCount }: ToolsCarouselProps) {
               </Button>
               <Button
                 variant="secondary"
-                className="h-10 w-10 border-[1.5px]"
+                className="h-9 w-9"
                 size="icon"
                 onClick={() => handleScroll("right")}
                 disabled={!canScrollRight}

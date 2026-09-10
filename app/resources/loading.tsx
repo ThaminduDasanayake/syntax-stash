@@ -1,5 +1,4 @@
 import { FilterBarSkeleton } from "@/components/filter-bar-skeleton";
-import { HeroEyebrowDots } from "@/components/hero-eyebrow-dots";
 import { ToolCardSkeleton } from "@/components/tool-card-skeleton";
 
 export default function ResourcesLoading() {
@@ -7,9 +6,6 @@ export default function ResourcesLoading() {
     <div className="lib-page">
       <header className="lib-header">
         <div className="section-inner">
-          <div className="hero-eyebrow">
-            <HeroEyebrowDots />
-          </div>
           <h1 className="lib-headline">
             THE RESOURCES
             <br />

@@ -204,7 +204,6 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
 
   const activeTheme = getCategoryTheme(activeTool.category);
   const activeThemeStyles = THEME_CONFIG[activeTheme];
-  const colorClasses = activeThemeStyles.bg;
 
   const authorResources = useMemo(() => {
     if (!activeTool.author) return [];
@@ -257,12 +256,12 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
   const footerContent = (
     <>
       <div className="modal-launch flex items-center gap-1.5 sm:gap-2">
-        <Button asChild size="sm" className="flex-1 px-2.5 sm:px-4">
+        <Button asChild size="default" className="flex-1 px-4">
           <a
             href={activeTool.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-mono-2xs sm:text-mono-xs w-full border-[1.5px]"
+            className="text-mono-2xs sm:text-mono-xs w-full"
           >
             Open resource <ArrowSquareOutIcon weight="bold" />
           </a>
@@ -271,8 +270,8 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
           <Button
             asChild
             variant="secondary"
-            size="sm"
-            className="group shrink-0 border-[1.5px] px-2.5 sm:px-4"
+            size="default"
+            className="group shrink-0 px-3.5 sm:px-4"
           >
             <a
               href={activeTool.github}
@@ -286,7 +285,7 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
                 alt="GitHub"
                 width={16}
                 height={16}
-                className="size-4 transition-all group-hover:invert"
+                className="size-4 transition-all group-hover:scale-105"
               />
               <span className="hidden sm:inline">GitHub</span>
               {formattedStars && (
@@ -300,7 +299,7 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
         )}
         <Button
           variant={bookmarked ? "default" : "secondary"}
-          size="sm"
+          size="default"
           onClick={() => {
             if (!session) {
               setAuthModalOpen(true);
@@ -309,7 +308,7 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
             toggleBookmark(activeTool);
           }}
           aria-label={bookmarked ? "Saved" : "Save"}
-          className="text-mono-2xs sm:text-mono-xs shrink-0 border-[1.5px] px-2.5 sm:px-4"
+          className="text-mono-2xs sm:text-mono-xs shrink-0 px-3.5 sm:px-4"
         >
           <BookmarkSimpleIcon weight={bookmarked ? "fill" : "bold"} className="size-4" />
           <span className="hidden sm:inline">{bookmarked ? "Saved" : "Save"}</span>
@@ -338,24 +337,21 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
       {/* Desktop Close Button */}
       <div className="modal-top-actions hidden md:flex">
         <DialogClose asChild>
-          <Button variant="secondary" size="icon" className="border-[1.5px]">
+          <Button variant="secondary" size="icon">
             <XIcon weight="bold" />
           </Button>
         </DialogClose>
       </div>
 
-      {/* Mobile Fixed Top Bar - Pinned the full way, theme bg, NO BORDERS */}
+      {/* Mobile Fixed Top Bar */}
       <div
-        className={cn(
-          "z-30 flex h-12 shrink-0 items-center justify-between border-0 px-4 shadow-none transition-colors duration-200 md:hidden",
-          colorClasses,
-        )}
+        className="z-30 flex h-12 shrink-0 items-center justify-between border-b border-white/[0.08] bg-[#18181b] px-4 text-foreground md:hidden"
       >
         <div className="flex min-w-0 flex-1 items-center gap-2 pr-3">
           <span
             className={cn(
-              "modal-cat-dot shrink-0",
-              colorClasses.includes("bg-c-blue") ? "bg-background" : "bg-foreground",
+              "size-2 shrink-0 rounded-full",
+              activeThemeStyles.dot,
             )}
           />
 
@@ -363,7 +359,7 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
             {/* Category label */}
             <span
               ref={mobileCategoryRef}
-              className="text-mono-2xs pointer-events-none absolute inset-0 flex items-center truncate font-bold tracking-wider uppercase"
+              className="text-mono-2xs text-muted-foreground pointer-events-none absolute inset-0 flex items-center truncate font-bold tracking-wider uppercase"
             >
               {activeTool.category}
             </span>
@@ -372,7 +368,7 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
 
         {/* Mobile Close Button */}
         <DialogClose asChild>
-          <Button variant="secondary" size="icon" className="size-8 shrink-0 border-[1.5px]">
+          <Button variant="secondary" size="icon" className="size-8 shrink-0">
             <XIcon weight="bold" />
           </Button>
         </DialogClose>
@@ -405,23 +401,20 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
       >
         {/* Left Side */}
         <div
-          className={cn(
-            "modal-left relative flex shrink-0 flex-col border-b-2 px-5 pt-3 pb-6 md:overflow-y-auto md:border-r-2 md:border-b-0 md:px-7 md:py-8",
-            colorClasses,
-          )}
+          className="modal-left relative flex shrink-0 flex-col bg-[#141416] text-foreground border-b border-white/[0.08] px-5 pt-3 pb-6 md:overflow-y-auto md:border-r md:border-b-0 md:px-7 md:py-8"
         >
           {/* Desktop Category Header */}
           <div className="modal-cat-label hidden md:flex">
             <div className="flex min-w-0 items-center gap-2">
               <span
                 className={cn(
-                  "modal-cat-dot",
-                  colorClasses.includes("bg-c-blue") ? "bg-background" : "bg-foreground",
+                  "size-2 shrink-0 rounded-full",
+                  activeThemeStyles.dot,
                 )}
-              ></span>
+              />
               <Link
                 href={`/resources/${activeTool.category}`}
-                className="modal-cat-name modal-cat-link truncate"
+                className="modal-cat-name text-muted-foreground hover:text-foreground font-semibold font-mono text-xs truncate"
               >
                 {activeTool.category}
               </Link>
@@ -449,7 +442,7 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
           </div>
 
           {/* Desktop Title */}
-          <DialogTitle className="modal-title hidden md:block">{activeTool.title}</DialogTitle>
+          <DialogTitle className="modal-title text-foreground hidden md:block">{activeTool.title}</DialogTitle>
 
           {/* Mobile Spacer (same dimensions as headline, invisible) */}
           <div
@@ -462,8 +455,8 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
           {/* Mobile Accessibility Title */}
           <DialogTitle className="sr-only md:hidden">{activeTool.title}</DialogTitle>
 
-          {activeTool.subtitle && <p className="modal-subtitle">{activeTool.subtitle}</p>}
-          <p className="modal-description">{activeTool.description}</p>
+          {activeTool.subtitle && <p className="modal-subtitle text-muted-foreground">{activeTool.subtitle}</p>}
+          <p className="modal-description text-foreground/90 border-t border-white/[0.08]">{activeTool.description}</p>
 
           {activeTool.author &&
             (() => {
@@ -486,13 +479,13 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
               if (authorList.length === 0) return null;
 
               return (
-                <p className="modal-author flex flex-wrap items-center gap-1">
+                <p className="modal-author flex flex-wrap items-center gap-1 text-muted-foreground">
                   {authorList.map((authorName, index) => (
                     <span key={authorName} className="inline-flex items-center">
                       {index > 0 && <span className="mr-1 opacity-60">&</span>}
                       <Link
                         href={`/authors/${slugifyAuthor(authorName)}`}
-                        className="modal-author-link hover:underline"
+                        className="modal-author-link text-muted-foreground hover:text-foreground hover:underline"
                       >
                         {authorName}
                       </Link>
@@ -617,15 +610,10 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
                         variant="outline"
                         size="xs"
                         onClick={() => onTagClickAction?.(tag)}
-                        className={cn(
-                          "text-mono-xs h-6 rounded-none border-[1.5px] px-2 py-0 font-bold transition-all duration-150 hover:-translate-y-0.5 hover:shadow-xs",
-                          activeThemeStyles.label,
-                          activeThemeStyles.border,
-                          activeThemeStyles.soft,
-                        )}
+                        className="text-mono-xs h-7 rounded-full border border-brand-purple/25 bg-brand-purple/5 px-3 py-1 font-semibold text-foreground transition-all duration-150 hover:-translate-y-0.5 hover:border-brand-purple/50 hover:bg-brand-purple/15"
                         title={`Filter by #${tag}`}
                       >
-                        #{tag}
+                        <span className="text-brand-purple mr-1 font-bold">#</span>{tag}
                       </Button>
                     ))}
                 </div>
@@ -645,7 +633,7 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
                   {!Array.isArray(activeTool.author) ? (
                     <Link
                       href={`/authors/${slugifyAuthor(activeTool.author)}`}
-                      className="text-muted-foreground hover:text-foreground font-mono text-[11px] font-semibold hover:underline"
+                      className="text-muted-foreground hover:text-primary font-mono text-[11px] font-semibold hover:underline"
                     >
                       View all ({authorResources.length + 1}) →
                     </Link>
@@ -658,7 +646,7 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
                       <button
                         key={res.title}
                         onClick={() => handleSelectTool(res)}
-                        className={cn("modal-related-chip group", styles.chip)}
+                        className={cn("modal-related-chip group hover:border-primary/40", styles.chip)}
                       >
                         <span className={cn("modal-chip-dot", styles.dot)} />
                         {res.title}
@@ -680,7 +668,7 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
                       <button
                         key={res.url || res.title}
                         onClick={() => handleSelectTool(res)}
-                        className={cn("modal-related-chip group", styles.chip)}
+                        className={cn("modal-related-chip group hover:border-primary/40", styles.chip)}
                       >
                         <span className={cn("modal-chip-dot", styles.dot)} />
                         {res.title}

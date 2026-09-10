@@ -659,9 +659,8 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
                     <DotButton
                       label={`${selectedTheme.toUpperCase()} ACTIVE`}
                       isActive={true}
-                      theme={selectedTheme}
                     />
-                    <DotButton label="INACTIVE PILL" isActive={false} theme={selectedTheme} />
+                    <DotButton label="INACTIVE PILL" isActive={false} />
                   </div>
                 </div>
 
