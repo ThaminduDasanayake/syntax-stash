@@ -1,8 +1,21 @@
 "use client";
 
-import { ArrowsCounterClockwiseIcon, BookmarkSimpleIcon, MagnifyingGlassIcon, XIcon, } from "@phosphor-icons/react";
+import {
+  ArrowsCounterClockwiseIcon,
+  BookmarkSimpleIcon,
+  MagnifyingGlassIcon,
+  XIcon,
+} from "@phosphor-icons/react";
 import { usePathname, useSearchParams } from "next/navigation";
-import { Suspense, useCallback, useDeferredValue, useEffect, useMemo, useRef, useState, } from "react";
+import {
+  Suspense,
+  useCallback,
+  useDeferredValue,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import { DotButton } from "@/components/dot-button";
 import { ResourceDialog } from "@/components/resource-dialog";
@@ -252,7 +265,6 @@ function FilterSectionInner({
 
     // Sort items: category order (matching categories list), then title (A → Z)
 
-
     return [...filtered].sort((a, b) => {
       if (a.category !== b.category) {
         const indexA = categories.indexOf(a.category);
@@ -388,7 +400,7 @@ function FilterSectionInner({
 
         {/* Active Tag Chips Bar */}
         {selectedTags.length > 0 && (
-          <div className="mx-auto mt-2 max-w-7xl border-t border-border/60 px-4 pt-2 sm:px-6 md:px-8">
+          <div className="border-border/60 mx-auto mt-2 max-w-7xl border-t px-4 pt-2 sm:px-6 md:px-8">
             <div className="no-scrollbar flex items-center gap-1.5 overflow-x-auto py-0.5 sm:flex-wrap sm:gap-2">
               <span className="text-mono-2xs text-muted-foreground shrink-0 font-bold tracking-wider uppercase">
                 Active:
@@ -398,7 +410,7 @@ function FilterSectionInner({
                   key={tag}
                   size="xs"
                   variant="outline"
-                  className="group text-mono-2xs shrink-0 rounded-lg border-brand-purple/30 bg-brand-purple/10 px-2 py-0.5 text-foreground hover:border-brand-purple/60 hover:bg-brand-purple/20"
+                  className="group text-mono-2xs border-brand-purple/30 bg-brand-purple/10 text-foreground hover:border-brand-purple/60 hover:bg-brand-purple/20 shrink-0 rounded-lg px-2 py-0.5"
                   onClick={() => handleToggleTag(tag)}
                   aria-label={`Remove tag ${tag}`}
                 >
@@ -412,7 +424,7 @@ function FilterSectionInner({
                   variant="outline"
                   size="xs"
                   onClick={() => handleMatchModeChange(matchMode === "any" ? "all" : "any")}
-                  className="text-mono-2xs shrink-0 rounded-lg border-border/70 bg-card px-2 py-0.5"
+                  className="text-mono-2xs border-border/70 bg-card shrink-0 rounded-lg px-2 py-0.5"
                   title="Click to toggle match mode"
                 >
                   <ArrowsCounterClockwiseIcon weight="bold" />
@@ -487,14 +499,14 @@ function FilterSectionInner({
                       <h2 className="font-mono text-lg font-extrabold tracking-widest uppercase sm:text-xl">
                         {category}
                       </h2>
-                      <span className="hidden h-px flex-1 bg-border/80 sm:block" />
+                      <span className="bg-border/80 hidden h-px flex-1 sm:block" />
                     </div>
 
                     <div className="flex w-full items-center gap-3 sm:w-auto">
                       <span className="text-mono-xs sm:text-mono-sm text-muted-foreground shrink-0 font-mono">
                         {count} {formatItemCountLabel(count, itemLabel)}
                       </span>
-                      <span className="h-px flex-1 bg-border/80 sm:hidden" />
+                      <span className="bg-border/80 h-px flex-1 sm:hidden" />
                     </div>
                   </div>
                   <div className="card-grid">
@@ -522,7 +534,7 @@ function FilterSectionInner({
                 variant="outline"
                 size="sm"
                 onClick={handleLoadMore}
-                className="rounded-xl border border-border/80 bg-card font-mono text-xs tracking-wider uppercase transition-all hover:bg-muted hover:text-foreground"
+                className="border-border/80 bg-card hover:bg-muted hover:text-foreground rounded-xl border font-mono text-xs tracking-wider uppercase transition-all"
               >
                 Load more ({filteredItems.length - visibleLimit} remaining)
               </Button>

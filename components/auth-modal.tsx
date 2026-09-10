@@ -45,10 +45,10 @@ export function AuthModal({ onOpenChange, open }: AuthModalProps) {
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader className="text-center">
-          <DialogTitle className="text-lg font-bold tracking-tight text-foreground">
+          <DialogTitle className="text-foreground text-lg font-bold tracking-tight">
             Sign in to Syntax Stash
           </DialogTitle>
-          <DialogDescription className="text-sm leading-relaxed text-muted-foreground">
+          <DialogDescription className="text-muted-foreground text-sm leading-relaxed">
             Sign in with Google or GitHub to save resources and sync your personal stash
             automatically across all your devices.
           </DialogDescription>

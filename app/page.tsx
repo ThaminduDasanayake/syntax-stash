@@ -62,7 +62,7 @@ export default async function Home() {
           </div>
 
           {/* Interactive Hero Workbench */}
-          <div className="w-full max-w-xl lg:max-w-none flex justify-center">
+          <div className="flex w-full max-w-xl justify-center lg:max-w-none">
             <HeroWorkbench />
           </div>
         </div>
@@ -85,7 +85,7 @@ export default async function Home() {
           </div>
           <div className="stat-item">
             <h2 className="stat-num flex items-center gap-2">
-              <span className="bg-accent size-2.5 shrink-0 rounded-full animate-pulse inline-block" />
+              <span className="bg-accent inline-block size-2.5 shrink-0 animate-pulse rounded-full" />
               100%
             </h2>
             <p className="stat-label">OPEN SOURCE</p>
@@ -94,7 +94,7 @@ export default async function Home() {
       </section>
 
       {/* Why this matters */}
-      <section className="border-b border-white/[0.08] bg-background px-6 py-24 sm:px-12 lg:px-24">
+      <section className="bg-background border-b border-white/[0.08] px-6 py-24 sm:px-12 lg:px-24">
         <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-24">
           <div>
             <h2 className="flex flex-col gap-0 text-6xl tracking-tighter sm:text-7xl">
@@ -136,7 +136,7 @@ export default async function Home() {
       </section>
 
       {/* Curated Resource Vault Spotlight */}
-      <section className="border-b border-white/[0.08] bg-background px-6 py-24 sm:px-12 lg:px-24">
+      <section className="bg-background border-b border-white/[0.08] px-6 py-24 sm:px-12 lg:px-24">
         <div className="mx-auto w-full max-w-7xl">
           <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div>
@@ -168,11 +168,11 @@ export default async function Home() {
                 <Link
                   key={category}
                   href={`/resources/${slug}`}
-                  className="group relative isolate flex min-h-[120px] flex-col justify-between overflow-hidden rounded-lg border border-border/60 bg-card p-4 transition-colors select-none hover:border-border"
+                  className="group border-border/60 bg-card hover:border-border relative isolate flex min-h-[120px] flex-col justify-between overflow-hidden rounded-lg border p-4 transition-colors select-none"
                 >
                   <div
                     aria-hidden="true"
-                    className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-20 bg-gradient-to-t from-brand-orange/[0.08] via-brand-purple/[0.04] to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                    className="from-brand-orange/[0.08] via-brand-purple/[0.04] pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-20 bg-gradient-to-t to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                   />
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex min-w-0 items-center gap-1.5">

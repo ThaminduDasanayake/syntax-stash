@@ -495,7 +495,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
                     >
                       <StarIcon
                         weight={tagItem.isFeatured ? "fill" : "regular"}
-                        className={`size-4 ${tagItem.isFeatured ? "text-amber-500" : "opacity-40"}`}
+                        className={`size-4 ${tagItem.isFeatured ? "text-star" : "opacity-40"}`}
                       />
                     </button>
                   </TableCell>

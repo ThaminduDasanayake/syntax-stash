@@ -79,7 +79,7 @@ function TagFilterContent({
       </div>
 
       {/* Match Mode Toggle */}
-      <div className="border-b border-border/60 bg-muted/40 flex items-center justify-between px-4 py-2 sm:px-3 sm:py-1.5">
+      <div className="border-border/60 bg-muted/40 flex items-center justify-between border-b px-4 py-2 sm:px-3 sm:py-1.5">
         <span className="text-muted-foreground font-mono text-xs sm:text-[11px]">Match:</span>
         <div className="flex items-center gap-1.5 sm:gap-1">
           <button

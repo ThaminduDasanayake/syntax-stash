@@ -38,7 +38,9 @@ export default function ChangelogPage() {
                     key={entry.version}
                     href={`#${entry.version}`}
                     className={`border-border flex items-center gap-1.5 border-2 px-3 py-1 font-mono text-xs font-bold transition-all hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] ${
-                      isLatest ? "bg-primary text-primary-foreground" : "bg-card text-foreground hover:bg-muted"
+                      isLatest
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-card text-foreground hover:bg-muted"
                     }`}
                   >
                     <span>{entry.version}</span>

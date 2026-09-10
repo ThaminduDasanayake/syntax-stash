@@ -12,10 +12,8 @@ const buttonGroupVariants = cva(
     },
     variants: {
       orientation: {
-        horizontal:
-          "[&>*]:rounded-full! [&>*]:border-0! [&>*]:shadow-none",
-        vertical:
-          "flex-col [&>*]:rounded-full! [&>*]:border-0! [&>*]:shadow-none",
+        horizontal: "[&>*]:rounded-full! [&>*]:border-0! [&>*]:shadow-none",
+        vertical: "flex-col [&>*]:rounded-full! [&>*]:border-0! [&>*]:shadow-none",
       },
     },
   },

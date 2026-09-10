@@ -18,7 +18,7 @@ function Command({ className, ...props }: React.ComponentProps<typeof CommandPri
     <CommandPrimitive
       data-slot="command"
       className={cn(
-        "bg-popover text-popover-foreground border-white/[0.08] flex size-full flex-col overflow-hidden rounded-2xl border",
+        "bg-popover text-popover-foreground flex size-full flex-col overflow-hidden rounded-2xl border border-white/[0.08]",
         className,
       )}
       {...props}
@@ -47,7 +47,7 @@ function CommandDialog({
       </DialogHeader>
       <DialogContent
         className={cn(
-          "border-white/[0.12] bg-[#18181b] top-1/5 translate-y-0 overflow-hidden rounded-2xl border p-0 shadow-[0_24px_64px_rgba(0,0,0,0.7)] sm:max-w-3xl",
+          "top-1/5 translate-y-0 overflow-hidden rounded-2xl border border-white/[0.12] bg-[#18181b] p-0 shadow-[0_24px_64px_rgba(0,0,0,0.7)] sm:max-w-3xl",
           className,
         )}
         showCloseButton={showCloseButton}
@@ -65,13 +65,13 @@ function CommandInput({
   return (
     <div
       data-slot="command-input-wrapper"
-      className="border-white/[0.08] bg-[#141416] flex items-center border-b px-4"
+      className="flex items-center border-b border-white/[0.08] bg-[#141416] px-4"
     >
       <MagnifyingGlassIcon weight="bold" className="text-primary mr-2.5 size-5 shrink-0" />
       <CommandPrimitive.Input
         data-slot="command-input"
         className={cn(
-          "text-mono-xs placeholder:text-zinc-500 flex h-14 w-full rounded-none bg-transparent py-4 text-foreground outline-none disabled:cursor-not-allowed disabled:opacity-50",
+          "text-mono-xs text-foreground flex h-14 w-full rounded-none bg-transparent py-4 outline-none placeholder:text-zinc-500 disabled:cursor-not-allowed disabled:opacity-50",
           className,
         )}
         {...props}

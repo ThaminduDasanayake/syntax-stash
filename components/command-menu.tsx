@@ -189,7 +189,7 @@ export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
                           className="text-muted-foreground inline-flex shrink-0 items-center gap-1 font-mono text-[11px]"
                           title={`${stars.toLocaleString()} GitHub stars`}
                         >
-                          <StarIcon weight="fill" className="size-3 text-amber-500" />
+                          <StarIcon weight="fill" className="text-star size-3" />
                           <span>{formatStarCount(stars)}</span>
                         </span>
                       )}

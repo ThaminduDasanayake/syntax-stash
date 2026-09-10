@@ -56,11 +56,11 @@ export function HeroWorkbench() {
   const activeTabConfig = TABS.find((t) => t.id === activeTab) || TABS[0];
 
   return (
-    <div className="relative w-full max-w-xl mx-auto lg:max-w-none">
+    <div className="relative mx-auto w-full max-w-xl lg:max-w-none">
       {/* Ambient background glow behind workbench */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -inset-4 rounded-3xl bg-gradient-to-tr from-brand-orange/20 via-brand-purple/20 to-brand-green/15 blur-2xl opacity-60 transition-all duration-700"
+        className="from-brand-orange/20 via-brand-purple/20 to-brand-green/15 pointer-events-none absolute -inset-4 rounded-3xl bg-gradient-to-tr opacity-60 blur-2xl transition-all duration-700"
       />
 
       {/* Main Workbench Window */}
@@ -69,23 +69,23 @@ export function HeroWorkbench() {
         <div className="flex items-center justify-between border-b border-white/[0.08] bg-[#141416] px-4 py-3">
           {/* macOS window controls */}
           <div className="flex items-center gap-2">
-            <span className="size-3 rounded-full bg-[#ef4444]/80 border border-[#ef4444]" />
-            <span className="size-3 rounded-full bg-[#f59e0b]/80 border border-[#f59e0b]" />
-            <span className="size-3 rounded-full bg-[#10b981]/80 border border-[#10b981]" />
-            <span className="ml-2 font-mono text-[11px] font-semibold text-zinc-500 hidden sm:inline-block">
+            <span className="size-3 rounded-full border border-[#ef4444] bg-[#ef4444]/80" />
+            <span className="size-3 rounded-full border border-[#f59e0b] bg-[#f59e0b]/80" />
+            <span className="size-3 rounded-full border border-[#10b981] bg-[#10b981]/80" />
+            <span className="ml-2 hidden font-mono text-[11px] font-semibold text-zinc-500 sm:inline-block">
               workbench.dev
             </span>
           </div>
 
           {/* Inbuilt Badge */}
-          <div className="flex items-center gap-1.5 rounded-full border border-accent/25 bg-accent/10 px-2.5 py-0.5 font-mono text-[10px] font-bold text-accent">
+          <div className="border-accent/25 bg-accent/10 text-accent flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-[10px] font-bold">
             <SparkleIcon weight="fill" className="size-3" />
             <span>Interactive Utilities</span>
           </div>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex items-center gap-1 border-b border-white/[0.08] bg-[#141416]/60 p-1.5 overflow-x-auto no-scrollbar">
+        <div className="no-scrollbar flex items-center gap-1 overflow-x-auto border-b border-white/[0.08] bg-[#141416]/60 p-1.5">
           {TABS.map((tab) => {
             const isActive = activeTab === tab.id;
             return (
@@ -94,10 +94,10 @@ export function HeroWorkbench() {
                 type="button"
                 onClick={() => setActiveTab(tab.id)}
                 className={cn(
-                  "flex items-center gap-1.5 rounded-lg px-3 py-1.5 font-mono text-xs font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer outline-none",
+                  "flex cursor-pointer items-center gap-1.5 rounded-lg px-3 py-1.5 font-mono text-xs font-semibold whitespace-nowrap transition-all duration-200 outline-none",
                   isActive
-                    ? "bg-[#27272a] text-white border border-white/[0.12] shadow-xs"
-                    : "text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04]",
+                    ? "border border-white/[0.12] bg-[#27272a] text-white shadow-xs"
+                    : "text-zinc-400 hover:bg-white/[0.04] hover:text-zinc-200",
                 )}
               >
                 <span>{tab.icon}</span>
@@ -108,14 +108,14 @@ export function HeroWorkbench() {
         </div>
 
         {/* Interactive Workspace Body */}
-        <div className="p-4 sm:p-5 min-h-[220px] flex flex-col justify-between">
+        <div className="flex min-h-[220px] flex-col justify-between p-4 sm:p-5">
           {/* 1. REGEX STUDIO DEMO */}
           {activeTab === "regex" && (
             <div className="flex flex-col gap-3">
               <div className="flex flex-col gap-1.5">
-                <div className="flex items-center justify-between text-[11px] font-mono text-zinc-400">
+                <div className="flex items-center justify-between font-mono text-[11px] text-zinc-400">
                   <span className="font-semibold text-zinc-300">Regular Expression</span>
-                  <span className="rounded bg-primary/20 px-1.5 py-0.2 text-[10px] font-bold text-primary">
+                  <span className="bg-primary/20 py-0.2 text-primary rounded px-1.5 text-[10px] font-bold">
                     flags: gms
                   </span>
                 </div>
@@ -129,18 +129,18 @@ export function HeroWorkbench() {
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <div className="flex items-center justify-between text-[11px] font-mono text-zinc-400">
+                <div className="flex items-center justify-between font-mono text-[11px] text-zinc-400">
                   <span>Match Results (2 found)</span>
-                  <span className="text-accent font-bold text-[10px] flex items-center gap-1">
-                    <span className="size-1.5 rounded-full bg-accent animate-pulse" /> 0ms compute
+                  <span className="text-accent flex items-center gap-1 text-[10px] font-bold">
+                    <span className="bg-accent size-1.5 animate-pulse rounded-full" /> 0ms compute
                   </span>
                 </div>
                 <div className="rounded-xl border border-white/[0.08] bg-[#121212] p-3 font-mono text-xs leading-relaxed">
-                  <span className="rounded-md bg-primary/20 border border-primary/40 px-1.5 py-0.5 text-primary font-bold">
+                  <span className="bg-primary/20 border-primary/40 text-primary rounded-md border px-1.5 py-0.5 font-bold">
                     alex@syntaxstash.dev
                   </span>
-                  <span className="text-zinc-500 mx-1.5">&amp;</span>
-                  <span className="rounded-md bg-secondary/20 border border-secondary/40 px-1.5 py-0.5 text-secondary font-bold">
+                  <span className="mx-1.5 text-zinc-500">&amp;</span>
+                  <span className="bg-secondary/20 border-secondary/40 text-secondary rounded-md border px-1.5 py-0.5 font-bold">
                     team@vercel.com
                   </span>
                 </div>
@@ -158,34 +158,43 @@ export function HeroWorkbench() {
                     type="button"
                     onClick={() => setCurlMethod(method)}
                     className={cn(
-                      "rounded-lg px-2.5 py-1 font-mono text-xs font-bold transition-all cursor-pointer",
+                      "cursor-pointer rounded-lg px-2.5 py-1 font-mono text-xs font-bold transition-all",
                       curlMethod === method
                         ? "bg-accent text-black shadow-xs"
-                        : "bg-white/[0.05] text-zinc-400 hover:text-white border border-white/5",
+                        : "border border-white/5 bg-white/[0.05] text-zinc-400 hover:text-white",
                     )}
                   >
                     {method}
                   </button>
                 ))}
-                <span className="font-mono text-xs text-zinc-400 truncate ml-1">
+                <span className="ml-1 truncate font-mono text-xs text-zinc-400">
                   https://api.syntaxstash.dev/v1/deploy
                 </span>
               </div>
 
               <div className="relative rounded-xl border border-white/[0.08] bg-[#121212] p-3 font-mono text-[11px] leading-relaxed text-zinc-300">
-                <div className="text-zinc-400 mb-1">
-                  <span className="text-primary font-bold">$ curl</span> -X {curlMethod} https://api.syntaxstash.dev/v1/deploy \
+                <div className="mb-1 text-zinc-400">
+                  <span className="text-primary font-bold">$ curl</span> -X {curlMethod}{" "}
+                  https://api.syntaxstash.dev/v1/deploy \
                 </div>
-                <div className="text-zinc-500 pl-4">
-                  -H <span className="text-secondary">&apos;Authorization: Bearer dev_stash_sec&apos;</span> \
+                <div className="pl-4 text-zinc-500">
+                  -H{" "}
+                  <span className="text-secondary">
+                    &apos;Authorization: Bearer dev_stash_sec&apos;
+                  </span>{" "}
+                  \
                 </div>
-                <div className="text-zinc-500 pl-4">
-                  -H <span className="text-secondary">&apos;Content-Type: application/json&apos;</span>
+                <div className="pl-4 text-zinc-500">
+                  -H{" "}
+                  <span className="text-secondary">&apos;Content-Type: application/json&apos;</span>
                   {curlMethod !== "GET" && <span> \</span>}
                 </div>
                 {curlMethod !== "GET" && (
-                  <div className="text-zinc-500 pl-4">
-                    -d <span className="text-accent">&apos;&#123;&quot;branch&quot;:&quot;main&quot;,&quot;build&quot;:&quot;prod&quot;&#125;&apos;</span>
+                  <div className="pl-4 text-zinc-500">
+                    -d{" "}
+                    <span className="text-accent">
+                      &apos;&#123;&quot;branch&quot;:&quot;main&quot;,&quot;build&quot;:&quot;prod&quot;&#125;&apos;
+                    </span>
                   </div>
                 )}
 
@@ -196,10 +205,14 @@ export function HeroWorkbench() {
                       `curl -X ${curlMethod} https://api.syntaxstash.dev/v1/deploy -H 'Authorization: Bearer dev_stash_sec'`,
                     )
                   }
-                  className="absolute top-2.5 right-2.5 flex size-7 items-center justify-center rounded-lg border border-white/10 bg-white/[0.06] text-zinc-300 hover:bg-white/15 hover:text-white transition-all cursor-pointer"
+                  className="absolute top-2.5 right-2.5 flex size-7 cursor-pointer items-center justify-center rounded-lg border border-white/10 bg-white/[0.06] text-zinc-300 transition-all hover:bg-white/15 hover:text-white"
                   title="Copy command"
                 >
-                  {copied ? <CheckIcon weight="bold" className="text-accent size-3.5" /> : <CopyIcon className="size-3.5" />}
+                  {copied ? (
+                    <CheckIcon weight="bold" className="text-accent size-3.5" />
+                  ) : (
+                    <CopyIcon className="size-3.5" />
+                  )}
                 </button>
               </div>
             </div>
@@ -208,31 +221,31 @@ export function HeroWorkbench() {
           {/* 3. COLOR STUDIO DEMO */}
           {activeTab === "color" && (
             <div className="flex flex-col gap-3">
-              <div className="h-10 w-full rounded-xl bg-gradient-to-r from-brand-orange via-brand-purple to-brand-green shadow-sm border border-white/10" />
+              <div className="from-brand-orange via-brand-purple to-brand-green h-10 w-full rounded-xl border border-white/10 bg-gradient-to-r shadow-sm" />
 
               <div className="grid grid-cols-3 gap-2 font-mono text-[11px]">
                 <div className="flex flex-col gap-1 rounded-xl border border-white/[0.08] bg-[#121212] p-2.5">
                   <div className="flex items-center gap-1.5">
-                    <span className="size-3 rounded-full bg-brand-orange border border-white/20" />
-                    <span className="text-white font-bold">Amber</span>
+                    <span className="bg-brand-orange size-3 rounded-full border border-white/20" />
+                    <span className="font-bold text-white">Amber</span>
                   </div>
-                  <span className="text-zinc-400 text-[10px]">#F59E0B</span>
+                  <span className="text-[10px] text-zinc-400">#F59E0B</span>
                 </div>
 
                 <div className="flex flex-col gap-1 rounded-xl border border-white/[0.08] bg-[#121212] p-2.5">
                   <div className="flex items-center gap-1.5">
-                    <span className="size-3 rounded-full bg-brand-purple border border-white/20" />
-                    <span className="text-white font-bold">Lilac</span>
+                    <span className="bg-brand-purple size-3 rounded-full border border-white/20" />
+                    <span className="font-bold text-white">Lilac</span>
                   </div>
-                  <span className="text-zinc-400 text-[10px]">#C084FC</span>
+                  <span className="text-[10px] text-zinc-400">#C084FC</span>
                 </div>
 
                 <div className="flex flex-col gap-1 rounded-xl border border-white/[0.08] bg-[#121212] p-2.5">
                   <div className="flex items-center gap-1.5">
-                    <span className="size-3 rounded-full bg-brand-green border border-white/20" />
-                    <span className="text-white font-bold">Lime</span>
+                    <span className="bg-brand-green size-3 rounded-full border border-white/20" />
+                    <span className="font-bold text-white">Lime</span>
                   </div>
-                  <span className="text-zinc-400 text-[10px]">#84CC16</span>
+                  <span className="text-[10px] text-zinc-400">#84CC16</span>
                 </div>
               </div>
             </div>
@@ -241,18 +254,18 @@ export function HeroWorkbench() {
           {/* 4. UUID GENERATOR DEMO */}
           {activeTab === "uuid" && (
             <div className="flex flex-col gap-3">
-              <div className="flex items-center justify-between text-[11px] font-mono text-zinc-400">
-                <span className="text-zinc-300 font-semibold">Cryptographically Secure (v4)</span>
+              <div className="flex items-center justify-between font-mono text-[11px] text-zinc-400">
+                <span className="font-semibold text-zinc-300">Cryptographically Secure (v4)</span>
                 <span className="text-accent font-bold">RFC 4122 Standard</span>
               </div>
 
               <div className="flex items-center justify-between rounded-xl border border-white/[0.10] bg-[#121212] px-3.5 py-3 font-mono text-xs text-white">
-                <span className="text-primary font-bold tracking-wider truncate">{uuid}</span>
-                <div className="flex items-center gap-1.5 shrink-0 ml-2">
+                <span className="text-primary truncate font-bold tracking-wider">{uuid}</span>
+                <div className="ml-2 flex shrink-0 items-center gap-1.5">
                   <button
                     type="button"
                     onClick={() => setUuid(generateUUID())}
-                    className="flex size-7 items-center justify-center rounded-lg border border-white/10 bg-white/[0.06] text-zinc-300 hover:bg-white/15 hover:text-white transition-all cursor-pointer"
+                    className="flex size-7 cursor-pointer items-center justify-center rounded-lg border border-white/10 bg-white/[0.06] text-zinc-300 transition-all hover:bg-white/15 hover:text-white"
                     title="Generate new UUID"
                   >
                     <ArrowsClockwiseIcon className="size-3.5" />
@@ -260,10 +273,14 @@ export function HeroWorkbench() {
                   <button
                     type="button"
                     onClick={() => handleCopy(uuid)}
-                    className="flex size-7 items-center justify-center rounded-lg border border-white/10 bg-white/[0.06] text-zinc-300 hover:bg-white/15 hover:text-white transition-all cursor-pointer"
+                    className="flex size-7 cursor-pointer items-center justify-center rounded-lg border border-white/10 bg-white/[0.06] text-zinc-300 transition-all hover:bg-white/15 hover:text-white"
                     title="Copy UUID"
                   >
-                    {copied ? <CheckIcon weight="bold" className="text-accent size-3.5" /> : <CopyIcon className="size-3.5" />}
+                    {copied ? (
+                      <CheckIcon weight="bold" className="text-accent size-3.5" />
+                    ) : (
+                      <CopyIcon className="size-3.5" />
+                    )}
                   </button>
                 </div>
               </div>
@@ -277,11 +294,16 @@ export function HeroWorkbench() {
           {/* Footer Action Bar */}
           <div className="mt-4 flex items-center justify-between border-t border-white/[0.08] pt-3.5">
             <div className="flex items-center gap-2 font-mono text-xs text-zinc-400">
-              <span className="size-2 rounded-full bg-accent animate-pulse" />
+              <span className="bg-accent size-2 animate-pulse rounded-full" />
               <span>Client-side • 0ms latency</span>
             </div>
 
-            <Button asChild size="sm" variant="default" className="rounded-full font-mono text-xs font-bold">
+            <Button
+              asChild
+              size="sm"
+              variant="default"
+              className="rounded-full font-mono text-xs font-bold"
+            >
               <Link href={`/tools/${activeTabConfig.slug}`}>
                 Launch {activeTabConfig.label}
                 <ArrowRightIcon weight="bold" className="ml-1 size-3.5" />

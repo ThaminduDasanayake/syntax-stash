@@ -1,8 +1,12 @@
 "use client";
 
-import { ArrowUpRight01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { BookmarkSimpleIcon, SparkleIcon, StarIcon, TagIcon } from "@phosphor-icons/react";
+import {
+  ArrowUpRightIcon,
+  BookmarkSimpleIcon,
+  ImageIcon,
+  StarIcon,
+  TagIcon,
+} from "@phosphor-icons/react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
@@ -121,7 +125,7 @@ export function ResourceCardView({
       )}
     >
       {/* 1. Visual Stage: clean 16:10 OG image — no overlays */}
-      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-white/[0.08] bg-[#18181b] transition-all duration-300 group-hover:border-white/[0.18] group-hover:shadow-[0_12px_36px_rgba(0,0,0,0.5)]">
+      <div className="relative aspect-16/10 w-full overflow-hidden rounded-2xl border border-white/10 bg-[#18181b] transition-all duration-300 group-hover:border-white/18 group-hover:shadow-[0_12px_36px_rgba(0,0,0,0.5)]">
         {imageSrc ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -133,27 +137,27 @@ export function ResourceCardView({
           />
         ) : (
           /* Abstract ambient fallback when no OG image */
-          <div className="relative flex h-full w-full items-center justify-center overflow-hidden bg-gradient-to-br from-brand-purple/[0.12] via-[#18181b] to-brand-orange/[0.12]">
+          <div className="from-brand-purple/12 to-brand-orange/12 relative flex h-full w-full items-center justify-center overflow-hidden bg-linear-to-br via-[#18181b]">
             <div
               className="absolute inset-0 opacity-[0.18]"
               style={{
-                backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.2) 1px, transparent 1px)",
+                backgroundImage:
+                  "radial-gradient(circle, rgba(255,255,255,0.2) 1px, transparent 1px)",
                 backgroundSize: "16px 16px",
               }}
             />
-            <div className="absolute size-32 rounded-full bg-brand-purple/20 blur-2xl transition-all duration-500 group-hover:scale-125 group-hover:bg-brand-purple/35" />
-            <SparkleIcon weight="light" className="size-8 text-zinc-600" />
+            <div className="bg-brand-purple/20 group-hover:bg-brand-purple/35 absolute size-32 rounded-full blur-2xl transition-all duration-500 group-hover:scale-125" />
+            <ImageIcon weight="light" className="size-8 text-zinc-600" />
           </div>
         )}
       </div>
 
       {/* 2. Text Block */}
-      <div className="flex flex-col gap-1.5 pt-3 px-0.5">
-
+      <div className="flex flex-col gap-1.5 px-0.5 pt-3">
         {/* Row 1: Inline favicon + title */}
-        <div className="flex items-center gap-2 min-w-0">
+        <div className="flex min-w-0 items-center gap-2">
           {/* Small 24px favicon squircle beside the title */}
-          <div className="flex size-6 shrink-0 items-center justify-center overflow-hidden rounded-md border border-primary/50 bg-white/[0.05] p-0.5">
+          <div className="border-primary/50 flex size-6 shrink-0 items-center justify-center overflow-hidden rounded-md border bg-white/5 p-0.5">
             {faviconSrc ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
@@ -173,7 +177,7 @@ export function ResourceCardView({
                 }}
               />
             ) : (
-              <SparkleIcon weight="light" className="size-3 text-zinc-600" />
+              <ImageIcon weight="light" className="size-3 text-zinc-600" />
             )}
           </div>
 
@@ -181,7 +185,7 @@ export function ResourceCardView({
             title={title || "Resource Title"}
             className="min-w-0 flex-1 truncate font-mono text-base font-bold tracking-tight text-white"
           >
-            <span className="relative inline after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-left after:scale-x-0 after:bg-primary after:transition-transform after:duration-300 after:ease-out group-hover:after:scale-x-100 motion-reduce:after:transition-none">
+            <span className="after:bg-primary relative inline after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-left after:scale-x-0 after:transition-transform after:duration-300 after:ease-out group-hover:after:scale-x-100 motion-reduce:after:transition-none">
               {title || "Resource Title"}
             </span>
           </h3>
@@ -233,10 +237,10 @@ export function ResourceCardView({
           {/* Center: Stars count — subtle amber, separate from title */}
           {stars !== null && (
             <span
-              className="inline-flex shrink-0 items-center gap-1 font-mono text-[11px] tabular-nums text-zinc-400"
+              className="inline-flex shrink-0 items-center gap-1 font-mono text-[11px] text-zinc-400 tabular-nums"
               title={`${stars.toLocaleString()} GitHub stars`}
             >
-              <StarIcon weight="fill" className="size-3 text-brand-orange" />
+              <StarIcon weight="fill" className="text-star size-3" />
               {formatStarCount(stars)}
             </span>
           )}
@@ -249,7 +253,7 @@ export function ResourceCardView({
                   <button
                     type="button"
                     className={cn(
-                      "flex size-7 cursor-pointer items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04] text-zinc-500 transition-all duration-150 hover:border-white/[0.18] hover:bg-white/[0.08] hover:text-white active:scale-95",
+                      "flex size-7 cursor-pointer items-center justify-center rounded-lg border border-white/8 bg-white/4 text-zinc-500 transition-all duration-150 hover:border-white/18 hover:bg-white/8 hover:text-white active:scale-95",
                       isBookmarked && "border-primary/40 bg-primary/15 text-primary",
                     )}
                     onMouseEnter={() => setIsBookmarkHovered(true)}
@@ -279,12 +283,7 @@ export function ResourceCardView({
                     className="flex size-7 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04] text-zinc-500 transition-all duration-150 hover:border-white/[0.18] hover:bg-white/[0.08] hover:text-white active:scale-95"
                     aria-label="Open in new tab"
                   >
-                    <HugeiconsIcon
-                      aria-hidden="true"
-                      icon={ArrowUpRight01Icon}
-                      strokeWidth={2}
-                      className="size-3.5"
-                    />
+                    <ArrowUpRightIcon weight="bold" className="size-3.5" />
                   </a>
                 </TooltipTrigger>
                 <TooltipContent side="top">
@@ -301,9 +300,9 @@ export function ResourceCardView({
             {parsedTags.slice(0, 3).map((t) => (
               <span
                 key={t}
-                className="inline-flex items-center gap-1 rounded-md border border-brand-purple/25 bg-brand-purple/10 px-1.5 py-0.5 font-mono text-[9px] font-medium text-brand-purple"
+                className="border-brand-purple/25 bg-brand-purple/10 text-brand-purple inline-flex items-center gap-1 rounded-md border px-1.5 py-0.5 font-mono text-[9px] font-medium"
               >
-                <TagIcon className="size-2.5 text-brand-purple" />
+                <TagIcon className="text-brand-purple size-2.5" />
                 {t}
               </span>
             ))}

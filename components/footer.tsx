@@ -86,7 +86,7 @@ export default function Footer() {
               {isUserAdmin && (
                 <Link
                   href="/admin/submissions"
-                  className="after:bg-primary font-bold text-paper relative inline-block transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
+                  className="after:bg-primary text-paper relative inline-block font-bold transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
                 >
                   [ Admin{pendingCount > 0 ? ` (${pendingCount})` : ""} ]
                 </Link>
@@ -122,7 +122,7 @@ export default function Footer() {
             href={siteConfig.links.authorLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-paper hover:text-white underline underline-offset-2 transition-colors"
+            className="text-paper underline underline-offset-2 transition-colors hover:text-white"
           >
             {siteConfig.author.name}
           </a>

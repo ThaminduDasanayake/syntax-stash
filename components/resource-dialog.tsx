@@ -285,12 +285,12 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
                 alt="GitHub"
                 width={16}
                 height={16}
-                className="size-4 transition-all group-hover:scale-105"
+                className="size-4 shrink-0 transition-transform group-hover:scale-105"
               />
               <span className="hidden sm:inline">GitHub</span>
               {formattedStars && (
-                <span className="text-muted-foreground group-hover:text-foreground inline-flex items-center gap-0.5 transition-colors">
-                  <StarIcon weight="fill" className="size-3 text-amber-500" />
+                <span className="text-muted-foreground group-hover:text-foreground inline-flex items-center gap-1 transition-colors">
+                  <StarIcon weight="fill" className="text-star size-3.5 shrink-0" />
                   <span>{formattedStars}</span>
                 </span>
               )}
@@ -344,16 +344,9 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
       </div>
 
       {/* Mobile Fixed Top Bar */}
-      <div
-        className="z-30 flex h-12 shrink-0 items-center justify-between border-b border-white/[0.08] bg-[#18181b] px-4 text-foreground md:hidden"
-      >
+      <div className="text-foreground z-30 flex h-12 shrink-0 items-center justify-between border-b border-white/8 bg-[#18181b] px-4 md:hidden">
         <div className="flex min-w-0 flex-1 items-center gap-2 pr-3">
-          <span
-            className={cn(
-              "size-2 shrink-0 rounded-full",
-              activeThemeStyles.dot,
-            )}
-          />
+          <span className={cn("size-2 shrink-0 rounded-full", activeThemeStyles.dot)} />
 
           <div className="relative h-5 min-w-0 flex-1">
             {/* Category label */}
@@ -400,21 +393,14 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
         className="modal-body flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-none [scrollbar-color:var(--line-2)_transparent] md:grid md:grid-cols-[340px_1fr] md:overflow-hidden md:overscroll-contain [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent"
       >
         {/* Left Side */}
-        <div
-          className="modal-left relative flex shrink-0 flex-col bg-[#141416] text-foreground border-b border-white/[0.08] px-5 pt-3 pb-6 md:overflow-y-auto md:border-r md:border-b-0 md:px-7 md:py-8"
-        >
+        <div className="modal-left text-foreground relative flex shrink-0 flex-col border-b border-white/8 bg-[#141416] px-5 pt-3 pb-6 md:overflow-y-auto md:border-r md:border-b-0 md:px-7 md:py-8">
           {/* Desktop Category Header */}
           <div className="modal-cat-label hidden md:flex">
             <div className="flex min-w-0 items-center gap-2">
-              <span
-                className={cn(
-                  "size-2 shrink-0 rounded-full",
-                  activeThemeStyles.dot,
-                )}
-              />
+              <span className={cn("size-2 shrink-0 rounded-full", activeThemeStyles.dot)} />
               <Link
                 href={`/resources/${activeTool.category}`}
-                className="modal-cat-name text-muted-foreground hover:text-foreground font-semibold font-mono text-xs truncate"
+                className="modal-cat-name text-muted-foreground hover:text-foreground truncate font-mono text-xs font-semibold"
               >
                 {activeTool.category}
               </Link>
@@ -442,7 +428,9 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
           </div>
 
           {/* Desktop Title */}
-          <DialogTitle className="modal-title text-foreground hidden md:block">{activeTool.title}</DialogTitle>
+          <DialogTitle className="modal-title text-foreground hidden md:block">
+            {activeTool.title}
+          </DialogTitle>
 
           {/* Mobile Spacer (same dimensions as headline, invisible) */}
           <div
@@ -455,8 +443,12 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
           {/* Mobile Accessibility Title */}
           <DialogTitle className="sr-only md:hidden">{activeTool.title}</DialogTitle>
 
-          {activeTool.subtitle && <p className="modal-subtitle text-muted-foreground">{activeTool.subtitle}</p>}
-          <p className="modal-description text-foreground/90 border-t border-white/[0.08]">{activeTool.description}</p>
+          {activeTool.subtitle && (
+            <p className="modal-subtitle text-muted-foreground">{activeTool.subtitle}</p>
+          )}
+          <p className="modal-description text-foreground/90 border-t border-white/8">
+            {activeTool.description}
+          </p>
 
           {activeTool.author &&
             (() => {
@@ -479,7 +471,7 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
               if (authorList.length === 0) return null;
 
               return (
-                <p className="modal-author flex flex-wrap items-center gap-1 text-muted-foreground">
+                <p className="modal-author text-muted-foreground flex flex-wrap items-center gap-1">
                   {authorList.map((authorName, index) => (
                     <span key={authorName} className="inline-flex items-center">
                       {index > 0 && <span className="mr-1 opacity-60">&</span>}
@@ -535,8 +527,10 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
               );
             })()}
 
-            <div className="modal-link">
-              <span className={cn("modal-heading", activeThemeStyles.label)}>Resource URL</span>
+            <div className="mb-5.5 flex flex-col items-start">
+              <span className={cn("text-display-2xs mb-2.5 block", activeThemeStyles.label)}>
+                Resource URL
+              </span>
               <div className="flex items-center justify-between gap-2">
                 <a
                   href={activeTool.url}
@@ -558,16 +552,18 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
             </div>
 
             {activeTool.github && (
-              <div className="modal-link">
-                <div className="flex items-center justify-between">
-                  <span className={cn("modal-heading", activeThemeStyles.label)}>GitHub</span>
+              <div className="mb-5.5 flex flex-col items-start">
+                <div className="flex w-full items-center gap-5">
+                  <span className={cn("text-display-2xs", activeThemeStyles.label)}>
+                    GitHub
+                  </span>
                   {formattedStars && (
                     <span
-                      className="text-muted-foreground inline-flex items-center gap-1 font-mono text-xs"
+                      className="text-muted-foreground inline-flex items-center gap-1 font-mono text-xs leading-none"
                       title={`${gitHubStars?.toLocaleString()} GitHub stars`}
                     >
-                      <StarIcon weight="fill" className="size-3.5 text-amber-500" />
-                      <span>{formattedStars}</span>
+                      <StarIcon weight="fill" className="text-star size-3.5 shrink-0" />
+                      <span className="leading-none">{formattedStars}</span>
                     </span>
                   )}
                 </div>
@@ -610,10 +606,11 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
                         variant="outline"
                         size="xs"
                         onClick={() => onTagClickAction?.(tag)}
-                        className="text-mono-xs h-7 rounded-full border border-brand-purple/25 bg-brand-purple/5 px-3 py-1 font-semibold text-foreground transition-all duration-150 hover:-translate-y-0.5 hover:border-brand-purple/50 hover:bg-brand-purple/15"
+                        className="text-mono-xs border-brand-purple/25 bg-brand-purple/5 text-foreground hover:border-brand-purple/50 hover:bg-brand-purple/15 h-7 rounded-full border px-3 py-1 font-semibold transition-all duration-150 hover:-translate-y-0.5"
                         title={`Filter by #${tag}`}
                       >
-                        <span className="text-brand-purple mr-1 font-bold">#</span>{tag}
+                        <span className="text-brand-purple mr-1 font-bold">#</span>
+                        {tag}
                       </Button>
                     ))}
                 </div>
@@ -624,7 +621,7 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
             {authorResources.length > 0 && activeTool.author && (
               <div className="mb-5.5">
                 <div className="mb-2 flex items-center justify-between">
-                  <span className={cn("modal-heading mb-0!", activeThemeStyles.label)}>
+                  <span className={cn("text-display-2xs mb-2.5 block", activeThemeStyles.label)}>
                     More by{" "}
                     {Array.isArray(activeTool.author)
                       ? activeTool.author.join(" & ")
@@ -646,7 +643,10 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
                       <button
                         key={res.title}
                         onClick={() => handleSelectTool(res)}
-                        className={cn("modal-related-chip group hover:border-primary/40", styles.chip)}
+                        className={cn(
+                          "modal-related-chip group hover:border-primary/40",
+                          styles.chip,
+                        )}
                       >
                         <span className={cn("modal-chip-dot", styles.dot)} />
                         {res.title}
@@ -660,7 +660,9 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
             {/* Related Section */}
             {relatedResources.length > 0 && (
               <div>
-                <span className={cn("modal-heading", activeThemeStyles.label)}>Related</span>
+                <span className={cn("text-display-2xs mb-2.5 block", activeThemeStyles.label)}>
+                  Related
+                </span>
                 <div className="modal-related-chips">
                   {relatedResources.map((res) => {
                     const styles = THEME_CONFIG[getCategoryTheme(res.category)];
@@ -668,7 +670,10 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
                       <button
                         key={res.url || res.title}
                         onClick={() => handleSelectTool(res)}
-                        className={cn("modal-related-chip group hover:border-primary/40", styles.chip)}
+                        className={cn(
+                          "modal-related-chip group hover:border-primary/40",
+                          styles.chip,
+                        )}
                       >
                         <span className={cn("modal-chip-dot", styles.dot)} />
                         {res.title}

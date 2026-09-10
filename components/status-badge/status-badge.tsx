@@ -45,43 +45,28 @@ const STATUS_DOT: Record<AppStatus, string> = {
   stopped: "bg-muted-foreground/50",
 };
 
-export const StatusBadge = ({
-  className,
-  label,
-  status,
-  ...props
-}: StatusBadgeProps) => (
+export const StatusBadge = ({ className, label, status, ...props }: StatusBadgeProps) => (
   <span
     className={cn(
-      "inline-flex items-center gap-1.5 rounded-sm border border-border/60 bg-card px-2 py-0.5 font-mono text-muted-foreground text-xs",
-      className
+      "border-border/60 bg-card text-muted-foreground inline-flex items-center gap-1.5 rounded-sm border px-2 py-0.5 font-mono text-xs",
+      className,
     )}
     data-slot="status-badge"
     data-status={status}
     {...props}
   >
-    <span
-      aria-hidden="true"
-      className={cn("size-1.5 shrink-0", STATUS_DOT[status])}
-    />
+    <span aria-hidden="true" className={cn("size-1.5 shrink-0", STATUS_DOT[status])} />
     {label ?? STATUS_LABEL[status]}
   </span>
 );
 
 /** Billing-plan companion: same footprint, no dot, paid gets ink. */
-export const PlanBadge = ({
-  className,
-  label,
-  plan,
-  ...props
-}: PlanBadgeProps) => (
+export const PlanBadge = ({ className, label, plan, ...props }: PlanBadgeProps) => (
   <span
     className={cn(
-      "inline-flex items-center rounded-sm border border-border/60 px-2 py-0.5 font-mono text-xs",
-      plan === "paid"
-        ? "border-primary/40 text-primary"
-        : "bg-card text-muted-foreground",
-      className
+      "border-border/60 inline-flex items-center rounded-sm border px-2 py-0.5 font-mono text-xs",
+      plan === "paid" ? "border-primary/40 text-primary" : "bg-card text-muted-foreground",
+      className,
     )}
     data-plan={plan}
     data-slot="plan-badge"

@@ -656,10 +656,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
                     02. Filter Pills (Active & Inactive)
                   </span>
                   <div className="flex flex-wrap gap-2">
-                    <DotButton
-                      label={`${selectedTheme.toUpperCase()} ACTIVE`}
-                      isActive={true}
-                    />
+                    <DotButton label={`${selectedTheme.toUpperCase()} ACTIVE`} isActive={true} />
                     <DotButton label="INACTIVE PILL" isActive={false} />
                   </div>
                 </div>

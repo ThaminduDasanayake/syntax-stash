@@ -38,6 +38,8 @@
   --brand-purple: oklch(0.7788 0.1126 306.2);
   --brand-green: oklch(0.6637 0.1739 136.2);
 
+  --star: oklch(0.7904 0.1386 85.2);
+
   /* Tailwind Semantic Mappings */
   --background: var(--bg);
   --foreground: var(--ink);
@@ -99,6 +101,7 @@
   --color-ink-2: var(--ink-2);
   --color-ink-mute: var(--ink-mute);
   --color-ink-faint: var(--ink-faint);
+  --color-star: var(--star);
 
   /* Typography */
   --font-sans: var(--font-sans);
@@ -724,10 +727,6 @@
   @apply text-ink-2 text-base leading-relaxed;
 }
 
-@utility modal-heading {
-  @apply text-display-2xs mb-2.5 block;
-}
-
 @utility modal-related-chips {
   @apply xs:flex-wrap xs:flex-row xs:gap-2 flex flex-col items-stretch gap-2;
 }
@@ -738,10 +737,6 @@
 
 @utility modal-chip-dot {
   @apply inline-block aspect-square size-2 shrink-0 rounded-full border border-white/10 transition-colors duration-200;
-}
-
-@utility modal-link {
-  @apply mb-5.5 flex flex-col items-start;
 }
 
 @utility modal-launch {
