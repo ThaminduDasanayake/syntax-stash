@@ -237,6 +237,53 @@ export function AdminResourceDialog({
         } = {};
 
         setFormData((prev) => {
+          if (resource) {
+            // In edit mode: keep all existing fields untouched; suggest detected values if different
+            if (
+              data.title &&
+              prev.title &&
+              prev.title.trim().toLowerCase() !== data.title.trim().toLowerCase()
+            ) {
+              newDetected.title = data.title.trim();
+            }
+
+            if (
+              data.subtitle &&
+              prev.subtitle &&
+              prev.subtitle.trim().toLowerCase() !== data.subtitle.trim().toLowerCase()
+            ) {
+              newDetected.subtitle = data.subtitle.trim();
+            }
+
+            if (
+              data.description &&
+              prev.description &&
+              prev.description.trim().toLowerCase() !== data.description.trim().toLowerCase()
+            ) {
+              newDetected.description = data.description.trim();
+            }
+
+            if (
+              data.github &&
+              prev.github &&
+              prev.github.trim().toLowerCase() !== data.github.trim().toLowerCase()
+            ) {
+              newDetected.github = data.github.trim();
+            }
+
+            return {
+              ...prev,
+              title: prev.title || data.title || "",
+              category: prev.category || data.category || (categoryOptions[0]?.value ?? ""),
+              description: prev.description || data.description || "",
+              favicon: prev.favicon || data.favicon || "",
+              github: prev.github || data.github || "",
+              ogImage: prev.ogImage || data.ogImage || "",
+              subtitle: prev.subtitle || data.subtitle || "",
+            };
+          }
+
+          // In create mode: populate empty fields or suggest updates
           const nextTitle = prev.title || data.title || "";
           if (
             prev.title &&
@@ -278,9 +325,9 @@ export function AdminResourceDialog({
             title: nextTitle,
             category: prev.category || data.category || (categoryOptions[0]?.value ?? ""),
             description: nextDescription,
-            favicon: data.favicon || prev.favicon || "",
+            favicon: prev.favicon || data.favicon || "",
             github: nextGithub,
-            ogImage: data.ogImage || prev.ogImage || "",
+            ogImage: prev.ogImage || data.ogImage || "",
             subtitle: nextSubtitle,
           };
         });

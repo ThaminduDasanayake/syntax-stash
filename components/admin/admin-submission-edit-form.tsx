@@ -220,37 +220,33 @@ export function AdminSubmissionEditForm({
         } = {};
 
         setEditForm((prev) => {
-          const nextTitle = prev.title || data.title || "";
           if (
-            prev.title &&
             data.title &&
+            prev.title &&
             prev.title.trim().toLowerCase() !== data.title.trim().toLowerCase()
           ) {
             newDetected.title = data.title.trim();
           }
 
-          const nextSubtitle = prev.subtitle || data.subtitle || "";
           if (
-            prev.subtitle &&
             data.subtitle &&
+            prev.subtitle &&
             prev.subtitle.trim().toLowerCase() !== data.subtitle.trim().toLowerCase()
           ) {
             newDetected.subtitle = data.subtitle.trim();
           }
 
-          const nextDescription = prev.description || data.description || "";
           if (
-            prev.description &&
             data.description &&
+            prev.description &&
             prev.description.trim().toLowerCase() !== data.description.trim().toLowerCase()
           ) {
             newDetected.description = data.description.trim();
           }
 
-          const nextGithub = prev.github || data.github || "";
           if (
-            prev.github &&
             data.github &&
+            prev.github &&
             prev.github.trim().toLowerCase() !== data.github.trim().toLowerCase()
           ) {
             newDetected.github = data.github.trim();
@@ -258,13 +254,13 @@ export function AdminSubmissionEditForm({
 
           return {
             ...prev,
-            title: nextTitle,
+            title: prev.title || data.title || "",
             category: prev.category || data.category || sub.category,
-            description: nextDescription,
-            favicon: data.favicon || prev.favicon,
-            github: nextGithub,
-            ogImage: data.ogImage || prev.ogImage,
-            subtitle: nextSubtitle,
+            description: prev.description || data.description || "",
+            favicon: prev.favicon || data.favicon || "",
+            github: prev.github || data.github || "",
+            ogImage: prev.ogImage || data.ogImage || "",
+            subtitle: prev.subtitle || data.subtitle || "",
           };
         });
 
