@@ -39,11 +39,12 @@ export function normalizeTag(rawTag: string): string {
 }
 
 export function getResourceId(
-  target: { title?: string; slug?: string; url?: string } | string,
+  target: { id?: string; title?: string; slug?: string; url?: string } | string,
 ): string {
   if (typeof target === "string") return target;
-  if (target.slug) return target.slug;
+  if (target.id) return target.id;
   if (target.url) return target.url;
+  if (target.slug) return target.slug;
   if (target.title) return slugify(target.title);
   return "";
 }

@@ -8,6 +8,7 @@ import {
   ClipboardTextIcon,
   EyeIcon,
   FunnelIcon,
+  HeartbeatIcon,
   MagnifyingGlassIcon,
   PencilSimpleIcon,
   PlusIcon,
@@ -63,6 +64,7 @@ export function AdminResourcesClient({
   const [resources, setResources] = useState<AdminResourceItem[]>(initialResources);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [healthFilter, setHealthFilter] = useState<string>("all");
   const [sortBy, setSortBy] = useState<string>("newest");
   const [viewMode, setViewMode] = useState<"cards" | "table">("cards");
   const [currentPage, setCurrentPage] = useState(1);
@@ -77,6 +79,116 @@ export function AdminResourcesClient({
   // Dynamic pagination: 24 for visual cards, 50 for text data table
   const itemsPerPage = viewMode === "cards" ? 24 : 50;
 
+  // Compute Missing Data Metrics across all loaded resources
+  const missingStats = useMemo(() => {
+    let missingOg = 0;
+    let missingAuthor = 0;
+    let missingGithub = 0;
+    let missingFavicon = 0;
+    let missingTags = 0;
+    let missingSubtitle = 0;
+    let missingDescription = 0;
+    let anyMissing = 0;
+
+    for (const r of resources) {
+      const hasNoOg = !r.ogImage || !r.ogImage.trim();
+      const hasNoAuthor = !r.authorName || !r.authorName.trim();
+      const hasNoGithub = !r.github || !r.github.trim();
+      const hasNoFavicon = !r.favicon || !r.favicon.trim();
+      const hasNoTags = !r.tags || !r.tags.trim();
+      const hasNoSubtitle = !r.subtitle || !r.subtitle.trim();
+      const hasNoDesc = !r.description || !r.description.trim();
+
+      if (hasNoOg) missingOg++;
+      if (hasNoAuthor) missingAuthor++;
+      if (hasNoGithub) missingGithub++;
+      if (hasNoFavicon) missingFavicon++;
+      if (hasNoTags) missingTags++;
+      if (hasNoSubtitle) missingSubtitle++;
+      if (hasNoDesc) missingDescription++;
+
+      if (hasNoOg || hasNoAuthor || hasNoFavicon || hasNoTags || hasNoDesc) {
+        anyMissing++;
+      }
+    }
+
+    return {
+      anyMissing,
+      missingAuthor,
+      missingDescription,
+      missingFavicon,
+      missingGithub,
+      missingOg,
+      missingSubtitle,
+      missingTags,
+    };
+  }, [resources]);
+
+  // Dynamically generate missing data filter options — only include options with count > 0
+  const missingFilterOptions = useMemo(() => {
+    const options: { label: string; value: string }[] = [
+      { label: "Data Health: All", value: "all" },
+    ];
+
+    if (missingStats.anyMissing > 0) {
+      options.push({
+        label: `⚠️ Any Missing Data (${missingStats.anyMissing})`,
+        value: "any-missing",
+      });
+    }
+
+    if (missingStats.missingOg > 0) {
+      options.push({
+        label: `Missing OG Image (${missingStats.missingOg})`,
+        value: "missing-og",
+      });
+    }
+
+    if (missingStats.missingAuthor > 0) {
+      options.push({
+        label: `Missing Author (${missingStats.missingAuthor})`,
+        value: "missing-author",
+      });
+    }
+
+    if (missingStats.missingTags > 0) {
+      options.push({
+        label: `Missing Tags (${missingStats.missingTags})`,
+        value: "missing-tags",
+      });
+    }
+
+    if (missingStats.missingFavicon > 0) {
+      options.push({
+        label: `Missing Favicon (${missingStats.missingFavicon})`,
+        value: "missing-favicon",
+      });
+    }
+
+    if (missingStats.missingGithub > 0) {
+      options.push({
+        label: `Missing GitHub (${missingStats.missingGithub})`,
+        value: "missing-github",
+      });
+    }
+
+    if (missingStats.missingSubtitle > 0) {
+      options.push({
+        label: `Missing Subtitle (${missingStats.missingSubtitle})`,
+        value: "missing-subtitle",
+      });
+    }
+
+    if (missingStats.missingDescription > 0) {
+      options.push({
+        label: `Missing Description (${missingStats.missingDescription})`,
+        value: "missing-description",
+      });
+    }
+
+    return options;
+  }, [missingStats]);
+
   // Filter & Sort
   const filteredAndSortedResources = useMemo(() => {
     let result = resources;
@@ -84,6 +196,32 @@ export function AdminResourcesClient({
     // Filter by Category
     if (selectedCategory && selectedCategory !== "all") {
       result = result.filter((r) => r.category === selectedCategory);
+    }
+
+    // Filter by Health / Missing Data
+    if (healthFilter === "missing-og") {
+      result = result.filter((r) => !r.ogImage || !r.ogImage.trim());
+    } else if (healthFilter === "missing-author") {
+      result = result.filter((r) => !r.authorName || !r.authorName.trim());
+    } else if (healthFilter === "missing-tags") {
+      result = result.filter((r) => !r.tags || !r.tags.trim());
+    } else if (healthFilter === "missing-favicon") {
+      result = result.filter((r) => !r.favicon || !r.favicon.trim());
+    } else if (healthFilter === "missing-github") {
+      result = result.filter((r) => !r.github || !r.github.trim());
+    } else if (healthFilter === "missing-subtitle") {
+      result = result.filter((r) => !r.subtitle || !r.subtitle.trim());
+    } else if (healthFilter === "missing-description") {
+      result = result.filter((r) => !r.description || !r.description.trim());
+    } else if (healthFilter === "any-missing") {
+      result = result.filter(
+        (r) =>
+          !r.ogImage?.trim() ||
+          !r.authorName?.trim() ||
+          !r.favicon?.trim() ||
+          !r.tags?.trim() ||
+          !r.description?.trim(),
+      );
     }
 
     // Filter by Search Query
@@ -119,7 +257,7 @@ export function AdminResourcesClient({
     }
 
     return sorted;
-  }, [resources, searchQuery, selectedCategory, sortBy]);
+  }, [healthFilter, resources, searchQuery, selectedCategory, sortBy]);
 
   // Pagination calculation
   const totalPages = Math.ceil(filteredAndSortedResources.length / itemsPerPage) || 1;
@@ -142,6 +280,11 @@ export function AdminResourcesClient({
 
   const handleCategoryChange = (val: string) => {
     setSelectedCategory(val);
+    setCurrentPage(1);
+  };
+
+  const handleHealthFilterChange = (val: string) => {
+    setHealthFilter(val);
     setCurrentPage(1);
   };
 
@@ -307,10 +450,10 @@ export function AdminResourcesClient({
 
         {/* Filter Dropdowns & Stats */}
         <div className="border-line flex flex-wrap items-center justify-between gap-3 border-t pt-3">
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-5">
             {/* Category Select */}
             <div className="flex items-center gap-1.5">
-              <FunnelIcon className="text-muted-foreground size-3.5" />
+              <FunnelIcon weight="duotone" className="text-brand-green size-7" />
               <span className="text-muted-foreground text-[11px] font-bold uppercase">
                 Category:
               </span>
@@ -322,9 +465,25 @@ export function AdminResourcesClient({
               />
             </div>
 
+            {/* Dynamic Data Health Filter (only shown if missing data options exist) */}
+            {missingFilterOptions.length > 1 && (
+              <div className="flex items-center gap-1.5">
+                <HeartbeatIcon weight="duotone" className="size-8 text-rose-500" />
+                <span className="text-muted-foreground text-[11px] font-bold whitespace-nowrap uppercase">
+                  Data Health:
+                </span>
+                <SelectField
+                  value={healthFilter}
+                  onValueChange={handleHealthFilterChange}
+                  options={missingFilterOptions}
+                  triggerClassName="h-8 font-mono text-xs min-w-[190px]"
+                />
+              </div>
+            )}
+
             {/* Sort Select */}
             <div className="flex items-center gap-1.5">
-              <SlidersHorizontalIcon className="text-muted-foreground size-3.5" />
+              <SlidersHorizontalIcon className="text-brand-purple size-7" />
               <span className="text-muted-foreground text-[11px] font-bold uppercase">Sort:</span>
               <SelectField
                 value={sortBy}
@@ -411,11 +570,18 @@ export function AdminResourcesClient({
                           </td>
 
                           {/* Title & Subtitle */}
-                          <td className="min-w-[200px] px-4 py-2.5">
+                          <td className="min-w-50 px-4 py-2.5">
                             <div className="flex flex-col">
-                              <span className="text-foreground group-hover:text-primary text-xs leading-snug font-bold transition-colors">
-                                {item.title}
-                              </span>
+                              <div className="flex items-center gap-1.5">
+                                <span className="text-foreground group-hover:text-primary text-xs leading-snug font-bold transition-colors">
+                                  {item.title}
+                                </span>
+                                {!item.ogImage?.trim() && (
+                                  <span className="py-0.2 rounded bg-amber-500/15 px-1 text-[9px] font-bold text-amber-700 dark:text-amber-400">
+                                    No OG
+                                  </span>
+                                )}
+                              </div>
                               {item.subtitle && (
                                 <span className="text-muted-foreground line-clamp-1 text-[11px]">
                                   {item.subtitle}
@@ -434,7 +600,7 @@ export function AdminResourcesClient({
                           </td>
 
                           {/* URL */}
-                          <td className="max-w-[200px] px-4 py-2.5">
+                          <td className="max-w-50 px-4 py-2.5">
                             <a
                               href={item.url}
                               target="_blank"
@@ -447,7 +613,7 @@ export function AdminResourcesClient({
                           </td>
 
                           {/* Tags */}
-                          <td className="max-w-[180px] px-4 py-2.5">
+                          <td className="max-w-45 px-4 py-2.5">
                             {item.tags ? (
                               <div className="flex flex-wrap gap-1">
                                 {item.tags

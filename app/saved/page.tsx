@@ -2,6 +2,7 @@
 
 import { BookmarkSimpleIcon, FolderSimpleIcon, GoogleLogoIcon } from "@phosphor-icons/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
 import { CollectionsView } from "@/components/collections/collections-view";
@@ -10,7 +11,7 @@ import { FilterSection } from "@/components/filter-section";
 import { ToolCardSkeleton } from "@/components/tool-card-skeleton";
 import { Button } from "@/components/ui/button";
 import { useBookmarks } from "@/hooks/use-bookmarks";
-import { signIn } from "@/lib/auth-client";
+import { signIn, useSession } from "@/lib/auth-client";
 import { cn, getResourceId } from "@/lib/utils";
 import { Resource } from "@/types";
 
@@ -18,6 +19,7 @@ type StashTab = "bookmarks" | "collections";
 
 export default function SavedPage() {
   const [activeTab, setActiveTab] = useState<StashTab>("bookmarks");
+  const { data: session, isPending: isSessionLoading } = useSession();
   const { bookmarkedSet, isLoading: isBookmarksLoading } = useBookmarks();
   const [allResources, setAllResources] = useState<Resource[]>([]);
   const [isResourcesLoading, setIsResourcesLoading] = useState(true);
@@ -42,7 +44,7 @@ export default function SavedPage() {
     return Array.from(new Set(savedResources.map((r) => r.category)));
   }, [savedResources]);
 
-  const isLoading = isBookmarksLoading || isResourcesLoading;
+  const isLoading = isBookmarksLoading || isResourcesLoading || isSessionLoading;
 
   const handleOAuthSignIn = (provider: "github" | "google") => {
     signIn.social({
@@ -123,36 +125,57 @@ export default function SavedPage() {
       ) : savedResources.length === 0 ? (
         <div className="mx-auto flex min-h-[45vh] flex-col items-center justify-center py-16 text-center">
           <p className="font-mono text-base font-bold uppercase">Your stash is empty</p>
-          <p className="mt-1.5 max-w-sm font-mono text-xs opacity-60">
-            Sign in with Google or GitHub to save tools and resources to your cloud account across
-            all your devices.
-          </p>
+          {session ? (
+            <>
+              <p className="mt-1.5 max-w-sm font-mono text-xs opacity-60">
+                You haven&apos;t saved any tools or resources yet. Bookmark items across the library
+                to access them here anytime.
+              </p>
+              <div className="mt-6">
+                <Button
+                  asChild
+                  variant="outline"
+                  size="sm"
+                  className="border-ink/40 hover:bg-ink hover:text-paper font-mono text-xs font-bold tracking-wider uppercase"
+                >
+                  <Link href="/resources">Explore Library</Link>
+                </Button>
+              </div>
+            </>
+          ) : (
+            <>
+              <p className="mt-1.5 max-w-sm font-mono text-xs opacity-60">
+                Sign in with Google or GitHub to save tools and resources to your cloud account
+                across all your devices.
+              </p>
 
-          <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => handleOAuthSignIn("github")}
-              className="group border-ink/40 hover:bg-ink hover:text-paper font-mono text-xs font-bold tracking-wider uppercase"
-            >
-              <Image
-                src="/github.svg"
-                alt="GitHub"
-                width={16}
-                height={16}
-                className="size-4 transition-all group-hover:invert"
-              />{" "}
-              Sign In with GitHub
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => handleOAuthSignIn("google")}
-              className="border-ink/40 hover:bg-ink hover:text-paper font-mono text-xs font-bold tracking-wider uppercase"
-            >
-              <GoogleLogoIcon weight="bold" /> Sign In with Google
-            </Button>
-          </div>
+              <div className="mt-6 flex flex-wrap justify-center gap-3">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleOAuthSignIn("github")}
+                  className="group border-ink/40 hover:bg-ink hover:text-paper font-mono text-xs font-bold tracking-wider uppercase"
+                >
+                  <Image
+                    src="/github.svg"
+                    alt="GitHub"
+                    width={16}
+                    height={16}
+                    className="size-4 transition-all group-hover:invert"
+                  />{" "}
+                  Sign In with GitHub
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleOAuthSignIn("google")}
+                  className="border-ink/40 hover:bg-ink hover:text-paper font-mono text-xs font-bold tracking-wider uppercase"
+                >
+                  <GoogleLogoIcon weight="bold" /> Sign In with Google
+                </Button>
+              </div>
+            </>
+          )}
         </div>
       ) : (
         <FilterSection

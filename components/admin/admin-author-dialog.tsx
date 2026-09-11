@@ -5,7 +5,10 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-import { invalidateAuthorCache } from "@/components/submissions/author-combobox";
+import {
+  invalidateAuthorCache,
+  registerNewAuthorLocally,
+} from "@/components/submissions/author-combobox";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -166,7 +169,7 @@ export function AdminAuthorDialog({
 
         if (res.ok && data.success && data.author) {
           toast.success(`"${formData.name}" created successfully.`);
-          invalidateAuthorCache();
+          registerNewAuthorLocally(data.author);
           onCreated?.(data.author);
           onOpenChange(false);
         } else {

@@ -153,7 +153,6 @@ export function AdminSubmissionEditForm({
   const handleSelectAuthorOption = (authorOption: AuthorOption) => {
     setEditForm((prev) => ({
       ...prev,
-      author: authorOption.name,
       authorGitHub: authorOption.links?.github || prev.authorGitHub || "",
       authorLinkedIn: authorOption.links?.linkedin || prev.authorLinkedIn || "",
       authorTwitter: authorOption.links?.twitter || prev.authorTwitter || "",
@@ -495,6 +494,7 @@ export function AdminSubmissionEditForm({
               className="rounded-lg"
               description={editForm.description || sub.description}
               favicon={editForm.favicon}
+              ogImage={editForm.ogImage}
               subtitle={editForm.subtitle}
               tags={editForm.tags}
               title={editForm.title || sub.title}
@@ -562,15 +562,26 @@ export function AdminSubmissionEditForm({
         onOpenChange={setIsCreateAuthorOpen}
         initialName={createAuthorInitialName}
         onCreated={(newAuthor) => {
-          setEditForm((prev) => ({
-            ...prev,
-            author: newAuthor.name,
-            authorGitHub: newAuthor.github || "",
-            authorLinkedIn: newAuthor.linkedin || "",
-            authorTwitter: newAuthor.twitter || "",
-            authorWebsite: newAuthor.website || "",
-            authorYouTube: newAuthor.youtube || "",
-          }));
+          setEditForm((prev) => {
+            const existing = prev.author
+              ? prev.author
+                  .split(",")
+                  .map((a) => a.trim())
+                  .filter(Boolean)
+              : [];
+            const next = existing.some((a) => a.toLowerCase() === newAuthor.name.toLowerCase())
+              ? existing
+              : [...existing, newAuthor.name];
+            return {
+              ...prev,
+              author: next.join(", "),
+              authorGitHub: newAuthor.github || prev.authorGitHub || "",
+              authorLinkedIn: newAuthor.linkedin || prev.authorLinkedIn || "",
+              authorTwitter: newAuthor.twitter || prev.authorTwitter || "",
+              authorWebsite: newAuthor.website || prev.authorWebsite || "",
+              authorYouTube: newAuthor.youtube || prev.authorYouTube || "",
+            };
+          });
           setIsCreateAuthorOpen(false);
         }}
       />

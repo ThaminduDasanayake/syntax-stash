@@ -1,12 +1,12 @@
 import { randomUUID } from "node:crypto";
 
-import { and, eq } from "drizzle-orm";
+import { and, eq, or } from "drizzle-orm";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { bookmark } from "@/lib/db/schema";
+import { bookmark, resource } from "@/lib/db/schema";
 
 export async function GET() {
   try {
@@ -50,10 +50,30 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "resourceId is required" }, { status: 400 });
     }
 
+    const trimmedInput = resourceId.trim();
+
+    // Verify target resource exists in the database by ID or URL (only external resources are bookmarkable)
+    const [targetResource] = await db
+      .select({ id: resource.id })
+      .from(resource)
+      .where(or(eq(resource.id, trimmedInput), eq(resource.url, trimmedInput)))
+      .limit(1);
+
+    if (!targetResource) {
+      return NextResponse.json(
+        { error: "Resource not found. Only external catalog resources can be bookmarked." },
+        { status: 404 },
+      );
+    }
+
+    const actualResourceId = targetResource.id;
+
     const [existing] = await db
       .select()
       .from(bookmark)
-      .where(and(eq(bookmark.userId, session.user.id), eq(bookmark.resourceId, resourceId)))
+      .where(
+        and(eq(bookmark.userId, session.user.id), eq(bookmark.resourceId, actualResourceId)),
+      )
       .limit(1);
 
     if (existing) {
@@ -61,7 +81,7 @@ export async function POST(req: Request) {
     } else {
       await db.insert(bookmark).values({
         id: randomUUID(),
-        resourceId,
+        resourceId: actualResourceId,
         userId: session.user.id,
       });
     }

@@ -113,7 +113,6 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
       authorGithub: authorOption.links?.github || "",
       authorId: authorOption.id || prev.authorId || null,
       authorLinkedin: authorOption.links?.linkedin || "",
-      authorName: authorOption.name,
       authorTwitter: authorOption.links?.twitter || "",
       authorWebsite: authorOption.links?.website || "",
       authorYoutube: authorOption.links?.youtube || "",
@@ -528,6 +527,7 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
                   author={formData.authorName}
                   category={formData.category}
                   description={formData.description}
+                  ogImage={formData.ogImage}
                   favicon={formData.favicon}
                   subtitle={formData.subtitle}
                   tags={formData.tags || ""}
@@ -604,17 +604,28 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
         onOpenChange={setIsCreateAuthorOpen}
         initialName={createAuthorInitialName}
         onCreated={(newAuthor) => {
-          setFormData((prev) => ({
-            ...prev,
-            authorBlog: newAuthor.blog || "",
-            authorGithub: newAuthor.github || "",
-            authorId: newAuthor.id,
-            authorLinkedin: newAuthor.linkedin || "",
-            authorName: newAuthor.name,
-            authorTwitter: newAuthor.twitter || "",
-            authorWebsite: newAuthor.website || "",
-            authorYoutube: newAuthor.youtube || "",
-          }));
+          setFormData((prev) => {
+            const existing = prev.authorName
+              ? prev.authorName
+                  .split(",")
+                  .map((a) => a.trim())
+                  .filter(Boolean)
+              : [];
+            const next = existing.some((a) => a.toLowerCase() === newAuthor.name.toLowerCase())
+              ? existing
+              : [...existing, newAuthor.name];
+            return {
+              ...prev,
+              authorBlog: newAuthor.blog || prev.authorBlog || "",
+              authorGithub: newAuthor.github || prev.authorGithub || "",
+              authorId: newAuthor.id || prev.authorId,
+              authorLinkedin: newAuthor.linkedin || prev.authorLinkedin || "",
+              authorName: next.join(", "),
+              authorTwitter: newAuthor.twitter || prev.authorTwitter || "",
+              authorWebsite: newAuthor.website || prev.authorWebsite || "",
+              authorYoutube: newAuthor.youtube || prev.authorYoutube || "",
+            };
+          });
           setIsCreateAuthorOpen(false);
         }}
       />
