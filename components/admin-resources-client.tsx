@@ -83,6 +83,11 @@ function AdminResourcesClientContent({
 
   const searchDebounceRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Sync resources if server props change (e.g. after router.refresh() on return from edit/create)
+  useEffect(() => {
+    setResources(initialResources);
+  }, [initialResources]);
+
   // Sync state with URL params when URL changes externally (e.g. back/forward navigation)
   useEffect(() => {
     setSearchQuery(paramQ);
@@ -541,7 +546,13 @@ function AdminResourcesClientContent({
             </Button>
 
             <Button asChild size="sm" className="h-9 gap-1.5 px-3.5 text-xs font-bold uppercase">
-              <Link href="/admin/resources/new">
+              <Link
+                href={
+                  searchParams.toString()
+                    ? `/admin/resources/new?${searchParams.toString()}`
+                    : "/admin/resources/new"
+                }
+              >
                 <PlusIcon weight="bold" className="size-4" />
                 <span>Add New Resource</span>
               </Link>
@@ -620,7 +631,11 @@ function AdminResourcesClientContent({
                   key={item.id}
                   resource={item}
                   onPreview={() => setPreviewResource(item)}
-                  onEdit={() => router.push(`/admin/resources/${item.id}`)}
+                  onEdit={() => router.push(
+  searchParams.toString()
+    ? `/admin/resources/${item.id}?${searchParams.toString()}`
+    : `/admin/resources/${item.id}`,
+)}
                   onDelete={() => setDeletingResource(item)}
                   isWorking={isWorking}
                 />
@@ -762,7 +777,11 @@ function AdminResourcesClientContent({
                               <Button
                                 size="sm"
                                 variant="outline"
-                                onClick={() => router.push(`/admin/resources/${item.id}`)}
+                                onClick={() => router.push(
+  searchParams.toString()
+    ? `/admin/resources/${item.id}?${searchParams.toString()}`
+    : `/admin/resources/${item.id}`,
+)}
                                 className="border-line hover:bg-surface size-7 p-0"
                                 title="Edit Resource"
                               >

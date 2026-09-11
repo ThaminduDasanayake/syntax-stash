@@ -9,8 +9,8 @@ import {
 } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useState } from "react";
 import { toast } from "sonner";
 
 import {
@@ -57,8 +57,12 @@ interface AdminResourceFormProps {
   mode?: "create" | "edit";
 }
 
-export function AdminResourceForm({ initialData, mode = "create" }: AdminResourceFormProps) {
+function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourceFormProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const searchString = searchParams.toString();
+  const returnUrl = `/admin/resources${searchString ? `?${searchString}` : ""}`;
+
   const isEdit = mode === "edit" || Boolean(initialData?.id);
   const { categoryOptions } = useCategories();
 
@@ -263,7 +267,7 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
             ? `"${formData.title}" updated successfully.`
             : `"${formData.title}" published to live catalog!`,
         );
-        router.push("/admin/resources");
+        router.push(returnUrl);
         router.refresh();
       } else {
         toast.error(data.error || "Failed to save resource.");
@@ -333,7 +337,7 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
               variant="outline"
               className="border-line hover:bg-surface h-8 gap-1 px-2.5 text-xs font-bold uppercase"
             >
-              <Link href="/admin/resources">
+              <Link href={returnUrl}>
                 <ArrowLeftIcon weight="bold" />
                 <span>Back to Resources</span>
               </Link>
@@ -368,7 +372,7 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
             disabled={isSubmitting}
             className="h-9 px-4 text-xs font-bold uppercase"
           >
-            <Link href="/admin/resources">Cancel</Link>
+            <Link href={returnUrl}>Cancel</Link>
           </Button>
 
           <Button
@@ -752,5 +756,13 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
         confirmLabel="Confirm & Save Resource"
       />
     </div>
+  );
+}
+
+export function AdminResourceForm(props: AdminResourceFormProps) {
+  return (
+    <Suspense>
+      <AdminResourceFormContent {...props} />
+    </Suspense>
   );
 }
