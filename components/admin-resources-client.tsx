@@ -35,12 +35,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { InputField } from "@/components/ui/input-field";
 import { SelectField } from "@/components/ui/select-field";
 import { useCategories } from "@/hooks/use-categories";
-import { cn, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 const SORT_OPTIONS = [
   { label: "Oldest First", value: "oldest" },
@@ -441,7 +442,7 @@ export function AdminResourcesClient({
 
             <Button asChild size="sm" className="h-9 gap-1.5 px-3.5 text-xs font-bold uppercase">
               <Link href="/admin/resources/new">
-                <PlusIcon className="size-4" />
+                <PlusIcon weight="bold" className="size-4" />
                 <span>Add New Resource</span>
               </Link>
             </Button>
@@ -543,30 +544,18 @@ export function AdminResourcesClient({
                   </thead>
                   <tbody className="divide-line divide-y">
                     {paginatedResources.map((item) => {
-                      const theme = getCategoryTheme(item.category);
-                      const themeStyles = THEME_CONFIG[theme];
                       const isCopied = copiedId === item.id;
 
                       return (
                         <tr key={item.id} className="hover:bg-surface/60 group transition-colors">
-                          {/* Category Badge with Theme Styling */}
+                          {/* Category Badge */}
                           <td className="px-4 py-2.5 whitespace-nowrap">
-                            <span
-                              className={cn(
-                                "inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase",
-                                themeStyles.soft,
-                                themeStyles.label,
-                                themeStyles.border,
-                              )}
+                            <Badge
+                              variant="secondary"
+                              className="font-mono text-[10px] font-bold tracking-wider uppercase"
                             >
-                              <span
-                                className={cn(
-                                  "size-1.5 rounded-full",
-                                  themeStyles.dotActive || themeStyles.dot,
-                                )}
-                              />
                               {item.category}
-                            </span>
+                            </Badge>
                           </td>
 
                           {/* Title & Subtitle */}
