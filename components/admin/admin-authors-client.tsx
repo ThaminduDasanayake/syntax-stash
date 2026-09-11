@@ -403,7 +403,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                           href={authorItem.website}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="border-line bg-paper/60 text-muted-foreground hover:text-primary hover:border-primary/50 flex size-6 items-center justify-center rounded border transition-colors"
+                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border transition-colors"
                           title={`Website: ${authorItem.website}`}
                         >
                           <GlobeIcon className="size-3.5" />
@@ -414,7 +414,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                           href={authorItem.blog}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="border-line bg-paper/60 text-muted-foreground hover:text-primary hover:border-primary/50 flex size-6 items-center justify-center rounded border transition-colors"
+                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border transition-colors"
                           title={`Blog: ${authorItem.blog}`}
                         >
                           <ArticleIcon className="size-3.5" />
@@ -429,7 +429,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                           }
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="border-line bg-paper/60 text-muted-foreground hover:text-primary hover:border-primary/50 flex size-6 items-center justify-center rounded border transition-colors"
+                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border transition-colors"
                           title={`GitHub: ${authorItem.github}`}
                         >
                           <Image
@@ -437,7 +437,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                             alt="GitHub"
                             width={14}
                             height={14}
-                            className="size-3.5 opacity-70 hover:opacity-100 dark:invert"
+                            className="size-3.5"
                           />
                         </a>
                       )}
@@ -450,7 +450,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                           }
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="border-line bg-paper/60 text-muted-foreground hover:text-primary hover:border-primary/50 flex size-6 items-center justify-center rounded border transition-colors"
+                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border transition-colors"
                           title={`Twitter/X: ${authorItem.twitter}`}
                         >
                           <XLogoIcon className="size-3" />
@@ -465,7 +465,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                           }
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="border-line bg-paper/60 text-muted-foreground hover:text-primary hover:border-primary/50 flex size-6 items-center justify-center rounded border transition-colors"
+                          className="border-line bg-paper/60 text-muted-foreground hover:text-primary hover:border-primary/70 flex size-6 items-center justify-center rounded border transition-colors"
                           title={`LinkedIn: ${authorItem.linkedin}`}
                         >
                           <Image
@@ -473,7 +473,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                             alt="LinkedIn"
                             width={14}
                             height={14}
-                            className="size-3.5 opacity-70 hover:opacity-100"
+                            className="size-3.5"
                           />
                         </a>
                       )}
@@ -486,7 +486,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                           }
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="border-line bg-paper/60 text-muted-foreground hover:text-primary hover:border-primary/50 flex size-6 items-center justify-center rounded border transition-colors"
+                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border transition-colors"
                           title={`YouTube: ${authorItem.youtube}`}
                         >
                           <Image
@@ -494,7 +494,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                             alt="YouTube"
                             width={14}
                             height={14}
-                            className="size-3.5 opacity-70 hover:opacity-100"
+                            className="size-3.5"
                           />
                         </a>
                       )}

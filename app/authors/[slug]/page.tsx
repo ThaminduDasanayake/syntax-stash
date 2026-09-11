@@ -106,7 +106,7 @@ export default async function AuthorPage({ params }: { params: Promise<Params> }
                       size="icon"
                       variant="ghost"
                       asChild
-                      className="bg-secondary/30 text-muted-foreground hover:bg-secondary hover:text-foreground border-line-2 hover:border-border size-8 rounded-lg border-[1.5px] transition-all duration-150 hover:-translate-y-0.5 active:translate-y-0"
+                      className="text-muted-foreground hover:text-foreground border-line-2 hover:border-foreground size-8 rounded-lg border-[1.5px] transition-all duration-150 hover:-translate-y-0.5 active:translate-y-0"
                     >
                       <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label}>
                         {icon}

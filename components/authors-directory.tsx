@@ -99,7 +99,7 @@ export function AuthorsDirectory({ authors }: AuthorsDirectoryProps) {
 
                 {/* Footer with links and view action */}
                 <div className="border-t-line/60 mt-5 flex items-center justify-between border-t pt-3 font-mono text-[11px]">
-                  <div className="text-muted-foreground flex items-center gap-2">
+                  <div className="text-foreground flex items-center gap-2">
                     {author.links?.website && <GlobeIcon className="size-3.5" />}
                     {author.links?.github && (
                       <Image
@@ -107,7 +107,7 @@ export function AuthorsDirectory({ authors }: AuthorsDirectoryProps) {
                         alt="GitHub"
                         width={14}
                         height={14}
-                        className="size-3.5 opacity-70 dark:invert"
+                        className="size-3.5"
                       />
                     )}
                     {author.links?.twitter && <XLogoIcon weight="bold" className="size-3.5" />}

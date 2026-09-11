@@ -24,17 +24,8 @@ import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "rea
 import { toast } from "sonner";
 
 import { adminItemToResource, AdminResourceCard, AdminResourceItem } from "@/components/admin";
+import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { ResourceDialog } from "@/components/resource-dialog";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
@@ -153,7 +144,7 @@ function AdminResourcesClientContent({
   // Dynamic pagination: 24 for visual cards, 50 for text data table
   const itemsPerPage = viewMode === "cards" ? 24 : 50;
 
-  // Compute Missing Data Metrics across all loaded resources
+  // Compute Missing Data Metrics scoped to the selected category (or across all resources if 'all' is selected)
   const missingStats = useMemo(() => {
     let missingOg = 0;
     let missingAuthor = 0;
@@ -164,7 +155,12 @@ function AdminResourcesClientContent({
     let missingDescription = 0;
     let anyMissing = 0;
 
-    for (const r of resources) {
+    const scopedResources =
+      selectedCategory && selectedCategory !== "all"
+        ? resources.filter((r) => r.category === selectedCategory)
+        : resources;
+
+    for (const r of scopedResources) {
       const hasNoOg = !r.ogImage || !r.ogImage.trim();
       const hasNoAuthor = !r.authorName || !r.authorName.trim();
       const hasNoGithub = !r.github || !r.github.trim();
@@ -196,64 +192,64 @@ function AdminResourcesClientContent({
       missingSubtitle,
       missingTags,
     };
-  }, [resources]);
+  }, [resources, selectedCategory]);
 
-  // Dynamically generate missing data filter options — only include options with count > 0
+  // Dynamically generate missing data filter options — only include options with count > 0 (or currently active)
   const missingFilterOptions = useMemo(() => {
     const options: { label: string; value: string }[] = [
       { label: "Data Health: All", value: "all" },
     ];
 
-    if (missingStats.anyMissing > 0) {
+    if (missingStats.anyMissing > 0 || healthFilter === "any-missing") {
       options.push({
         label: `⚠️ Any Missing Data (${missingStats.anyMissing})`,
         value: "any-missing",
       });
     }
 
-    if (missingStats.missingOg > 0) {
+    if (missingStats.missingOg > 0 || healthFilter === "missing-og") {
       options.push({
         label: `Missing OG Image (${missingStats.missingOg})`,
         value: "missing-og",
       });
     }
 
-    if (missingStats.missingAuthor > 0) {
+    if (missingStats.missingAuthor > 0 || healthFilter === "missing-author") {
       options.push({
         label: `Missing Author (${missingStats.missingAuthor})`,
         value: "missing-author",
       });
     }
 
-    if (missingStats.missingTags > 0) {
+    if (missingStats.missingTags > 0 || healthFilter === "missing-tags") {
       options.push({
         label: `Missing Tags (${missingStats.missingTags})`,
         value: "missing-tags",
       });
     }
 
-    if (missingStats.missingFavicon > 0) {
+    if (missingStats.missingFavicon > 0 || healthFilter === "missing-favicon") {
       options.push({
         label: `Missing Favicon (${missingStats.missingFavicon})`,
         value: "missing-favicon",
       });
     }
 
-    if (missingStats.missingGithub > 0) {
+    if (missingStats.missingGithub > 0 || healthFilter === "missing-github") {
       options.push({
         label: `Missing GitHub (${missingStats.missingGithub})`,
         value: "missing-github",
       });
     }
 
-    if (missingStats.missingSubtitle > 0) {
+    if (missingStats.missingSubtitle > 0 || healthFilter === "missing-subtitle") {
       options.push({
         label: `Missing Subtitle (${missingStats.missingSubtitle})`,
         value: "missing-subtitle",
       });
     }
 
-    if (missingStats.missingDescription > 0) {
+    if (missingStats.missingDescription > 0 || healthFilter === "missing-description") {
       options.push({
         label: `Missing Description (${missingStats.missingDescription})`,
         value: "missing-description",
@@ -261,7 +257,7 @@ function AdminResourcesClientContent({
     }
 
     return options;
-  }, [missingStats]);
+  }, [healthFilter, missingStats]);
 
   // Filter & Sort
   const filteredAndSortedResources = useMemo(() => {
@@ -619,7 +615,6 @@ function AdminResourcesClientContent({
           </div>
         </div>
       </div>
-
       {/* Main Catalog Display: Cards vs Text Data Table */}
       {paginatedResources.length > 0 ? (
         <div className="space-y-4">
@@ -894,7 +889,6 @@ function AdminResourcesClientContent({
           )}
         </div>
       )}
-
       {/* Live Resource Dialog Preview Modal */}
       <Dialog
         open={Boolean(previewResource)}
@@ -910,39 +904,52 @@ function AdminResourcesClientContent({
           />
         )}
       </Dialog>
-
-      {/* Deletion Confirmation AlertDialog */}
-      <AlertDialog
+      <ConfirmDialog
         open={Boolean(deletingResource)}
         onOpenChange={(open) => !open && setDeletingResource(null)}
-      >
-        <AlertDialogContent className="font-mono text-xs sm:max-w-md">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="text-destructive font-mono text-base font-bold uppercase">
-              Delete Resource from Live Catalog?
-            </AlertDialogTitle>
-            <AlertDialogDescription className="text-muted-foreground font-mono text-xs leading-relaxed">
-              Are you sure you want to delete{" "}
-              <strong className="text-foreground">&quot;{deletingResource?.title}&quot;</strong>?
-              <br />
-              <br />
-              This will permanently remove the resource from the database and instantly purge the
-              edge cache.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter className="mt-4 gap-2">
-            <AlertDialogCancel className="border-line font-mono text-xs font-bold uppercase">
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleConfirmDelete}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90 font-mono text-xs font-bold uppercase"
-            >
-              Delete Resource
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+        onConfirm={handleConfirmDelete}
+        title="Delete this resource?"
+        description={
+          <>
+            Are you sure you want to delete{" "}
+            <strong className="text-foreground">&quot;{deletingResource?.title}&quot;</strong>? This
+            will permanently remove the resource.
+          </>
+        }
+        confirmLabel="Hold to delete"
+      />
+
+      {/*<AlertDialog*/}
+      {/*  open={Boolean(deletingResource)}*/}
+      {/*  onOpenChange={(open) => !open && setDeletingResource(null)}*/}
+      {/*>*/}
+      {/*  <AlertDialogContent className="font-mono text-xs sm:max-w-md">*/}
+      {/*    <AlertDialogHeader>*/}
+      {/*      <AlertDialogTitle className="text-destructive font-mono text-base font-bold uppercase">*/}
+      {/*        Delete Resource from Live Catalog?*/}
+      {/*      </AlertDialogTitle>*/}
+      {/*      <AlertDialogDescription className="text-muted-foreground font-mono text-xs leading-relaxed">*/}
+      {/*        Are you sure you want to delete{" "}*/}
+      {/*        <strong className="text-foreground">&quot;{deletingResource?.title}&quot;</strong>?*/}
+      {/*        <br />*/}
+      {/*        <br />*/}
+      {/*        This will permanently remove the resource from the database and instantly purge the*/}
+      {/*        edge cache.*/}
+      {/*      </AlertDialogDescription>*/}
+      {/*    </AlertDialogHeader>*/}
+      {/*    <AlertDialogFooter className="mt-4 gap-2">*/}
+      {/*      <AlertDialogCancel className="border-line font-mono text-xs font-bold uppercase">*/}
+      {/*        Cancel*/}
+      {/*      </AlertDialogCancel>*/}
+      {/*      <AlertDialogAction*/}
+      {/*        onClick={handleConfirmDelete}*/}
+      {/*        className="bg-destructive text-destructive-foreground hover:bg-destructive/90 font-mono text-xs font-bold uppercase"*/}
+      {/*      >*/}
+      {/*        Delete Resource*/}
+      {/*      </AlertDialogAction>*/}
+      {/*    </AlertDialogFooter>*/}
+      {/*  </AlertDialogContent>*/}
+      {/*</AlertDialog>*/}
     </div>
   );
 }

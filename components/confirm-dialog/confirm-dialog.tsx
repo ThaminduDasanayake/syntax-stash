@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties, KeyboardEvent, ReactNode } from "react";
+import type { CSSProperties, KeyboardEvent, PointerEvent, ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -15,24 +15,23 @@ import {
 import { cn } from "@/lib/utils";
 
 export interface ConfirmDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  /** Runs after the hold completes; the dialog closes itself. */
-  onConfirm: () => void;
-  /** One line naming the action, e.g. "Restore this checkpoint?". */
-  title: string;
+  cancelLabel?: string;
+  confirmLabel?: string;
   /** What happens and what it costs — say it plainly. */
   description?: ReactNode;
-  /** Label inside the hold action. */
-  confirmLabel?: string;
-  cancelLabel?: string;
   /** How long the hold takes to arm, in milliseconds. */
   holdMs?: number;
+  /** Runs after the hold completes; the dialog closes itself. */
+  onConfirm: () => void;
+  onOpenChange: (open: boolean) => void;
+  open: boolean;
   /**
    * The hold trembles as it approaches commitment — barely a shiver
    * at the start, unmistakable by the end. Off under reduced motion.
    */
   shake?: boolean;
+  /** One line naming the action, e.g. "Restore this checkpoint?". */
+  title: string;
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -68,7 +67,7 @@ export interface ConfirmDialogProps {
 const DEFAULT_HOLD_MS = 1200;
 const RELEASE_MS = 180;
 /** Peak tremble at the moment the hold arms — a shiver, not a quake. */
-const SHAKE_MAX = "0.75px";
+const SHAKE_MAX = "1.75px";
 /**
  * The amplitude's ramp: flat for most of the hold, then it surges —
  * gradually, then suddenly.
@@ -76,6 +75,7 @@ const SHAKE_MAX = "0.75px";
 const SHAKE_EASE = "cubic-bezier(0.8, 0, 1, 1)";
 
 export const ConfirmDialog = ({
+  title,
   cancelLabel = "Cancel",
   confirmLabel = "Hold to confirm",
   description,
@@ -84,7 +84,6 @@ export const ConfirmDialog = ({
   onOpenChange,
   open,
   shake = true,
-  title,
 }: ConfirmDialogProps) => {
   const [holding, setHolding] = useState(false);
   const timerRef = useRef(0);
@@ -101,6 +100,27 @@ export const ConfirmDialog = ({
       onConfirm();
       onOpenChange(false);
     }, holdMs);
+  };
+
+  const handlePointerDown = (event: PointerEvent<HTMLButtonElement>) => {
+    if (event.button !== 0) return;
+    try {
+      event.currentTarget.setPointerCapture(event.pointerId);
+    } catch {
+      // Ignore if setPointerCapture is unsupported
+    }
+    startHold();
+  };
+
+  const handlePointerUp = (event: PointerEvent<HTMLButtonElement>) => {
+    try {
+      if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+        event.currentTarget.releasePointerCapture(event.pointerId);
+      }
+    } catch {
+      // Ignore
+    }
+    cancelHold();
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
@@ -132,9 +152,7 @@ export const ConfirmDialog = ({
       <DialogContent data-slot="confirm-dialog">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
-          {description ? (
-            <DialogDescription>{description}</DialogDescription>
-          ) : null}
+          {description ? <DialogDescription>{description}</DialogDescription> : null}
         </DialogHeader>
         <DialogFooter>
           <Button
@@ -146,8 +164,8 @@ export const ConfirmDialog = ({
           </Button>
           <Button
             className={cn(
-              "relative select-none overflow-hidden rounded-md border border-destructive/50 bg-destructive/10 text-destructive hover:bg-destructive/15 hover:text-destructive focus-visible:border-destructive/60 focus-visible:ring-destructive/25 dark:focus-visible:ring-destructive/40",
-              shake && holding && "neon-hold-shake"
+              "border-destructive/50 bg-destructive/10 text-destructive hover:bg-destructive/15 hover:text-destructive focus-visible:border-destructive/60 focus-visible:ring-destructive/25 dark:focus-visible:ring-destructive/40 relative overflow-hidden rounded-full border select-none active:scale-100!",
+              shake && holding && "neon-hold-shake",
             )}
             data-holding={holding || undefined}
             data-slot="confirm-dialog-hold"
@@ -161,12 +179,12 @@ export const ConfirmDialog = ({
                   } as CSSProperties)
                 : undefined
             }
+            onContextMenu={(e) => e.preventDefault()}
             onKeyDown={handleKeyDown}
             onKeyUp={cancelHold}
-            onPointerCancel={cancelHold}
-            onPointerDown={startHold}
-            onPointerLeave={cancelHold}
-            onPointerUp={cancelHold}
+            onPointerCancel={handlePointerUp}
+            onPointerDown={handlePointerDown}
+            onPointerUp={handlePointerUp}
             variant="ghost"
           >
             <span className="relative">{confirmLabel}</span>
@@ -175,7 +193,7 @@ export const ConfirmDialog = ({
                 crosses the letterforms instead of flipping the text. */}
             <span
               aria-hidden="true"
-              className="absolute inset-0 flex items-center justify-center bg-destructive text-destructive-foreground"
+              className="bg-destructive text-destructive-foreground pointer-events-none absolute inset-0 flex items-center justify-center"
               data-slot="confirm-dialog-hold-fill"
               style={{
                 clipPath: holding ? "inset(0 0% 0 0)" : "inset(0 100% 0 0)",
