@@ -121,12 +121,6 @@ export function MediaAssetFields({
             <Label className="text-foreground font-mono text-xs font-bold uppercase">
               Favicon URL
             </Label>
-            {cleanFavicon && (
-              <span className="text-muted-foreground inline-flex items-center gap-1 text-[10px]">
-                <CardIcon alt="favicon preview" favicon={cleanFavicon} className="size-3.5" />
-                <span>Favicon set</span>
-              </span>
-            )}
           </div>
           <div className="h-9">
             <EditableCandidateInput
@@ -138,7 +132,11 @@ export function MediaAssetFields({
               disabled={disabled}
               prefix={
                 cleanFavicon ? (
-                  <CardIcon alt="current favicon" favicon={cleanFavicon} className="size-4 shrink-0" />
+                  <CardIcon
+                    alt="current favicon"
+                    favicon={cleanFavicon}
+                    className="size-6 shrink-0"
+                  />
                 ) : null
               }
               renderPreview={(option) => (
@@ -156,12 +154,6 @@ export function MediaAssetFields({
             <Label className="text-foreground font-mono text-xs font-bold uppercase">
               OG Image URL
             </Label>
-            {cleanOg && (
-              <span className="text-muted-foreground inline-flex items-center gap-1 text-[10px]">
-                <ImageIcon className="size-4" />
-                <span>Image set</span>
-              </span>
-            )}
           </div>
           <div className="h-9">
             <EditableCandidateInput
@@ -172,8 +164,7 @@ export function MediaAssetFields({
               options={ogImageOptions}
               disabled={disabled}
               renderPreview={(option) => {
-                const isExt =
-                  option.url.startsWith("http://") || option.url.startsWith("https://");
+                const isExt = option.url.startsWith("http://") || option.url.startsWith("https://");
                 const optSrc = isExt
                   ? `/api/proxy-image?url=${encodeURIComponent(option.url)}`
                   : option.url;
