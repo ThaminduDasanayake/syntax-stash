@@ -8,6 +8,7 @@ import {
   ClipboardTextIcon,
   EyeIcon,
   FunnelIcon,
+  HeartbeatIcon,
   MagnifyingGlassIcon,
   PencilSimpleIcon,
   PlusIcon,
@@ -18,8 +19,8 @@ import {
   XIcon,
 } from "@phosphor-icons/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
 import { adminItemToResource, AdminResourceCard, AdminResourceItem } from "@/components/admin";
@@ -34,12 +35,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { InputField } from "@/components/ui/input-field";
 import { SelectField } from "@/components/ui/select-field";
 import { useCategories } from "@/hooks/use-categories";
-import { cn, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 const SORT_OPTIONS = [
   { label: "Oldest First", value: "oldest" },
@@ -54,19 +56,93 @@ interface AdminResourcesClientProps {
   initialResources: AdminResourceItem[];
 }
 
-export function AdminResourcesClient({
+function AdminResourcesClientContent({
   _initialCategoryCounts = {},
   initialResources = [],
 }: AdminResourcesClientProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
+  const paramSort = searchParams.get("sort") || "newest";
+  const paramCategory = searchParams.get("category") || "all";
+  const paramHealth = searchParams.get("health") || "all";
+  const paramView = searchParams.get("view") === "table" ? "table" : "cards";
+  const paramPage = Math.max(1, parseInt(searchParams.get("page") || "1", 10) || 1);
+  const paramQ = searchParams.get("q") || "";
+
   const { categories } = useCategories();
   const [resources, setResources] = useState<AdminResourceItem[]>(initialResources);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [sortBy, setSortBy] = useState<string>("newest");
-  const [viewMode, setViewMode] = useState<"cards" | "table">("cards");
-  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState(paramQ);
+  const [selectedCategory, setSelectedCategory] = useState<string>(paramCategory);
+  const [healthFilter, setHealthFilter] = useState<string>(paramHealth);
+  const [sortBy, setSortBy] = useState<string>(paramSort);
+  const [viewMode, setViewMode] = useState<"cards" | "table">(paramView);
+  const [currentPage, setCurrentPage] = useState(paramPage);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const searchDebounceRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Sync resources if server props change (e.g. after router.refresh() on return from edit/create)
+  useEffect(() => {
+    setResources(initialResources);
+  }, [initialResources]);
+
+  // Sync state with URL params when URL changes externally (e.g. back/forward navigation)
+  useEffect(() => {
+    setSearchQuery(paramQ);
+    setSelectedCategory(paramCategory);
+    setHealthFilter(paramHealth);
+    setSortBy(paramSort);
+    setViewMode(paramView);
+    setCurrentPage(paramPage);
+  }, [paramCategory, paramHealth, paramPage, paramQ, paramSort, paramView]);
+
+  useEffect(() => {
+    return () => {
+      if (searchDebounceRef.current) {
+        clearTimeout(searchDebounceRef.current);
+      }
+    };
+  }, []);
+
+  const syncUrl = useCallback(
+    (
+      newSort: string,
+      newCategory: string,
+      newHealth: string,
+      newView: "cards" | "table",
+      newPage: number,
+      newQ: string,
+    ) => {
+      if (typeof window === "undefined") return;
+      const params = new URLSearchParams();
+
+      if (newSort && newSort !== "newest") {
+        params.set("sort", newSort);
+      }
+      if (newCategory && newCategory !== "all") {
+        params.set("category", newCategory);
+      }
+      if (newHealth && newHealth !== "all") {
+        params.set("health", newHealth);
+      }
+      if (newView && newView !== "cards") {
+        params.set("view", newView);
+      }
+      if (newPage > 1) {
+        params.set("page", String(newPage));
+      }
+      if (newQ && newQ.trim()) {
+        params.set("q", newQ.trim());
+      }
+
+      const queryString = params.toString();
+      const newUrl = queryString ? `${pathname}?${queryString}` : pathname;
+      window.history.replaceState(null, "", newUrl);
+    },
+    [pathname],
+  );
 
   // Preview & Deletion state
   const [previewResource, setPreviewResource] = useState<AdminResourceItem | null>(null);
@@ -77,6 +153,116 @@ export function AdminResourcesClient({
   // Dynamic pagination: 24 for visual cards, 50 for text data table
   const itemsPerPage = viewMode === "cards" ? 24 : 50;
 
+  // Compute Missing Data Metrics across all loaded resources
+  const missingStats = useMemo(() => {
+    let missingOg = 0;
+    let missingAuthor = 0;
+    let missingGithub = 0;
+    let missingFavicon = 0;
+    let missingTags = 0;
+    let missingSubtitle = 0;
+    let missingDescription = 0;
+    let anyMissing = 0;
+
+    for (const r of resources) {
+      const hasNoOg = !r.ogImage || !r.ogImage.trim();
+      const hasNoAuthor = !r.authorName || !r.authorName.trim();
+      const hasNoGithub = !r.github || !r.github.trim();
+      const hasNoFavicon = !r.favicon || !r.favicon.trim();
+      const hasNoTags = !r.tags || !r.tags.trim();
+      const hasNoSubtitle = !r.subtitle || !r.subtitle.trim();
+      const hasNoDesc = !r.description || !r.description.trim();
+
+      if (hasNoOg) missingOg++;
+      if (hasNoAuthor) missingAuthor++;
+      if (hasNoGithub) missingGithub++;
+      if (hasNoFavicon) missingFavicon++;
+      if (hasNoTags) missingTags++;
+      if (hasNoSubtitle) missingSubtitle++;
+      if (hasNoDesc) missingDescription++;
+
+      if (hasNoOg || hasNoAuthor || hasNoFavicon || hasNoTags || hasNoDesc) {
+        anyMissing++;
+      }
+    }
+
+    return {
+      anyMissing,
+      missingAuthor,
+      missingDescription,
+      missingFavicon,
+      missingGithub,
+      missingOg,
+      missingSubtitle,
+      missingTags,
+    };
+  }, [resources]);
+
+  // Dynamically generate missing data filter options — only include options with count > 0
+  const missingFilterOptions = useMemo(() => {
+    const options: { label: string; value: string }[] = [
+      { label: "Data Health: All", value: "all" },
+    ];
+
+    if (missingStats.anyMissing > 0) {
+      options.push({
+        label: `⚠️ Any Missing Data (${missingStats.anyMissing})`,
+        value: "any-missing",
+      });
+    }
+
+    if (missingStats.missingOg > 0) {
+      options.push({
+        label: `Missing OG Image (${missingStats.missingOg})`,
+        value: "missing-og",
+      });
+    }
+
+    if (missingStats.missingAuthor > 0) {
+      options.push({
+        label: `Missing Author (${missingStats.missingAuthor})`,
+        value: "missing-author",
+      });
+    }
+
+    if (missingStats.missingTags > 0) {
+      options.push({
+        label: `Missing Tags (${missingStats.missingTags})`,
+        value: "missing-tags",
+      });
+    }
+
+    if (missingStats.missingFavicon > 0) {
+      options.push({
+        label: `Missing Favicon (${missingStats.missingFavicon})`,
+        value: "missing-favicon",
+      });
+    }
+
+    if (missingStats.missingGithub > 0) {
+      options.push({
+        label: `Missing GitHub (${missingStats.missingGithub})`,
+        value: "missing-github",
+      });
+    }
+
+    if (missingStats.missingSubtitle > 0) {
+      options.push({
+        label: `Missing Subtitle (${missingStats.missingSubtitle})`,
+        value: "missing-subtitle",
+      });
+    }
+
+    if (missingStats.missingDescription > 0) {
+      options.push({
+        label: `Missing Description (${missingStats.missingDescription})`,
+        value: "missing-description",
+      });
+    }
+
+    return options;
+  }, [missingStats]);
+
   // Filter & Sort
   const filteredAndSortedResources = useMemo(() => {
     let result = resources;
@@ -84,6 +270,32 @@ export function AdminResourcesClient({
     // Filter by Category
     if (selectedCategory && selectedCategory !== "all") {
       result = result.filter((r) => r.category === selectedCategory);
+    }
+
+    // Filter by Health / Missing Data
+    if (healthFilter === "missing-og") {
+      result = result.filter((r) => !r.ogImage || !r.ogImage.trim());
+    } else if (healthFilter === "missing-author") {
+      result = result.filter((r) => !r.authorName || !r.authorName.trim());
+    } else if (healthFilter === "missing-tags") {
+      result = result.filter((r) => !r.tags || !r.tags.trim());
+    } else if (healthFilter === "missing-favicon") {
+      result = result.filter((r) => !r.favicon || !r.favicon.trim());
+    } else if (healthFilter === "missing-github") {
+      result = result.filter((r) => !r.github || !r.github.trim());
+    } else if (healthFilter === "missing-subtitle") {
+      result = result.filter((r) => !r.subtitle || !r.subtitle.trim());
+    } else if (healthFilter === "missing-description") {
+      result = result.filter((r) => !r.description || !r.description.trim());
+    } else if (healthFilter === "any-missing") {
+      result = result.filter(
+        (r) =>
+          !r.ogImage?.trim() ||
+          !r.authorName?.trim() ||
+          !r.favicon?.trim() ||
+          !r.tags?.trim() ||
+          !r.description?.trim(),
+      );
     }
 
     // Filter by Search Query
@@ -119,7 +331,7 @@ export function AdminResourcesClient({
     }
 
     return sorted;
-  }, [resources, searchQuery, selectedCategory, sortBy]);
+  }, [healthFilter, resources, searchQuery, selectedCategory, sortBy]);
 
   // Pagination calculation
   const totalPages = Math.ceil(filteredAndSortedResources.length / itemsPerPage) || 1;
@@ -132,22 +344,59 @@ export function AdminResourcesClient({
   const handleViewModeChange = (mode: "cards" | "table") => {
     setViewMode(mode);
     setCurrentPage(1);
+    syncUrl(sortBy, selectedCategory, healthFilter, mode, 1, searchQuery);
   };
 
   // Reset page when filters change
   const handleSearchChange = (val: string) => {
     setSearchQuery(val);
     setCurrentPage(1);
+
+    if (searchDebounceRef.current) {
+      clearTimeout(searchDebounceRef.current);
+    }
+
+    if (!val.trim()) {
+      syncUrl(sortBy, selectedCategory, healthFilter, viewMode, 1, "");
+    } else {
+      searchDebounceRef.current = setTimeout(() => {
+        syncUrl(sortBy, selectedCategory, healthFilter, viewMode, 1, val);
+      }, 300);
+    }
   };
 
   const handleCategoryChange = (val: string) => {
     setSelectedCategory(val);
     setCurrentPage(1);
+    syncUrl(sortBy, val, healthFilter, viewMode, 1, searchQuery);
+  };
+
+  const handleHealthFilterChange = (val: string) => {
+    setHealthFilter(val);
+    setCurrentPage(1);
+    syncUrl(sortBy, selectedCategory, val, viewMode, 1, searchQuery);
   };
 
   const handleSortChange = (val: string) => {
     setSortBy(val);
     setCurrentPage(1);
+    syncUrl(val, selectedCategory, healthFilter, viewMode, 1, searchQuery);
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    syncUrl(sortBy, selectedCategory, healthFilter, viewMode, newPage, searchQuery);
+  };
+
+  const handleClearFilters = () => {
+    setSearchQuery("");
+    setSelectedCategory("all");
+    setHealthFilter("all");
+    setCurrentPage(1);
+    if (searchDebounceRef.current) {
+      clearTimeout(searchDebounceRef.current);
+    }
+    syncUrl(sortBy, "all", "all", viewMode, 1, "");
   };
 
   // Copy JSON handler
@@ -297,8 +546,14 @@ export function AdminResourcesClient({
             </Button>
 
             <Button asChild size="sm" className="h-9 gap-1.5 px-3.5 text-xs font-bold uppercase">
-              <Link href="/admin/resources/new">
-                <PlusIcon className="size-4" />
+              <Link
+                href={
+                  searchParams.toString()
+                    ? `/admin/resources/new?${searchParams.toString()}`
+                    : "/admin/resources/new"
+                }
+              >
+                <PlusIcon weight="bold" className="size-4" />
                 <span>Add New Resource</span>
               </Link>
             </Button>
@@ -307,10 +562,10 @@ export function AdminResourcesClient({
 
         {/* Filter Dropdowns & Stats */}
         <div className="border-line flex flex-wrap items-center justify-between gap-3 border-t pt-3">
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-5">
             {/* Category Select */}
             <div className="flex items-center gap-1.5">
-              <FunnelIcon className="text-muted-foreground size-3.5" />
+              <FunnelIcon weight="duotone" className="text-brand-green size-7" />
               <span className="text-muted-foreground text-[11px] font-bold uppercase">
                 Category:
               </span>
@@ -322,9 +577,25 @@ export function AdminResourcesClient({
               />
             </div>
 
+            {/* Dynamic Data Health Filter (only shown if missing data options exist) */}
+            {missingFilterOptions.length > 1 && (
+              <div className="flex items-center gap-1.5">
+                <HeartbeatIcon weight="duotone" className="size-8 text-rose-500" />
+                <span className="text-muted-foreground text-[11px] font-bold whitespace-nowrap uppercase">
+                  Data Health:
+                </span>
+                <SelectField
+                  value={healthFilter}
+                  onValueChange={handleHealthFilterChange}
+                  options={missingFilterOptions}
+                  triggerClassName="h-8 font-mono text-xs min-w-[190px]"
+                />
+              </div>
+            )}
+
             {/* Sort Select */}
             <div className="flex items-center gap-1.5">
-              <SlidersHorizontalIcon className="text-muted-foreground size-3.5" />
+              <SlidersHorizontalIcon className="text-brand-purple size-7" />
               <span className="text-muted-foreground text-[11px] font-bold uppercase">Sort:</span>
               <SelectField
                 value={sortBy}
@@ -360,7 +631,13 @@ export function AdminResourcesClient({
                   key={item.id}
                   resource={item}
                   onPreview={() => setPreviewResource(item)}
-                  onEdit={() => router.push(`/admin/resources/${item.id}`)}
+                  onEdit={() =>
+                    router.push(
+                      searchParams.toString()
+                        ? `/admin/resources/${item.id}?${searchParams.toString()}`
+                        : `/admin/resources/${item.id}`,
+                    )
+                  }
                   onDelete={() => setDeletingResource(item)}
                   isWorking={isWorking}
                 />
@@ -384,38 +661,33 @@ export function AdminResourcesClient({
                   </thead>
                   <tbody className="divide-line divide-y">
                     {paginatedResources.map((item) => {
-                      const theme = getCategoryTheme(item.category);
-                      const themeStyles = THEME_CONFIG[theme];
                       const isCopied = copiedId === item.id;
 
                       return (
                         <tr key={item.id} className="hover:bg-surface/60 group transition-colors">
-                          {/* Category Badge with Theme Styling */}
+                          {/* Category Badge */}
                           <td className="px-4 py-2.5 whitespace-nowrap">
-                            <span
-                              className={cn(
-                                "inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase",
-                                themeStyles.soft,
-                                themeStyles.label,
-                                themeStyles.border,
-                              )}
+                            <Badge
+                              variant="secondary"
+                              className="font-mono text-[10px] font-bold tracking-wider uppercase"
                             >
-                              <span
-                                className={cn(
-                                  "size-1.5 rounded-full",
-                                  themeStyles.dotActive || themeStyles.dot,
-                                )}
-                              />
                               {item.category}
-                            </span>
+                            </Badge>
                           </td>
 
                           {/* Title & Subtitle */}
-                          <td className="min-w-[200px] px-4 py-2.5">
+                          <td className="min-w-50 px-4 py-2.5">
                             <div className="flex flex-col">
-                              <span className="text-foreground group-hover:text-primary text-xs leading-snug font-bold transition-colors">
-                                {item.title}
-                              </span>
+                              <div className="flex items-center gap-1.5">
+                                <span className="text-foreground group-hover:text-primary text-xs leading-snug font-bold transition-colors">
+                                  {item.title}
+                                </span>
+                                {!item.ogImage?.trim() && (
+                                  <span className="py-0.2 rounded bg-amber-500/15 px-1 text-[9px] font-bold text-amber-700 dark:text-amber-400">
+                                    No OG
+                                  </span>
+                                )}
+                              </div>
                               {item.subtitle && (
                                 <span className="text-muted-foreground line-clamp-1 text-[11px]">
                                   {item.subtitle}
@@ -434,7 +706,7 @@ export function AdminResourcesClient({
                           </td>
 
                           {/* URL */}
-                          <td className="max-w-[200px] px-4 py-2.5">
+                          <td className="max-w-50 px-4 py-2.5">
                             <a
                               href={item.url}
                               target="_blank"
@@ -447,7 +719,7 @@ export function AdminResourcesClient({
                           </td>
 
                           {/* Tags */}
-                          <td className="max-w-[180px] px-4 py-2.5">
+                          <td className="max-w-45 px-4 py-2.5">
                             {item.tags ? (
                               <div className="flex flex-wrap gap-1">
                                 {item.tags
@@ -507,7 +779,13 @@ export function AdminResourcesClient({
                               <Button
                                 size="sm"
                                 variant="outline"
-                                onClick={() => router.push(`/admin/resources/${item.id}`)}
+                                onClick={() =>
+                                  router.push(
+                                    searchParams.toString()
+                                      ? `/admin/resources/${item.id}?${searchParams.toString()}`
+                                      : `/admin/resources/${item.id}`,
+                                  )
+                                }
                                 className="border-line hover:bg-surface size-7 p-0"
                                 title="Edit Resource"
                               >
@@ -546,7 +824,7 @@ export function AdminResourcesClient({
                 <Button
                   size="sm"
                   variant="outline"
-                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                  onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
                   disabled={currentPage === 1}
                   className="border-line hover:bg-surface h-8 gap-1 px-2.5 text-xs"
                 >
@@ -565,7 +843,7 @@ export function AdminResourcesClient({
                       <button
                         key={pageNum}
                         type="button"
-                        onClick={() => setCurrentPage(pageNum)}
+                        onClick={() => handlePageChange(pageNum)}
                         className={`size-8 rounded border text-xs font-bold transition-colors ${
                           currentPage === pageNum
                             ? "bg-primary text-primary-foreground border-primary"
@@ -581,7 +859,7 @@ export function AdminResourcesClient({
                 <Button
                   size="sm"
                   variant="outline"
-                  onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                  onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
                   disabled={currentPage === totalPages}
                   className="border-line hover:bg-surface h-8 gap-1 px-2.5 text-xs"
                 >
@@ -600,18 +878,15 @@ export function AdminResourcesClient({
             No Live Resources Found
           </h3>
           <p className="text-muted-foreground mt-1 max-w-sm text-xs">
-            {searchQuery || selectedCategory !== "all"
+            {searchQuery || selectedCategory !== "all" || healthFilter !== "all"
               ? "No resources matched your active filters or search criteria."
               : "The live catalog is currently empty. Click 'Add New Resource' to publish one."}
           </p>
-          {(searchQuery || selectedCategory !== "all") && (
+          {(searchQuery || selectedCategory !== "all" || healthFilter !== "all") && (
             <Button
               size="sm"
               variant="outline"
-              onClick={() => {
-                setSearchQuery("");
-                setSelectedCategory("all");
-              }}
+              onClick={handleClearFilters}
               className="border-line hover:bg-surface mt-4 h-8 text-xs font-bold uppercase"
             >
               Clear All Filters
@@ -669,5 +944,13 @@ export function AdminResourcesClient({
         </AlertDialogContent>
       </AlertDialog>
     </div>
+  );
+}
+
+export function AdminResourcesClient(props: AdminResourcesClientProps) {
+  return (
+    <Suspense>
+      <AdminResourcesClientContent {...props} />
+    </Suspense>
   );
 }

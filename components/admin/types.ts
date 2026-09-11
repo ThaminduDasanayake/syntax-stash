@@ -114,6 +114,8 @@ export interface AdminResourceItem {
   description: string;
   favicon?: string | null;
   github?: string | null;
+  iconBg?: string | null;
+  iconClassName?: string | null;
   id: string;
   ogImage?: string | null;
   subtitle?: string | null;

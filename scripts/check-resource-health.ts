@@ -698,6 +698,8 @@ async function main() {
 
   const isDryRun = args.includes("--dry-run");
   const isVerbose = args.includes("--verbose");
+  const isMissingOnly =
+    args.includes("--missing") || args.includes("--missing-only") || args.includes("--db-only");
 
   const allRes = await getAllResources();
   let targets = [...allRes];
@@ -724,6 +726,74 @@ async function main() {
 
   if (sampleSize && !isNaN(sampleSize)) {
     targets = targets.slice(0, sampleSize);
+  }
+
+  // Fast offline metadata check without making HTTP network requests
+  if (isMissingOnly) {
+    console.log(
+      `\n================ DATABASE METADATA AUDIT (${targets.length} resources) ================\n`,
+    );
+    let missingOg = 0;
+    let missingAuthor = 0;
+    let missingFavicon = 0;
+    let missingTags = 0;
+    let missingSubtitle = 0;
+    let missingDesc = 0;
+    const incompleteList: { title: string; category: string; missing: string[] }[] = [];
+
+    for (const r of targets) {
+      const missing: string[] = [];
+      if (!r.ogImage || !r.ogImage.trim()) {
+        missing.push("ogImage");
+        missingOg++;
+      }
+      if (!r.author || (Array.isArray(r.author) && r.author.length === 0)) {
+        missing.push("author");
+        missingAuthor++;
+      }
+      if (!r.favicon || !r.favicon.trim()) {
+        missing.push("favicon");
+        missingFavicon++;
+      }
+      if (!r.tags || r.tags.length === 0) {
+        missing.push("tags");
+        missingTags++;
+      }
+      if (!r.subtitle || !r.subtitle.trim()) {
+        missing.push("subtitle");
+        missingSubtitle++;
+      }
+      if (!r.description || !r.description.trim()) {
+        missing.push("description");
+        missingDesc++;
+      }
+
+      if (missing.length > 0) {
+        incompleteList.push({ title: r.title, category: r.category, missing });
+      }
+    }
+
+    console.log(`📊 Summary of Missing Fields:`);
+    console.log(`  • Missing ogImage:     ${missingOg}`);
+    console.log(`  • Missing author:      ${missingAuthor}`);
+    console.log(`  • Missing favicon:     ${missingFavicon}`);
+    console.log(`  • Missing tags:        ${missingTags}`);
+    console.log(`  • Missing subtitle:    ${missingSubtitle}`);
+    console.log(`  • Missing description: ${missingDesc}`);
+    console.log(`  • Total Incomplete:    ${incompleteList.length} / ${targets.length}\n`);
+
+    if (incompleteList.length > 0) {
+      console.log(`⚠️  Incomplete Resources:`);
+      for (const item of incompleteList) {
+        console.log(
+          `  • [${item.category}] "${item.title}" -> Missing: [${item.missing.join(", ")}]`,
+        );
+      }
+    } else {
+      console.log(`✅ All ${targets.length} resources have complete metadata!`);
+    }
+    console.log(`\n========================================================================\n`);
+    process.exit(0);
   }
 
   console.log(`Starting health check on ${targets.length} resources...`);

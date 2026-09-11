@@ -3,6 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { CategoryItem, getAllCategories } from "@/lib/categories";
 
+const DEFAULT_USER_AGENT =
+  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36";
+
 const BLOCKED_HOSTS = new Set(["0.0.0.0", "127.0.0.1", "::1", "localhost"]);
 
 function isPrivateIp(hostname: string): boolean {
@@ -540,12 +543,38 @@ export async function GET(request: NextRequest) {
       addFavicon($(el).attr("href"), "Shortcut Icon", "ICO", 35);
     });
 
-    // Fallback origin favicon.ico
-    try {
-      const u = new URL(finalUrl);
-      addFavicon(`${u.origin}/favicon.ico`, "Default /favicon.ico", "ICO", 20);
-    } catch {
-      // ignore
+    // If no explicit <link rel="icon"> tags were declared in HTML,
+    // verify whether an origin /favicon.ico actually exists (status 200 with image content-type)
+    // before suggesting it. Never blindly assume /favicon.ico exists.
+    if (faviconCandidates.length === 0) {
+      try {
+        const u = new URL(finalUrl);
+        const originFavicon = `${u.origin}/favicon.ico`;
+        const probeController = new AbortController();
+        const probeTimeout = setTimeout(() => probeController.abort(), 2500);
+        const probeRes = await fetch(originFavicon, {
+          headers: {
+            Accept: "image/*,*/*;q=0.8",
+            "User-Agent": DEFAULT_USER_AGENT,
+          },
+          method: "GET",
+          signal: probeController.signal,
+        });
+        clearTimeout(probeTimeout);
+
+        const contentType = probeRes.headers.get("content-type") || "";
+        if (
+          probeRes.ok &&
+          (contentType.startsWith("image/") ||
+            contentType.includes("icon") ||
+            contentType.includes("octet-stream")) &&
+          !contentType.includes("text/html")
+        ) {
+          addFavicon(originFavicon, "Default /favicon.ico", "ICO", 20);
+        }
+      } catch {
+        // Probe failed or timed out — website has no favicon
+      }
     }
 
     faviconCandidates.sort((a, b) => b.weight - a.weight);

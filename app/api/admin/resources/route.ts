@@ -190,12 +190,12 @@ export async function POST(req: Request) {
         authorRecordId = existingAuthor.id;
       }
     } else if (authorName && typeof authorName === "string" && authorName.trim()) {
-      const name = authorName.trim();
-      const slug = slugifyAuthor(name);
+      const primaryName = authorName.split(",")[0].trim();
+      const slug = slugifyAuthor(primaryName);
       const [existingAuthor] = await db
         .select()
         .from(author)
-        .where(or(eq(author.slug, slug), ilike(author.name, name)));
+        .where(or(eq(author.slug, slug), ilike(author.name, primaryName)));
       if (existingAuthor) {
         authorRecordId = existingAuthor.id;
       }
@@ -323,12 +323,12 @@ export async function PATCH(req: Request) {
       }
     } else if (authorName !== undefined) {
       if (authorName && typeof authorName === "string" && authorName.trim()) {
-        const name = authorName.trim();
-        const slug = slugifyAuthor(name);
+        const primaryName = authorName.split(",")[0].trim();
+        const slug = slugifyAuthor(primaryName);
         const [existingAuthor] = await db
           .select()
           .from(author)
-          .where(or(eq(author.slug, slug), ilike(author.name, name)));
+          .where(or(eq(author.slug, slug), ilike(author.name, primaryName)));
         authorRecordId = existingAuthor ? existingAuthor.id : null;
       } else {
         authorRecordId = null;

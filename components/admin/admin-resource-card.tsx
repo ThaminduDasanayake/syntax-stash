@@ -5,6 +5,7 @@ import {
   ClipboardTextIcon,
   PencilSimpleIcon,
   TrashIcon,
+  WarningCircleIcon,
 } from "@phosphor-icons/react";
 import { useState } from "react";
 
@@ -31,6 +32,12 @@ export function AdminResourceCard({
 }: AdminResourceCardProps) {
   const [copied, setCopied] = useState(false);
 
+  const hasNoOg = !res.ogImage || !res.ogImage.trim();
+  const hasNoAuthor = !res.authorName || !res.authorName.trim();
+  const hasNoFavicon = !res.favicon || !res.favicon.trim();
+  const hasNoTags = !res.tags || !res.tags.trim();
+  const hasMissingData = hasNoOg || hasNoAuthor || hasNoFavicon || hasNoTags;
+
   const handleCopyJson = (e: React.MouseEvent) => {
     e.stopPropagation();
     navigator.clipboard.writeText(JSON.stringify(res, null, 2));
@@ -48,6 +55,7 @@ export function AdminResourceCard({
           description={res.description}
           category={res.category}
           favicon={res.favicon}
+          ogImage={res.ogImage}
           author={res.authorName}
           authorHref={res.authorName ? `/authors/${slugifyAuthor(res.authorName)}` : undefined}
           url={res.url}
@@ -55,6 +63,26 @@ export function AdminResourceCard({
           cardClassName="h-full"
         />
       </div>
+
+      {/* Missing Data Warning Chips */}
+      {hasMissingData && (
+        <div className="flex flex-wrap items-center gap-1 border-t border-amber-500/20 bg-amber-500/10 px-2.5 py-1 font-mono text-[10px] text-amber-700 dark:text-amber-400">
+          <WarningCircleIcon weight="bold" className="size-3 shrink-0" />
+          <span className="font-semibold uppercase">Missing:</span>
+          {hasNoOg && (
+            <span className="py-0.2 rounded bg-amber-500/15 px-1 font-medium">og:image</span>
+          )}
+          {hasNoAuthor && (
+            <span className="py-0.2 rounded bg-amber-500/15 px-1 font-medium">author</span>
+          )}
+          {hasNoFavicon && (
+            <span className="py-0.2 rounded bg-amber-500/15 px-1 font-medium">favicon</span>
+          )}
+          {hasNoTags && (
+            <span className="py-0.2 rounded bg-amber-500/15 px-1 font-medium">tags</span>
+          )}
+        </div>
+      )}
 
       {/* Docked Admin Action Bar: 1 Line with 3 Proper Buttons */}
       <div className="border-line bg-surface/80 border-t p-2.5 font-mono text-[11px]">

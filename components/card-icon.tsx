@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 import { cn } from "@/lib/utils";
@@ -9,53 +11,87 @@ export function CardIcon({
   alt,
   className = "bg-background",
   favicon,
+  iconBg,
+  iconClassName,
 }: {
   alt: string;
   className?: string;
-  favicon?: string;
+  favicon?: string | null;
+  iconBg?: "dark" | "light" | "invert" | string | null;
+  iconClassName?: string;
 }) {
+  const cleanFavicon = favicon?.trim() || "";
   const isExternal =
-    favicon &&
-    (favicon.startsWith("http://") || favicon.startsWith("https://")) &&
-    !favicon.startsWith("/api/proxy-image");
+    Boolean(cleanFavicon) &&
+    (cleanFavicon.startsWith("http://") || cleanFavicon.startsWith("https://")) &&
+    !cleanFavicon.startsWith("/api/proxy-image");
 
-  const [useDirectFallback, setUseDirectFallback] = useState(false);
-  const [hasError, setHasError] = useState(false);
+  const [state, setState] = useState<{ directFallback: boolean; error: boolean; url: string }>({
+    directFallback: false,
+    error: false,
+    url: cleanFavicon,
+  });
+
+  if (state.url !== cleanFavicon) {
+    setState({
+      directFallback: false,
+      error: false,
+      url: cleanFavicon,
+    });
+  }
 
   const handleError = () => {
     // If the proxy fails (e.g. timeout or blocked host), fall back to direct URL
-    if (isExternal && !useDirectFallback) {
-      setUseDirectFallback(true);
+    if (isExternal && !state.directFallback) {
+      setState((prev) => ({ ...prev, directFallback: true }));
     } else {
-      setHasError(true);
+      setState((prev) => ({ ...prev, error: true }));
     }
   };
 
   const handleLoad = () => {
-    if (favicon) {
-      loadedFavicons.add(favicon);
+    if (cleanFavicon) {
+      loadedFavicons.add(cleanFavicon);
     }
   };
 
-  if (!favicon || hasError) {
-    return <div className={cn(className, "card-icon-box p-1")} />;
+  const isWhiteTile = iconBg === "light" || iconClassName?.includes("bg-white");
+  const isInverted = iconBg === "invert" || iconClassName?.includes("invert");
+
+  if (!cleanFavicon || state.error) {
+    return (
+      <div
+        className={cn(
+          className,
+          "card-icon-box p-1",
+          isWhiteTile && "border-white/80! bg-white! text-black!",
+        )}
+      />
+    );
   }
 
   // Route external favicons through our caching proxy for fast SWR caching and CORS stability
   const currentSrc =
-    isExternal && !useDirectFallback
-      ? `/api/proxy-image?url=${encodeURIComponent(favicon)}`
-      : favicon;
+    isExternal && !state.directFallback
+      ? `/api/proxy-image?url=${encodeURIComponent(cleanFavicon)}`
+      : cleanFavicon;
 
   return (
-    <div className={cn(className, "card-icon-box p-1")}>
+    <div
+      className={cn(
+        className,
+        "card-icon-box p-1",
+        isWhiteTile && "border-white/80! bg-white! text-black!",
+      )}
+    >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
+        key={currentSrc}
         src={currentSrc}
         alt={alt}
         loading="lazy"
         referrerPolicy="no-referrer"
-        className="h-full w-full object-contain"
+        className={cn("h-full w-full object-contain", isInverted && "brightness-125 invert")}
         onError={handleError}
         onLoad={handleLoad}
       />

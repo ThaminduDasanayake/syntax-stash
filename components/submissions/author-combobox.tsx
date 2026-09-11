@@ -53,11 +53,27 @@ if (typeof window !== "undefined" && "BroadcastChannel" in window) {
 export function invalidateAuthorCache() {
   cachedAuthors = null;
   fetchPromise = null;
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new CustomEvent("syntax-stash-authors-updated"));
+  }
   try {
     authorsChannel?.postMessage({ type: "AUTHORS_INVALIDATE" });
   } catch {
     // Ignore cross-tab messaging failure
   }
+}
+
+export function registerNewAuthorLocally(newAuthor: AuthorOption) {
+  if (cachedAuthors) {
+    if (
+      !cachedAuthors.some(
+        (a) => a.slug === newAuthor.slug || a.name.toLowerCase() === newAuthor.name.toLowerCase(),
+      )
+    ) {
+      cachedAuthors = [...cachedAuthors, newAuthor].sort((a, b) => a.name.localeCompare(b.name));
+    }
+  }
+  invalidateAuthorCache();
 }
 
 export async function fetchAuthorList(forceRefresh = false): Promise<AuthorOption[]> {
@@ -117,7 +133,13 @@ export function AuthorCombobox({
     // 1. Initial Load
     syncAuthors();
 
-    // 2. Cross-tab real-time listener (when author created/edited in another tab)
+    // 2. Same-window custom event listener (when author created/edited in current tab)
+    const handleLocalUpdate = () => {
+      syncAuthors(true);
+    };
+    window.addEventListener("syntax-stash-authors-updated", handleLocalUpdate);
+
+    // 3. Cross-tab real-time listener (when author created/edited in another tab)
     const handleBroadcast = (event: MessageEvent) => {
       if (event.data?.type === "AUTHORS_INVALIDATE") {
         cachedAuthors = null;
@@ -140,6 +162,7 @@ export function AuthorCombobox({
 
     return () => {
       mounted = false;
+      window.removeEventListener("syntax-stash-authors-updated", handleLocalUpdate);
       if (authorsChannel) {
         authorsChannel.removeEventListener("message", handleBroadcast);
       }

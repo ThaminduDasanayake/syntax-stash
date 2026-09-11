@@ -49,8 +49,21 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
   }, [allResources]);
 
   const resourcePool = allResources && allResources.length > 0 ? allResources : fetchedResources;
-  const [ogError, setOgError] = useState(false);
-  const [useDirectOgFallback, setUseDirectOgFallback] = useState(false);
+  const currentOg = activeTool.ogImage?.trim() || "";
+  const [ogState, setOgState] = useState<{ directFallback: boolean; error: boolean; url: string }>({
+    directFallback: false,
+    error: false,
+    url: currentOg,
+  });
+
+  if (ogState.url !== currentOg) {
+    setOgState({
+      directFallback: false,
+      error: false,
+      url: currentOg,
+    });
+  }
+
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const gitHubStars = getGitHubStars(activeTool.github);
   const formattedStars = gitHubStars !== null ? formatStarCount(gitHubStars) : null;
@@ -120,8 +133,6 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
   }, [activeTool, resetMobileHeader]);
 
   const handleSelectTool = (res: Resource) => {
-    setOgError(false);
-    setUseDirectOgFallback(false);
     setActiveTool(res);
     resetMobileHeader();
     if (scrollContainerRef.current) {
@@ -492,30 +503,30 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
         <div className="modal-right bg-background flex flex-col md:overflow-hidden">
           <div className="modal-content px-5 pt-5 pb-6 [scrollbar-color:var(--line-2)_transparent] md:min-h-0 md:flex-1 md:overflow-y-auto md:overscroll-contain md:px-8 md:pt-20 md:pb-5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent">
             {(() => {
-              if (!activeTool.ogImage || ogError) return null;
+              if (!currentOg || ogState.error) return null;
 
               const isExternalOg =
-                (activeTool.ogImage.startsWith("http://") ||
-                  activeTool.ogImage.startsWith("https://")) &&
-                !activeTool.ogImage.startsWith("/api/proxy-image");
+                (currentOg.startsWith("http://") || currentOg.startsWith("https://")) &&
+                !currentOg.startsWith("/api/proxy-image");
 
               const handleOgError = () => {
-                if (isExternalOg && !useDirectOgFallback) {
-                  setUseDirectOgFallback(true);
+                if (isExternalOg && !ogState.directFallback) {
+                  setOgState((prev) => ({ ...prev, directFallback: true }));
                 } else {
-                  setOgError(true);
+                  setOgState((prev) => ({ ...prev, error: true }));
                 }
               };
 
               const currentOgSrc =
-                isExternalOg && !useDirectOgFallback
-                  ? `/api/proxy-image?url=${encodeURIComponent(activeTool.ogImage)}`
-                  : activeTool.ogImage;
+                isExternalOg && !ogState.directFallback
+                  ? `/api/proxy-image?url=${encodeURIComponent(currentOg)}`
+                  : currentOg;
 
               return (
                 <div className="mb-5.5">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
+                    key={currentOgSrc}
                     src={currentOgSrc}
                     alt={activeTool.title}
                     className="h-auto w-full"

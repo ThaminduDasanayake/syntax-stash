@@ -12,6 +12,9 @@ export interface ResourceCardPreviewProps {
   className?: string;
   description?: string | null;
   favicon?: string | null;
+  iconBg?: "dark" | "light" | "invert" | string | null;
+  iconClassName?: string;
+  ogImage?: string | null;
   subtitle?: string | null;
   tags?: string | null;
   title?: string | null;
@@ -26,6 +29,9 @@ export function ResourceCardPreview({
   className,
   description,
   favicon,
+  iconBg,
+  iconClassName,
+  ogImage,
   subtitle,
   url,
 }: ResourceCardPreviewProps) {
@@ -44,6 +50,9 @@ export function ResourceCardPreview({
           category={category}
           description={description}
           favicon={favicon}
+          iconBg={iconBg}
+          iconClassName={iconClassName}
+          ogImage={ogImage}
           isBookmarked={isBookmarked}
           onBookmarkClick={() => setIsBookmarked((prev) => !prev)}
           showTags={false}

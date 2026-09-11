@@ -9,6 +9,7 @@ import {
   AuthorSocialFields,
   AuthorSocialValues,
   CandidateOption,
+  DetectedFieldSuggestion,
   MediaAssetFields,
   ResourceCardPreview,
   SuggestedAuthorData,
@@ -40,9 +41,16 @@ export function SubmitForm() {
   const [github, setGithub] = useState("");
   const [favicon, setFavicon] = useState("");
   const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
+  const [iconBg, setIconBg] = useState<"dark" | "light" | "invert">("dark");
   const [ogImage, setOgImage] = useState("");
   const [ogImageOptions, setOgImageOptions] = useState<CandidateOption[]>([]);
   const [suggestedAuthor, setSuggestedAuthor] = useState<SuggestedAuthorData | null>(null);
+  const [detectedUpdates, setDetectedUpdates] = useState<{
+    description?: string;
+    github?: string;
+    subtitle?: string;
+    title?: string;
+  }>({});
   const [tags, setTags] = useState("");
   const [notes, setNotes] = useState("");
   const [honeypot, setHoneypot] = useState(""); // anti-spam trap
@@ -66,9 +74,11 @@ export function SubmitForm() {
     setGithub("");
     setFavicon("");
     setFaviconOptions([]);
+    setIconBg("dark");
     setOgImage("");
     setOgImageOptions([]);
     setSuggestedAuthor(null);
+    setDetectedUpdates({});
     setTags("");
     setNotes("");
     setHoneypot("");
@@ -138,9 +148,44 @@ export function SubmitForm() {
         throw new Error(data.error || "Failed to auto-detect metadata.");
       }
 
-      if (data.title) setTitle(data.title);
-      if (data.subtitle) setSubtitle(data.subtitle);
-      if (data.description) setDescription(data.description);
+      const newDetected: {
+        description?: string;
+        github?: string;
+        subtitle?: string;
+        title?: string;
+      } = {};
+
+      if (data.title) {
+        if (title && title.trim().toLowerCase() !== data.title.trim().toLowerCase()) {
+          newDetected.title = data.title.trim();
+        } else {
+          setTitle(data.title);
+        }
+      }
+      if (data.subtitle) {
+        if (subtitle && subtitle.trim().toLowerCase() !== data.subtitle.trim().toLowerCase()) {
+          newDetected.subtitle = data.subtitle.trim();
+        } else {
+          setSubtitle(data.subtitle);
+        }
+      }
+      if (data.description) {
+        if (
+          description &&
+          description.trim().toLowerCase() !== data.description.trim().toLowerCase()
+        ) {
+          newDetected.description = data.description.trim();
+        } else {
+          setDescription(data.description);
+        }
+      }
+      if (data.github) {
+        if (github && github.trim().toLowerCase() !== data.github.trim().toLowerCase()) {
+          newDetected.github = data.github.trim();
+        } else {
+          setGithub(data.github);
+        }
+      }
       if (data.favicon) setFavicon(data.favicon);
       if (data.faviconOptions) setFaviconOptions(data.faviconOptions);
       if (data.ogImage) setOgImage(data.ogImage);
@@ -156,10 +201,10 @@ export function SubmitForm() {
           youtube: data.authorYouTube || "",
         });
       }
-      if (data.github) setGithub(data.github);
       if (data.category) {
-        setCategory(data.category);
+        setCategory((prev) => prev || data.category);
       }
+      setDetectedUpdates(newDetected);
       toast.success("Metadata auto-filled from website!");
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Could not fetch metadata from URL.";
@@ -303,9 +348,22 @@ export function SubmitForm() {
           {/* Section 2: Title, Subtitle, & Category */}
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             <div className="space-y-2">
-              <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                Title <span className="text-destructive">*</span>
-              </Label>
+              <div className="flex flex-wrap items-center justify-between gap-1.5">
+                <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                  Title <span className="text-destructive">*</span>
+                </Label>
+                <DetectedFieldSuggestion
+                  currentValue={title}
+                  detectedValue={detectedUpdates.title}
+                  onApply={(val) => {
+                    setTitle(val);
+                    setDetectedUpdates((prev) => ({ ...prev, title: undefined }));
+                  }}
+                  onDismiss={() => {
+                    setDetectedUpdates((prev) => ({ ...prev, title: undefined }));
+                  }}
+                />
+              </div>
               <div className="h-9">
                 <InputField
                   placeholder="e.g. Color Studio"
@@ -335,9 +393,22 @@ export function SubmitForm() {
 
           {/* Subtitle / Tagline */}
           <div className="space-y-2">
-            <Label className="text-foreground font-mono text-xs font-bold uppercase">
-              Subtitle / Tagline (Optional)
-            </Label>
+            <div className="flex flex-wrap items-center justify-between gap-1.5">
+              <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                Subtitle / Tagline (Optional)
+              </Label>
+              <DetectedFieldSuggestion
+                currentValue={subtitle}
+                detectedValue={detectedUpdates.subtitle}
+                onApply={(val) => {
+                  setSubtitle(val);
+                  setDetectedUpdates((prev) => ({ ...prev, subtitle: undefined }));
+                }}
+                onDismiss={() => {
+                  setDetectedUpdates((prev) => ({ ...prev, subtitle: undefined }));
+                }}
+              />
+            </div>
             <div className="h-9">
               <InputField
                 placeholder="e.g. The AI powered color palette generator"
@@ -351,9 +422,22 @@ export function SubmitForm() {
 
           {/* Section 3: Description */}
           <div className="space-y-2">
-            <Label className="text-foreground font-mono text-xs font-bold uppercase">
-              Description <span className="text-destructive">*</span>
-            </Label>
+            <div className="flex flex-wrap items-center justify-between gap-1.5">
+              <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                Description <span className="text-destructive">*</span>
+              </Label>
+              <DetectedFieldSuggestion
+                currentValue={description}
+                detectedValue={detectedUpdates.description}
+                onApply={(val) => {
+                  setDescription(val);
+                  setDetectedUpdates((prev) => ({ ...prev, description: undefined }));
+                }}
+                onDismiss={() => {
+                  setDetectedUpdates((prev) => ({ ...prev, description: undefined }));
+                }}
+              />
+            </div>
             <Textarea
               placeholder="Briefly explain what this tool or resource does..."
               value={description}
@@ -368,6 +452,8 @@ export function SubmitForm() {
           <MediaAssetFields
             favicon={favicon}
             faviconOptions={faviconOptions}
+            iconBg={iconBg}
+            onIconBgChange={setIconBg}
             ogImage={ogImage}
             ogImageOptions={ogImageOptions}
             onFaviconChange={setFavicon}
@@ -404,9 +490,22 @@ export function SubmitForm() {
 
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div className="space-y-2">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  GitHub Repository (Optional)
-                </Label>
+                <div className="flex flex-wrap items-center justify-between gap-1.5">
+                  <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                    GitHub Repository (Optional)
+                  </Label>
+                  <DetectedFieldSuggestion
+                    currentValue={github}
+                    detectedValue={detectedUpdates.github}
+                    onApply={(val) => {
+                      setGithub(val);
+                      setDetectedUpdates((prev) => ({ ...prev, github: undefined }));
+                    }}
+                    onDismiss={() => {
+                      setDetectedUpdates((prev) => ({ ...prev, github: undefined }));
+                    }}
+                  />
+                </div>
                 <div className="h-9">
                   <InputField
                     type="url"
@@ -486,6 +585,7 @@ export function SubmitForm() {
             category={category}
             description={description}
             favicon={favicon}
+            iconBg={iconBg}
             subtitle={subtitle}
             tags={tags}
             title={title}

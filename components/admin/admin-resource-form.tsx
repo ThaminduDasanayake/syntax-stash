@@ -9,8 +9,8 @@ import {
 } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useState } from "react";
 import { toast } from "sonner";
 
 import {
@@ -18,6 +18,7 @@ import {
   AuthorSocialFields,
   AuthorSocialValues,
   CandidateOption,
+  DetectedFieldSuggestion,
   MediaAssetFields,
   ResourceCardPreview,
   SuggestedAuthorData,
@@ -56,8 +57,12 @@ interface AdminResourceFormProps {
   mode?: "create" | "edit";
 }
 
-export function AdminResourceForm({ initialData, mode = "create" }: AdminResourceFormProps) {
+function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourceFormProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const searchString = searchParams.toString();
+  const returnUrl = `/admin/resources${searchString ? `?${searchString}` : ""}`;
+
   const isEdit = mode === "edit" || Boolean(initialData?.id);
   const { categoryOptions } = useCategories();
 
@@ -78,6 +83,7 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
     description: initialData?.description || "",
     favicon: initialData?.favicon || "",
     github: initialData?.github || "",
+    iconBg: initialData?.iconBg || "dark",
     ogImage: initialData?.ogImage || "",
     subtitle: initialData?.subtitle || "",
     tags: initialData?.tags || "",
@@ -89,6 +95,12 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
   const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
   const [ogImageOptions, setOgImageOptions] = useState<CandidateOption[]>([]);
   const [suggestedAuthor, setSuggestedAuthor] = useState<SuggestedAuthorData | null>(null);
+  const [detectedUpdates, setDetectedUpdates] = useState<{
+    description?: string;
+    github?: string;
+    subtitle?: string;
+    title?: string;
+  }>({});
 
   // Author Creation Modal State
   const [isCreateAuthorOpen, setIsCreateAuthorOpen] = useState(false);
@@ -113,7 +125,6 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
       authorGithub: authorOption.links?.github || "",
       authorId: authorOption.id || prev.authorId || null,
       authorLinkedin: authorOption.links?.linkedin || "",
-      authorName: authorOption.name,
       authorTwitter: authorOption.links?.twitter || "",
       authorWebsite: authorOption.links?.website || "",
       authorYoutube: authorOption.links?.youtube || "",
@@ -167,16 +178,63 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
           });
         }
 
-        setFormData((prev) => ({
-          ...prev,
-          title: prev.title || data.title || "",
-          category: prev.category || data.category || defaultCategory,
-          description: prev.description || data.description || "",
-          favicon: data.favicon || prev.favicon || "",
-          github: prev.github || data.github || "",
-          ogImage: data.ogImage || prev.ogImage || "",
-          subtitle: prev.subtitle || data.subtitle || "",
-        }));
+        const newDetected: {
+          description?: string;
+          github?: string;
+          subtitle?: string;
+          title?: string;
+        } = {};
+
+        setFormData((prev) => {
+          const nextTitle = prev.title || data.title || "";
+          if (
+            prev.title &&
+            data.title &&
+            prev.title.trim().toLowerCase() !== data.title.trim().toLowerCase()
+          ) {
+            newDetected.title = data.title.trim();
+          }
+
+          const nextSubtitle = prev.subtitle || data.subtitle || "";
+          if (
+            prev.subtitle &&
+            data.subtitle &&
+            prev.subtitle.trim().toLowerCase() !== data.subtitle.trim().toLowerCase()
+          ) {
+            newDetected.subtitle = data.subtitle.trim();
+          }
+
+          const nextDescription = prev.description || data.description || "";
+          if (
+            prev.description &&
+            data.description &&
+            prev.description.trim().toLowerCase() !== data.description.trim().toLowerCase()
+          ) {
+            newDetected.description = data.description.trim();
+          }
+
+          const nextGithub = prev.github || data.github || "";
+          if (
+            prev.github &&
+            data.github &&
+            prev.github.trim().toLowerCase() !== data.github.trim().toLowerCase()
+          ) {
+            newDetected.github = data.github.trim();
+          }
+
+          return {
+            ...prev,
+            title: nextTitle,
+            category: prev.category || data.category || defaultCategory,
+            description: nextDescription,
+            favicon: data.favicon || prev.favicon || "",
+            github: nextGithub,
+            ogImage: data.ogImage || prev.ogImage || "",
+            subtitle: nextSubtitle,
+          };
+        });
+
+        setDetectedUpdates(newDetected);
         toast.success("Metadata detected successfully!");
       } else {
         toast.error(data.error || "Failed to auto-detect metadata.");
@@ -209,7 +267,7 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
             ? `"${formData.title}" updated successfully.`
             : `"${formData.title}" published to live catalog!`,
         );
-        router.push("/admin/resources");
+        router.push(returnUrl);
         router.refresh();
       } else {
         toast.error(data.error || "Failed to save resource.");
@@ -279,7 +337,7 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
               variant="outline"
               className="border-line hover:bg-surface h-8 gap-1 px-2.5 text-xs font-bold uppercase"
             >
-              <Link href="/admin/resources">
+              <Link href={returnUrl}>
                 <ArrowLeftIcon weight="bold" />
                 <span>Back to Resources</span>
               </Link>
@@ -314,7 +372,7 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
             disabled={isSubmitting}
             className="h-9 px-4 text-xs font-bold uppercase"
           >
-            <Link href="/admin/resources">Cancel</Link>
+            <Link href={returnUrl}>Cancel</Link>
           </Button>
 
           <Button
@@ -391,9 +449,22 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
             {/* Section 2: Title, Category, & Subtitle */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Title <span className="text-destructive">*</span>
-                </Label>
+                <div className="flex flex-wrap items-center justify-between gap-1.5">
+                  <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                    Title <span className="text-destructive">*</span>
+                  </Label>
+                  <DetectedFieldSuggestion
+                    currentValue={formData.title}
+                    detectedValue={detectedUpdates.title}
+                    onApply={(val) => {
+                      setFormData((prev) => ({ ...prev, title: val }));
+                      setDetectedUpdates((prev) => ({ ...prev, title: undefined }));
+                    }}
+                    onDismiss={() => {
+                      setDetectedUpdates((prev) => ({ ...prev, title: undefined }));
+                    }}
+                  />
+                </div>
                 <div className="h-9">
                   <InputField
                     value={formData.title || ""}
@@ -422,9 +493,22 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
             </div>
 
             <div className="space-y-2">
-              <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                Subtitle / Tagline (Optional)
-              </Label>
+              <div className="flex flex-wrap items-center justify-between gap-1.5">
+                <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                  Subtitle / Tagline (Optional)
+                </Label>
+                <DetectedFieldSuggestion
+                  currentValue={formData.subtitle}
+                  detectedValue={detectedUpdates.subtitle}
+                  onApply={(val) => {
+                    setFormData((prev) => ({ ...prev, subtitle: val }));
+                    setDetectedUpdates((prev) => ({ ...prev, subtitle: undefined }));
+                  }}
+                  onDismiss={() => {
+                    setDetectedUpdates((prev) => ({ ...prev, subtitle: undefined }));
+                  }}
+                />
+              </div>
               <div className="h-9">
                 <InputField
                   value={formData.subtitle || ""}
@@ -438,9 +522,22 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
 
             {/* Section 3: Description */}
             <div className="space-y-2">
-              <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                Description <span className="text-destructive">*</span>
-              </Label>
+              <div className="flex flex-wrap items-center justify-between gap-1.5">
+                <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                  Description <span className="text-destructive">*</span>
+                </Label>
+                <DetectedFieldSuggestion
+                  currentValue={formData.description}
+                  detectedValue={detectedUpdates.description}
+                  onApply={(val) => {
+                    setFormData((prev) => ({ ...prev, description: val }));
+                    setDetectedUpdates((prev) => ({ ...prev, description: undefined }));
+                  }}
+                  onDismiss={() => {
+                    setDetectedUpdates((prev) => ({ ...prev, description: undefined }));
+                  }}
+                />
+              </div>
               <Textarea
                 value={formData.description || ""}
                 onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
@@ -455,6 +552,8 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
             <MediaAssetFields
               favicon={formData.favicon || ""}
               faviconOptions={faviconOptions}
+              iconBg={formData.iconBg || "dark"}
+              onIconBgChange={(val) => setFormData((prev) => ({ ...prev, iconBg: val }))}
               ogImage={formData.ogImage || ""}
               ogImageOptions={ogImageOptions}
               onFaviconChange={(val) => setFormData((prev) => ({ ...prev, favicon: val }))}
@@ -463,9 +562,22 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
 
             {/* Section 5: GitHub Repository URL */}
             <div className="space-y-2">
-              <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                GitHub Repository URL (Optional)
-              </Label>
+              <div className="flex flex-wrap items-center justify-between gap-1.5">
+                <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                  GitHub Repository URL (Optional)
+                </Label>
+                <DetectedFieldSuggestion
+                  currentValue={formData.github}
+                  detectedValue={detectedUpdates.github}
+                  onApply={(val) => {
+                    setFormData((prev) => ({ ...prev, github: val }));
+                    setDetectedUpdates((prev) => ({ ...prev, github: undefined }));
+                  }}
+                  onDismiss={() => {
+                    setDetectedUpdates((prev) => ({ ...prev, github: undefined }));
+                  }}
+                />
+              </div>
               <div className="h-9">
                 <InputField
                   placeholder="https://github.com/owner/repo"
@@ -528,7 +640,9 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
                   author={formData.authorName}
                   category={formData.category}
                   description={formData.description}
+                  ogImage={formData.ogImage}
                   favicon={formData.favicon}
+                  iconBg={formData.iconBg || "dark"}
                   subtitle={formData.subtitle}
                   tags={formData.tags || ""}
                   url={formData.url}
@@ -604,17 +718,28 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
         onOpenChange={setIsCreateAuthorOpen}
         initialName={createAuthorInitialName}
         onCreated={(newAuthor) => {
-          setFormData((prev) => ({
-            ...prev,
-            authorBlog: newAuthor.blog || "",
-            authorGithub: newAuthor.github || "",
-            authorId: newAuthor.id,
-            authorLinkedin: newAuthor.linkedin || "",
-            authorName: newAuthor.name,
-            authorTwitter: newAuthor.twitter || "",
-            authorWebsite: newAuthor.website || "",
-            authorYoutube: newAuthor.youtube || "",
-          }));
+          setFormData((prev) => {
+            const existing = prev.authorName
+              ? prev.authorName
+                  .split(",")
+                  .map((a) => a.trim())
+                  .filter(Boolean)
+              : [];
+            const next = existing.some((a) => a.toLowerCase() === newAuthor.name.toLowerCase())
+              ? existing
+              : [...existing, newAuthor.name];
+            return {
+              ...prev,
+              authorBlog: newAuthor.blog || prev.authorBlog || "",
+              authorGithub: newAuthor.github || prev.authorGithub || "",
+              authorId: newAuthor.id || prev.authorId,
+              authorLinkedin: newAuthor.linkedin || prev.authorLinkedin || "",
+              authorName: next.join(", "),
+              authorTwitter: newAuthor.twitter || prev.authorTwitter || "",
+              authorWebsite: newAuthor.website || prev.authorWebsite || "",
+              authorYoutube: newAuthor.youtube || prev.authorYoutube || "",
+            };
+          });
           setIsCreateAuthorOpen(false);
         }}
       />
@@ -631,5 +756,13 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
         confirmLabel="Confirm & Save Resource"
       />
     </div>
+  );
+}
+
+export function AdminResourceForm(props: AdminResourceFormProps) {
+  return (
+    <Suspense>
+      <AdminResourceFormContent {...props} />
+    </Suspense>
   );
 }

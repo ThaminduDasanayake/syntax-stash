@@ -55,6 +55,7 @@ export const getAllResources = cache(
         const resourceMap = new Map<
           string,
           {
+            id: string;
             author?: string;
             category: string;
             createdAt?: string;
@@ -74,6 +75,7 @@ export const getAllResources = cache(
           const catName = r.categoryName || "Generators";
           if (!resourceMap.has(r.id)) {
             resourceMap.set(r.id, {
+              id: r.id,
               title: r.title,
               author: r.authorName || undefined,
               category: catName,
