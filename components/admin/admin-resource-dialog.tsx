@@ -14,6 +14,7 @@ import {
   AuthorSocialFields,
   AuthorSocialValues,
   CandidateOption,
+  DetectedFieldSuggestion,
   MediaAssetFields,
   ResourceCardPreview,
   SuggestedAuthorData,
@@ -96,6 +97,12 @@ export function AdminResourceDialog({
   const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
   const [ogImageOptions, setOgImageOptions] = useState<CandidateOption[]>([]);
   const [suggestedAuthor, setSuggestedAuthor] = useState<SuggestedAuthorData | null>(null);
+  const [detectedUpdates, setDetectedUpdates] = useState<{
+    description?: string;
+    github?: string;
+    subtitle?: string;
+    title?: string;
+  }>({});
 
   // Author Creation Modal State
   const [isCreateAuthorOpen, setIsCreateAuthorOpen] = useState(false);
@@ -149,6 +156,7 @@ export function AdminResourceDialog({
     setFaviconOptions([]);
     setOgImageOptions([]);
     setSuggestedAuthor(null);
+    setDetectedUpdates({});
   }, [categoryOptions, open, resource]);
 
   const handleAuthorFieldChange = (field: keyof AuthorSocialValues, value: string) => {
@@ -218,16 +226,63 @@ export function AdminResourceDialog({
           });
         }
 
-        setFormData((prev) => ({
-          ...prev,
-          title: prev.title || data.title || "",
-          category: prev.category || data.category || (categoryOptions[0]?.value ?? ""),
-          description: prev.description || data.description || "",
-          favicon: data.favicon || prev.favicon || "",
-          github: prev.github || data.github || "",
-          ogImage: data.ogImage || prev.ogImage || "",
-          subtitle: prev.subtitle || data.subtitle || "",
-        }));
+        const newDetected: {
+          description?: string;
+          github?: string;
+          subtitle?: string;
+          title?: string;
+        } = {};
+
+        setFormData((prev) => {
+          const nextTitle = prev.title || data.title || "";
+          if (
+            prev.title &&
+            data.title &&
+            prev.title.trim().toLowerCase() !== data.title.trim().toLowerCase()
+          ) {
+            newDetected.title = data.title.trim();
+          }
+
+          const nextSubtitle = prev.subtitle || data.subtitle || "";
+          if (
+            prev.subtitle &&
+            data.subtitle &&
+            prev.subtitle.trim().toLowerCase() !== data.subtitle.trim().toLowerCase()
+          ) {
+            newDetected.subtitle = data.subtitle.trim();
+          }
+
+          const nextDescription = prev.description || data.description || "";
+          if (
+            prev.description &&
+            data.description &&
+            prev.description.trim().toLowerCase() !== data.description.trim().toLowerCase()
+          ) {
+            newDetected.description = data.description.trim();
+          }
+
+          const nextGithub = prev.github || data.github || "";
+          if (
+            prev.github &&
+            data.github &&
+            prev.github.trim().toLowerCase() !== data.github.trim().toLowerCase()
+          ) {
+            newDetected.github = data.github.trim();
+          }
+
+          return {
+            ...prev,
+            title: nextTitle,
+            category: prev.category || data.category || (categoryOptions[0]?.value ?? ""),
+            description: nextDescription,
+            favicon: data.favicon || prev.favicon || "",
+            github: nextGithub,
+            ogImage: data.ogImage || prev.ogImage || "",
+            subtitle: nextSubtitle,
+          };
+        });
+
+        setDetectedUpdates(newDetected);
       }
     } catch (err) {
       console.error("Metadata auto-detection failed:", err);
@@ -343,9 +398,22 @@ export function AdminResourceDialog({
               {/* Title & Subtitle */}
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
-                  <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                    Title *
-                  </Label>
+                  <div className="flex flex-wrap items-center justify-between gap-1.5">
+                    <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                      Title *
+                    </Label>
+                    <DetectedFieldSuggestion
+                      currentValue={formData.title}
+                      detectedValue={detectedUpdates.title}
+                      onApply={(val) => {
+                        setFormData((prev) => ({ ...prev, title: val }));
+                        setDetectedUpdates((prev) => ({ ...prev, title: undefined }));
+                      }}
+                      onDismiss={() => {
+                        setDetectedUpdates((prev) => ({ ...prev, title: undefined }));
+                      }}
+                    />
+                  </div>
                   <div className="h-9">
                     <InputField
                       placeholder="e.g. Next.js"
@@ -359,9 +427,22 @@ export function AdminResourceDialog({
                 </div>
 
                 <div className="space-y-2">
-                  <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                    Subtitle
-                  </Label>
+                  <div className="flex flex-wrap items-center justify-between gap-1.5">
+                    <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                      Subtitle
+                    </Label>
+                    <DetectedFieldSuggestion
+                      currentValue={formData.subtitle}
+                      detectedValue={detectedUpdates.subtitle}
+                      onApply={(val) => {
+                        setFormData((prev) => ({ ...prev, subtitle: val }));
+                        setDetectedUpdates((prev) => ({ ...prev, subtitle: undefined }));
+                      }}
+                      onDismiss={() => {
+                        setDetectedUpdates((prev) => ({ ...prev, subtitle: undefined }));
+                      }}
+                    />
+                  </div>
                   <div className="h-9">
                     <InputField
                       placeholder="e.g. The React Framework"
@@ -391,9 +472,22 @@ export function AdminResourceDialog({
                 </div>
 
                 <div className="space-y-2">
-                  <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                    GitHub Repo URL
-                  </Label>
+                  <div className="flex flex-wrap items-center justify-between gap-1.5">
+                    <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                      GitHub Repo URL
+                    </Label>
+                    <DetectedFieldSuggestion
+                      currentValue={formData.github}
+                      detectedValue={detectedUpdates.github}
+                      onApply={(val) => {
+                        setFormData((prev) => ({ ...prev, github: val }));
+                        setDetectedUpdates((prev) => ({ ...prev, github: undefined }));
+                      }}
+                      onDismiss={() => {
+                        setDetectedUpdates((prev) => ({ ...prev, github: undefined }));
+                      }}
+                    />
+                  </div>
                   <div className="h-9">
                     <InputField
                       type="url"
@@ -409,9 +503,22 @@ export function AdminResourceDialog({
 
               {/* Description */}
               <div className="space-y-2">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Description *
-                </Label>
+                <div className="flex flex-wrap items-center justify-between gap-1.5">
+                  <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                    Description *
+                  </Label>
+                  <DetectedFieldSuggestion
+                    currentValue={formData.description}
+                    detectedValue={detectedUpdates.description}
+                    onApply={(val) => {
+                      setFormData((prev) => ({ ...prev, description: val }));
+                      setDetectedUpdates((prev) => ({ ...prev, description: undefined }));
+                    }}
+                    onDismiss={() => {
+                      setDetectedUpdates((prev) => ({ ...prev, description: undefined }));
+                    }}
+                  />
+                </div>
                 <Textarea
                   placeholder="Describe the tool, its core features, and use case..."
                   value={formData.description || ""}

@@ -18,6 +18,7 @@ import {
   AuthorSocialFields,
   AuthorSocialValues,
   CandidateOption,
+  DetectedFieldSuggestion,
   MediaAssetFields,
   ResourceCardPreview,
   SuggestedAuthorData,
@@ -89,6 +90,12 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
   const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
   const [ogImageOptions, setOgImageOptions] = useState<CandidateOption[]>([]);
   const [suggestedAuthor, setSuggestedAuthor] = useState<SuggestedAuthorData | null>(null);
+  const [detectedUpdates, setDetectedUpdates] = useState<{
+    description?: string;
+    github?: string;
+    subtitle?: string;
+    title?: string;
+  }>({});
 
   // Author Creation Modal State
   const [isCreateAuthorOpen, setIsCreateAuthorOpen] = useState(false);
@@ -166,16 +173,63 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
           });
         }
 
-        setFormData((prev) => ({
-          ...prev,
-          title: prev.title || data.title || "",
-          category: prev.category || data.category || defaultCategory,
-          description: prev.description || data.description || "",
-          favicon: data.favicon || prev.favicon || "",
-          github: prev.github || data.github || "",
-          ogImage: data.ogImage || prev.ogImage || "",
-          subtitle: prev.subtitle || data.subtitle || "",
-        }));
+        const newDetected: {
+          description?: string;
+          github?: string;
+          subtitle?: string;
+          title?: string;
+        } = {};
+
+        setFormData((prev) => {
+          const nextTitle = prev.title || data.title || "";
+          if (
+            prev.title &&
+            data.title &&
+            prev.title.trim().toLowerCase() !== data.title.trim().toLowerCase()
+          ) {
+            newDetected.title = data.title.trim();
+          }
+
+          const nextSubtitle = prev.subtitle || data.subtitle || "";
+          if (
+            prev.subtitle &&
+            data.subtitle &&
+            prev.subtitle.trim().toLowerCase() !== data.subtitle.trim().toLowerCase()
+          ) {
+            newDetected.subtitle = data.subtitle.trim();
+          }
+
+          const nextDescription = prev.description || data.description || "";
+          if (
+            prev.description &&
+            data.description &&
+            prev.description.trim().toLowerCase() !== data.description.trim().toLowerCase()
+          ) {
+            newDetected.description = data.description.trim();
+          }
+
+          const nextGithub = prev.github || data.github || "";
+          if (
+            prev.github &&
+            data.github &&
+            prev.github.trim().toLowerCase() !== data.github.trim().toLowerCase()
+          ) {
+            newDetected.github = data.github.trim();
+          }
+
+          return {
+            ...prev,
+            title: nextTitle,
+            category: prev.category || data.category || defaultCategory,
+            description: nextDescription,
+            favicon: data.favicon || prev.favicon || "",
+            github: nextGithub,
+            ogImage: data.ogImage || prev.ogImage || "",
+            subtitle: nextSubtitle,
+          };
+        });
+
+        setDetectedUpdates(newDetected);
         toast.success("Metadata detected successfully!");
       } else {
         toast.error(data.error || "Failed to auto-detect metadata.");
@@ -390,9 +444,22 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
             {/* Section 2: Title, Category, & Subtitle */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Title <span className="text-destructive">*</span>
-                </Label>
+                <div className="flex flex-wrap items-center justify-between gap-1.5">
+                  <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                    Title <span className="text-destructive">*</span>
+                  </Label>
+                  <DetectedFieldSuggestion
+                    currentValue={formData.title}
+                    detectedValue={detectedUpdates.title}
+                    onApply={(val) => {
+                      setFormData((prev) => ({ ...prev, title: val }));
+                      setDetectedUpdates((prev) => ({ ...prev, title: undefined }));
+                    }}
+                    onDismiss={() => {
+                      setDetectedUpdates((prev) => ({ ...prev, title: undefined }));
+                    }}
+                  />
+                </div>
                 <div className="h-9">
                   <InputField
                     value={formData.title || ""}
@@ -421,9 +488,22 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
             </div>
 
             <div className="space-y-2">
-              <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                Subtitle / Tagline (Optional)
-              </Label>
+              <div className="flex flex-wrap items-center justify-between gap-1.5">
+                <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                  Subtitle / Tagline (Optional)
+                </Label>
+                <DetectedFieldSuggestion
+                  currentValue={formData.subtitle}
+                  detectedValue={detectedUpdates.subtitle}
+                  onApply={(val) => {
+                    setFormData((prev) => ({ ...prev, subtitle: val }));
+                    setDetectedUpdates((prev) => ({ ...prev, subtitle: undefined }));
+                  }}
+                  onDismiss={() => {
+                    setDetectedUpdates((prev) => ({ ...prev, subtitle: undefined }));
+                  }}
+                />
+              </div>
               <div className="h-9">
                 <InputField
                   value={formData.subtitle || ""}
@@ -437,9 +517,22 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
 
             {/* Section 3: Description */}
             <div className="space-y-2">
-              <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                Description <span className="text-destructive">*</span>
-              </Label>
+              <div className="flex flex-wrap items-center justify-between gap-1.5">
+                <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                  Description <span className="text-destructive">*</span>
+                </Label>
+                <DetectedFieldSuggestion
+                  currentValue={formData.description}
+                  detectedValue={detectedUpdates.description}
+                  onApply={(val) => {
+                    setFormData((prev) => ({ ...prev, description: val }));
+                    setDetectedUpdates((prev) => ({ ...prev, description: undefined }));
+                  }}
+                  onDismiss={() => {
+                    setDetectedUpdates((prev) => ({ ...prev, description: undefined }));
+                  }}
+                />
+              </div>
               <Textarea
                 value={formData.description || ""}
                 onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
@@ -462,9 +555,22 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
 
             {/* Section 5: GitHub Repository URL */}
             <div className="space-y-2">
-              <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                GitHub Repository URL (Optional)
-              </Label>
+              <div className="flex flex-wrap items-center justify-between gap-1.5">
+                <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                  GitHub Repository URL (Optional)
+                </Label>
+                <DetectedFieldSuggestion
+                  currentValue={formData.github}
+                  detectedValue={detectedUpdates.github}
+                  onApply={(val) => {
+                    setFormData((prev) => ({ ...prev, github: val }));
+                    setDetectedUpdates((prev) => ({ ...prev, github: undefined }));
+                  }}
+                  onDismiss={() => {
+                    setDetectedUpdates((prev) => ({ ...prev, github: undefined }));
+                  }}
+                />
+              </div>
               <div className="h-9">
                 <InputField
                   placeholder="https://github.com/owner/repo"

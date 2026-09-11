@@ -16,6 +16,7 @@ import {
   AuthorOption,
   AuthorSocialFields,
   AuthorSocialValues,
+  DetectedFieldSuggestion,
   MediaAssetFields,
   ResourceCardPreview,
   SuggestedAuthorData,
@@ -108,6 +109,12 @@ export function AdminSubmissionEditForm({
     { label: string; type?: string; url: string }[]
   >([]);
   const [suggestedAuthor, setSuggestedAuthor] = useState<SuggestedAuthorData | null>(null);
+  const [detectedUpdates, setDetectedUpdates] = useState<{
+    description?: string;
+    github?: string;
+    subtitle?: string;
+    title?: string;
+  }>({});
 
   // Inline Author Creation
   const [isCreateAuthorOpen, setIsCreateAuthorOpen] = useState(false);
@@ -204,16 +211,63 @@ export function AdminSubmissionEditForm({
           });
         }
 
-        setEditForm((prev) => ({
-          ...prev,
-          title: prev.title || data.title,
-          category: prev.category || data.category || sub.category,
-          description: prev.description || data.description,
-          favicon: data.favicon || prev.favicon,
-          github: prev.github || data.github,
-          ogImage: data.ogImage || prev.ogImage,
-          subtitle: prev.subtitle || data.subtitle,
-        }));
+        const newDetected: {
+          description?: string;
+          github?: string;
+          subtitle?: string;
+          title?: string;
+        } = {};
+
+        setEditForm((prev) => {
+          const nextTitle = prev.title || data.title || "";
+          if (
+            prev.title &&
+            data.title &&
+            prev.title.trim().toLowerCase() !== data.title.trim().toLowerCase()
+          ) {
+            newDetected.title = data.title.trim();
+          }
+
+          const nextSubtitle = prev.subtitle || data.subtitle || "";
+          if (
+            prev.subtitle &&
+            data.subtitle &&
+            prev.subtitle.trim().toLowerCase() !== data.subtitle.trim().toLowerCase()
+          ) {
+            newDetected.subtitle = data.subtitle.trim();
+          }
+
+          const nextDescription = prev.description || data.description || "";
+          if (
+            prev.description &&
+            data.description &&
+            prev.description.trim().toLowerCase() !== data.description.trim().toLowerCase()
+          ) {
+            newDetected.description = data.description.trim();
+          }
+
+          const nextGithub = prev.github || data.github || "";
+          if (
+            prev.github &&
+            data.github &&
+            prev.github.trim().toLowerCase() !== data.github.trim().toLowerCase()
+          ) {
+            newDetected.github = data.github.trim();
+          }
+
+          return {
+            ...prev,
+            title: nextTitle,
+            category: prev.category || data.category || sub.category,
+            description: nextDescription,
+            favicon: data.favicon || prev.favicon,
+            github: nextGithub,
+            ogImage: data.ogImage || prev.ogImage,
+            subtitle: nextSubtitle,
+          };
+        });
+
+        setDetectedUpdates(newDetected);
       }
     } catch (err) {
       console.error("Metadata re-sync failed:", err);
@@ -315,9 +369,22 @@ export function AdminSubmissionEditForm({
           {/* Section 2: Title, Subtitle, & Category */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="space-y-2">
-              <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                Title <span className="text-destructive">*</span>
-              </Label>
+              <div className="flex flex-wrap items-center justify-between gap-1.5">
+                <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                  Title <span className="text-destructive">*</span>
+                </Label>
+                <DetectedFieldSuggestion
+                  currentValue={editForm.title}
+                  detectedValue={detectedUpdates.title}
+                  onApply={(val) => {
+                    setEditForm((prev) => ({ ...prev, title: val }));
+                    setDetectedUpdates((prev) => ({ ...prev, title: undefined }));
+                  }}
+                  onDismiss={() => {
+                    setDetectedUpdates((prev) => ({ ...prev, title: undefined }));
+                  }}
+                />
+              </div>
               <div className="h-9">
                 <InputField
                   value={editForm.title || ""}
@@ -346,9 +413,22 @@ export function AdminSubmissionEditForm({
           </div>
 
           <div className="space-y-2">
-            <Label className="text-foreground font-mono text-xs font-bold uppercase">
-              Subtitle / Tagline (Optional)
-            </Label>
+            <div className="flex flex-wrap items-center justify-between gap-1.5">
+              <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                Subtitle / Tagline (Optional)
+              </Label>
+              <DetectedFieldSuggestion
+                currentValue={editForm.subtitle}
+                detectedValue={detectedUpdates.subtitle}
+                onApply={(val) => {
+                  setEditForm((prev) => ({ ...prev, subtitle: val }));
+                  setDetectedUpdates((prev) => ({ ...prev, subtitle: undefined }));
+                }}
+                onDismiss={() => {
+                  setDetectedUpdates((prev) => ({ ...prev, subtitle: undefined }));
+                }}
+              />
+            </div>
             <div className="h-9">
               <InputField
                 value={editForm.subtitle || ""}
@@ -362,9 +442,22 @@ export function AdminSubmissionEditForm({
 
           {/* Section 3: Description */}
           <div className="space-y-2">
-            <Label className="text-foreground font-mono text-xs font-bold uppercase">
-              Description <span className="text-destructive">*</span>
-            </Label>
+            <div className="flex flex-wrap items-center justify-between gap-1.5">
+              <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                Description <span className="text-destructive">*</span>
+              </Label>
+              <DetectedFieldSuggestion
+                currentValue={editForm.description}
+                detectedValue={detectedUpdates.description}
+                onApply={(val) => {
+                  setEditForm((prev) => ({ ...prev, description: val }));
+                  setDetectedUpdates((prev) => ({ ...prev, description: undefined }));
+                }}
+                onDismiss={() => {
+                  setDetectedUpdates((prev) => ({ ...prev, description: undefined }));
+                }}
+              />
+            </div>
             <Textarea
               value={editForm.description || ""}
               onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
@@ -418,9 +511,22 @@ export function AdminSubmissionEditForm({
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  GitHub Repository (Optional)
-                </Label>
+                <div className="flex flex-wrap items-center justify-between gap-1.5">
+                  <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                    GitHub Repository (Optional)
+                  </Label>
+                  <DetectedFieldSuggestion
+                    currentValue={editForm.github}
+                    detectedValue={detectedUpdates.github}
+                    onApply={(val) => {
+                      setEditForm((prev) => ({ ...prev, github: val }));
+                      setDetectedUpdates((prev) => ({ ...prev, github: undefined }));
+                    }}
+                    onDismiss={() => {
+                      setDetectedUpdates((prev) => ({ ...prev, github: undefined }));
+                    }}
+                  />
+                </div>
                 <div className="h-9">
                   <InputField
                     type="url"
