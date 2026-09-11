@@ -17,6 +17,7 @@ import {
   AuthorSocialFields,
   AuthorSocialValues,
   DetectedFieldSuggestion,
+  FieldCheckmark,
   MediaAssetFields,
   ResourceCardPreview,
   SuggestedAuthorData,
@@ -29,7 +30,7 @@ import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
 import { Submission } from "@/lib/db/schema";
-import { cn } from "@/lib/utils";
+import { cn, isValidHttpUrl } from "@/lib/utils";
 
 import { AdminAuthorDialog } from "./admin-author-dialog";
 import {
@@ -327,8 +328,12 @@ export function AdminSubmissionEditForm({
           {/* Section 1: Resource URL with Live Re-Sync */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                Resource URL <span className="text-destructive">*</span>
+              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                <span>Resource URL</span>
+                <span className="text-destructive">*</span>
+                <FieldCheckmark
+                  checked={Boolean(editForm.url?.trim() && isValidHttpUrl(editForm.url.trim()))}
+                />
               </Label>
               <span className="text-muted-foreground text-[10px]">
                 Scan live site for latest metadata & assets
@@ -367,8 +372,10 @@ export function AdminSubmissionEditForm({
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="space-y-2">
               <div className="flex flex-wrap items-center justify-between gap-1.5">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Title <span className="text-destructive">*</span>
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <span>Title</span>
+                  <span className="text-destructive">*</span>
+                  <FieldCheckmark checked={Boolean(editForm.title?.trim())} />
                 </Label>
                 <DetectedFieldSuggestion
                   currentValue={editForm.title}
@@ -395,8 +402,10 @@ export function AdminSubmissionEditForm({
             </div>
 
             <div className="space-y-2">
-              <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                Category <span className="text-destructive">*</span>
+              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                <span>Category</span>
+                <span className="text-destructive">*</span>
+                <FieldCheckmark checked={Boolean(editForm.category?.trim())} />
               </Label>
               <div className="h-9">
                 <SelectField
@@ -411,8 +420,9 @@ export function AdminSubmissionEditForm({
 
           <div className="space-y-2">
             <div className="flex flex-wrap items-center justify-between gap-1.5">
-              <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                Subtitle / Tagline (Optional)
+              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                <span>Subtitle / Tagline (Optional)</span>
+                <FieldCheckmark checked={Boolean(editForm.subtitle?.trim())} />
               </Label>
               <DetectedFieldSuggestion
                 currentValue={editForm.subtitle}
@@ -440,8 +450,10 @@ export function AdminSubmissionEditForm({
           {/* Section 3: Description */}
           <div className="space-y-2">
             <div className="flex flex-wrap items-center justify-between gap-1.5">
-              <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                Description <span className="text-destructive">*</span>
+              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                <span>Description</span>
+                <span className="text-destructive">*</span>
+                <FieldCheckmark checked={Boolean(editForm.description?.trim())} />
               </Label>
               <DetectedFieldSuggestion
                 currentValue={editForm.description}
@@ -511,8 +523,9 @@ export function AdminSubmissionEditForm({
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <div className="flex flex-wrap items-center justify-between gap-1.5">
-                  <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                    GitHub Repository (Optional)
+                  <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                    <span>GitHub Repository (Optional)</span>
+                    <FieldCheckmark checked={Boolean(editForm.github?.trim())} />
                   </Label>
                   <DetectedFieldSuggestion
                     currentValue={editForm.github}
@@ -539,8 +552,9 @@ export function AdminSubmissionEditForm({
               </div>
 
               <div className="space-y-2">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Canonical Tags (Select Only)
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <span>Canonical Tags (Select Only)</span>
+                  <FieldCheckmark checked={Boolean(editForm.tags?.trim())} />
                 </Label>
                 <TagPicker
                   value={editForm.tags || ""}

@@ -10,6 +10,7 @@ import {
   AuthorSocialValues,
   CandidateOption,
   DetectedFieldSuggestion,
+  FieldCheckmark,
   MediaAssetFields,
   ResourceCardPreview,
   SuggestedAuthorData,
@@ -21,6 +22,7 @@ import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
+import { isValidHttpUrl } from "@/lib/utils";
 
 export function SubmitForm() {
   const router = useRouter();
@@ -303,8 +305,10 @@ export function SubmitForm() {
           {/* Section 1: Resource URL with Auto-Fill */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                Resource URL <span className="text-destructive">*</span>
+              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                <span>Resource URL</span>
+                <span className="text-destructive">*</span>
+                <FieldCheckmark checked={Boolean(url.trim() && isValidHttpUrl(url.trim()))} />
               </Label>
               <span className="text-muted-foreground text-[10px]">
                 Paste link to auto-detect details
@@ -349,8 +353,10 @@ export function SubmitForm() {
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             <div className="space-y-2">
               <div className="flex flex-wrap items-center justify-between gap-1.5">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Title <span className="text-destructive">*</span>
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <span>Title</span>
+                  <span className="text-destructive">*</span>
+                  <FieldCheckmark checked={Boolean(title.trim())} />
                 </Label>
                 <DetectedFieldSuggestion
                   currentValue={title}
@@ -377,8 +383,10 @@ export function SubmitForm() {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                Category <span className="text-destructive">*</span>
+              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                <span>Category</span>
+                <span className="text-destructive">*</span>
+                <FieldCheckmark checked={Boolean(category.trim())} />
               </Label>
               <div className="h-9">
                 <SelectField
@@ -394,8 +402,9 @@ export function SubmitForm() {
           {/* Subtitle / Tagline */}
           <div className="space-y-2">
             <div className="flex flex-wrap items-center justify-between gap-1.5">
-              <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                Subtitle / Tagline (Optional)
+              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                <span>Subtitle / Tagline (Optional)</span>
+                <FieldCheckmark checked={Boolean(subtitle.trim())} />
               </Label>
               <DetectedFieldSuggestion
                 currentValue={subtitle}
@@ -423,8 +432,10 @@ export function SubmitForm() {
           {/* Section 3: Description */}
           <div className="space-y-2">
             <div className="flex flex-wrap items-center justify-between gap-1.5">
-              <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                Description <span className="text-destructive">*</span>
+              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                <span>Description</span>
+                <span className="text-destructive">*</span>
+                <FieldCheckmark checked={Boolean(description.trim())} />
               </Label>
               <DetectedFieldSuggestion
                 currentValue={description}
@@ -491,8 +502,9 @@ export function SubmitForm() {
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div className="space-y-2">
                 <div className="flex flex-wrap items-center justify-between gap-1.5">
-                  <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                    GitHub Repository (Optional)
+                  <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                    <span>GitHub Repository (Optional)</span>
+                    <FieldCheckmark checked={Boolean(github.trim())} />
                   </Label>
                   <DetectedFieldSuggestion
                     currentValue={github}
@@ -519,8 +531,9 @@ export function SubmitForm() {
               </div>
 
               <div className="space-y-2">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Tags / Keywords (Optional)
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <span>Tags / Keywords (Optional)</span>
+                  <FieldCheckmark checked={Boolean(tags.trim())} />
                 </Label>
                 <TagPicker
                   value={tags}
@@ -532,8 +545,9 @@ export function SubmitForm() {
             </div>
 
             <div className="space-y-2 pt-1">
-              <Label className="text-muted-foreground font-mono text-xs font-bold uppercase">
-                Note for Moderator (Optional)
+              <Label className="text-muted-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                <span>Note for Moderator (Optional)</span>
+                <FieldCheckmark checked={Boolean(notes.trim())} />
               </Label>
               <div className="h-9">
                 <InputField

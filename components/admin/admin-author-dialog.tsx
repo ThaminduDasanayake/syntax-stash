@@ -9,6 +9,7 @@ import {
   invalidateAuthorCache,
   registerNewAuthorLocally,
 } from "@/components/submissions/author-combobox";
+import { FieldCheckmark } from "@/components/submissions/field-checkmark";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,7 +21,7 @@ import {
 } from "@/components/ui/dialog";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
-import { slugifyAuthor } from "@/lib/utils";
+import { isValidHttpUrl, slugifyAuthor } from "@/lib/utils";
 
 import { AdminAuthorItem } from "./admin-authors-client";
 import {
@@ -221,18 +222,28 @@ export function AdminAuthorDialog({
         <form onSubmit={handleSubmit} className="space-y-4 pt-2 text-xs">
           {/* Row 1: Name and Slug Side-by-Side */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <InputField
-              label="Author / Creator Name *"
-              placeholder="e.g. Vercel or Lee Robinson"
-              value={formData.name}
-              onChange={(e) => handleNameChange(e.target.value)}
-              required
-              className="font-mono text-xs"
-            />
+            <div className="space-y-2">
+              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                <span>Author / Creator Name</span>
+                <span className="text-destructive">*</span>
+                <FieldCheckmark checked={Boolean(formData.name.trim())} />
+              </Label>
+              <InputField
+                placeholder="e.g. Vercel or Lee Robinson"
+                value={formData.name}
+                onChange={(e) => handleNameChange(e.target.value)}
+                required
+                className="font-mono text-xs"
+              />
+            </div>
 
             <div className="space-y-2">
               <div className="mb-2 flex items-center justify-between">
-                <Label>Slug *</Label>
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <span>Slug</span>
+                  <span className="text-destructive">*</span>
+                  <FieldCheckmark checked={Boolean(formData.slug.trim())} />
+                </Label>
                 {!isEdit && (
                   <button
                     type="button"
@@ -262,6 +273,13 @@ export function AdminAuthorDialog({
               <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
                 <GlobeIcon className="text-muted-foreground size-4" />
                 <span>Website / Portfolio URL</span>
+                <FieldCheckmark
+                  checked={Boolean(
+                    formData.website.trim() &&
+                      (formData.website.trim().startsWith("/") ||
+                        isValidHttpUrl(formData.website.trim())),
+                  )}
+                />
               </Label>
               <InputField
                 placeholder="https://example.com"
@@ -275,6 +293,7 @@ export function AdminAuthorDialog({
               <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
                 <Image src="/github.svg" alt="GitHub" width={16} height={16} />
                 <span>GitHub (Username or URL)</span>
+                <FieldCheckmark checked={Boolean(formData.github.trim())} />
               </Label>
               <InputField
                 placeholder="https://github.com/username"
@@ -288,6 +307,7 @@ export function AdminAuthorDialog({
               <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
                 <XLogoIcon weight="bold" className="text-muted-foreground size-4" />
                 <span>Twitter / X (@username or URL)</span>
+                <FieldCheckmark checked={Boolean(formData.twitter.trim())} />
               </Label>
               <InputField
                 placeholder="@username or https://x.com/..."
@@ -301,6 +321,7 @@ export function AdminAuthorDialog({
               <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
                 <Image src="/linkedin.svg" alt="LinkedIn" width={16} height={16} />
                 <span>LinkedIn (Username or URL)</span>
+                <FieldCheckmark checked={Boolean(formData.linkedin.trim())} />
               </Label>
               <InputField
                 placeholder="username or https://linkedin.com/in/..."
@@ -314,6 +335,7 @@ export function AdminAuthorDialog({
               <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
                 <Image src="/youtube.svg" alt="YouTube" width={16} height={16} />
                 <span>YouTube Channel URL</span>
+                <FieldCheckmark checked={Boolean(formData.youtube.trim())} />
               </Label>
               <InputField
                 placeholder="https://youtube.com/@channel"
@@ -327,6 +349,13 @@ export function AdminAuthorDialog({
               <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
                 <GlobeIcon className="text-muted-foreground size-4" />
                 <span>Blog URL</span>
+                <FieldCheckmark
+                  checked={Boolean(
+                    formData.blog.trim() &&
+                      (formData.blog.trim().startsWith("/") ||
+                        isValidHttpUrl(formData.blog.trim())),
+                  )}
+                />
               </Label>
               <InputField
                 placeholder="https://example.com/blog"

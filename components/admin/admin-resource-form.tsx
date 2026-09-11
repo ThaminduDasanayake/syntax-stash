@@ -19,6 +19,7 @@ import {
   AuthorSocialValues,
   CandidateOption,
   DetectedFieldSuggestion,
+  FieldCheckmark,
   MediaAssetFields,
   ResourceCardPreview,
   SuggestedAuthorData,
@@ -30,6 +31,7 @@ import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
+import { isValidHttpUrl } from "@/lib/utils";
 
 import { AdminAuthorDialog } from "./admin-author-dialog";
 import {
@@ -457,8 +459,12 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
             {/* Section 1: Resource URL with Auto-Detect */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Resource URL <span className="text-destructive">*</span>
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <span>Resource URL</span>
+                  <span className="text-destructive">*</span>
+                  <FieldCheckmark
+                    checked={Boolean(formData.url?.trim() && isValidHttpUrl(formData.url.trim()))}
+                  />
                 </Label>
                 <span className="text-muted-foreground text-[10px]">
                   Scan live site for latest metadata & assets
@@ -497,8 +503,10 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <div className="flex flex-wrap items-center justify-between gap-1.5">
-                  <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                    Title <span className="text-destructive">*</span>
+                  <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                    <span>Title</span>
+                    <span className="text-destructive">*</span>
+                    <FieldCheckmark checked={Boolean(formData.title?.trim())} />
                   </Label>
                   <DetectedFieldSuggestion
                     currentValue={formData.title}
@@ -525,8 +533,10 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
               </div>
 
               <div className="space-y-2">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Category <span className="text-destructive">*</span>
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <span>Category</span>
+                  <span className="text-destructive">*</span>
+                  <FieldCheckmark checked={Boolean(formData.category?.trim())} />
                 </Label>
                 <div className="h-9">
                   <SelectField
@@ -541,8 +551,9 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
 
             <div className="space-y-2">
               <div className="flex flex-wrap items-center justify-between gap-1.5">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Subtitle / Tagline (Optional)
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <span>Subtitle / Tagline (Optional)</span>
+                  <FieldCheckmark checked={Boolean(formData.subtitle?.trim())} />
                 </Label>
                 <DetectedFieldSuggestion
                   currentValue={formData.subtitle}
@@ -570,8 +581,10 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
             {/* Section 3: Description */}
             <div className="space-y-2">
               <div className="flex flex-wrap items-center justify-between gap-1.5">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Description <span className="text-destructive">*</span>
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <span>Description</span>
+                  <span className="text-destructive">*</span>
+                  <FieldCheckmark checked={Boolean(formData.description?.trim())} />
                 </Label>
                 <DetectedFieldSuggestion
                   currentValue={formData.description}
@@ -610,8 +623,9 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
             {/* Section 5: GitHub Repository URL */}
             <div className="space-y-2">
               <div className="flex flex-wrap items-center justify-between gap-1.5">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  GitHub Repository URL (Optional)
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <span>GitHub Repository URL (Optional)</span>
+                  <FieldCheckmark checked={Boolean(formData.github?.trim())} />
                 </Label>
                 <DetectedFieldSuggestion
                   currentValue={formData.github}
@@ -662,8 +676,9 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
 
             {/* Section 7: Canonical Tags */}
             <div className="space-y-2">
-              <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                Canonical Tags
+              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                <span>Canonical Tags</span>
+                <FieldCheckmark checked={Boolean(formData.tags?.trim())} />
               </Label>
               <TagPicker
                 allowCustom={false}

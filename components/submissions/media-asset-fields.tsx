@@ -9,6 +9,7 @@ import { useDebounce } from "@/hooks/use-debounce";
 import { cn, isValidHttpUrl } from "@/lib/utils";
 
 import { CandidateOption, EditableCandidateInput } from "./editable-candidate-input";
+import { FieldCheckmark } from "./field-checkmark";
 
 export type IconBgOption = "dark" | "light" | "invert";
 
@@ -139,8 +140,16 @@ export function MediaAssetFields({
         {/* Favicon URL Section */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <Label className="text-foreground font-mono text-xs font-bold uppercase">
-              Favicon URL
+            <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+              <span>Favicon URL</span>
+              <FieldCheckmark
+                checked={Boolean(
+                  cleanFavicon &&
+                    (cleanFavicon.startsWith("/") ||
+                      cleanFavicon.startsWith("data:") ||
+                      isValidHttpUrl(cleanFavicon)),
+                )}
+              />
             </Label>
           </div>
           <div className="h-9">
@@ -228,8 +237,16 @@ export function MediaAssetFields({
         {/* OG Image URL Section */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <Label className="text-foreground font-mono text-xs font-bold uppercase">
-              OG Image URL
+            <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+              <span>OG Image URL</span>
+              <FieldCheckmark
+                checked={Boolean(
+                  cleanOg &&
+                    (cleanOg.startsWith("/") ||
+                      cleanOg.startsWith("data:") ||
+                      isValidHttpUrl(cleanOg)),
+                )}
+              />
             </Label>
           </div>
           <div className="h-9">

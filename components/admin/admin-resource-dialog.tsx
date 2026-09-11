@@ -15,6 +15,7 @@ import {
   AuthorSocialValues,
   CandidateOption,
   DetectedFieldSuggestion,
+  FieldCheckmark,
   MediaAssetFields,
   ResourceCardPreview,
   SuggestedAuthorData,
@@ -33,6 +34,7 @@ import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
+import { isValidHttpUrl } from "@/lib/utils";
 
 import { AdminAuthorDialog } from "./admin-author-dialog";
 import {
@@ -408,8 +410,14 @@ export function AdminResourceDialog({
               {/* URL & Auto-detect */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                    Website URL *
+                  <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                    <span>Website URL</span>
+                    <span className="text-destructive">*</span>
+                    <FieldCheckmark
+                      checked={Boolean(
+                        formData.url?.trim() && isValidHttpUrl(formData.url.trim()),
+                      )}
+                    />
                   </Label>
                   <Button
                     type="button"
@@ -449,8 +457,10 @@ export function AdminResourceDialog({
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <div className="flex flex-wrap items-center justify-between gap-1.5">
-                    <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                      Title *
+                    <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                      <span>Title</span>
+                      <span className="text-destructive">*</span>
+                      <FieldCheckmark checked={Boolean(formData.title?.trim())} />
                     </Label>
                     <DetectedFieldSuggestion
                       currentValue={formData.title}
@@ -478,8 +488,9 @@ export function AdminResourceDialog({
 
                 <div className="space-y-2">
                   <div className="flex flex-wrap items-center justify-between gap-1.5">
-                    <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                      Subtitle
+                    <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                      <span>Subtitle</span>
+                      <FieldCheckmark checked={Boolean(formData.subtitle?.trim())} />
                     </Label>
                     <DetectedFieldSuggestion
                       currentValue={formData.subtitle}
@@ -510,8 +521,10 @@ export function AdminResourceDialog({
               {/* Category & GitHub Repo */}
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
-                  <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                    Category *
+                  <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                    <span>Category</span>
+                    <span className="text-destructive">*</span>
+                    <FieldCheckmark checked={Boolean(formData.category?.trim())} />
                   </Label>
                   <SelectField
                     value={formData.category || (categoryOptions[0]?.value ?? "")}
@@ -523,8 +536,9 @@ export function AdminResourceDialog({
 
                 <div className="space-y-2">
                   <div className="flex flex-wrap items-center justify-between gap-1.5">
-                    <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                      GitHub Repo URL
+                    <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                      <span>GitHub Repo URL</span>
+                      <FieldCheckmark checked={Boolean(formData.github?.trim())} />
                     </Label>
                     <DetectedFieldSuggestion
                       currentValue={formData.github}
@@ -554,8 +568,10 @@ export function AdminResourceDialog({
               {/* Description */}
               <div className="space-y-2">
                 <div className="flex flex-wrap items-center justify-between gap-1.5">
-                  <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                    Description *
+                  <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                    <span>Description</span>
+                    <span className="text-destructive">*</span>
+                    <FieldCheckmark checked={Boolean(formData.description?.trim())} />
                   </Label>
                   <DetectedFieldSuggestion
                     currentValue={formData.description}
@@ -583,8 +599,9 @@ export function AdminResourceDialog({
 
               {/* Tags */}
               <div className="space-y-2">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Canonical Tags (Select Only)
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <span>Canonical Tags (Select Only)</span>
+                  <FieldCheckmark checked={Boolean(formData.tags?.trim())} />
                 </Label>
                 <TagPicker
                   value={formData.tags || ""}
