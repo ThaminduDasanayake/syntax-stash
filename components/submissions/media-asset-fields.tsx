@@ -5,7 +5,8 @@ import { useState } from "react";
 
 import { CardIcon } from "@/components/card-icon";
 import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
+import { useDebounce } from "@/hooks/use-debounce";
+import { cn, isValidHttpUrl } from "@/lib/utils";
 
 import { CandidateOption, EditableCandidateInput } from "./editable-candidate-input";
 
@@ -25,7 +26,8 @@ export interface MediaAssetFieldsProps {
 }
 
 function OgImagePreviewBanner({ ogImage }: { ogImage: string }) {
-  const cleanOg = ogImage.trim();
+  const debouncedOg = useDebounce(ogImage, 400);
+  const cleanOg = (debouncedOg || "").trim();
 
   const [state, setState] = useState<{ directFallback: boolean; error: boolean; url: string }>({
     directFallback: false,
@@ -41,8 +43,14 @@ function OgImagePreviewBanner({ ogImage }: { ogImage: string }) {
     });
   }
 
+  const isValidUrl =
+    cleanOg.startsWith("/") ||
+    cleanOg.startsWith("data:") ||
+    isValidHttpUrl(cleanOg);
+
   const isExternal =
     Boolean(cleanOg) &&
+    isValidUrl &&
     (cleanOg.startsWith("http://") || cleanOg.startsWith("https://")) &&
     !cleanOg.startsWith("/api/proxy-image");
 
@@ -62,7 +70,7 @@ function OgImagePreviewBanner({ ogImage }: { ogImage: string }) {
   return (
     <div className="border-line bg-paper/60 mt-2.5 overflow-hidden rounded border p-3">
       <div className="border-line relative aspect-[1.91/1] w-full overflow-hidden rounded border bg-black/5 dark:bg-black/30">
-        {!state.error ? (
+        {!state.error && isValidUrl && cleanOg ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             key={currentSrc}
@@ -76,7 +84,13 @@ function OgImagePreviewBanner({ ogImage }: { ogImage: string }) {
         ) : (
           <div className="flex h-full w-full flex-col items-center justify-center gap-1.5 text-zinc-500">
             <WarningCircleIcon className="size-6 text-amber-500 opacity-80" />
-            <span className="text-[10px]">Unable to load preview from this URL</span>
+            <span className="text-[10px]">
+              {!cleanOg
+                ? "No image specified"
+                : !isValidUrl
+                  ? "Invalid image URL"
+                  : "Unable to load preview from this URL"}
+            </span>
           </div>
         )}
       </div>
@@ -84,7 +98,7 @@ function OgImagePreviewBanner({ ogImage }: { ogImage: string }) {
         <span className="text-muted-foreground text-[10px] font-bold tracking-wider uppercase">
           OG Image Banner Preview
         </span>
-        {state.error && (
+        {(state.error || (cleanOg && !isValidUrl)) && (
           <span className="text-[10px] font-semibold text-amber-600 dark:text-amber-400">
             Check image URL
           </span>
@@ -106,7 +120,8 @@ export function MediaAssetFields({
   onIconBgChange,
   onOgImageChange,
 }: MediaAssetFieldsProps) {
-  const cleanFavicon = favicon?.trim() || "";
+  const debouncedFavicon = useDebounce(favicon, 400);
+  const cleanFavicon = debouncedFavicon?.trim() || "";
   const cleanOg = ogImage?.trim() || "";
 
   return (

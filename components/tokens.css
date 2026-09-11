@@ -297,9 +297,11 @@
   background-image: linear-gradient(
     calc(90deg + var(--shimmer-angle, 20deg)),
     var(--_base) calc(50% - var(--_spread)),
-    color-mix(in oklch, var(--_highlight), var(--_base) 50%) calc(50% - var(--_spread) * 0.5),
+    color-mix(in oklch, var(--_highlight), var(--_base) 50%)
+      calc(50% - var(--_spread) * 0.5),
     var(--_highlight) 50%,
-    color-mix(in oklch, var(--_highlight), var(--_base) 50%) calc(50% + var(--_spread) * 0.5),
+    color-mix(in oklch, var(--_highlight), var(--_base) 50%)
+      calc(50% + var(--_spread) * 0.5),
     var(--_base) calc(50% + var(--_spread))
   );
   background-position: 0 0;
@@ -506,25 +508,31 @@
     translate: 0 0;
   }
   12% {
-    translate: calc(var(--neon-shake-amp) * -1) calc(var(--neon-shake-amp) * 0.4);
+    translate: calc(var(--neon-shake-amp) * -1)
+      calc(var(--neon-shake-amp) * 0.4);
   }
   25% {
     translate: var(--neon-shake-amp) calc(var(--neon-shake-amp) * -0.3);
   }
   38% {
-    translate: calc(var(--neon-shake-amp) * -0.7) calc(var(--neon-shake-amp) * -0.5);
+    translate: calc(var(--neon-shake-amp) * -0.7)
+      calc(var(--neon-shake-amp) * -0.5);
   }
   50% {
-    translate: calc(var(--neon-shake-amp) * 0.9) calc(var(--neon-shake-amp) * 0.3);
+    translate: calc(var(--neon-shake-amp) * 0.9)
+      calc(var(--neon-shake-amp) * 0.3);
   }
   62% {
-    translate: calc(var(--neon-shake-amp) * -1) calc(var(--neon-shake-amp) * -0.2);
+    translate: calc(var(--neon-shake-amp) * -1)
+      calc(var(--neon-shake-amp) * -0.2);
   }
   75% {
-    translate: calc(var(--neon-shake-amp) * 0.6) calc(var(--neon-shake-amp) * 0.5);
+    translate: calc(var(--neon-shake-amp) * 0.6)
+      calc(var(--neon-shake-amp) * 0.5);
   }
   88% {
-    translate: calc(var(--neon-shake-amp) * -0.4) calc(var(--neon-shake-amp) * -0.4);
+    translate: calc(var(--neon-shake-amp) * -0.4)
+      calc(var(--neon-shake-amp) * -0.4);
   }
 }
 

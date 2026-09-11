@@ -129,3 +129,23 @@ export function getCategoryColor(
 ): string {
   return THEME_CONFIG[getCategoryTheme(category, itemType)].bg;
 }
+
+/**
+ * Checks if a string is a syntactically valid HTTP/HTTPS URL with a valid hostname.
+ */
+export function isValidHttpUrl(urlString: string | null | undefined): boolean {
+  if (!urlString || typeof urlString !== "string") return false;
+  const trimmed = urlString.trim();
+  if (!trimmed.startsWith("http://") && !trimmed.startsWith("https://")) return false;
+  try {
+    const parsed = new URL(trimmed);
+    return (
+      (parsed.protocol === "http:" || parsed.protocol === "https:") &&
+      Boolean(parsed.hostname) &&
+      parsed.hostname.includes(".")
+    );
+  } catch {
+    return false;
+  }
+}
+

@@ -12,7 +12,7 @@ import { useMemo, useState } from "react";
 
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { formatStarCount } from "@/lib/github";
-import { cn, Theme } from "@/lib/utils";
+import { cn, isValidHttpUrl, Theme } from "@/lib/utils";
 
 export interface ResourceCardViewProps {
   author?: string | string[] | null;
@@ -131,13 +131,19 @@ export function ResourceCardView({
 
   const isClickable = Boolean(onCardClick);
 
+  const isValidOg =
+    cleanOgImage.startsWith("/") ||
+    cleanOgImage.startsWith("data:") ||
+    isValidHttpUrl(cleanOgImage);
+
   const isExternalOg =
     Boolean(cleanOgImage) &&
+    isValidOg &&
     (cleanOgImage.startsWith("http://") || cleanOgImage.startsWith("https://")) &&
     !cleanOgImage.startsWith("/api/proxy-image");
 
   const imageSrc =
-    !cleanOgImage || ogState.error
+    !cleanOgImage || ogState.error || !isValidOg
       ? null
       : isExternalOg && !ogState.directFallback
         ? `/api/proxy-image?url=${encodeURIComponent(cleanOgImage)}`
@@ -151,13 +157,19 @@ export function ResourceCardView({
     }
   };
 
+  const isValidFavicon =
+    cleanFavicon.startsWith("/") ||
+    cleanFavicon.startsWith("data:") ||
+    isValidHttpUrl(cleanFavicon);
+
   const isExternalFavicon =
     Boolean(cleanFavicon) &&
+    isValidFavicon &&
     (cleanFavicon.startsWith("http://") || cleanFavicon.startsWith("https://")) &&
     !cleanFavicon.startsWith("/api/proxy-image");
 
   const faviconSrc =
-    !cleanFavicon || faviconState.error
+    !cleanFavicon || faviconState.error || !isValidFavicon
       ? null
       : isExternalFavicon && !faviconState.directFallback
         ? `/api/proxy-image?url=${encodeURIComponent(cleanFavicon)}`

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { cn } from "@/lib/utils";
+import { cn, isValidHttpUrl } from "@/lib/utils";
 
 // In-memory set of favicons successfully loaded during the session
 const loadedFavicons = new Set<string>();
@@ -21,8 +21,14 @@ export function CardIcon({
   iconClassName?: string;
 }) {
   const cleanFavicon = favicon?.trim() || "";
+  const isValidUrl =
+    cleanFavicon.startsWith("/") ||
+    cleanFavicon.startsWith("data:") ||
+    isValidHttpUrl(cleanFavicon);
+
   const isExternal =
     Boolean(cleanFavicon) &&
+    isValidUrl &&
     (cleanFavicon.startsWith("http://") || cleanFavicon.startsWith("https://")) &&
     !cleanFavicon.startsWith("/api/proxy-image");
 
