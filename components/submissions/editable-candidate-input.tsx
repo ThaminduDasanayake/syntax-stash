@@ -22,6 +22,7 @@ export interface EditableCandidateInputProps {
   onChange: (value: string) => void;
   options?: CandidateOption[];
   placeholder?: string;
+  prefix?: React.ReactNode;
   renderPreview?: (option: CandidateOption) => React.ReactNode;
   type?: string;
   value: string;
@@ -34,6 +35,7 @@ export function EditableCandidateInput({
   onChange,
   options = [],
   placeholder,
+  prefix,
   renderPreview,
   type = "url",
   value,
@@ -45,6 +47,11 @@ export function EditableCandidateInput({
   return (
     <div className={cn("relative flex items-center", containerClassName)}>
       <InputGroup className="w-full">
+        {prefix && (
+          <InputGroupAddon align="inline-start" className="pr-1 pl-2">
+            {prefix}
+          </InputGroupAddon>
+        )}
         <InputGroupInput
           type={type}
           value={value}

@@ -54,7 +54,41 @@ export function ResourceCardView({
   url,
 }: ResourceCardViewProps) {
   const [isBookmarkHovered, setIsBookmarkHovered] = useState(false);
-  const [imageError, setImageError] = useState(false);
+
+  const cleanOgImage = ogImage?.trim() || "";
+  const cleanFavicon = favicon?.trim() || "";
+
+  const [ogState, setOgState] = useState<{ directFallback: boolean; error: boolean; url: string }>({
+    directFallback: false,
+    error: false,
+    url: cleanOgImage,
+  });
+
+  if (ogState.url !== cleanOgImage) {
+    setOgState({
+      directFallback: false,
+      error: false,
+      url: cleanOgImage,
+    });
+  }
+
+  const [faviconState, setFaviconState] = useState<{
+    directFallback: boolean;
+    error: boolean;
+    url: string;
+  }>({
+    directFallback: false,
+    error: false,
+    url: cleanFavicon,
+  });
+
+  if (faviconState.url !== cleanFavicon) {
+    setFaviconState({
+      directFallback: false,
+      error: false,
+      url: cleanFavicon,
+    });
+  }
 
   // Parse tags if provided as comma-separated string or array
   const parsedTags: string[] = Array.isArray(tags)
@@ -94,26 +128,45 @@ export function ResourceCardView({
 
   const isClickable = Boolean(onCardClick);
 
-  // Compute proxied OG image URL if external
-  const imageSrc = useMemo(() => {
-    if (!ogImage || imageError) return null;
-    if (
-      (ogImage.startsWith("http://") || ogImage.startsWith("https://")) &&
-      !ogImage.startsWith("/api/proxy-image")
-    ) {
-      return `/api/proxy-image?url=${encodeURIComponent(ogImage)}`;
-    }
-    return ogImage;
-  }, [imageError, ogImage]);
+  const isExternalOg =
+    Boolean(cleanOgImage) &&
+    (cleanOgImage.startsWith("http://") || cleanOgImage.startsWith("https://")) &&
+    !cleanOgImage.startsWith("/api/proxy-image");
 
-  // Compute proxied favicon URL if external
-  const faviconSrc = useMemo(() => {
-    if (!favicon) return null;
-    if (favicon.startsWith("http://") || favicon.startsWith("https://")) {
-      return `/api/proxy-image?url=${encodeURIComponent(favicon)}`;
+  const imageSrc =
+    !cleanOgImage || ogState.error
+      ? null
+      : isExternalOg && !ogState.directFallback
+        ? `/api/proxy-image?url=${encodeURIComponent(cleanOgImage)}`
+        : cleanOgImage;
+
+  const handleOgError = () => {
+    if (isExternalOg && !ogState.directFallback) {
+      setOgState((prev) => ({ ...prev, directFallback: true }));
+    } else {
+      setOgState((prev) => ({ ...prev, error: true }));
     }
-    return favicon;
-  }, [favicon]);
+  };
+
+  const isExternalFavicon =
+    Boolean(cleanFavicon) &&
+    (cleanFavicon.startsWith("http://") || cleanFavicon.startsWith("https://")) &&
+    !cleanFavicon.startsWith("/api/proxy-image");
+
+  const faviconSrc =
+    !cleanFavicon || faviconState.error
+      ? null
+      : isExternalFavicon && !faviconState.directFallback
+        ? `/api/proxy-image?url=${encodeURIComponent(cleanFavicon)}`
+        : cleanFavicon;
+
+  const handleFaviconError = () => {
+    if (isExternalFavicon && !faviconState.directFallback) {
+      setFaviconState((prev) => ({ ...prev, directFallback: true }));
+    } else {
+      setFaviconState((prev) => ({ ...prev, error: true }));
+    }
+  };
 
   const cardContent = (
     <article
@@ -129,10 +182,11 @@ export function ResourceCardView({
         {imageSrc ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
+            key={imageSrc}
             src={imageSrc}
             alt={title || "Resource preview"}
             loading="lazy"
-            onError={() => setImageError(true)}
+            onError={handleOgError}
             className="h-full w-full object-contain transition-transform duration-500 ease-out group-hover:scale-[1.03]"
           />
         ) : (
@@ -161,20 +215,13 @@ export function ResourceCardView({
             {faviconSrc ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
+                key={faviconSrc}
                 src={faviconSrc}
                 alt=""
                 loading="lazy"
                 referrerPolicy="no-referrer"
                 className="h-full w-full rounded-[25%] object-contain"
-                onError={(e) => {
-                  const img = e.currentTarget;
-                  if (!img.getAttribute("data-fallback") && favicon) {
-                    img.setAttribute("data-fallback", "true");
-                    img.src = favicon;
-                  } else {
-                    img.style.display = "none";
-                  }
-                }}
+                onError={handleFaviconError}
               />
             ) : (
               <ImageIcon weight="light" className="size-3 text-zinc-600" />

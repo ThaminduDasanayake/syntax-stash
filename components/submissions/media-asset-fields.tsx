@@ -1,7 +1,7 @@
 "use client";
 
-import { ImageIcon } from "@phosphor-icons/react";
-import Image from "next/image";
+import { ImageIcon, WarningCircleIcon } from "@phosphor-icons/react";
+import { useState } from "react";
 
 import { CardIcon } from "@/components/card-icon";
 import { Label } from "@/components/ui/label";
@@ -20,6 +20,76 @@ export interface MediaAssetFieldsProps {
   onOgImageChange: (val: string) => void;
 }
 
+function OgImagePreviewBanner({ ogImage }: { ogImage: string }) {
+  const cleanOg = ogImage.trim();
+
+  const [state, setState] = useState<{ directFallback: boolean; error: boolean; url: string }>({
+    directFallback: false,
+    error: false,
+    url: cleanOg,
+  });
+
+  if (state.url !== cleanOg) {
+    setState({
+      directFallback: false,
+      error: false,
+      url: cleanOg,
+    });
+  }
+
+  const isExternal =
+    Boolean(cleanOg) &&
+    (cleanOg.startsWith("http://") || cleanOg.startsWith("https://")) &&
+    !cleanOg.startsWith("/api/proxy-image");
+
+  const handleOgError = () => {
+    if (isExternal && !state.directFallback) {
+      setState((prev) => ({ ...prev, directFallback: true }));
+    } else {
+      setState((prev) => ({ ...prev, error: true }));
+    }
+  };
+
+  const currentSrc =
+    isExternal && !state.directFallback
+      ? `/api/proxy-image?url=${encodeURIComponent(cleanOg)}`
+      : cleanOg;
+
+  return (
+    <div className="border-line bg-paper/60 mt-2.5 overflow-hidden rounded border p-3">
+      <div className="border-line relative aspect-[1.91/1] w-full overflow-hidden rounded border bg-black/5 dark:bg-black/30">
+        {!state.error ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            key={currentSrc}
+            src={currentSrc}
+            alt="OG Image Preview"
+            loading="lazy"
+            referrerPolicy="no-referrer"
+            className="h-full w-full object-cover"
+            onError={handleOgError}
+          />
+        ) : (
+          <div className="flex h-full w-full flex-col items-center justify-center gap-1.5 text-zinc-500">
+            <WarningCircleIcon className="size-6 text-amber-500 opacity-80" />
+            <span className="text-[10px]">Unable to load preview from this URL</span>
+          </div>
+        )}
+      </div>
+      <div className="mt-2 flex items-center justify-between px-0.5">
+        <span className="text-muted-foreground text-[10px] font-bold tracking-wider uppercase">
+          OG Image Banner Preview
+        </span>
+        {state.error && (
+          <span className="text-[10px] font-semibold text-amber-600 dark:text-amber-400">
+            Check image URL
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export function MediaAssetFields({
   className,
   disabled = false,
@@ -30,6 +100,9 @@ export function MediaAssetFields({
   onFaviconChange,
   onOgImageChange,
 }: MediaAssetFieldsProps) {
+  const cleanFavicon = favicon?.trim() || "";
+  const cleanOg = ogImage?.trim() || "";
+
   return (
     <div className={cn("border-line space-y-5 border-t pt-4 font-mono text-xs", className)}>
       <div>
@@ -48,6 +121,12 @@ export function MediaAssetFields({
             <Label className="text-foreground font-mono text-xs font-bold uppercase">
               Favicon URL
             </Label>
+            {cleanFavicon && (
+              <span className="text-muted-foreground inline-flex items-center gap-1 text-[10px]">
+                <CardIcon alt="favicon preview" favicon={cleanFavicon} className="size-3.5" />
+                <span>Favicon set</span>
+              </span>
+            )}
           </div>
           <div className="h-9">
             <EditableCandidateInput
@@ -57,6 +136,11 @@ export function MediaAssetFields({
               onChange={onFaviconChange}
               options={faviconOptions}
               disabled={disabled}
+              prefix={
+                cleanFavicon ? (
+                  <CardIcon alt="current favicon" favicon={cleanFavicon} className="size-4 shrink-0" />
+                ) : null
+              }
               renderPreview={(option) => (
                 <div className="border-line bg-paper/60 grid size-6 place-items-center rounded border">
                   <CardIcon alt="favicon option" favicon={option.url} className="size-4" />
@@ -72,7 +156,7 @@ export function MediaAssetFields({
             <Label className="text-foreground font-mono text-xs font-bold uppercase">
               OG Image URL
             </Label>
-            {ogImage && (
+            {cleanOg && (
               <span className="text-muted-foreground inline-flex items-center gap-1 text-[10px]">
                 <ImageIcon className="size-4" />
                 <span>Image set</span>
@@ -87,39 +171,34 @@ export function MediaAssetFields({
               onChange={onOgImageChange}
               options={ogImageOptions}
               disabled={disabled}
-              renderPreview={(option) => (
-                <div className="border-line relative h-6 w-10 shrink-0 overflow-hidden rounded border bg-black/10">
-                  <Image
-                    src={option.url}
-                    alt="OG option preview"
-                    fill
-                    unoptimized
-                    className="object-cover"
-                  />
-                </div>
-              )}
+              renderPreview={(option) => {
+                const isExt =
+                  option.url.startsWith("http://") || option.url.startsWith("https://");
+                const optSrc = isExt
+                  ? `/api/proxy-image?url=${encodeURIComponent(option.url)}`
+                  : option.url;
+                return (
+                  <div className="border-line relative h-6 w-10 shrink-0 overflow-hidden rounded border bg-black/10">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={optSrc}
+                      alt="OG option preview"
+                      loading="lazy"
+                      className="h-full w-full object-cover"
+                      onError={(e) => {
+                        if (isExt && e.currentTarget.src !== option.url) {
+                          e.currentTarget.src = option.url;
+                        }
+                      }}
+                    />
+                  </div>
+                );
+              }}
             />
           </div>
 
           {/* OG Image Preview Thumbnail */}
-          {ogImage && (
-            <div className="border-line bg-paper/60 mt-2.5 overflow-hidden rounded border p-3">
-              <div className="border-line relative aspect-[1.91/1] w-full overflow-hidden rounded border bg-black/5">
-                <Image
-                  src={ogImage}
-                  alt="OG Image Preview"
-                  fill
-                  unoptimized
-                  className="object-cover"
-                />
-              </div>
-              <div className="mt-2 flex items-center justify-between px-0.5">
-                <span className="text-muted-foreground text-[10px] font-bold tracking-wider uppercase">
-                  OG Image Banner Preview
-                </span>
-              </div>
-            </div>
-          )}
+          {cleanOg && <OgImagePreviewBanner ogImage={cleanOg} />}
         </div>
       </div>
     </div>
