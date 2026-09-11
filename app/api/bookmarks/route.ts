@@ -71,9 +71,7 @@ export async function POST(req: Request) {
     const [existing] = await db
       .select()
       .from(bookmark)
-      .where(
-        and(eq(bookmark.userId, session.user.id), eq(bookmark.resourceId, actualResourceId)),
-      )
+      .where(and(eq(bookmark.userId, session.user.id), eq(bookmark.resourceId, actualResourceId)))
       .limit(1);
 
     if (existing) {

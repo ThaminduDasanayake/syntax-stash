@@ -631,11 +631,13 @@ function AdminResourcesClientContent({
                   key={item.id}
                   resource={item}
                   onPreview={() => setPreviewResource(item)}
-                  onEdit={() => router.push(
-  searchParams.toString()
-    ? `/admin/resources/${item.id}?${searchParams.toString()}`
-    : `/admin/resources/${item.id}`,
-)}
+                  onEdit={() =>
+                    router.push(
+                      searchParams.toString()
+                        ? `/admin/resources/${item.id}?${searchParams.toString()}`
+                        : `/admin/resources/${item.id}`,
+                    )
+                  }
                   onDelete={() => setDeletingResource(item)}
                   isWorking={isWorking}
                 />
@@ -777,11 +779,13 @@ function AdminResourcesClientContent({
                               <Button
                                 size="sm"
                                 variant="outline"
-                                onClick={() => router.push(
-  searchParams.toString()
-    ? `/admin/resources/${item.id}?${searchParams.toString()}`
-    : `/admin/resources/${item.id}`,
-)}
+                                onClick={() =>
+                                  router.push(
+                                    searchParams.toString()
+                                      ? `/admin/resources/${item.id}?${searchParams.toString()}`
+                                      : `/admin/resources/${item.id}`,
+                                  )
+                                }
                                 className="border-line hover:bg-surface size-7 p-0"
                                 title="Edit Resource"
                               >

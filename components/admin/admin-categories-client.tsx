@@ -362,7 +362,8 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
           <div className="text-muted-foreground flex items-center gap-2">
             <FoldersIcon className="size-3.5" />
             <span>
-              Total Categories: <strong className="text-foreground font-bold">{categories.length}</strong>
+              Total Categories:{" "}
+              <strong className="text-foreground font-bold">{categories.length}</strong>
             </span>
           </div>
           {searchQuery && (

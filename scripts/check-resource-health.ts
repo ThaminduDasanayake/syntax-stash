@@ -785,7 +785,9 @@ async function main() {
     if (incompleteList.length > 0) {
       console.log(`⚠️  Incomplete Resources:`);
       for (const item of incompleteList) {
-        console.log(`  • [${item.category}] "${item.title}" -> Missing: [${item.missing.join(", ")}]`);
+        console.log(
+          `  • [${item.category}] "${item.title}" -> Missing: [${item.missing.join(", ")}]`,
+        );
       }
     } else {
       console.log(`✅ All ${targets.length} resources have complete metadata!`);

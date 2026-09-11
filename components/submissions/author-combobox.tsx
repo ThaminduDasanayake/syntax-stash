@@ -67,8 +67,7 @@ export function registerNewAuthorLocally(newAuthor: AuthorOption) {
   if (cachedAuthors) {
     if (
       !cachedAuthors.some(
-        (a) =>
-          a.slug === newAuthor.slug || a.name.toLowerCase() === newAuthor.name.toLowerCase(),
+        (a) => a.slug === newAuthor.slug || a.name.toLowerCase() === newAuthor.name.toLowerCase(),
       )
     ) {
       cachedAuthors = [...cachedAuthors, newAuthor].sort((a, b) => a.name.localeCompare(b.name));

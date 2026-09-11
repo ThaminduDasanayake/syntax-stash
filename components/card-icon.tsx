@@ -91,7 +91,7 @@ export function CardIcon({
         alt={alt}
         loading="lazy"
         referrerPolicy="no-referrer"
-        className={cn("h-full w-full object-contain", isInverted && "invert brightness-125")}
+        className={cn("h-full w-full object-contain", isInverted && "brightness-125 invert")}
         onError={handleError}
         onLoad={handleLoad}
       />

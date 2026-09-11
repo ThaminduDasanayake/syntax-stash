@@ -170,7 +170,10 @@ export function SubmitForm() {
         }
       }
       if (data.description) {
-        if (description && description.trim().toLowerCase() !== data.description.trim().toLowerCase()) {
+        if (
+          description &&
+          description.trim().toLowerCase() !== data.description.trim().toLowerCase()
+        ) {
           newDetected.description = data.description.trim();
         } else {
           setDescription(data.description);
