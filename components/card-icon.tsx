@@ -11,10 +11,14 @@ export function CardIcon({
   alt,
   className = "bg-background",
   favicon,
+  iconBg,
+  iconClassName,
 }: {
   alt: string;
   className?: string;
   favicon?: string | null;
+  iconBg?: "dark" | "light" | "invert" | string | null;
+  iconClassName?: string;
 }) {
   const cleanFavicon = favicon?.trim() || "";
   const isExternal =
@@ -51,8 +55,19 @@ export function CardIcon({
     }
   };
 
+  const isWhiteTile = iconBg === "light" || iconClassName?.includes("bg-white");
+  const isInverted = iconBg === "invert" || iconClassName?.includes("invert");
+
   if (!cleanFavicon || state.error) {
-    return <div className={cn(className, "card-icon-box p-1")} />;
+    return (
+      <div
+        className={cn(
+          className,
+          "card-icon-box p-1",
+          isWhiteTile && "border-white/80! bg-white! text-black!",
+        )}
+      />
+    );
   }
 
   // Route external favicons through our caching proxy for fast SWR caching and CORS stability
@@ -62,7 +77,13 @@ export function CardIcon({
       : cleanFavicon;
 
   return (
-    <div className={cn(className, "card-icon-box p-1")}>
+    <div
+      className={cn(
+        className,
+        "card-icon-box p-1",
+        isWhiteTile && "border-white/80! bg-white! text-black!",
+      )}
+    >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         key={currentSrc}
@@ -70,7 +91,7 @@ export function CardIcon({
         alt={alt}
         loading="lazy"
         referrerPolicy="no-referrer"
-        className="h-full w-full object-contain"
+        className={cn("h-full w-full object-contain", isInverted && "invert brightness-125")}
         onError={handleError}
         onLoad={handleLoad}
       />

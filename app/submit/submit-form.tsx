@@ -41,6 +41,7 @@ export function SubmitForm() {
   const [github, setGithub] = useState("");
   const [favicon, setFavicon] = useState("");
   const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
+  const [iconBg, setIconBg] = useState<"dark" | "light" | "invert">("dark");
   const [ogImage, setOgImage] = useState("");
   const [ogImageOptions, setOgImageOptions] = useState<CandidateOption[]>([]);
   const [suggestedAuthor, setSuggestedAuthor] = useState<SuggestedAuthorData | null>(null);
@@ -73,6 +74,7 @@ export function SubmitForm() {
     setGithub("");
     setFavicon("");
     setFaviconOptions([]);
+    setIconBg("dark");
     setOgImage("");
     setOgImageOptions([]);
     setSuggestedAuthor(null);
@@ -447,6 +449,8 @@ export function SubmitForm() {
           <MediaAssetFields
             favicon={favicon}
             faviconOptions={faviconOptions}
+            iconBg={iconBg}
+            onIconBgChange={setIconBg}
             ogImage={ogImage}
             ogImageOptions={ogImageOptions}
             onFaviconChange={setFavicon}
@@ -578,6 +582,7 @@ export function SubmitForm() {
             category={category}
             description={description}
             favicon={favicon}
+            iconBg={iconBg}
             subtitle={subtitle}
             tags={tags}
             title={title}

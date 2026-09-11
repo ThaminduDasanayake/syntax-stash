@@ -1,6 +1,6 @@
 "use client";
 
-import { ImageIcon, WarningCircleIcon } from "@phosphor-icons/react";
+import { WarningCircleIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
 import { CardIcon } from "@/components/card-icon";
@@ -9,14 +9,18 @@ import { cn } from "@/lib/utils";
 
 import { CandidateOption, EditableCandidateInput } from "./editable-candidate-input";
 
+export type IconBgOption = "dark" | "light" | "invert";
+
 export interface MediaAssetFieldsProps {
   className?: string;
   disabled?: boolean;
   favicon?: string | null;
   faviconOptions?: CandidateOption[];
+  iconBg?: string | null;
   ogImage?: string | null;
   ogImageOptions?: CandidateOption[];
   onFaviconChange: (val: string) => void;
+  onIconBgChange?: (val: IconBgOption) => void;
   onOgImageChange: (val: string) => void;
 }
 
@@ -95,9 +99,11 @@ export function MediaAssetFields({
   disabled = false,
   favicon,
   faviconOptions = [],
+  iconBg = "dark",
   ogImage,
   ogImageOptions = [],
   onFaviconChange,
+  onIconBgChange,
   onOgImageChange,
 }: MediaAssetFieldsProps) {
   const cleanFavicon = favicon?.trim() || "";
@@ -135,17 +141,73 @@ export function MediaAssetFields({
                   <CardIcon
                     alt="current favicon"
                     favicon={cleanFavicon}
+                    iconBg={iconBg}
                     className="size-6 shrink-0"
                   />
                 ) : null
               }
               renderPreview={(option) => (
                 <div className="border-line bg-paper/60 grid size-6 place-items-center rounded border">
-                  <CardIcon alt="favicon option" favicon={option.url} className="size-4" />
+                  <CardIcon
+                    alt="favicon option"
+                    favicon={option.url}
+                    iconBg={iconBg}
+                    className="size-4"
+                  />
                 </div>
               )}
             />
           </div>
+
+          {/* Favicon Contrast & Background Selector */}
+          {cleanFavicon && onIconBgChange && (
+            <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
+              <span className="text-muted-foreground font-mono text-[10px]">
+                Icon Contrast / Background:
+              </span>
+              <div className="border-line bg-surface/60 inline-flex rounded border p-0.5 font-mono text-[11px]">
+                <button
+                  type="button"
+                  onClick={() => onIconBgChange("dark")}
+                  disabled={disabled}
+                  className={cn(
+                    "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                    !iconBg || iconBg === "dark"
+                      ? "bg-primary text-primary-foreground shadow-xs"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  Dark (Default)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onIconBgChange("light")}
+                  disabled={disabled}
+                  className={cn(
+                    "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                    iconBg === "light"
+                      ? "bg-primary text-primary-foreground shadow-xs"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  White Tile
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onIconBgChange("invert")}
+                  disabled={disabled}
+                  className={cn(
+                    "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                    iconBg === "invert"
+                      ? "bg-primary text-primary-foreground shadow-xs"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  Invert
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* OG Image URL Section */}

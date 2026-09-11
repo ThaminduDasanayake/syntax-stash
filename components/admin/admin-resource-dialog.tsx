@@ -87,6 +87,7 @@ export function AdminResourceDialog({
     description: "",
     favicon: "",
     github: "",
+    iconBg: "dark",
     ogImage: "",
     subtitle: "",
     tags: "",
@@ -128,6 +129,7 @@ export function AdminResourceDialog({
         description: resource.description || "",
         favicon: resource.favicon || "",
         github: resource.github || "",
+        iconBg: resource.iconBg || "dark",
         ogImage: resource.ogImage || "",
         subtitle: resource.subtitle || "",
         tags: resource.tags || "",
@@ -147,6 +149,7 @@ export function AdminResourceDialog({
         description: "",
         favicon: "",
         github: "",
+        iconBg: "dark",
         ogImage: "",
         subtitle: "",
         tags: "",
@@ -561,6 +564,8 @@ export function AdminResourceDialog({
               {/* Media Asset Fields */}
               <MediaAssetFields
                 favicon={formData.favicon}
+                iconBg={formData.iconBg || "dark"}
+                onIconBgChange={(val) => setFormData((prev) => ({ ...prev, iconBg: val }))}
                 ogImage={formData.ogImage}
                 faviconOptions={faviconOptions}
                 ogImageOptions={ogImageOptions}
@@ -581,6 +586,7 @@ export function AdminResourceDialog({
                     formData.description || "A concise description of the tool will appear here..."
                   }
                   favicon={formData.favicon}
+                  iconBg={formData.iconBg || "dark"}
                   tags={formData.tags}
                   author={formData.authorName}
                   url={formData.url || "https://example.com"}

@@ -79,7 +79,7 @@ export function AdminSubmissionEditForm({
   submission: sub,
 }: AdminSubmissionEditFormProps) {
   const { categoryOptions } = useCategories();
-  const [editForm, setEditForm] = useState<Partial<Submission>>({
+  const [editForm, setEditForm] = useState<Partial<Submission & { iconBg?: string }>>({
     title: sub.title,
     adminNotes: sub.adminNotes || "",
     author: sub.author || "",
@@ -92,6 +92,7 @@ export function AdminSubmissionEditForm({
     description: sub.description,
     favicon: sub.favicon || "",
     github: sub.github || "",
+    iconBg: (sub as unknown as { iconBg?: string }).iconBg || "dark",
     notes: sub.notes || "",
     ogImage: sub.ogImage || "",
     pricing: sub.pricing || "Free",
@@ -471,6 +472,8 @@ export function AdminSubmissionEditForm({
           <MediaAssetFields
             favicon={editForm.favicon}
             faviconOptions={faviconOptions}
+            iconBg={editForm.iconBg || "dark"}
+            onIconBgChange={(val) => setEditForm((prev) => ({ ...prev, iconBg: val }))}
             ogImage={editForm.ogImage}
             ogImageOptions={ogImageOptions}
             onFaviconChange={(val) => setEditForm((prev) => ({ ...prev, favicon: val }))}
@@ -600,6 +603,7 @@ export function AdminSubmissionEditForm({
               className="rounded-lg"
               description={editForm.description || sub.description}
               favicon={editForm.favicon}
+              iconBg={editForm.iconBg || "dark"}
               ogImage={editForm.ogImage}
               subtitle={editForm.subtitle}
               tags={editForm.tags}

@@ -21,6 +21,7 @@ export interface ResourceCardViewProps {
   category?: string | null;
   description?: string | null;
   favicon?: string | null;
+  iconBg?: "dark" | "light" | "invert" | string | null;
   iconClassName?: string;
   isBookmarked?: boolean;
   ogImage?: string | null;
@@ -43,6 +44,8 @@ export function ResourceCardView({
   cardClassName,
   description,
   favicon,
+  iconBg,
+  iconClassName,
   isBookmarked = false,
   ogImage,
   onBookmarkClick,
@@ -211,22 +214,39 @@ export function ResourceCardView({
         {/* Row 1: Inline favicon + title */}
         <div className="flex min-w-0 items-center gap-2">
           {/* Small 24px favicon squircle beside the title */}
-          <div className="border-primary/50 flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-[30%] border bg-white/5 p-0.5">
-            {faviconSrc ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                key={faviconSrc}
-                src={faviconSrc}
-                alt=""
-                loading="lazy"
-                referrerPolicy="no-referrer"
-                className="h-full w-full rounded-[25%] object-contain"
-                onError={handleFaviconError}
-              />
-            ) : (
-              <ImageIcon weight="light" className="size-3 text-zinc-600" />
-            )}
-          </div>
+          {(() => {
+            const isWhiteTile = iconBg === "light" || iconClassName?.includes("bg-white");
+            const isInverted = iconBg === "invert" || iconClassName?.includes("invert");
+
+            return (
+              <div
+                className={cn(
+                  "flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-[30%] border transition-colors",
+                  isWhiteTile
+                    ? "border-white/80 bg-white p-0.5 text-black shadow-xs"
+                    : "border-primary/50 bg-zinc-800/90 p-0.5",
+                )}
+              >
+                {faviconSrc ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    key={faviconSrc}
+                    src={faviconSrc}
+                    alt=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
+                    className={cn(
+                      "h-full w-full rounded-[25%] object-contain",
+                      isInverted && "brightness-125 invert",
+                    )}
+                    onError={handleFaviconError}
+                  />
+                ) : (
+                  <ImageIcon weight="light" className="size-3 text-zinc-600" />
+                )}
+              </div>
+            );
+          })()}
 
           <h3
             title={title || ""}

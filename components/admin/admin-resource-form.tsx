@@ -79,6 +79,7 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
     description: initialData?.description || "",
     favicon: initialData?.favicon || "",
     github: initialData?.github || "",
+    iconBg: initialData?.iconBg || "dark",
     ogImage: initialData?.ogImage || "",
     subtitle: initialData?.subtitle || "",
     tags: initialData?.tags || "",
@@ -547,6 +548,8 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
             <MediaAssetFields
               favicon={formData.favicon || ""}
               faviconOptions={faviconOptions}
+              iconBg={formData.iconBg || "dark"}
+              onIconBgChange={(val) => setFormData((prev) => ({ ...prev, iconBg: val }))}
               ogImage={formData.ogImage || ""}
               ogImageOptions={ogImageOptions}
               onFaviconChange={(val) => setFormData((prev) => ({ ...prev, favicon: val }))}
@@ -635,6 +638,7 @@ export function AdminResourceForm({ initialData, mode = "create" }: AdminResourc
                   description={formData.description}
                   ogImage={formData.ogImage}
                   favicon={formData.favicon}
+                  iconBg={formData.iconBg || "dark"}
                   subtitle={formData.subtitle}
                   tags={formData.tags || ""}
                   url={formData.url}
