@@ -183,7 +183,7 @@ export default function DockerComposePage() {
 
               {/* Duplicate port warning */}
               {duplicatePorts.length > 0 && (
-                <div className="rounded-lg border border-yellow-500/30 bg-yellow-500/10 px-4 py-3 text-xs text-yellow-400">
+                <div className="rounded-lg border-[1.5px] border-yellow-500/30 bg-yellow-500/10 px-4 py-3 text-xs text-yellow-400">
                   Duplicate host ports detected: {duplicatePorts.join(", ")}. This will cause a
                   conflict.
                 </div>
@@ -191,7 +191,7 @@ export default function DockerComposePage() {
 
               {/* Service cards */}
               {services.length === 0 ? (
-                <div className="border-border text-muted-foreground rounded-xl border border-dashed py-12 text-center text-sm">
+                <div className="border-border text-muted-foreground rounded-xl border-[1.5px] border-dashed py-12 text-center text-sm">
                   No services yet. Add one above.
                 </div>
               ) : (

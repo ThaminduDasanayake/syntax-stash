@@ -730,7 +730,7 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
           <div className="space-y-6 lg:col-span-5">
             <div className="sticky top-20 space-y-6">
               {/* Card Preview */}
-              <div className="border-line bg-surface/40 space-y-4 rounded-lg border p-5">
+              <div className="border-line bg-surface/40 space-y-4 rounded-lg border-[1.5px] p-5">
                 <h2 className="text-foreground border-line border-b pb-2 text-xs font-bold tracking-wider uppercase">
                   Live Catalog Card Preview
                 </h2>
@@ -749,7 +749,7 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
               </div>
 
               {/* Publishing Summary Box */}
-              <div className="border-line bg-surface/40 space-y-4 rounded-lg border p-5">
+              <div className="border-line bg-surface/40 space-y-4 rounded-lg border-[1.5px] p-5">
                 <h2 className="text-foreground border-line border-b pb-2 text-xs font-bold tracking-wider uppercase">
                   Publishing Summary
                 </h2>

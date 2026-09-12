@@ -316,7 +316,7 @@ export function SubmitForm() {
   return (
     <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
       {/* Left Column: Form (7 cols) */}
-      <div className="border-line bg-paper/40 border p-6 font-mono text-xs sm:p-8 lg:col-span-7">
+      <div className="border-line bg-paper/40 border-[1.5px] p-6 font-mono text-xs sm:p-8 lg:col-span-7">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Invisible Honeypot Anti-Bot Field */}
           <input
@@ -643,7 +643,7 @@ export function SubmitForm() {
           />
 
           {/* Guidelines Box */}
-          <div className="border-line bg-paper/30 border p-5 font-mono text-xs">
+          <div className="border-line bg-paper/30 border-[1.5px] p-5 font-mono text-xs">
             <h4 className="text-foreground font-bold tracking-tight uppercase">
               Submission Guidelines
             </h4>

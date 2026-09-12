@@ -78,7 +78,10 @@ export function PrismaToDrizzle() {
               ["String", "text", "text"],
             ] as [string, string, string][]
           ).map(([prisma, pg, sqlite]) => (
-            <div key={prisma} className="bg-card flex items-center gap-2 border p-3 font-mono">
+            <div
+              key={prisma}
+              className="bg-card flex items-center gap-2 border-[1.5px] p-3 font-mono"
+            >
               <span className="text-primary">{prisma}</span>
               <span>
                 <ArrowRightIcon />

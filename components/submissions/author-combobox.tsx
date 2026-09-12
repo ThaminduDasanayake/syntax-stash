@@ -356,7 +356,7 @@ export function AuthorCombobox({
         {selectedAuthors.map((authName) => (
           <span
             key={authName}
-            className="border-border bg-muted/80 text-foreground inline-flex items-center gap-1 rounded-none border px-2 py-0.5 font-mono text-[11px] font-medium"
+            className="border-border bg-muted/80 text-foreground inline-flex items-center gap-1 rounded-none border-[1.5px] px-2 py-0.5 font-mono text-[11px] font-medium"
           >
             <UserIcon className="text-primary size-3 shrink-0" />
             <span className="max-w-40 truncate">{authName}</span>
@@ -448,7 +448,7 @@ export function AuthorCombobox({
                     {typeof author.count === "number" && author.count > 0 && (
                       <span
                         className={cn(
-                          "py-0.2 rounded-none border px-1 text-[10px]",
+                          "py-0.2 rounded-none border-[1.5px] px-1 text-[10px]",
                           isHighlighted
                             ? "border-primary-foreground/40 bg-primary-foreground/20 text-primary-foreground"
                             : "border-border bg-muted/40 text-muted-foreground",

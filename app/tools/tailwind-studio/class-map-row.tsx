@@ -9,7 +9,7 @@ const ClassMapRow = ({
   onRename: (id: string, name: string) => void;
 }) => {
   return (
-    <div className="bg-card border-border hover:border-border/80 flex flex-col gap-3 rounded-xl border p-4 shadow-sm transition-colors">
+    <div className="bg-card border-border hover:border-border/80 flex flex-col gap-3 rounded-xl border-[1.5px] p-4 shadow-sm transition-colors">
       <InputField
         value={entry.semanticName}
         onChange={(e) => onRename(entry.id, e.target.value)}

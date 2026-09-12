@@ -149,7 +149,7 @@ export function ResourceCardView({
       )}
     >
       {/* 1. Visual Stage: clean 16:10 OG image — no overlays */}
-      <div className="relative aspect-16/10 w-full overflow-hidden rounded-2xl border border-white/10 bg-[#18181b] transition-all duration-300 group-hover:border-white/18 group-hover:shadow-[0_12px_36px_rgba(0,0,0,0.5)]">
+      <div className="relative aspect-16/10 w-full overflow-hidden rounded-2xl border-[1.5px] border-white/10 bg-[#18181b] transition-all duration-300 group-hover:border-white/18">
         {imageSrc ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -260,7 +260,7 @@ export function ResourceCardView({
                   <button
                     type="button"
                     className={cn(
-                      "flex size-7 cursor-pointer items-center justify-center rounded-lg border border-white/8 bg-white/4 text-zinc-500 transition-all duration-150 hover:border-white/18 hover:bg-white/8 hover:text-white active:scale-95",
+                      "flex size-7 cursor-pointer items-center justify-center rounded-lg border-[1.5px] border-white/8 bg-white/4 text-zinc-500 transition-all duration-150 hover:border-white/18 hover:bg-white/8 hover:text-white active:scale-95",
                       isBookmarked && "border-primary/40 bg-primary/15 text-primary",
                     )}
                     onMouseEnter={() => setIsBookmarkHovered(true)}
@@ -287,7 +287,7 @@ export function ResourceCardView({
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex size-7 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04] text-zinc-500 transition-all duration-150 hover:border-white/[0.18] hover:bg-white/[0.08] hover:text-white active:scale-95"
+                    className="flex size-7 items-center justify-center rounded-lg border-[1.5px] border-white/8 bg-white/4 text-zinc-500 transition-all duration-150 hover:border-white/18 hover:bg-white/8 hover:text-white active:scale-95"
                     aria-label="Open in new tab"
                   >
                     <ArrowUpRightIcon weight="bold" className="size-3.5" />
@@ -307,7 +307,7 @@ export function ResourceCardView({
             {parsedTags.slice(0, 3).map((t) => (
               <span
                 key={t}
-                className="border-brand-purple/25 bg-brand-purple/10 text-brand-purple inline-flex items-center gap-1 rounded-md border px-1.5 py-0.5 font-mono text-[9px] font-medium"
+                className="border-brand-purple/25 bg-brand-purple/10 text-brand-purple inline-flex items-center gap-1 rounded-md border-[1.5px] px-1.5 py-0.5 font-mono text-[9px] font-medium"
               >
                 <TagIcon className="text-brand-purple size-2.5" />
                 {t}

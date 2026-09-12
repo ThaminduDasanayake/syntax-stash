@@ -425,7 +425,7 @@
 }
 
 @utility vault-card {
-  @apply bg-card flex flex-col justify-between rounded-2xl border border-white/[0.08] p-5 shadow-[0_2px_12px_rgba(0,0,0,0.3)] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-white/[0.16] hover:shadow-[0_12px_32px_rgba(0,0,0,0.5)];
+  @apply bg-card flex flex-col justify-between rounded-2xl border-[1.5px] border-white/8 p-5 shadow-[0_2px_12px_rgba(0,0,0,0.3)] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-white/16 hover:shadow-[0_12px_32px_rgba(0,0,0,0.5)];
 }
 
 @utility vault-card-header {
@@ -433,7 +433,7 @@
 }
 
 @utility vault-card-dot {
-  @apply size-2.5 rounded-full border border-white/10 transition-colors;
+  @apply size-2.5 rounded-full border-[1.5px] border-white/10 transition-colors;
 }
 
 @utility vault-card-count {
@@ -445,12 +445,12 @@
 }
 
 @utility vault-card-footer {
-  @apply text-mono-2xs text-muted-foreground mt-4 flex items-center justify-between border-t border-white/[0.06] pt-3 transition-colors;
+  @apply text-mono-2xs text-muted-foreground mt-4 flex items-center justify-between border-t-[1.5px] border-white/6 pt-3 transition-colors;
 }
 
 /* Featured Section */
 @utility featured-section {
-  @apply bg-bg relative border-b border-white/[0.08] py-28;
+  @apply bg-bg relative border-b-[1.5px] border-white/8 py-28;
   background-image:
     radial-gradient(at 85% 80%, oklch(0.7788 0.1126 306.2 / 0.04) 0px, transparent 45%),
     radial-gradient(at 10% 20%, oklch(0.7674 0.1487 76.8 / 0.04) 0px, transparent 40%);
@@ -515,7 +515,7 @@
 }
 
 @utility lib-header {
-  @apply bg-background border-border/60 border-b pt-28 pb-10 sm:pt-32 sm:pb-12;
+  @apply bg-background border-border/60 border-b-[1.5px] pt-28 pb-10 sm:pt-32 sm:pb-12;
 }
 
 @utility section-inner {
@@ -544,7 +544,7 @@
 
 /* Filter Bar*/
 @utility filter-bar {
-  @apply border-y-border/60 bg-background/80 sticky top-16 z-40 border-y py-2.5 backdrop-blur-xl transition-all sm:py-3.5;
+  @apply border-y-border/60 bg-background/80 sticky top-16 z-40 border-y-[1.5px] py-2.5 backdrop-blur-xl transition-all sm:py-3.5;
 }
 
 @utility filter-bar-inner {
@@ -560,7 +560,7 @@
 }
 
 @utility filter-search {
-  @apply border-border/80! bg-card/90! text-foreground placeholder:text-muted-foreground focus:border-primary/50! focus:bg-card! focus:ring-primary/20 h-10! w-full rounded-xl! border pr-8! pl-9.5! font-mono text-xs transition-all duration-200 outline-none focus:ring-2;
+  @apply border-border/80! bg-card/90! text-foreground placeholder:text-muted-foreground focus:border-primary/50! focus:bg-card! focus:ring-primary/20 h-10! w-full rounded-xl! border-[1.5px] pr-8! pl-9.5! font-mono text-xs transition-all duration-200 outline-none focus:ring-2;
 
   @apply [&::-webkit-search-cancel-button]:hidden;
 }
@@ -603,7 +603,7 @@
 }
 
 @utility card-face {
-  @apply col-start-1 row-start-1 flex h-80 w-full flex-col gap-2.5 overflow-hidden rounded-2xl border border-white/[0.08] bg-[#18181b] p-5 shadow-[0_2px_12px_rgba(0,0,0,0.3)] transition-all duration-300;
+  @apply col-start-1 row-start-1 flex h-80 w-full flex-col gap-2.5 overflow-hidden rounded-2xl border-[1.5px] border-white/8 bg-[#18181b] p-5 shadow-[0_2px_12px_rgba(0,0,0,0.3)] transition-all duration-300;
 }
 
 @utility card-header {
@@ -619,7 +619,7 @@
 }
 
 @utility card-icon-box {
-  @apply flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-[30%] border border-white/[0.08] bg-white/[0.04];
+  @apply flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-[30%] border-[1.5px] border-white/8 bg-white/4;
 }
 
 @utility card-icon {
@@ -631,7 +631,7 @@
 }
 
 @utility card-subtitle {
-  @apply mt-0.5 mb-1 line-clamp-2 border-l border-current/40 pl-2 text-xs leading-snug font-medium opacity-85 transition-opacity duration-200;
+  @apply mt-0.5 mb-1 line-clamp-2 border-l-[1.5px] border-current/40 pl-2 text-xs leading-snug font-medium opacity-85 transition-opacity duration-200;
 }
 
 @utility card-description {
@@ -643,7 +643,7 @@
 }
 
 @utility card-footer {
-  @apply mt-auto flex w-full flex-none items-center justify-between gap-4 border-t border-white/[0.08] pt-3 transition-all duration-200 ease-out group-hover:border-white/20;
+  @apply mt-auto flex w-full flex-none items-center justify-between gap-4 border-t-[1.5px] border-white/8 pt-3 transition-all duration-200 ease-out group-hover:border-white/20;
 }
 
 @utility card-author {
@@ -656,7 +656,7 @@
 
 /* Resource Modal */
 @utility modal-panel {
-  @apply 2xs:w-[calc(100vw-2rem)]! 2xs:h-[calc(100dvh-32px)] 2xs:max-h-[100dvh-32px] fixed! top-1/2! left-1/2! flex h-[calc(100dvh-16px)] max-h-[calc(100dvh-16px)] w-[calc(100vw-1rem)]! max-w-235! -translate-x-1/2! -translate-y-1/2! flex-col overflow-hidden rounded-3xl! border border-white/[0.12]! bg-[#18181b]! p-0! shadow-[0_24px_64px_rgba(0,0,0,0.7)]! md:h-[calc(100vh-120px)]! md:max-h-[calc(100vh-80px)]!;
+  @apply 2xs:w-[calc(100vw-2rem)]! 2xs:h-[calc(100dvh-32px)] 2xs:max-h-[100dvh-32px] fixed! top-1/2! left-1/2! flex h-[calc(100dvh-16px)] max-h-[calc(100dvh-16px)] w-[calc(100vw-1rem)]! max-w-235! -translate-x-1/2! -translate-y-1/2! flex-col overflow-hidden rounded-3xl! border-[1.5px] border-white/12! bg-[#18181b]! p-0! shadow-[0_24px_64px_rgba(0,0,0,0.7)]! md:h-[calc(100vh-120px)]! md:max-h-[calc(100vh-80px)]!;
 }
 
 @utility modal-top-actions {
@@ -668,7 +668,7 @@
 }
 
 @utility modal-left {
-  @apply flex shrink-0 flex-col overflow-y-visible border-b border-white/[0.08] bg-[#141416] px-5 pt-5 pb-4 md:overflow-y-auto md:border-r md:border-b-0 md:px-7 md:py-8;
+  @apply flex shrink-0 flex-col overflow-y-visible border-b-[1.5px] border-white/8 bg-[#141416] px-5 pt-5 pb-4 md:overflow-y-auto md:border-r-[1.5px] md:border-b-0 md:px-7 md:py-8;
 }
 
 @utility modal-cat-label {
@@ -696,7 +696,7 @@
 }
 
 @utility modal-description {
-  @apply flex-none border-t border-white/[0.08] pt-3 leading-6.5 font-normal wrap-break-word opacity-90 md:flex-1;
+  @apply flex-none border-t-[1.5px] border-white/8 pt-3 leading-6.5 font-normal wrap-break-word opacity-90 md:flex-1;
 }
 
 @utility modal-author {
@@ -732,11 +732,11 @@
 }
 
 @utility modal-related-chip {
-  @apply xs:inline-flex text-display-xs flex cursor-pointer items-center justify-start gap-2 rounded-xl border border-white/[0.08] bg-white/[0.04] px-3.5 py-2.5 shadow-[0_1px_3px_rgba(0,0,0,0.3)] transition-all duration-200 ease-out hover:border-white/[0.18] hover:bg-white/[0.08] sm:px-3 sm:py-2;
+  @apply xs:inline-flex text-display-xs flex cursor-pointer items-center justify-start gap-2 rounded-xl border-[1.5px] border-white/8 bg-white/4 px-3.5 py-2.5 shadow-[0_1px_3px_rgba(0,0,0,0.3)] transition-all duration-200 ease-out hover:border-white/18 hover:bg-white/8 sm:px-3 sm:py-2;
 }
 
 @utility modal-chip-dot {
-  @apply inline-block aspect-square size-2 shrink-0 rounded-full border border-white/10 transition-colors duration-200;
+  @apply inline-block aspect-square size-2 shrink-0 rounded-full border-[1.5px] border-white/10 transition-colors duration-200;
 }
 
 @utility modal-launch {
@@ -744,7 +744,7 @@
 }
 
 @utility modal-nav-row {
-  @apply flex shrink-0 items-center justify-end gap-0 border-t border-t-white/[0.08] px-5 pt-2.5 pb-3.5 md:px-4.5 md:pt-2.5 md:pb-3.5;
+  @apply flex shrink-0 items-center justify-end gap-0 border-t-[1.5px] border-t-white/8 px-5 pt-2.5 pb-3.5 md:px-4.5 md:pt-2.5 md:pb-3.5;
 }
 
 /* Tabs */
@@ -753,7 +753,7 @@
 }
 
 @utility tab-trigger {
-  @apply border-border! bg-card hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground cursor-pointer rounded-xl! border! px-6 py-2 font-mono text-xs font-bold tracking-widest uppercase shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-all;
+  @apply border-border! bg-card hover:bg-muted data-[state=active]:bg-primary data-[state=active]:text-primary-foreground cursor-pointer rounded-xl! border-[1.5px]! px-6 py-2 font-mono text-xs font-bold tracking-widest uppercase shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-all;
 }
 
 /* ─────────────────────────────────────────────────────────

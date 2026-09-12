@@ -64,7 +64,7 @@ export function CubicBezierTab() {
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <div className="space-y-5">
           <div className="flex items-start gap-6">
-            <div className="border-border bg-muted/20 rounded-xl border p-2">
+            <div className="border-border bg-muted/20 rounded-xl border-[1.5px] p-2">
               <CurveCanvas p1x={p1x} p1y={p1y} p2x={p2x} p2y={p2y} onChangeAction={handleChange} />
             </div>
 
@@ -164,7 +164,7 @@ export function CubicBezierTab() {
         <div className="space-y-5">
           <div className="space-y-3">
             <Label className="text-sm">Live preview</Label>
-            <div className="border-border bg-muted/20 relative h-20 overflow-hidden rounded-xl border px-4">
+            <div className="border-border bg-muted/20 relative h-20 overflow-hidden rounded-xl border-[1.5px] px-4">
               <div
                 key={replayKey}
                 className="bg-primary absolute top-1/2 h-8 w-8 -translate-y-1/2 rounded-lg"
@@ -182,7 +182,7 @@ export function CubicBezierTab() {
 
           <div className="space-y-3">
             <Label className="text-sm">Generated CSS</Label>
-            <div className="border-border bg-muted/30 space-y-2 rounded-xl border p-4">
+            <div className="border-border bg-muted/30 space-y-2 rounded-xl border-[1.5px] p-4">
               <OutputRow label="CSS" value={cssSnippet} />
               <OutputRow label="Tailwind" value={tailwindSnippet} />
               <OutputRow label="Raw" value={cubicBezier} />

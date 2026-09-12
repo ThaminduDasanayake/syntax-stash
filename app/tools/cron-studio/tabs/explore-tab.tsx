@@ -99,7 +99,7 @@ export function ExploreTab({ expression, setExpression }: ExploreTabProps) {
         </div>
 
         {parsed.ok ? (
-          <div className="border-border bg-background border p-6">
+          <div className="border-border bg-background border-[1.5px] p-6">
             <p className="text-muted-foreground mb-3 text-xs font-semibold tracking-wider uppercase">
               Translation
             </p>
@@ -183,7 +183,7 @@ export function ExploreTab({ expression, setExpression }: ExploreTabProps) {
             {parsed.dates.map((d, i) => (
               <div
                 key={i}
-                className="bg-background border-border flex items-center justify-between border px-4 py-3"
+                className="bg-background border-border flex items-center justify-between border-[1.5px] px-4 py-3"
               >
                 <div className="flex items-center gap-4">
                   <span className="text-muted-foreground w-6 font-mono text-xs">#{i + 1}</span>
@@ -205,7 +205,7 @@ export function ExploreTab({ expression, setExpression }: ExploreTabProps) {
             ))}
           </div>
         ) : (
-          <div className="border-border bg-muted flex min-h-full items-center justify-center border border-dashed">
+          <div className="border-border bg-muted flex min-h-full items-center justify-center border-[1.5px] border-dashed">
             <p className="text-muted-foreground text-sm">
               Enter a valid expression to generate schedule.
             </p>

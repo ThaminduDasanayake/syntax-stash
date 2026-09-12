@@ -151,7 +151,7 @@ export function AdminConfirmEditDialog({
 
         <div className="py-2">
           {!hasChanges ? (
-            <div className="border-line bg-surface/50 flex flex-col items-center justify-center gap-2 rounded-lg border border-dashed p-8 text-center">
+            <div className="border-line bg-surface/50 flex flex-col items-center justify-center gap-2 rounded-lg border-[1.5px] border-dashed p-8 text-center">
               <InfoIcon className="text-muted-foreground size-8" />
               <p className="text-foreground font-bold uppercase">No Changes Detected</p>
               <p className="text-muted-foreground max-w-sm text-xs">
@@ -191,7 +191,7 @@ export function AdminConfirmEditDialog({
                         {/* Old Value */}
                         <div
                           className={cn(
-                            "flex-1 rounded border px-2.5 py-1.5 text-xs break-all",
+                            "flex-1 rounded border-[1.5px] px-2.5 py-1.5 text-xs break-all",
                             isOldEmpty
                               ? "border-line bg-surface/80 text-muted-foreground italic"
                               : "border-destructive/30 bg-destructive/10 text-destructive line-through",
@@ -209,7 +209,7 @@ export function AdminConfirmEditDialog({
                         {/* New Value */}
                         <div
                           className={cn(
-                            "flex-1 rounded border px-2.5 py-1.5 text-xs break-all",
+                            "flex-1 rounded border-[1.5px] px-2.5 py-1.5 text-xs break-all",
                             isNewEmpty
                               ? "border-line bg-surface/80 text-muted-foreground italic"
                               : "border-emerald-500/40 bg-emerald-500/10 font-bold text-emerald-700 dark:text-emerald-300",

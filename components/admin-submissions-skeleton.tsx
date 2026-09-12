@@ -3,11 +3,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 export function AdminSubmissionCardSkeleton() {
   return (
     <div
-      className="border-line/70 bg-surface/40 rounded border p-5 font-mono text-xs"
+      className="border-line/70 bg-surface/40 rounded border-[1.5px] p-5 font-mono text-xs"
       aria-hidden="true"
     >
       {/* Status & Submitter meta header */}
-      <div className="border-line/40 mb-3 flex flex-wrap items-center justify-between gap-2 border-b pb-2.5">
+      <div className="border-line/40 border-b-[1.5px]-[1.5px] mb-3 flex flex-wrap items-center justify-between gap-2 pb-2.5">
         <div className="flex items-center gap-2">
           <Skeleton className="bg-ink/15 h-5 w-16 rounded" />
           <Skeleton className="bg-ink/10 h-3.5 w-24 rounded" />
@@ -79,7 +79,7 @@ export function AdminSubmissionsSkeleton() {
     <div className="space-y-6" aria-hidden="true">
       {/* Top Header & Search */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-wrap items-center gap-2 border-b pb-3 sm:border-b-0 sm:pb-0">
+        <div className="flex flex-wrap items-center gap-2 border-b-[1.5px] pb-3 sm:border-b-0 sm:pb-0">
           {[1, 2, 3, 4].map((i) => (
             <Skeleton key={i} className="bg-ink/10 h-8 w-28 rounded-md" />
           ))}

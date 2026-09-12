@@ -625,7 +625,7 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
                         variant="outline"
                         size="xs"
                         onClick={() => onTagClickAction?.(tag)}
-                        className="text-mono-xs border-brand-purple/25 bg-brand-purple/5 text-foreground hover:border-brand-purple/50 hover:bg-brand-purple/15 h-7 rounded-full border px-3 py-1 font-semibold transition-all duration-150 hover:-translate-y-0.5"
+                        className="text-mono-xs border-brand-purple/25 bg-brand-purple/5 text-foreground hover:border-brand-purple/50 hover:bg-brand-purple/15 h-7 rounded-full border-[1.5px] px-3 py-1 font-semibold transition-all duration-150 hover:-translate-y-0.5"
                         title={`Filter by #${tag}`}
                       >
                         <span className="text-brand-purple mr-1 font-bold">#</span>

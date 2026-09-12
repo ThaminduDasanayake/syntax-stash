@@ -43,14 +43,9 @@ export function AdminSubmissionCard({
   const themeStyles = THEME_CONFIG[theme];
 
   return (
-    <div
-      className={cn(
-        "border-line bg-surface/40 hover:bg-surface/70 rounded-lg border border-l-[3px] p-5 font-mono text-xs transition-colors",
-        themeStyles.border,
-      )}
-    >
+    <div className="border-primary bg-surface/40 hover:bg-surface/70 rounded-lg border-[1.5px] p-5 font-mono text-xs transition-colors">
       {/* Status & Submitter meta header */}
-      <div className="border-line mb-3 flex flex-wrap items-center justify-between gap-2 border-b pb-2.5">
+      <div className="border-line mb-3 flex flex-wrap items-center justify-between gap-2 border-b-[1.5px] pb-2.5">
         <div className="flex items-center gap-2">
           <span
             className={cn(
@@ -96,7 +91,7 @@ export function AdminSubmissionCard({
               )}
               <span
                 className={cn(
-                  "inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase",
+                  "inline-flex items-center gap-1.5 rounded-full border-[1.5px] px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase",
                   themeStyles.soft,
                   themeStyles.label,
                   themeStyles.border,
@@ -129,7 +124,7 @@ export function AdminSubmissionCard({
                   .map((tag) => (
                     <span
                       key={tag}
-                      className="bg-surface border-line py-0.2 text-muted-foreground rounded border px-1.5 text-[10px]"
+                      className="bg-surface border-line py-0.2 text-muted-foreground rounded border-[1.5px] px-1.5 text-[10px]"
                     >
                       #{tag}
                     </span>

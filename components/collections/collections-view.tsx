@@ -138,7 +138,7 @@ export function CollectionsView() {
           </div>
 
           <div className="flex items-center gap-2 text-xs">
-            <span className="border-line bg-surface text-muted-foreground flex items-center gap-1 rounded border px-2 py-0.5 text-[10px] font-bold uppercase">
+            <span className="border-line bg-surface text-muted-foreground flex items-center gap-1 rounded border-[1.5px] px-2 py-0.5 text-[10px] font-bold uppercase">
               {activeCollection.isPublic ? (
                 <>
                   <GlobeIcon className="size-3" /> Public Stash
@@ -159,7 +159,7 @@ export function CollectionsView() {
             ))}
           </div>
         ) : collectionItems.length === 0 ? (
-          <div className="border-line bg-surface/20 flex flex-col items-center justify-center rounded-lg border border-dashed py-14 text-center font-mono text-xs">
+          <div className="border-line bg-surface/20 flex flex-col items-center justify-center rounded-lg border-[1.5px] border-dashed py-14 text-center font-mono text-xs">
             <FolderSimpleIcon className="text-muted-foreground/60 size-10" />
             <p className="text-foreground mt-3 font-bold uppercase">This collection is empty</p>
             <p className="text-muted-foreground mt-1 max-w-sm">
@@ -211,7 +211,7 @@ export function CollectionsView() {
           ))}
         </div>
       ) : collections.length === 0 ? (
-        <div className="border-line bg-surface/20 flex flex-col items-center justify-center rounded-lg border border-dashed py-14 text-center font-mono text-xs">
+        <div className="border-line bg-surface/20 flex flex-col items-center justify-center rounded-lg border-[1.5px] border-dashed py-14 text-center font-mono text-xs">
           <FolderPlusIcon className="text-muted-foreground/60 size-10" />
           <p className="text-foreground mt-3 font-bold uppercase">No collections yet</p>
           <p className="text-muted-foreground mt-1 max-w-sm">
@@ -232,7 +232,7 @@ export function CollectionsView() {
           {collections.map((col) => (
             <div
               key={col.id}
-              className="border-line bg-surface/40 hover:bg-surface/70 flex flex-col justify-between rounded-lg border p-4 transition-colors"
+              className="border-line bg-surface/40 hover:bg-surface/70 flex flex-col justify-between rounded-lg border-[1.5px] p-4 transition-colors"
             >
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
@@ -241,7 +241,7 @@ export function CollectionsView() {
                     <h3 className="text-foreground font-bold tracking-tight">{col.name}</h3>
                   </div>
 
-                  <span className="border-line bg-surface text-muted-foreground flex items-center gap-1 rounded border px-1.5 py-0.5 text-[9px] font-bold uppercase">
+                  <span className="border-line bg-surface text-muted-foreground flex items-center gap-1 rounded border-[1.5px] px-1.5 py-0.5 text-[9px] font-bold uppercase">
                     {col.isPublic ? (
                       <GlobeIcon className="size-2.5" />
                     ) : (

@@ -60,7 +60,7 @@ function TagFilterContent({
   return (
     <div className="flex flex-col">
       {/* Header */}
-      <div className="border-border bg-popover flex items-center justify-between border-b px-4 py-3 sm:px-3 sm:py-2">
+      <div className="border-border bg-popover flex items-center justify-between rounded-t-2xl border-b-[1.5px] px-4 py-3 sm:px-3 sm:py-2">
         <div className="flex items-center gap-2">
           <FunnelIcon weight="bold" className="text-primary size-4" />
           <span className="text-mono-xs font-bold tracking-wider uppercase">Filter by Tags</span>
@@ -79,16 +79,16 @@ function TagFilterContent({
       </div>
 
       {/* Match Mode Toggle */}
-      <div className="border-border/60 bg-muted/40 flex items-center justify-between border-b px-4 py-2 sm:px-3 sm:py-1.5">
+      <div className="border-border/60 bg-muted/40 flex items-center justify-between border-b-[1.5px] px-4 py-2 sm:px-3 sm:py-1.5">
         <span className="text-muted-foreground font-mono text-xs sm:text-[11px]">Match:</span>
         <div className="flex items-center gap-1.5 sm:gap-1">
           <button
             type="button"
             onClick={() => onMatchModeChange("any")}
             className={cn(
-              "cursor-pointer rounded-full border px-3 py-1 font-mono text-xs uppercase transition-all sm:px-2.5 sm:py-0.5 sm:text-[10px]",
+              "cursor-pointer rounded-full border-[1.5px] px-3 py-1 font-mono text-xs uppercase transition-all sm:px-2.5 sm:py-0.5 sm:text-[10px]",
               matchMode === "any"
-                ? "border-primary bg-primary text-primary-foreground font-bold shadow-xs"
+                ? "border-primary bg-primary text-primary-foreground font-bold"
                 : "border-border/70 bg-card text-muted-foreground hover:bg-muted hover:text-foreground",
             )}
           >
@@ -98,9 +98,9 @@ function TagFilterContent({
             type="button"
             onClick={() => onMatchModeChange("all")}
             className={cn(
-              "cursor-pointer rounded-full border px-3 py-1 font-mono text-xs uppercase transition-all sm:px-2.5 sm:py-0.5 sm:text-[10px]",
+              "cursor-pointer rounded-full border-[1.5px] px-3 py-1 font-mono text-xs uppercase transition-all sm:px-2.5 sm:py-0.5 sm:text-[10px]",
               matchMode === "all"
-                ? "border-primary bg-primary text-primary-foreground font-bold shadow-xs"
+                ? "border-primary bg-primary text-primary-foreground font-bold"
                 : "border-border/70 bg-card text-muted-foreground hover:bg-muted hover:text-foreground",
             )}
           >
@@ -110,7 +110,7 @@ function TagFilterContent({
       </div>
 
       {/* Tag Search & List */}
-      <Command className="bg-popover rounded-2xl border-none">
+      <Command className="bg-popover rounded-t-none rounded-b-2xl border-none">
         <CommandInput
           placeholder="Search tags..."
           value={search}
@@ -135,16 +135,16 @@ function TagFilterContent({
                     className={cn(
                       "flex cursor-pointer items-center justify-between rounded-xl px-3 py-2 font-mono text-xs transition-colors sm:px-2.5 sm:py-1.5",
                       isChecked
-                        ? "bg-brand-purple/10 text-foreground font-bold"
+                        ? "bg-primary/10 text-foreground font-bold"
                         : "hover:bg-muted/60 text-foreground/80",
                     )}
                   >
                     <div className="flex items-center gap-2.5 sm:gap-2">
                       <div
                         className={cn(
-                          "flex size-4 items-center justify-center rounded-md border transition-colors sm:size-3.5",
+                          "flex size-4 items-center justify-center rounded-md border-[1.5px] transition-colors sm:size-3.5",
                           isChecked
-                            ? "border-brand-purple bg-brand-purple text-paper"
+                            ? "border-foreground bg-foreground text-paper"
                             : "border-border bg-card",
                         )}
                       >
@@ -189,10 +189,8 @@ export function TagFilterPopover({
             size="icon-lg"
             aria-label="Filter by tags"
             className={cn(
-              "group relative size-11 rounded-full border shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg active:scale-95 sm:size-12",
-              hasSelected
-                ? "border-brand-purple/50 bg-brand-purple/15 text-brand-purple hover:bg-brand-purple/25"
-                : "border-border/80 bg-card text-muted-foreground hover:border-border hover:bg-muted hover:text-foreground",
+              "group border-muted-foreground hover:border-foreground bg-card text-muted-foreground hover:bg-muted hover:text-foreground relative size-11 rounded-full border-[1.5px] transition-all duration-200 hover:-translate-y-0.5 active:scale-95 sm:size-12",
+              hasSelected && "border-primary/60 hover:border-primary/80",
             )}
           >
             <TagIcon
@@ -200,7 +198,7 @@ export function TagFilterPopover({
               className="size-5 transition-transform duration-200 group-hover:scale-105"
             />
             {hasSelected && (
-              <span className="border-background bg-primary text-primary-foreground absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full border font-mono text-[10px] font-bold shadow-xs">
+              <span className="border-background bg-primary text-primary-foreground absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full border-[1.5px] font-mono text-[10px] font-bold">
                 {selectedTags.length}
               </span>
             )}
@@ -223,7 +221,7 @@ export function TagFilterPopover({
         <SheetContent
           side="bottom"
           showCloseButton={false}
-          className="border-border bg-popover z-70 max-h-[85vh] rounded-t-3xl border-t p-0 shadow-2xl"
+          className="border-border bg-popover z-70 max-h-[85vh] rounded-t-3xl border-t p-0"
         >
           <SheetHeader className="sr-only">
             <SheetTitle>Filter Resources by Tags</SheetTitle>
@@ -250,7 +248,7 @@ export function TagFilterPopover({
         side="top"
         align="end"
         sideOffset={12}
-        className="border-border bg-popover text-popover-foreground z-70 w-80 rounded-2xl border p-0 shadow-2xl"
+        className="border-border bg-popover text-popover-foreground z-70 w-80 rounded-2xl border-[1.5px] p-0"
       >
         <TagFilterContent
           availableTags={availableTags}

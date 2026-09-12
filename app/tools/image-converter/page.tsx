@@ -380,7 +380,7 @@ export default function ImageConverterPage() {
             </div>
           </div>
           {formatsWithSettings.includes(targetFormat) && (
-            <div className="bg-card space-y-4 border p-4">
+            <div className="bg-card space-y-4 border-[1.5px] p-4">
               <div className="flex items-center gap-2">
                 <span className="text-primary font-mono text-[11px] font-bold tracking-widest uppercase">
                   {"//"} {targetFormat} CONTEXT OPTIMIZATION
@@ -423,7 +423,7 @@ export default function ImageConverterPage() {
             </div>
           )}
           {/* Resize Settings */}
-          <div className="bg-card space-y-4 border p-4">
+          <div className="bg-card space-y-4 border-[1.5px] p-4">
             <div className="flex items-center gap-2">
               <span className="text-primary font-mono text-[11px] font-bold tracking-widest uppercase">
                 {"//"} RESIZING
@@ -521,7 +521,7 @@ export default function ImageConverterPage() {
                 {converted.map((img, i) => (
                   <div
                     key={i}
-                    className="bg-card flex items-center justify-between border p-3 hover:shadow-sm"
+                    className="bg-card flex items-center justify-between border-[1.5px] p-3 hover:shadow-sm"
                   >
                     <div className="flex min-w-0 items-center gap-3">
                       <div className="flex flex-col">

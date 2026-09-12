@@ -451,7 +451,7 @@ export default function CurlBuilderPage() {
                 )}
               </>
             ) : (
-              <div className="border-border flex min-h-60 items-center justify-center rounded-lg border border-dashed">
+              <div className="border-border flex min-h-60 items-center justify-center rounded-lg border-[1.5px] border-dashed">
                 <p className="text-muted-foreground text-sm">
                   Paste a curl command to see the breakdown.
                 </p>

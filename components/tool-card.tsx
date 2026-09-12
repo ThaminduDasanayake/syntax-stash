@@ -15,7 +15,7 @@ function ToolSchematicPreview({ tool }: { tool: InternalTool }) {
 
   if (slug === "curl-builder") {
     return (
-      <div className="rounded-lg border border-white/5 bg-black/40 p-2.5 font-mono text-[11px] leading-relaxed text-zinc-400">
+      <div className="rounded-lg border-[1.5px] border-white/5 bg-black/40 p-2.5 font-mono text-[11px] leading-relaxed text-zinc-400">
         <div className="mb-0.5 flex items-center gap-1.5 text-[10px] text-zinc-500">
           <span className="text-accent font-bold">POST</span>
           <span className="truncate">/api/v1/deploy</span>
@@ -32,14 +32,14 @@ function ToolSchematicPreview({ tool }: { tool: InternalTool }) {
 
   if (slug === "regex-studio") {
     return (
-      <div className="flex flex-col gap-1 rounded-lg border border-white/5 bg-black/40 p-2.5 font-mono text-[11px]">
+      <div className="flex flex-col gap-1 rounded-lg border-[1.5px] border-white/5 bg-black/40 p-2.5 font-mono text-[11px]">
         <div className="flex items-center justify-between text-[10px]">
           <span className="font-bold tracking-wider text-zinc-500 uppercase">Pattern</span>
           <span className="bg-primary/20 text-primary py-0.2 rounded px-1.5 font-bold">
             flags: gms
           </span>
         </div>
-        <div className="truncate rounded border border-white/5 bg-white/[0.04] px-2 py-0.5 text-[10.5px] font-semibold text-zinc-200">
+        <div className="truncate rounded border-[1.5px] border-white/5 bg-white/4 px-2 py-0.5 text-[10.5px] font-semibold text-zinc-200">
           <span className="text-accent">/</span>[a-z0-9_]+@[a-z]+\.[a-z]&#123;2,&#125;
           <span className="text-accent">/g</span>
         </div>
@@ -53,7 +53,7 @@ function ToolSchematicPreview({ tool }: { tool: InternalTool }) {
 
   if (slug === "diff-viewer") {
     return (
-      <div className="flex flex-col gap-1 rounded-lg border border-white/5 bg-black/40 p-2.5 font-mono text-[10.5px] leading-tight">
+      <div className="flex flex-col gap-1 rounded-lg border-[1.5px] border-white/5 bg-black/40 p-2.5 font-mono text-[10.5px] leading-tight">
         <div className="flex items-center gap-1.5 truncate rounded bg-red-500/10 px-1.5 py-0.5 text-red-400/90">
           <span className="font-bold">-</span> const timeout = 5000;
         </div>
@@ -69,8 +69,8 @@ function ToolSchematicPreview({ tool }: { tool: InternalTool }) {
 
   if (slug === "color-studio") {
     return (
-      <div className="flex flex-col gap-2 rounded-lg border border-white/5 bg-black/40 p-2.5">
-        <div className="from-brand-orange via-brand-purple to-brand-green h-5 w-full rounded-md bg-gradient-to-r shadow-xs" />
+      <div className="flex flex-col gap-2 rounded-lg border-[1.5px] border-white/5 bg-black/40 p-2.5">
+        <div className="from-brand-orange via-brand-purple to-brand-green h-5 w-full rounded-md bg-linear-to-r shadow-xs" />
         <div className="flex items-center justify-between font-mono text-[10.5px]">
           <span className="text-zinc-400">oklch(0.76 0.15 76.8)</span>
           <span className="text-accent font-bold">#F59E0B</span>
@@ -81,8 +81,8 @@ function ToolSchematicPreview({ tool }: { tool: InternalTool }) {
 
   if (slug === "cron-studio") {
     return (
-      <div className="flex flex-col gap-1 rounded-lg border border-white/5 bg-black/40 p-2.5 font-mono text-[11px]">
-        <div className="text-primary bg-primary/10 border-primary/20 rounded border py-1 text-center text-xs font-bold tracking-widest">
+      <div className="flex flex-col gap-1 rounded-lg border-[1.5px] border-white/5 bg-black/40 p-2.5 font-mono text-[11px]">
+        <div className="text-primary bg-primary/10 border-primary/20 rounded border-[1.5px] py-1 text-center text-xs font-bold tracking-widest">
           */15 09-18 * * 1-5
         </div>
         <div className="truncate text-center text-[10px] text-zinc-400">
@@ -101,14 +101,14 @@ function ToolSchematicPreview({ tool }: { tool: InternalTool }) {
     slug === "universal-decoder"
   ) {
     return (
-      <div className="flex flex-col gap-1 rounded-lg border border-white/5 bg-black/40 p-2.5 font-mono text-[10.5px]">
+      <div className="flex flex-col gap-1 rounded-lg border-[1.5px] border-white/5 bg-black/40 p-2.5 font-mono text-[10.5px]">
         <div className="flex items-center justify-between text-[10px] text-zinc-500">
           <span className="text-accent font-semibold uppercase">
             {tool.highlight || "Crypto"} Engine
           </span>
           <span className="text-zinc-400">256-bit</span>
         </div>
-        <div className="truncate rounded bg-white/[0.03] p-1 text-[10px] text-zinc-300">
+        <div className="truncate rounded bg-white/3 p-1 text-[10px] text-zinc-300">
           {slug === "uuid-generator"
             ? "e7b93a14-419b-4e6f-9981-d1c68f638a12"
             : "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b..."}
@@ -129,7 +129,7 @@ function ToolSchematicPreview({ tool }: { tool: InternalTool }) {
     slug === "xml-studio"
   ) {
     return (
-      <div className="rounded-lg border border-white/5 bg-black/40 p-2.5 font-mono text-[10.5px] leading-relaxed text-zinc-300">
+      <div className="rounded-lg border-[1.5px] border-white/5 bg-black/40 p-2.5 font-mono text-[10.5px] leading-relaxed text-zinc-300">
         <span className="text-zinc-500">&#123;</span>
         <div className="truncate pl-3">
           <span className="text-secondary">&quot;status&quot;</span>:{" "}
@@ -149,7 +149,7 @@ function ToolSchematicPreview({ tool }: { tool: InternalTool }) {
     slug === "html-to-jsx"
   ) {
     return (
-      <div className="flex flex-col gap-0.5 rounded-lg border border-white/5 bg-black/40 p-2.5 font-mono text-[10.5px] leading-relaxed">
+      <div className="flex flex-col gap-0.5 rounded-lg border-[1.5px] border-white/5 bg-black/40 p-2.5 font-mono text-[10.5px] leading-relaxed">
         <div className="flex items-center gap-1.5 truncate text-[10px] text-zinc-400">
           <span className="text-primary font-bold">.glassmorphic</span> &#123;
         </div>
@@ -162,7 +162,7 @@ function ToolSchematicPreview({ tool }: { tool: InternalTool }) {
 
   if (slug === "qr-generator" || slug === "image-converter") {
     return (
-      <div className="flex items-center justify-between rounded-lg border border-white/5 bg-black/40 p-2">
+      <div className="flex items-center justify-between rounded-lg border-[1.5px] border-white/5 bg-black/40 p-2">
         <div className="grid grid-cols-4 gap-1 rounded bg-white/10 p-1">
           <div className="bg-primary size-1.5 rounded-xs" />
           <div className="size-1.5 rounded-xs bg-white" />
@@ -185,7 +185,7 @@ function ToolSchematicPreview({ tool }: { tool: InternalTool }) {
 
   // General default schematic preview
   return (
-    <div className="flex items-center justify-between rounded-lg border border-white/5 bg-black/40 p-2.5 font-mono text-[10.5px]">
+    <div className="flex items-center justify-between rounded-lg border-[1.5px] border-white/5 bg-black/40 p-2.5 font-mono text-[10.5px]">
       <div className="flex items-center gap-2">
         <span className="bg-accent size-2 animate-pulse rounded-full" />
         <span className="font-semibold text-zinc-300">{tool.category}</span>
@@ -211,15 +211,15 @@ function ToolCardComponent({ tool }: ToolCardProps) {
     >
       <article data-slot="tool-card" className="group relative flex h-full flex-col select-none">
         {/* 1. Visual Interactive Stage: 16:10 Canvas with Schematic Preview */}
-        <div className="group-hover:border-primary/40 relative flex aspect-[16/10] w-full flex-col justify-between overflow-hidden rounded-2xl border border-white/[0.08] bg-[#18181b] p-3.5 transition-all duration-300 group-hover:shadow-[0_12px_36px_rgba(0,0,0,0.5)] sm:p-4">
+        <div className="group-hover:border-primary/40 relative flex aspect-16/10 w-full flex-col justify-between overflow-hidden rounded-2xl border-[1.5px] border-white/8 bg-[#18181b] p-3.5 transition-all duration-300 group-hover:shadow-[0_12px_36px_rgba(0,0,0,0.5)] sm:p-4">
           {/* Header Row: Tool Icon Squircle + Tool Index & Launch Arrow */}
           <div className="flex items-center justify-between gap-3">
-            <div className="group-hover:border-primary group-hover:bg-primary group-hover:text-primary-foreground flex size-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-white transition-all duration-300 group-hover:shadow-[0_4px_16px_rgba(230,126,34,0.3)]">
+            <div className="group-hover:border-primary group-hover:bg-primary group-hover:text-primary-foreground flex size-9 shrink-0 items-center justify-center rounded-xl border-[1.5px] border-white/10 bg-white/4 text-white transition-all duration-300 group-hover:shadow-[0_4px_16px_rgba(230,126,34,0.3)]">
               <Icon className="size-4.5" />
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="rounded-md border border-white/10 bg-white/[0.04] px-2 py-0.5 font-mono text-xs font-semibold text-zinc-400 tabular-nums">
+              <span className="rounded-md border-[1.5px] border-white/10 bg-white/4 px-2 py-0.5 font-mono text-xs font-semibold text-zinc-400 tabular-nums">
                 {toolNumber}
               </span>
               <HugeiconsIcon
@@ -237,7 +237,7 @@ function ToolCardComponent({ tool }: ToolCardProps) {
           </div>
 
           {/* Ambient Background Aura */}
-          <div className="from-brand-orange/10 via-brand-purple/10 group-hover:from-brand-orange/25 group-hover:via-brand-purple/20 pointer-events-none absolute -right-10 -bottom-10 size-32 rounded-full bg-gradient-to-br to-transparent blur-xl transition-all duration-500 group-hover:scale-150" />
+          <div className="from-brand-orange/10 via-brand-purple/10 group-hover:from-brand-orange/25 group-hover:via-brand-purple/20 pointer-events-none absolute -right-10 -bottom-10 size-32 rounded-full bg-linear-to-br to-transparent blur-xl transition-all duration-500 group-hover:scale-150" />
         </div>
 
         {/* 2. Text Block Below Stage */}

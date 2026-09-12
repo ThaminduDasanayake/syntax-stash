@@ -68,7 +68,7 @@ export function PatternLibrary({ onUsePatternAction }: PatternLibraryProps) {
       </p>
 
       {filteredLibrary.length === 0 ? (
-        <div className="text-muted-foreground border-border rounded-xl border border-dashed py-12 text-center text-sm">
+        <div className="text-muted-foreground border-border rounded-xl border-[1.5px] border-dashed py-12 text-center text-sm">
           No patterns found for &ldquo;{search}&rdquo;
         </div>
       ) : (
@@ -102,7 +102,7 @@ export function PatternLibrary({ onUsePatternAction }: PatternLibraryProps) {
                   </div>
 
                   <div
-                    className="bg-muted/40 border-border cursor-pointer overflow-x-auto rounded-lg border px-3 py-2"
+                    className="bg-muted/40 border-border cursor-pointer overflow-x-auto rounded-lg border-[1.5px] px-3 py-2"
                     onClick={() => navigator.clipboard.writeText(entry.pattern)}
                     title="Click to copy"
                   >

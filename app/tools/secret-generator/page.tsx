@@ -282,7 +282,7 @@ export default function SecretGeneratorPage() {
               key={p.id}
               onClick={() => applyPreset(p)}
               className={cn(
-                "group flex flex-col gap-1 rounded-lg border px-3 py-2.5 text-left transition-all",
+                "group flex flex-col gap-1 rounded-lg border-[1.5px] px-3 py-2.5 text-left transition-all",
                 selectedPreset === p.id
                   ? "border-primary bg-primary/5 ring-primary/30 ring-1"
                   : "hover:border-border/80 hover:bg-muted/50",

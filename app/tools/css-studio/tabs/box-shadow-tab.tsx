@@ -125,7 +125,7 @@ export function BoxShadowTab() {
       </div>
 
       <div className="flex flex-col space-y-6">
-        <div className="bg-card rounded-lg border p-8">
+        <div className="bg-card rounded-lg border-[1.5px] p-8">
           <div className="flex h-64 items-center justify-center rounded-lg bg-linear-to-br from-slate-100 to-slate-50">
             <div
               style={{

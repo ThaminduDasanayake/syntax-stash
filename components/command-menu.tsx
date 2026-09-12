@@ -130,7 +130,7 @@ export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
                 >
                   {/* Structural Level Indentation Logic */}
                   {"isSubItem" in tool && tool.isSubItem ? (
-                    <div className="border-muted-foreground/40 bg-background text-muted-foreground ml-4 flex h-8 w-8 shrink-0 items-center justify-center border border-dashed font-mono text-xs">
+                    <div className="border-muted-foreground/40 bg-background text-muted-foreground ml-4 flex h-8 w-8 shrink-0 items-center justify-center border-[1.5px] border-dashed font-mono text-xs">
                       &gt;
                     </div>
                   ) : (
@@ -169,14 +169,14 @@ export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
                 >
                   {/* Structural Level Indentation Logic */}
                   {"isSubItem" in tool && tool.isSubItem ? (
-                    <div className="border-muted-foreground/40 bg-background text-muted-foreground ml-4 flex h-8 w-8 shrink-0 items-center justify-center border border-dashed font-mono text-xs">
+                    <div className="border-muted-foreground/40 bg-background text-muted-foreground ml-4 flex h-8 w-8 shrink-0 items-center justify-center border-[1.5px] border-dashed font-mono text-xs">
                       &gt;
                     </div>
                   ) : (
                     <CardIcon
                       alt={tool.title}
                       favicon={tool.favicon}
-                      className="border-border bg-background flex h-10 w-10 shrink-0 items-center justify-center border-2! p-0.5!"
+                      className="border-border bg-background flex h-10 w-10 shrink-0 items-center justify-center p-0.5!"
                     />
                   )}
                   <div className="ml-1 flex min-w-0 flex-1 flex-col">

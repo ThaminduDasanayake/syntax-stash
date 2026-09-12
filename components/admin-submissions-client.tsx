@@ -244,7 +244,7 @@ export function AdminSubmissionsClient({
       {isLoading ? (
         <AdminSubmissionsCardsSkeleton count={3} />
       ) : filteredSubmissions.length === 0 ? (
-        <div className="border-line/70 bg-surface/30 rounded border p-12 text-center font-mono">
+        <div className="border-line/70 bg-surface/30 rounded border-[1.5px] p-12 text-center font-mono">
           <p className="text-muted-foreground text-sm font-semibold">
             No {activeTab === "all" ? "" : activeTab} submissions found.
           </p>

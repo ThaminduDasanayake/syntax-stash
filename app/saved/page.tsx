@@ -71,7 +71,7 @@ export default function SavedPage() {
             </div>
 
             {/* Tab Navigation */}
-            <div className="border-line bg-surface/60 inline-flex items-center rounded-lg border p-1 font-mono text-xs">
+            <div className="border-line bg-surface/60 inline-flex items-center rounded-lg border-[1.5px] p-1 font-mono text-xs">
               <button
                 type="button"
                 onClick={() => setActiveTab("bookmarks")}

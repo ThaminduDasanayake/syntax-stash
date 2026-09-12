@@ -113,7 +113,7 @@ export default function CodeStashUi({ initialSnippets }: { initialSnippets: Snip
                           key={lang}
                           variant="outline"
                           className={cn(
-                            "shrink-0 border px-1.5 py-0 font-mono text-[9px] tracking-wider",
+                            "shrink-0 border-[1.5px] px-1.5 py-0 font-mono text-[9px] tracking-wider",
                             LANG_COLORS[lang.toLowerCase()] ??
                               "bg-muted text-muted-foreground border-border",
                           )}

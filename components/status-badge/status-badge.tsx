@@ -48,7 +48,7 @@ const STATUS_DOT: Record<AppStatus, string> = {
 export const StatusBadge = ({ className, label, status, ...props }: StatusBadgeProps) => (
   <span
     className={cn(
-      "border-border/60 bg-card text-muted-foreground inline-flex items-center gap-1.5 rounded-sm border px-2 py-0.5 font-mono text-xs",
+      "border-border/60 bg-card text-muted-foreground inline-flex items-center gap-1.5 rounded-sm border-[1.5px] px-2 py-0.5 font-mono text-xs",
       className,
     )}
     data-slot="status-badge"
@@ -64,7 +64,7 @@ export const StatusBadge = ({ className, label, status, ...props }: StatusBadgeP
 export const PlanBadge = ({ className, label, plan, ...props }: PlanBadgeProps) => (
   <span
     className={cn(
-      "border-border/60 inline-flex items-center rounded-sm border px-2 py-0.5 font-mono text-xs",
+      "border-border/60 inline-flex items-center rounded-sm border-[1.5px] px-2 py-0.5 font-mono text-xs",
       plan === "paid" ? "border-primary/40 text-primary" : "bg-card text-muted-foreground",
       className,
     )}

@@ -101,7 +101,7 @@ export function EditableCandidateInput({
                           setOpen(false);
                         }}
                         className={cn(
-                          "hover:border-primary flex w-full items-center gap-2.5 rounded border p-2 text-left transition-colors hover:cursor-pointer",
+                          "hover:border-primary flex w-full items-center gap-2.5 rounded border-[1.5px] p-2 text-left transition-colors hover:cursor-pointer",
                           isSelected && "bg-primary",
                         )}
                       >

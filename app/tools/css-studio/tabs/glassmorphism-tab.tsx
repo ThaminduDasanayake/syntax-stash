@@ -58,7 +58,7 @@ export function GlassmorphismTab() {
   border: 1px solid rgba(255, 255, 255, ${(borderOpacity / 100).toFixed(2)});
 }`;
 
-  const tailwindClasses = `${getBlurClass(blur)} ${getOpacityClass(opacity)} border ${getBorderOpacityClass(borderOpacity)}`;
+  const tailwindClasses = `${getBlurClass(blur)} ${getOpacityClass(opacity)} border-[1.5px] ${getBorderOpacityClass(borderOpacity)}`;
 
   const glassStyle = {
     backdropFilter: `blur(${blur}px)`,
@@ -102,7 +102,7 @@ export function GlassmorphismTab() {
               onValueChange={(vals) => setBorderOpacity(vals[0])}
               min={1}
               max={100}
-              leftLabel="Controls the border transparency"
+              leftLabel="Controls the border-[1.5px] transparency"
             />
           </div>
         </div>
@@ -146,7 +146,7 @@ export function GlassmorphismTab() {
             <p className="text-foreground text-xs font-medium">CSS</p>
             <CopyButton labelName="Copy CSS" textToCopy={cssCode} />
           </div>
-          <div className="bg-background border-border overflow-x-auto border p-4">
+          <div className="bg-background border-border overflow-x-auto border-[1.5px] p-4">
             <pre className="text-primary font-mono text-xs wrap-break-word whitespace-pre-wrap">
               {cssCode}
             </pre>
@@ -158,7 +158,7 @@ export function GlassmorphismTab() {
             <p className="text-foreground text-xs font-medium">Tailwind Classes</p>
             <CopyButton labelName="Copy Tailwind CSS" textToCopy={tailwindClasses} />
           </div>
-          <div className="bg-background border-border space-y-3 border p-4">
+          <div className="bg-background border-border space-y-3 border-[1.5px] p-4">
             <pre className="text-primary font-mono text-xs wrap-break-word whitespace-pre-wrap">
               {tailwindClasses}
             </pre>
@@ -174,7 +174,7 @@ export function GlassmorphismTab() {
         </div>
       </div>
 
-      <div className="bg-muted/30 border-border mt-8 space-y-3 border p-4">
+      <div className="bg-muted/30 border-border mt-8 space-y-3 border-[1.5px] p-4">
         <h4 className="text-foreground text-sm font-semibold">Glassmorphism Tips</h4>
         <div className="text-muted-foreground grid grid-cols-1 gap-4 text-xs md:grid-cols-2">
           <div className="space-y-2">

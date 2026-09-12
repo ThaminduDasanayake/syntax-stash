@@ -98,11 +98,11 @@ export default function ChangelogPage() {
                       {/* Card Header */}
                       <div className="flex flex-wrap items-center justify-between gap-4 border-b-2 border-current/15 pb-4">
                         <div className="flex flex-wrap items-center gap-3">
-                          <span className="bg-primary text-primary-foreground border-border border px-3.5 py-1 font-mono text-sm font-bold tracking-wider uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                          <span className="bg-primary text-primary-foreground border-border border-[1.5px] px-3.5 py-1 font-mono text-sm font-bold tracking-wider uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                             {entry.version}
                           </span>
                           {isLatest && (
-                            <span className="border-border bg-muted text-foreground border px-2.5 py-1 font-mono text-xs font-extrabold tracking-widest uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                            <span className="border-border bg-muted text-foreground border-[1.5px] px-2.5 py-1 font-mono text-xs font-extrabold tracking-widest uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                               ★ LATEST RELEASE
                             </span>
                           )}
@@ -115,7 +115,7 @@ export default function ChangelogPage() {
                         {entry.sections.map((section) => (
                           <div key={section.title} className="flex flex-col gap-3">
                             <div className="flex items-center gap-2">
-                              <span className="border-border bg-muted/60 text-foreground border px-2.5 py-0.5 font-mono text-[11px] font-bold tracking-wider uppercase">
+                              <span className="border-border bg-muted/60 text-foreground border-[1.5px] px-2.5 py-0.5 font-mono text-[11px] font-bold tracking-wider uppercase">
                                 {section.title}
                               </span>
                             </div>

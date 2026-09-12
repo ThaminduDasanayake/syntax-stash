@@ -280,7 +280,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
             <span className="bg-ink text-paper px-3 py-1 font-mono text-xs font-bold tracking-widest uppercase">
               Design Specification v2.0
             </span>
-            <span className="border-ink bg-paper text-ink border px-3 py-1 font-mono text-xs font-bold tracking-widest uppercase">
+            <span className="border-ink bg-paper text-ink border-[1.5px] px-3 py-1 font-mono text-xs font-bold tracking-widest uppercase">
               8-Color Neo-Brutalist System
             </span>
           </div>
@@ -305,7 +305,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
               <a
                 key={nav.href}
                 href={nav.href}
-                className="border-ink bg-bg hover:bg-ink hover:text-paper border px-3 py-1.5 font-mono text-xs font-bold uppercase transition-colors duration-150"
+                className="border-ink bg-bg hover:bg-ink hover:text-paper border-[1.5px] px-3 py-1.5 font-mono text-xs font-bold uppercase transition-colors duration-150"
               >
                 {nav.label}
               </a>
@@ -403,19 +403,19 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
                   JetBrains Mono Metas (`text-mono-*`)
                 </div>
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-                  <div className="border-line bg-bg border p-3">
+                  <div className="border-line bg-bg border-[1.5px] p-3">
                     <span className="text-mono-2xs block">text-mono-2xs (10px)</span>
                     <span className="text-ink-mute text-xs">Category & Tag Badges</span>
                   </div>
-                  <div className="border-line bg-bg border p-3">
+                  <div className="border-line bg-bg border-[1.5px] p-3">
                     <span className="text-mono-xs block">text-mono-xs (12px)</span>
                     <span className="text-ink-mute text-xs">Filter Counts & Stats</span>
                   </div>
-                  <div className="border-line bg-bg border p-3">
+                  <div className="border-line bg-bg border-[1.5px] p-3">
                     <span className="text-mono-sm block">text-mono-sm (14px)</span>
                     <span className="text-ink-mute text-xs">Buttons & Nav Items</span>
                   </div>
-                  <div className="border-line bg-bg border p-3">
+                  <div className="border-line bg-bg border-[1.5px] p-3">
                     <span className="text-mono-base block">text-mono-base (16px)</span>
                     <span className="text-ink-mute text-xs">Code Snippets & Keys</span>
                   </div>
@@ -486,7 +486,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
                 >
                   <span
                     className={cn(
-                      "size-2.5 rounded-full border border-current",
+                      "size-2.5 rounded-full border-[1.5px] border-current",
                       isActive ? "bg-current" : "bg-transparent",
                     )}
                   />
@@ -617,7 +617,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
               </div>
               <span className="text-ink-mute font-mono text-xs">
                 Class:{" "}
-                <code className="bg-bg border-line border px-1.5 py-0.5">
+                <code className="bg-bg border-line border-[1.5px] px-1.5 py-0.5">
                   {THEME_CONFIG[selectedTheme].bg}
                 </code>
               </span>
@@ -664,7 +664,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
                   <span className="text-mono-2xs text-ink-mute mb-2 block">
                     03. Category Section Divider
                   </span>
-                  <div className="border-ink bg-bg border p-3">
+                  <div className="border-ink bg-bg border-[1.5px] p-3">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <span
@@ -689,7 +689,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
                   <div className="flex flex-wrap gap-2">
                     <span
                       className={cn(
-                        "border-ink border px-2.5 py-1 font-mono text-xs font-bold",
+                        "border-ink border-[1.5px] px-2.5 py-1 font-mono text-xs font-bold",
                         THEME_CONFIG[selectedTheme].bg,
                       )}
                     >
@@ -697,7 +697,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
                     </span>
                     <span
                       className={cn(
-                        "border-ink border px-2.5 py-1 font-mono text-xs font-bold",
+                        "border-ink border-[1.5px] px-2.5 py-1 font-mono text-xs font-bold",
                         THEME_CONFIG[selectedTheme].soft,
                       )}
                     >
@@ -779,7 +779,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
                   representation.
                 </p>
               </div>
-              <div className="bg-bg border-ink border px-3 py-1.5 font-mono text-xs">
+              <div className="bg-bg border-ink border-[1.5px] px-3 py-1.5 font-mono text-xs">
                 Active Category: <strong className="text-ink">{simulatedCategory}</strong> → Theme:{" "}
                 <strong className="uppercase">{simulatedTheme}</strong>
               </div>
@@ -869,7 +869,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
                     No manual database migration is required to maintain harmonious color
                     distribution across all pages.
                   </p>
-                  <div className="bg-paper border-line border p-2 text-[11px]">
+                  <div className="bg-paper border-line border-[1.5px] p-2 text-[11px]">
                     <code>const theme = getCategoryTheme(&quot;{simulatedCategory}&quot;);</code>
                     <br />
                     <code>{`// Returns: "${simulatedTheme}"`}</code>
@@ -1014,7 +1014,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
                             Syntax Stash.
                           </DialogDescription>
                         </DialogHeader>
-                        <div className="border-ink bg-bg my-2 border p-4 font-mono text-xs">
+                        <div className="border-ink bg-bg my-2 border-[1.5px] p-4 font-mono text-xs">
                           <code>
                             All modals support full keyboard accessibility (Esc, Tab focus
                             trapping).
@@ -1043,7 +1043,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
                     </Tooltip>
                   </div>
 
-                  <div className="border-line bg-bg text-ink-mute border p-3 font-mono text-xs">
+                  <div className="border-line bg-bg text-ink-mute border-[1.5px] p-3 font-mono text-xs">
                     Tooltips automatically invert contrast to provide maximum legibility across
                     different background colors.
                   </div>

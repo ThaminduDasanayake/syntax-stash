@@ -101,7 +101,7 @@ export function BuildTab({ onSendToExplore }: BuildTabProps) {
 
       {/* Custom builder */}
       {isCustom && (
-        <div className="space-y-5 border p-6">
+        <div className="space-y-5 border-[1.5px] p-6">
           <h3 className="text-base font-semibold">Custom Expression Builder</h3>
           <FieldEditor
             label="Minute (0–59)"

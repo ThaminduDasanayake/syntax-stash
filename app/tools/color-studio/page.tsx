@@ -79,7 +79,7 @@ export default function ColorStudioPage() {
                     <div
                       key={i}
                       className={cn(
-                        "border-border/30 flex min-h-24 flex-col justify-between rounded-none border p-3 font-mono transition-all duration-100",
+                        "border-border/30 flex min-h-24 flex-col justify-between rounded-none border-[1.5px] p-3 font-mono transition-all duration-100",
                         color.textColor === "black" ? "text-black" : "text-white",
                         color.colSpan,
                       )}

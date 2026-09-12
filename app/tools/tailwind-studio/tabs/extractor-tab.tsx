@@ -124,7 +124,7 @@ export function ExtractorTab() {
             </p>
           </div>
         ) : (
-          <div className="border-border bg-accent overflow-y-auto rounded-xl border p-3">
+          <div className="border-border bg-accent overflow-y-auto rounded-xl border-[1.5px] p-3">
             <div className="space-y-2">
               {entries.map((entry) => (
                 <ClassMapRow key={entry.id} entry={entry} onRename={renameEntry} />

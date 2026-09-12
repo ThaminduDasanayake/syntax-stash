@@ -68,7 +68,7 @@ export function AuthorSocialFields({
           </Label>
 
           {hasSuggestion && suggestedAuthor && (
-            <div className="animate-in fade-in inline-flex items-center gap-1.5 rounded border border-blue-500/40 bg-blue-500/10 px-2 py-0.5 font-mono text-[11px] font-bold text-blue-500 duration-200">
+            <div className="animate-in fade-in inline-flex items-center gap-1.5 rounded border-[1.5px] border-blue-500/40 bg-blue-500/10 px-2 py-0.5 font-mono text-[11px] font-bold text-blue-500 duration-200">
               <InfoIcon weight="duotone" className="size-4 shrink-0 text-blue-500" />
               <span>
                 Found:{" "}

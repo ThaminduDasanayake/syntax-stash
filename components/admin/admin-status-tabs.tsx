@@ -23,7 +23,7 @@ export function AdminStatusTabs({
 }: AdminStatusTabsProps) {
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-      <div className="flex flex-wrap items-center gap-2 border-b pb-3 font-mono sm:border-b-0 sm:pb-0">
+      <div className="flex flex-wrap items-center gap-2 border-b-[1.5px] pb-3 font-mono sm:border-b-0 sm:pb-0">
         {TABS.map((tab) => {
           const conf = TAB_CONFIG[tab];
           const isActive = activeTab === tab;

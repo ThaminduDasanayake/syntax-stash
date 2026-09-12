@@ -243,7 +243,7 @@ export default function WebExtractorPage() {
           <div className="mx-auto w-full max-w-2xl shrink-0 space-y-3">
             <ErrorAlert message={error} />
             {activeTab === "url" && (
-              <div className="flex flex-col gap-2 border border-amber-500/20 bg-amber-500/10 p-3.5 text-xs text-amber-600 sm:flex-row sm:items-center sm:justify-between dark:text-amber-400">
+              <div className="flex flex-col gap-2 border-[1.5px] border-amber-500/20 bg-amber-500/10 p-3.5 text-xs text-amber-600 sm:flex-row sm:items-center sm:justify-between dark:text-amber-400">
                 <div>
                   <p className="font-semibold">API credits run out or request failed?</p>
                   <p className="text-muted-foreground mt-0.5">
@@ -280,7 +280,7 @@ export default function WebExtractorPage() {
         )}
 
         {loading && (
-          <div className="border-border bg-card mx-auto flex w-full max-w-2xl flex-col items-center justify-center border border-dashed py-16 text-center">
+          <div className="border-border bg-card mx-auto flex w-full max-w-2xl flex-col items-center justify-center border-[1.5px] border-dashed py-16 text-center">
             <SpinnerGapIcon size={32} className="text-primary mb-4 animate-spin" />
             <p className="text-sm font-semibold">Fetching Head Tag HTML...</p>
             <p className="text-muted-foreground mt-1 max-w-[80%] truncate font-mono text-xs">
@@ -293,7 +293,7 @@ export default function WebExtractorPage() {
         {metadata && headHtml && (
           <div className="flex flex-col gap-6">
             {/* Page Link Banner */}
-            <div className="border-border bg-card flex items-center gap-3 border px-4 py-3">
+            <div className="border-border bg-card flex items-center gap-3 border-[1.5px] px-4 py-3">
               <GlobeIcon size={20} className="text-primary shrink-0" />
               {metadata.url.startsWith("http://") || metadata.url.startsWith("https://") ? (
                 <a

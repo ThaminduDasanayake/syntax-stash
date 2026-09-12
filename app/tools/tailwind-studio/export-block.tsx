@@ -2,8 +2,8 @@ import { CopyButton } from "@/components/ui/copy-button";
 
 const ExportBlock = ({ title, code }: { title: string; code: string }) => {
   return (
-    <div className="border-border bg-card overflow-hidden rounded-xl border shadow-sm">
-      <div className="border-border bg-muted/30 flex items-center justify-between border-b px-4 py-2">
+    <div className="border-border bg-card overflow-hidden rounded-xl border-[1.5px] shadow-sm">
+      <div className="border-border bg-muted/30 flex items-center justify-between border-b-[1.5px] px-4 py-2">
         <h4 className="text-foreground font-mono text-sm font-semibold">{title}</h4>
         <CopyButton variant="ghost" textToCopy={code} />
       </div>

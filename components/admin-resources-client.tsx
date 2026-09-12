@@ -470,7 +470,7 @@ function AdminResourcesClientContent({
   return (
     <div>
       {/* Control Bar: Search, View Switcher, Category Filter, Sort, Add Resource */}
-      <div className="border-line bg-surface/50 mb-6 space-y-4 rounded-lg border p-4 font-mono text-xs">
+      <div className="border-line bg-surface/50 mb-6 space-y-4 rounded-lg border-[1.5px] p-4 font-mono text-xs">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           {/* Search Bar */}
           <div className="flex-1">
@@ -486,7 +486,7 @@ function AdminResourcesClientContent({
           {/* Action Buttons & View Switcher */}
           <div className="flex flex-wrap items-center gap-2">
             {/* View Mode Toggle Switcher */}
-            <div className="border-line bg-surface/80 flex items-center rounded-md border p-0.5">
+            <div className="border-line bg-surface/80 flex items-center rounded-md border-[1.5px] p-0.5">
               <button
                 type="button"
                 onClick={() => handleViewModeChange("cards")}
@@ -549,7 +549,7 @@ function AdminResourcesClientContent({
           <div className="flex flex-wrap items-center gap-5">
             {/* Category Select */}
             <div className="flex items-center gap-1.5">
-              <FunnelIcon weight="duotone" className="text-primary size-7" />
+              <FunnelIcon weight="duotone" className="text-accent size-7" />
               <span className="text-muted-foreground text-[11px] font-bold uppercase">
                 Category:
               </span>
@@ -558,7 +558,7 @@ function AdminResourcesClientContent({
                 onValueChange={handleCategoryChange}
                 options={categoryFilterOptions}
                 triggerClassName="h-8 font-mono text-xs min-w-[180px]"
-                variant="primary"
+                variant="accent"
               />
             </div>
 
@@ -714,7 +714,7 @@ function AdminResourcesClientContent({
                                   .map((tag) => (
                                     <span
                                       key={tag.trim()}
-                                      className="border-line bg-surface/70 text-muted-foreground py-0.2 rounded border px-1.5 text-[9px]"
+                                      className="border-line bg-surface/70 text-muted-foreground py-0.2 rounded border-[1.5px] px-1.5 text-[9px]"
                                     >
                                       #{tag.trim()}
                                     </span>
@@ -830,7 +830,7 @@ function AdminResourcesClientContent({
                         key={pageNum}
                         type="button"
                         onClick={() => handlePageChange(pageNum)}
-                        className={`size-8 rounded border text-xs font-bold transition-colors ${
+                        className={`size-8 rounded border-[1.5px] text-xs font-bold transition-colors ${
                           currentPage === pageNum
                             ? "bg-primary text-primary-foreground border-primary"
                             : "border-line bg-surface/50 text-muted-foreground hover:bg-surface hover:text-foreground"
@@ -858,7 +858,7 @@ function AdminResourcesClientContent({
         </div>
       ) : (
         /* Empty State */
-        <div className="border-line bg-surface/20 flex flex-col items-center justify-center rounded-lg border border-dashed p-12 text-center font-mono">
+        <div className="border-line bg-surface/20 flex flex-col items-center justify-center rounded-lg border-[1.5px] border-dashed p-12 text-center font-mono">
           <MagnifyingGlassIcon className="text-muted-foreground/60 size-10" />
           <h3 className="text-foreground mt-3 text-sm font-bold uppercase">
             No Live Resources Found

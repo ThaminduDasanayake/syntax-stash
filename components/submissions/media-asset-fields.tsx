@@ -67,8 +67,8 @@ function OgImagePreviewBanner({ ogImage }: { ogImage: string }) {
       : cleanOg;
 
   return (
-    <div className="border-line bg-paper/60 mt-2.5 overflow-hidden rounded border p-3">
-      <div className="border-line relative aspect-[1.91/1] w-full overflow-hidden rounded border bg-black/5 dark:bg-black/30">
+    <div className="border-line bg-paper/60 mt-2.5 overflow-hidden rounded border-[1.5px] p-3">
+      <div className="border-line relative aspect-[1.91/1] w-full overflow-hidden rounded border-[1.5px] bg-black/5 dark:bg-black/30">
         {!state.error && isValidUrl && cleanOg ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -187,7 +187,7 @@ export function MediaAssetFields({
               <span className="text-muted-foreground font-mono text-[10px]">
                 Icon Contrast / Background:
               </span>
-              <div className="border-line bg-surface/60 inline-flex rounded border p-0.5 font-mono text-[11px]">
+              <div className="border-line bg-surface/60 inline-flex rounded border-[1.5px] p-0.5 font-mono text-[11px]">
                 <button
                   type="button"
                   onClick={() => onIconBgChange("dark")}
@@ -261,7 +261,7 @@ export function MediaAssetFields({
                   ? `/api/proxy-image?url=${encodeURIComponent(option.url)}`
                   : option.url;
                 return (
-                  <div className="border-line relative h-6 w-10 shrink-0 overflow-hidden rounded border bg-black/10">
+                  <div className="border-line relative h-6 w-10 shrink-0 overflow-hidden rounded border-[1.5px] bg-black/10">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={optSrc}
