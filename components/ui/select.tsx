@@ -32,15 +32,19 @@ function SelectTrigger({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Trigger> & {
   size?: "sm" | "default";
-  variant?: "accent" | "default" | "primary" | "secondary";
+  variant?: "accent" | "default" | "destructive" | "primary" | "rose" | "secondary";
 }) {
   const triggerVariantStyles = variant
     ? {
         accent:
           "hover:border-accent/50 focus-visible:border-accent focus-visible:ring-accent/30 dark:hover:bg-accent/10",
         default: "",
+        destructive:
+          "hover:border-destructive/50 focus-visible:border-destructive focus-visible:ring-destructive/30 dark:hover:bg-destructive/10",
         primary:
           "hover:border-primary/50 focus-visible:border-primary focus-visible:ring-primary/30 dark:hover:bg-primary/10",
+        rose:
+          "hover:border-rose-500/50 focus-visible:border-rose-500 focus-visible:ring-rose-500/30 dark:hover:bg-rose-500/10",
         secondary:
           "hover:border-secondary/50 focus-visible:border-secondary focus-visible:ring-secondary/30 dark:hover:bg-secondary/10",
       }[variant]
@@ -119,15 +123,19 @@ function SelectItem({
   variant = "default",
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Item> & {
-  variant?: "accent" | "default" | "primary" | "secondary";
+  variant?: "accent" | "default" | "destructive" | "primary" | "rose" | "secondary";
 }) {
   const variantStyles = {
     accent:
       "focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground",
     default:
       "focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground",
+    destructive:
+      "focus:bg-destructive focus:text-destructive-foreground not-data-[variant=destructive]:focus:**:text-destructive-foreground",
     primary:
       "focus:bg-primary focus:text-primary-foreground not-data-[variant=destructive]:focus:**:text-primary-foreground",
+    rose:
+      "focus:bg-rose-500 focus:text-white not-data-[variant=destructive]:focus:**:text-white",
     secondary:
       "focus:bg-secondary focus:text-secondary-foreground not-data-[variant=destructive]:focus:**:text-secondary-foreground",
   }[variant];

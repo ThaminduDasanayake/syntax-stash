@@ -27,7 +27,7 @@ export interface SelectFieldProps {
   placeholder?: string;
   triggerClassName?: string;
   value: string;
-  variant?: "accent" | "default" | "primary" | "secondary";
+  variant?: "accent" | "default" | "destructive" | "primary" | "rose" | "secondary";
 }
 
 export function SelectField({

@@ -574,7 +574,7 @@ function AdminResourcesClientContent({
                   onValueChange={handleHealthFilterChange}
                   options={missingFilterOptions}
                   triggerClassName="h-8 font-mono text-xs min-w-[190px]"
-                  variant="accent"
+                  variant="rose"
                 />
               </div>
             )}
