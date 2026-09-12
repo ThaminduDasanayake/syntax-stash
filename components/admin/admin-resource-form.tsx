@@ -204,6 +204,8 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
               prev.subtitle.trim().toLowerCase() !== data.subtitle.trim().toLowerCase()
             ) {
               newDetected.subtitle = data.subtitle.trim();
+            } else if (!data.subtitle && prev.subtitle && prev.subtitle.trim()) {
+              newDetected.subtitle = "";
             }
 
             if (
@@ -251,6 +253,8 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
             prev.subtitle.trim().toLowerCase() !== data.subtitle.trim().toLowerCase()
           ) {
             newDetected.subtitle = data.subtitle.trim();
+          } else if (!data.subtitle && prev.subtitle && prev.subtitle.trim()) {
+            newDetected.subtitle = "";
           }
 
           const nextDescription = prev.description || data.description || "";

@@ -248,7 +248,7 @@ export function ResourceCardView({
                     loading="lazy"
                     referrerPolicy="no-referrer"
                     className={cn(
-                      "h-full w-full rounded-[25%] object-contain",
+                      "h-full w-full object-contain",
                       isInverted && "brightness-125 invert",
                     )}
                     onError={handleFaviconError}

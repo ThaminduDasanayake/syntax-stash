@@ -235,6 +235,8 @@ export function AdminSubmissionEditForm({
             prev.subtitle.trim().toLowerCase() !== data.subtitle.trim().toLowerCase()
           ) {
             newDetected.subtitle = data.subtitle.trim();
+          } else if (!data.subtitle && prev.subtitle && prev.subtitle.trim()) {
+            newDetected.subtitle = "";
           }
 
           if (

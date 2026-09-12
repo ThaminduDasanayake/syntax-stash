@@ -170,7 +170,10 @@ export function SubmitForm() {
         } else {
           setSubtitle(data.subtitle);
         }
+      } else if (subtitle && subtitle.trim()) {
+        newDetected.subtitle = "";
       }
+
       if (data.description) {
         if (
           description &&

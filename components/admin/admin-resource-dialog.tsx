@@ -255,6 +255,8 @@ export function AdminResourceDialog({
               prev.subtitle.trim().toLowerCase() !== data.subtitle.trim().toLowerCase()
             ) {
               newDetected.subtitle = data.subtitle.trim();
+            } else if (!data.subtitle && prev.subtitle && prev.subtitle.trim()) {
+              newDetected.subtitle = "";
             }
 
             if (
@@ -302,6 +304,8 @@ export function AdminResourceDialog({
             prev.subtitle.trim().toLowerCase() !== data.subtitle.trim().toLowerCase()
           ) {
             newDetected.subtitle = data.subtitle.trim();
+          } else if (!data.subtitle && prev.subtitle && prev.subtitle.trim()) {
+            newDetected.subtitle = "";
           }
 
           const nextDescription = prev.description || data.description || "";
