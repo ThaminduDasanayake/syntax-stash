@@ -10,6 +10,8 @@ import {
   AuthorSocialValues,
   CandidateOption,
   DetectedFieldSuggestion,
+  DuplicateUrlItem,
+  DuplicateUrlNotice,
   FieldCheckmark,
   MediaAssetFields,
   ResourceCardPreview,
@@ -56,6 +58,10 @@ export function SubmitForm() {
   const [tags, setTags] = useState("");
   const [notes, setNotes] = useState("");
   const [honeypot, setHoneypot] = useState(""); // anti-spam trap
+  const [duplicateNotice, setDuplicateNotice] = useState<{
+    item: DuplicateUrlItem;
+    type: "resource" | "submission";
+  } | null>(null);
 
   // Request State
   const [isDetecting, setIsDetecting] = useState(false);
@@ -84,6 +90,7 @@ export function SubmitForm() {
     setTags("");
     setNotes("");
     setHoneypot("");
+    setDuplicateNotice(null);
   };
 
   const handleAuthorFieldChange = (field: keyof AuthorSocialValues, value: string) => {
@@ -210,7 +217,25 @@ export function SubmitForm() {
         setCategory((prev) => prev || data.category);
       }
       setDetectedUpdates(newDetected);
-      toast.success("Metadata auto-filled from website!");
+
+      if (data.existingResource) {
+        setDuplicateNotice({
+          item: data.existingResource,
+          type: "resource",
+        });
+        toast.warning(`"${data.existingResource.title}" is already listed in Syntax Stash!`);
+      } else if (data.existingSubmission) {
+        setDuplicateNotice({
+          item: data.existingSubmission,
+          type: "submission",
+        });
+        toast.info(
+          `"${data.existingSubmission.title}" was already submitted (Status: ${data.existingSubmission.status}).`,
+        );
+      } else {
+        setDuplicateNotice(null);
+        toast.success("Metadata auto-filled from website!");
+      }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Could not fetch metadata from URL.";
       toast.error(message);
@@ -350,6 +375,14 @@ export function SubmitForm() {
                 {isDetecting ? "Fetching..." : "Auto-Fill"}
               </Button>
             </div>
+
+            {duplicateNotice && (
+              <DuplicateUrlNotice
+                item={duplicateNotice.item}
+                type={duplicateNotice.type}
+                onDismiss={() => setDuplicateNotice(null)}
+              />
+            )}
           </div>
 
           {/* Section 2: Title, Subtitle, & Category */}

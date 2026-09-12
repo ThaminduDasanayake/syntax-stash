@@ -8,6 +8,7 @@ import {
   XIcon,
 } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 import {
   AuthorOption,
@@ -15,6 +16,8 @@ import {
   AuthorSocialValues,
   CandidateOption,
   DetectedFieldSuggestion,
+  DuplicateUrlItem,
+  DuplicateUrlNotice,
   FieldCheckmark,
   MediaAssetFields,
   ResourceCardPreview,
@@ -107,6 +110,10 @@ export function AdminResourceDialog({
     subtitle?: string;
     title?: string;
   }>({});
+  const [duplicateNotice, setDuplicateNotice] = useState<{
+    item: DuplicateUrlItem;
+    type: "resource" | "submission";
+  } | null>(null);
 
   // Author Creation Modal State
   const [isCreateAuthorOpen, setIsCreateAuthorOpen] = useState(false);
@@ -117,6 +124,7 @@ export function AdminResourceDialog({
   const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
 
   useEffect(() => {
+    setDuplicateNotice(null);
     if (resource) {
       setFormData({
         id: resource.id,
@@ -340,6 +348,27 @@ export function AdminResourceDialog({
         });
 
         setDetectedUpdates(newDetected);
+
+        if (data.existingResource && (!resource || data.existingResource.id !== formData.id)) {
+          setDuplicateNotice({
+            item: data.existingResource,
+            type: "resource",
+          });
+          toast.warning(
+            `A resource with this URL already exists: "${data.existingResource.title}" (${data.existingResource.category})`,
+          );
+        } else if (data.existingSubmission) {
+          setDuplicateNotice({
+            item: data.existingSubmission,
+            type: "submission",
+          });
+          toast.info(
+            `This URL has a pending submission: "${data.existingSubmission.title}"`,
+          );
+        } else {
+          setDuplicateNotice(null);
+          toast.success("Metadata detected successfully!");
+        }
       }
     } catch (err) {
       console.error("Metadata auto-detection failed:", err);
@@ -456,6 +485,15 @@ export function AdminResourceDialog({
                     className="font-mono text-xs"
                   />
                 </div>
+
+                {duplicateNotice && (
+                  <DuplicateUrlNotice
+                    adminLink
+                    item={duplicateNotice.item}
+                    type={duplicateNotice.type}
+                    onDismiss={() => setDuplicateNotice(null)}
+                  />
+                )}
               </div>
 
               {/* Title & Subtitle */}

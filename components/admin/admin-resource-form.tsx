@@ -19,6 +19,8 @@ import {
   AuthorSocialValues,
   CandidateOption,
   DetectedFieldSuggestion,
+  DuplicateUrlItem,
+  DuplicateUrlNotice,
   FieldCheckmark,
   MediaAssetFields,
   ResourceCardPreview,
@@ -104,6 +106,10 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
     subtitle?: string;
     title?: string;
   }>({});
+  const [duplicateNotice, setDuplicateNotice] = useState<{
+    item: DuplicateUrlItem;
+    type: "resource" | "submission";
+  } | null>(null);
 
   // Author Creation Modal State
   const [isCreateAuthorOpen, setIsCreateAuthorOpen] = useState(false);
@@ -289,7 +295,27 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
         });
 
         setDetectedUpdates(newDetected);
-        toast.success("Metadata detected successfully!");
+
+        if (data.existingResource && (!isEdit || data.existingResource.id !== formData.id)) {
+          setDuplicateNotice({
+            item: data.existingResource,
+            type: "resource",
+          });
+          toast.warning(
+            `A resource with this URL already exists: "${data.existingResource.title}" (${data.existingResource.category})`,
+          );
+        } else if (data.existingSubmission) {
+          setDuplicateNotice({
+            item: data.existingSubmission,
+            type: "submission",
+          });
+          toast.info(
+            `This URL has a pending submission: "${data.existingSubmission.title}"`,
+          );
+        } else {
+          setDuplicateNotice(null);
+          toast.success("Metadata detected successfully!");
+        }
       } else {
         toast.error(data.error || "Failed to auto-detect metadata.");
       }
@@ -502,6 +528,15 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
                   {isDetecting ? "Detecting..." : "Auto-Detect"}
                 </Button>
               </div>
+
+              {duplicateNotice && (
+                <DuplicateUrlNotice
+                  adminLink
+                  item={duplicateNotice.item}
+                  type={duplicateNotice.type}
+                  onDismiss={() => setDuplicateNotice(null)}
+                />
+              )}
             </div>
 
             {/* Section 2: Title, Category, & Subtitle */}
