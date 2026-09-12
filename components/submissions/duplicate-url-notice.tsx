@@ -68,15 +68,28 @@ export function DuplicateNotice({
 
   return (
     <div
-      className={`animate-in fade-in flex items-start justify-between gap-3 rounded-md border border-amber-500/40 bg-amber-500/10 p-2.5 font-mono text-xs text-amber-600 dark:text-amber-400 ${className}`}
+      className={`animate-in fade-in flex w-full min-w-0 max-w-full items-start justify-between gap-3 rounded-md border border-amber-500/40 bg-amber-500/10 p-2.5 font-mono text-xs text-amber-600 dark:text-amber-400 ${className}`}
     >
-      <div className="flex min-w-0 items-start gap-2">
+      <div className="flex min-w-0 flex-1 items-start gap-2">
         <WarningCircleIcon weight="fill" className="mt-0.5 size-4 shrink-0 text-amber-500" />
-        <div className="min-w-0 space-y-1">
+        <div className="min-w-0 flex-1 space-y-1">
           <p className="leading-snug font-semibold">{defaultTitle}</p>
           {defaultDescription && (
-            <div className="truncate text-[11px] leading-relaxed text-amber-700/90 dark:text-amber-300/90">
+            <div className="break-words text-[11px] leading-relaxed text-amber-700/90 dark:text-amber-300/90">
               {defaultDescription}
+            </div>
+          )}
+          {activeLiveUrl && (
+            <div className="pt-0.5">
+              <a
+                href={activeLiveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 hover:underline dark:text-amber-200"
+              >
+                <span>View live URL</span>
+                <ArrowSquareOutIcon className="size-3" />
+              </a>
             </div>
           )}
         </div>

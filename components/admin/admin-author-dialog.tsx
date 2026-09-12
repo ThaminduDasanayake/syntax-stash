@@ -249,7 +249,7 @@ export function AdminAuthorDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="border-line bg-paper max-h-[90vh] min-w-2xl overflow-y-auto font-mono text-xs">
+      <DialogContent className="border-line bg-paper max-h-[90vh] sm:max-w-2xl overflow-y-auto font-mono text-xs">
         <DialogHeader>
           <DialogTitle className="text-foreground text-base font-bold uppercase">
             {isEdit ? `Edit Author: ${author?.name || formData.name}` : "Create New Author"}
@@ -261,7 +261,7 @@ export function AdminAuthorDialog({
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4 pt-2 text-xs">
+        <form onSubmit={handleSubmit} className="w-full min-w-0 space-y-4 pt-2 text-xs">
           {/* Row 1: Name and Slug Side-by-Side */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="space-y-2">

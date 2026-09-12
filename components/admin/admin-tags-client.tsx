@@ -574,7 +574,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
             </DialogDescription>
           </DialogHeader>
 
-          <form onSubmit={handleSubmit} className="space-y-4 pt-2 text-xs">
+          <form onSubmit={handleSubmit} className="w-full min-w-0 space-y-4 pt-2 text-xs">
             <div>
               <InputField
                 label="Tag Name *"
