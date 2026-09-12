@@ -55,6 +55,7 @@ export function AdminResourceCard({
           description={res.description}
           category={res.category}
           favicon={res.favicon}
+          iconBg={res.iconBg}
           ogImage={res.ogImage}
           author={res.authorName}
           authorHref={res.authorName ? `/authors/${slugifyAuthor(res.authorName)}` : undefined}

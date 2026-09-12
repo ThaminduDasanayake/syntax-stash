@@ -69,7 +69,7 @@ export function CardIcon({
       <div
         className={cn(
           className,
-          "card-icon-box p-1",
+          "card-icon-box overflow-hidden rounded-[30%]",
           isWhiteTile && "border-white/80! bg-white! text-black!",
         )}
       />
@@ -86,7 +86,7 @@ export function CardIcon({
     <div
       className={cn(
         className,
-        "card-icon-box p-1",
+        "card-icon-box overflow-hidden rounded-[30%]",
         isWhiteTile && "border-white/80! bg-white! text-black!",
       )}
     >
@@ -97,7 +97,10 @@ export function CardIcon({
         alt={alt}
         loading="lazy"
         referrerPolicy="no-referrer"
-        className={cn("h-full w-full object-contain", isInverted && "brightness-125 invert")}
+        className={cn(
+          "h-full w-full rounded-[25%] object-contain",
+          isInverted && "brightness-125 invert",
+        )}
         onError={handleError}
         onLoad={handleLoad}
       />

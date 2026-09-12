@@ -38,6 +38,7 @@ interface AdminResourceRecord {
   description: string;
   favicon: string | null;
   github: string | null;
+  iconBg: string | null;
   id: string;
   ogImage: string | null;
   subtitle: string | null;
@@ -74,6 +75,7 @@ export async function GET() {
         description: resource.description,
         favicon: resource.favicon,
         github: resource.github,
+        iconBg: resource.iconBg,
         ogImage: resource.ogImage,
         subtitle: resource.subtitle,
         tagName: tag.name,
@@ -114,6 +116,7 @@ export async function GET() {
           description: r.description,
           favicon: r.favicon,
           github: r.github,
+          iconBg: r.iconBg || "dark",
           ogImage: r.ogImage,
           subtitle: r.subtitle,
           tags: r.tagName ? [r.tagName] : [],
@@ -160,6 +163,7 @@ export async function POST(req: Request) {
       description,
       favicon,
       github,
+      iconBg,
       ogImage,
       subtitle,
       tags,
@@ -230,6 +234,7 @@ export async function POST(req: Request) {
       description: description.trim(),
       favicon: favicon?.trim() || null,
       github: github?.trim() || null,
+      iconBg: iconBg || "dark",
       ogImage: ogImage?.trim() || null,
       subtitle: subtitle?.trim() || null,
       url: url.trim(),
@@ -359,6 +364,7 @@ export async function PATCH(req: Request) {
     if (updates.favicon !== undefined) updatedData.favicon = updates.favicon?.trim() || null;
     if (updates.ogImage !== undefined) updatedData.ogImage = updates.ogImage?.trim() || null;
     if (updates.github !== undefined) updatedData.github = updates.github?.trim() || null;
+    if (updates.iconBg !== undefined) updatedData.iconBg = updates.iconBg || "dark";
 
     await db.update(resource).set(updatedData).where(eq(resource.id, id));
 

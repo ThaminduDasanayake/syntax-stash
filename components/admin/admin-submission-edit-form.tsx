@@ -53,6 +53,7 @@ const SUBMISSION_FIELD_LABELS: Record<string, string> = {
   description: "Description",
   favicon: "Favicon URL",
   github: "GitHub Repository",
+  iconBg: "Icon Background / Style",
   ogImage: "OpenGraph Image",
   status: "Moderation Status",
   subtitle: "Subtitle / Tagline",

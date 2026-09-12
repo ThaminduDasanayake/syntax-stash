@@ -42,6 +42,7 @@ function ResourceCardComponent({
         category={resource.category}
         description={resource.description}
         favicon={resource.favicon}
+        iconBg={resource.iconBg}
         iconClassName={resource.className}
         isBookmarked={bookmarked}
         ogImage={resource.ogImage}

@@ -86,6 +86,7 @@ export async function PATCH(req: Request) {
     if (updates.authorLinkedIn !== undefined) updatedData.authorLinkedIn = updates.authorLinkedIn;
     if (updates.github !== undefined) updatedData.github = updates.github;
     if (updates.favicon !== undefined) updatedData.favicon = updates.favicon;
+    if (updates.iconBg !== undefined) updatedData.iconBg = updates.iconBg;
     if (updates.ogImage !== undefined) updatedData.ogImage = updates.ogImage;
     if (updates.pricing !== undefined) updatedData.pricing = updates.pricing;
     if (updates.tags !== undefined) updatedData.tags = updates.tags;
@@ -200,6 +201,7 @@ export async function PATCH(req: Request) {
               description: sub.description,
               favicon: sub.favicon || null,
               github: sub.github || null,
+              iconBg: sub.iconBg || "dark",
               ogImage: sub.ogImage || null,
               subtitle: sub.subtitle || null,
               updatedAt: new Date(),
@@ -215,6 +217,7 @@ export async function PATCH(req: Request) {
             description: sub.description,
             favicon: sub.favicon || null,
             github: sub.github || null,
+            iconBg: sub.iconBg || "dark",
             ogImage: sub.ogImage || null,
             subtitle: sub.subtitle || null,
             url: sub.url,

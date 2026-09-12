@@ -48,6 +48,7 @@ const RESOURCE_FIELD_LABELS: Record<string, string> = {
   description: "Description",
   favicon: "Favicon URL",
   github: "GitHub Repository URL",
+  iconBg: "Icon Background / Style",
   ogImage: "OpenGraph Image",
   subtitle: "Subtitle / Tagline",
   tags: "Canonical Tags",

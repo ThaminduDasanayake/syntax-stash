@@ -45,9 +45,7 @@ function OgImagePreviewBanner({ ogImage }: { ogImage: string }) {
   }
 
   const isValidUrl =
-    cleanOg.startsWith("/") ||
-    cleanOg.startsWith("data:") ||
-    isValidHttpUrl(cleanOg);
+    cleanOg.startsWith("/") || cleanOg.startsWith("data:") || isValidHttpUrl(cleanOg);
 
   const isExternal =
     Boolean(cleanOg) &&
@@ -145,9 +143,9 @@ export function MediaAssetFields({
               <FieldCheckmark
                 checked={Boolean(
                   cleanFavicon &&
-                    (cleanFavicon.startsWith("/") ||
-                      cleanFavicon.startsWith("data:") ||
-                      isValidHttpUrl(cleanFavicon)),
+                  (cleanFavicon.startsWith("/") ||
+                    cleanFavicon.startsWith("data:") ||
+                    isValidHttpUrl(cleanFavicon)),
                 )}
               />
             </Label>
@@ -166,17 +164,17 @@ export function MediaAssetFields({
                     alt="current favicon"
                     favicon={cleanFavicon}
                     iconBg={iconBg}
-                    className="size-6 shrink-0"
+                    className="size-6 shrink-0 rounded-[30%]"
                   />
                 ) : null
               }
               renderPreview={(option) => (
-                <div className="border-line bg-paper/60 grid size-6 place-items-center rounded border">
+                <div className="bg-paper/60 grid size-6 place-items-center overflow-hidden rounded-[30%]">
                   <CardIcon
                     alt="favicon option"
                     favicon={option.url}
                     iconBg={iconBg}
-                    className="size-4"
+                    className="size-6 rounded-[30%]"
                   />
                 </div>
               )}
@@ -242,9 +240,9 @@ export function MediaAssetFields({
               <FieldCheckmark
                 checked={Boolean(
                   cleanOg &&
-                    (cleanOg.startsWith("/") ||
-                      cleanOg.startsWith("data:") ||
-                      isValidHttpUrl(cleanOg)),
+                  (cleanOg.startsWith("/") ||
+                    cleanOg.startsWith("data:") ||
+                    isValidHttpUrl(cleanOg)),
                 )}
               />
             </Label>
