@@ -549,7 +549,7 @@ function AdminResourcesClientContent({
           <div className="flex flex-wrap items-center gap-5">
             {/* Category Select */}
             <div className="flex items-center gap-1.5">
-              <FunnelIcon weight="duotone" className="text-brand-green size-7" />
+              <FunnelIcon weight="duotone" className="text-primary size-7" />
               <span className="text-muted-foreground text-[11px] font-bold uppercase">
                 Category:
               </span>
@@ -558,6 +558,7 @@ function AdminResourcesClientContent({
                 onValueChange={handleCategoryChange}
                 options={categoryFilterOptions}
                 triggerClassName="h-8 font-mono text-xs min-w-[180px]"
+                variant="primary"
               />
             </div>
 
@@ -573,6 +574,7 @@ function AdminResourcesClientContent({
                   onValueChange={handleHealthFilterChange}
                   options={missingFilterOptions}
                   triggerClassName="h-8 font-mono text-xs min-w-[190px]"
+                  variant="accent"
                 />
               </div>
             )}
@@ -586,6 +588,7 @@ function AdminResourcesClientContent({
                 onValueChange={handleSortChange}
                 options={SORT_OPTIONS}
                 triggerClassName="h-8 font-mono text-xs min-w-[150px]"
+                variant="secondary"
               />
             </div>
           </div>

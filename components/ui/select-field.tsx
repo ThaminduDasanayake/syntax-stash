@@ -10,26 +10,31 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
-interface Option {
-  value: string;
+export interface Option {
   label: string;
+  value: string;
 }
 
-interface SelectFieldProps {
-  value: string;
+export interface SelectFieldProps {
+  containerClassName?: string;
+  contentClassName?: string;
+  disabled?: boolean;
+  itemClassName?: string;
+  label?: string;
+  labelClassName?: string;
   onValueChange: (value: string) => void;
   options: Option[];
-  label?: string;
   placeholder?: string;
-  disabled?: boolean;
-  containerClassName?: string;
-  labelClassName?: string;
   triggerClassName?: string;
+  value: string;
+  variant?: "accent" | "default" | "primary" | "secondary";
 }
 
 export function SelectField({
   containerClassName,
+  contentClassName,
   disabled,
+  itemClassName,
   label,
   labelClassName,
   onValueChange,
@@ -37,6 +42,7 @@ export function SelectField({
   placeholder,
   triggerClassName,
   value,
+  variant = "default",
 }: SelectFieldProps) {
   const selectComponent = (
     <Select
@@ -46,12 +52,17 @@ export function SelectField({
       }}
       disabled={disabled}
     >
-      <SelectTrigger className={cn("w-full cursor-pointer", triggerClassName)}>
+      <SelectTrigger variant={variant} className={cn("w-full cursor-pointer", triggerClassName)}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
-      <SelectContent className="shadow-none">
+      <SelectContent className={cn("shadow-none", contentClassName)}>
         {options.map((opt) => (
-          <SelectItem key={opt.value} value={opt.value}>
+          <SelectItem
+            key={opt.value}
+            value={opt.value}
+            variant={variant}
+            className={itemClassName}
+          >
             {opt.label}
           </SelectItem>
         ))}

@@ -434,6 +434,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
                 onValueChange={(val) => setFilterMode(val)}
                 options={FILTER_OPTIONS}
                 triggerClassName="h-8 font-mono text-[11px]"
+                variant="primary"
               />
             </div>
 
@@ -444,6 +445,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
                 onValueChange={(val) => setSortBy(val)}
                 options={SORT_OPTIONS}
                 triggerClassName="h-8 font-mono text-[11px]"
+                variant="secondary"
               />
             </div>
           </div>

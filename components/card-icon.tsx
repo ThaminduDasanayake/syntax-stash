@@ -69,7 +69,7 @@ export function CardIcon({
       <div
         className={cn(
           className,
-          "card-icon-box overflow-hidden rounded-[30%]",
+          "card-icon-box overflow-hidden rounded-[30%] p-0.5",
           isWhiteTile && "border-white/80! bg-white! text-black!",
         )}
       />
@@ -86,7 +86,7 @@ export function CardIcon({
     <div
       className={cn(
         className,
-        "card-icon-box overflow-hidden rounded-[30%]",
+        "card-icon-box overflow-hidden rounded-[30%] p-0.5",
         isWhiteTile && "border-white/80! bg-white! text-black!",
       )}
     >

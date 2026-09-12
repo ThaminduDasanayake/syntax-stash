@@ -320,6 +320,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                 onValueChange={handleSortChange}
                 options={SORT_OPTIONS}
                 triggerClassName="h-8 font-mono text-xs min-w-[160px]"
+                variant="secondary"
               />
             </div>
           </div>

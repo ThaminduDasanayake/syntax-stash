@@ -341,6 +341,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
               onValueChange={setSortBy}
               options={SORT_OPTIONS}
               triggerClassName="h-9 font-mono text-xs min-w-[170px]"
+              variant="secondary"
             />
           </div>
 
