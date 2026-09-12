@@ -148,4 +148,3 @@ export function isValidHttpUrl(urlString: string | null | undefined): boolean {
     return false;
   }
 }
-

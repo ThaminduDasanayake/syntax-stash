@@ -309,9 +309,7 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
             item: data.existingSubmission,
             type: "submission",
           });
-          toast.info(
-            `This URL has a pending submission: "${data.existingSubmission.title}"`,
-          );
+          toast.info(`This URL has a pending submission: "${data.existingSubmission.title}"`);
         } else {
           setDuplicateNotice(null);
           toast.success("Metadata detected successfully!");

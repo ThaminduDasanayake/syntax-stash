@@ -362,9 +362,7 @@ export function AdminResourceDialog({
             item: data.existingSubmission,
             type: "submission",
           });
-          toast.info(
-            `This URL has a pending submission: "${data.existingSubmission.title}"`,
-          );
+          toast.info(`This URL has a pending submission: "${data.existingSubmission.title}"`);
         } else {
           setDuplicateNotice(null);
           toast.success("Metadata detected successfully!");
@@ -448,9 +446,7 @@ export function AdminResourceDialog({
                     <span>Website URL</span>
                     <span className="text-destructive">*</span>
                     <FieldCheckmark
-                      checked={Boolean(
-                        formData.url?.trim() && isValidHttpUrl(formData.url.trim()),
-                      )}
+                      checked={Boolean(formData.url?.trim() && isValidHttpUrl(formData.url.trim()))}
                     />
                   </Label>
                   <Button

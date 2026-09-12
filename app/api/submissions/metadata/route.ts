@@ -1090,9 +1090,7 @@ export async function GET(request: NextRequest) {
           .from(resource)
           .leftJoin(category, eq(resource.categoryId, category.id));
 
-        const matchedResource = liveRows.find(
-          (r) => normalizeUrl(r.url) === normalizedInputUrl,
-        );
+        const matchedResource = liveRows.find((r) => normalizeUrl(r.url) === normalizedInputUrl);
 
         if (matchedResource) {
           existingResource = {

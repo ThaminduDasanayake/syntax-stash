@@ -183,9 +183,7 @@ export async function POST(req: Request) {
     const existingResources = await db
       .select({ id: resource.id, title: resource.title, url: resource.url })
       .from(resource);
-    const existing = existingResources.find(
-      (r) => normalizeUrl(r.url) === normalizedInputUrl,
-    );
+    const existing = existingResources.find((r) => normalizeUrl(r.url) === normalizedInputUrl);
     if (existing) {
       return NextResponse.json(
         { error: `A resource with this URL already exists: "${existing.title}"` },

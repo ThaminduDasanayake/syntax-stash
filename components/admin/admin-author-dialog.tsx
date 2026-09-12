@@ -89,9 +89,9 @@ export function AdminAuthorDialog({
     }
   }, [existingAuthors, open]);
 
-  const authorPool = (existingAuthors && existingAuthors.length > 0
-    ? existingAuthors
-    : loadedAuthors) as Array<{
+  const authorPool = (
+    existingAuthors && existingAuthors.length > 0 ? existingAuthors : loadedAuthors
+  ) as Array<{
     id?: string;
     name: string;
     slug: string;
@@ -249,7 +249,7 @@ export function AdminAuthorDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="border-line bg-paper max-h-[90vh] sm:max-w-2xl overflow-y-auto font-mono text-xs">
+      <DialogContent className="border-line bg-paper max-h-[90vh] overflow-y-auto font-mono text-xs sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle className="text-foreground text-base font-bold uppercase">
             {isEdit ? `Edit Author: ${author?.name || formData.name}` : "Create New Author"}
@@ -332,8 +332,8 @@ export function AdminAuthorDialog({
                 <FieldCheckmark
                   checked={Boolean(
                     formData.website.trim() &&
-                      (formData.website.trim().startsWith("/") ||
-                        isValidHttpUrl(formData.website.trim())),
+                    (formData.website.trim().startsWith("/") ||
+                      isValidHttpUrl(formData.website.trim())),
                   )}
                 />
               </Label>
@@ -408,8 +408,7 @@ export function AdminAuthorDialog({
                 <FieldCheckmark
                   checked={Boolean(
                     formData.blog.trim() &&
-                      (formData.blog.trim().startsWith("/") ||
-                        isValidHttpUrl(formData.blog.trim())),
+                    (formData.blog.trim().startsWith("/") || isValidHttpUrl(formData.blog.trim())),
                   )}
                 />
               </Label>

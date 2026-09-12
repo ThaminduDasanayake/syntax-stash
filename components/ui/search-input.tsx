@@ -21,8 +21,10 @@ import {
 import { Kbd } from "@/components/ui/kbd";
 import { cn } from "@/lib/utils";
 
-export interface SearchInputProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, "size" | "prefix"> {
+export interface SearchInputProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  "size" | "prefix"
+> {
   containerClassName?: string;
   inputGroupClassName?: string;
   isLoading?: boolean;
@@ -64,7 +66,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       (defaultValue as string) || "",
     );
 
-    const currentValue = isControlled ? (value as string) ?? "" : uncontrolledValue;
+    const currentValue = isControlled ? ((value as string) ?? "") : uncontrolledValue;
     const hasValue = Boolean(currentValue && String(currentValue).length > 0);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

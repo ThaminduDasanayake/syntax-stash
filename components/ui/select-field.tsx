@@ -57,12 +57,7 @@ export function SelectField({
       </SelectTrigger>
       <SelectContent className={cn("shadow-none", contentClassName)}>
         {options.map((opt) => (
-          <SelectItem
-            key={opt.value}
-            value={opt.value}
-            variant={variant}
-            className={itemClassName}
-          >
+          <SelectItem key={opt.value} value={opt.value} variant={variant} className={itemClassName}>
             {opt.label}
           </SelectItem>
         ))}
