@@ -7,13 +7,11 @@ import {
   CaretLeftIcon,
   CaretRightIcon,
   GlobeIcon,
-  MagnifyingGlassIcon,
   PencilSimpleIcon,
   PlusIcon,
   SlidersHorizontalIcon,
   TrashIcon,
   UserCircleIcon,
-  XIcon,
   XLogoIcon,
 } from "@phosphor-icons/react";
 import Image from "next/image";
@@ -35,7 +33,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { InputField } from "@/components/ui/input-field";
+import { SearchInput } from "@/components/ui/search-input";
 import { SelectField } from "@/components/ui/select-field";
 import {
   Table,
@@ -239,25 +237,14 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
       <div className="border-line bg-surface/50 mb-6 space-y-4 rounded-lg border p-4 font-mono text-xs">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           {/* Search Input */}
-          <div className="relative flex-1">
-            <InputField
+          <div className="flex-1">
+            <SearchInput
               placeholder="Search authors by name, slug, website, github, twitter..."
               value={searchQuery}
               onChange={(e) => handleSearchChange(e.target.value)}
-              prefix={<MagnifyingGlassIcon className="text-muted-foreground size-4" />}
-              containerClassName="h-9"
+              onClear={() => handleSearchChange("")}
               className="font-mono text-xs"
             />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => handleSearchChange("")}
-                className="text-muted-foreground hover:text-foreground absolute top-1/2 right-2.5 -translate-y-1/2 p-0.5"
-                title="Clear search"
-              >
-                <XIcon className="size-3.5" />
-              </button>
-            )}
           </div>
 
           {/* Action Buttons */}

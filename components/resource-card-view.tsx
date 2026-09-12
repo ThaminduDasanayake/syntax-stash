@@ -75,7 +75,6 @@ export function ResourceCardView({
     });
   }
 
-
   // Parse tags if provided as comma-separated string or array
   const parsedTags: string[] = Array.isArray(tags)
     ? tags
@@ -139,7 +138,6 @@ export function ResourceCardView({
       setOgState((prev) => ({ ...prev, error: true }));
     }
   };
-
 
   const cardContent = (
     <article

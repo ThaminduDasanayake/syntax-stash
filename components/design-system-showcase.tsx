@@ -7,10 +7,8 @@ import {
   CopyIcon,
   EyeIcon,
   LightningIcon,
-  MagnifyingGlassIcon,
   SparkleIcon,
   TextTIcon,
-  XIcon,
 } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
@@ -29,6 +27,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Kbd } from "@/components/ui/kbd";
+import { SearchInput } from "@/components/ui/search-input";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { CategoryItem } from "@/lib/categories";
 import { cn, getCategoryTheme, Theme, THEME_CONFIG, THEMES } from "@/lib/utils";
@@ -969,24 +968,13 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
                 <div className="space-y-4">
                   <div className="space-y-1.5">
                     <label className="text-mono-2xs text-ink">Brutalist Search Input</label>
-                    <div className="relative">
-                      <MagnifyingGlassIcon className="text-ink absolute top-1/2 left-3 size-4 -translate-y-1/2" />
-                      <Input
-                        value={sampleQuery}
-                        onChange={(e) => setSampleQuery(e.target.value)}
-                        placeholder="Search resources, tags, authors..."
-                        className="pr-9 pl-9"
-                      />
-                      {sampleQuery && (
-                        <button
-                          type="button"
-                          onClick={() => setSampleQuery("")}
-                          className="text-ink-mute hover:text-ink absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer"
-                        >
-                          <XIcon className="size-4" />
-                        </button>
-                      )}
-                    </div>
+                    <SearchInput
+                      value={sampleQuery}
+                      onChange={(e) => setSampleQuery(e.target.value)}
+                      onClear={() => setSampleQuery("")}
+                      placeholder="Search resources, tags, authors..."
+                      shortcut="⌘K"
+                    />
                   </div>
 
                   <div className="flex items-center justify-between pt-2">

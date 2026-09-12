@@ -16,7 +16,6 @@ import {
   SquaresFourIcon,
   TableIcon,
   TrashIcon,
-  XIcon,
 } from "@phosphor-icons/react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -29,7 +28,7 @@ import { ResourceDialog } from "@/components/resource-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
-import { InputField } from "@/components/ui/input-field";
+import { SearchInput } from "@/components/ui/search-input";
 import { SelectField } from "@/components/ui/select-field";
 import { useCategories } from "@/hooks/use-categories";
 import { cn } from "@/lib/utils";
@@ -474,25 +473,14 @@ function AdminResourcesClientContent({
       <div className="border-line bg-surface/50 mb-6 space-y-4 rounded-lg border p-4 font-mono text-xs">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           {/* Search Bar */}
-          <div className="relative flex-1">
-            <InputField
+          <div className="flex-1">
+            <SearchInput
               placeholder="Search live resources by name, description, tags, author, URL..."
               value={searchQuery}
               onChange={(e) => handleSearchChange(e.target.value)}
-              prefix={<MagnifyingGlassIcon className="text-muted-foreground size-4" />}
-              containerClassName="h-9"
+              onClear={() => handleSearchChange("")}
               className="font-mono text-xs"
             />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => handleSearchChange("")}
-                className="text-muted-foreground hover:text-foreground absolute top-1/2 right-2.5 -translate-y-1/2 p-0.5"
-                title="Clear search"
-              >
-                <XIcon className="size-3.5" />
-              </button>
-            )}
           </div>
 
           {/* Action Buttons & View Switcher */}

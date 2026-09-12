@@ -4,13 +4,11 @@ import {
   ArrowsClockwiseIcon,
   CheckIcon,
   FunnelIcon,
-  MagnifyingGlassIcon,
   PencilSimpleIcon,
   PlusIcon,
   StarIcon,
   TagIcon,
   TrashIcon,
-  XIcon,
 } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
@@ -37,6 +35,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { InputField } from "@/components/ui/input-field";
+import { SearchInput } from "@/components/ui/search-input";
 import { SelectField } from "@/components/ui/select-field";
 import {
   Table,
@@ -373,25 +372,14 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
       <div className="border-line bg-surface/50 mb-6 space-y-4 rounded-lg border p-4 text-xs">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           {/* Search */}
-          <div className="relative flex-1">
-            <InputField
+          <div className="flex-1">
+            <SearchInput
               placeholder="Search tags by name or slug..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              prefix={<MagnifyingGlassIcon className="text-muted-foreground size-4" />}
-              containerClassName="h-9"
+              onClear={() => setSearchQuery("")}
               className="font-mono text-xs"
             />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => setSearchQuery("")}
-                className="text-muted-foreground hover:text-foreground absolute top-1/2 right-2.5 -translate-y-1/2 p-0.5"
-                title="Clear search"
-              >
-                <XIcon className="size-3.5" />
-              </button>
-            )}
           </div>
 
           {/* Action Buttons */}
