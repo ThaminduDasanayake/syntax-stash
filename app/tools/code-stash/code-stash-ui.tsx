@@ -75,7 +75,7 @@ export default function CodeStashUi({ initialSnippets }: { initialSnippets: Snip
             </div>
 
             {/* Separator */}
-            <div className="border-border border-t" />
+            <div className="border-border border-t-[1.5px]" />
           </div>
 
           {/* Scrollable snippet list */}

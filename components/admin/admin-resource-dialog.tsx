@@ -412,7 +412,7 @@ export function AdminResourceDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[90vh] max-w-4xl overflow-y-auto p-0 font-mono text-xs sm:max-w-4xl">
-        <div className="border-line border-b p-6 pb-4">
+        <div className="border-line border-b-[1.5px] p-6 pb-4">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-lg font-bold tracking-tight uppercase">
               {isEdit ? (

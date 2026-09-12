@@ -149,9 +149,9 @@ export default function ChmodCalculatorPage() {
             <Label className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
               Permission Grid
             </Label>
-            <div className="overflow-hidden border">
+            <div className="overflow-hidden border-[1.5px]">
               {/* Header row */}
-              <div className="grid grid-cols-4 border-b">
+              <div className="grid grid-cols-4 border-b-[1.5px]">
                 <div className="bg-muted/50 p-2" />
                 {PERMS.map((p) => (
                   <div
@@ -164,7 +164,7 @@ export default function ChmodCalculatorPage() {
               </div>
               {/* Data rows */}
               {GROUPS.map((group, gi) => (
-                <div key={group} className={`grid grid-cols-4 ${gi < 2 ? "border-b" : ""}`}>
+                <div key={group} className={`grid grid-cols-4 ${gi < 2 ? "border-b-[1.5px]" : ""}`}>
                   <div className="text-muted-foreground flex items-center px-3 py-2 text-xs font-semibold">
                     {group}
                   </div>

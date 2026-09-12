@@ -215,7 +215,7 @@ export default function JsonSchemaStudioPage() {
             </TabsList>
           </div>
 
-          <div className="border-border bg-muted/10 flex min-h-0 flex-1 flex-col overflow-hidden rounded-md border">
+          <div className="border-border bg-muted/10 flex min-h-0 flex-1 flex-col overflow-hidden rounded-md border-[1.5px]">
             <TabsContent value="ts" className="m-0 h-full">
               <TextareaGroup
                 label="TypeScript Interface"

@@ -631,11 +631,11 @@ function AdminResourcesClientContent({
             </div>
           ) : (
             /* Text-Only Data Table Mode (50 per page, zero images requested) */
-            <div className="border-line bg-surface/30 overflow-hidden rounded-lg border">
+            <div className="border-line bg-surface/30 overflow-hidden rounded-lg border-[1.5px]">
               <div className="overflow-x-auto">
                 <table className="w-full border-collapse text-left font-mono text-xs">
                   <thead>
-                    <tr className="border-line bg-surface/80 text-muted-foreground border-b text-[11px] font-bold tracking-wider uppercase">
+                    <tr className="border-line bg-surface/80 text-muted-foreground border-b-[1.5px] text-[11px] font-bold tracking-wider uppercase">
                       <th className="px-4 py-3">Category</th>
                       <th className="px-4 py-3">Resource</th>
                       <th className="px-4 py-3">Author</th>

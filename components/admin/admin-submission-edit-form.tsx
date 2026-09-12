@@ -280,7 +280,7 @@ export function AdminSubmissionEditForm({
   return (
     <div className="border-primary/60 bg-paper/60 rounded-lg border-2 p-6 font-mono text-xs shadow-md">
       {/* Edit Header */}
-      <div className="border-line/60 mb-6 flex flex-wrap items-center justify-between gap-3 border-b pb-4">
+      <div className="border-line/60 mb-6 flex flex-wrap items-center justify-between gap-3 border-b-[1.5px] pb-4">
         <div className="flex items-center gap-3">
           <div className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded font-bold">
             <PencilSimpleIcon weight="bold" className="size-4" />

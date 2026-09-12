@@ -18,7 +18,7 @@ export default function ToolLoadingSkeleton() {
       </div>
 
       {/* Content Area Skeleton */}
-      <div className="bg-accent/50 border-border h-100 w-full animate-pulse rounded-xl border"></div>
+      <div className="bg-accent/50 border-border h-100 w-full animate-pulse rounded-xl border-[1.5px]"></div>
     </div>
   );
 }

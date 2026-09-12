@@ -60,7 +60,7 @@ export function ScrollToTop() {
             size="icon-lg"
             onClick={scrollToTop}
             aria-label="Scroll to top"
-            className="border-ink bg-background text-ink hover:border-ink hover:bg-primary hover:text-primary-foreground group size-10 rounded-none border-[1.5px] shadow-md transition-all duration-200 hover:-translate-y-1 hover:shadow-lg active:translate-y-0 sm:size-11"
+            className="border-muted-foreground hover:border-foreground bg-card text-muted-foreground hover:bg-muted hover:text-foreground group size-10 rounded-full border-[1.5px] transition-all duration-200 hover:-translate-y-1 hover:shadow-lg active:translate-y-0 sm:size-11"
           >
             <ArrowUpIcon
               weight="bold"

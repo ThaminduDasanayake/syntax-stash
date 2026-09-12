@@ -418,7 +418,7 @@ export function AuthorCombobox({
       {/* Dropdown Menu */}
       {isOpen && !disabled && (
         <div className="border-border bg-popover text-popover-foreground absolute z-50 mt-1 max-h-60 w-full overflow-hidden rounded-none border-2 shadow-lg">
-          <div className="border-border/60 text-muted-foreground bg-muted/40 border-b px-2.5 py-1 font-mono text-[10px] font-bold tracking-wider uppercase">
+          <div className="border-border/60 text-muted-foreground bg-muted/40 border-b-[1.5px] px-2.5 py-1 font-mono text-[10px] font-bold tracking-wider uppercase">
             {cleanQuery ? "Matching Creators" : "Suggested Creators (A-Z)"}
           </div>
 

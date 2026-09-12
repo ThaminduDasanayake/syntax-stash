@@ -338,7 +338,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
 
           {/* Interactive Live Type Tester */}
           <div className="border-ink bg-paper mt-8 border-2 p-6 shadow-sm">
-            <div className="border-line mb-6 flex flex-col justify-between gap-4 border-b pb-4 sm:flex-row sm:items-center">
+            <div className="border-line mb-6 flex flex-col justify-between gap-4 border-b-[1.5px] pb-4 sm:flex-row sm:items-center">
               <div className="flex items-center gap-2">
                 <TextTIcon className="text-ink size-5" />
                 <span className="font-mono text-xs font-bold tracking-wider uppercase">
@@ -366,7 +366,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
             {/* Rendered Type Scales */}
             <div className="space-y-8">
               {/* Display Headline */}
-              <div className="border-line space-y-2 border-b pb-6">
+              <div className="border-line space-y-2 border-b-[1.5px] pb-6">
                 <div className="text-mono-2xs text-ink-mute flex items-center justify-between">
                   <span>Display Headline (`.headline`)</span>
                   <span>Bricolage Grotesque 800 + Instrument Serif</span>
@@ -380,7 +380,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
               </div>
 
               {/* Display 3XL / 2XL */}
-              <div className="border-line grid grid-cols-1 gap-8 border-b pb-6 md:grid-cols-2">
+              <div className="border-line grid grid-cols-1 gap-8 border-b-[1.5px] pb-6 md:grid-cols-2">
                 <div className="space-y-2">
                   <div className="text-mono-2xs text-ink-mute">
                     Display Section Header (`text-3xl font-extrabold`)
@@ -398,7 +398,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
               </div>
 
               {/* Mono Scales */}
-              <div className="border-line space-y-4 border-b pb-6">
+              <div className="border-line space-y-4 border-b-[1.5px] pb-6">
                 <div className="text-mono-2xs text-ink-mute">
                   JetBrains Mono Metas (`text-mono-*`)
                 </div>
@@ -557,7 +557,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
                         <span className="text-ink-mute">Text Contrast:</span>
                         <span
                           className={cn(
-                            "border px-1.5 py-0.5 text-[10px] font-bold",
+                            "border-[1.5px] px-1.5 py-0.5 text-[10px] font-bold",
                             swatch.textColor === "text-paper"
                               ? "bg-ink text-paper border-ink"
                               : "bg-paper text-ink border-ink",
@@ -582,14 +582,14 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
                     <div className="border-line mt-3 flex items-center justify-between border-t pt-3 font-mono text-[11px]">
                       <div className="flex items-center gap-1.5">
                         <span
-                          className="border-ink size-3 rounded-full border"
+                          className="border-ink size-3 rounded-full border-[1.5px]"
                           style={{ backgroundColor: swatch.tintHex }}
                         />
                         <span className="text-ink-mute">Tint</span>
                       </div>
                       <div className="flex items-center gap-1.5">
                         <span
-                          className="border-ink size-3 rounded-full border"
+                          className="border-ink size-3 rounded-full border-[1.5px]"
                           style={{ backgroundColor: swatch.deepHex }}
                         />
                         <span className="text-ink-mute">Deep</span>
@@ -607,7 +607,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
 
           {/* Live Component Preview for Selected Theme */}
           <div className="border-ink bg-paper mt-10 border-2 p-6 shadow-sm">
-            <div className="border-line mb-6 flex items-center justify-between border-b pb-4">
+            <div className="border-line mb-6 flex items-center justify-between border-b-[1.5px] pb-4">
               <div className="flex items-center gap-2">
                 <SparkleIcon className="text-ink size-5" />
                 <h3 className="font-mono text-sm font-bold tracking-wider uppercase">
@@ -669,7 +669,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
                       <div className="flex items-center gap-2">
                         <span
                           className={cn(
-                            "border-ink size-3 rounded-full border",
+                            "border-ink size-3 rounded-full border-[1.5px]",
                             THEME_CONFIG[selectedTheme].bg,
                           )}
                         />
@@ -709,7 +709,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
 
               {/* Color Specs Box */}
               <div className="border-ink bg-bg space-y-3 border-2 p-4 font-mono text-xs">
-                <div className="border-line flex items-center justify-between border-b pb-2 font-bold">
+                <div className="border-line flex items-center justify-between border-b-[1.5px] pb-2 font-bold">
                   <span>TOKEN SPECS</span>
                   <span>{selectedTheme.toUpperCase()}</span>
                 </div>
@@ -786,7 +786,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
             </div>
 
             {/* Category Pills Matrix */}
-            <div className="border-line flex flex-wrap gap-2 border-b pb-6">
+            <div className="border-line flex flex-wrap gap-2 border-b-[1.5px] pb-6">
               {categories.map((cat, idx) => {
                 const theme = getCategoryTheme(cat.name, "resource", idx, categoryNames);
                 const isSelected = simulatedCategory.toLowerCase() === cat.name.toLowerCase();
@@ -805,7 +805,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
                   >
                     <span
                       className={cn(
-                        "border-ink size-2.5 rounded-full border",
+                        "border-ink size-2.5 rounded-full border-[1.5px]",
                         THEME_CONFIG[theme].bg,
                       )}
                     />
@@ -838,7 +838,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
               <div className="space-y-4 font-mono text-xs">
                 <span className="text-mono-2xs text-ink-mute">Category Distribution Stats</span>
                 <div className="border-ink bg-bg space-y-2 border-2 p-4">
-                  <div className="border-line flex justify-between border-b pb-2 font-bold">
+                  <div className="border-line flex justify-between border-b-[1.5px] pb-2 font-bold">
                     <span>PALETTE BALANCE</span>
                     <span>{categories.length} CATEGORIES</span>
                   </div>
@@ -903,7 +903,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
           <div className="mt-8 space-y-8">
             {/* Button Matrix */}
             <div className="border-ink bg-paper border-2 p-6 shadow-sm">
-              <h3 className="border-line mb-6 border-b pb-3 font-mono text-sm font-bold tracking-wider uppercase">
+              <h3 className="border-line mb-6 border-b-[1.5px] pb-3 font-mono text-sm font-bold tracking-wider uppercase">
                 Button Variants & Sizes
               </h3>
 
@@ -961,7 +961,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
               {/* Form Controls */}
               <div className="border-ink bg-paper space-y-6 border-2 p-6 shadow-sm">
-                <h3 className="border-line border-b pb-3 font-mono text-sm font-bold tracking-wider uppercase">
+                <h3 className="border-line border-b-[1.5px] pb-3 font-mono text-sm font-bold tracking-wider uppercase">
                   Search & Inputs
                 </h3>
 
@@ -991,7 +991,7 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
 
               {/* Dialog & Interactive Modals */}
               <div className="border-ink bg-paper space-y-6 border-2 p-6 shadow-sm">
-                <h3 className="border-line border-b pb-3 font-mono text-sm font-bold tracking-wider uppercase">
+                <h3 className="border-line border-b-[1.5px] pb-3 font-mono text-sm font-bold tracking-wider uppercase">
                   Dialogs & Tooltips
                 </h3>
 

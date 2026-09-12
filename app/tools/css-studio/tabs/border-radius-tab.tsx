@@ -131,7 +131,7 @@ export function BorderRadiusTab() {
       <div className="space-y-6">
         <div className="space-y-2">
           <Label>Live Preview</Label>
-          <div className="border-border bg-muted/20 flex h-64 items-center justify-center rounded-xl border">
+          <div className="border-border bg-muted/20 flex h-64 items-center justify-center rounded-xl border-[1.5px]">
             <div
               className="bg-primary/40 border-primary h-40 w-64 border-2 transition-all duration-150"
               style={{ borderRadius: cssValue }}

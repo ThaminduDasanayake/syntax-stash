@@ -248,11 +248,11 @@
 
 /* Nav*/
 @utility site-nav {
-  @apply fixed top-0 right-0 left-0 z-60 border-b border-white/[0.08] bg-[#121212e6] pt-[env(safe-area-inset-top)] backdrop-blur-xl transition-all duration-200 ease-out;
+  @apply fixed top-0 right-0 left-0 z-60 border-b-[1.5px] border-white/8 bg-[#121212e6] pt-[env(safe-area-inset-top)] backdrop-blur-xl transition-all duration-200 ease-out;
 }
 
 @utility site-nav--scrolled {
-  @apply border-b-white/[0.12] shadow-[0_4px_24px_rgba(0,0,0,0.6)];
+  @apply border-b-white/12 shadow-[0_4px_24px_rgba(0,0,0,0.6)];
 }
 
 @utility nav-inner {
@@ -270,7 +270,7 @@
 }
 
 @utility nav-links {
-  @apply bg-background fixed top-16 right-0 left-0 z-60 hidden flex-col items-start gap-1 border-b border-white/[0.08] px-5 pt-5 pb-7 shadow-2xl;
+  @apply bg-background fixed top-16 right-0 left-0 z-60 hidden flex-col items-start gap-1 border-b-[1.5px] border-white/8 px-5 pt-5 pb-7 shadow-2xl;
 
   @apply lg:static lg:z-auto lg:flex lg:flex-row lg:items-center lg:gap-5 lg:border-none lg:bg-transparent lg:p-0 lg:shadow-none xl:gap-6;
 }
@@ -319,7 +319,7 @@
 
 /* Footer*/
 @utility site-footer {
-  @apply bg-background border-t border-white/[0.08] pt-20 pb-10;
+  @apply bg-background border-t-[1.5px] border-white/8 pt-20 pb-10;
 }
 
 @utility footer-grid {
@@ -347,7 +347,7 @@
 }
 
 @utility footer-bottom {
-  @apply mx-auto flex max-w-7xl flex-wrap justify-between gap-2 border-t border-white/[0.08] px-5 pt-5 md:px-8 md:pt-6;
+  @apply mx-auto flex max-w-7xl flex-wrap justify-between gap-2 border-t-[1.5px] border-white/8 px-5 pt-5 md:px-8 md:pt-6;
 }
 
 @utility footer-copy {
@@ -359,7 +359,7 @@
 }
 /* Hero */
 @utility hero {
-  @apply border-line bg-sec-1 relative overflow-x-clip border-b pt-33 pb-16;
+  @apply border-line bg-sec-1 relative overflow-x-clip border-b-[1.5px] pt-33 pb-16;
   background-image:
     radial-gradient(at 15% 20%, oklch(0.7788 0.1126 306.2 / 0.05) 0px, transparent 45%),
     radial-gradient(at 85% 15%, oklch(0.7674 0.1487 76.8 / 0.04) 0px, transparent 40%);
@@ -387,7 +387,7 @@
 
 /* Stats Bar*/
 @utility stats-bar {
-  @apply border-line bg-bg border-b;
+  @apply border-line bg-bg border-b-[1.5px];
 }
 
 @utility stats-inner {
@@ -395,7 +395,7 @@
 }
 
 @utility stat-item {
-  @apply sm:border-line flex flex-col gap-1.5 px-5 py-6 sm:border-r sm:border-b-0 sm:px-7 sm:py-9;
+  @apply sm:border-line flex flex-col gap-1.5 px-5 py-6 sm:border-r-[1.5px] sm:border-b-0 sm:px-7 sm:py-9;
 
   &:nth-child(odd) {
     @apply border-line border-r;
@@ -403,7 +403,7 @@
 
   &:nth-child(1),
   &:nth-child(2) {
-    @apply border-line border-b sm:border-b-0;
+    @apply border-line border-b-[1.5px] sm:border-b-0;
   }
 
   &:last-child {

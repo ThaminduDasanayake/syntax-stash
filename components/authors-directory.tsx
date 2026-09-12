@@ -40,7 +40,7 @@ export function AuthorsDirectory({ authors }: AuthorsDirectoryProps) {
         />
 
         {/* Results Counter */}
-        <div className="border-b-line text-muted-foreground mb-6 flex w-full items-center justify-between border-b pb-3 font-mono text-xs">
+        <div className="border-b-line text-muted-foreground mb-6 flex w-full items-center justify-between border-b-[1.5px] pb-3 font-mono text-xs">
           <span>
             SHOWING {filteredAuthors.length} AUTHOR{filteredAuthors.length === 1 ? "" : "S"}
           </span>

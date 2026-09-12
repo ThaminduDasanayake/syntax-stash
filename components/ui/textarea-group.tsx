@@ -51,7 +51,7 @@ export function TextareaGroup({
         className={cn("flex flex-col overflow-hidden", isFill ? "h-full! min-h-0" : "h-auto!")}
       >
         {/* Header */}
-        <InputGroupAddon align="block-start" className="shrink-0 border-b">
+        <InputGroupAddon align="block-start" className="shrink-0 border-b-[1.5px]">
           <InputGroupText>{label}</InputGroupText>
           {action && <div className="ml-auto flex items-center gap-2">{action}</div>}
         </InputGroupAddon>
@@ -73,7 +73,7 @@ export function TextareaGroup({
 
         {/* Footer */}
         {footerText && (
-          <InputGroupAddon align="block-end" className="bg-muted/20 shrink-0 border-t">
+          <InputGroupAddon align="block-end" className="bg-muted/20 shrink-0 border-t-[1.5px]">
             <InputGroupText className="text-muted-foreground text-xs">{footerText}</InputGroupText>
           </InputGroupAddon>
         )}

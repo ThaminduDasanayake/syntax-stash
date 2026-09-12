@@ -50,7 +50,7 @@ export function AdminNav({
   }
 
   return (
-    <div className="border-line/60 mb-8 border-b pb-6 font-mono">
+    <div className="border-line/60 mb-8 border-b-[1.5px] pb-6 font-mono">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <div className="text-primary flex items-center gap-2 text-xs font-bold tracking-widest uppercase">
@@ -79,7 +79,7 @@ export function AdminNav({
             "flex items-center gap-2 rounded px-3.5 py-1.5 text-xs font-bold uppercase transition-all duration-150",
             isSubmissions
               ? "bg-primary text-primary-foreground shadow-sm"
-              : "border-line bg-surface/50 text-muted-foreground hover:bg-surface hover:text-foreground border",
+              : "border-line bg-surface/50 text-muted-foreground hover:bg-surface hover:text-foreground border-[1.5px]",
           )}
         >
           <TrayIcon weight={isSubmissions ? "fill" : "bold"} className="size-4" />
@@ -90,7 +90,7 @@ export function AdminNav({
                 "rounded-full px-1.5 py-0.5 text-[10px] leading-none font-extrabold",
                 isSubmissions
                   ? "bg-primary-foreground text-primary"
-                  : "border border-amber-600/40 bg-amber-500/20 text-amber-700",
+                  : "border-[1.5px] border-amber-600/40 bg-amber-500/20 text-amber-700",
               )}
             >
               {pendingSubmissionsCount}
@@ -104,7 +104,7 @@ export function AdminNav({
             "flex items-center gap-2 rounded px-3.5 py-1.5 text-xs font-bold uppercase transition-all duration-150",
             isResources
               ? "bg-primary text-primary-foreground shadow-sm"
-              : "border-line bg-surface/50 text-muted-foreground hover:bg-surface hover:text-foreground border",
+              : "border-line bg-surface/50 text-muted-foreground hover:bg-surface hover:text-foreground border-[1.5px]",
           )}
         >
           <StackIcon weight={isResources ? "fill" : "bold"} className="size-4" />
@@ -115,7 +115,7 @@ export function AdminNav({
                 "rounded-full px-1.5 py-0.5 text-[10px] leading-none font-extrabold",
                 isResources
                   ? "bg-primary-foreground text-primary"
-                  : "bg-surface-elevated text-muted-foreground border-border border",
+                  : "bg-surface-elevated text-muted-foreground border-border border-[1.5px]",
               )}
             >
               {totalResourcesCount}
@@ -129,7 +129,7 @@ export function AdminNav({
             "flex items-center gap-2 rounded px-3.5 py-1.5 text-xs font-bold uppercase transition-all duration-150",
             isCategories
               ? "bg-primary text-primary-foreground shadow-sm"
-              : "border-line bg-surface/50 text-muted-foreground hover:bg-surface hover:text-foreground border",
+              : "border-line bg-surface/50 text-muted-foreground hover:bg-surface hover:text-foreground border-[1.5px]",
           )}
         >
           <FoldersIcon weight={isCategories ? "fill" : "bold"} className="size-4" />
@@ -140,7 +140,7 @@ export function AdminNav({
                 "rounded-full px-1.5 py-0.5 text-[10px] leading-none font-extrabold",
                 isCategories
                   ? "bg-primary-foreground text-primary"
-                  : "bg-surface-elevated text-muted-foreground border-border border",
+                  : "bg-surface-elevated text-muted-foreground border-border border-[1.5px]",
               )}
             >
               {categoriesCount}
@@ -154,7 +154,7 @@ export function AdminNav({
             "flex items-center gap-2 rounded px-3.5 py-1.5 text-xs font-bold uppercase transition-all duration-150",
             isTags
               ? "bg-primary text-primary-foreground shadow-sm"
-              : "border-line bg-surface/50 text-muted-foreground hover:bg-surface hover:text-foreground border",
+              : "border-line bg-surface/50 text-muted-foreground hover:bg-surface hover:text-foreground border-[1.5px]",
           )}
         >
           <TagIcon weight={isTags ? "fill" : "bold"} className="size-4" />
@@ -165,7 +165,7 @@ export function AdminNav({
                 "rounded-full px-1.5 py-0.5 text-[10px] leading-none font-extrabold",
                 isTags
                   ? "bg-primary-foreground text-primary"
-                  : "bg-surface-elevated text-muted-foreground border-border border",
+                  : "bg-surface-elevated text-muted-foreground border-border border-[1.5px]",
               )}
             >
               {tagsCount}
@@ -179,7 +179,7 @@ export function AdminNav({
             "flex items-center gap-2 rounded px-3.5 py-1.5 text-xs font-bold uppercase transition-all duration-150",
             isAuthors
               ? "bg-primary text-primary-foreground shadow-sm"
-              : "border-line bg-surface/50 text-muted-foreground hover:bg-surface hover:text-foreground border",
+              : "border-line bg-surface/50 text-muted-foreground hover:bg-surface hover:text-foreground border-[1.5px]",
           )}
         >
           <UserCircleIcon weight={isAuthors ? "fill" : "bold"} className="size-4" />
@@ -190,7 +190,7 @@ export function AdminNav({
                 "rounded-full px-1.5 py-0.5 text-[10px] leading-none font-extrabold",
                 isAuthors
                   ? "bg-primary-foreground text-primary"
-                  : "bg-surface-elevated text-muted-foreground border-border border",
+                  : "bg-surface-elevated text-muted-foreground border-border border-[1.5px]",
               )}
             >
               {authorsCount}

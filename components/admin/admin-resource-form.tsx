@@ -406,7 +406,7 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
   return (
     <div className="mx-auto max-w-6xl space-y-8 font-mono text-xs">
       {/* Header with Navigation */}
-      <div className="border-line flex flex-col gap-4 border-b pb-6 sm:flex-row sm:items-center sm:justify-between">
+      <div className="border-line flex flex-col gap-4 border-b-[1.5px] pb-6 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <Button
@@ -731,7 +731,7 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
             <div className="sticky top-20 space-y-6">
               {/* Card Preview */}
               <div className="border-line bg-surface/40 space-y-4 rounded-lg border-[1.5px] p-5">
-                <h2 className="text-foreground border-line border-b pb-2 text-xs font-bold tracking-wider uppercase">
+                <h2 className="text-foreground border-line border-b-[1.5px] pb-2 text-xs font-bold tracking-wider uppercase">
                   Live Catalog Card Preview
                 </h2>
                 <ResourceCardPreview
@@ -750,7 +750,7 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
 
               {/* Publishing Summary Box */}
               <div className="border-line bg-surface/40 space-y-4 rounded-lg border-[1.5px] p-5">
-                <h2 className="text-foreground border-line border-b pb-2 text-xs font-bold tracking-wider uppercase">
+                <h2 className="text-foreground border-line border-b-[1.5px] pb-2 text-xs font-bold tracking-wider uppercase">
                   Publishing Summary
                 </h2>
 

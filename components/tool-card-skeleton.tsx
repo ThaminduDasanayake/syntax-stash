@@ -8,7 +8,7 @@ export function ToolCardSkeleton() {
           {/* Header */}
           <div className="card-header">
             <Skeleton className="bg-ink/10 h-3 w-20" />
-            <Skeleton className="border-border/20 bg-ink/10 size-11 border" />
+            <Skeleton className="border-border/20 bg-ink/10 size-11 border-[1.5px]" />
           </div>
 
           {/* Title & Subtitle */}

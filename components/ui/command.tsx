@@ -65,7 +65,7 @@ function CommandInput({
   return (
     <div
       data-slot="command-input-wrapper"
-      className="flex items-center border-b border-white/[0.08] bg-[#141416] px-4"
+      className="flex items-center border-b-[1.5px] border-white/[0.08] bg-[#141416] px-4"
     >
       <MagnifyingGlassIcon weight="bold" className="text-primary mr-2.5 size-5 shrink-0" />
       <CommandPrimitive.Input

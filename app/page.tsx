@@ -94,7 +94,7 @@ export default async function Home() {
       </section>
 
       {/* Why this matters */}
-      <section className="bg-background border-b border-white/8 px-6 py-24 sm:px-12 lg:px-24">
+      <section className="bg-background border-b-[1.5px] border-white/8 px-6 py-24 sm:px-12 lg:px-24">
         <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-24">
           <div>
             <h2 className="flex flex-col gap-0 text-6xl tracking-tighter sm:text-7xl">
@@ -136,7 +136,7 @@ export default async function Home() {
       </section>
 
       {/* Curated Resource Vault Spotlight */}
-      <section className="bg-background border-b border-white/8 px-6 py-24 sm:px-12 lg:px-24">
+      <section className="bg-background border-b-[1.5px] border-white/8 px-6 py-24 sm:px-12 lg:px-24">
         <div className="mx-auto w-full max-w-7xl">
           <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div>

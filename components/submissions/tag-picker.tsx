@@ -300,7 +300,7 @@ export function TagPicker({
       {/* Autocomplete Dropdown */}
       {isOpen && !disabled && (
         <div className="border-border bg-popover text-popover-foreground absolute z-50 mt-1 max-h-60 w-full overflow-hidden rounded-none border-2 shadow-lg">
-          <div className="border-border/60 text-muted-foreground bg-muted/40 flex items-center justify-between border-b px-2.5 py-1 font-mono text-[10px] font-bold tracking-wider uppercase">
+          <div className="border-border/60 text-muted-foreground bg-muted/40 flex items-center justify-between border-b-[1.5px] px-2.5 py-1 font-mono text-[10px] font-bold tracking-wider uppercase">
             <span>{allowCustom ? "Select or Add Tags" : "Canonical Tags (Select Only)"}</span>
             <span>
               {selectedTags.length}/{maxTags}

@@ -84,7 +84,7 @@ export function EditableCandidateInput({
                 align="end"
                 className="bg-popover border-border w-84 p-1.5 font-mono text-xs shadow-xl"
               >
-                <div className="text-muted-foreground border-b px-2 py-1.5 text-[10px] font-bold tracking-wider uppercase">
+                <div className="text-muted-foreground border-b-[1.5px] px-2 py-1.5 text-[10px] font-bold tracking-wider uppercase">
                   Detected Options ({options.length})
                 </div>
 

@@ -116,7 +116,7 @@ export function ExploreTab({ expression, setExpression }: ExploreTabProps) {
             </p>
 
             <TooltipProvider>
-              <div className="bg-muted border-accent relative h-12 overflow-hidden border">
+              <div className="bg-muted border-accent relative h-12 overflow-hidden border-[1.5px]">
                 {[25, 50, 75].map((pct) => (
                   <div
                     key={pct}

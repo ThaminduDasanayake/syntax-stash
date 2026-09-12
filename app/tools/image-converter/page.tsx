@@ -385,7 +385,7 @@ export default function ImageConverterPage() {
                 <span className="text-primary font-mono text-[11px] font-bold tracking-widest uppercase">
                   {"//"} {targetFormat} CONTEXT OPTIMIZATION
                 </span>
-                <div className="flex-1 border-t" />
+                <div className="flex-1 border-t-[1.5px]" />
               </div>
 
               {targetFormat === "png" && (
@@ -428,7 +428,7 @@ export default function ImageConverterPage() {
               <span className="text-primary font-mono text-[11px] font-bold tracking-widest uppercase">
                 {"//"} RESIZING
               </span>
-              <div className="flex-1 border-t" />
+              <div className="flex-1 border-t-[1.5px]" />
             </div>
             <ButtonGroup className="grid w-full grid-cols-3">
               {(

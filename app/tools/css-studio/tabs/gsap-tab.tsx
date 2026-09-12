@@ -160,11 +160,11 @@ export function GsapTab() {
         </div>
 
         <div className="flex flex-col space-y-4">
-          <div className="bg-background dark:bg-foreground relative flex min-h-120 overflow-hidden border">
+          <div className="bg-background dark:bg-foreground relative flex min-h-120 overflow-hidden border-[1.5px]">
             <div ref={containerRef} className="relative h-full w-full">
               <div
                 className={cn(
-                  "gsap-preview-box bg-secondary dark:bg-primary border-foreground dark:border-border absolute h-16 w-16 border",
+                  "gsap-preview-box bg-secondary dark:bg-primary border-foreground dark:border-border absolute h-16 w-16 border-[1.5px]",
                   positionClasses[startPosition],
                 )}
               />

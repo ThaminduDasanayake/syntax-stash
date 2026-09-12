@@ -115,7 +115,7 @@ export function CollectionsView() {
     return (
       <div className="space-y-6">
         {/* Header inside specific collection */}
-        <div className="border-line flex flex-col gap-3 border-b pb-4 font-mono sm:flex-row sm:items-center sm:justify-between">
+        <div className="border-line flex flex-col gap-3 border-b-[1.5px] pb-4 font-mono sm:flex-row sm:items-center sm:justify-between">
           <div className="space-y-1">
             <Button
               size="sm"
@@ -181,7 +181,7 @@ export function CollectionsView() {
   return (
     <div className="space-y-6">
       {/* Top Controls */}
-      <div className="border-line flex flex-wrap items-center justify-between gap-3 border-b pb-4 font-mono">
+      <div className="border-line flex flex-wrap items-center justify-between gap-3 border-b-[1.5px] pb-4 font-mono">
         <div>
           <h2 className="text-foreground text-sm font-bold tracking-wider uppercase">
             Custom Stash Folders
@@ -206,7 +206,7 @@ export function CollectionsView() {
           {Array.from({ length: 3 }).map((_, i) => (
             <div
               key={i}
-              className="border-line bg-surface/40 h-32 animate-pulse rounded-lg border"
+              className="border-line bg-surface/40 h-32 animate-pulse rounded-lg border-[1.5px]"
             />
           ))}
         </div>

@@ -72,7 +72,7 @@ export function DetectedFieldSuggestion({
             className="border-line bg-paper text-foreground max-w-xs rounded border-[1.5px] p-2.5 font-mono text-xs shadow-xl sm:max-w-md"
           >
             <div className="flex flex-col gap-1.5">
-              <div className="border-line text-muted-foreground flex items-center justify-between border-b pb-1 font-mono text-[10px] font-bold uppercase">
+              <div className="border-line text-muted-foreground flex items-center justify-between border-b-[1.5px] pb-1 font-mono text-[10px] font-bold uppercase">
                 <span>Detected Value</span>
                 <span>{detectedValue.length} chars</span>
               </div>

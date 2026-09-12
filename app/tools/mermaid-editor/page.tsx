@@ -243,7 +243,7 @@ export default function MermaidEditorPage() {
                 <DownloadButton label="PNG" onClick={downloadPng} disabled={!lastSvg} />
               </div>
             </div>
-            <div className="border-border bg-card flex-1 overflow-hidden rounded-xl border">
+            <div className="border-border bg-card flex-1 overflow-hidden rounded-xl border-[1.5px]">
               <MermaidPreview
                 code={code}
                 theme={theme}

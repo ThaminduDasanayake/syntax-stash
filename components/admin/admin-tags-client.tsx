@@ -484,7 +484,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
           )}
         </div>
       ) : (
-        <div className="border-line overflow-hidden rounded-lg border">
+        <div className="border-line overflow-hidden rounded-lg border-[1.5px]">
           <Table className="text-xs">
             <TableHeader className="bg-surface">
               <TableRow className="border-line hover:bg-transparent">
