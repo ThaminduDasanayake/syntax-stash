@@ -1,6 +1,7 @@
 import { InfoIcon, PlusIcon } from "@phosphor-icons/react";
 
 import { AuthorCombobox, AuthorOption } from "@/components/submissions/author-combobox";
+import { FieldCheckmark } from "@/components/submissions/field-checkmark";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
@@ -61,8 +62,9 @@ export function AuthorSocialFields({
     <div className={cn("border-line space-y-2 font-mono text-xs", className)}>
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex flex-wrap items-center gap-2">
-          <Label className="text-foreground font-mono text-xs font-bold uppercase">
-            Creator Attribution
+          <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+            <span>Creator Attribution</span>
+            <FieldCheckmark checked={Boolean(values.author?.trim())} />
           </Label>
 
           {hasSuggestion && suggestedAuthor && (

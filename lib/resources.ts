@@ -35,6 +35,7 @@ export const getAllResources = cache(
             description: resource.description,
             favicon: resource.favicon,
             github: resource.github,
+            iconBg: resource.iconBg,
             ogImage: resource.ogImage,
             subtitle: resource.subtitle,
             tagName: tag.name,
@@ -62,6 +63,7 @@ export const getAllResources = cache(
             description?: string;
             favicon?: string;
             github?: string;
+            iconBg?: "dark" | "light" | "invert" | string | null;
             ogImage?: string;
             subtitle?: string;
             tags: string[];
@@ -83,6 +85,7 @@ export const getAllResources = cache(
               description: r.description || undefined,
               favicon: r.favicon || undefined,
               github: r.github || undefined,
+              iconBg: r.iconBg || "dark",
               ogImage: r.ogImage || undefined,
               subtitle: r.subtitle || undefined,
               tags: r.tagName ? [r.tagName] : [],
@@ -148,6 +151,7 @@ export const getAllAdminResources = cache(
           description: resource.description,
           favicon: resource.favicon,
           github: resource.github,
+          iconBg: resource.iconBg,
           ogImage: resource.ogImage,
           subtitle: resource.subtitle,
           tagName: tag.name,
@@ -188,6 +192,7 @@ export const getAllAdminResources = cache(
             description: r.description,
             favicon: r.favicon,
             github: r.github,
+            iconBg: r.iconBg || "dark",
             ogImage: r.ogImage,
             subtitle: r.subtitle,
             tags: r.tagName ? [r.tagName] : [],

@@ -10,9 +10,10 @@ import {
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
+import { CardIcon } from "@/components/card-icon";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { formatStarCount } from "@/lib/github";
-import { cn, Theme } from "@/lib/utils";
+import { cn, isValidHttpUrl, Theme } from "@/lib/utils";
 
 export interface ResourceCardViewProps {
   author?: string | string[] | null;
@@ -59,7 +60,6 @@ export function ResourceCardView({
   const [isBookmarkHovered, setIsBookmarkHovered] = useState(false);
 
   const cleanOgImage = ogImage?.trim() || "";
-  const cleanFavicon = favicon?.trim() || "";
 
   const [ogState, setOgState] = useState<{ directFallback: boolean; error: boolean; url: string }>({
     directFallback: false,
@@ -72,24 +72,6 @@ export function ResourceCardView({
       directFallback: false,
       error: false,
       url: cleanOgImage,
-    });
-  }
-
-  const [faviconState, setFaviconState] = useState<{
-    directFallback: boolean;
-    error: boolean;
-    url: string;
-  }>({
-    directFallback: false,
-    error: false,
-    url: cleanFavicon,
-  });
-
-  if (faviconState.url !== cleanFavicon) {
-    setFaviconState({
-      directFallback: false,
-      error: false,
-      url: cleanFavicon,
     });
   }
 
@@ -131,13 +113,19 @@ export function ResourceCardView({
 
   const isClickable = Boolean(onCardClick);
 
+  const isValidOg =
+    cleanOgImage.startsWith("/") ||
+    cleanOgImage.startsWith("data:") ||
+    isValidHttpUrl(cleanOgImage);
+
   const isExternalOg =
     Boolean(cleanOgImage) &&
+    isValidOg &&
     (cleanOgImage.startsWith("http://") || cleanOgImage.startsWith("https://")) &&
     !cleanOgImage.startsWith("/api/proxy-image");
 
   const imageSrc =
-    !cleanOgImage || ogState.error
+    !cleanOgImage || ogState.error || !isValidOg
       ? null
       : isExternalOg && !ogState.directFallback
         ? `/api/proxy-image?url=${encodeURIComponent(cleanOgImage)}`
@@ -148,26 +136,6 @@ export function ResourceCardView({
       setOgState((prev) => ({ ...prev, directFallback: true }));
     } else {
       setOgState((prev) => ({ ...prev, error: true }));
-    }
-  };
-
-  const isExternalFavicon =
-    Boolean(cleanFavicon) &&
-    (cleanFavicon.startsWith("http://") || cleanFavicon.startsWith("https://")) &&
-    !cleanFavicon.startsWith("/api/proxy-image");
-
-  const faviconSrc =
-    !cleanFavicon || faviconState.error
-      ? null
-      : isExternalFavicon && !faviconState.directFallback
-        ? `/api/proxy-image?url=${encodeURIComponent(cleanFavicon)}`
-        : cleanFavicon;
-
-  const handleFaviconError = () => {
-    if (isExternalFavicon && !faviconState.directFallback) {
-      setFaviconState((prev) => ({ ...prev, directFallback: true }));
-    } else {
-      setFaviconState((prev) => ({ ...prev, error: true }));
     }
   };
 
@@ -213,40 +181,13 @@ export function ResourceCardView({
       <div className="flex flex-col gap-1.5 px-0.5 pt-3">
         {/* Row 1: Inline favicon + title */}
         <div className="flex min-w-0 items-center gap-2">
-          {/* Small 24px favicon squircle beside the title */}
-          {(() => {
-            const isWhiteTile = iconBg === "light" || iconClassName?.includes("bg-white");
-            const isInverted = iconBg === "invert" || iconClassName?.includes("invert");
-
-            return (
-              <div
-                className={cn(
-                  "flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-[30%] border transition-colors",
-                  isWhiteTile
-                    ? "border-white/80 bg-white p-0.5 text-black shadow-xs"
-                    : "border-primary/50 bg-zinc-800/90 p-0.5",
-                )}
-              >
-                {faviconSrc ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    key={faviconSrc}
-                    src={faviconSrc}
-                    alt=""
-                    loading="lazy"
-                    referrerPolicy="no-referrer"
-                    className={cn(
-                      "h-full w-full rounded-[25%] object-contain",
-                      isInverted && "brightness-125 invert",
-                    )}
-                    onError={handleFaviconError}
-                  />
-                ) : (
-                  <ImageIcon weight="light" className="size-3 text-zinc-600" />
-                )}
-              </div>
-            );
-          })()}
+          <CardIcon
+            alt={title || "Resource icon"}
+            className="size-8 shrink-0"
+            favicon={favicon}
+            iconBg={iconBg}
+            iconClassName={iconClassName}
+          />
 
           <h3
             title={title || ""}
@@ -260,8 +201,7 @@ export function ResourceCardView({
 
         {/* Row 2: Description (2-line clamp) */}
         <p className="line-clamp-2 font-sans text-xs leading-relaxed text-zinc-400 sm:text-sm">
-          {description ||
-            "Tool description preview will appear here. It explains the features, purpose, and utility for developers."}
+          {description || ""}
         </p>
 
         {/* Row 3: Footer — author · stars · action buttons */}

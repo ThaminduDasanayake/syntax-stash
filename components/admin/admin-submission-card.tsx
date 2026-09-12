@@ -85,6 +85,7 @@ export function AdminSubmissionCard({
           <CardIcon
             alt={sub.title}
             favicon={sub.favicon || undefined}
+            iconBg={sub.iconBg}
             className="size-11 shrink-0"
           />
           <div className="min-w-0 flex-1 space-y-1">

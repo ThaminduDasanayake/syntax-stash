@@ -17,6 +17,7 @@ import {
   AuthorSocialFields,
   AuthorSocialValues,
   DetectedFieldSuggestion,
+  FieldCheckmark,
   MediaAssetFields,
   ResourceCardPreview,
   SuggestedAuthorData,
@@ -29,7 +30,7 @@ import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
 import { Submission } from "@/lib/db/schema";
-import { cn } from "@/lib/utils";
+import { cn, isValidHttpUrl } from "@/lib/utils";
 
 import { AdminAuthorDialog } from "./admin-author-dialog";
 import {
@@ -52,6 +53,7 @@ const SUBMISSION_FIELD_LABELS: Record<string, string> = {
   description: "Description",
   favicon: "Favicon URL",
   github: "GitHub Repository",
+  iconBg: "Icon Background / Style",
   ogImage: "OpenGraph Image",
   status: "Moderation Status",
   subtitle: "Subtitle / Tagline",
@@ -220,37 +222,35 @@ export function AdminSubmissionEditForm({
         } = {};
 
         setEditForm((prev) => {
-          const nextTitle = prev.title || data.title || "";
           if (
-            prev.title &&
             data.title &&
+            prev.title &&
             prev.title.trim().toLowerCase() !== data.title.trim().toLowerCase()
           ) {
             newDetected.title = data.title.trim();
           }
 
-          const nextSubtitle = prev.subtitle || data.subtitle || "";
           if (
-            prev.subtitle &&
             data.subtitle &&
+            prev.subtitle &&
             prev.subtitle.trim().toLowerCase() !== data.subtitle.trim().toLowerCase()
           ) {
             newDetected.subtitle = data.subtitle.trim();
+          } else if (!data.subtitle && prev.subtitle && prev.subtitle.trim()) {
+            newDetected.subtitle = "";
           }
 
-          const nextDescription = prev.description || data.description || "";
           if (
-            prev.description &&
             data.description &&
+            prev.description &&
             prev.description.trim().toLowerCase() !== data.description.trim().toLowerCase()
           ) {
             newDetected.description = data.description.trim();
           }
 
-          const nextGithub = prev.github || data.github || "";
           if (
-            prev.github &&
             data.github &&
+            prev.github &&
             prev.github.trim().toLowerCase() !== data.github.trim().toLowerCase()
           ) {
             newDetected.github = data.github.trim();
@@ -258,13 +258,13 @@ export function AdminSubmissionEditForm({
 
           return {
             ...prev,
-            title: nextTitle,
+            title: prev.title || data.title || "",
             category: prev.category || data.category || sub.category,
-            description: nextDescription,
-            favicon: data.favicon || prev.favicon,
-            github: nextGithub,
-            ogImage: data.ogImage || prev.ogImage,
-            subtitle: nextSubtitle,
+            description: prev.description || data.description || "",
+            favicon: prev.favicon || data.favicon || "",
+            github: prev.github || data.github || "",
+            ogImage: prev.ogImage || data.ogImage || "",
+            subtitle: prev.subtitle || data.subtitle || "",
           };
         });
 
@@ -331,8 +331,12 @@ export function AdminSubmissionEditForm({
           {/* Section 1: Resource URL with Live Re-Sync */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                Resource URL <span className="text-destructive">*</span>
+              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                <span>Resource URL</span>
+                <span className="text-destructive">*</span>
+                <FieldCheckmark
+                  checked={Boolean(editForm.url?.trim() && isValidHttpUrl(editForm.url.trim()))}
+                />
               </Label>
               <span className="text-muted-foreground text-[10px]">
                 Scan live site for latest metadata & assets
@@ -371,8 +375,10 @@ export function AdminSubmissionEditForm({
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="space-y-2">
               <div className="flex flex-wrap items-center justify-between gap-1.5">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Title <span className="text-destructive">*</span>
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <span>Title</span>
+                  <span className="text-destructive">*</span>
+                  <FieldCheckmark checked={Boolean(editForm.title?.trim())} />
                 </Label>
                 <DetectedFieldSuggestion
                   currentValue={editForm.title}
@@ -399,8 +405,10 @@ export function AdminSubmissionEditForm({
             </div>
 
             <div className="space-y-2">
-              <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                Category <span className="text-destructive">*</span>
+              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                <span>Category</span>
+                <span className="text-destructive">*</span>
+                <FieldCheckmark checked={Boolean(editForm.category?.trim())} />
               </Label>
               <div className="h-9">
                 <SelectField
@@ -415,8 +423,9 @@ export function AdminSubmissionEditForm({
 
           <div className="space-y-2">
             <div className="flex flex-wrap items-center justify-between gap-1.5">
-              <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                Subtitle / Tagline (Optional)
+              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                <span>Subtitle / Tagline (Optional)</span>
+                <FieldCheckmark checked={Boolean(editForm.subtitle?.trim())} />
               </Label>
               <DetectedFieldSuggestion
                 currentValue={editForm.subtitle}
@@ -444,8 +453,10 @@ export function AdminSubmissionEditForm({
           {/* Section 3: Description */}
           <div className="space-y-2">
             <div className="flex flex-wrap items-center justify-between gap-1.5">
-              <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                Description <span className="text-destructive">*</span>
+              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                <span>Description</span>
+                <span className="text-destructive">*</span>
+                <FieldCheckmark checked={Boolean(editForm.description?.trim())} />
               </Label>
               <DetectedFieldSuggestion
                 currentValue={editForm.description}
@@ -515,8 +526,9 @@ export function AdminSubmissionEditForm({
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <div className="flex flex-wrap items-center justify-between gap-1.5">
-                  <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                    GitHub Repository (Optional)
+                  <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                    <span>GitHub Repository (Optional)</span>
+                    <FieldCheckmark checked={Boolean(editForm.github?.trim())} />
                   </Label>
                   <DetectedFieldSuggestion
                     currentValue={editForm.github}
@@ -543,8 +555,9 @@ export function AdminSubmissionEditForm({
               </div>
 
               <div className="space-y-2">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Canonical Tags (Select Only)
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <span>Canonical Tags (Select Only)</span>
+                  <FieldCheckmark checked={Boolean(editForm.tags?.trim())} />
                 </Label>
                 <TagPicker
                   value={editForm.tags || ""}

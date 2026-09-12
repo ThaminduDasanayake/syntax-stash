@@ -20,6 +20,7 @@ export interface Resource<TCategory extends string = string> extends BaseItem<TC
   createdAt?: Date | string;
   favicon?: string;
   github?: string;
+  iconBg?: "dark" | "light" | "invert" | string | null;
   id?: string;
   ogImage?: string;
   subtitle?: string;

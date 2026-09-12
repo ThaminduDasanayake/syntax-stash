@@ -28,16 +28,34 @@ function SelectTrigger({
   children,
   className,
   size = "default",
+  variant,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Trigger> & {
   size?: "sm" | "default";
+  variant?: "accent" | "default" | "destructive" | "primary" | "rose" | "secondary";
 }) {
+  const triggerVariantStyles = variant
+    ? {
+        accent:
+          "hover:border-accent/50 focus-visible:border-accent focus-visible:ring-accent/30 dark:hover:bg-accent/10",
+        default: "",
+        destructive:
+          "hover:border-destructive/50 focus-visible:border-destructive focus-visible:ring-destructive/30 dark:hover:bg-destructive/10",
+        primary:
+          "hover:border-primary/50 focus-visible:border-primary focus-visible:ring-primary/30 dark:hover:bg-primary/10",
+        rose: "hover:border-rose-500/50 focus-visible:border-rose-500 focus-visible:ring-rose-500/30 dark:hover:bg-rose-500/10",
+        secondary:
+          "hover:border-secondary/50 focus-visible:border-secondary focus-visible:ring-secondary/30 dark:hover:bg-secondary/10",
+      }[variant]
+    : "";
+
   return (
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
       data-size={size}
       className={cn(
         "border-border focus-visible:border-ring focus-visible:ring-ring/70 aria-invalid:border-destructive aria-invalid:ring-destructive/20 data-placeholder:text-muted-foreground dark:bg-input/30 dark:hover:bg-input/50 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 flex w-fit items-center justify-between gap-1.5 rounded-none border bg-transparent py-2 pr-2 pl-2.5 text-sm whitespace-nowrap transition-colors outline-none select-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-3 data-[size=default]:h-8 data-[size=sm]:h-7 data-[size=sm]:rounded-[min(var(--radius-md),10px)] *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        triggerVariantStyles,
         className,
       )}
       {...props}
@@ -101,13 +119,32 @@ function SelectLabel({ className, ...props }: React.ComponentProps<typeof Select
 function SelectItem({
   children,
   className,
+  variant = "default",
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Item>) {
+}: React.ComponentProps<typeof SelectPrimitive.Item> & {
+  variant?: "accent" | "default" | "destructive" | "primary" | "rose" | "secondary";
+}) {
+  const variantStyles = {
+    accent:
+      "focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground",
+    default:
+      "focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground",
+    destructive:
+      "focus:bg-destructive focus:text-destructive-foreground not-data-[variant=destructive]:focus:**:text-destructive-foreground",
+    primary:
+      "focus:bg-primary focus:text-primary-foreground not-data-[variant=destructive]:focus:**:text-primary-foreground",
+    rose: "focus:bg-rose-500 focus:text-white not-data-[variant=destructive]:focus:**:text-white",
+    secondary:
+      "focus:bg-secondary focus:text-secondary-foreground not-data-[variant=destructive]:focus:**:text-secondary-foreground",
+  }[variant];
+
   return (
     <SelectPrimitive.Item
       data-slot="select-item"
+      data-variant={variant}
       className={cn(
-        "focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground relative flex w-full cursor-default items-center gap-1.5 rounded-none py-1 pr-8 pl-1.5 text-sm outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
+        "relative flex w-full cursor-default items-center gap-1.5 rounded-none py-1 pr-8 pl-1.5 text-sm outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
+        variantStyles,
         className,
       )}
       {...props}

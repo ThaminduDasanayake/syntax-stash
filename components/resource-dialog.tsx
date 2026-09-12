@@ -424,6 +424,11 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
                 alt={activeTool.title}
                 className={activeTool.className}
                 favicon={activeTool.favicon}
+                iconBg={
+                  "iconBg" in activeTool
+                    ? (activeTool.iconBg as "dark" | "light" | "invert")
+                    : undefined
+                }
               />
             </div>
           </div>
@@ -435,6 +440,11 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
               alt={activeTool.title}
               className={activeTool.className}
               favicon={activeTool.favicon}
+              iconBg={
+                "iconBg" in activeTool
+                  ? (activeTool.iconBg as "dark" | "light" | "invert")
+                  : undefined
+              }
             />
           </div>
 

@@ -7,6 +7,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 export interface DetectedFieldSuggestionProps {
   currentValue?: string | null;
   detectedValue?: string | null;
+  emptyLabel?: string;
   onApply: (val: string) => void;
   onDismiss: () => void;
 }
@@ -14,10 +15,42 @@ export interface DetectedFieldSuggestionProps {
 export function DetectedFieldSuggestion({
   currentValue,
   detectedValue,
+  emptyLabel = "No subtitle on live site",
   onApply,
   onDismiss,
 }: DetectedFieldSuggestionProps) {
-  if (!detectedValue || !detectedValue.trim()) return null;
+  if (detectedValue === undefined || detectedValue === null) return null;
+
+  // Case 1: Empty string detected when current value exists -> Notifies that the field was removed on live site
+  if (detectedValue === "") {
+    if (!currentValue || !currentValue.trim()) return null;
+
+    return (
+      <div className="animate-in fade-in inline-flex max-w-full items-center gap-1.5 rounded border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 font-mono text-[11px] text-amber-600 dark:text-amber-400">
+        <span className="truncate">
+          Live site: <strong className="font-semibold">{emptyLabel}</strong>
+        </span>
+        <button
+          type="button"
+          onClick={() => onApply("")}
+          className="shrink-0 cursor-pointer font-bold underline hover:opacity-80"
+        >
+          Remove
+        </button>
+        <button
+          type="button"
+          onClick={onDismiss}
+          className="text-muted-foreground hover:text-foreground ml-0.5 shrink-0 cursor-pointer"
+          title="Keep current value"
+        >
+          ✕
+        </button>
+      </div>
+    );
+  }
+
+  // Case 2: Non-empty detected value
+  if (!detectedValue.trim()) return null;
   if (currentValue && currentValue.trim().toLowerCase() === detectedValue.trim().toLowerCase()) {
     return null;
   }

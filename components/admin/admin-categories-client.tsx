@@ -5,16 +5,15 @@ import {
   CheckIcon,
   CopyIcon,
   FoldersIcon,
-  MagnifyingGlassIcon,
   PencilSimpleIcon,
   PlusIcon,
   SlidersHorizontalIcon,
   TrashIcon,
-  XIcon,
 } from "@phosphor-icons/react";
 import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
 
+import { DuplicateNotice } from "@/components/submissions/duplicate-url-notice";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -36,6 +35,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { InputField } from "@/components/ui/input-field";
+import { SearchInput } from "@/components/ui/search-input";
 import { SelectField } from "@/components/ui/select-field";
 import {
   Table,
@@ -97,6 +97,20 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
   const [formData, setFormData] = useState({
     name: "",
   });
+
+  const duplicateCategory = useMemo(() => {
+    const rawName = formData.name.trim();
+    if (!rawName) return null;
+    const targetSlug = slugify(rawName);
+    const targetLower = rawName.toLowerCase();
+    return (
+      categories.find(
+        (c) =>
+          c.id !== editingCategory?.id &&
+          (c.slug === targetSlug || c.name.toLowerCase() === targetLower),
+      ) || null
+    );
+  }, [categories, editingCategory?.id, formData.name]);
 
   const filteredCategories = useMemo(() => {
     let result = categories;
@@ -261,6 +275,11 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
       return;
     }
 
+    if (duplicateCategory) {
+      toast.error(`Category "${duplicateCategory.name}" already exists.`);
+      return;
+    }
+
     if (editingCategory) {
       const diffs = computeFieldChanges(editingCategory, formData, CATEGORY_FIELD_LABELS);
       setPendingChanges(diffs);
@@ -303,25 +322,14 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
       <div className="border-line bg-surface/50 mb-6 space-y-4 rounded-lg border p-4 text-xs">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           {/* Search */}
-          <div className="relative flex-1">
-            <InputField
+          <div className="flex-1">
+            <SearchInput
               placeholder="Search categories by name or slug..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              prefix={<MagnifyingGlassIcon className="text-muted-foreground size-4" />}
-              containerClassName="h-9"
+              onClear={() => setSearchQuery("")}
               className="font-mono text-xs"
             />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => setSearchQuery("")}
-                className="text-muted-foreground hover:text-foreground absolute top-1/2 right-2.5 -translate-y-1/2 p-0.5"
-                title="Clear search"
-              >
-                <XIcon className="size-3.5" />
-              </button>
-            )}
           </div>
 
           {/* Sort Dropdown */}
@@ -333,6 +341,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
               onValueChange={setSortBy}
               options={SORT_OPTIONS}
               triggerClassName="h-9 font-mono text-xs min-w-[170px]"
+              variant="secondary"
             />
           </div>
 
@@ -499,7 +508,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
             </DialogDescription>
           </DialogHeader>
 
-          <form onSubmit={handleSubmit} className="space-y-4 pt-2 text-xs">
+          <form onSubmit={handleSubmit} className="w-full min-w-0 space-y-4 pt-2 text-xs">
             {/* Name */}
             <div>
               <InputField
@@ -519,6 +528,23 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
               </span>
               <span className="text-foreground font-bold">/{slugify(formData.name) || "slug"}</span>
             </div>
+
+            {duplicateCategory && (
+              <DuplicateNotice
+                type="category"
+                title="This category is already added!"
+                description={
+                  <>
+                    Already listed as{" "}
+                    <strong className="font-bold underline">{duplicateCategory.name}</strong> (
+                    <code>/{duplicateCategory.slug}</code>)
+                    {duplicateCategory.toolCount > 0
+                      ? ` with ${duplicateCategory.toolCount} assigned resource(s).`
+                      : "."}
+                  </>
+                }
+              />
+            )}
 
             {/* Footer Actions */}
             <DialogFooter className="mt-4 pt-2">

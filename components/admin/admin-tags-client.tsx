@@ -4,17 +4,16 @@ import {
   ArrowsClockwiseIcon,
   CheckIcon,
   FunnelIcon,
-  MagnifyingGlassIcon,
   PencilSimpleIcon,
   PlusIcon,
   StarIcon,
   TagIcon,
   TrashIcon,
-  XIcon,
 } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
+import { DuplicateNotice } from "@/components/submissions/duplicate-url-notice";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -37,6 +36,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { InputField } from "@/components/ui/input-field";
+import { SearchInput } from "@/components/ui/search-input";
 import { SelectField } from "@/components/ui/select-field";
 import {
   Table,
@@ -111,6 +111,21 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
     slug: "",
   });
   const [autoSlug, setAutoSlug] = useState(true);
+
+  const duplicateTag = useMemo(() => {
+    const rawName = formData.name.trim();
+    const rawSlug = formData.slug.trim();
+    if (!rawName && !rawSlug) return null;
+    const targetSlug = rawSlug ? normalizeTag(rawSlug) : normalizeTag(rawName);
+    const targetLower = rawName.toLowerCase();
+    return (
+      tags.find(
+        (t) =>
+          t.id !== editingTag?.id &&
+          (t.slug === targetSlug || (targetLower && t.name.toLowerCase() === targetLower)),
+      ) || null
+    );
+  }, [editingTag?.id, formData.name, formData.slug, tags]);
 
   // Filter & Sort
   const filteredAndSortedTags = useMemo(() => {
@@ -330,6 +345,11 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
       return;
     }
 
+    if (duplicateTag) {
+      toast.error(`Tag "${duplicateTag.name}" already exists.`);
+      return;
+    }
+
     if (editingTag) {
       const diffs = computeFieldChanges(editingTag, formData, TAG_FIELD_LABELS);
       setPendingChanges(diffs);
@@ -373,25 +393,14 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
       <div className="border-line bg-surface/50 mb-6 space-y-4 rounded-lg border p-4 text-xs">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           {/* Search */}
-          <div className="relative flex-1">
-            <InputField
+          <div className="flex-1">
+            <SearchInput
               placeholder="Search tags by name or slug..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              prefix={<MagnifyingGlassIcon className="text-muted-foreground size-4" />}
-              containerClassName="h-9"
+              onClear={() => setSearchQuery("")}
               className="font-mono text-xs"
             />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => setSearchQuery("")}
-                className="text-muted-foreground hover:text-foreground absolute top-1/2 right-2.5 -translate-y-1/2 p-0.5"
-                title="Clear search"
-              >
-                <XIcon className="size-3.5" />
-              </button>
-            )}
           </div>
 
           {/* Action Buttons */}
@@ -425,6 +434,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
                 onValueChange={(val) => setFilterMode(val)}
                 options={FILTER_OPTIONS}
                 triggerClassName="h-8 font-mono text-[11px]"
+                variant="primary"
               />
             </div>
 
@@ -435,6 +445,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
                 onValueChange={(val) => setSortBy(val)}
                 options={SORT_OPTIONS}
                 triggerClassName="h-8 font-mono text-[11px]"
+                variant="secondary"
               />
             </div>
           </div>
@@ -565,7 +576,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
             </DialogDescription>
           </DialogHeader>
 
-          <form onSubmit={handleSubmit} className="space-y-4 pt-2 text-xs">
+          <form onSubmit={handleSubmit} className="w-full min-w-0 space-y-4 pt-2 text-xs">
             <div>
               <InputField
                 label="Tag Name *"
@@ -617,6 +628,23 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
                 Featured Tag (highlighted prominently in filters and search)
               </label>
             </div>
+
+            {duplicateTag && (
+              <DuplicateNotice
+                type="tag"
+                title="This tag is already added!"
+                description={
+                  <>
+                    Already listed as{" "}
+                    <strong className="font-bold underline">#{duplicateTag.name}</strong> (
+                    <code>{duplicateTag.slug}</code>)
+                    {duplicateTag.toolCount > 0
+                      ? ` with ${duplicateTag.toolCount} assigned resource(s).`
+                      : "."}
+                  </>
+                }
+              />
+            )}
 
             <DialogFooter className="mt-4 pt-2">
               <Button

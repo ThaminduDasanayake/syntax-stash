@@ -19,6 +19,9 @@ import {
   AuthorSocialValues,
   CandidateOption,
   DetectedFieldSuggestion,
+  DuplicateUrlItem,
+  DuplicateUrlNotice,
+  FieldCheckmark,
   MediaAssetFields,
   ResourceCardPreview,
   SuggestedAuthorData,
@@ -30,6 +33,7 @@ import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
+import { isValidHttpUrl } from "@/lib/utils";
 
 import { AdminAuthorDialog } from "./admin-author-dialog";
 import {
@@ -46,6 +50,7 @@ const RESOURCE_FIELD_LABELS: Record<string, string> = {
   description: "Description",
   favicon: "Favicon URL",
   github: "GitHub Repository URL",
+  iconBg: "Icon Background / Style",
   ogImage: "OpenGraph Image",
   subtitle: "Subtitle / Tagline",
   tags: "Canonical Tags",
@@ -101,6 +106,10 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
     subtitle?: string;
     title?: string;
   }>({});
+  const [duplicateNotice, setDuplicateNotice] = useState<{
+    item: DuplicateUrlItem;
+    type: "resource" | "submission";
+  } | null>(null);
 
   // Author Creation Modal State
   const [isCreateAuthorOpen, setIsCreateAuthorOpen] = useState(false);
@@ -186,6 +195,55 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
         } = {};
 
         setFormData((prev) => {
+          if (isEdit) {
+            // In edit mode: keep all existing fields untouched; suggest detected values if different
+            if (
+              data.title &&
+              prev.title &&
+              prev.title.trim().toLowerCase() !== data.title.trim().toLowerCase()
+            ) {
+              newDetected.title = data.title.trim();
+            }
+
+            if (
+              data.subtitle &&
+              prev.subtitle &&
+              prev.subtitle.trim().toLowerCase() !== data.subtitle.trim().toLowerCase()
+            ) {
+              newDetected.subtitle = data.subtitle.trim();
+            } else if (!data.subtitle && prev.subtitle && prev.subtitle.trim()) {
+              newDetected.subtitle = "";
+            }
+
+            if (
+              data.description &&
+              prev.description &&
+              prev.description.trim().toLowerCase() !== data.description.trim().toLowerCase()
+            ) {
+              newDetected.description = data.description.trim();
+            }
+
+            if (
+              data.github &&
+              prev.github &&
+              prev.github.trim().toLowerCase() !== data.github.trim().toLowerCase()
+            ) {
+              newDetected.github = data.github.trim();
+            }
+
+            return {
+              ...prev,
+              title: prev.title || data.title || "",
+              category: prev.category || data.category || defaultCategory,
+              description: prev.description || data.description || "",
+              favicon: prev.favicon || data.favicon || "",
+              github: prev.github || data.github || "",
+              ogImage: prev.ogImage || data.ogImage || "",
+              subtitle: prev.subtitle || data.subtitle || "",
+            };
+          }
+
+          // In create mode: populate empty fields or suggest updates
           const nextTitle = prev.title || data.title || "";
           if (
             prev.title &&
@@ -202,6 +260,8 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
             prev.subtitle.trim().toLowerCase() !== data.subtitle.trim().toLowerCase()
           ) {
             newDetected.subtitle = data.subtitle.trim();
+          } else if (!data.subtitle && prev.subtitle && prev.subtitle.trim()) {
+            newDetected.subtitle = "";
           }
 
           const nextDescription = prev.description || data.description || "";
@@ -227,15 +287,33 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
             title: nextTitle,
             category: prev.category || data.category || defaultCategory,
             description: nextDescription,
-            favicon: data.favicon || prev.favicon || "",
+            favicon: prev.favicon || data.favicon || "",
             github: nextGithub,
-            ogImage: data.ogImage || prev.ogImage || "",
+            ogImage: prev.ogImage || data.ogImage || "",
             subtitle: nextSubtitle,
           };
         });
 
         setDetectedUpdates(newDetected);
-        toast.success("Metadata detected successfully!");
+
+        if (data.existingResource && (!isEdit || data.existingResource.id !== formData.id)) {
+          setDuplicateNotice({
+            item: data.existingResource,
+            type: "resource",
+          });
+          toast.warning(
+            `A resource with this URL already exists: "${data.existingResource.title}" (${data.existingResource.category})`,
+          );
+        } else if (data.existingSubmission) {
+          setDuplicateNotice({
+            item: data.existingSubmission,
+            type: "submission",
+          });
+          toast.info(`This URL has a pending submission: "${data.existingSubmission.title}"`);
+        } else {
+          setDuplicateNotice(null);
+          toast.success("Metadata detected successfully!");
+        }
       } else {
         toast.error(data.error || "Failed to auto-detect metadata.");
       }
@@ -410,8 +488,12 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
             {/* Section 1: Resource URL with Auto-Detect */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Resource URL <span className="text-destructive">*</span>
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <span>Resource URL</span>
+                  <span className="text-destructive">*</span>
+                  <FieldCheckmark
+                    checked={Boolean(formData.url?.trim() && isValidHttpUrl(formData.url.trim()))}
+                  />
                 </Label>
                 <span className="text-muted-foreground text-[10px]">
                   Scan live site for latest metadata & assets
@@ -444,14 +526,24 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
                   {isDetecting ? "Detecting..." : "Auto-Detect"}
                 </Button>
               </div>
+
+              {duplicateNotice && (
+                <DuplicateUrlNotice
+                  item={duplicateNotice.item}
+                  type={duplicateNotice.type}
+                  onDismiss={() => setDuplicateNotice(null)}
+                />
+              )}
             </div>
 
             {/* Section 2: Title, Category, & Subtitle */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <div className="flex flex-wrap items-center justify-between gap-1.5">
-                  <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                    Title <span className="text-destructive">*</span>
+                  <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                    <span>Title</span>
+                    <span className="text-destructive">*</span>
+                    <FieldCheckmark checked={Boolean(formData.title?.trim())} />
                   </Label>
                   <DetectedFieldSuggestion
                     currentValue={formData.title}
@@ -478,8 +570,10 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
               </div>
 
               <div className="space-y-2">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Category <span className="text-destructive">*</span>
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <span>Category</span>
+                  <span className="text-destructive">*</span>
+                  <FieldCheckmark checked={Boolean(formData.category?.trim())} />
                 </Label>
                 <div className="h-9">
                   <SelectField
@@ -494,8 +588,9 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
 
             <div className="space-y-2">
               <div className="flex flex-wrap items-center justify-between gap-1.5">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Subtitle / Tagline (Optional)
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <span>Subtitle / Tagline (Optional)</span>
+                  <FieldCheckmark checked={Boolean(formData.subtitle?.trim())} />
                 </Label>
                 <DetectedFieldSuggestion
                   currentValue={formData.subtitle}
@@ -523,8 +618,10 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
             {/* Section 3: Description */}
             <div className="space-y-2">
               <div className="flex flex-wrap items-center justify-between gap-1.5">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  Description <span className="text-destructive">*</span>
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <span>Description</span>
+                  <span className="text-destructive">*</span>
+                  <FieldCheckmark checked={Boolean(formData.description?.trim())} />
                 </Label>
                 <DetectedFieldSuggestion
                   currentValue={formData.description}
@@ -563,8 +660,9 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
             {/* Section 5: GitHub Repository URL */}
             <div className="space-y-2">
               <div className="flex flex-wrap items-center justify-between gap-1.5">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                  GitHub Repository URL (Optional)
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <span>GitHub Repository URL (Optional)</span>
+                  <FieldCheckmark checked={Boolean(formData.github?.trim())} />
                 </Label>
                 <DetectedFieldSuggestion
                   currentValue={formData.github}
@@ -615,8 +713,9 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
 
             {/* Section 7: Canonical Tags */}
             <div className="space-y-2">
-              <Label className="text-foreground font-mono text-xs font-bold uppercase">
-                Canonical Tags
+              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                <span>Canonical Tags</span>
+                <FieldCheckmark checked={Boolean(formData.tags?.trim())} />
               </Label>
               <TagPicker
                 allowCustom={false}

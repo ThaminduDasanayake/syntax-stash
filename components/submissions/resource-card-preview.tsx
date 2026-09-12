@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { ResourceCardView } from "@/components/resource-card-view";
+import { useDebounce } from "@/hooks/use-debounce";
 import { cn } from "@/lib/utils";
 
 export interface ResourceCardPreviewProps {
@@ -36,6 +37,8 @@ export function ResourceCardPreview({
   url,
 }: ResourceCardPreviewProps) {
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const debouncedOgImage = useDebounce(ogImage, 400);
+  const debouncedFavicon = useDebounce(favicon, 400);
 
   return (
     <div className={cn("border-line bg-paper/50 border p-5 font-mono text-xs", className)}>
@@ -49,10 +52,10 @@ export function ResourceCardPreview({
           author={author}
           category={category}
           description={description}
-          favicon={favicon}
+          favicon={debouncedFavicon}
           iconBg={iconBg}
           iconClassName={iconClassName}
-          ogImage={ogImage}
+          ogImage={debouncedOgImage}
           isBookmarked={isBookmarked}
           onBookmarkClick={() => setIsBookmarked((prev) => !prev)}
           showTags={false}

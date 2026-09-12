@@ -101,8 +101,8 @@ export function EditableCandidateInput({
                           setOpen(false);
                         }}
                         className={cn(
-                          "hover:bg-accent flex w-full items-center gap-2.5 rounded p-2 text-left transition-colors",
-                          isSelected && "bg-accent/70 ring-primary/40 ring-1",
+                          "hover:border-primary flex w-full items-center gap-2.5 rounded border p-2 text-left transition-colors hover:cursor-pointer",
+                          isSelected && "bg-primary",
                         )}
                       >
                         {/* Optional Custom Preview */}
@@ -111,22 +111,37 @@ export function EditableCandidateInput({
                         {/* Text and URL details */}
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center justify-between gap-1">
-                            <span className="text-foreground truncate text-[11px] font-bold">
+                            <span
+                              className={cn(
+                                "text-foreground truncate text-[11px] font-bold",
+                                isSelected && "text-background",
+                              )}
+                            >
                               {option.label}
                             </span>
                             {option.type && (
-                              <span className="bg-ink/10 dark:bg-paper/10 text-muted-foreground shrink-0 rounded px-1 text-[9px] font-semibold uppercase">
+                              <span
+                                className={cn(
+                                  "bg-ink/10 text-muted-foreground shrink-0 rounded px-1 text-[9px] font-semibold uppercase",
+                                  isSelected && "text-background bg-background/20",
+                                )}
+                              >
                                 {option.type}
                               </span>
                             )}
                           </div>
-                          <span className="text-muted-foreground block truncate text-[10px]">
+                          <span
+                            className={cn(
+                              "text-muted-foreground block truncate text-[10px]",
+                              isSelected && "text-background",
+                            )}
+                          >
                             {option.url}
                           </span>
                         </div>
 
                         {isSelected && (
-                          <CheckIcon className="text-primary size-3.5 shrink-0" weight="bold" />
+                          <CheckIcon className="text-background size-3.5 shrink-0" weight="bold" />
                         )}
                       </button>
                     );

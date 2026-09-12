@@ -1,11 +1,11 @@
 "use client";
 
-import { ArrowRightIcon, GlobeIcon, MagnifyingGlassIcon, XLogoIcon } from "@phosphor-icons/react";
+import { ArrowRightIcon, GlobeIcon, XLogoIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
-import { Input } from "@/components/ui/input";
+import { SearchInput } from "@/components/ui/search-input";
 import type { AuthorWithResources } from "@/lib/authors";
 
 interface AuthorsDirectoryProps {
@@ -30,16 +30,14 @@ export function AuthorsDirectory({ authors }: AuthorsDirectoryProps) {
     <div className="card-body">
       <div className="section-inner w-full">
         {/* Search Bar */}
-        <div className="relative mb-10 w-full max-w-md">
-          <MagnifyingGlassIcon className="text-ink-2 pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2" />
-          <Input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search authors by name, category, or tool..."
-            className="border-ink/40 bg-background pl-9 font-mono text-xs"
-          />
-        </div>
+        <SearchInput
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onClear={() => setSearch("")}
+          placeholder="Search authors by name, category, or tool..."
+          containerClassName="mb-10 max-w-md"
+          className="font-mono text-xs"
+        />
 
         {/* Results Counter */}
         <div className="border-b-line text-muted-foreground mb-6 flex w-full items-center justify-between border-b pb-3 font-mono text-xs">
@@ -99,7 +97,7 @@ export function AuthorsDirectory({ authors }: AuthorsDirectoryProps) {
 
                 {/* Footer with links and view action */}
                 <div className="border-t-line/60 mt-5 flex items-center justify-between border-t pt-3 font-mono text-[11px]">
-                  <div className="text-muted-foreground flex items-center gap-2">
+                  <div className="text-foreground flex items-center gap-2">
                     {author.links?.website && <GlobeIcon className="size-3.5" />}
                     {author.links?.github && (
                       <Image
@@ -107,7 +105,7 @@ export function AuthorsDirectory({ authors }: AuthorsDirectoryProps) {
                         alt="GitHub"
                         width={14}
                         height={14}
-                        className="size-3.5 opacity-70 dark:invert"
+                        className="size-3.5"
                       />
                     )}
                     {author.links?.twitter && <XLogoIcon weight="bold" className="size-3.5" />}

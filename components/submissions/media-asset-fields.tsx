@@ -5,9 +5,11 @@ import { useState } from "react";
 
 import { CardIcon } from "@/components/card-icon";
 import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
+import { useDebounce } from "@/hooks/use-debounce";
+import { cn, isValidHttpUrl } from "@/lib/utils";
 
 import { CandidateOption, EditableCandidateInput } from "./editable-candidate-input";
+import { FieldCheckmark } from "./field-checkmark";
 
 export type IconBgOption = "dark" | "light" | "invert";
 
@@ -25,7 +27,8 @@ export interface MediaAssetFieldsProps {
 }
 
 function OgImagePreviewBanner({ ogImage }: { ogImage: string }) {
-  const cleanOg = ogImage.trim();
+  const debouncedOg = useDebounce(ogImage, 400);
+  const cleanOg = (debouncedOg || "").trim();
 
   const [state, setState] = useState<{ directFallback: boolean; error: boolean; url: string }>({
     directFallback: false,
@@ -41,8 +44,12 @@ function OgImagePreviewBanner({ ogImage }: { ogImage: string }) {
     });
   }
 
+  const isValidUrl =
+    cleanOg.startsWith("/") || cleanOg.startsWith("data:") || isValidHttpUrl(cleanOg);
+
   const isExternal =
     Boolean(cleanOg) &&
+    isValidUrl &&
     (cleanOg.startsWith("http://") || cleanOg.startsWith("https://")) &&
     !cleanOg.startsWith("/api/proxy-image");
 
@@ -62,7 +69,7 @@ function OgImagePreviewBanner({ ogImage }: { ogImage: string }) {
   return (
     <div className="border-line bg-paper/60 mt-2.5 overflow-hidden rounded border p-3">
       <div className="border-line relative aspect-[1.91/1] w-full overflow-hidden rounded border bg-black/5 dark:bg-black/30">
-        {!state.error ? (
+        {!state.error && isValidUrl && cleanOg ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             key={currentSrc}
@@ -76,7 +83,13 @@ function OgImagePreviewBanner({ ogImage }: { ogImage: string }) {
         ) : (
           <div className="flex h-full w-full flex-col items-center justify-center gap-1.5 text-zinc-500">
             <WarningCircleIcon className="size-6 text-amber-500 opacity-80" />
-            <span className="text-[10px]">Unable to load preview from this URL</span>
+            <span className="text-[10px]">
+              {!cleanOg
+                ? "No image specified"
+                : !isValidUrl
+                  ? "Invalid image URL"
+                  : "Unable to load preview from this URL"}
+            </span>
           </div>
         )}
       </div>
@@ -84,7 +97,7 @@ function OgImagePreviewBanner({ ogImage }: { ogImage: string }) {
         <span className="text-muted-foreground text-[10px] font-bold tracking-wider uppercase">
           OG Image Banner Preview
         </span>
-        {state.error && (
+        {(state.error || (cleanOg && !isValidUrl)) && (
           <span className="text-[10px] font-semibold text-amber-600 dark:text-amber-400">
             Check image URL
           </span>
@@ -106,7 +119,8 @@ export function MediaAssetFields({
   onIconBgChange,
   onOgImageChange,
 }: MediaAssetFieldsProps) {
-  const cleanFavicon = favicon?.trim() || "";
+  const debouncedFavicon = useDebounce(favicon, 400);
+  const cleanFavicon = debouncedFavicon?.trim() || "";
   const cleanOg = ogImage?.trim() || "";
 
   return (
@@ -124,8 +138,16 @@ export function MediaAssetFields({
         {/* Favicon URL Section */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <Label className="text-foreground font-mono text-xs font-bold uppercase">
-              Favicon URL
+            <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+              <span>Favicon URL</span>
+              <FieldCheckmark
+                checked={Boolean(
+                  cleanFavicon &&
+                  (cleanFavicon.startsWith("/") ||
+                    cleanFavicon.startsWith("data:") ||
+                    isValidHttpUrl(cleanFavicon)),
+                )}
+              />
             </Label>
           </div>
           <div className="h-9">
@@ -142,17 +164,17 @@ export function MediaAssetFields({
                     alt="current favicon"
                     favicon={cleanFavicon}
                     iconBg={iconBg}
-                    className="size-6 shrink-0"
+                    className="size-6 shrink-0 rounded-[30%]"
                   />
                 ) : null
               }
               renderPreview={(option) => (
-                <div className="border-line bg-paper/60 grid size-6 place-items-center rounded border">
+                <div className="bg-paper/60 grid size-6 place-items-center overflow-hidden rounded-[30%]">
                   <CardIcon
                     alt="favicon option"
                     favicon={option.url}
                     iconBg={iconBg}
-                    className="size-4"
+                    className="size-6 rounded-[30%]"
                   />
                 </div>
               )}
@@ -213,8 +235,16 @@ export function MediaAssetFields({
         {/* OG Image URL Section */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <Label className="text-foreground font-mono text-xs font-bold uppercase">
-              OG Image URL
+            <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+              <span>OG Image URL</span>
+              <FieldCheckmark
+                checked={Boolean(
+                  cleanOg &&
+                  (cleanOg.startsWith("/") ||
+                    cleanOg.startsWith("data:") ||
+                    isValidHttpUrl(cleanOg)),
+                )}
+              />
             </Label>
           </div>
           <div className="h-9">

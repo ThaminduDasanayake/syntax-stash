@@ -2,13 +2,17 @@
 
 import { CheckIcon, GlobeIcon, XLogoIcon } from "@phosphor-icons/react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import {
+  AuthorOption,
+  fetchAuthorList,
   invalidateAuthorCache,
   registerNewAuthorLocally,
 } from "@/components/submissions/author-combobox";
+import { DuplicateNotice } from "@/components/submissions/duplicate-url-notice";
+import { FieldCheckmark } from "@/components/submissions/field-checkmark";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,7 +24,7 @@ import {
 } from "@/components/ui/dialog";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
-import { slugifyAuthor } from "@/lib/utils";
+import { isValidHttpUrl, slugifyAuthor } from "@/lib/utils";
 
 import { AdminAuthorItem } from "./admin-authors-client";
 import {
@@ -42,6 +46,7 @@ const AUTHOR_FIELD_LABELS: Record<string, string> = {
 
 export interface AdminAuthorDialogProps {
   author?: AdminAuthorItem | Partial<AdminAuthorItem> | null;
+  existingAuthors?: Array<{ id?: string; name: string; slug: string }>;
   initialName?: string;
   onCreated?: (newAuthor: AdminAuthorItem) => void;
   onOpenChange: (open: boolean) => void;
@@ -51,6 +56,7 @@ export interface AdminAuthorDialogProps {
 
 export function AdminAuthorDialog({
   author,
+  existingAuthors,
   initialName = "",
   onCreated,
   onOpenChange,
@@ -73,6 +79,38 @@ export function AdminAuthorDialog({
   const [isWorking, setIsWorking] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
+  const [loadedAuthors, setLoadedAuthors] = useState<AuthorOption[]>([]);
+
+  useEffect(() => {
+    if (open && (!existingAuthors || existingAuthors.length === 0)) {
+      fetchAuthorList().then((list) => {
+        setLoadedAuthors(list);
+      });
+    }
+  }, [existingAuthors, open]);
+
+  const authorPool = (
+    existingAuthors && existingAuthors.length > 0 ? existingAuthors : loadedAuthors
+  ) as Array<{
+    id?: string;
+    name: string;
+    slug: string;
+  }>;
+
+  const duplicateAuthor = useMemo(() => {
+    const rawName = formData.name.trim();
+    const rawSlug = formData.slug.trim();
+    if (!rawName && !rawSlug) return null;
+    const targetSlug = rawSlug ? slugifyAuthor(rawSlug) : slugifyAuthor(rawName);
+    const targetLower = rawName.toLowerCase();
+    return (
+      authorPool.find(
+        (a) =>
+          a.id !== author?.id &&
+          (a.slug === targetSlug || (targetLower && a.name.toLowerCase() === targetLower)),
+      ) || null
+    );
+  }, [author?.id, authorPool, formData.name, formData.slug]);
 
   useEffect(() => {
     if (open) {
@@ -195,6 +233,11 @@ export function AdminAuthorDialog({
       return;
     }
 
+    if (duplicateAuthor) {
+      toast.error(`Author "${duplicateAuthor.name}" already exists.`);
+      return;
+    }
+
     if (isEdit && author) {
       const diffs = computeFieldChanges(author, formData, AUTHOR_FIELD_LABELS);
       setPendingChanges(diffs);
@@ -206,7 +249,7 @@ export function AdminAuthorDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="border-line bg-paper max-h-[90vh] min-w-2xl overflow-y-auto font-mono text-xs">
+      <DialogContent className="border-line bg-paper max-h-[90vh] overflow-y-auto font-mono text-xs sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle className="text-foreground text-base font-bold uppercase">
             {isEdit ? `Edit Author: ${author?.name || formData.name}` : "Create New Author"}
@@ -218,21 +261,31 @@ export function AdminAuthorDialog({
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4 pt-2 text-xs">
+        <form onSubmit={handleSubmit} className="w-full min-w-0 space-y-4 pt-2 text-xs">
           {/* Row 1: Name and Slug Side-by-Side */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <InputField
-              label="Author / Creator Name *"
-              placeholder="e.g. Vercel or Lee Robinson"
-              value={formData.name}
-              onChange={(e) => handleNameChange(e.target.value)}
-              required
-              className="font-mono text-xs"
-            />
+            <div className="space-y-2">
+              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                <span>Author / Creator Name</span>
+                <span className="text-destructive">*</span>
+                <FieldCheckmark checked={Boolean(formData.name.trim())} />
+              </Label>
+              <InputField
+                placeholder="e.g. Vercel or Lee Robinson"
+                value={formData.name}
+                onChange={(e) => handleNameChange(e.target.value)}
+                required
+                className="font-mono text-xs"
+              />
+            </div>
 
             <div className="space-y-2">
               <div className="mb-2 flex items-center justify-between">
-                <Label>Slug *</Label>
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <span>Slug</span>
+                  <span className="text-destructive">*</span>
+                  <FieldCheckmark checked={Boolean(formData.slug.trim())} />
+                </Label>
                 {!isEdit && (
                   <button
                     type="button"
@@ -256,12 +309,33 @@ export function AdminAuthorDialog({
             </div>
           </div>
 
+          {duplicateAuthor && (
+            <DuplicateNotice
+              type="author"
+              title="This author is already added!"
+              description={
+                <>
+                  Already listed as{" "}
+                  <strong className="font-bold underline">{duplicateAuthor.name}</strong> (
+                  <code>/{duplicateAuthor.slug}</code>).
+                </>
+              }
+            />
+          )}
+
           {/* URLs Sequentially One After the Other with Icons in Labels */}
           <div className="border-line/60 space-y-3.5 border-t pt-3">
             <div className="space-y-1.5">
               <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
                 <GlobeIcon className="text-muted-foreground size-4" />
                 <span>Website / Portfolio URL</span>
+                <FieldCheckmark
+                  checked={Boolean(
+                    formData.website.trim() &&
+                    (formData.website.trim().startsWith("/") ||
+                      isValidHttpUrl(formData.website.trim())),
+                  )}
+                />
               </Label>
               <InputField
                 placeholder="https://example.com"
@@ -275,6 +349,7 @@ export function AdminAuthorDialog({
               <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
                 <Image src="/github.svg" alt="GitHub" width={16} height={16} />
                 <span>GitHub (Username or URL)</span>
+                <FieldCheckmark checked={Boolean(formData.github.trim())} />
               </Label>
               <InputField
                 placeholder="https://github.com/username"
@@ -288,6 +363,7 @@ export function AdminAuthorDialog({
               <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
                 <XLogoIcon weight="bold" className="text-muted-foreground size-4" />
                 <span>Twitter / X (@username or URL)</span>
+                <FieldCheckmark checked={Boolean(formData.twitter.trim())} />
               </Label>
               <InputField
                 placeholder="@username or https://x.com/..."
@@ -301,6 +377,7 @@ export function AdminAuthorDialog({
               <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
                 <Image src="/linkedin.svg" alt="LinkedIn" width={16} height={16} />
                 <span>LinkedIn (Username or URL)</span>
+                <FieldCheckmark checked={Boolean(formData.linkedin.trim())} />
               </Label>
               <InputField
                 placeholder="username or https://linkedin.com/in/..."
@@ -314,6 +391,7 @@ export function AdminAuthorDialog({
               <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
                 <Image src="/youtube.svg" alt="YouTube" width={16} height={16} />
                 <span>YouTube Channel URL</span>
+                <FieldCheckmark checked={Boolean(formData.youtube.trim())} />
               </Label>
               <InputField
                 placeholder="https://youtube.com/@channel"
@@ -327,6 +405,12 @@ export function AdminAuthorDialog({
               <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
                 <GlobeIcon className="text-muted-foreground size-4" />
                 <span>Blog URL</span>
+                <FieldCheckmark
+                  checked={Boolean(
+                    formData.blog.trim() &&
+                    (formData.blog.trim().startsWith("/") || isValidHttpUrl(formData.blog.trim())),
+                  )}
+                />
               </Label>
               <InputField
                 placeholder="https://example.com/blog"

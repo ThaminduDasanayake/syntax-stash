@@ -7,13 +7,11 @@ import {
   CaretLeftIcon,
   CaretRightIcon,
   GlobeIcon,
-  MagnifyingGlassIcon,
   PencilSimpleIcon,
   PlusIcon,
   SlidersHorizontalIcon,
   TrashIcon,
   UserCircleIcon,
-  XIcon,
   XLogoIcon,
 } from "@phosphor-icons/react";
 import Image from "next/image";
@@ -35,7 +33,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { InputField } from "@/components/ui/input-field";
+import { SearchInput } from "@/components/ui/search-input";
 import { SelectField } from "@/components/ui/select-field";
 import {
   Table,
@@ -239,25 +237,14 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
       <div className="border-line bg-surface/50 mb-6 space-y-4 rounded-lg border p-4 font-mono text-xs">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           {/* Search Input */}
-          <div className="relative flex-1">
-            <InputField
+          <div className="flex-1">
+            <SearchInput
               placeholder="Search authors by name, slug, website, github, twitter..."
               value={searchQuery}
               onChange={(e) => handleSearchChange(e.target.value)}
-              prefix={<MagnifyingGlassIcon className="text-muted-foreground size-4" />}
-              containerClassName="h-9"
+              onClear={() => handleSearchChange("")}
               className="font-mono text-xs"
             />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => handleSearchChange("")}
-                className="text-muted-foreground hover:text-foreground absolute top-1/2 right-2.5 -translate-y-1/2 p-0.5"
-                title="Clear search"
-              >
-                <XIcon className="size-3.5" />
-              </button>
-            )}
           </div>
 
           {/* Action Buttons */}
@@ -333,6 +320,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                 onValueChange={handleSortChange}
                 options={SORT_OPTIONS}
                 triggerClassName="h-8 font-mono text-xs min-w-[160px]"
+                variant="secondary"
               />
             </div>
           </div>
@@ -403,7 +391,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                           href={authorItem.website}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="border-line bg-paper/60 text-muted-foreground hover:text-primary hover:border-primary/50 flex size-6 items-center justify-center rounded border transition-colors"
+                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border transition-colors"
                           title={`Website: ${authorItem.website}`}
                         >
                           <GlobeIcon className="size-3.5" />
@@ -414,7 +402,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                           href={authorItem.blog}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="border-line bg-paper/60 text-muted-foreground hover:text-primary hover:border-primary/50 flex size-6 items-center justify-center rounded border transition-colors"
+                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border transition-colors"
                           title={`Blog: ${authorItem.blog}`}
                         >
                           <ArticleIcon className="size-3.5" />
@@ -429,7 +417,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                           }
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="border-line bg-paper/60 text-muted-foreground hover:text-primary hover:border-primary/50 flex size-6 items-center justify-center rounded border transition-colors"
+                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border transition-colors"
                           title={`GitHub: ${authorItem.github}`}
                         >
                           <Image
@@ -437,7 +425,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                             alt="GitHub"
                             width={14}
                             height={14}
-                            className="size-3.5 opacity-70 hover:opacity-100 dark:invert"
+                            className="size-3.5"
                           />
                         </a>
                       )}
@@ -450,7 +438,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                           }
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="border-line bg-paper/60 text-muted-foreground hover:text-primary hover:border-primary/50 flex size-6 items-center justify-center rounded border transition-colors"
+                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border transition-colors"
                           title={`Twitter/X: ${authorItem.twitter}`}
                         >
                           <XLogoIcon className="size-3" />
@@ -465,7 +453,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                           }
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="border-line bg-paper/60 text-muted-foreground hover:text-primary hover:border-primary/50 flex size-6 items-center justify-center rounded border transition-colors"
+                          className="border-line bg-paper/60 text-muted-foreground hover:text-primary hover:border-primary/70 flex size-6 items-center justify-center rounded border transition-colors"
                           title={`LinkedIn: ${authorItem.linkedin}`}
                         >
                           <Image
@@ -473,7 +461,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                             alt="LinkedIn"
                             width={14}
                             height={14}
-                            className="size-3.5 opacity-70 hover:opacity-100"
+                            className="size-3.5"
                           />
                         </a>
                       )}
@@ -486,7 +474,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                           }
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="border-line bg-paper/60 text-muted-foreground hover:text-primary hover:border-primary/50 flex size-6 items-center justify-center rounded border transition-colors"
+                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border transition-colors"
                           title={`YouTube: ${authorItem.youtube}`}
                         >
                           <Image
@@ -494,7 +482,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                             alt="YouTube"
                             width={14}
                             height={14}
-                            className="size-3.5 opacity-70 hover:opacity-100"
+                            className="size-3.5"
                           />
                         </a>
                       )}
@@ -595,11 +583,11 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
       </div>
 
       {/* Create / Edit Author Modal */}
-      {/* Create / Edit Author Modal */}
       <AdminAuthorDialog
         open={isModalOpen}
         onOpenChange={setIsModalOpen}
         author={editingAuthor}
+        existingAuthors={authors}
         onCreated={(newAuthor) => setAuthors((prev) => [newAuthor, ...prev])}
         onUpdated={(updatedAuthor) =>
           setAuthors((prev) => prev.map((a) => (a.id === updatedAuthor.id ? updatedAuthor : a)))

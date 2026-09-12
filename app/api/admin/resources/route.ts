@@ -9,6 +9,7 @@ import { slugifyAuthor } from "@/lib/authors";
 import { db } from "@/lib/db";
 import { author, category, resource, resourceTag, tag } from "@/lib/db/schema";
 import { normalizeTag } from "@/lib/tags";
+import { normalizeUrl } from "@/lib/url-utils";
 
 async function verifyAdmin() {
   const reqHeaders = await headers();
@@ -38,6 +39,7 @@ interface AdminResourceRecord {
   description: string;
   favicon: string | null;
   github: string | null;
+  iconBg: string | null;
   id: string;
   ogImage: string | null;
   subtitle: string | null;
@@ -74,6 +76,7 @@ export async function GET() {
         description: resource.description,
         favicon: resource.favicon,
         github: resource.github,
+        iconBg: resource.iconBg,
         ogImage: resource.ogImage,
         subtitle: resource.subtitle,
         tagName: tag.name,
@@ -114,6 +117,7 @@ export async function GET() {
           description: r.description,
           favicon: r.favicon,
           github: r.github,
+          iconBg: r.iconBg || "dark",
           ogImage: r.ogImage,
           subtitle: r.subtitle,
           tags: r.tagName ? [r.tagName] : [],
@@ -160,6 +164,7 @@ export async function POST(req: Request) {
       description,
       favicon,
       github,
+      iconBg,
       ogImage,
       subtitle,
       tags,
@@ -174,10 +179,14 @@ export async function POST(req: Request) {
     }
 
     // Check if URL already exists
-    const [existing] = await db.select().from(resource).where(eq(resource.url, url.trim()));
+    const normalizedInputUrl = normalizeUrl(url);
+    const existingResources = await db
+      .select({ id: resource.id, title: resource.title, url: resource.url })
+      .from(resource);
+    const existing = existingResources.find((r) => normalizeUrl(r.url) === normalizedInputUrl);
     if (existing) {
       return NextResponse.json(
-        { error: `A resource with the URL "${url}" already exists.` },
+        { error: `A resource with this URL already exists: "${existing.title}"` },
         { status: 409 },
       );
     }
@@ -230,6 +239,7 @@ export async function POST(req: Request) {
       description: description.trim(),
       favicon: favicon?.trim() || null,
       github: github?.trim() || null,
+      iconBg: iconBg || "dark",
       ogImage: ogImage?.trim() || null,
       subtitle: subtitle?.trim() || null,
       url: url.trim(),
@@ -355,10 +365,26 @@ export async function PATCH(req: Request) {
     if (updates.title !== undefined) updatedData.title = updates.title.trim();
     if (updates.subtitle !== undefined) updatedData.subtitle = updates.subtitle?.trim() || null;
     if (updates.description !== undefined) updatedData.description = updates.description.trim();
-    if (updates.url !== undefined) updatedData.url = updates.url.trim();
+    if (updates.url !== undefined) {
+      const normalizedNew = normalizeUrl(updates.url);
+      const allResources = await db
+        .select({ id: resource.id, title: resource.title, url: resource.url })
+        .from(resource);
+      const conflict = allResources.find(
+        (r) => r.id !== id && normalizeUrl(r.url) === normalizedNew,
+      );
+      if (conflict) {
+        return NextResponse.json(
+          { error: `A resource with this URL already exists: "${conflict.title}"` },
+          { status: 409 },
+        );
+      }
+      updatedData.url = updates.url.trim();
+    }
     if (updates.favicon !== undefined) updatedData.favicon = updates.favicon?.trim() || null;
     if (updates.ogImage !== undefined) updatedData.ogImage = updates.ogImage?.trim() || null;
     if (updates.github !== undefined) updatedData.github = updates.github?.trim() || null;
+    if (updates.iconBg !== undefined) updatedData.iconBg = updates.iconBg || "dark";
 
     await db.update(resource).set(updatedData).where(eq(resource.id, id));
 

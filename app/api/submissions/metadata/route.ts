@@ -1,7 +1,11 @@
 import * as cheerio from "cheerio";
+import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
 import { CategoryItem, getAllCategories } from "@/lib/categories";
+import { db } from "@/lib/db";
+import { category, resource, submission } from "@/lib/db/schema";
+import { normalizeUrl } from "@/lib/url-utils";
 
 const DEFAULT_USER_AGENT =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36";
@@ -1067,6 +1071,62 @@ export async function GET(request: NextRequest) {
     const categories = await getAllCategories();
     const suggestedCategory = suggestCategory(`${title} ${description}`, categories);
 
+    // Check if this URL is already in the live catalog or pending submissions
+    const normalizedInputUrl = normalizeUrl(finalUrl || urlParam);
+    let existingResource: { category?: string; id: string; title: string; url: string } | null =
+      null;
+    let existingSubmission: { id: string; status: string; title: string; url: string } | null =
+      null;
+
+    if (normalizedInputUrl) {
+      try {
+        const liveRows = await db
+          .select({
+            id: resource.id,
+            title: resource.title,
+            category: category.name,
+            url: resource.url,
+          })
+          .from(resource)
+          .leftJoin(category, eq(resource.categoryId, category.id));
+
+        const matchedResource = liveRows.find((r) => normalizeUrl(r.url) === normalizedInputUrl);
+
+        if (matchedResource) {
+          existingResource = {
+            id: matchedResource.id,
+            title: matchedResource.title,
+            category: matchedResource.category || "General",
+            url: matchedResource.url,
+          };
+        } else {
+          const submissionRows = await db
+            .select({
+              id: submission.id,
+              title: submission.title,
+              status: submission.status,
+              url: submission.url,
+            })
+            .from(submission);
+
+          const matchedSubmission = submissionRows.find(
+            (s) => normalizeUrl(s.url) === normalizedInputUrl,
+          );
+
+          if (matchedSubmission) {
+            existingSubmission = {
+              id: matchedSubmission.id,
+              title: matchedSubmission.title,
+              status: matchedSubmission.status,
+              url: matchedSubmission.url,
+            };
+          }
+        }
+      } catch (dbErr) {
+        console.error("Duplicate check error during metadata extraction:", dbErr);
+      }
+    }
+
     return NextResponse.json({
       title,
       author,
@@ -1077,6 +1137,8 @@ export async function GET(request: NextRequest) {
       authorYouTube,
       category: suggestedCategory,
       description,
+      existingResource,
+      existingSubmission,
       favicon,
       faviconOptions,
       github,

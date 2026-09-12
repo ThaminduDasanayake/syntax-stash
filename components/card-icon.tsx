@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { cn } from "@/lib/utils";
+import { cn, isValidHttpUrl } from "@/lib/utils";
 
 // In-memory set of favicons successfully loaded during the session
 const loadedFavicons = new Set<string>();
@@ -21,8 +21,14 @@ export function CardIcon({
   iconClassName?: string;
 }) {
   const cleanFavicon = favicon?.trim() || "";
+  const isValidUrl =
+    cleanFavicon.startsWith("/") ||
+    cleanFavicon.startsWith("data:") ||
+    isValidHttpUrl(cleanFavicon);
+
   const isExternal =
     Boolean(cleanFavicon) &&
+    isValidUrl &&
     (cleanFavicon.startsWith("http://") || cleanFavicon.startsWith("https://")) &&
     !cleanFavicon.startsWith("/api/proxy-image");
 
@@ -63,7 +69,7 @@ export function CardIcon({
       <div
         className={cn(
           className,
-          "card-icon-box p-1",
+          "card-icon-box overflow-hidden rounded-[30%] p-0.5",
           isWhiteTile && "border-white/80! bg-white! text-black!",
         )}
       />
@@ -80,7 +86,7 @@ export function CardIcon({
     <div
       className={cn(
         className,
-        "card-icon-box p-1",
+        "card-icon-box overflow-hidden rounded-[30%] p-0.5",
         isWhiteTile && "border-white/80! bg-white! text-black!",
       )}
     >
@@ -91,7 +97,10 @@ export function CardIcon({
         alt={alt}
         loading="lazy"
         referrerPolicy="no-referrer"
-        className={cn("h-full w-full object-contain", isInverted && "brightness-125 invert")}
+        className={cn(
+          "h-full w-full rounded-[25%] object-contain",
+          isInverted && "brightness-125 invert",
+        )}
         onError={handleError}
         onLoad={handleLoad}
       />
