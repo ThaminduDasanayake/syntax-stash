@@ -488,7 +488,6 @@ export function AdminResourceDialog({
 
                 {duplicateNotice && (
                   <DuplicateUrlNotice
-                    adminLink
                     item={duplicateNotice.item}
                     type={duplicateNotice.type}
                     onDismiss={() => setDuplicateNotice(null)}

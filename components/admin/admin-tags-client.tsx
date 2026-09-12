@@ -13,6 +13,7 @@ import {
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
+import { DuplicateNotice } from "@/components/submissions/duplicate-url-notice";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -110,6 +111,21 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
     slug: "",
   });
   const [autoSlug, setAutoSlug] = useState(true);
+
+  const duplicateTag = useMemo(() => {
+    const rawName = formData.name.trim();
+    const rawSlug = formData.slug.trim();
+    if (!rawName && !rawSlug) return null;
+    const targetSlug = rawSlug ? normalizeTag(rawSlug) : normalizeTag(rawName);
+    const targetLower = rawName.toLowerCase();
+    return (
+      tags.find(
+        (t) =>
+          t.id !== editingTag?.id &&
+          (t.slug === targetSlug || (targetLower && t.name.toLowerCase() === targetLower)),
+      ) || null
+    );
+  }, [editingTag?.id, formData.name, formData.slug, tags]);
 
   // Filter & Sort
   const filteredAndSortedTags = useMemo(() => {
@@ -326,6 +342,11 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
     e.preventDefault();
     if (!formData.name.trim()) {
       toast.error("Tag name is required.");
+      return;
+    }
+
+    if (duplicateTag) {
+      toast.error(`Tag "${duplicateTag.name}" already exists.`);
       return;
     }
 
@@ -605,6 +626,23 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
                 Featured Tag (highlighted prominently in filters and search)
               </label>
             </div>
+
+            {duplicateTag && (
+              <DuplicateNotice
+                type="tag"
+                title="This tag is already added!"
+                description={
+                  <>
+                    Already listed as{" "}
+                    <strong className="font-bold underline">#{duplicateTag.name}</strong> (
+                    <code>{duplicateTag.slug}</code>)
+                    {duplicateTag.toolCount > 0
+                      ? ` with ${duplicateTag.toolCount} assigned resource(s).`
+                      : "."}
+                  </>
+                }
+              />
+            )}
 
             <DialogFooter className="mt-4 pt-2">
               <Button

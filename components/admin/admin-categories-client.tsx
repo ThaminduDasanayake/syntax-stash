@@ -13,6 +13,7 @@ import {
 import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
 
+import { DuplicateNotice } from "@/components/submissions/duplicate-url-notice";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -96,6 +97,20 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
   const [formData, setFormData] = useState({
     name: "",
   });
+
+  const duplicateCategory = useMemo(() => {
+    const rawName = formData.name.trim();
+    if (!rawName) return null;
+    const targetSlug = slugify(rawName);
+    const targetLower = rawName.toLowerCase();
+    return (
+      categories.find(
+        (c) =>
+          c.id !== editingCategory?.id &&
+          (c.slug === targetSlug || c.name.toLowerCase() === targetLower),
+      ) || null
+    );
+  }, [categories, editingCategory?.id, formData.name]);
 
   const filteredCategories = useMemo(() => {
     let result = categories;
@@ -257,6 +272,11 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
     e.preventDefault();
     if (!formData.name.trim()) {
       toast.error("Category name is required.");
+      return;
+    }
+
+    if (duplicateCategory) {
+      toast.error(`Category "${duplicateCategory.name}" already exists.`);
       return;
     }
 
@@ -507,6 +527,23 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
               </span>
               <span className="text-foreground font-bold">/{slugify(formData.name) || "slug"}</span>
             </div>
+
+            {duplicateCategory && (
+              <DuplicateNotice
+                type="category"
+                title="This category is already added!"
+                description={
+                  <>
+                    Already listed as{" "}
+                    <strong className="font-bold underline">{duplicateCategory.name}</strong> (
+                    <code>/{duplicateCategory.slug}</code>)
+                    {duplicateCategory.toolCount > 0
+                      ? ` with ${duplicateCategory.toolCount} assigned resource(s).`
+                      : "."}
+                  </>
+                }
+              />
+            )}
 
             {/* Footer Actions */}
             <DialogFooter className="mt-4 pt-2">

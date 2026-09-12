@@ -531,7 +531,6 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
 
               {duplicateNotice && (
                 <DuplicateUrlNotice
-                  adminLink
                   item={duplicateNotice.item}
                   type={duplicateNotice.type}
                   onDismiss={() => setDuplicateNotice(null)}

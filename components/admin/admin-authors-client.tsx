@@ -582,11 +582,11 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
       </div>
 
       {/* Create / Edit Author Modal */}
-      {/* Create / Edit Author Modal */}
       <AdminAuthorDialog
         open={isModalOpen}
         onOpenChange={setIsModalOpen}
         author={editingAuthor}
+        existingAuthors={authors}
         onCreated={(newAuthor) => setAuthors((prev) => [newAuthor, ...prev])}
         onUpdated={(updatedAuthor) =>
           setAuthors((prev) => prev.map((a) => (a.id === updatedAuthor.id ? updatedAuthor : a)))

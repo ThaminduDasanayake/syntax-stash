@@ -2,13 +2,16 @@
 
 import { CheckIcon, GlobeIcon, XLogoIcon } from "@phosphor-icons/react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import {
+  AuthorOption,
+  fetchAuthorList,
   invalidateAuthorCache,
   registerNewAuthorLocally,
 } from "@/components/submissions/author-combobox";
+import { DuplicateNotice } from "@/components/submissions/duplicate-url-notice";
 import { FieldCheckmark } from "@/components/submissions/field-checkmark";
 import { Button } from "@/components/ui/button";
 import {
@@ -43,6 +46,7 @@ const AUTHOR_FIELD_LABELS: Record<string, string> = {
 
 export interface AdminAuthorDialogProps {
   author?: AdminAuthorItem | Partial<AdminAuthorItem> | null;
+  existingAuthors?: Array<{ id?: string; name: string; slug: string }>;
   initialName?: string;
   onCreated?: (newAuthor: AdminAuthorItem) => void;
   onOpenChange: (open: boolean) => void;
@@ -52,6 +56,7 @@ export interface AdminAuthorDialogProps {
 
 export function AdminAuthorDialog({
   author,
+  existingAuthors,
   initialName = "",
   onCreated,
   onOpenChange,
@@ -74,6 +79,38 @@ export function AdminAuthorDialog({
   const [isWorking, setIsWorking] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
+  const [loadedAuthors, setLoadedAuthors] = useState<AuthorOption[]>([]);
+
+  useEffect(() => {
+    if (open && (!existingAuthors || existingAuthors.length === 0)) {
+      fetchAuthorList().then((list) => {
+        setLoadedAuthors(list);
+      });
+    }
+  }, [existingAuthors, open]);
+
+  const authorPool = (existingAuthors && existingAuthors.length > 0
+    ? existingAuthors
+    : loadedAuthors) as Array<{
+    id?: string;
+    name: string;
+    slug: string;
+  }>;
+
+  const duplicateAuthor = useMemo(() => {
+    const rawName = formData.name.trim();
+    const rawSlug = formData.slug.trim();
+    if (!rawName && !rawSlug) return null;
+    const targetSlug = rawSlug ? slugifyAuthor(rawSlug) : slugifyAuthor(rawName);
+    const targetLower = rawName.toLowerCase();
+    return (
+      authorPool.find(
+        (a) =>
+          a.id !== author?.id &&
+          (a.slug === targetSlug || (targetLower && a.name.toLowerCase() === targetLower)),
+      ) || null
+    );
+  }, [author?.id, authorPool, formData.name, formData.slug]);
 
   useEffect(() => {
     if (open) {
@@ -196,6 +233,11 @@ export function AdminAuthorDialog({
       return;
     }
 
+    if (duplicateAuthor) {
+      toast.error(`Author "${duplicateAuthor.name}" already exists.`);
+      return;
+    }
+
     if (isEdit && author) {
       const diffs = computeFieldChanges(author, formData, AUTHOR_FIELD_LABELS);
       setPendingChanges(diffs);
@@ -266,6 +308,20 @@ export function AdminAuthorDialog({
               />
             </div>
           </div>
+
+          {duplicateAuthor && (
+            <DuplicateNotice
+              type="author"
+              title="This author is already added!"
+              description={
+                <>
+                  Already listed as{" "}
+                  <strong className="font-bold underline">{duplicateAuthor.name}</strong> (
+                  <code>/{duplicateAuthor.slug}</code>).
+                </>
+              }
+            />
+          )}
 
           {/* URLs Sequentially One After the Other with Icons in Labels */}
           <div className="border-line/60 space-y-3.5 border-t pt-3">
