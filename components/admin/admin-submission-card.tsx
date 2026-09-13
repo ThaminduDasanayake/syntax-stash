@@ -343,7 +343,7 @@ export function AdminSubmissionCard({
                 <ArrowCounterClockwiseIcon weight="duotone" className="size-4" /> Move to Pending
               </Button>
             )}
-            {sub.status !== "rejected" && (
+            {sub.status === "pending" && (
               <Button
                 size="sm"
                 variant="outline"

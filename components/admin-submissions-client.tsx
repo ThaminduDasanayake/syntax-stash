@@ -11,16 +11,7 @@ import {
   TabStatus,
 } from "@/components/admin";
 import { AdminSubmissionsCardsSkeleton } from "@/components/admin-submissions-skeleton";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { Submission } from "@/lib/db/schema";
 
 interface AdminSubmissionsClientProps {
@@ -198,34 +189,23 @@ export function AdminSubmissionsClient({
         </div>
       )}
 
-      {/* Custom Confirmation Alert Dialog */}
-      <AlertDialog
+      {/* Hold-to-Confirm Dialog for Deleting Submission */}
+      <ConfirmDialog
         open={Boolean(deletingSubmission)}
         onOpenChange={(open) => !open && setDeletingSubmission(null)}
-      >
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Delete Submission</AlertDialogTitle>
-            <AlertDialogDescription>
-              Are you sure you want to permanently delete{" "}
-              <strong className="text-foreground">&ldquo;{deletingSubmission?.title}&rdquo;</strong>
-              ? This action cannot be undone.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel disabled={Boolean(actionLoadingId)}>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={(e) => {
-                e.preventDefault();
-                handleConfirmDelete();
-              }}
-              disabled={Boolean(actionLoadingId)}
-            >
-              {actionLoadingId ? "Deleting..." : "Delete Permanently"}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+        onConfirm={handleConfirmDelete}
+        title="Delete this submission?"
+        description={
+          <>
+            Are you sure you want to permanently delete submission{" "}
+            <strong className="text-foreground">
+              &quot;{deletingSubmission?.title}&quot;
+            </strong>
+            ? This action cannot be undone.
+          </>
+        }
+        confirmLabel="Hold to delete"
+      />
     </div>
   );
 }
