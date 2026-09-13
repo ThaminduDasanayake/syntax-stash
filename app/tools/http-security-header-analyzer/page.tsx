@@ -93,7 +93,7 @@ export default function HeaderAnalyzerPage() {
         <div className="flex h-full min-h-0 flex-col space-y-4">
           <div className="shrink-0 space-y-3">
             {graded.map(({ grade, rule, value }) => (
-              <div key={rule.key} className="border-border rounded-lg border p-3">
+              <div key={rule.key} className="border-border rounded-lg border-[1.5px] p-3">
                 <div className="mb-1 flex items-center justify-between gap-2">
                   <p className="text-foreground truncate font-mono text-xs font-semibold">
                     {rule.label}

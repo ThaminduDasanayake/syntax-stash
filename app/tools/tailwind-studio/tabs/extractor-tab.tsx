@@ -117,14 +117,14 @@ export function ExtractorTab() {
         </div>
 
         {entries.length === 0 ? (
-          <div className="border-border bg-accent flex items-center justify-center rounded-xl border">
+          <div className="border-border bg-accent flex items-center justify-center rounded-xl border-[1.5px]">
             <p className="text-muted-foreground text-sm">
               No <code className="bg-muted rounded px-1 font-mono text-xs">className</code>{" "}
               attributes found yet.
             </p>
           </div>
         ) : (
-          <div className="border-border bg-accent overflow-y-auto rounded-xl border p-3">
+          <div className="border-border bg-accent overflow-y-auto rounded-xl border-[1.5px] p-3">
             <div className="space-y-2">
               {entries.map((entry) => (
                 <ClassMapRow key={entry.id} entry={entry} onRename={renameEntry} />

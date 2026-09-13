@@ -3,15 +3,16 @@
 import {
   ArrowCounterClockwiseIcon,
   ArrowSquareOutIcon,
-  CheckCircleIcon,
   ClipboardTextIcon,
   GlobeIcon,
-  PencilSimpleIcon,
+  MagnifyingGlassIcon,
   TrashIcon,
   XCircleIcon,
   XLogoIcon,
 } from "@phosphor-icons/react";
 import Image from "next/image";
+import Link from "next/link";
+import { useMemo } from "react";
 
 import { CardIcon } from "@/components/card-icon";
 import { Button } from "@/components/ui/button";
@@ -25,7 +26,6 @@ interface AdminSubmissionCardProps {
   isWorking: boolean;
   onCopyTs: () => void;
   onDelete: () => void;
-  onEdit: () => void;
   onUpdateStatus: (status: "approved" | "rejected" | "pending") => void;
   submission: Submission;
 }
@@ -35,22 +35,24 @@ export function AdminSubmissionCard({
   isWorking,
   onCopyTs,
   onDelete,
-  onEdit,
   onUpdateStatus,
   submission: sub,
 }: AdminSubmissionCardProps) {
+  const authorList = useMemo(() => {
+    if (!sub.author?.trim()) return [];
+    return sub.author
+      .split(",")
+      .map((a) => a.trim())
+      .filter(Boolean);
+  }, [sub.author]);
+
   const theme = getCategoryTheme(sub.category);
   const themeStyles = THEME_CONFIG[theme];
 
   return (
-    <div
-      className={cn(
-        "border-line bg-surface/40 hover:bg-surface/70 rounded-lg border border-l-[3px] p-5 font-mono text-xs transition-colors",
-        themeStyles.border,
-      )}
-    >
+    <div className="border-primary bg-surface/40 hover:bg-surface/70 rounded-lg border-[1.5px] p-5 font-mono text-xs transition-colors">
       {/* Status & Submitter meta header */}
-      <div className="border-line mb-3 flex flex-wrap items-center justify-between gap-2 border-b pb-2.5">
+      <div className="border-line mb-3 flex flex-wrap items-center justify-between gap-2 border-b-[1.5px] pb-2.5">
         <div className="flex items-center gap-2">
           <span
             className={cn(
@@ -96,7 +98,7 @@ export function AdminSubmissionCard({
               )}
               <span
                 className={cn(
-                  "inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase",
+                  "inline-flex items-center gap-1.5 rounded-full border-[1.5px] px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase",
                   themeStyles.soft,
                   themeStyles.label,
                   themeStyles.border,
@@ -129,7 +131,7 @@ export function AdminSubmissionCard({
                   .map((tag) => (
                     <span
                       key={tag}
-                      className="bg-surface border-line py-0.2 text-muted-foreground rounded border px-1.5 text-[10px]"
+                      className="bg-surface border-line py-0.2 text-muted-foreground rounded border-[1.5px] px-1.5 text-[10px]"
                     >
                       #{tag}
                     </span>
@@ -138,9 +140,21 @@ export function AdminSubmissionCard({
             )}
 
             <div className="flex flex-wrap items-center gap-3 pt-1.5 text-[11px]">
-              {sub.author && (
-                <div className="text-foreground flex items-center gap-1.5 font-semibold">
-                  <span>By {sub.author}</span>
+              {authorList.length > 0 && (
+                <div className="text-foreground flex flex-wrap items-center gap-1.5 font-semibold">
+                  <span>By</span>
+                  {authorList.map((authName, idx) => (
+                    <span key={authName} className="inline-flex items-center gap-1">
+                      {idx > 0 && <span className="text-muted-foreground font-normal">&amp;</span>}
+                      <Link
+                        href={`/admin/authors?q=${encodeURIComponent(authName)}`}
+                        className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
+                        title={`View ${authName} in Authors`}
+                      >
+                        {authName}
+                      </Link>
+                    </span>
+                  ))}
                   <div className="text-muted-foreground flex items-center gap-1">
                     {sub.authorWebsite && (
                       <a
@@ -149,6 +163,17 @@ export function AdminSubmissionCard({
                         rel="noopener noreferrer"
                         className="hover:text-primary p-0.5"
                         title="Author Website"
+                      >
+                        <GlobeIcon className="size-3.5" />
+                      </a>
+                    )}
+                    {sub.authorBlog && (
+                      <a
+                        href={sub.authorBlog}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-primary p-0.5"
+                        title="Author Blog"
                       >
                         <GlobeIcon className="size-3.5" />
                       </a>
@@ -257,7 +282,31 @@ export function AdminSubmissionCard({
 
         {/* Action Buttons Bar */}
         <div className="border-line mt-4 flex flex-wrap items-center justify-between gap-2 border-t pt-3">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            {sub.status === "approved" ? (
+              <Button
+                asChild
+                size="sm"
+                className="bg-emerald-600 text-white hover:bg-emerald-700 gap-1.5 text-[11px] font-bold uppercase"
+              >
+                <Link href={`/admin/resources?q=${encodeURIComponent(sub.title)}`}>
+                  <ArrowSquareOutIcon weight="bold" className="size-3.5" />
+                  <span>View in Catalog</span>
+                </Link>
+              </Button>
+            ) : (
+              <Button
+                asChild
+                size="sm"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 gap-1.5 text-[11px] font-bold uppercase"
+              >
+                <Link href={`/admin/submissions/${sub.id}`}>
+                  <MagnifyingGlassIcon weight="bold" className="size-3.5" />
+                  <span>Inspect & Review</span>
+                </Link>
+              </Button>
+            )}
+
             <Button
               size="sm"
               variant="outline"
@@ -267,31 +316,9 @@ export function AdminSubmissionCard({
               <ClipboardTextIcon weight="duotone" />
               {copied ? "Copied!" : "Copy TypeScript"}
             </Button>
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={onEdit}
-              className="gap-1 text-[11px] uppercase"
-            >
-              <PencilSimpleIcon weight="duotone" /> Edit
-            </Button>
           </div>
 
           <div className="flex items-center gap-2">
-            {sub.status !== "approved" && (
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => onUpdateStatus("approved")}
-                disabled={isWorking}
-                className={cn(
-                  "gap-1.5 text-[11px] font-bold uppercase transition-all duration-150 active:scale-95",
-                  STATUS_CONFIG.approved.button,
-                )}
-              >
-                <CheckCircleIcon weight="duotone" className="size-4" /> Approve
-              </Button>
-            )}
             {sub.status === "rejected" && (
               <Button
                 size="sm"
@@ -306,7 +333,7 @@ export function AdminSubmissionCard({
                 <ArrowCounterClockwiseIcon weight="duotone" className="size-4" /> Move to Pending
               </Button>
             )}
-            {sub.status !== "rejected" && (
+            {sub.status === "pending" && (
               <Button
                 size="sm"
                 variant="outline"

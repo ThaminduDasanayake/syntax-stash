@@ -278,6 +278,7 @@ export const submission = pgTable(
     title: text("title").notNull(),
     adminNotes: text("admin_notes"),
     author: text("author"),
+    authorBlog: text("author_blog"),
     authorGitHub: text("author_github"),
     authorLinkedIn: text("author_linkedin"),
     authorTwitter: text("author_twitter"),

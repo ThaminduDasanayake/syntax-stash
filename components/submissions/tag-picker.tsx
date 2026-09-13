@@ -255,7 +255,7 @@ export function TagPicker({
         {selectedTags.map((tag) => (
           <span
             key={tag}
-            className="border-primary/40 bg-primary/10 text-foreground flex items-center gap-1 rounded-none border px-1.5 py-0.5 font-mono text-[11px] font-semibold"
+            className="border-primary/40 bg-primary/10 text-foreground flex items-center gap-1 rounded-none border-[1.5px] px-1.5 py-0.5 font-mono text-[11px] font-semibold"
           >
             <HashIcon className="text-primary size-3 shrink-0" />
             <span>{tag}</span>
@@ -300,7 +300,7 @@ export function TagPicker({
       {/* Autocomplete Dropdown */}
       {isOpen && !disabled && (
         <div className="border-border bg-popover text-popover-foreground absolute z-50 mt-1 max-h-60 w-full overflow-hidden rounded-none border-2 shadow-lg">
-          <div className="border-border/60 text-muted-foreground bg-muted/40 flex items-center justify-between border-b px-2.5 py-1 font-mono text-[10px] font-bold tracking-wider uppercase">
+          <div className="border-border/60 text-muted-foreground bg-muted/40 flex items-center justify-between border-b-[1.5px] px-2.5 py-1 font-mono text-[10px] font-bold tracking-wider uppercase">
             <span>{allowCustom ? "Select or Add Tags" : "Canonical Tags (Select Only)"}</span>
             <span>
               {selectedTags.length}/{maxTags}
@@ -334,7 +334,7 @@ export function TagPicker({
                   {tagItem.count > 0 && (
                     <span
                       className={cn(
-                        "py-0.2 rounded-none border px-1 text-[10px]",
+                        "py-0.2 rounded-none border-[1.5px] px-1 text-[10px]",
                         isHighlighted
                           ? "border-primary-foreground/40 bg-primary-foreground/20 text-primary-foreground"
                           : "border-border bg-muted/40 text-muted-foreground",

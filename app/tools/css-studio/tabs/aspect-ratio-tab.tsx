@@ -87,7 +87,7 @@ export function AspectRatioTab() {
           </div>
         </div>
 
-        <div className="border-border rounded-xl border p-4">
+        <div className="border-border rounded-xl border-[1.5px] p-4">
           <p className="text-muted-foreground mb-1 text-xs font-semibold tracking-wider uppercase">
             Simplified Ratio
           </p>
@@ -104,7 +104,7 @@ export function AspectRatioTab() {
       <div className="space-y-6">
         <div className="space-y-2">
           <Label>Live Preview</Label>
-          <div className="border-border bg-muted/20 flex h-64 items-center justify-center rounded-xl border p-4">
+          <div className="border-border bg-muted/20 flex h-64 items-center justify-center rounded-xl border-[1.5px] p-4">
             <div
               className="bg-primary/40 border-primary text-primary flex items-center justify-center rounded border-2 font-mono text-sm transition-all duration-150"
               style={{
@@ -124,7 +124,7 @@ export function AspectRatioTab() {
             <Label className="text-xs">CSS</Label>
             <CopyButton textToCopy={computed.css} />
           </div>
-          <div className="bg-muted/40 border-border overflow-x-auto rounded-lg border px-4 py-3">
+          <div className="bg-muted/40 border-border overflow-x-auto rounded-lg border-[1.5px] px-4 py-3">
             <code className="text-primary font-mono text-sm">{computed.css}</code>
           </div>
         </div>
@@ -134,7 +134,7 @@ export function AspectRatioTab() {
             <Label className="text-xs">Tailwind CSS</Label>
             <CopyButton textToCopy={computed.tailwind} />
           </div>
-          <div className="bg-muted/40 border-border overflow-x-auto rounded-lg border px-4 py-3">
+          <div className="bg-muted/40 border-border overflow-x-auto rounded-lg border-[1.5px] px-4 py-3">
             <code className="text-primary font-mono text-sm">{computed.tailwind}</code>
           </div>
         </div>
@@ -144,7 +144,7 @@ export function AspectRatioTab() {
             <Label className="text-xs">Legacy padding-bottom hack</Label>
             <CopyButton textToCopy={computed.legacy} />
           </div>
-          <pre className="bg-muted/40 border-border overflow-x-auto rounded-lg border px-4 py-3 font-mono text-xs">
+          <pre className="bg-muted/40 border-border overflow-x-auto rounded-lg border-[1.5px] px-4 py-3 font-mono text-xs">
             <code className="text-primary">{computed.legacy}</code>
           </pre>
         </div>

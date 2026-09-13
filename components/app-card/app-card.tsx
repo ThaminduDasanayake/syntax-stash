@@ -55,7 +55,7 @@ export const AppCard = ({
 }: AppCardProps) => (
   <a
     className={cn(
-      "group border-border/60 bg-card hover:border-border focus-visible:border-primary relative isolate flex min-h-[128px] cursor-pointer flex-col overflow-hidden rounded-lg border p-4 no-underline shadow-none ring-0 transition-colors select-none focus-visible:outline-none",
+      "group border-border/60 bg-card hover:border-border focus-visible:border-primary relative isolate flex min-h-32 cursor-pointer flex-col overflow-hidden rounded-lg border-[1.5px] p-4 no-underline shadow-none ring-0 transition-colors select-none focus-visible:outline-none",
       className,
     )}
     data-slot="app-card"

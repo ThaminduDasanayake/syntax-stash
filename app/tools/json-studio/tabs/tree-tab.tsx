@@ -50,7 +50,7 @@ export function TreeTab({ input, onTestInQueryAction }: Props) {
         </div>
       </div>
 
-      <div className="border-border bg-card min-h-100 overflow-auto rounded-xl border p-3 font-mono">
+      <div className="border-border bg-card min-h-100 overflow-auto rounded-xl border-[1.5px] p-3 font-mono">
         {parsed.ok ? (
           <TreeNode
             name=""

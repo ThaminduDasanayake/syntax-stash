@@ -164,7 +164,7 @@ export const ConfirmDialog = ({
           </Button>
           <Button
             className={cn(
-              "border-destructive/50 bg-destructive/10 text-destructive hover:bg-destructive/15 hover:text-destructive focus-visible:border-destructive/60 focus-visible:ring-destructive/25 dark:focus-visible:ring-destructive/40 relative overflow-hidden rounded-full border select-none active:scale-100!",
+              "border-destructive/50 bg-destructive/10 text-destructive hover:bg-destructive/15 hover:text-destructive focus-visible:border-destructive/60 focus-visible:ring-destructive/25 dark:focus-visible:ring-destructive/40 relative overflow-hidden rounded-full border-[1.5px] select-none active:scale-100!",
               shake && holding && "neon-hold-shake",
             )}
             data-holding={holding || undefined}

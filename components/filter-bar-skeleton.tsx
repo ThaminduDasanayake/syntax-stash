@@ -33,7 +33,7 @@ export function FilterBarSkeleton({
           {PILL_WIDTHS.map((width, i) => (
             <div
               key={i}
-              className="filter-pill border-border/60 bg-card/60 flex items-center border opacity-60"
+              className="filter-pill border-border/60 bg-card/60 flex items-center border-[1.5px] opacity-60"
             >
               <Skeleton className={`h-2.5 ${width} bg-muted/60`} />
             </div>

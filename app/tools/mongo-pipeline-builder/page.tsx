@@ -99,7 +99,7 @@ export default function MongoPipelineBuilderPage() {
 
           {/* Stage cards */}
           {stages.length === 0 ? (
-            <div className="shrink-0 rounded-lg border border-dashed p-8 text-center">
+            <div className="shrink-0 rounded-lg border-[1.5px] border-dashed p-8 text-center">
               <p className="text-muted-foreground text-sm">No stages yet. Add one above.</p>
             </div>
           ) : (

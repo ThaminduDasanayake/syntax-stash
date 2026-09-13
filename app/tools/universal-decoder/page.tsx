@@ -70,7 +70,7 @@ export default function UniversalDecoderPage() {
           {input.trim() && (
             <div className="space-y-2">
               {result ? (
-                <div className="border-border rounded-lg border p-4">
+                <div className="border-border rounded-lg border-[1.5px] p-4">
                   <div className="mb-1 flex items-center gap-2">
                     <Badge variant={result.confidence === "high" ? "default" : "secondary"}>
                       {result.confidence === "high" ? "High confidence" : "Medium confidence"}
@@ -79,7 +79,7 @@ export default function UniversalDecoderPage() {
                   <p className="text-foreground font-mono text-lg font-semibold">{result.format}</p>
                 </div>
               ) : (
-                <div className="border-border rounded-lg border border-dashed p-4">
+                <div className="border-border rounded-lg border-[1.5px] border-dashed p-4">
                   <p className="text-muted-foreground text-sm">
                     Format not recognised. Try a JWT, Unix timestamp, UUID, MongoDB ObjectId, or ISO
                     date string.
@@ -102,25 +102,25 @@ export default function UniversalDecoderPage() {
                       Timestamp
                     </p>
                     <div className="space-y-2">
-                      <div className="border-border rounded-md border p-3">
+                      <div className="border-border rounded-md border-[1.5px] p-3">
                         <p className="text-muted-foreground mb-0.5 text-xs">Local</p>
                         <p className="text-foreground font-mono text-sm">
                           {localFmt.format(result.timestamp)}
                         </p>
                       </div>
-                      <div className="border-border rounded-md border p-3">
+                      <div className="border-border rounded-md border-[1.5px] p-3">
                         <p className="text-muted-foreground mb-0.5 text-xs">UTC</p>
                         <p className="text-foreground font-mono text-sm">
                           {utcFmt.format(result.timestamp)}
                         </p>
                       </div>
-                      <div className="border-border rounded-md border p-3">
+                      <div className="border-border rounded-md border-[1.5px] p-3">
                         <p className="text-muted-foreground mb-0.5 text-xs">Relative</p>
                         <p className="text-primary font-mono text-sm font-semibold">
                           {relativeTime(result.timestamp)}
                         </p>
                       </div>
-                      <div className="border-border rounded-md border p-3">
+                      <div className="border-border rounded-md border-[1.5px] p-3">
                         <p className="text-muted-foreground mb-0.5 text-xs">Unix (seconds)</p>
                         <p className="text-foreground font-mono text-sm">
                           {Math.floor(result.timestamp.getTime() / 1000).toLocaleString()}
@@ -140,7 +140,7 @@ export default function UniversalDecoderPage() {
                     </p>
                     <div className="space-y-2">
                       {Object.entries(result.metadata).map(([key, value]) => (
-                        <div key={key} className="border-border rounded-md border p-3">
+                        <div key={key} className="border-border rounded-md border-[1.5px] p-3">
                           <p className="text-muted-foreground mb-0.5 text-xs">{key}</p>
                           <p className="text-foreground font-mono text-sm break-all">{value}</p>
                         </div>
@@ -151,7 +151,7 @@ export default function UniversalDecoderPage() {
               )}
             </>
           ) : (
-            <div className="border-border flex min-h-60 items-center justify-center rounded-lg border border-dashed">
+            <div className="border-border flex min-h-60 items-center justify-center rounded-lg border-[1.5px] border-dashed">
               <p className="text-muted-foreground text-sm">
                 {input.trim() ? "Unrecognised format." : "Paste a value to decode."}
               </p>

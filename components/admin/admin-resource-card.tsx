@@ -46,7 +46,7 @@ export function AdminResourceCard({
   };
 
   return (
-    <div className="border-line bg-surface/30 group hover:border-foreground/40 flex h-full flex-col justify-between overflow-hidden rounded-lg border transition-all">
+    <div className="border-line bg-surface/30 group hover:border-foreground/40 flex h-full flex-col justify-between overflow-hidden rounded-lg border-[1.5px] transition-all">
       {/* Exact Visual Public Card (clicking anywhere on card opens ResourceDialog preview) */}
       <div className="flex-1 p-2 sm:p-2.5">
         <ResourceCardView

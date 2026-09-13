@@ -60,7 +60,7 @@ export default async function TagPage({ params }: { params: Promise<Params> }) {
       <header className="res-header">
         <div className="section-inner">
           <div className="mb-2">
-            <span className="border-line bg-surface-elevated text-primary rounded border px-2.5 py-1 font-mono text-xs font-bold tracking-wider uppercase">
+            <span className="border-line bg-surface-elevated text-primary rounded border-[1.5px] px-2.5 py-1 font-mono text-xs font-bold tracking-wider uppercase">
               Tag Taxonomy
             </span>
           </div>

@@ -14,7 +14,7 @@ const ShadeButton = ({ hex, shade }: { shade: number; hex: string }) => {
       className="h-auto w-full flex-col items-stretch gap-0 overflow-hidden rounded-xl p-0 transition-all hover:scale-105 active:scale-95"
     >
       {/* The Color Swatch */}
-      <div className="h-20 w-full shrink-0 border-b" style={{ backgroundColor: hex }} />
+      <div className="h-20 w-full shrink-0 border-b-[1.5px]" style={{ backgroundColor: hex }} />
 
       {/* The Label */}
       <div className="bg-card flex w-full flex-col p-2 font-mono">

@@ -16,7 +16,8 @@ import {
 } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { AdminAuthorDialog } from "@/components/admin/admin-author-dialog";
@@ -74,9 +75,11 @@ const SORT_OPTIONS = [
   { label: "Recently Updated", value: "updated-desc" },
 ];
 
-export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientProps) {
+function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientProps) {
+  const searchParams = useSearchParams();
+  const paramQ = searchParams.get("q") || "";
   const [authors, setAuthors] = useState<AdminAuthorItem[]>(initialAuthors);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(paramQ);
   const [filterMode, setFilterMode] = useState<"all" | "with-resources" | "without-resources">(
     "all",
   );
@@ -234,7 +237,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
   return (
     <div>
       {/* Control Bar */}
-      <div className="border-line bg-surface/50 mb-6 space-y-4 rounded-lg border p-4 font-mono text-xs">
+      <div className="border-line bg-surface/50 mb-6 space-y-4 rounded-lg border-[1.5px] p-4 font-mono text-xs">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           {/* Search Input */}
           <div className="flex-1">
@@ -275,7 +278,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
         {/* Filter Tabs & Sort & Count */}
         <div className="border-line flex flex-wrap items-center justify-between gap-3 border-t pt-3">
           <div className="flex flex-wrap items-center gap-2">
-            <div className="border-line flex items-center rounded border p-0.5">
+            <div className="border-line flex items-center rounded border-[1.5px] p-0.5">
               <button
                 type="button"
                 onClick={() => handleFilterChange("all")}
@@ -333,7 +336,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
       </div>
 
       {/* Authors Table */}
-      <div className="border-line bg-surface/30 overflow-hidden rounded-lg border font-mono text-xs shadow-sm">
+      <div className="border-line bg-surface/30 overflow-hidden rounded-lg border-[1.5px] font-mono text-xs shadow-sm">
         <Table>
           <TableHeader>
             <TableRow className="border-line bg-surface/60 hover:bg-surface/60">
@@ -357,7 +360,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                   {/* Name & Avatar */}
                   <TableCell className="font-medium">
                     <div className="flex items-center gap-2.5">
-                      <div className="bg-primary/10 text-primary border-line flex size-8 shrink-0 items-center justify-center rounded-full border text-xs font-bold uppercase">
+                      <div className="bg-primary/10 text-primary border-line flex size-8 shrink-0 items-center justify-center rounded-full border-[1.5px] text-xs font-bold uppercase">
                         {authorItem.name.slice(0, 2)}
                       </div>
                       <div>
@@ -378,7 +381,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
 
                   {/* Slug */}
                   <TableCell className="text-muted-foreground">
-                    <code className="bg-paper border-line rounded border px-1.5 py-0.5 text-[11px]">
+                    <code className="bg-paper border-line rounded border-[1.5px] px-1.5 py-0.5 text-[11px]">
                       {authorItem.slug}
                     </code>
                   </TableCell>
@@ -391,7 +394,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                           href={authorItem.website}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border transition-colors"
+                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
                           title={`Website: ${authorItem.website}`}
                         >
                           <GlobeIcon className="size-3.5" />
@@ -402,7 +405,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                           href={authorItem.blog}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border transition-colors"
+                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
                           title={`Blog: ${authorItem.blog}`}
                         >
                           <ArticleIcon className="size-3.5" />
@@ -417,7 +420,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                           }
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border transition-colors"
+                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
                           title={`GitHub: ${authorItem.github}`}
                         >
                           <Image
@@ -438,7 +441,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                           }
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border transition-colors"
+                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
                           title={`Twitter/X: ${authorItem.twitter}`}
                         >
                           <XLogoIcon className="size-3" />
@@ -453,7 +456,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                           }
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="border-line bg-paper/60 text-muted-foreground hover:text-primary hover:border-primary/70 flex size-6 items-center justify-center rounded border transition-colors"
+                          className="border-line bg-paper/60 text-muted-foreground hover:text-primary hover:border-primary/70 flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
                           title={`LinkedIn: ${authorItem.linkedin}`}
                         >
                           <Image
@@ -474,7 +477,7 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
                           }
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border transition-colors"
+                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
                           title={`YouTube: ${authorItem.youtube}`}
                         >
                           <Image
@@ -633,5 +636,13 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
         </AlertDialogContent>
       </AlertDialog>
     </div>
+  );
+}
+
+export function AdminAuthorsClient(props: AdminAuthorsClientProps) {
+  return (
+    <Suspense>
+      <AdminAuthorsClientContent {...props} />
+    </Suspense>
   );
 }

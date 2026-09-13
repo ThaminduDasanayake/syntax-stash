@@ -104,7 +104,7 @@ export default function DiffViewerPage() {
         {/* Diff output */}
         {diffLines.length > 0 && (
           <Card className="gap-0 pb-0">
-            <CardHeader className="flex flex-wrap items-center gap-3 border-b">
+            <CardHeader className="flex flex-wrap items-center gap-3 border-b-[1.5px]">
               <ButtonGroup className="grid grid-cols-2">
                 <Button
                   size="sm"
@@ -159,7 +159,7 @@ export default function DiffViewerPage() {
               {hasChanges && viewMode === "side-by-side" && (
                 <div className="grid grid-cols-2 overflow-x-auto">
                   <div className="border-border border-r">
-                    <div className="border-border bg-muted/30 border-b px-3 py-1.5">
+                    <div className="border-border bg-muted/30 border-b-[1.5px] px-3 py-1.5">
                       <span className="text-muted-foreground font-mono text-xs font-semibold">
                         Original
                       </span>
@@ -169,7 +169,7 @@ export default function DiffViewerPage() {
                     ))}
                   </div>
                   <div>
-                    <div className="border-border bg-muted/30 border-b px-3 py-1.5">
+                    <div className="border-border bg-muted/30 border-b-[1.5px] px-3 py-1.5">
                       <span className="text-muted-foreground font-mono text-xs font-semibold">
                         Modified
                       </span>

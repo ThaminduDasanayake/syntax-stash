@@ -90,7 +90,7 @@ export function OrganizeTab({ input }: { input: string }) {
 
         {hasValidData && (
           <Card size="sm">
-            <CardHeader className="border-b">
+            <CardHeader className="border-b-[1.5px]">
               <CardTitle>Sort</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -113,7 +113,7 @@ export function OrganizeTab({ input }: { input: string }) {
 
         {hasValidData && (
           <Card size="sm">
-            <CardHeader className="border-b">
+            <CardHeader className="border-b-[1.5px]">
               <CardTitle>Filter (Optional)</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">

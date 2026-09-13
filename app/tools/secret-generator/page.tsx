@@ -282,7 +282,7 @@ export default function SecretGeneratorPage() {
               key={p.id}
               onClick={() => applyPreset(p)}
               className={cn(
-                "group flex flex-col gap-1 rounded-lg border px-3 py-2.5 text-left transition-all",
+                "group flex flex-col gap-1 rounded-lg border-[1.5px] px-3 py-2.5 text-left transition-all",
                 selectedPreset === p.id
                   ? "border-primary bg-primary/5 ring-primary/30 ring-1"
                   : "hover:border-border/80 hover:bg-muted/50",
@@ -411,7 +411,7 @@ export default function SecretGeneratorPage() {
               const isCopiedSecret = copiedKey === `secret-${i}`;
               const isCopiedEnv = copiedKey === `env-${i}`;
               return (
-                <div key={i} className="bg-muted rounded-lg border">
+                <div key={i} className="bg-muted rounded-lg border-[1.5px]">
                   {/* Secret value row */}
                   <div className="flex items-center gap-2 px-3 py-2.5">
                     <span className="flex-1 font-mono text-sm leading-relaxed break-all">
@@ -479,8 +479,8 @@ export default function SecretGeneratorPage() {
           )}
 
           {/* openssl equivalent */}
-          <div className="mt-2 rounded-lg border">
-            <div className="text-muted-foreground flex items-center gap-2 border-b px-3 py-2 text-xs font-medium">
+          <div className="mt-2 rounded-lg border-[1.5px]">
+            <div className="text-muted-foreground flex items-center gap-2 border-b-[1.5px] px-3 py-2 text-xs font-medium">
               <TerminalIcon size={13} />
               Equivalent shell command
             </div>

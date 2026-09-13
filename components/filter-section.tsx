@@ -534,7 +534,7 @@ function FilterSectionInner({
                 variant="outline"
                 size="sm"
                 onClick={handleLoadMore}
-                className="border-border/80 bg-card hover:bg-muted hover:text-foreground rounded-xl border font-mono text-xs tracking-wider uppercase transition-all"
+                className="border-border/80 bg-card hover:bg-muted hover:text-foreground rounded-xl border-[1.5px] font-mono text-xs tracking-wider uppercase transition-all"
               >
                 Load more ({filteredItems.length - visibleLimit} remaining)
               </Button>

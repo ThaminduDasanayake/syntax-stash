@@ -122,9 +122,9 @@ export function AdminConfirmEditDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="border-line bg-paper max-h-[90vh] max-w-2xl overflow-y-auto font-mono text-xs sm:max-w-2xl">
-        <DialogHeader className="border-line border-b pb-4">
+        <DialogHeader className="border-line border-b-[1.5px] pb-4">
           <div className="flex items-center gap-2">
-            <div className="bg-primary/10 text-primary border-primary/20 flex size-8 shrink-0 items-center justify-center rounded-md border">
+            <div className="bg-primary/10 text-primary border-primary/20 flex size-8 shrink-0 items-center justify-center rounded-md border-[1.5px]">
               <ShieldCheckIcon weight="duotone" className="size-5" />
             </div>
             <div>
@@ -151,7 +151,7 @@ export function AdminConfirmEditDialog({
 
         <div className="py-2">
           {!hasChanges ? (
-            <div className="border-line bg-surface/50 flex flex-col items-center justify-center gap-2 rounded-lg border border-dashed p-8 text-center">
+            <div className="border-line bg-surface/50 flex flex-col items-center justify-center gap-2 rounded-lg border-[1.5px] border-dashed p-8 text-center">
               <InfoIcon className="text-muted-foreground size-8" />
               <p className="text-foreground font-bold uppercase">No Changes Detected</p>
               <p className="text-muted-foreground max-w-sm text-xs">
@@ -164,7 +164,7 @@ export function AdminConfirmEditDialog({
                 Modified Attributes:
               </div>
 
-              <div className="border-line divide-line bg-surface/40 divide-y rounded-lg border">
+              <div className="border-line divide-line bg-surface/40 divide-y rounded-lg border-[1.5px]">
                 {changes.map((change) => {
                   const oldFormatted = formatDiffValue(change.oldValue);
                   const newFormatted = formatDiffValue(change.newValue);
@@ -191,7 +191,7 @@ export function AdminConfirmEditDialog({
                         {/* Old Value */}
                         <div
                           className={cn(
-                            "flex-1 rounded border px-2.5 py-1.5 text-xs break-all",
+                            "flex-1 rounded border-[1.5px] px-2.5 py-1.5 text-xs break-all",
                             isOldEmpty
                               ? "border-line bg-surface/80 text-muted-foreground italic"
                               : "border-destructive/30 bg-destructive/10 text-destructive line-through",
@@ -209,7 +209,7 @@ export function AdminConfirmEditDialog({
                         {/* New Value */}
                         <div
                           className={cn(
-                            "flex-1 rounded border px-2.5 py-1.5 text-xs break-all",
+                            "flex-1 rounded border-[1.5px] px-2.5 py-1.5 text-xs break-all",
                             isNewEmpty
                               ? "border-line bg-surface/80 text-muted-foreground italic"
                               : "border-emerald-500/40 bg-emerald-500/10 font-bold text-emerald-700 dark:text-emerald-300",

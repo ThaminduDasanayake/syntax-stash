@@ -12,7 +12,7 @@ export default function SubmitPage() {
   return (
     <div className="container mx-auto max-w-6xl px-4 py-8 sm:py-12">
       {/* Header */}
-      <div className="border-line/60 mb-10 border-b pb-8 font-mono">
+      <div className="border-line/60 mb-10 border-b-[1.5px] pb-8 font-mono">
         <div className="text-primary flex items-center gap-2 text-xs font-bold tracking-widest uppercase">
           <span className="bg-primary size-2 rounded-full" />
           <span>Community Submissions</span>

@@ -278,11 +278,11 @@ export function AnimationTab() {
                 <ArrowCounterClockwiseIcon /> Replay
               </Button>
             </div>
-            <div className="border-border bg-muted/20 flex h-52 items-center justify-center rounded-xl border">
+            <div className="border-border bg-muted/20 flex h-52 items-center justify-center rounded-xl border-[1.5px]">
               <div
                 key={replayKey}
                 style={previewStyle}
-                className="bg-primary/20 border-primary/40 text-primary flex h-16 w-16 items-center justify-center rounded-xl border font-mono text-xs"
+                className="bg-primary/20 border-primary/40 text-primary flex h-16 w-16 items-center justify-center rounded-xl border-[1.5px] font-mono text-xs"
               >
                 .el
               </div>

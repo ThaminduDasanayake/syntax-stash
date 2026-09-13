@@ -117,7 +117,9 @@ export function AdminResourceDialog({
 
   // Author Creation Modal State
   const [isCreateAuthorOpen, setIsCreateAuthorOpen] = useState(false);
-  const [createAuthorInitialName, setCreateAuthorInitialName] = useState("");
+  const [createAuthorInitialData, setCreateAuthorInitialData] = useState<
+    Partial<SuggestedAuthorData>
+  >({});
 
   // Confirmation Dialog State
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
@@ -136,11 +138,11 @@ export function AdminResourceDialog({
         authorTwitter: resource.authorTwitter || "",
         authorWebsite: resource.authorWebsite || "",
         authorYoutube: resource.authorYoutube || "",
-        category: resource.category || (categoryOptions[0]?.value ?? ""),
+        category: resource.category || categoryOptions[0]?.value || "",
         description: resource.description || "",
         favicon: resource.favicon || "",
         github: resource.github || "",
-        iconBg: resource.iconBg || "dark",
+        iconBg: (resource.iconBg as "dark" | "light" | "invert") || "dark",
         ogImage: resource.ogImage || "",
         subtitle: resource.subtitle || "",
         tags: resource.tags || "",
@@ -174,11 +176,20 @@ export function AdminResourceDialog({
   }, [categoryOptions, open, resource]);
 
   const handleAuthorFieldChange = (field: keyof AuthorSocialValues, value: string) => {
-    if (field === "author") {
+    const fieldMapping: Record<keyof AuthorSocialValues, string> = {
+      author: "authorName",
+      authorBlog: "authorBlog",
+      authorGitHub: "authorGithub",
+      authorLinkedIn: "authorLinkedin",
+      authorTwitter: "authorTwitter",
+      authorWebsite: "authorWebsite",
+      authorYouTube: "authorYoutube",
+    };
+    const mapped = fieldMapping[field];
+    if (mapped) {
       setFormData((prev) => ({
         ...prev,
-        authorName: value,
-        ...(value ? {} : { authorId: null }),
+        [mapped]: value,
       }));
     }
   };
@@ -196,8 +207,19 @@ export function AdminResourceDialog({
     }));
   };
 
-  const handleRequestCreateAuthor = (name: string) => {
-    setCreateAuthorInitialName(name);
+  const handleRequestCreateAuthor = (
+    name: string,
+    initialData?: Partial<SuggestedAuthorData>,
+  ) => {
+    setCreateAuthorInitialData({
+      blog: initialData?.blog || formData.authorBlog || "",
+      github: initialData?.github || formData.authorGithub || "",
+      linkedin: initialData?.linkedin || formData.authorLinkedin || "",
+      name: name || initialData?.name || "",
+      twitter: initialData?.twitter || formData.authorTwitter || "",
+      website: initialData?.website || formData.authorWebsite || "",
+      youtube: initialData?.youtube || formData.authorYoutube || "",
+    });
     setIsCreateAuthorOpen(true);
   };
 
@@ -412,7 +434,7 @@ export function AdminResourceDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[90vh] max-w-4xl overflow-y-auto p-0 font-mono text-xs sm:max-w-4xl">
-        <div className="border-line border-b p-6 pb-4">
+        <div className="border-line border-b-[1.5px] p-6 pb-4">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-lg font-bold tracking-tight uppercase">
               {isEdit ? (
@@ -736,7 +758,8 @@ export function AdminResourceDialog({
       <AdminAuthorDialog
         open={isCreateAuthorOpen}
         onOpenChange={setIsCreateAuthorOpen}
-        initialName={createAuthorInitialName}
+        initialData={createAuthorInitialData}
+        initialName={createAuthorInitialData.name}
         onCreated={(newAuthor) => {
           setFormData((prev) => {
             const existing = prev.authorName

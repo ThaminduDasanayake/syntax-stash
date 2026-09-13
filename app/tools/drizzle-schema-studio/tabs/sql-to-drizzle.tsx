@@ -66,7 +66,7 @@ export function SqlToDrizzle() {
             ["Dialects", "PostgreSQL (pgTable) and MySQL (mysqlTable)"],
             ["Foreign key references are noted in comments", "REFERENCES"],
           ].map(([title, desc]) => (
-            <div key={title} className="bg-card border p-3">
+            <div key={title} className="bg-card border-[1.5px] p-3">
               <p className="text-xs font-medium">{title}</p>
               <p className="text-muted-foreground text-xs">{desc}</p>
             </div>

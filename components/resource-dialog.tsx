@@ -355,7 +355,7 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
       </div>
 
       {/* Mobile Fixed Top Bar */}
-      <div className="text-foreground z-30 flex h-12 shrink-0 items-center justify-between border-b border-white/8 bg-[#18181b] px-4 md:hidden">
+      <div className="text-foreground z-30 flex h-12 shrink-0 items-center justify-between border-b-[1.5px] border-white/8 bg-[#18181b] px-4 md:hidden">
         <div className="flex min-w-0 flex-1 items-center gap-2 pr-3">
           <span className={cn("size-2 shrink-0 rounded-full", activeThemeStyles.dot)} />
 
@@ -404,7 +404,7 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
         className="modal-body flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-none [scrollbar-color:var(--line-2)_transparent] md:grid md:grid-cols-[340px_1fr] md:overflow-hidden md:overscroll-contain [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent"
       >
         {/* Left Side */}
-        <div className="modal-left text-foreground relative flex shrink-0 flex-col border-b border-white/8 bg-[#141416] px-5 pt-3 pb-6 md:overflow-y-auto md:border-r md:border-b-0 md:px-7 md:py-8">
+        <div className="modal-left text-foreground relative flex shrink-0 flex-col border-b-[1.5px] border-white/8 bg-[#141416] px-5 pt-3 pb-6 md:overflow-y-auto md:border-r md:border-b-0 md:px-7 md:py-8">
           {/* Desktop Category Header */}
           <div className="modal-cat-label hidden md:flex">
             <div className="flex min-w-0 items-center gap-2">
@@ -625,7 +625,7 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
                         variant="outline"
                         size="xs"
                         onClick={() => onTagClickAction?.(tag)}
-                        className="text-mono-xs border-brand-purple/25 bg-brand-purple/5 text-foreground hover:border-brand-purple/50 hover:bg-brand-purple/15 h-7 rounded-full border px-3 py-1 font-semibold transition-all duration-150 hover:-translate-y-0.5"
+                        className="text-mono-xs border-brand-purple/25 bg-brand-purple/5 text-foreground hover:border-brand-purple/50 hover:bg-brand-purple/15 h-7 rounded-full border-[1.5px] px-3 py-1 font-semibold transition-all duration-150 hover:-translate-y-0.5"
                         title={`Filter by #${tag}`}
                       >
                         <span className="text-brand-purple mr-1 font-bold">#</span>

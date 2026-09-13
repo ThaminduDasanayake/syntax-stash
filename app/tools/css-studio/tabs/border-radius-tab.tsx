@@ -131,7 +131,7 @@ export function BorderRadiusTab() {
       <div className="space-y-6">
         <div className="space-y-2">
           <Label>Live Preview</Label>
-          <div className="border-border bg-muted/20 flex h-64 items-center justify-center rounded-xl border">
+          <div className="border-border bg-muted/20 flex h-64 items-center justify-center rounded-xl border-[1.5px]">
             <div
               className="bg-primary/40 border-primary h-40 w-64 border-2 transition-all duration-150"
               style={{ borderRadius: cssValue }}
@@ -144,7 +144,7 @@ export function BorderRadiusTab() {
             <Label className="text-xs">CSS</Label>
             <CopyButton textToCopy={`border-radius: ${cssValue};`} />
           </div>
-          <div className="bg-muted/40 border-border overflow-x-auto rounded-lg border px-4 py-3">
+          <div className="bg-muted/40 border-border overflow-x-auto rounded-lg border-[1.5px] px-4 py-3">
             <code className="text-primary font-mono text-sm">border-radius: {cssValue};</code>
           </div>
         </div>
@@ -154,12 +154,12 @@ export function BorderRadiusTab() {
             <Label className="text-xs">Tailwind CSS</Label>
             <CopyButton textToCopy={twClass} />
           </div>
-          <div className="bg-muted/40 border-border overflow-x-auto rounded-lg border px-4 py-3">
+          <div className="bg-muted/40 border-border overflow-x-auto rounded-lg border-[1.5px] px-4 py-3">
             <code className="text-primary font-mono text-sm">{twClass}</code>
           </div>
         </div>
 
-        <div className="border-border rounded-xl border p-4">
+        <div className="border-border rounded-xl border-[1.5px] p-4">
           <p className="text-muted-foreground mb-3 text-xs font-semibold tracking-wider uppercase">
             Corner Values
           </p>

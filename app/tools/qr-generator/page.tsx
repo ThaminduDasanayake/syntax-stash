@@ -151,7 +151,7 @@ export default function QRGeneratorPage() {
           </div>
 
           {/* Options Section */}
-          <div className="bg-card border-border space-y-6 rounded-xl border p-5">
+          <div className="bg-card border-border space-y-6 rounded-xl border-[1.5px] p-5">
             <h3 className="text-sm font-semibold">Options</h3>
 
             <div className="space-y-4">
@@ -186,7 +186,7 @@ export default function QRGeneratorPage() {
           </div>
 
           {/* Colors Section */}
-          <div className="bg-card border-border space-y-6 rounded-xl border p-5">
+          <div className="bg-card border-border space-y-6 rounded-xl border-[1.5px] p-5">
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-semibold">Colours</h3>
 
@@ -225,7 +225,7 @@ export default function QRGeneratorPage() {
                   />
                 </div>
               ) : (
-                <div className="border-border flex h-64 w-64 items-center justify-center border border-dashed">
+                <div className="border-border flex h-64 w-64 items-center justify-center border-[1.5px] border-dashed">
                   <p className="text-muted-foreground px-4 text-center font-mono text-xs">
                     Enter text to generate a QR code
                   </p>

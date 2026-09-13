@@ -111,7 +111,7 @@ export default function JsdocGeneratorPage() {
           />
         </div>
 
-        <div className="border-border bg-muted/30 shrink-0 rounded-xl border p-4 text-xs">
+        <div className="border-border bg-muted/30 shrink-0 rounded-xl border-[1.5px] p-4 text-xs">
           <p className="text-foreground mb-2 font-semibold">Style differences</p>
           <ul className="text-muted-foreground space-y-1">
             <li>

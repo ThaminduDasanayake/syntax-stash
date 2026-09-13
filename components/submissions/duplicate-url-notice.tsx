@@ -68,7 +68,7 @@ export function DuplicateNotice({
 
   return (
     <div
-      className={`animate-in fade-in flex w-full max-w-full min-w-0 items-start justify-between gap-3 rounded-md border border-amber-500/40 bg-amber-500/10 p-2.5 font-mono text-xs text-amber-600 dark:text-amber-400 ${className}`}
+      className={`animate-in fade-in flex w-full max-w-full min-w-0 items-start justify-between gap-3 rounded-md border-[1.5px] border-amber-500/40 bg-amber-500/10 p-2.5 font-mono text-xs text-amber-600 dark:text-amber-400 ${className}`}
     >
       <div className="flex min-w-0 flex-1 items-start gap-2">
         <WarningCircleIcon weight="fill" className="mt-0.5 size-4 shrink-0 text-amber-500" />

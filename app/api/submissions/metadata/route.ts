@@ -640,6 +640,7 @@ export async function GET(request: NextRequest) {
     const metaAuthor = $('meta[name="author"]').attr("content")?.trim();
 
     let author = cleanAuthorName(metaAuthor || "") || cleanAuthorName(articleAuthor || "");
+    let authorBlog: string | undefined;
     let authorWebsite: string | undefined;
     let authorTwitter: string | undefined;
     let authorGitHub: string | undefined;
@@ -929,6 +930,19 @@ export async function GET(request: NextRequest) {
             authorLinkedIn = fullHref;
           }
         }
+
+        // Blog / RSS / Substack / Medium / Dev.to
+        if (!authorBlog) {
+          if (
+            host.includes("substack.com") ||
+            host.includes("medium.com") ||
+            host.includes("dev.to") ||
+            host.includes("hashnode.dev") ||
+            host.includes("hashnode.com")
+          ) {
+            authorBlog = fullHref;
+          }
+        }
       } catch {
         // ignore invalid urls
       }
@@ -1130,6 +1144,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       title,
       author,
+      authorBlog,
       authorGitHub,
       authorLinkedIn,
       authorTwitter,

@@ -221,7 +221,7 @@ export function LiveTester({
       </div>
 
       {parsed.ok && (
-        <div className="border-border bg-card overflow-auto rounded-xl border p-6">
+        <div className="border-border bg-card overflow-auto rounded-xl border-[1.5px] p-6">
           <Diagram ast={parsed.ast} svgRef={diagramRef} />
         </div>
       )}

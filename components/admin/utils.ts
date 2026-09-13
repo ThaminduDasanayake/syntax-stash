@@ -40,7 +40,8 @@ export function generateTsCode(sub: Submission): string {
     sub.authorGitHub ||
     sub.authorWebsite ||
     sub.authorYouTube ||
-    sub.authorLinkedIn;
+    sub.authorLinkedIn ||
+    sub.authorBlog;
 
   if (sub.author && hasSocial) {
     const slug = slugifyAuthor(sub.author);
@@ -48,6 +49,7 @@ export function generateTsCode(sub: Submission): string {
     code += `  "${slug}": {\n`;
     code += `    name: "${sub.author.replace(/"/g, '\\"')}",\n`;
     code += `    links: {\n`;
+    if (sub.authorBlog) code += `      blog: "${sub.authorBlog}",\n`;
     if (sub.authorGitHub) code += `      github: "${sub.authorGitHub}",\n`;
     if (sub.authorLinkedIn) code += `      linkedin: "${sub.authorLinkedIn}",\n`;
     if (sub.authorTwitter) code += `      twitter: "${sub.authorTwitter}",\n`;

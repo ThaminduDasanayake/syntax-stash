@@ -113,18 +113,31 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
 
   // Author Creation Modal State
   const [isCreateAuthorOpen, setIsCreateAuthorOpen] = useState(false);
-  const [createAuthorInitialName, setCreateAuthorInitialName] = useState("");
+  const [createAuthorInitialData, setCreateAuthorInitialData] = useState<
+    Partial<SuggestedAuthorData>
+  >({});
 
   // Confirmation Dialog State
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
 
-  const handleAuthorFieldChange = (_field: keyof AuthorSocialValues, value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      authorName: value,
-      ...(value ? {} : { authorId: null }),
-    }));
+  const handleAuthorFieldChange = (field: keyof AuthorSocialValues, value: string) => {
+    const fieldMapping: Record<keyof AuthorSocialValues, string> = {
+      author: "authorName",
+      authorBlog: "authorBlog",
+      authorGitHub: "authorGithub",
+      authorLinkedIn: "authorLinkedin",
+      authorTwitter: "authorTwitter",
+      authorWebsite: "authorWebsite",
+      authorYouTube: "authorYoutube",
+    };
+    const mapped = fieldMapping[field];
+    if (mapped) {
+      setFormData((prev) => ({
+        ...prev,
+        [mapped]: value,
+      }));
+    }
   };
 
   const handleSelectAuthorOption = (authorOption: AuthorOption) => {
@@ -140,8 +153,19 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
     }));
   };
 
-  const handleRequestCreateAuthor = (name: string) => {
-    setCreateAuthorInitialName(name);
+  const handleRequestCreateAuthor = (
+    name: string,
+    initialData?: Partial<SuggestedAuthorData>,
+  ) => {
+    setCreateAuthorInitialData({
+      blog: initialData?.blog || formData.authorBlog || "",
+      github: initialData?.github || formData.authorGithub || "",
+      linkedin: initialData?.linkedin || formData.authorLinkedin || "",
+      name: name || initialData?.name || "",
+      twitter: initialData?.twitter || formData.authorTwitter || "",
+      website: initialData?.website || formData.authorWebsite || "",
+      youtube: initialData?.youtube || formData.authorYoutube || "",
+    });
     setIsCreateAuthorOpen(true);
   };
 
@@ -406,7 +430,7 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
   return (
     <div className="mx-auto max-w-6xl space-y-8 font-mono text-xs">
       {/* Header with Navigation */}
-      <div className="border-line flex flex-col gap-4 border-b pb-6 sm:flex-row sm:items-center sm:justify-between">
+      <div className="border-line flex flex-col gap-4 border-b-[1.5px] pb-6 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <Button
@@ -730,8 +754,8 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
           <div className="space-y-6 lg:col-span-5">
             <div className="sticky top-20 space-y-6">
               {/* Card Preview */}
-              <div className="border-line bg-surface/40 space-y-4 rounded-lg border p-5">
-                <h2 className="text-foreground border-line border-b pb-2 text-xs font-bold tracking-wider uppercase">
+              <div className="border-line bg-surface/40 space-y-4 rounded-lg border-[1.5px] p-5">
+                <h2 className="text-foreground border-line border-b-[1.5px] pb-2 text-xs font-bold tracking-wider uppercase">
                   Live Catalog Card Preview
                 </h2>
                 <ResourceCardPreview
@@ -749,8 +773,8 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
               </div>
 
               {/* Publishing Summary Box */}
-              <div className="border-line bg-surface/40 space-y-4 rounded-lg border p-5">
-                <h2 className="text-foreground border-line border-b pb-2 text-xs font-bold tracking-wider uppercase">
+              <div className="border-line bg-surface/40 space-y-4 rounded-lg border-[1.5px] p-5">
+                <h2 className="text-foreground border-line border-b-[1.5px] pb-2 text-xs font-bold tracking-wider uppercase">
                   Publishing Summary
                 </h2>
 
@@ -815,7 +839,8 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
       <AdminAuthorDialog
         open={isCreateAuthorOpen}
         onOpenChange={setIsCreateAuthorOpen}
-        initialName={createAuthorInitialName}
+        initialData={createAuthorInitialData}
+        initialName={createAuthorInitialData.name}
         onCreated={(newAuthor) => {
           setFormData((prev) => {
             const existing = prev.authorName

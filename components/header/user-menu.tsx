@@ -58,7 +58,7 @@ export function UserMenu({ onSearchOpenAction }: UserMenuProps) {
         <Button
           variant="ghost"
           size="icon"
-          className="border-ink/20 hover:bg-muted focus-visible:ring-ring relative size-9 shrink-0 rounded-full border p-0 focus-visible:ring-1"
+          className="border-ink/20 hover:bg-muted focus-visible:ring-ring relative size-9 shrink-0 rounded-full border-[1.5px] p-0 focus-visible:ring-1"
           aria-label="User menu"
         >
           <Avatar className="size-9 overflow-visible">

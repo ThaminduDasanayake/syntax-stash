@@ -319,7 +319,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
   return (
     <div className="font-mono">
       {/* Control Bar */}
-      <div className="border-line bg-surface/50 mb-6 space-y-4 rounded-lg border p-4 text-xs">
+      <div className="border-line bg-surface/50 mb-6 space-y-4 rounded-lg border-[1.5px] p-4 text-xs">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           {/* Search */}
           <div className="flex-1">
@@ -385,7 +385,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
 
       {/* Categories Table */}
       {filteredCategories.length === 0 ? (
-        <div className="border-line bg-surface/30 flex flex-col items-center justify-center rounded-lg border p-12 text-center">
+        <div className="border-line bg-surface/30 flex flex-col items-center justify-center rounded-lg border-[1.5px] p-12 text-center">
           <FoldersIcon className="text-muted-foreground/60 mb-3 size-10" />
           <h3 className="text-foreground text-sm font-bold uppercase">No Categories Found</h3>
           <p className="text-muted-foreground mt-1 max-w-sm text-xs">
@@ -410,7 +410,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
           )}
         </div>
       ) : (
-        <div className="border-line overflow-hidden rounded-lg border">
+        <div className="border-line overflow-hidden rounded-lg border-[1.5px]">
           <Table className="text-xs">
             <TableHeader className="bg-surface">
               <TableRow className="border-line hover:bg-transparent">
@@ -522,7 +522,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
             </div>
 
             {/* Auto-Generated Slug (Read-only Preview) */}
-            <div className="border-line bg-surface/40 flex items-center justify-between rounded border px-3 py-2 text-xs">
+            <div className="border-line bg-surface/40 flex items-center justify-between rounded border-[1.5px] px-3 py-2 text-xs">
               <span className="text-muted-foreground text-[10px] font-bold tracking-wider uppercase">
                 Generated Route URL:
               </span>

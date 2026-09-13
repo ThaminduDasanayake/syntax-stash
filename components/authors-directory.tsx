@@ -40,7 +40,7 @@ export function AuthorsDirectory({ authors }: AuthorsDirectoryProps) {
         />
 
         {/* Results Counter */}
-        <div className="border-b-line text-muted-foreground mb-6 flex w-full items-center justify-between border-b pb-3 font-mono text-xs">
+        <div className="border-b-line text-muted-foreground mb-6 flex w-full items-center justify-between border-b-[1.5px] pb-3 font-mono text-xs">
           <span>
             SHOWING {filteredAuthors.length} AUTHOR{filteredAuthors.length === 1 ? "" : "S"}
           </span>
@@ -61,14 +61,14 @@ export function AuthorsDirectory({ authors }: AuthorsDirectoryProps) {
               <Link
                 key={author.slug}
                 href={`/authors/${author.slug}`}
-                className="group border-ink/20 bg-background hover:border-ink relative flex flex-col justify-between border p-5 transition-all hover:shadow-xs"
+                className="group border-ink/20 bg-background hover:border-ink relative flex flex-col justify-between border-[1.5px] p-5 transition-all hover:shadow-xs"
               >
                 <div>
                   <div className="flex items-start justify-between gap-2">
                     <h2 className="group-hover:text-foreground text-ink truncate font-mono text-base font-bold tracking-tight uppercase">
                       {author.name}
                     </h2>
-                    <span className="border-ink/20 bg-sec-1 shrink-0 border px-2 py-0.5 font-mono text-[11px] font-bold">
+                    <span className="border-ink/20 bg-sec-1 shrink-0 border-[1.5px] px-2 py-0.5 font-mono text-[11px] font-bold">
                       {author.count}
                     </span>
                   </div>
@@ -82,7 +82,7 @@ export function AuthorsDirectory({ authors }: AuthorsDirectoryProps) {
                     {author.categories.slice(0, 3).map((cat) => (
                       <span
                         key={cat}
-                        className="bg-muted/60 text-muted-foreground border-border border px-1.5 py-0.5 font-mono text-[10px]"
+                        className="bg-muted/60 text-muted-foreground border-border border-[1.5px] px-1.5 py-0.5 font-mono text-[10px]"
                       >
                         {cat}
                       </span>

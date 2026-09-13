@@ -25,19 +25,19 @@ export const STATUS_CONFIG: Record<
   }
 > = {
   approved: {
-    badge: "bg-emerald-500/15 text-emerald-700 border border-emerald-600/60",
+    badge: "bg-emerald-500/15 text-emerald-700 border-[1.5px] border-emerald-600/60",
     button: "border-emerald-600/60 text-emerald-700 hover:bg-emerald-500/20",
     dotColor: "bg-emerald-500",
     label: "Approved",
   },
   pending: {
-    badge: "bg-amber-500/15 text-amber-800 border border-amber-600/60",
+    badge: "bg-amber-500/15 text-amber-800 border-[1.5px] border-amber-600/60",
     button: "border-amber-600/60 text-amber-800 hover:bg-amber-500/20",
     dotColor: "bg-amber-500",
     label: "Pending",
   },
   rejected: {
-    badge: "bg-rose-500/15 text-rose-700 border border-rose-600/60",
+    badge: "bg-rose-500/15 text-rose-700 border-[1.5px] border-rose-600/60",
     button: "border-rose-600/60 text-rose-700 hover:bg-rose-500/20",
     dotColor: "bg-rose-500",
     label: "Rejected",

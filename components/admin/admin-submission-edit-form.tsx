@@ -44,6 +44,7 @@ const SUBMISSION_FIELD_LABELS: Record<string, string> = {
   title: "Title",
   adminNotes: "Internal Admin Notes",
   author: "Author / Creator",
+  authorBlog: "Author Blog URL",
   authorGitHub: "Author GitHub",
   authorLinkedIn: "Author LinkedIn",
   authorTwitter: "Author Twitter / X",
@@ -85,6 +86,7 @@ export function AdminSubmissionEditForm({
     title: sub.title,
     adminNotes: sub.adminNotes || "",
     author: sub.author || "",
+    authorBlog: sub.authorBlog || "",
     authorGitHub: sub.authorGitHub || "",
     authorLinkedIn: sub.authorLinkedIn || "",
     authorTwitter: sub.authorTwitter || "",
@@ -121,7 +123,9 @@ export function AdminSubmissionEditForm({
 
   // Inline Author Creation
   const [isCreateAuthorOpen, setIsCreateAuthorOpen] = useState(false);
-  const [createAuthorInitialName, setCreateAuthorInitialName] = useState("");
+  const [createAuthorInitialData, setCreateAuthorInitialData] = useState<
+    Partial<SuggestedAuthorData>
+  >({});
 
   // Confirmation Dialog State
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
@@ -163,6 +167,7 @@ export function AdminSubmissionEditForm({
   const handleSelectAuthorOption = (authorOption: AuthorOption) => {
     setEditForm((prev) => ({
       ...prev,
+      authorBlog: authorOption.links?.blog || prev.authorBlog || "",
       authorGitHub: authorOption.links?.github || prev.authorGitHub || "",
       authorLinkedIn: authorOption.links?.linkedin || prev.authorLinkedIn || "",
       authorTwitter: authorOption.links?.twitter || prev.authorTwitter || "",
@@ -171,8 +176,19 @@ export function AdminSubmissionEditForm({
     }));
   };
 
-  const handleRequestCreateAuthor = (name: string) => {
-    setCreateAuthorInitialName(name);
+  const handleRequestCreateAuthor = (
+    name: string,
+    initialData?: Partial<SuggestedAuthorData>,
+  ) => {
+    setCreateAuthorInitialData({
+      blog: initialData?.blog || editForm.authorBlog || "",
+      github: initialData?.github || editForm.authorGitHub || "",
+      linkedin: initialData?.linkedin || editForm.authorLinkedIn || "",
+      name: name || initialData?.name || "",
+      twitter: initialData?.twitter || editForm.authorTwitter || "",
+      website: initialData?.website || editForm.authorWebsite || "",
+      youtube: initialData?.youtube || editForm.authorYouTube || "",
+    });
     setIsCreateAuthorOpen(true);
   };
 
@@ -180,6 +196,7 @@ export function AdminSubmissionEditForm({
     setEditForm((prev) => ({
       ...prev,
       author: suggested.name,
+      authorBlog: suggested.blog || prev.authorBlog || "",
       authorGitHub: suggested.github || prev.authorGitHub || "",
       authorLinkedIn: suggested.linkedin || prev.authorLinkedIn || "",
       authorTwitter: suggested.twitter || prev.authorTwitter || "",
@@ -280,7 +297,7 @@ export function AdminSubmissionEditForm({
   return (
     <div className="border-primary/60 bg-paper/60 rounded-lg border-2 p-6 font-mono text-xs shadow-md">
       {/* Edit Header */}
-      <div className="border-line/60 mb-6 flex flex-wrap items-center justify-between gap-3 border-b pb-4">
+      <div className="border-line/60 mb-6 flex flex-wrap items-center justify-between gap-3 border-b-[1.5px] pb-4">
         <div className="flex items-center gap-3">
           <div className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded font-bold">
             <PencilSimpleIcon weight="bold" className="size-4" />
@@ -495,6 +512,7 @@ export function AdminSubmissionEditForm({
           <AuthorSocialFields
             values={{
               author: editForm.author,
+              authorBlog: editForm.authorBlog,
               authorGitHub: editForm.authorGitHub,
               authorLinkedIn: editForm.authorLinkedIn,
               authorTwitter: editForm.authorTwitter,
@@ -683,7 +701,8 @@ export function AdminSubmissionEditForm({
       <AdminAuthorDialog
         open={isCreateAuthorOpen}
         onOpenChange={setIsCreateAuthorOpen}
-        initialName={createAuthorInitialName}
+        initialData={createAuthorInitialData}
+        initialName={createAuthorInitialData.name}
         onCreated={(newAuthor) => {
           setEditForm((prev) => {
             const existing = prev.author
@@ -698,6 +717,7 @@ export function AdminSubmissionEditForm({
             return {
               ...prev,
               author: next.join(", "),
+              authorBlog: newAuthor.blog || prev.authorBlog || "",
               authorGitHub: newAuthor.github || prev.authorGitHub || "",
               authorLinkedIn: newAuthor.linkedin || prev.authorLinkedIn || "",
               authorTwitter: newAuthor.twitter || prev.authorTwitter || "",

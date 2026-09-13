@@ -26,7 +26,7 @@ export function DetectedFieldSuggestion({
     if (!currentValue || !currentValue.trim()) return null;
 
     return (
-      <div className="animate-in fade-in inline-flex max-w-full items-center gap-1.5 rounded border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 font-mono text-[11px] text-amber-600 dark:text-amber-400">
+      <div className="animate-in fade-in inline-flex max-w-full items-center gap-1.5 rounded border-[1.5px] border-amber-500/40 bg-amber-500/10 px-2 py-0.5 font-mono text-[11px] text-amber-600 dark:text-amber-400">
         <span className="truncate">
           Live site: <strong className="font-semibold">{emptyLabel}</strong>
         </span>
@@ -56,7 +56,7 @@ export function DetectedFieldSuggestion({
   }
 
   return (
-    <div className="animate-in fade-in inline-flex max-w-full items-center gap-1.5 rounded border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 font-mono text-[11px] text-amber-500">
+    <div className="animate-in fade-in inline-flex max-w-full items-center gap-1.5 rounded border-[1.5px] border-amber-500/40 bg-amber-500/10 px-2 py-0.5 font-mono text-[11px] text-amber-500">
       <TooltipProvider delayDuration={100}>
         <Tooltip>
           <TooltipTrigger asChild>
@@ -69,10 +69,10 @@ export function DetectedFieldSuggestion({
             side="top"
             align="start"
             sideOffset={6}
-            className="border-line bg-paper text-foreground max-w-xs rounded border p-2.5 font-mono text-xs shadow-xl sm:max-w-md"
+            className="border-line bg-paper text-foreground max-w-xs rounded border-[1.5px] p-2.5 font-mono text-xs shadow-xl sm:max-w-md"
           >
             <div className="flex flex-col gap-1.5">
-              <div className="border-line text-muted-foreground flex items-center justify-between border-b pb-1 font-mono text-[10px] font-bold uppercase">
+              <div className="border-line text-muted-foreground flex items-center justify-between border-b-[1.5px] pb-1 font-mono text-[10px] font-bold uppercase">
                 <span>Detected Value</span>
                 <span>{detectedValue.length} chars</span>
               </div>

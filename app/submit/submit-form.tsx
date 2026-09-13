@@ -37,6 +37,7 @@ export function SubmitForm() {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState<string>("");
   const [author, setAuthor] = useState("");
+  const [authorBlog, setAuthorBlog] = useState("");
   const [authorWebsite, setAuthorWebsite] = useState("");
   const [authorTwitter, setAuthorTwitter] = useState("");
   const [authorGitHub, setAuthorGitHub] = useState("");
@@ -74,6 +75,7 @@ export function SubmitForm() {
     setDescription("");
     setCategory(categoryOptions[0]?.value || "");
     setAuthor("");
+    setAuthorBlog("");
     setAuthorWebsite("");
     setAuthorTwitter("");
     setAuthorGitHub("");
@@ -98,6 +100,9 @@ export function SubmitForm() {
       case "author":
         setAuthor(value);
         break;
+      case "authorBlog":
+        setAuthorBlog(value);
+        break;
       case "authorWebsite":
         setAuthorWebsite(value);
         break;
@@ -118,11 +123,33 @@ export function SubmitForm() {
 
   const handleAuthorBatchChange = (updates: Partial<AuthorSocialValues>) => {
     if (updates.author !== undefined) setAuthor(updates.author || "");
+    if (updates.authorBlog !== undefined) setAuthorBlog(updates.authorBlog || "");
     if (updates.authorWebsite !== undefined) setAuthorWebsite(updates.authorWebsite || "");
     if (updates.authorTwitter !== undefined) setAuthorTwitter(updates.authorTwitter || "");
     if (updates.authorGitHub !== undefined) setAuthorGitHub(updates.authorGitHub || "");
     if (updates.authorYouTube !== undefined) setAuthorYouTube(updates.authorYouTube || "");
     if (updates.authorLinkedIn !== undefined) setAuthorLinkedIn(updates.authorLinkedIn || "");
+  };
+
+  const handleSelectAuthorOption = (authorOption: {
+    links?: {
+      blog?: string;
+      github?: string;
+      linkedin?: string;
+      twitter?: string;
+      website?: string;
+      youtube?: string;
+    } | null;
+    name: string;
+  }) => {
+    if (authorOption.links) {
+      if (authorOption.links.website) setAuthorWebsite(authorOption.links.website);
+      if (authorOption.links.twitter) setAuthorTwitter(authorOption.links.twitter);
+      if (authorOption.links.github) setAuthorGitHub(authorOption.links.github);
+      if (authorOption.links.youtube) setAuthorYouTube(authorOption.links.youtube);
+      if (authorOption.links.linkedin) setAuthorLinkedIn(authorOption.links.linkedin);
+      if (authorOption.links.blog) setAuthorBlog(authorOption.links.blog);
+    }
   };
 
   const handleAcceptSuggestedAuthor = (suggested: SuggestedAuthorData) => {
@@ -132,6 +159,7 @@ export function SubmitForm() {
     if (suggested.github) setAuthorGitHub(suggested.github);
     if (suggested.youtube) setAuthorYouTube(suggested.youtube);
     if (suggested.linkedin) setAuthorLinkedIn(suggested.linkedin);
+    if (suggested.blog) setAuthorBlog(suggested.blog);
     setSuggestedAuthor(null);
   };
 
@@ -259,6 +287,7 @@ export function SubmitForm() {
         body: JSON.stringify({
           title: title.trim(),
           author: author.trim() || undefined,
+          authorBlog: authorBlog.trim() || undefined,
           authorGitHub: authorGitHub.trim() || undefined,
           authorLinkedIn: authorLinkedIn.trim() || undefined,
           authorTwitter: authorTwitter.trim() || undefined,
@@ -268,6 +297,7 @@ export function SubmitForm() {
           description: description.trim(),
           favicon: favicon.trim() || undefined,
           github: github.trim() || undefined,
+          iconBg: iconBg || "dark",
           notes: notes.trim() || undefined,
           ogImage: ogImage.trim() || undefined,
           subtitle: subtitle.trim() || undefined,
@@ -316,7 +346,7 @@ export function SubmitForm() {
   return (
     <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
       {/* Left Column: Form (7 cols) */}
-      <div className="border-line bg-paper/40 border p-6 font-mono text-xs sm:p-8 lg:col-span-7">
+      <div className="border-line bg-paper/40 border-[1.5px] p-6 font-mono text-xs sm:p-8 lg:col-span-7">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Invisible Honeypot Anti-Bot Field */}
           <input
@@ -511,6 +541,7 @@ export function SubmitForm() {
           <AuthorSocialFields
             values={{
               author,
+              authorBlog,
               authorGitHub,
               authorLinkedIn,
               authorTwitter,
@@ -519,6 +550,7 @@ export function SubmitForm() {
             }}
             onChange={handleAuthorFieldChange}
             onBatchChange={handleAuthorBatchChange}
+            onSelectAuthorOption={handleSelectAuthorOption}
             suggestedAuthor={suggestedAuthor}
             onAcceptSuggestedAuthor={handleAcceptSuggestedAuthor}
             onDismissSuggestedAuthor={() => setSuggestedAuthor(null)}
@@ -643,7 +675,7 @@ export function SubmitForm() {
           />
 
           {/* Guidelines Box */}
-          <div className="border-line bg-paper/30 border p-5 font-mono text-xs">
+          <div className="border-line bg-paper/30 border-[1.5px] p-5 font-mono text-xs">
             <h4 className="text-foreground font-bold tracking-tight uppercase">
               Submission Guidelines
             </h4>

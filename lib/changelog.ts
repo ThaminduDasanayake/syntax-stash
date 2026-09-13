@@ -26,7 +26,7 @@ export function formatInlineMarkdown(text: string): string {
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
     .replace(
       /`([^`]+)`/g,
-      '<code class="bg-card border border-border px-1.5 py-0.5 font-mono text-xs text-foreground">$1</code>',
+      '<code class="bg-card border-[1.5px] border-border px-1.5 py-0.5 font-mono text-xs text-foreground">$1</code>',
     );
 }
 

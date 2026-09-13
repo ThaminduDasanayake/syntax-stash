@@ -94,7 +94,7 @@ export default async function Home() {
       </section>
 
       {/* Why this matters */}
-      <section className="bg-background border-b border-white/[0.08] px-6 py-24 sm:px-12 lg:px-24">
+      <section className="bg-background border-b-[1.5px] border-white/8 px-6 py-24 sm:px-12 lg:px-24">
         <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-24">
           <div>
             <h2 className="flex flex-col gap-0 text-6xl tracking-tighter sm:text-7xl">
@@ -114,7 +114,7 @@ export default async function Home() {
                 and fragmentation that follows.
               </p>
             </div>
-            <div className="flex gap-6 border-t border-white/[0.08] pt-12">
+            <div className="flex gap-6 border-t border-white/8 pt-12">
               <span className="text-primary font-mono text-base font-extrabold">02</span>
               <p>
                 AI assistants now generate the estimate, the summary, the first draft of the code.
@@ -123,7 +123,7 @@ export default async function Home() {
                 that delivers them. But foundational understanding requires tactile interaction.
               </p>
             </div>
-            <div className="flex gap-6 border-t border-white/[0.08] pt-12">
+            <div className="flex gap-6 border-t border-white/8 pt-12">
               <span className="text-primary font-mono text-base font-extrabold">03</span>
               <p>
                 What follows is a working library:{" "}
@@ -136,7 +136,7 @@ export default async function Home() {
       </section>
 
       {/* Curated Resource Vault Spotlight */}
-      <section className="bg-background border-b border-white/[0.08] px-6 py-24 sm:px-12 lg:px-24">
+      <section className="bg-background border-b-[1.5px] border-white/8 px-6 py-24 sm:px-12 lg:px-24">
         <div className="mx-auto w-full max-w-7xl">
           <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div>
@@ -168,11 +168,11 @@ export default async function Home() {
                 <Link
                   key={category}
                   href={`/resources/${slug}`}
-                  className="group border-border/60 bg-card hover:border-border relative isolate flex min-h-[120px] flex-col justify-between overflow-hidden rounded-lg border p-4 transition-colors select-none"
+                  className="group border-border/60 bg-card hover:border-border relative isolate flex min-h-30 flex-col justify-between overflow-hidden rounded-lg border-[1.5px] p-4 transition-colors select-none"
                 >
                   <div
                     aria-hidden="true"
-                    className="from-brand-orange/[0.08] via-brand-purple/[0.04] pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-20 bg-gradient-to-t to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                    className="from-brand-orange/8 via-brand-purple/4 pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-20 bg-linear-to-t to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                   />
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex min-w-0 items-center gap-1.5">
@@ -201,7 +201,7 @@ export default async function Home() {
             })}
           </div>
 
-          <div className="mt-10 flex items-center justify-between border-t border-white/[0.08] pt-8">
+          <div className="mt-10 flex items-center justify-between border-t border-white/8 pt-8">
             <Button asChild size="sm" variant="default">
               <Link href="/resources" className="text-display-xs">
                 EXPLORE ALL {resourceLinks.length} RESOURCES{" "}

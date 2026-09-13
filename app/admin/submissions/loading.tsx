@@ -5,7 +5,7 @@ export default function AdminSubmissionsLoading() {
   return (
     <div className="container mx-auto max-w-5xl px-4 py-8 sm:py-12" aria-busy="true">
       {/* Admin Header Skeleton */}
-      <div className="border-line/60 mb-8 border-b pb-6 font-mono">
+      <div className="border-line/60 mb-8 border-b-[1.5px] pb-6 font-mono">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">
