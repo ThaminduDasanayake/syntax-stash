@@ -306,17 +306,44 @@ export function AdminSubmissionCard({
 
         {/* Action Buttons Bar */}
         <div className="border-line mt-4 flex flex-wrap items-center justify-between gap-2 border-t pt-3">
-          <div className="flex items-center gap-2">
-            <Button
-              asChild
-              size="sm"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 gap-1.5 text-[11px] font-bold uppercase"
-            >
-              <Link href={`/admin/submissions/${sub.id}`}>
-                <MagnifyingGlassIcon weight="bold" className="size-3.5" />
-                <span>Inspect & Review</span>
-              </Link>
-            </Button>
+          <div className="flex flex-wrap items-center gap-2">
+            {sub.status === "approved" ? (
+              <>
+                <Button
+                  asChild
+                  size="sm"
+                  className="bg-emerald-600 text-white hover:bg-emerald-700 gap-1.5 text-[11px] font-bold uppercase"
+                >
+                  <Link href={`/admin/resources?q=${encodeURIComponent(sub.title)}`}>
+                    <ArrowSquareOutIcon weight="bold" className="size-3.5" />
+                    <span>View in Catalog</span>
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  size="sm"
+                  variant="outline"
+                  className="gap-1.5 text-[11px] font-bold uppercase"
+                >
+                  <Link href={`/admin/submissions/${sub.id}`}>
+                    <MagnifyingGlassIcon weight="bold" className="size-3.5" />
+                    <span>Inspect</span>
+                  </Link>
+                </Button>
+              </>
+            ) : (
+              <Button
+                asChild
+                size="sm"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 gap-1.5 text-[11px] font-bold uppercase"
+              >
+                <Link href={`/admin/submissions/${sub.id}`}>
+                  <MagnifyingGlassIcon weight="bold" className="size-3.5" />
+                  <span>Inspect & Review</span>
+                </Link>
+              </Button>
+            )}
+
             <Button
               size="sm"
               variant="outline"

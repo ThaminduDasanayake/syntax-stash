@@ -4,6 +4,7 @@ import {
   ArrowLeftIcon,
   ArrowRightIcon,
   ArrowsClockwiseIcon,
+  ArrowSquareOutIcon,
   CheckCircleIcon,
   CircleNotchIcon,
   CopyIcon,
@@ -551,7 +552,17 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
             <span>Sync All Fields ➔</span>
           </Button>
 
-          {sub.status !== "approved" && (
+          {sub.status === "approved" ? (
+            <Button
+              asChild
+              className="h-9 gap-1.5 bg-emerald-600 px-4 text-xs font-bold text-white uppercase hover:bg-emerald-700"
+            >
+              <Link href={`/admin/resources?q=${encodeURIComponent(sub.title)}`}>
+                <ArrowSquareOutIcon weight="bold" className="size-4" />
+                <span>View in Catalog</span>
+              </Link>
+            </Button>
+          ) : (
             <Button
               type="button"
               onClick={() => handleRequestSave("approved")}
@@ -1171,7 +1182,18 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
                 <span>Save Edits</span>
               </Button>
 
-              {sub.status !== "approved" && (
+              {sub.status === "approved" ? (
+                <Button
+                  asChild
+                  size="sm"
+                  className="gap-1.5 bg-emerald-600 text-xs font-bold text-white uppercase hover:bg-emerald-700"
+                >
+                  <Link href={`/admin/resources?q=${encodeURIComponent(sub.title)}`}>
+                    <ArrowSquareOutIcon weight="bold" className="size-4" />
+                    <span>View in Catalog</span>
+                  </Link>
+                </Button>
+              ) : (
                 <Button
                   type="button"
                   size="sm"
