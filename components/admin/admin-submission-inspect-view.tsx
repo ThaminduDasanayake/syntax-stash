@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
+import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import {
   AuthorOption,
   AuthorSocialFields,
@@ -185,6 +186,7 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
 
   // Confirmation Dialog State
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
   const [pendingAction, setPendingAction] = useState<(() => Promise<void>) | null>(null);
 
@@ -463,11 +465,7 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
     setIsConfirmOpen(true);
   };
 
-  const handleDelete = async () => {
-    if (!confirm(`Are you sure you want to permanently delete submission "${sub.title}"?`)) {
-      return;
-    }
-
+  const executeDelete = async () => {
     try {
       setIsWorking(true);
       const res = await fetch(`/api/admin/submissions?id=${sub.id}`, {
@@ -1143,7 +1141,7 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
               type="button"
               size="sm"
               variant="ghost"
-              onClick={handleDelete}
+              onClick={() => setIsDeleteDialogOpen(true)}
               disabled={isWorking}
               className="text-destructive hover:bg-destructive/10 gap-1.5 text-xs uppercase"
             >
@@ -1251,6 +1249,22 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
           }
         }}
         isWorking={isWorking}
+      />
+
+      {/* Hold-to-Confirm Dialog for Deleting Submission */}
+      <ConfirmDialog
+        open={isDeleteDialogOpen}
+        onOpenChange={setIsDeleteDialogOpen}
+        onConfirm={executeDelete}
+        title="Delete this submission?"
+        description={
+          <>
+            Are you sure you want to permanently delete submission{" "}
+            <strong className="text-foreground">&quot;{sub.title}&quot;</strong>? This action
+            cannot be undone.
+          </>
+        }
+        confirmLabel="Hold to delete"
       />
     </div>
   );
