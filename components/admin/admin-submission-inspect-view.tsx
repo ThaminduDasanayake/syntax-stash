@@ -12,7 +12,6 @@ import {
   UserIcon,
   XCircleIcon,
 } from "@phosphor-icons/react";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -73,11 +72,57 @@ interface AdminSubmissionInspectViewProps {
   submission: Submission;
 }
 
+function SubmittedDataBanner({
+  display,
+  label,
+  onSync,
+  value,
+}: {
+  display?: React.ReactNode;
+  label?: string;
+  onSync: () => void;
+  value?: string | null;
+}) {
+  const hasContent = Boolean(value?.trim() || display);
+
+  return (
+    <div className="border-line/60 bg-muted/30 flex items-center justify-between gap-2 rounded border px-3 py-1.5 font-mono text-xs">
+      <div className="flex items-center gap-2 truncate">
+        <span className="text-muted-foreground shrink-0 text-[10px] font-bold tracking-wider uppercase">
+          {label || "Submitted"}:
+        </span>
+        {display ? (
+          display
+        ) : (
+          <span
+            className={cn("truncate text-[11px]", hasContent ? "text-foreground font-medium" : "text-muted-foreground italic")}
+          >
+            {value || "None provided"}
+          </span>
+        )}
+      </div>
+
+      <Button
+        type="button"
+        size="sm"
+        variant="ghost"
+        disabled={!hasContent}
+        onClick={onSync}
+        className="text-primary hover:bg-primary/10 h-5 shrink-0 gap-1 px-1.5 text-[10px] font-bold uppercase"
+        title="Sync this value into target field"
+      >
+        <span>Sync</span>
+        <ArrowRightIcon className="size-3" />
+      </Button>
+    </div>
+  );
+}
+
 export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionInspectViewProps) {
   const router = useRouter();
   const { categoryOptions } = useCategories();
 
-  // Inspect mode starts with empty destination fields so the admin inspects and syncs intentionally
+  // Inspect mode starts with empty destination fields so admin inspects and syncs intentionally
   const [editForm, setEditForm] = useState<Partial<Submission & { iconBg?: string }>>({
     title: "",
     adminNotes: sub.adminNotes || "",
@@ -442,20 +487,20 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
   };
 
   return (
-    <div className="mx-auto max-w-7xl space-y-6 font-mono text-xs">
-      {/* Top Header & Navigation Bar */}
-      <div className="border-line/60 bg-paper flex flex-col gap-4 rounded-xl border p-5 sm:flex-row sm:items-center sm:justify-between">
-        <div className="space-y-1.5">
-          <div className="flex flex-wrap items-center gap-2">
+    <div className="mx-auto max-w-6xl space-y-8 font-mono text-xs">
+      {/* Header with Navigation & Quick Actions */}
+      <div className="border-line flex flex-col gap-4 border-b-[1.5px] pb-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
             <Button
               asChild
               size="sm"
               variant="outline"
-              className="border-line hover:bg-surface h-8 gap-1.5 px-3 text-xs font-bold uppercase"
+              className="border-line hover:bg-surface h-8 gap-1 px-2.5 text-xs font-bold uppercase"
             >
               <Link href="/admin/submissions">
-                <ArrowLeftIcon weight="bold" className="size-3.5" />
-                <span>Back to Queue</span>
+                <ArrowLeftIcon weight="bold" />
+                <span>Back to Submissions</span>
               </Link>
             </Button>
             <span className="text-muted-foreground">/</span>
@@ -464,8 +509,8 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
             </span>
           </div>
           <div className="flex flex-wrap items-center gap-2.5 pt-1">
-            <h1 className="text-foreground text-lg font-bold uppercase tracking-tight">
-              {sub.title}
+            <h1 className="text-foreground text-2xl font-bold tracking-tight uppercase">
+              Inspect: <span className="text-primary">{sub.title}</span>
             </h1>
             <span
               className={cn(
@@ -477,22 +522,22 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
               {statusConfig.label}
             </span>
           </div>
-          <p className="text-muted-foreground text-[11px]">
+          <p className="text-muted-foreground font-mono text-xs">
             Submitted by{" "}
             <span className="text-foreground font-semibold">
               {sub.submitterName || sub.submitterEmail || "Anonymous"}
             </span>{" "}
-            on {new Date(sub.createdAt).toLocaleDateString()}
+            on {new Date(sub.createdAt).toLocaleDateString()}. Review submitted payload above each field and sync selectively into the catalog editor.
           </p>
         </div>
 
-        {/* Top Global Quick Actions */}
+        {/* Global Actions */}
         <div className="flex flex-wrap items-center gap-2">
           <Button
             type="button"
             variant="outline"
             onClick={() => handleSyncField("all")}
-            className="border-primary/50 text-primary hover:bg-primary/10 h-8 gap-1.5 text-xs font-bold uppercase"
+            className="border-primary/50 text-primary hover:bg-primary/10 h-9 gap-1.5 px-3 text-xs font-bold uppercase"
           >
             <LightningIcon weight="fill" className="size-4" />
             <span>Sync All Fields ➔</span>
@@ -503,7 +548,7 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
               type="button"
               onClick={() => handleRequestSave("approved")}
               disabled={isWorking}
-              className="h-8 gap-1.5 bg-emerald-600 px-3.5 text-xs font-bold text-white uppercase hover:bg-emerald-700"
+              className="h-9 gap-1.5 bg-emerald-600 px-4 text-xs font-bold text-white uppercase hover:bg-emerald-700"
             >
               <CheckCircleIcon weight="fill" className="size-4" />
               <span>Approve & Publish</span>
@@ -516,7 +561,7 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
               variant="outline"
               onClick={() => handleRequestSave("rejected")}
               disabled={isWorking}
-              className="border-destructive/60 text-destructive hover:bg-destructive/10 h-8 gap-1.5 text-xs font-bold uppercase"
+              className="border-destructive/60 text-destructive hover:bg-destructive/10 h-9 gap-1.5 px-3 text-xs font-bold uppercase"
             >
               <XCircleIcon weight="bold" className="size-4" />
               <span>Reject</span>
@@ -525,23 +570,23 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
         </div>
       </div>
 
-      {/* Submitter Notes Alert if available */}
+      {/* Submitter Note Alert if present */}
       {sub.notes && (
-        <div className="border-line/60 bg-muted/30 rounded-xl border p-4 text-[11px]">
+        <div className="border-line/60 bg-muted/20 rounded-lg border p-4 text-[11px]">
           <span className="text-muted-foreground font-bold uppercase">Submitter Note:</span>
-          <p className="text-foreground mt-1 italic">{sub.notes}</p>
+          <p className="text-foreground mt-0.5 italic">{sub.notes}</p>
         </div>
       )}
 
-      {/* Main Comparative Inspection Grid (Left 8 Cols: Paired Fields, Right 4 Cols: Sticky Preview & Actions) */}
-      <div className="grid grid-cols-1 gap-6 xl:grid-cols-12">
-        {/* Paired Fields Section (8 cols) */}
-        <div className="space-y-6 xl:col-span-8">
-          {/* FIELD 1: RESOURCE URL */}
-          <div className="border-line/60 bg-paper rounded-xl border p-5 shadow-xs">
-            <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+      {/* Main Layout: Form Controls (7 cols) + Live Real Card Preview (5 cols) */}
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
+        {/* Left Column: Form Controls with Submitted Data Banners (7 cols) */}
+        <div className="space-y-6 lg:col-span-7">
+          {/* Section 1: Resource URL */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
               <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                <span>1. Resource URL</span>
+                <span>Resource URL</span>
                 <span className="text-destructive">*</span>
                 <FieldCheckmark
                   checked={Boolean(editForm.url?.trim() && isValidHttpUrl(editForm.url.trim()))}
@@ -549,135 +594,115 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
               </Label>
               <Button
                 type="button"
-                size="sm"
                 variant="outline"
+                size="sm"
                 onClick={handleAutoDetect}
                 disabled={isDetecting || (!editForm.url?.trim() && !sub.url?.trim())}
-                className="h-7 gap-1 px-2 font-mono text-[10px] font-bold uppercase"
+                className="h-7 gap-1.5 font-mono text-[10px] font-bold uppercase"
               >
                 {isDetecting ? (
-                  <CircleNotchIcon className="size-3 animate-spin" />
+                  <CircleNotchIcon weight="bold" className="size-3.5 animate-spin" />
                 ) : (
-                  <ArrowsClockwiseIcon weight="bold" className="text-primary size-3" />
+                  <ArrowsClockwiseIcon weight="bold" className="text-primary size-3.5" />
                 )}
                 <span>Scan Live Site</span>
               </Button>
             </div>
 
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-              {/* Read-only Submitted */}
-              <div className="border-line/40 bg-muted/20 flex flex-col justify-between rounded-lg border p-3">
-                <div>
-                  <span className="text-muted-foreground mb-1 block text-[10px] font-bold uppercase">
-                    Submitted (Read-Only)
-                  </span>
-                  <a
-                    href={sub.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary block truncate font-mono text-xs hover:underline"
-                  >
-                    {sub.url}
-                  </a>
-                </div>
-                <div className="mt-2.5 flex justify-end">
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => handleSyncField("url")}
-                    className="text-primary hover:bg-primary/10 h-6 gap-1 px-2 text-[10px] font-bold uppercase"
-                  >
-                    <span>Sync URL</span>
-                    <ArrowRightIcon className="size-3" />
-                  </Button>
-                </div>
-              </div>
+            {/* Submitted Value Banner */}
+            <SubmittedDataBanner
+              label="Submitted URL"
+              value={sub.url}
+              onSync={() => handleSyncField("url")}
+            />
 
-              {/* Editable Target */}
-              <div className="space-y-1">
-                <span className="text-muted-foreground block text-[10px] font-bold uppercase">
-                  Target Resource (Type or Sync)
-                </span>
-                <InputField
-                  type="url"
-                  value={editForm.url || ""}
-                  onChange={(e) => setEditForm({ ...editForm, url: e.target.value })}
-                  placeholder="https://example.com"
-                  containerClassName="h-9"
-                  className="font-mono text-xs"
-                  required
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* FIELD 2: TITLE */}
-          <div className="border-line/60 bg-paper rounded-xl border p-5 shadow-xs">
-            <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                <span>2. Title</span>
-                <span className="text-destructive">*</span>
-                <FieldCheckmark checked={Boolean(editForm.title?.trim())} />
-              </Label>
-              <DetectedFieldSuggestion
-                currentValue={editForm.title}
-                detectedValue={detectedUpdates.title}
-                onApply={(val) => {
-                  setEditForm((prev) => ({ ...prev, title: val }));
-                  setDetectedUpdates((prev) => ({ ...prev, title: undefined }));
-                }}
-                onDismiss={() => {
-                  setDetectedUpdates((prev) => ({ ...prev, title: undefined }));
-                }}
+            {/* Target Input Field */}
+            <div className="h-9">
+              <InputField
+                type="url"
+                value={editForm.url || ""}
+                onChange={(e) => setEditForm((prev) => ({ ...prev, url: e.target.value }))}
+                placeholder="https://example.com"
+                containerClassName="h-9"
+                className="font-mono text-xs"
+                required
               />
             </div>
+          </div>
 
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-              {/* Read-only Submitted */}
-              <div className="border-line/40 bg-muted/20 flex flex-col justify-between rounded-lg border p-3">
-                <div>
-                  <span className="text-muted-foreground mb-1 block text-[10px] font-bold uppercase">
-                    Submitted (Read-Only)
-                  </span>
-                  <p className="text-foreground font-bold">{sub.title}</p>
-                </div>
-                <div className="mt-2.5 flex justify-end">
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => handleSyncField("title")}
-                    className="text-primary hover:bg-primary/10 h-6 gap-1 px-2 text-[10px] font-bold uppercase"
-                  >
-                    <span>Sync Title</span>
-                    <ArrowRightIcon className="size-3" />
-                  </Button>
-                </div>
+          {/* Section 2: Title, Category, & Subtitle */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {/* Title */}
+            <div className="space-y-2">
+              <div className="flex flex-wrap items-center justify-between gap-1.5">
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <span>Title</span>
+                  <span className="text-destructive">*</span>
+                  <FieldCheckmark checked={Boolean(editForm.title?.trim())} />
+                </Label>
+                <DetectedFieldSuggestion
+                  currentValue={editForm.title}
+                  detectedValue={detectedUpdates.title}
+                  onApply={(val) => {
+                    setEditForm((prev) => ({ ...prev, title: val }));
+                    setDetectedUpdates((prev) => ({ ...prev, title: undefined }));
+                  }}
+                  onDismiss={() => {
+                    setDetectedUpdates((prev) => ({ ...prev, title: undefined }));
+                  }}
+                />
               </div>
 
-              {/* Editable Target */}
-              <div className="space-y-1">
-                <span className="text-muted-foreground block text-[10px] font-bold uppercase">
-                  Target Resource (Type or Sync)
-                </span>
+              {/* Submitted Title Banner */}
+              <SubmittedDataBanner
+                label="Submitted"
+                value={sub.title}
+                onSync={() => handleSyncField("title")}
+              />
+
+              <div className="h-9">
                 <InputField
                   value={editForm.title || ""}
-                  onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
-                  placeholder="e.g. Color Studio"
+                  onChange={(e) => setEditForm((prev) => ({ ...prev, title: e.target.value }))}
+                  placeholder="e.g. Radix UI"
                   containerClassName="h-9"
                   className="font-mono text-xs"
                   required
                 />
               </div>
             </div>
+
+            {/* Category */}
+            <div className="space-y-2">
+              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                <span>Category</span>
+                <span className="text-destructive">*</span>
+                <FieldCheckmark checked={Boolean(editForm.category?.trim())} />
+              </Label>
+
+              {/* Submitted Category Banner */}
+              <SubmittedDataBanner
+                label="Submitted"
+                value={sub.category}
+                onSync={() => handleSyncField("category")}
+              />
+
+              <div className="h-9">
+                <SelectField
+                  value={editForm.category || ""}
+                  onValueChange={(val) => setEditForm((prev) => ({ ...prev, category: val }))}
+                  options={categoryOptions}
+                  triggerClassName="h-9 font-mono text-xs"
+                />
+              </div>
+            </div>
           </div>
 
-          {/* FIELD 3: SUBTITLE / TAGLINE */}
-          <div className="border-line/60 bg-paper rounded-xl border p-5 shadow-xs">
-            <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+          {/* Subtitle / Tagline */}
+          <div className="space-y-2">
+            <div className="flex flex-wrap items-center justify-between gap-1.5">
               <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                <span>3. Subtitle / Tagline (Optional)</span>
+                <span>Subtitle / Tagline (Optional)</span>
                 <FieldCheckmark checked={Boolean(editForm.subtitle?.trim())} />
               </Label>
               <DetectedFieldSuggestion
@@ -693,103 +718,29 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
               />
             </div>
 
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-              {/* Read-only Submitted */}
-              <div className="border-line/40 bg-muted/20 flex flex-col justify-between rounded-lg border p-3">
-                <div>
-                  <span className="text-muted-foreground mb-1 block text-[10px] font-bold uppercase">
-                    Submitted (Read-Only)
-                  </span>
-                  <p className={cn("text-xs", !sub.subtitle && "text-muted-foreground italic")}>
-                    {sub.subtitle || "None provided"}
-                  </p>
-                </div>
-                <div className="mt-2.5 flex justify-end">
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="ghost"
-                    disabled={!sub.subtitle}
-                    onClick={() => handleSyncField("subtitle")}
-                    className="text-primary hover:bg-primary/10 h-6 gap-1 px-2 text-[10px] font-bold uppercase"
-                  >
-                    <span>Sync Subtitle</span>
-                    <ArrowRightIcon className="size-3" />
-                  </Button>
-                </div>
-              </div>
+            {/* Submitted Subtitle Banner */}
+            <SubmittedDataBanner
+              label="Submitted"
+              value={sub.subtitle}
+              onSync={() => handleSyncField("subtitle")}
+            />
 
-              {/* Editable Target */}
-              <div className="space-y-1">
-                <span className="text-muted-foreground block text-[10px] font-bold uppercase">
-                  Target Resource (Type or Sync)
-                </span>
-                <InputField
-                  value={editForm.subtitle || ""}
-                  onChange={(e) => setEditForm({ ...editForm, subtitle: e.target.value })}
-                  placeholder="e.g. Modern React UI library"
-                  containerClassName="h-9"
-                  className="font-mono text-xs"
-                />
-              </div>
+            <div className="h-9">
+              <InputField
+                value={editForm.subtitle || ""}
+                onChange={(e) => setEditForm((prev) => ({ ...prev, subtitle: e.target.value }))}
+                placeholder="e.g. Unstyled, accessible React UI components"
+                containerClassName="h-9"
+                className="font-mono text-xs"
+              />
             </div>
           </div>
 
-          {/* FIELD 4: CATEGORY */}
-          <div className="border-line/60 bg-paper rounded-xl border p-5 shadow-xs">
-            <div className="mb-3 flex items-center justify-between">
+          {/* Section 3: Description */}
+          <div className="space-y-2">
+            <div className="flex flex-wrap items-center justify-between gap-1.5">
               <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                <span>4. Category</span>
-                <span className="text-destructive">*</span>
-                <FieldCheckmark checked={Boolean(editForm.category?.trim())} />
-              </Label>
-            </div>
-
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-              {/* Read-only Submitted */}
-              <div className="border-line/40 bg-muted/20 flex flex-col justify-between rounded-lg border p-3">
-                <div>
-                  <span className="text-muted-foreground mb-1 block text-[10px] font-bold uppercase">
-                    Submitted (Read-Only)
-                  </span>
-                  <span className="bg-primary/10 text-primary inline-block rounded px-2 py-0.5 text-xs font-semibold">
-                    {sub.category}
-                  </span>
-                </div>
-                <div className="mt-2.5 flex justify-end">
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => handleSyncField("category")}
-                    className="text-primary hover:bg-primary/10 h-6 gap-1 px-2 text-[10px] font-bold uppercase"
-                  >
-                    <span>Sync Category</span>
-                    <ArrowRightIcon className="size-3" />
-                  </Button>
-                </div>
-              </div>
-
-              {/* Editable Target */}
-              <div className="space-y-1">
-                <span className="text-muted-foreground block text-[10px] font-bold uppercase">
-                  Target Resource (Select or Sync)
-                </span>
-                <SelectField
-                  value={editForm.category || ""}
-                  onValueChange={(val) => setEditForm({ ...editForm, category: val })}
-                  options={categoryOptions}
-                  triggerClassName="h-9 font-mono text-xs"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* FIELD 5: DESCRIPTION */}
-          <div className="border-line/60 bg-paper rounded-xl border p-5 shadow-xs">
-            <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                <span>5. Description</span>
+                <span>Description</span>
                 <span className="text-destructive">*</span>
                 <FieldCheckmark checked={Boolean(editForm.description?.trim())} />
               </Label>
@@ -806,50 +757,28 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
               />
             </div>
 
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-              {/* Read-only Submitted */}
-              <div className="border-line/40 bg-muted/20 flex flex-col justify-between rounded-lg border p-3">
-                <div>
-                  <span className="text-muted-foreground mb-1 block text-[10px] font-bold uppercase">
-                    Submitted (Read-Only)
-                  </span>
-                  <p className="text-foreground leading-relaxed text-[11px]">{sub.description}</p>
-                </div>
-                <div className="mt-2.5 flex justify-end">
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => handleSyncField("description")}
-                    className="text-primary hover:bg-primary/10 h-6 gap-1 px-2 text-[10px] font-bold uppercase"
-                  >
-                    <span>Sync Description</span>
-                    <ArrowRightIcon className="size-3" />
-                  </Button>
-                </div>
-              </div>
+            {/* Submitted Description Banner */}
+            <SubmittedDataBanner
+              label="Submitted"
+              value={sub.description}
+              onSync={() => handleSyncField("description")}
+            />
 
-              {/* Editable Target */}
-              <div className="space-y-1">
-                <span className="text-muted-foreground block text-[10px] font-bold uppercase">
-                  Target Resource (Type or Sync)
-                </span>
-                <Textarea
-                  value={editForm.description || ""}
-                  onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
-                  rows={4}
-                  className="bg-paper min-h-24 font-mono text-xs leading-relaxed"
-                  required
-                />
-              </div>
-            </div>
+            <Textarea
+              value={editForm.description || ""}
+              onChange={(e) => setEditForm((prev) => ({ ...prev, description: e.target.value }))}
+              placeholder="Brief overview of the tool or resource..."
+              rows={4}
+              className="bg-paper min-h-24 font-mono text-xs leading-relaxed"
+              required
+            />
           </div>
 
-          {/* FIELD 6: VISUALS & MEDIA ASSETS */}
-          <div className="border-line/60 bg-paper rounded-xl border p-5 shadow-xs">
-            <div className="mb-3 flex items-center justify-between">
+          {/* Section 4: Visuals & Media Styling */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
               <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                <span>6. Media & Icon Styling</span>
+                <span>Visuals & Media Styling</span>
                 <FieldCheckmark checked={Boolean(editForm.favicon || editForm.ogImage)} />
               </Label>
               <Button
@@ -864,289 +793,293 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
               </Button>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
-              {/* Read-only Submitted Preview Box (5 cols) */}
-              <div className="border-line/40 bg-muted/20 space-y-3 rounded-lg border p-3 lg:col-span-5">
-                <span className="text-muted-foreground block text-[10px] font-bold uppercase">
-                  Submitted Visuals
+            {/* Submitted Visuals Summary Banner */}
+            <div className="border-line/60 bg-muted/30 flex flex-wrap items-center justify-between gap-3 rounded border p-2.5 text-[11px]">
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="text-muted-foreground text-[10px] font-bold uppercase">
+                  Submitted Visuals:
                 </span>
-                <div className="flex items-center gap-3">
-                  <span className="text-muted-foreground text-[10px]">Favicon:</span>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] text-muted-foreground">Favicon:</span>
                   {sub.favicon ? (
-                    <div className="bg-card flex size-7 items-center justify-center rounded border p-1">
+                    <div className="bg-card flex size-6 items-center justify-center rounded border p-0.5">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={sub.favicon} alt="Favicon" className="size-4 object-contain" />
+                      <img src={sub.favicon} alt="Favicon" className="size-3.5 object-contain" />
                     </div>
                   ) : (
                     <span className="text-muted-foreground text-[10px] italic">None</span>
                   )}
-                  <span className="bg-muted rounded px-1.5 py-0.5 text-[10px] font-bold uppercase">
+                </div>
+
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] text-muted-foreground">Icon Bg:</span>
+                  <span className="bg-muted rounded px-1.5 py-0.2 text-[10px] font-bold uppercase">
                     {(sub as unknown as { iconBg?: string }).iconBg || "dark"}
                   </span>
                 </div>
 
-                {sub.ogImage ? (
-                  <div className="border-line/30 space-y-1 border-t pt-2">
-                    <span className="text-muted-foreground text-[10px]">OG Image:</span>
-                    <div className="bg-muted relative h-20 w-full overflow-hidden rounded border">
-                      <Image
-                        src={sub.ogImage}
-                        alt="Submitted OG Preview"
-                        fill
-                        className="object-cover"
-                        unoptimized
-                      />
-                    </div>
+                {sub.ogImage && (
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[10px] text-muted-foreground">OG Image:</span>
+                    <span className="text-foreground max-w-40 truncate text-[10px] font-mono">
+                      {sub.ogImage}
+                    </span>
                   </div>
-                ) : (
-                  <span className="text-muted-foreground block text-[10px] italic">
-                    No OG image submitted
-                  </span>
                 )}
               </div>
 
-              {/* Editable Target Media Asset Fields (7 cols) */}
-              <div className="lg:col-span-7">
-                <MediaAssetFields
-                  favicon={editForm.favicon}
-                  faviconOptions={faviconOptions}
-                  iconBg={editForm.iconBg || "dark"}
-                  onIconBgChange={(val) => setEditForm((prev) => ({ ...prev, iconBg: val }))}
-                  ogImage={editForm.ogImage}
-                  ogImageOptions={ogImageOptions}
-                  onFaviconChange={(val) => setEditForm((prev) => ({ ...prev, favicon: val }))}
-                  onOgImageChange={(val) => setEditForm((prev) => ({ ...prev, ogImage: val }))}
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* FIELD 7: CREATOR ATTRIBUTION & SOCIALS */}
-          <div className="border-line/60 bg-paper rounded-xl border p-5 shadow-xs">
-            <div className="mb-3 flex items-center justify-between">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                <span>7. Creator / Author Attribution</span>
-                <FieldCheckmark checked={Boolean(editForm.author?.trim())} />
-              </Label>
               <Button
                 type="button"
                 size="sm"
                 variant="ghost"
+                onClick={() => handleSyncField("visuals")}
+                className="text-primary hover:bg-primary/10 h-5 gap-1 px-1.5 text-[10px] font-bold uppercase"
+              >
+                <span>Sync</span>
+                <ArrowRightIcon className="size-3" />
+              </Button>
+            </div>
+
+            <MediaAssetFields
+              favicon={editForm.favicon}
+              faviconOptions={faviconOptions}
+              iconBg={editForm.iconBg || "dark"}
+              onIconBgChange={(val) => setEditForm((prev) => ({ ...prev, iconBg: val }))}
+              ogImage={editForm.ogImage}
+              ogImageOptions={ogImageOptions}
+              onFaviconChange={(val) => setEditForm((prev) => ({ ...prev, favicon: val }))}
+              onOgImageChange={(val) => setEditForm((prev) => ({ ...prev, ogImage: val }))}
+            />
+          </div>
+
+          {/* Section 5: Creator Attribution */}
+          <div className="space-y-3">
+            {/* Submitted Author Banner */}
+            <div className="border-line/60 bg-muted/30 flex flex-wrap items-center justify-between gap-2 rounded border p-2.5 text-[11px]">
+              <div className="flex items-center gap-2 truncate">
+                <span className="text-muted-foreground text-[10px] font-bold uppercase">
+                  Submitted Author:
+                </span>
+                <UserIcon className="text-primary size-3.5" />
+                <span className="text-foreground font-bold">{sub.author || "None provided"}</span>
+                {(sub.authorGitHub || sub.authorTwitter || sub.authorWebsite) && (
+                  <span className="text-muted-foreground truncate text-[10px]">
+                    ({[sub.authorGitHub, sub.authorTwitter, sub.authorWebsite].filter(Boolean).join(", ")})
+                  </span>
+                )}
+              </div>
+
+              <Button
+                type="button"
+                size="sm"
+                variant="ghost"
+                disabled={!sub.author}
                 onClick={() => handleSyncField("authorAll")}
-                className="text-primary hover:bg-primary/10 h-6 gap-1 px-2 text-[10px] font-bold uppercase"
+                className="text-primary hover:bg-primary/10 h-5 gap-1 px-1.5 text-[10px] font-bold uppercase"
               >
                 <span>Sync Author & Links</span>
                 <ArrowRightIcon className="size-3" />
               </Button>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
-              {/* Read-only Submitted Author Box (5 cols) */}
-              <div className="border-line/40 bg-muted/20 space-y-2 rounded-lg border p-3 lg:col-span-5">
-                <span className="text-muted-foreground block text-[10px] font-bold uppercase">
-                  Submitted Author Data
-                </span>
-                <div className="flex items-center gap-2">
-                  <UserIcon className="text-muted-foreground size-4" />
-                  <span className="text-foreground font-bold">{sub.author || "None provided"}</span>
+            <AuthorSocialFields
+              values={{
+                author: editForm.author,
+                authorBlog: editForm.authorBlog,
+                authorGitHub: editForm.authorGitHub,
+                authorLinkedIn: editForm.authorLinkedIn,
+                authorTwitter: editForm.authorTwitter,
+                authorWebsite: editForm.authorWebsite,
+                authorYouTube: editForm.authorYouTube,
+              }}
+              onChange={handleAuthorFieldChange}
+              onBatchChange={handleAuthorBatchChange}
+              onRequestCreateAuthor={handleRequestCreateAuthor}
+              onSelectAuthorOption={handleSelectAuthorOption}
+              suggestedAuthor={suggestedAuthor}
+              onAcceptSuggestedAuthor={handleAcceptSuggestedAuthor}
+              onDismissSuggestedAuthor={() => setSuggestedAuthor(null)}
+              allowCustom={false}
+              disabled={isWorking}
+            />
+          </div>
+
+          {/* Section 6: Additional Details & Tags */}
+          <div className="border-line space-y-4 border-t pt-5">
+            <div>
+              <h4 className="text-foreground font-mono text-xs font-bold tracking-tight uppercase">
+                Additional Details & Tags
+              </h4>
+              <p className="text-muted-foreground text-[11px]">
+                Repository link, topic tags, and internal review notes.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {/* GitHub Repo */}
+              <div className="space-y-2">
+                <div className="flex flex-wrap items-center justify-between gap-1.5">
+                  <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                    <span>GitHub Repository (Optional)</span>
+                    <FieldCheckmark checked={Boolean(editForm.github?.trim())} />
+                  </Label>
+                  <DetectedFieldSuggestion
+                    currentValue={editForm.github}
+                    detectedValue={detectedUpdates.github}
+                    onApply={(val) => {
+                      setEditForm((prev) => ({ ...prev, github: val }));
+                      setDetectedUpdates((prev) => ({ ...prev, github: undefined }));
+                    }}
+                    onDismiss={() => {
+                      setDetectedUpdates((prev) => ({ ...prev, github: undefined }));
+                    }}
+                  />
                 </div>
 
-                <div className="border-line/30 grid grid-cols-1 gap-1 border-t pt-2 text-[10px]">
-                  {sub.authorWebsite && (
-                    <div className="truncate text-muted-foreground">
-                      <span className="font-bold">Website:</span> {sub.authorWebsite}
-                    </div>
-                  )}
-                  {sub.authorGitHub && (
-                    <div className="truncate text-muted-foreground">
-                      <span className="font-bold">GitHub:</span> {sub.authorGitHub}
-                    </div>
-                  )}
-                  {sub.authorTwitter && (
-                    <div className="truncate text-muted-foreground">
-                      <span className="font-bold">X / Twitter:</span> {sub.authorTwitter}
-                    </div>
-                  )}
-                  {sub.authorLinkedIn && (
-                    <div className="truncate text-muted-foreground">
-                      <span className="font-bold">LinkedIn:</span> {sub.authorLinkedIn}
-                    </div>
-                  )}
-                  {sub.authorYouTube && (
-                    <div className="truncate text-muted-foreground">
-                      <span className="font-bold">YouTube:</span> {sub.authorYouTube}
-                    </div>
-                  )}
-                  {sub.authorBlog && (
-                    <div className="truncate text-muted-foreground">
-                      <span className="font-bold">Blog:</span> {sub.authorBlog}
-                    </div>
-                  )}
-                  {!sub.authorWebsite &&
-                    !sub.authorGitHub &&
-                    !sub.authorTwitter &&
-                    !sub.authorLinkedIn &&
-                    !sub.authorYouTube &&
-                    !sub.authorBlog && (
-                      <span className="text-muted-foreground italic">No links submitted</span>
-                    )}
+                {/* Submitted GitHub Banner */}
+                <SubmittedDataBanner
+                  label="Submitted"
+                  value={sub.github}
+                  onSync={() => handleSyncField("github")}
+                />
+
+                <div className="h-9">
+                  <InputField
+                    type="url"
+                    value={editForm.github || ""}
+                    onChange={(e) => setEditForm((prev) => ({ ...prev, github: e.target.value }))}
+                    placeholder="https://github.com/owner/repo"
+                    containerClassName="h-9"
+                    className="font-mono text-xs"
+                  />
                 </div>
               </div>
 
-              {/* Editable Target Author Fields (7 cols) */}
-              <div className="lg:col-span-7">
-                <AuthorSocialFields
-                  values={{
-                    author: editForm.author,
-                    authorBlog: editForm.authorBlog,
-                    authorGitHub: editForm.authorGitHub,
-                    authorLinkedIn: editForm.authorLinkedIn,
-                    authorTwitter: editForm.authorTwitter,
-                    authorWebsite: editForm.authorWebsite,
-                    authorYouTube: editForm.authorYouTube,
-                  }}
-                  onChange={handleAuthorFieldChange}
-                  onBatchChange={handleAuthorBatchChange}
-                  onRequestCreateAuthor={handleRequestCreateAuthor}
-                  onSelectAuthorOption={handleSelectAuthorOption}
-                  suggestedAuthor={suggestedAuthor}
-                  onAcceptSuggestedAuthor={handleAcceptSuggestedAuthor}
-                  onDismissSuggestedAuthor={() => setSuggestedAuthor(null)}
+              {/* Canonical Tags */}
+              <div className="space-y-2">
+                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <span>Canonical Tags</span>
+                  <FieldCheckmark checked={Boolean(editForm.tags?.trim())} />
+                </Label>
+
+                {/* Submitted Tags Banner */}
+                <SubmittedDataBanner
+                  label="Submitted"
+                  value={sub.tags}
+                  onSync={() => handleSyncField("tags")}
+                />
+
+                <TagPicker
+                  value={editForm.tags || ""}
+                  onChange={(val) => setEditForm((prev) => ({ ...prev, tags: val }))}
                   allowCustom={false}
-                  disabled={isWorking}
+                  placeholder="Search and select canonical tags..."
                 />
               </div>
             </div>
-          </div>
 
-          {/* FIELD 8: GITHUB & CANONICAL TAGS */}
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            {/* GitHub Repo */}
-            <div className="border-line/60 bg-paper space-y-3 rounded-xl border p-5 shadow-xs">
-              <div className="flex items-center justify-between">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                  <span>8. GitHub Repo (Optional)</span>
-                  <FieldCheckmark checked={Boolean(editForm.github?.trim())} />
-                </Label>
-                <Button
-                  type="button"
-                  size="sm"
-                  variant="ghost"
-                  disabled={!sub.github}
-                  onClick={() => handleSyncField("github")}
-                  className="text-primary hover:bg-primary/10 h-6 gap-1 px-2 text-[10px] font-bold uppercase"
-                >
-                  <span>Sync</span>
-                  <ArrowRightIcon className="size-3" />
-                </Button>
-              </div>
-
-              <div className="border-line/40 bg-muted/20 rounded-lg border p-2 text-[10px]">
-                <span className="text-muted-foreground font-bold">Submitted:</span>{" "}
-                <span className={cn(sub.github ? "text-foreground" : "text-muted-foreground italic")}>
-                  {sub.github || "None"}
-                </span>
-              </div>
-
-              <InputField
-                type="url"
-                value={editForm.github || ""}
-                onChange={(e) => setEditForm({ ...editForm, github: e.target.value })}
-                placeholder="https://github.com/owner/repo"
-                containerClassName="h-9"
-                className="font-mono text-xs"
-              />
-            </div>
-
-            {/* Canonical Tags */}
-            <div className="border-line/60 bg-paper space-y-3 rounded-xl border p-5 shadow-xs">
-              <div className="flex items-center justify-between">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                  <span>9. Canonical Tags</span>
-                  <FieldCheckmark checked={Boolean(editForm.tags?.trim())} />
-                </Label>
-                <Button
-                  type="button"
-                  size="sm"
-                  variant="ghost"
-                  disabled={!sub.tags}
-                  onClick={() => handleSyncField("tags")}
-                  className="text-primary hover:bg-primary/10 h-6 gap-1 px-2 text-[10px] font-bold uppercase"
-                >
-                  <span>Sync</span>
-                  <ArrowRightIcon className="size-3" />
-                </Button>
-              </div>
-
-              <div className="border-line/40 bg-muted/20 rounded-lg border p-2 text-[10px]">
-                <span className="text-muted-foreground font-bold">Submitted:</span>{" "}
-                <span className={cn(sub.tags ? "text-foreground" : "text-muted-foreground italic")}>
-                  {sub.tags || "None"}
-                </span>
-              </div>
-
-              <TagPicker
-                value={editForm.tags || ""}
-                onChange={(val) => setEditForm({ ...editForm, tags: val })}
-                allowCustom={false}
-                placeholder="Search & select canonical tags..."
-              />
-            </div>
-          </div>
-
-          {/* FIELD 10: MODERATION & ADMIN NOTES */}
-          <div className="border-line/60 bg-paper space-y-4 rounded-xl border p-5 shadow-xs">
-            <h3 className="text-foreground text-xs font-bold uppercase tracking-wider">
-              10. Moderation Status & Admin Notes
-            </h3>
-
+            {/* Moderation Status & Admin Notes */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label className="text-foreground font-mono text-xs font-bold uppercase">
                   Moderation Status
                 </Label>
-                <SelectField
-                  value={editForm.status || sub.status}
-                  onValueChange={(val) =>
-                    setEditForm({
-                      ...editForm,
-                      status: val as "pending" | "approved" | "rejected",
-                    })
-                  }
-                  options={STATUS_OPTIONS}
-                  triggerClassName="h-9 font-mono text-xs"
-                />
+                <div className="h-9">
+                  <SelectField
+                    value={editForm.status || sub.status}
+                    onValueChange={(val) =>
+                      setEditForm((prev) => ({
+                        ...prev,
+                        status: val as "pending" | "approved" | "rejected",
+                      }))
+                    }
+                    options={STATUS_OPTIONS}
+                    triggerClassName="h-9 font-mono text-xs"
+                  />
+                </div>
               </div>
 
               <div className="space-y-2">
                 <Label className="text-foreground font-mono text-xs font-bold uppercase">
                   Internal Admin Notes
                 </Label>
-                <InputField
-                  value={editForm.adminNotes || ""}
-                  onChange={(e) => setEditForm({ ...editForm, adminNotes: e.target.value })}
-                  placeholder="Notes about this review..."
-                  containerClassName="h-9"
-                  className="font-mono text-xs"
-                />
+                <div className="h-9">
+                  <InputField
+                    value={editForm.adminNotes || ""}
+                    onChange={(e) => setEditForm((prev) => ({ ...prev, adminNotes: e.target.value }))}
+                    placeholder="Notes about this review..."
+                    containerClassName="h-9"
+                    className="font-mono text-xs"
+                  />
+                </div>
               </div>
+            </div>
+          </div>
+
+          {/* Bottom Actions Bar */}
+          <div className="border-line flex flex-wrap items-center justify-between gap-3 border-t pt-6">
+            <Button
+              type="button"
+              size="sm"
+              variant="ghost"
+              onClick={handleDelete}
+              disabled={isWorking}
+              className="text-destructive hover:bg-destructive/10 gap-1.5 text-xs uppercase"
+            >
+              <TrashIcon className="size-4" />
+              <span>Delete Submission</span>
+            </Button>
+
+            <div className="flex flex-wrap items-center gap-2.5">
+              <Button
+                type="button"
+                size="sm"
+                variant="outline"
+                onClick={() => router.push("/admin/submissions")}
+                className="text-xs uppercase"
+              >
+                Cancel
+              </Button>
+
+              <Button
+                type="button"
+                size="sm"
+                onClick={() => handleRequestSave()}
+                disabled={isWorking}
+                className="gap-1.5 text-xs font-bold uppercase"
+              >
+                <FloppyDiskIcon className="size-4" />
+                <span>Save Edits</span>
+              </Button>
+
+              {sub.status !== "approved" && (
+                <Button
+                  type="button"
+                  size="sm"
+                  onClick={() => handleRequestSave("approved")}
+                  disabled={isWorking}
+                  className="gap-1.5 bg-emerald-600 text-xs font-bold text-white uppercase hover:bg-emerald-700"
+                >
+                  <CheckCircleIcon weight="fill" className="size-4" />
+                  <span>Approve & Publish</span>
+                </Button>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Sticky Sidebar: Live Preview & Action Bar (4 cols) */}
-        <div className="space-y-6 xl:col-span-4">
-          <div className="sticky top-20 space-y-6">
-            {/* Live Resource Card Preview */}
-            <div className="border-line/60 bg-paper rounded-xl border p-5 shadow-sm">
-              <h3 className="text-foreground mb-3 text-xs font-bold uppercase tracking-wider">
+        {/* Right Column: Sticky Real Live Card Preview & Info (5 cols) */}
+        <div className="space-y-6 lg:col-span-5">
+          <div className="sticky top-24 space-y-6">
+            <div className="border-line bg-paper/40 border-[1.5px] p-5 shadow-xs">
+              <h3 className="text-foreground mb-3 font-mono text-xs font-bold tracking-wider uppercase">
                 Live Resource Card Preview
               </h3>
               <p className="text-muted-foreground mb-4 text-[11px]">
-                Real-time preview of how this card will render in the catalog once published.
+                Real-time preview of how this card will render in the live catalog once published.
               </p>
 
-              <div className="flex justify-center rounded-xl border border-dashed border-line/60 bg-muted/20 p-4">
+              <div className="flex justify-center">
                 <ResourceCardPreview
                   author={editForm.author}
                   cardMaxWidthClass="max-w-xs"
@@ -1164,58 +1097,19 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
               </div>
             </div>
 
-            {/* Actions Card */}
-            <div className="border-line/60 bg-paper space-y-3 rounded-xl border p-5 shadow-sm">
-              <h3 className="text-foreground text-xs font-bold uppercase tracking-wider">
-                Inspection Actions
-              </h3>
-
-              <div className="flex flex-col gap-2">
-                {sub.status !== "approved" && (
-                  <Button
-                    type="button"
-                    onClick={() => handleRequestSave("approved")}
-                    disabled={isWorking}
-                    className="w-full gap-1.5 bg-emerald-600 text-xs font-bold text-white uppercase hover:bg-emerald-700"
-                  >
-                    <CheckCircleIcon weight="fill" className="size-4" />
-                    <span>Approve & Publish</span>
-                  </Button>
-                )}
-
-                <Button
-                  type="button"
-                  onClick={() => handleRequestSave()}
-                  disabled={isWorking}
-                  className="w-full gap-1.5 text-xs font-bold uppercase"
-                >
-                  <FloppyDiskIcon className="size-4" />
-                  <span>Save Inspection State</span>
-                </Button>
-
-                <div className="grid grid-cols-2 gap-2 pt-1">
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="outline"
-                    onClick={() => router.push("/admin/submissions")}
-                    className="text-xs uppercase"
-                  >
-                    Cancel
-                  </Button>
-
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="ghost"
-                    onClick={handleDelete}
-                    disabled={isWorking}
-                    className="text-destructive hover:bg-destructive/10 gap-1 text-xs uppercase"
-                  >
-                    <TrashIcon className="size-3.5" />
-                    <span>Delete</span>
-                  </Button>
-                </div>
+            {/* Quick Meta Card */}
+            <div className="border-line bg-paper/30 space-y-2.5 border-[1.5px] p-4 text-[11px]">
+              <div className="flex items-center justify-between">
+                <span className="text-muted-foreground font-bold uppercase">Submission ID:</span>
+                <span className="text-foreground font-mono">{sub.id.slice(0, 12)}...</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-muted-foreground font-bold uppercase">Submitted Date:</span>
+                <span className="text-foreground">{new Date(sub.createdAt).toLocaleString()}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-muted-foreground font-bold uppercase">Submitter Email:</span>
+                <span className="text-foreground">{sub.submitterEmail || "Anonymous"}</span>
               </div>
             </div>
           </div>
