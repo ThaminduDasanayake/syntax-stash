@@ -16,7 +16,8 @@ import {
 } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { AdminAuthorDialog } from "@/components/admin/admin-author-dialog";
@@ -74,9 +75,11 @@ const SORT_OPTIONS = [
   { label: "Recently Updated", value: "updated-desc" },
 ];
 
-export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientProps) {
+function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientProps) {
+  const searchParams = useSearchParams();
+  const paramQ = searchParams.get("q") || "";
   const [authors, setAuthors] = useState<AdminAuthorItem[]>(initialAuthors);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(paramQ);
   const [filterMode, setFilterMode] = useState<"all" | "with-resources" | "without-resources">(
     "all",
   );
@@ -633,5 +636,13 @@ export function AdminAuthorsClient({ initialAuthors = [] }: AdminAuthorsClientPr
         </AlertDialogContent>
       </AlertDialog>
     </div>
+  );
+}
+
+export function AdminAuthorsClient(props: AdminAuthorsClientProps) {
+  return (
+    <Suspense>
+      <AdminAuthorsClientContent {...props} />
+    </Suspense>
   );
 }

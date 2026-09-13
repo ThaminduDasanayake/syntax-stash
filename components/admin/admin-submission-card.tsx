@@ -12,10 +12,9 @@ import {
 } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import { CardIcon } from "@/components/card-icon";
-import { AuthorOption, fetchAuthorList } from "@/components/submissions/author-combobox";
 import { Button } from "@/components/ui/button";
 import { Submission } from "@/lib/db/schema";
 import { cn, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
@@ -39,18 +38,6 @@ export function AdminSubmissionCard({
   onUpdateStatus,
   submission: sub,
 }: AdminSubmissionCardProps) {
-  const [existingAuthors, setExistingAuthors] = useState<AuthorOption[]>([]);
-
-  useEffect(() => {
-    let mounted = true;
-    fetchAuthorList().then((list) => {
-      if (mounted) setExistingAuthors(list);
-    });
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
   const authorList = useMemo(() => {
     if (!sub.author?.trim()) return [];
     return sub.author
@@ -156,29 +143,18 @@ export function AdminSubmissionCard({
               {authorList.length > 0 && (
                 <div className="text-foreground flex flex-wrap items-center gap-1.5 font-semibold">
                   <span>By</span>
-                  {authorList.map((authName, idx) => {
-                    const clean = authName.toLowerCase();
-                    const isExisting = existingAuthors.some(
-                      (a) => a.name.toLowerCase() === clean || a.slug.toLowerCase() === clean,
-                    );
-                    return (
-                      <span key={authName} className="inline-flex items-center gap-1">
-                        {idx > 0 && (
-                          <span className="text-muted-foreground font-normal">&amp;</span>
-                        )}
-                        <span>{authName}</span>
-                        {isExisting ? (
-                          <span className="border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded border px-1.5 py-0.2 font-mono text-[10px] font-bold">
-                            Catalog Author
-                          </span>
-                        ) : (
-                          <span className="border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400 rounded border px-1.5 py-0.2 font-mono text-[10px] font-bold">
-                            New Author
-                          </span>
-                        )}
-                      </span>
-                    );
-                  })}
+                  {authorList.map((authName, idx) => (
+                    <span key={authName} className="inline-flex items-center gap-1">
+                      {idx > 0 && <span className="text-muted-foreground font-normal">&amp;</span>}
+                      <Link
+                        href={`/admin/authors?q=${encodeURIComponent(authName)}`}
+                        className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
+                        title={`View ${authName} in Authors`}
+                      >
+                        {authName}
+                      </Link>
+                    </span>
+                  ))}
                   <div className="text-muted-foreground flex items-center gap-1">
                     {sub.authorWebsite && (
                       <a
