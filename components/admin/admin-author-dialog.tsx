@@ -47,6 +47,16 @@ const AUTHOR_FIELD_LABELS: Record<string, string> = {
 export interface AdminAuthorDialogProps {
   author?: AdminAuthorItem | Partial<AdminAuthorItem> | null;
   existingAuthors?: Array<{ id?: string; name: string; slug: string }>;
+  initialData?: Partial<AdminAuthorItem> | {
+    blog?: string | null;
+    github?: string | null;
+    linkedin?: string | null;
+    name?: string | null;
+    slug?: string | null;
+    twitter?: string | null;
+    website?: string | null;
+    youtube?: string | null;
+  } | null;
   initialName?: string;
   onCreated?: (newAuthor: AdminAuthorItem) => void;
   onOpenChange: (open: boolean) => void;
@@ -57,6 +67,7 @@ export interface AdminAuthorDialogProps {
 export function AdminAuthorDialog({
   author,
   existingAuthors,
+  initialData,
   initialName = "",
   onCreated,
   onOpenChange,
@@ -114,7 +125,7 @@ export function AdminAuthorDialog({
 
   useEffect(() => {
     if (open) {
-      if (author) {
+      if (author && author.id) {
         setFormData({
           blog: author.blog || "",
           github: author.github || "",
@@ -127,21 +138,22 @@ export function AdminAuthorDialog({
         });
         setAutoSlug(!author.slug);
       } else {
-        const nameVal = initialName.trim();
+        const nameVal = (initialData?.name || initialName || "").trim();
+        const slugVal = (initialData?.slug || (nameVal ? slugifyAuthor(nameVal) : "")).trim();
         setFormData({
-          blog: "",
-          github: "",
-          linkedin: "",
+          blog: initialData?.blog || "",
+          github: initialData?.github || "",
+          linkedin: initialData?.linkedin || "",
           name: nameVal,
-          slug: nameVal ? slugifyAuthor(nameVal) : "",
-          twitter: "",
-          website: "",
-          youtube: "",
+          slug: slugVal,
+          twitter: initialData?.twitter || "",
+          website: initialData?.website || "",
+          youtube: initialData?.youtube || "",
         });
-        setAutoSlug(true);
+        setAutoSlug(!initialData?.slug);
       }
     }
-  }, [author, initialName, open]);
+  }, [author, initialData, initialName, open]);
 
   const handleNameChange = (val: string) => {
     setFormData((prev) => ({

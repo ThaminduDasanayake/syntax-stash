@@ -6,7 +6,6 @@ import { toast } from "sonner";
 import {
   AdminStatusTabs,
   AdminSubmissionCard,
-  AdminSubmissionEditForm,
   generateTsCode,
   SubmissionCounts,
   TabStatus,
@@ -37,7 +36,6 @@ export function AdminSubmissionsClient({
   const [allSubmissions, setAllSubmissions] = useState<Submission[]>(initialSubmissions);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [editingId, setEditingId] = useState<string | null>(null);
   const [deletingSubmission, setDeletingSubmission] = useState<Submission | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [actionLoadingId, setActionLoadingId] = useState<string | null>(null);
@@ -122,7 +120,6 @@ export function AdminSubmissionsClient({
 
     // 1. Optimistically remove from state
     setAllSubmissions((prev) => prev.filter((s) => s.id !== target.id));
-    if (editingId === target.id) setEditingId(null);
     setDeletingSubmission(null);
 
     // 2. Immediate feedback toast
@@ -139,70 +136,6 @@ export function AdminSubmissionsClient({
       console.error("Failed to delete submission:", err);
       setAllSubmissions(previousSubmissions);
       toast.error(`Failed to delete ${itemTitle}. Reverted changes.`);
-    } finally {
-      setActionLoadingId(null);
-    }
-  };
-
-  // Optimistic Edit & Save: Instant UI update + Toast + Background API call
-  const handleSaveEdit = async (
-    id: string,
-    formData: Partial<Submission>,
-    overrideStatus?: "approved" | "rejected" | "pending",
-  ) => {
-    const target = allSubmissions.find((s) => s.id === id);
-    const previousSubmissions = allSubmissions;
-    const itemTitle = `"${formData.title || target?.title || "Submission"}"`;
-
-    // 1. Optimistically update state
-    setAllSubmissions((prev) =>
-      prev.map((s) =>
-        s.id === id
-          ? {
-              ...s,
-              ...formData,
-              ...(overrideStatus ? { status: overrideStatus } : {}),
-              updatedAt: new Date(),
-            }
-          : s,
-      ),
-    );
-
-    setEditingId(null);
-
-    // 2. Immediate feedback toast
-    if (overrideStatus === "approved") {
-      toast.success(`${itemTitle} updated and approved.`);
-    } else if (overrideStatus === "rejected") {
-      toast.warning(`${itemTitle} updated and rejected.`);
-    } else if (overrideStatus === "pending") {
-      toast.info(`${itemTitle} updated and moved to pending.`);
-    } else {
-      toast.success(`Changes saved for ${itemTitle}.`);
-    }
-
-    // 3. Background API sync
-    try {
-      setActionLoadingId(id);
-      const payload = {
-        id,
-        ...formData,
-        ...(overrideStatus ? { status: overrideStatus } : {}),
-      };
-
-      const res = await fetch("/api/admin/submissions", {
-        body: JSON.stringify(payload),
-        headers: { "Content-Type": "application/json" },
-        method: "PATCH",
-      });
-
-      if (!res.ok) {
-        throw new Error("Failed to save edits on server");
-      }
-    } catch (err) {
-      console.error("Failed to save edits:", err);
-      setAllSubmissions(previousSubmissions);
-      toast.error(`Failed to save edits for ${itemTitle}. Reverted changes.`);
     } finally {
       setActionLoadingId(null);
     }
@@ -251,29 +184,17 @@ export function AdminSubmissionsClient({
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-6">
-          {filteredSubmissions.map((sub) =>
-            editingId === sub.id ? (
-              <AdminSubmissionEditForm
-                key={sub.id}
-                submission={sub}
-                isWorking={actionLoadingId === sub.id}
-                onCancel={() => setEditingId(null)}
-                onDelete={() => setDeletingSubmission(sub)}
-                onSave={handleSaveEdit}
-              />
-            ) : (
-              <AdminSubmissionCard
-                key={sub.id}
-                submission={sub}
-                copied={copiedId === sub.id}
-                isWorking={actionLoadingId === sub.id}
-                onCopyTs={() => handleCopyTsCode(sub)}
-                onEdit={() => setEditingId(sub.id)}
-                onDelete={() => setDeletingSubmission(sub)}
-                onUpdateStatus={(status) => handleUpdateStatus(sub.id, status)}
-              />
-            ),
-          )}
+          {filteredSubmissions.map((sub) => (
+            <AdminSubmissionCard
+              key={sub.id}
+              submission={sub}
+              copied={copiedId === sub.id}
+              isWorking={actionLoadingId === sub.id}
+              onCopyTs={() => handleCopyTsCode(sub)}
+              onDelete={() => setDeletingSubmission(sub)}
+              onUpdateStatus={(status) => handleUpdateStatus(sub.id, status)}
+            />
+          ))}
         </div>
       )}
 

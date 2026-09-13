@@ -25,6 +25,7 @@ export async function POST(req: Request) {
     const {
       title,
       author,
+      authorBlog,
       authorGitHub,
       authorLinkedIn,
       authorTwitter,
@@ -116,6 +117,7 @@ export async function POST(req: Request) {
           .set({
             title: String(title).trim(),
             author: author ? String(author).trim() : null,
+            authorBlog: authorBlog ? String(authorBlog).trim() : null,
             authorGitHub: authorGitHub ? String(authorGitHub).trim() : null,
             authorLinkedIn: authorLinkedIn ? String(authorLinkedIn).trim() : null,
             authorTwitter: authorTwitter ? String(authorTwitter).trim() : null,
@@ -154,6 +156,7 @@ export async function POST(req: Request) {
           .set({
             title: String(title).trim(),
             author: author ? String(author).trim() : null,
+            authorBlog: authorBlog ? String(authorBlog).trim() : null,
             authorGitHub: authorGitHub ? String(authorGitHub).trim() : null,
             authorLinkedIn: authorLinkedIn ? String(authorLinkedIn).trim() : null,
             authorTwitter: authorTwitter ? String(authorTwitter).trim() : null,
@@ -195,6 +198,7 @@ export async function POST(req: Request) {
       id: submissionId,
       title: String(title).trim(),
       author: author ? String(author).trim() : null,
+      authorBlog: authorBlog ? String(authorBlog).trim() : null,
       authorGitHub: authorGitHub ? String(authorGitHub).trim() : null,
       authorLinkedIn: authorLinkedIn ? String(authorLinkedIn).trim() : null,
       authorTwitter: authorTwitter ? String(authorTwitter).trim() : null,

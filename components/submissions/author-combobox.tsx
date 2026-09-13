@@ -174,17 +174,28 @@ export function AuthorCombobox({
   // Parse current selected authors into an array
   const selectedAuthors: string[] = useMemo(() => {
     if (!value) return [];
-    if (Array.isArray(value)) {
-      return value.map((v) => (typeof v === "string" ? v.trim() : "")).filter(Boolean);
+    const rawList = Array.isArray(value)
+      ? value.map((v) => (typeof v === "string" ? v.trim() : "")).filter(Boolean)
+      : typeof value === "string"
+        ? value
+            .split(",")
+            .map((v) => v.trim())
+            .filter(Boolean)
+        : [];
+
+    if (allowCustom || authors.length === 0) {
+      return rawList;
     }
-    if (typeof value === "string") {
-      return value
-        .split(",")
-        .map((v) => v.trim())
-        .filter(Boolean);
-    }
-    return [];
-  }, [value]);
+
+    // When allowCustom is false, strictly enforce that chips only display confirmed catalog authors
+    return rawList.filter((name) =>
+      authors.some(
+        (a) =>
+          a.name.toLowerCase() === name.toLowerCase() ||
+          a.slug.toLowerCase() === name.toLowerCase(),
+      ),
+    );
+  }, [allowCustom, authors, value]);
 
   const cleanQuery = query.trim().toLowerCase();
 
@@ -204,6 +215,11 @@ export function AuthorCombobox({
   // Check if current typed value exactly matches an author in list or is already selected
   const exactMatch = authors.some((a) => a.name.toLowerCase() === cleanQuery);
   const isAlreadySelected = selectedAuthors.some((a) => a.toLowerCase() === cleanQuery);
+  const showCustomOption =
+    Boolean(cleanQuery) &&
+    !exactMatch &&
+    !isAlreadySelected &&
+    (allowCustom || Boolean(onRequestCreateAuthor));
 
   const emitChange = (newAuthors: string[]) => {
     onChange(newAuthors.join(", "));
@@ -261,10 +277,10 @@ export function AuthorCombobox({
       return;
     }
 
-    // Comma or Enter to add creator
-    if (e.key === "," || (e.key === "Enter" && !isOpen)) {
-      e.preventDefault();
+    // Comma, Tab, or Enter to add creator
+    if (e.key === "," || e.key === "Tab" || (e.key === "Enter" && !isOpen)) {
       if (query.trim()) {
+        e.preventDefault();
         if (onRequestCreateAuthor) {
           onRequestCreateAuthor(query.trim());
           setQuery("");
@@ -272,8 +288,8 @@ export function AuthorCombobox({
         } else if (allowCustom) {
           addAuthor(query.trim());
         }
+        return;
       }
-      return;
     }
 
     if (!isOpen) {
@@ -284,11 +300,6 @@ export function AuthorCombobox({
       return;
     }
 
-    const showCustomOption =
-      cleanQuery &&
-      !exactMatch &&
-      !isAlreadySelected &&
-      (allowCustom || Boolean(onRequestCreateAuthor));
     const totalItems = filteredAuthors.length + (showCustomOption ? 1 : 0);
 
     if (e.key === "ArrowDown") {
@@ -390,6 +401,11 @@ export function AuthorCombobox({
           onFocus={() => {
             if (!disabled) {
               setIsOpen(true);
+            }
+          }}
+          onBlur={() => {
+            if (allowCustom && !onRequestCreateAuthor && query.trim()) {
+              addAuthor(query.trim());
             }
           }}
           disabled={disabled || selectedAuthors.length >= maxAuthors}
@@ -537,16 +553,18 @@ export function AuthorCombobox({
                 >
                   <span>
                     + Add &quot;<strong className="text-foreground">{query.trim()}</strong>&quot; as
-                    creator
+                    creator name
                   </span>
                 </li>
               )}
 
-            {filteredAuthors.length === 0 && (!cleanQuery || exactMatch || isAlreadySelected) && (
-              <li className="text-muted-foreground px-2.5 py-2 text-center text-xs">
-                {selectedAuthors.length >= maxAuthors
-                  ? `Maximum limit of ${maxAuthors} authors reached.`
-                  : "No more authors to suggest."}
+            {filteredAuthors.length === 0 && !showCustomOption && (
+              <li className="text-muted-foreground px-2.5 py-2.5 text-center text-xs">
+                {cleanQuery
+                  ? "No matching creators found in catalog."
+                  : selectedAuthors.length >= maxAuthors
+                    ? `Maximum limit of ${maxAuthors} authors reached.`
+                    : "No more authors to suggest."}
               </li>
             )}
           </ul>

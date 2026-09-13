@@ -79,6 +79,7 @@ export async function PATCH(req: Request) {
     if (updates.description !== undefined) updatedData.description = updates.description;
     if (updates.category !== undefined) updatedData.category = updates.category;
     if (updates.author !== undefined) updatedData.author = updates.author;
+    if (updates.authorBlog !== undefined) updatedData.authorBlog = updates.authorBlog;
     if (updates.authorWebsite !== undefined) updatedData.authorWebsite = updates.authorWebsite;
     if (updates.authorTwitter !== undefined) updatedData.authorTwitter = updates.authorTwitter;
     if (updates.authorGitHub !== undefined) updatedData.authorGitHub = updates.authorGitHub;
@@ -140,6 +141,7 @@ export async function PATCH(req: Request) {
             await db
               .update(author)
               .set({
+                blog: existingAuthor.blog || sub.authorBlog || null,
                 github: existingAuthor.github || sub.authorGitHub || null,
                 linkedin: existingAuthor.linkedin || sub.authorLinkedIn || null,
                 twitter: existingAuthor.twitter || sub.authorTwitter || null,
@@ -152,6 +154,7 @@ export async function PATCH(req: Request) {
             authorRecordId = crypto.randomUUID();
             await db.insert(author).values({
               id: authorRecordId,
+              blog: sub.authorBlog || null,
               github: sub.authorGitHub || null,
               linkedin: sub.authorLinkedIn || null,
               name: authorName,

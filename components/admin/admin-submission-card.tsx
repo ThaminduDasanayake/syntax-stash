@@ -3,17 +3,19 @@
 import {
   ArrowCounterClockwiseIcon,
   ArrowSquareOutIcon,
-  CheckCircleIcon,
   ClipboardTextIcon,
   GlobeIcon,
-  PencilSimpleIcon,
+  MagnifyingGlassIcon,
   TrashIcon,
   XCircleIcon,
   XLogoIcon,
 } from "@phosphor-icons/react";
 import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 
 import { CardIcon } from "@/components/card-icon";
+import { AuthorOption, fetchAuthorList } from "@/components/submissions/author-combobox";
 import { Button } from "@/components/ui/button";
 import { Submission } from "@/lib/db/schema";
 import { cn, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
@@ -25,7 +27,6 @@ interface AdminSubmissionCardProps {
   isWorking: boolean;
   onCopyTs: () => void;
   onDelete: () => void;
-  onEdit: () => void;
   onUpdateStatus: (status: "approved" | "rejected" | "pending") => void;
   submission: Submission;
 }
@@ -35,10 +36,29 @@ export function AdminSubmissionCard({
   isWorking,
   onCopyTs,
   onDelete,
-  onEdit,
   onUpdateStatus,
   submission: sub,
 }: AdminSubmissionCardProps) {
+  const [existingAuthors, setExistingAuthors] = useState<AuthorOption[]>([]);
+
+  useEffect(() => {
+    let mounted = true;
+    fetchAuthorList().then((list) => {
+      if (mounted) setExistingAuthors(list);
+    });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const authorList = useMemo(() => {
+    if (!sub.author?.trim()) return [];
+    return sub.author
+      .split(",")
+      .map((a) => a.trim())
+      .filter(Boolean);
+  }, [sub.author]);
+
   const theme = getCategoryTheme(sub.category);
   const themeStyles = THEME_CONFIG[theme];
 
@@ -133,9 +153,32 @@ export function AdminSubmissionCard({
             )}
 
             <div className="flex flex-wrap items-center gap-3 pt-1.5 text-[11px]">
-              {sub.author && (
-                <div className="text-foreground flex items-center gap-1.5 font-semibold">
-                  <span>By {sub.author}</span>
+              {authorList.length > 0 && (
+                <div className="text-foreground flex flex-wrap items-center gap-1.5 font-semibold">
+                  <span>By</span>
+                  {authorList.map((authName, idx) => {
+                    const clean = authName.toLowerCase();
+                    const isExisting = existingAuthors.some(
+                      (a) => a.name.toLowerCase() === clean || a.slug.toLowerCase() === clean,
+                    );
+                    return (
+                      <span key={authName} className="inline-flex items-center gap-1">
+                        {idx > 0 && (
+                          <span className="text-muted-foreground font-normal">&amp;</span>
+                        )}
+                        <span>{authName}</span>
+                        {isExisting ? (
+                          <span className="border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded border px-1.5 py-0.2 font-mono text-[10px] font-bold">
+                            Catalog Author
+                          </span>
+                        ) : (
+                          <span className="border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400 rounded border px-1.5 py-0.2 font-mono text-[10px] font-bold">
+                            New Author
+                          </span>
+                        )}
+                      </span>
+                    );
+                  })}
                   <div className="text-muted-foreground flex items-center gap-1">
                     {sub.authorWebsite && (
                       <a
@@ -144,6 +187,17 @@ export function AdminSubmissionCard({
                         rel="noopener noreferrer"
                         className="hover:text-primary p-0.5"
                         title="Author Website"
+                      >
+                        <GlobeIcon className="size-3.5" />
+                      </a>
+                    )}
+                    {sub.authorBlog && (
+                      <a
+                        href={sub.authorBlog}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-primary p-0.5"
+                        title="Author Blog"
                       >
                         <GlobeIcon className="size-3.5" />
                       </a>
@@ -254,6 +308,16 @@ export function AdminSubmissionCard({
         <div className="border-line mt-4 flex flex-wrap items-center justify-between gap-2 border-t pt-3">
           <div className="flex items-center gap-2">
             <Button
+              asChild
+              size="sm"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 gap-1.5 text-[11px] font-bold uppercase"
+            >
+              <Link href={`/admin/submissions/${sub.id}`}>
+                <MagnifyingGlassIcon weight="bold" className="size-3.5" />
+                <span>Inspect & Review</span>
+              </Link>
+            </Button>
+            <Button
               size="sm"
               variant="outline"
               onClick={onCopyTs}
@@ -262,31 +326,9 @@ export function AdminSubmissionCard({
               <ClipboardTextIcon weight="duotone" />
               {copied ? "Copied!" : "Copy TypeScript"}
             </Button>
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={onEdit}
-              className="gap-1 text-[11px] uppercase"
-            >
-              <PencilSimpleIcon weight="duotone" /> Edit
-            </Button>
           </div>
 
           <div className="flex items-center gap-2">
-            {sub.status !== "approved" && (
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => onUpdateStatus("approved")}
-                disabled={isWorking}
-                className={cn(
-                  "gap-1.5 text-[11px] font-bold uppercase transition-all duration-150 active:scale-95",
-                  STATUS_CONFIG.approved.button,
-                )}
-              >
-                <CheckCircleIcon weight="duotone" className="size-4" /> Approve
-              </Button>
-            )}
             {sub.status === "rejected" && (
               <Button
                 size="sm"

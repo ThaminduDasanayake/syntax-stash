@@ -113,18 +113,31 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
 
   // Author Creation Modal State
   const [isCreateAuthorOpen, setIsCreateAuthorOpen] = useState(false);
-  const [createAuthorInitialName, setCreateAuthorInitialName] = useState("");
+  const [createAuthorInitialData, setCreateAuthorInitialData] = useState<
+    Partial<SuggestedAuthorData>
+  >({});
 
   // Confirmation Dialog State
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
 
-  const handleAuthorFieldChange = (_field: keyof AuthorSocialValues, value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      authorName: value,
-      ...(value ? {} : { authorId: null }),
-    }));
+  const handleAuthorFieldChange = (field: keyof AuthorSocialValues, value: string) => {
+    const fieldMapping: Record<keyof AuthorSocialValues, string> = {
+      author: "authorName",
+      authorBlog: "authorBlog",
+      authorGitHub: "authorGithub",
+      authorLinkedIn: "authorLinkedin",
+      authorTwitter: "authorTwitter",
+      authorWebsite: "authorWebsite",
+      authorYouTube: "authorYoutube",
+    };
+    const mapped = fieldMapping[field];
+    if (mapped) {
+      setFormData((prev) => ({
+        ...prev,
+        [mapped]: value,
+      }));
+    }
   };
 
   const handleSelectAuthorOption = (authorOption: AuthorOption) => {
@@ -140,8 +153,19 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
     }));
   };
 
-  const handleRequestCreateAuthor = (name: string) => {
-    setCreateAuthorInitialName(name);
+  const handleRequestCreateAuthor = (
+    name: string,
+    initialData?: Partial<SuggestedAuthorData>,
+  ) => {
+    setCreateAuthorInitialData({
+      blog: initialData?.blog || formData.authorBlog || "",
+      github: initialData?.github || formData.authorGithub || "",
+      linkedin: initialData?.linkedin || formData.authorLinkedin || "",
+      name: name || initialData?.name || "",
+      twitter: initialData?.twitter || formData.authorTwitter || "",
+      website: initialData?.website || formData.authorWebsite || "",
+      youtube: initialData?.youtube || formData.authorYoutube || "",
+    });
     setIsCreateAuthorOpen(true);
   };
 
@@ -815,7 +839,8 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
       <AdminAuthorDialog
         open={isCreateAuthorOpen}
         onOpenChange={setIsCreateAuthorOpen}
-        initialName={createAuthorInitialName}
+        initialData={createAuthorInitialData}
+        initialName={createAuthorInitialData.name}
         onCreated={(newAuthor) => {
           setFormData((prev) => {
             const existing = prev.authorName
