@@ -6,15 +6,19 @@ import {
   ArrowsClockwiseIcon,
   CheckCircleIcon,
   CircleNotchIcon,
+  CopyIcon,
   FloppyDiskIcon,
+  GlobeIcon,
   LightningIcon,
   TrashIcon,
   UserIcon,
   XCircleIcon,
+  XLogoIcon,
 } from "@phosphor-icons/react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import {
@@ -23,6 +27,7 @@ import {
   AuthorSocialValues,
   CandidateOption,
   DetectedFieldSuggestion,
+  fetchAuthorList,
   FieldCheckmark,
   MediaAssetFields,
   ResourceCardPreview,
@@ -38,7 +43,6 @@ import { useCategories } from "@/hooks/use-categories";
 import { Submission } from "@/lib/db/schema";
 import { cn, isValidHttpUrl } from "@/lib/utils";
 
-import { AdminAuthorDialog } from "./admin-author-dialog";
 import {
   AdminConfirmEditDialog,
   computeFieldChanges,
@@ -72,6 +76,24 @@ interface AdminSubmissionInspectViewProps {
   submission: Submission;
 }
 
+function CopyValueButton({ label, text }: { label: string; text: string }) {
+  return (
+    <Button
+      type="button"
+      size="sm"
+      variant="ghost"
+      onClick={() => {
+        navigator.clipboard.writeText(text);
+        toast.info(`Copied ${label} to clipboard.`);
+      }}
+      className="text-muted-foreground hover:text-foreground hover:bg-muted/60 size-6 p-0"
+      title={`Copy ${label}`}
+    >
+      <CopyIcon className="size-3" />
+    </Button>
+  );
+}
+
 function SubmittedDataBanner({
   display,
   label,
@@ -95,7 +117,10 @@ function SubmittedDataBanner({
           display
         ) : (
           <span
-            className={cn("truncate text-[11px]", hasContent ? "text-foreground font-medium" : "text-muted-foreground italic")}
+            className={cn(
+              "truncate text-[11px]",
+              hasContent ? "text-foreground font-medium" : "text-muted-foreground italic",
+            )}
           >
             {value || "None provided"}
           </span>
@@ -147,6 +172,7 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
     url: "",
   });
 
+  const [existingAuthors, setExistingAuthors] = useState<AuthorOption[]>([]);
   const [isWorking, setIsWorking] = useState(false);
   const [isDetecting, setIsDetecting] = useState(false);
   const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
@@ -159,16 +185,27 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
     title?: string;
   }>({});
 
-  // Inline Author Creation Dialog
-  const [isCreateAuthorOpen, setIsCreateAuthorOpen] = useState(false);
-  const [createAuthorInitialData, setCreateAuthorInitialData] = useState<
-    Partial<SuggestedAuthorData>
-  >({});
-
   // Confirmation Dialog State
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
   const [pendingAction, setPendingAction] = useState<(() => Promise<void>) | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    fetchAuthorList().then((list) => {
+      if (mounted) setExistingAuthors(list);
+    });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const submittedAuthorNames = sub.author
+    ? sub.author
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean)
+    : [];
 
   // Field-by-Field Sync Handlers
   const handleSyncField = (field: keyof Submission | "visuals" | "authorAll" | "all") => {
@@ -222,7 +259,7 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
         authorWebsite: sub.authorWebsite || "",
         authorYouTube: sub.authorYouTube || "",
       }));
-      toast.success("Synchronized author details and social links.");
+      toast.success("Synchronized author details.");
       return;
     }
 
@@ -260,22 +297,6 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
       authorWebsite: authorOption.links?.website || prev.authorWebsite || "",
       authorYouTube: authorOption.links?.youtube || prev.authorYouTube || "",
     }));
-  };
-
-  const handleRequestCreateAuthor = (
-    name: string,
-    initialData?: Partial<SuggestedAuthorData>,
-  ) => {
-    setCreateAuthorInitialData({
-      blog: initialData?.blog || editForm.authorBlog || sub.authorBlog || "",
-      github: initialData?.github || editForm.authorGitHub || sub.authorGitHub || "",
-      linkedin: initialData?.linkedin || editForm.authorLinkedIn || sub.authorLinkedIn || "",
-      name: name || initialData?.name || editForm.author || sub.author || "",
-      twitter: initialData?.twitter || editForm.authorTwitter || sub.authorTwitter || "",
-      website: initialData?.website || editForm.authorWebsite || sub.authorWebsite || "",
-      youtube: initialData?.youtube || editForm.authorYouTube || sub.authorYouTube || "",
-    });
-    setIsCreateAuthorOpen(true);
   };
 
   const handleAcceptSuggestedAuthor = (suggested: SuggestedAuthorData) => {
@@ -527,7 +548,8 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
             <span className="text-foreground font-semibold">
               {sub.submitterName || sub.submitterEmail || "Anonymous"}
             </span>{" "}
-            on {new Date(sub.createdAt).toLocaleDateString()}. Review submitted payload above each field and sync selectively into the catalog editor.
+            on {new Date(sub.createdAt).toLocaleDateString()}. Review submitted payload above each
+            field and sync selectively into the catalog editor.
           </p>
         </div>
 
@@ -852,56 +874,211 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
             />
           </div>
 
-          {/* Section 5: Creator Attribution */}
-          <div className="space-y-3">
-            {/* Submitted Author Banner */}
-            <div className="border-line/60 bg-muted/30 flex flex-wrap items-center justify-between gap-2 rounded border p-2.5 text-[11px]">
-              <div className="flex items-center gap-2 truncate">
-                <span className="text-muted-foreground text-[10px] font-bold uppercase">
-                  Submitted Author:
-                </span>
-                <UserIcon className="text-primary size-3.5" />
-                <span className="text-foreground font-bold">{sub.author || "None provided"}</span>
-                {(sub.authorGitHub || sub.authorTwitter || sub.authorWebsite) && (
-                  <span className="text-muted-foreground truncate text-[10px]">
-                    ({[sub.authorGitHub, sub.authorTwitter, sub.authorWebsite].filter(Boolean).join(", ")})
-                  </span>
-                )}
-              </div>
-
-              <Button
-                type="button"
-                size="sm"
-                variant="ghost"
-                disabled={!sub.author}
-                onClick={() => handleSyncField("authorAll")}
-                className="text-primary hover:bg-primary/10 h-5 gap-1 px-1.5 text-[10px] font-bold uppercase"
-              >
-                <span>Sync Author & Links</span>
-                <ArrowRightIcon className="size-3" />
-              </Button>
+          {/* Section 5: Creator Attribution (Submitted Cards + Copy + Manual Selector) */}
+          <div className="space-y-4">
+            <div>
+              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                <UserIcon className="text-primary size-4" />
+                <span>Submitted Author Details</span>
+              </Label>
+              <p className="text-muted-foreground text-[11px]">
+                Submitted author names and links. Copy details as needed to manually add to the
+                catalog database.
+              </p>
             </div>
 
-            <AuthorSocialFields
-              values={{
-                author: editForm.author,
-                authorBlog: editForm.authorBlog,
-                authorGitHub: editForm.authorGitHub,
-                authorLinkedIn: editForm.authorLinkedIn,
-                authorTwitter: editForm.authorTwitter,
-                authorWebsite: editForm.authorWebsite,
-                authorYouTube: editForm.authorYouTube,
-              }}
-              onChange={handleAuthorFieldChange}
-              onBatchChange={handleAuthorBatchChange}
-              onRequestCreateAuthor={handleRequestCreateAuthor}
-              onSelectAuthorOption={handleSelectAuthorOption}
-              suggestedAuthor={suggestedAuthor}
-              onAcceptSuggestedAuthor={handleAcceptSuggestedAuthor}
-              onDismissSuggestedAuthor={() => setSuggestedAuthor(null)}
-              allowCustom={false}
-              disabled={isWorking}
-            />
+            {/* Individual Submitted Author Cards with Copy Buttons */}
+            {submittedAuthorNames.length > 0 ? (
+              <div className="space-y-3">
+                {submittedAuthorNames.map((authorName, idx) => {
+                  const inDb = existingAuthors.some(
+                    (a) =>
+                      a.name.toLowerCase() === authorName.toLowerCase() ||
+                      a.slug.toLowerCase() === authorName.toLowerCase(),
+                  );
+
+                  return (
+                    <div
+                      key={`${authorName}-${idx}`}
+                      className="border-line/70 bg-paper/40 space-y-3 rounded-lg border-[1.5px] p-3.5"
+                    >
+                      {/* Author Header */}
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <div className="flex items-center gap-2">
+                          <UserIcon className="text-primary size-4" />
+                          <span className="text-foreground text-xs font-bold">{authorName}</span>
+                          <CopyValueButton text={authorName} label="author name" />
+
+                          {inDb ? (
+                            <span className="border-emerald-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded border px-2 py-0.5 text-[10px] font-bold">
+                              In Catalog Database
+                            </span>
+                          ) : (
+                            <span className="border-amber-500/40 bg-amber-500/10 text-amber-600 dark:text-amber-400 rounded border px-2 py-0.5 text-[10px] font-bold">
+                              Not in Database
+                            </span>
+                          )}
+                        </div>
+
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => {
+                            setEditForm((prev) => {
+                              const current = prev.author
+                                ? prev.author
+                                    .split(",")
+                                    .map((s) => s.trim())
+                                    .filter(Boolean)
+                                : [];
+                              if (current.includes(authorName)) return prev;
+                              return {
+                                ...prev,
+                                author: [...current, authorName].join(", "),
+                              };
+                            });
+                            toast.success(`Selected "${authorName}" for resource.`);
+                          }}
+                          className="text-primary hover:bg-primary/10 h-6 gap-1 px-2 text-[10px] font-bold uppercase"
+                        >
+                          <span>Select Name</span>
+                          <ArrowRightIcon className="size-3" />
+                        </Button>
+                      </div>
+
+                      {/* Submitted Links List with Individual Copy Buttons */}
+                      <div className="border-line/40 grid grid-cols-1 gap-2.5 border-t pt-2.5 sm:grid-cols-2 text-[10px]">
+                        {sub.authorWebsite ? (
+                          <div className="bg-muted/30 border-line/40 flex items-center justify-between gap-2 rounded border px-2.5 py-1">
+                            <div className="flex items-center gap-1.5 truncate">
+                              <GlobeIcon className="text-muted-foreground size-3.5 shrink-0" />
+                              <span className="font-bold text-muted-foreground">Website:</span>
+                              <span className="text-foreground truncate">{sub.authorWebsite}</span>
+                            </div>
+                            <CopyValueButton text={sub.authorWebsite} label="Website URL" />
+                          </div>
+                        ) : null}
+
+                        {sub.authorGitHub ? (
+                          <div className="bg-muted/30 border-line/40 flex items-center justify-between gap-2 rounded border px-2.5 py-1">
+                            <div className="flex items-center gap-1.5 truncate">
+                              <Image
+                                src="/github.svg"
+                                alt="GitHub"
+                                width={12}
+                                height={12}
+                                className="opacity-70 dark:invert shrink-0"
+                              />
+                              <span className="font-bold text-muted-foreground">GitHub:</span>
+                              <span className="text-foreground truncate">{sub.authorGitHub}</span>
+                            </div>
+                            <CopyValueButton text={sub.authorGitHub} label="GitHub URL" />
+                          </div>
+                        ) : null}
+
+                        {sub.authorTwitter ? (
+                          <div className="bg-muted/30 border-line/40 flex items-center justify-between gap-2 rounded border px-2.5 py-1">
+                            <div className="flex items-center gap-1.5 truncate">
+                              <XLogoIcon weight="bold" className="text-muted-foreground size-3.5 shrink-0" />
+                              <span className="font-bold text-muted-foreground">Twitter/X:</span>
+                              <span className="text-foreground truncate">{sub.authorTwitter}</span>
+                            </div>
+                            <CopyValueButton text={sub.authorTwitter} label="Twitter / X" />
+                          </div>
+                        ) : null}
+
+                        {sub.authorLinkedIn ? (
+                          <div className="bg-muted/30 border-line/40 flex items-center justify-between gap-2 rounded border px-2.5 py-1">
+                            <div className="flex items-center gap-1.5 truncate">
+                              <Image
+                                src="/linkedin.svg"
+                                alt="LinkedIn"
+                                width={12}
+                                height={12}
+                                className="opacity-70 shrink-0"
+                              />
+                              <span className="font-bold text-muted-foreground">LinkedIn:</span>
+                              <span className="text-foreground truncate">{sub.authorLinkedIn}</span>
+                            </div>
+                            <CopyValueButton text={sub.authorLinkedIn} label="LinkedIn" />
+                          </div>
+                        ) : null}
+
+                        {sub.authorYouTube ? (
+                          <div className="bg-muted/30 border-line/40 flex items-center justify-between gap-2 rounded border px-2.5 py-1">
+                            <div className="flex items-center gap-1.5 truncate">
+                              <Image
+                                src="/youtube.svg"
+                                alt="YouTube"
+                                width={12}
+                                height={12}
+                                className="opacity-70 shrink-0"
+                              />
+                              <span className="font-bold text-muted-foreground">YouTube:</span>
+                              <span className="text-foreground truncate">{sub.authorYouTube}</span>
+                            </div>
+                            <CopyValueButton text={sub.authorYouTube} label="YouTube" />
+                          </div>
+                        ) : null}
+
+                        {sub.authorBlog ? (
+                          <div className="bg-muted/30 border-line/40 flex items-center justify-between gap-2 rounded border px-2.5 py-1">
+                            <div className="flex items-center gap-1.5 truncate">
+                              <GlobeIcon className="text-muted-foreground size-3.5 shrink-0" />
+                              <span className="font-bold text-muted-foreground">Blog:</span>
+                              <span className="text-foreground truncate">{sub.authorBlog}</span>
+                            </div>
+                            <CopyValueButton text={sub.authorBlog} label="Blog URL" />
+                          </div>
+                        ) : null}
+
+                        {!sub.authorWebsite &&
+                          !sub.authorGitHub &&
+                          !sub.authorTwitter &&
+                          !sub.authorLinkedIn &&
+                          !sub.authorYouTube &&
+                          !sub.authorBlog && (
+                            <span className="text-muted-foreground italic col-span-2 py-1">
+                              No social profile links submitted for this creator.
+                            </span>
+                          )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="border-line/60 bg-muted/20 rounded-lg border p-3 text-muted-foreground italic text-xs">
+                No creator was specified in this submission.
+              </div>
+            )}
+
+            {/* Target Resource Author Selector */}
+            <div className="border-line/60 border-t pt-3">
+              <Label className="text-foreground mb-1.5 block font-mono text-xs font-bold uppercase">
+                Assign Catalog Author(s) to Resource
+              </Label>
+              <AuthorSocialFields
+                values={{
+                  author: editForm.author,
+                  authorBlog: editForm.authorBlog,
+                  authorGitHub: editForm.authorGitHub,
+                  authorLinkedIn: editForm.authorLinkedIn,
+                  authorTwitter: editForm.authorTwitter,
+                  authorWebsite: editForm.authorWebsite,
+                  authorYouTube: editForm.authorYouTube,
+                }}
+                onChange={handleAuthorFieldChange}
+                onBatchChange={handleAuthorBatchChange}
+                onSelectAuthorOption={handleSelectAuthorOption}
+                suggestedAuthor={suggestedAuthor}
+                onAcceptSuggestedAuthor={handleAcceptSuggestedAuthor}
+                onDismissSuggestedAuthor={() => setSuggestedAuthor(null)}
+                allowCustom={false}
+                disabled={isWorking}
+              />
+            </div>
           </div>
 
           {/* Section 6: Additional Details & Tags */}
@@ -1006,7 +1183,9 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
                 <div className="h-9">
                   <InputField
                     value={editForm.adminNotes || ""}
-                    onChange={(e) => setEditForm((prev) => ({ ...prev, adminNotes: e.target.value }))}
+                    onChange={(e) =>
+                      setEditForm((prev) => ({ ...prev, adminNotes: e.target.value }))
+                    }
                     placeholder="Notes about this review..."
                     containerClassName="h-9"
                     className="font-mono text-xs"
@@ -1115,39 +1294,6 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
           </div>
         </div>
       </div>
-
-      {/* Inline Create Author Modal */}
-      <AdminAuthorDialog
-        open={isCreateAuthorOpen}
-        onOpenChange={setIsCreateAuthorOpen}
-        initialData={createAuthorInitialData}
-        initialName={createAuthorInitialData.name}
-        onCreated={(newAuthor) => {
-          setEditForm((prev) => {
-            const existing = prev.author
-              ? prev.author
-                  .split(",")
-                  .map((a) => a.trim())
-                  .filter(Boolean)
-              : [];
-            const next = existing.some((a) => a.toLowerCase() === newAuthor.name.toLowerCase())
-              ? existing
-              : [...existing, newAuthor.name];
-            return {
-              ...prev,
-              author: next.join(", "),
-              authorBlog: newAuthor.blog || prev.authorBlog || "",
-              authorGitHub: newAuthor.github || prev.authorGitHub || "",
-              authorLinkedIn: newAuthor.linkedin || prev.authorLinkedIn || "",
-              authorTwitter: newAuthor.twitter || prev.authorTwitter || "",
-              authorWebsite: newAuthor.website || prev.authorWebsite || "",
-              authorYouTube: newAuthor.youtube || prev.authorYouTube || "",
-            };
-          });
-          setIsCreateAuthorOpen(false);
-          toast.success(`Author "${newAuthor.name}" created and linked!`);
-        }}
-      />
 
       {/* Confirmation Dialog for Submission Updates */}
       <AdminConfirmEditDialog

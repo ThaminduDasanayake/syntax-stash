@@ -86,8 +86,10 @@ export function AuthorSocialFields({
   // Catalog selected authors string (e.g. "shadcn, leerob")
   const [catalogAuthorsString, setCatalogAuthorsString] = useState<string>("");
 
-  // New non-catalog author cards
+  // New non-catalog author cards (used only for public submit mode when onRequestCreateAuthor is absent)
   const [newAuthors, setNewAuthors] = useState<NewAuthorEntry[]>([]);
+
+  const isAdminMode = Boolean(onRequestCreateAuthor);
 
   useEffect(() => {
     let mounted = true;
@@ -99,7 +101,7 @@ export function AuthorSocialFields({
     };
   }, []);
 
-  // Parse initial `values.author` into catalog authors and new non-catalog authors
+  // Parse initial `values.author`
   useEffect(() => {
     if (isInternalUpdate.current) {
       isInternalUpdate.current = false;
@@ -111,6 +113,14 @@ export function AuthorSocialFields({
       .map((s) => s.trim())
       .filter(Boolean);
 
+    if (isAdminMode) {
+      // In Admin mode, all selected authors map cleanly to catalog combobox
+      setCatalogAuthorsString(rawNames.join(", "));
+      setNewAuthors([]);
+      return;
+    }
+
+    // In Public Submit mode, partition into catalog vs non-catalog
     const catalogList: string[] = [];
     const nonCatalogList: NewAuthorEntry[] = [];
 
@@ -139,7 +149,7 @@ export function AuthorSocialFields({
     setCatalogAuthorsString(catalogList.join(", "));
     setNewAuthors(nonCatalogList);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [existingAuthors, values.author]);
+  }, [existingAuthors, isAdminMode, values.author]);
 
   const syncToParent = (catalogStr: string, newAuthList: NewAuthorEntry[]) => {
     isInternalUpdate.current = true;
@@ -149,23 +159,25 @@ export function AuthorSocialFields({
       .map((s) => s.trim())
       .filter(Boolean);
 
-    const newNames = newAuthList.map((a) => a.name.trim()).filter(Boolean);
+    const newNames = newAuthList
+      .map((a) => a.name.trim())
+      .filter(Boolean);
 
     const allNames = [...catalogNames, ...newNames].join(", ");
 
-    // Prioritize new authors who have links
+    // Prioritize new authors who have links if in public mode
     const newAuthorWithLinks = newAuthList.find((a) =>
       Boolean(a.blog || a.github || a.linkedin || a.twitter || a.website || a.youtube),
     );
 
     const updates: Partial<AuthorSocialValues> = {
       author: allNames,
-      authorBlog: newAuthorWithLinks?.blog || "",
-      authorGitHub: newAuthorWithLinks?.github || "",
-      authorLinkedIn: newAuthorWithLinks?.linkedin || "",
-      authorTwitter: newAuthorWithLinks?.twitter || "",
-      authorWebsite: newAuthorWithLinks?.website || "",
-      authorYouTube: newAuthorWithLinks?.youtube || "",
+      authorBlog: newAuthorWithLinks?.blog || values.authorBlog || "",
+      authorGitHub: newAuthorWithLinks?.github || values.authorGitHub || "",
+      authorLinkedIn: newAuthorWithLinks?.linkedin || values.authorLinkedIn || "",
+      authorTwitter: newAuthorWithLinks?.twitter || values.authorTwitter || "",
+      authorWebsite: newAuthorWithLinks?.website || values.authorWebsite || "",
+      authorYouTube: newAuthorWithLinks?.youtube || values.authorYouTube || "",
     };
 
     if (onBatchChange) {
@@ -191,6 +203,11 @@ export function AuthorSocialFields({
   };
 
   const handleAddNewAuthor = (initialData?: Partial<SuggestedAuthorData>) => {
+    if (isAdminMode && onRequestCreateAuthor) {
+      onRequestCreateAuthor(initialData?.name || "", initialData);
+      return;
+    }
+
     const newEntry: NewAuthorEntry = {
       id: `new-author-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
       blog: initialData?.blog || "",
@@ -245,7 +262,11 @@ export function AuthorSocialFields({
         syncToParent(next, newAuthors);
       }
     } else {
-      handleAddNewAuthor(suggested);
+      if (isAdminMode && onRequestCreateAuthor) {
+        onRequestCreateAuthor(suggested.name, suggested);
+      } else {
+        handleAddNewAuthor(suggested);
+      }
     }
   };
 
@@ -280,17 +301,31 @@ export function AuthorSocialFields({
           )}
         </div>
 
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          onClick={() => handleAddNewAuthor()}
-          disabled={disabled}
-          className="border-primary/40 text-primary hover:bg-primary/10 h-7 gap-1.5 font-mono text-[11px] font-bold uppercase"
-        >
-          <PlusIcon weight="bold" className="size-3" />
-          <span>Add Author</span>
-        </Button>
+        {isAdminMode ? (
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => onRequestCreateAuthor?.("")}
+            disabled={disabled}
+            className="border-primary/40 text-primary hover:bg-primary/10 h-7 gap-1.5 font-mono text-[11px] font-bold uppercase"
+          >
+            <PlusIcon weight="bold" className="size-3" />
+            <span>New Author to DB</span>
+          </Button>
+        ) : (
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => handleAddNewAuthor()}
+            disabled={disabled}
+            className="border-primary/40 text-primary hover:bg-primary/10 h-7 gap-1.5 font-mono text-[11px] font-bold uppercase"
+          >
+            <PlusIcon weight="bold" className="size-3" />
+            <span>Add Author</span>
+          </Button>
+        )}
       </div>
 
       {/* Primary Catalog Search Combobox */}
@@ -300,18 +335,20 @@ export function AuthorSocialFields({
           value={catalogAuthorsString}
           onChange={handleCatalogAuthorsChange}
           onSelectAuthor={onSelectAuthorOption}
+          onRequestCreateAuthor={onRequestCreateAuthor}
           allowCustom={allowCustom}
           disabled={disabled}
           className="font-mono text-xs"
         />
         <p className="text-muted-foreground text-[10px]">
-          Search for an author&apos;s name in the catalog, or click &quot;+ Add Author&quot; to add
-          them with their details if not found.
+          {isAdminMode
+            ? 'Search existing creators in catalog or click "+ New Author to DB" to create a new author record in the database.'
+            : 'Search for an author\'s name in the catalog, or click "+ Add Author" to add them with their details if not found.'}
         </p>
       </div>
 
-      {/* New Non-Catalog Author Sections (Rendered when added) */}
-      {newAuthors.length > 0 && (
+      {/* New Non-Catalog Author Sections (Rendered only in Public Submit mode when added) */}
+      {!isAdminMode && newAuthors.length > 0 && (
         <div className="space-y-3 pt-2">
           {newAuthors.map((entry, index) => (
             <div
@@ -324,48 +361,21 @@ export function AuthorSocialFields({
                   <span className="text-foreground font-mono text-xs font-bold uppercase">
                     Author {newAuthors.length > 1 ? `#${index + 1}` : ""}
                   </span>
-                  <span className="rounded border border-amber-500/40 bg-amber-500/10 px-1.5 py-0.5 font-mono text-[10px] font-bold text-amber-600 dark:text-amber-400">
-                    Author (Not in search)
+                  <span className="border-amber-500/40 bg-amber-500/10 text-amber-600 dark:text-amber-400 rounded border px-1.5 py-0.5 font-mono text-[10px] font-bold">
+                    Author (Not in DB)
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  {onRequestCreateAuthor && Boolean(entry.name.trim()) && (
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() =>
-                        onRequestCreateAuthor(entry.name, {
-                          blog: entry.blog,
-                          github: entry.github,
-                          linkedin: entry.linkedin,
-                          name: entry.name,
-                          twitter: entry.twitter,
-                          website: entry.website,
-                          youtube: entry.youtube,
-                        })
-                      }
-                      disabled={disabled}
-                      className="text-primary hover:bg-primary/10 h-6 gap-1 px-2 text-[10px] font-bold uppercase"
-                      title="Save this author to catalog database"
-                    >
-                      <PlusIcon className="size-3" weight="bold" />
-                      <span>Create in DB</span>
-                    </Button>
-                  )}
-
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveNewAuthor(entry.id)}
-                    disabled={disabled}
-                    className="text-muted-foreground hover:text-destructive flex size-6 items-center justify-center rounded p-0.5 transition-colors"
-                    title="Remove this new author section"
-                    aria-label="Remove author"
-                  >
-                    <TrashIcon className="size-3.5" />
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => handleRemoveNewAuthor(entry.id)}
+                  disabled={disabled}
+                  className="text-muted-foreground hover:text-destructive flex size-6 items-center justify-center rounded p-0.5 transition-colors"
+                  title="Remove this author section"
+                  aria-label="Remove author"
+                >
+                  <TrashIcon className="size-3.5" />
+                </button>
               </div>
 
               {/* Creator Name Field */}
@@ -389,7 +399,7 @@ export function AuthorSocialFields({
 
               {/* Creator Profile Links Grid */}
               <div className="border-line/60 bg-background/50 space-y-3 rounded-lg border p-3.5">
-                <span className="text-muted-foreground block text-[10px] font-bold tracking-wider uppercase">
+                <span className="text-muted-foreground block text-[10px] font-bold uppercase tracking-wider">
                   Creator Profile & Social Links (Optional)
                 </span>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">

@@ -100,35 +100,11 @@ export async function PATCH(req: Request) {
 
     if (sub) {
       if (sub.status === "approved") {
-        // 1. Resolve or Create Author(s)
+        // 1. Resolve Author(s) from Database (Verified by admin)
         let authorRecordId: string | null = null;
         if (sub.author && sub.author.trim()) {
           const authorName = sub.author.trim();
           const authorSlug = slugifyAuthor(authorName);
-
-          // Ensure every individual author exists in author table
-          const splitAuthors = authorName.includes(",")
-            ? authorName
-                .split(",")
-                .map((a: string) => a.trim())
-                .filter(Boolean)
-            : [authorName];
-
-          for (const singleName of splitAuthors) {
-            const singleSlug = slugifyAuthor(singleName);
-            if (!singleSlug) continue;
-            const [singleExisting] = await db
-              .select()
-              .from(author)
-              .where(eq(author.slug, singleSlug));
-            if (!singleExisting) {
-              await db.insert(author).values({
-                id: crypto.randomUUID(),
-                name: singleName,
-                slug: singleSlug,
-              });
-            }
-          }
 
           const [existingAuthor] = await db
             .select()
@@ -137,32 +113,19 @@ export async function PATCH(req: Request) {
 
           if (existingAuthor) {
             authorRecordId = existingAuthor.id;
-            // Optionally backfill missing links on existing author
-            await db
-              .update(author)
-              .set({
-                blog: existingAuthor.blog || sub.authorBlog || null,
-                github: existingAuthor.github || sub.authorGitHub || null,
-                linkedin: existingAuthor.linkedin || sub.authorLinkedIn || null,
-                twitter: existingAuthor.twitter || sub.authorTwitter || null,
-                updatedAt: new Date(),
-                website: existingAuthor.website || sub.authorWebsite || null,
-                youtube: existingAuthor.youtube || sub.authorYouTube || null,
-              })
-              .where(eq(author.id, existingAuthor.id));
           } else {
-            authorRecordId = crypto.randomUUID();
-            await db.insert(author).values({
-              id: authorRecordId,
-              blog: sub.authorBlog || null,
-              github: sub.authorGitHub || null,
-              linkedin: sub.authorLinkedIn || null,
-              name: authorName,
-              slug: authorSlug,
-              twitter: sub.authorTwitter || null,
-              website: sub.authorWebsite || null,
-              youtube: sub.authorYouTube || null,
-            });
+            // Check if first author in comma-separated list exists
+            const firstAuthor = authorName.split(",")[0]?.trim();
+            if (firstAuthor) {
+              const firstSlug = slugifyAuthor(firstAuthor);
+              const [foundFirst] = await db
+                .select()
+                .from(author)
+                .where(eq(author.slug, firstSlug));
+              if (foundFirst) {
+                authorRecordId = foundFirst.id;
+              }
+            }
           }
         }
 
