@@ -18,7 +18,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 import {
@@ -27,7 +27,6 @@ import {
   AuthorSocialValues,
   CandidateOption,
   DetectedFieldSuggestion,
-  fetchAuthorList,
   FieldCheckmark,
   MediaAssetFields,
   ResourceCardPreview,
@@ -172,7 +171,6 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
     url: "",
   });
 
-  const [existingAuthors, setExistingAuthors] = useState<AuthorOption[]>([]);
   const [isWorking, setIsWorking] = useState(false);
   const [isDetecting, setIsDetecting] = useState(false);
   const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
@@ -189,16 +187,6 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
   const [pendingAction, setPendingAction] = useState<(() => Promise<void>) | null>(null);
-
-  useEffect(() => {
-    let mounted = true;
-    fetchAuthorList().then((list) => {
-      if (mounted) setExistingAuthors(list);
-    });
-    return () => {
-      mounted = false;
-    };
-  }, []);
 
   const submittedAuthorNames = sub.author
     ? sub.author
@@ -890,62 +878,17 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
             {/* Individual Submitted Author Cards with Copy Buttons */}
             {submittedAuthorNames.length > 0 ? (
               <div className="space-y-3">
-                {submittedAuthorNames.map((authorName, idx) => {
-                  const inDb = existingAuthors.some(
-                    (a) =>
-                      a.name.toLowerCase() === authorName.toLowerCase() ||
-                      a.slug.toLowerCase() === authorName.toLowerCase(),
-                  );
-
-                  return (
-                    <div
-                      key={`${authorName}-${idx}`}
-                      className="border-line/70 bg-paper/40 space-y-3 rounded-lg border-[1.5px] p-3.5"
-                    >
-                      {/* Author Header */}
-                      <div className="flex flex-wrap items-center justify-between gap-2">
-                        <div className="flex items-center gap-2">
-                          <UserIcon className="text-primary size-4" />
-                          <span className="text-foreground text-xs font-bold">{authorName}</span>
-                          <CopyValueButton text={authorName} label="author name" />
-
-                          {inDb ? (
-                            <span className="border-emerald-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded border px-2 py-0.5 text-[10px] font-bold">
-                              In Catalog Database
-                            </span>
-                          ) : (
-                            <span className="border-amber-500/40 bg-amber-500/10 text-amber-600 dark:text-amber-400 rounded border px-2 py-0.5 text-[10px] font-bold">
-                              Not in Database
-                            </span>
-                          )}
-                        </div>
-
-                        <Button
-                          type="button"
-                          size="sm"
-                          variant="ghost"
-                          onClick={() => {
-                            setEditForm((prev) => {
-                              const current = prev.author
-                                ? prev.author
-                                    .split(",")
-                                    .map((s) => s.trim())
-                                    .filter(Boolean)
-                                : [];
-                              if (current.includes(authorName)) return prev;
-                              return {
-                                ...prev,
-                                author: [...current, authorName].join(", "),
-                              };
-                            });
-                            toast.success(`Selected "${authorName}" for resource.`);
-                          }}
-                          className="text-primary hover:bg-primary/10 h-6 gap-1 px-2 text-[10px] font-bold uppercase"
-                        >
-                          <span>Select Name</span>
-                          <ArrowRightIcon className="size-3" />
-                        </Button>
-                      </div>
+                {submittedAuthorNames.map((authorName, idx) => (
+                  <div
+                    key={`${authorName}-${idx}`}
+                    className="border-line/70 bg-paper/40 space-y-3 rounded-lg border-[1.5px] p-3.5"
+                  >
+                    {/* Author Header */}
+                    <div className="flex items-center gap-2">
+                      <UserIcon className="text-primary size-4" />
+                      <span className="text-foreground text-xs font-bold">{authorName}</span>
+                      <CopyValueButton text={authorName} label="author name" />
+                    </div>
 
                       {/* Submitted Links List with Individual Copy Buttons */}
                       <div className="border-line/40 grid grid-cols-1 gap-2.5 border-t pt-2.5 sm:grid-cols-2 text-[10px]">
@@ -1045,8 +988,7 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
                           )}
                       </div>
                     </div>
-                  );
-                })}
+                ))}
               </div>
             ) : (
               <div className="border-line/60 bg-muted/20 rounded-lg border p-3 text-muted-foreground italic text-xs">
