@@ -35,6 +35,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { EmptyState } from "@/components/ui/empty-state";
 import { InputField } from "@/components/ui/input-field";
 import { SearchInput } from "@/components/ui/search-input";
 import { SelectField } from "@/components/ui/select-field";
@@ -459,30 +460,33 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
 
       {/* Tags Table */}
       {filteredAndSortedTags.length === 0 ? (
-        <div className="border-line bg-surface/30 flex flex-col items-center justify-center rounded-lg border-[1.5px] p-12 text-center">
-          <TagIcon className="text-muted-foreground/60 mb-3 size-10" />
-          <h3 className="text-foreground text-sm font-bold uppercase">No Tags Found</h3>
-          <p className="text-muted-foreground mt-1 max-w-sm text-xs">
-            {searchQuery
+        <EmptyState
+          variant="card"
+          icon={<TagIcon className="size-6" />}
+          title="No Tags Found"
+          description={
+            searchQuery
               ? `No tags match query "${searchQuery}". Try a different term.`
-              : "No tags currently exist. Create your first tag above."}
-          </p>
-          {searchQuery ? (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setSearchQuery("")}
-              className="mt-4 text-xs uppercase"
-            >
-              Clear Search
-            </Button>
-          ) : (
-            <Button size="sm" onClick={handleOpenAdd} className="mt-4 text-xs uppercase">
-              <PlusIcon className="size-3.5" />
-              Add Tag
-            </Button>
-          )}
-        </div>
+              : "No tags currently exist. Create your first tag above."
+          }
+          action={
+            searchQuery ? (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setSearchQuery("")}
+                className="text-xs uppercase"
+              >
+                Clear Search
+              </Button>
+            ) : (
+              <Button size="sm" onClick={handleOpenAdd} className="text-xs uppercase">
+                <PlusIcon className="size-3.5" />
+                Add Tag
+              </Button>
+            )
+          }
+        />
       ) : (
         <div className="border-line overflow-hidden rounded-lg border-[1.5px]">
           <Table className="text-xs">

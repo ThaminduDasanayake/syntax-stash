@@ -99,6 +99,49 @@ export const TAB_CONFIG: Record<
 // eslint-disable-next-line perfectionist/sort-arrays
 export const TABS: TabStatus[] = ["pending", "approved", "rejected", "all"];
 
+export type HealthStatus = "blocked" | "broken" | "healthy" | "redirect" | "unknown";
+
+export const HEALTH_STATUS_CONFIG: Record<
+  HealthStatus,
+  {
+    badge: string;
+    description: string;
+    dotColor: string;
+    label: string;
+  }
+> = {
+  blocked: {
+    badge: "bg-orange-500/15 text-orange-800 border-[1.5px] border-orange-600/60",
+    description: "Cloudflare / Bot Protection (403/429)",
+    dotColor: "bg-orange-500",
+    label: "Blocked",
+  },
+  broken: {
+    badge: "bg-rose-500/15 text-rose-700 border-[1.5px] border-rose-600/60",
+    description: "Dead / Unreachable (404/500/DNS error)",
+    dotColor: "bg-rose-500",
+    label: "Broken",
+  },
+  healthy: {
+    badge: "bg-emerald-500/15 text-emerald-700 border-[1.5px] border-emerald-600/60",
+    description: "Active and Reachable (200 OK)",
+    dotColor: "bg-emerald-500",
+    label: "Healthy",
+  },
+  redirect: {
+    badge: "bg-amber-500/15 text-amber-800 border-[1.5px] border-amber-600/60",
+    description: "Permanent / Temporary Redirect (301/308)",
+    dotColor: "bg-amber-500",
+    label: "Redirect",
+  },
+  unknown: {
+    badge: "bg-muted text-muted-foreground border-[1.5px] border-border",
+    description: "Not yet checked",
+    dotColor: "bg-muted-foreground",
+    label: "Unchecked",
+  },
+};
+
 export interface AdminResourceItem {
   authorBlog?: string | null;
   authorGithub?: string | null;
@@ -114,6 +157,11 @@ export interface AdminResourceItem {
   description: string;
   favicon?: string | null;
   github?: string | null;
+  healthErrorMessage?: string | null;
+  healthLastCheckedAt?: string | null;
+  healthRedirectUrl?: string | null;
+  healthStatus?: HealthStatus | null;
+  healthStatusCode?: number | null;
   iconBg?: string | null;
   iconClassName?: string | null;
   id: string;

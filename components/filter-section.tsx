@@ -23,6 +23,7 @@ import StashCard from "@/components/stash-card";
 import { TagFilterPopover, TagOption } from "@/components/tag-filter-popover";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
+import { EmptyState } from "@/components/ui/empty-state";
 import { Input } from "@/components/ui/input";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { getResourceId } from "@/lib/utils";
@@ -449,44 +450,43 @@ function FilterSectionInner({
         <div className="section-inner">
           {Object.keys(groupedItems).length === 0 ? (
             savedOnly ? (
-              <div className="py-16 text-center">
-                <BookmarkSimpleIcon
-                  weight="fill"
-                  className="text-muted-foreground/40 mx-auto mb-3 size-10"
-                />
-                <p className="font-mono text-base font-bold uppercase">No saved resources yet</p>
-
-                <p className="text-muted-foreground mx-auto mt-1 max-w-sm font-mono text-xs">
-                  Click the bookmark icon on any resource card to save it here for fast offline
-                  access.
-                </p>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() =>
-                    syncUrl(activeCategory, selectedTags, matchMode, searchQuery, false)
-                  }
-                  className="mt-4 font-mono text-xs"
-                >
-                  View all resources
-                </Button>
-              </div>
-            ) : (
-              <div className="py-16 text-center">
-                <p className="font-mono text-sm opacity-60">
-                  No {itemLabel.toLowerCase()} found matching your filters.
-                </p>
-                {(selectedTags.length > 0 || searchQuery || activeCategory) && (
+              <EmptyState
+                variant="default"
+                icon={<BookmarkSimpleIcon weight="fill" className="size-6" />}
+                title="No saved resources yet"
+                description="Click the bookmark icon on any resource card to save it here for fast offline access."
+                action={
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={handleResetAll}
-                    className="mt-4 font-mono text-xs"
+                    onClick={() =>
+                      syncUrl(activeCategory, selectedTags, matchMode, searchQuery, false)
+                    }
+                    className="font-mono text-xs uppercase"
                   >
-                    Reset all filters
+                    View all resources
                   </Button>
-                )}
-              </div>
+                }
+              />
+            ) : (
+              <EmptyState
+                variant="default"
+                icon={<MagnifyingGlassIcon className="size-6" />}
+                title={`No ${itemLabel.toLowerCase()} found`}
+                description="No resources matched your active filters or search criteria."
+                action={
+                  selectedTags.length > 0 || searchQuery || activeCategory ? (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleResetAll}
+                      className="font-mono text-xs uppercase"
+                    >
+                      Reset all filters
+                    </Button>
+                  ) : undefined
+                }
+              />
             )
           ) : (
             Object.entries(groupedItems).map(([category, catItems]) => {

@@ -1,8 +1,11 @@
 "use client";
 
 import {
+  ArrowRightIcon,
+  ArrowsClockwiseIcon,
   CheckCircleIcon,
   ClipboardTextIcon,
+  HeartbeatIcon,
   PencilSimpleIcon,
   TrashIcon,
   WarningCircleIcon,
@@ -13,10 +16,14 @@ import { ResourceCardView } from "@/components/resource-card-view";
 import { Button } from "@/components/ui/button";
 import { slugifyAuthor } from "@/lib/utils";
 
-import { AdminResourceItem } from "./types";
+import { AdminResourceItem, HEALTH_STATUS_CONFIG } from "./types";
 
 interface AdminResourceCardProps {
+  isApplyingRedirect?: boolean;
+  isCheckingHealth?: boolean;
   isWorking?: boolean;
+  onApplyRedirect?: () => void;
+  onCheckHealth?: () => void;
   onDelete: () => void;
   onEdit: () => void;
   onPreview?: () => void;
@@ -24,7 +31,11 @@ interface AdminResourceCardProps {
 }
 
 export function AdminResourceCard({
+  isApplyingRedirect = false,
+  isCheckingHealth = false,
   isWorking = false,
+  onApplyRedirect,
+  onCheckHealth,
   onDelete,
   onEdit,
   onPreview,
@@ -37,6 +48,9 @@ export function AdminResourceCard({
   const hasNoFavicon = !res.favicon || !res.favicon.trim();
   const hasNoTags = !res.tags || !res.tags.trim();
   const hasMissingData = hasNoOg || hasNoAuthor || hasNoFavicon || hasNoTags;
+
+  const healthStatus = res.healthStatus || "unknown";
+  const healthConfig = HEALTH_STATUS_CONFIG[healthStatus];
 
   const handleCopyJson = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -64,6 +78,102 @@ export function AdminResourceCard({
           cardClassName="h-full"
         />
       </div>
+
+      {/* URL Health & Diagnostics Strip */}
+      <div className="border-line bg-surface/60 flex items-center justify-between border-t px-2.5 py-1.5 font-mono text-[11px]">
+        <div className="flex min-w-0 flex-1 items-center gap-1.5">
+          <span
+            className={`inline-block size-2 shrink-0 rounded-full ${healthConfig.dotColor} ${
+              healthStatus === "broken" ? "animate-pulse" : ""
+            }`}
+          />
+          <div className="flex min-w-0 flex-col">
+            <div className="flex items-center gap-1.5">
+              <span className="text-foreground text-[10px] font-bold uppercase">
+                {healthConfig.label}
+              </span>
+              {res.healthStatusCode && (
+                <span className="text-muted-foreground text-[9px] font-medium">
+                  ({res.healthStatusCode})
+                </span>
+              )}
+            </div>
+            {res.healthErrorMessage && (
+              <span
+                className="text-muted-foreground truncate text-[9px]"
+                title={res.healthErrorMessage}
+              >
+                {res.healthErrorMessage}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Quick Ping Button */}
+        {onCheckHealth && (
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={(e) => {
+              e.stopPropagation();
+              onCheckHealth();
+            }}
+            disabled={isCheckingHealth || isWorking}
+            className="hover:bg-surface h-6 shrink-0 gap-1 px-1.5 text-[10px] font-bold uppercase"
+            title="Check live URL health"
+          >
+            <HeartbeatIcon
+              weight="bold"
+              className={`size-3 ${
+                isCheckingHealth ? "text-primary animate-spin" : "text-muted-foreground"
+              }`}
+            />
+            <span>{isCheckingHealth ? "Checking" : "Ping"}</span>
+          </Button>
+        )}
+      </div>
+
+      {/* Suggested Redirect Action Banner (if status is 301/308 redirect) */}
+      {healthStatus === "redirect" && res.healthRedirectUrl && (
+        <div className="flex flex-col gap-1.5 border-t border-amber-500/20 bg-amber-500/10 px-2.5 py-1.5 font-mono text-[10px] text-amber-800 dark:text-amber-300">
+          <div className="flex items-center justify-between gap-1">
+            <span className="font-bold uppercase">Redirect Detected:</span>
+            {onApplyRedirect && (
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onApplyRedirect();
+                }}
+                disabled={isApplyingRedirect || isWorking}
+                className="h-6 gap-1 border-amber-600/40 bg-amber-500/20 px-2 text-[9px] font-bold text-amber-900 uppercase hover:bg-amber-500/30 dark:text-amber-200"
+              >
+                {isApplyingRedirect ? (
+                  <>
+                    <ArrowsClockwiseIcon className="size-2.5 animate-spin" />
+                    <span>Applying...</span>
+                  </>
+                ) : (
+                  <>
+                    <ArrowRightIcon className="size-2.5" />
+                    <span>Apply URL</span>
+                  </>
+                )}
+              </Button>
+            )}
+          </div>
+          <a
+            href={res.healthRedirectUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="truncate text-[9px] underline opacity-80 hover:opacity-100"
+            title={res.healthRedirectUrl}
+          >
+            {res.healthRedirectUrl}
+          </a>
+        </div>
+      )}
 
       {/* Missing Data Warning Chips */}
       {hasMissingData && (

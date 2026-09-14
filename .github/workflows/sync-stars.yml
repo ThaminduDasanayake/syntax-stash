@@ -30,6 +30,7 @@ jobs:
       - name: Fetch and Sync Star Counts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: npm run sync:stars
 
       - name: Commit and Push Changes

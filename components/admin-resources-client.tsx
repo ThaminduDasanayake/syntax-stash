@@ -28,6 +28,7 @@ import { ResourceDialog } from "@/components/resource-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
+import { EmptyState } from "@/components/ui/empty-state";
 import { SearchInput } from "@/components/ui/search-input";
 import { SelectField } from "@/components/ui/select-field";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -139,11 +140,13 @@ function AdminResourcesClientContent({
   const [deletingResource, setDeletingResource] = useState<AdminResourceItem | null>(null);
   const [isWorking, setIsWorking] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [checkingHealthId, setCheckingHealthId] = useState<string | null>(null);
+  const [applyingRedirectId, setApplyingRedirectId] = useState<string | null>(null);
 
   // Dynamic pagination: 24 for visual cards, 50 for text data table
   const itemsPerPage = viewMode === "cards" ? 24 : 50;
 
-  // Compute Missing Data Metrics scoped to the selected category (or across all resources if 'all' is selected)
+  // Compute Missing Data Metrics scoped to the selected category
   const missingStats = useMemo(() => {
     let missingOg = 0;
     let missingAuthor = 0;
@@ -193,11 +196,71 @@ function AdminResourcesClientContent({
     };
   }, [resources, selectedCategory]);
 
-  // Dynamically generate missing data filter options — only include options with count > 0 (or currently active)
-  const missingFilterOptions = useMemo(() => {
+  // Compute URL Health Metrics (Broken, Redirect, Blocked, Healthy, Unchecked)
+  const urlHealthStats = useMemo(() => {
+    let broken = 0;
+    let redirect = 0;
+    let blocked = 0;
+    let healthy = 0;
+    let unchecked = 0;
+
+    const scopedResources =
+      selectedCategory && selectedCategory !== "all"
+        ? resources.filter((r) => r.category === selectedCategory)
+        : resources;
+
+    for (const r of scopedResources) {
+      const status = r.healthStatus || "unknown";
+      if (status === "broken") broken++;
+      else if (status === "redirect") redirect++;
+      else if (status === "blocked") blocked++;
+      else if (status === "healthy") healthy++;
+      else unchecked++;
+    }
+
+    return { blocked, broken, healthy, redirect, unchecked };
+  }, [resources, selectedCategory]);
+
+  // Dynamically generate health & missing data filter options
+  const healthFilterOptions = useMemo(() => {
     const options: { label: string; value: string }[] = [
-      { label: "Data Health: All", value: "all" },
+      { label: "Health / Data: All", value: "all" },
     ];
+
+    if (urlHealthStats.broken > 0 || healthFilter === "broken") {
+      options.push({
+        label: `🚨 Broken URLs (${urlHealthStats.broken})`,
+        value: "broken",
+      });
+    }
+
+    if (urlHealthStats.redirect > 0 || healthFilter === "redirect") {
+      options.push({
+        label: `🔄 Redirects (${urlHealthStats.redirect})`,
+        value: "redirect",
+      });
+    }
+
+    if (urlHealthStats.blocked > 0 || healthFilter === "blocked") {
+      options.push({
+        label: `⚠️ Blocked / Cloudflare (${urlHealthStats.blocked})`,
+        value: "blocked",
+      });
+    }
+
+    if (urlHealthStats.healthy > 0 || healthFilter === "healthy") {
+      options.push({
+        label: `🟢 Healthy URLs (${urlHealthStats.healthy})`,
+        value: "healthy",
+      });
+    }
+
+    if (urlHealthStats.unchecked > 0 || healthFilter === "unchecked") {
+      options.push({
+        label: `⚪️ Unchecked URLs (${urlHealthStats.unchecked})`,
+        value: "unchecked",
+      });
+    }
 
     if (missingStats.anyMissing > 0 || healthFilter === "any-missing") {
       options.push({
@@ -256,7 +319,91 @@ function AdminResourcesClientContent({
     }
 
     return options;
-  }, [healthFilter, missingStats]);
+  }, [healthFilter, missingStats, urlHealthStats]);
+
+  // Live URL Diagnostic Handler
+  const handleCheckHealth = useCallback(async (item: AdminResourceItem) => {
+    setCheckingHealthId(item.id);
+    try {
+      const res = await fetch("/api/admin/resources/health", {
+        body: JSON.stringify({ resourceId: item.id }),
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        toast.error(data.error || "Failed to check health");
+        return;
+      }
+      const { health } = data;
+      setResources((prev) =>
+        prev.map((r) =>
+          r.id === item.id
+            ? {
+                ...r,
+                healthErrorMessage: health.errorMessage,
+                healthLastCheckedAt: health.lastCheckedAt,
+                healthRedirectUrl: health.redirectUrl,
+                healthStatus: health.status,
+                healthStatusCode: health.statusCode,
+              }
+            : r,
+        ),
+      );
+      if (health.status === "healthy") {
+        toast.success(`"${item.title}" is healthy (${health.statusCode || 200} OK)`);
+      } else if (health.status === "redirect") {
+        toast.warning(`"${item.title}" moved to ${health.redirectUrl} (${health.statusCode})`);
+      } else if (health.status === "blocked") {
+        toast.info(`"${item.title}" is protected / anti-bot (${health.statusCode || 403})`);
+      } else {
+        toast.error(`"${item.title}" is unreachable (${health.errorMessage || "Error"})`);
+      }
+    } catch {
+      toast.error("Health check network error");
+    } finally {
+      setCheckingHealthId(null);
+    }
+  }, []);
+
+  // 1-Click Apply Redirect Handler
+  const handleApplyRedirect = useCallback(async (item: AdminResourceItem) => {
+    if (!item.healthRedirectUrl) return;
+    setApplyingRedirectId(item.id);
+    try {
+      const res = await fetch("/api/admin/resources/health", {
+        body: JSON.stringify({ applyRedirect: true, resourceId: item.id }),
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        toast.error(data.error || "Failed to apply redirect");
+        return;
+      }
+      const { health, updatedUrl } = data;
+      setResources((prev) =>
+        prev.map((r) =>
+          r.id === item.id
+            ? {
+                ...r,
+                healthErrorMessage: health.errorMessage,
+                healthLastCheckedAt: health.lastCheckedAt,
+                healthRedirectUrl: health.redirectUrl,
+                healthStatus: health.status,
+                healthStatusCode: health.statusCode,
+                url: updatedUrl || r.url,
+              }
+            : r,
+        ),
+      );
+      toast.success(`Updated URL for "${item.title}" to ${updatedUrl}`);
+    } catch {
+      toast.error("Failed to apply redirect URL");
+    } finally {
+      setApplyingRedirectId(null);
+    }
+  }, []);
 
   // Filter & Sort
   const filteredAndSortedResources = useMemo(() => {
@@ -268,7 +415,17 @@ function AdminResourcesClientContent({
     }
 
     // Filter by Health / Missing Data
-    if (healthFilter === "missing-og") {
+    if (healthFilter === "broken") {
+      result = result.filter((r) => r.healthStatus === "broken");
+    } else if (healthFilter === "redirect") {
+      result = result.filter((r) => r.healthStatus === "redirect");
+    } else if (healthFilter === "blocked") {
+      result = result.filter((r) => r.healthStatus === "blocked");
+    } else if (healthFilter === "healthy") {
+      result = result.filter((r) => r.healthStatus === "healthy");
+    } else if (healthFilter === "unchecked") {
+      result = result.filter((r) => !r.healthStatus || r.healthStatus === "unknown");
+    } else if (healthFilter === "missing-og") {
       result = result.filter((r) => !r.ogImage || !r.ogImage.trim());
     } else if (healthFilter === "missing-author") {
       result = result.filter((r) => !r.authorName || !r.authorName.trim());
@@ -555,18 +712,18 @@ function AdminResourcesClientContent({
               />
             </div>
 
-            {/* Dynamic Data Health Filter (only shown if missing data options exist) */}
-            {missingFilterOptions.length > 1 && (
+            {/* Dynamic Health & Missing Data Filter */}
+            {healthFilterOptions.length > 1 && (
               <div className="flex items-center gap-1.5">
                 <HeartbeatIcon weight="duotone" className="size-8 text-rose-500" />
                 <span className="text-muted-foreground text-[11px] font-bold whitespace-nowrap uppercase">
-                  Data Health:
+                  Health & Data:
                 </span>
                 <SelectField
                   value={healthFilter}
                   onValueChange={handleHealthFilterChange}
-                  options={missingFilterOptions}
-                  triggerClassName="h-8 font-mono text-xs min-w-[190px]"
+                  options={healthFilterOptions}
+                  triggerClassName="h-8 font-mono text-xs min-w-[200px]"
                   variant="rose"
                 />
               </div>
@@ -618,6 +775,10 @@ function AdminResourcesClientContent({
                     )
                   }
                   onDelete={() => setDeletingResource(item)}
+                  onCheckHealth={() => handleCheckHealth(item)}
+                  onApplyRedirect={() => handleApplyRedirect(item)}
+                  isCheckingHealth={checkingHealthId === item.id}
+                  isApplyingRedirect={applyingRedirectId === item.id}
                   isWorking={isWorking}
                 />
               ))}
@@ -631,8 +792,8 @@ function AdminResourcesClientContent({
                     <tr className="border-line bg-surface/80 text-muted-foreground border-b-[1.5px] text-[11px] font-bold tracking-wider uppercase">
                       <th className="px-4 py-3">Category</th>
                       <th className="px-4 py-3">Resource</th>
+                      <th className="px-4 py-3">Health & URL</th>
                       <th className="px-4 py-3">Author</th>
-                      <th className="px-4 py-3">URL</th>
                       <th className="px-4 py-3">Tags</th>
                       <th className="px-4 py-3">Created</th>
                       <th className="px-4 py-3 text-right">Actions</th>
@@ -675,26 +836,72 @@ function AdminResourcesClientContent({
                             </div>
                           </td>
 
-                          {/* Author */}
-                          <td className="text-muted-foreground px-4 py-2.5 text-[11px] whitespace-nowrap">
-                            {item.authorName ? (
-                              <span className="text-foreground font-medium">{item.authorName}</span>
-                            ) : (
-                              <span className="opacity-40">—</span>
-                            )}
-                          </td>
+                          {/* Health & URL */}
+                          <td className="max-w-64 px-4 py-2.5">
+                            <div className="flex flex-col gap-0.5">
+                              <div className="flex items-center gap-1.5">
+                                <span
+                                  className={`inline-block size-2 shrink-0 rounded-full ${
+                                    item.healthStatus === "healthy"
+                                      ? "bg-emerald-500"
+                                      : item.healthStatus === "broken"
+                                        ? "animate-pulse bg-rose-500"
+                                        : item.healthStatus === "redirect"
+                                          ? "bg-amber-500"
+                                          : item.healthStatus === "blocked"
+                                            ? "bg-orange-500"
+                                            : "bg-muted-foreground"
+                                  }`}
+                                />
+                                <span className="text-muted-foreground text-[10px] font-bold uppercase">
+                                  {item.healthStatus || "unchecked"}
+                                  {item.healthStatusCode ? ` (${item.healthStatusCode})` : ""}
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() => handleCheckHealth(item)}
+                                  disabled={checkingHealthId === item.id}
+                                  className="text-muted-foreground hover:text-primary p-0.5 transition-colors"
+                                  title="Check live URL health"
+                                >
+                                  <HeartbeatIcon
+                                    weight="bold"
+                                    className={`size-3 ${
+                                      checkingHealthId === item.id
+                                        ? "text-primary animate-spin"
+                                        : ""
+                                    }`}
+                                  />
+                                </button>
+                              </div>
 
-                          {/* URL */}
-                          <td className="max-w-50 px-4 py-2.5">
-                            <a
-                              href={item.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-primary block truncate text-[11px] hover:underline"
-                              title={item.url}
-                            >
-                              {item.url.replace(/^https?:\/\/(www\.)?/, "")}
-                            </a>
+                              <a
+                                href={item.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-primary block truncate text-[11px] hover:underline"
+                                title={item.url}
+                              >
+                                {item.url.replace(/^https?:\/\/(www\.)?/, "")}
+                              </a>
+
+                              {item.healthStatus === "redirect" && item.healthRedirectUrl && (
+                                <div className="flex items-center gap-1 text-[10px] text-amber-700 dark:text-amber-400">
+                                  <span className="truncate" title={item.healthRedirectUrl}>
+                                    ↳ {item.healthRedirectUrl}
+                                  </span>
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={() => handleApplyRedirect(item)}
+                                    disabled={applyingRedirectId === item.id}
+                                    className="h-5 border-amber-600/40 bg-amber-500/15 px-1.5 text-[9px] font-bold uppercase hover:bg-amber-500/25"
+                                  >
+                                    {applyingRedirectId === item.id ? "..." : "Apply"}
+                                  </Button>
+                                </div>
+                              )}
+                            </div>
                           </td>
 
                           {/* Tags */}
@@ -851,27 +1058,35 @@ function AdminResourcesClientContent({
         </div>
       ) : (
         /* Empty State */
-        <div className="border-line bg-surface/20 flex flex-col items-center justify-center rounded-lg border-[1.5px] border-dashed p-12 text-center font-mono">
-          <MagnifyingGlassIcon className="text-muted-foreground/60 size-10" />
-          <h3 className="text-foreground mt-3 text-sm font-bold uppercase">
-            No Live Resources Found
-          </h3>
-          <p className="text-muted-foreground mt-1 max-w-sm text-xs">
-            {searchQuery || selectedCategory !== "all" || healthFilter !== "all"
+        <EmptyState
+          variant="dashed"
+          icon={<MagnifyingGlassIcon className="size-6" />}
+          title="No Live Resources Found"
+          description={
+            searchQuery || selectedCategory !== "all" || healthFilter !== "all"
               ? "No resources matched your active filters or search criteria."
-              : "The live catalog is currently empty. Click 'Add New Resource' to publish one."}
-          </p>
-          {(searchQuery || selectedCategory !== "all" || healthFilter !== "all") && (
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={handleClearFilters}
-              className="border-line hover:bg-surface mt-4 h-8 text-xs font-bold uppercase"
-            >
-              Clear All Filters
-            </Button>
-          )}
-        </div>
+              : "The live catalog is currently empty. Click 'Add New Resource' to publish one."
+          }
+          action={
+            searchQuery || selectedCategory !== "all" || healthFilter !== "all" ? (
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={handleClearFilters}
+                className="border-line hover:bg-surface h-8 text-xs font-bold uppercase"
+              >
+                Clear All Filters
+              </Button>
+            ) : (
+              <Button asChild size="sm" className="h-8 gap-1.5 text-xs font-bold uppercase">
+                <Link href="/admin/resources/new">
+                  <PlusIcon className="size-3.5" />
+                  <span>Add New Resource</span>
+                </Link>
+              </Button>
+            )
+          }
+        />
       )}
       {/* Live Resource Dialog Preview Modal */}
       <Dialog
