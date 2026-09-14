@@ -867,7 +867,7 @@ function AdminResourcesClientContent({
                                     weight="bold"
                                     className={`size-3 ${
                                       checkingHealthId === item.id
-                                        ? "animate-spin text-primary"
+                                        ? "text-primary animate-spin"
                                         : ""
                                     }`}
                                   />
@@ -894,7 +894,7 @@ function AdminResourcesClientContent({
                                     variant="outline"
                                     onClick={() => handleApplyRedirect(item)}
                                     disabled={applyingRedirectId === item.id}
-                                    className="border-amber-600/40 bg-amber-500/15 hover:bg-amber-500/25 h-5 px-1.5 text-[9px] font-bold uppercase"
+                                    className="h-5 border-amber-600/40 bg-amber-500/15 px-1.5 text-[9px] font-bold uppercase hover:bg-amber-500/25"
                                   >
                                     {applyingRedirectId === item.id ? "..." : "Apply"}
                                   </Button>

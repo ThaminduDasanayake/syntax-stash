@@ -110,7 +110,8 @@ export default async function Image({ params }: { params: Promise<{ slug: string
             maxWidth: "850px",
           }}
         >
-          Curated developer tools, libraries, generators, and documentation for {categoryName.toLowerCase()}.
+          Curated developer tools, libraries, generators, and documentation for{" "}
+          {categoryName.toLowerCase()}.
         </div>
       </div>
 

@@ -105,7 +105,8 @@ export default async function Image({ params }: { params: Promise<{ slug: string
             maxWidth: "850px",
           }}
         >
-          Curated developer tools, open-source libraries, and utilities created or maintained by {authorName}.
+          Curated developer tools, open-source libraries, and utilities created or maintained by{" "}
+          {authorName}.
         </div>
       </div>
 
@@ -134,7 +135,9 @@ export default async function Image({ params }: { params: Promise<{ slug: string
           }}
         >
           <span style={{ color: "#e8a52b" }}>●</span>
-          <span>{resourceCount} Curated {resourceCount === 1 ? "Tool" : "Tools"}</span>
+          <span>
+            {resourceCount} Curated {resourceCount === 1 ? "Tool" : "Tools"}
+          </span>
         </div>
 
         <div style={{ color: "#e8a52b", fontSize: "18px", fontWeight: 600 }}>

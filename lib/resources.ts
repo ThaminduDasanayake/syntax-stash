@@ -201,7 +201,8 @@ export const getAllAdminResources = cache(
             healthErrorMessage: r.healthErrorMessage,
             healthLastCheckedAt: r.healthLastCheckedAt ? r.healthLastCheckedAt.toISOString() : null,
             healthRedirectUrl: r.healthRedirectUrl,
-            healthStatus: (r.healthStatus as import("@/components/admin/types").HealthStatus) || null,
+            healthStatus:
+              (r.healthStatus as import("@/components/admin/types").HealthStatus) || null,
             healthStatusCode: r.healthStatusCode,
             iconBg: r.iconBg || "dark",
             ogImage: r.ogImage,

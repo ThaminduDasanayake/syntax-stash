@@ -125,7 +125,7 @@ export function AdminResourceCard({
             <HeartbeatIcon
               weight="bold"
               className={`size-3 ${
-                isCheckingHealth ? "animate-spin text-primary" : "text-muted-foreground"
+                isCheckingHealth ? "text-primary animate-spin" : "text-muted-foreground"
               }`}
             />
             <span>{isCheckingHealth ? "Checking" : "Ping"}</span>
@@ -147,7 +147,7 @@ export function AdminResourceCard({
                   onApplyRedirect();
                 }}
                 disabled={isApplyingRedirect || isWorking}
-                className="border-amber-600/40 bg-amber-500/20 hover:bg-amber-500/30 text-amber-900 dark:text-amber-200 h-6 gap-1 px-2 text-[9px] font-bold uppercase"
+                className="h-6 gap-1 border-amber-600/40 bg-amber-500/20 px-2 text-[9px] font-bold text-amber-900 uppercase hover:bg-amber-500/30 dark:text-amber-200"
               >
                 {isApplyingRedirect ? (
                   <>

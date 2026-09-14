@@ -165,10 +165,7 @@ export async function POST(req: Request) {
     const { applyRedirect, resourceId, url: customUrl } = body;
 
     if (!resourceId && !customUrl) {
-      return NextResponse.json(
-        { error: "Either resourceId or url is required." },
-        { status: 400 },
-      );
+      return NextResponse.json({ error: "Either resourceId or url is required." }, { status: 400 });
     }
 
     let targetUrl = customUrl;

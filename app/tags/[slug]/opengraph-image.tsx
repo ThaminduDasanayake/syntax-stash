@@ -118,7 +118,8 @@ export default async function Image({ params }: { params: Promise<{ slug: string
             maxWidth: "850px",
           }}
         >
-          Curated developer tools, utilities, libraries, and resources tagged with #{tagName} on Syntax Stash.
+          Curated developer tools, utilities, libraries, and resources tagged with #{tagName} on
+          Syntax Stash.
         </div>
       </div>
 
@@ -147,7 +148,9 @@ export default async function Image({ params }: { params: Promise<{ slug: string
           }}
         >
           <span style={{ color: "#e8a52b" }}>●</span>
-          <span>{matchingCount} {matchingCount === 1 ? "Resource" : "Resources"}</span>
+          <span>
+            {matchingCount} {matchingCount === 1 ? "Resource" : "Resources"}
+          </span>
         </div>
 
         <div style={{ color: "#e8a52b", fontSize: "18px", fontWeight: 600 }}>

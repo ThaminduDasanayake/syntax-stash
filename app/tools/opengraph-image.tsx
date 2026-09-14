@@ -101,7 +101,8 @@ export default async function Image() {
             maxWidth: "850px",
           }}
         >
-          Formatters, Converters, CSS Studios, Regex Testers, Diff Viewers, and Code Generators — 100% private, client-side execution.
+          Formatters, Converters, CSS Studios, Regex Testers, Diff Viewers, and Code Generators —
+          100% private, client-side execution.
         </div>
       </div>
 
