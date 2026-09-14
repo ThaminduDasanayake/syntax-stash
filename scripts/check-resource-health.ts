@@ -2,16 +2,76 @@ import fs from "node:fs";
 import path from "node:path";
 
 import * as cheerio from "cheerio";
+import { asc, eq } from "drizzle-orm";
 
-import { CategoryItem, getAllCategories } from "@/lib/categories";
 import { db } from "@/lib/db";
-import { resourceHealth } from "@/lib/db/schema";
+import { author, category, resource, resourceHealth, resourceTag, tag } from "@/lib/db/schema";
 import { parseGitHubRepo } from "@/lib/github";
-import { getAllResources } from "@/lib/resources";
 import { Resource } from "@/types";
 
 import { AUDIT_CONFIG } from "./audit-config";
 import { runPool } from "./pool";
+
+async function fetchDirectCategories() {
+  return db.select().from(category).orderBy(asc(category.name));
+}
+
+async function fetchDirectResources(): Promise<Resource[]> {
+  const rows = await db
+    .select({
+      id: resource.id,
+      title: resource.title,
+      authorName: author.name,
+      categoryId: resource.categoryId,
+      categoryName: category.name,
+      createdAt: resource.createdAt,
+      description: resource.description,
+      favicon: resource.favicon,
+      github: resource.github,
+      iconBg: resource.iconBg,
+      ogImage: resource.ogImage,
+      subtitle: resource.subtitle,
+      tagName: tag.name,
+      updatedAt: resource.updatedAt,
+      url: resource.url,
+    })
+    .from(resource)
+    .leftJoin(author, eq(resource.authorId, author.id))
+    .leftJoin(category, eq(resource.categoryId, category.id))
+    .leftJoin(resourceTag, eq(resource.id, resourceTag.resourceId))
+    .leftJoin(tag, eq(resourceTag.tagId, tag.id))
+    .orderBy(asc(category.name), asc(resource.title));
+
+  const resourceMap = new Map<string, Resource>();
+  for (const r of rows) {
+    const catName = r.categoryName || "Generators";
+    if (!resourceMap.has(r.id)) {
+      resourceMap.set(r.id, {
+        id: r.id,
+        title: r.title,
+        author: r.authorName || undefined,
+        category: catName,
+        createdAt: r.createdAt ? new Date(r.createdAt).toISOString() : undefined,
+        description: r.description || undefined,
+        favicon: r.favicon || undefined,
+        github: r.github || undefined,
+        iconBg: (r.iconBg as "dark" | "invert" | "light") || "dark",
+        ogImage: r.ogImage || undefined,
+        subtitle: r.subtitle || undefined,
+        tags: r.tagName ? [r.tagName] : [],
+        updatedAt: r.updatedAt ? new Date(r.updatedAt).toISOString() : undefined,
+        url: r.url,
+      });
+    } else if (r.tagName) {
+      const entry = resourceMap.get(r.id)!;
+      if (entry.tags && !entry.tags.includes(r.tagName)) {
+        entry.tags.push(r.tagName);
+      }
+    }
+  }
+
+  return Array.from(resourceMap.values());
+}
 
 interface AuditFinding {
   type:
@@ -58,7 +118,7 @@ function normalizeText(text: string): string {
 
 async function resolveCategory(input: string): Promise<{ name: string; slug: string } | null> {
   const norm = input.trim().toLowerCase();
-  const categories = await getAllCategories();
+  const categories = await fetchDirectCategories();
 
   for (const cat of categories) {
     if (
@@ -703,15 +763,15 @@ async function main() {
   const isMissingOnly =
     args.includes("--missing") || args.includes("--missing-only") || args.includes("--db-only");
 
-  const allRes = await getAllResources();
+  const allRes = await fetchDirectResources();
   let targets = [...allRes];
   let resolvedCategory: { name: string; slug: string } | null = null;
 
   if (categoryInput) {
     resolvedCategory = await resolveCategory(categoryInput);
     if (!resolvedCategory) {
-      const categories = await getAllCategories();
-      const validCategories = categories.map((c: CategoryItem) => c.slug).join(", ");
+      const categories = await fetchDirectCategories();
+      const validCategories = categories.map((c) => c.slug).join(", ");
       console.error(
         `❌ Unknown category: "${categoryInput}".\nAvailable categories: ${validCategories}`,
       );
