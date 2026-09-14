@@ -3,7 +3,7 @@ import { unstable_cache } from "next/cache";
 import { cache } from "react";
 
 import { db } from "@/lib/db";
-import { author, category, resource, resourceTag, tag } from "@/lib/db/schema";
+import { author, category, resource, resourceHealth, resourceTag, tag } from "@/lib/db/schema";
 import { Resource } from "@/types";
 
 /**
@@ -151,6 +151,11 @@ export const getAllAdminResources = cache(
           description: resource.description,
           favicon: resource.favicon,
           github: resource.github,
+          healthErrorMessage: resourceHealth.errorMessage,
+          healthLastCheckedAt: resourceHealth.lastCheckedAt,
+          healthRedirectUrl: resourceHealth.redirectUrl,
+          healthStatus: resourceHealth.status,
+          healthStatusCode: resourceHealth.statusCode,
           iconBg: resource.iconBg,
           ogImage: resource.ogImage,
           subtitle: resource.subtitle,
@@ -163,6 +168,7 @@ export const getAllAdminResources = cache(
         .leftJoin(category, eq(resource.categoryId, category.id))
         .leftJoin(resourceTag, eq(resource.id, resourceTag.resourceId))
         .leftJoin(tag, eq(resourceTag.tagId, tag.id))
+        .leftJoin(resourceHealth, eq(resource.id, resourceHealth.resourceId))
         .orderBy(desc(resource.createdAt));
 
       const categoryCounts: Record<string, number> = {};
@@ -192,6 +198,11 @@ export const getAllAdminResources = cache(
             description: r.description,
             favicon: r.favicon,
             github: r.github,
+            healthErrorMessage: r.healthErrorMessage,
+            healthLastCheckedAt: r.healthLastCheckedAt ? r.healthLastCheckedAt.toISOString() : null,
+            healthRedirectUrl: r.healthRedirectUrl,
+            healthStatus: (r.healthStatus as import("@/components/admin/types").HealthStatus) || null,
+            healthStatusCode: r.healthStatusCode,
             iconBg: r.iconBg || "dark",
             ogImage: r.ogImage,
             subtitle: r.subtitle,

@@ -152,6 +152,26 @@ export const resource = pgTable(
   ],
 );
 
+export const resourceHealth = pgTable(
+  "resource_health",
+  {
+    id: text("id").primaryKey(),
+    errorMessage: text("error_message"),
+    lastCheckedAt: timestamp("last_checked_at").notNull().defaultNow(),
+    redirectUrl: text("redirect_url"),
+    resourceId: text("resource_id")
+      .notNull()
+      .unique()
+      .references(() => resource.id, { onDelete: "cascade" }),
+    status: text("status").notNull(), // 'healthy' | 'broken' | 'redirect' | 'blocked' | 'unknown'
+    statusCode: integer("status_code"),
+  },
+  (table) => [
+    index("resource_health_resource_id_idx").on(table.resourceId),
+    index("resource_health_status_idx").on(table.status),
+  ],
+);
+
 export const resourceTag = pgTable(
   "resource_tag",
   {
@@ -237,7 +257,18 @@ export const resourceRelations = relations(resource, ({ many, one }) => ({
     references: [category.id],
   }),
   collectionItems: many(collectionItem),
+  health: one(resourceHealth, {
+    fields: [resource.id],
+    references: [resourceHealth.resourceId],
+  }),
   resourceTags: many(resourceTag),
+}));
+
+export const resourceHealthRelations = relations(resourceHealth, ({ one }) => ({
+  resource: one(resource, {
+    fields: [resourceHealth.resourceId],
+    references: [resource.id],
+  }),
 }));
 
 export const resourceTagRelations = relations(resourceTag, ({ one }) => ({
@@ -332,5 +363,7 @@ export type CollectionItem = typeof collectionItem.$inferSelect;
 export type NewCollectionItem = typeof collectionItem.$inferInsert;
 export type DbResource = typeof resource.$inferSelect;
 export type NewDbResource = typeof resource.$inferInsert;
+export type ResourceHealth = typeof resourceHealth.$inferSelect;
+export type NewResourceHealth = typeof resourceHealth.$inferInsert;
 export type Submission = typeof submission.$inferSelect;
 export type NewSubmission = typeof submission.$inferInsert;

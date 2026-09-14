@@ -4,6 +4,8 @@ import path from "node:path";
 import * as cheerio from "cheerio";
 
 import { CategoryItem, getAllCategories } from "@/lib/categories";
+import { db } from "@/lib/db";
+import { resourceHealth } from "@/lib/db/schema";
 import { parseGitHubRepo } from "@/lib/github";
 import { getAllResources } from "@/lib/resources";
 import { Resource } from "@/types";
@@ -801,14 +803,68 @@ async function main() {
   let completed = 0;
   const allFindings: AuditFinding[] = [];
 
-  await runPool(targets, 15, async (resource) => {
-    const findings = await checkResource(resource);
+  await runPool(targets, 15, async (resItem) => {
+    const findings = await checkResource(resItem);
     completed++;
+
+    // Determine health status to persist to Postgres
+    const brokenFinding = findings.find((f) => f.type === "broken");
+    const redirectFinding = findings.find((f) => f.type === "redirect");
+    const blockedFinding = findings.find((f) => f.type === "blocked");
+
+    let status: "healthy" | "broken" | "redirect" | "blocked" = "healthy";
+    let statusCode: number | null = 200;
+    let redirectUrl: string | null = null;
+    let errorMessage: string | null = null;
+
+    if (brokenFinding) {
+      status = "broken";
+      statusCode = brokenFinding.statusCode || 404;
+      errorMessage = brokenFinding.details;
+    } else if (redirectFinding) {
+      status = "redirect";
+      statusCode = redirectFinding.statusCode || 301;
+      redirectUrl = redirectFinding.suggestion || null;
+    } else if (blockedFinding) {
+      status = "blocked";
+      statusCode = blockedFinding.statusCode || 403;
+      errorMessage = blockedFinding.details;
+    }
+
+    if (!isDryRun && resItem.id) {
+      try {
+        const healthId = crypto.randomUUID();
+        const now = new Date();
+        await db
+          .insert(resourceHealth)
+          .values({
+            id: healthId,
+            errorMessage,
+            lastCheckedAt: now,
+            redirectUrl,
+            resourceId: resItem.id,
+            status,
+            statusCode,
+          })
+          .onConflictDoUpdate({
+            set: {
+              errorMessage,
+              lastCheckedAt: now,
+              redirectUrl,
+              status,
+              statusCode,
+            },
+            target: resourceHealth.resourceId,
+          });
+      } catch {
+        // Silently continue if DB logging fails during audit run
+      }
+    }
 
     if (isVerbose || findings.length > 0) {
       const statusIcon = findings.length === 0 ? "✅" : "⚠️";
       console.log(
-        `[${completed}/${targets.length}] ${statusIcon} ${resource.title} (${resource.url})`,
+        `[${completed}/${targets.length}] ${statusIcon} ${resItem.title} (${resItem.url})`,
       );
       for (const f of findings) {
         console.log(`   └─ [${f.type}] ${f.details}`);

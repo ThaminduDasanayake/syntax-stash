@@ -7,7 +7,7 @@ import { isAdmin } from "@/lib/admin";
 import { auth } from "@/lib/auth";
 import { slugifyAuthor } from "@/lib/authors";
 import { db } from "@/lib/db";
-import { author, category, resource, resourceTag, tag } from "@/lib/db/schema";
+import { author, category, resource, resourceHealth, resourceTag, tag } from "@/lib/db/schema";
 import { normalizeTag } from "@/lib/tags";
 import { normalizeUrl } from "@/lib/url-utils";
 
@@ -39,6 +39,11 @@ interface AdminResourceRecord {
   description: string;
   favicon: string | null;
   github: string | null;
+  healthErrorMessage?: string | null;
+  healthLastCheckedAt?: string | null;
+  healthRedirectUrl?: string | null;
+  healthStatus?: import("@/components/admin/types").HealthStatus | null;
+  healthStatusCode?: number | null;
   iconBg: string | null;
   id: string;
   ogImage: string | null;
@@ -76,6 +81,11 @@ export async function GET() {
         description: resource.description,
         favicon: resource.favicon,
         github: resource.github,
+        healthErrorMessage: resourceHealth.errorMessage,
+        healthLastCheckedAt: resourceHealth.lastCheckedAt,
+        healthRedirectUrl: resourceHealth.redirectUrl,
+        healthStatus: resourceHealth.status,
+        healthStatusCode: resourceHealth.statusCode,
         iconBg: resource.iconBg,
         ogImage: resource.ogImage,
         subtitle: resource.subtitle,
@@ -88,6 +98,7 @@ export async function GET() {
       .leftJoin(category, eq(resource.categoryId, category.id))
       .leftJoin(resourceTag, eq(resource.id, resourceTag.resourceId))
       .leftJoin(tag, eq(resourceTag.tagId, tag.id))
+      .leftJoin(resourceHealth, eq(resource.id, resourceHealth.resourceId))
       .orderBy(desc(resource.createdAt));
 
     const categoryCounts: Record<string, number> = {};
@@ -117,6 +128,11 @@ export async function GET() {
           description: r.description,
           favicon: r.favicon,
           github: r.github,
+          healthErrorMessage: r.healthErrorMessage,
+          healthLastCheckedAt: r.healthLastCheckedAt ? r.healthLastCheckedAt.toISOString() : null,
+          healthRedirectUrl: r.healthRedirectUrl,
+          healthStatus: (r.healthStatus as import("@/components/admin/types").HealthStatus) || null,
+          healthStatusCode: r.healthStatusCode,
           iconBg: r.iconBg || "dark",
           ogImage: r.ogImage,
           subtitle: r.subtitle,
