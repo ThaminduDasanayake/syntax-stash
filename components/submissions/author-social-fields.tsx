@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  GlobeIcon,
-  PlusIcon,
-  TrashIcon,
-  UserIcon,
-  XLogoIcon,
-} from "@phosphor-icons/react";
+import { GlobeIcon, PlusIcon, TrashIcon, UserIcon, XLogoIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
