@@ -1,5 +1,6 @@
 "use client";
 
+import { TrayIcon } from "@phosphor-icons/react";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -12,6 +13,8 @@ import {
 } from "@/components/admin";
 import { AdminSubmissionsCardsSkeleton } from "@/components/admin-submissions-skeleton";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
+import { Button } from "@/components/ui/button";
+import { EmptyState } from "@/components/ui/empty-state";
 import { Submission } from "@/lib/db/schema";
 
 interface AdminSubmissionsClientProps {
@@ -168,11 +171,28 @@ export function AdminSubmissionsClient({
       {isLoading ? (
         <AdminSubmissionsCardsSkeleton count={3} />
       ) : filteredSubmissions.length === 0 ? (
-        <div className="border-line/70 bg-surface/30 rounded border-[1.5px] p-12 text-center font-mono">
-          <p className="text-muted-foreground text-sm font-semibold">
-            No {activeTab === "all" ? "" : activeTab} submissions found.
-          </p>
-        </div>
+        <EmptyState
+          variant="card"
+          icon={<TrayIcon className="size-6" />}
+          title={activeTab === "all" ? "No Submissions Found" : `No ${activeTab} Submissions`}
+          description={
+            searchQuery
+              ? `No submissions match "${searchQuery}". Try clearing your search query.`
+              : `There are currently no ${activeTab === "all" ? "" : activeTab} submissions to review.`
+          }
+          action={
+            searchQuery ? (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setSearchQuery("")}
+                className="text-xs uppercase"
+              >
+                Clear Search
+              </Button>
+            ) : undefined
+          }
+        />
       ) : (
         <div className="grid grid-cols-1 gap-6">
           {filteredSubmissions.map((sub) => (

@@ -28,6 +28,7 @@ import { ResourceDialog } from "@/components/resource-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
+import { EmptyState } from "@/components/ui/empty-state";
 import { SearchInput } from "@/components/ui/search-input";
 import { SelectField } from "@/components/ui/select-field";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -1057,27 +1058,35 @@ function AdminResourcesClientContent({
         </div>
       ) : (
         /* Empty State */
-        <div className="border-line bg-surface/20 flex flex-col items-center justify-center rounded-lg border-[1.5px] border-dashed p-12 text-center font-mono">
-          <MagnifyingGlassIcon className="text-muted-foreground/60 size-10" />
-          <h3 className="text-foreground mt-3 text-sm font-bold uppercase">
-            No Live Resources Found
-          </h3>
-          <p className="text-muted-foreground mt-1 max-w-sm text-xs">
-            {searchQuery || selectedCategory !== "all" || healthFilter !== "all"
+        <EmptyState
+          variant="dashed"
+          icon={<MagnifyingGlassIcon className="size-6" />}
+          title="No Live Resources Found"
+          description={
+            searchQuery || selectedCategory !== "all" || healthFilter !== "all"
               ? "No resources matched your active filters or search criteria."
-              : "The live catalog is currently empty. Click 'Add New Resource' to publish one."}
-          </p>
-          {(searchQuery || selectedCategory !== "all" || healthFilter !== "all") && (
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={handleClearFilters}
-              className="border-line hover:bg-surface mt-4 h-8 text-xs font-bold uppercase"
-            >
-              Clear All Filters
-            </Button>
-          )}
-        </div>
+              : "The live catalog is currently empty. Click 'Add New Resource' to publish one."
+          }
+          action={
+            searchQuery || selectedCategory !== "all" || healthFilter !== "all" ? (
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={handleClearFilters}
+                className="border-line hover:bg-surface h-8 text-xs font-bold uppercase"
+              >
+                Clear All Filters
+              </Button>
+            ) : (
+              <Button asChild size="sm" className="h-8 gap-1.5 text-xs font-bold uppercase">
+                <Link href="/admin/resources/new">
+                  <PlusIcon className="size-3.5" />
+                  <span>Add New Resource</span>
+                </Link>
+              </Button>
+            )
+          }
+        />
       )}
       {/* Live Resource Dialog Preview Modal */}
       <Dialog

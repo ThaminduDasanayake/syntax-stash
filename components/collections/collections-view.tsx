@@ -34,6 +34,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { EmptyState } from "@/components/ui/empty-state";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -159,13 +160,12 @@ export function CollectionsView() {
             ))}
           </div>
         ) : collectionItems.length === 0 ? (
-          <div className="border-line bg-surface/20 flex flex-col items-center justify-center rounded-lg border-[1.5px] border-dashed py-14 text-center font-mono text-xs">
-            <FolderSimpleIcon className="text-muted-foreground/60 size-10" />
-            <p className="text-foreground mt-3 font-bold uppercase">This collection is empty</p>
-            <p className="text-muted-foreground mt-1 max-w-sm">
-              Save tools from across the catalog or browse the main directory to populate this list.
-            </p>
-          </div>
+          <EmptyState
+            variant="dashed"
+            icon={<FolderSimpleIcon className="size-6" />}
+            title="This collection is empty"
+            description="Save tools from across the catalog or browse the main directory to populate this list."
+          />
         ) : (
           <FilterSection
             items={collectionItems}
@@ -211,22 +211,22 @@ export function CollectionsView() {
           ))}
         </div>
       ) : collections.length === 0 ? (
-        <div className="border-line bg-surface/20 flex flex-col items-center justify-center rounded-lg border-[1.5px] border-dashed py-14 text-center font-mono text-xs">
-          <FolderPlusIcon className="text-muted-foreground/60 size-10" />
-          <p className="text-foreground mt-3 font-bold uppercase">No collections yet</p>
-          <p className="text-muted-foreground mt-1 max-w-sm">
-            Create custom folders like &quot;Next.js Stack&quot; or &quot;UI Primitives&quot; to
-            organize your favorite tools.
-          </p>
-          <Button
-            size="sm"
-            onClick={() => setIsCreateOpen(true)}
-            className="mt-4 h-8 gap-1.5 text-xs font-bold uppercase"
-          >
-            <PlusIcon className="size-3.5" />
-            <span>Create Your First Collection</span>
-          </Button>
-        </div>
+        <EmptyState
+          variant="dashed"
+          icon={<FolderPlusIcon className="size-6" />}
+          title="No collections yet"
+          description='Create custom folders like "Next.js Stack" or "UI Primitives" to organize your favorite tools.'
+          action={
+            <Button
+              size="sm"
+              onClick={() => setIsCreateOpen(true)}
+              className="h-8 gap-1.5 text-xs font-bold uppercase"
+            >
+              <PlusIcon className="size-3.5" />
+              <span>Create Your First Collection</span>
+            </Button>
+          }
+        />
       ) : (
         <div className="grid grid-cols-1 gap-4 font-mono text-xs sm:grid-cols-2 lg:grid-cols-3">
           {collections.map((col) => (

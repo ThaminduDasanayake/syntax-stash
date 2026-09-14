@@ -34,6 +34,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { EmptyState } from "@/components/ui/empty-state";
 import { SearchInput } from "@/components/ui/search-input";
 import { SelectField } from "@/components/ui/select-field";
 import {
@@ -539,11 +540,34 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={5} className="text-muted-foreground h-32 text-center">
-                  <div className="flex flex-col items-center justify-center gap-2">
-                    <UserCircleIcon className="text-muted-foreground/60 size-8" />
-                    <span>No authors match your search.</span>
-                  </div>
+                <TableCell colSpan={5} className="p-0">
+                  <EmptyState
+                    variant="table"
+                    icon={<UserCircleIcon className="size-6" />}
+                    title="No Authors Found"
+                    description={
+                      searchQuery
+                        ? `No authors match "${searchQuery}". Try a different term or clear the filter.`
+                        : "No authors registered in the database yet."
+                    }
+                    action={
+                      searchQuery ? (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setSearchQuery("")}
+                          className="text-xs uppercase"
+                        >
+                          Clear Search
+                        </Button>
+                      ) : (
+                        <Button size="sm" onClick={handleOpenCreate} className="text-xs uppercase">
+                          <PlusIcon className="size-3.5" />
+                          Add Author
+                        </Button>
+                      )
+                    }
+                  />
                 </TableCell>
               </TableRow>
             )}

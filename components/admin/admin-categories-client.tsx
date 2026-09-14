@@ -34,6 +34,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { EmptyState } from "@/components/ui/empty-state";
 import { InputField } from "@/components/ui/input-field";
 import { SearchInput } from "@/components/ui/search-input";
 import { SelectField } from "@/components/ui/select-field";
@@ -385,30 +386,33 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
 
       {/* Categories Table */}
       {filteredCategories.length === 0 ? (
-        <div className="border-line bg-surface/30 flex flex-col items-center justify-center rounded-lg border-[1.5px] p-12 text-center">
-          <FoldersIcon className="text-muted-foreground/60 mb-3 size-10" />
-          <h3 className="text-foreground text-sm font-bold uppercase">No Categories Found</h3>
-          <p className="text-muted-foreground mt-1 max-w-sm text-xs">
-            {searchQuery
+        <EmptyState
+          variant="card"
+          icon={<FoldersIcon className="size-6" />}
+          title="No Categories Found"
+          description={
+            searchQuery
               ? "No categories match the active search query. Try clearing the search filter."
-              : "No categories currently exist. Create your first category above."}
-          </p>
-          {searchQuery ? (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setSearchQuery("")}
-              className="mt-4 text-xs uppercase"
-            >
-              Reset Search
-            </Button>
-          ) : (
-            <Button size="sm" onClick={handleOpenAdd} className="mt-4 text-xs uppercase">
-              <PlusIcon className="size-3.5" />
-              Add Category
-            </Button>
-          )}
-        </div>
+              : "No categories currently exist. Create your first category above."
+          }
+          action={
+            searchQuery ? (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setSearchQuery("")}
+                className="text-xs uppercase"
+              >
+                Reset Search
+              </Button>
+            ) : (
+              <Button size="sm" onClick={handleOpenAdd} className="text-xs uppercase">
+                <PlusIcon className="size-3.5" />
+                Add Category
+              </Button>
+            )
+          }
+        />
       ) : (
         <div className="border-line overflow-hidden rounded-lg border-[1.5px]">
           <Table className="text-xs">
