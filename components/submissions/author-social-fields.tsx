@@ -159,9 +159,7 @@ export function AuthorSocialFields({
       .map((s) => s.trim())
       .filter(Boolean);
 
-    const newNames = newAuthList
-      .map((a) => a.name.trim())
-      .filter(Boolean);
+    const newNames = newAuthList.map((a) => a.name.trim()).filter(Boolean);
 
     const allNames = [...catalogNames, ...newNames].join(", ");
 
@@ -311,7 +309,7 @@ export function AuthorSocialFields({
             className="border-primary/40 text-primary hover:bg-primary/10 h-7 gap-1.5 font-mono text-[11px] font-bold uppercase"
           >
             <PlusIcon weight="bold" className="size-3" />
-            <span>New Author to DB</span>
+            <span>New Author</span>
           </Button>
         ) : (
           <Button
@@ -361,7 +359,7 @@ export function AuthorSocialFields({
                   <span className="text-foreground font-mono text-xs font-bold uppercase">
                     Author {newAuthors.length > 1 ? `#${index + 1}` : ""}
                   </span>
-                  <span className="border-amber-500/40 bg-amber-500/10 text-amber-600 dark:text-amber-400 rounded border px-1.5 py-0.5 font-mono text-[10px] font-bold">
+                  <span className="rounded border border-amber-500/40 bg-amber-500/10 px-1.5 py-0.5 font-mono text-[10px] font-bold text-amber-600 dark:text-amber-400">
                     Author (Not in DB)
                   </span>
                 </div>
@@ -399,7 +397,7 @@ export function AuthorSocialFields({
 
               {/* Creator Profile Links Grid */}
               <div className="border-line/60 bg-background/50 space-y-3 rounded-lg border p-3.5">
-                <span className="text-muted-foreground block text-[10px] font-bold uppercase tracking-wider">
+                <span className="text-muted-foreground block text-[10px] font-bold tracking-wider uppercase">
                   Creator Profile & Social Links (Optional)
                 </span>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">

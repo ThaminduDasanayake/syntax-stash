@@ -118,10 +118,7 @@ export async function PATCH(req: Request) {
             const firstAuthor = authorName.split(",")[0]?.trim();
             if (firstAuthor) {
               const firstSlug = slugifyAuthor(firstAuthor);
-              const [foundFirst] = await db
-                .select()
-                .from(author)
-                .where(eq(author.slug, firstSlug));
+              const [foundFirst] = await db.select().from(author).where(eq(author.slug, firstSlug));
               if (foundFirst) {
                 authorRecordId = foundFirst.id;
               }

@@ -47,16 +47,19 @@ const AUTHOR_FIELD_LABELS: Record<string, string> = {
 export interface AdminAuthorDialogProps {
   author?: AdminAuthorItem | Partial<AdminAuthorItem> | null;
   existingAuthors?: Array<{ id?: string; name: string; slug: string }>;
-  initialData?: Partial<AdminAuthorItem> | {
-    blog?: string | null;
-    github?: string | null;
-    linkedin?: string | null;
-    name?: string | null;
-    slug?: string | null;
-    twitter?: string | null;
-    website?: string | null;
-    youtube?: string | null;
-  } | null;
+  initialData?:
+    | Partial<AdminAuthorItem>
+    | {
+        blog?: string | null;
+        github?: string | null;
+        linkedin?: string | null;
+        name?: string | null;
+        slug?: string | null;
+        twitter?: string | null;
+        website?: string | null;
+        youtube?: string | null;
+      }
+    | null;
   initialName?: string;
   onCreated?: (newAuthor: AdminAuthorItem) => void;
   onOpenChange: (open: boolean) => void;

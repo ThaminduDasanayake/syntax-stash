@@ -18,9 +18,7 @@ interface SubmissionInspectPageProps {
   params: Promise<{ id: string }>;
 }
 
-export default async function AdminInspectSubmissionPage({
-  params,
-}: SubmissionInspectPageProps) {
+export default async function AdminInspectSubmissionPage({ params }: SubmissionInspectPageProps) {
   const { id } = await params;
 
   const [sub] = await db.select().from(submission).where(eq(submission.id, id));

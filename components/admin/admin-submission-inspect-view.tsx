@@ -819,7 +819,7 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
                   Submitted Visuals:
                 </span>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-[10px] text-muted-foreground">Favicon:</span>
+                  <span className="text-muted-foreground text-[10px]">Favicon:</span>
                   {sub.favicon ? (
                     <div className="bg-card flex size-6 items-center justify-center rounded border p-0.5">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -831,16 +831,16 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
                 </div>
 
                 <div className="flex items-center gap-1.5">
-                  <span className="text-[10px] text-muted-foreground">Icon Bg:</span>
-                  <span className="bg-muted rounded px-1.5 py-0.2 text-[10px] font-bold uppercase">
+                  <span className="text-muted-foreground text-[10px]">Icon Bg:</span>
+                  <span className="bg-muted py-0.2 rounded px-1.5 text-[10px] font-bold uppercase">
                     {(sub as unknown as { iconBg?: string }).iconBg || "dark"}
                   </span>
                 </div>
 
                 {sub.ogImage && (
                   <div className="flex items-center gap-1.5">
-                    <span className="text-[10px] text-muted-foreground">OG Image:</span>
-                    <span className="text-foreground max-w-40 truncate text-[10px] font-mono">
+                    <span className="text-muted-foreground text-[10px]">OG Image:</span>
+                    <span className="text-foreground max-w-40 truncate font-mono text-[10px]">
                       {sub.ogImage}
                     </span>
                   </div>
@@ -899,108 +899,111 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
                       <CopyValueButton text={authorName} label="author name" />
                     </div>
 
-                      {/* Submitted Links List with Individual Copy Buttons */}
-                      <div className="border-line/40 grid grid-cols-1 gap-2.5 border-t pt-2.5 sm:grid-cols-2 text-[10px]">
-                        {sub.authorWebsite ? (
-                          <div className="bg-muted/30 border-line/40 flex items-center justify-between gap-2 rounded border px-2.5 py-1">
-                            <div className="flex items-center gap-1.5 truncate">
-                              <GlobeIcon className="text-muted-foreground size-3.5 shrink-0" />
-                              <span className="font-bold text-muted-foreground">Website:</span>
-                              <span className="text-foreground truncate">{sub.authorWebsite}</span>
-                            </div>
-                            <CopyValueButton text={sub.authorWebsite} label="Website URL" />
+                    {/* Submitted Links List with Individual Copy Buttons */}
+                    <div className="border-line/40 grid grid-cols-1 gap-2.5 border-t pt-2.5 text-[10px] sm:grid-cols-2">
+                      {sub.authorWebsite ? (
+                        <div className="bg-muted/30 border-line/40 flex items-center justify-between gap-2 rounded border px-2.5 py-1">
+                          <div className="flex items-center gap-1.5 truncate">
+                            <GlobeIcon className="text-muted-foreground size-3.5 shrink-0" />
+                            <span className="text-muted-foreground font-bold">Website:</span>
+                            <span className="text-foreground truncate">{sub.authorWebsite}</span>
                           </div>
-                        ) : null}
+                          <CopyValueButton text={sub.authorWebsite} label="Website URL" />
+                        </div>
+                      ) : null}
 
-                        {sub.authorGitHub ? (
-                          <div className="bg-muted/30 border-line/40 flex items-center justify-between gap-2 rounded border px-2.5 py-1">
-                            <div className="flex items-center gap-1.5 truncate">
-                              <Image
-                                src="/github.svg"
-                                alt="GitHub"
-                                width={12}
-                                height={12}
-                                className="opacity-70 dark:invert shrink-0"
-                              />
-                              <span className="font-bold text-muted-foreground">GitHub:</span>
-                              <span className="text-foreground truncate">{sub.authorGitHub}</span>
-                            </div>
-                            <CopyValueButton text={sub.authorGitHub} label="GitHub URL" />
+                      {sub.authorGitHub ? (
+                        <div className="bg-muted/30 border-line/40 flex items-center justify-between gap-2 rounded border px-2.5 py-1">
+                          <div className="flex items-center gap-1.5 truncate">
+                            <Image
+                              src="/github.svg"
+                              alt="GitHub"
+                              width={12}
+                              height={12}
+                              className="shrink-0 opacity-70 dark:invert"
+                            />
+                            <span className="text-muted-foreground font-bold">GitHub:</span>
+                            <span className="text-foreground truncate">{sub.authorGitHub}</span>
                           </div>
-                        ) : null}
+                          <CopyValueButton text={sub.authorGitHub} label="GitHub URL" />
+                        </div>
+                      ) : null}
 
-                        {sub.authorTwitter ? (
-                          <div className="bg-muted/30 border-line/40 flex items-center justify-between gap-2 rounded border px-2.5 py-1">
-                            <div className="flex items-center gap-1.5 truncate">
-                              <XLogoIcon weight="bold" className="text-muted-foreground size-3.5 shrink-0" />
-                              <span className="font-bold text-muted-foreground">Twitter/X:</span>
-                              <span className="text-foreground truncate">{sub.authorTwitter}</span>
-                            </div>
-                            <CopyValueButton text={sub.authorTwitter} label="Twitter / X" />
+                      {sub.authorTwitter ? (
+                        <div className="bg-muted/30 border-line/40 flex items-center justify-between gap-2 rounded border px-2.5 py-1">
+                          <div className="flex items-center gap-1.5 truncate">
+                            <XLogoIcon
+                              weight="bold"
+                              className="text-muted-foreground size-3.5 shrink-0"
+                            />
+                            <span className="text-muted-foreground font-bold">Twitter/X:</span>
+                            <span className="text-foreground truncate">{sub.authorTwitter}</span>
                           </div>
-                        ) : null}
+                          <CopyValueButton text={sub.authorTwitter} label="Twitter / X" />
+                        </div>
+                      ) : null}
 
-                        {sub.authorLinkedIn ? (
-                          <div className="bg-muted/30 border-line/40 flex items-center justify-between gap-2 rounded border px-2.5 py-1">
-                            <div className="flex items-center gap-1.5 truncate">
-                              <Image
-                                src="/linkedin.svg"
-                                alt="LinkedIn"
-                                width={12}
-                                height={12}
-                                className="opacity-70 shrink-0"
-                              />
-                              <span className="font-bold text-muted-foreground">LinkedIn:</span>
-                              <span className="text-foreground truncate">{sub.authorLinkedIn}</span>
-                            </div>
-                            <CopyValueButton text={sub.authorLinkedIn} label="LinkedIn" />
+                      {sub.authorLinkedIn ? (
+                        <div className="bg-muted/30 border-line/40 flex items-center justify-between gap-2 rounded border px-2.5 py-1">
+                          <div className="flex items-center gap-1.5 truncate">
+                            <Image
+                              src="/linkedin.svg"
+                              alt="LinkedIn"
+                              width={12}
+                              height={12}
+                              className="shrink-0 opacity-70"
+                            />
+                            <span className="text-muted-foreground font-bold">LinkedIn:</span>
+                            <span className="text-foreground truncate">{sub.authorLinkedIn}</span>
                           </div>
-                        ) : null}
+                          <CopyValueButton text={sub.authorLinkedIn} label="LinkedIn" />
+                        </div>
+                      ) : null}
 
-                        {sub.authorYouTube ? (
-                          <div className="bg-muted/30 border-line/40 flex items-center justify-between gap-2 rounded border px-2.5 py-1">
-                            <div className="flex items-center gap-1.5 truncate">
-                              <Image
-                                src="/youtube.svg"
-                                alt="YouTube"
-                                width={12}
-                                height={12}
-                                className="opacity-70 shrink-0"
-                              />
-                              <span className="font-bold text-muted-foreground">YouTube:</span>
-                              <span className="text-foreground truncate">{sub.authorYouTube}</span>
-                            </div>
-                            <CopyValueButton text={sub.authorYouTube} label="YouTube" />
+                      {sub.authorYouTube ? (
+                        <div className="bg-muted/30 border-line/40 flex items-center justify-between gap-2 rounded border px-2.5 py-1">
+                          <div className="flex items-center gap-1.5 truncate">
+                            <Image
+                              src="/youtube.svg"
+                              alt="YouTube"
+                              width={12}
+                              height={12}
+                              className="shrink-0 opacity-70"
+                            />
+                            <span className="text-muted-foreground font-bold">YouTube:</span>
+                            <span className="text-foreground truncate">{sub.authorYouTube}</span>
                           </div>
-                        ) : null}
+                          <CopyValueButton text={sub.authorYouTube} label="YouTube" />
+                        </div>
+                      ) : null}
 
-                        {sub.authorBlog ? (
-                          <div className="bg-muted/30 border-line/40 flex items-center justify-between gap-2 rounded border px-2.5 py-1">
-                            <div className="flex items-center gap-1.5 truncate">
-                              <GlobeIcon className="text-muted-foreground size-3.5 shrink-0" />
-                              <span className="font-bold text-muted-foreground">Blog:</span>
-                              <span className="text-foreground truncate">{sub.authorBlog}</span>
-                            </div>
-                            <CopyValueButton text={sub.authorBlog} label="Blog URL" />
+                      {sub.authorBlog ? (
+                        <div className="bg-muted/30 border-line/40 flex items-center justify-between gap-2 rounded border px-2.5 py-1">
+                          <div className="flex items-center gap-1.5 truncate">
+                            <GlobeIcon className="text-muted-foreground size-3.5 shrink-0" />
+                            <span className="text-muted-foreground font-bold">Blog:</span>
+                            <span className="text-foreground truncate">{sub.authorBlog}</span>
                           </div>
-                        ) : null}
+                          <CopyValueButton text={sub.authorBlog} label="Blog URL" />
+                        </div>
+                      ) : null}
 
-                        {!sub.authorWebsite &&
-                          !sub.authorGitHub &&
-                          !sub.authorTwitter &&
-                          !sub.authorLinkedIn &&
-                          !sub.authorYouTube &&
-                          !sub.authorBlog && (
-                            <span className="text-muted-foreground italic col-span-2 py-1">
-                              No social profile links submitted for this creator.
-                            </span>
-                          )}
-                      </div>
+                      {!sub.authorWebsite &&
+                        !sub.authorGitHub &&
+                        !sub.authorTwitter &&
+                        !sub.authorLinkedIn &&
+                        !sub.authorYouTube &&
+                        !sub.authorBlog && (
+                          <span className="text-muted-foreground col-span-2 py-1 italic">
+                            No social profile links submitted for this creator.
+                          </span>
+                        )}
                     </div>
+                  </div>
                 ))}
               </div>
             ) : (
-              <div className="border-line/60 bg-muted/20 rounded-lg border p-3 text-muted-foreground italic text-xs">
+              <div className="border-line/60 bg-muted/20 text-muted-foreground rounded-lg border p-3 text-xs italic">
                 No creator was specified in this submission.
               </div>
             )}
@@ -1282,8 +1285,8 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
         description={
           <>
             Are you sure you want to permanently delete submission{" "}
-            <strong className="text-foreground">&quot;{sub.title}&quot;</strong>? This action
-            cannot be undone.
+            <strong className="text-foreground">&quot;{sub.title}&quot;</strong>? This action cannot
+            be undone.
           </>
         }
         confirmLabel="Hold to delete"

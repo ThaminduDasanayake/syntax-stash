@@ -176,10 +176,7 @@ export function AdminSubmissionEditForm({
     }));
   };
 
-  const handleRequestCreateAuthor = (
-    name: string,
-    initialData?: Partial<SuggestedAuthorData>,
-  ) => {
+  const handleRequestCreateAuthor = (name: string, initialData?: Partial<SuggestedAuthorData>) => {
     setCreateAuthorInitialData({
       blog: initialData?.blog || editForm.authorBlog || "",
       github: initialData?.github || editForm.authorGitHub || "",
