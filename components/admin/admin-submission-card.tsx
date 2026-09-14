@@ -148,7 +148,7 @@ export function AdminSubmissionCard({
                       {idx > 0 && <span className="text-muted-foreground font-normal">&amp;</span>}
                       <Link
                         href={`/admin/authors?q=${encodeURIComponent(authName)}`}
-                        className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
+                        className="text-foreground hover:text-primary underline-offset-4 transition-colors hover:underline"
                         title={`View ${authName} in Authors`}
                       >
                         {authName}
@@ -287,7 +287,7 @@ export function AdminSubmissionCard({
               <Button
                 asChild
                 size="sm"
-                className="bg-emerald-600 text-white hover:bg-emerald-700 gap-1.5 text-[11px] font-bold uppercase"
+                className="gap-1.5 bg-emerald-600 text-[11px] font-bold text-white uppercase hover:bg-emerald-700"
               >
                 <Link href={`/admin/resources?q=${encodeURIComponent(sub.title)}`}>
                   <ArrowSquareOutIcon weight="bold" className="size-3.5" />

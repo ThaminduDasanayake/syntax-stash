@@ -207,10 +207,7 @@ export function AdminResourceDialog({
     }));
   };
 
-  const handleRequestCreateAuthor = (
-    name: string,
-    initialData?: Partial<SuggestedAuthorData>,
-  ) => {
+  const handleRequestCreateAuthor = (name: string, initialData?: Partial<SuggestedAuthorData>) => {
     setCreateAuthorInitialData({
       blog: initialData?.blog || formData.authorBlog || "",
       github: initialData?.github || formData.authorGithub || "",
@@ -680,7 +677,6 @@ export function AdminResourceDialog({
                 onSelectAuthorOption={handleSelectAuthorOption}
                 suggestedAuthor={suggestedAuthor}
                 onAcceptSuggestedAuthor={handleAcceptSuggestedAuthor}
-                onDismissSuggestedAuthor={() => setSuggestedAuthor(null)}
                 allowCustom={false}
                 disabled={isWorking}
               />

@@ -198,10 +198,8 @@ export function AdminSubmissionsClient({
         description={
           <>
             Are you sure you want to permanently delete submission{" "}
-            <strong className="text-foreground">
-              &quot;{deletingSubmission?.title}&quot;
-            </strong>
-            ? This action cannot be undone.
+            <strong className="text-foreground">&quot;{deletingSubmission?.title}&quot;</strong>?
+            This action cannot be undone.
           </>
         }
         confirmLabel="Hold to delete"

@@ -30,8 +30,8 @@ import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { SearchInput } from "@/components/ui/search-input";
 import { SelectField } from "@/components/ui/select-field";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCategories } from "@/hooks/use-categories";
-import { cn } from "@/lib/utils";
 
 const SORT_OPTIONS = [
   { label: "Oldest First", value: "oldest" },
@@ -486,36 +486,29 @@ function AdminResourcesClientContent({
           {/* Action Buttons & View Switcher */}
           <div className="flex flex-wrap items-center gap-2">
             {/* View Mode Toggle Switcher */}
-            <div className="border-line bg-surface/80 flex items-center rounded-md border-[1.5px] p-0.5">
-              <button
-                type="button"
-                onClick={() => handleViewModeChange("cards")}
-                className={cn(
-                  "flex items-center gap-1 rounded px-2.5 py-1 text-xs font-bold uppercase transition-colors",
-                  viewMode === "cards"
-                    ? "bg-primary text-primary-foreground shadow-xs"
-                    : "text-muted-foreground hover:text-foreground",
-                )}
-                title="Visual Cards View (24 per page)"
-              >
-                <SquaresFourIcon className="size-3.5" />
-                <span className="hidden sm:inline">Cards (24)</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleViewModeChange("table")}
-                className={cn(
-                  "flex items-center gap-1 rounded px-2.5 py-1 text-xs font-bold uppercase transition-colors",
-                  viewMode === "table"
-                    ? "bg-primary text-primary-foreground shadow-xs"
-                    : "text-muted-foreground hover:text-foreground",
-                )}
-                title="Text Data Table (50 per page)"
-              >
-                <TableIcon className="size-3.5" />
-                <span className="hidden sm:inline">Grid (50)</span>
-              </button>
-            </div>
+            <Tabs
+              value={viewMode}
+              onValueChange={(val) => handleViewModeChange(val as "cards" | "table")}
+            >
+              <TabsList className="border-line bg-surface/80 h-9 rounded-md border-[1.5px] p-0.5 font-mono">
+                <TabsTrigger
+                  value="cards"
+                  className="data-active:bg-primary data-active:text-primary-foreground hover:data-active:text-primary-foreground gap-1.5 rounded px-2.5 py-1 font-mono text-xs font-bold uppercase transition-colors"
+                  title="Visual Cards View (24 per page)"
+                >
+                  <SquaresFourIcon className="size-3.5" />
+                  <span className="hidden sm:inline">Cards (24)</span>
+                </TabsTrigger>
+                <TabsTrigger
+                  value="table"
+                  className="data-active:bg-primary data-active:text-primary-foreground hover:data-active:text-primary-foreground gap-1.5 rounded px-2.5 py-1 font-mono text-xs font-bold uppercase transition-colors"
+                  title="Text Data Table (50 per page)"
+                >
+                  <TableIcon className="size-3.5" />
+                  <span className="hidden sm:inline">Grid (50)</span>
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
 
             <Button
               size="sm"

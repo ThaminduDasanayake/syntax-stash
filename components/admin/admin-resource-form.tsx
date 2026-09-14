@@ -153,10 +153,7 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
     }));
   };
 
-  const handleRequestCreateAuthor = (
-    name: string,
-    initialData?: Partial<SuggestedAuthorData>,
-  ) => {
+  const handleRequestCreateAuthor = (name: string, initialData?: Partial<SuggestedAuthorData>) => {
     setCreateAuthorInitialData({
       blog: initialData?.blog || formData.authorBlog || "",
       github: initialData?.github || formData.authorGithub || "",
@@ -731,7 +728,6 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
               onSelectAuthorOption={handleSelectAuthorOption}
               suggestedAuthor={suggestedAuthor}
               onAcceptSuggestedAuthor={handleAcceptSuggestedAuthor}
-              onDismissSuggestedAuthor={() => setSuggestedAuthor(null)}
               allowCustom={false}
             />
 
