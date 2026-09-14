@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  CopyIcon,
   GlobeIcon,
   PlusIcon,
   TrashIcon,
@@ -10,7 +9,6 @@ import {
 } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { toast } from "sonner";
 
 import {
   AuthorCombobox,
@@ -19,6 +17,7 @@ import {
 } from "@/components/submissions/author-combobox";
 import { FieldCheckmark } from "@/components/submissions/field-checkmark";
 import { Button } from "@/components/ui/button";
+import { CopyButton } from "@/components/ui/copy-button";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { cn, isValidHttpUrl } from "@/lib/utils";
@@ -51,6 +50,7 @@ export interface AuthorSocialFieldsProps {
   onAcceptSuggestedAuthor?: (authorData: SuggestedAuthorData) => void;
   onBatchChange?: (updates: Partial<AuthorSocialValues>) => void;
   onChange: (field: keyof AuthorSocialValues, value: string) => void;
+  onDismissSuggestedAuthor?: () => void;
   onRequestCreateAuthor?: (authorName: string, initialData?: Partial<SuggestedAuthorData>) => void;
   onSelectAuthorOption?: (author: AuthorOption) => void;
   suggestedAuthor?: SuggestedAuthorData | null;
@@ -70,19 +70,13 @@ interface NewAuthorEntry {
 
 function CopyValueButton({ label, text }: { label: string; text: string }) {
   return (
-    <Button
-      type="button"
-      size="sm"
-      variant="ghost"
-      onClick={() => {
-        navigator.clipboard.writeText(text);
-        toast.info(`Copied ${label} to clipboard.`);
-      }}
-      className="text-muted-foreground hover:text-foreground hover:bg-muted/60 size-6 p-0"
+    <CopyButton
+      textToCopy={text}
+      iconOnly
+      size="icon-xs"
+      className="text-muted-foreground hover:text-foreground hover:bg-muted/60 size-6 shrink-0 p-0"
       title={`Copy ${label}`}
-    >
-      <CopyIcon className="size-3" />
-    </Button>
+    />
   );
 }
 

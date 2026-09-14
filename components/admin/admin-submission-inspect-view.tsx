@@ -7,7 +7,6 @@ import {
   ArrowSquareOutIcon,
   CheckCircleIcon,
   CircleNotchIcon,
-  CopyIcon,
   FloppyDiskIcon,
   GlobeIcon,
   LightningIcon,
@@ -36,6 +35,7 @@ import {
   TagPicker,
 } from "@/components/submissions";
 import { Button } from "@/components/ui/button";
+import { CopyButton } from "@/components/ui/copy-button";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
@@ -79,19 +79,13 @@ interface AdminSubmissionInspectViewProps {
 
 function CopyValueButton({ label, text }: { label: string; text: string }) {
   return (
-    <Button
-      type="button"
-      size="sm"
-      variant="ghost"
-      onClick={() => {
-        navigator.clipboard.writeText(text);
-        toast.info(`Copied ${label} to clipboard.`);
-      }}
-      className="text-muted-foreground hover:text-foreground hover:bg-muted/60 size-6 p-0"
+    <CopyButton
+      textToCopy={text}
+      iconOnly
+      size="icon-xs"
+      className="text-muted-foreground hover:text-foreground hover:bg-muted/60 size-6 shrink-0 p-0"
       title={`Copy ${label}`}
-    >
-      <CopyIcon className="size-3" />
-    </Button>
+    />
   );
 }
 
