@@ -553,7 +553,6 @@ export function SubmitForm() {
             onSelectAuthorOption={handleSelectAuthorOption}
             suggestedAuthor={suggestedAuthor}
             onAcceptSuggestedAuthor={handleAcceptSuggestedAuthor}
-            onDismissSuggestedAuthor={() => setSuggestedAuthor(null)}
           />
 
           {/* Section 6: Additional Details & Tags */}

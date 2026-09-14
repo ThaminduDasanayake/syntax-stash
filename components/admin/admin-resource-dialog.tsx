@@ -677,7 +677,6 @@ export function AdminResourceDialog({
                 onSelectAuthorOption={handleSelectAuthorOption}
                 suggestedAuthor={suggestedAuthor}
                 onAcceptSuggestedAuthor={handleAcceptSuggestedAuthor}
-                onDismissSuggestedAuthor={() => setSuggestedAuthor(null)}
                 allowCustom={false}
                 disabled={isWorking}
               />

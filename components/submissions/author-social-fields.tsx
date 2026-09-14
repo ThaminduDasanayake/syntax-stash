@@ -1,8 +1,8 @@
 "use client";
 
 import {
+  CopyIcon,
   GlobeIcon,
-  InfoIcon,
   PlusIcon,
   TrashIcon,
   UserIcon,
@@ -10,6 +10,7 @@ import {
 } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 
 import {
   AuthorCombobox,
@@ -50,7 +51,6 @@ export interface AuthorSocialFieldsProps {
   onAcceptSuggestedAuthor?: (authorData: SuggestedAuthorData) => void;
   onBatchChange?: (updates: Partial<AuthorSocialValues>) => void;
   onChange: (field: keyof AuthorSocialValues, value: string) => void;
-  onDismissSuggestedAuthor?: () => void;
   onRequestCreateAuthor?: (authorName: string, initialData?: Partial<SuggestedAuthorData>) => void;
   onSelectAuthorOption?: (author: AuthorOption) => void;
   suggestedAuthor?: SuggestedAuthorData | null;
@@ -68,11 +68,28 @@ interface NewAuthorEntry {
   youtube: string;
 }
 
+function CopyValueButton({ label, text }: { label: string; text: string }) {
+  return (
+    <Button
+      type="button"
+      size="sm"
+      variant="ghost"
+      onClick={() => {
+        navigator.clipboard.writeText(text);
+        toast.info(`Copied ${label} to clipboard.`);
+      }}
+      className="text-muted-foreground hover:text-foreground hover:bg-muted/60 size-6 p-0"
+      title={`Copy ${label}`}
+    >
+      <CopyIcon className="size-3" />
+    </Button>
+  );
+}
+
 export function AuthorSocialFields({
   allowCustom = false,
   className,
   disabled = false,
-  onAcceptSuggestedAuthor,
   onBatchChange,
   onChange,
   onRequestCreateAuthor,
@@ -233,41 +250,6 @@ export function AuthorSocialFields({
     syncToParent(catalogAuthorsString, next);
   };
 
-  const hasSuggestion =
-    Boolean(suggestedAuthor?.name?.trim()) &&
-    !catalogAuthorsString.toLowerCase().includes(suggestedAuthor!.name.toLowerCase()) &&
-    !newAuthors.some(
-      (a) => a.name.trim().toLowerCase() === suggestedAuthor?.name?.trim().toLowerCase(),
-    );
-
-  const handleAcceptSuggestion = (suggested: SuggestedAuthorData) => {
-    onAcceptSuggestedAuthor?.(suggested);
-    const clean = suggested.name.trim().toLowerCase();
-    const isMatch = existingAuthors.find(
-      (a) => a.name.toLowerCase() === clean || a.slug.toLowerCase() === clean,
-    );
-
-    if (isMatch) {
-      const existing = catalogAuthorsString
-        ? catalogAuthorsString
-            .split(",")
-            .map((s) => s.trim())
-            .filter(Boolean)
-        : [];
-      if (!existing.some((n) => n.toLowerCase() === isMatch.name.toLowerCase())) {
-        const next = [...existing, isMatch.name].join(", ");
-        setCatalogAuthorsString(next);
-        syncToParent(next, newAuthors);
-      }
-    } else {
-      if (isAdminMode && onRequestCreateAuthor) {
-        onRequestCreateAuthor(suggested.name, suggested);
-      } else {
-        handleAddNewAuthor(suggested);
-      }
-    }
-  };
-
   const hasAnyAuthor =
     Boolean(catalogAuthorsString.trim()) || newAuthors.some((a) => Boolean(a.name.trim()));
 
@@ -275,28 +257,127 @@ export function AuthorSocialFields({
     <div className={cn("border-line space-y-4 font-mono text-xs", className)}>
       {/* Attribution Header */}
       <div className="flex flex-wrap items-center justify-between gap-2">
+        {/* Detected Author Details Card */}
+        {suggestedAuthor?.name?.trim() ? (
+          <div className="bg-paper/40 animate-in fade-in mb-2 w-full space-y-2 rounded-lg border-[1.5px] border-blue-500/70 p-3 duration-150">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2 truncate">
+                <UserIcon weight="duotone" className="size-4 shrink-0 text-blue-500" />
+                <span className="text-muted-foreground text-[10px] font-bold tracking-wider uppercase">
+                  Found Author:
+                </span>
+                <span className="text-foreground truncate text-xs font-bold">
+                  {suggestedAuthor.name}
+                </span>
+                <CopyValueButton text={suggestedAuthor.name} label="author name" />
+              </div>
+            </div>
+
+            {/* Links list if any links were found */}
+            {(suggestedAuthor.website ||
+              suggestedAuthor.github ||
+              suggestedAuthor.twitter ||
+              suggestedAuthor.linkedin ||
+              suggestedAuthor.youtube ||
+              suggestedAuthor.blog) && (
+              <div className="border-line/40 grid grid-cols-1 gap-2 border-t pt-2 text-[10px] sm:grid-cols-2">
+                {suggestedAuthor.website ? (
+                  <div className="bg-muted/30 border-line/40 flex items-center justify-between gap-2 rounded border px-2.5 py-1">
+                    <div className="flex items-center gap-1.5 truncate">
+                      <GlobeIcon className="text-muted-foreground size-3.5 shrink-0" />
+                      <span className="text-muted-foreground font-bold">Website:</span>
+                      <span className="text-foreground truncate">{suggestedAuthor.website}</span>
+                    </div>
+                    <CopyValueButton text={suggestedAuthor.website} label="Website URL" />
+                  </div>
+                ) : null}
+
+                {suggestedAuthor.github ? (
+                  <div className="bg-muted/30 border-line/40 flex items-center justify-between gap-2 rounded border px-2.5 py-1">
+                    <div className="flex items-center gap-1.5 truncate">
+                      <Image
+                        src="/github.svg"
+                        alt="GitHub"
+                        width={12}
+                        height={12}
+                        className="shrink-0 opacity-70 dark:invert"
+                      />
+                      <span className="text-muted-foreground font-bold">GitHub:</span>
+                      <span className="text-foreground truncate">{suggestedAuthor.github}</span>
+                    </div>
+                    <CopyValueButton text={suggestedAuthor.github} label="GitHub URL" />
+                  </div>
+                ) : null}
+
+                {suggestedAuthor.twitter ? (
+                  <div className="bg-muted/30 border-line/40 flex items-center justify-between gap-2 rounded border px-2.5 py-1">
+                    <div className="flex items-center gap-1.5 truncate">
+                      <XLogoIcon
+                        weight="bold"
+                        className="text-muted-foreground size-3.5 shrink-0"
+                      />
+                      <span className="text-muted-foreground font-bold">Twitter/X:</span>
+                      <span className="text-foreground truncate">{suggestedAuthor.twitter}</span>
+                    </div>
+                    <CopyValueButton text={suggestedAuthor.twitter} label="Twitter / X" />
+                  </div>
+                ) : null}
+
+                {suggestedAuthor.linkedin ? (
+                  <div className="bg-muted/30 border-line/40 flex items-center justify-between gap-2 rounded border px-2.5 py-1">
+                    <div className="flex items-center gap-1.5 truncate">
+                      <Image
+                        src="/linkedin.svg"
+                        alt="LinkedIn"
+                        width={12}
+                        height={12}
+                        className="shrink-0 opacity-70"
+                      />
+                      <span className="text-muted-foreground font-bold">LinkedIn:</span>
+                      <span className="text-foreground truncate">{suggestedAuthor.linkedin}</span>
+                    </div>
+                    <CopyValueButton text={suggestedAuthor.linkedin} label="LinkedIn" />
+                  </div>
+                ) : null}
+
+                {suggestedAuthor.youtube ? (
+                  <div className="bg-muted/30 border-line/40 flex items-center justify-between gap-2 rounded border px-2.5 py-1">
+                    <div className="flex items-center gap-1.5 truncate">
+                      <Image
+                        src="/youtube.svg"
+                        alt="YouTube"
+                        width={12}
+                        height={12}
+                        className="shrink-0 opacity-70"
+                      />
+                      <span className="text-muted-foreground font-bold">YouTube:</span>
+                      <span className="text-foreground truncate">{suggestedAuthor.youtube}</span>
+                    </div>
+                    <CopyValueButton text={suggestedAuthor.youtube} label="YouTube" />
+                  </div>
+                ) : null}
+
+                {suggestedAuthor.blog ? (
+                  <div className="bg-muted/30 border-line/40 flex items-center justify-between gap-2 rounded border px-2.5 py-1">
+                    <div className="flex items-center gap-1.5 truncate">
+                      <GlobeIcon className="text-muted-foreground size-3.5 shrink-0" />
+                      <span className="text-muted-foreground font-bold">Blog:</span>
+                      <span className="text-foreground truncate">{suggestedAuthor.blog}</span>
+                    </div>
+                    <CopyValueButton text={suggestedAuthor.blog} label="Blog URL" />
+                  </div>
+                ) : null}
+              </div>
+            )}
+          </div>
+        ) : null}
+
         <div className="flex flex-wrap items-center gap-2">
           <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-            <UserIcon className="text-primary size-4" />
+            <UserIcon weight="duotone" className="text-primary size-4" />
             <span>Creator Attribution</span>
             <FieldCheckmark checked={hasAnyAuthor} />
           </Label>
-
-          {hasSuggestion && suggestedAuthor && (
-            <button
-              type="button"
-              onClick={() => handleAcceptSuggestion(suggestedAuthor)}
-              className="animate-in fade-in inline-flex cursor-pointer items-center gap-1.5 rounded border-[1.5px] border-blue-500/40 bg-blue-500/10 px-2 py-0.5 font-mono text-[11px] font-bold text-blue-500 transition-colors hover:bg-blue-500/20"
-              title={`Click to add "${suggestedAuthor.name}" as an author`}
-            >
-              <InfoIcon weight="duotone" className="size-4 shrink-0 text-blue-500" />
-              <span>
-                Found:{" "}
-                <strong className="underline underline-offset-2">{suggestedAuthor.name}</strong>
-              </span>
-              <span className="text-[10px] opacity-80">(Click to add)</span>
-            </button>
-          )}
         </div>
 
         {isAdminMode ? (

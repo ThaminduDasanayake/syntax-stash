@@ -1028,7 +1028,6 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
                 onSelectAuthorOption={handleSelectAuthorOption}
                 suggestedAuthor={suggestedAuthor}
                 onAcceptSuggestedAuthor={handleAcceptSuggestedAuthor}
-                onDismissSuggestedAuthor={() => setSuggestedAuthor(null)}
                 allowCustom={false}
                 disabled={isWorking}
               />
