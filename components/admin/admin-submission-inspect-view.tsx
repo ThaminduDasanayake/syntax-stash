@@ -854,6 +854,7 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
             </div>
 
             <MediaAssetFields
+              allowUpload
               favicon={editForm.favicon}
               faviconOptions={faviconOptions}
               iconBg={editForm.iconBg || "dark"}

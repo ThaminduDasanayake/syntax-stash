@@ -3,6 +3,7 @@
 import { WarningCircleIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
+import { CloudinaryUploadButton } from "@/components/admin/cloudinary-upload-button";
 import { CardIcon } from "@/components/card-icon";
 import { Label } from "@/components/ui/label";
 import { useDebounce } from "@/hooks/use-debounce";
@@ -14,6 +15,7 @@ import { FieldCheckmark } from "./field-checkmark";
 export type IconBgOption = "dark" | "light" | "invert";
 
 export interface MediaAssetFieldsProps {
+  allowUpload?: boolean;
   className?: string;
   disabled?: boolean;
   favicon?: string | null;
@@ -108,6 +110,7 @@ function OgImagePreviewBanner({ ogImage }: { ogImage: string }) {
 }
 
 export function MediaAssetFields({
+  allowUpload = false,
   className,
   disabled = false,
   favicon,
@@ -149,6 +152,13 @@ export function MediaAssetFields({
                 )}
               />
             </Label>
+            {allowUpload && (
+              <CloudinaryUploadButton
+                label="Upload Icon / SVG"
+                onUploadSuccess={onFaviconChange}
+                disabled={disabled}
+              />
+            )}
           </div>
           <div className="h-9">
             <EditableCandidateInput
@@ -246,6 +256,13 @@ export function MediaAssetFields({
                 )}
               />
             </Label>
+            {allowUpload && (
+              <CloudinaryUploadButton
+                label="Upload Screenshot"
+                onUploadSuccess={onOgImageChange}
+                disabled={disabled}
+              />
+            )}
           </div>
           <div className="h-9">
             <EditableCandidateInput
