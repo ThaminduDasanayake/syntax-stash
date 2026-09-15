@@ -7,6 +7,7 @@ export * from "./admin-ping-button";
 export * from "./admin-resource-card";
 export * from "./admin-resource-dialog";
 export * from "./admin-resource-form";
+export * from "./admin-resource-table";
 export * from "./admin-status-tabs";
 export * from "./admin-submission-card";
 export * from "./admin-submission-edit-form";
