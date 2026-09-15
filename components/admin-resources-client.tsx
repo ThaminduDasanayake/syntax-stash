@@ -22,7 +22,12 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
-import { adminItemToResource, AdminResourceCard, AdminResourceItem } from "@/components/admin";
+import {
+  adminItemToResource,
+  AdminPingButton,
+  AdminResourceCard,
+  AdminResourceItem,
+} from "@/components/admin";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { ResourceDialog } from "@/components/resource-dialog";
 import { Badge } from "@/components/ui/badge";
@@ -857,22 +862,12 @@ function AdminResourcesClientContent({
                                   {item.healthStatus || "unchecked"}
                                   {item.healthStatusCode ? ` (${item.healthStatusCode})` : ""}
                                 </span>
-                                <button
-                                  type="button"
-                                  onClick={() => handleCheckHealth(item)}
-                                  disabled={checkingHealthId === item.id}
-                                  className="text-muted-foreground hover:text-primary p-0.5 transition-colors"
-                                  title="Check live URL health"
-                                >
-                                  <HeartbeatIcon
-                                    weight="bold"
-                                    className={`size-3 text-rose-500 ${
-                                      checkingHealthId === item.id
-                                        ? "text-primary animate-pulse"
-                                        : ""
-                                    }`}
-                                  />
-                                </button>
+                                 <AdminPingButton
+                                   showLabel={false}
+                                   isChecking={checkingHealthId === item.id}
+                                   onClick={() => handleCheckHealth(item)}
+                                   side="top"
+                                 />
                               </div>
 
                               <a
