@@ -27,6 +27,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { CheckboxField } from "@/components/ui/checkbox-field";
 import {
   Dialog,
   DialogContent,
@@ -329,18 +330,14 @@ export function CollectionsView() {
               />
             </div>
 
-            <div className="flex items-center gap-2 pt-1">
-              <input
-                id="isPublicCheck"
-                type="checkbox"
-                checked={newColPublic}
-                onChange={(e) => setNewColPublic(e.target.checked)}
-                className="accent-primary size-4 cursor-pointer"
-              />
-              <label htmlFor="isPublicCheck" className="cursor-pointer text-xs select-none">
-                Make this collection public (shareable link)
-              </label>
-            </div>
+            <CheckboxField
+              id="isPublicCheck"
+              checked={newColPublic}
+              onCheckedChange={(checked) => setNewColPublic(Boolean(checked))}
+              label="Make this collection public (shareable link)"
+              labelClassName="text-xs select-none"
+              containerClassName="pt-1"
+            />
 
             <div className="border-line flex justify-end gap-2 border-t pt-4">
               <Button

@@ -4,15 +4,15 @@
 
 ### 1. Shadcn Component Adoptions & UI Modernization
 
-- [ ] **Collections Create Dialog Checkbox**:
+- [x] **Collections Create Dialog Checkbox**:
   - **File:** `components/collections/collections-view.tsx` (Line 333)
-  - **Task:** Replace raw `<input type="checkbox">` and `<label>` with shadcn `<CheckboxField>` or `<Checkbox>`.
+  - **Task:** Replaced raw `<input type="checkbox">` and `<label>` with shadcn `<CheckboxField>`.
 - [ ] **Design System Showcase Table**:
   - **File:** `components/design-system-showcase.tsx` (Line 1077)
   - **Task:** Replace raw HTML `<table>` tags with shadcn `<Table>`, `<TableHeader>`, `<TableBody>`, `<TableRow>`, `<TableHead>`, `<TableCell>` components.
-- [ ] **Collapsible Component Import Standardization**:
+- [x] **Collapsible Component Import Standardization**:
   - **File:** `app/tools/json-studio/tabs/query-tab.tsx`
-  - **Task:** Standardize import from local `@/components/ui/collapsible` wrapper instead of direct `@radix-ui/react-collapsible`.
+  - **Task:** Standardized import from local `@/components/ui/collapsible` wrapper instead of direct `@radix-ui/react-collapsible`.
 - [ ] **Developer Tools Controls Audit**:
   - **Context:** Audit inputs and options in `app/tools/*` to standardize on shadcn primitives (`SliderField`, `SwitchField`, `Tabs`, `Badge`, `Tooltip`, `StepperField`).
 

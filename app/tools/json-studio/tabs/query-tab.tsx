@@ -1,14 +1,13 @@
 "use client";
 
 import { CaretDownIcon } from "@phosphor-icons/react";
-import { Collapsible } from "@radix-ui/react-collapsible";
 import { JSONPath } from "jsonpath-plus";
 import { useMemo } from "react";
 
 import { ErrorAlert } from "@/components/error-alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { CopyButton } from "@/components/ui/copy-button";
 import { InputField } from "@/components/ui/input-field";
 import { TextareaGroup } from "@/components/ui/textarea-group";
