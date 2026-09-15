@@ -866,9 +866,9 @@ function AdminResourcesClientContent({
                                 >
                                   <HeartbeatIcon
                                     weight="bold"
-                                    className={`size-3 ${
+                                    className={`size-3 text-rose-500 ${
                                       checkingHealthId === item.id
-                                        ? "text-primary animate-spin"
+                                        ? "text-primary animate-pulse"
                                         : ""
                                     }`}
                                   />

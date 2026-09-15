@@ -14,6 +14,7 @@ import { useState } from "react";
 
 import { ResourceCardView } from "@/components/resource-card-view";
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { slugifyAuthor } from "@/lib/utils";
 
 import { AdminResourceItem, HEALTH_STATUS_CONFIG } from "./types";
@@ -111,25 +112,32 @@ export function AdminResourceCard({
 
         {/* Quick Ping Button */}
         {onCheckHealth && (
-          <Button
-            size="sm"
-            variant="ghost"
-            onClick={(e) => {
-              e.stopPropagation();
-              onCheckHealth();
-            }}
-            disabled={isCheckingHealth || isWorking}
-            className="hover:bg-surface h-6 shrink-0 gap-1 px-1.5 text-[10px] font-bold uppercase"
-            title="Check live URL health"
-          >
-            <HeartbeatIcon
-              weight="bold"
-              className={`size-3 ${
-                isCheckingHealth ? "text-primary animate-spin" : "text-muted-foreground"
-              }`}
-            />
-            <span>{isCheckingHealth ? "Checking" : "Ping"}</span>
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onCheckHealth();
+                }}
+                disabled={isCheckingHealth || isWorking}
+                className="hover:bg-surface h-6 shrink-0 gap-1 px-1.5 text-[10px] font-bold uppercase"
+                title="Check live URL health"
+              >
+                <HeartbeatIcon
+                  weight="bold"
+                  className={`size-3 text-rose-500 ${
+                    isCheckingHealth ? "text-primary animate-pulse" : "text-muted-foreground"
+                  }`}
+                />
+                <span>{isCheckingHealth ? "Checking" : "Ping"}</span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              <p>Check health</p>
+            </TooltipContent>
+          </Tooltip>
         )}
       </div>
 
