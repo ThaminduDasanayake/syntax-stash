@@ -20,18 +20,23 @@ export const CopyButton = ({
   disabled,
   iconOnly = false,
   labelName = "Copy",
+  onClick,
   size,
   textToCopy,
+  type = "button",
   variant,
   ...props
 }: CopyButtonProps) => {
   const { copied, copy } = useCopyToClipboard();
 
-  const handleCopy = () => {
+  const handleCopy = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
     const finalString = typeof textToCopy === "function" ? textToCopy() : textToCopy;
     if (finalString) {
       copy(finalString);
     }
+    onClick?.(e);
   };
 
   const finalVariant = variant || (iconOnly ? "ghost" : "outline");
@@ -40,6 +45,7 @@ export const CopyButton = ({
 
   return (
     <Button
+      type={type}
       variant={finalVariant}
       size={finalSize}
       aria-disabled={disabled}

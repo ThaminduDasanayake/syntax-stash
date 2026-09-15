@@ -3,6 +3,7 @@
 import { GlobeIcon, PlusIcon, TrashIcon, UserIcon, XLogoIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 
 import {
   AuthorCombobox,
@@ -65,9 +66,13 @@ interface NewAuthorEntry {
 function CopyValueButton({ label, text }: { label: string; text: string }) {
   return (
     <CopyButton
+      type="button"
       textToCopy={text}
       iconOnly
       size="icon-xs"
+      onClick={() => {
+        toast.success(`Copied ${label} to clipboard`);
+      }}
       className="text-muted-foreground hover:text-foreground hover:bg-muted/60 size-6 shrink-0 p-0"
       title={`Copy ${label}`}
     />

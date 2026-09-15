@@ -157,7 +157,7 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
     description: "",
     favicon: "",
     github: "",
-    iconBg: "dark",
+    iconBg: sub.iconBg || "dark",
     notes: sub.notes || "",
     ogImage: "",
     pricing: "Free",
