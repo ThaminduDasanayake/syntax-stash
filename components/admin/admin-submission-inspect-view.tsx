@@ -157,7 +157,7 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
     description: "",
     favicon: "",
     github: "",
-    iconBg: "dark",
+    iconBg: sub.iconBg || "dark",
     notes: sub.notes || "",
     ogImage: "",
     pricing: "Free",
@@ -854,6 +854,7 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
             </div>
 
             <MediaAssetFields
+              allowUpload
               favicon={editForm.favicon}
               faviconOptions={faviconOptions}
               iconBg={editForm.iconBg || "dark"}

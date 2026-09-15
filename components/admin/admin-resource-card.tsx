@@ -5,7 +5,6 @@ import {
   ArrowsClockwiseIcon,
   CheckCircleIcon,
   ClipboardTextIcon,
-  HeartbeatIcon,
   PencilSimpleIcon,
   TrashIcon,
   WarningCircleIcon,
@@ -16,6 +15,7 @@ import { ResourceCardView } from "@/components/resource-card-view";
 import { Button } from "@/components/ui/button";
 import { slugifyAuthor } from "@/lib/utils";
 
+import { AdminPingButton } from "./admin-ping-button";
 import { AdminResourceItem, HEALTH_STATUS_CONFIG } from "./types";
 
 interface AdminResourceCardProps {
@@ -111,25 +111,11 @@ export function AdminResourceCard({
 
         {/* Quick Ping Button */}
         {onCheckHealth && (
-          <Button
-            size="sm"
-            variant="ghost"
-            onClick={(e) => {
-              e.stopPropagation();
-              onCheckHealth();
-            }}
-            disabled={isCheckingHealth || isWorking}
-            className="hover:bg-surface h-6 shrink-0 gap-1 px-1.5 text-[10px] font-bold uppercase"
-            title="Check live URL health"
-          >
-            <HeartbeatIcon
-              weight="bold"
-              className={`size-3 ${
-                isCheckingHealth ? "text-primary animate-spin" : "text-muted-foreground"
-              }`}
-            />
-            <span>{isCheckingHealth ? "Checking" : "Ping"}</span>
-          </Button>
+          <AdminPingButton
+            onClick={onCheckHealth}
+            isChecking={isCheckingHealth}
+            disabled={isWorking}
+          />
         )}
       </div>
 

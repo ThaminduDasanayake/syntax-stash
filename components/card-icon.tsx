@@ -70,7 +70,7 @@ export function CardIcon({
         className={cn(
           className,
           "card-icon-box overflow-hidden rounded-[30%] p-0.5",
-          isWhiteTile && "border-white/80! bg-white! text-black!",
+          isWhiteTile && "bg-white! text-black!",
         )}
       />
     );
@@ -87,7 +87,7 @@ export function CardIcon({
       className={cn(
         className,
         "card-icon-box overflow-hidden rounded-[30%] p-0.5",
-        isWhiteTile && "border-white/80! bg-white! text-black!",
+        isWhiteTile && "bg-white! text-black!",
       )}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -37,78 +37,99 @@ export async function GET(request: NextRequest) {
     return new NextResponse("Forbidden destination host", { status: 403 });
   }
 
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 9000);
-
-    const upstreamHeaders: Record<string, string> = {
+  // Multi-tier attempt: first with clean natural browser headers, then without Referer
+  const headerVariants: Record<string, string>[] = [
+    // 1. Natural browser asset request (no conflicting sec-fetch headers)
+    {
       Accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
       "Accept-Language": "en-US,en;q=0.9",
+      Referer: `${parsedUrl.origin}/`,
       "User-Agent":
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
-    };
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+    },
+    // 2. Clean request without Referer (for hosts with strict anti-hotlink rules)
+    {
+      Accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "User-Agent":
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+    },
+  ];
 
-    // Forward conditional headers for ETag / 304 validation
-    const ifNoneMatch = request.headers.get("if-none-match");
-    if (ifNoneMatch) {
-      upstreamHeaders["If-None-Match"] = ifNoneMatch;
-    }
+  for (let i = 0; i < headerVariants.length; i++) {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 6000);
 
-    const ifModifiedSince = request.headers.get("if-modified-since");
-    if (ifModifiedSince) {
-      upstreamHeaders["If-Modified-Since"] = ifModifiedSince;
-    }
+      const headers = { ...headerVariants[i] };
+      const ifNoneMatch = request.headers.get("if-none-match");
+      if (ifNoneMatch) headers["If-None-Match"] = ifNoneMatch;
+      const ifModifiedSince = request.headers.get("if-modified-since");
+      if (ifModifiedSince) headers["If-Modified-Since"] = ifModifiedSince;
 
-    const upstreamRes = await fetch(parsedUrl.href, {
-      headers: upstreamHeaders,
-      redirect: "follow",
-      signal: controller.signal,
-    });
-
-    clearTimeout(timeoutId);
-
-    const responseHeaders: Record<string, string> = {
-      "Access-Control-Allow-Origin": "*",
-      "Cache-Control": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400",
-      "Cross-Origin-Resource-Policy": "cross-origin",
-    };
-
-    // Forward upstream validation headers
-    const etag = upstreamRes.headers.get("etag");
-    if (etag) {
-      responseHeaders["ETag"] = etag;
-    }
-
-    const lastModified = upstreamRes.headers.get("last-modified");
-    if (lastModified) {
-      responseHeaders["Last-Modified"] = lastModified;
-    }
-
-    // Upstream confirmed image is unchanged
-    if (upstreamRes.status === 304) {
-      return new NextResponse(null, {
-        headers: responseHeaders,
-        status: 304,
+      const upstreamRes = await fetch(parsedUrl.href, {
+        headers,
+        redirect: "follow",
+        signal: controller.signal,
       });
+
+      clearTimeout(timeoutId);
+
+      const responseHeaders: Record<string, string> = {
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+      };
+
+      const etag = upstreamRes.headers.get("etag");
+      if (etag) responseHeaders["ETag"] = etag;
+
+      const lastModified = upstreamRes.headers.get("last-modified");
+      if (lastModified) responseHeaders["Last-Modified"] = lastModified;
+
+      // Upstream confirmed image is unchanged
+      if (upstreamRes.status === 304) {
+        return new NextResponse(null, {
+          headers: responseHeaders,
+          status: 304,
+        });
+      }
+
+      if (upstreamRes.ok) {
+        let contentType = upstreamRes.headers.get("content-type") || "image/png";
+        if (parsedUrl.pathname.endsWith(".svg") && !contentType.includes("svg")) {
+          contentType = "image/svg+xml";
+        }
+        responseHeaders["Content-Type"] = contentType;
+
+        const imageBuffer = await upstreamRes.arrayBuffer();
+
+        return new NextResponse(imageBuffer, {
+          headers: responseHeaders,
+          status: 200,
+        });
+      }
+
+      // If 403, 401, or 400 on the first attempt, try the next header variant
+      if (
+        i < headerVariants.length - 1 &&
+        (upstreamRes.status === 403 || upstreamRes.status === 401 || upstreamRes.status === 400)
+      ) {
+        continue;
+      }
+    } catch {
+      if (i < headerVariants.length - 1) {
+        continue;
+      }
     }
-
-    if (!upstreamRes.ok) {
-      return new NextResponse(`Upstream returned ${upstreamRes.status}`, {
-        status: upstreamRes.status,
-      });
-    }
-
-    const contentType = upstreamRes.headers.get("content-type") || "image/png";
-    responseHeaders["Content-Type"] = contentType;
-
-    const imageBuffer = await upstreamRes.arrayBuffer();
-
-    return new NextResponse(imageBuffer, {
-      headers: responseHeaders,
-      status: 200,
-    });
-  } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Fetch failed";
-    return new NextResponse(`Failed to fetch image: ${message}`, { status: 502 });
   }
+
+  // If upstream server protects against server-side proxies (e.g. Cloudflare Turnstile/WAF 403),
+  // redirect directly to the original asset URL with 307 so the user's browser fetches it natively!
+  return NextResponse.redirect(parsedUrl.href, {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
+    },
+    status: 307,
+  });
 }

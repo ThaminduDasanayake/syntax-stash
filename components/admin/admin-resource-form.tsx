@@ -668,6 +668,7 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
 
             {/* Section 4: Visuals & Media Assets */}
             <MediaAssetFields
+              allowUpload
               favicon={formData.favicon || ""}
               faviconOptions={faviconOptions}
               iconBg={formData.iconBg || "dark"}

@@ -495,6 +495,7 @@ export function AdminSubmissionEditForm({
 
           {/* Section 4: Visuals & Media */}
           <MediaAssetFields
+            allowUpload
             favicon={editForm.favicon}
             faviconOptions={faviconOptions}
             iconBg={editForm.iconBg || "dark"}

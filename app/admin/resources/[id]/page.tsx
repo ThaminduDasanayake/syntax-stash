@@ -41,6 +41,7 @@ export default async function AdminEditResourcePage({ params }: EditPageProps) {
       description: resource.description,
       favicon: resource.favicon,
       github: resource.github,
+      iconBg: resource.iconBg,
       ogImage: resource.ogImage,
       subtitle: resource.subtitle,
       tagName: tag.name,
@@ -65,6 +66,7 @@ export default async function AdminEditResourcePage({ params }: EditPageProps) {
     ...first,
     category: first.categoryName || "Generators",
     createdAt: first.createdAt.toISOString(),
+    iconBg: first.iconBg || "dark",
     tags: tagsList.join(", "),
     updatedAt: first.updatedAt.toISOString(),
   };

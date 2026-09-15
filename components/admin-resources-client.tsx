@@ -4,28 +4,27 @@ import {
   ArrowsClockwiseIcon,
   CaretLeftIcon,
   CaretRightIcon,
-  CheckCircleIcon,
-  ClipboardTextIcon,
-  EyeIcon,
   FunnelIcon,
   HeartbeatIcon,
   MagnifyingGlassIcon,
-  PencilSimpleIcon,
   PlusIcon,
   SlidersHorizontalIcon,
   SquaresFourIcon,
   TableIcon,
-  TrashIcon,
 } from "@phosphor-icons/react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
-import { adminItemToResource, AdminResourceCard, AdminResourceItem } from "@/components/admin";
+import {
+  adminItemToResource,
+  AdminResourceCard,
+  AdminResourceItem,
+  AdminResourceTable,
+} from "@/components/admin";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { ResourceDialog } from "@/components/resource-dialog";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -785,217 +784,25 @@ function AdminResourcesClientContent({
             </div>
           ) : (
             /* Text-Only Data Table Mode (50 per page, zero images requested) */
-            <div className="border-line bg-surface/30 overflow-hidden rounded-lg border-[1.5px]">
-              <div className="overflow-x-auto">
-                <table className="w-full border-collapse text-left font-mono text-xs">
-                  <thead>
-                    <tr className="border-line bg-surface/80 text-muted-foreground border-b-[1.5px] text-[11px] font-bold tracking-wider uppercase">
-                      <th className="px-4 py-3">Category</th>
-                      <th className="px-4 py-3">Resource</th>
-                      <th className="px-4 py-3">Health & URL</th>
-                      <th className="px-4 py-3">Author</th>
-                      <th className="px-4 py-3">Tags</th>
-                      <th className="px-4 py-3">Created</th>
-                      <th className="px-4 py-3 text-right">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-line divide-y">
-                    {paginatedResources.map((item) => {
-                      const isCopied = copiedId === item.id;
-
-                      return (
-                        <tr key={item.id} className="hover:bg-surface/60 group transition-colors">
-                          {/* Category Badge */}
-                          <td className="px-4 py-2.5 whitespace-nowrap">
-                            <Badge
-                              variant="secondary"
-                              className="font-mono text-[10px] font-bold tracking-wider uppercase"
-                            >
-                              {item.category}
-                            </Badge>
-                          </td>
-
-                          {/* Title & Subtitle */}
-                          <td className="min-w-50 px-4 py-2.5">
-                            <div className="flex flex-col">
-                              <div className="flex items-center gap-1.5">
-                                <span className="text-foreground group-hover:text-primary text-xs leading-snug font-bold transition-colors">
-                                  {item.title}
-                                </span>
-                                {!item.ogImage?.trim() && (
-                                  <span className="py-0.2 rounded bg-amber-500/15 px-1 text-[9px] font-bold text-amber-700 dark:text-amber-400">
-                                    No OG
-                                  </span>
-                                )}
-                              </div>
-                              {item.subtitle && (
-                                <span className="text-muted-foreground line-clamp-1 text-[11px]">
-                                  {item.subtitle}
-                                </span>
-                              )}
-                            </div>
-                          </td>
-
-                          {/* Health & URL */}
-                          <td className="max-w-64 px-4 py-2.5">
-                            <div className="flex flex-col gap-0.5">
-                              <div className="flex items-center gap-1.5">
-                                <span
-                                  className={`inline-block size-2 shrink-0 rounded-full ${
-                                    item.healthStatus === "healthy"
-                                      ? "bg-emerald-500"
-                                      : item.healthStatus === "broken"
-                                        ? "animate-pulse bg-rose-500"
-                                        : item.healthStatus === "redirect"
-                                          ? "bg-amber-500"
-                                          : item.healthStatus === "blocked"
-                                            ? "bg-orange-500"
-                                            : "bg-muted-foreground"
-                                  }`}
-                                />
-                                <span className="text-muted-foreground text-[10px] font-bold uppercase">
-                                  {item.healthStatus || "unchecked"}
-                                  {item.healthStatusCode ? ` (${item.healthStatusCode})` : ""}
-                                </span>
-                                <button
-                                  type="button"
-                                  onClick={() => handleCheckHealth(item)}
-                                  disabled={checkingHealthId === item.id}
-                                  className="text-muted-foreground hover:text-primary p-0.5 transition-colors"
-                                  title="Check live URL health"
-                                >
-                                  <HeartbeatIcon
-                                    weight="bold"
-                                    className={`size-3 ${
-                                      checkingHealthId === item.id
-                                        ? "text-primary animate-spin"
-                                        : ""
-                                    }`}
-                                  />
-                                </button>
-                              </div>
-
-                              <a
-                                href={item.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-primary block truncate text-[11px] hover:underline"
-                                title={item.url}
-                              >
-                                {item.url.replace(/^https?:\/\/(www\.)?/, "")}
-                              </a>
-
-                              {item.healthStatus === "redirect" && item.healthRedirectUrl && (
-                                <div className="flex items-center gap-1 text-[10px] text-amber-700 dark:text-amber-400">
-                                  <span className="truncate" title={item.healthRedirectUrl}>
-                                    ↳ {item.healthRedirectUrl}
-                                  </span>
-                                  <Button
-                                    size="sm"
-                                    variant="outline"
-                                    onClick={() => handleApplyRedirect(item)}
-                                    disabled={applyingRedirectId === item.id}
-                                    className="h-5 border-amber-600/40 bg-amber-500/15 px-1.5 text-[9px] font-bold uppercase hover:bg-amber-500/25"
-                                  >
-                                    {applyingRedirectId === item.id ? "..." : "Apply"}
-                                  </Button>
-                                </div>
-                              )}
-                            </div>
-                          </td>
-
-                          {/* Tags */}
-                          <td className="max-w-45 px-4 py-2.5">
-                            {item.tags ? (
-                              <div className="flex flex-wrap gap-1">
-                                {item.tags
-                                  .split(",")
-                                  .slice(0, 2)
-                                  .map((tag) => (
-                                    <span
-                                      key={tag.trim()}
-                                      className="border-line bg-surface/70 text-muted-foreground py-0.2 rounded border-[1.5px] px-1.5 text-[9px]"
-                                    >
-                                      #{tag.trim()}
-                                    </span>
-                                  ))}
-                                {item.tags.split(",").length > 2 && (
-                                  <span className="text-muted-foreground/70 text-[9px]">
-                                    +{item.tags.split(",").length - 2}
-                                  </span>
-                                )}
-                              </div>
-                            ) : (
-                              <span className="opacity-40">—</span>
-                            )}
-                          </td>
-
-                          {/* Created Date */}
-                          <td className="text-muted-foreground px-4 py-2.5 text-[11px] whitespace-nowrap">
-                            {new Date(item.createdAt).toLocaleDateString()}
-                          </td>
-
-                          {/* Action Buttons */}
-                          <td className="px-4 py-2.5 text-right whitespace-nowrap">
-                            <div className="flex items-center justify-end gap-1">
-                              <Button
-                                size="sm"
-                                variant="ghost"
-                                onClick={() => setPreviewResource(item)}
-                                className="text-foreground hover:bg-surface-elevated size-7 p-0"
-                                title="Preview Full ResourceDialog"
-                              >
-                                <EyeIcon className="text-primary size-3.5" />
-                              </Button>
-
-                              <Button
-                                size="sm"
-                                variant="ghost"
-                                onClick={() => handleCopyJson(item)}
-                                className="text-muted-foreground hover:text-foreground size-7 p-0"
-                                title="Copy JSON"
-                              >
-                                {isCopied ? (
-                                  <CheckCircleIcon className="size-3.5 text-emerald-600" />
-                                ) : (
-                                  <ClipboardTextIcon className="size-3.5" />
-                                )}
-                              </Button>
-
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                onClick={() =>
-                                  router.push(
-                                    searchParams.toString()
-                                      ? `/admin/resources/${item.id}?${searchParams.toString()}`
-                                      : `/admin/resources/${item.id}`,
-                                  )
-                                }
-                                className="border-line hover:bg-surface size-7 p-0"
-                                title="Edit Resource"
-                              >
-                                <PencilSimpleIcon className="size-3" />
-                              </Button>
-
-                              <Button
-                                size="sm"
-                                variant="ghost"
-                                onClick={() => setDeletingResource(item)}
-                                className="hover:bg-destructive/10 text-muted-foreground hover:text-destructive size-7 p-0"
-                                title="Delete Resource"
-                              >
-                                <TrashIcon className="size-3" />
-                              </Button>
-                            </div>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            <AdminResourceTable
+              resources={paginatedResources}
+              onPreview={(item) => setPreviewResource(item)}
+              onEdit={(item) =>
+                router.push(
+                  searchParams.toString()
+                    ? `/admin/resources/${item.id}?${searchParams.toString()}`
+                    : `/admin/resources/${item.id}`,
+                )
+              }
+              onDelete={(item) => setDeletingResource(item)}
+              onCheckHealth={(item) => handleCheckHealth(item)}
+              onApplyRedirect={(item) => handleApplyRedirect(item)}
+              onCopyJson={(item) => handleCopyJson(item)}
+              checkingHealthId={checkingHealthId}
+              applyingRedirectId={applyingRedirectId}
+              copiedId={copiedId}
+              isWorking={isWorking}
+            />
           )}
 
           {/* Pagination Controls */}

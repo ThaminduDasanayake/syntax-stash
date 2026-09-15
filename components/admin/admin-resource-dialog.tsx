@@ -683,6 +683,7 @@ export function AdminResourceDialog({
 
               {/* Media Asset Fields */}
               <MediaAssetFields
+                allowUpload
                 favicon={formData.favicon}
                 iconBg={formData.iconBg || "dark"}
                 onIconBgChange={(val) => setFormData((prev) => ({ ...prev, iconBg: val }))}
