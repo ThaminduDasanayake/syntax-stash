@@ -58,6 +58,9 @@ export function CloudinaryUploadButton({
         maxFileSize: 10000000, // 10MB
         multiple: false,
         resourceType,
+        showCompletedButton: true,
+        showPoweredBy: false,
+        singleUploadAutoClose: false,
         sources: ["camera", "local", "url"],
       }}
       onSuccess={handleSuccess}
