@@ -1,24 +1,42 @@
 "use client";
 
-import { HashIcon, PlusIcon, TagIcon, XIcon } from "@phosphor-icons/react";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { HashIcon, TagIcon } from "@phosphor-icons/react";
+import React, { useEffect, useMemo, useState } from "react";
 
-import type { TagInfo } from "@/lib/tags";
-import { cn, normalizeTag } from "@/lib/utils";
+import {
+  Combobox,
+  ComboboxChip,
+  ComboboxChips,
+  ComboboxChipsInput,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxItem,
+  ComboboxList,
+  ComboboxValue,
+  useComboboxAnchor,
+} from "@/components/ui/combobox";
+import type { TagInfo, TagItem } from "@/lib/tags";
+import { cn } from "@/lib/utils";
+
+export type { TagInfo, TagItem };
 
 export interface TagPickerProps {
   allowCustom?: boolean;
   className?: string;
+  containerClassName?: string;
   disabled?: boolean;
   maxTags?: number;
   onChange: (value: string) => void;
+  onSelectTag?: (tag: TagItem) => void;
   placeholder?: string;
-  value: string | string[];
+  value: string | string[] | null | undefined;
 }
 
-// Global cache to avoid refetching on every render
-let cachedTags: TagInfo[] | null = null;
-let fetchTagsPromise: Promise<TagInfo[]> | null = null;
+export type TagComboboxProps = TagPickerProps;
+
+// Global module cache to prevent duplicate requests across renders
+let cachedTags: TagItem[] | null = null;
+let fetchTagsPromise: Promise<TagItem[]> | null = null;
 
 // Cross-tab synchronization channel
 let tagsChannel: BroadcastChannel | null = null;
@@ -33,14 +51,17 @@ if (typeof window !== "undefined" && "BroadcastChannel" in window) {
 export function invalidateTagCache() {
   cachedTags = null;
   fetchTagsPromise = null;
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new CustomEvent("syntax-stash-tags-updated"));
+  }
   try {
     tagsChannel?.postMessage({ type: "TAGS_INVALIDATE" });
   } catch {
-    // Ignore
+    // Ignore cross-tab messaging failure
   }
 }
 
-export async function fetchTagList(forceRefresh = false): Promise<TagInfo[]> {
+export async function fetchTagList(forceRefresh = false): Promise<TagItem[]> {
   if (!forceRefresh && cachedTags) return cachedTags;
   if (fetchTagsPromise) return fetchTagsPromise;
 
@@ -49,8 +70,10 @@ export async function fetchTagList(forceRefresh = false): Promise<TagInfo[]> {
       const res = await fetch("/api/tags", { cache: "no-store" });
       if (!res.ok) throw new Error("Failed to load tags");
       const data = await res.json();
-      const tagsList: TagInfo[] = data.tags || [];
-      cachedTags = tagsList.sort((a, b) => a.name.localeCompare(b.name));
+      const tagsList: TagItem[] = data.tags || [];
+      cachedTags = tagsList.sort((a, b) =>
+        a.name.localeCompare(b.name, undefined, { sensitivity: "base" }),
+      );
       return cachedTags!;
     } catch {
       return cachedTags || [];
@@ -62,23 +85,24 @@ export async function fetchTagList(forceRefresh = false): Promise<TagInfo[]> {
   return fetchTagsPromise;
 }
 
-export function TagPicker({
-  allowCustom = false,
+export function TagCombobox({
   className,
+  containerClassName,
   disabled = false,
-  maxTags = 8,
+  maxTags = 10,
   onChange,
-  placeholder = "Select tags...",
+  onSelectTag,
+  placeholder = "Search tags in taxonomy...",
   value,
-}: TagPickerProps) {
-  const [allTags, setAllTags] = useState<TagInfo[]>(cachedTags || []);
-  const [query, setQuery] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-  const [highlightedIndex, setHighlightedIndex] = useState(-1);
+}: TagComboboxProps) {
+  const [tags, setTags] = useState<TagItem[]>(() => {
+    if (!cachedTags) return [];
+    return [...cachedTags].sort((a, b) =>
+      a.name.localeCompare(b.name, undefined, { sensitivity: "base" }),
+    );
+  });
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const dropdownRef = useRef<HTMLUListElement>(null);
+  const anchor = useComboboxAnchor();
 
   useEffect(() => {
     let mounted = true;
@@ -86,7 +110,10 @@ export function TagPicker({
     const syncTags = (force = false) => {
       fetchTagList(force).then((list) => {
         if (mounted && list.length > 0) {
-          setAllTags(list);
+          const sorted = [...list].sort((a, b) =>
+            a.name.localeCompare(b.name, undefined, { sensitivity: "base" }),
+          );
+          setTags(sorted);
         }
       });
     };
@@ -94,292 +121,138 @@ export function TagPicker({
     // 1. Initial Load
     syncTags();
 
-    // 2. Cross-tab real-time listener (when tags created/updated in another tab)
+    // 2. Window event listener when a tag is created, edited, or deleted in admin
+    const handleLocalUpdate = () => {
+      syncTags(true);
+    };
+    window.addEventListener("syntax-stash-tags-updated", handleLocalUpdate);
+
+    // 3. Cross-tab real-time listener
     const handleBroadcast = (event: MessageEvent) => {
       if (event.data?.type === "TAGS_INVALIDATE") {
-        cachedTags = null;
-        fetchTagsPromise = null;
         syncTags(true);
       }
     };
-
-    if (tagsChannel) {
-      tagsChannel.addEventListener("message", handleBroadcast);
-    }
-
-    // 3. Tab focus / visibility change
-    const handleFocus = () => {
-      syncTags(true);
-    };
-
-    window.addEventListener("focus", handleFocus);
-    document.addEventListener("visibilitychange", handleFocus);
+    tagsChannel?.addEventListener("message", handleBroadcast);
 
     return () => {
       mounted = false;
-      if (tagsChannel) {
-        tagsChannel.removeEventListener("message", handleBroadcast);
-      }
-      window.removeEventListener("focus", handleFocus);
-      document.removeEventListener("visibilitychange", handleFocus);
+      window.removeEventListener("syntax-stash-tags-updated", handleLocalUpdate);
+      tagsChannel?.removeEventListener("message", handleBroadcast);
     };
   }, []);
 
-  // Parse current selected tags into an array, sorted alphabetically
-  const selectedTags: string[] = useMemo(() => {
-    let raw: string[] = [];
+  const selectedValues = useMemo(() => {
+    if (!value) return [];
     if (Array.isArray(value)) {
-      raw = value.map(normalizeTag).filter(Boolean);
-    } else if (typeof value === "string") {
-      raw = value.split(",").map(normalizeTag).filter(Boolean);
+      return value.map((t) => t.trim()).filter(Boolean);
     }
-    return Array.from(new Set(raw)).sort((a, b) => a.localeCompare(b));
+    return value
+      .split(",")
+      .map((t) => t.trim())
+      .filter(Boolean);
   }, [value]);
 
-  // Filter available suggestions based on query and already selected tags, strictly in alphabetical order
-  const cleanQuery = normalizeTag(query);
-  const filteredSuggestions = useMemo(() => {
-    const unselected = allTags
-      .filter((t) => !selectedTags.includes(t.name))
-      .sort((a, b) => a.name.localeCompare(b.name));
+  const tagNames = useMemo(() => {
+    return tags.map((t) => t.name);
+  }, [tags]);
 
-    if (!cleanQuery) {
-      return unselected.slice(0, 10);
+  const tagMap = useMemo(() => {
+    const map = new Map<string, TagItem>();
+    for (const t of tags) {
+      map.set(t.name, t);
     }
-    return unselected.filter((t) => t.name.includes(cleanQuery)).slice(0, 10);
-  }, [allTags, cleanQuery, selectedTags]);
+    return map;
+  }, [tags]);
 
-  const exactMatchExists = allTags.some((t) => t.name === cleanQuery);
-  const isAlreadySelected = selectedTags.includes(cleanQuery);
-  const canAddCustom = allowCustom && cleanQuery && !exactMatchExists && !isAlreadySelected;
+  const handleValueChange = (newValues: string[]) => {
+    const next = newValues.slice(0, maxTags);
+    onChange(next.join(", "));
 
-  const emitChange = (newTags: string[]) => {
-    const sorted = [...new Set(newTags.map(normalizeTag).filter(Boolean))].sort((a, b) =>
-      a.localeCompare(b),
-    );
-    onChange(sorted.join(", "));
-  };
-
-  const addTag = (tagName: string) => {
-    const normalized = normalizeTag(tagName);
-    if (!normalized) return;
-    if (selectedTags.includes(normalized)) return;
-    if (selectedTags.length >= maxTags) return;
-
-    const nextTags = [...selectedTags, normalized];
-    emitChange(nextTags);
-    setQuery("");
-    setHighlightedIndex(-1);
-    inputRef.current?.focus();
-  };
-
-  const removeTag = (tagToRemove: string) => {
-    const nextTags = selectedTags.filter((t) => t !== tagToRemove);
-    emitChange(nextTags);
-    inputRef.current?.focus();
-  };
-
-  // Close dropdown on click outside
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
+    if (onSelectTag && next.length > 0) {
+      const latestAdded = next.find((n) => !selectedValues.includes(n)) || next[next.length - 1];
+      if (latestAdded) {
+        const found = tags.find((t) => t.name.toLowerCase() === latestAdded.toLowerCase());
+        if (found) {
+          onSelectTag(found);
+        }
       }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (disabled) return;
-
-    if (e.key === "Backspace" && !query && selectedTags.length > 0) {
-      // Remove last tag when backspacing on empty input
-      removeTag(selectedTags[selectedTags.length - 1]!);
-      return;
-    }
-
-    if (!isOpen) {
-      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-        setIsOpen(true);
-        e.preventDefault();
-      }
-      return;
-    }
-
-    const totalOptions = filteredSuggestions.length + (canAddCustom ? 1 : 0);
-
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      setHighlightedIndex((prev) => (prev + 1) % totalOptions);
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      setHighlightedIndex((prev) => (prev - 1 + totalOptions) % totalOptions);
-    } else if (e.key === "Enter" || e.key === ",") {
-      e.preventDefault();
-      if (highlightedIndex >= 0 && highlightedIndex < filteredSuggestions.length) {
-        const item = filteredSuggestions[highlightedIndex];
-        if (item) addTag(item.name);
-      } else if (highlightedIndex === filteredSuggestions.length && canAddCustom) {
-        addTag(cleanQuery);
-      } else if (filteredSuggestions.length > 0 && filteredSuggestions[0]) {
-        addTag(filteredSuggestions[0].name);
-      } else if (canAddCustom) {
-        addTag(cleanQuery);
-      }
-    } else if (e.key === "Escape") {
-      e.preventDefault();
-      setIsOpen(false);
     }
   };
 
   return (
-    <div ref={containerRef} className="relative w-full">
-      {/* Interactive Tag Container */}
-      <div
-        onClick={() => {
-          if (!disabled) {
-            inputRef.current?.focus();
-            setIsOpen(true);
-          }
-        }}
-        className={cn(
-          "border-border bg-input/30 focus-within:border-primary/80 focus-within:ring-primary/20 flex min-h-9 w-full flex-wrap items-center gap-1.5 rounded-none border-2 p-1.5 font-mono text-xs transition-colors focus-within:ring-2",
-          disabled ? "cursor-not-allowed opacity-60" : "cursor-text",
-          className,
-        )}
+    <div className={cn("relative w-full", containerClassName)}>
+      <Combobox
+        multiple
+        autoHighlight
+        disabled={disabled}
+        items={tagNames}
+        value={selectedValues}
+        onValueChange={handleValueChange}
       >
-        {/* Selected Tag Badges */}
-        {selectedTags.map((tag) => (
-          <span
-            key={tag}
-            className="border-primary/40 bg-primary/10 text-foreground flex items-center gap-1 rounded-none border-[1.5px] px-1.5 py-0.5 font-mono text-[11px] font-semibold"
-          >
-            <HashIcon className="text-primary size-3 shrink-0" />
-            <span>{tag}</span>
-            {!disabled && (
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  removeTag(tag);
-                }}
-                className="text-muted-foreground hover:text-foreground ml-0.5 rounded-none p-0.5 transition-colors"
-                aria-label={`Remove tag ${tag}`}
-              >
-                <XIcon className="size-2.5" />
-              </button>
+        <ComboboxChips
+          ref={anchor}
+          className={cn(
+            "bg-paper border-line focus-within:border-primary/60 min-h-9 w-full rounded-md border-[1.5px] font-mono text-xs transition-colors",
+            disabled && "cursor-not-allowed opacity-50",
+            className,
+          )}
+        >
+          <ComboboxValue>
+            {(values: string[]) => (
+              <React.Fragment>
+                {values.map((tagName: string) => (
+                  <ComboboxChip
+                    key={tagName}
+                    className="bg-muted text-foreground border-line/60 rounded border text-xs"
+                  >
+                    <HashIcon className="text-primary size-3" />
+                    <span>{tagName}</span>
+                  </ComboboxChip>
+                ))}
+                <ComboboxChipsInput
+                  placeholder={values.length === 0 ? placeholder : ""}
+                  className="font-mono text-xs placeholder:text-zinc-500"
+                />
+              </React.Fragment>
             )}
-          </span>
-        ))}
+          </ComboboxValue>
+        </ComboboxChips>
 
-        {/* Embedded Filter Input */}
-        {selectedTags.length < maxTags && (
-          <input
-            ref={inputRef}
-            type="text"
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              setIsOpen(true);
-              setHighlightedIndex(-1);
-            }}
-            onKeyDown={handleKeyDown}
-            onFocus={() => {
-              if (!disabled) setIsOpen(true);
-            }}
-            disabled={disabled}
-            placeholder={selectedTags.length === 0 ? placeholder : "Add more tags..."}
-            className="placeholder:text-muted-foreground min-w-[120px] flex-1 bg-transparent px-1 font-mono text-xs outline-none"
-          />
-        )}
-      </div>
-
-      {/* Autocomplete Dropdown */}
-      {isOpen && !disabled && (
-        <div className="border-border bg-popover text-popover-foreground absolute z-50 mt-1 max-h-60 w-full overflow-hidden rounded-none border-2 shadow-lg">
-          <div className="border-border/60 text-muted-foreground bg-muted/40 flex items-center justify-between border-b-[1.5px] px-2.5 py-1 font-mono text-[10px] font-bold tracking-wider uppercase">
-            <span>{allowCustom ? "Select or Add Tags" : "Canonical Tags (Select Only)"}</span>
-            <span>
-              {selectedTags.length}/{maxTags}
-            </span>
-          </div>
-
-          <ul ref={dropdownRef} className="max-h-48 overflow-y-auto py-1 font-mono text-xs">
-            {filteredSuggestions.map((tagItem, index) => {
-              const isHighlighted = index === highlightedIndex;
-
+        <ComboboxContent
+          anchor={anchor}
+          align="start"
+          sideOffset={4}
+          className="border-line bg-popover text-popover-foreground z-50 rounded-md border-[1.5px] font-mono text-xs shadow-md"
+        >
+          <ComboboxEmpty className="text-muted-foreground py-3 text-center font-mono text-xs">
+            No tags found.
+          </ComboboxEmpty>
+          <ComboboxList className="no-scrollbar max-h-60 overflow-y-auto p-1 font-mono text-xs">
+            {(item: string) => {
+              const tagObj = tagMap.get(item);
               return (
-                <li
-                  key={tagItem.name}
-                  onMouseEnter={() => setHighlightedIndex(index)}
-                  onClick={() => addTag(tagItem.name)}
-                  className={cn(
-                    "flex cursor-pointer items-center justify-between gap-2 px-2.5 py-1.5 transition-colors",
-                    isHighlighted ? "bg-primary text-primary-foreground" : "hover:bg-muted/60",
-                  )}
+                <ComboboxItem
+                  key={item}
+                  value={item}
+                  className="cursor-pointer gap-2 py-1.5 pr-8 pl-2 font-mono text-xs"
                 >
-                  <div className="flex items-center gap-1.5 truncate">
-                    <TagIcon
-                      className={cn(
-                        "size-3 shrink-0",
-                        isHighlighted ? "text-primary-foreground" : "text-muted-foreground",
-                      )}
-                    />
-                    <span className="font-semibold">{tagItem.name}</span>
-                  </div>
-
-                  {tagItem.count > 0 && (
-                    <span
-                      className={cn(
-                        "py-0.2 rounded-none border-[1.5px] px-1 text-[10px]",
-                        isHighlighted
-                          ? "border-primary-foreground/40 bg-primary-foreground/20 text-primary-foreground"
-                          : "border-border bg-muted/40 text-muted-foreground",
-                      )}
-                    >
-                      {tagItem.count} {tagItem.count === 1 ? "tool" : "tools"}
+                  <TagIcon className="text-muted-foreground size-3.5 shrink-0" />
+                  <span className="flex-1 truncate">#{item}</span>
+                  {tagObj?.count !== undefined && tagObj.count > 0 && (
+                    <span className="text-muted-foreground text-[10px] tabular-nums">
+                      ({tagObj.count})
                     </span>
                   )}
-                </li>
+                </ComboboxItem>
               );
-            })}
-
-            {/* Custom Tag creation option if allowed */}
-            {canAddCustom && (
-              <li
-                onMouseEnter={() => setHighlightedIndex(filteredSuggestions.length)}
-                onClick={() => addTag(cleanQuery)}
-                className={cn(
-                  "border-border/40 text-muted-foreground hover:text-foreground flex cursor-pointer items-center gap-1.5 border-t px-2.5 py-2 transition-colors",
-                  highlightedIndex === filteredSuggestions.length
-                    ? "bg-primary text-primary-foreground"
-                    : "hover:bg-muted/60",
-                )}
-              >
-                <PlusIcon className="size-3" />
-                <span>
-                  + Add &quot;<strong className="text-foreground">{cleanQuery}</strong>&quot; as
-                  custom tag
-                </span>
-              </li>
-            )}
-
-            {/* Empty State when no matches */}
-            {filteredSuggestions.length === 0 && !canAddCustom && (
-              <li className="text-muted-foreground px-3 py-3 text-center text-xs">
-                {query
-                  ? !allowCustom
-                    ? `No canonical tag matching "${query}". Only existing tags can be selected.`
-                    : "No tags found."
-                  : "All suggested tags already selected."}
-              </li>
-            )}
-          </ul>
-        </div>
-      )}
+            }}
+          </ComboboxList>
+        </ComboboxContent>
+      </Combobox>
     </div>
   );
 }
+
+// Alias for backwards compatibility
+export const TagPicker = TagCombobox;

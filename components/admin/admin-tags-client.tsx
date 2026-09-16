@@ -14,6 +14,7 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { DuplicateNotice } from "@/components/submissions/duplicate-url-notice";
+import { invalidateTagCache } from "@/components/submissions/tag-picker";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -256,6 +257,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
               : t,
           ),
         );
+        invalidateTagCache();
         toast.success(`Tag "${formData.name}" updated successfully.`);
         setIsConfirmOpen(false);
         setIsDialogOpen(false);
@@ -285,6 +287,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
             toolCount: 0,
           },
         ]);
+        invalidateTagCache();
         toast.success(`Tag "${formData.name}" created successfully.`);
         setIsDialogOpen(false);
       }
@@ -325,6 +328,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
 
     // Optimistic delete
     setTags((prev) => prev.filter((t) => t.id !== target.id));
+    invalidateTagCache();
     setDeletingTag(null);
 
     try {
@@ -335,12 +339,14 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
 
       if (!res.ok) {
         setTags(previous);
+        invalidateTagCache();
         toast.error(data.error || "Failed to delete tag.");
       } else {
         toast.success(`Tag "${target.name}" deleted.`);
       }
     } catch {
       setTags(previous);
+      invalidateTagCache();
       toast.error("Network error. Tag restored.");
     }
   };

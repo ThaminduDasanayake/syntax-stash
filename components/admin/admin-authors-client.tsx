@@ -23,16 +23,6 @@ import { toast } from "sonner";
 import { AdminAuthorDialog } from "@/components/admin/admin-author-dialog";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { invalidateAuthorCache } from "@/components/submissions/author-combobox";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -89,7 +79,6 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
   const [sortBy, setSortBy] = useState<string>("resources-desc");
   const [currentPage, setCurrentPage] = useState(1);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [isWorking, setIsWorking] = useState(false);
 
   // Dialog states
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -148,7 +137,6 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
     invalidateAuthorCache();
 
     try {
-      setIsWorking(true);
       const res = await fetch(`/api/admin/authors?id=${encodeURIComponent(target.id)}`, {
         method: "DELETE",
       });
@@ -161,8 +149,6 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
     } catch {
       setAuthors(previousAuthors);
       toast.error("Network error. Author restoration applied.");
-    } finally {
-      setIsWorking(false);
     }
   };
 
@@ -648,45 +634,6 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
         }
         confirmLabel="Hold to delete"
       />
-
-      {/* Delete Confirmation Alert */}
-      {/*<AlertDialog*/}
-      {/*  open={Boolean(deletingAuthor)}*/}
-      {/*  onOpenChange={(open) => !open && setDeletingAuthor(null)}*/}
-      {/*>*/}
-      {/*  <AlertDialogContent className="border-line bg-paper font-mono text-xs">*/}
-      {/*    <AlertDialogHeader>*/}
-      {/*      <AlertDialogTitle className="text-foreground text-base font-bold uppercase">*/}
-      {/*        Delete Author: {deletingAuthor?.name}*/}
-      {/*      </AlertDialogTitle>*/}
-      {/*      <AlertDialogDescription className="text-muted-foreground text-xs leading-relaxed">*/}
-      {/*        Are you sure you want to permanently delete this author?*/}
-      {/*        {deletingAuthor && deletingAuthor.resourceCount > 0 && (*/}
-      {/*          <span className="text-destructive mt-2 block font-bold">*/}
-      {/*            Warning: {deletingAuthor.resourceCount} resource(s) are currently assigned to this*/}
-      {/*            author. You must reassign or delete these resources first before deleting this*/}
-      {/*            author.*/}
-      {/*          </span>*/}
-      {/*        )}*/}
-      {/*      </AlertDialogDescription>*/}
-      {/*    </AlertDialogHeader>*/}
-      {/*    <AlertDialogFooter className="gap-2 pt-2">*/}
-      {/*      <AlertDialogCancel*/}
-      {/*        disabled={isWorking}*/}
-      {/*        className="border-line hover:bg-surface font-mono text-xs uppercase"*/}
-      {/*      >*/}
-      {/*        Cancel*/}
-      {/*      </AlertDialogCancel>*/}
-      {/*      <AlertDialogAction*/}
-      {/*        onClick={handleConfirmDelete}*/}
-      {/*        disabled={isWorking || Boolean(deletingAuthor && deletingAuthor.resourceCount > 0)}*/}
-      {/*        className="bg-destructive text-destructive-foreground hover:bg-destructive/90 font-mono text-xs font-bold uppercase"*/}
-      {/*      >*/}
-      {/*        {isWorking ? "Deleting..." : "Delete Author"}*/}
-      {/*      </AlertDialogAction>*/}
-      {/*    </AlertDialogFooter>*/}
-      {/*  </AlertDialogContent>*/}
-      {/*</AlertDialog>*/}
     </div>
   );
 }
