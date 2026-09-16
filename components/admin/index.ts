@@ -13,5 +13,6 @@ export * from "./admin-submission-card";
 export * from "./admin-submission-edit-form";
 export * from "./admin-submission-inspect-view";
 export * from "./admin-tags-client";
+export * from "./sort-select";
 export * from "./types";
 export * from "./utils";

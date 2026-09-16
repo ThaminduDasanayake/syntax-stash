@@ -9,7 +9,6 @@ import {
   GlobeIcon,
   PencilSimpleIcon,
   PlusIcon,
-  SlidersHorizontalIcon,
   TrashIcon,
   UserCircleIcon,
   XLogoIcon,
@@ -21,13 +20,13 @@ import { Suspense, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { AdminAuthorDialog } from "@/components/admin/admin-author-dialog";
+import { SortSelect } from "@/components/admin/sort-select";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { invalidateAuthorCache } from "@/components/submissions/author-combobox";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { SearchInput } from "@/components/ui/search-input";
-import { SelectField } from "@/components/ui/select-field";
 import {
   Table,
   TableBody,
@@ -307,17 +306,12 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
             </div>
 
             {/* Sort Dropdown */}
-            <div className="flex items-center gap-1.5 pl-2">
-              <SlidersHorizontalIcon className="text-brand-purple size-7" />
-              <span className="text-muted-foreground text-[11px] font-bold uppercase">Sort:</span>
-              <SelectField
-                value={sortBy}
-                onValueChange={handleSortChange}
-                options={SORT_OPTIONS}
-                triggerClassName="h-8 font-mono text-xs min-w-[160px]"
-                variant="secondary"
-              />
-            </div>
+            <SortSelect
+              value={sortBy}
+              onValueChange={handleSortChange}
+              options={SORT_OPTIONS}
+              className="pl-2"
+            />
           </div>
 
           <div className="text-muted-foreground text-[11px]">

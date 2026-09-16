@@ -6,12 +6,12 @@ import {
   FoldersIcon,
   PencilSimpleIcon,
   PlusIcon,
-  SlidersHorizontalIcon,
   TrashIcon,
 } from "@phosphor-icons/react";
 import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
 
+import { SortSelect } from "@/components/admin/sort-select";
 import { DuplicateNotice } from "@/components/submissions/duplicate-url-notice";
 import {
   AlertDialog,
@@ -37,7 +37,6 @@ import {
 import { EmptyState } from "@/components/ui/empty-state";
 import { InputField } from "@/components/ui/input-field";
 import { SearchInput } from "@/components/ui/search-input";
-import { SelectField } from "@/components/ui/select-field";
 import {
   Table,
   TableBody,
@@ -328,17 +327,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
           </div>
 
           {/* Sort Dropdown */}
-          <div className="flex items-center gap-1.5">
-            <SlidersHorizontalIcon className="text-brand-purple size-7" />
-            <span className="text-muted-foreground text-[11px] font-bold uppercase">Sort:</span>
-            <SelectField
-              value={sortBy}
-              onValueChange={setSortBy}
-              options={SORT_OPTIONS}
-              triggerClassName="h-8 font-mono text-xs min-w-[200px]"
-              variant="secondary"
-            />
-          </div>
+          <SortSelect value={sortBy} onValueChange={setSortBy} options={SORT_OPTIONS} />
 
           {/* Action Buttons */}
           <div className="flex items-center gap-2">

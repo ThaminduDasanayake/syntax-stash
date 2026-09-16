@@ -8,7 +8,6 @@ import {
   HeartbeatIcon,
   MagnifyingGlassIcon,
   PlusIcon,
-  SlidersHorizontalIcon,
   SquaresFourIcon,
   TableIcon,
 } from "@phosphor-icons/react";
@@ -22,6 +21,7 @@ import {
   AdminResourceCard,
   AdminResourceItem,
   AdminResourceTable,
+  SortSelect,
 } from "@/components/admin";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { ResourceDialog } from "@/components/resource-dialog";
@@ -725,17 +725,7 @@ function AdminResourcesClientContent({
             )}
 
             {/* Sort Select */}
-            <div className="flex items-center gap-1.5">
-              <SlidersHorizontalIcon className="text-brand-purple size-7" />
-              <span className="text-muted-foreground text-[11px] font-bold uppercase">Sort:</span>
-              <SelectField
-                value={sortBy}
-                onValueChange={handleSortChange}
-                options={SORT_OPTIONS}
-                triggerClassName="h-8 font-mono text-xs min-w-[200px]"
-                variant="secondary"
-              />
-            </div>
+            <SortSelect value={sortBy} onValueChange={handleSortChange} options={SORT_OPTIONS} />
           </div>
 
           {/* Result Counts */}

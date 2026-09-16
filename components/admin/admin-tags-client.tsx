@@ -6,13 +6,13 @@ import {
   FunnelIcon,
   PencilSimpleIcon,
   PlusIcon,
-  SlidersHorizontalIcon,
   TagIcon,
   TrashIcon,
 } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
+import { SortSelect } from "@/components/admin/sort-select";
 import { DuplicateNotice } from "@/components/submissions/duplicate-url-notice";
 import { invalidateTagCache } from "@/components/submissions/tag-picker";
 import {
@@ -379,17 +379,11 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
             />
           </div>
 
-          <div className="flex items-center gap-1.5">
-            <SlidersHorizontalIcon className="text-brand-purple size-7" />
-            <span className="text-muted-foreground text-[11px] font-bold uppercase">Sort:</span>
-            <SelectField
-              value={sortBy}
-              onValueChange={(val) => setSortBy(val)}
-              options={SORT_OPTIONS}
-              triggerClassName="h-8 font-mono text-[11px]"
-              variant="secondary"
-            />
-          </div>
+          <SortSelect
+            value={sortBy}
+            onValueChange={(val) => setSortBy(val)}
+            options={SORT_OPTIONS}
+          />
 
           {/* Action Buttons */}
           <div className="flex items-center gap-2">
