@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 
 import { AdminResourceForm } from "@/components/admin/admin-resource-form";
 import { db } from "@/lib/db";
-import { author, category, resource, resourceTag, tag } from "@/lib/db/schema";
+import { author, category, resource, resourceAuthor, resourceTag, tag } from "@/lib/db/schema";
 
 export const metadata: Metadata = {
   title: "Edit Resource — Syntax Stash Admin",
@@ -49,7 +49,8 @@ export default async function AdminEditResourcePage({ params }: EditPageProps) {
       url: resource.url,
     })
     .from(resource)
-    .leftJoin(author, eq(resource.authorId, author.id))
+    .leftJoin(resourceAuthor, eq(resource.id, resourceAuthor.resourceId))
+    .leftJoin(author, eq(resourceAuthor.authorId, author.id))
     .leftJoin(category, eq(resource.categoryId, category.id))
     .leftJoin(resourceTag, eq(resource.id, resourceTag.resourceId))
     .leftJoin(tag, eq(resourceTag.tagId, tag.id))
@@ -60,10 +61,16 @@ export default async function AdminEditResourcePage({ params }: EditPageProps) {
   }
 
   const first = rows[0];
-  const tagsList = rows.map((r) => r.tagName).filter((t): t is string => Boolean(t));
+  const tagsList = Array.from(
+    new Set(rows.map((r) => r.tagName).filter((t): t is string => Boolean(t))),
+  );
+  const authorsList = Array.from(
+    new Set(rows.map((r) => r.authorName).filter((a): a is string => Boolean(a))),
+  );
 
   const initialData = {
     ...first,
+    authorName: authorsList.length > 0 ? authorsList.join(", ") : first.authorName || null,
     category: first.categoryName || "Generators",
     createdAt: first.createdAt.toISOString(),
     iconBg: first.iconBg || "dark",

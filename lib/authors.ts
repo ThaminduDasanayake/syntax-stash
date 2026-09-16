@@ -3,7 +3,7 @@ import { revalidateTag, unstable_cache } from "next/cache";
 import { cache } from "react";
 
 import { db } from "@/lib/db";
-import { author, resource } from "@/lib/db/schema";
+import { author, resourceAuthor } from "@/lib/db/schema";
 import { getAllResources } from "@/lib/resources";
 import { parseAuthors, slugifyAuthor } from "@/lib/utils";
 import { Resource } from "@/types";
@@ -98,16 +98,16 @@ export const getAllAuthors = cache(
             github: author.github,
             linkedin: author.linkedin,
             name: author.name,
-            resourceCount: count(resource.id),
+            resourceCount: count(resourceAuthor.resourceId),
             slug: author.slug,
             twitter: author.twitter,
             website: author.website,
             youtube: author.youtube,
           })
           .from(author)
-          .leftJoin(resource, eq(author.id, resource.authorId))
+          .leftJoin(resourceAuthor, eq(author.id, resourceAuthor.authorId))
           .groupBy(author.id)
-          .orderBy(desc(count(resource.id)), asc(author.name));
+          .orderBy(desc(count(resourceAuthor.resourceId)), asc(author.name));
 
         const allResources = await getAllResources();
 
