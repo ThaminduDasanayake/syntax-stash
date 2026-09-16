@@ -1,16 +1,11 @@
 "use client";
 
-import {
-  CheckIcon,
-  ClipboardTextIcon,
-  EyeIcon,
-  PencilSimpleIcon,
-  TrashIcon,
-} from "@phosphor-icons/react";
+import { EyeIcon, PencilSimpleIcon, TrashIcon } from "@phosphor-icons/react";
 import * as React from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { CopyButton } from "@/components/ui/copy-button";
 import {
   Table,
   TableBody,
@@ -27,11 +22,9 @@ import { AdminResourceItem } from "./types";
 export interface AdminResourceTableProps {
   applyingRedirectId?: string | null;
   checkingHealthId?: string | null;
-  copiedId?: string | null;
   isWorking?: boolean;
   onApplyRedirect?: (item: AdminResourceItem) => void;
   onCheckHealth?: (item: AdminResourceItem) => void;
-  onCopyJson: (item: AdminResourceItem) => void;
   onDelete: (item: AdminResourceItem) => void;
   onEdit: (item: AdminResourceItem) => void;
   onPreview: (item: AdminResourceItem) => void;
@@ -41,11 +34,9 @@ export interface AdminResourceTableProps {
 export function AdminResourceTable({
   applyingRedirectId,
   checkingHealthId,
-  copiedId,
   isWorking = false,
   onApplyRedirect,
   onCheckHealth,
-  onCopyJson,
   onDelete,
   onEdit,
   onPreview,
@@ -81,8 +72,6 @@ export function AdminResourceTable({
         </TableHeader>
         <TableBody className="divide-line divide-y">
           {resources.map((item) => {
-            const isCopied = copiedId === item.id;
-
             return (
               <TableRow
                 key={item.id}
@@ -245,18 +234,12 @@ export function AdminResourceTable({
 
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={() => onCopyJson(item)}
-                          className="text-muted-foreground hover:text-foreground size-7 p-0"
-                        >
-                          {isCopied ? (
-                            <CheckIcon className="text-emerald-600" />
-                          ) : (
-                            <ClipboardTextIcon />
-                          )}
-                        </Button>
+                        <CopyButton
+                          textToCopy={() => JSON.stringify(item, null, 2)}
+                          iconOnly
+                          size="icon-xs"
+                          title="Copy JSON"
+                        />
                       </TooltipTrigger>
                       <TooltipContent side="top">
                         <p>Copy JSON</p>

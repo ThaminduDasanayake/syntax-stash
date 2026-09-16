@@ -69,7 +69,6 @@ function AdminResourcesClientContent({
   const [sortBy, setSortBy] = useState<string>(paramSort);
   const [viewMode, setViewMode] = useState<"cards" | "table">(paramView);
   const [currentPage, setCurrentPage] = useState(paramPage);
-  const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const searchDebounceRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -550,13 +549,6 @@ function AdminResourcesClientContent({
     syncUrl(sortBy, "all", "all", viewMode, 1, "");
   };
 
-  // Copy JSON handler
-  const handleCopyJson = (item: AdminResourceItem) => {
-    navigator.clipboard.writeText(JSON.stringify(item, null, 2));
-    setCopiedId(item.id);
-    setTimeout(() => setCopiedId(null), 2000);
-  };
-
   // Background refresh
   const handleRefresh = async () => {
     try {
@@ -736,7 +728,7 @@ function AdminResourcesClientContent({
                 value={sortBy}
                 onValueChange={handleSortChange}
                 options={SORT_OPTIONS}
-                triggerClassName="h-8 font-mono text-xs min-w-[150px]"
+                triggerClassName="h-8 font-mono text-xs min-w-[200px]"
                 variant="secondary"
               />
             </div>
@@ -797,10 +789,8 @@ function AdminResourcesClientContent({
               onDelete={(item) => setDeletingResource(item)}
               onCheckHealth={(item) => handleCheckHealth(item)}
               onApplyRedirect={(item) => handleApplyRedirect(item)}
-              onCopyJson={(item) => handleCopyJson(item)}
               checkingHealthId={checkingHealthId}
               applyingRedirectId={applyingRedirectId}
-              copiedId={copiedId}
               isWorking={isWorking}
             />
           )}

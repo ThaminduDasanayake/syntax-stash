@@ -3,7 +3,6 @@
 import {
   ArrowsClockwiseIcon,
   CheckIcon,
-  CopyIcon,
   FoldersIcon,
   PencilSimpleIcon,
   PlusIcon,
@@ -26,6 +25,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { CopyButton } from "@/components/ui/copy-button";
 import {
   Dialog,
   DialogContent,
@@ -148,12 +148,6 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
 
     return sorted;
   }, [categories, searchQuery, sortBy]);
-
-  // Copy to clipboard
-  const handleCopy = (text: string, label: string) => {
-    navigator.clipboard.writeText(text);
-    toast.success(`Copied ${label} "${text}" to clipboard.`);
-  };
 
   // Refresh
   const handleRefresh = async () => {
@@ -335,13 +329,13 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
 
           {/* Sort Dropdown */}
           <div className="flex items-center gap-1.5">
-            <SlidersHorizontalIcon className="text-muted-foreground size-3.5" />
+            <SlidersHorizontalIcon className="text-brand-purple size-7" />
             <span className="text-muted-foreground text-[11px] font-bold uppercase">Sort:</span>
             <SelectField
               value={sortBy}
               onValueChange={setSortBy}
               options={SORT_OPTIONS}
-              triggerClassName="h-9 font-mono text-xs min-w-[170px]"
+              triggerClassName="h-8 font-mono text-xs min-w-[200px]"
               variant="secondary"
             />
           </div>
@@ -356,7 +350,10 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
               className="h-9 text-xs uppercase"
               title="Refresh category catalog"
             >
-              <ArrowsClockwiseIcon className={`size-3.5 ${isRefreshing ? "animate-spin" : ""}`} />
+              <ArrowsClockwiseIcon
+                weight="bold"
+                className={`text-brand-green size-4 ${isRefreshing ? "animate-spin" : ""}`}
+              />
               <span className="hidden sm:inline">Sync</span>
             </Button>
 
@@ -437,8 +434,9 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
                     </TableCell>
 
                     {/* Name */}
-                    <TableCell>
+                    <TableCell className="flex items-center justify-start gap-1.5">
                       <span className="text-foreground font-bold">{cat.name}</span>
+                      <CopyButton textToCopy={cat.name} iconOnly size="icon-xs" />
                     </TableCell>
 
                     {/* Slug */}
@@ -447,14 +445,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
                         <Badge variant="secondary" className="px-1.5 py-0 text-[11px] font-normal">
                           {cat.slug}
                         </Badge>
-                        <button
-                          type="button"
-                          onClick={() => handleCopy(cat.slug, "Slug")}
-                          className="text-muted-foreground hover:text-foreground cursor-pointer p-0.5 opacity-60 hover:opacity-100"
-                          title="Copy slug"
-                        >
-                          <CopyIcon className="size-3" />
-                        </button>
+                        <CopyButton textToCopy={cat.slug} iconOnly size="icon-xs" />
                       </div>
                     </TableCell>
 

@@ -7,7 +7,6 @@ import { toast } from "sonner";
 import {
   AdminStatusTabs,
   AdminSubmissionCard,
-  generateTsCode,
   SubmissionCounts,
   TabStatus,
 } from "@/components/admin";
@@ -31,7 +30,6 @@ export function AdminSubmissionsClient({
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [deletingSubmission, setDeletingSubmission] = useState<Submission | null>(null);
-  const [copiedId, setCopiedId] = useState<string | null>(null);
   const [actionLoadingId, setActionLoadingId] = useState<string | null>(null);
 
   // Background refresh handler (used if initial submissions were not preloaded)
@@ -135,14 +133,6 @@ export function AdminSubmissionsClient({
     }
   };
 
-  const handleCopyTsCode = (sub: Submission) => {
-    const code = generateTsCode(sub);
-    navigator.clipboard.writeText(code);
-    setCopiedId(sub.id);
-    toast.info(`TypeScript entry copied for "${sub.title}".`);
-    setTimeout(() => setCopiedId(null), 2000);
-  };
-
   // Instant client-side filtering by active tab and search query
   const filteredSubmissions = allSubmissions.filter((sub) => {
     if (activeTab !== "all" && sub.status !== activeTab) return false;
@@ -199,9 +189,7 @@ export function AdminSubmissionsClient({
             <AdminSubmissionCard
               key={sub.id}
               submission={sub}
-              copied={copiedId === sub.id}
               isWorking={actionLoadingId === sub.id}
-              onCopyTs={() => handleCopyTsCode(sub)}
               onDelete={() => setDeletingSubmission(sub)}
               onUpdateStatus={(status) => handleUpdateStatus(sub.id, status)}
             />

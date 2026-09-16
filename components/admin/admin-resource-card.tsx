@@ -3,16 +3,14 @@
 import {
   ArrowRightIcon,
   ArrowsClockwiseIcon,
-  CheckCircleIcon,
-  ClipboardTextIcon,
   PencilSimpleIcon,
   TrashIcon,
   WarningCircleIcon,
 } from "@phosphor-icons/react";
-import { useState } from "react";
 
 import { ResourceCardView } from "@/components/resource-card-view";
 import { Button } from "@/components/ui/button";
+import { CopyButton } from "@/components/ui/copy-button";
 import { slugifyAuthor } from "@/lib/utils";
 
 import { AdminPingButton } from "./admin-ping-button";
@@ -41,8 +39,6 @@ export function AdminResourceCard({
   onPreview,
   resource: res,
 }: AdminResourceCardProps) {
-  const [copied, setCopied] = useState(false);
-
   const hasNoOg = !res.ogImage || !res.ogImage.trim();
   const hasNoAuthor = !res.authorName || !res.authorName.trim();
   const hasNoFavicon = !res.favicon || !res.favicon.trim();
@@ -51,13 +47,6 @@ export function AdminResourceCard({
 
   const healthStatus = res.healthStatus || "unknown";
   const healthConfig = HEALTH_STATUS_CONFIG[healthStatus];
-
-  const handleCopyJson = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    navigator.clipboard.writeText(JSON.stringify(res, null, 2));
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   return (
     <div className="border-line bg-surface/30 group hover:border-foreground/40 flex h-full flex-col justify-between overflow-hidden rounded-lg border-[1.5px] transition-all">
@@ -184,24 +173,13 @@ export function AdminResourceCard({
       {/* Docked Admin Action Bar: 1 Line with 3 Proper Buttons */}
       <div className="border-line bg-surface/80 border-t p-2.5 font-mono text-[11px]">
         <div className="grid grid-cols-3 gap-2">
-          <Button
+          <CopyButton
+            textToCopy={() => JSON.stringify(res, null, 2)}
+            labelName="JSON"
             size="sm"
             variant="outline"
-            onClick={handleCopyJson}
             className="border-line hover:bg-surface h-8 w-full gap-1.5 px-2 text-[11px] font-bold uppercase"
-          >
-            {copied ? (
-              <>
-                <CheckCircleIcon className="size-3.5 text-emerald-600" />
-                <span>Copied</span>
-              </>
-            ) : (
-              <>
-                <ClipboardTextIcon className="size-3.5" />
-                <span>JSON</span>
-              </>
-            )}
-          </Button>
+          />
 
           <Button
             size="sm"
