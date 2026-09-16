@@ -35,13 +35,13 @@ export function FilterBarSkeleton({
               key={i}
               className="filter-pill border-border/60 bg-card/60 flex items-center border-[1.5px] opacity-60"
             >
-              <Skeleton className={`h-2.5 ${width} bg-muted/60`} />
+              <Skeleton className={`h-2.5 ${width} bg-foreground/10`} />
             </div>
           ))}
         </div>
 
         <div className="filter-count">
-          <Skeleton className="bg-muted/60 h-3.5 w-14" />
+          <Skeleton className="bg-foreground/10 h-3.5 w-14" />
         </div>
       </div>
     </div>
