@@ -302,13 +302,15 @@ export function AdminAuthorDialog({
                   <FieldCheckmark checked={Boolean(formData.slug.trim())} />
                 </Label>
                 {!isEdit && (
-                  <button
+                  <Button
                     type="button"
+                    variant="link"
+                    size="xs"
                     onClick={() => setAutoSlug(!autoSlug)}
-                    className="text-primary text-[10px] hover:underline"
+                    className="text-primary h-auto p-0 font-mono text-[10px] hover:underline"
                   >
                     {autoSlug ? "Manual Slug" : "Auto Slug"}
-                  </button>
+                  </Button>
                 )}
               </div>
               <InputField
