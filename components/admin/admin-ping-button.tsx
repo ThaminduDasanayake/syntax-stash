@@ -54,7 +54,7 @@ export function AdminPingButton({
           )}
         >
           <HeartbeatIcon
-            weight="bold"
+            weight="duotone"
             className={cn("size-3 text-rose-500", isChecking && "animate-pulse")}
           />
           {showLabel && <span>{isChecking ? checkingLabel : label}</span>}
