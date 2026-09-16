@@ -30,7 +30,6 @@ export async function GET() {
       .select({
         id: tag.id,
         createdAt: tag.createdAt,
-        isFeatured: tag.isFeatured,
         name: tag.name,
         slug: tag.slug,
         toolCount: count(resourceTag.resourceId),
@@ -64,7 +63,7 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { isFeatured, name, slug } = body;
+    const { name, slug } = body;
 
     if (!name || typeof name !== "string" || !name.trim()) {
       return NextResponse.json({ error: "Tag name is required." }, { status: 400 });
@@ -86,7 +85,6 @@ export async function POST(req: Request) {
     await db.insert(tag).values({
       id: tagId,
       createdAt: new Date(),
-      isFeatured: Boolean(isFeatured),
       name: cleanName,
       slug: cleanSlug,
       updatedAt: new Date(),
@@ -116,7 +114,7 @@ export async function PATCH(req: Request) {
     }
 
     const body = await req.json();
-    const { id, isFeatured, name, slug } = body;
+    const { id, name, slug } = body;
 
     if (!id || typeof id !== "string") {
       return NextResponse.json({ error: "Tag ID is required." }, { status: 400 });
@@ -136,9 +134,6 @@ export async function PATCH(req: Request) {
     }
     if (slug !== undefined && slug.trim()) {
       updates.slug = normalizeTag(slug.trim());
-    }
-    if (isFeatured !== undefined) {
-      updates.isFeatured = Boolean(isFeatured);
     }
 
     await db.update(tag).set(updates).where(eq(tag.id, id));

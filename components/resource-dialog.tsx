@@ -22,7 +22,7 @@ import { DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/co
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { useSession } from "@/lib/auth-client";
 import { formatStarCount, getGitHubStars } from "@/lib/github";
-import { cn, getCategoryTheme, slugifyAuthor, THEME_CONFIG } from "@/lib/utils";
+import { cn, getCategoryTheme, parseAuthors, slugifyAuthor, THEME_CONFIG } from "@/lib/utils";
 import { Resource } from "@/types";
 
 export interface ResourceDialogProps {
@@ -218,14 +218,17 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
 
   const authorResources = useMemo(() => {
     if (!activeTool.author) return [];
-    const currentAuthors = Array.isArray(activeTool.author)
-      ? activeTool.author
-      : [activeTool.author];
+    const currentAuthors = parseAuthors(activeTool.author);
+    if (currentAuthors.length === 0) return [];
 
     return resourcePool.filter((r) => {
       if (r.title === activeTool.title || !r.author) return false;
-      const rAuthors = Array.isArray(r.author) ? r.author : [r.author];
-      return currentAuthors.some((ca) => rAuthors.includes(ca));
+      const rAuthors = parseAuthors(r.author);
+      return currentAuthors.some((ca) =>
+        rAuthors.some(
+          (ra) => ra.toLowerCase() === ca.toLowerCase() || slugifyAuthor(ra) === slugifyAuthor(ca),
+        ),
+      );
     });
   }, [activeTool, resourcePool]);
 
@@ -473,21 +476,7 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
 
           {activeTool.author &&
             (() => {
-              const authorList: string[] = Array.isArray(activeTool.author)
-                ? activeTool.author.flatMap((a) =>
-                    typeof a === "string"
-                      ? a
-                          .split(",")
-                          .map((x) => x.trim())
-                          .filter(Boolean)
-                      : [],
-                  )
-                : typeof activeTool.author === "string"
-                  ? activeTool.author
-                      .split(",")
-                      .map((x) => x.trim())
-                      .filter(Boolean)
-                  : [];
+              const authorList: string[] = parseAuthors(activeTool.author);
 
               if (authorList.length === 0) return null;
 
@@ -641,14 +630,11 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
               <div className="mb-5.5">
                 <div className="mb-2 flex items-center justify-between">
                   <span className={cn("text-display-2xs mb-2.5 block", activeThemeStyles.label)}>
-                    More by{" "}
-                    {Array.isArray(activeTool.author)
-                      ? activeTool.author.join(" & ")
-                      : activeTool.author}
+                    More by {parseAuthors(activeTool.author).join(" & ")}
                   </span>
-                  {!Array.isArray(activeTool.author) ? (
+                  {parseAuthors(activeTool.author).length === 1 ? (
                     <Link
-                      href={`/authors/${slugifyAuthor(activeTool.author)}`}
+                      href={`/authors/${slugifyAuthor(parseAuthors(activeTool.author)[0])}`}
                       className="text-muted-foreground hover:text-primary font-mono text-[11px] font-semibold hover:underline"
                     >
                       View all ({authorResources.length + 1}) →

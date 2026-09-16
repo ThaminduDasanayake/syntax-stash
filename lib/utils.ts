@@ -27,6 +27,24 @@ export function slugifyAuthor(name: string): string {
 }
 
 /**
+ * Parses an author field (string or string array) into individual author names.
+ * Supports comma (,), ampersand (&), 'and', and slash (/) delimiters.
+ */
+export function parseAuthors(author?: string | string[] | null): string[] {
+  if (!author) return [];
+  const rawList = Array.isArray(author) ? author : [author];
+  return rawList
+    .flatMap((item) => {
+      if (typeof item !== "string") return [];
+      return item
+        .split(/,|\s+&\s+|\s+and\s+|\s+\/\s+/i)
+        .map((a) => a.trim())
+        .filter(Boolean);
+    })
+    .filter((name, idx, arr) => arr.indexOf(name) === idx);
+}
+
+/**
  * Normalizes a tag string into a clean, lowercased, kebab-cased tag.
  */
 export function normalizeTag(rawTag: string): string {

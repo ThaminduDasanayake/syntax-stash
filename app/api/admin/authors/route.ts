@@ -7,7 +7,7 @@ import { isAdmin } from "@/lib/admin";
 import { auth } from "@/lib/auth";
 import { slugifyAuthor } from "@/lib/authors";
 import { db } from "@/lib/db";
-import { author, resource } from "@/lib/db/schema";
+import { author, resourceAuthor } from "@/lib/db/schema";
 
 async function verifyAdmin() {
   const reqHeaders = await headers();
@@ -34,7 +34,7 @@ export async function GET() {
         github: author.github,
         linkedin: author.linkedin,
         name: author.name,
-        resourceCount: count(resource.id),
+        resourceCount: count(resourceAuthor.resourceId),
         slug: author.slug,
         twitter: author.twitter,
         updatedAt: author.updatedAt,
@@ -42,9 +42,9 @@ export async function GET() {
         youtube: author.youtube,
       })
       .from(author)
-      .leftJoin(resource, eq(author.id, resource.authorId))
+      .leftJoin(resourceAuthor, eq(author.id, resourceAuthor.authorId))
       .groupBy(author.id)
-      .orderBy(desc(count(resource.id)), author.name);
+      .orderBy(desc(count(resourceAuthor.resourceId)), author.name);
 
     const result = rows.map((r) => ({
       ...r,
@@ -222,9 +222,9 @@ export async function DELETE(req: NextRequest) {
 
     // Check if author has linked resources
     const [resourceCheck] = await db
-      .select({ count: count(resource.id) })
-      .from(resource)
-      .where(eq(resource.authorId, id));
+      .select({ count: count(resourceAuthor.resourceId) })
+      .from(resourceAuthor)
+      .where(eq(resourceAuthor.authorId, id));
 
     if (resourceCheck && Number(resourceCheck.count) > 0) {
       return NextResponse.json(

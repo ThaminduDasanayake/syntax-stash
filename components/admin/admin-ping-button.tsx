@@ -52,10 +52,9 @@ export function AdminPingButton({
             showLabel ? "px-1.5 text-[10px]" : "size-6 p-0",
             className,
           )}
-          title={tooltipText}
         >
           <HeartbeatIcon
-            weight="bold"
+            weight="duotone"
             className={cn("size-3 text-rose-500", isChecking && "animate-pulse")}
           />
           {showLabel && <span>{isChecking ? checkingLabel : label}</span>}

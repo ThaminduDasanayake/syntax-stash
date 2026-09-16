@@ -10,7 +10,6 @@ import { Resource } from "@/types";
 export interface TagItem {
   id?: string;
   count: number;
-  isFeatured?: boolean;
   name: string;
   slug: string;
 }
@@ -71,7 +70,6 @@ export const getAllTags = cache(
           .select({
             id: tag.id,
             count: count(resourceTag.resourceId),
-            isFeatured: tag.isFeatured,
             name: tag.name,
             slug: tag.slug,
           })
@@ -83,7 +81,6 @@ export const getAllTags = cache(
         return rows.map((r) => ({
           id: r.id,
           count: Number(r.count) || 0,
-          isFeatured: Boolean(r.isFeatured),
           name: r.name,
           slug: r.slug,
         }));

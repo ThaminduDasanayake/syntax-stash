@@ -4,11 +4,9 @@ import {
   ArrowsClockwiseIcon,
   CaretLeftIcon,
   CaretRightIcon,
-  FunnelIcon,
   HeartbeatIcon,
   MagnifyingGlassIcon,
   PlusIcon,
-  SlidersHorizontalIcon,
   SquaresFourIcon,
   TableIcon,
 } from "@phosphor-icons/react";
@@ -22,6 +20,8 @@ import {
   AdminResourceCard,
   AdminResourceItem,
   AdminResourceTable,
+  FilterSelect,
+  SortSelect,
 } from "@/components/admin";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { ResourceDialog } from "@/components/resource-dialog";
@@ -32,6 +32,7 @@ import { SearchInput } from "@/components/ui/search-input";
 import { SelectField } from "@/components/ui/select-field";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCategories } from "@/hooks/use-categories";
+import { cn } from "@/lib/utils";
 
 const SORT_OPTIONS = [
   { label: "Oldest First", value: "oldest" },
@@ -69,7 +70,6 @@ function AdminResourcesClientContent({
   const [sortBy, setSortBy] = useState<string>(paramSort);
   const [viewMode, setViewMode] = useState<"cards" | "table">(paramView);
   const [currentPage, setCurrentPage] = useState(paramPage);
-  const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const searchDebounceRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -550,13 +550,6 @@ function AdminResourcesClientContent({
     syncUrl(sortBy, "all", "all", viewMode, 1, "");
   };
 
-  // Copy JSON handler
-  const handleCopyJson = (item: AdminResourceItem) => {
-    navigator.clipboard.writeText(JSON.stringify(item, null, 2));
-    setCopiedId(item.id);
-    setTimeout(() => setCopiedId(null), 2000);
-  };
-
   // Background refresh
   const handleRefresh = async () => {
     try {
@@ -674,7 +667,10 @@ function AdminResourcesClientContent({
               className="border-line hover:bg-surface h-9 gap-1.5 px-3 text-xs font-bold uppercase"
               title="Refresh catalog from database"
             >
-              <ArrowsClockwiseIcon className={`size-3.5 ${isRefreshing ? "animate-spin" : ""}`} />
+              <ArrowsClockwiseIcon
+                weight="bold"
+                className={cn("text-brand-green size-4", isRefreshing && "animate-spin")}
+              />
               <span className="hidden sm:inline">Refresh</span>
             </Button>
 
@@ -694,22 +690,16 @@ function AdminResourcesClientContent({
         </div>
 
         {/* Filter Dropdowns & Stats */}
-        <div className="border-line flex flex-wrap items-center justify-between gap-3 border-t pt-3">
+        <div className="border-line flex flex-wrap items-center justify-between gap-3 border-t-[1.5px] pt-3">
           <div className="flex flex-wrap items-center gap-5">
             {/* Category Select */}
-            <div className="flex items-center gap-1.5">
-              <FunnelIcon weight="duotone" className="text-accent size-7" />
-              <span className="text-muted-foreground text-[11px] font-bold uppercase">
-                Category:
-              </span>
-              <SelectField
-                value={selectedCategory}
-                onValueChange={handleCategoryChange}
-                options={categoryFilterOptions}
-                triggerClassName="h-8 font-mono text-xs min-w-[180px]"
-                variant="accent"
-              />
-            </div>
+            <FilterSelect
+              label="Category:"
+              value={selectedCategory}
+              onValueChange={handleCategoryChange}
+              options={categoryFilterOptions}
+              triggerClassName="min-w-[180px]"
+            />
 
             {/* Dynamic Health & Missing Data Filter */}
             {healthFilterOptions.length > 1 && (
@@ -729,17 +719,7 @@ function AdminResourcesClientContent({
             )}
 
             {/* Sort Select */}
-            <div className="flex items-center gap-1.5">
-              <SlidersHorizontalIcon className="text-brand-purple size-7" />
-              <span className="text-muted-foreground text-[11px] font-bold uppercase">Sort:</span>
-              <SelectField
-                value={sortBy}
-                onValueChange={handleSortChange}
-                options={SORT_OPTIONS}
-                triggerClassName="h-8 font-mono text-xs min-w-[150px]"
-                variant="secondary"
-              />
-            </div>
+            <SortSelect value={sortBy} onValueChange={handleSortChange} options={SORT_OPTIONS} />
           </div>
 
           {/* Result Counts */}
@@ -797,10 +777,8 @@ function AdminResourcesClientContent({
               onDelete={(item) => setDeletingResource(item)}
               onCheckHealth={(item) => handleCheckHealth(item)}
               onApplyRedirect={(item) => handleApplyRedirect(item)}
-              onCopyJson={(item) => handleCopyJson(item)}
               checkingHealthId={checkingHealthId}
               applyingRedirectId={applyingRedirectId}
-              copiedId={copiedId}
               isWorking={isWorking}
             />
           )}
@@ -924,38 +902,6 @@ function AdminResourcesClientContent({
         }
         confirmLabel="Hold to delete"
       />
-
-      {/*<AlertDialog*/}
-      {/*  open={Boolean(deletingResource)}*/}
-      {/*  onOpenChange={(open) => !open && setDeletingResource(null)}*/}
-      {/*>*/}
-      {/*  <AlertDialogContent className="font-mono text-xs sm:max-w-md">*/}
-      {/*    <AlertDialogHeader>*/}
-      {/*      <AlertDialogTitle className="text-destructive font-mono text-base font-bold uppercase">*/}
-      {/*        Delete Resource from Live Catalog?*/}
-      {/*      </AlertDialogTitle>*/}
-      {/*      <AlertDialogDescription className="text-muted-foreground font-mono text-xs leading-relaxed">*/}
-      {/*        Are you sure you want to delete{" "}*/}
-      {/*        <strong className="text-foreground">&quot;{deletingResource?.title}&quot;</strong>?*/}
-      {/*        <br />*/}
-      {/*        <br />*/}
-      {/*        This will permanently remove the resource from the database and instantly purge the*/}
-      {/*        edge cache.*/}
-      {/*      </AlertDialogDescription>*/}
-      {/*    </AlertDialogHeader>*/}
-      {/*    <AlertDialogFooter className="mt-4 gap-2">*/}
-      {/*      <AlertDialogCancel className="border-line font-mono text-xs font-bold uppercase">*/}
-      {/*        Cancel*/}
-      {/*      </AlertDialogCancel>*/}
-      {/*      <AlertDialogAction*/}
-      {/*        onClick={handleConfirmDelete}*/}
-      {/*        className="bg-destructive text-destructive-foreground hover:bg-destructive/90 font-mono text-xs font-bold uppercase"*/}
-      {/*      >*/}
-      {/*        Delete Resource*/}
-      {/*      </AlertDialogAction>*/}
-      {/*    </AlertDialogFooter>*/}
-      {/*  </AlertDialogContent>*/}
-      {/*</AlertDialog>*/}
     </div>
   );
 }

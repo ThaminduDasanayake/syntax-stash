@@ -3,7 +3,6 @@
 import {
   ArrowCounterClockwiseIcon,
   ArrowSquareOutIcon,
-  ClipboardTextIcon,
   GlobeIcon,
   MagnifyingGlassIcon,
   TrashIcon,
@@ -16,24 +15,22 @@ import { useMemo } from "react";
 
 import { CardIcon } from "@/components/card-icon";
 import { Button } from "@/components/ui/button";
+import { CopyButton } from "@/components/ui/copy-button";
 import { Submission } from "@/lib/db/schema";
 import { cn, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
 
 import { STATUS_CONFIG, SubmissionStatus } from "./types";
+import { generateTsCode } from "./utils";
 
 interface AdminSubmissionCardProps {
-  copied: boolean;
   isWorking: boolean;
-  onCopyTs: () => void;
   onDelete: () => void;
   onUpdateStatus: (status: "approved" | "rejected" | "pending") => void;
   submission: Submission;
 }
 
 export function AdminSubmissionCard({
-  copied,
   isWorking,
-  onCopyTs,
   onDelete,
   onUpdateStatus,
   submission: sub,
@@ -307,15 +304,13 @@ export function AdminSubmissionCard({
               </Button>
             )}
 
-            <Button
+            <CopyButton
+              textToCopy={() => generateTsCode(sub)}
+              labelName="Copy TypeScript"
               size="sm"
               variant="outline"
-              onClick={onCopyTs}
               className="gap-1 text-[11px] font-bold uppercase"
-            >
-              <ClipboardTextIcon weight="duotone" />
-              {copied ? "Copied!" : "Copy TypeScript"}
-            </Button>
+            />
           </div>
 
           <div className="flex items-center gap-2">

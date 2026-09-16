@@ -3,17 +3,18 @@
 import {
   ArrowsClockwiseIcon,
   CheckIcon,
-  FunnelIcon,
   PencilSimpleIcon,
   PlusIcon,
-  StarIcon,
   TagIcon,
   TrashIcon,
 } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
+import { FilterSelect } from "@/components/admin/filter-select";
+import { SortSelect } from "@/components/admin/sort-select";
 import { DuplicateNotice } from "@/components/submissions/duplicate-url-notice";
+import { invalidateTagCache } from "@/components/submissions/tag-picker";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,7 +27,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -38,7 +38,6 @@ import {
 import { EmptyState } from "@/components/ui/empty-state";
 import { InputField } from "@/components/ui/input-field";
 import { SearchInput } from "@/components/ui/search-input";
-import { SelectField } from "@/components/ui/select-field";
 import {
   Table,
   TableBody,
@@ -47,7 +46,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { normalizeTag } from "@/lib/utils";
+import { cn, normalizeTag } from "@/lib/utils";
 
 import {
   AdminConfirmEditDialog,
@@ -56,7 +55,6 @@ import {
 } from "./admin-confirm-edit-dialog";
 
 const TAG_FIELD_LABELS: Record<string, string> = {
-  isFeatured: "Featured Status",
   name: "Tag Name",
   slug: "Tag Slug",
 };
@@ -64,7 +62,6 @@ const TAG_FIELD_LABELS: Record<string, string> = {
 export interface AdminTagItem {
   createdAt?: Date | string;
   id: string;
-  isFeatured: boolean;
   name: string;
   slug: string;
   toolCount: number;
@@ -77,8 +74,8 @@ interface AdminTagsClientProps {
 
 const FILTER_OPTIONS = [
   { label: "All Tags", value: "all" },
-  { label: "Featured Only", value: "featured" },
-  { label: "Standard (Non-Featured)", value: "standard" },
+  { label: "Unused (0 Tools)", value: "unused" },
+  { label: "Used in Catalog", value: "used" },
 ];
 
 const SORT_OPTIONS = [
@@ -107,7 +104,6 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
 
   // Form state
   const [formData, setFormData] = useState({
-    isFeatured: false,
     name: "",
     slug: "",
   });
@@ -140,11 +136,11 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
       );
     }
 
-    // Filter by featured
-    if (filterMode === "featured") {
-      result = result.filter((t) => t.isFeatured);
-    } else if (filterMode === "standard") {
-      result = result.filter((t) => !t.isFeatured);
+    // Filter by usage
+    if (filterMode === "used") {
+      result = result.filter((t) => t.toolCount > 0);
+    } else if (filterMode === "unused") {
+      result = result.filter((t) => t.toolCount === 0);
     }
 
     // Sort
@@ -197,7 +193,6 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
   const handleOpenAdd = () => {
     setEditingTag(null);
     setFormData({
-      isFeatured: false,
       name: "",
       slug: "",
     });
@@ -209,7 +204,6 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
   const handleOpenEdit = (tagItem: AdminTagItem) => {
     setEditingTag(tagItem);
     setFormData({
-      isFeatured: tagItem.isFeatured,
       name: tagItem.name,
       slug: tagItem.slug,
     });
@@ -226,39 +220,6 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
     }));
   };
 
-  // Quick toggle featured status
-  const handleToggleFeatured = async (tagItem: AdminTagItem) => {
-    const nextFeatured = !tagItem.isFeatured;
-    const previous = tags;
-
-    setTags((prev) =>
-      prev.map((t) => (t.id === tagItem.id ? { ...t, isFeatured: nextFeatured } : t)),
-    );
-
-    try {
-      const res = await fetch("/api/admin/tags", {
-        body: JSON.stringify({
-          id: tagItem.id,
-          isFeatured: nextFeatured,
-        }),
-        headers: { "Content-Type": "application/json" },
-        method: "PATCH",
-      });
-
-      if (!res.ok) {
-        setTags(previous);
-        toast.error("Failed to update featured status.");
-      } else {
-        toast.success(
-          nextFeatured ? `"${tagItem.name}" marked as featured.` : `"${tagItem.name}" unfeatured.`,
-        );
-      }
-    } catch {
-      setTags(previous);
-      toast.error("Network error.");
-    }
-  };
-
   // Execute Save
   const executeSave = async () => {
     try {
@@ -268,7 +229,6 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
         const res = await fetch("/api/admin/tags", {
           body: JSON.stringify({
             id: editingTag.id,
-            isFeatured: formData.isFeatured,
             name: formData.name.trim(),
             slug: formData.slug.trim() ? normalizeTag(formData.slug) : normalizeTag(formData.name),
           }),
@@ -287,7 +247,6 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
             t.id === editingTag.id
               ? {
                   ...t,
-                  isFeatured: formData.isFeatured,
                   name: formData.name.trim(),
                   slug: formData.slug.trim()
                     ? normalizeTag(formData.slug)
@@ -297,6 +256,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
               : t,
           ),
         );
+        invalidateTagCache();
         toast.success(`Tag "${formData.name}" updated successfully.`);
         setIsConfirmOpen(false);
         setIsDialogOpen(false);
@@ -304,7 +264,6 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
         // POST
         const res = await fetch("/api/admin/tags", {
           body: JSON.stringify({
-            isFeatured: formData.isFeatured,
             name: formData.name.trim(),
             slug: formData.slug.trim() ? normalizeTag(formData.slug) : normalizeTag(formData.name),
           }),
@@ -322,12 +281,12 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
           ...prev,
           {
             id: data.id,
-            isFeatured: formData.isFeatured,
             name: formData.name.trim(),
             slug: formData.slug.trim() ? normalizeTag(formData.slug) : normalizeTag(formData.name),
             toolCount: 0,
           },
         ]);
+        invalidateTagCache();
         toast.success(`Tag "${formData.name}" created successfully.`);
         setIsDialogOpen(false);
       }
@@ -368,6 +327,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
 
     // Optimistic delete
     setTags((prev) => prev.filter((t) => t.id !== target.id));
+    invalidateTagCache();
     setDeletingTag(null);
 
     try {
@@ -378,12 +338,14 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
 
       if (!res.ok) {
         setTags(previous);
+        invalidateTagCache();
         toast.error(data.error || "Failed to delete tag.");
       } else {
         toast.success(`Tag "${target.name}" deleted.`);
       }
     } catch {
       setTags(previous);
+      invalidateTagCache();
       toast.error("Network error. Tag restored.");
     }
   };
@@ -404,6 +366,19 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
             />
           </div>
 
+          <FilterSelect
+            label="Tag:"
+            value={filterMode}
+            onValueChange={(val) => setFilterMode(val)}
+            options={FILTER_OPTIONS}
+          />
+
+          <SortSelect
+            value={sortBy}
+            onValueChange={(val) => setSortBy(val)}
+            options={SORT_OPTIONS}
+          />
+
           {/* Action Buttons */}
           <div className="flex items-center gap-2">
             <Button
@@ -414,7 +389,10 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
               className="h-9 text-xs uppercase"
               title="Refresh tags catalog"
             >
-              <ArrowsClockwiseIcon className={`size-3.5 ${isRefreshing ? "animate-spin" : ""}`} />
+              <ArrowsClockwiseIcon
+                weight="bold"
+                className={cn("text-brand-green size-4", isRefreshing && "animate-spin")}
+              />
               <span className="hidden sm:inline">Sync</span>
             </Button>
 
@@ -426,30 +404,8 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
         </div>
 
         {/* Filter and Sort bar */}
-        <div className="border-border/40 flex flex-wrap items-center justify-between gap-3 border-t pt-3">
-          <div className="flex flex-wrap items-center gap-3">
-            <div className="flex items-center gap-1.5">
-              <FunnelIcon className="text-muted-foreground size-3.5" />
-              <SelectField
-                value={filterMode}
-                onValueChange={(val) => setFilterMode(val)}
-                options={FILTER_OPTIONS}
-                triggerClassName="h-8 font-mono text-[11px]"
-                variant="primary"
-              />
-            </div>
-
-            <div className="flex items-center gap-1.5">
-              <span className="text-muted-foreground text-[11px]">Sort:</span>
-              <SelectField
-                value={sortBy}
-                onValueChange={(val) => setSortBy(val)}
-                options={SORT_OPTIONS}
-                triggerClassName="h-8 font-mono text-[11px]"
-                variant="secondary"
-              />
-            </div>
-          </div>
+        <div className="border-line flex flex-wrap items-center justify-between gap-3 border-t-[1.5px] pt-3">
+          <div className="flex flex-wrap items-center gap-5"></div>
 
           <div className="text-muted-foreground text-[11px]">
             Displaying <strong className="text-foreground">{filteredAndSortedTags.length}</strong>{" "}
@@ -492,7 +448,6 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
           <Table className="text-xs">
             <TableHeader className="bg-surface">
               <TableRow className="border-line hover:bg-transparent">
-                <TableHead className="w-12 text-center uppercase">Featured</TableHead>
                 <TableHead className="uppercase">Tag Name & Slug</TableHead>
                 <TableHead className="text-center uppercase">Usage (Assigned Resources)</TableHead>
                 <TableHead className="w-24 text-right uppercase">Actions</TableHead>
@@ -501,33 +456,12 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
             <TableBody>
               {filteredAndSortedTags.map((tagItem) => (
                 <TableRow key={tagItem.id} className="border-line hover:bg-surface/50">
-                  <TableCell className="text-center">
-                    <button
-                      type="button"
-                      onClick={() => handleToggleFeatured(tagItem)}
-                      title={tagItem.isFeatured ? "Unmark featured" : "Mark as featured"}
-                      className="text-muted-foreground p-1 transition-colors hover:text-amber-500"
-                    >
-                      <StarIcon
-                        weight={tagItem.isFeatured ? "fill" : "regular"}
-                        className={`size-4 ${tagItem.isFeatured ? "text-star" : "opacity-40"}`}
-                      />
-                    </button>
-                  </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
                       <span className="text-foreground font-bold">#{tagItem.name}</span>
                       <span className="text-muted-foreground text-[10px] tracking-wide">
                         ({tagItem.slug})
                       </span>
-                      {tagItem.isFeatured && (
-                        <Badge
-                          variant="outline"
-                          className="border-amber-500/30 bg-amber-500/10 text-[10px] text-amber-600 dark:text-amber-400"
-                        >
-                          Featured
-                        </Badge>
-                      )}
                     </div>
                   </TableCell>
                   <TableCell className="text-center">
@@ -575,7 +509,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
             </DialogTitle>
             <DialogDescription className="text-xs">
               {editingTag
-                ? "Update tag name, slug identifier, or featured status."
+                ? "Update tag name or slug identifier."
                 : "Add a new tag for categorizing and discovering resources."}
             </DialogDescription>
           </DialogHeader>
@@ -615,22 +549,6 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
                 required
                 className="font-mono text-xs"
               />
-            </div>
-
-            <div className="border-line bg-surface/50 flex items-center gap-2 rounded border-[1.5px] p-3">
-              <Checkbox
-                id="tag-is-featured"
-                checked={formData.isFeatured}
-                onCheckedChange={(checked) =>
-                  setFormData((prev) => ({ ...prev, isFeatured: Boolean(checked) }))
-                }
-              />
-              <label
-                htmlFor="tag-is-featured"
-                className="cursor-pointer text-xs font-medium select-none"
-              >
-                Featured Tag (highlighted prominently in filters and search)
-              </label>
             </div>
 
             {duplicateTag && (

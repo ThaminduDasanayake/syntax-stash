@@ -5,9 +5,17 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { isAdmin } from "@/lib/admin";
 import { auth } from "@/lib/auth";
-import { slugifyAuthor } from "@/lib/authors";
+import { parseAuthors, slugifyAuthor } from "@/lib/authors";
 import { db } from "@/lib/db";
-import { author, category, resource, resourceTag, submission, tag } from "@/lib/db/schema";
+import {
+  author,
+  category,
+  resource,
+  resourceAuthor,
+  resourceTag,
+  submission,
+  tag,
+} from "@/lib/db/schema";
 import { normalizeTag } from "@/lib/tags";
 
 async function verifyAdmin() {
@@ -100,31 +108,41 @@ export async function PATCH(req: Request) {
 
     if (sub) {
       if (sub.status === "approved") {
-        // 1. Resolve Author(s) from Database (Verified by admin)
-        let authorRecordId: string | null = null;
+        // 1. Resolve Individual Author(s) from Database (Never store combined author names in author table)
+        const resolvedAuthorIds: string[] = [];
         if (sub.author && sub.author.trim()) {
-          const authorName = sub.author.trim();
-          const authorSlug = slugifyAuthor(authorName);
+          const parsed = parseAuthors(sub.author);
+          for (const singleName of parsed) {
+            const authorName = singleName.trim();
+            if (!authorName) continue;
+            const authorSlug = slugifyAuthor(authorName);
 
-          const [existingAuthor] = await db
-            .select()
-            .from(author)
-            .where(eq(author.slug, authorSlug));
+            const [existingAuthor] = await db
+              .select()
+              .from(author)
+              .where(or(eq(author.slug, authorSlug), ilike(author.name, authorName)));
 
-          if (existingAuthor) {
-            authorRecordId = existingAuthor.id;
-          } else {
-            // Check if first author in comma-separated list exists
-            const firstAuthor = authorName.split(",")[0]?.trim();
-            if (firstAuthor) {
-              const firstSlug = slugifyAuthor(firstAuthor);
-              const [foundFirst] = await db.select().from(author).where(eq(author.slug, firstSlug));
-              if (foundFirst) {
-                authorRecordId = foundFirst.id;
-              }
+            if (existingAuthor) {
+              resolvedAuthorIds.push(existingAuthor.id);
+            } else {
+              const newAuthorId = crypto.randomUUID();
+              await db.insert(author).values({
+                id: newAuthorId,
+                blog: parsed.length === 1 ? sub.authorBlog || null : null,
+                github: parsed.length === 1 ? sub.authorGitHub || null : null,
+                linkedin: parsed.length === 1 ? sub.authorLinkedIn || null : null,
+                name: authorName,
+                slug: authorSlug,
+                twitter: parsed.length === 1 ? sub.authorTwitter || null : null,
+                website: parsed.length === 1 ? sub.authorWebsite || null : null,
+                youtube: parsed.length === 1 ? sub.authorYouTube || null : null,
+              });
+              resolvedAuthorIds.push(newAuthorId);
             }
           }
         }
+
+        const primaryAuthorId = resolvedAuthorIds[0] || null;
 
         // 2. Resolve Category ID
         let categoryRecordId: string;
@@ -159,7 +177,7 @@ export async function PATCH(req: Request) {
             .update(resource)
             .set({
               title: sub.title,
-              authorId: authorRecordId,
+              authorId: primaryAuthorId,
               categoryId: categoryRecordId,
               description: sub.description,
               favicon: sub.favicon || null,
@@ -175,7 +193,7 @@ export async function PATCH(req: Request) {
           await db.insert(resource).values({
             id: liveResourceId,
             title: sub.title,
-            authorId: authorRecordId,
+            authorId: primaryAuthorId,
             categoryId: categoryRecordId,
             description: sub.description,
             favicon: sub.favicon || null,
@@ -187,7 +205,19 @@ export async function PATCH(req: Request) {
           });
         }
 
-        // 4. Update tags in resourceTag junction table
+        // 4. Link all authors in resourceAuthor junction table
+        await db.delete(resourceAuthor).where(eq(resourceAuthor.resourceId, liveResourceId));
+        for (const aId of resolvedAuthorIds) {
+          await db
+            .insert(resourceAuthor)
+            .values({
+              authorId: aId,
+              resourceId: liveResourceId,
+            })
+            .onConflictDoNothing();
+        }
+
+        // 5. Update tags in resourceTag junction table
         if (sub.tags && typeof sub.tags === "string" && sub.tags.trim()) {
           await db.delete(resourceTag).where(eq(resourceTag.resourceId, liveResourceId));
 

@@ -117,7 +117,6 @@ export const tag = pgTable(
   {
     id: text("id").primaryKey(),
     createdAt: timestamp("created_at").notNull().defaultNow(),
-    isFeatured: boolean("is_featured").notNull().default(false),
     name: text("name").notNull(),
     slug: text("slug").notNull().unique(),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
@@ -190,6 +189,24 @@ export const resourceTag = pgTable(
   ],
 );
 
+export const resourceAuthor = pgTable(
+  "resource_author",
+  {
+    authorId: text("author_id")
+      .notNull()
+      .references(() => author.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    resourceId: text("resource_id")
+      .notNull()
+      .references(() => resource.id, { onDelete: "cascade" }),
+  },
+  (table) => [
+    index("resource_author_author_id_idx").on(table.authorId),
+    index("resource_author_resource_id_idx").on(table.resourceId),
+    primaryKey({ columns: [table.authorId, table.resourceId] }),
+  ],
+);
+
 export const collection = pgTable(
   "collection",
   {
@@ -236,6 +253,7 @@ export const userRelations = relations(user, ({ many }) => ({
 }));
 
 export const authorRelations = relations(author, ({ many }) => ({
+  resourceAuthors: many(resourceAuthor),
   resources: many(resource),
 }));
 
@@ -261,7 +279,19 @@ export const resourceRelations = relations(resource, ({ many, one }) => ({
     fields: [resource.id],
     references: [resourceHealth.resourceId],
   }),
+  resourceAuthors: many(resourceAuthor),
   resourceTags: many(resourceTag),
+}));
+
+export const resourceAuthorRelations = relations(resourceAuthor, ({ one }) => ({
+  author: one(author, {
+    fields: [resourceAuthor.authorId],
+    references: [author.id],
+  }),
+  resource: one(resource, {
+    fields: [resourceAuthor.resourceId],
+    references: [resource.id],
+  }),
 }));
 
 export const resourceHealthRelations = relations(resourceHealth, ({ one }) => ({
@@ -357,6 +387,8 @@ export type Tag = typeof tag.$inferSelect;
 export type NewTag = typeof tag.$inferInsert;
 export type ResourceTag = typeof resourceTag.$inferSelect;
 export type NewResourceTag = typeof resourceTag.$inferInsert;
+export type ResourceAuthor = typeof resourceAuthor.$inferSelect;
+export type NewResourceAuthor = typeof resourceAuthor.$inferInsert;
 export type Collection = typeof collection.$inferSelect;
 export type NewCollection = typeof collection.$inferInsert;
 export type CollectionItem = typeof collectionItem.$inferSelect;

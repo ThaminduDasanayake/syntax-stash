@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
-import { cn, isValidHttpUrl } from "@/lib/utils";
+import { cn, isValidHttpUrl, parseAuthors } from "@/lib/utils";
 
 export interface SuggestedAuthorData {
   blog?: string;
@@ -118,10 +118,7 @@ export function AuthorSocialFields({
       return;
     }
 
-    const rawNames = (values.author || "")
-      .split(",")
-      .map((s) => s.trim())
-      .filter(Boolean);
+    const rawNames = parseAuthors(values.author);
 
     if (isAdminMode) {
       // In Admin mode, all selected authors map cleanly to catalog combobox

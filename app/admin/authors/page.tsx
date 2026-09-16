@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 import { AdminAuthorsClient } from "@/components/admin/admin-authors-client";
 import { db } from "@/lib/db";
-import { author, resource } from "@/lib/db/schema";
+import { author, resourceAuthor } from "@/lib/db/schema";
 
 export const metadata: Metadata = {
   title: "Authors Manager — Syntax Stash Admin",
@@ -22,7 +22,7 @@ export default async function AdminAuthorsPage() {
       github: author.github,
       linkedin: author.linkedin,
       name: author.name,
-      resourceCount: count(resource.id),
+      resourceCount: count(resourceAuthor.resourceId),
       slug: author.slug,
       twitter: author.twitter,
       updatedAt: author.updatedAt,
@@ -30,9 +30,9 @@ export default async function AdminAuthorsPage() {
       youtube: author.youtube,
     })
     .from(author)
-    .leftJoin(resource, eq(author.id, resource.authorId))
+    .leftJoin(resourceAuthor, eq(author.id, resourceAuthor.authorId))
     .groupBy(author.id)
-    .orderBy(desc(count(resource.id)), author.name);
+    .orderBy(desc(count(resourceAuthor.resourceId)), author.name);
 
   const authors = rows.map((r) => ({
     ...r,

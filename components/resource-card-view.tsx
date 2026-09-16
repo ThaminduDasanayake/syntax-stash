@@ -13,7 +13,7 @@ import { useMemo, useState } from "react";
 import { CardIcon } from "@/components/card-icon";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { formatStarCount } from "@/lib/github";
-import { cn, isValidHttpUrl, Theme } from "@/lib/utils";
+import { cn, isValidHttpUrl, parseAuthors, Theme } from "@/lib/utils";
 
 export interface ResourceCardViewProps {
   author?: string | string[] | null;
@@ -86,26 +86,7 @@ export function ResourceCardView({
       : [];
 
   // Parse authors supporting comma-separated strings or arrays
-  const authorList: string[] = useMemo(() => {
-    if (!author) return [];
-    if (Array.isArray(author)) {
-      return author.flatMap((a) =>
-        typeof a === "string"
-          ? a
-              .split(",")
-              .map((x) => x.trim())
-              .filter(Boolean)
-          : [],
-      );
-    }
-    if (typeof author === "string") {
-      return author
-        .split(",")
-        .map((x) => x.trim())
-        .filter(Boolean);
-    }
-    return [];
-  }, [author]);
+  const authorList: string[] = useMemo(() => parseAuthors(author), [author]);
 
   const handleCardClick = () => {
     onCardClick?.();
@@ -206,54 +187,50 @@ export function ResourceCardView({
 
         {/* Row 3: Footer — author · stars · action buttons */}
         <div
-          className="flex items-center justify-between gap-2 pt-0.5"
+          className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 pt-0.5"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Left: Author only — hidden entirely when no author */}
+          {/* Left: Author list — renders all co-authors */}
           {authorList.length > 0 && (
-            <div className="flex min-w-0 items-center gap-1 font-mono text-xs text-zinc-500">
-              <span className="truncate">
-                {authorList.map((authorName, index) => {
-                  const href =
-                    typeof authorHref === "function"
-                      ? authorHref(authorName)
-                      : typeof authorHref === "string"
-                        ? authorHref
-                        : null;
-                  return (
-                    <span key={authorName} className="inline-flex items-center">
-                      {index > 0 && <span className="mx-1 text-zinc-700">&amp;</span>}
-                      {href ? (
-                        <Link
-                          href={href}
-                          className="text-zinc-400 transition-colors hover:text-white hover:underline"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          {authorName}
-                        </Link>
-                      ) : (
-                        <span className="text-zinc-400">{authorName}</span>
-                      )}
-                    </span>
-                  );
-                })}
-              </span>
+            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-1 gap-y-0.5 font-mono text-xs">
+              {authorList.map((authorName, index) => {
+                const href =
+                  typeof authorHref === "function"
+                    ? authorHref(authorName)
+                    : typeof authorHref === "string"
+                      ? authorHref
+                      : null;
+                return (
+                  <span key={authorName} className="inline-flex items-center text-zinc-400">
+                    {index > 0 && <span className="mr-1 text-zinc-500">&amp;</span>}
+                    {href ? (
+                      <Link
+                        href={href}
+                        className="transition-colors hover:text-white hover:underline"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {authorName}
+                      </Link>
+                    ) : (
+                      <span className="text-zinc-400">{authorName}</span>
+                    )}
+                  </span>
+                );
+              })}
             </div>
           )}
 
-          {/* Center: Stars count — subtle amber, separate from title */}
-          {stars !== null && (
-            <span
-              className="inline-flex shrink-0 items-center gap-1 font-mono text-[11px] text-zinc-400 tabular-nums"
-              title={`${stars.toLocaleString()} GitHub stars`}
-            >
-              <StarIcon weight="fill" className="text-star size-3" />
-              {formatStarCount(stars)}
-            </span>
-          )}
-
-          {/* Right: Bookmark + Open-in-new-tab */}
-          <div className="ml-auto flex shrink-0 items-center gap-1">
+          {/* Right: Stars + Actions */}
+          <div className="ml-auto flex shrink-0 items-center gap-1.5">
+            {stars !== null && (
+              <span
+                className="inline-flex items-center gap-1 font-mono text-[11px] text-zinc-400 tabular-nums"
+                title={`${stars.toLocaleString()} GitHub stars`}
+              >
+                <StarIcon weight="fill" className="text-star size-3" />
+                {formatStarCount(stars)}
+              </span>
+            )}
             {onBookmarkClick && (
               <Tooltip>
                 <TooltipTrigger asChild>

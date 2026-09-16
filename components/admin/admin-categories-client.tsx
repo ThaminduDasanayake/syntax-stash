@@ -3,16 +3,15 @@
 import {
   ArrowsClockwiseIcon,
   CheckIcon,
-  CopyIcon,
   FoldersIcon,
   PencilSimpleIcon,
   PlusIcon,
-  SlidersHorizontalIcon,
   TrashIcon,
 } from "@phosphor-icons/react";
 import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
 
+import { SortSelect } from "@/components/admin/sort-select";
 import { DuplicateNotice } from "@/components/submissions/duplicate-url-notice";
 import {
   AlertDialog,
@@ -26,6 +25,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { CopyButton } from "@/components/ui/copy-button";
 import {
   Dialog,
   DialogContent,
@@ -37,7 +37,6 @@ import {
 import { EmptyState } from "@/components/ui/empty-state";
 import { InputField } from "@/components/ui/input-field";
 import { SearchInput } from "@/components/ui/search-input";
-import { SelectField } from "@/components/ui/select-field";
 import {
   Table,
   TableBody,
@@ -46,7 +45,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { slugify } from "@/lib/utils";
+import { cn, slugify } from "@/lib/utils";
 
 import {
   AdminConfirmEditDialog,
@@ -148,12 +147,6 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
 
     return sorted;
   }, [categories, searchQuery, sortBy]);
-
-  // Copy to clipboard
-  const handleCopy = (text: string, label: string) => {
-    navigator.clipboard.writeText(text);
-    toast.success(`Copied ${label} "${text}" to clipboard.`);
-  };
 
   // Refresh
   const handleRefresh = async () => {
@@ -334,17 +327,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
           </div>
 
           {/* Sort Dropdown */}
-          <div className="flex items-center gap-1.5">
-            <SlidersHorizontalIcon className="text-muted-foreground size-3.5" />
-            <span className="text-muted-foreground text-[11px] font-bold uppercase">Sort:</span>
-            <SelectField
-              value={sortBy}
-              onValueChange={setSortBy}
-              options={SORT_OPTIONS}
-              triggerClassName="h-9 font-mono text-xs min-w-[170px]"
-              variant="secondary"
-            />
-          </div>
+          <SortSelect value={sortBy} onValueChange={setSortBy} options={SORT_OPTIONS} />
 
           {/* Action Buttons */}
           <div className="flex items-center gap-2">
@@ -356,7 +339,10 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
               className="h-9 text-xs uppercase"
               title="Refresh category catalog"
             >
-              <ArrowsClockwiseIcon className={`size-3.5 ${isRefreshing ? "animate-spin" : ""}`} />
+              <ArrowsClockwiseIcon
+                weight="bold"
+                className={cn("text-brand-green size-4", isRefreshing && "animate-spin")}
+              />
               <span className="hidden sm:inline">Sync</span>
             </Button>
 
@@ -437,8 +423,9 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
                     </TableCell>
 
                     {/* Name */}
-                    <TableCell>
+                    <TableCell className="flex items-center justify-start gap-1.5">
                       <span className="text-foreground font-bold">{cat.name}</span>
+                      <CopyButton textToCopy={cat.name} iconOnly size="icon-xs" />
                     </TableCell>
 
                     {/* Slug */}
@@ -447,14 +434,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
                         <Badge variant="secondary" className="px-1.5 py-0 text-[11px] font-normal">
                           {cat.slug}
                         </Badge>
-                        <button
-                          type="button"
-                          onClick={() => handleCopy(cat.slug, "Slug")}
-                          className="text-muted-foreground hover:text-foreground cursor-pointer p-0.5 opacity-60 hover:opacity-100"
-                          title="Copy slug"
-                        >
-                          <CopyIcon className="size-3" />
-                        </button>
+                        <CopyButton textToCopy={cat.slug} iconOnly size="icon-xs" />
                       </div>
                     </TableCell>
 

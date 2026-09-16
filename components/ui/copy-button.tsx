@@ -16,7 +16,7 @@ interface CopyButtonProps extends ComponentProps<typeof Button> {
 
 export const CopyButton = ({
   className,
-  copiedLabelName = "Copied!",
+  copiedLabelName = "Copied",
   disabled,
   iconOnly = false,
   labelName = "Copy",

@@ -3,7 +3,15 @@ import { unstable_cache } from "next/cache";
 import { cache } from "react";
 
 import { db } from "@/lib/db";
-import { author, category, resource, resourceHealth, resourceTag, tag } from "@/lib/db/schema";
+import {
+  author,
+  category,
+  resource,
+  resourceAuthor,
+  resourceHealth,
+  resourceTag,
+  tag,
+} from "@/lib/db/schema";
 import { Resource } from "@/types";
 
 /**
@@ -43,7 +51,8 @@ export const getAllResources = cache(
             url: resource.url,
           })
           .from(resource)
-          .leftJoin(author, eq(resource.authorId, author.id))
+          .leftJoin(resourceAuthor, eq(resource.id, resourceAuthor.resourceId))
+          .leftJoin(author, eq(resourceAuthor.authorId, author.id))
           .leftJoin(category, eq(resource.categoryId, category.id))
           .leftJoin(resourceTag, eq(resource.id, resourceTag.resourceId))
           .leftJoin(tag, eq(resourceTag.tagId, tag.id))
@@ -57,7 +66,7 @@ export const getAllResources = cache(
           string,
           {
             id: string;
-            author?: string;
+            authors: string[];
             category: string;
             createdAt?: string;
             description?: string;
@@ -75,11 +84,12 @@ export const getAllResources = cache(
 
         for (const r of rows) {
           const catName = r.categoryName || "Generators";
-          if (!resourceMap.has(r.id)) {
-            resourceMap.set(r.id, {
+          let entry = resourceMap.get(r.id);
+          if (!entry) {
+            entry = {
               id: r.id,
               title: r.title,
-              author: r.authorName || undefined,
+              authors: r.authorName ? [r.authorName] : [],
               category: catName,
               createdAt: r.createdAt ? new Date(r.createdAt).toISOString() : undefined,
               description: r.description || undefined,
@@ -91,10 +101,13 @@ export const getAllResources = cache(
               tags: r.tagName ? [r.tagName] : [],
               updatedAt: r.updatedAt ? new Date(r.updatedAt).toISOString() : undefined,
               url: r.url,
-            });
-          } else if (r.tagName) {
-            const entry = resourceMap.get(r.id)!;
-            if (!entry.tags.includes(r.tagName)) {
+            };
+            resourceMap.set(r.id, entry);
+          } else {
+            if (r.authorName && !entry.authors.includes(r.authorName)) {
+              entry.authors.push(r.authorName);
+            }
+            if (r.tagName && !entry.tags.includes(r.tagName)) {
               entry.tags.push(r.tagName);
             }
           }
@@ -102,6 +115,7 @@ export const getAllResources = cache(
 
         const mapped: Resource[] = Array.from(resourceMap.values()).map((r) => ({
           ...r,
+          author: r.authors.length > 0 ? r.authors.join(", ") : undefined,
           tags: r.tags.length > 0 ? r.tags : undefined,
         }));
 
@@ -164,7 +178,8 @@ export const getAllAdminResources = cache(
           url: resource.url,
         })
         .from(resource)
-        .leftJoin(author, eq(resource.authorId, author.id))
+        .leftJoin(resourceAuthor, eq(resource.id, resourceAuthor.resourceId))
+        .leftJoin(author, eq(resourceAuthor.authorId, author.id))
         .leftJoin(category, eq(resource.categoryId, category.id))
         .leftJoin(resourceTag, eq(resource.id, resourceTag.resourceId))
         .leftJoin(tag, eq(resourceTag.tagId, tag.id))
@@ -174,14 +189,18 @@ export const getAllAdminResources = cache(
       const categoryCounts: Record<string, number> = {};
       const resourceMap = new Map<
         string,
-        Omit<import("@/components/admin/types").AdminResourceItem, "tags"> & { tags: string[] }
+        Omit<import("@/components/admin/types").AdminResourceItem, "tags"> & {
+          authors: string[];
+          tags: string[];
+        }
       >();
 
       for (const r of rows) {
         const catName = r.categoryName || "Generators";
-        if (!resourceMap.has(r.id)) {
+        let entry = resourceMap.get(r.id);
+        if (!entry) {
           categoryCounts[catName] = (categoryCounts[catName] || 0) + 1;
-          resourceMap.set(r.id, {
+          entry = {
             id: r.id,
             title: r.title,
             authorBlog: r.authorBlog,
@@ -189,6 +208,7 @@ export const getAllAdminResources = cache(
             authorId: r.authorId,
             authorLinkedin: r.authorLinkedin,
             authorName: r.authorName,
+            authors: r.authorName ? [r.authorName] : [],
             authorSlug: r.authorSlug,
             authorTwitter: r.authorTwitter,
             authorWebsite: r.authorWebsite,
@@ -210,10 +230,13 @@ export const getAllAdminResources = cache(
             tags: r.tagName ? [r.tagName] : [],
             updatedAt: r.updatedAt.toISOString(),
             url: r.url,
-          });
-        } else if (r.tagName) {
-          const entry = resourceMap.get(r.id)!;
-          if (!entry.tags.includes(r.tagName)) {
+          };
+          resourceMap.set(r.id, entry);
+        } else {
+          if (r.authorName && !entry.authors.includes(r.authorName)) {
+            entry.authors.push(r.authorName);
+          }
+          if (r.tagName && !entry.tags.includes(r.tagName)) {
             entry.tags.push(r.tagName);
           }
         }
@@ -221,6 +244,7 @@ export const getAllAdminResources = cache(
 
       const resources = Array.from(resourceMap.values()).map((r) => ({
         ...r,
+        authorName: r.authors.length > 0 ? r.authors.join(", ") : r.authorName || null,
         tags: r.tags.join(", "),
       }));
 

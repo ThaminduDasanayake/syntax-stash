@@ -43,7 +43,8 @@ export function AdminNav({
     pageSubtitle = "Create, organize, style, and manage first-class resource categories.";
   } else if (isTags) {
     pageTitle = "Tags Manager";
-    pageSubtitle = "Manage canonical resource tags, slug identifiers, and featured tag highlights.";
+    pageSubtitle =
+      "Manage canonical resource tags, slug identifiers, and usage across the catalog.";
   } else if (isAuthors) {
     pageTitle = "Authors Manager";
     pageSubtitle = "Manage verified creator profiles, social links, and resource attributions.";
