@@ -21,6 +21,7 @@ import { Suspense, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { AdminAuthorDialog } from "@/components/admin/admin-author-dialog";
+import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { invalidateAuthorCache } from "@/components/submissions/author-combobox";
 import {
   AlertDialog,
@@ -535,6 +536,7 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
                         onClick={() => setDeletingAuthor(authorItem)}
                         className="text-muted-foreground hover:text-destructive h-7 w-7 p-0"
                         title="Delete Author"
+                        disabled={Boolean(deletingAuthor && deletingAuthor.resourceCount > 0)}
                       >
                         <TrashIcon className="size-3.5" />
                       </Button>
@@ -625,44 +627,66 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
         }
       />
 
-      {/* Delete Confirmation Alert */}
-      <AlertDialog
+      <ConfirmDialog
         open={Boolean(deletingAuthor)}
         onOpenChange={(open) => !open && setDeletingAuthor(null)}
-      >
-        <AlertDialogContent className="border-line bg-paper font-mono text-xs">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="text-foreground text-base font-bold uppercase">
-              Delete Author: {deletingAuthor?.name}
-            </AlertDialogTitle>
-            <AlertDialogDescription className="text-muted-foreground text-xs leading-relaxed">
-              Are you sure you want to permanently delete this author?
-              {deletingAuthor && deletingAuthor.resourceCount > 0 && (
-                <span className="text-destructive mt-2 block font-bold">
-                  Warning: {deletingAuthor.resourceCount} resource(s) are currently assigned to this
-                  author. You must reassign or delete these resources first before deleting this
-                  author.
-                </span>
-              )}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter className="gap-2 pt-2">
-            <AlertDialogCancel
-              disabled={isWorking}
-              className="border-line hover:bg-surface font-mono text-xs uppercase"
-            >
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleConfirmDelete}
-              disabled={isWorking || Boolean(deletingAuthor && deletingAuthor.resourceCount > 0)}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90 font-mono text-xs font-bold uppercase"
-            >
-              {isWorking ? "Deleting..." : "Delete Author"}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+        onConfirm={handleConfirmDelete}
+        title="Delete Author"
+        description={
+          <>
+            Are you sure you want to permanently delete this author{" "}
+            <strong className="text-foreground">&quot;{deletingAuthor?.name}&quot;</strong>? This
+            action cannot be undone.
+            {deletingAuthor && deletingAuthor.resourceCount > 0 && (
+              <span className="text-destructive mt-2 block font-bold">
+                Warning: {deletingAuthor.resourceCount} resource(s) are currently assigned to this
+                author. You must reassign or delete these resources first before deleting this
+                author.
+              </span>
+            )}
+          </>
+        }
+        confirmLabel="Hold to delete"
+      />
+
+      {/* Delete Confirmation Alert */}
+      {/*<AlertDialog*/}
+      {/*  open={Boolean(deletingAuthor)}*/}
+      {/*  onOpenChange={(open) => !open && setDeletingAuthor(null)}*/}
+      {/*>*/}
+      {/*  <AlertDialogContent className="border-line bg-paper font-mono text-xs">*/}
+      {/*    <AlertDialogHeader>*/}
+      {/*      <AlertDialogTitle className="text-foreground text-base font-bold uppercase">*/}
+      {/*        Delete Author: {deletingAuthor?.name}*/}
+      {/*      </AlertDialogTitle>*/}
+      {/*      <AlertDialogDescription className="text-muted-foreground text-xs leading-relaxed">*/}
+      {/*        Are you sure you want to permanently delete this author?*/}
+      {/*        {deletingAuthor && deletingAuthor.resourceCount > 0 && (*/}
+      {/*          <span className="text-destructive mt-2 block font-bold">*/}
+      {/*            Warning: {deletingAuthor.resourceCount} resource(s) are currently assigned to this*/}
+      {/*            author. You must reassign or delete these resources first before deleting this*/}
+      {/*            author.*/}
+      {/*          </span>*/}
+      {/*        )}*/}
+      {/*      </AlertDialogDescription>*/}
+      {/*    </AlertDialogHeader>*/}
+      {/*    <AlertDialogFooter className="gap-2 pt-2">*/}
+      {/*      <AlertDialogCancel*/}
+      {/*        disabled={isWorking}*/}
+      {/*        className="border-line hover:bg-surface font-mono text-xs uppercase"*/}
+      {/*      >*/}
+      {/*        Cancel*/}
+      {/*      </AlertDialogCancel>*/}
+      {/*      <AlertDialogAction*/}
+      {/*        onClick={handleConfirmDelete}*/}
+      {/*        disabled={isWorking || Boolean(deletingAuthor && deletingAuthor.resourceCount > 0)}*/}
+      {/*        className="bg-destructive text-destructive-foreground hover:bg-destructive/90 font-mono text-xs font-bold uppercase"*/}
+      {/*      >*/}
+      {/*        {isWorking ? "Deleting..." : "Delete Author"}*/}
+      {/*      </AlertDialogAction>*/}
+      {/*    </AlertDialogFooter>*/}
+      {/*  </AlertDialogContent>*/}
+      {/*</AlertDialog>*/}
     </div>
   );
 }

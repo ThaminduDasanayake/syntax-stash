@@ -197,7 +197,6 @@ export function AdminSubmissionsClient({
         </div>
       )}
 
-      {/* Hold-to-Confirm Dialog for Deleting Submission */}
       <ConfirmDialog
         open={Boolean(deletingSubmission)}
         onOpenChange={(open) => !open && setDeletingSubmission(null)}
