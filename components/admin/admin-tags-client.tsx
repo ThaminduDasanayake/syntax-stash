@@ -3,7 +3,6 @@
 import {
   ArrowsClockwiseIcon,
   CheckIcon,
-  FunnelIcon,
   PencilSimpleIcon,
   PlusIcon,
   TagIcon,
@@ -12,6 +11,7 @@ import {
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
+import { FilterSelect } from "@/components/admin/filter-select";
 import { SortSelect } from "@/components/admin/sort-select";
 import { DuplicateNotice } from "@/components/submissions/duplicate-url-notice";
 import { invalidateTagCache } from "@/components/submissions/tag-picker";
@@ -38,7 +38,6 @@ import {
 import { EmptyState } from "@/components/ui/empty-state";
 import { InputField } from "@/components/ui/input-field";
 import { SearchInput } from "@/components/ui/search-input";
-import { SelectField } from "@/components/ui/select-field";
 import {
   Table,
   TableBody,
@@ -367,17 +366,12 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
             />
           </div>
 
-          <div className="flex items-center gap-1.5">
-            <FunnelIcon weight="duotone" className="text-accent size-6" />
-            <span className="text-muted-foreground text-[11px] font-bold uppercase">Tag:</span>
-            <SelectField
-              value={filterMode}
-              onValueChange={(val) => setFilterMode(val)}
-              options={FILTER_OPTIONS}
-              triggerClassName="h-8 font-mono text-[11px] min-w-[200px]"
-              variant="accent"
-            />
-          </div>
+          <FilterSelect
+            label="Tag:"
+            value={filterMode}
+            onValueChange={(val) => setFilterMode(val)}
+            options={FILTER_OPTIONS}
+          />
 
           <SortSelect
             value={sortBy}

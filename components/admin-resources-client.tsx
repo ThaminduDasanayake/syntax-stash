@@ -4,7 +4,6 @@ import {
   ArrowsClockwiseIcon,
   CaretLeftIcon,
   CaretRightIcon,
-  FunnelIcon,
   HeartbeatIcon,
   MagnifyingGlassIcon,
   PlusIcon,
@@ -21,6 +20,7 @@ import {
   AdminResourceCard,
   AdminResourceItem,
   AdminResourceTable,
+  FilterSelect,
   SortSelect,
 } from "@/components/admin";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
@@ -693,19 +693,13 @@ function AdminResourcesClientContent({
         <div className="border-line flex flex-wrap items-center justify-between gap-3 border-t-[1.5px] pt-3">
           <div className="flex flex-wrap items-center gap-5">
             {/* Category Select */}
-            <div className="flex items-center gap-1.5">
-              <FunnelIcon weight="duotone" className="text-accent size-7" />
-              <span className="text-muted-foreground text-[11px] font-bold uppercase">
-                Category:
-              </span>
-              <SelectField
-                value={selectedCategory}
-                onValueChange={handleCategoryChange}
-                options={categoryFilterOptions}
-                triggerClassName="h-8 font-mono text-xs min-w-[180px]"
-                variant="accent"
-              />
-            </div>
+            <FilterSelect
+              label="Category:"
+              value={selectedCategory}
+              onValueChange={handleCategoryChange}
+              options={categoryFilterOptions}
+              triggerClassName="min-w-[180px]"
+            />
 
             {/* Dynamic Health & Missing Data Filter */}
             {healthFilterOptions.length > 1 && (
