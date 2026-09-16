@@ -117,7 +117,6 @@ export const tag = pgTable(
   {
     id: text("id").primaryKey(),
     createdAt: timestamp("created_at").notNull().defaultNow(),
-    isFeatured: boolean("is_featured").notNull().default(false),
     name: text("name").notNull(),
     slug: text("slug").notNull().unique(),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),

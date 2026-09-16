@@ -18,7 +18,6 @@ export default async function AdminTagsPage() {
     .select({
       id: tag.id,
       createdAt: tag.createdAt,
-      isFeatured: tag.isFeatured,
       name: tag.name,
       slug: tag.slug,
       toolCount: count(resourceTag.resourceId),

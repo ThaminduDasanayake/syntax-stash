@@ -46,7 +46,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { slugify } from "@/lib/utils";
+import { cn, slugify } from "@/lib/utils";
 
 import {
   AdminConfirmEditDialog,
@@ -352,7 +352,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
             >
               <ArrowsClockwiseIcon
                 weight="bold"
-                className={`text-brand-green size-4 ${isRefreshing ? "animate-spin" : ""}`}
+                className={cn("text-brand-green size-4", isRefreshing && "animate-spin")}
               />
               <span className="hidden sm:inline">Sync</span>
             </Button>

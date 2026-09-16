@@ -32,6 +32,7 @@ import { SearchInput } from "@/components/ui/search-input";
 import { SelectField } from "@/components/ui/select-field";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCategories } from "@/hooks/use-categories";
+import { cn } from "@/lib/utils";
 
 const SORT_OPTIONS = [
   { label: "Oldest First", value: "oldest" },
@@ -666,7 +667,10 @@ function AdminResourcesClientContent({
               className="border-line hover:bg-surface h-9 gap-1.5 px-3 text-xs font-bold uppercase"
               title="Refresh catalog from database"
             >
-              <ArrowsClockwiseIcon className={`size-3.5 ${isRefreshing ? "animate-spin" : ""}`} />
+              <ArrowsClockwiseIcon
+                weight="bold"
+                className={cn("text-brand-green size-4", isRefreshing && "animate-spin")}
+              />
               <span className="hidden sm:inline">Refresh</span>
             </Button>
 
@@ -686,7 +690,7 @@ function AdminResourcesClientContent({
         </div>
 
         {/* Filter Dropdowns & Stats */}
-        <div className="border-line flex flex-wrap items-center justify-between gap-3 border-t pt-3">
+        <div className="border-line flex flex-wrap items-center justify-between gap-3 border-t-[1.5px] pt-3">
           <div className="flex flex-wrap items-center gap-5">
             {/* Category Select */}
             <div className="flex items-center gap-1.5">
@@ -914,38 +918,6 @@ function AdminResourcesClientContent({
         }
         confirmLabel="Hold to delete"
       />
-
-      {/*<AlertDialog*/}
-      {/*  open={Boolean(deletingResource)}*/}
-      {/*  onOpenChange={(open) => !open && setDeletingResource(null)}*/}
-      {/*>*/}
-      {/*  <AlertDialogContent className="font-mono text-xs sm:max-w-md">*/}
-      {/*    <AlertDialogHeader>*/}
-      {/*      <AlertDialogTitle className="text-destructive font-mono text-base font-bold uppercase">*/}
-      {/*        Delete Resource from Live Catalog?*/}
-      {/*      </AlertDialogTitle>*/}
-      {/*      <AlertDialogDescription className="text-muted-foreground font-mono text-xs leading-relaxed">*/}
-      {/*        Are you sure you want to delete{" "}*/}
-      {/*        <strong className="text-foreground">&quot;{deletingResource?.title}&quot;</strong>?*/}
-      {/*        <br />*/}
-      {/*        <br />*/}
-      {/*        This will permanently remove the resource from the database and instantly purge the*/}
-      {/*        edge cache.*/}
-      {/*      </AlertDialogDescription>*/}
-      {/*    </AlertDialogHeader>*/}
-      {/*    <AlertDialogFooter className="mt-4 gap-2">*/}
-      {/*      <AlertDialogCancel className="border-line font-mono text-xs font-bold uppercase">*/}
-      {/*        Cancel*/}
-      {/*      </AlertDialogCancel>*/}
-      {/*      <AlertDialogAction*/}
-      {/*        onClick={handleConfirmDelete}*/}
-      {/*        className="bg-destructive text-destructive-foreground hover:bg-destructive/90 font-mono text-xs font-bold uppercase"*/}
-      {/*      >*/}
-      {/*        Delete Resource*/}
-      {/*      </AlertDialogAction>*/}
-      {/*    </AlertDialogFooter>*/}
-      {/*  </AlertDialogContent>*/}
-      {/*</AlertDialog>*/}
     </div>
   );
 }

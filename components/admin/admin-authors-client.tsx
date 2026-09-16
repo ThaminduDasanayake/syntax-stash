@@ -45,6 +45,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { cn } from "@/lib/utils";
 
 export interface AdminAuthorItem {
   blog: string | null;
@@ -261,7 +262,10 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
               className="border-line hover:bg-surface h-9 gap-1.5 px-3 text-xs font-bold uppercase"
               title="Refresh authors list"
             >
-              <ArrowsClockwiseIcon className={`size-3.5 ${isRefreshing ? "animate-spin" : ""}`} />
+              <ArrowsClockwiseIcon
+                weight="bold"
+                className={cn("text-brand-green size-4", isRefreshing && "animate-spin")}
+              />
               <span className="hidden sm:inline">Refresh</span>
             </Button>
 
@@ -317,7 +321,7 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
 
             {/* Sort Dropdown */}
             <div className="flex items-center gap-1.5 pl-2">
-              <SlidersHorizontalIcon className="text-muted-foreground size-3.5" />
+              <SlidersHorizontalIcon className="text-brand-purple size-7" />
               <span className="text-muted-foreground text-[11px] font-bold uppercase">Sort:</span>
               <SelectField
                 value={sortBy}
