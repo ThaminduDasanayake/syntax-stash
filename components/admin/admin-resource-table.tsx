@@ -1,7 +1,7 @@
 "use client";
 
 import {
-  CheckCircleIcon,
+  CheckIcon,
   ClipboardTextIcon,
   EyeIcon,
   PencilSimpleIcon,
@@ -19,6 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 import { AdminPingButton } from "./admin-ping-button";
 import { AdminResourceItem } from "./types";
@@ -131,7 +132,7 @@ export function AdminResourceTable({
                               : item.healthStatus === "redirect"
                                 ? "bg-amber-500"
                                 : item.healthStatus === "blocked"
-                                  ? "bg-orange-500"
+                                  ? "bg-yellow-500"
                                   : "bg-muted-foreground"
                         }`}
                       />
@@ -226,51 +227,75 @@ export function AdminResourceTable({
                 {/* Action Buttons */}
                 <TableCell className="px-4 py-2.5 text-right whitespace-nowrap">
                   <div className="flex items-center justify-end gap-1">
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => onPreview(item)}
-                      className="text-foreground hover:bg-surface-elevated size-7 p-0"
-                      title="Preview Full ResourceDialog"
-                    >
-                      <EyeIcon className="text-primary size-3.5" />
-                    </Button>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => onPreview(item)}
+                          className="text-foreground hover:bg-surface-elevated"
+                        >
+                          <EyeIcon className="text-primary" />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent side="top">
+                        <p>Open</p>
+                      </TooltipContent>
+                    </Tooltip>
 
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => onCopyJson(item)}
-                      className="text-muted-foreground hover:text-foreground size-7 p-0"
-                      title="Copy JSON"
-                    >
-                      {isCopied ? (
-                        <CheckCircleIcon className="size-3.5 text-emerald-600" />
-                      ) : (
-                        <ClipboardTextIcon className="size-3.5" />
-                      )}
-                    </Button>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => onCopyJson(item)}
+                          className="text-muted-foreground hover:text-foreground size-7 p-0"
+                        >
+                          {isCopied ? (
+                            <CheckIcon className="text-emerald-600" />
+                          ) : (
+                            <ClipboardTextIcon />
+                          )}
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent side="top">
+                        <p>Copy JSON</p>
+                      </TooltipContent>
+                    </Tooltip>
 
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => onEdit(item)}
-                      disabled={isWorking}
-                      className="border-line hover:bg-surface size-7 p-0"
-                      title="Edit Resource"
-                    >
-                      <PencilSimpleIcon className="size-3" />
-                    </Button>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => onEdit(item)}
+                          disabled={isWorking}
+                          className="border-line hover:bg-surface size-7 p-0"
+                        >
+                          <PencilSimpleIcon />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent side="top">
+                        <p>Edit</p>
+                      </TooltipContent>
+                    </Tooltip>
 
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => onDelete(item)}
-                      disabled={isWorking}
-                      className="hover:bg-destructive/10 text-muted-foreground hover:text-destructive size-7 p-0"
-                      title="Delete Resource"
-                    >
-                      <TrashIcon className="size-3" />
-                    </Button>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => onDelete(item)}
+                          disabled={isWorking}
+                          className="hover:bg-destructive/10 text-muted-foreground hover:text-destructive size-7 p-0"
+                        >
+                          <TrashIcon />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent side="top">
+                        <p>Delete</p>
+                      </TooltipContent>
+                    </Tooltip>
                   </div>
                 </TableCell>
               </TableRow>

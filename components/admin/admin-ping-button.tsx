@@ -52,7 +52,6 @@ export function AdminPingButton({
             showLabel ? "px-1.5 text-[10px]" : "size-6 p-0",
             className,
           )}
-          title={tooltipText}
         >
           <HeartbeatIcon
             weight="bold"
