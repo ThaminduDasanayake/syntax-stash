@@ -5,7 +5,7 @@ import { cache } from "react";
 import { db } from "@/lib/db";
 import { author, resource } from "@/lib/db/schema";
 import { getAllResources } from "@/lib/resources";
-import { slugifyAuthor } from "@/lib/utils";
+import { parseAuthors, slugifyAuthor } from "@/lib/utils";
 import { Resource } from "@/types";
 
 export interface AuthorLinks {
@@ -34,7 +34,7 @@ export interface AuthorWithResources {
   slug: string;
 }
 
-export { slugifyAuthor };
+export { parseAuthors, slugifyAuthor };
 
 /**
  * Derives authors in-memory from a resource list (fallback / offline mode).
@@ -45,31 +45,20 @@ export function getAuthorsFromResources(list: Resource[]): AuthorWithResources[]
   for (const item of list) {
     if (!item.author) continue;
 
-    const rawAuthors = Array.isArray(item.author) ? item.author : [item.author];
+    const splitAuthors = parseAuthors(item.author);
 
-    for (const authorItem of rawAuthors) {
-      if (!authorItem) continue;
-      const splitAuthors =
-        typeof authorItem === "string" && authorItem.includes(",")
-          ? authorItem
-              .split(",")
-              .map((a) => a.trim())
-              .filter(Boolean)
-          : [authorItem.trim()];
+    for (const trimmedAuthor of splitAuthors) {
+      if (!trimmedAuthor) continue;
+      const slug = slugifyAuthor(trimmedAuthor);
 
-      for (const trimmedAuthor of splitAuthors) {
-        if (!trimmedAuthor) continue;
-        const slug = slugifyAuthor(trimmedAuthor);
-
-        if (!authorMap.has(slug)) {
-          authorMap.set(slug, {
-            name: trimmedAuthor,
-            resources: [],
-          });
-        }
-
-        authorMap.get(slug)?.resources.push(item);
+      if (!authorMap.has(slug)) {
+        authorMap.set(slug, {
+          name: trimmedAuthor,
+          resources: [],
+        });
       }
+
+      authorMap.get(slug)?.resources.push(item);
     }
   }
 
@@ -123,12 +112,15 @@ export const getAllAuthors = cache(
         const allResources = await getAllResources();
 
         return rows.map((r) => {
-          const authorResources = allResources.filter(
-            (res) =>
-              res.author === r.name ||
-              (Array.isArray(res.author) && res.author.includes(r.name)) ||
-              slugifyAuthor(typeof res.author === "string" ? res.author : "") === r.slug,
-          );
+          const authorResources = allResources.filter((res) => {
+            const parsed = parseAuthors(res.author);
+            return parsed.some(
+              (name) =>
+                name.toLowerCase() === r.name.toLowerCase() ||
+                slugifyAuthor(name) === r.slug ||
+                slugifyAuthor(name) === slugifyAuthor(r.name),
+            );
+          });
 
           const categories = Array.from(new Set(authorResources.map((res) => res.category)));
 
@@ -194,12 +186,15 @@ export async function getAuthorBySlug(
     if (!dbAuthor) return null;
 
     const allResources = await getAllResources();
-    const authorResources = allResources.filter(
-      (res) =>
-        res.author === dbAuthor.name ||
-        (Array.isArray(res.author) && res.author.includes(dbAuthor.name)) ||
-        slugifyAuthor(typeof res.author === "string" ? res.author : "") === dbAuthor.slug,
-    );
+    const authorResources = allResources.filter((res) => {
+      const parsed = parseAuthors(res.author);
+      return parsed.some(
+        (name) =>
+          name.toLowerCase() === dbAuthor.name.toLowerCase() ||
+          slugifyAuthor(name) === dbAuthor.slug ||
+          slugifyAuthor(name) === slugifyAuthor(dbAuthor.name),
+      );
+    });
     const categories = Array.from(new Set(authorResources.map((res) => res.category)));
 
     return {

@@ -100,7 +100,7 @@ export async function PATCH(req: Request) {
 
     if (sub) {
       if (sub.status === "approved") {
-        // 1. Resolve Author(s) from Database (Verified by admin)
+        // 1. Resolve Author(s) from Database (Verified by admin, preserves full co-authors)
         let authorRecordId: string | null = null;
         if (sub.author && sub.author.trim()) {
           const authorName = sub.author.trim();
@@ -109,20 +109,24 @@ export async function PATCH(req: Request) {
           const [existingAuthor] = await db
             .select()
             .from(author)
-            .where(eq(author.slug, authorSlug));
+            .where(or(eq(author.slug, authorSlug), ilike(author.name, authorName)));
 
           if (existingAuthor) {
             authorRecordId = existingAuthor.id;
           } else {
-            // Check if first author in comma-separated list exists
-            const firstAuthor = authorName.split(",")[0]?.trim();
-            if (firstAuthor) {
-              const firstSlug = slugifyAuthor(firstAuthor);
-              const [foundFirst] = await db.select().from(author).where(eq(author.slug, firstSlug));
-              if (foundFirst) {
-                authorRecordId = foundFirst.id;
-              }
-            }
+            const newAuthorId = crypto.randomUUID();
+            await db.insert(author).values({
+              id: newAuthorId,
+              blog: sub.authorBlog || null,
+              github: sub.authorGitHub || null,
+              linkedin: sub.authorLinkedIn || null,
+              name: authorName,
+              slug: authorSlug,
+              twitter: sub.authorTwitter || null,
+              website: sub.authorWebsite || null,
+              youtube: sub.authorYouTube || null,
+            });
+            authorRecordId = newAuthorId;
           }
         }
 

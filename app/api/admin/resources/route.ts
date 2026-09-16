@@ -174,8 +174,14 @@ export async function POST(req: Request) {
     const body = await req.json();
     const {
       title,
+      authorBlog,
+      authorGithub,
       authorId,
+      authorLinkedin,
       authorName,
+      authorTwitter,
+      authorWebsite,
+      authorYoutube,
       category: categoryInput,
       description,
       favicon,
@@ -207,20 +213,34 @@ export async function POST(req: Request) {
       );
     }
 
-    // 1. Resolve Author (Strictly from existing author records)
+    // 1. Resolve Author (Preserves full multi-author string)
     let authorRecordId: string | null = null;
-    if (authorId && typeof authorId === "string" && authorId.trim()) {
-      const [existingAuthor] = await db.select().from(author).where(eq(author.id, authorId.trim()));
-      if (existingAuthor) {
-        authorRecordId = existingAuthor.id;
-      }
-    } else if (authorName && typeof authorName === "string" && authorName.trim()) {
-      const primaryName = authorName.split(",")[0].trim();
-      const slug = slugifyAuthor(primaryName);
+    if (authorName && typeof authorName === "string" && authorName.trim()) {
+      const cleanAuthorName = authorName.trim();
+      const slug = slugifyAuthor(cleanAuthorName);
       const [existingAuthor] = await db
         .select()
         .from(author)
-        .where(or(eq(author.slug, slug), ilike(author.name, primaryName)));
+        .where(or(eq(author.slug, slug), ilike(author.name, cleanAuthorName)));
+      if (existingAuthor) {
+        authorRecordId = existingAuthor.id;
+      } else {
+        const newAuthorId = crypto.randomUUID();
+        await db.insert(author).values({
+          id: newAuthorId,
+          blog: authorBlog || null,
+          github: authorGithub || null,
+          linkedin: authorLinkedin || null,
+          name: cleanAuthorName,
+          slug,
+          twitter: authorTwitter || null,
+          website: authorWebsite || null,
+          youtube: authorYoutube || null,
+        });
+        authorRecordId = newAuthorId;
+      }
+    } else if (authorId && typeof authorId === "string" && authorId.trim()) {
+      const [existingAuthor] = await db.select().from(author).where(eq(author.id, authorId.trim()));
       if (existingAuthor) {
         authorRecordId = existingAuthor.id;
       }
@@ -335,26 +355,43 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ error: "Resource not found." }, { status: 404 });
     }
 
-    // 1. Resolve author strictly from existing authors
+    // 1. Resolve author (Preserves full multi-author string)
     let authorRecordId = existingResource.authorId;
-    if (authorId !== undefined) {
+    if (authorName !== undefined) {
+      if (authorName && typeof authorName === "string" && authorName.trim()) {
+        const cleanAuthorName = authorName.trim();
+        const slug = slugifyAuthor(cleanAuthorName);
+        const [existingAuthor] = await db
+          .select()
+          .from(author)
+          .where(or(eq(author.slug, slug), ilike(author.name, cleanAuthorName)));
+
+        if (existingAuthor) {
+          authorRecordId = existingAuthor.id;
+        } else {
+          const newAuthorId = crypto.randomUUID();
+          await db.insert(author).values({
+            id: newAuthorId,
+            blog: updates.authorBlog || null,
+            github: updates.authorGithub || null,
+            linkedin: updates.authorLinkedin || null,
+            name: cleanAuthorName,
+            slug,
+            twitter: updates.authorTwitter || null,
+            website: updates.authorWebsite || null,
+            youtube: updates.authorYoutube || null,
+          });
+          authorRecordId = newAuthorId;
+        }
+      } else {
+        authorRecordId = null;
+      }
+    } else if (authorId !== undefined) {
       if (authorId && typeof authorId === "string" && authorId.trim()) {
         const [existingAuthor] = await db
           .select()
           .from(author)
           .where(eq(author.id, authorId.trim()));
-        authorRecordId = existingAuthor ? existingAuthor.id : null;
-      } else {
-        authorRecordId = null;
-      }
-    } else if (authorName !== undefined) {
-      if (authorName && typeof authorName === "string" && authorName.trim()) {
-        const primaryName = authorName.split(",")[0].trim();
-        const slug = slugifyAuthor(primaryName);
-        const [existingAuthor] = await db
-          .select()
-          .from(author)
-          .where(or(eq(author.slug, slug), ilike(author.name, primaryName)));
         authorRecordId = existingAuthor ? existingAuthor.id : null;
       } else {
         authorRecordId = null;

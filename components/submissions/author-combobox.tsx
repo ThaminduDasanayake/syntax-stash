@@ -4,7 +4,7 @@ import { GlobeIcon, UserIcon, XIcon, XLogoIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
-import { cn } from "@/lib/utils";
+import { cn, parseAuthors } from "@/lib/utils";
 
 export interface AuthorLinks {
   blog?: string;
@@ -86,7 +86,9 @@ export async function fetchAuthorList(forceRefresh = false): Promise<AuthorOptio
       if (!res.ok) throw new Error("Failed to load authors");
       const data = await res.json();
       const list: AuthorOption[] = data.authors || [];
-      cachedAuthors = list.sort((a, b) => a.name.localeCompare(b.name));
+      cachedAuthors = list.sort((a, b) =>
+        a.name.localeCompare(b.name, undefined, { sensitivity: "base" }),
+      );
       return cachedAuthors!;
     } catch {
       return cachedAuthors || [];
@@ -110,7 +112,12 @@ export function AuthorCombobox({
   placeholder = "Search creators or type a name...",
   value,
 }: AuthorComboboxProps) {
-  const [authors, setAuthors] = useState<AuthorOption[]>(cachedAuthors || []);
+  const [authors, setAuthors] = useState<AuthorOption[]>(() => {
+    if (!cachedAuthors) return [];
+    return [...cachedAuthors].sort((a, b) =>
+      a.name.localeCompare(b.name, undefined, { sensitivity: "base" }),
+    );
+  });
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
@@ -125,7 +132,10 @@ export function AuthorCombobox({
     const syncAuthors = (force = false) => {
       fetchAuthorList(force).then((list) => {
         if (mounted && list.length > 0) {
-          setAuthors(list);
+          const sorted = [...list].sort((a, b) =>
+            a.name.localeCompare(b.name, undefined, { sensitivity: "base" }),
+          );
+          setAuthors(sorted);
         }
       });
     };
@@ -177,10 +187,7 @@ export function AuthorCombobox({
     const rawList = Array.isArray(value)
       ? value.map((v) => (typeof v === "string" ? v.trim() : "")).filter(Boolean)
       : typeof value === "string"
-        ? value
-            .split(",")
-            .map((v) => v.trim())
-            .filter(Boolean)
+        ? parseAuthors(value)
         : [];
 
     if (allowCustom || authors.length === 0) {
@@ -199,10 +206,12 @@ export function AuthorCombobox({
 
   const cleanQuery = query.trim().toLowerCase();
 
-  // Filter available author suggestions (excluding already selected ones) in alphabetical order
+  // Filter available author suggestions (excluding already selected ones) in strict alphabetical order
   const filteredAuthors = useMemo(() => {
     const selectedLower = new Set(selectedAuthors.map((a) => a.toLowerCase()));
-    const unselected = authors.filter((a) => !selectedLower.has(a.name.toLowerCase()));
+    const unselected = authors
+      .filter((a) => !selectedLower.has(a.name.toLowerCase()))
+      .sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: "base" }));
 
     if (!cleanQuery) {
       return unselected.slice(0, 10);

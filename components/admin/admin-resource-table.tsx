@@ -1,11 +1,20 @@
 "use client";
 
-import { EyeIcon, PencilSimpleIcon, TrashIcon } from "@phosphor-icons/react";
+import {
+  ArticleIcon,
+  EyeIcon,
+  GlobeIcon,
+  PencilSimpleIcon,
+  TrashIcon,
+  XLogoIcon,
+} from "@phosphor-icons/react";
+import Image from "next/image";
 import * as React from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import {
   Table,
   TableBody,
@@ -15,6 +24,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { parseAuthors } from "@/lib/utils";
 
 import { AdminPingButton } from "./admin-ping-button";
 import { AdminResourceItem } from "./types";
@@ -72,6 +82,79 @@ export function AdminResourceTable({
         </TableHeader>
         <TableBody className="divide-line divide-y">
           {resources.map((item) => {
+            const authorLinks: {
+              href: string;
+              icon: React.ReactNode;
+              key: string;
+              label: string;
+            }[] = [];
+
+            if (item.authorBlog) {
+              authorLinks.push({
+                href: item.authorBlog,
+                icon: <ArticleIcon className="size-3.5" />,
+                key: "blog",
+                label: "Blog",
+              });
+            }
+            if (item.authorGithub) {
+              authorLinks.push({
+                href: item.authorGithub,
+                icon: (
+                  <Image
+                    src="/github.svg"
+                    alt="GitHub"
+                    width={14}
+                    height={14}
+                    className="dark:invert"
+                  />
+                ),
+                key: "github",
+                label: "GitHub",
+              });
+            }
+            if (item.authorLinkedin) {
+              authorLinks.push({
+                href: item.authorLinkedin,
+                icon: <Image src="/linkedin.svg" alt="LinkedIn" width={14} height={14} />,
+                key: "linkedin",
+                label: "LinkedIn",
+              });
+            }
+            if (item.authorTwitter) {
+              authorLinks.push({
+                href: item.authorTwitter,
+                icon: <XLogoIcon weight="bold" className="size-3.5" />,
+                key: "twitter",
+                label: "X / Twitter",
+              });
+            }
+            if (item.authorWebsite) {
+              authorLinks.push({
+                href: item.authorWebsite,
+                icon: <GlobeIcon className="size-3.5" />,
+                key: "website",
+                label: "Website",
+              });
+            }
+            if (item.authorYoutube) {
+              authorLinks.push({
+                href: item.authorYoutube,
+                icon: <Image src="/youtube.svg" alt="YouTube" width={14} height={14} />,
+                key: "youtube",
+                label: "YouTube",
+              });
+            }
+
+            const parsedAuthors = parseAuthors(item.authorName);
+
+            const allTags = item.tags
+              ? item.tags
+                  .split(",")
+                  .map((t) => t.trim())
+                  .filter(Boolean)
+              : [];
+
             return (
               <TableRow
                 key={item.id}
@@ -173,10 +256,56 @@ export function AdminResourceTable({
 
                 {/* Author */}
                 <TableCell className="max-w-40 px-4 py-2.5">
-                  {item.authorName ? (
-                    <span className="text-foreground text-[11px] font-medium">
-                      {item.authorName}
-                    </span>
+                  {parsedAuthors.length > 0 ? (
+                    <HoverCard openDelay={150} closeDelay={200}>
+                      <HoverCardTrigger asChild>
+                        <span className="text-foreground hover:text-primary inline-flex cursor-pointer items-center text-[11px] font-medium underline-offset-2 hover:underline">
+                          {parsedAuthors.join(" & ")}
+                        </span>
+                      </HoverCardTrigger>
+                      <HoverCardContent
+                        align="start"
+                        className="w-auto max-w-xs min-w-48 font-mono"
+                      >
+                        <div className="flex flex-col gap-2">
+                          <div>
+                            <p className="text-foreground text-xs font-bold uppercase">
+                              {parsedAuthors.join(" & ")}
+                            </p>
+                            <p className="text-muted-foreground text-[10px]">
+                              {parsedAuthors.length > 1 ? "Resource Authors" : "Resource Author"}
+                            </p>
+                          </div>
+                          {authorLinks.length > 0 ? (
+                            <div className="border-line flex flex-wrap items-center gap-1.5 border-t pt-2">
+                              {authorLinks.map(({ href, icon, key, label }) => (
+                                <Button
+                                  key={key}
+                                  size="icon"
+                                  variant="ghost"
+                                  asChild
+                                  className="text-muted-foreground hover:text-foreground border-line hover:border-foreground size-7 rounded-full border transition-all duration-150 hover:-translate-y-0.5 active:translate-y-0"
+                                >
+                                  <a
+                                    href={href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={label}
+                                    title={label}
+                                  >
+                                    {icon}
+                                  </a>
+                                </Button>
+                              ))}
+                            </div>
+                          ) : (
+                            <p className="text-muted-foreground/70 border-line border-t pt-1.5 text-[10px] italic">
+                              No links available
+                            </p>
+                          )}
+                        </div>
+                      </HoverCardContent>
+                    </HoverCard>
                   ) : (
                     <span className="opacity-40">—</span>
                   )}
@@ -184,25 +313,43 @@ export function AdminResourceTable({
 
                 {/* Tags */}
                 <TableCell className="max-w-45 px-4 py-2.5">
-                  {item.tags ? (
-                    <div className="flex flex-wrap gap-1">
-                      {item.tags
-                        .split(",")
-                        .slice(0, 2)
-                        .map((tag) => (
-                          <span
-                            key={tag.trim()}
-                            className="border-line bg-surface/70 text-muted-foreground py-0.2 rounded border-[1.5px] px-1.5 text-[9px]"
-                          >
-                            #{tag.trim()}
+                  {allTags.length > 0 ? (
+                    <HoverCard openDelay={150} closeDelay={200}>
+                      <HoverCardTrigger asChild>
+                        <div className="flex cursor-pointer flex-wrap items-center gap-1">
+                          {allTags.slice(0, 2).map((tag) => (
+                            <span
+                              key={tag}
+                              className="border-line bg-surface/70 text-muted-foreground py-0.2 rounded border-[1.5px] px-1.5 text-[9px]"
+                            >
+                              #{tag}
+                            </span>
+                          ))}
+                          {allTags.length > 2 && (
+                            <span className="text-muted-foreground/70 self-center text-[9px] font-bold">
+                              +{allTags.length - 2}
+                            </span>
+                          )}
+                        </div>
+                      </HoverCardTrigger>
+                      <HoverCardContent align="start" className="w-auto max-w-64 font-mono">
+                        <div className="flex flex-col gap-2">
+                          <span className="text-muted-foreground text-[10px] font-bold tracking-wider uppercase">
+                            All Tags ({allTags.length})
                           </span>
-                        ))}
-                      {item.tags.split(",").length > 2 && (
-                        <span className="text-muted-foreground/70 text-[9px]">
-                          +{item.tags.split(",").length - 2}
-                        </span>
-                      )}
-                    </div>
+                          <div className="flex flex-wrap gap-1">
+                            {allTags.map((tag) => (
+                              <span
+                                key={tag}
+                                className="border-line bg-surface text-foreground rounded border-[1.5px] px-1.5 py-0.5 text-[10px]"
+                              >
+                                #{tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </HoverCardContent>
+                    </HoverCard>
                   ) : (
                     <span className="opacity-40">—</span>
                   )}

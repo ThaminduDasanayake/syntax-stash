@@ -61,7 +61,9 @@ export function AdminResourceCard({
           iconBg={res.iconBg}
           ogImage={res.ogImage}
           author={res.authorName}
-          authorHref={res.authorName ? `/authors/${slugifyAuthor(res.authorName)}` : undefined}
+          authorHref={
+            res.authorName ? (name: string) => `/authors/${slugifyAuthor(name)}` : undefined
+          }
           url={res.url}
           onCardClick={onPreview}
           cardClassName="h-full"

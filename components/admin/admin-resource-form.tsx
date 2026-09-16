@@ -136,6 +136,7 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
       setFormData((prev) => ({
         ...prev,
         [mapped]: value,
+        ...(field === "author" ? { authorId: null } : {}),
       }));
     }
   };
@@ -145,7 +146,7 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
       ...prev,
       authorBlog: authorOption.links?.blog || "",
       authorGithub: authorOption.links?.github || "",
-      authorId: authorOption.id || prev.authorId || null,
+      authorId: null,
       authorLinkedin: authorOption.links?.linkedin || "",
       authorTwitter: authorOption.links?.twitter || "",
       authorWebsite: authorOption.links?.website || "",
