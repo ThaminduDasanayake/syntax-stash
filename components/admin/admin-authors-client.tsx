@@ -25,6 +25,7 @@ import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { invalidateAuthorCache } from "@/components/submissions/author-combobox";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { EmptyState } from "@/components/ui/empty-state";
 import { SearchInput } from "@/components/ui/search-input";
 import {
@@ -269,41 +270,35 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
         {/* Filter Tabs & Sort & Count */}
         <div className="border-line flex flex-wrap items-center justify-between gap-3 border-t pt-3">
           <div className="flex flex-wrap items-center gap-2">
-            <div className="border-line flex items-center rounded border-[1.5px] p-0.5">
-              <button
+            <ButtonGroup className="rounded-lg">
+              <Button
                 type="button"
+                variant={filterMode === "all" ? "default" : "ghost"}
+                size="xs"
                 onClick={() => handleFilterChange("all")}
-                className={`rounded px-2.5 py-1 text-[11px] font-bold uppercase transition-colors ${
-                  filterMode === "all"
-                    ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
+                className="font-mono text-[11px] font-bold uppercase"
               >
                 All ({authors.length})
-              </button>
-              <button
+              </Button>
+              <Button
                 type="button"
+                variant={filterMode === "with-resources" ? "default" : "ghost"}
+                size="xs"
                 onClick={() => handleFilterChange("with-resources")}
-                className={`rounded px-2.5 py-1 text-[11px] font-bold uppercase transition-colors ${
-                  filterMode === "with-resources"
-                    ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
+                className="font-mono text-[11px] font-bold uppercase"
               >
                 Active ({authors.filter((a) => a.resourceCount > 0).length})
-              </button>
-              <button
+              </Button>
+              <Button
                 type="button"
+                variant={filterMode === "without-resources" ? "default" : "ghost"}
+                size="xs"
                 onClick={() => handleFilterChange("without-resources")}
-                className={`rounded px-2.5 py-1 text-[11px] font-bold uppercase transition-colors ${
-                  filterMode === "without-resources"
-                    ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
+                className="font-mono text-[11px] font-bold uppercase"
               >
                 Unassigned ({authors.filter((a) => a.resourceCount === 0).length})
-              </button>
-            </div>
+              </Button>
+            </ButtonGroup>
 
             {/* Sort Dropdown */}
             <SortSelect
@@ -501,20 +496,19 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
                   <TableCell className="text-right">
                     <div className="flex items-center justify-end gap-1.5">
                       <Button
-                        size="sm"
+                        size="icon-xs"
                         variant="ghost"
                         onClick={() => handleOpenEdit(authorItem)}
-                        className="h-7 w-7 p-0"
                         title="Edit Author"
                       >
                         <PencilSimpleIcon className="size-3.5" />
                       </Button>
 
                       <Button
-                        size="sm"
+                        size="icon-xs"
                         variant="ghost"
                         onClick={() => setDeletingAuthor(authorItem)}
-                        className="text-muted-foreground hover:text-destructive h-7 w-7 p-0"
+                        className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
                         title="Delete Author"
                         disabled={Boolean(deletingAuthor && deletingAuthor.resourceCount > 0)}
                       >
