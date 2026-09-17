@@ -178,13 +178,13 @@ export function AdminSubmissionEditForm({
 
   const handleRequestCreateAuthor = (name: string, initialData?: Partial<SuggestedAuthorData>) => {
     setCreateAuthorInitialData({
-      blog: initialData?.blog || editForm.authorBlog || "",
-      github: initialData?.github || editForm.authorGitHub || "",
-      linkedin: initialData?.linkedin || editForm.authorLinkedIn || "",
+      blog: initialData?.blog || "",
+      github: initialData?.github || "",
+      linkedin: initialData?.linkedin || "",
       name: name || initialData?.name || "",
-      twitter: initialData?.twitter || editForm.authorTwitter || "",
-      website: initialData?.website || editForm.authorWebsite || "",
-      youtube: initialData?.youtube || editForm.authorYouTube || "",
+      twitter: initialData?.twitter || "",
+      website: initialData?.website || "",
+      youtube: initialData?.youtube || "",
     });
     setIsCreateAuthorOpen(true);
   };
@@ -697,7 +697,12 @@ export function AdminSubmissionEditForm({
       {/* Inline Create Author Modal */}
       <AdminAuthorDialog
         open={isCreateAuthorOpen}
-        onOpenChange={setIsCreateAuthorOpen}
+        onOpenChange={(isOpen) => {
+          setIsCreateAuthorOpen(isOpen);
+          if (!isOpen) {
+            setCreateAuthorInitialData({});
+          }
+        }}
         initialData={createAuthorInitialData}
         initialName={createAuthorInitialData.name}
         onCreated={(newAuthor) => {
@@ -722,6 +727,7 @@ export function AdminSubmissionEditForm({
               authorYouTube: newAuthor.youtube || prev.authorYouTube || "",
             };
           });
+          setCreateAuthorInitialData({});
           setIsCreateAuthorOpen(false);
         }}
       />

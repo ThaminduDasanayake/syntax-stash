@@ -209,13 +209,13 @@ export function AdminResourceDialog({
 
   const handleRequestCreateAuthor = (name: string, initialData?: Partial<SuggestedAuthorData>) => {
     setCreateAuthorInitialData({
-      blog: initialData?.blog || formData.authorBlog || "",
-      github: initialData?.github || formData.authorGithub || "",
-      linkedin: initialData?.linkedin || formData.authorLinkedin || "",
+      blog: initialData?.blog || "",
+      github: initialData?.github || "",
+      linkedin: initialData?.linkedin || "",
       name: name || initialData?.name || "",
-      twitter: initialData?.twitter || formData.authorTwitter || "",
-      website: initialData?.website || formData.authorWebsite || "",
-      youtube: initialData?.youtube || formData.authorYoutube || "",
+      twitter: initialData?.twitter || "",
+      website: initialData?.website || "",
+      youtube: initialData?.youtube || "",
     });
     setIsCreateAuthorOpen(true);
   };
@@ -754,7 +754,12 @@ export function AdminResourceDialog({
       {/* Inline Create Author Modal */}
       <AdminAuthorDialog
         open={isCreateAuthorOpen}
-        onOpenChange={setIsCreateAuthorOpen}
+        onOpenChange={(isOpen) => {
+          setIsCreateAuthorOpen(isOpen);
+          if (!isOpen) {
+            setCreateAuthorInitialData({});
+          }
+        }}
         initialData={createAuthorInitialData}
         initialName={createAuthorInitialData.name}
         onCreated={(newAuthor) => {
@@ -780,6 +785,7 @@ export function AdminResourceDialog({
               authorYoutube: newAuthor.youtube || prev.authorYoutube || "",
             };
           });
+          setCreateAuthorInitialData({});
           setIsCreateAuthorOpen(false);
         }}
       />

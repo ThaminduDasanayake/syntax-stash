@@ -7,6 +7,7 @@ import { asc, eq } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { author, category, resource, resourceHealth, resourceTag, tag } from "@/lib/db/schema";
 import { parseGitHubRepo } from "@/lib/github";
+import { isBotChallengeUrl } from "@/lib/url-utils";
 import { Resource } from "@/types";
 
 import { AUDIT_CONFIG } from "./audit-config";
@@ -324,11 +325,29 @@ async function checkResource(resource: Resource): Promise<AuditFinding[]> {
 
     clearTimeout(timeoutId);
 
-    // 1. Check for Redirects (301, 308, 302)
+    // 1. Check for Redirects (301, 308, 302, 307)
     if ([301, 302, 307, 308].includes(res.status)) {
       const location = res.headers.get("location");
       if (location) {
-        const resolved = new URL(location, targetUrl).href;
+        let resolved = location;
+        try {
+          resolved = new URL(location, targetUrl).href;
+        } catch {
+          // ignore
+        }
+
+        if (isBotChallengeUrl(location) || isBotChallengeUrl(resolved)) {
+          findings.push({
+            category: resource.category,
+            details: `Protected by Anti-Bot / WAF Challenge (HTTP ${res.status})`,
+            resourceTitle: resource.title,
+            statusCode: res.status,
+            type: "blocked",
+            url: targetUrl,
+          });
+          return findings;
+        }
+
         const cleanOld = targetUrl.replace(/\/$/, "");
         const cleanNew = resolved.replace(/\/$/, "");
 

@@ -7,7 +7,7 @@ import { isAdmin } from "@/lib/admin";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { resource, resourceHealth } from "@/lib/db/schema";
-import { normalizeUrl } from "@/lib/url-utils";
+import { isBotChallengeUrl, normalizeUrl } from "@/lib/url-utils";
 
 async function verifyAdmin() {
   const reqHeaders = await headers();
@@ -73,6 +73,16 @@ export async function probeUrl(targetUrl: string): Promise<ProbeResult> {
         } catch {
           resolvedRedirect = location;
         }
+      }
+
+      // Check if redirect target is an anti-bot challenge interstitial (e.g. .within.website, Cloudflare, PerimeterX, Datadome)
+      if (isBotChallengeUrl(location) || isBotChallengeUrl(resolvedRedirect)) {
+        return {
+          errorMessage: `Protected by Anti-Bot / WAF Challenge (HTTP ${res.status})`,
+          redirectUrl: null,
+          status: "blocked",
+          statusCode: res.status,
+        };
       }
 
       // Check if redirect is just a trailing slash change

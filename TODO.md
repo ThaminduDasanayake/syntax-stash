@@ -47,3 +47,4 @@
 My own additions
 
 - need to make the edit, copy json and delete buttons in the admin pages
+- deep dice into internal tools and only get free tools from icons8

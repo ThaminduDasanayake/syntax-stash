@@ -86,3 +86,30 @@ export function areUrlsEqual(urlA?: string | null, urlB?: string | null): boolea
   if (!urlA || !urlB) return false;
   return normalizeUrl(urlA) === normalizeUrl(urlB);
 }
+
+/**
+ * Detects if a URL or redirect location is an anti-bot interstitial/challenge endpoint
+ * rather than a genuine website relocation.
+ */
+export function isBotChallengeUrl(rawUrl?: string | null): boolean {
+  if (!rawUrl || typeof rawUrl !== "string") return false;
+  const lower = rawUrl.toLowerCase();
+
+  return (
+    lower.includes(".within.website") ||
+    lower.includes("__cf_chl") ||
+    lower.includes("cf_chl_") ||
+    lower.includes("cdn-cgi/challenge-platform") ||
+    lower.includes("cdn-cgi/l/chk_jschl") ||
+    lower.includes("perimeterx") ||
+    lower.includes("px-captcha") ||
+    lower.includes("datadome") ||
+    lower.includes("arkoselabs") ||
+    lower.includes("geetest") ||
+    lower.includes("bot-detection") ||
+    lower.includes("bot-verification") ||
+    lower.includes("challenge-bypass") ||
+    lower.includes("captcha-delivery") ||
+    lower.includes("geo.captcha")
+  );
+}
