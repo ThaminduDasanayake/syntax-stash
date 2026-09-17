@@ -28,6 +28,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Kbd } from "@/components/ui/kbd";
 import { SearchInput } from "@/components/ui/search-input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { CategoryItem } from "@/lib/categories";
 import { cn, getCategoryTheme, Theme, THEME_CONFIG, THEMES } from "@/lib/utils";
@@ -1074,18 +1082,26 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
           </div>
 
           <div className="border-ink bg-paper mt-8 overflow-x-auto border-2 p-6 shadow-sm">
-            <table className="w-full border-collapse text-left font-mono text-xs">
-              <thead>
-                <tr className="border-ink bg-bg border-b-2">
-                  <th className="p-3 uppercase">Theme Name</th>
-                  <th className="p-3 uppercase">OKLCH Token</th>
-                  <th className="p-3 uppercase">Hex</th>
-                  <th className="p-3 uppercase">Foreground Text</th>
-                  <th className="p-3 uppercase">Ratio</th>
-                  <th className="p-3 uppercase">WCAG Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-line divide-y">
+            <Table className="font-mono text-xs">
+              <TableHeader>
+                <TableRow className="border-ink bg-bg hover:bg-bg border-b-2">
+                  <TableHead className="text-foreground p-3 font-bold uppercase">
+                    Theme Name
+                  </TableHead>
+                  <TableHead className="text-foreground p-3 font-bold uppercase">
+                    OKLCH Token
+                  </TableHead>
+                  <TableHead className="text-foreground p-3 font-bold uppercase">Hex</TableHead>
+                  <TableHead className="text-foreground p-3 font-bold uppercase">
+                    Foreground Text
+                  </TableHead>
+                  <TableHead className="text-foreground p-3 font-bold uppercase">Ratio</TableHead>
+                  <TableHead className="text-foreground p-3 font-bold uppercase">
+                    WCAG Status
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody className="divide-line divide-y">
                 {[
                   {
                     theme: "Red (Cardinal Red)",
@@ -1152,26 +1168,26 @@ export function DesignSystemShowcase({ categories }: DesignSystemShowcaseProps) 
                     status: "AAA Pass",
                   },
                 ].map((row) => (
-                  <tr key={row.theme} className="hover:bg-bg/50">
-                    <td className="p-3 font-bold">{row.theme}</td>
-                    <td className="p-3">
+                  <TableRow key={row.theme} className="hover:bg-bg/50">
+                    <TableCell className="p-3 font-bold">{row.theme}</TableCell>
+                    <TableCell className="p-3">
                       <code>{row.oklch}</code>
-                    </td>
-                    <td className="p-3">
+                    </TableCell>
+                    <TableCell className="p-3">
                       <code>{row.hex}</code>
-                    </td>
-                    <td className="p-3">{row.text}</td>
-                    <td className="p-3 font-bold">{row.ratio}</td>
-                    <td className="p-3">
+                    </TableCell>
+                    <TableCell className="p-3">{row.text}</TableCell>
+                    <TableCell className="p-3 font-bold">{row.ratio}</TableCell>
+                    <TableCell className="p-3">
                       <span className="inline-flex items-center gap-1 font-bold text-emerald-700 dark:text-emerald-400">
                         <CheckCircleIcon weight="fill" className="size-4" />
                         {row.status}
                       </span>
-                    </td>
-                  </tr>
+                    </TableCell>
+                  </TableRow>
                 ))}
-              </tbody>
-            </table>
+              </TableBody>
+            </Table>
           </div>
         </section>
       </main>

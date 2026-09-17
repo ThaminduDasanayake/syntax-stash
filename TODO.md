@@ -7,9 +7,9 @@
 - [x] **Collections Create Dialog Checkbox**:
   - **File:** `components/collections/collections-view.tsx` (Line 333)
   - **Task:** Replaced raw `<input type="checkbox">` and `<label>` with shadcn `<CheckboxField>`.
-- [ ] **Design System Showcase Table**:
+- [x] **Design System Showcase Table**:
   - **File:** `components/design-system-showcase.tsx` (Line 1077)
-  - **Task:** Replace raw HTML `<table>` tags with shadcn `<Table>`, `<TableHeader>`, `<TableBody>`, `<TableRow>`, `<TableHead>`, `<TableCell>` components.
+  - **Task:** Replaced raw HTML `<table>` tags with shadcn `<Table>`, `<TableHeader>`, `<TableBody>`, `<TableRow>`, `<TableHead>`, `<TableCell>` components.
 - [x] **Collapsible Component Import Standardization**:
   - **File:** `app/tools/json-studio/tabs/query-tab.tsx`
   - **Task:** Standardized import from local `@/components/ui/collapsible` wrapper instead of direct `@radix-ui/react-collapsible`.
