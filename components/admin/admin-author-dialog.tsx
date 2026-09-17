@@ -1,7 +1,13 @@
 "use client";
 
-import { CheckIcon, GlobeIcon, XLogoIcon } from "@phosphor-icons/react";
-import Image from "next/image";
+import {
+  CheckIcon,
+  GithubLogoIcon,
+  GlobeIcon,
+  LinkedinLogoIcon,
+  XLogoIcon,
+  YoutubeLogoIcon,
+} from "@phosphor-icons/react";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
@@ -24,7 +30,7 @@ import {
 } from "@/components/ui/dialog";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
-import { isValidHttpUrl, slugifyAuthor } from "@/lib/utils";
+import { cn, isValidHttpUrl, slugifyAuthor } from "@/lib/utils";
 
 import { AdminAuthorItem } from "./admin-authors-client";
 import {
@@ -287,6 +293,21 @@ export function AdminAuthorDialog({
     }
   };
 
+  const isNameFilled = Boolean(formData.name.trim());
+  const isSlugFilled = Boolean(formData.slug.trim());
+  const isWebsiteFilled = Boolean(
+    formData.website.trim() &&
+    (formData.website.trim().startsWith("/") || isValidHttpUrl(formData.website.trim())),
+  );
+  const isGithubFilled = Boolean(formData.github.trim());
+  const isTwitterFilled = Boolean(formData.twitter.trim());
+  const isLinkedinFilled = Boolean(formData.linkedin.trim());
+  const isYoutubeFilled = Boolean(formData.youtube.trim());
+  const isBlogFilled = Boolean(
+    formData.blog.trim() &&
+    (formData.blog.trim().startsWith("/") || isValidHttpUrl(formData.blog.trim())),
+  );
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="border-line bg-paper max-h-[90vh] overflow-y-auto font-mono text-xs sm:max-w-2xl">
@@ -304,27 +325,45 @@ export function AdminAuthorDialog({
         <form onSubmit={handleSubmit} className="w-full min-w-0 space-y-4 pt-2 text-xs">
           {/* Row 1: Name and Slug Side-by-Side */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -m-2 space-y-1.5 rounded p-2 transition-all duration-150 focus-within:ring-1">
+              <Label
+                className={cn(
+                  "flex items-center gap-1.5 font-mono text-xs font-bold uppercase transition-colors",
+                  isNameFilled
+                    ? "text-emerald-600 dark:text-emerald-400"
+                    : "text-foreground group-focus-within:text-primary",
+                )}
+              >
                 <span>Author / Creator Name</span>
                 <span className="text-destructive">*</span>
-                <FieldCheckmark checked={Boolean(formData.name.trim())} />
+                <FieldCheckmark checked={isNameFilled} />
               </Label>
               <InputField
                 placeholder="e.g. Vercel or Lee Robinson"
                 value={formData.name}
                 onChange={(e) => handleNameChange(e.target.value)}
                 required
-                className="font-mono text-xs"
+                className={cn(
+                  "font-mono text-xs transition-colors",
+                  isNameFilled &&
+                    "border-emerald-500/40 focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20",
+                )}
               />
             </div>
 
-            <div className="space-y-2">
-              <div className="mb-2 flex items-center justify-between">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -m-2 space-y-1.5 rounded p-2 transition-all duration-150 focus-within:ring-1">
+              <div className="flex items-center justify-between">
+                <Label
+                  className={cn(
+                    "flex items-center gap-1.5 font-mono text-xs font-bold uppercase transition-colors",
+                    isSlugFilled
+                      ? "text-emerald-600 dark:text-emerald-400"
+                      : "text-foreground group-focus-within:text-primary",
+                  )}
+                >
                   <span>Slug</span>
                   <span className="text-destructive">*</span>
-                  <FieldCheckmark checked={Boolean(formData.slug.trim())} />
+                  <FieldCheckmark checked={isSlugFilled} />
                 </Label>
                 {!isEdit && (
                   <Button
@@ -346,7 +385,11 @@ export function AdminAuthorDialog({
                   setFormData((prev) => ({ ...prev, slug: e.target.value }));
                 }}
                 required
-                className="font-mono text-xs"
+                className={cn(
+                  "font-mono text-xs transition-colors",
+                  isSlugFilled &&
+                    "border-emerald-500/40 focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20",
+                )}
               />
             </div>
           </div>
@@ -366,99 +409,202 @@ export function AdminAuthorDialog({
           )}
 
           {/* URLs Sequentially One After the Other with Icons in Labels */}
-          <div className="border-line/60 space-y-3.5 border-t pt-3">
-            <div className="space-y-1.5">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
-                <GlobeIcon className="text-muted-foreground size-4" />
-                <span>Website / Portfolio URL</span>
-                <FieldCheckmark
-                  checked={Boolean(
-                    formData.website.trim() &&
-                    (formData.website.trim().startsWith("/") ||
-                      isValidHttpUrl(formData.website.trim())),
+          <div className="border-line/60 border-t-[1.5px] pt-3">
+            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -m-2 space-y-1.5 rounded p-2 transition-all duration-150 focus-within:ring-1">
+              <Label
+                className={cn(
+                  "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
+                  isWebsiteFilled
+                    ? "font-bold text-emerald-600 dark:text-emerald-400"
+                    : "text-foreground group-focus-within:text-primary",
+                )}
+              >
+                <GlobeIcon
+                  weight="bold"
+                  className={cn(
+                    "size-4 transition-colors",
+                    isWebsiteFilled
+                      ? "text-emerald-600 dark:text-emerald-400"
+                      : "text-muted-foreground group-focus-within:text-primary",
                   )}
                 />
+                <span>Website / Portfolio URL</span>
+                <FieldCheckmark checked={isWebsiteFilled} />
               </Label>
               <InputField
                 placeholder="https://example.com"
                 value={formData.website}
                 onChange={(e) => setFormData((prev) => ({ ...prev, website: e.target.value }))}
-                className="font-mono text-xs"
+                className={cn(
+                  "font-mono text-xs transition-colors",
+                  isWebsiteFilled &&
+                    "border-emerald-500/40 focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20",
+                )}
               />
             </div>
 
-            <div className="space-y-1.5">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
-                <Image src="/github.svg" alt="GitHub" width={16} height={16} />
+            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -m-2 space-y-1.5 rounded p-2 transition-all duration-150 focus-within:ring-1">
+              <Label
+                className={cn(
+                  "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
+                  isGithubFilled
+                    ? "font-bold text-emerald-600 dark:text-emerald-400"
+                    : "text-foreground group-focus-within:text-primary",
+                )}
+              >
+                <GithubLogoIcon
+                  weight="bold"
+                  className={cn(
+                    "size-4 transition-colors",
+                    isGithubFilled
+                      ? "text-emerald-600 dark:text-emerald-400"
+                      : "text-muted-foreground group-focus-within:text-primary",
+                  )}
+                />
                 <span>GitHub (Username or URL)</span>
-                <FieldCheckmark checked={Boolean(formData.github.trim())} />
+                <FieldCheckmark checked={isGithubFilled} />
               </Label>
               <InputField
                 placeholder="https://github.com/username"
                 value={formData.github}
                 onChange={(e) => setFormData((prev) => ({ ...prev, github: e.target.value }))}
-                className="font-mono text-xs"
+                className={cn(
+                  "font-mono text-xs transition-colors",
+                  isGithubFilled &&
+                    "border-emerald-500/40 focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20",
+                )}
               />
             </div>
 
-            <div className="space-y-1.5">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
-                <XLogoIcon weight="bold" className="text-muted-foreground size-4" />
+            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -m-2 space-y-1.5 rounded p-2 transition-all duration-150 focus-within:ring-1">
+              <Label
+                className={cn(
+                  "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
+                  isTwitterFilled
+                    ? "font-bold text-emerald-600 dark:text-emerald-400"
+                    : "text-foreground group-focus-within:text-primary",
+                )}
+              >
+                <XLogoIcon
+                  weight="bold"
+                  className={cn(
+                    "size-4 transition-colors",
+                    isTwitterFilled
+                      ? "text-emerald-600 dark:text-emerald-400"
+                      : "text-muted-foreground group-focus-within:text-primary",
+                  )}
+                />
                 <span>Twitter / X (@username or URL)</span>
-                <FieldCheckmark checked={Boolean(formData.twitter.trim())} />
+                <FieldCheckmark checked={isTwitterFilled} />
               </Label>
               <InputField
                 placeholder="@username or https://x.com/..."
                 value={formData.twitter}
                 onChange={(e) => setFormData((prev) => ({ ...prev, twitter: e.target.value }))}
-                className="font-mono text-xs"
+                className={cn(
+                  "font-mono text-xs transition-colors",
+                  isTwitterFilled &&
+                    "border-emerald-500/40 focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20",
+                )}
               />
             </div>
 
-            <div className="space-y-1.5">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
-                <Image src="/linkedin.svg" alt="LinkedIn" width={16} height={16} />
+            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -m-2 space-y-1.5 rounded p-2 transition-all duration-150 focus-within:ring-1">
+              <Label
+                className={cn(
+                  "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
+                  isLinkedinFilled
+                    ? "font-bold text-emerald-600 dark:text-emerald-400"
+                    : "text-foreground group-focus-within:text-primary",
+                )}
+              >
+                <LinkedinLogoIcon
+                  weight="bold"
+                  className={cn(
+                    "size-4 transition-colors",
+                    isLinkedinFilled
+                      ? "text-emerald-600 dark:text-emerald-400"
+                      : "text-muted-foreground group-focus-within:text-primary",
+                  )}
+                />
                 <span>LinkedIn (Username or URL)</span>
-                <FieldCheckmark checked={Boolean(formData.linkedin.trim())} />
+                <FieldCheckmark checked={isLinkedinFilled} />
               </Label>
               <InputField
                 placeholder="username or https://linkedin.com/in/..."
                 value={formData.linkedin}
                 onChange={(e) => setFormData((prev) => ({ ...prev, linkedin: e.target.value }))}
-                className="font-mono text-xs"
+                className={cn(
+                  "font-mono text-xs transition-colors",
+                  isLinkedinFilled &&
+                    "border-emerald-500/40 focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20",
+                )}
               />
             </div>
 
-            <div className="space-y-1.5">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
-                <Image src="/youtube.svg" alt="YouTube" width={16} height={16} />
+            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -m-2 space-y-1.5 rounded p-2 transition-all duration-150 focus-within:ring-1">
+              <Label
+                className={cn(
+                  "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
+                  isYoutubeFilled
+                    ? "font-bold text-emerald-600 dark:text-emerald-400"
+                    : "text-foreground group-focus-within:text-primary",
+                )}
+              >
+                <YoutubeLogoIcon
+                  weight="bold"
+                  className={cn(
+                    "size-4 transition-colors",
+                    isYoutubeFilled
+                      ? "text-emerald-600 dark:text-emerald-400"
+                      : "text-muted-foreground group-focus-within:text-primary",
+                  )}
+                />
                 <span>YouTube Channel URL</span>
-                <FieldCheckmark checked={Boolean(formData.youtube.trim())} />
+                <FieldCheckmark checked={isYoutubeFilled} />
               </Label>
               <InputField
                 placeholder="https://youtube.com/@channel"
                 value={formData.youtube}
                 onChange={(e) => setFormData((prev) => ({ ...prev, youtube: e.target.value }))}
-                className="font-mono text-xs"
+                className={cn(
+                  "font-mono text-xs transition-colors",
+                  isYoutubeFilled &&
+                    "border-emerald-500/40 focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20",
+                )}
               />
             </div>
 
-            <div className="space-y-1.5">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
-                <GlobeIcon className="text-muted-foreground size-4" />
-                <span>Blog URL</span>
-                <FieldCheckmark
-                  checked={Boolean(
-                    formData.blog.trim() &&
-                    (formData.blog.trim().startsWith("/") || isValidHttpUrl(formData.blog.trim())),
+            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -m-2 space-y-1.5 rounded p-2 transition-all duration-150 focus-within:ring-1">
+              <Label
+                className={cn(
+                  "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
+                  isBlogFilled
+                    ? "font-bold text-emerald-600 dark:text-emerald-400"
+                    : "text-foreground group-focus-within:text-primary",
+                )}
+              >
+                <GlobeIcon
+                  weight="bold"
+                  className={cn(
+                    "size-4 transition-colors",
+                    isBlogFilled
+                      ? "text-emerald-600 dark:text-emerald-400"
+                      : "text-muted-foreground group-focus-within:text-primary",
                   )}
                 />
+                <span>Blog URL</span>
+                <FieldCheckmark checked={isBlogFilled} />
               </Label>
               <InputField
                 placeholder="https://example.com/blog"
                 value={formData.blog}
                 onChange={(e) => setFormData((prev) => ({ ...prev, blog: e.target.value }))}
-                className="font-mono text-xs"
+                className={cn(
+                  "font-mono text-xs transition-colors",
+                  isBlogFilled &&
+                    "border-emerald-500/40 focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20",
+                )}
               />
             </div>
           </div>
