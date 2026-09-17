@@ -1,13 +1,7 @@
 "use client";
 
-import {
-  CheckIcon,
-  GithubLogoIcon,
-  GlobeIcon,
-  LinkedinLogoIcon,
-  XLogoIcon,
-  YoutubeLogoIcon,
-} from "@phosphor-icons/react";
+import { ArticleIcon, CheckIcon, GlobeIcon, XLogoIcon } from "@phosphor-icons/react";
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
@@ -325,7 +319,7 @@ export function AdminAuthorDialog({
         <form onSubmit={handleSubmit} className="w-full min-w-0 space-y-4 pt-2 text-xs">
           {/* Row 1: Name and Slug Side-by-Side */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -m-2 space-y-1.5 rounded p-2 transition-all duration-150 focus-within:ring-1">
+            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -m-2 space-y-1.5 rounded-md p-2 transition-all duration-150 focus-within:ring-1">
               <Label
                 className={cn(
                   "flex items-center gap-1.5 font-mono text-xs font-bold uppercase transition-colors",
@@ -351,7 +345,7 @@ export function AdminAuthorDialog({
               />
             </div>
 
-            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -m-2 space-y-1.5 rounded p-2 transition-all duration-150 focus-within:ring-1">
+            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -m-2 space-y-1.5 rounded-md p-2 transition-all duration-150 focus-within:ring-1">
               <div className="flex items-center justify-between">
                 <Label
                   className={cn(
@@ -410,7 +404,7 @@ export function AdminAuthorDialog({
 
           {/* URLs Sequentially One After the Other with Icons in Labels */}
           <div className="border-line/60 border-t-[1.5px] pt-4">
-            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 space-y-1.5 rounded-md py-2 transition-all duration-150 focus-within:ring-1">
+            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -mx-2 space-y-1.5 rounded-md p-2 transition-all duration-150 focus-within:ring-1">
               <Label
                 className={cn(
                   "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
@@ -425,7 +419,7 @@ export function AdminAuthorDialog({
                     "size-4 transition-colors",
                     isWebsiteFilled
                       ? "text-emerald-600 dark:text-emerald-400"
-                      : "text-muted-foreground group-focus-within:text-primary",
+                      : "tgroup-focus-within:text-primary",
                   )}
                 />
                 <span>Website / Portfolio URL</span>
@@ -443,7 +437,7 @@ export function AdminAuthorDialog({
               />
             </div>
 
-            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 space-y-1.5 rounded-md py-2 transition-all duration-150 focus-within:ring-1">
+            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -mx-2 space-y-1.5 rounded-md p-2 transition-all duration-150 focus-within:ring-1">
               <Label
                 className={cn(
                   "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
@@ -452,15 +446,7 @@ export function AdminAuthorDialog({
                     : "text-foreground group-focus-within:text-primary",
                 )}
               >
-                <GithubLogoIcon
-                  weight="bold"
-                  className={cn(
-                    "size-4 transition-colors",
-                    isGithubFilled
-                      ? "text-emerald-600 dark:text-emerald-400"
-                      : "text-muted-foreground group-focus-within:text-primary",
-                  )}
-                />
+                <Image src="/github.svg" alt="GitHub" width={16} height={16} />
                 <span>GitHub (Username or URL)</span>
                 <FieldCheckmark checked={isGithubFilled} />
               </Label>
@@ -476,7 +462,7 @@ export function AdminAuthorDialog({
               />
             </div>
 
-            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 space-y-1.5 rounded-md py-2 transition-all duration-150 focus-within:ring-1">
+            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -mx-2 space-y-1.5 rounded-md p-2 transition-all duration-150 focus-within:ring-1">
               <Label
                 className={cn(
                   "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
@@ -491,7 +477,7 @@ export function AdminAuthorDialog({
                     "size-4 transition-colors",
                     isTwitterFilled
                       ? "text-emerald-600 dark:text-emerald-400"
-                      : "text-muted-foreground group-focus-within:text-primary",
+                      : "group-focus-within:text-primary",
                   )}
                 />
                 <span>Twitter / X (@username or URL)</span>
@@ -509,7 +495,7 @@ export function AdminAuthorDialog({
               />
             </div>
 
-            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 space-y-1.5 rounded-md py-2 transition-all duration-150 focus-within:ring-1">
+            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -mx-2 space-y-1.5 rounded-md p-2 transition-all duration-150 focus-within:ring-1">
               <Label
                 className={cn(
                   "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
@@ -518,14 +504,12 @@ export function AdminAuthorDialog({
                     : "text-foreground group-focus-within:text-primary",
                 )}
               >
-                <LinkedinLogoIcon
-                  weight="bold"
-                  className={cn(
-                    "size-4 transition-colors",
-                    isLinkedinFilled
-                      ? "text-emerald-600 dark:text-emerald-400"
-                      : "text-muted-foreground group-focus-within:text-primary",
-                  )}
+                <Image
+                  src="/linkedin.svg"
+                  alt="LinkedIn"
+                  width={16}
+                  height={16}
+                  className="opacity-90"
                 />
                 <span>LinkedIn (Username or URL)</span>
                 <FieldCheckmark checked={isLinkedinFilled} />
@@ -542,7 +526,7 @@ export function AdminAuthorDialog({
               />
             </div>
 
-            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 space-y-1.5 rounded-md py-2 transition-all duration-150 focus-within:ring-1">
+            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -mx-2 space-y-1.5 rounded-md p-2 transition-all duration-150 focus-within:ring-1">
               <Label
                 className={cn(
                   "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
@@ -551,14 +535,12 @@ export function AdminAuthorDialog({
                     : "text-foreground group-focus-within:text-primary",
                 )}
               >
-                <YoutubeLogoIcon
-                  weight="bold"
-                  className={cn(
-                    "size-4 transition-colors",
-                    isYoutubeFilled
-                      ? "text-emerald-600 dark:text-emerald-400"
-                      : "text-muted-foreground group-focus-within:text-primary",
-                  )}
+                <Image
+                  src="/youtube.svg"
+                  alt="YouTube"
+                  width={16}
+                  height={16}
+                  className="opacity-90"
                 />
                 <span>YouTube Channel URL</span>
                 <FieldCheckmark checked={isYoutubeFilled} />
@@ -575,7 +557,7 @@ export function AdminAuthorDialog({
               />
             </div>
 
-            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 space-y-1.5 rounded-md py-2 transition-all duration-150 focus-within:ring-1">
+            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -mx-2 space-y-1.5 rounded-md p-2 transition-all duration-150 focus-within:ring-1">
               <Label
                 className={cn(
                   "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
@@ -584,13 +566,13 @@ export function AdminAuthorDialog({
                     : "text-foreground group-focus-within:text-primary",
                 )}
               >
-                <GlobeIcon
+                <ArticleIcon
                   weight="bold"
                   className={cn(
                     "size-4 transition-colors",
                     isBlogFilled
                       ? "text-emerald-600 dark:text-emerald-400"
-                      : "text-muted-foreground group-focus-within:text-primary",
+                      : "group-focus-within:text-primary",
                   )}
                 />
                 <span>Blog URL</span>
