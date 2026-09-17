@@ -9,13 +9,8 @@ import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { SelectField } from "@/components/ui/select-field";
+import { SliderField } from "@/components/ui/slider-field";
 
 export function CubicBezierTab() {
   const [p1x, setP1x] = useState(0.25);
@@ -125,40 +120,27 @@ export function CubicBezierTab() {
                 </div>
               </div>
 
-              <div className="space-y-1">
-                <Label className="text-muted-foreground text-xs">Duration (ms)</Label>
-                <Input
-                  type="number"
-                  min={100}
-                  max={5000}
-                  step={50}
-                  value={duration}
-                  onChange={(e) => setDuration(Number(e.target.value))}
-                  className="w-24 font-mono text-xs"
-                />
-              </div>
+              <SliderField
+                label="Duration"
+                value={[duration]}
+                onValueChange={(vals) => setDuration(vals[0])}
+                min={100}
+                max={5000}
+                step={50}
+                valueLabel={`${duration} ms`}
+              />
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <Label className="shrink-0 text-sm">Preset</Label>
-            <Select
-              onValueChange={(v) => {
-                if (v) applyPreset(String(v));
-              }}
-            >
-              <SelectTrigger className="flex-1">
-                <SelectValue placeholder="Choose a preset..." />
-              </SelectTrigger>
-              <SelectContent>
-                {PRESETS.map((p) => (
-                  <SelectItem key={p.label} value={p.label}>
-                    {p.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <SelectField
+            label="Preset"
+            value=""
+            onValueChange={(v) => {
+              if (v) applyPreset(String(v));
+            }}
+            options={PRESETS.map((p) => ({ label: p.label, value: p.label }))}
+            placeholder="Choose a preset..."
+          />
         </div>
 
         <div className="space-y-5">

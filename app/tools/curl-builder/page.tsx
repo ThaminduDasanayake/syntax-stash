@@ -10,6 +10,7 @@ import { CheckboxField } from "@/components/ui/checkbox-field";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Input } from "@/components/ui/input";
+import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { TextareaGroup } from "@/components/ui/textarea-group";
@@ -217,10 +218,13 @@ export default function CurlBuilderPage() {
                 onValueChange={(v) => v && setMethod(v as HttpMethod)}
                 options={METHODS.map((m) => ({ label: m, value: m }))}
               />
-              <div className="flex-1 space-y-2">
-                <Label>URL</Label>
-                <Input value={url} onChange={(e) => setUrl(e.target.value)} className="font-mono" />
-              </div>
+              <InputField
+                label="URL"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                className="font-mono"
+                containerClassName="flex-1"
+              />
             </div>
 
             {/* Auth */}

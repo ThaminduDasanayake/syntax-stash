@@ -4,8 +4,8 @@ import { useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { StepperField } from "@/components/ui/stepper-field";
 
 function gcd(a: number, b: number): number {
   return b === 0 ? a : gcd(b, a % b);
@@ -67,24 +67,20 @@ export function AspectRatioTab() {
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label>Width</Label>
-            <Input
-              type="number"
-              min={1}
-              value={width}
-              onChange={(e) => setWidth(Math.max(1, parseInt(e.target.value) || 1))}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label>Height</Label>
-            <Input
-              type="number"
-              min={1}
-              value={height}
-              onChange={(e) => setHeight(Math.max(1, parseInt(e.target.value) || 1))}
-            />
-          </div>
+          <StepperField
+            label="Width"
+            value={width}
+            onValueChange={(val) => setWidth(Math.max(1, val || 1))}
+            min={1}
+            step={10}
+          />
+          <StepperField
+            label="Height"
+            value={height}
+            onValueChange={(val) => setHeight(Math.max(1, val || 1))}
+            min={1}
+            step={10}
+          />
         </div>
 
         <div className="border-border rounded-xl border-[1.5px] p-4">
