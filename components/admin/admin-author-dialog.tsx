@@ -155,6 +155,20 @@ export function AdminAuthorDialog({
         });
         setAutoSlug(!initialData?.slug);
       }
+    } else {
+      setFormData({
+        blog: "",
+        github: "",
+        linkedin: "",
+        name: "",
+        slug: "",
+        twitter: "",
+        website: "",
+        youtube: "",
+      });
+      setAutoSlug(true);
+      setIsConfirmOpen(false);
+      setPendingChanges([]);
     }
   }, [author, initialData, initialName, open]);
 
@@ -223,6 +237,17 @@ export function AdminAuthorDialog({
         if (res.ok && data.success && data.author) {
           toast.success(`"${formData.name}" created successfully.`);
           registerNewAuthorLocally(data.author);
+          setFormData({
+            blog: "",
+            github: "",
+            linkedin: "",
+            name: "",
+            slug: "",
+            twitter: "",
+            website: "",
+            youtube: "",
+          });
+          setAutoSlug(true);
           onCreated?.(data.author);
           onOpenChange(false);
         } else {
