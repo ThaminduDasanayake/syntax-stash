@@ -409,8 +409,8 @@ export function AdminAuthorDialog({
           )}
 
           {/* URLs Sequentially One After the Other with Icons in Labels */}
-          <div className="border-line/60 border-t-[1.5px] pt-3">
-            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -m-2 space-y-1.5 rounded p-2 transition-all duration-150 focus-within:ring-1">
+          <div className="border-line/60 border-t-[1.5px] pt-4">
+            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 space-y-1.5 rounded-md py-2 transition-all duration-150 focus-within:ring-1">
               <Label
                 className={cn(
                   "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
@@ -443,7 +443,7 @@ export function AdminAuthorDialog({
               />
             </div>
 
-            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -m-2 space-y-1.5 rounded p-2 transition-all duration-150 focus-within:ring-1">
+            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 space-y-1.5 rounded-md py-2 transition-all duration-150 focus-within:ring-1">
               <Label
                 className={cn(
                   "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
@@ -476,7 +476,7 @@ export function AdminAuthorDialog({
               />
             </div>
 
-            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -m-2 space-y-1.5 rounded p-2 transition-all duration-150 focus-within:ring-1">
+            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 space-y-1.5 rounded-md py-2 transition-all duration-150 focus-within:ring-1">
               <Label
                 className={cn(
                   "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
@@ -509,7 +509,7 @@ export function AdminAuthorDialog({
               />
             </div>
 
-            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -m-2 space-y-1.5 rounded p-2 transition-all duration-150 focus-within:ring-1">
+            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 space-y-1.5 rounded-md py-2 transition-all duration-150 focus-within:ring-1">
               <Label
                 className={cn(
                   "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
@@ -542,7 +542,7 @@ export function AdminAuthorDialog({
               />
             </div>
 
-            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -m-2 space-y-1.5 rounded p-2 transition-all duration-150 focus-within:ring-1">
+            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 space-y-1.5 rounded-md py-2 transition-all duration-150 focus-within:ring-1">
               <Label
                 className={cn(
                   "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
@@ -575,7 +575,7 @@ export function AdminAuthorDialog({
               />
             </div>
 
-            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -m-2 space-y-1.5 rounded p-2 transition-all duration-150 focus-within:ring-1">
+            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 space-y-1.5 rounded-md py-2 transition-all duration-150 focus-within:ring-1">
               <Label
                 className={cn(
                   "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
