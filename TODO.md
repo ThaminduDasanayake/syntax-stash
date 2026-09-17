@@ -13,8 +13,8 @@
 - [x] **Collapsible Component Import Standardization**:
   - **File:** `app/tools/json-studio/tabs/query-tab.tsx`
   - **Task:** Standardized import from local `@/components/ui/collapsible` wrapper instead of direct `@radix-ui/react-collapsible`.
-- [ ] **Developer Tools Controls Audit**:
-  - **Context:** Audit inputs and options in `app/tools/*` to standardize on shadcn primitives (`SliderField`, `SwitchField`, `Tabs`, `Badge`, `Tooltip`, `StepperField`).
+- [x] **Developer Tools Controls Audit**:
+  - **Context:** Audited inputs and options in `app/tools/*` and standardized controls on shadcn primitives (`SliderField`, `SwitchField`, `Tabs`, `Badge`, `Tooltip`, `StepperField`, `InputField`, `SelectField`).
 
 ### 2. Asset & Resource Curation
 
