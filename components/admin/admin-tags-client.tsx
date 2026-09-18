@@ -10,24 +10,14 @@ import {
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
+import { AdminTagDialog } from "@/components/admin/admin-tag-dialog";
 import { FilterSelect } from "@/components/admin/filter-select";
 import { SortSelect } from "@/components/admin/sort-select";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
-import { DuplicateNotice } from "@/components/submissions/duplicate-url-notice";
 import { invalidateTagCache } from "@/components/submissions/tag-picker";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogFormActions,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { EmptyState } from "@/components/ui/empty-state";
-import { InputField } from "@/components/ui/input-field";
 import { SearchInput } from "@/components/ui/search-input";
 import {
   Table,
@@ -37,18 +27,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { cn, normalizeTag } from "@/lib/utils";
-
-import {
-  AdminConfirmEditDialog,
-  computeFieldChanges,
-  FieldDiff,
-} from "./admin-confirm-edit-dialog";
-
-const TAG_FIELD_LABELS: Record<string, string> = {
-  name: "Tag Name",
-  slug: "Tag Slug",
-};
+import { cn } from "@/lib/utils";
 
 export interface AdminTagItem {
   createdAt?: Date | string;
@@ -89,31 +68,6 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingTag, setEditingTag] = useState<AdminTagItem | null>(null);
   const [deletingTag, setDeletingTag] = useState<AdminTagItem | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-  const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
-
-  // Form state
-  const [formData, setFormData] = useState({
-    name: "",
-    slug: "",
-  });
-  const [autoSlug, setAutoSlug] = useState(true);
-
-  const duplicateTag = useMemo(() => {
-    const rawName = formData.name.trim();
-    const rawSlug = formData.slug.trim();
-    if (!rawName && !rawSlug) return null;
-    const targetSlug = rawSlug ? normalizeTag(rawSlug) : normalizeTag(rawName);
-    const targetLower = rawName.toLowerCase();
-    return (
-      tags.find(
-        (t) =>
-          t.id !== editingTag?.id &&
-          (t.slug === targetSlug || (targetLower && t.name.toLowerCase() === targetLower)),
-      ) || null
-    );
-  }, [editingTag?.id, formData.name, formData.slug, tags]);
 
   // Filter & Sort
   const filteredAndSortedTags = useMemo(() => {
@@ -183,131 +137,13 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
   // Open Add Dialog
   const handleOpenAdd = () => {
     setEditingTag(null);
-    setFormData({
-      name: "",
-      slug: "",
-    });
-    setAutoSlug(true);
     setIsDialogOpen(true);
   };
 
   // Open Edit Dialog
   const handleOpenEdit = (tagItem: AdminTagItem) => {
     setEditingTag(tagItem);
-    setFormData({
-      name: tagItem.name,
-      slug: tagItem.slug,
-    });
-    setAutoSlug(false);
     setIsDialogOpen(true);
-  };
-
-  // Handle Form Name Change (auto slug)
-  const handleNameChange = (newName: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      name: newName,
-      slug: autoSlug ? normalizeTag(newName) : prev.slug,
-    }));
-  };
-
-  // Execute Save
-  const executeSave = async () => {
-    try {
-      setIsSubmitting(true);
-      if (editingTag) {
-        // PATCH
-        const res = await fetch("/api/admin/tags", {
-          body: JSON.stringify({
-            id: editingTag.id,
-            name: formData.name.trim(),
-            slug: formData.slug.trim() ? normalizeTag(formData.slug) : normalizeTag(formData.name),
-          }),
-          headers: { "Content-Type": "application/json" },
-          method: "PATCH",
-        });
-
-        const data = await res.json();
-        if (!res.ok) {
-          toast.error(data.error || "Failed to update tag.");
-          return;
-        }
-
-        setTags((prev) =>
-          prev.map((t) =>
-            t.id === editingTag.id
-              ? {
-                  ...t,
-                  name: formData.name.trim(),
-                  slug: formData.slug.trim()
-                    ? normalizeTag(formData.slug)
-                    : normalizeTag(formData.name),
-                  updatedAt: new Date().toISOString(),
-                }
-              : t,
-          ),
-        );
-        invalidateTagCache();
-        toast.success(`Tag "${formData.name}" updated successfully.`);
-        setIsConfirmOpen(false);
-        setIsDialogOpen(false);
-      } else {
-        // POST
-        const res = await fetch("/api/admin/tags", {
-          body: JSON.stringify({
-            name: formData.name.trim(),
-            slug: formData.slug.trim() ? normalizeTag(formData.slug) : normalizeTag(formData.name),
-          }),
-          headers: { "Content-Type": "application/json" },
-          method: "POST",
-        });
-
-        const data = await res.json();
-        if (!res.ok) {
-          toast.error(data.error || "Failed to create tag.");
-          return;
-        }
-
-        setTags((prev) => [
-          ...prev,
-          {
-            id: data.id,
-            name: formData.name.trim(),
-            slug: formData.slug.trim() ? normalizeTag(formData.slug) : normalizeTag(formData.name),
-            toolCount: 0,
-          },
-        ]);
-        invalidateTagCache();
-        toast.success(`Tag "${formData.name}" created successfully.`);
-        setIsDialogOpen(false);
-      }
-    } catch {
-      toast.error("Network error while saving tag.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  // Submit Add or Edit
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.name.trim()) {
-      toast.error("Tag name is required.");
-      return;
-    }
-
-    if (duplicateTag) {
-      toast.error(`Tag "${duplicateTag.name}" already exists.`);
-      return;
-    }
-
-    if (editingTag) {
-      const diffs = computeFieldChanges(editingTag, formData, TAG_FIELD_LABELS);
-      setPendingChanges(diffs);
-      setIsConfirmOpen(true);
-    } else {
-      await executeSave();
-    }
   };
 
   // Confirm Delete
@@ -492,88 +328,16 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
       )}
 
       {/* Add / Edit Tag Dialog */}
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="font-mono sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-base font-bold tracking-tight uppercase">
-              {editingTag ? `Edit Tag: #${editingTag.name}` : "Create New Tag"}
-            </DialogTitle>
-            <DialogDescription className="text-xs">
-              {editingTag
-                ? "Update tag name or slug identifier."
-                : "Add a new tag for categorizing and discovering resources."}
-            </DialogDescription>
-          </DialogHeader>
-
-          <form onSubmit={handleSubmit} className="w-full min-w-0 space-y-4 pt-2 text-xs">
-            <div>
-              <InputField
-                label="Tag Name *"
-                placeholder="e.g. Next.js, Open Source"
-                value={formData.name}
-                onChange={(e) => handleNameChange(e.target.value)}
-                required
-                className="font-mono text-xs"
-              />
-            </div>
-
-            <div>
-              <div className="mb-1 flex items-center justify-between">
-                <label className="text-muted-foreground text-xs font-semibold">Slug *</label>
-                {!editingTag && (
-                  <button
-                    type="button"
-                    onClick={() => setAutoSlug(!autoSlug)}
-                    className="text-primary text-[10px] hover:underline"
-                  >
-                    {autoSlug ? "Manual Slug" : "Auto Slug"}
-                  </button>
-                )}
-              </div>
-              <InputField
-                placeholder="e.g. next-js, open-source"
-                value={formData.slug}
-                onChange={(e) => {
-                  setAutoSlug(false);
-                  setFormData((prev) => ({ ...prev, slug: e.target.value }));
-                }}
-                required
-                className="font-mono text-xs"
-              />
-            </div>
-
-            {duplicateTag && (
-              <DuplicateNotice
-                type="tag"
-                title="This tag is already added!"
-                description={
-                  <>
-                    Already listed as{" "}
-                    <strong className="font-bold underline">#{duplicateTag.name}</strong> (
-                    <code>{duplicateTag.slug}</code>)
-                    {duplicateTag.toolCount > 0
-                      ? ` with ${duplicateTag.toolCount} assigned resource(s).`
-                      : "."}
-                  </>
-                }
-              />
-            )}
-
-            {/* Footer Actions */}
-            <DialogFooter className="mt-4 pt-2">
-              <DialogFormActions
-                size="sm"
-                onCancel={() => setIsDialogOpen(false)}
-                isWorking={isSubmitting}
-                isEdit={Boolean(editingTag)}
-                createLabel="Create Tag"
-                editLabel="Save Changes"
-                cancelVariant="outline"
-              />
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
+      <AdminTagDialog
+        open={isDialogOpen}
+        onOpenChange={setIsDialogOpen}
+        tag={editingTag}
+        existingTags={tags}
+        onCreated={(newTag) => setTags((prev) => [newTag, ...prev])}
+        onUpdated={(updatedTag) =>
+          setTags((prev) => prev.map((t) => (t.id === updatedTag.id ? updatedTag : t)))
+        }
+      />
 
       {/* Delete Confirmation Alert Dialog */}
       <ConfirmDialog
@@ -594,20 +358,6 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
           </>
         }
         confirmLabel="Hold to delete"
-      />
-
-      {/* Confirmation Dialog for Tag Updates */}
-      <AdminConfirmEditDialog
-        open={isConfirmOpen}
-        onOpenChange={setIsConfirmOpen}
-        title="Confirm Tag Updates"
-        description="Review the list of changed tag properties before saving changes."
-        itemTitle={
-          formData.name ? `#${formData.name}` : editingTag ? `#${editingTag.name}` : undefined
-        }
-        changes={pendingChanges}
-        onConfirm={executeSave}
-        isWorking={isSubmitting}
       />
     </div>
   );
