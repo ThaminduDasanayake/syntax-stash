@@ -3,6 +3,7 @@
 import {
   ArrowsClockwiseIcon,
   CheckIcon,
+  CircleNotchIcon,
   DownloadSimpleIcon,
   FoldersIcon,
   PencilSimpleIcon,
@@ -85,6 +86,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<string>("name-asc");
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [downloadingCategoryId, setDownloadingCategoryId] = useState<string | null>(null);
 
   // Dialog state
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -194,6 +196,85 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
       toast.success("Categories downloaded as JSON.");
     } catch {
       toast.error("Failed to download categories JSON.");
+    }
+  };
+
+  // Download All Resources in a Category
+  const handleDownloadCategoryResources = async (cat: AdminCategoryItem) => {
+    if (cat.toolCount === 0) {
+      toast.info(`No resources in category "${cat.name}".`);
+      return;
+    }
+
+    try {
+      setDownloadingCategoryId(cat.id);
+      const res = await fetch(`/api/admin/resources?categoryId=${encodeURIComponent(cat.id)}`);
+      const data = await res.json();
+
+      if (!res.ok || !data.resources) {
+        toast.error(data.error || `Failed to fetch resources for "${cat.name}".`);
+        return;
+      }
+
+      if (data.resources.length === 0) {
+        toast.info(`No resources found in "${cat.name}".`);
+        return;
+      }
+
+      const exportData = data.resources.map(
+        (r: {
+          authors?: string[];
+          category?: string;
+          createdAt?: string;
+          description?: string;
+          favicon?: string;
+          github?: string;
+          iconBg?: string;
+          id: string;
+          ogImage?: string;
+          subtitle?: string;
+          tags?: string[];
+          title: string;
+          updatedAt?: string;
+          url: string;
+        }) => ({
+          id: r.id,
+          title: r.title,
+          authors: r.authors && r.authors.length > 0 ? r.authors : undefined,
+          category: r.category || cat.name,
+          createdAt: r.createdAt,
+          description: r.description,
+          favicon: r.favicon || undefined,
+          github: r.github || undefined,
+          iconBg: r.iconBg || undefined,
+          ogImage: r.ogImage || undefined,
+          subtitle: r.subtitle || undefined,
+          tags: r.tags && r.tags.length > 0 ? r.tags : undefined,
+          updatedAt: r.updatedAt,
+          url: r.url,
+        }),
+      );
+
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+        type: "application/json",
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const safeSlug = cat.slug || slugify(cat.name);
+      a.href = url;
+      a.download = `${safeSlug}-resources-${new Date().toISOString().split("T")[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      toast.success(
+        `Downloaded ${data.resources.length} resource${data.resources.length === 1 ? "" : "s"} for "${cat.name}".`,
+      );
+    } catch {
+      toast.error(`Network error while downloading resources for "${cat.name}".`);
+    } finally {
+      setDownloadingCategoryId(null);
     }
   };
 
@@ -369,7 +450,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
               className="h-9 text-xs uppercase"
               title="Download all categories as JSON"
             >
-              <DownloadSimpleIcon weight="bold" className="size-4" />
+              <DownloadSimpleIcon weight="bold" className="text-primary size-4" />
               <span className="hidden sm:inline">Export JSON</span>
             </Button>
 
@@ -473,7 +554,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
                     {/* Slug */}
                     <TableCell>
                       <div className="flex items-center gap-1.5 font-mono">
-                        <Badge variant="secondary" className="px-1.5 py-0 text-[11px] font-normal">
+                        <Badge variant="secondary" className="px-1.5 py-0 text-[11px] font-bold">
                           {cat.slug}
                         </Badge>
                         <CopyButton textToCopy={cat.slug} iconOnly size="icon-xs" />
@@ -483,8 +564,8 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
                     {/* Resource Count */}
                     <TableCell className="text-center">
                       <Badge
-                        variant={cat.toolCount > 0 ? "default" : "secondary"}
-                        className="font-mono text-[10px]"
+                        variant={cat.toolCount > 0 ? "accent" : "secondary"}
+                        className="font-mono text-[10px] font-bold"
                       >
                         {cat.toolCount} {cat.toolCount === 1 ? "resource" : "resources"}
                       </Badge>
@@ -493,6 +574,24 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
                     {/* Actions */}
                     <TableCell className="text-right">
                       <div className="flex items-center justify-end gap-1">
+                        <Button
+                          size="icon-xs"
+                          variant="ghost"
+                          onClick={() => handleDownloadCategoryResources(cat)}
+                          disabled={cat.toolCount === 0 || downloadingCategoryId === cat.id}
+                          title={
+                            cat.toolCount === 0
+                              ? `No resources in ${cat.name}`
+                              : `Download all ${cat.toolCount} resources in ${cat.name}`
+                          }
+                          className="hover:text-foreground text-muted-foreground"
+                        >
+                          {downloadingCategoryId === cat.id ? (
+                            <CircleNotchIcon weight="bold" className="size-3.5 animate-spin" />
+                          ) : (
+                            <DownloadSimpleIcon weight="bold" className="text-primary size-3.5" />
+                          )}
+                        </Button>
                         <CopyButton
                           textToCopy={JSON.stringify(
                             {
