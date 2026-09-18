@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  ArrowRightIcon,
-  CircleNotchIcon,
-  FloppyDiskIcon,
-  InfoIcon,
-  ShieldCheckIcon,
-  XIcon,
-} from "@phosphor-icons/react";
+import { ArrowRightIcon, InfoIcon, ShieldCheckIcon, XIcon } from "@phosphor-icons/react";
 import React from "react";
 
 import { Badge } from "@/components/ui/badge";
@@ -16,7 +9,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
+  DialogFormActions,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -236,41 +229,35 @@ export function AdminConfirmEditDialog({
 
         {/* Pinned Footer */}
         <div className="border-line bg-surface/30 shrink-0 border-t-[1.5px] p-4 sm:px-6">
-          <DialogFooter className="m-0 flex flex-col-reverse gap-2 rounded-none border-0 bg-transparent p-0 sm:flex-row sm:justify-end">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-              disabled={isBusy}
-              className="border-line hover:bg-surface font-mono text-xs uppercase"
-            >
-              <XIcon className="mr-1 size-3.5" />
-              <span>{hasChanges ? "Back to Editing" : "Close"}</span>
-            </Button>
-
-            {hasChanges && (
+          {hasChanges ? (
+            <DialogFormActions
+              cancelLabel="Back to Editing"
+              cancelVariant="outline"
+              cancelIcon={true}
+              cancelClassName="border-line hover:bg-surface"
+              onCancel={() => onOpenChange(false)}
+              isWorking={isBusy}
+              workingText="Saving Changes..."
+              isEdit={true}
+              editLabel={confirmLabel}
+              submitType="button"
+              onSubmit={async () => {
+                await onConfirm();
+              }}
+            />
+          ) : (
+            <div className="flex justify-end">
               <Button
                 type="button"
-                onClick={async () => {
-                  await onConfirm();
-                }}
-                disabled={isBusy}
-                className="font-mono text-xs font-bold uppercase"
+                variant="outline"
+                onClick={() => onOpenChange(false)}
+                className="border-line hover:bg-surface font-mono text-xs uppercase"
               >
-                {isBusy ? (
-                  <>
-                    <CircleNotchIcon className="mr-1.5 size-4 animate-spin" />
-                    <span>Saving Changes...</span>
-                  </>
-                ) : (
-                  <>
-                    <FloppyDiskIcon weight="duotone" className="mr-1.5 size-4" />
-                    <span>{confirmLabel}</span>
-                  </>
-                )}
+                <XIcon className="mr-1 size-3.5" />
+                <span>Close</span>
               </Button>
-            )}
-          </DialogFooter>
+            </div>
+          )}
         </div>
       </DialogContent>
     </Dialog>
