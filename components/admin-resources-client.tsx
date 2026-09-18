@@ -80,7 +80,7 @@ function AdminResourcesClientContent({
 
   // Sync state with URL params when URL changes externally (e.g. back/forward navigation)
   useEffect(() => {
-    setSearchQuery(paramQ);
+    setSearchQuery((prev) => (prev.trim() === paramQ.trim() ? prev : paramQ));
     setSelectedCategory(paramCategory);
     setHealthFilter(paramHealth);
     setSortBy(paramSort);

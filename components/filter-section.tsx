@@ -86,7 +86,9 @@ function FilterSectionInner({
 
   if (qParam !== prevQParam) {
     setPrevQParam(qParam);
-    setSearchQuery(qParam);
+    if (qParam.trim() !== searchQuery.trim()) {
+      setSearchQuery(qParam);
+    }
   }
 
   // Defer heavy list filtering so typing input response is instantaneous (0ms lag)
