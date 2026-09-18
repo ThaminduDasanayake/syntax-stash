@@ -4,12 +4,8 @@ import {
   ArrowsClockwiseIcon,
   ArrowSquareOutIcon,
   ArticleIcon,
-  CaretLeftIcon,
-  CaretRightIcon,
   GlobeIcon,
-  PencilSimpleIcon,
   PlusIcon,
-  TrashIcon,
   UserCircleIcon,
   XLogoIcon,
 } from "@phosphor-icons/react";
@@ -20,6 +16,9 @@ import { Suspense, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { AdminAuthorDialog } from "@/components/admin/admin-author-dialog";
+import { AdminPagination } from "@/components/admin/admin-pagination";
+import { AdminTableRowActions } from "@/components/admin/admin-table-row-actions";
+import { AdminToolbar } from "@/components/admin/admin-toolbar";
 import { SortSelect } from "@/components/admin/sort-select";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { invalidateAuthorCache } from "@/components/submissions/author-combobox";
@@ -226,21 +225,18 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
   return (
     <div>
       {/* Control Bar */}
-      <div className="border-line bg-surface/50 mb-6 space-y-4 rounded-lg border-[1.5px] p-4 font-mono text-xs">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          {/* Search Input */}
-          <div className="flex-1">
-            <SearchInput
-              placeholder="Search authors by name, slug, website, github, twitter..."
-              value={searchQuery}
-              onChange={(e) => handleSearchChange(e.target.value)}
-              onClear={() => handleSearchChange("")}
-              className="font-mono text-xs"
-            />
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex items-center gap-2">
+      <AdminToolbar
+        search={
+          <SearchInput
+            placeholder="Search authors by name, slug, website, github, twitter..."
+            value={searchQuery}
+            onChange={(e) => handleSearchChange(e.target.value)}
+            onClear={() => handleSearchChange("")}
+            className="font-mono text-xs"
+          />
+        }
+        actions={
+          <>
             <Button
               size="sm"
               variant="outline"
@@ -264,57 +260,57 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
               <PlusIcon className="size-4" />
               <span>Add Author</span>
             </Button>
-          </div>
-        </div>
+          </>
+        }
+        footer={
+          <>
+            <div className="flex flex-wrap items-center gap-2">
+              <ButtonGroup className="rounded-lg">
+                <Button
+                  type="button"
+                  variant={filterMode === "all" ? "default" : "ghost"}
+                  size="xs"
+                  onClick={() => handleFilterChange("all")}
+                  className="font-mono text-[11px] font-bold uppercase"
+                >
+                  All ({authors.length})
+                </Button>
+                <Button
+                  type="button"
+                  variant={filterMode === "with-resources" ? "default" : "ghost"}
+                  size="xs"
+                  onClick={() => handleFilterChange("with-resources")}
+                  className="font-mono text-[11px] font-bold uppercase"
+                >
+                  Active ({authors.filter((a) => a.resourceCount > 0).length})
+                </Button>
+                <Button
+                  type="button"
+                  variant={filterMode === "without-resources" ? "default" : "ghost"}
+                  size="xs"
+                  onClick={() => handleFilterChange("without-resources")}
+                  className="font-mono text-[11px] font-bold uppercase"
+                >
+                  Unassigned ({authors.filter((a) => a.resourceCount === 0).length})
+                </Button>
+              </ButtonGroup>
 
-        {/* Filter Tabs & Sort & Count */}
-        <div className="border-line flex flex-wrap items-center justify-between gap-3 border-t pt-3">
-          <div className="flex flex-wrap items-center gap-2">
-            <ButtonGroup className="rounded-lg">
-              <Button
-                type="button"
-                variant={filterMode === "all" ? "default" : "ghost"}
-                size="xs"
-                onClick={() => handleFilterChange("all")}
-                className="font-mono text-[11px] font-bold uppercase"
-              >
-                All ({authors.length})
-              </Button>
-              <Button
-                type="button"
-                variant={filterMode === "with-resources" ? "default" : "ghost"}
-                size="xs"
-                onClick={() => handleFilterChange("with-resources")}
-                className="font-mono text-[11px] font-bold uppercase"
-              >
-                Active ({authors.filter((a) => a.resourceCount > 0).length})
-              </Button>
-              <Button
-                type="button"
-                variant={filterMode === "without-resources" ? "default" : "ghost"}
-                size="xs"
-                onClick={() => handleFilterChange("without-resources")}
-                className="font-mono text-[11px] font-bold uppercase"
-              >
-                Unassigned ({authors.filter((a) => a.resourceCount === 0).length})
-              </Button>
-            </ButtonGroup>
+              {/* Sort Dropdown */}
+              <SortSelect
+                value={sortBy}
+                onValueChange={handleSortChange}
+                options={SORT_OPTIONS}
+                className="pl-2"
+              />
+            </div>
 
-            {/* Sort Dropdown */}
-            <SortSelect
-              value={sortBy}
-              onValueChange={handleSortChange}
-              options={SORT_OPTIONS}
-              className="pl-2"
-            />
-          </div>
-
-          <div className="text-muted-foreground text-[11px]">
-            Showing <strong className="text-foreground">{filteredAndSortedAuthors.length}</strong>{" "}
-            of <strong className="text-foreground">{authors.length}</strong> authors
-          </div>
-        </div>
-      </div>
+            <div className="text-muted-foreground text-[11px]">
+              Showing <strong className="text-foreground">{filteredAndSortedAuthors.length}</strong>{" "}
+              of <strong className="text-foreground">{authors.length}</strong> authors
+            </div>
+          </>
+        }
+      />
 
       {/* Authors Table */}
       <div className="border-line bg-surface/30 overflow-hidden rounded-lg border-[1.5px] font-mono text-xs shadow-sm">
@@ -494,27 +490,14 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
 
                   {/* Actions */}
                   <TableCell className="text-right">
-                    <div className="flex items-center justify-end gap-1.5">
-                      <Button
-                        size="icon-xs"
-                        variant="ghost"
-                        onClick={() => handleOpenEdit(authorItem)}
-                        title="Edit Author"
-                      >
-                        <PencilSimpleIcon className="size-3.5" />
-                      </Button>
-
-                      <Button
-                        size="icon-xs"
-                        variant="ghost"
-                        onClick={() => setDeletingAuthor(authorItem)}
-                        className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                        title="Delete Author"
-                        disabled={Boolean(deletingAuthor && deletingAuthor.resourceCount > 0)}
-                      >
-                        <TrashIcon className="size-3.5" />
-                      </Button>
-                    </div>
+                    <AdminTableRowActions
+                      onEdit={() => handleOpenEdit(authorItem)}
+                      onDelete={() => setDeletingAuthor(authorItem)}
+                      editTitle={`Edit ${authorItem.name}`}
+                      deleteTitle={`Delete ${authorItem.name}`}
+                      deleteDisabled={authorItem.resourceCount > 0}
+                      deleteDisabledReason={`Cannot delete "${authorItem.name}". It is assigned to ${authorItem.resourceCount} resource(s).`}
+                    />
                   </TableCell>
                 </TableRow>
               ))
@@ -555,38 +538,13 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
         </Table>
 
         {/* Pagination Controls */}
-        {totalPages > 1 && (
-          <div className="border-line bg-surface/40 flex flex-wrap items-center justify-between gap-3 border-t p-3">
-            <div className="text-muted-foreground text-[11px]">
-              Page <strong className="text-foreground">{currentPage}</strong> of{" "}
-              <strong className="text-foreground">{totalPages}</strong>
-            </div>
-
-            <div className="flex items-center gap-1.5">
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                disabled={currentPage === 1}
-                className="border-line hover:bg-surface h-8 gap-1 px-2.5 text-xs"
-              >
-                <CaretLeftIcon className="size-3.5" />
-                <span>Prev</span>
-              </Button>
-
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                disabled={currentPage === totalPages}
-                className="border-line hover:bg-surface h-8 gap-1 px-2.5 text-xs"
-              >
-                <span>Next</span>
-                <CaretRightIcon className="size-3.5" />
-              </Button>
-            </div>
-          </div>
-        )}
+        <AdminPagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={filteredAndSortedAuthors.length}
+          itemsPerPage={ITEMS_PER_PAGE}
+          onPageChange={setCurrentPage}
+        />
       </div>
 
       {/* Create / Edit Author Modal */}

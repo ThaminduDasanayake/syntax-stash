@@ -2,6 +2,7 @@ import { ArrowUpRightIcon, GithubLogo } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { TechStack } from "@/components/tech-stack";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
@@ -69,6 +70,9 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* Tech Stack Section */}
+      <TechStack />
 
       {/* Creator & Links Section */}
       <section className="bg-background px-6 py-24 pb-32 sm:px-12 lg:px-24">

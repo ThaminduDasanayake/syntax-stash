@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  ArrowRightIcon,
-  CircleNotchIcon,
-  FloppyDiskIcon,
-  InfoIcon,
-  ShieldCheckIcon,
-  XIcon,
-} from "@phosphor-icons/react";
+import { ArrowRightIcon, InfoIcon, ShieldCheckIcon, XIcon } from "@phosphor-icons/react";
 import React from "react";
 
 import { Badge } from "@/components/ui/badge";
@@ -16,7 +9,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
+  DialogFormActions,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -121,35 +114,39 @@ export function AdminConfirmEditDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="border-line bg-paper max-h-[90vh] max-w-2xl overflow-y-auto font-mono text-xs sm:max-w-2xl">
-        <DialogHeader className="border-line border-b-[1.5px] pb-4">
-          <div className="flex items-center gap-2">
-            <div className="bg-primary/10 text-primary border-primary/20 flex size-8 shrink-0 items-center justify-center rounded-md border-[1.5px]">
-              <ShieldCheckIcon weight="duotone" className="size-5" />
+      <DialogContent className="border-line bg-paper flex max-h-[85vh] max-w-2xl flex-col gap-0 overflow-hidden p-0 font-mono text-xs sm:max-w-2xl">
+        {/* Pinned Header */}
+        <div className="border-line shrink-0 border-b-[1.5px] p-6 pb-4">
+          <DialogHeader>
+            <div className="flex items-center gap-2 pr-6">
+              <div className="bg-primary/10 text-primary border-primary/20 flex size-8 shrink-0 items-center justify-center rounded-md border-[1.5px]">
+                <ShieldCheckIcon weight="duotone" className="size-5" />
+              </div>
+              <div>
+                <DialogTitle className="text-foreground flex flex-wrap items-center gap-2 text-base font-bold uppercase">
+                  <span>{title}</span>
+                  {hasChanges && (
+                    <Badge
+                      variant="outline"
+                      className="border-primary/40 bg-primary/10 text-primary text-[10px] font-bold"
+                    >
+                      {changes.length} {changes.length === 1 ? "field modified" : "fields modified"}
+                    </Badge>
+                  )}
+                </DialogTitle>
+                <DialogDescription className="text-muted-foreground text-xs">
+                  {description ||
+                    (displayName
+                      ? `Please review the proposed modifications to "${displayName}" before applying them.`
+                      : "Please review the proposed modifications before applying them to the database.")}
+                </DialogDescription>
+              </div>
             </div>
-            <div>
-              <DialogTitle className="text-foreground flex flex-wrap items-center gap-2 text-base font-bold uppercase">
-                <span>{title}</span>
-                {hasChanges && (
-                  <Badge
-                    variant="outline"
-                    className="border-primary/40 bg-primary/10 text-primary text-[10px] font-bold"
-                  >
-                    {changes.length} {changes.length === 1 ? "field modified" : "fields modified"}
-                  </Badge>
-                )}
-              </DialogTitle>
-              <DialogDescription className="text-muted-foreground text-xs">
-                {description ||
-                  (displayName
-                    ? `Please review the proposed modifications to "${displayName}" before applying them.`
-                    : "Please review the proposed modifications before applying them to the database.")}
-              </DialogDescription>
-            </div>
-          </div>
-        </DialogHeader>
+          </DialogHeader>
+        </div>
 
-        <div className="py-2">
+        {/* Scrollable Body Only */}
+        <div className="flex-1 space-y-3 overflow-y-auto p-6">
           {!hasChanges ? (
             <div className="border-line bg-surface/50 flex flex-col items-center justify-center gap-2 rounded-lg border-[1.5px] border-dashed p-8 text-center">
               <InfoIcon className="text-muted-foreground size-8" />
@@ -230,41 +227,38 @@ export function AdminConfirmEditDialog({
           )}
         </div>
 
-        <DialogFooter className="border-line border-t pt-4">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => onOpenChange(false)}
-            disabled={isBusy}
-            className="border-line hover:bg-surface font-mono text-xs uppercase"
-          >
-            <XIcon className="mr-1 size-3.5" />
-            <span>{hasChanges ? "Back to Editing" : "Close"}</span>
-          </Button>
-
-          {hasChanges && (
-            <Button
-              type="button"
-              onClick={async () => {
+        {/* Pinned Footer */}
+        <div className="border-line bg-surface/30 shrink-0 border-t-[1.5px] p-4 sm:px-6">
+          {hasChanges ? (
+            <DialogFormActions
+              cancelLabel="Back to Editing"
+              cancelVariant="outline"
+              cancelIcon={true}
+              cancelClassName="border-line hover:bg-surface"
+              onCancel={() => onOpenChange(false)}
+              isWorking={isBusy}
+              workingText="Saving Changes..."
+              isEdit={true}
+              editLabel={confirmLabel}
+              submitType="button"
+              onSubmit={async () => {
                 await onConfirm();
               }}
-              disabled={isBusy}
-              className="font-mono text-xs font-bold uppercase"
-            >
-              {isBusy ? (
-                <>
-                  <CircleNotchIcon className="mr-1.5 size-4 animate-spin" />
-                  <span>Saving Changes...</span>
-                </>
-              ) : (
-                <>
-                  <FloppyDiskIcon weight="duotone" className="mr-1.5 size-4" />
-                  <span>{confirmLabel}</span>
-                </>
-              )}
-            </Button>
+            />
+          ) : (
+            <div className="flex justify-end">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => onOpenChange(false)}
+                className="border-line hover:bg-surface font-mono text-xs uppercase"
+              >
+                <XIcon className="mr-1 size-3.5" />
+                <span>Close</span>
+              </Button>
+            </div>
           )}
-        </DialogFooter>
+        </div>
       </DialogContent>
     </Dialog>
   );

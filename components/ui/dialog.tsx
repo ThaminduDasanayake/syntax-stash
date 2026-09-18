@@ -131,6 +131,8 @@ function DialogDescription({
   );
 }
 
+export * from "./dialog-form-actions";
+
 export {
   Dialog,
   DialogClose,

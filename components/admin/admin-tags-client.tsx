@@ -1,42 +1,19 @@
 "use client";
 
-import {
-  ArrowsClockwiseIcon,
-  CheckIcon,
-  PencilSimpleIcon,
-  PlusIcon,
-  TagIcon,
-  TrashIcon,
-} from "@phosphor-icons/react";
+import { ArrowsClockwiseIcon, PlusIcon, TagIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
+import { AdminTableRowActions } from "@/components/admin/admin-table-row-actions";
+import { AdminTagDialog } from "@/components/admin/admin-tag-dialog";
+import { AdminToolbar } from "@/components/admin/admin-toolbar";
 import { FilterSelect } from "@/components/admin/filter-select";
 import { SortSelect } from "@/components/admin/sort-select";
-import { DuplicateNotice } from "@/components/submissions/duplicate-url-notice";
+import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { invalidateTagCache } from "@/components/submissions/tag-picker";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { EmptyState } from "@/components/ui/empty-state";
-import { InputField } from "@/components/ui/input-field";
 import { SearchInput } from "@/components/ui/search-input";
 import {
   Table,
@@ -46,18 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { cn, normalizeTag } from "@/lib/utils";
-
-import {
-  AdminConfirmEditDialog,
-  computeFieldChanges,
-  FieldDiff,
-} from "./admin-confirm-edit-dialog";
-
-const TAG_FIELD_LABELS: Record<string, string> = {
-  name: "Tag Name",
-  slug: "Tag Slug",
-};
+import { cn } from "@/lib/utils";
 
 export interface AdminTagItem {
   createdAt?: Date | string;
@@ -98,31 +64,6 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingTag, setEditingTag] = useState<AdminTagItem | null>(null);
   const [deletingTag, setDeletingTag] = useState<AdminTagItem | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-  const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
-
-  // Form state
-  const [formData, setFormData] = useState({
-    name: "",
-    slug: "",
-  });
-  const [autoSlug, setAutoSlug] = useState(true);
-
-  const duplicateTag = useMemo(() => {
-    const rawName = formData.name.trim();
-    const rawSlug = formData.slug.trim();
-    if (!rawName && !rawSlug) return null;
-    const targetSlug = rawSlug ? normalizeTag(rawSlug) : normalizeTag(rawName);
-    const targetLower = rawName.toLowerCase();
-    return (
-      tags.find(
-        (t) =>
-          t.id !== editingTag?.id &&
-          (t.slug === targetSlug || (targetLower && t.name.toLowerCase() === targetLower)),
-      ) || null
-    );
-  }, [editingTag?.id, formData.name, formData.slug, tags]);
 
   // Filter & Sort
   const filteredAndSortedTags = useMemo(() => {
@@ -192,131 +133,13 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
   // Open Add Dialog
   const handleOpenAdd = () => {
     setEditingTag(null);
-    setFormData({
-      name: "",
-      slug: "",
-    });
-    setAutoSlug(true);
     setIsDialogOpen(true);
   };
 
   // Open Edit Dialog
   const handleOpenEdit = (tagItem: AdminTagItem) => {
     setEditingTag(tagItem);
-    setFormData({
-      name: tagItem.name,
-      slug: tagItem.slug,
-    });
-    setAutoSlug(false);
     setIsDialogOpen(true);
-  };
-
-  // Handle Form Name Change (auto slug)
-  const handleNameChange = (newName: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      name: newName,
-      slug: autoSlug ? normalizeTag(newName) : prev.slug,
-    }));
-  };
-
-  // Execute Save
-  const executeSave = async () => {
-    try {
-      setIsSubmitting(true);
-      if (editingTag) {
-        // PATCH
-        const res = await fetch("/api/admin/tags", {
-          body: JSON.stringify({
-            id: editingTag.id,
-            name: formData.name.trim(),
-            slug: formData.slug.trim() ? normalizeTag(formData.slug) : normalizeTag(formData.name),
-          }),
-          headers: { "Content-Type": "application/json" },
-          method: "PATCH",
-        });
-
-        const data = await res.json();
-        if (!res.ok) {
-          toast.error(data.error || "Failed to update tag.");
-          return;
-        }
-
-        setTags((prev) =>
-          prev.map((t) =>
-            t.id === editingTag.id
-              ? {
-                  ...t,
-                  name: formData.name.trim(),
-                  slug: formData.slug.trim()
-                    ? normalizeTag(formData.slug)
-                    : normalizeTag(formData.name),
-                  updatedAt: new Date().toISOString(),
-                }
-              : t,
-          ),
-        );
-        invalidateTagCache();
-        toast.success(`Tag "${formData.name}" updated successfully.`);
-        setIsConfirmOpen(false);
-        setIsDialogOpen(false);
-      } else {
-        // POST
-        const res = await fetch("/api/admin/tags", {
-          body: JSON.stringify({
-            name: formData.name.trim(),
-            slug: formData.slug.trim() ? normalizeTag(formData.slug) : normalizeTag(formData.name),
-          }),
-          headers: { "Content-Type": "application/json" },
-          method: "POST",
-        });
-
-        const data = await res.json();
-        if (!res.ok) {
-          toast.error(data.error || "Failed to create tag.");
-          return;
-        }
-
-        setTags((prev) => [
-          ...prev,
-          {
-            id: data.id,
-            name: formData.name.trim(),
-            slug: formData.slug.trim() ? normalizeTag(formData.slug) : normalizeTag(formData.name),
-            toolCount: 0,
-          },
-        ]);
-        invalidateTagCache();
-        toast.success(`Tag "${formData.name}" created successfully.`);
-        setIsDialogOpen(false);
-      }
-    } catch {
-      toast.error("Network error while saving tag.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  // Submit Add or Edit
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.name.trim()) {
-      toast.error("Tag name is required.");
-      return;
-    }
-
-    if (duplicateTag) {
-      toast.error(`Tag "${duplicateTag.name}" already exists.`);
-      return;
-    }
-
-    if (editingTag) {
-      const diffs = computeFieldChanges(editingTag, formData, TAG_FIELD_LABELS);
-      setPendingChanges(diffs);
-      setIsConfirmOpen(true);
-    } else {
-      await executeSave();
-    }
   };
 
   // Confirm Delete
@@ -353,34 +176,33 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
   return (
     <div className="font-mono">
       {/* Control Bar */}
-      <div className="border-line bg-surface/50 mb-6 space-y-4 rounded-lg border-[1.5px] p-4 text-xs">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          {/* Search */}
-          <div className="flex-1">
-            <SearchInput
-              placeholder="Search tags by name or slug..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onClear={() => setSearchQuery("")}
-              className="font-mono text-xs"
+      <AdminToolbar
+        search={
+          <SearchInput
+            placeholder="Search tags by name or slug..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onClear={() => setSearchQuery("")}
+            className="font-mono text-xs"
+          />
+        }
+        filters={
+          <>
+            <FilterSelect
+              label="Tag:"
+              value={filterMode}
+              onValueChange={(val) => setFilterMode(val)}
+              options={FILTER_OPTIONS}
             />
-          </div>
-
-          <FilterSelect
-            label="Tag:"
-            value={filterMode}
-            onValueChange={(val) => setFilterMode(val)}
-            options={FILTER_OPTIONS}
-          />
-
-          <SortSelect
-            value={sortBy}
-            onValueChange={(val) => setSortBy(val)}
-            options={SORT_OPTIONS}
-          />
-
-          {/* Action Buttons */}
-          <div className="flex items-center gap-2">
+            <SortSelect
+              value={sortBy}
+              onValueChange={(val) => setSortBy(val)}
+              options={SORT_OPTIONS}
+            />
+          </>
+        }
+        actions={
+          <>
             <Button
               size="sm"
               variant="outline"
@@ -400,19 +222,15 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
               <PlusIcon className="size-3.5" weight="bold" />
               <span>New Tag</span>
             </Button>
-          </div>
-        </div>
-
-        {/* Filter and Sort bar */}
-        <div className="border-line flex flex-wrap items-center justify-between gap-3 border-t-[1.5px] pt-3">
-          <div className="flex flex-wrap items-center gap-5"></div>
-
+          </>
+        }
+        footer={
           <div className="text-muted-foreground text-[11px]">
             Displaying <strong className="text-foreground">{filteredAndSortedTags.length}</strong>{" "}
             of {tags.length} tags
           </div>
-        </div>
-      </div>
+        }
+      />
 
       {/* Tags Table */}
       {filteredAndSortedTags.length === 0 ? (
@@ -473,25 +291,12 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
-                    <div className="flex items-center justify-end gap-1">
-                      <Button
-                        size="icon-xs"
-                        variant="ghost"
-                        onClick={() => handleOpenEdit(tagItem)}
-                        title={`Edit #${tagItem.name}`}
-                      >
-                        <PencilSimpleIcon className="size-3.5" />
-                      </Button>
-                      <Button
-                        size="icon-xs"
-                        variant="ghost"
-                        className="text-destructive hover:bg-destructive/10"
-                        onClick={() => setDeletingTag(tagItem)}
-                        title={`Delete #${tagItem.name}`}
-                      >
-                        <TrashIcon className="size-3.5" />
-                      </Button>
-                    </div>
+                    <AdminTableRowActions
+                      onEdit={() => handleOpenEdit(tagItem)}
+                      onDelete={() => setDeletingTag(tagItem)}
+                      editTitle={`Edit #${tagItem.name}`}
+                      deleteTitle={`Delete #${tagItem.name}`}
+                    />
                   </TableCell>
                 </TableRow>
               ))}
@@ -501,149 +306,36 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
       )}
 
       {/* Add / Edit Tag Dialog */}
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="font-mono sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-base font-bold tracking-tight uppercase">
-              {editingTag ? `Edit Tag: #${editingTag.name}` : "Create New Tag"}
-            </DialogTitle>
-            <DialogDescription className="text-xs">
-              {editingTag
-                ? "Update tag name or slug identifier."
-                : "Add a new tag for categorizing and discovering resources."}
-            </DialogDescription>
-          </DialogHeader>
-
-          <form onSubmit={handleSubmit} className="w-full min-w-0 space-y-4 pt-2 text-xs">
-            <div>
-              <InputField
-                label="Tag Name *"
-                placeholder="e.g. Next.js, Open Source"
-                value={formData.name}
-                onChange={(e) => handleNameChange(e.target.value)}
-                required
-                className="font-mono text-xs"
-              />
-            </div>
-
-            <div>
-              <div className="mb-1 flex items-center justify-between">
-                <label className="text-muted-foreground text-xs font-semibold">Slug *</label>
-                {!editingTag && (
-                  <button
-                    type="button"
-                    onClick={() => setAutoSlug(!autoSlug)}
-                    className="text-primary text-[10px] hover:underline"
-                  >
-                    {autoSlug ? "Manual Slug" : "Auto Slug"}
-                  </button>
-                )}
-              </div>
-              <InputField
-                placeholder="e.g. next-js, open-source"
-                value={formData.slug}
-                onChange={(e) => {
-                  setAutoSlug(false);
-                  setFormData((prev) => ({ ...prev, slug: e.target.value }));
-                }}
-                required
-                className="font-mono text-xs"
-              />
-            </div>
-
-            {duplicateTag && (
-              <DuplicateNotice
-                type="tag"
-                title="This tag is already added!"
-                description={
-                  <>
-                    Already listed as{" "}
-                    <strong className="font-bold underline">#{duplicateTag.name}</strong> (
-                    <code>{duplicateTag.slug}</code>)
-                    {duplicateTag.toolCount > 0
-                      ? ` with ${duplicateTag.toolCount} assigned resource(s).`
-                      : "."}
-                  </>
-                }
-              />
-            )}
-
-            <DialogFooter className="mt-4 pt-2">
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => setIsDialogOpen(false)}
-                disabled={isSubmitting}
-                className="text-xs uppercase"
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                size="sm"
-                disabled={isSubmitting}
-                className="text-xs font-bold uppercase"
-              >
-                {isSubmitting ? (
-                  "Saving..."
-                ) : (
-                  <>
-                    <CheckIcon className="size-3.5" />
-                    <span>{editingTag ? "Save Changes" : "Create Tag"}</span>
-                  </>
-                )}
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
+      <AdminTagDialog
+        open={isDialogOpen}
+        onOpenChange={setIsDialogOpen}
+        tag={editingTag}
+        existingTags={tags}
+        onCreated={(newTag) => setTags((prev) => [newTag, ...prev])}
+        onUpdated={(updatedTag) =>
+          setTags((prev) => prev.map((t) => (t.id === updatedTag.id ? updatedTag : t)))
+        }
+      />
 
       {/* Delete Confirmation Alert Dialog */}
-      <AlertDialog
+      <ConfirmDialog
         open={Boolean(deletingTag)}
         onOpenChange={(open) => !open && setDeletingTag(null)}
-      >
-        <AlertDialogContent className="font-mono text-xs">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="text-destructive font-mono uppercase">
-              Delete Tag: #{deletingTag?.name}
-            </AlertDialogTitle>
-            <AlertDialogDescription className="text-xs leading-relaxed">
-              Are you sure you want to delete tag{" "}
-              <strong className="text-foreground">#{deletingTag?.slug}</strong>?
-              {deletingTag && deletingTag.toolCount > 0 && (
-                <span className="mt-2 block font-semibold text-amber-600 dark:text-amber-400">
-                  Note: This tag is currently attached to {deletingTag.toolCount} resource(s).
-                  Deleting it will remove the tag association from those resources.
-                </span>
-              )}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel className="text-xs uppercase">Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleConfirmDelete}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90 text-xs font-bold uppercase"
-            >
-              Confirm Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-
-      {/* Confirmation Dialog for Tag Updates */}
-      <AdminConfirmEditDialog
-        open={isConfirmOpen}
-        onOpenChange={setIsConfirmOpen}
-        title="Confirm Tag Updates"
-        description="Review the list of changed tag properties before saving changes."
-        itemTitle={
-          formData.name ? `#${formData.name}` : editingTag ? `#${editingTag.name}` : undefined
+        onConfirm={handleConfirmDelete}
+        title={`Delete Tag: #${deletingTag?.name}`}
+        description={
+          <>
+            Are you sure you want to delete tag{" "}
+            <strong className="text-foreground">#{deletingTag?.slug}</strong>?
+            {deletingTag && deletingTag.toolCount > 0 && (
+              <span className="mt-2 block font-semibold text-amber-600 dark:text-amber-400">
+                Note: This tag is currently attached to {deletingTag.toolCount} resource(s).
+                Deleting it will remove the tag association from those resources.
+              </span>
+            )}
+          </>
         }
-        changes={pendingChanges}
-        onConfirm={executeSave}
-        isWorking={isSubmitting}
+        confirmLabel="Hold to delete"
       />
     </div>
   );

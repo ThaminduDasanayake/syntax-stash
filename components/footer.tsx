@@ -122,7 +122,7 @@ export default function Footer() {
             href={siteConfig.links.authorLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-paper underline underline-offset-2 transition-colors hover:text-white"
+            className="text-paper underline-offset-2 transition-colors hover:font-bold hover:underline"
           >
             {siteConfig.author.name}
           </a>

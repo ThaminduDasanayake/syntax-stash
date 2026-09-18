@@ -63,14 +63,17 @@ interface AdminResourceRecord {
   url: string;
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     const adminUser = await verifyAdmin();
     if (!adminUser) {
       return NextResponse.json({ error: "Unauthorized. Admin access required." }, { status: 403 });
     }
 
-    const rows = await db
+    const { searchParams } = new URL(request.url);
+    const categoryId = searchParams.get("categoryId");
+
+    const query = db
       .select({
         id: resource.id,
         title: resource.title,
@@ -108,8 +111,11 @@ export async function GET() {
       .leftJoin(category, eq(resource.categoryId, category.id))
       .leftJoin(resourceTag, eq(resource.id, resourceTag.resourceId))
       .leftJoin(tag, eq(resourceTag.tagId, tag.id))
-      .leftJoin(resourceHealth, eq(resource.id, resourceHealth.resourceId))
-      .orderBy(desc(resource.createdAt));
+      .leftJoin(resourceHealth, eq(resource.id, resourceHealth.resourceId));
+
+    const rows = categoryId
+      ? await query.where(eq(resource.categoryId, categoryId)).orderBy(desc(resource.createdAt))
+      : await query.orderBy(desc(resource.createdAt));
 
     const categoryCounts: Record<string, number> = {};
     const resourceMap = new Map<string, AdminResourceRecord>();
