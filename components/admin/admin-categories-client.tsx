@@ -3,6 +3,7 @@
 import {
   ArrowsClockwiseIcon,
   CheckIcon,
+  DownloadSimpleIcon,
   FoldersIcon,
   PencilSimpleIcon,
   PlusIcon,
@@ -164,6 +165,35 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
       toast.error("Network error while refreshing categories.");
     } finally {
       setIsRefreshing(false);
+    }
+  };
+
+  // Download Categories JSON
+  const handleDownloadJson = () => {
+    try {
+      const exportData = categories.map((c) => ({
+        id: c.id,
+        createdAt: c.createdAt,
+        name: c.name,
+        resourceCount: c.toolCount,
+        slug: c.slug,
+        updatedAt: c.updatedAt,
+      }));
+
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+        type: "application/json",
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `categories-${new Date().toISOString().split("T")[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      toast.success("Categories downloaded as JSON.");
+    } catch {
+      toast.error("Failed to download categories JSON.");
     }
   };
 
@@ -334,6 +364,18 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
             <Button
               size="sm"
               variant="outline"
+              onClick={handleDownloadJson}
+              disabled={categories.length === 0}
+              className="h-9 text-xs uppercase"
+              title="Download all categories as JSON"
+            >
+              <DownloadSimpleIcon weight="bold" className="size-4" />
+              <span className="hidden sm:inline">Export JSON</span>
+            </Button>
+
+            <Button
+              size="sm"
+              variant="outline"
               onClick={handleRefresh}
               disabled={isRefreshing}
               className="h-9 text-xs uppercase"
@@ -451,6 +493,23 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
                     {/* Actions */}
                     <TableCell className="text-right">
                       <div className="flex items-center justify-end gap-1">
+                        <CopyButton
+                          textToCopy={JSON.stringify(
+                            {
+                              id: cat.id,
+                              createdAt: cat.createdAt,
+                              name: cat.name,
+                              resourceCount: cat.toolCount,
+                              slug: cat.slug,
+                              updatedAt: cat.updatedAt,
+                            },
+                            null,
+                            2,
+                          )}
+                          iconOnly
+                          size="icon-xs"
+                          title={`Copy JSON for ${cat.name}`}
+                        />
                         <Button
                           size="icon-xs"
                           variant="ghost"
