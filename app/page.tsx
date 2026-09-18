@@ -2,6 +2,7 @@ import { ArrowRightIcon, CompassIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 
 import { HeroWorkbench } from "@/components/hero-workbench";
+import { TechStack } from "@/components/tech-stack";
 import { ToolsCarousel } from "@/components/tools-carousel";
 import { Button } from "@/components/ui/button";
 import { getAllCategories } from "@/lib/categories";
@@ -213,6 +214,7 @@ export default async function Home() {
       </section>
 
       <ToolsCarousel tools={topTools} totalCount={internalTools.length} />
+      <TechStack />
     </>
   );
 }
