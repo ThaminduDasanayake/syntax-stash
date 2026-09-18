@@ -2,7 +2,6 @@
 
 import {
   ArrowsClockwiseIcon,
-  CheckIcon,
   CircleNotchIcon,
   DownloadSimpleIcon,
   FoldersIcon,
@@ -13,22 +12,13 @@ import {
 import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
 
+import { AdminCategoryDialog } from "@/components/admin/admin-category-dialog";
 import { SortSelect } from "@/components/admin/sort-select";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
-import { DuplicateNotice } from "@/components/submissions/duplicate-url-notice";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { EmptyState } from "@/components/ui/empty-state";
-import { InputField } from "@/components/ui/input-field";
 import { SearchInput } from "@/components/ui/search-input";
 import {
   Table,
@@ -39,16 +29,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn, slugify } from "@/lib/utils";
-
-import {
-  AdminConfirmEditDialog,
-  computeFieldChanges,
-  FieldDiff,
-} from "./admin-confirm-edit-dialog";
-
-const CATEGORY_FIELD_LABELS: Record<string, string> = {
-  name: "Category Name",
-};
 
 export interface AdminCategoryItem {
   createdAt?: Date | string;
@@ -80,31 +60,9 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
   const [downloadingCategoryId, setDownloadingCategoryId] = useState<string | null>(null);
 
   // Dialog state
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editingCategory, setEditingCategory] = useState<AdminCategoryItem | null>(null);
+  const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<AdminCategoryItem | null>(null);
   const [deletingCategory, setDeletingCategory] = useState<AdminCategoryItem | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-  const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
-
-  // Form fields (only name; slug is strictly auto-generated)
-  const [formData, setFormData] = useState({
-    name: "",
-  });
-
-  const duplicateCategory = useMemo(() => {
-    const rawName = formData.name.trim();
-    if (!rawName) return null;
-    const targetSlug = slugify(rawName);
-    const targetLower = rawName.toLowerCase();
-    return (
-      categories.find(
-        (c) =>
-          c.id !== editingCategory?.id &&
-          (c.slug === targetSlug || c.name.toLowerCase() === targetLower),
-      ) || null
-    );
-  }, [categories, editingCategory?.id, formData.name]);
 
   const filteredCategories = useMemo(() => {
     let result = categories;
@@ -271,118 +229,23 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
 
   // Open Add Dialog
   const handleOpenAdd = () => {
-    setEditingCategory(null);
-    setFormData({
-      name: "",
-    });
-    setIsDialogOpen(true);
+    setSelectedCategory(null);
+    setIsCategoryDialogOpen(true);
   };
 
   // Open Edit Dialog
   const handleOpenEdit = (categoryItem: AdminCategoryItem) => {
-    setEditingCategory(categoryItem);
-    setFormData({
-      name: categoryItem.name,
-    });
-    setIsDialogOpen(true);
+    setSelectedCategory(categoryItem);
+    setIsCategoryDialogOpen(true);
   };
 
-  // Execute Save
-  const executeSave = async () => {
-    try {
-      setIsSubmitting(true);
-      const cleanName = formData.name.trim();
-
-      if (editingCategory) {
-        // PATCH
-        const res = await fetch("/api/admin/categories", {
-          body: JSON.stringify({
-            id: editingCategory.id,
-            name: cleanName,
-          }),
-          headers: { "Content-Type": "application/json" },
-          method: "PATCH",
-        });
-
-        const data = await res.json();
-        if (!res.ok) {
-          toast.error(data.error || "Failed to update category.");
-          return;
-        }
-
-        const updatedSlug = slugify(cleanName);
-        setCategories((prev) =>
-          prev.map((c) =>
-            c.id === editingCategory.id
-              ? {
-                  ...c,
-                  name: cleanName,
-                  slug: updatedSlug,
-                  updatedAt: new Date().toISOString(),
-                }
-              : c,
-          ),
-        );
-        toast.success(`Category "${cleanName}" updated successfully.`);
-        setIsConfirmOpen(false);
-        setIsDialogOpen(false);
-      } else {
-        // POST
-        const res = await fetch("/api/admin/categories", {
-          body: JSON.stringify({
-            name: cleanName,
-          }),
-          headers: { "Content-Type": "application/json" },
-          method: "POST",
-        });
-
-        const data = await res.json();
-        if (!res.ok) {
-          toast.error(data.error || "Failed to create category.");
-          return;
-        }
-
-        setCategories((prev) => [
-          ...prev,
-          {
-            id: data.id,
-            createdAt: new Date().toISOString(),
-            name: cleanName,
-            slug: data.slug || slugify(cleanName),
-            toolCount: 0,
-            updatedAt: new Date().toISOString(),
-          },
-        ]);
-        toast.success(`Category "${cleanName}" created successfully.`);
-        setIsDialogOpen(false);
-      }
-    } catch {
-      toast.error("Network error while saving category.");
-    } finally {
-      setIsSubmitting(false);
-    }
+  // Handle Created / Updated Category Callbacks
+  const handleCategoryCreated = (newCategory: AdminCategoryItem) => {
+    setCategories((prev) => [...prev, newCategory]);
   };
 
-  // Submit Add / Edit Form
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.name.trim()) {
-      toast.error("Category name is required.");
-      return;
-    }
-
-    if (duplicateCategory) {
-      toast.error(`Category "${duplicateCategory.name}" already exists.`);
-      return;
-    }
-
-    if (editingCategory) {
-      const diffs = computeFieldChanges(editingCategory, formData, CATEGORY_FIELD_LABELS);
-      setPendingChanges(diffs);
-      setIsConfirmOpen(true);
-    } else {
-      await executeSave();
-    }
+  const handleCategoryUpdated = (updatedCategory: AdminCategoryItem) => {
+    setCategories((prev) => prev.map((c) => (c.id === updatedCategory.id ? updatedCategory : c)));
   };
 
   // Confirm Delete
@@ -628,88 +491,14 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
       )}
 
       {/* Add / Edit Category Dialog */}
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="font-mono sm:max-w-lg">
-          <DialogHeader>
-            <DialogTitle className="text-base font-bold tracking-tight uppercase">
-              {editingCategory ? `Edit Category: ${editingCategory.name}` : "Create New Category"}
-            </DialogTitle>
-            <DialogDescription className="text-xs">
-              {editingCategory
-                ? "Update category name. The routing slug will automatically adjust."
-                : "Add a category to the catalog. The routing slug is automatically generated."}
-            </DialogDescription>
-          </DialogHeader>
-
-          <form onSubmit={handleSubmit} className="w-full min-w-0 space-y-4 pt-2 text-xs">
-            {/* Name */}
-            <div>
-              <InputField
-                label="Category Name *"
-                placeholder="e.g. Artificial Intelligence"
-                value={formData.name}
-                onChange={(e) => setFormData({ name: e.target.value })}
-                required
-                className="font-mono text-xs"
-              />
-            </div>
-
-            {/* Auto-Generated Slug (Read-only Preview) */}
-            <div className="border-line bg-surface/40 flex items-center justify-between rounded border-[1.5px] px-3 py-2 text-xs">
-              <span className="text-muted-foreground text-[10px] font-bold tracking-wider uppercase">
-                Generated Route URL:
-              </span>
-              <span className="text-foreground font-bold">/{slugify(formData.name) || "slug"}</span>
-            </div>
-
-            {duplicateCategory && (
-              <DuplicateNotice
-                type="category"
-                title="This category is already added!"
-                description={
-                  <>
-                    Already listed as{" "}
-                    <strong className="font-bold underline">{duplicateCategory.name}</strong> (
-                    <code>/{duplicateCategory.slug}</code>)
-                    {duplicateCategory.toolCount > 0
-                      ? ` with ${duplicateCategory.toolCount} assigned resource(s).`
-                      : "."}
-                  </>
-                }
-              />
-            )}
-
-            {/* Footer Actions */}
-            <DialogFooter className="mt-4 pt-2">
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => setIsDialogOpen(false)}
-                disabled={isSubmitting}
-                className="text-xs uppercase"
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                size="sm"
-                disabled={isSubmitting}
-                className="text-xs font-bold uppercase"
-              >
-                {isSubmitting ? (
-                  "Saving..."
-                ) : (
-                  <>
-                    <CheckIcon weight="bold" className="size-3.5" />
-                    <span>{editingCategory ? "Save Changes" : "Create Category"}</span>
-                  </>
-                )}
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
+      <AdminCategoryDialog
+        open={isCategoryDialogOpen}
+        onOpenChange={setIsCategoryDialogOpen}
+        category={selectedCategory}
+        existingCategories={categories}
+        onCreated={handleCategoryCreated}
+        onUpdated={handleCategoryUpdated}
+      />
 
       {/* Delete Confirmation Alert Dialog */}
       <ConfirmDialog
@@ -731,18 +520,6 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
           </>
         }
         confirmLabel="Hold to delete"
-      />
-
-      {/* Confirmation Dialog for Category Updates */}
-      <AdminConfirmEditDialog
-        open={isConfirmOpen}
-        onOpenChange={setIsConfirmOpen}
-        title="Confirm Category Updates"
-        description="Review the list of changed category properties before saving changes."
-        itemTitle={formData.name || editingCategory?.name}
-        changes={pendingChanges}
-        onConfirm={executeSave}
-        isWorking={isSubmitting}
       />
     </div>
   );
