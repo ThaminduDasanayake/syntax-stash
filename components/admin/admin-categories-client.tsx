@@ -14,17 +14,8 @@ import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { SortSelect } from "@/components/admin/sort-select";
+import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { DuplicateNotice } from "@/components/submissions/duplicate-url-notice";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
@@ -710,7 +701,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
                   "Saving..."
                 ) : (
                   <>
-                    <CheckIcon className="size-3.5" />
+                    <CheckIcon weight="bold" className="size-3.5" />
                     <span>{editingCategory ? "Save Changes" : "Create Category"}</span>
                   </>
                 )}
@@ -721,37 +712,26 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
       </Dialog>
 
       {/* Delete Confirmation Alert Dialog */}
-      <AlertDialog
+      <ConfirmDialog
         open={Boolean(deletingCategory)}
         onOpenChange={(open) => !open && setDeletingCategory(null)}
-      >
-        <AlertDialogContent className="font-mono text-xs">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="text-destructive font-mono uppercase">
-              Delete Category: {deletingCategory?.name}
-            </AlertDialogTitle>
-            <AlertDialogDescription className="text-xs leading-relaxed">
-              Are you sure you want to delete category{" "}
-              <strong className="text-foreground">/{deletingCategory?.slug}</strong>?
-              {deletingCategory && deletingCategory.toolCount > 0 && (
-                <span className="text-destructive mt-2 block font-semibold">
-                  Warning: {deletingCategory.toolCount} resource(s) are currently assigned to this
-                  category. Deleting it will fail until those resources are reassigned.
-                </span>
-              )}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel className="text-xs uppercase">Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleConfirmDelete}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90 text-xs font-bold uppercase"
-            >
-              Confirm Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+        onConfirm={handleConfirmDelete}
+        title="Delete Category"
+        description={
+          <>
+            Are you sure you want to permanently delete this category{" "}
+            <strong className="text-foreground">&quot;{deletingCategory?.name}&quot;</strong>? This
+            action cannot be undone.
+            {deletingCategory && deletingCategory.toolCount > 0 && (
+              <span className="text-destructive mt-2 block font-semibold">
+                Warning: {deletingCategory.toolCount} resource(s) are currently assigned to this
+                category. Deleting it will fail until those resources are reassigned.
+              </span>
+            )}
+          </>
+        }
+        confirmLabel="Hold to delete"
+      />
 
       {/* Confirmation Dialog for Category Updates */}
       <AdminConfirmEditDialog
