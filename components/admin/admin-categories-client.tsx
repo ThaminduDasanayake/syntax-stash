@@ -5,14 +5,14 @@ import {
   CircleNotchIcon,
   DownloadSimpleIcon,
   FoldersIcon,
-  PencilSimpleIcon,
   PlusIcon,
-  TrashIcon,
 } from "@phosphor-icons/react";
 import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { AdminCategoryDialog } from "@/components/admin/admin-category-dialog";
+import { AdminTableRowActions } from "@/components/admin/admin-table-row-actions";
+import { AdminToolbar } from "@/components/admin/admin-toolbar";
 import { SortSelect } from "@/components/admin/sort-select";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { Badge } from "@/components/ui/badge";
@@ -278,24 +278,19 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
   return (
     <div className="font-mono">
       {/* Control Bar */}
-      <div className="border-line bg-surface/50 mb-6 space-y-4 rounded-lg border-[1.5px] p-4 text-xs">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          {/* Search */}
-          <div className="flex-1">
-            <SearchInput
-              placeholder="Search categories by name or slug..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onClear={() => setSearchQuery("")}
-              className="font-mono text-xs"
-            />
-          </div>
-
-          {/* Sort Dropdown */}
-          <SortSelect value={sortBy} onValueChange={setSortBy} options={SORT_OPTIONS} />
-
-          {/* Action Buttons */}
-          <div className="flex items-center gap-2">
+      <AdminToolbar
+        search={
+          <SearchInput
+            placeholder="Search categories by name or slug..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onClear={() => setSearchQuery("")}
+            className="font-mono text-xs"
+          />
+        }
+        filters={<SortSelect value={sortBy} onValueChange={setSortBy} options={SORT_OPTIONS} />}
+        actions={
+          <>
             <Button
               size="sm"
               variant="outline"
@@ -327,25 +322,25 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
               <PlusIcon className="size-3.5" weight="bold" />
               <span>New Category</span>
             </Button>
-          </div>
-        </div>
-
-        {/* Quick Summary Row */}
-        <div className="border-border flex items-center justify-between border-t pt-3 text-[11px]">
-          <div className="text-muted-foreground flex items-center gap-2">
-            <FoldersIcon className="size-3.5" />
-            <span>
-              Total Categories:{" "}
-              <strong className="text-foreground font-bold">{categories.length}</strong>
-            </span>
-          </div>
-          {searchQuery && (
-            <span className="text-muted-foreground">
-              Showing {filteredCategories.length} matching results
-            </span>
-          )}
-        </div>
-      </div>
+          </>
+        }
+        footer={
+          <>
+            <div className="text-muted-foreground flex items-center gap-2">
+              <FoldersIcon className="size-3.5" />
+              <span>
+                Total Categories:{" "}
+                <strong className="text-foreground font-bold">{categories.length}</strong>
+              </span>
+            </div>
+            {searchQuery && (
+              <span className="text-muted-foreground">
+                Showing {filteredCategories.length} matching results
+              </span>
+            )}
+          </>
+        }
+      />
 
       {/* Categories Table */}
       {filteredCategories.length === 0 ? (
@@ -427,60 +422,54 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
 
                     {/* Actions */}
                     <TableCell className="text-right">
-                      <div className="flex items-center justify-end gap-1">
-                        <Button
-                          size="icon-xs"
-                          variant="ghost"
-                          onClick={() => handleDownloadCategoryResources(cat)}
-                          disabled={cat.toolCount === 0 || downloadingCategoryId === cat.id}
-                          title={
-                            cat.toolCount === 0
-                              ? `No resources in ${cat.name}`
-                              : `Download all ${cat.toolCount} resources in ${cat.name}`
-                          }
-                          className="hover:text-foreground text-muted-foreground"
-                        >
-                          {downloadingCategoryId === cat.id ? (
-                            <CircleNotchIcon weight="bold" className="size-3.5 animate-spin" />
-                          ) : (
-                            <DownloadSimpleIcon weight="bold" className="text-primary size-3.5" />
-                          )}
-                        </Button>
-                        <CopyButton
-                          textToCopy={JSON.stringify(
-                            {
-                              id: cat.id,
-                              createdAt: cat.createdAt,
-                              name: cat.name,
-                              resourceCount: cat.toolCount,
-                              slug: cat.slug,
-                              updatedAt: cat.updatedAt,
-                            },
-                            null,
-                            2,
-                          )}
-                          iconOnly
-                          size="icon-xs"
-                          title={`Copy JSON for ${cat.name}`}
-                        />
-                        <Button
-                          size="icon-xs"
-                          variant="ghost"
-                          onClick={() => handleOpenEdit(cat)}
-                          title={`Edit ${cat.name}`}
-                        >
-                          <PencilSimpleIcon className="size-3.5" />
-                        </Button>
-                        <Button
-                          size="icon-xs"
-                          variant="ghost"
-                          className="text-destructive hover:bg-destructive/10"
-                          onClick={() => setDeletingCategory(cat)}
-                          title={`Delete ${cat.name}`}
-                        >
-                          <TrashIcon className="size-3.5" />
-                        </Button>
-                      </div>
+                      <AdminTableRowActions
+                        onEdit={() => handleOpenEdit(cat)}
+                        onDelete={() => setDeletingCategory(cat)}
+                        editTitle={`Edit ${cat.name}`}
+                        deleteTitle={`Delete ${cat.name}`}
+                        extraActions={
+                          <>
+                            <Button
+                              size="icon-xs"
+                              variant="ghost"
+                              onClick={() => handleDownloadCategoryResources(cat)}
+                              disabled={cat.toolCount === 0 || downloadingCategoryId === cat.id}
+                              title={
+                                cat.toolCount === 0
+                                  ? `No resources in ${cat.name}`
+                                  : `Download all ${cat.toolCount} resources in ${cat.name}`
+                              }
+                              className="hover:text-foreground text-muted-foreground"
+                            >
+                              {downloadingCategoryId === cat.id ? (
+                                <CircleNotchIcon weight="bold" className="size-3.5 animate-spin" />
+                              ) : (
+                                <DownloadSimpleIcon
+                                  weight="bold"
+                                  className="text-primary size-3.5"
+                                />
+                              )}
+                            </Button>
+                            <CopyButton
+                              textToCopy={JSON.stringify(
+                                {
+                                  id: cat.id,
+                                  createdAt: cat.createdAt,
+                                  name: cat.name,
+                                  resourceCount: cat.toolCount,
+                                  slug: cat.slug,
+                                  updatedAt: cat.updatedAt,
+                                },
+                                null,
+                                2,
+                              )}
+                              iconOnly
+                              size="icon-xs"
+                              title={`Copy JSON for ${cat.name}`}
+                            />
+                          </>
+                        }
+                      />
                     </TableCell>
                   </TableRow>
                 );

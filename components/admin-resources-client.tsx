@@ -19,6 +19,7 @@ import {
   AdminResourceCard,
   AdminResourceItem,
   AdminResourceTable,
+  AdminToolbar,
   FilterSelect,
   SortSelect,
 } from "@/components/admin";
@@ -618,21 +619,18 @@ function AdminResourcesClientContent({
   return (
     <div>
       {/* Control Bar: Search, View Switcher, Category Filter, Sort, Add Resource */}
-      <div className="border-line bg-surface/50 mb-6 space-y-4 rounded-lg border-[1.5px] p-4 font-mono text-xs">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          {/* Search Bar */}
-          <div className="flex-1">
-            <SearchInput
-              placeholder="Search live resources by name, description, tags, author, URL..."
-              value={searchQuery}
-              onChange={(e) => handleSearchChange(e.target.value)}
-              onClear={() => handleSearchChange("")}
-              className="font-mono text-xs"
-            />
-          </div>
-
-          {/* Action Buttons & View Switcher */}
-          <div className="flex flex-wrap items-center gap-2">
+      <AdminToolbar
+        search={
+          <SearchInput
+            placeholder="Search live resources by name, description, tags, author, URL..."
+            value={searchQuery}
+            onChange={(e) => handleSearchChange(e.target.value)}
+            onClear={() => handleSearchChange("")}
+            className="font-mono text-xs"
+          />
+        }
+        actions={
+          <>
             {/* View Mode Toggle Switcher */}
             <Tabs
               value={viewMode}
@@ -685,55 +683,56 @@ function AdminResourcesClientContent({
                 <span>Add New Resource</span>
               </Link>
             </Button>
-          </div>
-        </div>
+          </>
+        }
+        footer={
+          <>
+            <div className="flex flex-wrap items-center gap-5">
+              {/* Category Select */}
+              <FilterSelect
+                label="Category:"
+                value={selectedCategory}
+                onValueChange={handleCategoryChange}
+                options={categoryFilterOptions}
+                triggerClassName="min-w-[180px]"
+              />
 
-        {/* Filter Dropdowns & Stats */}
-        <div className="border-line flex flex-wrap items-center justify-between gap-3 border-t-[1.5px] pt-3">
-          <div className="flex flex-wrap items-center gap-5">
-            {/* Category Select */}
-            <FilterSelect
-              label="Category:"
-              value={selectedCategory}
-              onValueChange={handleCategoryChange}
-              options={categoryFilterOptions}
-              triggerClassName="min-w-[180px]"
-            />
+              {/* Dynamic Health & Missing Data Filter */}
+              {healthFilterOptions.length > 1 && (
+                <div className="flex items-center gap-1.5">
+                  <HeartbeatIcon weight="duotone" className="size-8 text-rose-500" />
+                  <span className="text-muted-foreground text-[11px] font-bold whitespace-nowrap uppercase">
+                    Health & Data:
+                  </span>
+                  <SelectField
+                    value={healthFilter}
+                    onValueChange={handleHealthFilterChange}
+                    options={healthFilterOptions}
+                    triggerClassName="h-8 font-mono text-xs min-w-[200px]"
+                    variant="rose"
+                  />
+                </div>
+              )}
 
-            {/* Dynamic Health & Missing Data Filter */}
-            {healthFilterOptions.length > 1 && (
-              <div className="flex items-center gap-1.5">
-                <HeartbeatIcon weight="duotone" className="size-8 text-rose-500" />
-                <span className="text-muted-foreground text-[11px] font-bold whitespace-nowrap uppercase">
-                  Health & Data:
+              {/* Sort Select */}
+              <SortSelect value={sortBy} onValueChange={handleSortChange} options={SORT_OPTIONS} />
+            </div>
+
+            {/* Result Counts */}
+            <div className="text-muted-foreground text-[11px]">
+              Showing{" "}
+              <strong className="text-foreground">{filteredAndSortedResources.length}</strong> of{" "}
+              <strong className="text-foreground">{resources.length}</strong> resources
+              {searchQuery && (
+                <span>
+                  {" "}
+                  matching &quot;<span className="text-primary">{searchQuery}</span>&quot;
                 </span>
-                <SelectField
-                  value={healthFilter}
-                  onValueChange={handleHealthFilterChange}
-                  options={healthFilterOptions}
-                  triggerClassName="h-8 font-mono text-xs min-w-[200px]"
-                  variant="rose"
-                />
-              </div>
-            )}
-
-            {/* Sort Select */}
-            <SortSelect value={sortBy} onValueChange={handleSortChange} options={SORT_OPTIONS} />
-          </div>
-
-          {/* Result Counts */}
-          <div className="text-muted-foreground text-[11px]">
-            Showing <strong className="text-foreground">{filteredAndSortedResources.length}</strong>{" "}
-            of <strong className="text-foreground">{resources.length}</strong> resources
-            {searchQuery && (
-              <span>
-                {" "}
-                matching &quot;<span className="text-primary">{searchQuery}</span>&quot;
-              </span>
-            )}
-          </div>
-        </div>
-      </div>
+              )}
+            </div>
+          </>
+        }
+      />
       {/* Main Catalog Display: Cards vs Text Data Table */}
       {paginatedResources.length > 0 ? (
         <div className="space-y-4">

@@ -1,16 +1,12 @@
 "use client";
 
-import {
-  ArrowsClockwiseIcon,
-  PencilSimpleIcon,
-  PlusIcon,
-  TagIcon,
-  TrashIcon,
-} from "@phosphor-icons/react";
+import { ArrowsClockwiseIcon, PlusIcon, TagIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
+import { AdminTableRowActions } from "@/components/admin/admin-table-row-actions";
 import { AdminTagDialog } from "@/components/admin/admin-tag-dialog";
+import { AdminToolbar } from "@/components/admin/admin-toolbar";
 import { FilterSelect } from "@/components/admin/filter-select";
 import { SortSelect } from "@/components/admin/sort-select";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
@@ -180,34 +176,33 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
   return (
     <div className="font-mono">
       {/* Control Bar */}
-      <div className="border-line bg-surface/50 mb-6 space-y-4 rounded-lg border-[1.5px] p-4 text-xs">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          {/* Search */}
-          <div className="flex-1">
-            <SearchInput
-              placeholder="Search tags by name or slug..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onClear={() => setSearchQuery("")}
-              className="font-mono text-xs"
+      <AdminToolbar
+        search={
+          <SearchInput
+            placeholder="Search tags by name or slug..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onClear={() => setSearchQuery("")}
+            className="font-mono text-xs"
+          />
+        }
+        filters={
+          <>
+            <FilterSelect
+              label="Tag:"
+              value={filterMode}
+              onValueChange={(val) => setFilterMode(val)}
+              options={FILTER_OPTIONS}
             />
-          </div>
-
-          <FilterSelect
-            label="Tag:"
-            value={filterMode}
-            onValueChange={(val) => setFilterMode(val)}
-            options={FILTER_OPTIONS}
-          />
-
-          <SortSelect
-            value={sortBy}
-            onValueChange={(val) => setSortBy(val)}
-            options={SORT_OPTIONS}
-          />
-
-          {/* Action Buttons */}
-          <div className="flex items-center gap-2">
+            <SortSelect
+              value={sortBy}
+              onValueChange={(val) => setSortBy(val)}
+              options={SORT_OPTIONS}
+            />
+          </>
+        }
+        actions={
+          <>
             <Button
               size="sm"
               variant="outline"
@@ -227,19 +222,15 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
               <PlusIcon className="size-3.5" weight="bold" />
               <span>New Tag</span>
             </Button>
-          </div>
-        </div>
-
-        {/* Filter and Sort bar */}
-        <div className="border-line flex flex-wrap items-center justify-between gap-3 border-t-[1.5px] pt-3">
-          <div className="flex flex-wrap items-center gap-5"></div>
-
+          </>
+        }
+        footer={
           <div className="text-muted-foreground text-[11px]">
             Displaying <strong className="text-foreground">{filteredAndSortedTags.length}</strong>{" "}
             of {tags.length} tags
           </div>
-        </div>
-      </div>
+        }
+      />
 
       {/* Tags Table */}
       {filteredAndSortedTags.length === 0 ? (
@@ -300,25 +291,12 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
-                    <div className="flex items-center justify-end gap-1">
-                      <Button
-                        size="icon-xs"
-                        variant="ghost"
-                        onClick={() => handleOpenEdit(tagItem)}
-                        title={`Edit #${tagItem.name}`}
-                      >
-                        <PencilSimpleIcon className="size-3.5" />
-                      </Button>
-                      <Button
-                        size="icon-xs"
-                        variant="ghost"
-                        className="text-destructive hover:bg-destructive/10"
-                        onClick={() => setDeletingTag(tagItem)}
-                        title={`Delete #${tagItem.name}`}
-                      >
-                        <TrashIcon className="size-3.5" />
-                      </Button>
-                    </div>
+                    <AdminTableRowActions
+                      onEdit={() => handleOpenEdit(tagItem)}
+                      onDelete={() => setDeletingTag(tagItem)}
+                      editTitle={`Edit #${tagItem.name}`}
+                      deleteTitle={`Delete #${tagItem.name}`}
+                    />
                   </TableCell>
                 </TableRow>
               ))}
