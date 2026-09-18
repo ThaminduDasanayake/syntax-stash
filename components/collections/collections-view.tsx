@@ -2,7 +2,6 @@
 
 import {
   ArrowLeftIcon,
-  CircleNotchIcon,
   FolderOpenIcon,
   FolderPlusIcon,
   FolderSimpleIcon,
@@ -23,6 +22,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFormActions,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -330,30 +330,14 @@ export function CollectionsView() {
               containerClassName="pt-1"
             />
 
-            <div className="border-line flex justify-end gap-2 border-t pt-4">
-              <Button
-                type="button"
-                variant="ghost"
-                onClick={() => setIsCreateOpen(false)}
-                disabled={isCreating}
-                className="h-8 text-xs font-bold uppercase"
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                disabled={isCreating || !newColName.trim()}
-                className="h-8 gap-1 px-4 text-xs font-bold uppercase"
-              >
-                {isCreating ? (
-                  <>
-                    <CircleNotchIcon className="size-3.5 animate-spin" />
-                    <span>Creating...</span>
-                  </>
-                ) : (
-                  <span>Create Collection</span>
-                )}
-              </Button>
+            <div className="border-line border-t pt-4">
+              <DialogFormActions
+                size="sm"
+                onCancel={() => setIsCreateOpen(false)}
+                isWorking={isCreating}
+                createLabel="Create Collection"
+                disabled={!newColName.trim()}
+              />
             </div>
           </form>
         </DialogContent>

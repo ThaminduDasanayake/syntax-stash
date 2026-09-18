@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  ArrowsClockwiseIcon,
-  CircleNotchIcon,
-  FloppyDiskIcon,
-  PlusIcon,
-  XIcon,
-} from "@phosphor-icons/react";
+import { ArrowsClockwiseIcon, CircleNotchIcon, PlusIcon } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -29,6 +23,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFormActions,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -727,35 +722,20 @@ export function AdminResourceDialog({
           </div>
 
           {/* Action Buttons */}
-          <div className="border-line bg-surface/30 flex shrink-0 flex-wrap items-center justify-between gap-3 border-t-[1.5px] p-4 sm:px-6">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-              disabled={isWorking}
-              className="border-line hover:bg-surface h-9 gap-1.5 px-4 text-xs font-bold uppercase"
-            >
-              <XIcon className="size-4" />
-              <span>Cancel</span>
-            </Button>
-
-            <Button
-              type="submit"
-              disabled={isWorking || !formData.title?.trim() || !formData.url?.trim()}
-              className="h-9 gap-1.5 px-5 text-xs font-bold uppercase"
-            >
-              {isWorking ? (
-                <>
-                  <CircleNotchIcon className="size-4 animate-spin" />
-                  <span>Saving...</span>
-                </>
-              ) : (
-                <>
-                  <FloppyDiskIcon className="size-4" />
-                  <span>{isEdit ? "Update Tool" : "Create & Publish"}</span>
-                </>
-              )}
-            </Button>
+          <div className="border-line bg-surface/30 shrink-0 border-t-[1.5px] p-4 sm:px-6">
+            <DialogFormActions
+              layout="between"
+              onCancel={() => onOpenChange(false)}
+              cancelVariant="outline"
+              cancelIcon={true}
+              cancelClassName="border-line hover:bg-surface h-9 px-4"
+              isWorking={isWorking}
+              isEdit={isEdit}
+              createLabel="Create & Publish"
+              editLabel="Update Tool"
+              disabled={!formData.title?.trim() || !formData.url?.trim()}
+              submitClassName="h-9 px-5"
+            />
           </div>
         </form>
       </DialogContent>

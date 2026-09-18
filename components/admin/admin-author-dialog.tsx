@@ -1,6 +1,6 @@
 "use client";
 
-import { ArticleIcon, CheckIcon, GlobeIcon, XLogoIcon } from "@phosphor-icons/react";
+import { ArticleIcon, GlobeIcon, XLogoIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
@@ -18,7 +18,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
+  DialogFormActions,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -596,33 +596,13 @@ export function AdminAuthorDialog({
           </div>
 
           <div className="border-line bg-surface/30 shrink-0 border-t-[1.5px] p-4 sm:px-6">
-            <DialogFooter className="gap-2">
-              <Button
-                type="button"
-                variant="ghost"
-                onClick={() => onOpenChange(false)}
-                disabled={isWorking}
-                className="font-mono text-xs uppercase"
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                disabled={isWorking}
-                className="font-mono text-xs font-bold uppercase"
-              >
-                {isWorking ? (
-                  "Saving..."
-                ) : isEdit ? (
-                  "Save Changes"
-                ) : (
-                  <span className="flex items-center gap-1">
-                    <CheckIcon weight="bold" className="size-3.5" />
-                    <span>Create Author</span>
-                  </span>
-                )}
-              </Button>
-            </DialogFooter>
+            <DialogFormActions
+              onCancel={() => onOpenChange(false)}
+              isWorking={isWorking}
+              isEdit={isEdit}
+              createLabel="Create Author"
+              editLabel="Save Changes"
+            />
           </div>
         </form>
       </DialogContent>

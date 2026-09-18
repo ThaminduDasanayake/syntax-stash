@@ -2,7 +2,6 @@
 
 import {
   ArrowsClockwiseIcon,
-  CheckIcon,
   PencilSimpleIcon,
   PlusIcon,
   TagIcon,
@@ -23,6 +22,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogFooter,
+  DialogFormActions,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -559,32 +559,17 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
               />
             )}
 
+            {/* Footer Actions */}
             <DialogFooter className="mt-4 pt-2">
-              <Button
-                type="button"
-                variant="outline"
+              <DialogFormActions
                 size="sm"
-                onClick={() => setIsDialogOpen(false)}
-                disabled={isSubmitting}
-                className="text-xs uppercase"
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                size="sm"
-                disabled={isSubmitting}
-                className="text-xs font-bold uppercase"
-              >
-                {isSubmitting ? (
-                  "Saving..."
-                ) : (
-                  <>
-                    <CheckIcon className="size-3.5" />
-                    <span>{editingTag ? "Save Changes" : "Create Tag"}</span>
-                  </>
-                )}
-              </Button>
+                onCancel={() => setIsDialogOpen(false)}
+                isWorking={isSubmitting}
+                isEdit={Boolean(editingTag)}
+                createLabel="Create Tag"
+                editLabel="Save Changes"
+                cancelVariant="outline"
+              />
             </DialogFooter>
           </form>
         </DialogContent>

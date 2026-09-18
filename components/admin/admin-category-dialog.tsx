@@ -1,17 +1,15 @@
 "use client";
 
-import { CheckIcon, FloppyDiskIcon } from "@phosphor-icons/react";
 import React, { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { DuplicateNotice } from "@/components/submissions/duplicate-url-notice";
 import { FieldCheckmark } from "@/components/submissions/field-checkmark";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
+  DialogFormActions,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -253,37 +251,14 @@ export function AdminCategoryDialog({
           </div>
 
           {/* Fixed Footer Actions */}
-          <div className="shrink-0 p-4 sm:px-6">
-            <DialogFooter className="gap-2 border-t-[1.5px]">
-              <Button
-                type="button"
-                variant="ghost"
-                onClick={() => onOpenChange(false)}
-                disabled={isWorking}
-                className="font-mono text-xs uppercase"
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                disabled={isWorking}
-                className="font-mono text-xs font-bold uppercase"
-              >
-                {isWorking ? (
-                  "Saving..."
-                ) : isEdit ? (
-                  <>
-                    <FloppyDiskIcon weight="duotone" className="mr-1.5 size-4" />
-                    <span>Save Changes</span>
-                  </>
-                ) : (
-                  <span className="flex items-center gap-1">
-                    <CheckIcon weight="bold" className="size-3.5" />
-                    <span>Create Category</span>
-                  </span>
-                )}
-              </Button>
-            </DialogFooter>
+          <div className="border-line bg-surface/30 shrink-0 border-t-[1.5px] p-4 sm:px-6">
+            <DialogFormActions
+              onCancel={() => onOpenChange(false)}
+              isWorking={isWorking}
+              isEdit={isEdit}
+              createLabel="Create Category"
+              editLabel="Save Changes"
+            />
           </div>
         </form>
       </DialogContent>
