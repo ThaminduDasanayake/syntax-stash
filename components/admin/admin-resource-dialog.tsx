@@ -430,8 +430,8 @@ export function AdminResourceDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90vh] max-w-4xl overflow-y-auto p-0 font-mono text-xs sm:max-w-4xl">
-        <div className="border-line border-b-[1.5px] p-6 pb-4">
+      <DialogContent className="border-line bg-paper flex max-h-[85vh] max-w-4xl flex-col gap-0 overflow-hidden p-0 font-mono text-xs sm:max-w-4xl">
+        <div className="border-line shrink-0 border-b-[1.5px] p-6 pb-4">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-lg font-bold tracking-tight uppercase">
               {isEdit ? (
@@ -454,271 +454,280 @@ export function AdminResourceDialog({
           </DialogHeader>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6 p-6">
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
-            {/* Form Inputs (7 cols on large) */}
-            <div className="space-y-5 lg:col-span-7">
-              {/* URL & Auto-detect */}
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                    <span>Website URL</span>
-                    <span className="text-destructive">*</span>
-                    <FieldCheckmark
-                      checked={Boolean(formData.url?.trim() && isValidHttpUrl(formData.url.trim()))}
-                    />
-                  </Label>
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="ghost"
-                    onClick={handleAutoDetect}
-                    disabled={isDetecting || !formData.url?.trim()}
-                    className="text-primary hover:bg-primary/10 h-6 gap-1 px-2 text-[11px]"
-                  >
-                    {isDetecting ? (
-                      <>
-                        <CircleNotchIcon className="size-3 animate-spin" />
-                        <span>Detecting...</span>
-                      </>
-                    ) : (
-                      <>
-                        <ArrowsClockwiseIcon className="size-3" />
-                        <span>Auto-Detect</span>
-                      </>
-                    )}
-                  </Button>
-                </div>
-                <div className="h-9">
-                  <InputField
-                    type="url"
-                    placeholder="https://example.com"
-                    value={formData.url || ""}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, url: e.target.value }))}
-                    required
-                    containerClassName="h-9"
-                    className="font-mono text-xs"
-                  />
-                </div>
-
-                {duplicateNotice && (
-                  <DuplicateUrlNotice
-                    item={duplicateNotice.item}
-                    type={duplicateNotice.type}
-                    onDismiss={() => setDuplicateNotice(null)}
-                  />
-                )}
-              </div>
-
-              {/* Title & Subtitle */}
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <form onSubmit={handleSubmit} className="flex min-h-0 flex-1 flex-col">
+          <div className="flex-1 space-y-6 overflow-y-auto p-6">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+              {/* Form Inputs (7 cols on large) */}
+              <div className="space-y-5 lg:col-span-7">
+                {/* URL & Auto-detect */}
                 <div className="space-y-2">
-                  <div className="flex flex-wrap items-center justify-between gap-1.5">
+                  <div className="flex items-center justify-between">
                     <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                      <span>Title</span>
+                      <span>Website URL</span>
                       <span className="text-destructive">*</span>
-                      <FieldCheckmark checked={Boolean(formData.title?.trim())} />
+                      <FieldCheckmark
+                        checked={Boolean(
+                          formData.url?.trim() && isValidHttpUrl(formData.url.trim()),
+                        )}
+                      />
                     </Label>
-                    <DetectedFieldSuggestion
-                      currentValue={formData.title}
-                      detectedValue={detectedUpdates.title}
-                      onApply={(val) => {
-                        setFormData((prev) => ({ ...prev, title: val }));
-                        setDetectedUpdates((prev) => ({ ...prev, title: undefined }));
-                      }}
-                      onDismiss={() => {
-                        setDetectedUpdates((prev) => ({ ...prev, title: undefined }));
-                      }}
-                    />
-                  </div>
-                  <div className="h-9">
-                    <InputField
-                      placeholder="e.g. Next.js"
-                      value={formData.title || ""}
-                      onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
-                      required
-                      containerClassName="h-9"
-                      className="font-mono text-xs font-bold"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <div className="flex flex-wrap items-center justify-between gap-1.5">
-                    <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                      <span>Subtitle</span>
-                      <FieldCheckmark checked={Boolean(formData.subtitle?.trim())} />
-                    </Label>
-                    <DetectedFieldSuggestion
-                      currentValue={formData.subtitle}
-                      detectedValue={detectedUpdates.subtitle}
-                      onApply={(val) => {
-                        setFormData((prev) => ({ ...prev, subtitle: val }));
-                        setDetectedUpdates((prev) => ({ ...prev, subtitle: undefined }));
-                      }}
-                      onDismiss={() => {
-                        setDetectedUpdates((prev) => ({ ...prev, subtitle: undefined }));
-                      }}
-                    />
-                  </div>
-                  <div className="h-9">
-                    <InputField
-                      placeholder="e.g. The React Framework"
-                      value={formData.subtitle || ""}
-                      onChange={(e) =>
-                        setFormData((prev) => ({ ...prev, subtitle: e.target.value }))
-                      }
-                      containerClassName="h-9"
-                      className="font-mono text-xs"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Category & GitHub Repo */}
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div className="space-y-2">
-                  <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                    <span>Category</span>
-                    <span className="text-destructive">*</span>
-                    <FieldCheckmark checked={Boolean(formData.category?.trim())} />
-                  </Label>
-                  <SelectField
-                    value={formData.category || (categoryOptions[0]?.value ?? "")}
-                    onValueChange={(val) => setFormData((prev) => ({ ...prev, category: val }))}
-                    options={categoryOptions}
-                    triggerClassName="h-9 font-mono text-xs"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <div className="flex flex-wrap items-center justify-between gap-1.5">
-                    <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                      <span>GitHub Repo URL</span>
-                      <FieldCheckmark checked={Boolean(formData.github?.trim())} />
-                    </Label>
-                    <DetectedFieldSuggestion
-                      currentValue={formData.github}
-                      detectedValue={detectedUpdates.github}
-                      onApply={(val) => {
-                        setFormData((prev) => ({ ...prev, github: val }));
-                        setDetectedUpdates((prev) => ({ ...prev, github: undefined }));
-                      }}
-                      onDismiss={() => {
-                        setDetectedUpdates((prev) => ({ ...prev, github: undefined }));
-                      }}
-                    />
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="ghost"
+                      onClick={handleAutoDetect}
+                      disabled={isDetecting || !formData.url?.trim()}
+                      className="text-primary hover:bg-primary/10 h-6 gap-1 px-2 text-[11px]"
+                    >
+                      {isDetecting ? (
+                        <>
+                          <CircleNotchIcon className="size-3 animate-spin" />
+                          <span>Detecting...</span>
+                        </>
+                      ) : (
+                        <>
+                          <ArrowsClockwiseIcon className="size-3" />
+                          <span>Auto-Detect</span>
+                        </>
+                      )}
+                    </Button>
                   </div>
                   <div className="h-9">
                     <InputField
                       type="url"
-                      placeholder="https://github.com/org/repo"
-                      value={formData.github || ""}
-                      onChange={(e) => setFormData((prev) => ({ ...prev, github: e.target.value }))}
+                      placeholder="https://example.com"
+                      value={formData.url || ""}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, url: e.target.value }))}
+                      required
                       containerClassName="h-9"
                       className="font-mono text-xs"
                     />
                   </div>
-                </div>
-              </div>
 
-              {/* Description */}
-              <div className="space-y-2">
-                <div className="flex flex-wrap items-center justify-between gap-1.5">
-                  <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                    <span>Description</span>
-                    <span className="text-destructive">*</span>
-                    <FieldCheckmark checked={Boolean(formData.description?.trim())} />
-                  </Label>
-                  <DetectedFieldSuggestion
-                    currentValue={formData.description}
-                    detectedValue={detectedUpdates.description}
-                    onApply={(val) => {
-                      setFormData((prev) => ({ ...prev, description: val }));
-                      setDetectedUpdates((prev) => ({ ...prev, description: undefined }));
-                    }}
-                    onDismiss={() => {
-                      setDetectedUpdates((prev) => ({ ...prev, description: undefined }));
-                    }}
+                  {duplicateNotice && (
+                    <DuplicateUrlNotice
+                      item={duplicateNotice.item}
+                      type={duplicateNotice.type}
+                      onDismiss={() => setDuplicateNotice(null)}
+                    />
+                  )}
+                </div>
+
+                {/* Title & Subtitle */}
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div className="space-y-2">
+                    <div className="flex flex-wrap items-center justify-between gap-1.5">
+                      <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                        <span>Title</span>
+                        <span className="text-destructive">*</span>
+                        <FieldCheckmark checked={Boolean(formData.title?.trim())} />
+                      </Label>
+                      <DetectedFieldSuggestion
+                        currentValue={formData.title}
+                        detectedValue={detectedUpdates.title}
+                        onApply={(val) => {
+                          setFormData((prev) => ({ ...prev, title: val }));
+                          setDetectedUpdates((prev) => ({ ...prev, title: undefined }));
+                        }}
+                        onDismiss={() => {
+                          setDetectedUpdates((prev) => ({ ...prev, title: undefined }));
+                        }}
+                      />
+                    </div>
+                    <div className="h-9">
+                      <InputField
+                        placeholder="e.g. Next.js"
+                        value={formData.title || ""}
+                        onChange={(e) =>
+                          setFormData((prev) => ({ ...prev, title: e.target.value }))
+                        }
+                        required
+                        containerClassName="h-9"
+                        className="font-mono text-xs font-bold"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex flex-wrap items-center justify-between gap-1.5">
+                      <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                        <span>Subtitle</span>
+                        <FieldCheckmark checked={Boolean(formData.subtitle?.trim())} />
+                      </Label>
+                      <DetectedFieldSuggestion
+                        currentValue={formData.subtitle}
+                        detectedValue={detectedUpdates.subtitle}
+                        onApply={(val) => {
+                          setFormData((prev) => ({ ...prev, subtitle: val }));
+                          setDetectedUpdates((prev) => ({ ...prev, subtitle: undefined }));
+                        }}
+                        onDismiss={() => {
+                          setDetectedUpdates((prev) => ({ ...prev, subtitle: undefined }));
+                        }}
+                      />
+                    </div>
+                    <div className="h-9">
+                      <InputField
+                        placeholder="e.g. The React Framework"
+                        value={formData.subtitle || ""}
+                        onChange={(e) =>
+                          setFormData((prev) => ({ ...prev, subtitle: e.target.value }))
+                        }
+                        containerClassName="h-9"
+                        className="font-mono text-xs"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Category & GitHub Repo */}
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                      <span>Category</span>
+                      <span className="text-destructive">*</span>
+                      <FieldCheckmark checked={Boolean(formData.category?.trim())} />
+                    </Label>
+                    <SelectField
+                      value={formData.category || (categoryOptions[0]?.value ?? "")}
+                      onValueChange={(val) => setFormData((prev) => ({ ...prev, category: val }))}
+                      options={categoryOptions}
+                      triggerClassName="h-9 font-mono text-xs"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex flex-wrap items-center justify-between gap-1.5">
+                      <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                        <span>GitHub Repo URL</span>
+                        <FieldCheckmark checked={Boolean(formData.github?.trim())} />
+                      </Label>
+                      <DetectedFieldSuggestion
+                        currentValue={formData.github}
+                        detectedValue={detectedUpdates.github}
+                        onApply={(val) => {
+                          setFormData((prev) => ({ ...prev, github: val }));
+                          setDetectedUpdates((prev) => ({ ...prev, github: undefined }));
+                        }}
+                        onDismiss={() => {
+                          setDetectedUpdates((prev) => ({ ...prev, github: undefined }));
+                        }}
+                      />
+                    </div>
+                    <div className="h-9">
+                      <InputField
+                        type="url"
+                        placeholder="https://github.com/org/repo"
+                        value={formData.github || ""}
+                        onChange={(e) =>
+                          setFormData((prev) => ({ ...prev, github: e.target.value }))
+                        }
+                        containerClassName="h-9"
+                        className="font-mono text-xs"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Description */}
+                <div className="space-y-2">
+                  <div className="flex flex-wrap items-center justify-between gap-1.5">
+                    <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                      <span>Description</span>
+                      <span className="text-destructive">*</span>
+                      <FieldCheckmark checked={Boolean(formData.description?.trim())} />
+                    </Label>
+                    <DetectedFieldSuggestion
+                      currentValue={formData.description}
+                      detectedValue={detectedUpdates.description}
+                      onApply={(val) => {
+                        setFormData((prev) => ({ ...prev, description: val }));
+                        setDetectedUpdates((prev) => ({ ...prev, description: undefined }));
+                      }}
+                      onDismiss={() => {
+                        setDetectedUpdates((prev) => ({ ...prev, description: undefined }));
+                      }}
+                    />
+                  </div>
+                  <Textarea
+                    placeholder="Describe the tool, its core features, and use case..."
+                    value={formData.description || ""}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, description: e.target.value }))
+                    }
+                    required
+                    rows={3}
+                    className="resize-none font-mono text-xs"
                   />
                 </div>
-                <Textarea
-                  placeholder="Describe the tool, its core features, and use case..."
-                  value={formData.description || ""}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, description: e.target.value }))
-                  }
-                  required
-                  rows={3}
-                  className="resize-none font-mono text-xs"
-                />
-              </div>
 
-              {/* Tags */}
-              <div className="space-y-2">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                  <span>Canonical Tags (Select Only)</span>
-                  <FieldCheckmark checked={Boolean(formData.tags?.trim())} />
-                </Label>
-                <TagPicker
-                  value={formData.tags || ""}
-                  onChange={(val) => setFormData((prev) => ({ ...prev, tags: val }))}
-                  disabled={isWorking}
+                {/* Tags */}
+                <div className="space-y-2">
+                  <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                    <span>Canonical Tags (Select Only)</span>
+                    <FieldCheckmark checked={Boolean(formData.tags?.trim())} />
+                  </Label>
+                  <TagPicker
+                    value={formData.tags || ""}
+                    onChange={(val) => setFormData((prev) => ({ ...prev, tags: val }))}
+                    disabled={isWorking}
+                    allowCustom={false}
+                    placeholder="Search and select canonical tags..."
+                  />
+                </div>
+
+                {/* Author Attribution */}
+                <AuthorSocialFields
+                  values={authorValues}
+                  onChange={handleAuthorFieldChange}
+                  onRequestCreateAuthor={handleRequestCreateAuthor}
+                  onSelectAuthorOption={handleSelectAuthorOption}
+                  suggestedAuthor={suggestedAuthor}
+                  onAcceptSuggestedAuthor={handleAcceptSuggestedAuthor}
                   allowCustom={false}
-                  placeholder="Search and select canonical tags..."
+                  disabled={isWorking}
                 />
-              </div>
 
-              {/* Author Attribution */}
-              <AuthorSocialFields
-                values={authorValues}
-                onChange={handleAuthorFieldChange}
-                onRequestCreateAuthor={handleRequestCreateAuthor}
-                onSelectAuthorOption={handleSelectAuthorOption}
-                suggestedAuthor={suggestedAuthor}
-                onAcceptSuggestedAuthor={handleAcceptSuggestedAuthor}
-                allowCustom={false}
-                disabled={isWorking}
-              />
-
-              {/* Media Asset Fields */}
-              <MediaAssetFields
-                allowUpload
-                favicon={formData.favicon}
-                iconBg={formData.iconBg || "dark"}
-                onIconBgChange={(val) => setFormData((prev) => ({ ...prev, iconBg: val }))}
-                ogImage={formData.ogImage}
-                faviconOptions={faviconOptions}
-                ogImageOptions={ogImageOptions}
-                onFaviconChange={(val) => setFormData((prev) => ({ ...prev, favicon: val }))}
-                onOgImageChange={(val) => setFormData((prev) => ({ ...prev, ogImage: val }))}
-                disabled={isWorking}
-              />
-            </div>
-
-            {/* Live Preview Panel (5 cols on large) */}
-            <div className="space-y-4 lg:col-span-5">
-              <div className="sticky top-4">
-                <ResourceCardPreview
-                  title={formData.title || "Tool Title"}
-                  subtitle={formData.subtitle || "Tool Subtitle"}
-                  category={formData.category || "Generators"}
-                  description={
-                    formData.description || "A concise description of the tool will appear here..."
-                  }
+                {/* Media Asset Fields */}
+                <MediaAssetFields
+                  allowUpload
                   favicon={formData.favicon}
                   iconBg={formData.iconBg || "dark"}
-                  tags={formData.tags}
-                  author={formData.authorName}
-                  url={formData.url || "https://example.com"}
-                  cardMaxWidthClass="w-full"
+                  onIconBgChange={(val) => setFormData((prev) => ({ ...prev, iconBg: val }))}
+                  ogImage={formData.ogImage}
+                  faviconOptions={faviconOptions}
+                  ogImageOptions={ogImageOptions}
+                  onFaviconChange={(val) => setFormData((prev) => ({ ...prev, favicon: val }))}
+                  onOgImageChange={(val) => setFormData((prev) => ({ ...prev, ogImage: val }))}
+                  disabled={isWorking}
                 />
+              </div>
+
+              {/* Live Preview Panel (5 cols on large) */}
+              <div className="space-y-4 lg:col-span-5">
+                <div className="sticky top-4">
+                  <ResourceCardPreview
+                    title={formData.title || "Tool Title"}
+                    subtitle={formData.subtitle || "Tool Subtitle"}
+                    category={formData.category || "Generators"}
+                    description={
+                      formData.description ||
+                      "A concise description of the tool will appear here..."
+                    }
+                    favicon={formData.favicon}
+                    iconBg={formData.iconBg || "dark"}
+                    tags={formData.tags}
+                    author={formData.authorName}
+                    url={formData.url || "https://example.com"}
+                    cardMaxWidthClass="w-full"
+                  />
+                </div>
               </div>
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="border-line flex flex-wrap items-center justify-between gap-3 border-t pt-4">
+          <div className="border-line bg-surface/30 flex shrink-0 flex-wrap items-center justify-between gap-3 border-t-[1.5px] p-4 sm:px-6">
             <Button
               type="button"
               variant="outline"
