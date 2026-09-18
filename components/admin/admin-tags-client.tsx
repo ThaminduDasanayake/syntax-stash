@@ -13,18 +13,9 @@ import { toast } from "sonner";
 
 import { FilterSelect } from "@/components/admin/filter-select";
 import { SortSelect } from "@/components/admin/sort-select";
+import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { DuplicateNotice } from "@/components/submissions/duplicate-url-notice";
 import { invalidateTagCache } from "@/components/submissions/tag-picker";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -600,37 +591,25 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
       </Dialog>
 
       {/* Delete Confirmation Alert Dialog */}
-      <AlertDialog
+      <ConfirmDialog
         open={Boolean(deletingTag)}
         onOpenChange={(open) => !open && setDeletingTag(null)}
-      >
-        <AlertDialogContent className="font-mono text-xs">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="text-destructive font-mono uppercase">
-              Delete Tag: #{deletingTag?.name}
-            </AlertDialogTitle>
-            <AlertDialogDescription className="text-xs leading-relaxed">
-              Are you sure you want to delete tag{" "}
-              <strong className="text-foreground">#{deletingTag?.slug}</strong>?
-              {deletingTag && deletingTag.toolCount > 0 && (
-                <span className="mt-2 block font-semibold text-amber-600 dark:text-amber-400">
-                  Note: This tag is currently attached to {deletingTag.toolCount} resource(s).
-                  Deleting it will remove the tag association from those resources.
-                </span>
-              )}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel className="text-xs uppercase">Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleConfirmDelete}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90 text-xs font-bold uppercase"
-            >
-              Confirm Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+        onConfirm={handleConfirmDelete}
+        title={`Delete Tag: #${deletingTag?.name}`}
+        description={
+          <>
+            Are you sure you want to delete tag{" "}
+            <strong className="text-foreground">#{deletingTag?.slug}</strong>?
+            {deletingTag && deletingTag.toolCount > 0 && (
+              <span className="mt-2 block font-semibold text-amber-600 dark:text-amber-400">
+                Note: This tag is currently attached to {deletingTag.toolCount} resource(s).
+                Deleting it will remove the tag association from those resources.
+              </span>
+            )}
+          </>
+        }
+        confirmLabel="Hold to delete"
+      />
 
       {/* Confirmation Dialog for Tag Updates */}
       <AdminConfirmEditDialog

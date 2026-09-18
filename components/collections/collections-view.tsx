@@ -14,18 +14,9 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
+import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { FilterSection } from "@/components/filter-section";
 import { ToolCardSkeleton } from "@/components/tool-card-skeleton";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { CheckboxField } from "@/components/ui/checkbox-field";
 import {
@@ -368,43 +359,29 @@ export function CollectionsView() {
         </DialogContent>
       </Dialog>
 
-      {/* Delete Confirmation AlertDialog */}
-      <AlertDialog
+      {/* Delete Confirmation Dialog */}
+      <ConfirmDialog
         open={Boolean(deletingCol)}
         onOpenChange={(open) => !open && setDeletingCol(null)}
-      >
-        <AlertDialogContent className="font-mono text-xs sm:max-w-md">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="text-destructive font-mono text-base font-bold uppercase">
-              Delete Collection?
-            </AlertDialogTitle>
-            <AlertDialogDescription className="text-muted-foreground font-mono text-xs leading-relaxed">
-              Are you sure you want to delete the collection{" "}
-              <strong className="text-foreground">&quot;{deletingCol?.name}&quot;</strong>?
-              <br />
-              <br />
-              This will remove the folder list. The saved tools themselves will remain in your
-              bookmarks.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter className="mt-4 gap-2">
-            <AlertDialogCancel className="border-line font-mono text-xs font-bold uppercase">
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction
-              onClick={() => {
-                if (deletingCol) {
-                  deleteCollection(deletingCol.id);
-                  setDeletingCol(null);
-                }
-              }}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90 font-mono text-xs font-bold uppercase"
-            >
-              Delete Collection
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+        onConfirm={() => {
+          if (deletingCol) {
+            deleteCollection(deletingCol.id);
+            setDeletingCol(null);
+          }
+        }}
+        title="Delete Collection"
+        description={
+          <>
+            Are you sure you want to delete the collection{" "}
+            <strong className="text-foreground">&quot;{deletingCol?.name}&quot;</strong>?
+            <br />
+            <br />
+            This will remove the folder list. The saved tools themselves will remain in your
+            bookmarks.
+          </>
+        }
+        confirmLabel="Hold to delete"
+      />
     </div>
   );
 }

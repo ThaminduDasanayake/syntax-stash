@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckIcon } from "@phosphor-icons/react";
+import { CheckIcon, FloppyDiskIcon } from "@phosphor-icons/react";
 import React, { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
@@ -197,13 +197,11 @@ export function AdminCategoryDialog({
         <form onSubmit={handleSubmit} className="flex min-h-0 flex-1 flex-col">
           <div className="flex-1 space-y-4 overflow-y-auto p-6 text-xs">
             {/* Category Name */}
-            <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -m-2 space-y-1.5 rounded-md p-2 transition-all duration-150 focus-within:ring-1">
+            <div className="space-y-1.5">
               <Label
                 className={cn(
                   "flex items-center gap-1.5 font-mono text-xs font-bold uppercase transition-colors",
-                  isNameFilled
-                    ? "text-emerald-600 dark:text-emerald-400"
-                    : "text-foreground group-focus-within:text-primary",
+                  isNameFilled ? "text-emerald-600 dark:text-emerald-400" : "text-foreground",
                 )}
               >
                 <span>Category Name</span>
@@ -224,11 +222,16 @@ export function AdminCategoryDialog({
             </div>
 
             {/* Auto-Generated Slug (Read-only Preview) */}
-            <div className="border-line bg-surface/40 flex items-center justify-between rounded border-[1.5px] px-3 py-2 text-xs">
-              <span className="text-muted-foreground text-[10px] font-bold tracking-wider uppercase">
-                Generated Route URL:
-              </span>
-              <span className="text-foreground font-bold">/{slugify(formData.name) || "slug"}</span>
+            <div className="space-y-1.5">
+              <Label className="text-muted-foreground flex items-center gap-1.5 font-mono text-xs uppercase">
+                <span>Generated Route URL</span>
+              </Label>
+              <InputField
+                value={slugify(formData.name) || "slug"}
+                readOnly
+                prefix="/"
+                className="text-muted-foreground font-mono text-xs select-none"
+              />
             </div>
 
             {duplicateCategory && (
@@ -250,8 +253,8 @@ export function AdminCategoryDialog({
           </div>
 
           {/* Fixed Footer Actions */}
-          <div className="border-line bg-surface/30 shrink-0 border-t-[1.5px] p-4 sm:px-6">
-            <DialogFooter className="gap-2">
+          <div className="shrink-0 p-4 sm:px-6">
+            <DialogFooter className="gap-2 border-t-[1.5px]">
               <Button
                 type="button"
                 variant="ghost"
@@ -269,7 +272,10 @@ export function AdminCategoryDialog({
                 {isWorking ? (
                   "Saving..."
                 ) : isEdit ? (
-                  "Save Changes"
+                  <>
+                    <FloppyDiskIcon weight="duotone" className="mr-1.5 size-4" />
+                    <span>Save Changes</span>
+                  </>
                 ) : (
                   <span className="flex items-center gap-1">
                     <CheckIcon weight="bold" className="size-3.5" />
