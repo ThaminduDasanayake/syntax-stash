@@ -4,8 +4,6 @@ import {
   ArrowsClockwiseIcon,
   ArrowSquareOutIcon,
   ArticleIcon,
-  CaretLeftIcon,
-  CaretRightIcon,
   GlobeIcon,
   PencilSimpleIcon,
   PlusIcon,
@@ -20,6 +18,7 @@ import { Suspense, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { AdminAuthorDialog } from "@/components/admin/admin-author-dialog";
+import { AdminPagination } from "@/components/admin/admin-pagination";
 import { SortSelect } from "@/components/admin/sort-select";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { invalidateAuthorCache } from "@/components/submissions/author-combobox";
@@ -555,38 +554,13 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
         </Table>
 
         {/* Pagination Controls */}
-        {totalPages > 1 && (
-          <div className="border-line bg-surface/40 flex flex-wrap items-center justify-between gap-3 border-t p-3">
-            <div className="text-muted-foreground text-[11px]">
-              Page <strong className="text-foreground">{currentPage}</strong> of{" "}
-              <strong className="text-foreground">{totalPages}</strong>
-            </div>
-
-            <div className="flex items-center gap-1.5">
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                disabled={currentPage === 1}
-                className="border-line hover:bg-surface h-8 gap-1 px-2.5 text-xs"
-              >
-                <CaretLeftIcon className="size-3.5" />
-                <span>Prev</span>
-              </Button>
-
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                disabled={currentPage === totalPages}
-                className="border-line hover:bg-surface h-8 gap-1 px-2.5 text-xs"
-              >
-                <span>Next</span>
-                <CaretRightIcon className="size-3.5" />
-              </Button>
-            </div>
-          </div>
-        )}
+        <AdminPagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={filteredAndSortedAuthors.length}
+          itemsPerPage={ITEMS_PER_PAGE}
+          onPageChange={setCurrentPage}
+        />
       </div>
 
       {/* Create / Edit Author Modal */}

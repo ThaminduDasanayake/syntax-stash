@@ -2,8 +2,6 @@
 
 import {
   ArrowsClockwiseIcon,
-  CaretLeftIcon,
-  CaretRightIcon,
   HeartbeatIcon,
   MagnifyingGlassIcon,
   PlusIcon,
@@ -17,6 +15,7 @@ import { toast } from "sonner";
 
 import {
   adminItemToResource,
+  AdminPagination,
   AdminResourceCard,
   AdminResourceItem,
   AdminResourceTable,
@@ -784,62 +783,14 @@ function AdminResourcesClientContent({
           )}
 
           {/* Pagination Controls */}
-          {totalPages > 1 && (
-            <div className="border-line flex flex-wrap items-center justify-between gap-3 border-t pt-4 font-mono text-xs">
-              <div className="text-muted-foreground text-[11px]">
-                Page <strong className="text-foreground">{currentPage}</strong> of{" "}
-                <strong className="text-foreground">{totalPages}</strong> ({itemsPerPage} per page)
-              </div>
-
-              <div className="flex items-center gap-1.5">
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
-                  disabled={currentPage === 1}
-                  className="border-line hover:bg-surface h-8 gap-1 px-2.5 text-xs"
-                >
-                  <CaretLeftIcon className="size-3.5" />
-                  <span>Prev</span>
-                </Button>
-
-                {/* Page number indicators */}
-                <div className="flex items-center gap-1 px-1">
-                  {Array.from({ length: Math.min(5, totalPages) }, (_, idx) => {
-                    let pageNum = idx + 1;
-                    if (totalPages > 5 && currentPage > 3) {
-                      pageNum = Math.min(currentPage - 2 + idx, totalPages - 4 + idx);
-                    }
-                    return (
-                      <button
-                        key={pageNum}
-                        type="button"
-                        onClick={() => handlePageChange(pageNum)}
-                        className={`size-8 rounded border-[1.5px] text-xs font-bold transition-colors ${
-                          currentPage === pageNum
-                            ? "bg-primary text-primary-foreground border-primary"
-                            : "border-line bg-surface/50 text-muted-foreground hover:bg-surface hover:text-foreground"
-                        }`}
-                      >
-                        {pageNum}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
-                  disabled={currentPage === totalPages}
-                  className="border-line hover:bg-surface h-8 gap-1 px-2.5 text-xs"
-                >
-                  <span>Next</span>
-                  <CaretRightIcon className="size-3.5" />
-                </Button>
-              </div>
-            </div>
-          )}
+          <AdminPagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalItems={filteredAndSortedResources.length}
+            itemsPerPage={itemsPerPage}
+            onPageChange={handlePageChange}
+            className="border-line flex flex-wrap items-center justify-between gap-3 border-t bg-transparent p-0 pt-4 font-mono text-xs"
+          />
         </div>
       ) : (
         /* Empty State */
