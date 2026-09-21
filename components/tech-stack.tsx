@@ -6,52 +6,51 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { cn } from "@/lib/utils";
 
 export interface TechStackItem {
-  name: string;
   logo: string;
   logoClassName?: string;
+  name: string;
 }
 
-//
 export const DEFAULT_TECH_STACK: TechStackItem[] = [
   {
     logo: "/stack/better-auth_wordmark.svg",
-    logoClassName: "h-4.5 w-auto",
+    logoClassName: "h-5 w-auto",
     name: "Better Auth",
   },
   {
     logo: "/stack/drizzle-orm.svg",
-    logoClassName: "",
+    logoClassName: "h-5.5 w-auto",
     name: "Drizzle ORM",
   },
   {
     logo: "/stack/neon-wordmark.svg",
-    logoClassName: "h-4.5 w-auto",
+    logoClassName: "h-5.5 w-auto",
     name: "Neon Postgres",
   },
   {
     logo: "/stack/nextjs_logo.svg",
-    logoClassName: "h-4.5 w-auto",
+    logoClassName: "h-5 w-auto",
     name: "Next.js",
   },
   {
     logo: "/stack/phosphoricons-wordmark.svg",
-    logoClassName: "h-20 w-auto invert",
+    logoClassName: "h-5.5 w-auto",
     name: "Phosphor Icons",
   },
   {
     logo: "/stack/react_wordmark_dark.svg",
-    logoClassName: "h-4.5 w-auto",
-    name: "React",
+    logoClassName: "h-5.5 w-auto",
+    name: "React 19",
   },
   {
     logo: "/stack/shadcn-ui.svg",
-    logoClassName: "size-5 text-foreground",
+    logoClassName: "size-6",
     name: "Shadcn UI",
   },
   {
     logo: "/stack/tailwindcss-wordmark.svg",
-    logoClassName: "h-4 w-auto",
-    name: "Tailwind CSS",
+    logoClassName: "h-4.5 w-auto",
+    name: "Tailwind CSS v4",
   },
 ];
 
@@ -78,7 +77,7 @@ export function TechStack({
       {/* Dot grid background texture */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.08)_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_at_center,black_70%,transparent_100%)] [background-size:24px_24px]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.08)_1px,transparent_1px)] mask-[radial-gradient(ellipse_at_center,black_70%,transparent_100%)] bg-size-[24px_24px]"
       />
 
       <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center">
@@ -94,7 +93,7 @@ export function TechStack({
               <TooltipTrigger asChild>
                 <div
                   className={cn(
-                    "group border-line bg-card/60 relative flex h-12 min-w-16 cursor-default items-center justify-center rounded-lg border-[1.5px] px-4 shadow-2xs backdrop-blur-xs transition-all duration-200 select-none",
+                    "group border-line bg-card/60 relative flex h-12 min-w-16 cursor-default items-center justify-center rounded-lg border-[1.5px] px-4.5 shadow-2xs backdrop-blur-xs transition-all duration-200 select-none",
                     "hover:border-primary/50 hover:bg-card hover:-translate-y-0.5 hover:shadow-xs",
                   )}
                   tabIndex={0}
@@ -106,7 +105,7 @@ export function TechStack({
                     src={item.logo}
                     alt={item.name}
                     className={cn(
-                      "max-h-5.5 w-auto max-w-28 object-contain transition-all duration-200 group-hover:scale-105",
+                      "w-auto max-w-32 object-contain transition-all duration-200 group-hover:scale-105",
                       item.logoClassName,
                     )}
                   />
