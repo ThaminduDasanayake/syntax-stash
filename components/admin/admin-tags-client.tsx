@@ -292,6 +292,8 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
                   </TableCell>
                   <TableCell className="text-right">
                     <AdminTableRowActions
+                      copyJsonText={() => JSON.stringify(tagItem, null, 2)}
+                      copyJsonTitle={`Copy JSON for #${tagItem.name}`}
                       onEdit={() => handleOpenEdit(tagItem)}
                       onDelete={() => setDeletingTag(tagItem)}
                       editTitle={`Edit #${tagItem.name}`}

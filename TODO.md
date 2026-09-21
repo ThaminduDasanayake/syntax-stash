@@ -46,6 +46,7 @@
 
 My own additions
 
-- need to make the edit, copy json and delete buttons in the admin pages
-- deep dice into internal tools and only get free tools from icons8
-- https://www.svgrepo.com/ tools inside this
+- [x] **Admin Action Controls (Edit, Copy JSON, and Delete)**:
+  - **Context:** Standardized action buttons (Edit, Copy JSON, Delete) across `/admin/resources` (Card & Table views), `/admin/authors`, `/admin/categories`, and `/admin/tags`.
+- [ ] deep dive into internal tools and only get free tools from icons8
+- [ ] https://www.svgrepo.com/ tools inside this

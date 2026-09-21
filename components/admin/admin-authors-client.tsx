@@ -35,6 +35,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 export interface AdminAuthorItem {
@@ -343,14 +344,20 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
                       <div>
                         <div className="flex items-center gap-1.5">
                           <span className="text-foreground font-bold">{authorItem.name}</span>
-                          <Link
-                            href={`/authors/${authorItem.slug}`}
-                            target="_blank"
-                            className="text-muted-foreground hover:text-primary transition-colors"
-                            title="View public author directory"
-                          >
-                            <ArrowSquareOutIcon className="size-3.5" />
-                          </Link>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Link
+                                href={`/authors/${authorItem.slug}`}
+                                target="_blank"
+                                className="text-muted-foreground hover:text-primary transition-colors"
+                              >
+                                <ArrowSquareOutIcon className="size-3.5" />
+                              </Link>
+                            </TooltipTrigger>
+                            <TooltipContent side="top">
+                              <p>View public author directory</p>
+                            </TooltipContent>
+                          </Tooltip>
                         </div>
                       </div>
                     </div>
@@ -367,104 +374,140 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
                   <TableCell>
                     <div className="flex items-center gap-1.5">
                       {authorItem.website && (
-                        <a
-                          href={authorItem.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
-                          title={`Website: ${authorItem.website}`}
-                        >
-                          <GlobeIcon className="size-3.5" />
-                        </a>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <a
+                              href={authorItem.website}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
+                            >
+                              <GlobeIcon className="size-3.5" />
+                            </a>
+                          </TooltipTrigger>
+                          <TooltipContent side="top">
+                            <p>Website: {authorItem.website}</p>
+                          </TooltipContent>
+                        </Tooltip>
                       )}
                       {authorItem.blog && (
-                        <a
-                          href={authorItem.blog}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
-                          title={`Blog: ${authorItem.blog}`}
-                        >
-                          <ArticleIcon className="size-3.5" />
-                        </a>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <a
+                              href={authorItem.blog}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
+                            >
+                              <ArticleIcon className="size-3.5" />
+                            </a>
+                          </TooltipTrigger>
+                          <TooltipContent side="top">
+                            <p>Blog: {authorItem.blog}</p>
+                          </TooltipContent>
+                        </Tooltip>
                       )}
                       {authorItem.github && (
-                        <a
-                          href={
-                            authorItem.github.startsWith("http")
-                              ? authorItem.github
-                              : `https://github.com/${authorItem.github}`
-                          }
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
-                          title={`GitHub: ${authorItem.github}`}
-                        >
-                          <Image
-                            src="/github.svg"
-                            alt="GitHub"
-                            width={14}
-                            height={14}
-                            className="size-3.5"
-                          />
-                        </a>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <a
+                              href={
+                                authorItem.github.startsWith("http")
+                                  ? authorItem.github
+                                  : `https://github.com/${authorItem.github}`
+                              }
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
+                            >
+                              <Image
+                                src="/github.svg"
+                                alt="GitHub"
+                                width={14}
+                                height={14}
+                                className="size-3.5 dark:invert"
+                              />
+                            </a>
+                          </TooltipTrigger>
+                          <TooltipContent side="top">
+                            <p>GitHub: {authorItem.github}</p>
+                          </TooltipContent>
+                        </Tooltip>
                       )}
                       {authorItem.twitter && (
-                        <a
-                          href={
-                            authorItem.twitter.startsWith("http")
-                              ? authorItem.twitter
-                              : `https://x.com/${authorItem.twitter.replace(/^@/, "")}`
-                          }
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
-                          title={`Twitter/X: ${authorItem.twitter}`}
-                        >
-                          <XLogoIcon className="size-3" />
-                        </a>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <a
+                              href={
+                                authorItem.twitter.startsWith("http")
+                                  ? authorItem.twitter
+                                  : `https://x.com/${authorItem.twitter.replace(/^@/, "")}`
+                              }
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
+                            >
+                              <XLogoIcon className="size-3" />
+                            </a>
+                          </TooltipTrigger>
+                          <TooltipContent side="top">
+                            <p>Twitter/X: {authorItem.twitter}</p>
+                          </TooltipContent>
+                        </Tooltip>
                       )}
                       {authorItem.linkedin && (
-                        <a
-                          href={
-                            authorItem.linkedin.startsWith("http")
-                              ? authorItem.linkedin
-                              : `https://linkedin.com/in/${authorItem.linkedin}`
-                          }
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="border-line bg-paper/60 text-muted-foreground hover:text-primary hover:border-primary/70 flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
-                          title={`LinkedIn: ${authorItem.linkedin}`}
-                        >
-                          <Image
-                            src="/linkedin.svg"
-                            alt="LinkedIn"
-                            width={14}
-                            height={14}
-                            className="size-3.5"
-                          />
-                        </a>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <a
+                              href={
+                                authorItem.linkedin.startsWith("http")
+                                  ? authorItem.linkedin
+                                  : `https://linkedin.com/in/${authorItem.linkedin}`
+                              }
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="border-line bg-paper/60 text-muted-foreground hover:text-primary hover:border-primary/70 flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
+                            >
+                              <Image
+                                src="/linkedin.svg"
+                                alt="LinkedIn"
+                                width={14}
+                                height={14}
+                                className="size-3.5"
+                              />
+                            </a>
+                          </TooltipTrigger>
+                          <TooltipContent side="top">
+                            <p>LinkedIn: {authorItem.linkedin}</p>
+                          </TooltipContent>
+                        </Tooltip>
                       )}
                       {authorItem.youtube && (
-                        <a
-                          href={
-                            authorItem.youtube.startsWith("http")
-                              ? authorItem.youtube
-                              : `https://youtube.com/${authorItem.youtube}`
-                          }
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
-                          title={`YouTube: ${authorItem.youtube}`}
-                        >
-                          <Image
-                            src="/youtube.svg"
-                            alt="YouTube"
-                            width={14}
-                            height={14}
-                            className="size-3.5"
-                          />
-                        </a>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <a
+                              href={
+                                authorItem.youtube.startsWith("http")
+                                  ? authorItem.youtube
+                                  : `https://youtube.com/${authorItem.youtube}`
+                              }
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
+                            >
+                              <Image
+                                src="/youtube.svg"
+                                alt="YouTube"
+                                width={14}
+                                height={14}
+                                className="size-3.5"
+                              />
+                            </a>
+                          </TooltipTrigger>
+                          <TooltipContent side="top">
+                            <p>YouTube: {authorItem.youtube}</p>
+                          </TooltipContent>
+                        </Tooltip>
                       )}
                       {!authorItem.website &&
                         !authorItem.blog &&
@@ -491,6 +534,8 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
                   {/* Actions */}
                   <TableCell className="text-right">
                     <AdminTableRowActions
+                      copyJsonText={() => JSON.stringify(authorItem, null, 2)}
+                      copyJsonTitle={`Copy JSON for ${authorItem.name}`}
                       onEdit={() => handleOpenEdit(authorItem)}
                       onDelete={() => setDeletingAuthor(authorItem)}
                       editTitle={`Edit ${authorItem.name}`}

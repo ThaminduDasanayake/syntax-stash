@@ -254,15 +254,22 @@ export function AdminResourceTable({
                           ↳ {item.healthRedirectUrl}
                         </span>
                         {onApplyRedirect && (
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => onApplyRedirect(item)}
-                            disabled={applyingRedirectId === item.id || isWorking}
-                            className="h-5 border-amber-600/40 bg-amber-500/15 px-1.5 text-[9px] font-bold uppercase hover:bg-amber-500/25"
-                          >
-                            {applyingRedirectId === item.id ? "..." : "Apply"}
-                          </Button>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => onApplyRedirect(item)}
+                                disabled={applyingRedirectId === item.id || isWorking}
+                                className="h-5 border-amber-600/40 bg-amber-500/15 px-1.5 text-[9px] font-bold uppercase hover:bg-amber-500/25"
+                              >
+                                {applyingRedirectId === item.id ? "..." : "Apply"}
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent side="top">
+                              <p>Apply redirect URL</p>
+                            </TooltipContent>
+                          </Tooltip>
                         )}
                       </div>
                     )}
@@ -300,23 +307,28 @@ export function AdminResourceTable({
                                 {authorLinks.length > 0 ? (
                                   <div className="flex items-center gap-1.5">
                                     {authorLinks.map(({ href, icon, key, label }) => (
-                                      <Button
-                                        key={key}
-                                        size="icon"
-                                        variant="ghost"
-                                        asChild
-                                        className="text-muted-foreground hover:text-foreground hover:border-foreground border-line-2 size-8 border-[1.5px] transition-all duration-150 hover:-translate-y-0.5 active:translate-y-0"
-                                      >
-                                        <a
-                                          href={href}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          aria-label={label}
-                                          title={label}
-                                        >
-                                          {icon}
-                                        </a>
-                                      </Button>
+                                      <Tooltip key={key}>
+                                        <TooltipTrigger asChild>
+                                          <Button
+                                            size="icon"
+                                            variant="ghost"
+                                            asChild
+                                            className="text-muted-foreground hover:text-foreground hover:border-foreground border-line-2 size-8 border-[1.5px] transition-all duration-150 hover:-translate-y-0.5 active:translate-y-0"
+                                          >
+                                            <a
+                                              href={href}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                              aria-label={label}
+                                            >
+                                              {icon}
+                                            </a>
+                                          </Button>
+                                        </TooltipTrigger>
+                                        <TooltipContent side="top">
+                                          <p>{label}</p>
+                                        </TooltipContent>
+                                      </Tooltip>
                                     ))}
                                   </div>
                                 ) : (
@@ -414,15 +426,17 @@ export function AdminResourceTable({
 
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => onEdit(item)}
-                          disabled={isWorking}
-                          className="border-line hover:bg-surface size-7 p-0"
-                        >
-                          <PencilSimpleIcon />
-                        </Button>
+                        <span className="inline-flex">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => onEdit(item)}
+                            disabled={isWorking}
+                            className="border-line hover:bg-surface size-7 p-0"
+                          >
+                            <PencilSimpleIcon />
+                          </Button>
+                        </span>
                       </TooltipTrigger>
                       <TooltipContent side="top">
                         <p>Edit</p>
@@ -431,15 +445,17 @@ export function AdminResourceTable({
 
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={() => onDelete(item)}
-                          disabled={isWorking}
-                          className="hover:bg-destructive/10 text-muted-foreground hover:text-destructive size-7 p-0"
-                        >
-                          <TrashIcon />
-                        </Button>
+                        <span className="inline-flex">
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => onDelete(item)}
+                            disabled={isWorking}
+                            className="hover:bg-destructive/10 text-muted-foreground hover:text-destructive size-7 p-0"
+                          >
+                            <TrashIcon />
+                          </Button>
+                        </span>
                       </TooltipTrigger>
                       <TooltipContent side="top">
                         <p>Delete</p>
