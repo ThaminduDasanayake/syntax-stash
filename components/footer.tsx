@@ -32,9 +32,9 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-ink-mute border-y-2 py-4 font-mono text-xs font-bold tracking-wider uppercase">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex flex-wrap items-center gap-4 sm:gap-8">
+        <div className="border-ink-mute border-y-2 py-8 font-mono text-xs font-bold tracking-wider uppercase">
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4">
+            <div className="flex flex-col items-start gap-3.5">
               <a
                 href={siteConfig.links.github}
                 target="_blank"
@@ -65,6 +65,9 @@ export default function Footer() {
               >
                 [ Design System ]
               </Link>
+            </div>
+
+            <div className="flex flex-col items-start gap-3.5">
               <Link
                 href="/about"
                 className="after:bg-primary relative inline-block transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
@@ -83,6 +86,9 @@ export default function Footer() {
               >
                 [ Changelog ]
               </Link>
+            </div>
+
+            <div className="flex flex-col items-start gap-3.5">
               <Link
                 href="/privacy"
                 className="after:bg-primary relative inline-block transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
@@ -105,16 +111,18 @@ export default function Footer() {
               )}
             </div>
 
-            <button
-              onClick={scrollToTop}
-              className="group flex cursor-pointer items-center gap-1.5 transition-colors"
-            >
-              <span>[ BACK TO TOP</span>
-              <span className="transition-transform group-hover:-translate-y-0.5">
-                <ArrowUpIcon weight="bold" />
-              </span>
-              ]
-            </button>
+            <div className="flex flex-col items-start gap-3.5 lg:items-end">
+              <button
+                onClick={scrollToTop}
+                className="group flex cursor-pointer items-center gap-1.5 transition-colors"
+              >
+                <span>[ BACK TO TOP</span>
+                <span className="transition-transform group-hover:-translate-y-0.5">
+                  <ArrowUpIcon weight="bold" />
+                </span>
+                ]
+              </button>
+            </div>
           </div>
         </div>
       </div>
