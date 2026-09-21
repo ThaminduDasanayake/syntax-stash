@@ -34,7 +34,7 @@ export const DEFAULT_TECH_STACK: TechStackItem[] = [
   },
   {
     logo: "/stack/phosphoricons-wordmark.svg",
-    logoClassName: "h-6 w-auto",
+    logoClassName: "h-8.5 w-auto",
     name: "Phosphor Icons",
   },
   {
