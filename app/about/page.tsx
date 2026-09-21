@@ -85,7 +85,7 @@ export default function AboutPage() {
               </span>
             </h2>
             <p className="max-w-xs font-mono text-sm opacity-80 md:text-right">
-              Have a tool or resource that belongs in the stash? Feel free to submit a pull request!
+              Have a tool or resource that belongs in the stash? Feel free to submit a request!
             </p>
           </div>
 

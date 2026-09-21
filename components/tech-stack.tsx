@@ -14,42 +14,42 @@ export interface TechStackItem {
 export const DEFAULT_TECH_STACK: TechStackItem[] = [
   {
     logo: "/stack/better-auth_wordmark.svg",
-    logoClassName: "h-5 w-auto",
+    logoClassName: "h-5.5 w-auto",
     name: "Better Auth",
   },
   {
     logo: "/stack/drizzle-orm.svg",
-    logoClassName: "h-5.5 w-auto",
+    logoClassName: "h-6 w-auto",
     name: "Drizzle ORM",
   },
   {
     logo: "/stack/neon-wordmark.svg",
-    logoClassName: "h-5.5 w-auto",
+    logoClassName: "h-6 w-auto",
     name: "Neon Postgres",
   },
   {
     logo: "/stack/nextjs_logo.svg",
-    logoClassName: "h-5 w-auto",
+    logoClassName: "h-5.5 w-auto",
     name: "Next.js",
   },
   {
     logo: "/stack/phosphoricons-wordmark.svg",
-    logoClassName: "h-5.5 w-auto",
+    logoClassName: "h-6 w-auto",
     name: "Phosphor Icons",
   },
   {
     logo: "/stack/react_wordmark_dark.svg",
-    logoClassName: "h-5.5 w-auto",
+    logoClassName: "h-6 w-auto",
     name: "React 19",
   },
   {
     logo: "/stack/shadcn-ui.svg",
-    logoClassName: "size-6",
+    logoClassName: "size-6.5",
     name: "Shadcn UI",
   },
   {
     logo: "/stack/tailwindcss-wordmark.svg",
-    logoClassName: "h-4.5 w-auto",
+    logoClassName: "h-5 w-auto",
     name: "Tailwind CSS v4",
   },
 ];
@@ -82,36 +82,33 @@ export function TechStack({
 
       <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center">
         {/* Caption Header */}
-        <p className="text-muted-foreground mb-8 text-center font-mono text-xs font-bold tracking-widest uppercase">
+        <p className="text-muted-foreground mb-10 text-center font-mono text-xs font-bold tracking-widest uppercase">
           {title}
         </p>
 
-        {/* Tech Stack Logo Badges */}
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+        {/* Tech Stack Logos */}
+        <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-10 md:gap-12">
           {items.map((item) => (
             <Tooltip key={item.name}>
               <TooltipTrigger asChild>
                 <div
-                  className={cn(
-                    "group border-line bg-card/60 relative flex h-12 min-w-16 cursor-default items-center justify-center rounded-lg border-[1.5px] px-4.5 shadow-2xs backdrop-blur-xs transition-all duration-200 select-none",
-                    "hover:border-primary/50 hover:bg-card hover:-translate-y-0.5 hover:shadow-xs",
-                  )}
                   tabIndex={0}
                   role="img"
                   aria-label={item.name}
+                  className="flex items-center justify-center cursor-default select-none"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={item.logo}
                     alt={item.name}
                     className={cn(
-                      "w-auto max-w-32 object-contain transition-all duration-200 group-hover:scale-105",
+                      "w-auto max-w-36 object-contain",
                       item.logoClassName,
                     )}
                   />
                 </div>
               </TooltipTrigger>
-              <TooltipContent side="top" sideOffset={6} className="font-mono text-xs font-bold">
+              <TooltipContent side="top" sideOffset={8} className="font-mono text-xs font-bold">
                 {item.name}
               </TooltipContent>
             </Tooltip>
