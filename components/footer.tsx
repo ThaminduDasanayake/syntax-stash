@@ -83,6 +83,18 @@ export default function Footer() {
               >
                 [ Changelog ]
               </Link>
+              <Link
+                href="/privacy"
+                className="after:bg-primary relative inline-block transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
+              >
+                [ Privacy ]
+              </Link>
+              <Link
+                href="/terms"
+                className="after:bg-primary relative inline-block transition-colors duration-200 ease-out after:absolute after:bottom-0 after:left-0 after:h-[1.5px] after:w-full after:origin-center after:scale-x-0 after:transition-transform after:delay-150 after:duration-300 after:ease-out hover:after:scale-x-100"
+              >
+                [ Terms ]
+              </Link>
               {isUserAdmin && (
                 <Link
                   href="/admin/submissions"
