@@ -102,12 +102,12 @@ export function AuthModal({ onOpenChange, open }: AuthModalProps) {
             </span>
           </Button>
 
-          <p className="mt-1 text-center font-mono text-[11px] leading-relaxed text-muted-foreground">
+          <p className="text-muted-foreground mt-1 text-center font-mono text-[11px] leading-relaxed">
             By signing in, you agree to our{" "}
             <Link
               href="/terms"
               onClick={() => onOpenChange(false)}
-              className="text-foreground underline underline-offset-2 transition-colors hover:text-primary"
+              className="text-foreground hover:text-primary underline underline-offset-2 transition-colors"
             >
               Terms of Service
             </Link>{" "}
@@ -115,7 +115,7 @@ export function AuthModal({ onOpenChange, open }: AuthModalProps) {
             <Link
               href="/privacy"
               onClick={() => onOpenChange(false)}
-              className="text-foreground underline underline-offset-2 transition-colors hover:text-primary"
+              className="text-foreground hover:text-primary underline underline-offset-2 transition-colors"
             >
               Privacy Policy
             </Link>

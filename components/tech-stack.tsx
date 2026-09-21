@@ -95,16 +95,13 @@ export function TechStack({
                   tabIndex={0}
                   role="img"
                   aria-label={item.name}
-                  className="flex items-center justify-center cursor-default select-none"
+                  className="flex cursor-default items-center justify-center select-none"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={item.logo}
                     alt={item.name}
-                    className={cn(
-                      "w-auto max-w-36 object-contain",
-                      item.logoClassName,
-                    )}
+                    className={cn("w-auto max-w-36 object-contain", item.logoClassName)}
                   />
                 </div>
               </TooltipTrigger>
