@@ -1,5 +1,6 @@
-import { ArrowUpRightIcon, GithubLogo } from "@phosphor-icons/react/ssr";
+import { ArrowUpRightIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 
 import { TechStack } from "@/components/tech-stack";
@@ -96,7 +97,14 @@ export default function AboutPage() {
                 target="_blank"
                 className="text-display-sm"
               >
-                VIEW ON GITHUB <GithubLogo weight="bold" className="ml-2 size-5" />
+                VIEW ON GITHUB
+                <Image
+                  src="/github.svg"
+                  alt="GitHub"
+                  width={20}
+                  height={20}
+                  className="ml-2 size-5 invert"
+                />
               </Link>
             </Button>
             <Button asChild size="lg" variant="secondary">
