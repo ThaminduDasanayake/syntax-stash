@@ -5,7 +5,6 @@ import {
   ArrowSquareOutIcon,
   ArticleIcon,
   GlobeIcon,
-  PlusIcon,
   UserCircleIcon,
   XLogoIcon,
 } from "@phosphor-icons/react";
@@ -22,6 +21,7 @@ import { AdminToolbar } from "@/components/admin/admin-toolbar";
 import { SortSelect } from "@/components/admin/sort-select";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { invalidateAuthorCache } from "@/components/submissions/author-combobox";
+import { AddButton } from "@/components/ui/add-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
@@ -253,14 +253,9 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
               <span className="hidden sm:inline">Refresh</span>
             </Button>
 
-            <Button
-              size="sm"
-              onClick={handleOpenCreate}
-              className="h-9 gap-1.5 px-3.5 text-xs font-bold uppercase"
-            >
-              <PlusIcon className="size-4" />
-              <span>Add Author</span>
-            </Button>
+            <AddButton onClick={handleOpenCreate} className="h-9">
+              Add Author
+            </AddButton>
           </>
         }
         footer={
@@ -569,10 +564,7 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
                           Clear Search
                         </Button>
                       ) : (
-                        <Button size="sm" onClick={handleOpenCreate} className="text-xs uppercase">
-                          <PlusIcon className="size-3.5" />
-                          Add Author
-                        </Button>
+                        <AddButton onClick={handleOpenCreate}>Add Author</AddButton>
                       )
                     }
                   />

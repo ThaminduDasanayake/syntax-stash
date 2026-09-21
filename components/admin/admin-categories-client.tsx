@@ -5,7 +5,6 @@ import {
   CircleNotchIcon,
   DownloadSimpleIcon,
   FoldersIcon,
-  PlusIcon,
 } from "@phosphor-icons/react";
 import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
@@ -15,6 +14,7 @@ import { AdminTableRowActions } from "@/components/admin/admin-table-row-actions
 import { AdminToolbar } from "@/components/admin/admin-toolbar";
 import { SortSelect } from "@/components/admin/sort-select";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
+import { AddButton } from "@/components/ui/add-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
@@ -319,10 +319,9 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
               <span className="hidden sm:inline">Sync</span>
             </Button>
 
-            <Button size="sm" onClick={handleOpenAdd} className="h-9 text-xs font-bold uppercase">
-              <PlusIcon className="size-3.5" weight="bold" />
-              <span>New Category</span>
-            </Button>
+            <AddButton onClick={handleOpenAdd} className="h-9">
+              New Category
+            </AddButton>
           </>
         }
         footer={
@@ -365,10 +364,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
                 Reset Search
               </Button>
             ) : (
-              <Button size="sm" onClick={handleOpenAdd} className="text-xs uppercase">
-                <PlusIcon className="size-3.5" />
-                Add Category
-              </Button>
+              <AddButton onClick={handleOpenAdd}>Add Category</AddButton>
             )
           }
         />
@@ -457,6 +453,8 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
                         onDelete={() => setDeletingCategory(cat)}
                         editTitle={`Edit ${cat.name}`}
                         deleteTitle={`Delete ${cat.name}`}
+                        deleteDisabled={cat.toolCount > 0}
+                        deleteDisabledReason={`Cannot delete "${cat.name}". It is assigned to ${cat.toolCount} resource(s).`}
                         extraActions={
                           <Tooltip>
                             <TooltipTrigger asChild>

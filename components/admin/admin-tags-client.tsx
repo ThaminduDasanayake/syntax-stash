@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowsClockwiseIcon, PlusIcon, TagIcon } from "@phosphor-icons/react";
+import { ArrowsClockwiseIcon, TagIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
@@ -11,6 +11,7 @@ import { FilterSelect } from "@/components/admin/filter-select";
 import { SortSelect } from "@/components/admin/sort-select";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { invalidateTagCache } from "@/components/submissions/tag-picker";
+import { AddButton } from "@/components/ui/add-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -218,10 +219,9 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
               <span className="hidden sm:inline">Sync</span>
             </Button>
 
-            <Button size="sm" onClick={handleOpenAdd} className="h-9 text-xs font-bold uppercase">
-              <PlusIcon className="size-3.5" weight="bold" />
-              <span>New Tag</span>
-            </Button>
+            <AddButton onClick={handleOpenAdd} className="h-9">
+              New Tag
+            </AddButton>
           </>
         }
         footer={
@@ -254,10 +254,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
                 Clear Search
               </Button>
             ) : (
-              <Button size="sm" onClick={handleOpenAdd} className="text-xs uppercase">
-                <PlusIcon className="size-3.5" />
-                Add Tag
-              </Button>
+              <AddButton onClick={handleOpenAdd}>Add Tag</AddButton>
             )
           }
         />
