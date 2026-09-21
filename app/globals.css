@@ -16,6 +16,7 @@
 }
 
 :root {
+  color-scheme: dark;
   --bg: #121212;
   --bg-2: #18181b;
   --bg-3: #27272a;

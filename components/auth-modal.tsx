@@ -2,6 +2,7 @@
 
 import { CircleNotchIcon } from "@phosphor-icons/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -100,6 +101,26 @@ export function AuthModal({ onOpenChange, open }: AuthModalProps) {
               {loadingProvider === "google" ? "Connecting to Google..." : "Continue with Google"}
             </span>
           </Button>
+
+          <p className="text-muted-foreground mt-1 text-center font-mono text-[11px] leading-relaxed">
+            By signing in, you agree to our{" "}
+            <Link
+              href="/terms"
+              onClick={() => onOpenChange(false)}
+              className="text-foreground hover:text-primary underline underline-offset-2 transition-colors"
+            >
+              Terms of Service
+            </Link>{" "}
+            and{" "}
+            <Link
+              href="/privacy"
+              onClick={() => onOpenChange(false)}
+              className="text-foreground hover:text-primary underline underline-offset-2 transition-colors"
+            >
+              Privacy Policy
+            </Link>
+            .
+          </p>
         </div>
       </DialogContent>
     </Dialog>
