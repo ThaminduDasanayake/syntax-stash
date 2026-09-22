@@ -43,7 +43,6 @@ export default async function AdminHistoryPage() {
     <AdminHistoryClient
       initialItems={items as import("@/components/admin/admin-history-client").ActivityLogItem[]}
       initialTotal={Number(totalCountRow?.count) || 0}
-      userEmail={session.user.email}
     />
   );
 }

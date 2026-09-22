@@ -22,7 +22,6 @@ import Link from "next/link";
 import React, { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
-import { AdminNav } from "@/components/admin/admin-nav";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { SearchInput } from "@/components/ui/search-input";
@@ -51,7 +50,6 @@ export interface ActivityLogItem {
 interface AdminHistoryClientProps {
   initialItems?: ActivityLogItem[];
   initialTotal?: number;
-  userEmail?: string;
 }
 
 const ENTITY_FILTERS = [
@@ -173,7 +171,6 @@ function getEntityTypeBadgeStyle(type: ActivityLogItem["entityType"]) {
 export function AdminHistoryClient({
   initialItems = [],
   initialTotal = 0,
-  userEmail,
 }: AdminHistoryClientProps) {
   const [items, setItems] = useState<ActivityLogItem[]>(initialItems);
   const [total, setTotal] = useState(initialTotal);
@@ -237,8 +234,6 @@ export function AdminHistoryClient({
 
   return (
     <div className="font-mono text-xs">
-      <AdminNav userEmail={userEmail} />
-
       {/* Filter Toolbar */}
       <div className="border-line bg-paper/40 mb-6 space-y-4 rounded-lg border-[1.5px] p-4 shadow-xs">
         {/* Top Row: Search and Refresh */}
