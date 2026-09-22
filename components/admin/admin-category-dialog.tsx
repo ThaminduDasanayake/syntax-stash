@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { DuplicateNotice } from "@/components/submissions/duplicate-url-notice";
@@ -37,36 +37,21 @@ export interface AdminCategoryDialogProps {
   open: boolean;
 }
 
-export function AdminCategoryDialog({
+function AdminCategoryDialogInner({
   category,
   existingCategories = [],
   onCreated,
   onOpenChange,
   onUpdated,
-  open,
-}: AdminCategoryDialogProps) {
+}: Omit<AdminCategoryDialogProps, "open">) {
   const isEdit = Boolean(category?.id);
 
   const [formData, setFormData] = useState({
-    name: "",
+    name: category?.name || "",
   });
   const [isWorking, setIsWorking] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
-
-  useEffect(() => {
-    if (open) {
-      setFormData({
-        name: category?.name || "",
-      });
-    } else {
-      setFormData({
-        name: "",
-      });
-      setIsConfirmOpen(false);
-      setPendingChanges([]);
-    }
-  }, [category, open]);
 
   const duplicateCategory = useMemo(() => {
     const rawName = formData.name.trim();
@@ -100,6 +85,7 @@ export function AdminCategoryDialog({
         const data = await res.json();
         if (!res.ok) {
           toast.error(data.error || "Failed to update category.");
+          setIsWorking(false);
           return;
         }
 
@@ -116,6 +102,7 @@ export function AdminCategoryDialog({
         onUpdated?.(updatedCategory);
         setIsConfirmOpen(false);
         onOpenChange(false);
+        return;
       } else {
         // POST
         const res = await fetch("/api/admin/categories", {
@@ -129,6 +116,7 @@ export function AdminCategoryDialog({
         const data = await res.json();
         if (!res.ok) {
           toast.error(data.error || "Failed to create category.");
+          setIsWorking(false);
           return;
         }
 
@@ -143,12 +131,11 @@ export function AdminCategoryDialog({
 
         toast.success(`Category "${cleanName}" created successfully.`);
         onCreated?.(newCategory);
-        setFormData({ name: "" });
         onOpenChange(false);
+        return;
       }
     } catch {
       toast.error("Network error while saving category.");
-    } finally {
       setIsWorking(false);
     }
   };
@@ -180,7 +167,7 @@ export function AdminCategoryDialog({
     : true;
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <>
       <DialogContent className="border-line bg-paper flex max-h-[85vh] max-w-lg flex-col gap-0 overflow-hidden p-0 font-mono text-xs sm:max-w-lg">
         <div className="border-line shrink-0 border-b-[1.5px] p-6 pb-4">
           <DialogHeader>
@@ -278,6 +265,23 @@ export function AdminCategoryDialog({
         onConfirm={executeSave}
         isWorking={isWorking}
       />
+    </>
+  );
+}
+
+export function AdminCategoryDialog(props: AdminCategoryDialogProps) {
+  return (
+    <Dialog open={props.open} onOpenChange={props.onOpenChange}>
+      {props.open && (
+        <AdminCategoryDialogInner
+          key={props.category?.id || "new"}
+          category={props.category}
+          existingCategories={props.existingCategories}
+          onCreated={props.onCreated}
+          onOpenChange={props.onOpenChange}
+          onUpdated={props.onUpdated}
+        />
+      )}
     </Dialog>
   );
 }

@@ -438,13 +438,14 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
         toast.success(`Submission "${editForm.title || sub.title}" ${actionLabel}!`);
         router.push("/admin/submissions");
         router.refresh();
+        return;
       } else {
         toast.error(data.error || "Failed to update submission.");
+        setIsWorking(false);
       }
     } catch (err) {
       console.error("Failed to update submission:", err);
       toast.error("Network error while updating submission.");
-    } finally {
       setIsWorking(false);
     }
   };
@@ -471,13 +472,14 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
         toast.success("Submission deleted.");
         router.push("/admin/submissions");
         router.refresh();
+        return;
       } else {
         toast.error(data.error || "Failed to delete submission.");
+        setIsWorking(false);
       }
     } catch (err) {
       console.error("Delete submission error:", err);
       toast.error("Network error while deleting submission.");
-    } finally {
       setIsWorking(false);
     }
   };

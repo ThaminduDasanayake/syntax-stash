@@ -375,13 +375,14 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
         );
         router.push(returnUrl);
         router.refresh();
+        return;
       } else {
         toast.error(data.error || "Failed to save resource.");
+        setIsSubmitting(false);
       }
     } catch (err) {
       console.error("Save resource error:", err);
       toast.error("Network error while saving resource.");
-    } finally {
       setIsSubmitting(false);
     }
   };

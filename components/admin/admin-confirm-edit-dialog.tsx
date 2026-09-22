@@ -108,8 +108,16 @@ export function AdminConfirmEditDialog({
   onOpenChange,
   open,
 }: AdminConfirmEditDialogProps) {
+  const [localBusy, setLocalBusy] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!open) {
+      setLocalBusy(false);
+    }
+  }, [open]);
+
   const hasChanges = changes.length > 0;
-  const isBusy = Boolean(isWorking ?? isSaving);
+  const isBusy = Boolean(isWorking || isSaving || localBusy);
   const displayName = itemTitle ?? itemName;
 
   return (
@@ -242,7 +250,12 @@ export function AdminConfirmEditDialog({
               editLabel={confirmLabel}
               submitType="button"
               onSubmit={async () => {
-                await onConfirm();
+                try {
+                  setLocalBusy(true);
+                  await onConfirm();
+                } catch {
+                  setLocalBusy(false);
+                }
               }}
             />
           ) : (
