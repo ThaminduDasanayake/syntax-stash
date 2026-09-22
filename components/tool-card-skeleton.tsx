@@ -2,38 +2,39 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function ToolCardSkeleton() {
   return (
-    <div className="card border-border/80 bg-card border-2" aria-hidden="true">
-      <div className="card-inner">
-        <div className="card-face">
-          {/* Header */}
-          <div className="card-header">
-            <Skeleton className="bg-ink/10 h-3 w-20" />
-            <Skeleton className="border-border/20 bg-ink/10 size-11 border-[1.5px]" />
-          </div>
+    <article
+      data-slot="resource-card-skeleton"
+      className="group relative flex h-full flex-col select-none"
+      aria-hidden="true"
+    >
+      {/* 1. Visual Stage: clean 16:10 OG image box with single rounded-2xl border */}
+      <div className="relative aspect-16/10 w-full overflow-hidden rounded-2xl border-[1.5px] border-white/10 bg-[#18181b]">
+        <Skeleton className="h-full w-full rounded-2xl bg-white/5" />
+      </div>
 
-          {/* Title & Subtitle */}
-          <div className="mt-1 flex flex-col gap-2">
-            <Skeleton className="bg-ink/15 h-6 w-4/5" />
-            <Skeleton className="bg-ink/10 h-3.5 w-1/2" />
-          </div>
+      {/* 2. Text Block */}
+      <div className="flex flex-col gap-2 px-0.5 pt-3">
+        {/* Row 1: Inline favicon + title */}
+        <div className="flex min-w-0 items-center gap-2">
+          <Skeleton className="size-8 shrink-0 rounded-lg bg-white/10" />
+          <Skeleton className="h-5 flex-1 rounded-md bg-white/10" />
+        </div>
 
-          {/* Description lines */}
-          <div className="mt-2.5 space-y-2">
-            <Skeleton className="bg-ink/10 h-3 w-full" />
-            <Skeleton className="bg-ink/10 h-3 w-11/12" />
-            <Skeleton className="bg-ink/10 h-3 w-4/5" />
-          </div>
+        {/* Row 2: Description lines */}
+        <div className="mt-1 space-y-1.5">
+          <Skeleton className="h-3.5 w-full rounded-md bg-white/5" />
+          <Skeleton className="h-3.5 w-4/5 rounded-md bg-white/5" />
+        </div>
 
-          {/* Footer */}
-          <div className="card-footer">
-            <Skeleton className="bg-ink/10 h-3 w-16" />
-            <div className="flex items-center gap-2">
-              <Skeleton className="bg-ink/10 size-5 rounded-none" />
-              <Skeleton className="bg-ink/10 size-5 rounded-none" />
-            </div>
+        {/* Row 3: Footer */}
+        <div className="mt-1 flex items-center justify-between pt-0.5">
+          <Skeleton className="h-3 w-20 rounded-md bg-white/10" />
+          <div className="flex items-center gap-1.5">
+            <Skeleton className="size-7 rounded-lg bg-white/5" />
+            <Skeleton className="size-7 rounded-lg bg-white/5" />
           </div>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
