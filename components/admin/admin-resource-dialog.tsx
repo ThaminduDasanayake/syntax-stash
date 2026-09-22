@@ -44,7 +44,13 @@ import { AdminResourceItem } from "./types";
 
 const RESOURCE_FIELD_LABELS: Record<string, string> = {
   title: "Title",
+  authorBlog: "Author Blog URL",
+  authorGithub: "Author GitHub",
+  authorLinkedin: "Author LinkedIn",
   authorName: "Creator / Author",
+  authorTwitter: "Author Twitter / X",
+  authorWebsite: "Author Website",
+  authorYoutube: "Author YouTube",
   category: "Category",
   description: "Description",
   favicon: "Favicon URL",
@@ -423,6 +429,10 @@ export function AdminResourceDialog({
     authorYouTube: formData.authorYoutube || "",
   };
 
+  const hasChanges = isEdit
+    ? computeFieldChanges(resource, formData, RESOURCE_FIELD_LABELS).length > 0
+    : true;
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="border-line bg-paper flex max-h-[85vh] max-w-4xl flex-col gap-0 overflow-hidden p-0 font-mono text-xs sm:max-w-4xl">
@@ -733,7 +743,7 @@ export function AdminResourceDialog({
               isEdit={isEdit}
               createLabel="Create & Publish"
               editLabel="Update Tool"
-              disabled={!formData.title?.trim() || !formData.url?.trim()}
+              disabled={!formData.title?.trim() || !formData.url?.trim() || (isEdit && !hasChanges)}
               submitClassName="h-9 px-5"
             />
           </div>

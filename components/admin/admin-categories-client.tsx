@@ -5,7 +5,6 @@ import {
   CircleNotchIcon,
   DownloadSimpleIcon,
   FoldersIcon,
-  PlusIcon,
 } from "@phosphor-icons/react";
 import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
@@ -15,6 +14,7 @@ import { AdminTableRowActions } from "@/components/admin/admin-table-row-actions
 import { AdminToolbar } from "@/components/admin/admin-toolbar";
 import { SortSelect } from "@/components/admin/sort-select";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
+import { AddButton } from "@/components/ui/add-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
@@ -28,6 +28,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn, slugify } from "@/lib/utils";
 
 export interface AdminCategoryItem {
@@ -318,10 +319,9 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
               <span className="hidden sm:inline">Sync</span>
             </Button>
 
-            <Button size="sm" onClick={handleOpenAdd} className="h-9 text-xs font-bold uppercase">
-              <PlusIcon className="size-3.5" weight="bold" />
-              <span>New Category</span>
-            </Button>
+            <AddButton onClick={handleOpenAdd} className="h-9">
+              New Category
+            </AddButton>
           </>
         }
         footer={
@@ -364,10 +364,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
                 Reset Search
               </Button>
             ) : (
-              <Button size="sm" onClick={handleOpenAdd} className="text-xs uppercase">
-                <PlusIcon className="size-3.5" />
-                Add Category
-              </Button>
+              <AddButton onClick={handleOpenAdd}>Add Category</AddButton>
             )
           }
         />
@@ -397,7 +394,14 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
                     {/* Name */}
                     <TableCell className="flex items-center justify-start gap-1.5">
                       <span className="text-foreground font-bold">{cat.name}</span>
-                      <CopyButton textToCopy={cat.name} iconOnly size="icon-xs" />
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <CopyButton textToCopy={cat.name} iconOnly size="icon-xs" />
+                        </TooltipTrigger>
+                        <TooltipContent side="top">
+                          <p>Copy category name</p>
+                        </TooltipContent>
+                      </Tooltip>
                     </TableCell>
 
                     {/* Slug */}
@@ -406,7 +410,14 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
                         <Badge variant="secondary" className="px-1.5 py-0 text-[11px] font-bold">
                           {cat.slug}
                         </Badge>
-                        <CopyButton textToCopy={cat.slug} iconOnly size="icon-xs" />
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <CopyButton textToCopy={cat.slug} iconOnly size="icon-xs" />
+                          </TooltipTrigger>
+                          <TooltipContent side="top">
+                            <p>Copy slug</p>
+                          </TooltipContent>
+                        </Tooltip>
                       </div>
                     </TableCell>
 
@@ -423,51 +434,60 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
                     {/* Actions */}
                     <TableCell className="text-right">
                       <AdminTableRowActions
+                        copyJsonText={() =>
+                          JSON.stringify(
+                            {
+                              id: cat.id,
+                              createdAt: cat.createdAt,
+                              name: cat.name,
+                              resourceCount: cat.toolCount,
+                              slug: cat.slug,
+                              updatedAt: cat.updatedAt,
+                            },
+                            null,
+                            2,
+                          )
+                        }
+                        copyJsonTitle={`Copy JSON for ${cat.name}`}
                         onEdit={() => handleOpenEdit(cat)}
                         onDelete={() => setDeletingCategory(cat)}
                         editTitle={`Edit ${cat.name}`}
                         deleteTitle={`Delete ${cat.name}`}
+                        deleteDisabled={cat.toolCount > 0}
+                        deleteDisabledReason={`Cannot delete "${cat.name}". It is assigned to ${cat.toolCount} resource(s).`}
                         extraActions={
-                          <>
-                            <Button
-                              size="icon-xs"
-                              variant="ghost"
-                              onClick={() => handleDownloadCategoryResources(cat)}
-                              disabled={cat.toolCount === 0 || downloadingCategoryId === cat.id}
-                              title={
-                                cat.toolCount === 0
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <span className="inline-flex">
+                                <Button
+                                  size="icon-xs"
+                                  variant="ghost"
+                                  onClick={() => handleDownloadCategoryResources(cat)}
+                                  disabled={cat.toolCount === 0 || downloadingCategoryId === cat.id}
+                                  className="hover:text-foreground text-muted-foreground"
+                                >
+                                  {downloadingCategoryId === cat.id ? (
+                                    <CircleNotchIcon
+                                      weight="bold"
+                                      className="size-3.5 animate-spin"
+                                    />
+                                  ) : (
+                                    <DownloadSimpleIcon
+                                      weight="bold"
+                                      className="text-primary size-3.5"
+                                    />
+                                  )}
+                                </Button>
+                              </span>
+                            </TooltipTrigger>
+                            <TooltipContent side="top">
+                              <p>
+                                {cat.toolCount === 0
                                   ? `No resources in ${cat.name}`
-                                  : `Download all ${cat.toolCount} resources in ${cat.name}`
-                              }
-                              className="hover:text-foreground text-muted-foreground"
-                            >
-                              {downloadingCategoryId === cat.id ? (
-                                <CircleNotchIcon weight="bold" className="size-3.5 animate-spin" />
-                              ) : (
-                                <DownloadSimpleIcon
-                                  weight="bold"
-                                  className="text-primary size-3.5"
-                                />
-                              )}
-                            </Button>
-                            <CopyButton
-                              textToCopy={JSON.stringify(
-                                {
-                                  id: cat.id,
-                                  createdAt: cat.createdAt,
-                                  name: cat.name,
-                                  resourceCount: cat.toolCount,
-                                  slug: cat.slug,
-                                  updatedAt: cat.updatedAt,
-                                },
-                                null,
-                                2,
-                              )}
-                              iconOnly
-                              size="icon-xs"
-                              title={`Copy JSON for ${cat.name}`}
-                            />
-                          </>
+                                  : `Download all ${cat.toolCount} resources in ${cat.name}`}
+                              </p>
+                            </TooltipContent>
+                          </Tooltip>
                         }
                       />
                     </TableCell>

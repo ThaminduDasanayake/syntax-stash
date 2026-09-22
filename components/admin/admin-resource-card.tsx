@@ -7,10 +7,12 @@ import {
   TrashIcon,
   WarningCircleIcon,
 } from "@phosphor-icons/react";
+import Image from "next/image";
 
 import { ResourceCardView } from "@/components/resource-card-view";
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { slugifyAuthor } from "@/lib/utils";
 
 import { AdminPingButton } from "./admin-ping-button";
@@ -43,7 +45,8 @@ export function AdminResourceCard({
   const hasNoAuthor = !res.authorName || !res.authorName.trim();
   const hasNoFavicon = !res.favicon || !res.favicon.trim();
   const hasNoTags = !res.tags || !res.tags.trim();
-  const hasMissingData = hasNoOg || hasNoAuthor || hasNoFavicon || hasNoTags;
+  const hasNoGithub = !res.github || !res.github.trim();
+  const hasMissingData = hasNoOg || hasNoAuthor || hasNoFavicon || hasNoTags || hasNoGithub;
 
   const healthStatus = res.healthStatus || "unknown";
   const healthConfig = HEALTH_STATUS_CONFIG[healthStatus];
@@ -100,14 +103,55 @@ export function AdminResourceCard({
           </div>
         </div>
 
-        {/* Quick Ping Button */}
-        {onCheckHealth && (
-          <AdminPingButton
-            onClick={onCheckHealth}
-            isChecking={isCheckingHealth}
-            disabled={isWorking}
-          />
-        )}
+        {/* GitHub Indicator & Ping Action */}
+        <div className="flex shrink-0 items-center gap-1.5">
+          {res.github ? (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <a
+                  href={
+                    res.github.startsWith("http") ? res.github : `https://github.com/${res.github}`
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="border-line bg-paper/60 hover:border-foreground flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
+                >
+                  <Image
+                    src="/github.svg"
+                    alt="GitHub"
+                    width={13}
+                    height={13}
+                    className="size-3.5 dark:invert"
+                  />
+                </a>
+              </TooltipTrigger>
+              <TooltipContent side="top">
+                <p>GitHub: {res.github}</p>
+              </TooltipContent>
+            </Tooltip>
+          ) : (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span className="rounded bg-amber-500/15 px-1.5 py-0.5 text-[9px] font-bold text-amber-700 select-none dark:text-amber-400">
+                  No GH
+                </span>
+              </TooltipTrigger>
+              <TooltipContent side="top">
+                <p>No GitHub repository link set</p>
+              </TooltipContent>
+            </Tooltip>
+          )}
+
+          {/* Quick Ping Button */}
+          {onCheckHealth && (
+            <AdminPingButton
+              onClick={onCheckHealth}
+              isChecking={isCheckingHealth}
+              disabled={isWorking}
+            />
+          )}
+        </div>
       </div>
 
       {/* Suggested Redirect Action Banner (if status is 301/308 redirect) */}
@@ -168,6 +212,9 @@ export function AdminResourceCard({
           )}
           {hasNoTags && (
             <span className="py-0.2 rounded bg-amber-500/15 px-1 font-medium">tags</span>
+          )}
+          {hasNoGithub && (
+            <span className="py-0.2 rounded bg-amber-500/15 px-1 font-medium">github</span>
           )}
         </div>
       )}

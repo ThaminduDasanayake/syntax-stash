@@ -3,6 +3,7 @@ export * from "./admin-authors-client";
 export * from "./admin-categories-client";
 export * from "./admin-category-dialog";
 export * from "./admin-confirm-edit-dialog";
+export * from "./admin-history-client";
 export * from "./admin-nav";
 export * from "./admin-pagination";
 export * from "./admin-ping-button";

@@ -25,6 +25,7 @@ import {
 } from "@/components/admin";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { ResourceDialog } from "@/components/resource-dialog";
+import { AddButton } from "@/components/ui/add-button";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -671,7 +672,7 @@ function AdminResourcesClientContent({
               <span className="hidden sm:inline">Refresh</span>
             </Button>
 
-            <Button asChild size="sm" className="h-9 gap-1.5 px-3.5 text-xs font-bold uppercase">
+            <AddButton asChild className="h-9">
               <Link
                 href={
                   searchParams.toString()
@@ -682,7 +683,7 @@ function AdminResourcesClientContent({
                 <PlusIcon weight="bold" className="size-4" />
                 <span>Add New Resource</span>
               </Link>
-            </Button>
+            </AddButton>
           </>
         }
         footer={
@@ -813,12 +814,12 @@ function AdminResourcesClientContent({
                 Clear All Filters
               </Button>
             ) : (
-              <Button asChild size="sm" className="h-8 gap-1.5 text-xs font-bold uppercase">
+              <AddButton asChild size="sm" className="h-8">
                 <Link href="/admin/resources/new">
                   <PlusIcon className="size-3.5" />
                   <span>Add New Resource</span>
                 </Link>
-              </Button>
+              </AddButton>
             )
           }
         />

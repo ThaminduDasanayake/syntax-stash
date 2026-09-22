@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { DuplicateNotice } from "@/components/submissions/duplicate-url-notice";
@@ -39,42 +39,23 @@ export interface AdminTagDialogProps {
   tag?: AdminTagItem | Partial<AdminTagItem> | null;
 }
 
-export function AdminTagDialog({
+function AdminTagDialogInner({
   existingTags = [],
   onCreated,
   onOpenChange,
   onUpdated,
-  open,
   tag,
-}: AdminTagDialogProps) {
+}: Omit<AdminTagDialogProps, "open">) {
   const isEdit = Boolean(tag?.id);
 
   const [formData, setFormData] = useState({
-    name: "",
-    slug: "",
+    name: tag?.name || "",
+    slug: tag?.slug || "",
   });
-  const [autoSlug, setAutoSlug] = useState(true);
+  const [autoSlug, setAutoSlug] = useState(!tag?.slug);
   const [isWorking, setIsWorking] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
-
-  useEffect(() => {
-    if (open) {
-      setFormData({
-        name: tag?.name || "",
-        slug: tag?.slug || "",
-      });
-      setAutoSlug(!tag?.slug);
-    } else {
-      setFormData({
-        name: "",
-        slug: "",
-      });
-      setAutoSlug(true);
-      setIsConfirmOpen(false);
-      setPendingChanges([]);
-    }
-  }, [open, tag]);
 
   const duplicateTag = useMemo(() => {
     const rawName = formData.name.trim();
@@ -122,6 +103,7 @@ export function AdminTagDialog({
         const data = await res.json();
         if (!res.ok) {
           toast.error(data.error || "Failed to update tag.");
+          setIsWorking(false);
           return;
         }
 
@@ -139,6 +121,7 @@ export function AdminTagDialog({
         onUpdated?.(updatedTag);
         setIsConfirmOpen(false);
         onOpenChange(false);
+        return;
       } else {
         // POST
         const res = await fetch("/api/admin/tags", {
@@ -153,6 +136,7 @@ export function AdminTagDialog({
         const data = await res.json();
         if (!res.ok) {
           toast.error(data.error || "Failed to create tag.");
+          setIsWorking(false);
           return;
         }
 
@@ -168,12 +152,11 @@ export function AdminTagDialog({
         invalidateTagCache();
         toast.success(`Tag "${cleanName}" created successfully.`);
         onCreated?.(newTag);
-        setFormData({ name: "", slug: "" });
         onOpenChange(false);
+        return;
       }
     } catch {
       toast.error("Network error while saving tag.");
-    } finally {
       setIsWorking(false);
     }
   };
@@ -201,9 +184,12 @@ export function AdminTagDialog({
 
   const isNameFilled = Boolean(formData.name.trim());
   const isSlugFilled = Boolean(formData.slug.trim());
+  const hasChanges = isEdit
+    ? computeFieldChanges(tag, formData, TAG_FIELD_LABELS).length > 0
+    : true;
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <>
       <DialogContent className="border-line bg-paper flex max-h-[85vh] max-w-lg flex-col gap-0 overflow-hidden p-0 font-mono text-xs sm:max-w-lg">
         <div className="border-line shrink-0 border-b-[1.5px] p-6 pb-4">
           <DialogHeader>
@@ -311,6 +297,9 @@ export function AdminTagDialog({
               isEdit={isEdit}
               createLabel="Create Tag"
               editLabel="Save Changes"
+              disabled={
+                !isNameFilled || !isSlugFilled || Boolean(duplicateTag) || (isEdit && !hasChanges)
+              }
             />
           </div>
         </form>
@@ -327,6 +316,23 @@ export function AdminTagDialog({
         onConfirm={executeSave}
         isWorking={isWorking}
       />
+    </>
+  );
+}
+
+export function AdminTagDialog(props: AdminTagDialogProps) {
+  return (
+    <Dialog open={props.open} onOpenChange={props.onOpenChange}>
+      {props.open && (
+        <AdminTagDialogInner
+          key={props.tag?.id || "new"}
+          existingTags={props.existingTags}
+          onCreated={props.onCreated}
+          onOpenChange={props.onOpenChange}
+          onUpdated={props.onUpdated}
+          tag={props.tag}
+        />
+      )}
     </Dialog>
   );
 }

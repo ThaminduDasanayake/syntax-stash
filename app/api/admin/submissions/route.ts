@@ -73,6 +73,11 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ error: "Submission ID is required." }, { status: 400 });
     }
 
+    const [existingSub] = await db.select().from(submission).where(eq(submission.id, id));
+    if (!existingSub) {
+      return NextResponse.json({ error: "Submission not found." }, { status: 404 });
+    }
+
     const updatedData: Record<string, unknown> = {
       updatedAt: new Date(),
     };

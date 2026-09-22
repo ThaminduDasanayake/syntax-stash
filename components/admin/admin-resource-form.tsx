@@ -45,7 +45,13 @@ import { AdminResourceItem } from "./types";
 
 const RESOURCE_FIELD_LABELS: Record<string, string> = {
   title: "Title",
+  authorBlog: "Author Blog URL",
+  authorGithub: "Author GitHub",
+  authorLinkedin: "Author LinkedIn",
   authorName: "Creator / Author",
+  authorTwitter: "Author Twitter / X",
+  authorWebsite: "Author Website",
+  authorYoutube: "Author YouTube",
   category: "Category",
   description: "Description",
   favicon: "Favicon URL",
@@ -369,13 +375,14 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
         );
         router.push(returnUrl);
         router.refresh();
+        return;
       } else {
         toast.error(data.error || "Failed to save resource.");
+        setIsSubmitting(false);
       }
     } catch (err) {
       console.error("Save resource error:", err);
       toast.error("Network error while saving resource.");
-    } finally {
       setIsSubmitting(false);
     }
   };
@@ -424,6 +431,10 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
         .map((t) => t.trim())
         .filter(Boolean)
     : [];
+
+  const hasChanges = isEdit
+    ? computeFieldChanges(initialData, formData, RESOURCE_FIELD_LABELS).length > 0
+    : true;
 
   return (
     <div className="mx-auto max-w-6xl space-y-8 font-mono text-xs">
@@ -479,7 +490,7 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
             type="button"
             size="sm"
             onClick={handleSubmit}
-            disabled={isSubmitting}
+            disabled={isSubmitting || (isEdit && !hasChanges)}
             className="h-9 gap-1.5 px-5 text-xs font-bold uppercase"
           >
             {isSubmitting ? (
@@ -806,7 +817,7 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
                 <div className="border-line border-t pt-4">
                   <Button
                     type="submit"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || (isEdit && !hasChanges)}
                     className="h-10 w-full gap-1.5 text-xs font-bold uppercase"
                   >
                     {isSubmitting ? (
