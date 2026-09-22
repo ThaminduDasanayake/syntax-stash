@@ -6,7 +6,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { isAdmin } from "@/lib/admin";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { computeDiffs, logActivity } from "@/lib/db/audit";
 import { category, resource } from "@/lib/db/schema";
 import { slugify } from "@/lib/utils";
 
@@ -104,15 +103,6 @@ export async function POST(req: Request) {
     revalidatePath("/resources");
     revalidatePath("/admin/categories");
 
-    await logActivity({
-      action: "created",
-      actorEmail: adminUser.email,
-      entityId: categoryId,
-      entityTitle: cleanName,
-      entityType: "category",
-      metadata: { slug: cleanSlug },
-    });
-
     return NextResponse.json({
       id: categoryId,
       message: "Category created successfully.",
@@ -173,21 +163,6 @@ export async function PATCH(req: Request) {
     revalidatePath("/resources");
     revalidatePath("/admin/categories");
 
-    const diffs = computeDiffs(
-      existing as Record<string, unknown>,
-      updates,
-      { name: "Category Name", slug: "Category Slug" },
-    );
-
-    await logActivity({
-      action: "updated",
-      actorEmail: adminUser.email,
-      diff: diffs,
-      entityId: id,
-      entityTitle: (updates.name as string) || existing.name,
-      entityType: "category",
-    });
-
     return NextResponse.json({
       message: "Category updated successfully.",
       success: true,
@@ -210,8 +185,6 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: "Missing category ID." }, { status: 400 });
     }
 
-    const [targetCat] = await db.select().from(category).where(eq(category.id, id));
-
     // Check if any resources are linked
     const linkedResources = await db
       .select({ id: resource.id })
@@ -233,16 +206,6 @@ export async function DELETE(request: NextRequest) {
     revalidateTag("resources", { expire: 0 });
     revalidatePath("/resources");
     revalidatePath("/admin/categories");
-
-    if (targetCat) {
-      await logActivity({
-        action: "deleted",
-        actorEmail: adminUser.email,
-        entityId: id,
-        entityTitle: targetCat.name,
-        entityType: "category",
-      });
-    }
 
     return NextResponse.json({
       message: "Category deleted.",

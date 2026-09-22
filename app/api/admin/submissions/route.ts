@@ -7,7 +7,6 @@ import { isAdmin } from "@/lib/admin";
 import { auth } from "@/lib/auth";
 import { parseAuthors, slugifyAuthor } from "@/lib/authors";
 import { db } from "@/lib/db";
-import { computeDiffs, logActivity } from "@/lib/db/audit";
 import {
   author,
   category,
@@ -283,52 +282,6 @@ export async function PATCH(req: Request) {
       }
     }
 
-    const fieldLabels: Record<string, string> = {
-      title: "Title",
-      adminNotes: "Admin Notes",
-      author: "Author",
-      authorBlog: "Author Blog",
-      authorGitHub: "Author GitHub",
-      authorLinkedIn: "Author LinkedIn",
-      authorTwitter: "Author Twitter",
-      authorWebsite: "Author Website",
-      authorYouTube: "Author YouTube",
-      category: "Category",
-      description: "Description",
-      favicon: "Favicon URL",
-      github: "GitHub Repository",
-      iconBg: "Icon Style",
-      ogImage: "OpenGraph Image",
-      pricing: "Pricing",
-      status: "Status",
-      subtitle: "Subtitle",
-      tags: "Tags",
-      url: "Resource URL",
-    };
-
-    const diffs = computeDiffs(
-      existingSub as Record<string, unknown>,
-      updates,
-      fieldLabels,
-    );
-
-    const action =
-      updates.status === "approved"
-        ? "approved"
-        : updates.status === "rejected"
-          ? "rejected"
-          : "updated";
-
-    await logActivity({
-      action,
-      actorEmail: adminUser.email,
-      diff: diffs,
-      entityId: id,
-      entityTitle: (updates.title as string)?.trim() || existingSub.title,
-      entityType: "submission",
-      metadata: { status: updates.status || existingSub.status },
-    });
-
     return NextResponse.json({
       message: "Submission updated and synchronized successfully.",
       success: true,
@@ -366,17 +319,6 @@ export async function DELETE(request: NextRequest) {
     }
 
     await db.delete(submission).where(eq(submission.id, id));
-
-    if (sub) {
-      await logActivity({
-        action: "deleted",
-        actorEmail: adminUser.email,
-        entityId: id,
-        entityTitle: sub.title,
-        entityType: "submission",
-        metadata: { status: sub.status, url: sub.url },
-      });
-    }
 
     return NextResponse.json({ message: "Submission deleted.", success: true });
   } catch (error) {

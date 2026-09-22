@@ -256,20 +256,29 @@ export async function POST(request: NextRequest) {
         console.error("Failed to update resource health:", healthErr);
       }
 
-      // If diffs found, record in activity log
+      // If diffs found, record in activity log as an observation alert
       if (diffs.length > 0) {
         driftCount++;
+        const alertAction =
+          healthStatus === "broken"
+            ? "health_alert"
+            : healthStatus === "redirect"
+              ? "redirect_detected"
+              : "drift_detected";
+
         await logActivity({
-          action: "updated",
+          action: alertAction,
           actorEmail: "scanner@system",
           diff: diffs,
           entityId: r.id,
           entityTitle: r.title,
           entityType: "resource",
           metadata: {
-            issue: healthStatus === "broken" ? "Broken Link" : "Remote Metadata Drift",
+            note: "Observed from live website. Catalog resource was NOT modified.",
             redirectUrl,
+            source: "Live Web Crawler",
             statusCode,
+            url: r.url,
           },
         });
       }
@@ -278,6 +287,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       broken: brokenCount,
       drifts: driftCount,
+      message: "Catalog scan finished. No catalog resources were modified.",
       redirects: redirectCount,
       scanned: resources.length,
       success: true,

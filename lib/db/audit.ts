@@ -9,7 +9,15 @@ export interface FieldDiff {
 }
 
 export interface LogActivityParams {
-  action: "approved" | "created" | "deleted" | "rejected" | "updated";
+  action:
+    | "approved"
+    | "created"
+    | "deleted"
+    | "drift_detected"
+    | "health_alert"
+    | "redirect_detected"
+    | "rejected"
+    | "updated";
   actorEmail?: null | string;
   diff?: FieldDiff[] | null;
   entityId?: null | string;

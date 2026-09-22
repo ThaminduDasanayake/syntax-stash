@@ -7,7 +7,6 @@ import { isAdmin } from "@/lib/admin";
 import { auth } from "@/lib/auth";
 import { parseAuthors, slugifyAuthor } from "@/lib/authors";
 import { db } from "@/lib/db";
-import { computeDiffs, logActivity } from "@/lib/db/audit";
 import {
   author,
   category,
@@ -366,15 +365,6 @@ export async function POST(req: Request) {
     revalidatePath("/resources");
     revalidatePath("/authors");
 
-    await logActivity({
-      action: "created",
-      actorEmail: adminUser.email,
-      entityId: resourceId,
-      entityTitle: title.trim(),
-      entityType: "resource",
-      metadata: { category: categoryInput, url: url.trim() },
-    });
-
     return NextResponse.json({
       id: resourceId,
       message: "Resource created successfully.",
@@ -571,39 +561,6 @@ export async function PATCH(req: Request) {
     revalidatePath("/resources");
     revalidatePath("/authors");
 
-    const fieldLabels: Record<string, string> = {
-      title: "Title",
-      authorName: "Author",
-      category: "Category",
-      description: "Description",
-      favicon: "Favicon URL",
-      github: "GitHub Repository",
-      iconBg: "Icon Style",
-      ogImage: "OpenGraph Image",
-      subtitle: "Subtitle",
-      tags: "Tags",
-      url: "Website URL",
-    };
-
-    const diffs = computeDiffs(
-      existingResource as Record<string, unknown>,
-      {
-        ...updates,
-        ...(authorName !== undefined ? { authorName } : {}),
-        ...(tags !== undefined ? { tags } : {}),
-      },
-      fieldLabels,
-    );
-
-    await logActivity({
-      action: "updated",
-      actorEmail: adminUser.email,
-      diff: diffs,
-      entityId: id,
-      entityTitle: (updates.title as string)?.trim() || existingResource.title,
-      entityType: "resource",
-    });
-
     return NextResponse.json({ message: "Resource updated successfully.", success: true });
   } catch (error) {
     console.error("PATCH /api/admin/resources error:", error);
@@ -623,7 +580,6 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: "Missing resource ID." }, { status: 400 });
     }
 
-    const [targetResource] = await db.select().from(resource).where(eq(resource.id, id));
     await db.delete(resource).where(eq(resource.id, id));
 
     revalidateTag("resources", { expire: 0 });
@@ -633,17 +589,6 @@ export async function DELETE(request: NextRequest) {
     revalidatePath("/");
     revalidatePath("/resources");
     revalidatePath("/authors");
-
-    if (targetResource) {
-      await logActivity({
-        action: "deleted",
-        actorEmail: adminUser.email,
-        entityId: id,
-        entityTitle: targetResource.title,
-        entityType: "resource",
-        metadata: { url: targetResource.url },
-      });
-    }
 
     return NextResponse.json({ message: "Resource deleted.", success: true });
   } catch (error) {

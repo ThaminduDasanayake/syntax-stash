@@ -10,7 +10,7 @@ import { db } from "@/lib/db";
 import { activityLog } from "@/lib/db/schema";
 
 export const metadata: Metadata = {
-  title: "Activity & Change History — Syntax Stash Admin",
+  title: "Resource Change Monitor — Syntax Stash Admin",
   robots: {
     follow: false,
     index: false,

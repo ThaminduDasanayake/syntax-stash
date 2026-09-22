@@ -77,3 +77,31 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Failed to fetch activity history." }, { status: 500 });
   }
 }
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const adminUser = await verifyAdmin();
+    if (!adminUser) {
+      return NextResponse.json({ error: "Unauthorized. Admin access required." }, { status: 403 });
+    }
+
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+    const clearAll = searchParams.get("all") === "true";
+
+    if (clearAll) {
+      await db.delete(activityLog);
+      return NextResponse.json({ message: "All alerts cleared successfully.", success: true });
+    }
+
+    if (!id) {
+      return NextResponse.json({ error: "Alert ID or all=true required." }, { status: 400 });
+    }
+
+    await db.delete(activityLog).where(eq(activityLog.id, id));
+    return NextResponse.json({ message: "Alert dismissed.", success: true });
+  } catch (error) {
+    console.error("DELETE /api/admin/history error:", error);
+    return NextResponse.json({ error: "Failed to dismiss alert." }, { status: 500 });
+  }
+}

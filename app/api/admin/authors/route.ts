@@ -7,7 +7,6 @@ import { isAdmin } from "@/lib/admin";
 import { auth } from "@/lib/auth";
 import { slugifyAuthor } from "@/lib/authors";
 import { db } from "@/lib/db";
-import { computeDiffs, logActivity } from "@/lib/db/audit";
 import { author, resourceAuthor } from "@/lib/db/schema";
 
 async function verifyAdmin() {
@@ -111,15 +110,6 @@ export async function POST(req: Request) {
     revalidatePath("/authors");
     revalidatePath("/admin/authors");
 
-    await logActivity({
-      action: "created",
-      actorEmail: adminUser.email,
-      entityId: newAuthorId,
-      entityTitle: cleanName,
-      entityType: "author",
-      metadata: { slug: cleanSlug },
-    });
-
     return NextResponse.json({
       author: {
         id: newAuthorId,
@@ -204,32 +194,6 @@ export async function PATCH(req: Request) {
     revalidatePath("/admin/authors");
     revalidatePath("/admin/resources");
 
-    const fieldLabels: Record<string, string> = {
-      blog: "Blog",
-      github: "GitHub",
-      linkedin: "LinkedIn",
-      name: "Author Name",
-      slug: "Author Slug",
-      twitter: "Twitter",
-      website: "Website",
-      youtube: "YouTube",
-    };
-
-    const diffs = computeDiffs(
-      existing as Record<string, unknown>,
-      updateData,
-      fieldLabels,
-    );
-
-    await logActivity({
-      action: "updated",
-      actorEmail: adminUser.email,
-      diff: diffs,
-      entityId: id,
-      entityTitle: updateData.name || existing.name,
-      entityType: "author",
-    });
-
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("PATCH /api/admin/authors error:", error);
@@ -276,14 +240,6 @@ export async function DELETE(req: NextRequest) {
     revalidateTag("authors", { expire: 0 });
     revalidatePath("/authors");
     revalidatePath("/admin/authors");
-
-    await logActivity({
-      action: "deleted",
-      actorEmail: adminUser.email,
-      entityId: id,
-      entityTitle: existing.name,
-      entityType: "author",
-    });
 
     return NextResponse.json({ success: true });
   } catch (error) {

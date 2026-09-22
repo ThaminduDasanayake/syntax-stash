@@ -1,7 +1,7 @@
 "use client";
 
 import {
-  ClockCounterClockwiseIcon,
+  BroadcastIcon,
   FoldersIcon,
   StackIcon,
   TagIcon,
@@ -57,9 +57,9 @@ export function AdminNav({
     pageTitle = "Authors Manager";
     pageSubtitle = "Manage verified creator profiles, social links, and resource attributions.";
   } else if (isHistory) {
-    pageTitle = "Activity & Change History";
+    pageTitle = "Resource Change Monitor";
     pageSubtitle =
-      "Audit log of all modifications, updates, creations, and moderation events across the catalog.";
+      "Live alerts for remote website changes, author updates, redirects, and dead links. Review detected changes without altering your catalog.";
   }
 
   return (
@@ -220,8 +220,8 @@ export function AdminNav({
               : "border-line bg-surface/50 text-muted-foreground hover:bg-surface hover:text-foreground border-[1.5px]",
           )}
         >
-          <ClockCounterClockwiseIcon weight={isHistory ? "fill" : "bold"} className="size-4" />
-          <span>Activity Log</span>
+          <BroadcastIcon weight={isHistory ? "fill" : "bold"} className="size-4" />
+          <span>Change Monitor</span>
         </Link>
       </div>
     </div>
