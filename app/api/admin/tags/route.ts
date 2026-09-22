@@ -6,6 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { isAdmin } from "@/lib/admin";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { computeDiffs, logActivity } from "@/lib/db/audit";
 import { resourceTag, tag } from "@/lib/db/schema";
 import { normalizeTag } from "@/lib/tags";
 
@@ -95,6 +96,15 @@ export async function POST(req: Request) {
     revalidatePath("/admin/tags");
     revalidatePath("/tags");
 
+    await logActivity({
+      action: "created",
+      actorEmail: adminUser.email,
+      entityId: tagId,
+      entityTitle: `#${cleanName}`,
+      entityType: "tag",
+      metadata: { slug: cleanSlug },
+    });
+
     return NextResponse.json({
       id: tagId,
       message: "Tag created successfully.",
@@ -143,6 +153,21 @@ export async function PATCH(req: Request) {
     revalidatePath("/admin/tags");
     revalidatePath("/tags");
 
+    const diffs = computeDiffs(
+      existing as Record<string, unknown>,
+      updates,
+      { name: "Tag Name", slug: "Tag Slug" },
+    );
+
+    await logActivity({
+      action: "updated",
+      actorEmail: adminUser.email,
+      diff: diffs,
+      entityId: id,
+      entityTitle: `#${updates.name || existing.name}`,
+      entityType: "tag",
+    });
+
     return NextResponse.json({
       message: "Tag updated successfully.",
       success: true,
@@ -165,12 +190,24 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: "Missing tag ID." }, { status: 400 });
     }
 
+    const [targetTag] = await db.select().from(tag).where(eq(tag.id, id));
+
     await db.delete(tag).where(eq(tag.id, id));
 
     revalidateTag("resources", { expire: 0 });
     revalidateTag("tags", { expire: 0 });
     revalidatePath("/admin/tags");
     revalidatePath("/tags");
+
+    if (targetTag) {
+      await logActivity({
+        action: "deleted",
+        actorEmail: adminUser.email,
+        entityId: id,
+        entityTitle: `#${targetTag.name}`,
+        entityType: "tag",
+      });
+    }
 
     return NextResponse.json({
       message: "Tag deleted.",

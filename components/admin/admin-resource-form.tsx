@@ -44,6 +44,7 @@ import {
 import { AdminResourceItem } from "./types";
 
 const RESOURCE_FIELD_LABELS: Record<string, string> = {
+  title: "Title",
   authorBlog: "Author Blog URL",
   authorGithub: "Author GitHub",
   authorLinkedin: "Author LinkedIn",
@@ -59,7 +60,6 @@ const RESOURCE_FIELD_LABELS: Record<string, string> = {
   ogImage: "OpenGraph Image",
   subtitle: "Subtitle / Tagline",
   tags: "Canonical Tags",
-  title: "Title",
   url: "Website URL",
 };
 

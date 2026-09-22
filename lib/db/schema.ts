@@ -375,6 +375,26 @@ export const submission = pgTable(
   ],
 );
 
+export const activityLog = pgTable(
+  "activity_log",
+  {
+    id: text("id").primaryKey(),
+    action: text("action").notNull(), // 'created' | 'updated' | 'deleted' | 'approved' | 'rejected'
+    actorEmail: text("actor_email"),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    diff: text("diff"), // JSON stringified FieldDiff[]
+    entityId: text("entity_id"),
+    entityTitle: text("entity_title").notNull(),
+    entityType: text("entity_type").notNull(), // 'resource' | 'submission' | 'category' | 'author' | 'tag'
+    metadata: text("metadata"), // JSON stringified extra details
+  },
+  (table) => [
+    index("activity_log_created_at_idx").on(table.createdAt),
+    index("activity_log_entity_id_idx").on(table.entityId),
+    index("activity_log_entity_type_idx").on(table.entityType),
+  ],
+);
+
 export type User = typeof user.$inferSelect;
 export type NewUser = typeof user.$inferInsert;
 export type Bookmark = typeof bookmark.$inferSelect;
@@ -399,3 +419,5 @@ export type ResourceHealth = typeof resourceHealth.$inferSelect;
 export type NewResourceHealth = typeof resourceHealth.$inferInsert;
 export type Submission = typeof submission.$inferSelect;
 export type NewSubmission = typeof submission.$inferInsert;
+export type ActivityLog = typeof activityLog.$inferSelect;
+export type NewActivityLog = typeof activityLog.$inferInsert;

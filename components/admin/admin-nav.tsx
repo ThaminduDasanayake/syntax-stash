@@ -1,6 +1,13 @@
 "use client";
 
-import { FoldersIcon, StackIcon, TagIcon, TrayIcon, UserCircleIcon } from "@phosphor-icons/react";
+import {
+  ClockCounterClockwiseIcon,
+  FoldersIcon,
+  StackIcon,
+  TagIcon,
+  TrayIcon,
+  UserCircleIcon,
+} from "@phosphor-icons/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -30,6 +37,7 @@ export function AdminNav({
   const isCategories = pathname.startsWith("/admin/categories");
   const isTags = pathname.startsWith("/admin/tags");
   const isAuthors = pathname.startsWith("/admin/authors");
+  const isHistory = pathname.startsWith("/admin/history");
 
   let pageTitle = "Resource Submissions Queue";
   let pageSubtitle = "Review, edit, approve, and manage community resource submissions.";
@@ -48,6 +56,10 @@ export function AdminNav({
   } else if (isAuthors) {
     pageTitle = "Authors Manager";
     pageSubtitle = "Manage verified creator profiles, social links, and resource attributions.";
+  } else if (isHistory) {
+    pageTitle = "Activity & Change History";
+    pageSubtitle =
+      "Audit log of all modifications, updates, creations, and moderation events across the catalog.";
   }
 
   return (
@@ -197,6 +209,19 @@ export function AdminNav({
               {authorsCount}
             </span>
           )}
+        </Link>
+
+        <Link
+          href="/admin/history"
+          className={cn(
+            "flex items-center gap-2 rounded px-3.5 py-1.5 text-xs font-bold uppercase transition-all duration-150",
+            isHistory
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "border-line bg-surface/50 text-muted-foreground hover:bg-surface hover:text-foreground border-[1.5px]",
+          )}
+        >
+          <ClockCounterClockwiseIcon weight={isHistory ? "fill" : "bold"} className="size-4" />
+          <span>Activity Log</span>
         </Link>
       </div>
     </div>
