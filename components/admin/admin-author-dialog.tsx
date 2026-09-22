@@ -301,6 +301,9 @@ export function AdminAuthorDialog({
     formData.blog.trim() &&
     (formData.blog.trim().startsWith("/") || isValidHttpUrl(formData.blog.trim())),
   );
+  const hasChanges = isEdit
+    ? computeFieldChanges(author, formData, AUTHOR_FIELD_LABELS).length > 0
+    : true;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -602,6 +605,12 @@ export function AdminAuthorDialog({
               isEdit={isEdit}
               createLabel="Create Author"
               editLabel="Save Changes"
+              disabled={
+                !isNameFilled ||
+                !isSlugFilled ||
+                Boolean(duplicateAuthor) ||
+                (isEdit && !hasChanges)
+              }
             />
           </div>
         </form>

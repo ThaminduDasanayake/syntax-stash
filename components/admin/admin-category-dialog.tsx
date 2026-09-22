@@ -175,6 +175,9 @@ export function AdminCategoryDialog({
   };
 
   const isNameFilled = Boolean(formData.name.trim());
+  const hasChanges = isEdit
+    ? computeFieldChanges(category, formData, CATEGORY_FIELD_LABELS).length > 0
+    : true;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -258,6 +261,7 @@ export function AdminCategoryDialog({
               isEdit={isEdit}
               createLabel="Create Category"
               editLabel="Save Changes"
+              disabled={!isNameFilled || Boolean(duplicateCategory) || (isEdit && !hasChanges)}
             />
           </div>
         </form>

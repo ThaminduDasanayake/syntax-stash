@@ -201,6 +201,9 @@ export function AdminTagDialog({
 
   const isNameFilled = Boolean(formData.name.trim());
   const isSlugFilled = Boolean(formData.slug.trim());
+  const hasChanges = isEdit
+    ? computeFieldChanges(tag, formData, TAG_FIELD_LABELS).length > 0
+    : true;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -311,6 +314,9 @@ export function AdminTagDialog({
               isEdit={isEdit}
               createLabel="Create Tag"
               editLabel="Save Changes"
+              disabled={
+                !isNameFilled || !isSlugFilled || Boolean(duplicateTag) || (isEdit && !hasChanges)
+              }
             />
           </div>
         </form>

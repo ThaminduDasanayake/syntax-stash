@@ -291,6 +291,9 @@ export function AdminSubmissionEditForm({
     }
   };
 
+  const hasChanges =
+    computeFieldChanges(sub, editForm as Partial<Submission>, SUBMISSION_FIELD_LABELS).length > 0;
+
   return (
     <div className="border-primary/60 bg-paper/60 rounded-lg border-2 p-6 font-mono text-xs shadow-md">
       {/* Edit Header */}
@@ -686,7 +689,7 @@ export function AdminSubmissionEditForm({
           <Button
             size="sm"
             onClick={() => handleRequestSave()}
-            disabled={isWorking}
+            disabled={isWorking || !hasChanges}
             className="gap-1.5 text-xs font-bold uppercase"
           >
             <FloppyDiskIcon className="size-4" /> Save Changes
