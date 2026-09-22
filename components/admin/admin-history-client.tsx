@@ -3,6 +3,7 @@
 import {
   ArrowRightIcon,
   ArrowsClockwiseIcon,
+  BroadcastIcon,
   CaretDownIcon,
   CaretUpIcon,
   CheckCircleIcon,
@@ -180,6 +181,8 @@ export function AdminHistoryClient({
   const [isLoading, setIsLoading] = useState(false);
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({});
 
+  const [isScanning, setIsScanning] = useState(false);
+
   const toggleExpand = (id: string) => {
     setExpandedItems((prev) => ({
       ...prev,
@@ -209,6 +212,31 @@ export function AdminHistoryClient({
       toast.error("Network error while fetching activity logs.");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleScanCatalog = async () => {
+    try {
+      setIsScanning(true);
+      toast.info("Starting live metadata & health scan across catalog resources...");
+
+      const res = await fetch("/api/admin/history/scan", {
+        method: "POST",
+      });
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        toast.success(
+          `Scan complete: Scanned ${data.scanned} resources. Found ${data.drifts} remote drift(s), ${data.redirects} redirect(s), and ${data.broken} broken link(s).`,
+        );
+        await fetchHistory();
+      } else {
+        toast.error(data.error || "Failed to complete catalog scan.");
+      }
+    } catch {
+      toast.error("Network error while running catalog scan.");
+    } finally {
+      setIsScanning(false);
     }
   };
 
@@ -248,12 +276,32 @@ export function AdminHistoryClient({
             />
           </form>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleScanCatalog}
+              disabled={isScanning || isLoading}
+              className="border-line hover:bg-surface h-9 gap-1.5 font-mono text-xs font-bold uppercase"
+            >
+              {isScanning ? (
+                <>
+                  <CircleNotchIcon className="size-3.5 animate-spin" />
+                  <span>Scanning Live Sites...</span>
+                </>
+              ) : (
+                <>
+                  <BroadcastIcon weight="bold" className="text-primary size-3.5" />
+                  <span>Scan Catalog for Changes</span>
+                </>
+              )}
+            </Button>
+
             <Button
               variant="outline"
               size="sm"
               onClick={fetchHistory}
-              disabled={isLoading}
+              disabled={isLoading || isScanning}
               className="border-line hover:bg-surface h-9 gap-1.5 font-mono text-xs font-bold uppercase"
             >
               {isLoading ? (
