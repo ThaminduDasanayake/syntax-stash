@@ -7,8 +7,84 @@ import { db } from "@/lib/db";
 import { category, resource, submission } from "@/lib/db/schema";
 import { normalizeUrl } from "@/lib/url-utils";
 
-const DEFAULT_USER_AGENT =
-  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36";
+const BROWSER_HEADERS = {
+  Accept:
+    "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+  "Accept-Language": "en-US,en;q=0.9",
+  "Cache-Control": "no-cache",
+  Pragma: "no-cache",
+  "Sec-Ch-Ua": '"Chromium";v="132", "Google Chrome";v="132", "Not-A.Brand";v="99"',
+  "Sec-Ch-Ua-Mobile": "?0",
+  "Sec-Ch-Ua-Platform": '"macOS"',
+  "Sec-Fetch-Dest": "document",
+  "Sec-Fetch-Mode": "navigate",
+  "Sec-Fetch-Site": "none",
+  "Sec-Fetch-User": "?1",
+  "Upgrade-Insecure-Requests": "1",
+  "User-Agent":
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36",
+};
+
+async function fetchWithRetry(
+  url: string,
+  options: RequestInit = {},
+  retries = 2,
+  delay = 500,
+): Promise<Response> {
+  let lastError: Error | null = null;
+
+  for (let i = 0; i <= retries; i++) {
+    try {
+      const attemptSignal = AbortSignal.timeout(10_000);
+      const response = await fetch(url, {
+        ...options,
+        signal: attemptSignal,
+      });
+
+      if (response.ok) {
+        return response;
+      }
+
+      const status = response.status;
+      if (status === 429 || status === 503 || status === 504) {
+        if (i === retries) {
+          return response;
+        }
+
+        let retryAfterDelay = delay * Math.pow(2, i);
+        if (status === 429) {
+          const retryAfterHeader = response.headers.get("retry-after");
+          if (retryAfterHeader) {
+            const seconds = parseInt(retryAfterHeader, 10);
+            if (!isNaN(seconds)) {
+              retryAfterDelay = seconds * 1000;
+            } else {
+              const dateMs = Date.parse(retryAfterHeader);
+              if (!isNaN(dateMs)) {
+                retryAfterDelay = Math.max(0, dateMs - Date.now());
+              }
+            }
+          }
+        }
+
+        retryAfterDelay = Math.min(retryAfterDelay, 4000);
+        await new Promise((resolve) => setTimeout(resolve, retryAfterDelay));
+        continue;
+      }
+
+      return response;
+    } catch (e) {
+      lastError = e instanceof Error ? e : new Error(String(e));
+      if (i === retries) {
+        throw lastError;
+      }
+      const retryAfterDelay = Math.min(delay * Math.pow(2, i), 4000);
+      await new Promise((resolve) => setTimeout(resolve, retryAfterDelay));
+    }
+  }
+
+  throw lastError ?? new Error("Fetch failed");
+}
 
 const BLOCKED_HOSTS = new Set(["0.0.0.0", "127.0.0.1", "::1", "localhost"]);
 
@@ -324,28 +400,130 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8000);
+    let html = "";
+    let finalUrl = parsedUrl.href;
+    const apiKey = process.env.SCRAPINGBEE_API_KEY;
 
-    const res = await fetch(parsedUrl.href, {
-      headers: {
-        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.9",
-        "User-Agent":
-          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
-      },
-      redirect: "follow",
-      signal: controller.signal,
-    });
+    let response: Response | null = null;
 
-    clearTimeout(timeoutId);
-
-    if (!res.ok) {
-      return NextResponse.json({ error: `Website returned status ${res.status}` }, { status: 502 });
+    // 1. Attempt direct fetch with browser headers and exponential 429/503 retry backoff
+    try {
+      response = await fetchWithRetry(parsedUrl.href, {
+        headers: BROWSER_HEADERS,
+        redirect: "follow",
+      });
+    } catch {
+      // Direct fetch failed
     }
 
-    const html = await res.text();
-    const finalUrl = res.url || parsedUrl.href;
+    // 2. If direct fetch failed or received 429 / 403 / 5xx and ScrapingBee is configured, fetch through ScrapingBee
+    if ((!response || !response.ok) && apiKey) {
+      try {
+        const scrapingBeeUrl = `https://app.scrapingbee.com/api/v1/?api_key=${encodeURIComponent(
+          apiKey,
+        )}&url=${encodeURIComponent(parsedUrl.href)}&render_js=true`;
+        const sbResponse = await fetchWithRetry(scrapingBeeUrl, { redirect: "follow" });
+        if (sbResponse.ok) {
+          response = sbResponse;
+        }
+      } catch {
+        // ScrapingBee failed
+      }
+    }
+
+    if (response && response.ok) {
+      html = await response.text();
+      finalUrl = response.url || parsedUrl.href;
+    }
+
+    // 3. If html could not be retrieved (e.g. 429 rate-limited or blocked without ScrapingBee key), provide resilient fallback metadata
+    if (!html) {
+      const rawHost = parsedUrl.hostname.replace(/^www\./, "");
+      const rawBrand = rawHost.split(".")[0] || "Resource";
+      const fallbackTitle = rawBrand.charAt(0).toUpperCase() + rawBrand.slice(1);
+      const fallbackFavicon = `https://${parsedUrl.hostname}/favicon.ico`;
+      const categories = await getAllCategories();
+      const suggestedCategory = suggestCategory(`${fallbackTitle} ${rawHost}`, categories);
+
+      const normalizedInputUrl = normalizeUrl(parsedUrl.href);
+      let existingResource: { category?: string; id: string; title: string; url: string } | null =
+        null;
+      let existingSubmission: { id: string; status: string; title: string; url: string } | null =
+        null;
+
+      if (normalizedInputUrl) {
+        try {
+          const liveRows = await db
+            .select({
+              id: resource.id,
+              title: resource.title,
+              category: category.name,
+              url: resource.url,
+            })
+            .from(resource)
+            .leftJoin(category, eq(resource.categoryId, category.id));
+
+          const matchedResource = liveRows.find((r) => normalizeUrl(r.url) === normalizedInputUrl);
+
+          if (matchedResource) {
+            existingResource = {
+              id: matchedResource.id,
+              title: matchedResource.title,
+              category: matchedResource.category || "General",
+              url: matchedResource.url,
+            };
+          } else {
+            const submissionRows = await db
+              .select({
+                id: submission.id,
+                title: submission.title,
+                status: submission.status,
+                url: submission.url,
+              })
+              .from(submission);
+
+            const matchedSubmission = submissionRows.find(
+              (s) => normalizeUrl(s.url) === normalizedInputUrl,
+            );
+
+            if (matchedSubmission) {
+              existingSubmission = {
+                id: matchedSubmission.id,
+                title: matchedSubmission.title,
+                status: matchedSubmission.status,
+                url: matchedSubmission.url,
+              };
+            }
+          }
+        } catch (dbErr) {
+          console.error("Duplicate check error during metadata fallback:", dbErr);
+        }
+      }
+
+      return NextResponse.json({
+        title: fallbackTitle,
+        author: "",
+        authorBlog: "",
+        authorGitHub: "",
+        authorLinkedIn: "",
+        authorTwitter: "",
+        authorWebsite: "",
+        authorYouTube: "",
+        category: suggestedCategory,
+        description: "",
+        existingResource,
+        existingSubmission,
+        favicon: fallbackFavicon,
+        faviconOptions: [
+          { label: "Root Favicon (Fallback)", type: "favicon", url: fallbackFavicon },
+        ],
+        github: "",
+        ogImage: "",
+        ogImageOptions: [],
+        url: parsedUrl.href,
+      });
+    }
+
     const $ = cheerio.load(html);
 
     // 1. Title & Subtitle Extraction
@@ -559,7 +737,7 @@ export async function GET(request: NextRequest) {
         const probeRes = await fetch(originFavicon, {
           headers: {
             Accept: "image/*,*/*;q=0.8",
-            "User-Agent": DEFAULT_USER_AGENT,
+            "User-Agent": BROWSER_HEADERS["User-Agent"],
           },
           method: "GET",
           signal: probeController.signal,
