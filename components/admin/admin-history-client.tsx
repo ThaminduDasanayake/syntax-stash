@@ -8,7 +8,6 @@ import {
   CaretDownIcon,
   CaretUpIcon,
   CircleNotchIcon,
-  InfoIcon,
   PencilSimpleIcon,
   ShieldCheckIcon,
   TrashIcon,
@@ -96,21 +95,21 @@ function getAlertBadgeStyle(action: ActivityLogItem["action"]) {
   switch (action) {
     case "drift_detected":
       return {
-        bg: "bg-amber-500/15 text-amber-800 border-amber-600/40 dark:text-amber-300",
+        bg: "bg-amber-500/15 border-amber-600/40 ",
         dot: "bg-amber-500",
         icon: WarningCircleIcon,
         label: "Metadata Drift",
       };
     case "redirect_detected":
       return {
-        bg: "bg-sky-500/15 text-sky-800 border-sky-600/40 dark:text-sky-300",
+        bg: "bg-sky-500/15 border-sky-600/40 ",
         dot: "bg-sky-500",
         icon: ArrowRightIcon,
         label: "URL Redirect",
       };
     case "health_alert":
       return {
-        bg: "bg-rose-500/15 text-rose-800 border-rose-600/40 dark:text-rose-300",
+        bg: "bg-rose-500/15 border-rose-600/40 ",
         dot: "bg-rose-500",
         icon: WarningOctagonIcon,
         label: "Broken Link",
@@ -260,22 +259,6 @@ export function AdminHistoryClient({
 
   return (
     <div className="font-mono text-xs">
-      {/* Non-Destructive Explainer Banner */}
-      <div className="border-line bg-surface/60 mb-6 flex items-start gap-3 rounded-lg border-[1.5px] p-4 text-xs">
-        <InfoIcon weight="bold" className="text-primary mt-0.5 size-4 shrink-0" />
-        <div className="space-y-1">
-          <p className="text-foreground font-bold uppercase">
-            Notification-Only Live Monitoring
-          </p>
-          <p className="text-muted-foreground text-[11px] leading-relaxed">
-            The Change Monitor crawls external website URLs to alert you whenever third-party authors update their titles, descriptions, redirect URLs, or if a link goes down.{" "}
-            <strong className="text-foreground">
-              Scanning only alerts you — your catalog data is never modified automatically.
-            </strong>
-          </p>
-        </div>
-      </div>
-
       {/* Filter Toolbar */}
       <div className="border-line bg-paper/40 mb-6 space-y-4 rounded-lg border-[1.5px] p-4 shadow-xs">
         {/* Top Row: Search and Action Buttons */}
@@ -332,7 +315,7 @@ export function AdminHistoryClient({
                 size="sm"
                 onClick={handleClearAllAlerts}
                 disabled={isClearing || isLoading}
-                className="border-line text-rose-600 hover:bg-rose-500/10 dark:text-rose-400 h-9 gap-1.5 font-mono text-xs font-bold uppercase"
+                className="border-line h-9 gap-1.5 font-mono text-xs font-bold text-rose-600 uppercase hover:bg-rose-500/10"
               >
                 {isClearing ? (
                   <CircleNotchIcon className="size-3.5 animate-spin" />
@@ -353,19 +336,20 @@ export function AdminHistoryClient({
           {ALERT_TYPE_FILTERS.map((filter) => {
             const active = alertFilter === filter.value;
             return (
-              <button
+              <Button
                 key={filter.value}
                 type="button"
+                size="xs"
+                variant={active ? "default" : "outline"}
                 onClick={() => setAlertFilter(filter.value)}
                 className={cn(
-                  "rounded px-2.5 py-1 text-[11px] font-bold uppercase transition-all duration-150",
-                  active
-                    ? "bg-primary text-primary-foreground shadow-xs"
-                    : "border-line bg-surface/60 text-muted-foreground hover:bg-surface hover:text-foreground border",
+                  "h-6 px-2.5 text-[11px] font-bold uppercase transition-all duration-150",
+                  !active &&
+                    "border-line bg-surface/60 text-muted-foreground hover:bg-surface hover:text-foreground",
                 )}
               >
                 {filter.label}
-              </button>
+              </Button>
             );
           })}
         </div>
@@ -378,22 +362,18 @@ export function AdminHistoryClient({
           <div className="text-foreground text-xl font-black">{stats.totalCount}</div>
         </div>
         <div className="border-line bg-surface/30 rounded-lg border-[1.5px] p-3 text-center">
-          <div className="text-muted-foreground text-[10px] font-bold uppercase">Metadata Drifts</div>
-          <div className="text-amber-600 text-xl font-black dark:text-amber-400">
-            {stats.driftCount}
+          <div className="text-muted-foreground text-[10px] font-bold uppercase">
+            Metadata Drifts
           </div>
+          <div className="text-xl font-black text-amber-600">{stats.driftCount}</div>
         </div>
         <div className="border-line bg-surface/30 rounded-lg border-[1.5px] p-3 text-center">
           <div className="text-muted-foreground text-[10px] font-bold uppercase">URL Redirects</div>
-          <div className="text-sky-600 text-xl font-black dark:text-sky-400">
-            {stats.redirectCount}
-          </div>
+          <div className="text-xl font-black text-sky-600">{stats.redirectCount}</div>
         </div>
         <div className="border-line bg-surface/30 rounded-lg border-[1.5px] p-3 text-center">
           <div className="text-muted-foreground text-[10px] font-bold uppercase">Broken Links</div>
-          <div className="text-rose-600 text-xl font-black dark:text-rose-400">
-            {stats.brokenCount}
-          </div>
+          <div className="text-xl font-black text-rose-600">{stats.brokenCount}</div>
         </div>
       </div>
 
@@ -407,7 +387,7 @@ export function AdminHistoryClient({
         </div>
       ) : items.length === 0 ? (
         <EmptyState
-          icon={<ShieldCheckIcon className="text-emerald-500 size-6" />}
+          icon={<ShieldCheckIcon className="size-6 text-emerald-500" />}
           title="No Change Alerts Found"
           description={
             searchQuery || alertFilter !== "all"
@@ -445,7 +425,7 @@ export function AdminHistoryClient({
             return (
               <div
                 key={item.id}
-                className="border-line bg-paper/60 hover:border-primary/40 rounded-lg border-[1.5px] p-4 transition-all duration-150 shadow-xs"
+                className="border-line bg-paper/60 hover:border-primary/40 rounded-lg border-[1.5px] p-4 shadow-xs transition-all duration-150"
               >
                 {/* Item Top Row */}
                 <div className="flex flex-wrap items-center justify-between gap-3">
@@ -463,9 +443,7 @@ export function AdminHistoryClient({
                     </span>
 
                     {/* Entity Title */}
-                    <span className="text-foreground text-xs font-black">
-                      {item.entityTitle}
-                    </span>
+                    <span className="text-foreground text-xs font-black">{item.entityTitle}</span>
                   </div>
 
                   {/* Timestamp & Actions */}
@@ -502,10 +480,12 @@ export function AdminHistoryClient({
                           Observed Remote Changes ({diffs.length})
                         </span>
                         {diffs.length > 2 && (
-                          <button
+                          <Button
                             type="button"
+                            variant="ghost"
+                            size="xs"
                             onClick={() => toggleExpand(item.id)}
-                            className="text-primary hover:text-primary/80 inline-flex items-center gap-1 text-[10px] font-bold uppercase"
+                            className="text-primary hover:text-primary/80 h-auto p-0 text-[10px] font-bold uppercase"
                           >
                             <span>{isExpanded ? "Collapse" : "Show All Diffs"}</span>
                             {isExpanded ? (
@@ -513,7 +493,7 @@ export function AdminHistoryClient({
                             ) : (
                               <CaretDownIcon weight="bold" className="size-3" />
                             )}
-                          </button>
+                          </Button>
                         )}
                       </div>
 
@@ -528,12 +508,17 @@ export function AdminHistoryClient({
                               {diff.label || diff.field}:
                             </span>
                             <div className="flex flex-wrap items-center gap-2 sm:col-span-9">
-                              <span className="bg-rose-500/10 text-rose-700 border-rose-500/20 max-w-xs truncate rounded border px-1.5 py-0.5 text-[10px] dark:text-rose-400">
-                                <strong className="font-semibold opacity-75">Stored:</strong> {formatDiffValue(diff.oldValue)}
+                              <span className="max-w-xs truncate rounded border border-rose-500/20 bg-rose-500/10 px-1.5 py-0.5 text-[10px] text-rose-700">
+                                <strong className="font-semibold opacity-75">Stored:</strong>{" "}
+                                {formatDiffValue(diff.oldValue)}
                               </span>
-                              <ArrowRightIcon weight="bold" className="text-muted-foreground size-3 shrink-0" />
-                              <span className="bg-emerald-500/10 text-emerald-700 border-emerald-500/20 max-w-xs truncate rounded border px-1.5 py-0.5 text-[10px] font-bold dark:text-emerald-400">
-                                <strong className="font-semibold opacity-75">Live:</strong> {formatDiffValue(diff.newValue)}
+                              <ArrowRightIcon
+                                weight="bold"
+                                className="text-muted-foreground size-3 shrink-0"
+                              />
+                              <span className="max-w-xs truncate rounded border border-emerald-500/20 bg-emerald-500/10 px-1.5 py-0.5 text-[10px] font-bold text-emerald-700">
+                                <strong className="font-semibold opacity-75">Live:</strong>{" "}
+                                {formatDiffValue(diff.newValue)}
                               </span>
                             </div>
                           </div>
