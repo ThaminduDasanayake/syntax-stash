@@ -197,6 +197,45 @@ export function AdminResourceTable({
                           No OG
                         </span>
                       )}
+                      {item.github ? (
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <a
+                              href={
+                                item.github.startsWith("http")
+                                  ? item.github
+                                  : `https://github.com/${item.github}`
+                              }
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="border-line bg-paper/60 hover:border-foreground flex size-4.5 items-center justify-center rounded border transition-colors"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <Image
+                                src="/github.svg"
+                                alt="GitHub"
+                                width={12}
+                                height={12}
+                                className="size-3 dark:invert"
+                              />
+                            </a>
+                          </TooltipTrigger>
+                          <TooltipContent side="top">
+                            <p>GitHub: {item.github}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      ) : (
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <span className="rounded bg-amber-500/15 px-1 py-0.2 text-[9px] font-semibold text-amber-700 select-none dark:text-amber-400">
+                              No GH
+                            </span>
+                          </TooltipTrigger>
+                          <TooltipContent side="top">
+                            <p>No GitHub repository link set</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      )}
                     </div>
                     {item.subtitle && (
                       <span className="text-muted-foreground line-clamp-1 text-[11px]">
