@@ -124,7 +124,8 @@ export async function POST(request: NextRequest) {
       let healthStatus = "healthy";
       let redirectUrl: string | null = null;
       let errorMessage: string | null = null;
-      const diffs: Array<{ field: string; label: string; newValue: unknown; oldValue: unknown }> = [];
+      const diffs: Array<{ field: string; label: string; newValue: unknown; oldValue: unknown }> =
+        [];
 
       try {
         const controller = new AbortController();
@@ -192,7 +193,12 @@ export async function POST(request: NextRequest) {
             const normCleaned = normalizeText(cleanedLiveTitle);
             const normStored = normalizeText(r.title);
 
-            if (normCleaned && normStored && normCleaned !== normStored && !normCleaned.includes(normStored)) {
+            if (
+              normCleaned &&
+              normStored &&
+              normCleaned !== normStored &&
+              !normCleaned.includes(normStored)
+            ) {
               diffs.push({
                 field: "title",
                 label: "Remote Title Changed",

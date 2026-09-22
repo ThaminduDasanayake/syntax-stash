@@ -364,7 +364,7 @@ function AdminAuthorDialogInner({
 
             {/* Section 2: Social Links Grid */}
             <div className="border-line/60 border-t pt-4">
-              <span className="text-muted-foreground mb-3 block text-[10px] font-bold uppercase tracking-wider">
+              <span className="text-muted-foreground mb-3 block text-[10px] font-bold tracking-wider uppercase">
                 Social Profiles & Links (Optional)
               </span>
 
@@ -488,9 +488,7 @@ function AdminAuthorDialogInner({
                   <InputField
                     placeholder="username or https://linkedin.com/in/..."
                     value={formData.linkedin}
-                    onChange={(e) =>
-                      setFormData((prev) => ({ ...prev, linkedin: e.target.value }))
-                    }
+                    onChange={(e) => setFormData((prev) => ({ ...prev, linkedin: e.target.value }))}
                     className={cn(
                       "font-mono text-xs transition-colors",
                       isLinkedinFilled &&
@@ -574,7 +572,10 @@ function AdminAuthorDialogInner({
               createLabel="Create Author"
               editLabel="Save Changes"
               disabled={
-                !isNameFilled || !isSlugFilled || Boolean(duplicateAuthor) || (isEdit && !hasChanges)
+                !isNameFilled ||
+                !isSlugFilled ||
+                Boolean(duplicateAuthor) ||
+                (isEdit && !hasChanges)
               }
             />
           </div>

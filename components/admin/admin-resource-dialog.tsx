@@ -743,9 +743,7 @@ export function AdminResourceDialog({
               isEdit={isEdit}
               createLabel="Create & Publish"
               editLabel="Update Tool"
-              disabled={
-                !formData.title?.trim() || !formData.url?.trim() || (isEdit && !hasChanges)
-              }
+              disabled={!formData.title?.trim() || !formData.url?.trim() || (isEdit && !hasChanges)}
               submitClassName="h-9 px-5"
             />
           </div>

@@ -26,11 +26,7 @@ export default async function AdminHistoryPage() {
   }
 
   const [initialRows, [totalCountRow]] = await Promise.all([
-    db
-      .select()
-      .from(activityLog)
-      .orderBy(desc(activityLog.createdAt))
-      .limit(50),
+    db.select().from(activityLog).orderBy(desc(activityLog.createdAt)).limit(50),
     db.select({ count: sql<number>`count(*)` }).from(activityLog),
   ]);
 

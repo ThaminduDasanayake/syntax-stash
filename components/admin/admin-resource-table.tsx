@@ -227,7 +227,7 @@ export function AdminResourceTable({
                       ) : (
                         <Tooltip>
                           <TooltipTrigger asChild>
-                            <span className="rounded bg-amber-500/15 px-1 py-0.2 text-[9px] font-semibold text-amber-700 select-none dark:text-amber-400">
+                            <span className="py-0.2 rounded bg-amber-500/15 px-1 text-[9px] font-semibold text-amber-700 select-none dark:text-amber-400">
                               No GH
                             </span>
                           </TooltipTrigger>
