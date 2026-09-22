@@ -450,7 +450,7 @@ export function AdminAuthorDialog({
                   )}
                 >
                   <Image src="/github.svg" alt="GitHub" width={16} height={16} />
-                  <span>GitHub (Username or URL)</span>
+                  <span>GitHub Profile</span>
                   <FieldCheckmark checked={isGithubFilled} />
                 </Label>
                 <InputField
@@ -483,7 +483,7 @@ export function AdminAuthorDialog({
                         : "group-focus-within:text-primary",
                     )}
                   />
-                  <span>Twitter / X (@username or URL)</span>
+                  <span>Twitter / X</span>
                   <FieldCheckmark checked={isTwitterFilled} />
                 </Label>
                 <InputField
@@ -514,7 +514,7 @@ export function AdminAuthorDialog({
                     height={16}
                     className="opacity-90"
                   />
-                  <span>LinkedIn (Username or URL)</span>
+                  <span>LinkedIn</span>
                   <FieldCheckmark checked={isLinkedinFilled} />
                 </Label>
                 <InputField
@@ -545,7 +545,7 @@ export function AdminAuthorDialog({
                     height={16}
                     className="opacity-90"
                   />
-                  <span>YouTube Channel URL</span>
+                  <span>YouTube Channel</span>
                   <FieldCheckmark checked={isYoutubeFilled} />
                 </Label>
                 <InputField
@@ -578,7 +578,7 @@ export function AdminAuthorDialog({
                         : "group-focus-within:text-primary",
                     )}
                   />
-                  <span>Blog URL</span>
+                  <span>Blog</span>
                   <FieldCheckmark checked={isBlogFilled} />
                 </Label>
                 <InputField
