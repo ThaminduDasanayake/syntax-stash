@@ -1,13 +1,14 @@
 "use client";
 
-import { CaretDownIcon, CheckIcon } from "@phosphor-icons/react";
+import { ArrowSquareOutIcon, CaretDownIcon, CheckIcon } from "@phosphor-icons/react";
 import * as React from "react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { CopyButton } from "@/components/ui/copy-button";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
+import { cn, isValidHttpUrl } from "@/lib/utils";
 
 export interface CandidateOption {
   label: string;
@@ -42,13 +43,15 @@ export function EditableCandidateInput({
 }: EditableCandidateInputProps) {
   const [open, setOpen] = useState(false);
 
-  const hasOptions = options.length > 1;
+  const hasOptions = options.length > 0;
+  const cleanVal = value?.trim() || "";
+  const isValidUrl = Boolean(cleanVal) && (cleanVal.startsWith("/") || isValidHttpUrl(cleanVal));
 
   return (
     <div className={cn("relative flex items-center", containerClassName)}>
       <InputGroup className="w-full">
         {prefix && (
-          <InputGroupAddon align="inline-start" className="pr-1 pl-2">
+          <InputGroupAddon align="inline-start" className="pl-2 pr-1">
             {prefix}
           </InputGroupAddon>
         )}
@@ -58,8 +61,34 @@ export function EditableCandidateInput({
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           disabled={disabled}
+          title={value || placeholder || ""}
           className={cn("font-mono text-xs", className)}
         />
+
+        {/* Action buttons on active input value */}
+        {cleanVal && isValidUrl && (
+          <InputGroupAddon align="inline-end" className="gap-1 pr-1">
+            <CopyButton
+              textToCopy={cleanVal}
+              iconOnly
+              size="icon-xs"
+              className="text-muted-foreground hover:text-foreground size-6"
+              title="Copy current URL"
+            />
+            {cleanVal.startsWith("http") && (
+              <a
+                href={cleanVal}
+                target="_blank"
+                rel="noopener noreferrer"
+                tabIndex={-1}
+                className="text-muted-foreground hover:text-foreground inline-flex size-6 items-center justify-center rounded transition-colors hover:bg-muted/50"
+                title="Open current asset in new tab"
+              >
+                <ArrowSquareOutIcon weight="bold" className="size-3" />
+              </a>
+            )}
+          </InputGroupAddon>
+        )}
 
         {hasOptions && (
           <InputGroupAddon align="inline-end">
@@ -71,10 +100,10 @@ export function EditableCandidateInput({
                   size="sm"
                   disabled={disabled}
                   className="text-muted-foreground hover:text-foreground h-7 gap-1 px-1.5 font-mono text-[10px] font-bold uppercase"
-                  title="Choose from detected options"
+                  title="Choose or inspect detected options"
                 >
-                  <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5">
-                    {options.length} options
+                  <span className="rounded bg-primary/10 px-1.5 py-0.5 text-primary">
+                    {options.length} {options.length === 1 ? "option" : "options"}
                   </span>
                   <CaretDownIcon className="size-3" />
                 </Button>
@@ -82,68 +111,108 @@ export function EditableCandidateInput({
 
               <PopoverContent
                 align="end"
-                className="bg-popover border-border w-84 p-1.5 font-mono text-xs shadow-xl"
+                className="bg-popover border-border w-[calc(100vw-2rem)] max-w-lg p-2 font-mono text-xs shadow-xl sm:w-[480px]"
               >
-                <div className="text-muted-foreground border-b-[1.5px] px-2 py-1.5 text-[10px] font-bold tracking-wider uppercase">
-                  Detected Options ({options.length})
+                <div className="border-border text-muted-foreground flex items-center justify-between border-b-[1.5px] px-2 py-1.5 text-[10px] font-bold tracking-wider uppercase">
+                  <span>Detected Options ({options.length})</span>
+                  <span className="text-[9px] font-normal lowercase opacity-70">
+                    click to select or inspect
+                  </span>
                 </div>
 
-                <div className="no-scrollbar mt-1 max-h-60 space-y-1 overflow-y-auto">
+                <div className="no-scrollbar mt-1 max-h-72 space-y-1.5 overflow-y-auto p-0.5">
                   {options.map((option, idx) => {
                     const isSelected = value?.trim() === option.url.trim();
+                    const isOptHttp = option.url.startsWith("http");
 
                     return (
-                      <button
+                      <div
                         key={`${option.url}-${idx}`}
-                        type="button"
-                        onClick={() => {
-                          onChange(option.url);
-                          setOpen(false);
-                        }}
                         className={cn(
-                          "hover:border-primary flex w-full items-center gap-2.5 rounded border-[1.5px] p-2 text-left transition-colors hover:cursor-pointer",
-                          isSelected && "bg-primary",
+                          "group/option flex w-full items-start gap-2.5 rounded border-[1.5px] p-2 text-left transition-all",
+                          isSelected
+                            ? "border-primary bg-primary/10 shadow-xs"
+                            : "border-line bg-surface/40 hover:border-primary/50 hover:bg-surface/80",
                         )}
                       >
-                        {/* Optional Custom Preview */}
-                        {renderPreview && <div className="shrink-0">{renderPreview(option)}</div>}
+                        {/* Custom Preview thumbnail if provided */}
+                        {renderPreview && (
+                          <div
+                            onClick={() => {
+                              onChange(option.url);
+                              setOpen(false);
+                            }}
+                            className="mt-0.5 shrink-0 cursor-pointer"
+                          >
+                            {renderPreview(option)}
+                          </div>
+                        )}
 
-                        {/* Text and URL details */}
-                        <div className="min-w-0 flex-1">
+                        {/* Main clickable area to select this option */}
+                        <div
+                          onClick={() => {
+                            onChange(option.url);
+                            setOpen(false);
+                          }}
+                          className="min-w-0 flex-1 cursor-pointer select-none space-y-1"
+                        >
                           <div className="flex items-center justify-between gap-1">
-                            <span
-                              className={cn(
-                                "text-foreground truncate text-[11px] font-bold",
-                                isSelected && "text-background",
-                              )}
-                            >
+                            <span className="text-foreground truncate text-[11px] font-bold">
                               {option.label}
                             </span>
                             {option.type && (
                               <span
                                 className={cn(
-                                  "bg-ink/10 text-muted-foreground shrink-0 rounded px-1 text-[9px] font-semibold uppercase",
-                                  isSelected && "text-background bg-background/20",
+                                  "shrink-0 rounded px-1 text-[9px] font-semibold uppercase",
+                                  isSelected
+                                    ? "bg-primary text-primary-foreground"
+                                    : "bg-muted text-muted-foreground",
                                 )}
                               >
                                 {option.type}
                               </span>
                             )}
                           </div>
+
+                          {/* Full URL with break-all and hover tooltip */}
                           <span
-                            className={cn(
-                              "text-muted-foreground block truncate text-[10px]",
-                              isSelected && "text-background",
-                            )}
+                            title={option.url}
+                            className="text-muted-foreground hover:text-foreground block text-[10px] break-all leading-relaxed"
                           >
                             {option.url}
                           </span>
                         </div>
 
-                        {isSelected && (
-                          <CheckIcon className="text-background size-3.5 shrink-0" weight="bold" />
-                        )}
-                      </button>
+                        {/* Action buttons (Copy, Open in Tab, Selected Check) */}
+                        <div className="flex shrink-0 items-center gap-1 pt-0.5">
+                          <CopyButton
+                            textToCopy={option.url}
+                            iconOnly
+                            size="icon-xs"
+                            className="text-muted-foreground hover:text-foreground size-6 rounded hover:bg-muted/60"
+                            title="Copy candidate URL"
+                          />
+
+                          {isOptHttp && (
+                            <a
+                              href={option.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="text-muted-foreground hover:text-foreground inline-flex size-6 items-center justify-center rounded transition-colors hover:bg-muted/60"
+                              title="Open image in new tab"
+                            >
+                              <ArrowSquareOutIcon weight="bold" className="size-3" />
+                            </a>
+                          )}
+
+                          {isSelected && (
+                            <div className="bg-primary text-primary-foreground ml-0.5 flex size-5 items-center justify-center rounded-full">
+                              <CheckIcon className="size-3" weight="bold" />
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     );
                   })}
                 </div>
