@@ -11,7 +11,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
+import { Suspense, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
@@ -99,6 +99,7 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
 
   const [isDetecting, setIsDetecting] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isNavigating, startTransition] = useTransition();
   const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
   const [ogImageOptions, setOgImageOptions] = useState<CandidateOption[]>([]);
   const [suggestedAuthor, setSuggestedAuthor] = useState<SuggestedAuthorData | null>(null);
@@ -394,14 +395,15 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
       const data = await res.json();
 
       if (res.ok && data.success) {
-        setIsConfirmOpen(false);
         toast.success(
           isEdit
             ? `"${formData.title}" updated successfully.`
             : `"${formData.title}" published to live catalog!`,
         );
-        router.push(returnUrl);
-        router.refresh();
+        startTransition(() => {
+          router.push(returnUrl);
+          router.refresh();
+        });
         return;
       } else {
         toast.error(data.error || "Failed to save resource.");
@@ -941,7 +943,7 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
         title="Confirm Resource Updates"
         itemTitle={formData.title || initialData?.title || "Resource"}
         changes={pendingChanges}
-        isWorking={isSubmitting}
+        isWorking={isSubmitting || isNavigating}
         onConfirm={executeSave}
         confirmLabel="Confirm & Save Resource"
       />
