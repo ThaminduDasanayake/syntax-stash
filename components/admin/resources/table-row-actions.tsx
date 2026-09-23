@@ -21,7 +21,7 @@ export interface AdminTableRowActionsProps {
   onEdit?: () => void;
 }
 
-export function AdminTableRowActions({
+export function TableRowActions({
   className,
   copyJsonText,
   copyJsonTitle = "Copy JSON",

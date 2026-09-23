@@ -95,7 +95,19 @@ export interface ExtractedData {
 function resolveHref(href: string, base: string): string | null {
   if (!href || href.startsWith("#") || href.startsWith("javascript:")) return null;
   try {
-    return new URL(href, base).href;
+    const raw = href.trim();
+    if (raw.includes("scrapingbee.com")) {
+      const baseObj = new URL(base);
+      const urlObj = new URL(raw);
+      return `${baseObj.origin}${urlObj.pathname}${urlObj.search}`;
+    }
+    const resolved = new URL(raw, base).href;
+    if (resolved.includes("scrapingbee.com")) {
+      const baseObj = new URL(base);
+      const urlObj = new URL(resolved);
+      return `${baseObj.origin}${urlObj.pathname}${urlObj.search}`;
+    }
+    return resolved;
   } catch {
     return null;
   }

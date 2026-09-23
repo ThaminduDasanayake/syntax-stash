@@ -1,7 +1,7 @@
 import { count, desc, eq } from "drizzle-orm";
 import type { Metadata } from "next";
 
-import { AdminAuthorsClient } from "@/components/admin/admin-authors-client";
+import { AuthorsManager } from "@/components/admin/authors/authors-manager";
 import { db } from "@/lib/db";
 import { author, resourceAuthor } from "@/lib/db/schema";
 
@@ -39,5 +39,5 @@ export default async function AdminAuthorsPage() {
     resourceCount: Number(r.resourceCount) || 0,
   }));
 
-  return <AdminAuthorsClient initialAuthors={authors} />;
+  return <AuthorsManager initialAuthors={authors} />;
 }

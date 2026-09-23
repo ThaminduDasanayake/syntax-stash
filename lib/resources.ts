@@ -142,7 +142,7 @@ export const getAllResources = cache(
 export const getAllAdminResources = cache(
   async (): Promise<{
     categoryCounts: Record<string, number>;
-    resources: import("@/components/admin/types").AdminResourceItem[];
+    resources: import("@/components/admin/shared/types").AdminResourceItem[];
   }> => {
     try {
       const rows = await db
@@ -189,7 +189,7 @@ export const getAllAdminResources = cache(
       const categoryCounts: Record<string, number> = {};
       const resourceMap = new Map<
         string,
-        Omit<import("@/components/admin/types").AdminResourceItem, "tags"> & {
+        Omit<import("@/components/admin/shared/types").AdminResourceItem, "tags"> & {
           authors: string[];
           tags: string[];
         }
@@ -222,7 +222,7 @@ export const getAllAdminResources = cache(
             healthLastCheckedAt: r.healthLastCheckedAt ? r.healthLastCheckedAt.toISOString() : null,
             healthRedirectUrl: r.healthRedirectUrl,
             healthStatus:
-              (r.healthStatus as import("@/components/admin/types").HealthStatus) || null,
+              (r.healthStatus as import("@/components/admin/shared/types").HealthStatus) || null,
             healthStatusCode: r.healthStatusCode,
             iconBg: r.iconBg || "dark",
             ogImage: r.ogImage,

@@ -157,7 +157,19 @@ export async function POST(req: NextRequest) {
     function absoluteUrl(value: string | null | undefined, base: string) {
       if (!value) return null;
       try {
-        return new URL(value, base).href;
+        const raw = value.trim();
+        if (raw.includes("scrapingbee.com")) {
+          const baseObj = new URL(base);
+          const urlObj = new URL(raw);
+          return `${baseObj.origin}${urlObj.pathname}${urlObj.search}`;
+        }
+        const resolved = new URL(raw, base).href;
+        if (resolved.includes("scrapingbee.com")) {
+          const baseObj = new URL(base);
+          const urlObj = new URL(resolved);
+          return `${baseObj.origin}${urlObj.pathname}${urlObj.search}`;
+        }
+        return resolved;
       } catch {
         return null;
       }
@@ -187,13 +199,37 @@ export async function POST(req: NextRequest) {
 
     const baseUrl = targetUrl;
 
+    const findFaviconSvg = (): string | null => {
+      let darkSvg: string | null = null;
+      let defaultSvg: string | null = null;
+      let lightSvg: string | null = null;
+
+      $(
+        'link[rel="icon"][type="image/svg+xml"], link[rel="icon"][href*=".svg"], link[rel="shortcut icon"][type="image/svg+xml"], link[rel="shortcut icon"][href*=".svg"]',
+      ).each((_, el) => {
+        const href = $(el).attr("href") || "";
+        const media = ($(el).attr("media") || "").toLowerCase();
+        const hrefLower = href.toLowerCase();
+
+        if (media.includes("dark") || hrefLower.includes("dark")) {
+          if (!darkSvg) darkSvg = href;
+        } else if (media.includes("light") || hrefLower.includes("light")) {
+          if (!lightSvg) lightSvg = href;
+        } else {
+          if (!defaultSvg) defaultSvg = href;
+        }
+      });
+
+      return darkSvg || defaultSvg || lightSvg;
+    };
+
     const icons = {
       appleTouchIcon: $('link[rel="apple-touch-icon"]').first().attr("href") || null,
       favicon:
         $('link[rel="icon"][type="image/png"]').first().attr("href") ||
         $('link[rel="icon"]').first().attr("href") ||
         null,
-      faviconSvg: $('link[rel="icon"][type="image/svg+xml"]').first().attr("href") || null,
+      faviconSvg: findFaviconSvg(),
     };
 
     function extractJsonLdLogo($: cheerio.CheerioAPI): string | null {

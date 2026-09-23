@@ -51,7 +51,7 @@ interface AdminResourceRecord {
   healthErrorMessage?: string | null;
   healthLastCheckedAt?: string | null;
   healthRedirectUrl?: string | null;
-  healthStatus?: import("@/components/admin/types").HealthStatus | null;
+  healthStatus?: import("@/components/admin/shared/types").HealthStatus | null;
   healthStatusCode?: number | null;
   iconBg: string | null;
   id: string;
@@ -149,7 +149,8 @@ export async function GET(request: NextRequest) {
           healthErrorMessage: r.healthErrorMessage,
           healthLastCheckedAt: r.healthLastCheckedAt ? r.healthLastCheckedAt.toISOString() : null,
           healthRedirectUrl: r.healthRedirectUrl,
-          healthStatus: (r.healthStatus as import("@/components/admin/types").HealthStatus) || null,
+          healthStatus:
+            (r.healthStatus as import("@/components/admin/shared/types").HealthStatus) || null,
           healthStatusCode: r.healthStatusCode,
           iconBg: r.iconBg || "dark",
           ogImage: r.ogImage,

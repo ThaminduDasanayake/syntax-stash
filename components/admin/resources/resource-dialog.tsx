@@ -4,6 +4,7 @@ import { ArrowsClockwiseIcon, CircleNotchIcon, PlusIcon } from "@phosphor-icons/
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
+import { AuthorDialog } from "@/components/admin/authors/author-dialog";
 import {
   AuthorOption,
   AuthorSocialFields,
@@ -34,23 +35,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
 import { isValidHttpUrl } from "@/lib/utils";
 
-import { AdminAuthorDialog } from "./admin-author-dialog";
-import {
-  AdminConfirmEditDialog,
-  computeFieldChanges,
-  FieldDiff,
-} from "./admin-confirm-edit-dialog";
-import { AdminResourceItem } from "./types";
+import { computeFieldChanges, ConfirmEditDialog, FieldDiff } from "../shared/confirm-edit-dialog";
+import { AdminResourceItem } from "../shared/types";
 
 const RESOURCE_FIELD_LABELS: Record<string, string> = {
   title: "Title",
-  authorBlog: "Author Blog URL",
-  authorGithub: "Author GitHub",
-  authorLinkedin: "Author LinkedIn",
   authorName: "Creator / Author",
-  authorTwitter: "Author Twitter / X",
-  authorWebsite: "Author Website",
-  authorYoutube: "Author YouTube",
   category: "Category",
   description: "Description",
   favicon: "Favicon URL",
@@ -70,7 +60,7 @@ interface AdminResourceDialogProps {
   resource?: AdminResourceItem | null;
 }
 
-export function AdminResourceDialog({
+export function ResourceDialog({
   isWorking = false,
   onOpenChange,
   onSave,
@@ -751,7 +741,7 @@ export function AdminResourceDialog({
       </DialogContent>
 
       {/* Inline Create Author Modal */}
-      <AdminAuthorDialog
+      <AuthorDialog
         open={isCreateAuthorOpen}
         onOpenChange={(isOpen) => {
           setIsCreateAuthorOpen(isOpen);
@@ -790,7 +780,7 @@ export function AdminResourceDialog({
       />
 
       {/* Confirmation Dialog for Edits */}
-      <AdminConfirmEditDialog
+      <ConfirmEditDialog
         open={isConfirmOpen}
         onOpenChange={setIsConfirmOpen}
         title="Confirm Resource Updates"

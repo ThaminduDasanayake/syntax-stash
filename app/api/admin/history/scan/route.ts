@@ -67,6 +67,173 @@ function cleanExtractedTitle(rawTitle: string, existingTitle: string): string {
   return rawTitle.trim();
 }
 
+function resolveUrl(relative: string | undefined | null, base: string): string {
+  if (!relative) return "";
+  try {
+    const raw = relative.trim();
+    if (raw.includes("scrapingbee.com")) {
+      const baseObj = new URL(base);
+      const urlObj = new URL(raw);
+      return `${baseObj.origin}${urlObj.pathname}${urlObj.search}`;
+    }
+    const resolved = new URL(raw, base).href;
+    if (resolved.includes("scrapingbee.com")) {
+      const baseObj = new URL(base);
+      const urlObj = new URL(resolved);
+      return `${baseObj.origin}${urlObj.pathname}${urlObj.search}`;
+    }
+    return resolved;
+  } catch {
+    return relative.trim();
+  }
+}
+
+function extractFavicon($: cheerio.CheerioAPI, baseUrl: string): string {
+  const candidates: { url: string; weight: number }[] = [];
+
+  const add = (href: string | undefined, weight: number) => {
+    if (!href) return;
+    const resolved = resolveUrl(href, baseUrl);
+    if (
+      resolved &&
+      (resolved.startsWith("http://") ||
+        resolved.startsWith("https://") ||
+        resolved.startsWith("data:"))
+    ) {
+      candidates.push({ url: resolved, weight });
+    }
+  };
+
+  // 1. Vector SVG icons (priority: dark SVG (110) > standard SVG (105) > light SVG (100))
+  $(
+    'link[rel="icon"][type="image/svg+xml"], link[rel="icon"][href*=".svg"], link[rel="shortcut icon"][type="image/svg+xml"], link[rel="shortcut icon"][href*=".svg"]',
+  ).each((_, el) => {
+    const href = $(el).attr("href") || "";
+    const media = ($(el).attr("media") || "").toLowerCase();
+    const hrefLower = href.toLowerCase();
+
+    const isDark = media.includes("dark") || hrefLower.includes("dark");
+    const isLight = media.includes("light") || hrefLower.includes("light");
+
+    if (isDark) {
+      add(href, 110);
+    } else if (isLight) {
+      add(href, 100);
+    } else {
+      add(href, 105);
+    }
+  });
+  // 2. Apple Touch Icon (priority 85)
+  $('link[rel="apple-touch-icon"], link[rel="apple-touch-icon-precomposed"]').each((_, el) => {
+    add($(el).attr("href"), 85);
+  });
+  // 3. PNG Favicon (priority 75)
+  $('link[rel="icon"][type="image/png"]').each((_, el) => {
+    add($(el).attr("href"), 75);
+  });
+  // 4. Standard Favicon (priority 60)
+  $('link[rel="icon"]').each((_, el) => {
+    add($(el).attr("href"), 60);
+  });
+  // 5. Shortcut Icon (priority 40)
+  $('link[rel="shortcut icon"]').each((_, el) => {
+    add($(el).attr("href"), 40);
+  });
+
+  if (candidates.length === 0) {
+    return "";
+  }
+  candidates.sort((a, b) => b.weight - a.weight);
+  return candidates[0].url;
+}
+
+function extractOgImage($: cheerio.CheerioAPI, baseUrl: string): string {
+  const candidates: { url: string; weight: number }[] = [];
+
+  const add = (href: string | undefined, weight: number) => {
+    if (!href) return;
+    const resolved = resolveUrl(href, baseUrl);
+    if (resolved && (resolved.startsWith("http://") || resolved.startsWith("https://"))) {
+      candidates.push({ url: resolved, weight });
+    }
+  };
+
+  // 1. OpenGraph image (highest priority 100)
+  const ogImg =
+    $('meta[property="og:image"]').attr("content") ||
+    $('meta[property="og:image:url"]').attr("content") ||
+    $('meta[property="og:image:secure_url"]').attr("content");
+  add(ogImg, 100);
+
+  // 2. Large OG image (priority 95)
+  const ogLarge = $('meta[property="og:image:large"]').attr("content");
+  add(ogLarge, 95);
+
+  // 3. Twitter image (priority 90 - fallback after OpenGraph)
+  const twImg =
+    $('meta[name="twitter:image"]').attr("content") ||
+    $('meta[name="twitter:image:src"]').attr("content") ||
+    $('meta[name="twitter:image:url"]').attr("content");
+  add(twImg, 90);
+
+  if (candidates.length === 0) {
+    return "";
+  }
+  candidates.sort((a, b) => b.weight - a.weight);
+  return candidates[0].url;
+}
+
+function compareAssetUrl(
+  storedUrl: string | null | undefined,
+  liveUrl: string | null | undefined,
+  assetName: "Favicon" | "OG Image",
+): { field: string; label: string; newValue: unknown; oldValue: unknown } | null {
+  const stored = storedUrl?.trim() || "";
+  const live = liveUrl?.trim() || "";
+
+  if (!live) return null;
+
+  if (!stored) {
+    return {
+      field: assetName === "Favicon" ? "favicon" : "ogImage",
+      label: `Remote ${assetName} Discovered`,
+      newValue: live,
+      oldValue: "— (None)",
+    };
+  }
+
+  if (stored === live) return null;
+
+  const [storedBase, storedQuery] = stored.split("?");
+  const [liveBase, liveQuery] = live.split("?");
+
+  if (storedBase === liveBase) {
+    if (liveQuery && !storedQuery) {
+      return {
+        field: assetName === "Favicon" ? "favicon" : "ogImage",
+        label: `${assetName} Query String Missing (?${liveQuery.slice(0, 45)}${liveQuery.length > 45 ? "..." : ""})`,
+        newValue: live,
+        oldValue: stored,
+      };
+    }
+    if (storedQuery && liveQuery && storedQuery !== liveQuery) {
+      return {
+        field: assetName === "Favicon" ? "favicon" : "ogImage",
+        label: `${assetName} Query/Version Updated`,
+        newValue: live,
+        oldValue: stored,
+      };
+    }
+  }
+
+  return {
+    field: assetName === "Favicon" ? "favicon" : "ogImage",
+    label: `Remote ${assetName} Changed`,
+    newValue: live,
+    oldValue: stored,
+  };
+}
+
 async function runPool<T, R>(
   items: T[],
   concurrency: number,
@@ -108,6 +275,8 @@ export async function POST(request: NextRequest) {
         id: resource.id,
         title: resource.title,
         description: resource.description,
+        favicon: resource.favicon,
+        ogImage: resource.ogImage,
         url: resource.url,
       })
       .from(resource)
@@ -180,14 +349,8 @@ export async function POST(request: NextRequest) {
           const html = await res.text();
           const $ = cheerio.load(html);
 
+          // 1. Title Drift Check
           const rawTitle = $("title").first().text().trim();
-          const metaDesc = (
-            $('meta[name="description"]').attr("content") ||
-            $('meta[property="og:description"]').attr("content") ||
-            $('meta[name="twitter:description"]').attr("content") ||
-            ""
-          ).trim();
-
           if (rawTitle) {
             const cleanedLiveTitle = cleanExtractedTitle(rawTitle, r.title);
             const normCleaned = normalizeText(cleanedLiveTitle);
@@ -208,6 +371,14 @@ export async function POST(request: NextRequest) {
             }
           }
 
+          // 2. Description Drift Check
+          const metaDesc = (
+            $('meta[name="description"]').attr("content") ||
+            $('meta[property="og:description"]').attr("content") ||
+            $('meta[name="twitter:description"]').attr("content") ||
+            ""
+          ).trim();
+
           if (metaDesc && r.description) {
             const normLiveDesc = normalizeText(metaDesc);
             const normStoredDesc = normalizeText(r.description);
@@ -226,6 +397,20 @@ export async function POST(request: NextRequest) {
                 oldValue: r.description.slice(0, 300),
               });
             }
+          }
+
+          // 3. Favicon Drift & Stripped Query String Check
+          const liveFavicon = extractFavicon($, targetUrl);
+          const faviconDiff = compareAssetUrl(r.favicon, liveFavicon, "Favicon");
+          if (faviconDiff) {
+            diffs.push(faviconDiff);
+          }
+
+          // 4. OG Image Drift & Stripped Query String Check
+          const liveOgImage = extractOgImage($, targetUrl);
+          const ogImageDiff = compareAssetUrl(r.ogImage, liveOgImage, "OG Image");
+          if (ogImageDiff) {
+            diffs.push(ogImageDiff);
           }
         }
       } catch (err: unknown) {

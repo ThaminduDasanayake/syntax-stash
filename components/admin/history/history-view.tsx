@@ -124,10 +124,7 @@ function getAlertBadgeStyle(action: ActivityLogItem["action"]) {
   }
 }
 
-export function AdminHistoryClient({
-  initialItems = [],
-  initialTotal = 0,
-}: AdminHistoryClientProps) {
+export function HistoryView({ initialItems = [], initialTotal = 0 }: AdminHistoryClientProps) {
   const [items, setItems] = useState<ActivityLogItem[]>(initialItems);
   const [total, setTotal] = useState(initialTotal);
   const [alertFilter, setAlertFilter] = useState("all");
@@ -171,7 +168,9 @@ export function AdminHistoryClient({
   const handleScanCatalog = async () => {
     try {
       setIsScanning(true);
-      toast.info("Scanning live website URLs for title/description drift and link health...");
+      toast.info(
+        "Scanning live website URLs for title, description, favicon & OG image drift, and link health...",
+      );
 
       const res = await fetch("/api/admin/history/scan", {
         method: "POST",
@@ -499,30 +498,41 @@ export function AdminHistoryClient({
 
                       {/* Diff Entries */}
                       <div className="space-y-2">
-                        {(isExpanded ? diffs : diffs.slice(0, 2)).map((diff, idx) => (
-                          <div
-                            key={idx}
-                            className="bg-background/80 border-line/40 grid grid-cols-1 gap-2 rounded border p-2 text-[11px] sm:grid-cols-12 sm:items-center"
-                          >
-                            <span className="text-foreground font-bold uppercase sm:col-span-3">
-                              {diff.label || diff.field}:
-                            </span>
-                            <div className="flex flex-wrap items-center gap-2 sm:col-span-9">
-                              <span className="max-w-xs truncate rounded border border-rose-500/20 bg-rose-500/10 px-1.5 py-0.5 text-[10px] text-rose-700">
-                                <strong className="font-semibold opacity-75">Stored:</strong>{" "}
-                                {formatDiffValue(diff.oldValue)}
+                        {(isExpanded ? diffs : diffs.slice(0, 2)).map((diff, idx) => {
+                          const oldStr = formatDiffValue(diff.oldValue);
+                          const newStr = formatDiffValue(diff.newValue);
+
+                          return (
+                            <div
+                              key={idx}
+                              className="bg-background/80 border-line/40 grid grid-cols-1 gap-2 rounded border p-2 text-[11px] sm:grid-cols-12 sm:items-center"
+                            >
+                              <span className="text-foreground font-bold uppercase sm:col-span-4">
+                                {diff.label || diff.field}:
                               </span>
-                              <ArrowRightIcon
-                                weight="bold"
-                                className="text-muted-foreground size-3 shrink-0"
-                              />
-                              <span className="max-w-xs truncate rounded border border-emerald-500/20 bg-emerald-500/10 px-1.5 py-0.5 text-[10px] font-bold text-emerald-700">
-                                <strong className="font-semibold opacity-75">Live:</strong>{" "}
-                                {formatDiffValue(diff.newValue)}
-                              </span>
+                              <div className="flex flex-wrap items-center gap-2 sm:col-span-8">
+                                <span
+                                  className="max-w-xs truncate rounded border border-rose-500/20 bg-rose-500/10 px-1.5 py-0.5 text-[10px] text-rose-700"
+                                  title={oldStr}
+                                >
+                                  <strong className="font-semibold opacity-75">Stored:</strong>{" "}
+                                  {oldStr}
+                                </span>
+                                <ArrowRightIcon
+                                  weight="bold"
+                                  className="text-muted-foreground size-3 shrink-0"
+                                />
+                                <span
+                                  className="max-w-xs truncate rounded border border-emerald-500/20 bg-emerald-500/10 px-1.5 py-0.5 text-[10px] font-bold text-emerald-700"
+                                  title={newStr}
+                                >
+                                  <strong className="font-semibold opacity-75">Live:</strong>{" "}
+                                  {newStr}
+                                </span>
+                              </div>
                             </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     </div>
                   </div>

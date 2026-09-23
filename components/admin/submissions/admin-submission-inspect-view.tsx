@@ -18,7 +18,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { toast } from "sonner";
 
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
@@ -44,12 +44,8 @@ import { useCategories } from "@/hooks/use-categories";
 import { Submission } from "@/lib/db/schema";
 import { cn, isValidHttpUrl } from "@/lib/utils";
 
-import {
-  AdminConfirmEditDialog,
-  computeFieldChanges,
-  FieldDiff,
-} from "./admin-confirm-edit-dialog";
-import { STATUS_CONFIG, STATUS_OPTIONS, SubmissionStatus } from "./types";
+import { computeFieldChanges, ConfirmEditDialog, FieldDiff } from "../shared/confirm-edit-dialog";
+import { STATUS_CONFIG, STATUS_OPTIONS, SubmissionStatus } from "../shared/types";
 
 const SUBMISSION_FIELD_LABELS: Record<string, string> = {
   title: "Title",
@@ -168,6 +164,7 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
   });
 
   const [isWorking, setIsWorking] = useState(false);
+  const [isNavigating, startTransition] = useTransition();
   const [isDetecting, setIsDetecting] = useState(false);
   const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
   const [ogImageOptions, setOgImageOptions] = useState<CandidateOption[]>([]);
@@ -428,7 +425,6 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
 
       const data = await res.json();
       if (res.ok && data.success) {
-        setIsConfirmOpen(false);
         const actionLabel =
           statusOverride === "approved"
             ? "approved & published to catalog"
@@ -436,8 +432,10 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
               ? "marked as rejected"
               : "saved";
         toast.success(`Submission "${editForm.title || sub.title}" ${actionLabel}!`);
-        router.push("/admin/submissions");
-        router.refresh();
+        startTransition(() => {
+          router.push("/admin/submissions");
+          router.refresh();
+        });
         return;
       } else {
         toast.error(data.error || "Failed to update submission.");
@@ -1257,19 +1255,19 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
       </div>
 
       {/* Confirmation Dialog for Submission Updates */}
-      <AdminConfirmEditDialog
+      <ConfirmEditDialog
         open={isConfirmOpen}
         onOpenChange={setIsConfirmOpen}
         title="Confirm Submission & Resource Synchronization"
         description="Review field updates before applying to the database and catalog."
         itemTitle={editForm.title || sub.title}
         changes={pendingChanges}
-        onConfirm={() => {
+        onConfirm={async () => {
           if (pendingAction) {
-            pendingAction();
+            await pendingAction();
           }
         }}
-        isWorking={isWorking}
+        isWorking={isWorking || isNavigating}
       />
 
       {/* Hold-to-Confirm Dialog for Deleting Submission */}

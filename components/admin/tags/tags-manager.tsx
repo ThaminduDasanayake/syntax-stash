@@ -4,11 +4,11 @@ import { ArrowsClockwiseIcon, TagIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
-import { AdminTableRowActions } from "@/components/admin/admin-table-row-actions";
-import { AdminTagDialog } from "@/components/admin/admin-tag-dialog";
-import { AdminToolbar } from "@/components/admin/admin-toolbar";
-import { FilterSelect } from "@/components/admin/filter-select";
-import { SortSelect } from "@/components/admin/sort-select";
+import { AdminToolbar } from "@/components/admin/layout/admin-toolbar";
+import { TableRowActions } from "@/components/admin/resources/table-row-actions";
+import { FilterSelect } from "@/components/admin/shared/filter-select";
+import { SortSelect } from "@/components/admin/shared/sort-select";
+import { TagDialog } from "@/components/admin/tags/tag-dialog";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { invalidateTagCache } from "@/components/submissions/tag-picker";
 import { AddButton } from "@/components/ui/add-button";
@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 
-export interface AdminTagItem {
+export interface TagItem {
   createdAt?: Date | string;
   id: string;
   name: string;
@@ -35,8 +35,8 @@ export interface AdminTagItem {
   updatedAt?: Date | string;
 }
 
-interface AdminTagsClientProps {
-  initialTags: AdminTagItem[];
+interface TagsClientProps {
+  initialTags: TagItem[];
 }
 
 const FILTER_OPTIONS = [
@@ -54,8 +54,8 @@ const SORT_OPTIONS = [
   { label: "Recently Updated", value: "updated-desc" },
 ];
 
-export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
-  const [tags, setTags] = useState<AdminTagItem[]>(initialTags);
+export function TagsManager({ initialTags = [] }: TagsClientProps) {
+  const [tags, setTags] = useState<TagItem[]>(initialTags);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterMode, setFilterMode] = useState<string>("all");
   const [sortBy, setSortBy] = useState<string>("usage-desc");
@@ -63,8 +63,8 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
 
   // Dialog state
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editingTag, setEditingTag] = useState<AdminTagItem | null>(null);
-  const [deletingTag, setDeletingTag] = useState<AdminTagItem | null>(null);
+  const [editingTag, setEditingTag] = useState<TagItem | null>(null);
+  const [deletingTag, setDeletingTag] = useState<TagItem | null>(null);
 
   // Filter & Sort
   const filteredAndSortedTags = useMemo(() => {
@@ -138,7 +138,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
   };
 
   // Open Edit Dialog
-  const handleOpenEdit = (tagItem: AdminTagItem) => {
+  const handleOpenEdit = (tagItem: TagItem) => {
     setEditingTag(tagItem);
     setIsDialogOpen(true);
   };
@@ -288,7 +288,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
-                    <AdminTableRowActions
+                    <TableRowActions
                       copyJsonText={() => JSON.stringify(tagItem, null, 2)}
                       copyJsonTitle={`Copy JSON for #${tagItem.name}`}
                       onEdit={() => handleOpenEdit(tagItem)}
@@ -305,7 +305,7 @@ export function AdminTagsClient({ initialTags = [] }: AdminTagsClientProps) {
       )}
 
       {/* Add / Edit Tag Dialog */}
-      <AdminTagDialog
+      <TagDialog
         open={isDialogOpen}
         onOpenChange={setIsDialogOpen}
         tag={editingTag}

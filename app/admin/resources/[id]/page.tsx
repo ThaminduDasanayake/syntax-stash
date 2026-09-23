@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { AdminResourceForm } from "@/components/admin/admin-resource-form";
+import { ResourceForm } from "@/components/admin/resources/resource-form";
 import { db } from "@/lib/db";
 import { author, category, resource, resourceAuthor, resourceTag, tag } from "@/lib/db/schema";
 
@@ -78,5 +78,5 @@ export default async function AdminEditResourcePage({ params }: EditPageProps) {
     updatedAt: first.updatedAt.toISOString(),
   };
 
-  return <AdminResourceForm initialData={initialData} mode="edit" />;
+  return <ResourceForm initialData={initialData} mode="edit" />;
 }

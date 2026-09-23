@@ -16,7 +16,7 @@ export interface AdminPaginationProps {
   totalPages: number;
 }
 
-export function AdminPagination({
+export function Pagination({
   className,
   currentPage,
   itemsPerPage,

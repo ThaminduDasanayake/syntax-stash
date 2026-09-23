@@ -19,8 +19,8 @@ import { CopyButton } from "@/components/ui/copy-button";
 import { Submission } from "@/lib/db/schema";
 import { cn, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
 
-import { STATUS_CONFIG, SubmissionStatus } from "./types";
-import { generateTsCode } from "./utils";
+import { STATUS_CONFIG, SubmissionStatus } from "../shared/types";
+import { generateTsCode } from "../shared/utils";
 
 interface AdminSubmissionCardProps {
   isWorking: boolean;

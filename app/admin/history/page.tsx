@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { AdminHistoryClient } from "@/components/admin/admin-history-client";
+import { HistoryView } from "@/components/admin/history/history-view";
 import { isAdmin } from "@/lib/admin";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
@@ -36,8 +36,8 @@ export default async function AdminHistoryPage() {
   }));
 
   return (
-    <AdminHistoryClient
-      initialItems={items as import("@/components/admin/admin-history-client").ActivityLogItem[]}
+    <HistoryView
+      initialItems={items as import("@/components/admin/history/history-view").ActivityLogItem[]}
       initialTotal={Number(totalCountRow?.count) || 0}
     />
   );

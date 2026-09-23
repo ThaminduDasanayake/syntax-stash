@@ -15,8 +15,8 @@ import { CopyButton } from "@/components/ui/copy-button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { slugifyAuthor } from "@/lib/utils";
 
-import { AdminPingButton } from "./admin-ping-button";
-import { AdminResourceItem, HEALTH_STATUS_CONFIG } from "./types";
+import { PingButton } from "../shared/ping-button";
+import { AdminResourceItem, HEALTH_STATUS_CONFIG } from "../shared/types";
 
 interface AdminResourceCardProps {
   isApplyingRedirect?: boolean;
@@ -30,7 +30,7 @@ interface AdminResourceCardProps {
   resource: AdminResourceItem;
 }
 
-export function AdminResourceCard({
+export function ResourceCard({
   isApplyingRedirect = false,
   isCheckingHealth = false,
   isWorking = false,
@@ -145,7 +145,7 @@ export function AdminResourceCard({
 
           {/* Quick Ping Button */}
           {onCheckHealth && (
-            <AdminPingButton
+            <PingButton
               onClick={onCheckHealth}
               isChecking={isCheckingHealth}
               disabled={isWorking}

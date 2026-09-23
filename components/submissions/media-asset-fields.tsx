@@ -3,7 +3,7 @@
 import { WarningCircleIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
-import { CloudinaryUploadButton } from "@/components/admin/cloudinary-upload-button";
+import { CloudinaryUploadButton } from "@/components/admin/shared/cloudinary-upload-button";
 import { CardIcon } from "@/components/card-icon";
 import { Label } from "@/components/ui/label";
 import { useDebounce } from "@/hooks/use-debounce";

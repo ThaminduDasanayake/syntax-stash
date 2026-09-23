@@ -109,8 +109,33 @@ export function parseHeadHtml(rawHtml: string, baseUrl?: string): ExtractedMetad
     doc.querySelector('link[rel="icon"][type="image/png"]')?.getAttribute("href") ||
     doc.querySelector('link[rel="icon"]')?.getAttribute("href") ||
     null;
-  const faviconSvg =
-    doc.querySelector('link[rel="icon"][type="image/svg+xml"]')?.getAttribute("href") || null;
+  const findFaviconSvg = (): string | null => {
+    let darkSvg: string | null = null;
+    let defaultSvg: string | null = null;
+    let lightSvg: string | null = null;
+
+    doc
+      .querySelectorAll(
+        'link[rel="icon"][type="image/svg+xml"], link[rel="icon"][href*=".svg"], link[rel="shortcut icon"][type="image/svg+xml"], link[rel="shortcut icon"][href*=".svg"]',
+      )
+      .forEach((el) => {
+        const href = el.getAttribute("href") || "";
+        const media = (el.getAttribute("media") || "").toLowerCase();
+        const hrefLower = href.toLowerCase();
+
+        if (media.includes("dark") || hrefLower.includes("dark")) {
+          if (!darkSvg) darkSvg = href;
+        } else if (media.includes("light") || hrefLower.includes("light")) {
+          if (!lightSvg) lightSvg = href;
+        } else {
+          if (!defaultSvg) defaultSvg = href;
+        }
+      });
+
+    return darkSvg || defaultSvg || lightSvg;
+  };
+
+  const faviconSvg = findFaviconSvg();
 
   let logo: string | null = null;
   const scriptLdJsons = doc.querySelectorAll('script[type="application/ld+json"]');

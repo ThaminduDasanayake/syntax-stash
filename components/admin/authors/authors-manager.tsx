@@ -14,11 +14,11 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useMemo, useState } from "react";
 import { toast } from "sonner";
 
-import { AdminAuthorDialog } from "@/components/admin/admin-author-dialog";
-import { AdminPagination } from "@/components/admin/admin-pagination";
-import { AdminTableRowActions } from "@/components/admin/admin-table-row-actions";
-import { AdminToolbar } from "@/components/admin/admin-toolbar";
-import { SortSelect } from "@/components/admin/sort-select";
+import { AuthorDialog } from "@/components/admin/authors/author-dialog";
+import { AdminToolbar } from "@/components/admin/layout/admin-toolbar";
+import { TableRowActions } from "@/components/admin/resources/table-row-actions";
+import { Pagination } from "@/components/admin/shared/pagination";
+import { SortSelect } from "@/components/admin/shared/sort-select";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { invalidateAuthorCache } from "@/components/submissions/author-combobox";
 import { AddButton } from "@/components/ui/add-button";
@@ -528,7 +528,7 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
 
                   {/* Actions */}
                   <TableCell className="text-right">
-                    <AdminTableRowActions
+                    <TableRowActions
                       copyJsonText={() => JSON.stringify(authorItem, null, 2)}
                       copyJsonTitle={`Copy JSON for ${authorItem.name}`}
                       onEdit={() => handleOpenEdit(authorItem)}
@@ -575,7 +575,7 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
         </Table>
 
         {/* Pagination Controls */}
-        <AdminPagination
+        <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
           totalItems={filteredAndSortedAuthors.length}
@@ -585,7 +585,7 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
       </div>
 
       {/* Create / Edit Author Modal */}
-      <AdminAuthorDialog
+      <AuthorDialog
         open={isModalOpen}
         onOpenChange={setIsModalOpen}
         author={editingAuthor}
@@ -621,7 +621,7 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
   );
 }
 
-export function AdminAuthorsClient(props: AdminAuthorsClientProps) {
+export function AuthorsManager(props: AdminAuthorsClientProps) {
   return (
     <Suspense>
       <AdminAuthorsClientContent {...props} />

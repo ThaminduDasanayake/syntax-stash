@@ -4,15 +4,18 @@ import {
   ArrowLeftIcon,
   ArrowsClockwiseIcon,
   CircleNotchIcon,
+  EraserIcon,
   FloppyDiskIcon,
   PlusIcon,
 } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
+import { Suspense, useState, useTransition } from "react";
 import { toast } from "sonner";
 
+import { AuthorDialog } from "@/components/admin/authors/author-dialog";
+import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import {
   AuthorOption,
   AuthorSocialFields,
@@ -35,23 +38,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
 import { isValidHttpUrl } from "@/lib/utils";
 
-import { AdminAuthorDialog } from "./admin-author-dialog";
-import {
-  AdminConfirmEditDialog,
-  computeFieldChanges,
-  FieldDiff,
-} from "./admin-confirm-edit-dialog";
-import { AdminResourceItem } from "./types";
+import { computeFieldChanges, ConfirmEditDialog, FieldDiff } from "../shared/confirm-edit-dialog";
+import { AdminResourceItem } from "../shared/types";
 
 const RESOURCE_FIELD_LABELS: Record<string, string> = {
   title: "Title",
-  authorBlog: "Author Blog URL",
-  authorGithub: "Author GitHub",
-  authorLinkedin: "Author LinkedIn",
   authorName: "Creator / Author",
-  authorTwitter: "Author Twitter / X",
-  authorWebsite: "Author Website",
-  authorYoutube: "Author YouTube",
   category: "Category",
   description: "Description",
   favicon: "Favicon URL",
@@ -103,6 +95,7 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
 
   const [isDetecting, setIsDetecting] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isNavigating, startTransition] = useTransition();
   const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
   const [ogImageOptions, setOgImageOptions] = useState<CandidateOption[]>([]);
   const [suggestedAuthor, setSuggestedAuthor] = useState<SuggestedAuthorData | null>(null);
@@ -125,7 +118,38 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
 
   // Confirmation Dialog State
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isClearConfirmOpen, setIsClearConfirmOpen] = useState(false);
   const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
+
+  const handleClearAll = () => {
+    setFormData({
+      id: isEdit ? initialData?.id : undefined,
+      title: "",
+      authorBlog: "",
+      authorGithub: "",
+      authorId: null,
+      authorLinkedin: "",
+      authorName: "",
+      authorTwitter: "",
+      authorWebsite: "",
+      authorYoutube: "",
+      category: defaultCategory,
+      description: "",
+      favicon: "",
+      github: "",
+      iconBg: "dark",
+      ogImage: "",
+      subtitle: "",
+      tags: "",
+      url: "",
+    });
+    setFaviconOptions([]);
+    setOgImageOptions([]);
+    setSuggestedAuthor(null);
+    setDetectedUpdates({});
+    setDuplicateNotice(null);
+    toast.info("All form fields have been cleared.");
+  };
 
   const handleAuthorFieldChange = (field: keyof AuthorSocialValues, value: string) => {
     const fieldMapping: Record<keyof AuthorSocialValues, string> = {
@@ -367,14 +391,15 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
       const data = await res.json();
 
       if (res.ok && data.success) {
-        setIsConfirmOpen(false);
         toast.success(
           isEdit
             ? `"${formData.title}" updated successfully.`
             : `"${formData.title}" published to live catalog!`,
         );
-        router.push(returnUrl);
-        router.refresh();
+        startTransition(() => {
+          router.push(returnUrl);
+          router.refresh();
+        });
         return;
       } else {
         toast.error(data.error || "Failed to save resource.");
@@ -475,7 +500,19 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            onClick={() => setIsClearConfirmOpen(true)}
+            disabled={isSubmitting}
+            className="border-line hover:bg-destructive/10 hover:text-destructive hover:border-destructive/40 h-9 gap-1.5 px-3 text-xs font-bold uppercase transition-colors"
+          >
+            <EraserIcon weight="duotone" className="size-4" />
+            <span>Clear All</span>
+          </Button>
+
           <Button
             asChild
             size="sm"
@@ -814,7 +851,7 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
                   </div>
                 </div>
 
-                <div className="border-line border-t pt-4">
+                <div className="border-line space-y-2 border-t pt-4">
                   <Button
                     type="submit"
                     disabled={isSubmitting || (isEdit && !hasChanges)}
@@ -837,6 +874,18 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
                       </>
                     )}
                   </Button>
+
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setIsClearConfirmOpen(true)}
+                    disabled={isSubmitting}
+                    className="border-line hover:bg-destructive/10 hover:text-destructive hover:border-destructive/40 h-8 w-full gap-1.5 text-[11px] font-bold uppercase transition-colors"
+                  >
+                    <EraserIcon weight="duotone" className="size-3.5" />
+                    <span>Clear All Fields</span>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -845,7 +894,7 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
       </form>
 
       {/* Inline Create Author Modal */}
-      <AdminAuthorDialog
+      <AuthorDialog
         open={isCreateAuthorOpen}
         onOpenChange={(isOpen) => {
           setIsCreateAuthorOpen(isOpen);
@@ -884,21 +933,31 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
       />
 
       {/* Confirmation Dialog for Resource Edits */}
-      <AdminConfirmEditDialog
+      <ConfirmEditDialog
         open={isConfirmOpen}
         onOpenChange={setIsConfirmOpen}
         title="Confirm Resource Updates"
         itemTitle={formData.title || initialData?.title || "Resource"}
         changes={pendingChanges}
-        isWorking={isSubmitting}
+        isWorking={isSubmitting || isNavigating}
         onConfirm={executeSave}
         confirmLabel="Confirm & Save Resource"
+      />
+
+      {/* Hold-to-Confirm Dialog for Clearing All Form Fields */}
+      <ConfirmDialog
+        open={isClearConfirmOpen}
+        onOpenChange={setIsClearConfirmOpen}
+        onConfirm={handleClearAll}
+        title="Clear all form fields?"
+        description="Are you sure you want to clear all entered values, detected metadata, and author attributions in this form? This action cannot be undone."
+        confirmLabel="Hold to clear all"
       />
     </div>
   );
 }
 
-export function AdminResourceForm(props: AdminResourceFormProps) {
+export function ResourceForm(props: AdminResourceFormProps) {
   return (
     <Suspense>
       <AdminResourceFormContent {...props} />

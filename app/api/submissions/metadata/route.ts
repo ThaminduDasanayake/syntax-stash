@@ -102,10 +102,23 @@ function isPrivateIp(hostname: string): boolean {
 }
 
 function resolveUrl(relativeOrAbsolute: string, baseUrl: string): string {
+  if (!relativeOrAbsolute) return "";
   try {
-    return new URL(relativeOrAbsolute, baseUrl).href;
+    const raw = relativeOrAbsolute.trim();
+    if (raw.includes("scrapingbee.com")) {
+      const baseObj = new URL(baseUrl);
+      const urlObj = new URL(raw);
+      return `${baseObj.origin}${urlObj.pathname}${urlObj.search}`;
+    }
+    const resolved = new URL(raw, baseUrl).href;
+    if (resolved.includes("scrapingbee.com")) {
+      const baseObj = new URL(baseUrl);
+      const urlObj = new URL(resolved);
+      return `${baseObj.origin}${urlObj.pathname}${urlObj.search}`;
+    }
+    return resolved;
   } catch {
-    return relativeOrAbsolute;
+    return relativeOrAbsolute.trim();
   }
 }
 
@@ -406,6 +419,8 @@ export async function GET(request: NextRequest) {
 
     let response: Response | null = null;
 
+    let isScrapingBee = false;
+
     // 1. Attempt direct fetch with browser headers and exponential 429/503 retry backoff
     try {
       response = await fetchWithRetry(parsedUrl.href, {
@@ -425,6 +440,7 @@ export async function GET(request: NextRequest) {
         const sbResponse = await fetchWithRetry(scrapingBeeUrl, { redirect: "follow" });
         if (sbResponse.ok) {
           response = sbResponse;
+          isScrapingBee = true;
         }
       } catch {
         // ScrapingBee failed
@@ -433,7 +449,16 @@ export async function GET(request: NextRequest) {
 
     if (response && response.ok) {
       html = await response.text();
-      finalUrl = response.url || parsedUrl.href;
+      if (isScrapingBee) {
+        // ScrapingBee provides the actual target URL in spb-resolved-url header.
+        // Never use response.url when using ScrapingBee as response.url is https://app.scrapingbee.com/api/v1/...
+        const spbResolved =
+          response.headers.get("spb-resolved-url") ||
+          response.headers.get("x-scrapingbee-resolved-url");
+        finalUrl = spbResolved || parsedUrl.href;
+      } else {
+        finalUrl = response.url || parsedUrl.href;
+      }
     }
 
     // 3. If html could not be retrieved (e.g. 429 rate-limited or blocked without ScrapingBee key), provide resilient fallback metadata
@@ -691,9 +716,24 @@ export async function GET(request: NextRequest) {
       }
     };
 
-    // Vector SVG icons (highest priority)
-    $('link[rel="icon"][type="image/svg+xml"], link[rel="icon"][href*=".svg"]').each((_, el) => {
-      addFavicon($(el).attr("href"), "Vector SVG (Sharpest)", "SVG", 100);
+    // Vector SVG icons (prioritizing Dark SVG (110) > Default SVG (105) > Light SVG (100))
+    $(
+      'link[rel="icon"][type="image/svg+xml"], link[rel="icon"][href*=".svg"], link[rel="shortcut icon"][type="image/svg+xml"], link[rel="shortcut icon"][href*=".svg"]',
+    ).each((_, el) => {
+      const href = $(el).attr("href") || "";
+      const media = ($(el).attr("media") || "").toLowerCase();
+      const hrefLower = href.toLowerCase();
+
+      const isDark = media.includes("dark") || hrefLower.includes("dark");
+      const isLight = media.includes("light") || hrefLower.includes("light");
+
+      if (isDark) {
+        addFavicon(href, "Vector SVG (Dark Scheme)", "SVG", 110);
+      } else if (isLight) {
+        addFavicon(href, "Vector SVG (Light Scheme)", "SVG", 100);
+      } else {
+        addFavicon(href, "Vector SVG (Sharpest)", "SVG", 105);
+      }
     });
 
     // Apple touch icon (high resolution PNG)
@@ -767,7 +807,7 @@ export async function GET(request: NextRequest) {
     }));
     const favicon = faviconOptions[0]?.url || "";
 
-    // 5. OG Image Multi-Discovery & Quality Ranking
+    // 5. OG Image Multi-Discovery & Quality Ranking (OpenGraph > Twitter > JSON-LD > Thumbnail)
     const ogImageCandidates: { label: string; type: string; url: string; weight: number }[] = [];
     const seenOgImages = new Set<string>();
 
@@ -780,22 +820,23 @@ export async function GET(request: NextRequest) {
       }
     };
 
-    // Twitter image (typically 1200x630 summary card)
-    const twImg =
-      $('meta[name="twitter:image"]').attr("content") ||
-      $('meta[name="twitter:image:src"]').attr("content");
-    addOgImage(twImg, "Twitter Summary Card (1200x630 HD)", "Twitter", 95);
-
-    // OpenGraph image
+    // OpenGraph image (highest priority 100)
     const ogImg =
       $('meta[property="og:image"]').attr("content") ||
       $('meta[property="og:image:url"]').attr("content") ||
       $('meta[property="og:image:secure_url"]').attr("content");
-    addOgImage(ogImg, "OpenGraph Banner Image", "OpenGraph", 90);
+    addOgImage(ogImg, "OpenGraph Banner Image", "OpenGraph", 100);
 
-    // Large format OG Image
+    // Large format OG Image (priority 95)
     const ogImgLarge = $('meta[property="og:image:large"]').attr("content");
-    addOgImage(ogImgLarge, "Large Banner Image", "High-Res", 85);
+    addOgImage(ogImgLarge, "Large OpenGraph Banner Image", "High-Res", 95);
+
+    // Twitter image (typically 1200x630 summary card - fallback after OpenGraph, priority 90)
+    const twImg =
+      $('meta[name="twitter:image"]').attr("content") ||
+      $('meta[name="twitter:image:src"]').attr("content") ||
+      $('meta[name="twitter:image:url"]').attr("content");
+    addOgImage(twImg, "Twitter Summary Card (1200x630 HD)", "Twitter", 90);
 
     // JSON-LD Image
     addOgImage(jsonLdImage, "Structured Data (JSON-LD) Image", "JSON-LD", 75);

@@ -28,8 +28,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { useAuthors } from "@/hooks/use-authors";
 import { parseAuthors, slugifyAuthor } from "@/lib/utils";
 
-import { AdminPingButton } from "./admin-ping-button";
-import { AdminResourceItem } from "./types";
+import { PingButton } from "../shared/ping-button";
+import { AdminResourceItem } from "../shared/types";
 
 function getAuthorSocialLinks(
   authorName: string,
@@ -118,7 +118,7 @@ export interface AdminResourceTableProps {
   resources: AdminResourceItem[];
 }
 
-export function AdminResourceTable({
+export function ResourceTable({
   applyingRedirectId,
   checkingHealthId,
   isWorking = false,
@@ -267,7 +267,7 @@ export function AdminResourceTable({
                         {item.healthStatusCode ? ` (${item.healthStatusCode})` : ""}
                       </span>
                       {onCheckHealth && (
-                        <AdminPingButton
+                        <PingButton
                           showLabel={false}
                           isChecking={checkingHealthId === item.id}
                           onClick={() => onCheckHealth(item)}

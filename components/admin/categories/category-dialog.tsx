@@ -17,12 +17,8 @@ import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { cn, slugify } from "@/lib/utils";
 
-import { AdminCategoryItem } from "./admin-categories-client";
-import {
-  AdminConfirmEditDialog,
-  computeFieldChanges,
-  FieldDiff,
-} from "./admin-confirm-edit-dialog";
+import { computeFieldChanges, ConfirmEditDialog, FieldDiff } from "../shared/confirm-edit-dialog";
+import { AdminCategoryItem } from "./categories-manager";
 
 const CATEGORY_FIELD_LABELS: Record<string, string> = {
   name: "Category Name",
@@ -37,7 +33,7 @@ export interface AdminCategoryDialogProps {
   open: boolean;
 }
 
-function AdminCategoryDialogInner({
+function CategoryDialogInner({
   category,
   existingCategories = [],
   onCreated,
@@ -255,7 +251,7 @@ function AdminCategoryDialogInner({
       </DialogContent>
 
       {/* Confirmation Dialog for Category Updates */}
-      <AdminConfirmEditDialog
+      <ConfirmEditDialog
         open={isConfirmOpen}
         onOpenChange={setIsConfirmOpen}
         title="Confirm Category Updates"
@@ -269,11 +265,11 @@ function AdminCategoryDialogInner({
   );
 }
 
-export function AdminCategoryDialog(props: AdminCategoryDialogProps) {
+export function CategoryDialog(props: AdminCategoryDialogProps) {
   return (
     <Dialog open={props.open} onOpenChange={props.onOpenChange}>
       {props.open && (
-        <AdminCategoryDialogInner
+        <CategoryDialogInner
           key={props.category?.id || "new"}
           category={props.category}
           existingCategories={props.existingCategories}

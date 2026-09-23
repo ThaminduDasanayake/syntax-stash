@@ -68,14 +68,14 @@ export function DuplicateNotice({
 
   return (
     <div
-      className={`animate-in fade-in flex w-full max-w-full min-w-0 items-start justify-between gap-3 rounded-md border-[1.5px] border-amber-500/40 bg-amber-500/10 p-2.5 font-mono text-xs text-amber-600 dark:text-amber-400 ${className}`}
+      className={`animate-in fade-in flex w-full max-w-full min-w-0 items-start justify-between gap-3 rounded-md border-[1.5px] border-amber-500/40 bg-amber-500/10 p-2.5 font-mono text-xs text-amber-600 ${className}`}
     >
       <div className="flex min-w-0 flex-1 items-start gap-2">
         <WarningCircleIcon weight="fill" className="mt-0.5 size-4 shrink-0 text-amber-500" />
         <div className="min-w-0 flex-1 space-y-1">
           <p className="leading-snug font-semibold">{defaultTitle}</p>
           {defaultDescription && (
-            <div className="text-[11px] leading-relaxed break-words text-amber-700/90 dark:text-amber-300/90">
+            <div className="text-[11px] leading-relaxed wrap-break-word text-amber-700">
               {defaultDescription}
             </div>
           )}
@@ -85,7 +85,7 @@ export function DuplicateNotice({
                 href={activeLiveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 hover:underline dark:text-amber-200"
+                className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 hover:underline"
               >
                 <span>View live URL</span>
                 <ArrowSquareOutIcon className="size-3" />
@@ -99,7 +99,7 @@ export function DuplicateNotice({
         <button
           type="button"
           onClick={onDismiss}
-          className="shrink-0 cursor-pointer p-0.5 text-amber-600 hover:opacity-80 dark:text-amber-400"
+          className="shrink-0 cursor-pointer p-0.5 text-amber-600 hover:opacity-80"
           title="Dismiss notice"
         >
           <XIcon className="size-3.5" />
