@@ -1,10 +1,16 @@
 "use client";
 
-import { ArrowRightIcon, InfoIcon, ShieldCheckIcon, XIcon } from "@phosphor-icons/react";
+import {
+  ArrowRightIcon,
+  InfoIcon,
+  ShieldCheckIcon,
+  XIcon,
+} from "@phosphor-icons/react";
 import React from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { CopyButton } from "@/components/ui/copy-button";
 import {
   Dialog,
   DialogContent,
@@ -13,7 +19,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { cn } from "@/lib/utils";
+import { cn, isValidHttpUrl } from "@/lib/utils";
 
 export interface FieldDiff {
   field: string;
@@ -34,6 +40,70 @@ export interface AdminConfirmEditDialogProps {
   onOpenChange: (open: boolean) => void;
   open: boolean;
   title?: string;
+}
+
+export interface WordDiffToken {
+  text: string;
+  type: "added" | "removed" | "unchanged";
+}
+
+/**
+ * Computes word-level diffs preserving whitespace and punctuation.
+ */
+export function computeWordDiff(oldText: string, newText: string): WordDiffToken[] {
+  if (!oldText && !newText) return [];
+  if (!oldText) return [{ text: newText, type: "added" }];
+  if (!newText) return [{ text: oldText, type: "removed" }];
+
+  const tokenize = (str: string) => str.split(/(\s+|[^\w\s])/).filter(Boolean);
+  const aTokens = tokenize(oldText);
+  const bTokens = tokenize(newText);
+
+  const m = aTokens.length;
+  const n = bTokens.length;
+
+  const table: number[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      table[i][j] =
+        aTokens[i - 1] === bTokens[j - 1]
+          ? table[i - 1][j - 1] + 1
+          : Math.max(table[i - 1][j], table[i][j - 1]);
+    }
+  }
+
+  const result: WordDiffToken[] = [];
+  let i = m;
+  let j = n;
+
+  while (i > 0 || j > 0) {
+    if (i > 0 && j > 0 && aTokens[i - 1] === bTokens[j - 1]) {
+      result.push({ text: aTokens[i - 1], type: "unchanged" });
+      i--;
+      j--;
+    } else if (j > 0 && (i === 0 || table[i][j - 1] >= table[i - 1][j])) {
+      result.push({ text: bTokens[j - 1], type: "added" });
+      j--;
+    } else {
+      result.push({ text: aTokens[i - 1], type: "removed" });
+      i--;
+    }
+  }
+
+  result.reverse();
+
+  // Merge contiguous tokens of the same type
+  const merged: WordDiffToken[] = [];
+  for (const token of result) {
+    const last = merged[merged.length - 1];
+    if (last && last.type === token.type) {
+      last.text += token.text;
+    } else {
+      merged.push({ text: token.text, type: token.type });
+    }
+  }
+
+  return merged;
 }
 
 /**
@@ -60,6 +130,64 @@ function isDifferent(valA: unknown, valB: unknown): boolean {
   return normA !== normB;
 }
 
+const LINK_FIELD_NAMES = new Set([
+  "authorgithub",
+  "authortwitter",
+  "authorwebsite",
+  "avatar",
+  "banner",
+  "blog",
+  "favicon",
+  "github",
+  "image",
+  "linkedin",
+  "ogimage",
+  "previewurl",
+  "repo",
+  "repository",
+  "twitter",
+  "url",
+  "website",
+  "youtube",
+]);
+
+const SELECT_OR_BOOLEAN_FIELDS = new Set([
+  "category",
+  "iconbg",
+  "isapproved",
+  "isfeatured",
+  "isfree",
+  "isrejected",
+  "pricing",
+  "role",
+  "status",
+  "type",
+]);
+
+function isLinkField(field: string, valA: unknown, valB: unknown): boolean {
+  const normalizedField = field.toLowerCase().replace(/[-_]/g, "");
+  if (LINK_FIELD_NAMES.has(normalizedField)) return true;
+  if (
+    typeof valA === "string" &&
+    (isValidHttpUrl(valA) || valA.startsWith("http://") || valA.startsWith("https://"))
+  ) {
+    return true;
+  }
+  if (
+    typeof valB === "string" &&
+    (isValidHttpUrl(valB) || valB.startsWith("http://") || valB.startsWith("https://"))
+  ) {
+    return true;
+  }
+  return false;
+}
+
+function isSelectOrBooleanField(field: string, valA: unknown, valB: unknown): boolean {
+  if (typeof valA === "boolean" || typeof valB === "boolean") return true;
+  const normalizedField = field.toLowerCase().replace(/[-_]/g, "");
+  return SELECT_OR_BOOLEAN_FIELDS.has(normalizedField);
+}
+
 /**
  * Utility to compute list of changed fields between initial and current state.
  */
@@ -77,7 +205,7 @@ export function computeFieldChanges<T extends object>(
 
   for (const key of checkedKeys) {
     const label = fieldLabels[key];
-    if (!label) continue; // Only compare declared fields
+    if (!label) continue;
 
     const oldVal = initialObj[key];
     const newVal = currentObj[key];
@@ -126,7 +254,7 @@ export function AdminConfirmEditDialog({
         {/* Pinned Header */}
         <div className="border-line shrink-0 border-b-[1.5px] p-6 pb-4">
           <DialogHeader>
-            <div className="flex items-center gap-2 pr-6">
+            <div className="flex items-center gap-3 pr-6">
               <div className="bg-primary/10 text-primary border-primary/20 flex size-8 shrink-0 items-center justify-center rounded-md border-[1.5px]">
                 <ShieldCheckIcon weight="duotone" className="size-5" />
               </div>
@@ -138,7 +266,8 @@ export function AdminConfirmEditDialog({
                       variant="outline"
                       className="border-primary/40 bg-primary/10 text-primary text-[10px] font-bold"
                     >
-                      {changes.length} {changes.length === 1 ? "field modified" : "fields modified"}
+                      {changes.length}{" "}
+                      {changes.length === 1 ? "field modified" : "fields modified"}
                     </Badge>
                   )}
                 </DialogTitle>
@@ -153,7 +282,7 @@ export function AdminConfirmEditDialog({
           </DialogHeader>
         </div>
 
-        {/* Scrollable Body Only */}
+        {/* Scrollable Body: Single Unified View */}
         <div className="flex-1 space-y-3 overflow-y-auto p-6">
           {!hasChanges ? (
             <div className="border-line bg-surface/50 flex flex-col items-center justify-center gap-2 rounded-lg border-[1.5px] border-dashed p-8 text-center">
@@ -176,57 +305,129 @@ export function AdminConfirmEditDialog({
                   const isOldEmpty = oldFormatted.startsWith("—");
                   const isNewEmpty = newFormatted.startsWith("—");
 
+                  const isLink = isLinkField(change.field, change.oldValue, change.newValue);
+                  const isSelectOrBoolean = isSelectOrBooleanField(
+                    change.field,
+                    change.oldValue,
+                    change.newValue,
+                  );
+
+                  // If it's a link or select/boolean, show Old -> New comparison cards
+                  const showSideBySide = isLink || isSelectOrBoolean;
+
+                  // For text/prose, compute word-level diff
+                  const rawOld =
+                    change.oldValue === null || change.oldValue === undefined
+                      ? ""
+                      : String(change.oldValue);
+                  const rawNew =
+                    change.newValue === null || change.newValue === undefined
+                      ? ""
+                      : String(change.newValue);
+
+                  const wordTokens = !showSideBySide
+                    ? computeWordDiff(rawOld, rawNew)
+                    : null;
+
                   return (
-                    <div
-                      key={change.field}
-                      className="grid grid-cols-1 gap-2 p-3 sm:grid-cols-12 sm:items-center"
-                    >
-                      {/* Field Name */}
-                      <div className="sm:col-span-4">
-                        <span className="text-foreground font-bold tracking-tight uppercase">
-                          {change.label}
-                        </span>
-                        <span className="text-muted-foreground block text-[10px]">
-                          ({change.field})
-                        </span>
-                      </div>
-
-                      {/* Diff: Old → New */}
-                      <div className="flex flex-col gap-1.5 sm:col-span-8 sm:flex-row sm:items-center">
-                        {/* Old Value */}
-                        <div
-                          className={cn(
-                            "flex-1 rounded border-[1.5px] px-2.5 py-1.5 text-xs break-all",
-                            isOldEmpty
-                              ? "border-line bg-surface/80 text-muted-foreground italic"
-                              : "border-destructive/30 bg-destructive/10 text-destructive line-through",
-                          )}
-                          title="Previous Value"
-                        >
-                          <span className="block text-[10px] font-bold uppercase opacity-70">
-                            Old:
+                    <div key={change.field} className="space-y-2 p-3.5">
+                      {/* Field Label & Action Buttons */}
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-foreground font-bold tracking-tight uppercase">
+                            {change.label}
                           </span>
-                          <span>{oldFormatted}</span>
+                          <span className="text-muted-foreground text-[10px]">
+                            ({change.field})
+                          </span>
                         </div>
 
-                        <ArrowRightIcon className="text-muted-foreground hidden size-3.5 shrink-0 sm:block" />
-
-                        {/* New Value */}
-                        <div
-                          className={cn(
-                            "flex-1 rounded border-[1.5px] px-2.5 py-1.5 text-xs break-all",
-                            isNewEmpty
-                              ? "border-line bg-surface/80 text-muted-foreground italic"
-                              : "border-emerald-500/40 bg-emerald-500/10 font-bold text-emerald-700 dark:text-emerald-300",
-                          )}
-                          title="New Value"
-                        >
-                          <span className="block text-[10px] font-bold uppercase opacity-70">
-                            New:
-                          </span>
-                          <span>{newFormatted}</span>
+                        {/* Quick Copy Action */}
+                        <div className="flex items-center gap-1.5">
+                          <CopyButton
+                            textToCopy={newFormatted.startsWith("—") ? oldFormatted : newFormatted}
+                            iconOnly
+                            size="icon-xs"
+                            className="size-5 rounded"
+                            title="Copy new value"
+                          />
                         </div>
                       </div>
+
+                      {/* Content: Old -> New for Links/Selects vs Word-level Diff for Text */}
+                      {showSideBySide ? (
+                        /* Links, URLs, Select Options, Booleans: Old -> New Cards */
+                        <div className="flex flex-col gap-1.5 sm:flex-row sm:items-center">
+                          {/* Old Value */}
+                          <div
+                            className={cn(
+                              "flex-1 rounded border-[1.5px] px-2.5 py-1.5 text-xs break-all",
+                              isOldEmpty
+                                ? "border-line bg-surface/80 text-muted-foreground italic"
+                                : "border-destructive/30 bg-destructive/10 text-destructive line-through",
+                            )}
+                            title="Previous Value"
+                          >
+                            <span className="block text-[10px] font-bold uppercase opacity-70">
+                              Old:
+                            </span>
+                            <span>{oldFormatted}</span>
+                          </div>
+
+                          <ArrowRightIcon className="text-muted-foreground hidden size-3.5 shrink-0 sm:block" />
+
+                          {/* New Value */}
+                          <div
+                            className={cn(
+                              "flex-1 rounded border-[1.5px] px-2.5 py-1.5 text-xs break-all",
+                              isNewEmpty
+                                ? "border-line bg-surface/80 text-muted-foreground italic"
+                                : "border-emerald-500/40 bg-emerald-500/10 font-bold text-emerald-700 dark:text-emerald-300",
+                            )}
+                            title="New Value"
+                          >
+                            <span className="block text-[10px] font-bold uppercase opacity-70">
+                              New:
+                            </span>
+                            <span>{newFormatted}</span>
+                          </div>
+                        </div>
+                      ) : (
+                        /* Text / Prose / Descriptions: Inline Word-level Diff */
+                        <div className="border-line bg-surface/80 rounded border-[1.5px] p-2.5 text-xs leading-relaxed break-words font-mono">
+                          {wordTokens && wordTokens.length > 0 ? (
+                            wordTokens.map((token, tIdx) => {
+                              if (token.type === "added") {
+                                return (
+                                  <span
+                                    key={tIdx}
+                                    className="bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-bold px-1 py-0.5 rounded mx-0.5 inline-block"
+                                  >
+                                    {token.text}
+                                  </span>
+                                );
+                              }
+                              if (token.type === "removed") {
+                                return (
+                                  <span
+                                    key={tIdx}
+                                    className="bg-destructive/15 text-destructive line-through px-1 py-0.5 rounded mx-0.5 inline-block opacity-80"
+                                  >
+                                    {token.text}
+                                  </span>
+                                );
+                              }
+                              return (
+                                <span key={tIdx} className="text-foreground">
+                                  {token.text}
+                                </span>
+                              );
+                            })
+                          ) : (
+                            <span className="text-muted-foreground italic">— (None)</span>
+                          )}
+                        </div>
+                      )}
                     </div>
                   );
                 })}
