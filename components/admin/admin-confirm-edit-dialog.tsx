@@ -454,7 +454,7 @@ export function AdminConfirmEditDialog({
                 try {
                   setLocalBusy(true);
                   await onConfirm();
-                } catch {
+                } finally {
                   setLocalBusy(false);
                 }
               }}

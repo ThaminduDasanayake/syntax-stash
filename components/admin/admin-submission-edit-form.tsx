@@ -130,7 +130,9 @@ export function AdminSubmissionEditForm({
   // Confirmation Dialog State
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
-  const [pendingSaveAction, setPendingSaveAction] = useState<(() => void) | null>(null);
+  const [pendingSaveAction, setPendingSaveAction] = useState<(() => Promise<void> | void) | null>(
+    null,
+  );
 
   const handleRequestSave = (status?: "approved" | "rejected" | "pending") => {
     const updatedPayload: Partial<Submission> = {
@@ -139,13 +141,15 @@ export function AdminSubmissionEditForm({
     };
     const diffs = computeFieldChanges(sub, updatedPayload, SUBMISSION_FIELD_LABELS);
     setPendingChanges(diffs);
-    setPendingSaveAction(() => () => onSave(sub.id, editForm, status));
+    setPendingSaveAction(() => async () => {
+      await onSave(sub.id, editForm, status);
+    });
     setIsConfirmOpen(true);
   };
 
-  const handleConfirmSave = () => {
+  const handleConfirmSave = async () => {
     if (pendingSaveAction) {
-      pendingSaveAction();
+      await pendingSaveAction();
     }
     setIsConfirmOpen(false);
   };

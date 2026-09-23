@@ -1264,9 +1264,9 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
         description="Review field updates before applying to the database and catalog."
         itemTitle={editForm.title || sub.title}
         changes={pendingChanges}
-        onConfirm={() => {
+        onConfirm={async () => {
           if (pendingAction) {
-            pendingAction();
+            await pendingAction();
           }
         }}
         isWorking={isWorking}
