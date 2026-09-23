@@ -14,10 +14,10 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useMemo, useState } from "react";
 import { toast } from "sonner";
 
-import { AdminAuthorDialog } from "@/components/admin/admin-author-dialog";
 import { AdminPagination } from "@/components/admin/admin-pagination";
 import { AdminTableRowActions } from "@/components/admin/admin-table-row-actions";
 import { AdminToolbar } from "@/components/admin/admin-toolbar";
+import { AuthorDialog } from "@/components/admin/authors/author-dialog";
 import { SortSelect } from "@/components/admin/sort-select";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { invalidateAuthorCache } from "@/components/submissions/author-combobox";
@@ -585,7 +585,7 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
       </div>
 
       {/* Create / Edit Author Modal */}
-      <AdminAuthorDialog
+      <AuthorDialog
         open={isModalOpen}
         onOpenChange={setIsModalOpen}
         author={editingAuthor}
@@ -621,7 +621,7 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
   );
 }
 
-export function AdminAuthorsClient(props: AdminAuthorsClientProps) {
+export function AuthorsManager(props: AdminAuthorsClientProps) {
   return (
     <Suspense>
       <AdminAuthorsClientContent {...props} />

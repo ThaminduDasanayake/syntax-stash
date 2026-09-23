@@ -1,7 +1,7 @@
 import { count, desc, eq } from "drizzle-orm";
 import type { Metadata } from "next";
 
-import { AdminTagsClient } from "@/components/admin/admin-tags-client";
+import { TagsManager } from "@/components/admin/tags/tags-manager";
 import { db } from "@/lib/db";
 import { resourceTag, tag } from "@/lib/db/schema";
 
@@ -33,5 +33,5 @@ export default async function AdminTagsPage() {
     toolCount: Number(r.toolCount) || 0,
   }));
 
-  return <AdminTagsClient initialTags={tags} />;
+  return <TagsManager initialTags={tags} />;
 }

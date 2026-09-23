@@ -14,6 +14,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState, useTransition } from "react";
 import { toast } from "sonner";
 
+import { AuthorDialog } from "@/components/admin/authors/author-dialog";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import {
   AuthorOption,
@@ -37,7 +38,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
 import { isValidHttpUrl } from "@/lib/utils";
 
-import { AdminAuthorDialog } from "./admin-author-dialog";
 import {
   AdminConfirmEditDialog,
   computeFieldChanges,
@@ -855,7 +855,7 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
                   </div>
                 </div>
 
-                <div className="border-line border-t pt-4 space-y-2">
+                <div className="border-line space-y-2 border-t pt-4">
                   <Button
                     type="submit"
                     disabled={isSubmitting || (isEdit && !hasChanges)}
@@ -898,7 +898,7 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
       </form>
 
       {/* Inline Create Author Modal */}
-      <AdminAuthorDialog
+      <AuthorDialog
         open={isCreateAuthorOpen}
         onOpenChange={(isOpen) => {
           setIsCreateAuthorOpen(isOpen);

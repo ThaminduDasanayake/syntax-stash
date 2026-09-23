@@ -3,6 +3,12 @@
 import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
 
+import { TagItem } from "@/components/admin";
+import {
+  AdminConfirmEditDialog,
+  computeFieldChanges,
+  FieldDiff,
+} from "@/components/admin/admin-confirm-edit-dialog";
 import { DuplicateNotice } from "@/components/submissions/duplicate-url-notice";
 import { FieldCheckmark } from "@/components/submissions/field-checkmark";
 import { invalidateTagCache } from "@/components/submissions/tag-picker";
@@ -18,25 +24,18 @@ import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { cn, normalizeTag } from "@/lib/utils";
 
-import {
-  AdminConfirmEditDialog,
-  computeFieldChanges,
-  FieldDiff,
-} from "./admin-confirm-edit-dialog";
-import { AdminTagItem } from "./admin-tags-client";
-
 const TAG_FIELD_LABELS: Record<string, string> = {
   name: "Tag Name",
   slug: "Tag Slug",
 };
 
-export interface AdminTagDialogProps {
-  existingTags?: AdminTagItem[];
-  onCreated?: (newTag: AdminTagItem) => void;
+export interface TagDialogProps {
+  existingTags?: TagItem[];
+  onCreated?: (newTag: TagItem) => void;
   onOpenChange: (open: boolean) => void;
-  onUpdated?: (updatedTag: AdminTagItem) => void;
+  onUpdated?: (updatedTag: TagItem) => void;
   open: boolean;
-  tag?: AdminTagItem | Partial<AdminTagItem> | null;
+  tag?: TagItem | Partial<TagItem> | null;
 }
 
 function AdminTagDialogInner({
@@ -45,7 +44,7 @@ function AdminTagDialogInner({
   onOpenChange,
   onUpdated,
   tag,
-}: Omit<AdminTagDialogProps, "open">) {
+}: Omit<TagDialogProps, "open">) {
   const isEdit = Boolean(tag?.id);
 
   const [formData, setFormData] = useState({
@@ -107,7 +106,7 @@ function AdminTagDialogInner({
           return;
         }
 
-        const updatedTag: AdminTagItem = {
+        const updatedTag: TagItem = {
           ...tag,
           id: tag.id,
           name: cleanName,
@@ -140,7 +139,7 @@ function AdminTagDialogInner({
           return;
         }
 
-        const newTag: AdminTagItem = {
+        const newTag: TagItem = {
           id: data.id,
           createdAt: new Date().toISOString(),
           name: cleanName,
@@ -161,7 +160,7 @@ function AdminTagDialogInner({
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     if (!formData.name.trim()) {
       toast.error("Tag name is required.");
@@ -320,7 +319,7 @@ function AdminTagDialogInner({
   );
 }
 
-export function AdminTagDialog(props: AdminTagDialogProps) {
+export function TagDialog(props: TagDialogProps) {
   return (
     <Dialog open={props.open} onOpenChange={props.onOpenChange}>
       {props.open && (

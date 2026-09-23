@@ -4,6 +4,7 @@ import { ArrowsClockwiseIcon, CircleNotchIcon, PlusIcon } from "@phosphor-icons/
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
+import { AuthorDialog } from "@/components/admin/authors/author-dialog";
 import {
   AuthorOption,
   AuthorSocialFields,
@@ -34,7 +35,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
 import { isValidHttpUrl } from "@/lib/utils";
 
-import { AdminAuthorDialog } from "./admin-author-dialog";
 import {
   AdminConfirmEditDialog,
   computeFieldChanges,
@@ -745,7 +745,7 @@ export function AdminResourceDialog({
       </DialogContent>
 
       {/* Inline Create Author Modal */}
-      <AdminAuthorDialog
+      <AuthorDialog
         open={isCreateAuthorOpen}
         onOpenChange={(isOpen) => {
           setIsCreateAuthorOpen(isOpen);

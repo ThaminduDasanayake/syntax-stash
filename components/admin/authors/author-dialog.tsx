@@ -6,6 +6,12 @@ import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import {
+  AdminAuthorItem,
+  AdminConfirmEditDialog,
+  computeFieldChanges,
+  FieldDiff,
+} from "@/components/admin";
+import {
   AuthorOption,
   fetchAuthorList,
   invalidateAuthorCache,
@@ -25,13 +31,6 @@ import {
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { cn, isValidHttpUrl, slugifyAuthor } from "@/lib/utils";
-
-import { AdminAuthorItem } from "./admin-authors-client";
-import {
-  AdminConfirmEditDialog,
-  computeFieldChanges,
-  FieldDiff,
-} from "./admin-confirm-edit-dialog";
 
 const AUTHOR_FIELD_LABELS: Record<string, string> = {
   blog: "Blog URL",
@@ -573,7 +572,7 @@ function AdminAuthorDialogInner({
   );
 }
 
-export function AdminAuthorDialog(props: AdminAuthorDialogProps) {
+export function AuthorDialog(props: AdminAuthorDialogProps) {
   return (
     <Dialog open={props.open} onOpenChange={props.onOpenChange}>
       {props.open && (

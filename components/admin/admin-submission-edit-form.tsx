@@ -14,6 +14,7 @@ import {
 import { useState } from "react";
 import { toast } from "sonner";
 
+import { AuthorDialog } from "@/components/admin/authors/author-dialog";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import {
   AuthorOption,
@@ -35,7 +36,6 @@ import { useCategories } from "@/hooks/use-categories";
 import { Submission } from "@/lib/db/schema";
 import { cn, isValidHttpUrl } from "@/lib/utils";
 
-import { AdminAuthorDialog } from "./admin-author-dialog";
 import {
   AdminConfirmEditDialog,
   computeFieldChanges,
@@ -749,7 +749,7 @@ export function AdminSubmissionEditForm({
       </div>
 
       {/* Inline Create Author Modal */}
-      <AdminAuthorDialog
+      <AuthorDialog
         open={isCreateAuthorOpen}
         onOpenChange={(isOpen) => {
           setIsCreateAuthorOpen(isOpen);
