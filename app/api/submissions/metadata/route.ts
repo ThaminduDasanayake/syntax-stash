@@ -102,10 +102,23 @@ function isPrivateIp(hostname: string): boolean {
 }
 
 function resolveUrl(relativeOrAbsolute: string, baseUrl: string): string {
+  if (!relativeOrAbsolute) return "";
   try {
-    return new URL(relativeOrAbsolute, baseUrl).href;
+    const raw = relativeOrAbsolute.trim();
+    if (raw.includes("scrapingbee.com")) {
+      const baseObj = new URL(baseUrl);
+      const urlObj = new URL(raw);
+      return `${baseObj.origin}${urlObj.pathname}${urlObj.search}`;
+    }
+    const resolved = new URL(raw, baseUrl).href;
+    if (resolved.includes("scrapingbee.com")) {
+      const baseObj = new URL(baseUrl);
+      const urlObj = new URL(resolved);
+      return `${baseObj.origin}${urlObj.pathname}${urlObj.search}`;
+    }
+    return resolved;
   } catch {
-    return relativeOrAbsolute;
+    return relativeOrAbsolute.trim();
   }
 }
 
@@ -406,6 +419,8 @@ export async function GET(request: NextRequest) {
 
     let response: Response | null = null;
 
+    let isScrapingBee = false;
+
     // 1. Attempt direct fetch with browser headers and exponential 429/503 retry backoff
     try {
       response = await fetchWithRetry(parsedUrl.href, {
@@ -425,6 +440,7 @@ export async function GET(request: NextRequest) {
         const sbResponse = await fetchWithRetry(scrapingBeeUrl, { redirect: "follow" });
         if (sbResponse.ok) {
           response = sbResponse;
+          isScrapingBee = true;
         }
       } catch {
         // ScrapingBee failed
@@ -433,7 +449,16 @@ export async function GET(request: NextRequest) {
 
     if (response && response.ok) {
       html = await response.text();
-      finalUrl = response.url || parsedUrl.href;
+      if (isScrapingBee) {
+        // ScrapingBee provides the actual target URL in spb-resolved-url header.
+        // Never use response.url when using ScrapingBee as response.url is https://app.scrapingbee.com/api/v1/...
+        const spbResolved =
+          response.headers.get("spb-resolved-url") ||
+          response.headers.get("x-scrapingbee-resolved-url");
+        finalUrl = spbResolved || parsedUrl.href;
+      } else {
+        finalUrl = response.url || parsedUrl.href;
+      }
     }
 
     // 3. If html could not be retrieved (e.g. 429 rate-limited or blocked without ScrapingBee key), provide resilient fallback metadata

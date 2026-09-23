@@ -70,7 +70,19 @@ function cleanExtractedTitle(rawTitle: string, existingTitle: string): string {
 function resolveUrl(relative: string | undefined | null, base: string): string {
   if (!relative) return "";
   try {
-    return new URL(relative.trim(), base).href;
+    const raw = relative.trim();
+    if (raw.includes("scrapingbee.com")) {
+      const baseObj = new URL(base);
+      const urlObj = new URL(raw);
+      return `${baseObj.origin}${urlObj.pathname}${urlObj.search}`;
+    }
+    const resolved = new URL(raw, base).href;
+    if (resolved.includes("scrapingbee.com")) {
+      const baseObj = new URL(base);
+      const urlObj = new URL(resolved);
+      return `${baseObj.origin}${urlObj.pathname}${urlObj.search}`;
+    }
+    return resolved;
   } catch {
     return relative.trim();
   }
