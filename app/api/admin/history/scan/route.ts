@@ -92,9 +92,24 @@ function extractFavicon($: cheerio.CheerioAPI, baseUrl: string): string {
     }
   };
 
-  // 1. Vector SVG (priority 100)
-  $('link[rel="icon"][type="image/svg+xml"], link[rel="icon"][href*=".svg"]').each((_, el) => {
-    add($(el).attr("href"), 100);
+  // 1. Vector SVG icons (priority: dark SVG (110) > standard SVG (105) > light SVG (100))
+  $(
+    'link[rel="icon"][type="image/svg+xml"], link[rel="icon"][href*=".svg"], link[rel="shortcut icon"][type="image/svg+xml"], link[rel="shortcut icon"][href*=".svg"]',
+  ).each((_, el) => {
+    const href = $(el).attr("href") || "";
+    const media = ($(el).attr("media") || "").toLowerCase();
+    const hrefLower = href.toLowerCase();
+
+    const isDark = media.includes("dark") || hrefLower.includes("dark");
+    const isLight = media.includes("light") || hrefLower.includes("light");
+
+    if (isDark) {
+      add(href, 110);
+    } else if (isLight) {
+      add(href, 100);
+    } else {
+      add(href, 105);
+    }
   });
   // 2. Apple Touch Icon (priority 85)
   $('link[rel="apple-touch-icon"], link[rel="apple-touch-icon-precomposed"]').each((_, el) => {
@@ -131,22 +146,23 @@ function extractOgImage($: cheerio.CheerioAPI, baseUrl: string): string {
     }
   };
 
-  // Twitter image (priority 95)
-  const twImg =
-    $('meta[name="twitter:image"]').attr("content") ||
-    $('meta[name="twitter:image:src"]').attr("content");
-  add(twImg, 95);
-
-  // OG image (priority 90)
+  // 1. OpenGraph image (highest priority 100)
   const ogImg =
     $('meta[property="og:image"]').attr("content") ||
     $('meta[property="og:image:url"]').attr("content") ||
     $('meta[property="og:image:secure_url"]').attr("content");
-  add(ogImg, 90);
+  add(ogImg, 100);
 
-  // Large OG image (priority 85)
+  // 2. Large OG image (priority 95)
   const ogLarge = $('meta[property="og:image:large"]').attr("content");
-  add(ogLarge, 85);
+  add(ogLarge, 95);
+
+  // 3. Twitter image (priority 90 - fallback after OpenGraph)
+  const twImg =
+    $('meta[name="twitter:image"]').attr("content") ||
+    $('meta[name="twitter:image:src"]').attr("content") ||
+    $('meta[name="twitter:image:url"]').attr("content");
+  add(twImg, 90);
 
   if (candidates.length === 0) {
     return "";
