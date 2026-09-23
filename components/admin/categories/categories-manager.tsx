@@ -14,6 +14,7 @@ import { Toolbar } from "@/components/admin/layout/toolbar";
 import { TableRowActions } from "@/components/admin/resources/table-row-actions";
 import { SortSelect } from "@/components/admin/shared/sort-select";
 import { CategoryItem } from "@/components/admin/shared/types";
+import { sortEntities } from "@/components/admin/shared/utils";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { AddButton } from "@/components/ui/add-button";
 import { Badge } from "@/components/ui/badge";
@@ -67,30 +68,7 @@ export function CategoriesManager({ initialCategories = [] }: CategoriesManagerP
       );
     }
 
-    const sorted = [...result];
-    if (sortBy === "name-asc") {
-      sorted.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (sortBy === "name-desc") {
-      sorted.sort((a, b) => b.name.localeCompare(a.name));
-    } else if (sortBy === "updated-desc") {
-      sorted.sort((a, b) => {
-        const timeA = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
-        const timeB = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
-        return timeB - timeA || a.name.localeCompare(b.name);
-      });
-    } else if (sortBy === "created-desc") {
-      sorted.sort((a, b) => {
-        const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
-        const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-        return timeB - timeA || a.name.localeCompare(b.name);
-      });
-    } else if (sortBy === "resources-desc") {
-      sorted.sort((a, b) => b.toolCount - a.toolCount || a.name.localeCompare(b.name));
-    } else if (sortBy === "resources-asc") {
-      sorted.sort((a, b) => a.toolCount - b.toolCount || a.name.localeCompare(b.name));
-    }
-
-    return sorted;
+    return sortEntities(result, sortBy);
   }, [categories, searchQuery, sortBy]);
 
   // Refresh

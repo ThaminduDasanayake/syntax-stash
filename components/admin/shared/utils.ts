@@ -81,3 +81,53 @@ export function itemToResource(item: ResourceItem): Resource {
     url: item.url,
   };
 }
+
+export interface SortableEntity {
+  createdAt?: Date | string | null;
+  name: string;
+  resourceCount?: number;
+  toolCount?: number;
+  updatedAt?: Date | string | null;
+}
+
+export function sortEntities<T extends SortableEntity>(
+  items: T[],
+  sortBy: string,
+): T[] {
+  const sorted = [...items];
+  const getCount = (item: T) => item.resourceCount ?? item.toolCount ?? 0;
+
+  switch (sortBy) {
+    case "resources-desc":
+    case "usage-desc":
+      return sorted.sort((a, b) => getCount(b) - getCount(a) || a.name.localeCompare(b.name));
+
+    case "resources-asc":
+    case "usage-asc":
+      return sorted.sort((a, b) => getCount(a) - getCount(b) || a.name.localeCompare(b.name));
+
+    case "updated-desc":
+      return sorted.sort((a, b) => {
+        const timeA = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
+        const timeB = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
+        return timeB - timeA || a.name.localeCompare(b.name);
+      });
+
+    case "created-desc":
+      return sorted.sort((a, b) => {
+        const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+        const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+        return timeB - timeA || a.name.localeCompare(b.name);
+      });
+
+    case "name-asc":
+      return sorted.sort((a, b) => a.name.localeCompare(b.name));
+
+    case "name-desc":
+      return sorted.sort((a, b) => b.name.localeCompare(a.name));
+
+    default:
+      return sorted;
+  }
+}
+

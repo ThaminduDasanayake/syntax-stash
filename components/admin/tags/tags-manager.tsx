@@ -9,6 +9,7 @@ import { TableRowActions } from "@/components/admin/resources/table-row-actions"
 import { FilterSelect } from "@/components/admin/shared/filter-select";
 import { SortSelect } from "@/components/admin/shared/sort-select";
 import { TagItem } from "@/components/admin/shared/types";
+import { sortEntities } from "@/components/admin/shared/utils";
 import { TagDialog } from "@/components/admin/tags/tag-dialog";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { invalidateTagCache } from "@/components/submissions/tag-picker";
@@ -77,31 +78,7 @@ export function TagsManager({ initialTags = [] }: TagsManagerProps) {
       result = result.filter((t) => t.toolCount === 0);
     }
 
-    // Sort
-    const sorted = [...result];
-    if (sortBy === "usage-desc") {
-      sorted.sort((a, b) => b.toolCount - a.toolCount || a.name.localeCompare(b.name));
-    } else if (sortBy === "usage-asc") {
-      sorted.sort((a, b) => a.toolCount - b.toolCount || a.name.localeCompare(b.name));
-    } else if (sortBy === "updated-desc") {
-      sorted.sort((a, b) => {
-        const timeA = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
-        const timeB = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
-        return timeB - timeA || a.name.localeCompare(b.name);
-      });
-    } else if (sortBy === "created-desc") {
-      sorted.sort((a, b) => {
-        const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
-        const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-        return timeB - timeA || a.name.localeCompare(b.name);
-      });
-    } else if (sortBy === "name-asc") {
-      sorted.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (sortBy === "name-desc") {
-      sorted.sort((a, b) => b.name.localeCompare(a.name));
-    }
-
-    return sorted;
+    return sortEntities(result, sortBy);
   }, [filterMode, searchQuery, sortBy, tags]);
 
   // Refresh
