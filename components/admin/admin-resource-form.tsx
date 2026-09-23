@@ -4,6 +4,7 @@ import {
   ArrowLeftIcon,
   ArrowsClockwiseIcon,
   CircleNotchIcon,
+  EraserIcon,
   FloppyDiskIcon,
   PlusIcon,
 } from "@phosphor-icons/react";
@@ -13,6 +14,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { toast } from "sonner";
 
+import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import {
   AuthorOption,
   AuthorSocialFields,
@@ -119,7 +121,38 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
 
   // Confirmation Dialog State
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isClearConfirmOpen, setIsClearConfirmOpen] = useState(false);
   const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
+
+  const handleClearAll = () => {
+    setFormData({
+      id: isEdit ? initialData?.id : undefined,
+      title: "",
+      authorBlog: "",
+      authorGithub: "",
+      authorId: null,
+      authorLinkedin: "",
+      authorName: "",
+      authorTwitter: "",
+      authorWebsite: "",
+      authorYoutube: "",
+      category: defaultCategory,
+      description: "",
+      favicon: "",
+      github: "",
+      iconBg: "dark",
+      ogImage: "",
+      subtitle: "",
+      tags: "",
+      url: "",
+    });
+    setFaviconOptions([]);
+    setOgImageOptions([]);
+    setSuggestedAuthor(null);
+    setDetectedUpdates({});
+    setDuplicateNotice(null);
+    toast.info("All form fields have been cleared.");
+  };
 
   const handleAuthorFieldChange = (field: keyof AuthorSocialValues, value: string) => {
     const fieldMapping: Record<keyof AuthorSocialValues, string> = {
@@ -469,7 +502,19 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            onClick={() => setIsClearConfirmOpen(true)}
+            disabled={isSubmitting}
+            className="border-line hover:bg-destructive/10 hover:text-destructive hover:border-destructive/40 h-9 gap-1.5 px-3 text-xs font-bold uppercase transition-colors"
+          >
+            <EraserIcon weight="duotone" className="size-4" />
+            <span>Clear All</span>
+          </Button>
+
           <Button
             asChild
             size="sm"
@@ -808,7 +853,7 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
                   </div>
                 </div>
 
-                <div className="border-line border-t pt-4">
+                <div className="border-line border-t pt-4 space-y-2">
                   <Button
                     type="submit"
                     disabled={isSubmitting || (isEdit && !hasChanges)}
@@ -830,6 +875,18 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
                         <span>Publish Resource</span>
                       </>
                     )}
+                  </Button>
+
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setIsClearConfirmOpen(true)}
+                    disabled={isSubmitting}
+                    className="border-line hover:bg-destructive/10 hover:text-destructive hover:border-destructive/40 h-8 w-full gap-1.5 text-[11px] font-bold uppercase transition-colors"
+                  >
+                    <EraserIcon weight="duotone" className="size-3.5" />
+                    <span>Clear All Fields</span>
                   </Button>
                 </div>
               </div>
@@ -887,6 +944,16 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
         isWorking={isSubmitting}
         onConfirm={executeSave}
         confirmLabel="Confirm & Save Resource"
+      />
+
+      {/* Hold-to-Confirm Dialog for Clearing All Form Fields */}
+      <ConfirmDialog
+        open={isClearConfirmOpen}
+        onOpenChange={setIsClearConfirmOpen}
+        onConfirm={handleClearAll}
+        title="Clear all form fields?"
+        description="Are you sure you want to clear all entered values, detected metadata, and author attributions in this form? This action cannot be undone."
+        confirmLabel="Hold to clear all"
       />
     </div>
   );

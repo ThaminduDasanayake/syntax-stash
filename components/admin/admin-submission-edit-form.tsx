@@ -5,13 +5,16 @@ import {
   ArrowsClockwiseIcon,
   CheckCircleIcon,
   CircleNotchIcon,
+  EraserIcon,
   FloppyDiskIcon,
   PencilSimpleIcon,
   TrashIcon,
   XIcon,
 } from "@phosphor-icons/react";
 import { useState } from "react";
+import { toast } from "sonner";
 
+import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import {
   AuthorOption,
   AuthorSocialFields,
@@ -129,10 +132,42 @@ export function AdminSubmissionEditForm({
 
   // Confirmation Dialog State
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isClearConfirmOpen, setIsClearConfirmOpen] = useState(false);
   const [pendingChanges, setPendingChanges] = useState<FieldDiff[]>([]);
   const [pendingSaveAction, setPendingSaveAction] = useState<(() => Promise<void> | void) | null>(
     null,
   );
+
+  const handleClearAll = () => {
+    setEditForm({
+      title: "",
+      adminNotes: "",
+      author: "",
+      authorBlog: "",
+      authorGitHub: "",
+      authorLinkedIn: "",
+      authorTwitter: "",
+      authorWebsite: "",
+      authorYouTube: "",
+      category: "",
+      description: "",
+      favicon: "",
+      github: "",
+      iconBg: "dark",
+      notes: "",
+      ogImage: "",
+      pricing: "Free",
+      status: sub.status,
+      subtitle: "",
+      tags: "",
+      url: "",
+    });
+    setFaviconOptions([]);
+    setOgImageOptions([]);
+    setSuggestedAuthor(null);
+    setDetectedUpdates({});
+    toast.info("All submission form fields have been cleared.");
+  };
 
   const handleRequestSave = (status?: "approved" | "rejected" | "pending") => {
     const updatedPayload: Partial<Submission> = {
@@ -662,6 +697,18 @@ export function AdminSubmissionEditForm({
         </Button>
 
         <div className="flex flex-wrap items-center gap-2.5">
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            onClick={() => setIsClearConfirmOpen(true)}
+            disabled={isWorking}
+            className="border-line hover:bg-destructive/10 hover:text-destructive hover:border-destructive/40 h-8 gap-1.5 px-3 text-xs font-bold uppercase transition-colors"
+          >
+            <EraserIcon weight="duotone" className="size-3.5" />
+            <span>Clear All</span>
+          </Button>
+
           <Button size="sm" variant="outline" onClick={onCancel} className="text-xs uppercase">
             Cancel
           </Button>
@@ -749,6 +796,16 @@ export function AdminSubmissionEditForm({
         changes={pendingChanges}
         onConfirm={handleConfirmSave}
         isWorking={isWorking}
+      />
+
+      {/* Hold-to-Confirm Dialog for Clearing All Submission Fields */}
+      <ConfirmDialog
+        open={isClearConfirmOpen}
+        onOpenChange={setIsClearConfirmOpen}
+        onConfirm={handleClearAll}
+        title="Clear all submission fields?"
+        description="Are you sure you want to clear all edited values, detected metadata, and author details in this form? This action cannot be undone."
+        confirmLabel="Hold to clear all"
       />
     </div>
   );
