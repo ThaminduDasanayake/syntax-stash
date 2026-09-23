@@ -35,11 +35,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
 import { isValidHttpUrl } from "@/lib/utils";
 
-import {
-  ConfirmEditDialog,
-  computeFieldChanges,
-  FieldDiff,
-} from "../shared/confirm-edit-dialog";
+import { computeFieldChanges, ConfirmEditDialog, FieldDiff } from "../shared/confirm-edit-dialog";
 import { AdminResourceItem } from "../shared/types";
 
 const RESOURCE_FIELD_LABELS: Record<string, string> = {
@@ -64,7 +60,7 @@ interface AdminResourceDialogProps {
   resource?: AdminResourceItem | null;
 }
 
-export function AdminResourceDialog({
+export function ResourceDialog({
   isWorking = false,
   onOpenChange,
   onSave,

@@ -36,11 +36,7 @@ import { useCategories } from "@/hooks/use-categories";
 import { Submission } from "@/lib/db/schema";
 import { cn, isValidHttpUrl } from "@/lib/utils";
 
-import {
-  ConfirmEditDialog,
-  computeFieldChanges,
-  FieldDiff,
-} from "../shared/confirm-edit-dialog";
+import { computeFieldChanges, ConfirmEditDialog, FieldDiff } from "../shared/confirm-edit-dialog";
 import { STATUS_CONFIG, STATUS_OPTIONS, SubmissionStatus } from "../shared/types";
 
 const SUBMISSION_FIELD_LABELS: Record<string, string> = {

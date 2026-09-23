@@ -51,7 +51,7 @@ export function EditableCandidateInput({
     <div className={cn("relative flex items-center", containerClassName)}>
       <InputGroup className="w-full">
         {prefix && (
-          <InputGroupAddon align="inline-start" className="pl-2 pr-1">
+          <InputGroupAddon align="inline-start" className="pr-1 pl-2">
             {prefix}
           </InputGroupAddon>
         )}
@@ -81,7 +81,7 @@ export function EditableCandidateInput({
                 target="_blank"
                 rel="noopener noreferrer"
                 tabIndex={-1}
-                className="text-muted-foreground hover:text-foreground inline-flex size-6 items-center justify-center rounded transition-colors hover:bg-muted/50"
+                className="text-muted-foreground hover:text-foreground hover:bg-muted/50 inline-flex size-6 items-center justify-center rounded transition-colors"
                 title="Open current asset in new tab"
               >
                 <ArrowSquareOutIcon weight="bold" className="size-3" />
@@ -102,7 +102,7 @@ export function EditableCandidateInput({
                   className="text-muted-foreground hover:text-foreground h-7 gap-1 px-1.5 font-mono text-[10px] font-bold uppercase"
                   title="Choose or inspect detected options"
                 >
-                  <span className="rounded bg-primary/10 px-1.5 py-0.5 text-primary">
+                  <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5">
                     {options.length} {options.length === 1 ? "option" : "options"}
                   </span>
                   <CaretDownIcon className="size-3" />
@@ -154,7 +154,7 @@ export function EditableCandidateInput({
                             onChange(option.url);
                             setOpen(false);
                           }}
-                          className="min-w-0 flex-1 cursor-pointer select-none space-y-1"
+                          className="min-w-0 flex-1 cursor-pointer space-y-1 select-none"
                         >
                           <div className="flex items-center justify-between gap-1">
                             <span className="text-foreground truncate text-[11px] font-bold">
@@ -177,7 +177,7 @@ export function EditableCandidateInput({
                           {/* Full URL with break-all and hover tooltip */}
                           <span
                             title={option.url}
-                            className="text-muted-foreground hover:text-foreground block text-[10px] break-all leading-relaxed"
+                            className="text-muted-foreground hover:text-foreground block text-[10px] leading-relaxed break-all"
                           >
                             {option.url}
                           </span>
@@ -189,7 +189,7 @@ export function EditableCandidateInput({
                             textToCopy={option.url}
                             iconOnly
                             size="icon-xs"
-                            className="text-muted-foreground hover:text-foreground size-6 rounded hover:bg-muted/60"
+                            className="text-muted-foreground hover:text-foreground hover:bg-muted/60 size-6 rounded"
                             title="Copy candidate URL"
                           />
 
@@ -199,7 +199,7 @@ export function EditableCandidateInput({
                               target="_blank"
                               rel="noopener noreferrer"
                               onClick={(e) => e.stopPropagation()}
-                              className="text-muted-foreground hover:text-foreground inline-flex size-6 items-center justify-center rounded transition-colors hover:bg-muted/60"
+                              className="text-muted-foreground hover:text-foreground hover:bg-muted/60 inline-flex size-6 items-center justify-center rounded transition-colors"
                               title="Open image in new tab"
                             >
                               <ArrowSquareOutIcon weight="bold" className="size-3" />

@@ -14,10 +14,10 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useMemo, useState } from "react";
 import { toast } from "sonner";
 
-import { Pagination } from "@/components/admin/shared/pagination";
-import { AdminToolbar } from "@/components/admin/layout/admin-toolbar";
 import { AuthorDialog } from "@/components/admin/authors/author-dialog";
-import { AdminTableRowActions } from "@/components/admin/resources/admin-table-row-actions";
+import { AdminToolbar } from "@/components/admin/layout/admin-toolbar";
+import { TableRowActions } from "@/components/admin/resources/table-row-actions";
+import { Pagination } from "@/components/admin/shared/pagination";
 import { SortSelect } from "@/components/admin/shared/sort-select";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { invalidateAuthorCache } from "@/components/submissions/author-combobox";
@@ -528,7 +528,7 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
 
                   {/* Actions */}
                   <TableCell className="text-right">
-                    <AdminTableRowActions
+                    <TableRowActions
                       copyJsonText={() => JSON.stringify(authorItem, null, 2)}
                       copyJsonTitle={`Copy JSON for ${authorItem.name}`}
                       onEdit={() => handleOpenEdit(authorItem)}

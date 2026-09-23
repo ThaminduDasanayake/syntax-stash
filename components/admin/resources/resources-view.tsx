@@ -15,12 +15,12 @@ import { toast } from "sonner";
 
 import {
   adminItemToResource,
-  Pagination,
-  AdminResourceCard,
   AdminResourceItem,
-  AdminResourceTable,
   AdminToolbar,
   FilterSelect,
+  Pagination,
+  ResourceCard,
+  ResourceTable,
   SortSelect,
 } from "@/components/admin";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
@@ -741,7 +741,7 @@ function AdminResourcesClientContent({
             /* Visual Cards Mode (24 per page, 4 per row matching public site) */
             <div className="card-grid">
               {paginatedResources.map((item) => (
-                <AdminResourceCard
+                <ResourceCard
                   key={item.id}
                   resource={item}
                   onPreview={() => setPreviewResource(item)}
@@ -763,7 +763,7 @@ function AdminResourcesClientContent({
             </div>
           ) : (
             /* Text-Only Data Table Mode (50 per page, zero images requested) */
-            <AdminResourceTable
+            <ResourceTable
               resources={paginatedResources}
               onPreview={(item) => setPreviewResource(item)}
               onEdit={(item) =>
@@ -857,7 +857,7 @@ function AdminResourcesClientContent({
   );
 }
 
-export function AdminResourcesClient(props: AdminResourcesClientProps) {
+export function ResourcesView(props: AdminResourcesClientProps) {
   return (
     <Suspense>
       <AdminResourcesClientContent {...props} />

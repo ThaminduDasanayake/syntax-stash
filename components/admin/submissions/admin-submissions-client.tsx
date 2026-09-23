@@ -4,12 +4,7 @@ import { TrayIcon } from "@phosphor-icons/react";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
-import {
-  StatusTabs,
-  AdminSubmissionCard,
-  SubmissionCounts,
-  TabStatus,
-} from "@/components/admin";
+import { AdminSubmissionCard, StatusTabs, SubmissionCounts, TabStatus } from "@/components/admin";
 import { AdminSubmissionsCardsSkeleton } from "@/components/admin/submissions/admin-submissions-skeleton";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { Button } from "@/components/ui/button";

@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
-export interface AdminPingButtonProps {
+export interface PingButtonProps {
   checkingLabel?: string;
   className?: string;
   disabled?: boolean;
@@ -33,7 +33,7 @@ export function PingButton({
   size = "sm",
   tooltipText = "Check health",
   variant = "ghost",
-}: AdminPingButtonProps) {
+}: PingButtonProps) {
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     onClick(e);

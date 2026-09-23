@@ -124,10 +124,7 @@ function getAlertBadgeStyle(action: ActivityLogItem["action"]) {
   }
 }
 
-export function AdminHistoryClient({
-  initialItems = [],
-  initialTotal = 0,
-}: AdminHistoryClientProps) {
+export function HistoryView({ initialItems = [], initialTotal = 0 }: AdminHistoryClientProps) {
   const [items, setItems] = useState<ActivityLogItem[]>(initialItems);
   const [total, setTotal] = useState(initialTotal);
   const [alertFilter, setAlertFilter] = useState("all");

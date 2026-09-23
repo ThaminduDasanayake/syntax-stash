@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { AdminResourceForm } from "@/components/admin/resources/admin-resource-form";
+import { ResourceForm } from "@/components/admin/resources/resource-form";
 
 export const metadata: Metadata = {
   title: "Add New Resource — Syntax Stash Admin",
@@ -11,5 +11,5 @@ export const metadata: Metadata = {
 };
 
 export default function AdminNewResourcePage() {
-  return <AdminResourceForm mode="create" />;
+  return <ResourceForm mode="create" />;
 }

@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { AdminToolbar } from "@/components/admin/layout/admin-toolbar";
-import { AdminTableRowActions } from "@/components/admin/resources/admin-table-row-actions";
+import { TableRowActions } from "@/components/admin/resources/table-row-actions";
 import { FilterSelect } from "@/components/admin/shared/filter-select";
 import { SortSelect } from "@/components/admin/shared/sort-select";
 import { TagDialog } from "@/components/admin/tags/tag-dialog";
@@ -288,7 +288,7 @@ export function TagsManager({ initialTags = [] }: TagsClientProps) {
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
-                    <AdminTableRowActions
+                    <TableRowActions
                       copyJsonText={() => JSON.stringify(tagItem, null, 2)}
                       copyJsonTitle={`Copy JSON for #${tagItem.name}`}
                       onEdit={() => handleOpenEdit(tagItem)}

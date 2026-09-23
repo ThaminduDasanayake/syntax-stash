@@ -30,7 +30,7 @@ interface AdminResourceCardProps {
   resource: AdminResourceItem;
 }
 
-export function AdminResourceCard({
+export function ResourceCard({
   isApplyingRedirect = false,
   isCheckingHealth = false,
   isWorking = false,

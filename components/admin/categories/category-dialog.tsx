@@ -17,11 +17,7 @@ import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { cn, slugify } from "@/lib/utils";
 
-import {
-  ConfirmEditDialog,
-  computeFieldChanges,
-  FieldDiff,
-} from "../shared/confirm-edit-dialog";
+import { computeFieldChanges, ConfirmEditDialog, FieldDiff } from "../shared/confirm-edit-dialog";
 import { AdminCategoryItem } from "./categories-manager";
 
 const CATEGORY_FIELD_LABELS: Record<string, string> = {

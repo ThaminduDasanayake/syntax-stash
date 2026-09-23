@@ -118,7 +118,7 @@ export interface AdminResourceTableProps {
   resources: AdminResourceItem[];
 }
 
-export function AdminResourceTable({
+export function ResourceTable({
   applyingRedirectId,
   checkingHealthId,
   isWorking = false,

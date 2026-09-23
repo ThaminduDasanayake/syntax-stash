@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { AdminResourcesClient } from "@/components/admin/resources/admin-resources-client";
+import { ResourcesView } from "@/components/admin/resources/resources-view";
 import { getAllAdminResources } from "@/lib/resources";
 
 export const metadata: Metadata = {
@@ -14,7 +14,5 @@ export const metadata: Metadata = {
 export default async function AdminResourcesPage() {
   const { categoryCounts, resources } = await getAllAdminResources();
 
-  return (
-    <AdminResourcesClient _initialCategoryCounts={categoryCounts} initialResources={resources} />
-  );
+  return <ResourcesView _initialCategoryCounts={categoryCounts} initialResources={resources} />;
 }
