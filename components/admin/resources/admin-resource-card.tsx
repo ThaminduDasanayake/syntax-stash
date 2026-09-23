@@ -15,8 +15,8 @@ import { CopyButton } from "@/components/ui/copy-button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { slugifyAuthor } from "@/lib/utils";
 
-import { AdminPingButton } from "./admin-ping-button";
-import { AdminResourceItem, HEALTH_STATUS_CONFIG } from "./types";
+import { AdminPingButton } from "../admin-ping-button";
+import { AdminResourceItem, HEALTH_STATUS_CONFIG } from "../types";
 
 interface AdminResourceCardProps {
   isApplyingRedirect?: boolean;

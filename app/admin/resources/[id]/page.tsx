@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { AdminResourceForm } from "@/components/admin/admin-resource-form";
+import { AdminResourceForm } from "@/components/admin/resources/admin-resource-form";
 import { db } from "@/lib/db";
 import { author, category, resource, resourceAuthor, resourceTag, tag } from "@/lib/db/schema";
 

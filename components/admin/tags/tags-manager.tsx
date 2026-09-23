@@ -4,9 +4,9 @@ import { ArrowsClockwiseIcon, TagIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
-import { AdminTableRowActions } from "@/components/admin/admin-table-row-actions";
 import { AdminToolbar } from "@/components/admin/admin-toolbar";
 import { FilterSelect } from "@/components/admin/filter-select";
+import { AdminTableRowActions } from "@/components/admin/resources/admin-table-row-actions";
 import { SortSelect } from "@/components/admin/sort-select";
 import { TagDialog } from "@/components/admin/tags/tag-dialog";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";

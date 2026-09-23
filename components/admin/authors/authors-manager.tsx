@@ -15,9 +15,9 @@ import { Suspense, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { AdminPagination } from "@/components/admin/admin-pagination";
-import { AdminTableRowActions } from "@/components/admin/admin-table-row-actions";
 import { AdminToolbar } from "@/components/admin/admin-toolbar";
 import { AuthorDialog } from "@/components/admin/authors/author-dialog";
+import { AdminTableRowActions } from "@/components/admin/resources/admin-table-row-actions";
 import { SortSelect } from "@/components/admin/sort-select";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { invalidateAuthorCache } from "@/components/submissions/author-combobox";

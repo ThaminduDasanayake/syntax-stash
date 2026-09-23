@@ -28,8 +28,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { useAuthors } from "@/hooks/use-authors";
 import { parseAuthors, slugifyAuthor } from "@/lib/utils";
 
-import { AdminPingButton } from "./admin-ping-button";
-import { AdminResourceItem } from "./types";
+import { AdminPingButton } from "../admin-ping-button";
+import { AdminResourceItem } from "../types";
 
 function getAuthorSocialLinks(
   authorName: string,

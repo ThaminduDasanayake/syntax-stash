@@ -1,7 +1,7 @@
 import { asc, count, eq } from "drizzle-orm";
 import type { Metadata } from "next";
 
-import { AdminCategoriesClient } from "@/components/admin/admin-categories-client";
+import { CategoriesManager } from "@/components/admin/categories/categories-manager";
 import { db } from "@/lib/db";
 import { category, resource } from "@/lib/db/schema";
 
@@ -33,5 +33,5 @@ export default async function AdminCategoriesPage() {
     toolCount: Number(r.toolCount) || 0,
   }));
 
-  return <AdminCategoriesClient initialCategories={categories} />;
+  return <CategoriesManager initialCategories={categories} />;
 }

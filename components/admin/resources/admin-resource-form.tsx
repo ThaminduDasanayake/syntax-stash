@@ -42,8 +42,8 @@ import {
   AdminConfirmEditDialog,
   computeFieldChanges,
   FieldDiff,
-} from "./admin-confirm-edit-dialog";
-import { AdminResourceItem } from "./types";
+} from "../admin-confirm-edit-dialog";
+import { AdminResourceItem } from "../types";
 
 const RESOURCE_FIELD_LABELS: Record<string, string> = {
   title: "Title",

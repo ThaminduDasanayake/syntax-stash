@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { AdminResourcesClient } from "@/components/admin-resources-client";
+import { AdminResourcesClient } from "@/components/admin/resources/admin-resources-client";
 import { getAllAdminResources } from "@/lib/resources";
 
 export const metadata: Metadata = {

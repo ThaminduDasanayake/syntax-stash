@@ -9,9 +9,9 @@ import {
 import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
 
-import { AdminCategoryDialog } from "@/components/admin/admin-category-dialog";
-import { AdminTableRowActions } from "@/components/admin/admin-table-row-actions";
 import { AdminToolbar } from "@/components/admin/admin-toolbar";
+import { CategoryDialog } from "@/components/admin/categories/category-dialog";
+import { AdminTableRowActions } from "@/components/admin/resources/admin-table-row-actions";
 import { SortSelect } from "@/components/admin/sort-select";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { AddButton } from "@/components/ui/add-button";
@@ -53,7 +53,7 @@ const SORT_OPTIONS = [
   { label: "Recently Updated", value: "updated-desc" },
 ];
 
-export function AdminCategoriesClient({ initialCategories = [] }: AdminCategoriesClientProps) {
+export function CategoriesManager({ initialCategories = [] }: AdminCategoriesClientProps) {
   const [categories, setCategories] = useState<AdminCategoryItem[]>(initialCategories);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<string>("name-asc");
@@ -500,7 +500,7 @@ export function AdminCategoriesClient({ initialCategories = [] }: AdminCategorie
       )}
 
       {/* Add / Edit Category Dialog */}
-      <AdminCategoryDialog
+      <CategoryDialog
         open={isCategoryDialogOpen}
         onOpenChange={setIsCategoryDialogOpen}
         category={selectedCategory}
