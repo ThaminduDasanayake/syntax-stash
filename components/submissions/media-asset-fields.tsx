@@ -4,7 +4,14 @@ import { WarningCircleIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
 import { CloudinaryUploadButton } from "@/components/admin/shared/cloudinary-upload-button";
-import { CardIcon } from "@/components/card-icon";
+import {
+  CardIcon,
+  IconBgOption,
+  IconColorOption,
+  IconSpacingOption,
+  parseIconStyle,
+  serializeIconStyle,
+} from "@/components/card-icon";
 import { Label } from "@/components/ui/label";
 import { useDebounce } from "@/hooks/use-debounce";
 import { cn, isValidHttpUrl } from "@/lib/utils";
@@ -12,7 +19,8 @@ import { cn, isValidHttpUrl } from "@/lib/utils";
 import { CandidateOption, EditableCandidateInput } from "./editable-candidate-input";
 import { FieldCheckmark } from "./field-checkmark";
 
-export type IconBgOption = "dark" | "light" | "invert";
+export type { IconBgOption, IconColorOption, IconSpacingOption };
+export { parseIconStyle, serializeIconStyle };
 
 export interface MediaAssetFieldsProps {
   allowUpload?: boolean;
@@ -191,55 +199,107 @@ export function MediaAssetFields({
             />
           </div>
 
-          {/* Favicon Contrast & Background Selector */}
-          {cleanFavicon && onIconBgChange && (
-            <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
-              <span className="text-muted-foreground font-mono text-[10px]">
-                Icon Contrast / Background:
-              </span>
-              <div className="border-line bg-surface/60 inline-flex rounded border-[1.5px] p-0.5 font-mono text-[11px]">
-                <button
-                  type="button"
-                  onClick={() => onIconBgChange("dark")}
-                  disabled={disabled}
-                  className={cn(
-                    "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
-                    !iconBg || iconBg === "dark"
-                      ? "bg-primary text-primary-foreground shadow-xs"
-                      : "text-muted-foreground hover:text-foreground",
-                  )}
-                >
-                  Dark (Default)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => onIconBgChange("light")}
-                  disabled={disabled}
-                  className={cn(
-                    "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
-                    iconBg === "light"
-                      ? "bg-primary text-primary-foreground shadow-xs"
-                      : "text-muted-foreground hover:text-foreground",
-                  )}
-                >
-                  White Tile
-                </button>
-                <button
-                  type="button"
-                  onClick={() => onIconBgChange("invert")}
-                  disabled={disabled}
-                  className={cn(
-                    "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
-                    iconBg === "invert"
-                      ? "bg-primary text-primary-foreground shadow-xs"
-                      : "text-muted-foreground hover:text-foreground",
-                  )}
-                >
-                  Invert
-                </button>
+          {/* Favicon Styling Controls: Separate Color & Spacing Options */}
+          {cleanFavicon && onIconBgChange && (() => {
+            const { color: currentColor, spacing: currentSpacing } = parseIconStyle(iconBg);
+
+            const handleColorChange = (newColor: IconColorOption) => {
+              onIconBgChange(serializeIconStyle(newColor, currentSpacing));
+            };
+
+            const handleSpacingChange = (newSpacing: IconSpacingOption) => {
+              onIconBgChange(serializeIconStyle(currentColor, newSpacing));
+            };
+
+            return (
+              <div className="border-line/70 bg-surface/40 space-y-2.5 rounded-lg border-[1.5px] p-3">
+                {/* Row 1: Background / Contrast */}
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="text-muted-foreground font-mono text-[10px] font-bold uppercase tracking-wider">
+                    Background / Color:
+                  </span>
+                  <div className="border-line bg-surface/80 inline-flex rounded border-[1.5px] p-0.5 font-mono text-[11px]">
+                    <button
+                      type="button"
+                      onClick={() => handleColorChange("dark")}
+                      disabled={disabled}
+                      className={cn(
+                        "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                        currentColor === "dark"
+                          ? "bg-primary text-primary-foreground shadow-xs"
+                          : "text-muted-foreground hover:text-foreground",
+                      )}
+                    >
+                      Dark (Default)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleColorChange("light")}
+                      disabled={disabled}
+                      className={cn(
+                        "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                        currentColor === "light"
+                          ? "bg-primary text-primary-foreground shadow-xs"
+                          : "text-muted-foreground hover:text-foreground",
+                      )}
+                    >
+                      White Tile
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleColorChange("invert")}
+                      disabled={disabled}
+                      className={cn(
+                        "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                        currentColor === "invert"
+                          ? "bg-primary text-primary-foreground shadow-xs"
+                          : "text-muted-foreground hover:text-foreground",
+                      )}
+                    >
+                      Invert
+                    </button>
+                  </div>
+                </div>
+
+                {/* Row 2: Spacing & Fit */}
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="text-muted-foreground font-mono text-[10px] font-bold uppercase tracking-wider">
+                    Icon Spacing & Fit:
+                  </span>
+                  <div className="border-line bg-surface/80 inline-flex rounded border-[1.5px] p-0.5 font-mono text-[11px]">
+                    <button
+                      type="button"
+                      onClick={() => handleSpacingChange("padded")}
+                      disabled={disabled}
+                      className={cn(
+                        "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                        currentSpacing === "padded"
+                          ? "bg-primary text-primary-foreground shadow-xs"
+                          : "text-muted-foreground hover:text-foreground",
+                      )}
+                      title="Inner padding (safe from corner cutting for transparent SVGs/logos)"
+                    >
+                      Padded (Default)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleSpacingChange("fill")}
+                      disabled={disabled}
+                      className={cn(
+                        "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                        currentSpacing === "fill"
+                          ? "bg-primary text-primary-foreground shadow-xs"
+                          : "text-muted-foreground hover:text-foreground",
+                      )}
+                      title="Edge-to-edge fill with squircle corners (ideal for solid square icons)"
+                    >
+                      Fill (Edge-to-Edge)
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
         </div>
 
         {/* OG Image URL Section */}

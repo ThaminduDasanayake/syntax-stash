@@ -141,6 +141,7 @@ function CategoryDialogInner({
 
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     if (!formData.name.trim()) {
       toast.error("Category name is required.");
       return;

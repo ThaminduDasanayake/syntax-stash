@@ -4,6 +4,32 @@ import { useState } from "react";
 
 import { cn, isValidHttpUrl } from "@/lib/utils";
 
+export type IconColorOption = "dark" | "light" | "invert";
+export type IconSpacingOption = "padded" | "fill";
+export type IconBgOption = "dark" | "light" | "invert" | "fill" | string;
+
+export function parseIconStyle(iconBg?: string | null): {
+  color: IconColorOption;
+  spacing: IconSpacingOption;
+} {
+  const normalized = (iconBg || "").toLowerCase().trim();
+  const isLight = normalized.includes("light") || normalized.includes("white");
+  const isInvert = normalized.includes("invert");
+  const isFill = normalized.includes("fill") || normalized.includes("full");
+
+  const color: IconColorOption = isLight ? "light" : isInvert ? "invert" : "dark";
+  const spacing: IconSpacingOption = isFill ? "fill" : "padded";
+
+  return { color, spacing };
+}
+
+export function serializeIconStyle(color: IconColorOption, spacing: IconSpacingOption): string {
+  if (spacing === "fill") {
+    return color === "dark" ? "fill" : `${color} fill`;
+  }
+  return color;
+}
+
 // In-memory set of favicons successfully loaded during the session
 const loadedFavicons = new Set<string>();
 
@@ -61,15 +87,20 @@ export function CardIcon({
     }
   };
 
-  const isWhiteTile = iconBg === "light" || iconClassName?.includes("bg-white");
-  const isInverted = iconBg === "invert" || iconClassName?.includes("invert");
+  const { color, spacing } = parseIconStyle(iconBg);
+  const isWhiteTile = color === "light" || iconClassName?.includes("bg-white");
+  const isInverted = color === "invert" || iconClassName?.includes("invert");
+  const isFill =
+    spacing === "fill" ||
+    Boolean(iconClassName?.includes("fill") || iconClassName?.includes("object-cover"));
 
   if (!cleanFavicon || state.error) {
     return (
       <div
         className={cn(
           className,
-          "card-icon-box overflow-hidden rounded-[30%] p-0.5",
+          "card-icon-box flex items-center justify-center overflow-hidden rounded-[22%]",
+          isFill ? "p-0" : "p-0.75",
           isWhiteTile && "bg-white! text-black!",
         )}
       />
@@ -89,7 +120,8 @@ export function CardIcon({
       }}
       className={cn(
         className,
-        "card-icon-box overflow-hidden rounded-[30%] p-0.5 text-black dark:text-white",
+        "card-icon-box flex items-center justify-center overflow-hidden rounded-[22%] text-black dark:text-white",
+        isFill ? "p-0" : "p-0.5",
         isWhiteTile && "bg-white! text-black!",
       )}
     >
@@ -104,7 +136,8 @@ export function CardIcon({
           colorScheme: isWhiteTile ? "light" : "dark",
         }}
         className={cn(
-          "h-full w-full rounded-[25%] object-contain text-inherit",
+          "size-full text-inherit",
+          isFill ? "object-cover" : "object-contain",
           isInverted && "brightness-125 invert",
           iconClassName,
         )}

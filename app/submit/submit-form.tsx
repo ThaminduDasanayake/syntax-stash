@@ -13,6 +13,7 @@ import {
   DuplicateUrlItem,
   DuplicateUrlNotice,
   FieldCheckmark,
+  IconBgOption,
   MediaAssetFields,
   ResourceCardPreview,
   SuggestedAuthorData,
@@ -46,7 +47,7 @@ export function SubmitForm() {
   const [github, setGithub] = useState("");
   const [favicon, setFavicon] = useState("");
   const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
-  const [iconBg, setIconBg] = useState<"dark" | "light" | "invert">("dark");
+  const [iconBg, setIconBg] = useState<IconBgOption>("dark");
   const [ogImage, setOgImage] = useState("");
   const [ogImageOptions, setOgImageOptions] = useState<CandidateOption[]>([]);
   const [suggestedAuthor, setSuggestedAuthor] = useState<SuggestedAuthorData | null>(null);

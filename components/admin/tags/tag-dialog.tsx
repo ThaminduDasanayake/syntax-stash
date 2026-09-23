@@ -162,6 +162,7 @@ function TagDialogInner({
 
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     if (!formData.name.trim()) {
       toast.error("Tag name is required.");
       return;

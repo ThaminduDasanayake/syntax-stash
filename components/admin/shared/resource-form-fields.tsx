@@ -363,20 +363,7 @@ export function ResourceFormFields({
             disabled={disabled}
           />
 
-          {/* Section 6: Author & Creator Attributions */}
-          <AuthorSocialFields
-            values={authorValues}
-            onChange={handleAuthorFieldChange}
-            suggestedAuthor={scanner.suggestedAuthor}
-            onAcceptSuggestedAuthor={handleAcceptSuggestedAuthor}
-            onDismissSuggestedAuthor={onDismissSuggestedAuthor}
-            onSelectAuthorOption={handleSelectAuthorOption}
-            onRequestCreateAuthor={handleRequestCreateAuthor}
-            allowCustom
-            disabled={disabled}
-          />
-
-          {/* Section 7: GitHub Repository */}
+          {/* Section 6: GitHub Repository */}
           <div className="space-y-2">
             <div className="flex flex-wrap items-center justify-between gap-1.5">
               <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
@@ -412,6 +399,19 @@ export function ResourceFormFields({
               disabled={disabled}
             />
           </div>
+
+          {/* Section 7: Author & Creator Attributions */}
+          <AuthorSocialFields
+            values={authorValues}
+            onChange={handleAuthorFieldChange}
+            suggestedAuthor={scanner.suggestedAuthor}
+            onAcceptSuggestedAuthor={handleAcceptSuggestedAuthor}
+            onDismissSuggestedAuthor={onDismissSuggestedAuthor}
+            onSelectAuthorOption={handleSelectAuthorOption}
+            onRequestCreateAuthor={handleRequestCreateAuthor}
+            allowCustom
+            disabled={disabled}
+          />
 
           <div className="space-y-2">
             <div className="flex items-center justify-between">
