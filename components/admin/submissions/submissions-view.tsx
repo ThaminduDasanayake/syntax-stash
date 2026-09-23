@@ -4,22 +4,22 @@ import { TrayIcon } from "@phosphor-icons/react";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
-import { AdminSubmissionCard, StatusTabs, SubmissionCounts, TabStatus } from "@/components/admin";
-import { AdminSubmissionsCardsSkeleton } from "@/components/admin/submissions/admin-submissions-skeleton";
+import { StatusTabs, SubmissionCard, SubmissionCounts, TabStatus } from "@/components/admin";
+import { SubmissionsCardsSkeleton } from "@/components/admin/submissions/submissions-skeleton";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Submission } from "@/lib/db/schema";
 
-interface AdminSubmissionsClientProps {
+interface SubmissionsViewProps {
   initialCounts?: SubmissionCounts;
   initialSubmissions?: Submission[];
 }
 
-export function AdminSubmissionsClient({
+export function SubmissionsView({
   _initialCounts,
   initialSubmissions = [],
-}: AdminSubmissionsClientProps & { _initialCounts?: SubmissionCounts }) {
+}: SubmissionsViewProps & { _initialCounts?: SubmissionCounts }) {
   const [activeTab, setActiveTab] = useState<TabStatus>("pending");
   const [allSubmissions, setAllSubmissions] = useState<Submission[]>(initialSubmissions);
   const [isLoading, setIsLoading] = useState(false);
@@ -154,7 +154,7 @@ export function AdminSubmissionsClient({
 
       {/* Submissions List / Loading Skeleton / Empty State */}
       {isLoading ? (
-        <AdminSubmissionsCardsSkeleton count={3} />
+        <SubmissionsCardsSkeleton count={3} />
       ) : filteredSubmissions.length === 0 ? (
         <EmptyState
           variant="card"
@@ -181,7 +181,7 @@ export function AdminSubmissionsClient({
       ) : (
         <div className="grid grid-cols-1 gap-6">
           {filteredSubmissions.map((sub) => (
-            <AdminSubmissionCard
+            <SubmissionCard
               key={sub.id}
               submission={sub}
               isWorking={actionLoadingId === sub.id}

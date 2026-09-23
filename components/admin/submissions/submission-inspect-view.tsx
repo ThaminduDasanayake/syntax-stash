@@ -69,7 +69,7 @@ const SUBMISSION_FIELD_LABELS: Record<string, string> = {
   url: "Resource URL",
 };
 
-interface AdminSubmissionInspectViewProps {
+interface SubmissionInspectViewProps {
   submission: Submission;
 }
 
@@ -134,7 +134,7 @@ function SubmittedDataBanner({
   );
 }
 
-export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionInspectViewProps) {
+export function SubmissionInspectView({ submission: sub }: SubmissionInspectViewProps) {
   const router = useRouter();
   const { categoryOptions } = useCategories();
 

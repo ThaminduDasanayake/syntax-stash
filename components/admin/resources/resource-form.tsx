@@ -39,7 +39,7 @@ import { useCategories } from "@/hooks/use-categories";
 import { isValidHttpUrl } from "@/lib/utils";
 
 import { computeFieldChanges, ConfirmEditDialog, FieldDiff } from "../shared/confirm-edit-dialog";
-import { AdminResourceItem } from "../shared/types";
+import { ResourceItem } from "../shared/types";
 
 const RESOURCE_FIELD_LABELS: Record<string, string> = {
   title: "Title",
@@ -55,12 +55,12 @@ const RESOURCE_FIELD_LABELS: Record<string, string> = {
   url: "Website URL",
 };
 
-interface AdminResourceFormProps {
-  initialData?: Partial<AdminResourceItem> | null;
+interface ResourceFormProps {
+  initialData?: Partial<ResourceItem> | null;
   mode?: "create" | "edit";
 }
 
-function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourceFormProps) {
+function ResourceFormContent({ initialData, mode = "create" }: ResourceFormProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const searchString = searchParams.toString();
@@ -71,7 +71,7 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
 
   const defaultCategory = initialData?.category || categoryOptions[0]?.value || "";
 
-  const [formData, setFormData] = useState<Partial<AdminResourceItem>>({
+  const [formData, setFormData] = useState<Partial<ResourceItem>>({
     id: initialData?.id || undefined,
     title: initialData?.title || "",
     authorBlog: initialData?.authorBlog || "",
@@ -957,10 +957,10 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
   );
 }
 
-export function ResourceForm(props: AdminResourceFormProps) {
+export function ResourceForm(props: ResourceFormProps) {
   return (
     <Suspense>
-      <AdminResourceFormContent {...props} />
+      <ResourceFormContent {...props} />
     </Suspense>
   );
 }

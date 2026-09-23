@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function AdminHistoryPage() {
+export default async function HistoryPage() {
   const reqHeaders = await headers();
   const session = await auth.api.getSession({ headers: reqHeaders });
 

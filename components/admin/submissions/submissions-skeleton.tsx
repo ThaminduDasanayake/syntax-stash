@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-export function AdminSubmissionCardSkeleton() {
+export function SubmissionCardSkeleton() {
   return (
     <div
       className="border-line/70 bg-surface/40 rounded border-[1.5px] p-5 font-mono text-xs"
@@ -64,17 +64,17 @@ export function AdminSubmissionCardSkeleton() {
   );
 }
 
-export function AdminSubmissionsCardsSkeleton({ count = 3 }: { count?: number }) {
+export function SubmissionsCardsSkeleton({ count = 3 }: { count?: number }) {
   return (
     <div className="grid grid-cols-1 gap-4" aria-hidden="true">
       {Array.from({ length: count }).map((_, i) => (
-        <AdminSubmissionCardSkeleton key={i} />
+        <SubmissionCardSkeleton key={i} />
       ))}
     </div>
   );
 }
 
-export function AdminSubmissionsSkeleton() {
+export function SubmissionsSkeleton() {
   return (
     <div className="space-y-6" aria-hidden="true">
       {/* Top Header & Search */}
@@ -91,7 +91,7 @@ export function AdminSubmissionsSkeleton() {
       </div>
 
       {/* Cards List */}
-      <AdminSubmissionsCardsSkeleton count={3} />
+      <SubmissionsCardsSkeleton count={3} />
     </div>
   );
 }

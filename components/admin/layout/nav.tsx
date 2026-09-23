@@ -13,7 +13,7 @@ import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 
-interface AdminNavProps {
+interface NavProps {
   authorsCount?: number;
   categoriesCount?: number;
   pendingSubmissionsCount?: number;
@@ -29,7 +29,7 @@ export function Nav({
   tagsCount,
   totalResourcesCount,
   userEmail,
-}: AdminNavProps) {
+}: NavProps) {
   const pathname = usePathname();
 
   const isSubmissions = pathname.startsWith("/admin/submissions");
@@ -84,7 +84,7 @@ export function Nav({
         )}
       </div>
 
-      {/* Admin Module Switcher Tabs */}
+      {/* Module Switcher Tabs */}
       <div className="border-border/40 mt-6 flex flex-wrap items-center gap-2 border-t pt-4">
         <Link
           href="/admin/submissions"

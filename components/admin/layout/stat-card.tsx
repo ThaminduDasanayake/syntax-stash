@@ -4,7 +4,7 @@ import React from "react";
 
 import { cn } from "@/lib/utils";
 
-export interface AdminStatCardProps {
+export interface StatCardProps {
   badge?: React.ReactNode;
   className?: string;
   description?: React.ReactNode;
@@ -14,7 +14,7 @@ export interface AdminStatCardProps {
   value: number | string;
 }
 
-export function AdminStatCard({
+export function StatCard({
   badge,
   className,
   description,
@@ -22,7 +22,7 @@ export function AdminStatCard({
   label,
   onClick,
   value,
-}: AdminStatCardProps) {
+}: StatCardProps) {
   const Comp = onClick ? "button" : "div";
 
   return (
@@ -52,13 +52,13 @@ export function AdminStatCard({
   );
 }
 
-export interface AdminStatsGridProps {
+export interface StatsGridProps {
   children: React.ReactNode;
   className?: string;
   columns?: 2 | 3 | 4;
 }
 
-export function AdminStatsGrid({ children, className, columns = 4 }: AdminStatsGridProps) {
+export function StatsGrid({ children, className, columns = 4 }: StatsGridProps) {
   const colClasses = {
     2: "grid-cols-1 sm:grid-cols-2",
     3: "grid-cols-1 sm:grid-cols-3",

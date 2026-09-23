@@ -38,7 +38,7 @@ export interface TagDialogProps {
   tag?: TagItem | Partial<TagItem> | null;
 }
 
-function AdminTagDialogInner({
+function TagDialogInner({
   existingTags = [],
   onCreated,
   onOpenChange,
@@ -323,7 +323,7 @@ export function TagDialog(props: TagDialogProps) {
   return (
     <Dialog open={props.open} onOpenChange={props.onOpenChange}>
       {props.open && (
-        <AdminTagDialogInner
+        <TagDialogInner
           key={props.tag?.id || "new"}
           existingTags={props.existingTags}
           onCreated={props.onCreated}

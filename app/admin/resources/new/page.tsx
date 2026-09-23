@@ -10,6 +10,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function AdminNewResourcePage() {
+export default function NewResourcePage() {
   return <ResourceForm mode="create" />;
 }

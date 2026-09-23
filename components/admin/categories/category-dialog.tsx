@@ -18,18 +18,18 @@ import { Label } from "@/components/ui/label";
 import { cn, slugify } from "@/lib/utils";
 
 import { computeFieldChanges, ConfirmEditDialog, FieldDiff } from "../shared/confirm-edit-dialog";
-import { AdminCategoryItem } from "./categories-manager";
+import { CategoryItem } from "./categories-manager";
 
 const CATEGORY_FIELD_LABELS: Record<string, string> = {
   name: "Category Name",
 };
 
-export interface AdminCategoryDialogProps {
-  category?: AdminCategoryItem | Partial<AdminCategoryItem> | null;
-  existingCategories?: AdminCategoryItem[];
-  onCreated?: (newCategory: AdminCategoryItem) => void;
+export interface CategoryDialogProps {
+  category?: CategoryItem | Partial<CategoryItem> | null;
+  existingCategories?: CategoryItem[];
+  onCreated?: (newCategory: CategoryItem) => void;
   onOpenChange: (open: boolean) => void;
-  onUpdated?: (updatedCategory: AdminCategoryItem) => void;
+  onUpdated?: (updatedCategory: CategoryItem) => void;
   open: boolean;
 }
 
@@ -39,7 +39,7 @@ function CategoryDialogInner({
   onCreated,
   onOpenChange,
   onUpdated,
-}: Omit<AdminCategoryDialogProps, "open">) {
+}: Omit<CategoryDialogProps, "open">) {
   const isEdit = Boolean(category?.id);
 
   const [formData, setFormData] = useState({
@@ -85,7 +85,7 @@ function CategoryDialogInner({
           return;
         }
 
-        const updatedCategory: AdminCategoryItem = {
+        const updatedCategory: CategoryItem = {
           ...category,
           id: category.id,
           name: cleanName,
@@ -116,7 +116,7 @@ function CategoryDialogInner({
           return;
         }
 
-        const newCategory: AdminCategoryItem = {
+        const newCategory: CategoryItem = {
           id: data.id,
           createdAt: new Date().toISOString(),
           name: cleanName,
@@ -265,7 +265,7 @@ function CategoryDialogInner({
   );
 }
 
-export function CategoryDialog(props: AdminCategoryDialogProps) {
+export function CategoryDialog(props: CategoryDialogProps) {
   return (
     <Dialog open={props.open} onOpenChange={props.onOpenChange}>
       {props.open && (

@@ -61,7 +61,7 @@ const SUBMISSION_FIELD_LABELS: Record<string, string> = {
   url: "Resource URL",
 };
 
-interface AdminSubmissionEditFormProps {
+interface SubmissionEditFormProps {
   isWorking: boolean;
   onCancel: () => void;
   onDelete: () => void;
@@ -73,13 +73,13 @@ interface AdminSubmissionEditFormProps {
   submission: Submission;
 }
 
-export function AdminSubmissionEditForm({
+export function SubmissionEditForm({
   isWorking,
   onCancel,
   onDelete,
   onSave,
   submission: sub,
-}: AdminSubmissionEditFormProps) {
+}: SubmissionEditFormProps) {
   const { categoryOptions } = useCategories();
   const [editForm, setEditForm] = useState<Partial<Submission & { iconBg?: string }>>({
     title: sub.title,

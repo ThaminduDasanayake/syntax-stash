@@ -15,7 +15,7 @@ import { Suspense, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { AuthorDialog } from "@/components/admin/authors/author-dialog";
-import { AdminToolbar } from "@/components/admin/layout/admin-toolbar";
+import { Toolbar } from "@/components/admin/layout/toolbar";
 import { TableRowActions } from "@/components/admin/resources/table-row-actions";
 import { Pagination } from "@/components/admin/shared/pagination";
 import { SortSelect } from "@/components/admin/shared/sort-select";
@@ -38,7 +38,7 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
-export interface AdminAuthorItem {
+export interface AuthorItem {
   blog: string | null;
   createdAt?: Date | string;
   github: string | null;
@@ -53,8 +53,8 @@ export interface AdminAuthorItem {
   youtube: string | null;
 }
 
-interface AdminAuthorsClientProps {
-  initialAuthors: AdminAuthorItem[];
+interface AuthorsManagerProps {
+  initialAuthors: AuthorItem[];
 }
 
 const ITEMS_PER_PAGE = 25;
@@ -68,10 +68,10 @@ const SORT_OPTIONS = [
   { label: "Recently Updated", value: "updated-desc" },
 ];
 
-function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientProps) {
+function AuthorsManagerContent({ initialAuthors = [] }: AuthorsManagerProps) {
   const searchParams = useSearchParams();
   const paramQ = searchParams.get("q") || "";
-  const [authors, setAuthors] = useState<AdminAuthorItem[]>(initialAuthors);
+  const [authors, setAuthors] = useState<AuthorItem[]>(initialAuthors);
   const [searchQuery, setSearchQuery] = useState(paramQ);
   const [filterMode, setFilterMode] = useState<"all" | "with-resources" | "without-resources">(
     "all",
@@ -82,8 +82,8 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
 
   // Dialog states
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingAuthor, setEditingAuthor] = useState<AdminAuthorItem | null>(null);
-  const [deletingAuthor, setDeletingAuthor] = useState<AdminAuthorItem | null>(null);
+  const [editingAuthor, setEditingAuthor] = useState<AuthorItem | null>(null);
+  const [deletingAuthor, setDeletingAuthor] = useState<AuthorItem | null>(null);
 
   // Refresh from API
   const handleRefresh = async () => {
@@ -111,7 +111,7 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
   };
 
   // Open Edit Modal
-  const handleOpenEdit = (authorItem: AdminAuthorItem) => {
+  const handleOpenEdit = (authorItem: AuthorItem) => {
     setEditingAuthor(authorItem);
     setIsModalOpen(true);
   };
@@ -226,7 +226,7 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
   return (
     <div>
       {/* Control Bar */}
-      <AdminToolbar
+      <Toolbar
         search={
           <SearchInput
             placeholder="Search authors by name, slug, website, github, twitter..."
@@ -621,10 +621,10 @@ function AdminAuthorsClientContent({ initialAuthors = [] }: AdminAuthorsClientPr
   );
 }
 
-export function AuthorsManager(props: AdminAuthorsClientProps) {
+export function AuthorsManager(props: AuthorsManagerProps) {
   return (
     <Suspense>
-      <AdminAuthorsClientContent {...props} />
+      <AuthorsManagerContent {...props} />
     </Suspense>
   );
 }

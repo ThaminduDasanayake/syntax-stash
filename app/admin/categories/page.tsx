@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function AdminCategoriesPage() {
+export default async function CategoriesPage() {
   const rows = await db
     .select({
       id: category.id,

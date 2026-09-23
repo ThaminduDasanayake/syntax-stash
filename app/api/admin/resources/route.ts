@@ -29,7 +29,7 @@ async function verifyAdmin() {
   return session.user;
 }
 
-interface AdminResourceRecord {
+interface ResourceRecord {
   authorBlog: string | null;
   authorGithub: string | null;
   authorId: string | null;
@@ -118,7 +118,7 @@ export async function GET(request: NextRequest) {
       : await query.orderBy(desc(resource.createdAt));
 
     const categoryCounts: Record<string, number> = {};
-    const resourceMap = new Map<string, AdminResourceRecord>();
+    const resourceMap = new Map<string, ResourceRecord>();
 
     for (const r of rows) {
       const catName = r.categoryName || "Generators";

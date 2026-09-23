@@ -16,9 +16,9 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { slugifyAuthor } from "@/lib/utils";
 
 import { PingButton } from "../shared/ping-button";
-import { AdminResourceItem, HEALTH_STATUS_CONFIG } from "../shared/types";
+import { HEALTH_STATUS_CONFIG, ResourceItem } from "../shared/types";
 
-interface AdminResourceCardProps {
+interface ResourceCardProps {
   isApplyingRedirect?: boolean;
   isCheckingHealth?: boolean;
   isWorking?: boolean;
@@ -27,7 +27,7 @@ interface AdminResourceCardProps {
   onDelete: () => void;
   onEdit: () => void;
   onPreview?: () => void;
-  resource: AdminResourceItem;
+  resource: ResourceItem;
 }
 
 export function ResourceCard({
@@ -40,7 +40,7 @@ export function ResourceCard({
   onEdit,
   onPreview,
   resource: res,
-}: AdminResourceCardProps) {
+}: ResourceCardProps) {
   const hasNoOg = !res.ogImage || !res.ogImage.trim();
   const hasNoAuthor = !res.authorName || !res.authorName.trim();
   const hasNoFavicon = !res.favicon || !res.favicon.trim();
@@ -219,7 +219,7 @@ export function ResourceCard({
         </div>
       )}
 
-      {/* Docked Admin Action Bar: 1 Line with 3 Proper Buttons */}
+      {/* Docked Action Bar: 1 Line with 3 Proper Buttons */}
       <div className="border-line bg-surface/80 border-t p-2.5 font-mono text-[11px]">
         <div className="grid grid-cols-3 gap-2">
           <CopyButton

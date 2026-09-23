@@ -14,14 +14,14 @@ import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "rea
 import { toast } from "sonner";
 
 import {
-  adminItemToResource,
-  AdminResourceItem,
-  AdminToolbar,
   FilterSelect,
+  itemToResource,
   Pagination,
   ResourceCard,
+  ResourceItem,
   ResourceTable,
   SortSelect,
+  Toolbar,
 } from "@/components/admin";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { ResourceDialog } from "@/components/resource-dialog";
@@ -43,15 +43,15 @@ const SORT_OPTIONS = [
   { label: "Title (Z → A)", value: "title-desc" },
 ];
 
-interface AdminResourcesClientProps {
+interface ResourcesViewProps {
   _initialCategoryCounts?: Record<string, number>;
-  initialResources: AdminResourceItem[];
+  initialResources: ResourceItem[];
 }
 
-function AdminResourcesClientContent({
+function ResourcesViewContent({
   _initialCategoryCounts = {},
   initialResources = [],
-}: AdminResourcesClientProps) {
+}: ResourcesViewProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -64,7 +64,7 @@ function AdminResourcesClientContent({
   const paramQ = searchParams.get("q") || "";
 
   const { categories } = useCategories();
-  const [resources, setResources] = useState<AdminResourceItem[]>(initialResources);
+  const [resources, setResources] = useState<ResourceItem[]>(initialResources);
   const [searchQuery, setSearchQuery] = useState(paramQ);
   const [selectedCategory, setSelectedCategory] = useState<string>(paramCategory);
   const [healthFilter, setHealthFilter] = useState<string>(paramHealth);
@@ -136,8 +136,8 @@ function AdminResourcesClientContent({
   );
 
   // Preview & Deletion state
-  const [previewResource, setPreviewResource] = useState<AdminResourceItem | null>(null);
-  const [deletingResource, setDeletingResource] = useState<AdminResourceItem | null>(null);
+  const [previewResource, setPreviewResource] = useState<ResourceItem | null>(null);
+  const [deletingResource, setDeletingResource] = useState<ResourceItem | null>(null);
   const [isWorking, setIsWorking] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [checkingHealthId, setCheckingHealthId] = useState<string | null>(null);
@@ -322,7 +322,7 @@ function AdminResourcesClientContent({
   }, [healthFilter, missingStats, urlHealthStats]);
 
   // Live URL Diagnostic Handler
-  const handleCheckHealth = useCallback(async (item: AdminResourceItem) => {
+  const handleCheckHealth = useCallback(async (item: ResourceItem) => {
     setCheckingHealthId(item.id);
     try {
       const res = await fetch("/api/admin/resources/health", {
@@ -367,7 +367,7 @@ function AdminResourcesClientContent({
   }, []);
 
   // 1-Click Apply Redirect Handler
-  const handleApplyRedirect = useCallback(async (item: AdminResourceItem) => {
+  const handleApplyRedirect = useCallback(async (item: ResourceItem) => {
     if (!item.healthRedirectUrl) return;
     setApplyingRedirectId(item.id);
     try {
@@ -620,7 +620,7 @@ function AdminResourcesClientContent({
   return (
     <div>
       {/* Control Bar: Search, View Switcher, Category Filter, Sort, Add Resource */}
-      <AdminToolbar
+      <Toolbar
         search={
           <SearchInput
             placeholder="Search live resources by name, description, tags, author, URL..."
@@ -834,8 +834,8 @@ function AdminResourcesClientContent({
         {previewResource && (
           <ResourceDialog
             key={previewResource.id || previewResource.url}
-            resource={adminItemToResource(previewResource)}
-            allResources={resources.map(adminItemToResource)}
+            resource={itemToResource(previewResource)}
+            allResources={resources.map(itemToResource)}
           />
         )}
       </Dialog>
@@ -857,10 +857,10 @@ function AdminResourcesClientContent({
   );
 }
 
-export function ResourcesView(props: AdminResourcesClientProps) {
+export function ResourcesView(props: ResourcesViewProps) {
   return (
     <Suspense>
-      <AdminResourcesClientContent {...props} />
+      <ResourcesViewContent {...props} />
     </Suspense>
   );
 }

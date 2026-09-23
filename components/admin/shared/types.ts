@@ -142,7 +142,7 @@ export const HEALTH_STATUS_CONFIG: Record<
   },
 };
 
-export interface AdminResourceItem {
+export interface ResourceItem {
   authorBlog?: string | null;
   authorGithub?: string | null;
   authorId?: string | null;

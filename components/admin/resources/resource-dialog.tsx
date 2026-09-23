@@ -36,7 +36,7 @@ import { useCategories } from "@/hooks/use-categories";
 import { isValidHttpUrl } from "@/lib/utils";
 
 import { computeFieldChanges, ConfirmEditDialog, FieldDiff } from "../shared/confirm-edit-dialog";
-import { AdminResourceItem } from "../shared/types";
+import { ResourceItem } from "../shared/types";
 
 const RESOURCE_FIELD_LABELS: Record<string, string> = {
   title: "Title",
@@ -52,12 +52,12 @@ const RESOURCE_FIELD_LABELS: Record<string, string> = {
   url: "Website URL",
 };
 
-interface AdminResourceDialogProps {
+interface ResourceDialogProps {
   isWorking?: boolean;
   onOpenChange: (open: boolean) => void;
-  onSave: (data: Partial<AdminResourceItem>) => Promise<void>;
+  onSave: (data: Partial<ResourceItem>) => Promise<void>;
   open: boolean;
-  resource?: AdminResourceItem | null;
+  resource?: ResourceItem | null;
 }
 
 export function ResourceDialog({
@@ -66,11 +66,11 @@ export function ResourceDialog({
   onSave,
   open,
   resource,
-}: AdminResourceDialogProps) {
+}: ResourceDialogProps) {
   const isEdit = Boolean(resource?.id);
   const { categoryOptions } = useCategories();
 
-  const [formData, setFormData] = useState<Partial<AdminResourceItem>>({
+  const [formData, setFormData] = useState<Partial<ResourceItem>>({
     title: "",
     authorBlog: "",
     authorGithub: "",

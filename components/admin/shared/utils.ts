@@ -2,7 +2,7 @@ import { Submission } from "@/lib/db/schema";
 import { slugifyAuthor } from "@/lib/utils";
 import { Resource } from "@/types";
 
-import { AdminResourceItem } from "./types";
+import { ResourceItem } from "./types";
 
 export function generateTsCode(sub: Submission): string {
   // Parse tags
@@ -62,7 +62,7 @@ export function generateTsCode(sub: Submission): string {
   return code;
 }
 
-export function adminItemToResource(item: AdminResourceItem): Resource {
+export function itemToResource(item: ResourceItem): Resource {
   return {
     title: item.title,
     author: item.authorName || undefined,

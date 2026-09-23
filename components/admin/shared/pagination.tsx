@@ -6,7 +6,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-export interface AdminPaginationProps {
+export interface PaginationProps {
   className?: string;
   currentPage: number;
   itemsPerPage?: number;
@@ -24,7 +24,7 @@ export function Pagination({
   showPageNumbers = true,
   totalItems,
   totalPages,
-}: AdminPaginationProps) {
+}: PaginationProps) {
   if (totalPages <= 1) return null;
 
   const getPageNumbers = () => {

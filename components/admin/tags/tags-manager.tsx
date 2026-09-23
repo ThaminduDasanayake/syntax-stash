@@ -4,7 +4,7 @@ import { ArrowsClockwiseIcon, TagIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
-import { AdminToolbar } from "@/components/admin/layout/admin-toolbar";
+import { Toolbar } from "@/components/admin/layout/toolbar";
 import { TableRowActions } from "@/components/admin/resources/table-row-actions";
 import { FilterSelect } from "@/components/admin/shared/filter-select";
 import { SortSelect } from "@/components/admin/shared/sort-select";
@@ -35,7 +35,7 @@ export interface TagItem {
   updatedAt?: Date | string;
 }
 
-interface TagsClientProps {
+interface TagsManagerProps {
   initialTags: TagItem[];
 }
 
@@ -54,7 +54,7 @@ const SORT_OPTIONS = [
   { label: "Recently Updated", value: "updated-desc" },
 ];
 
-export function TagsManager({ initialTags = [] }: TagsClientProps) {
+export function TagsManager({ initialTags = [] }: TagsManagerProps) {
   const [tags, setTags] = useState<TagItem[]>(initialTags);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterMode, setFilterMode] = useState<string>("all");
@@ -177,7 +177,7 @@ export function TagsManager({ initialTags = [] }: TagsClientProps) {
   return (
     <div className="font-mono">
       {/* Control Bar */}
-      <AdminToolbar
+      <Toolbar
         search={
           <SearchInput
             placeholder="Search tags by name or slug..."

@@ -23,7 +23,7 @@ export interface FieldDiff {
   oldValue: string | number | boolean | null | undefined;
 }
 
-export interface AdminConfirmEditDialogProps {
+export interface ConfirmEditDialogProps {
   changes: FieldDiff[];
   confirmLabel?: string;
   description?: string;
@@ -230,7 +230,7 @@ export function ConfirmEditDialog({
   onConfirm,
   onOpenChange,
   open,
-}: AdminConfirmEditDialogProps) {
+}: ConfirmEditDialogProps) {
   const [localBusy, setLocalBusy] = React.useState(false);
 
   React.useEffect(() => {

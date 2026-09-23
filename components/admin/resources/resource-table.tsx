@@ -29,11 +29,11 @@ import { useAuthors } from "@/hooks/use-authors";
 import { parseAuthors, slugifyAuthor } from "@/lib/utils";
 
 import { PingButton } from "../shared/ping-button";
-import { AdminResourceItem } from "../shared/types";
+import { ResourceItem } from "../shared/types";
 
 function getAuthorSocialLinks(
   authorName: string,
-  item: AdminResourceItem,
+  item: ResourceItem,
   canonicalAuthors: import("@/lib/authors").AuthorWithResources[],
 ) {
   const cleanName = authorName.trim();
@@ -106,16 +106,16 @@ function getAuthorSocialLinks(
   return links;
 }
 
-export interface AdminResourceTableProps {
+export interface ResourceTableProps {
   applyingRedirectId?: string | null;
   checkingHealthId?: string | null;
   isWorking?: boolean;
-  onApplyRedirect?: (item: AdminResourceItem) => void;
-  onCheckHealth?: (item: AdminResourceItem) => void;
-  onDelete: (item: AdminResourceItem) => void;
-  onEdit: (item: AdminResourceItem) => void;
-  onPreview: (item: AdminResourceItem) => void;
-  resources: AdminResourceItem[];
+  onApplyRedirect?: (item: ResourceItem) => void;
+  onCheckHealth?: (item: ResourceItem) => void;
+  onDelete: (item: ResourceItem) => void;
+  onEdit: (item: ResourceItem) => void;
+  onPreview: (item: ResourceItem) => void;
+  resources: ResourceItem[];
 }
 
 export function ResourceTable({
@@ -128,7 +128,7 @@ export function ResourceTable({
   onEdit,
   onPreview,
   resources,
-}: AdminResourceTableProps) {
+}: ResourceTableProps) {
   const { authors } = useAuthors();
 
   return (

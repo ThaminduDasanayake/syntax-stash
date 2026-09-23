@@ -8,7 +8,7 @@ import { CopyButton } from "@/components/ui/copy-button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
-export interface AdminTableRowActionsProps {
+export interface TableRowActionsProps {
   className?: string;
   copyJsonText?: (() => string) | string;
   copyJsonTitle?: string;
@@ -32,7 +32,7 @@ export function TableRowActions({
   extraActions,
   onDelete,
   onEdit,
-}: AdminTableRowActionsProps) {
+}: TableRowActionsProps) {
   return (
     <div className={cn("flex items-center justify-end gap-1 font-mono", className)}>
       {extraActions}

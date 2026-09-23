@@ -51,7 +51,7 @@ export interface ActivityLogItem {
   metadata: null | string;
 }
 
-interface AdminHistoryClientProps {
+interface HistoryViewProps {
   initialItems?: ActivityLogItem[];
   initialTotal?: number;
 }
@@ -124,7 +124,7 @@ function getAlertBadgeStyle(action: ActivityLogItem["action"]) {
   }
 }
 
-export function HistoryView({ initialItems = [], initialTotal = 0 }: AdminHistoryClientProps) {
+export function HistoryView({ initialItems = [], initialTotal = 0 }: HistoryViewProps) {
   const [items, setItems] = useState<ActivityLogItem[]>(initialItems);
   const [total, setTotal] = useState(initialTotal);
   const [alertFilter, setAlertFilter] = useState("all");
