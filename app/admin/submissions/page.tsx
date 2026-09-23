@@ -1,7 +1,7 @@
 import { desc } from "drizzle-orm";
 import type { Metadata } from "next";
 
-import { AdminSubmissionsClient } from "@/components/admin-submissions-client";
+import { AdminSubmissionsClient } from "@/components/admin/submissions/admin-submissions-client";
 import { db } from "@/lib/db";
 import { Submission, submission } from "@/lib/db/schema";
 

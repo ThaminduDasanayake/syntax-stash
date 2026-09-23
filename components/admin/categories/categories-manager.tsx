@@ -9,10 +9,10 @@ import {
 import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
 
-import { AdminToolbar } from "@/components/admin/admin-toolbar";
+import { AdminToolbar } from "@/components/admin/layout/admin-toolbar";
 import { CategoryDialog } from "@/components/admin/categories/category-dialog";
 import { AdminTableRowActions } from "@/components/admin/resources/admin-table-row-actions";
-import { SortSelect } from "@/components/admin/sort-select";
+import { SortSelect } from "@/components/admin/shared/sort-select";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { AddButton } from "@/components/ui/add-button";
 import { Badge } from "@/components/ui/badge";

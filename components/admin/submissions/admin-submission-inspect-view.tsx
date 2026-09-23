@@ -45,11 +45,11 @@ import { Submission } from "@/lib/db/schema";
 import { cn, isValidHttpUrl } from "@/lib/utils";
 
 import {
-  AdminConfirmEditDialog,
+  ConfirmEditDialog,
   computeFieldChanges,
   FieldDiff,
-} from "./admin-confirm-edit-dialog";
-import { STATUS_CONFIG, STATUS_OPTIONS, SubmissionStatus } from "./types";
+} from "../shared/confirm-edit-dialog";
+import { STATUS_CONFIG, STATUS_OPTIONS, SubmissionStatus } from "../shared/types";
 
 const SUBMISSION_FIELD_LABELS: Record<string, string> = {
   title: "Title",
@@ -1259,7 +1259,7 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
       </div>
 
       {/* Confirmation Dialog for Submission Updates */}
-      <AdminConfirmEditDialog
+      <ConfirmEditDialog
         open={isConfirmOpen}
         onOpenChange={setIsConfirmOpen}
         title="Confirm Submission & Resource Synchronization"

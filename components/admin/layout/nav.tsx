@@ -22,7 +22,7 @@ interface AdminNavProps {
   userEmail?: string;
 }
 
-export function AdminNav({
+export function Nav({
   authorsCount,
   categoriesCount,
   pendingSubmissionsCount,

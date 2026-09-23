@@ -21,7 +21,7 @@ export interface AdminPingButtonProps {
   variant?: "ghost" | "outline";
 }
 
-export function AdminPingButton({
+export function PingButton({
   checkingLabel = "Checking",
   className,
   disabled = false,

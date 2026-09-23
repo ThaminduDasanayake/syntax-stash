@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  ArrowRightIcon,
-  InfoIcon,
-  ShieldCheckIcon,
-  XIcon,
-} from "@phosphor-icons/react";
+import { ArrowRightIcon, InfoIcon, ShieldCheckIcon, XIcon } from "@phosphor-icons/react";
 import React from "react";
 
 import { Badge } from "@/components/ui/badge";
@@ -223,7 +218,7 @@ export function computeFieldChanges<T extends object>(
   return diffs;
 }
 
-export function AdminConfirmEditDialog({
+export function ConfirmEditDialog({
   title = "Review & Confirm Changes",
   changes,
   confirmLabel = "Confirm & Save Changes",
@@ -266,8 +261,7 @@ export function AdminConfirmEditDialog({
                       variant="outline"
                       className="border-primary/40 bg-primary/10 text-primary text-[10px] font-bold"
                     >
-                      {changes.length}{" "}
-                      {changes.length === 1 ? "field modified" : "fields modified"}
+                      {changes.length} {changes.length === 1 ? "field modified" : "fields modified"}
                     </Badge>
                   )}
                 </DialogTitle>
@@ -325,9 +319,7 @@ export function AdminConfirmEditDialog({
                       ? ""
                       : String(change.newValue);
 
-                  const wordTokens = !showSideBySide
-                    ? computeWordDiff(rawOld, rawNew)
-                    : null;
+                  const wordTokens = !showSideBySide ? computeWordDiff(rawOld, rawNew) : null;
 
                   return (
                     <div key={change.field} className="space-y-2 p-3.5">
@@ -394,14 +386,14 @@ export function AdminConfirmEditDialog({
                         </div>
                       ) : (
                         /* Text / Prose / Descriptions: Inline Word-level Diff */
-                        <div className="border-line bg-surface/80 rounded border-[1.5px] p-2.5 text-xs leading-relaxed break-words font-mono">
+                        <div className="border-line bg-surface/80 rounded border-[1.5px] p-2.5 font-mono text-xs leading-relaxed break-words">
                           {wordTokens && wordTokens.length > 0 ? (
                             wordTokens.map((token, tIdx) => {
                               if (token.type === "added") {
                                 return (
                                   <span
                                     key={tIdx}
-                                    className="bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-bold px-1 py-0.5 rounded mx-0.5 inline-block"
+                                    className="mx-0.5 inline-block rounded bg-emerald-500/20 px-1 py-0.5 font-bold text-emerald-700 dark:text-emerald-300"
                                   >
                                     {token.text}
                                   </span>
@@ -411,7 +403,7 @@ export function AdminConfirmEditDialog({
                                 return (
                                   <span
                                     key={tIdx}
-                                    className="bg-destructive/15 text-destructive line-through px-1 py-0.5 rounded mx-0.5 inline-block opacity-80"
+                                    className="bg-destructive/15 text-destructive mx-0.5 inline-block rounded px-1 py-0.5 line-through opacity-80"
                                   >
                                     {token.text}
                                   </span>

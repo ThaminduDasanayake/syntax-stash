@@ -1,4 +1,4 @@
-import { AdminSubmissionsSkeleton } from "@/components/admin-submissions-skeleton";
+import { AdminSubmissionsSkeleton } from "@/components/admin/submissions/admin-submissions-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function AdminSubmissionsLoading() {

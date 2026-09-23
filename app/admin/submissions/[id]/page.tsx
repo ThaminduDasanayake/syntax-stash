@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { AdminSubmissionInspectView } from "@/components/admin/admin-submission-inspect-view";
+import { AdminSubmissionInspectView } from "@/components/admin/submissions/admin-submission-inspect-view";
 import { db } from "@/lib/db";
 import { submission } from "@/lib/db/schema";
 

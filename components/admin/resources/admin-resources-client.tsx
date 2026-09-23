@@ -15,7 +15,7 @@ import { toast } from "sonner";
 
 import {
   adminItemToResource,
-  AdminPagination,
+  Pagination,
   AdminResourceCard,
   AdminResourceItem,
   AdminResourceTable,
@@ -783,7 +783,7 @@ function AdminResourcesClientContent({
           )}
 
           {/* Pagination Controls */}
-          <AdminPagination
+          <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
             totalItems={filteredAndSortedResources.length}

@@ -5,12 +5,12 @@ import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import {
-  AdminStatusTabs,
+  StatusTabs,
   AdminSubmissionCard,
   SubmissionCounts,
   TabStatus,
 } from "@/components/admin";
-import { AdminSubmissionsCardsSkeleton } from "@/components/admin-submissions-skeleton";
+import { AdminSubmissionsCardsSkeleton } from "@/components/admin/submissions/admin-submissions-skeleton";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -149,7 +149,7 @@ export function AdminSubmissionsClient({
   return (
     <div className="space-y-6">
       {/* Top Tabs & Search Bar */}
-      <AdminStatusTabs
+      <StatusTabs
         activeTab={activeTab}
         counts={counts}
         onTabChange={setActiveTab}

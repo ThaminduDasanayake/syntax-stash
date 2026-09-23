@@ -5,10 +5,10 @@ import { toast } from "sonner";
 
 import { TagItem } from "@/components/admin";
 import {
-  AdminConfirmEditDialog,
+  ConfirmEditDialog,
   computeFieldChanges,
   FieldDiff,
-} from "@/components/admin/admin-confirm-edit-dialog";
+} from "@/components/admin/shared/confirm-edit-dialog";
 import { DuplicateNotice } from "@/components/submissions/duplicate-url-notice";
 import { FieldCheckmark } from "@/components/submissions/field-checkmark";
 import { invalidateTagCache } from "@/components/submissions/tag-picker";
@@ -305,7 +305,7 @@ function AdminTagDialogInner({
       </DialogContent>
 
       {/* Confirmation Dialog for Tag Updates */}
-      <AdminConfirmEditDialog
+      <ConfirmEditDialog
         open={isConfirmOpen}
         onOpenChange={setIsConfirmOpen}
         title="Confirm Tag Updates"

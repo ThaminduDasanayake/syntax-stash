@@ -39,11 +39,11 @@ import { useCategories } from "@/hooks/use-categories";
 import { isValidHttpUrl } from "@/lib/utils";
 
 import {
-  AdminConfirmEditDialog,
+  ConfirmEditDialog,
   computeFieldChanges,
   FieldDiff,
-} from "../admin-confirm-edit-dialog";
-import { AdminResourceItem } from "../types";
+} from "../shared/confirm-edit-dialog";
+import { AdminResourceItem } from "../shared/types";
 
 const RESOURCE_FIELD_LABELS: Record<string, string> = {
   title: "Title",
@@ -937,7 +937,7 @@ function AdminResourceFormContent({ initialData, mode = "create" }: AdminResourc
       />
 
       {/* Confirmation Dialog for Resource Edits */}
-      <AdminConfirmEditDialog
+      <ConfirmEditDialog
         open={isConfirmOpen}
         onOpenChange={setIsConfirmOpen}
         title="Confirm Resource Updates"

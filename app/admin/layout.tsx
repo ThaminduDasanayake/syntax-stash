@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 import Link from "next/link";
 import { ReactNode } from "react";
 
-import { AdminNav } from "@/components/admin";
+import { Nav } from "@/components/admin";
 import { Button } from "@/components/ui/button";
 import { isAdmin } from "@/lib/admin";
 import { auth } from "@/lib/auth";
@@ -85,7 +85,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
 
   return (
     <div className="container mx-auto max-w-7xl px-4 py-8 sm:py-12">
-      <AdminNav
+      <Nav
         authorsCount={authorsCount}
         categoriesCount={categoriesCount}
         pendingSubmissionsCount={pendingSubmissionsCount}

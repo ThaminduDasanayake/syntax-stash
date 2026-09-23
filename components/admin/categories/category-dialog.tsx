@@ -18,10 +18,10 @@ import { Label } from "@/components/ui/label";
 import { cn, slugify } from "@/lib/utils";
 
 import {
-  AdminConfirmEditDialog,
+  ConfirmEditDialog,
   computeFieldChanges,
   FieldDiff,
-} from "../admin-confirm-edit-dialog";
+} from "../shared/confirm-edit-dialog";
 import { AdminCategoryItem } from "./categories-manager";
 
 const CATEGORY_FIELD_LABELS: Record<string, string> = {
@@ -255,7 +255,7 @@ function CategoryDialogInner({
       </DialogContent>
 
       {/* Confirmation Dialog for Category Updates */}
-      <AdminConfirmEditDialog
+      <ConfirmEditDialog
         open={isConfirmOpen}
         onOpenChange={setIsConfirmOpen}
         title="Confirm Category Updates"

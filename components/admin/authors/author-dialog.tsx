@@ -7,8 +7,8 @@ import { toast } from "sonner";
 
 import {
   AdminAuthorItem,
-  AdminConfirmEditDialog,
   computeFieldChanges,
+  ConfirmEditDialog,
   FieldDiff,
 } from "@/components/admin";
 import {
@@ -558,7 +558,7 @@ function AdminAuthorDialogInner({
       </DialogContent>
 
       {/* Confirmation Dialog for Edits */}
-      <AdminConfirmEditDialog
+      <ConfirmEditDialog
         open={isConfirmOpen}
         onOpenChange={setIsConfirmOpen}
         title="Confirm Author Updates"

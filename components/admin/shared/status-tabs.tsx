@@ -14,7 +14,7 @@ interface AdminStatusTabsProps {
   searchQuery: string;
 }
 
-export function AdminStatusTabs({
+export function StatusTabs({
   activeTab,
   counts,
   onSearchChange,
