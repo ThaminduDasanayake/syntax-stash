@@ -19,6 +19,7 @@ import { Toolbar } from "@/components/admin/layout/toolbar";
 import { TableRowActions } from "@/components/admin/resources/table-row-actions";
 import { Pagination } from "@/components/admin/shared/pagination";
 import { SortSelect } from "@/components/admin/shared/sort-select";
+import { AuthorItem } from "@/components/admin/shared/types";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { invalidateAuthorCache } from "@/components/submissions/author-combobox";
 import { AddButton } from "@/components/ui/add-button";
@@ -37,21 +38,6 @@ import {
 } from "@/components/ui/table";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-
-export interface AuthorItem {
-  blog: string | null;
-  createdAt?: Date | string;
-  github: string | null;
-  id: string;
-  linkedin: string | null;
-  name: string;
-  resourceCount: number;
-  slug: string;
-  twitter: string | null;
-  updatedAt?: Date | string;
-  website: string | null;
-  youtube: string | null;
-}
 
 interface AuthorsManagerProps {
   initialAuthors: AuthorItem[];

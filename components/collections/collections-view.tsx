@@ -10,7 +10,7 @@ import {
   PlusIcon,
   TrashIcon,
 } from "@phosphor-icons/react";
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
@@ -77,7 +77,7 @@ export function CollectionsView() {
     loadItems();
   }, [activeCollection]);
 
-  const handleCreateSubmit = async (e: React.FormEvent) => {
+  const handleCreateSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     if (!newColName.trim()) return;
 

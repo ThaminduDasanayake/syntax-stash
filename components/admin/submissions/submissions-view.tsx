@@ -4,7 +4,9 @@ import { TrayIcon } from "@phosphor-icons/react";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
-import { StatusTabs, SubmissionCard, SubmissionCounts, TabStatus } from "@/components/admin";
+import { StatusTabs } from "@/components/admin/shared/status-tabs";
+import { SubmissionCounts, TabStatus } from "@/components/admin/shared/types";
+import { SubmissionCard } from "@/components/admin/submissions/submission-card";
 import { SubmissionsCardsSkeleton } from "@/components/admin/submissions/submissions-skeleton";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { Button } from "@/components/ui/button";

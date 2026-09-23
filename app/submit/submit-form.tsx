@@ -2,7 +2,7 @@
 
 import { CheckIcon, CircleNotchIcon, SparkleIcon, XIcon } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import React, { useState } from "react";
 import { toast } from "sonner";
 
 import {
@@ -272,7 +272,7 @@ export function SubmitForm() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
 
     if (!url.trim() || !title.trim() || !description.trim() || !category) {

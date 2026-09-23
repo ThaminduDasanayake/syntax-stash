@@ -8,6 +8,7 @@ import { Toolbar } from "@/components/admin/layout/toolbar";
 import { TableRowActions } from "@/components/admin/resources/table-row-actions";
 import { FilterSelect } from "@/components/admin/shared/filter-select";
 import { SortSelect } from "@/components/admin/shared/sort-select";
+import { TagItem } from "@/components/admin/shared/types";
 import { TagDialog } from "@/components/admin/tags/tag-dialog";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { invalidateTagCache } from "@/components/submissions/tag-picker";
@@ -25,15 +26,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
-
-export interface TagItem {
-  createdAt?: Date | string;
-  id: string;
-  name: string;
-  slug: string;
-  toolCount: number;
-  updatedAt?: Date | string;
-}
 
 interface TagsManagerProps {
   initialTags: TagItem[];

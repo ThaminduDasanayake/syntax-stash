@@ -3,12 +3,12 @@
 import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
 
-import { TagItem } from "@/components/admin";
 import {
   computeFieldChanges,
   ConfirmEditDialog,
   FieldDiff,
 } from "@/components/admin/shared/confirm-edit-dialog";
+import { TagItem } from "@/components/admin/shared/types";
 import { DuplicateNotice } from "@/components/submissions/duplicate-url-notice";
 import { FieldCheckmark } from "@/components/submissions/field-checkmark";
 import { invalidateTagCache } from "@/components/submissions/tag-picker";

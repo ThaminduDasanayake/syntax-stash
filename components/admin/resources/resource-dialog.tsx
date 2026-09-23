@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowsClockwiseIcon, CircleNotchIcon, PlusIcon } from "@phosphor-icons/react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { AuthorDialog } from "@/components/admin/authors/author-dialog";
@@ -390,7 +390,7 @@ export function ResourceDialog({
     setIsConfirmOpen(false);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     if (
       !formData.title?.trim() ||

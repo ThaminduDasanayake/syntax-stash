@@ -13,16 +13,14 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
-import {
-  FilterSelect,
-  itemToResource,
-  Pagination,
-  ResourceCard,
-  ResourceItem,
-  ResourceTable,
-  SortSelect,
-  Toolbar,
-} from "@/components/admin";
+import { Toolbar } from "@/components/admin/layout/toolbar";
+import { ResourceCard } from "@/components/admin/resources/resource-card";
+import { ResourceTable } from "@/components/admin/resources/resource-table";
+import { FilterSelect } from "@/components/admin/shared/filter-select";
+import { Pagination } from "@/components/admin/shared/pagination";
+import { SortSelect } from "@/components/admin/shared/sort-select";
+import { ResourceItem } from "@/components/admin/shared/types";
+import { itemToResource } from "@/components/admin/shared/utils";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { ResourceDialog } from "@/components/resource-dialog";
 import { AddButton } from "@/components/ui/add-button";

@@ -13,6 +13,7 @@ import { CategoryDialog } from "@/components/admin/categories/category-dialog";
 import { Toolbar } from "@/components/admin/layout/toolbar";
 import { TableRowActions } from "@/components/admin/resources/table-row-actions";
 import { SortSelect } from "@/components/admin/shared/sort-select";
+import { CategoryItem } from "@/components/admin/shared/types";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { AddButton } from "@/components/ui/add-button";
 import { Badge } from "@/components/ui/badge";
@@ -30,15 +31,6 @@ import {
 } from "@/components/ui/table";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn, slugify } from "@/lib/utils";
-
-export interface CategoryItem {
-  createdAt?: Date | string;
-  id: string;
-  name: string;
-  slug: string;
-  toolCount: number;
-  updatedAt?: Date | string;
-}
 
 interface CategoriesManagerProps {
   initialCategories: CategoryItem[];

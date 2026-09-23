@@ -242,7 +242,7 @@ export function HistoryView({ initialItems = [], initialTotal = 0 }: HistoryView
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [alertFilter]);
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
+  const handleSearchSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
     fetchAlerts();
   };

@@ -2,10 +2,15 @@
 
 import { ArticleIcon, GlobeIcon, XLogoIcon } from "@phosphor-icons/react";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
-import { AuthorItem, computeFieldChanges, ConfirmEditDialog, FieldDiff } from "@/components/admin";
+import {
+  computeFieldChanges,
+  ConfirmEditDialog,
+  FieldDiff,
+} from "@/components/admin/shared/confirm-edit-dialog";
+import { AuthorItem } from "@/components/admin/shared/types";
 import {
   AuthorOption,
   fetchAuthorList,
@@ -213,7 +218,7 @@ function AuthorDialogInner({
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     if (!formData.name.trim()) {
       toast.error("Author name is required.");

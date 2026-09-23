@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 import Link from "next/link";
 import { ReactNode } from "react";
 
-import { Nav } from "@/components/admin";
+import { Nav } from "@/components/admin/layout/nav";
 import { Button } from "@/components/ui/button";
 import { isAdmin } from "@/lib/admin";
 import { auth } from "@/lib/auth";

@@ -11,7 +11,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useState, useTransition } from "react";
+import React, { Suspense, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 import { AuthorDialog } from "@/components/admin/authors/author-dialog";
@@ -412,8 +412,8 @@ function ResourceFormContent({ initialData, mode = "create" }: ResourceFormProps
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: React.SyntheticEvent) => {
+    e?.preventDefault();
 
     if (!formData.title?.trim()) {
       toast.error("Resource title is required.");
