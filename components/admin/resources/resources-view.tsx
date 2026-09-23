@@ -42,12 +42,10 @@ const SORT_OPTIONS = [
 ];
 
 interface ResourcesViewProps {
-  _initialCategoryCounts?: Record<string, number>;
   initialResources: ResourceItem[];
 }
 
 function ResourcesViewContent({
-  _initialCategoryCounts = {},
   initialResources = [],
 }: ResourcesViewProps) {
   const router = useRouter();

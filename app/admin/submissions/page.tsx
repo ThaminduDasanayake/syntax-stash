@@ -15,20 +15,15 @@ export const metadata: Metadata = {
 
 export default async function SubmissionsPage() {
   let initialSubmissions: Submission[] = [];
-  let initialCounts = { all: 0, approved: 0, pending: 0, rejected: 0 };
 
   try {
-    const all = await db.select().from(submission).orderBy(desc(submission.createdAt));
-    initialCounts = {
-      all: all.length,
-      approved: all.filter((s) => s.status === "approved").length,
-      pending: all.filter((s) => s.status === "pending").length,
-      rejected: all.filter((s) => s.status === "rejected").length,
-    };
-    initialSubmissions = all;
+    initialSubmissions = await db
+      .select()
+      .from(submission)
+      .orderBy(desc(submission.createdAt));
   } catch (err) {
     console.error("Failed to preload submissions in server component:", err);
   }
 
-  return <SubmissionsView initialSubmissions={initialSubmissions} initialCounts={initialCounts} />;
+  return <SubmissionsView initialSubmissions={initialSubmissions} />;
 }

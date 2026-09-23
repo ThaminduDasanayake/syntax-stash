@@ -19,9 +19,8 @@ interface SubmissionsViewProps {
 }
 
 export function SubmissionsView({
-  _initialCounts,
   initialSubmissions = [],
-}: SubmissionsViewProps & { _initialCounts?: SubmissionCounts }) {
+}: SubmissionsViewProps) {
   const [activeTab, setActiveTab] = useState<TabStatus>("pending");
   const [allSubmissions, setAllSubmissions] = useState<Submission[]>(initialSubmissions);
   const [isLoading, setIsLoading] = useState(false);
@@ -47,7 +46,7 @@ export function SubmissionsView({
 
   useEffect(() => {
     if (initialSubmissions.length === 0) {
-      refreshSubmissions();
+      void refreshSubmissions();
     }
   }, [initialSubmissions.length, refreshSubmissions]);
 
@@ -89,7 +88,8 @@ export function SubmissionsView({
       });
 
       if (!res.ok) {
-        throw new Error("Failed to update status on server");
+        setAllSubmissions(previousSubmissions);
+        toast.error(`Failed to update status for ${itemTitle}. Reverted changes.`);
       }
     } catch (err) {
       console.error("Failed to update status:", err);
@@ -119,7 +119,8 @@ export function SubmissionsView({
       setActionLoadingId(target.id);
       const res = await fetch(`/api/admin/submissions?id=${target.id}`, { method: "DELETE" });
       if (!res.ok) {
-        throw new Error("Failed to delete submission on server");
+        setAllSubmissions(previousSubmissions);
+        toast.error(`Failed to delete ${itemTitle}. Reverted changes.`);
       }
     } catch (err) {
       console.error("Failed to delete submission:", err);

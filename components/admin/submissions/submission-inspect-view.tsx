@@ -18,7 +18,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { ReactNode, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
@@ -91,7 +91,7 @@ function SubmittedDataBanner({
   onSync,
   value,
 }: {
-  display?: React.ReactNode;
+  display?: ReactNode;
   label?: string;
   onSync: () => void;
   value?: string | null;
