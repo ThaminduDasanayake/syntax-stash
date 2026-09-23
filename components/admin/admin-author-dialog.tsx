@@ -281,71 +281,70 @@ function AdminAuthorDialogInner({
 
         <form onSubmit={handleSubmit} className="flex min-h-0 flex-1 flex-col">
           <div className="flex-1 space-y-5 overflow-y-auto p-6 text-xs">
-            {/* Author Name */}
-            <div className="space-y-1.5">
-              <Label
-                className={cn(
-                  "flex items-center gap-1.5 font-mono text-xs font-bold uppercase transition-colors",
-                  isNameFilled ? "text-emerald-600 dark:text-emerald-400" : "text-foreground",
-                )}
-              >
-                <span>Creator / Author Name</span>
-                <span className="text-destructive">*</span>
-                <FieldCheckmark checked={isNameFilled} />
-              </Label>
-              <InputField
-                placeholder="e.g. Lee Robinson or Vercel"
-                value={formData.name}
-                onChange={(e) => handleNameChange(e.target.value)}
-                required
-                className={cn(
-                  "font-mono text-xs transition-colors",
-                  isNameFilled &&
-                    "border-emerald-500/40 focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20",
-                )}
-              />
-            </div>
-
-            {/* Author Slug Identifier */}
-            <div className="space-y-1.5">
-              <div className="flex items-center justify-between">
+            {/* Row 1: Author Name and Slug in one row */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {/* Author Name */}
+              <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -mx-2 space-y-1.5 rounded-md p-2 transition-all duration-150 focus-within:ring-1">
                 <Label
                   className={cn(
                     "flex items-center gap-1.5 font-mono text-xs font-bold uppercase transition-colors",
-                    isSlugFilled ? "text-emerald-600 dark:text-emerald-400" : "text-foreground",
+                    isNameFilled
+                      ? "text-emerald-600"
+                      : "text-foreground group-focus-within:text-primary",
                   )}
                 >
-                  <span>Slug Identifier</span>
+                  <span>Creator / Author Name</span>
                   <span className="text-destructive">*</span>
-                  <FieldCheckmark checked={isSlugFilled} />
+                  <FieldCheckmark checked={isNameFilled} />
                 </Label>
-                {!isEdit && (
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="xs"
-                    onClick={() => setAutoSlug(!autoSlug)}
-                    className="text-primary h-auto p-0 font-mono text-[10px] uppercase hover:underline"
-                  >
-                    {autoSlug ? "Manual Slug" : "Auto-Generate"}
-                  </Button>
-                )}
+                <InputField
+                  placeholder="e.g. Lee Robinson or Vercel"
+                  value={formData.name}
+                  onChange={(e) => handleNameChange(e.target.value)}
+                  required
+                  className="font-mono text-xs"
+                />
               </div>
-              <InputField
-                placeholder="e.g. lee-robinson"
-                value={formData.slug}
-                prefix="/authors/"
-                onChange={(e) => {
-                  setAutoSlug(false);
-                  setFormData((prev) => ({ ...prev, slug: e.target.value }));
-                }}
-                required
-                className={cn(
-                  "font-mono text-xs transition-colors",
-                  isSlugFilled &&
-                    "border-emerald-500/40 focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20",
-                )}
-              />
+
+              {/* Author Slug Identifier */}
+              <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -mx-2 space-y-1.5 rounded-md p-2 transition-all duration-150 focus-within:ring-1">
+                <div className="flex items-center justify-between">
+                  <Label
+                    className={cn(
+                      "flex items-center gap-1.5 font-mono text-xs font-bold uppercase transition-colors",
+                      isSlugFilled
+                        ? "text-emerald-600"
+                        : "text-foreground group-focus-within:text-primary",
+                    )}
+                  >
+                    <span>Slug Identifier</span>
+                    <span className="text-destructive">*</span>
+                    <FieldCheckmark checked={isSlugFilled} />
+                  </Label>
+                  {!isEdit && (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="xs"
+                      onClick={() => setAutoSlug(!autoSlug)}
+                      className="text-primary h-auto p-0 font-mono text-[10px] uppercase hover:underline"
+                    >
+                      {autoSlug ? "Manual Slug" : "Auto-Generate"}
+                    </Button>
+                  )}
+                </div>
+                <InputField
+                  placeholder="e.g. lee-robinson"
+                  value={formData.slug}
+                  prefix="/authors/"
+                  onChange={(e) => {
+                    setAutoSlug(false);
+                    setFormData((prev) => ({ ...prev, slug: e.target.value }));
+                  }}
+                  required
+                  className="font-mono text-xs"
+                />
+              </div>
             </div>
 
             {duplicateAuthor && (
@@ -362,19 +361,19 @@ function AdminAuthorDialogInner({
               />
             )}
 
-            {/* Section 2: Social Links Grid */}
+            {/* Section 2: Social Links (Each on their own separate full-width row) */}
             <div className="border-line/60 border-t pt-4">
               <span className="text-muted-foreground mb-3 block text-[10px] font-bold tracking-wider uppercase">
                 Social Profiles & Links (Optional)
               </span>
 
-              <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
+              <div className="space-y-3.5">
                 <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -mx-2 space-y-1.5 rounded-md p-2 transition-all duration-150 focus-within:ring-1">
                   <Label
                     className={cn(
                       "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
                       isWebsiteFilled
-                        ? "font-bold text-emerald-600 dark:text-emerald-400"
+                        ? "font-bold text-emerald-600"
                         : "text-foreground group-focus-within:text-primary",
                     )}
                   >
@@ -383,7 +382,7 @@ function AdminAuthorDialogInner({
                       className={cn(
                         "size-4 transition-colors",
                         isWebsiteFilled
-                          ? "text-emerald-600 dark:text-emerald-400"
+                          ? "text-emerald-600"
                           : "group-focus-within:text-primary",
                       )}
                     />
@@ -394,11 +393,7 @@ function AdminAuthorDialogInner({
                     placeholder="https://example.com"
                     value={formData.website}
                     onChange={(e) => setFormData((prev) => ({ ...prev, website: e.target.value }))}
-                    className={cn(
-                      "font-mono text-xs transition-colors",
-                      isWebsiteFilled &&
-                        "border-emerald-500/40 focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20",
-                    )}
+                    className="font-mono text-xs"
                   />
                 </div>
 
@@ -407,7 +402,7 @@ function AdminAuthorDialogInner({
                     className={cn(
                       "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
                       isGithubFilled
-                        ? "font-bold text-emerald-600 dark:text-emerald-400"
+                        ? "font-bold text-emerald-600"
                         : "text-foreground group-focus-within:text-primary",
                     )}
                   >
@@ -425,11 +420,7 @@ function AdminAuthorDialogInner({
                     placeholder="username or https://github.com/..."
                     value={formData.github}
                     onChange={(e) => setFormData((prev) => ({ ...prev, github: e.target.value }))}
-                    className={cn(
-                      "font-mono text-xs transition-colors",
-                      isGithubFilled &&
-                        "border-emerald-500/40 focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20",
-                    )}
+                    className="font-mono text-xs"
                   />
                 </div>
 
@@ -438,7 +429,7 @@ function AdminAuthorDialogInner({
                     className={cn(
                       "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
                       isTwitterFilled
-                        ? "font-bold text-emerald-600 dark:text-emerald-400"
+                        ? "font-bold text-emerald-600"
                         : "text-foreground group-focus-within:text-primary",
                     )}
                   >
@@ -447,7 +438,7 @@ function AdminAuthorDialogInner({
                       className={cn(
                         "size-4 transition-colors",
                         isTwitterFilled
-                          ? "text-emerald-600 dark:text-emerald-400"
+                          ? "text-emerald-600"
                           : "group-focus-within:text-primary",
                       )}
                     />
@@ -458,11 +449,7 @@ function AdminAuthorDialogInner({
                     placeholder="@handle or https://x.com/..."
                     value={formData.twitter}
                     onChange={(e) => setFormData((prev) => ({ ...prev, twitter: e.target.value }))}
-                    className={cn(
-                      "font-mono text-xs transition-colors",
-                      isTwitterFilled &&
-                        "border-emerald-500/40 focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20",
-                    )}
+                    className="font-mono text-xs"
                   />
                 </div>
 
@@ -471,7 +458,7 @@ function AdminAuthorDialogInner({
                     className={cn(
                       "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
                       isLinkedinFilled
-                        ? "font-bold text-emerald-600 dark:text-emerald-400"
+                        ? "font-bold text-emerald-600"
                         : "text-foreground group-focus-within:text-primary",
                     )}
                   >
@@ -489,11 +476,7 @@ function AdminAuthorDialogInner({
                     placeholder="username or https://linkedin.com/in/..."
                     value={formData.linkedin}
                     onChange={(e) => setFormData((prev) => ({ ...prev, linkedin: e.target.value }))}
-                    className={cn(
-                      "font-mono text-xs transition-colors",
-                      isLinkedinFilled &&
-                        "border-emerald-500/40 focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20",
-                    )}
+                    className="font-mono text-xs"
                   />
                 </div>
 
@@ -502,7 +485,7 @@ function AdminAuthorDialogInner({
                     className={cn(
                       "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
                       isYoutubeFilled
-                        ? "font-bold text-emerald-600 dark:text-emerald-400"
+                        ? "font-bold text-emerald-600"
                         : "text-foreground group-focus-within:text-primary",
                     )}
                   >
@@ -520,11 +503,7 @@ function AdminAuthorDialogInner({
                     placeholder="https://youtube.com/@channel"
                     value={formData.youtube}
                     onChange={(e) => setFormData((prev) => ({ ...prev, youtube: e.target.value }))}
-                    className={cn(
-                      "font-mono text-xs transition-colors",
-                      isYoutubeFilled &&
-                        "border-emerald-500/40 focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20",
-                    )}
+                    className="font-mono text-xs"
                   />
                 </div>
 
@@ -533,7 +512,7 @@ function AdminAuthorDialogInner({
                     className={cn(
                       "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
                       isBlogFilled
-                        ? "font-bold text-emerald-600 dark:text-emerald-400"
+                        ? "font-bold text-emerald-600"
                         : "text-foreground group-focus-within:text-primary",
                     )}
                   >
@@ -542,7 +521,7 @@ function AdminAuthorDialogInner({
                       className={cn(
                         "size-4 transition-colors",
                         isBlogFilled
-                          ? "text-emerald-600 dark:text-emerald-400"
+                          ? "text-emerald-600"
                           : "group-focus-within:text-primary",
                       )}
                     />
@@ -553,11 +532,7 @@ function AdminAuthorDialogInner({
                     placeholder="https://example.com/blog"
                     value={formData.blog}
                     onChange={(e) => setFormData((prev) => ({ ...prev, blog: e.target.value }))}
-                    className={cn(
-                      "font-mono text-xs transition-colors",
-                      isBlogFilled &&
-                        "border-emerald-500/40 focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20",
-                    )}
+                    className="font-mono text-xs"
                   />
                 </div>
               </div>
