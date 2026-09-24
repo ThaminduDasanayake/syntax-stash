@@ -15,11 +15,22 @@ export async function getOgFonts(): Promise<OgFont[]> {
     return cachedFonts;
   }
 
-  const [bricolageData, instrumentSerifData, jetbrainsMonoData] = await Promise.all([
+  const [
+    bricolageData,
+    instrumentSerifData,
+    interRegularData,
+    jetbrainsMonoRegularData,
+  ] = await Promise.all([
     readFile(join(process.cwd(), "public/fonts/BricolageGrotesque-Bold.ttf")),
     readFile(join(process.cwd(), "public/fonts/InstrumentSerif-Italic.ttf")),
-    readFile(join(process.cwd(), "public/fonts/JetBrainsMono-Bold.ttf")),
+    readFile(join(process.cwd(), "public/fonts/Inter-Regular.ttf")),
+    readFile(join(process.cwd(), "public/fonts/JetBrainsMono-Regular.ttf")),
   ]);
+
+  const instrumentSerifBuffer = instrumentSerifData.buffer.slice(
+    instrumentSerifData.byteOffset,
+    instrumentSerifData.byteOffset + instrumentSerifData.byteLength,
+  );
 
   cachedFonts = [
     {
@@ -32,22 +43,34 @@ export async function getOgFonts(): Promise<OgFont[]> {
       weight: 800,
     },
     {
-      data: instrumentSerifData.buffer.slice(
-        instrumentSerifData.byteOffset,
-        instrumentSerifData.byteOffset + instrumentSerifData.byteLength,
-      ),
+      data: instrumentSerifBuffer,
       name: "Instrument Serif",
       style: "italic",
       weight: 400,
     },
     {
-      data: jetbrainsMonoData.buffer.slice(
-        jetbrainsMonoData.byteOffset,
-        jetbrainsMonoData.byteOffset + jetbrainsMonoData.byteLength,
+      data: instrumentSerifBuffer,
+      name: "Instrument Serif",
+      style: "italic",
+      weight: 900,
+    },
+    {
+      data: interRegularData.buffer.slice(
+        interRegularData.byteOffset,
+        interRegularData.byteOffset + interRegularData.byteLength,
+      ),
+      name: "Inter",
+      style: "normal",
+      weight: 400,
+    },
+    {
+      data: jetbrainsMonoRegularData.buffer.slice(
+        jetbrainsMonoRegularData.byteOffset,
+        jetbrainsMonoRegularData.byteOffset + jetbrainsMonoRegularData.byteLength,
       ),
       name: "JetBrains Mono",
       style: "normal",
-      weight: 800,
+      weight: 400,
     },
   ];
 

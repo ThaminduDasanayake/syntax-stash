@@ -1,156 +1,108 @@
 import { ReactNode } from "react";
 
-export interface OgStatItem {
-  color?: string;
-  label: string;
-  subtext: string;
-  value: number | string;
-}
+export const OG_COLORS = {
+  orange: "#E8A52B",
+  bgCard: "#F5F0E6",
+  fgDark: "#18181b",
+  muted: "#52525b",
+  subtle: "#71717a",
+} as const;
 
 export interface OgTemplateProps {
-  badgeText: string;
-  description: string;
-  stat1: OgStatItem;
-  stat2: OgStatItem;
-  stat3: OgStatItem;
+  description?: string;
+  eyebrow?: string;
+  statsText?: string;
   title: ReactNode | string;
 }
 
-function StatCard({ stat }: { stat: OgStatItem }) {
-  const accentColor = stat.color || "#e8a52b";
-  return (
-    <div
-      style={{
-        backgroundColor: "rgba(24, 24, 27, 0.8)",
-        border: `1.5px solid ${accentColor}4d`,
-        borderRadius: "16px",
-        display: "flex",
-        flex: 1,
-        flexDirection: "column",
-        gap: "4px",
-        padding: "24px 28px",
-      }}
-    >
-      <div
-        style={{
-          color: accentColor,
-          display: "flex",
-          fontFamily: "JetBrains Mono, monospace",
-          fontSize: "76px",
-          fontWeight: 800,
-          lineHeight: 1,
-        }}
-      >
-        {`${stat.value}`}
-      </div>
-      <div
-        style={{
-          color: "#ffffff",
-          display: "flex",
-          fontFamily: "JetBrains Mono, monospace",
-          fontSize: "15px",
-          fontWeight: 800,
-          letterSpacing: "2px",
-        }}
-      >
-        {stat.label}
-      </div>
-      <div
-        style={{
-          color: "#71717a",
-          display: "flex",
-          fontSize: "13px",
-          fontWeight: 500,
-        }}
-      >
-        {stat.subtext}
-      </div>
-    </div>
-  );
-}
-
-export function OgTemplate({
-  title,
-  badgeText,
-  description,
-  stat1,
-  stat2,
-  stat3,
-}: OgTemplateProps) {
+export function OgTemplate({ title, description, eyebrow, statsText }: OgTemplateProps) {
   return (
     <div
       style={{
         alignItems: "stretch",
-        backgroundColor: "#09090b",
-        backgroundImage:
-          "radial-gradient(circle at 10% 10%, rgba(232, 165, 43, 0.15) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(168, 85, 247, 0.15) 0%, transparent 40%), radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px)",
-        backgroundSize: "100% 100%, 100% 100%, 28px 28px",
-        color: "#f4f4f5",
+        backgroundColor: OG_COLORS.bgCard,
         display: "flex",
         flexDirection: "column",
         fontFamily: "sans-serif",
         height: "100%",
         justifyContent: "space-between",
-        padding: "52px 64px",
         width: "100%",
       }}
     >
-      {/* Top Header: Authentic Brand Icon + SYNTAX.stash Wordmark + Domain Badge */}
+      {/* Main Inner Content (Full Size, Generous Breathing Room) */}
       <div
         style={{
-          alignItems: "center",
           display: "flex",
+          flex: 1,
+          flexDirection: "column",
           justifyContent: "space-between",
-          width: "100%",
+          padding: "68px 80px 44px",
         }}
       >
+        {/* Top Header: Brand Lockup in Dark */}
         <div style={{ alignItems: "center", display: "flex", gap: "16px" }}>
-          {/* Logo Square */}
           <div
             style={{
               alignItems: "center",
               backgroundColor: "#14110b",
-              borderRadius: "12px",
-              color: "#e8a52b",
+              borderRadius: "10px",
+              color: OG_COLORS.orange,
               display: "flex",
               fontFamily: "Bricolage Grotesque, sans-serif",
-              fontSize: "44px",
-              fontWeight: 800,
-              height: "56px",
+              fontSize: "38px",
+              fontWeight: 900,
+              height: "48px",
               justifyContent: "center",
-              width: "56px",
+              lineHeight: 1,
+              width: "48px",
             }}
           >
             S
           </div>
-
-          {/* Authentic Wordmark: SYNTAX.stash */}
-          <div style={{ alignItems: "baseline", display: "flex", fontSize: "36px" }}>
+          <div
+            style={{
+              alignItems: "baseline",
+              display: "flex",
+              lineHeight: 1,
+            }}
+          >
             <span
               style={{
-                color: "#ffffff",
+                color: OG_COLORS.fgDark,
+                display: "flex",
                 fontFamily: "Bricolage Grotesque, sans-serif",
-                fontWeight: 800,
-                letterSpacing: "-1px",
+                fontSize: "40px",
+                fontWeight: 900,
+                letterSpacing: "-1.5px",
+                lineHeight: 1,
+                textTransform: "uppercase",
               }}
             >
               SYNTAX
             </span>
             <span
               style={{
-                color: "#e8a52b",
+                color: OG_COLORS.orange,
+                display: "flex",
                 fontFamily: "Bricolage Grotesque, sans-serif",
-                fontWeight: 800,
+                fontSize: "40px",
+                fontWeight: 900,
+                lineHeight: 1,
               }}
             >
               .
             </span>
             <span
               style={{
-                color: "#ffffff",
+                color: OG_COLORS.fgDark,
+                display: "flex",
                 fontFamily: "Instrument Serif, serif",
+                fontSize: "48px",
                 fontStyle: "italic",
                 fontWeight: 400,
+                letterSpacing: "0px",
+                lineHeight: 1,
+                textTransform: "lowercase",
               }}
             >
               stash
@@ -158,70 +110,95 @@ export function OgTemplate({
           </div>
         </div>
 
-        {/* Right Badge */}
+        {/* Center Hero: Two-Tone Title + Description */}
         <div
           style={{
-            alignItems: "center",
-            backgroundColor: "rgba(255, 255, 255, 0.04)",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
-            borderRadius: "8px",
-            color: "#d4d4d8",
             display: "flex",
-            fontFamily: "JetBrains Mono, monospace",
-            fontSize: "14px",
-            fontWeight: 800,
-            padding: "8px 16px",
+            flexDirection: "column",
+            gap: "16px",
+            maxWidth: "1040px",
           }}
         >
-          {badgeText}
-        </div>
-      </div>
+          <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.05 }}>
+            {eyebrow && (
+              <div
+                style={{
+                  color: OG_COLORS.fgDark,
+                  display: "flex",
+                  fontFamily: "Bricolage Grotesque, sans-serif",
+                  fontSize: "52px",
+                  fontWeight: 900,
+                  letterSpacing: "-1.5px",
+                }}
+              >
+                {eyebrow}
+              </div>
+            )}
+            {typeof title === "string" ? (
+              <div
+                style={{
+                  color: OG_COLORS.orange,
+                  display: "flex",
+                  fontFamily: "Bricolage Grotesque, sans-serif",
+                  fontSize: eyebrow ? "70px" : "64px",
+                  fontWeight: 900,
+                  letterSpacing: "-2px",
+                }}
+              >
+                {title}
+              </div>
+            ) : (
+              title
+            )}
+          </div>
 
-      {/* Main Title & Description */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-        {typeof title === "string" ? (
+          {description && (
+            <div
+              style={{
+                color: OG_COLORS.muted,
+                display: "flex",
+                fontFamily: "JetBrains Mono, monospace",
+                fontSize: "21px",
+                fontWeight: 400,
+                letterSpacing: "-0.3px",
+                lineHeight: 1.5,
+                maxWidth: "960px",
+              }}
+            >
+              {description}
+            </div>
+          )}
+        </div>
+
+        {/* Bottom Row: Simple Stats */}
+        {statsText ? (
           <div
             style={{
-              color: "#ffffff",
+              alignItems: "center",
+              color: OG_COLORS.subtle,
               display: "flex",
-              fontFamily: "Bricolage Grotesque, sans-serif",
-              fontSize: "54px",
-              fontWeight: 800,
-              letterSpacing: "-2px",
-              lineHeight: 1.08,
-              maxWidth: "1000px",
+              fontFamily: "JetBrains Mono, monospace",
+              fontSize: "18px",
+              fontWeight: 400,
+              letterSpacing: "-0.2px",
             }}
           >
-            {title}
+            {statsText}
           </div>
         ) : (
-          title
+          <div style={{ display: "flex", height: "1px" }} />
         )}
-        <div
-          style={{
-            color: "#a1a1aa",
-            display: "flex",
-            fontSize: "20px",
-            lineHeight: 1.45,
-            maxWidth: "920px",
-          }}
-        >
-          {description}
-        </div>
       </div>
 
-      {/* Massive Prominent Stats Grid (3 Columns) */}
+      {/* Full-Bleed Solid Orange Bottom Bar */}
       <div
         style={{
+          backgroundColor: OG_COLORS.orange,
           display: "flex",
-          gap: "20px",
+          height: "16px",
           width: "100%",
         }}
-      >
-        <StatCard stat={stat1} />
-        <StatCard stat={stat2} />
-        <StatCard stat={stat3} />
-      </div>
+      />
     </div>
   );
 }

@@ -23,27 +23,10 @@ export default async function Image() {
 
   return new ImageResponse(
     <OgTemplate
-      badgeText={siteConfig.url.replace(/^https?:\/\//, "")}
       description={siteConfig.description}
-      stat1={{
-        color: "#e8a52b",
-        label: "TOTAL RESOURCES",
-        subtext: "Handpicked & Verified",
-        value: resources.length,
-      }}
-      stat2={{
-        color: "#a855f7",
-        label: "CATEGORIES",
-        subtext: "Organized Architecture",
-        value: categories.length,
-      }}
-      stat3={{
-        color: "#10b981",
-        label: "FREE & OPEN",
-        subtext: "No Paywalls or Clutter",
-        value: "100%",
-      }}
-      title="Curated Developer Tools & Web Stash"
+      eyebrow="Syntax Stash"
+      statsText={`${resources.length} Resources · ${categories.length} Categories`}
+      title="Curated Developer Tools"
     />,
     {
       ...size,
