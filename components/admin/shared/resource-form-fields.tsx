@@ -240,7 +240,7 @@ export function ResourceFormFields({
                 onChange={(e) => onChange("title", e.target.value)}
                 placeholder="Resource Name"
                 containerClassName="h-9"
-                className="font-mono text-xs font-bold"
+                className="font-mono text-xs"
                 disabled={disabled}
                 required
               />

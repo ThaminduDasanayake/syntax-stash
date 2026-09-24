@@ -45,9 +45,7 @@ interface ResourcesViewProps {
   initialResources: ResourceItem[];
 }
 
-function ResourcesViewContent({
-  initialResources = [],
-}: ResourcesViewProps) {
+function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -137,7 +135,6 @@ function ResourcesViewContent({
   const [isWorking, setIsWorking] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [checkingHealthId, setCheckingHealthId] = useState<string | null>(null);
-  const [applyingRedirectId, setApplyingRedirectId] = useState<string | null>(null);
 
   // Dynamic pagination: 24 for visual cards, 50 for text data table
   const itemsPerPage = viewMode === "cards" ? 24 : 50;
@@ -363,43 +360,6 @@ function ResourcesViewContent({
   }, []);
 
   // 1-Click Apply Redirect Handler
-  const handleApplyRedirect = useCallback(async (item: ResourceItem) => {
-    if (!item.healthRedirectUrl) return;
-    setApplyingRedirectId(item.id);
-    try {
-      const res = await fetch("/api/admin/resources/health", {
-        body: JSON.stringify({ applyRedirect: true, resourceId: item.id }),
-        headers: { "Content-Type": "application/json" },
-        method: "POST",
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        toast.error(data.error || "Failed to apply redirect");
-        return;
-      }
-      const { health, updatedUrl } = data;
-      setResources((prev) =>
-        prev.map((r) =>
-          r.id === item.id
-            ? {
-                ...r,
-                healthErrorMessage: health.errorMessage,
-                healthLastCheckedAt: health.lastCheckedAt,
-                healthRedirectUrl: health.redirectUrl,
-                healthStatus: health.status,
-                healthStatusCode: health.statusCode,
-                url: updatedUrl || r.url,
-              }
-            : r,
-        ),
-      );
-      toast.success(`Updated URL for "${item.title}" to ${updatedUrl}`);
-    } catch {
-      toast.error("Failed to apply redirect URL");
-    } finally {
-      setApplyingRedirectId(null);
-    }
-  }, []);
 
   // Filter & Sort
   const filteredAndSortedResources = useMemo(() => {
@@ -750,9 +710,7 @@ function ResourcesViewContent({
                   }
                   onDelete={() => setDeletingResource(item)}
                   onCheckHealth={() => handleCheckHealth(item)}
-                  onApplyRedirect={() => handleApplyRedirect(item)}
                   isCheckingHealth={checkingHealthId === item.id}
-                  isApplyingRedirect={applyingRedirectId === item.id}
                   isWorking={isWorking}
                 />
               ))}
@@ -771,9 +729,7 @@ function ResourcesViewContent({
               }
               onDelete={(item) => setDeletingResource(item)}
               onCheckHealth={(item) => handleCheckHealth(item)}
-              onApplyRedirect={(item) => handleApplyRedirect(item)}
               checkingHealthId={checkingHealthId}
-              applyingRedirectId={applyingRedirectId}
               isWorking={isWorking}
             />
           )}

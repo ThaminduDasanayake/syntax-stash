@@ -1,28 +1,21 @@
 "use client";
 
-import {
-  ArrowRightIcon,
-  ArrowsClockwiseIcon,
-  PencilSimpleIcon,
-  TrashIcon,
-  WarningCircleIcon,
-} from "@phosphor-icons/react";
+import { PencilSimpleIcon, TrashIcon, WarningCircleIcon } from "@phosphor-icons/react";
 import Image from "next/image";
+import Link from "next/link";
 
 import { ResourceCardView } from "@/components/resource-card-view";
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { slugifyAuthor } from "@/lib/utils";
+import { cn, getCategoryTheme, slugifyAuthor, THEME_CONFIG } from "@/lib/utils";
 
 import { PingButton } from "../shared/ping-button";
 import { HEALTH_STATUS_CONFIG, ResourceItem } from "../shared/types";
 
 interface ResourceCardProps {
-  isApplyingRedirect?: boolean;
   isCheckingHealth?: boolean;
   isWorking?: boolean;
-  onApplyRedirect?: () => void;
   onCheckHealth?: () => void;
   onDelete: () => void;
   onEdit: () => void;
@@ -31,10 +24,8 @@ interface ResourceCardProps {
 }
 
 export function ResourceCard({
-  isApplyingRedirect = false,
   isCheckingHealth = false,
   isWorking = false,
-  onApplyRedirect,
   onCheckHealth,
   onDelete,
   onEdit,
@@ -51,8 +42,37 @@ export function ResourceCard({
   const healthStatus = res.healthStatus || "unknown";
   const healthConfig = HEALTH_STATUS_CONFIG[healthStatus];
 
+  const theme = getCategoryTheme(res.category);
+  const themeStyles = THEME_CONFIG[theme];
+
   return (
     <div className="border-line bg-surface/30 group hover:border-foreground/40 flex h-full flex-col justify-between overflow-hidden rounded-lg border-[1.5px] transition-all">
+      {/* Category Header Strip (outside the public card view) */}
+      <div className="border-line bg-surface/60 flex items-center justify-between border-b px-2.5 py-1.5 font-mono text-[11px]">
+        <div className="flex items-center gap-1.5">
+          {res.category ? (
+            <Link
+              href={`/admin/resources?category=${encodeURIComponent(res.category)}`}
+              onClick={(e) => e.stopPropagation()}
+              className={cn(
+                "inline-flex items-center gap-1.5 rounded-full border-[1.5px] px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase transition-opacity hover:opacity-80",
+                themeStyles.soft,
+                themeStyles.label,
+                themeStyles.border,
+              )}
+              title={`Filter by ${res.category}`}
+            >
+              <span
+                className={cn("size-1.5 rounded-full", themeStyles.dotActive || themeStyles.dot)}
+              />
+              {res.category}
+            </Link>
+          ) : (
+            <span className="text-muted-foreground text-[10px] italic">Uncategorized</span>
+          )}
+        </div>
+      </div>
+
       {/* Exact Visual Public Card (clicking anywhere on card opens ResourceDialog preview) */}
       <div className="flex-1 p-2 sm:p-2.5">
         <ResourceCardView
@@ -133,7 +153,7 @@ export function ResourceCard({
           ) : (
             <Tooltip>
               <TooltipTrigger asChild>
-                <span className="rounded bg-amber-500/15 px-1.5 py-0.5 text-[9px] font-bold text-amber-700 select-none dark:text-amber-400">
+                <span className="rounded bg-amber-500/15 px-1.5 py-0.5 text-[9px] font-bold text-amber-400 select-none">
                   No GH
                 </span>
               </TooltipTrigger>
@@ -156,39 +176,15 @@ export function ResourceCard({
 
       {/* Suggested Redirect Action Banner (if status is 301/308 redirect) */}
       {healthStatus === "redirect" && res.healthRedirectUrl && (
-        <div className="flex flex-col gap-1.5 border-t border-amber-500/20 bg-amber-500/10 px-2.5 py-1.5 font-mono text-[10px] text-amber-800 dark:text-amber-300">
+        <div className="flex flex-col gap-1.5 border-t border-amber-500/20 bg-amber-500/10 px-2.5 py-1.5 font-mono text-[10px] text-amber-600">
           <div className="flex items-center justify-between gap-1">
             <span className="font-bold uppercase">Redirect Detected:</span>
-            {onApplyRedirect && (
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onApplyRedirect();
-                }}
-                disabled={isApplyingRedirect || isWorking}
-                className="h-6 gap-1 border-amber-600/40 bg-amber-500/20 px-2 text-[9px] font-bold text-amber-900 uppercase hover:bg-amber-500/30 dark:text-amber-200"
-              >
-                {isApplyingRedirect ? (
-                  <>
-                    <ArrowsClockwiseIcon className="size-2.5 animate-spin" />
-                    <span>Applying...</span>
-                  </>
-                ) : (
-                  <>
-                    <ArrowRightIcon className="size-2.5" />
-                    <span>Apply URL</span>
-                  </>
-                )}
-              </Button>
-            )}
           </div>
           <a
             href={res.healthRedirectUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="truncate text-[9px] underline opacity-80 hover:opacity-100"
+            className="truncate text-[10px] underline opacity-80 hover:opacity-100"
             title={res.healthRedirectUrl}
           >
             {res.healthRedirectUrl}
@@ -198,7 +194,7 @@ export function ResourceCard({
 
       {/* Missing Data Warning Chips */}
       {hasMissingData && (
-        <div className="flex flex-wrap items-center gap-1 border-t border-amber-500/20 bg-amber-500/10 px-2.5 py-1 font-mono text-[10px] text-amber-700 dark:text-amber-400">
+        <div className="flex flex-wrap items-center gap-1 border-t border-amber-500/20 bg-amber-500/10 px-2.5 py-1 font-mono text-[10px] text-amber-400">
           <WarningCircleIcon weight="bold" className="size-3 shrink-0" />
           <span className="font-semibold uppercase">Missing:</span>
           {hasNoOg && (
