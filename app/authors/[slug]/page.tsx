@@ -68,7 +68,7 @@ export default async function AuthorPage({ params }: { params: Promise<Params> }
     },
     {
       href: links?.youtube,
-      icon: <Image src="/youtube.svg" alt="YouTube" width={14} height={14} className="size-3.5" />,
+      icon: <Image src="/youtube.svg" alt="YouTube" width={20} height={20} />,
       key: "youtube",
       label: "YouTube",
     },

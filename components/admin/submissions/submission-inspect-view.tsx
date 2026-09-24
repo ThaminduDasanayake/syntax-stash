@@ -1175,7 +1175,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
                 disabled={isWorking}
                 className="gap-1.5 text-xs font-bold uppercase"
               >
-                <FloppyDiskIcon className="size-4" />
+                <FloppyDiskIcon weight="duotone" className="size-4" />
                 <span>Save Edits</span>
               </Button>
 
