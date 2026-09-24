@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function ChangelogPage() {
   const changelogEntries = getChangelog();
-  const latestVersion = changelogEntries.length > 0 ? changelogEntries[0].version : null;
+  const latestId = changelogEntries.length > 0 ? changelogEntries[0].id : null;
 
   return (
     <div className="lib-page">
@@ -27,23 +27,23 @@ export default function ChangelogPage() {
             Track new tools, features, and platform updates as {siteConfig.name} evolves.
           </p>
 
-          {/* Quick Version Navigation Bar */}
+          {/* Quick Date Navigation Bar */}
           {changelogEntries.length > 0 && (
             <div className="mt-8 flex flex-wrap items-center gap-2.5">
-              <span className="font-mono text-xs font-bold uppercase opacity-60">Releases:</span>
+              <span className="font-mono text-xs font-bold uppercase opacity-60">Updates:</span>
               {changelogEntries.map((entry) => {
-                const isLatest = entry.version === latestVersion;
+                const isLatest = entry.id === latestId;
                 return (
                   <a
-                    key={entry.version}
-                    href={`#${entry.version}`}
+                    key={entry.id}
+                    href={`#${entry.id}`}
                     className={`border-border flex items-center gap-1.5 border-2 px-3 py-1 font-mono text-xs font-bold transition-all hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] ${
                       isLatest
                         ? "bg-primary text-primary-foreground"
                         : "bg-card text-foreground hover:bg-muted"
                     }`}
                   >
-                    <span>{entry.version}</span>
+                    <span>{entry.date}</span>
                     {isLatest && (
                       <span className="bg-paper/20 text-paper ml-1 rounded px-1.5 py-0.5 text-[10px] uppercase">
                         Latest
@@ -70,14 +70,10 @@ export default function ChangelogPage() {
               <div className="border-border absolute top-4 bottom-4 left-2 w-1 border-l-2 border-dashed sm:left-4" />
 
               {changelogEntries.map((entry) => {
-                const isLatest = entry.version === latestVersion;
+                const isLatest = entry.id === latestId;
 
                 return (
-                  <div
-                    key={entry.version}
-                    id={entry.version}
-                    className="group relative scroll-mt-24"
-                  >
+                  <div key={entry.id} id={entry.id} className="group relative scroll-mt-24">
                     {/* Timeline Node Indicator */}
                     <div
                       className={`border-border absolute top-8 -left-6 h-4 w-4 rounded-full border-2 sm:-left-10 ${
@@ -99,15 +95,14 @@ export default function ChangelogPage() {
                       <div className="flex flex-wrap items-center justify-between gap-4 border-b-2 border-current/15 pb-4">
                         <div className="flex flex-wrap items-center gap-3">
                           <span className="bg-primary text-primary-foreground border-border border-[1.5px] px-3.5 py-1 font-mono text-sm font-bold tracking-wider uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                            {entry.version}
+                            {entry.date}
                           </span>
                           {isLatest && (
                             <span className="border-border bg-muted text-foreground border-[1.5px] px-2.5 py-1 font-mono text-xs font-extrabold tracking-widest uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                              ★ LATEST RELEASE
+                              ★ LATEST UPDATE
                             </span>
                           )}
                         </div>
-                        <span className="font-mono text-xs font-bold opacity-70">{entry.date}</span>
                       </div>
 
                       {/* Card Sections */}

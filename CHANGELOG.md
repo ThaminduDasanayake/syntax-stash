@@ -1,13 +1,38 @@
 # Changelog
 
-All notable changes to **Syntax Stash** will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+All notable changes and updates to **Syntax Stash** are documented here chronologically by release date.
 
 ---
 
-## [1.4.0] - 2026-08-21
+## [2026-09-24] - September 24, 2026
+
+### Added
+
+- **Admin Management Suite**:
+  - **Live URL Health & Drift Scanner**: Integrated diagnostic tools to probe HTTP response codes, detect permanent/temporary redirects (301/308), anti-bot/WAF challenges, broken links, and track metadata drift for favicons and OpenGraph images.
+  - **Submissions & Review Workflow**: Full submission inspection portal (`SubmissionsView`, `SubmissionInspectView`) with candidate scrapers, external link validation, and 1-click publishing.
+  - **Entity Management Dialogs**: Dedicated dialogs and managers for Categories, Authors, and Tags with auto-slug generation, social links, and confirmation diff dialogs.
+  - **Word-Level Diffing**: Visual comparison modal (`ConfirmEditDialog`) for precise, field-by-field review before committing administrative updates.
+- **GitHub Stars Syncing**: Background synchronization script (`sync:stars`) with pool concurrency, rate-limit resilience, and precomputed dataset caching (`lib/github-stars.json`).
+- **Public Author Profiles & Directory**: Added `/authors` directory and individual author profile pages (`/authors/[slug]`) featuring author bios, verified social links, and associated catalog tools.
+- **Authentication & Saved Collections**: Integrated Better Auth with PostgreSQL persistence for user bookmarks, alongside dedicated `/saved` library view with JSON import/export tools.
+- **Legal & Compliance Pages**: Added Privacy Policy (`/privacy`) and Terms of Service (`/terms`) routes.
+- **Dynamic OpenGraph Engine**: Standardized edge-rendered OpenGraph images using shared templates, custom fonts, and real-time vault stats.
+
+### Changed
+
+- **Resource Dialog Mobile UX**: Redesigned dialog header with smooth scroll-to-morph title animations, responsive button sizing, and overscroll bounce physics.
+- **Footer & Tech Stack Grid**: Overhauled site footer with interactive multi-column grid and modern SVG tech stack wordmarks (Next.js, Neon, Drizzle ORM, Better Auth, Tailwind CSS).
+- **Metadata Scraping Pipeline**: Enhanced head parser with theme-aware SVG favicon extraction, ScrapingBee fallback handling, and retry mechanisms.
+- **Icon System**: Standardized social and external link SVG icons (GitHub, LinkedIn, YouTube) to consistent 1:1 square aspect ratios.
+
+### Refactored
+
+- **Admin Component Architecture**: Modularized admin directory structure, removed legacy prefixes and barrel files, and centralized entity sorting and shared form field components.
+
+---
+
+## [2026-08-21] - August 21, 2026
 
 ### Added
 
@@ -25,7 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.3.0] - 2026-08-04
+## [2026-08-04] - August 04, 2026
 
 ### Added
 
@@ -47,7 +72,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.2.0] - 2026-07-28
+## [2026-07-28] - July 28, 2026
 
 ### Added
 
@@ -65,7 +90,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.1.0] - 2026-06-15
+## [2026-06-15] - June 15, 2026
 
 ### Added
 
@@ -75,10 +100,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.0.0] - 2026-05-01
+## [2026-05-01] - May 01, 2026
 
 ### Added
 
-- **Initial Public Release**: Launched Syntax Stash featuring 100+ curated developer resources and tools.
+- **Initial Public Launch**: Launched Syntax Stash featuring curated developer resources and utilities.
 - **Brutalist UI System**: High-contrast brutalist design system built with Next.js App Router, Tailwind CSS, and Phosphor Icons.
 - **Developer Toolbelt**: Released 40+ client-side developer utilities including JSON Studio, Document Extractor, JSON Schema Studio, and ASCII Studio running 100% locally.

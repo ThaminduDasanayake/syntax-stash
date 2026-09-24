@@ -315,7 +315,7 @@ function ResourceFormContent({ initialData, mode = "create" }: ResourceFormProps
         <div className="text-muted-foreground flex items-center gap-2 font-mono text-xs">
           {isEdit ? (
             hasChanges ? (
-              <span className="text-amber-500 font-bold">• Unsaved changes pending</span>
+              <span className="font-bold text-amber-500">• Unsaved changes pending</span>
             ) : (
               <span>No modifications made</span>
             )

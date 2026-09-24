@@ -18,9 +18,7 @@ interface SubmissionsViewProps {
   initialSubmissions?: Submission[];
 }
 
-export function SubmissionsView({
-  initialSubmissions = [],
-}: SubmissionsViewProps) {
+export function SubmissionsView({ initialSubmissions = [] }: SubmissionsViewProps) {
   const [activeTab, setActiveTab] = useState<TabStatus>("pending");
   const [allSubmissions, setAllSubmissions] = useState<Submission[]>(initialSubmissions);
   const [isLoading, setIsLoading] = useState(false);

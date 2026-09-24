@@ -17,10 +17,7 @@ export default async function SubmissionsPage() {
   let initialSubmissions: Submission[] = [];
 
   try {
-    initialSubmissions = await db
-      .select()
-      .from(submission)
-      .orderBy(desc(submission.createdAt));
+    initialSubmissions = await db.select().from(submission).orderBy(desc(submission.createdAt));
   } catch (err) {
     console.error("Failed to preload submissions in server component:", err);
   }

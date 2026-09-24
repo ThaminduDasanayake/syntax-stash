@@ -7,9 +7,11 @@ export type ChangelogSection = {
 };
 
 export type ChangelogEntry = {
-  version: string;
+  id: string;
+  title: string;
   date: string;
   sections: ChangelogSection[];
+  version: string;
 };
 
 /**
@@ -49,8 +51,13 @@ export function getChangelog(): ChangelogEntry[] {
     const body = firstLineEnd !== -1 ? block.substring(firstLineEnd + 1) : "";
 
     const headerMatch = headerLine.match(/^([^\]]+)](?:\s*-\s*(.+))?/);
-    const version = headerMatch ? headerMatch[1].trim() : "v0.0.0";
-    const date = headerMatch && headerMatch[2] ? headerMatch[2].trim() : "";
+    const primary = headerMatch ? headerMatch[1].trim() : "Update";
+    const secondary = headerMatch && headerMatch[2] ? headerMatch[2].trim() : "";
+
+    // If primary is in YYYY-MM-DD format (or contains date/version), use it as anchor ID
+    const id = primary.replace(/[^a-zA-Z0-9-_]/g, "-").toLowerCase();
+    const date = secondary || primary;
+    const title = secondary || primary;
 
     const rawSections = body.split(/^###\s+/m).slice(1);
     const sections: ChangelogSection[] = [];
@@ -86,9 +93,11 @@ export function getChangelog(): ChangelogEntry[] {
     }
 
     return {
+      id,
+      title,
       date,
       sections,
-      version: version.startsWith("v") ? version : `v${version}`,
+      version: primary,
     };
   });
 }

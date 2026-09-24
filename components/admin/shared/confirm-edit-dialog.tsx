@@ -168,16 +168,16 @@ function isUrlString(val: unknown): boolean {
 
 function isLinkField(field: string, valA: unknown, valB: unknown): boolean {
   const normalizedField = field.toLowerCase().replace(/[-_]/g, "");
-  return (
-    LINK_FIELD_NAMES.has(normalizedField) ||
-    isUrlString(valA) ||
-    isUrlString(valB)
-  );
+  return LINK_FIELD_NAMES.has(normalizedField) || isUrlString(valA) || isUrlString(valB);
 }
 
 function isSelectOrBooleanField(field: string, valA: unknown, valB: unknown): boolean {
   const normalizedField = field.toLowerCase().replace(/[-_]/g, "");
-  return typeof valA === "boolean" || typeof valB === "boolean" || SELECT_OR_BOOLEAN_FIELDS.has(normalizedField);
+  return (
+    typeof valA === "boolean" ||
+    typeof valB === "boolean" ||
+    SELECT_OR_BOOLEAN_FIELDS.has(normalizedField)
+  );
 }
 
 /**

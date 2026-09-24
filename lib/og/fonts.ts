@@ -15,17 +15,13 @@ export async function getOgFonts(): Promise<OgFont[]> {
     return cachedFonts;
   }
 
-  const [
-    bricolageData,
-    instrumentSerifData,
-    interRegularData,
-    jetbrainsMonoRegularData,
-  ] = await Promise.all([
-    readFile(join(process.cwd(), "public/fonts/BricolageGrotesque-Bold.ttf")),
-    readFile(join(process.cwd(), "public/fonts/InstrumentSerif-Italic.ttf")),
-    readFile(join(process.cwd(), "public/fonts/Inter-Regular.ttf")),
-    readFile(join(process.cwd(), "public/fonts/JetBrainsMono-Regular.ttf")),
-  ]);
+  const [bricolageData, instrumentSerifData, interRegularData, jetbrainsMonoRegularData] =
+    await Promise.all([
+      readFile(join(process.cwd(), "public/fonts/BricolageGrotesque-Bold.ttf")),
+      readFile(join(process.cwd(), "public/fonts/InstrumentSerif-Italic.ttf")),
+      readFile(join(process.cwd(), "public/fonts/Inter-Regular.ttf")),
+      readFile(join(process.cwd(), "public/fonts/JetBrainsMono-Regular.ttf")),
+    ]);
 
   const instrumentSerifBuffer = instrumentSerifData.buffer.slice(
     instrumentSerifData.byteOffset,

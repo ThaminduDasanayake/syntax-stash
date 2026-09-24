@@ -3,11 +3,7 @@
 import { useCallback, useState } from "react";
 import { toast } from "sonner";
 
-import {
-  CandidateOption,
-  DuplicateUrlItem,
-  SuggestedAuthorData,
-} from "@/components/submissions";
+import { CandidateOption, DuplicateUrlItem, SuggestedAuthorData } from "@/components/submissions";
 
 export interface MetadataScanResult {
   author?: string;

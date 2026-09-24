@@ -90,10 +90,7 @@ export interface SortableEntity {
   updatedAt?: Date | string | null;
 }
 
-export function sortEntities<T extends SortableEntity>(
-  items: T[],
-  sortBy: string,
-): T[] {
+export function sortEntities<T extends SortableEntity>(items: T[], sortBy: string): T[] {
   const sorted = [...items];
   const getCount = (item: T) => item.resourceCount ?? item.toolCount ?? 0;
 
@@ -130,4 +127,3 @@ export function sortEntities<T extends SortableEntity>(
       return sorted;
   }
 }
-
