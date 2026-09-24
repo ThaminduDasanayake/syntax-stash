@@ -109,7 +109,7 @@ export function DialogFormActions({
             {submitIcon !== undefined ? (
               submitIcon
             ) : isEdit ? (
-              <FloppyDiskIcon weight="bold" className="size-3.5" />
+              <FloppyDiskIcon weight="duotone" className="size-3.5" />
             ) : (
               <CheckIcon weight="bold" className="size-3.5" />
             )}

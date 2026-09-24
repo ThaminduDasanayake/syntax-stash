@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function AdminResourcesPage() {
-  const { categoryCounts, resources } = await getAllAdminResources();
+export default async function ResourcesPage() {
+  const { resources } = await getAllAdminResources();
 
-  return <ResourcesView _initialCategoryCounts={categoryCounts} initialResources={resources} />;
+  return <ResourcesView initialResources={resources} />;
 }

@@ -18,7 +18,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { ReactNode, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
@@ -69,7 +69,7 @@ const SUBMISSION_FIELD_LABELS: Record<string, string> = {
   url: "Resource URL",
 };
 
-interface AdminSubmissionInspectViewProps {
+interface SubmissionInspectViewProps {
   submission: Submission;
 }
 
@@ -91,7 +91,7 @@ function SubmittedDataBanner({
   onSync,
   value,
 }: {
-  display?: React.ReactNode;
+  display?: ReactNode;
   label?: string;
   onSync: () => void;
   value?: string | null;
@@ -134,7 +134,7 @@ function SubmittedDataBanner({
   );
 }
 
-export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionInspectViewProps) {
+export function SubmissionInspectView({ submission: sub }: SubmissionInspectViewProps) {
   const router = useRouter();
   const { categoryOptions } = useCategories();
 
@@ -1175,7 +1175,7 @@ export function AdminSubmissionInspectView({ submission: sub }: AdminSubmissionI
                 disabled={isWorking}
                 className="gap-1.5 text-xs font-bold uppercase"
               >
-                <FloppyDiskIcon className="size-4" />
+                <FloppyDiskIcon weight="duotone" className="size-4" />
                 <span>Save Edits</span>
               </Button>
 

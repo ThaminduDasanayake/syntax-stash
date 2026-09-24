@@ -23,7 +23,7 @@ export interface FieldDiff {
   oldValue: string | number | boolean | null | undefined;
 }
 
-export interface AdminConfirmEditDialogProps {
+export interface ConfirmEditDialogProps {
   changes: FieldDiff[];
   confirmLabel?: string;
   description?: string;
@@ -159,28 +159,25 @@ const SELECT_OR_BOOLEAN_FIELDS = new Set([
   "type",
 ]);
 
+function isUrlString(val: unknown): boolean {
+  return (
+    typeof val === "string" &&
+    (isValidHttpUrl(val) || val.startsWith("http://") || val.startsWith("https://"))
+  );
+}
+
 function isLinkField(field: string, valA: unknown, valB: unknown): boolean {
   const normalizedField = field.toLowerCase().replace(/[-_]/g, "");
-  if (LINK_FIELD_NAMES.has(normalizedField)) return true;
-  if (
-    typeof valA === "string" &&
-    (isValidHttpUrl(valA) || valA.startsWith("http://") || valA.startsWith("https://"))
-  ) {
-    return true;
-  }
-  if (
-    typeof valB === "string" &&
-    (isValidHttpUrl(valB) || valB.startsWith("http://") || valB.startsWith("https://"))
-  ) {
-    return true;
-  }
-  return false;
+  return LINK_FIELD_NAMES.has(normalizedField) || isUrlString(valA) || isUrlString(valB);
 }
 
 function isSelectOrBooleanField(field: string, valA: unknown, valB: unknown): boolean {
-  if (typeof valA === "boolean" || typeof valB === "boolean") return true;
   const normalizedField = field.toLowerCase().replace(/[-_]/g, "");
-  return SELECT_OR_BOOLEAN_FIELDS.has(normalizedField);
+  return (
+    typeof valA === "boolean" ||
+    typeof valB === "boolean" ||
+    SELECT_OR_BOOLEAN_FIELDS.has(normalizedField)
+  );
 }
 
 /**
@@ -230,7 +227,7 @@ export function ConfirmEditDialog({
   onConfirm,
   onOpenChange,
   open,
-}: AdminConfirmEditDialogProps) {
+}: ConfirmEditDialogProps) {
   const [localBusy, setLocalBusy] = React.useState(false);
 
   React.useEffect(() => {
@@ -386,7 +383,7 @@ export function ConfirmEditDialog({
                         </div>
                       ) : (
                         /* Text / Prose / Descriptions: Inline Word-level Diff */
-                        <div className="border-line bg-surface/80 rounded border-[1.5px] p-2.5 font-mono text-xs leading-relaxed break-words">
+                        <div className="border-line bg-surface/80 rounded border-[1.5px] p-2.5 font-mono text-xs leading-relaxed wrap-break-word">
                           {wordTokens && wordTokens.length > 0 ? (
                             wordTokens.map((token, tIdx) => {
                               if (token.type === "added") {

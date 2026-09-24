@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function AdminTagsPage() {
+export default async function TagsPage() {
   const rows = await db
     .select({
       id: tag.id,

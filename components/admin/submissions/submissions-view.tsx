@@ -4,22 +4,21 @@ import { TrayIcon } from "@phosphor-icons/react";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
-import { AdminSubmissionCard, StatusTabs, SubmissionCounts, TabStatus } from "@/components/admin";
-import { AdminSubmissionsCardsSkeleton } from "@/components/admin/submissions/admin-submissions-skeleton";
+import { StatusTabs } from "@/components/admin/shared/status-tabs";
+import { SubmissionCounts, TabStatus } from "@/components/admin/shared/types";
+import { SubmissionCard } from "@/components/admin/submissions/submission-card";
+import { SubmissionsCardsSkeleton } from "@/components/admin/submissions/submissions-skeleton";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Submission } from "@/lib/db/schema";
 
-interface AdminSubmissionsClientProps {
+interface SubmissionsViewProps {
   initialCounts?: SubmissionCounts;
   initialSubmissions?: Submission[];
 }
 
-export function AdminSubmissionsClient({
-  _initialCounts,
-  initialSubmissions = [],
-}: AdminSubmissionsClientProps & { _initialCounts?: SubmissionCounts }) {
+export function SubmissionsView({ initialSubmissions = [] }: SubmissionsViewProps) {
   const [activeTab, setActiveTab] = useState<TabStatus>("pending");
   const [allSubmissions, setAllSubmissions] = useState<Submission[]>(initialSubmissions);
   const [isLoading, setIsLoading] = useState(false);
@@ -45,7 +44,7 @@ export function AdminSubmissionsClient({
 
   useEffect(() => {
     if (initialSubmissions.length === 0) {
-      refreshSubmissions();
+      void refreshSubmissions();
     }
   }, [initialSubmissions.length, refreshSubmissions]);
 
@@ -87,7 +86,8 @@ export function AdminSubmissionsClient({
       });
 
       if (!res.ok) {
-        throw new Error("Failed to update status on server");
+        setAllSubmissions(previousSubmissions);
+        toast.error(`Failed to update status for ${itemTitle}. Reverted changes.`);
       }
     } catch (err) {
       console.error("Failed to update status:", err);
@@ -117,7 +117,8 @@ export function AdminSubmissionsClient({
       setActionLoadingId(target.id);
       const res = await fetch(`/api/admin/submissions?id=${target.id}`, { method: "DELETE" });
       if (!res.ok) {
-        throw new Error("Failed to delete submission on server");
+        setAllSubmissions(previousSubmissions);
+        toast.error(`Failed to delete ${itemTitle}. Reverted changes.`);
       }
     } catch (err) {
       console.error("Failed to delete submission:", err);
@@ -154,7 +155,7 @@ export function AdminSubmissionsClient({
 
       {/* Submissions List / Loading Skeleton / Empty State */}
       {isLoading ? (
-        <AdminSubmissionsCardsSkeleton count={3} />
+        <SubmissionsCardsSkeleton count={3} />
       ) : filteredSubmissions.length === 0 ? (
         <EmptyState
           variant="card"
@@ -181,7 +182,7 @@ export function AdminSubmissionsClient({
       ) : (
         <div className="grid grid-cols-1 gap-6">
           {filteredSubmissions.map((sub) => (
-            <AdminSubmissionCard
+            <SubmissionCard
               key={sub.id}
               submission={sub}
               isWorking={actionLoadingId === sub.id}

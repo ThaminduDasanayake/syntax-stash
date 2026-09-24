@@ -4,7 +4,7 @@ import React from "react";
 
 import { cn } from "@/lib/utils";
 
-export interface AdminToolbarProps {
+export interface ToolbarProps {
   actions?: React.ReactNode;
   children?: React.ReactNode;
   className?: string;
@@ -13,14 +13,7 @@ export interface AdminToolbarProps {
   search?: React.ReactNode;
 }
 
-export function AdminToolbar({
-  actions,
-  children,
-  className,
-  filters,
-  footer,
-  search,
-}: AdminToolbarProps) {
+export function Toolbar({ actions, children, className, filters, footer, search }: ToolbarProps) {
   return (
     <div
       className={cn(

@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 import { SubmissionCounts, TAB_CONFIG, TABS, TabStatus } from "./types";
 
-interface AdminStatusTabsProps {
+interface StatusTabsProps {
   activeTab: TabStatus;
   counts: SubmissionCounts;
   onSearchChange: (query: string) => void;
@@ -20,7 +20,7 @@ export function StatusTabs({
   onSearchChange,
   onTabChange,
   searchQuery,
-}: AdminStatusTabsProps) {
+}: StatusTabsProps) {
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex flex-wrap items-center gap-2 border-b-[1.5px] pb-3 font-mono sm:border-b-0 sm:pb-0">

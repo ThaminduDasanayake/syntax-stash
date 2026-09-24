@@ -2,15 +2,15 @@
 
 import { ArticleIcon, GlobeIcon, XLogoIcon } from "@phosphor-icons/react";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import {
-  AdminAuthorItem,
   computeFieldChanges,
   ConfirmEditDialog,
   FieldDiff,
-} from "@/components/admin";
+} from "@/components/admin/shared/confirm-edit-dialog";
+import { AuthorItem } from "@/components/admin/shared/types";
 import {
   AuthorOption,
   fetchAuthorList,
@@ -43,11 +43,11 @@ const AUTHOR_FIELD_LABELS: Record<string, string> = {
   youtube: "YouTube Channel",
 };
 
-export interface AdminAuthorDialogProps {
-  author?: AdminAuthorItem | Partial<AdminAuthorItem> | null;
+export interface AuthorDialogProps {
+  author?: AuthorItem | Partial<AuthorItem> | null;
   existingAuthors?: Array<{ id?: string; name: string; slug: string }>;
   initialData?:
-    | Partial<AdminAuthorItem>
+    | Partial<AuthorItem>
     | {
         blog?: string | null;
         github?: string | null;
@@ -60,13 +60,13 @@ export interface AdminAuthorDialogProps {
       }
     | null;
   initialName?: string;
-  onCreated?: (newAuthor: AdminAuthorItem) => void;
+  onCreated?: (newAuthor: AuthorItem) => void;
   onOpenChange: (open: boolean) => void;
-  onUpdated?: (updatedAuthor: AdminAuthorItem) => void;
+  onUpdated?: (updatedAuthor: AuthorItem) => void;
   open: boolean;
 }
 
-function AdminAuthorDialogInner({
+function AuthorDialogInner({
   author,
   existingAuthors,
   initialData,
@@ -74,7 +74,7 @@ function AdminAuthorDialogInner({
   onCreated,
   onOpenChange,
   onUpdated,
-}: Omit<AdminAuthorDialogProps, "open">) {
+}: Omit<AuthorDialogProps, "open">) {
   const isEdit = Boolean(author?.id);
 
   const initialNameVal = (author?.name || initialData?.name || initialName || "").trim();
@@ -167,7 +167,7 @@ function AdminAuthorDialogInner({
         const data = await res.json();
 
         if (res.ok && data.success) {
-          const updatedItem: AdminAuthorItem = {
+          const updatedItem: AuthorItem = {
             ...author,
             id: author.id,
             blog: formData.blog.trim() || null,
@@ -218,8 +218,9 @@ function AdminAuthorDialogInner({
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     if (!formData.name.trim()) {
       toast.error("Author name is required.");
       return;
@@ -572,11 +573,11 @@ function AdminAuthorDialogInner({
   );
 }
 
-export function AuthorDialog(props: AdminAuthorDialogProps) {
+export function AuthorDialog(props: AuthorDialogProps) {
   return (
     <Dialog open={props.open} onOpenChange={props.onOpenChange}>
       {props.open && (
-        <AdminAuthorDialogInner
+        <AuthorDialogInner
           key={props.author?.id || props.initialName || "new"}
           author={props.author}
           existingAuthors={props.existingAuthors}

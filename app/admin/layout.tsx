@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 import Link from "next/link";
 import { ReactNode } from "react";
 
-import { Nav } from "@/components/admin";
+import { Nav } from "@/components/admin/layout/nav";
 import { Button } from "@/components/ui/button";
 import { isAdmin } from "@/lib/admin";
 import { auth } from "@/lib/auth";
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function AdminLayout({ children }: { children: ReactNode }) {
+export default async function Layout({ children }: { children: ReactNode }) {
   const reqHeaders = await headers();
   const session = await auth.api.getSession({ headers: reqHeaders });
 
@@ -56,7 +56,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
     );
   }
 
-  // Pre-fetch count badges for the persistent AdminNav header
+  // Pre-fetch count badges for the persistent Nav header
   let pendingSubmissionsCount = 0;
   let totalResourcesCount = 0;
   let categoriesCount = 0;

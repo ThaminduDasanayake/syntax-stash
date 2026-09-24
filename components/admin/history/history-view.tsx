@@ -15,7 +15,7 @@ import {
   WarningOctagonIcon,
 } from "@phosphor-icons/react";
 import Link from "next/link";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -51,7 +51,7 @@ export interface ActivityLogItem {
   metadata: null | string;
 }
 
-interface AdminHistoryClientProps {
+interface HistoryViewProps {
   initialItems?: ActivityLogItem[];
   initialTotal?: number;
 }
@@ -124,7 +124,7 @@ function getAlertBadgeStyle(action: ActivityLogItem["action"]) {
   }
 }
 
-export function HistoryView({ initialItems = [], initialTotal = 0 }: AdminHistoryClientProps) {
+export function HistoryView({ initialItems = [], initialTotal = 0 }: HistoryViewProps) {
   const [items, setItems] = useState<ActivityLogItem[]>(initialItems);
   const [total, setTotal] = useState(initialTotal);
   const [alertFilter, setAlertFilter] = useState("all");
@@ -141,7 +141,7 @@ export function HistoryView({ initialItems = [], initialTotal = 0 }: AdminHistor
     }));
   };
 
-  const fetchAlerts = async () => {
+  const fetchAlerts = useCallback(async () => {
     try {
       setIsLoading(true);
       const params = new URLSearchParams();
@@ -163,7 +163,7 @@ export function HistoryView({ initialItems = [], initialTotal = 0 }: AdminHistor
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [alertFilter, searchQuery]);
 
   const handleScanCatalog = async () => {
     try {
@@ -238,13 +238,12 @@ export function HistoryView({ initialItems = [], initialTotal = 0 }: AdminHistor
   };
 
   useEffect(() => {
-    fetchAlerts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [alertFilter]);
+    void fetchAlerts();
+  }, [fetchAlerts]);
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
+  const handleSearchSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    fetchAlerts();
+    void fetchAlerts();
   };
 
   const stats = useMemo(() => {
@@ -296,7 +295,9 @@ export function HistoryView({ initialItems = [], initialTotal = 0 }: AdminHistor
             <Button
               variant="outline"
               size="sm"
-              onClick={fetchAlerts}
+              onClick={() => {
+                void fetchAlerts();
+              }}
               disabled={isLoading || isScanning}
               className="border-line hover:bg-surface h-9 gap-1.5 font-mono text-xs font-bold uppercase"
             >

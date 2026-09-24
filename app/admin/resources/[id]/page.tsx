@@ -18,7 +18,7 @@ interface EditPageProps {
   params: Promise<{ id: string }>;
 }
 
-export default async function AdminEditResourcePage({ params }: EditPageProps) {
+export default async function EditResourcePage({ params }: EditPageProps) {
   const { id } = await params;
 
   const rows = await db

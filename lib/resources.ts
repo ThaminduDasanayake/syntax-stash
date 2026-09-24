@@ -142,7 +142,7 @@ export const getAllResources = cache(
 export const getAllAdminResources = cache(
   async (): Promise<{
     categoryCounts: Record<string, number>;
-    resources: import("@/components/admin/shared/types").AdminResourceItem[];
+    resources: import("@/components/admin/shared/types").ResourceItem[];
   }> => {
     try {
       const rows = await db
@@ -189,7 +189,7 @@ export const getAllAdminResources = cache(
       const categoryCounts: Record<string, number> = {};
       const resourceMap = new Map<
         string,
-        Omit<import("@/components/admin/shared/types").AdminResourceItem, "tags"> & {
+        Omit<import("@/components/admin/shared/types").ResourceItem, "tags"> & {
           authors: string[];
           tags: string[];
         }

@@ -3,12 +3,12 @@
 import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
 
-import { TagItem } from "@/components/admin";
 import {
   computeFieldChanges,
   ConfirmEditDialog,
   FieldDiff,
 } from "@/components/admin/shared/confirm-edit-dialog";
+import { TagItem } from "@/components/admin/shared/types";
 import { DuplicateNotice } from "@/components/submissions/duplicate-url-notice";
 import { FieldCheckmark } from "@/components/submissions/field-checkmark";
 import { invalidateTagCache } from "@/components/submissions/tag-picker";
@@ -38,7 +38,7 @@ export interface TagDialogProps {
   tag?: TagItem | Partial<TagItem> | null;
 }
 
-function AdminTagDialogInner({
+function TagDialogInner({
   existingTags = [],
   onCreated,
   onOpenChange,
@@ -162,6 +162,7 @@ function AdminTagDialogInner({
 
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     if (!formData.name.trim()) {
       toast.error("Tag name is required.");
       return;
@@ -323,7 +324,7 @@ export function TagDialog(props: TagDialogProps) {
   return (
     <Dialog open={props.open} onOpenChange={props.onOpenChange}>
       {props.open && (
-        <AdminTagDialogInner
+        <TagDialogInner
           key={props.tag?.id || "new"}
           existingTags={props.existingTags}
           onCreated={props.onCreated}

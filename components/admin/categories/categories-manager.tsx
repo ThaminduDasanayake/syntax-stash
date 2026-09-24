@@ -10,9 +10,11 @@ import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { CategoryDialog } from "@/components/admin/categories/category-dialog";
-import { AdminToolbar } from "@/components/admin/layout/admin-toolbar";
+import { Toolbar } from "@/components/admin/layout/toolbar";
 import { TableRowActions } from "@/components/admin/resources/table-row-actions";
 import { SortSelect } from "@/components/admin/shared/sort-select";
+import { CategoryItem } from "@/components/admin/shared/types";
+import { sortEntities } from "@/components/admin/shared/utils";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { AddButton } from "@/components/ui/add-button";
 import { Badge } from "@/components/ui/badge";
@@ -31,17 +33,8 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn, slugify } from "@/lib/utils";
 
-export interface AdminCategoryItem {
-  createdAt?: Date | string;
-  id: string;
-  name: string;
-  slug: string;
-  toolCount: number;
-  updatedAt?: Date | string;
-}
-
-interface AdminCategoriesClientProps {
-  initialCategories: AdminCategoryItem[];
+interface CategoriesManagerProps {
+  initialCategories: CategoryItem[];
 }
 
 const SORT_OPTIONS = [
@@ -53,8 +46,8 @@ const SORT_OPTIONS = [
   { label: "Recently Updated", value: "updated-desc" },
 ];
 
-export function CategoriesManager({ initialCategories = [] }: AdminCategoriesClientProps) {
-  const [categories, setCategories] = useState<AdminCategoryItem[]>(initialCategories);
+export function CategoriesManager({ initialCategories = [] }: CategoriesManagerProps) {
+  const [categories, setCategories] = useState<CategoryItem[]>(initialCategories);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<string>("name-asc");
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -62,8 +55,8 @@ export function CategoriesManager({ initialCategories = [] }: AdminCategoriesCli
 
   // Dialog state
   const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<AdminCategoryItem | null>(null);
-  const [deletingCategory, setDeletingCategory] = useState<AdminCategoryItem | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<CategoryItem | null>(null);
+  const [deletingCategory, setDeletingCategory] = useState<CategoryItem | null>(null);
 
   const filteredCategories = useMemo(() => {
     let result = categories;
@@ -75,30 +68,7 @@ export function CategoriesManager({ initialCategories = [] }: AdminCategoriesCli
       );
     }
 
-    const sorted = [...result];
-    if (sortBy === "name-asc") {
-      sorted.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (sortBy === "name-desc") {
-      sorted.sort((a, b) => b.name.localeCompare(a.name));
-    } else if (sortBy === "updated-desc") {
-      sorted.sort((a, b) => {
-        const timeA = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
-        const timeB = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
-        return timeB - timeA || a.name.localeCompare(b.name);
-      });
-    } else if (sortBy === "created-desc") {
-      sorted.sort((a, b) => {
-        const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
-        const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-        return timeB - timeA || a.name.localeCompare(b.name);
-      });
-    } else if (sortBy === "resources-desc") {
-      sorted.sort((a, b) => b.toolCount - a.toolCount || a.name.localeCompare(b.name));
-    } else if (sortBy === "resources-asc") {
-      sorted.sort((a, b) => a.toolCount - b.toolCount || a.name.localeCompare(b.name));
-    }
-
-    return sorted;
+    return sortEntities(result, sortBy);
   }, [categories, searchQuery, sortBy]);
 
   // Refresh
@@ -150,7 +120,7 @@ export function CategoriesManager({ initialCategories = [] }: AdminCategoriesCli
   };
 
   // Download All Resources in a Category
-  const handleDownloadCategoryResources = async (cat: AdminCategoryItem) => {
+  const handleDownloadCategoryResources = async (cat: CategoryItem) => {
     if (cat.toolCount === 0) {
       toast.info(`No resources in category "${cat.name}".`);
       return;
@@ -235,17 +205,17 @@ export function CategoriesManager({ initialCategories = [] }: AdminCategoriesCli
   };
 
   // Open Edit Dialog
-  const handleOpenEdit = (categoryItem: AdminCategoryItem) => {
+  const handleOpenEdit = (categoryItem: CategoryItem) => {
     setSelectedCategory(categoryItem);
     setIsCategoryDialogOpen(true);
   };
 
   // Handle Created / Updated Category Callbacks
-  const handleCategoryCreated = (newCategory: AdminCategoryItem) => {
+  const handleCategoryCreated = (newCategory: CategoryItem) => {
     setCategories((prev) => [...prev, newCategory]);
   };
 
-  const handleCategoryUpdated = (updatedCategory: AdminCategoryItem) => {
+  const handleCategoryUpdated = (updatedCategory: CategoryItem) => {
     setCategories((prev) => prev.map((c) => (c.id === updatedCategory.id ? updatedCategory : c)));
   };
 
@@ -279,7 +249,7 @@ export function CategoriesManager({ initialCategories = [] }: AdminCategoriesCli
   return (
     <div className="font-mono">
       {/* Control Bar */}
-      <AdminToolbar
+      <Toolbar
         search={
           <SearchInput
             placeholder="Search categories by name or slug..."

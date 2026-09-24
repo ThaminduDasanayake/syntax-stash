@@ -4,10 +4,12 @@ import { ArrowsClockwiseIcon, TagIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
-import { AdminToolbar } from "@/components/admin/layout/admin-toolbar";
+import { Toolbar } from "@/components/admin/layout/toolbar";
 import { TableRowActions } from "@/components/admin/resources/table-row-actions";
 import { FilterSelect } from "@/components/admin/shared/filter-select";
 import { SortSelect } from "@/components/admin/shared/sort-select";
+import { TagItem } from "@/components/admin/shared/types";
+import { sortEntities } from "@/components/admin/shared/utils";
 import { TagDialog } from "@/components/admin/tags/tag-dialog";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { invalidateTagCache } from "@/components/submissions/tag-picker";
@@ -26,16 +28,7 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 
-export interface TagItem {
-  createdAt?: Date | string;
-  id: string;
-  name: string;
-  slug: string;
-  toolCount: number;
-  updatedAt?: Date | string;
-}
-
-interface TagsClientProps {
+interface TagsManagerProps {
   initialTags: TagItem[];
 }
 
@@ -54,7 +47,7 @@ const SORT_OPTIONS = [
   { label: "Recently Updated", value: "updated-desc" },
 ];
 
-export function TagsManager({ initialTags = [] }: TagsClientProps) {
+export function TagsManager({ initialTags = [] }: TagsManagerProps) {
   const [tags, setTags] = useState<TagItem[]>(initialTags);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterMode, setFilterMode] = useState<string>("all");
@@ -85,31 +78,7 @@ export function TagsManager({ initialTags = [] }: TagsClientProps) {
       result = result.filter((t) => t.toolCount === 0);
     }
 
-    // Sort
-    const sorted = [...result];
-    if (sortBy === "usage-desc") {
-      sorted.sort((a, b) => b.toolCount - a.toolCount || a.name.localeCompare(b.name));
-    } else if (sortBy === "usage-asc") {
-      sorted.sort((a, b) => a.toolCount - b.toolCount || a.name.localeCompare(b.name));
-    } else if (sortBy === "updated-desc") {
-      sorted.sort((a, b) => {
-        const timeA = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
-        const timeB = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
-        return timeB - timeA || a.name.localeCompare(b.name);
-      });
-    } else if (sortBy === "created-desc") {
-      sorted.sort((a, b) => {
-        const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
-        const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-        return timeB - timeA || a.name.localeCompare(b.name);
-      });
-    } else if (sortBy === "name-asc") {
-      sorted.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (sortBy === "name-desc") {
-      sorted.sort((a, b) => b.name.localeCompare(a.name));
-    }
-
-    return sorted;
+    return sortEntities(result, sortBy);
   }, [filterMode, searchQuery, sortBy, tags]);
 
   // Refresh
@@ -177,7 +146,7 @@ export function TagsManager({ initialTags = [] }: TagsClientProps) {
   return (
     <div className="font-mono">
       {/* Control Bar */}
-      <AdminToolbar
+      <Toolbar
         search={
           <SearchInput
             placeholder="Search tags by name or slug..."

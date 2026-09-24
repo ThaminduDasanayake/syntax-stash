@@ -142,7 +142,7 @@ export const HEALTH_STATUS_CONFIG: Record<
   },
 };
 
-export interface AdminResourceItem {
+export interface ResourceItem {
   authorBlog?: string | null;
   authorGithub?: string | null;
   authorId?: string | null;
@@ -171,4 +171,37 @@ export interface AdminResourceItem {
   title: string;
   updatedAt: string | Date;
   url: string;
+}
+
+export interface CategoryItem {
+  createdAt?: Date | string;
+  id: string;
+  name: string;
+  slug: string;
+  toolCount: number;
+  updatedAt?: Date | string;
+}
+
+export interface TagItem {
+  createdAt?: Date | string;
+  id: string;
+  name: string;
+  slug: string;
+  toolCount: number;
+  updatedAt?: Date | string;
+}
+
+export interface AuthorItem {
+  blog: string | null;
+  createdAt?: Date | string;
+  github: string | null;
+  id: string;
+  linkedin: string | null;
+  name: string;
+  resourceCount: number;
+  slug: string;
+  twitter: string | null;
+  updatedAt?: Date | string;
+  website: string | null;
+  youtube: string | null;
 }

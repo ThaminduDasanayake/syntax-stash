@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { AdminSubmissionInspectView } from "@/components/admin/submissions/admin-submission-inspect-view";
+import { SubmissionInspectView } from "@/components/admin/submissions/submission-inspect-view";
 import { db } from "@/lib/db";
 import { submission } from "@/lib/db/schema";
 
@@ -18,7 +18,7 @@ interface SubmissionInspectPageProps {
   params: Promise<{ id: string }>;
 }
 
-export default async function AdminInspectSubmissionPage({ params }: SubmissionInspectPageProps) {
+export default async function InspectSubmissionPage({ params }: SubmissionInspectPageProps) {
   const { id } = await params;
 
   const [sub] = await db.select().from(submission).where(eq(submission.id, id));
@@ -27,5 +27,5 @@ export default async function AdminInspectSubmissionPage({ params }: SubmissionI
     notFound();
   }
 
-  return <AdminSubmissionInspectView submission={sub} />;
+  return <SubmissionInspectView submission={sub} />;
 }

@@ -22,19 +22,19 @@ import { cn, getCategoryTheme, THEME_CONFIG } from "@/lib/utils";
 import { STATUS_CONFIG, SubmissionStatus } from "../shared/types";
 import { generateTsCode } from "../shared/utils";
 
-interface AdminSubmissionCardProps {
+interface SubmissionCardProps {
   isWorking: boolean;
   onDelete: () => void;
   onUpdateStatus: (status: "approved" | "rejected" | "pending") => void;
   submission: Submission;
 }
 
-export function AdminSubmissionCard({
+export function SubmissionCard({
   isWorking,
   onDelete,
   onUpdateStatus,
   submission: sub,
-}: AdminSubmissionCardProps) {
+}: SubmissionCardProps) {
   const authorList = useMemo(() => {
     if (!sub.author?.trim()) return [];
     return sub.author

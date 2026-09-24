@@ -2,7 +2,7 @@
 
 import { CheckIcon, CircleNotchIcon, SparkleIcon, XIcon } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import React, { useState } from "react";
 import { toast } from "sonner";
 
 import {
@@ -13,6 +13,7 @@ import {
   DuplicateUrlItem,
   DuplicateUrlNotice,
   FieldCheckmark,
+  IconBgOption,
   MediaAssetFields,
   ResourceCardPreview,
   SuggestedAuthorData,
@@ -46,7 +47,7 @@ export function SubmitForm() {
   const [github, setGithub] = useState("");
   const [favicon, setFavicon] = useState("");
   const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
-  const [iconBg, setIconBg] = useState<"dark" | "light" | "invert">("dark");
+  const [iconBg, setIconBg] = useState<IconBgOption>("dark");
   const [ogImage, setOgImage] = useState("");
   const [ogImageOptions, setOgImageOptions] = useState<CandidateOption[]>([]);
   const [suggestedAuthor, setSuggestedAuthor] = useState<SuggestedAuthorData | null>(null);
@@ -272,7 +273,7 @@ export function SubmitForm() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
 
     if (!url.trim() || !title.trim() || !description.trim() || !category) {

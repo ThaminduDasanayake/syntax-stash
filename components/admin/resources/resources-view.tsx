@@ -13,16 +13,14 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
-import {
-  adminItemToResource,
-  AdminResourceItem,
-  AdminToolbar,
-  FilterSelect,
-  Pagination,
-  ResourceCard,
-  ResourceTable,
-  SortSelect,
-} from "@/components/admin";
+import { Toolbar } from "@/components/admin/layout/toolbar";
+import { ResourceCard } from "@/components/admin/resources/resource-card";
+import { ResourceTable } from "@/components/admin/resources/resource-table";
+import { FilterSelect } from "@/components/admin/shared/filter-select";
+import { Pagination } from "@/components/admin/shared/pagination";
+import { SortSelect } from "@/components/admin/shared/sort-select";
+import { ResourceItem } from "@/components/admin/shared/types";
+import { itemToResource } from "@/components/admin/shared/utils";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { ResourceDialog } from "@/components/resource-dialog";
 import { AddButton } from "@/components/ui/add-button";
@@ -43,15 +41,11 @@ const SORT_OPTIONS = [
   { label: "Title (Z → A)", value: "title-desc" },
 ];
 
-interface AdminResourcesClientProps {
-  _initialCategoryCounts?: Record<string, number>;
-  initialResources: AdminResourceItem[];
+interface ResourcesViewProps {
+  initialResources: ResourceItem[];
 }
 
-function AdminResourcesClientContent({
-  _initialCategoryCounts = {},
-  initialResources = [],
-}: AdminResourcesClientProps) {
+function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -64,7 +58,7 @@ function AdminResourcesClientContent({
   const paramQ = searchParams.get("q") || "";
 
   const { categories } = useCategories();
-  const [resources, setResources] = useState<AdminResourceItem[]>(initialResources);
+  const [resources, setResources] = useState<ResourceItem[]>(initialResources);
   const [searchQuery, setSearchQuery] = useState(paramQ);
   const [selectedCategory, setSelectedCategory] = useState<string>(paramCategory);
   const [healthFilter, setHealthFilter] = useState<string>(paramHealth);
@@ -136,12 +130,11 @@ function AdminResourcesClientContent({
   );
 
   // Preview & Deletion state
-  const [previewResource, setPreviewResource] = useState<AdminResourceItem | null>(null);
-  const [deletingResource, setDeletingResource] = useState<AdminResourceItem | null>(null);
+  const [previewResource, setPreviewResource] = useState<ResourceItem | null>(null);
+  const [deletingResource, setDeletingResource] = useState<ResourceItem | null>(null);
   const [isWorking, setIsWorking] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [checkingHealthId, setCheckingHealthId] = useState<string | null>(null);
-  const [applyingRedirectId, setApplyingRedirectId] = useState<string | null>(null);
 
   // Dynamic pagination: 24 for visual cards, 50 for text data table
   const itemsPerPage = viewMode === "cards" ? 24 : 50;
@@ -322,7 +315,7 @@ function AdminResourcesClientContent({
   }, [healthFilter, missingStats, urlHealthStats]);
 
   // Live URL Diagnostic Handler
-  const handleCheckHealth = useCallback(async (item: AdminResourceItem) => {
+  const handleCheckHealth = useCallback(async (item: ResourceItem) => {
     setCheckingHealthId(item.id);
     try {
       const res = await fetch("/api/admin/resources/health", {
@@ -367,43 +360,6 @@ function AdminResourcesClientContent({
   }, []);
 
   // 1-Click Apply Redirect Handler
-  const handleApplyRedirect = useCallback(async (item: AdminResourceItem) => {
-    if (!item.healthRedirectUrl) return;
-    setApplyingRedirectId(item.id);
-    try {
-      const res = await fetch("/api/admin/resources/health", {
-        body: JSON.stringify({ applyRedirect: true, resourceId: item.id }),
-        headers: { "Content-Type": "application/json" },
-        method: "POST",
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        toast.error(data.error || "Failed to apply redirect");
-        return;
-      }
-      const { health, updatedUrl } = data;
-      setResources((prev) =>
-        prev.map((r) =>
-          r.id === item.id
-            ? {
-                ...r,
-                healthErrorMessage: health.errorMessage,
-                healthLastCheckedAt: health.lastCheckedAt,
-                healthRedirectUrl: health.redirectUrl,
-                healthStatus: health.status,
-                healthStatusCode: health.statusCode,
-                url: updatedUrl || r.url,
-              }
-            : r,
-        ),
-      );
-      toast.success(`Updated URL for "${item.title}" to ${updatedUrl}`);
-    } catch {
-      toast.error("Failed to apply redirect URL");
-    } finally {
-      setApplyingRedirectId(null);
-    }
-  }, []);
 
   // Filter & Sort
   const filteredAndSortedResources = useMemo(() => {
@@ -620,7 +576,7 @@ function AdminResourcesClientContent({
   return (
     <div>
       {/* Control Bar: Search, View Switcher, Category Filter, Sort, Add Resource */}
-      <AdminToolbar
+      <Toolbar
         search={
           <SearchInput
             placeholder="Search live resources by name, description, tags, author, URL..."
@@ -754,9 +710,7 @@ function AdminResourcesClientContent({
                   }
                   onDelete={() => setDeletingResource(item)}
                   onCheckHealth={() => handleCheckHealth(item)}
-                  onApplyRedirect={() => handleApplyRedirect(item)}
                   isCheckingHealth={checkingHealthId === item.id}
-                  isApplyingRedirect={applyingRedirectId === item.id}
                   isWorking={isWorking}
                 />
               ))}
@@ -775,9 +729,7 @@ function AdminResourcesClientContent({
               }
               onDelete={(item) => setDeletingResource(item)}
               onCheckHealth={(item) => handleCheckHealth(item)}
-              onApplyRedirect={(item) => handleApplyRedirect(item)}
               checkingHealthId={checkingHealthId}
-              applyingRedirectId={applyingRedirectId}
               isWorking={isWorking}
             />
           )}
@@ -834,8 +786,8 @@ function AdminResourcesClientContent({
         {previewResource && (
           <ResourceDialog
             key={previewResource.id || previewResource.url}
-            resource={adminItemToResource(previewResource)}
-            allResources={resources.map(adminItemToResource)}
+            resource={itemToResource(previewResource)}
+            allResources={resources.map(itemToResource)}
           />
         )}
       </Dialog>
@@ -857,10 +809,10 @@ function AdminResourcesClientContent({
   );
 }
 
-export function ResourcesView(props: AdminResourcesClientProps) {
+export function ResourcesView(props: ResourcesViewProps) {
   return (
     <Suspense>
-      <AdminResourcesClientContent {...props} />
+      <ResourcesViewContent {...props} />
     </Suspense>
   );
 }

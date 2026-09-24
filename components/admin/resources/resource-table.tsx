@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  ArrowElbowDownRightIcon,
   ArticleIcon,
   EyeIcon,
   GlobeIcon,
@@ -29,11 +30,11 @@ import { useAuthors } from "@/hooks/use-authors";
 import { parseAuthors, slugifyAuthor } from "@/lib/utils";
 
 import { PingButton } from "../shared/ping-button";
-import { AdminResourceItem } from "../shared/types";
+import { ResourceItem } from "../shared/types";
 
 function getAuthorSocialLinks(
   authorName: string,
-  item: AdminResourceItem,
+  item: ResourceItem,
   canonicalAuthors: import("@/lib/authors").AuthorWithResources[],
 ) {
   const cleanName = authorName.trim();
@@ -65,7 +66,7 @@ function getAuthorSocialLinks(
   if (github) {
     links.push({
       href: github,
-      icon: <Image src="/github.svg" alt="GitHub" width={20} height={20} className="dark:invert" />,
+      icon: <Image src="/github.svg" alt="GitHub" width={20} height={20} />,
       key: "github",
       label: "GitHub",
     });
@@ -106,29 +107,25 @@ function getAuthorSocialLinks(
   return links;
 }
 
-export interface AdminResourceTableProps {
-  applyingRedirectId?: string | null;
+export interface ResourceTableProps {
   checkingHealthId?: string | null;
   isWorking?: boolean;
-  onApplyRedirect?: (item: AdminResourceItem) => void;
-  onCheckHealth?: (item: AdminResourceItem) => void;
-  onDelete: (item: AdminResourceItem) => void;
-  onEdit: (item: AdminResourceItem) => void;
-  onPreview: (item: AdminResourceItem) => void;
-  resources: AdminResourceItem[];
+  onCheckHealth?: (item: ResourceItem) => void;
+  onDelete: (item: ResourceItem) => void;
+  onEdit: (item: ResourceItem) => void;
+  onPreview: (item: ResourceItem) => void;
+  resources: ResourceItem[];
 }
 
 export function ResourceTable({
-  applyingRedirectId,
   checkingHealthId,
   isWorking = false,
-  onApplyRedirect,
   onCheckHealth,
   onDelete,
   onEdit,
   onPreview,
   resources,
-}: AdminResourceTableProps) {
+}: ResourceTableProps) {
   const { authors } = useAuthors();
 
   return (
@@ -193,7 +190,7 @@ export function ResourceTable({
                         {item.title}
                       </span>
                       {!item.ogImage?.trim() && (
-                        <span className="py-0.2 rounded bg-amber-500/15 px-1 text-[9px] font-bold text-amber-700 dark:text-amber-400">
+                        <span className="py-0.2 rounded bg-amber-500/15 px-1 text-[9px] font-bold text-amber-400">
                           No OG
                         </span>
                       )}
@@ -216,7 +213,7 @@ export function ResourceTable({
                                 alt="GitHub"
                                 width={12}
                                 height={12}
-                                className="size-3 dark:invert"
+                                className="size-3"
                               />
                             </a>
                           </TooltipTrigger>
@@ -227,7 +224,7 @@ export function ResourceTable({
                       ) : (
                         <Tooltip>
                           <TooltipTrigger asChild>
-                            <span className="py-0.2 rounded bg-amber-500/15 px-1 text-[9px] font-semibold text-amber-700 select-none dark:text-amber-400">
+                            <span className="py-0.2 rounded bg-amber-500/15 px-1 text-[9px] font-semibold text-amber-400 select-none">
                               No GH
                             </span>
                           </TooltipTrigger>
@@ -288,28 +285,10 @@ export function ResourceTable({
                     </a>
 
                     {item.healthStatus === "redirect" && item.healthRedirectUrl && (
-                      <div className="flex items-center gap-1 text-[10px] text-amber-700 dark:text-amber-400">
-                        <span className="truncate" title={item.healthRedirectUrl}>
-                          ↳ {item.healthRedirectUrl}
+                      <div className="flex items-center gap-1 text-[10px] text-amber-600">
+                        <span className="flex gap-0.5 truncate" title={item.healthRedirectUrl}>
+                          <ArrowElbowDownRightIcon weight="bold" /> {item.healthRedirectUrl}
                         </span>
-                        {onApplyRedirect && (
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                onClick={() => onApplyRedirect(item)}
-                                disabled={applyingRedirectId === item.id || isWorking}
-                                className="h-5 border-amber-600/40 bg-amber-500/15 px-1.5 text-[9px] font-bold uppercase hover:bg-amber-500/25"
-                              >
-                                {applyingRedirectId === item.id ? "..." : "Apply"}
-                              </Button>
-                            </TooltipTrigger>
-                            <TooltipContent side="top">
-                              <p>Apply redirect URL</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        )}
                       </div>
                     )}
                   </div>
