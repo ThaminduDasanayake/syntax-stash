@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
+import { format } from "sql-formatter";
 
 import { ErrorAlert } from "@/components/error-alert";
 import { ToolLayout } from "@/components/tool-layout";
@@ -28,37 +29,19 @@ export default function SqlFormatterPage() {
   const [input, setInput] = useState(PLACEHOLDER);
   const [dialect, setDialect] = useState<SqlDialect>("sql");
 
-  const [output, setOutput] = useState("");
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
+  const { error, output } = useMemo(() => {
     if (!input.trim()) {
-      setOutput("");
-      setError(null);
-      return;
+      return { error: null, output: "" };
     }
-
-    let isMounted = true;
-
-    import("sql-formatter")
-      .then(({ format }) => {
-        if (!isMounted) return;
-        try {
-          const result = format(input, { keywordCase: "upper", language: dialect, tabWidth: 2 });
-          setOutput(result);
-          setError(null);
-        } catch (e) {
-          setError(e instanceof Error ? e.message : "Failed to format SQL");
-        }
-      })
-      .catch(() => {
-        if (!isMounted) return;
-        setError("Failed to load SQL formatter module.");
-      });
-
-    return () => {
-      isMounted = false;
-    };
+    try {
+      const result = format(input, { keywordCase: "upper", language: dialect, tabWidth: 2 });
+      return { error: null, output: result };
+    } catch (e) {
+      return {
+        error: e instanceof Error ? e.message : "Failed to format SQL",
+        output: "",
+      };
+    }
   }, [dialect, input]);
 
   const tool = internalTools.find((t) => t.slug === "sql-formatter");

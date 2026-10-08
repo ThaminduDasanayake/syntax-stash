@@ -129,7 +129,7 @@ export function HistoryView({ initialItems = [], initialTotal = 0 }: HistoryView
   const [total, setTotal] = useState(initialTotal);
   const [alertFilter, setAlertFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({});
   const [isScanning, setIsScanning] = useState(false);
   const [isClearing, setIsClearing] = useState(false);
@@ -141,9 +141,11 @@ export function HistoryView({ initialItems = [], initialTotal = 0 }: HistoryView
     }));
   };
 
-  const fetchAlerts = useCallback(async () => {
+  const fetchAlerts = useCallback(async (showLoading = false) => {
     try {
-      setIsLoading(true);
+      if (showLoading) {
+        setIsLoading(true);
+      }
       const params = new URLSearchParams();
       if (alertFilter !== "all") params.set("action", alertFilter);
       if (searchQuery.trim()) params.set("search", searchQuery.trim());
