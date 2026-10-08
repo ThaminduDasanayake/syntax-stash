@@ -16,18 +16,27 @@ import {
 import { signIn } from "@/lib/auth-client";
 
 interface AuthModalProps {
+  callbackURL?: string;
+  description?: string;
   onOpenChange: (open: boolean) => void;
   open: boolean;
+  title?: string;
 }
 
-export function AuthModal({ onOpenChange, open }: AuthModalProps) {
+export function AuthModal({
+  title,
+  callbackURL = "/saved",
+  description,
+  onOpenChange,
+  open,
+}: AuthModalProps) {
   const [loadingProvider, setLoadingProvider] = useState<"github" | "google" | null>(null);
 
   const handleSocialSignIn = async (provider: "github" | "google") => {
     setLoadingProvider(provider);
     try {
       await signIn.social({
-        callbackURL: "/saved",
+        callbackURL,
         provider,
       });
     } catch {
@@ -47,11 +56,11 @@ export function AuthModal({ onOpenChange, open }: AuthModalProps) {
       <DialogContent className="sm:max-w-md">
         <DialogHeader className="text-center">
           <DialogTitle className="text-foreground text-lg font-bold tracking-tight">
-            Sign in to Syntax Stash
+            {title || "Sign in to Syntax Stash"}
           </DialogTitle>
           <DialogDescription className="text-muted-foreground text-sm leading-relaxed">
-            Sign in with Google or GitHub to save resources and sync your personal stash
-            automatically across all your devices.
+            {description ||
+              "Sign in with Google or GitHub to save resources and sync your personal stash automatically across all your devices."}
           </DialogDescription>
         </DialogHeader>
 
