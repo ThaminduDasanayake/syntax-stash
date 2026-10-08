@@ -393,12 +393,7 @@ export default function SecretGeneratorPage() {
           {/* Regenerate */}
           <div className="flex items-center justify-between">
             <p className="text-sm font-medium">Generated secrets</p>
-            <Button
-              variant="outline"
-              size="sm"
-              className="gap-2"
-              onClick={generate}
-            >
+            <Button variant="outline" size="sm" className="gap-2" onClick={generate}>
               <ArrowsClockwiseIcon weight="bold" size={14} />
               Regenerate
             </Button>
