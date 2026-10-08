@@ -57,7 +57,7 @@ export default function CodeStashUi({ initialSnippets }: { initialSnippets: Snip
             />
 
             {/* Language filter pills */}
-            <div className="scrollbar-none flex gap-1.5 overflow-x-auto pb-2">
+            <div className="flex scrollbar-none gap-1.5 overflow-x-auto pb-2">
               {languages.map((lang) => (
                 <Button
                   key={lang}
