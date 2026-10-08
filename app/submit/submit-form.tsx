@@ -1,10 +1,18 @@
 "use client";
 
-import { CheckIcon, CircleNotchIcon, SparkleIcon, XIcon } from "@phosphor-icons/react";
+import {
+  CheckIcon,
+  CircleNotchIcon,
+  SparkleIcon,
+  UserIcon,
+  XIcon,
+} from "@phosphor-icons/react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
+import { AuthModal } from "@/components/auth-modal";
 import {
   AuthorSocialFields,
   AuthorSocialValues,
@@ -25,11 +33,14 @@ import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
+import { signIn, useSession } from "@/lib/auth-client";
 import { isValidHttpUrl } from "@/lib/utils";
 
 export function SubmitForm() {
   const router = useRouter();
   const { categoryOptions } = useCategories();
+  const { data: session, isPending: isSessionLoading } = useSession();
+  const [authModalOpen, setAuthModalOpen] = useState(false);
 
   // Form State
   const [url, setUrl] = useState("");
@@ -273,8 +284,21 @@ export function SubmitForm() {
     }
   };
 
+  const handleOAuthSignIn = (provider: "github" | "google") => {
+    signIn.social({
+      callbackURL: "/submit",
+      provider,
+    });
+  };
+
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
+
+    if (!session?.user) {
+      setAuthModalOpen(true);
+      toast.info("Please sign in to submit a resource.");
+      return;
+    }
 
     if (!url.trim() || !title.trim() || !description.trim() || !category) {
       toast.error("Please fill in all required fields (URL, Title, Category, Description).");
@@ -314,6 +338,12 @@ export function SubmitForm() {
 
       const data = await res.json();
 
+      if (res.status === 401) {
+        setAuthModalOpen(true);
+        toast.error("You must be signed in to submit a resource.");
+        return;
+      }
+
       if (res.status === 409 || data.code === "ALREADY_EXISTS") {
         const resourceTitle = data.title || title.trim();
         const targetUrl = resourceTitle
@@ -346,6 +376,14 @@ export function SubmitForm() {
 
   return (
     <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
+      <AuthModal
+        open={authModalOpen}
+        onOpenChange={setAuthModalOpen}
+        callbackURL="/submit"
+        title="Sign in to Submit a Resource"
+        description="Sign in with Google or GitHub to submit your tool or library to Syntax Stash. This helps protect the catalog against automated spam."
+      />
+
       {/* Left Column: Form (7 cols) */}
       <div className="border-line bg-paper/40 border-[1.5px] p-6 font-mono text-xs sm:p-8 lg:col-span-7">
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -360,6 +398,54 @@ export function SubmitForm() {
             className="sr-only"
             aria-hidden="true"
           />
+
+          {/* Authentication Requirement Banner */}
+          {!session && !isSessionLoading && (
+            <div className="border-line bg-paper/80 border-[1.5px] p-4 font-mono text-xs">
+              <div className="flex items-center gap-2 text-amber-500 font-bold uppercase tracking-wider text-[11px]">
+                <UserIcon weight="bold" className="size-4 shrink-0" />
+                <span>Sign In Required to Submit</span>
+              </div>
+              <p className="text-muted-foreground mt-1.5 text-xs leading-relaxed">
+                To prevent automated bots and protect directory quality, you must be signed in with
+                GitHub or Google to submit tools.
+              </p>
+              <div className="mt-3.5 flex flex-wrap items-center gap-2.5">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleOAuthSignIn("github")}
+                  className="group border-[1.5px] font-mono text-xs font-bold uppercase"
+                >
+                  <Image
+                    src="/github.svg"
+                    alt="GitHub"
+                    width={14}
+                    height={14}
+                    className="size-3.5 transition-all group-hover:scale-105"
+                  />
+                  <span>Sign In with GitHub</span>
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleOAuthSignIn("google")}
+                  className="border-[1.5px] font-mono text-xs font-bold uppercase"
+                >
+                  <Image
+                    src="/google.svg"
+                    alt="Google"
+                    width={14}
+                    height={14}
+                    className="size-3.5"
+                  />
+                  <span>Sign In with Google</span>
+                </Button>
+              </div>
+            </div>
+          )}
 
           {/* Section 1: Resource URL with Auto-Fill */}
           <div className="space-y-2">
@@ -640,21 +726,33 @@ export function SubmitForm() {
             >
               Reset
             </Button>
-            <Button
-              type="submit"
-              size="sm"
-              disabled={isSubmitting}
-              className="border-[1.5px] font-mono text-xs font-bold uppercase"
-            >
-              {isSubmitting ? (
-                <>
-                  <CircleNotchIcon className="mr-1.5 size-3.5 animate-spin" />
-                  Submitting...
-                </>
-              ) : (
-                "Submit for Review"
-              )}
-            </Button>
+            {session ? (
+              <Button
+                type="submit"
+                size="sm"
+                disabled={isSubmitting}
+                className="border-[1.5px] font-mono text-xs font-bold uppercase"
+              >
+                {isSubmitting ? (
+                  <>
+                    <CircleNotchIcon className="mr-1.5 size-3.5 animate-spin" />
+                    Submitting...
+                  </>
+                ) : (
+                  "Submit for Review"
+                )}
+              </Button>
+            ) : (
+              <Button
+                type="button"
+                size="sm"
+                onClick={() => setAuthModalOpen(true)}
+                className="border-[1.5px] font-mono text-xs font-bold uppercase"
+              >
+                <UserIcon weight="bold" className="mr-1.5 size-3.5" />
+                Sign In to Submit
+              </Button>
+            )}
           </div>
         </form>
       </div>

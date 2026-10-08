@@ -14,6 +14,14 @@ export async function POST(req: Request) {
     const reqHeaders = await headers();
     const session = await auth.api.getSession({ headers: reqHeaders });
 
+    // Enforce authentication requirement to prevent spam bots and AI agents
+    if (!session?.user) {
+      return NextResponse.json(
+        { error: "You must be signed in to submit a resource." },
+        { status: 401 },
+      );
+    }
+
     const body = await req.json();
 
     // 1. Honeypot check (anti-bot trap)
