@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowsClockwiseIcon, CheckIcon, CopyIcon, TerminalIcon } from "@phosphor-icons/react";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
@@ -397,7 +397,7 @@ export default function SecretGeneratorPage() {
               variant="outline"
               size="sm"
               className="gap-2"
-              onClick={() => setSeed((s) => s + 1)}
+              onClick={generate}
             >
               <ArrowsClockwiseIcon weight="bold" size={14} />
               Regenerate

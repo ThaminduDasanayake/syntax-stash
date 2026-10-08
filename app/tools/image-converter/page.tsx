@@ -47,6 +47,7 @@ export default function ImageConverterPage() {
   const [converted, setConverted] = useState<ConvertedImage[]>([]);
   const [converting, setConverting] = useState(false);
   const [isReading, setIsReading] = useState(false);
+  const [failedFiles, setFailedFiles] = useState<string[]>([]);
   const avifSupported = useSyncExternalStore(
     () => () => {},
     () => {

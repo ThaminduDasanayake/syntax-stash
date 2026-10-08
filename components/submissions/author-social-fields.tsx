@@ -214,7 +214,7 @@ export function AuthorSocialFields({
     }
 
     const newEntry: NewAuthorEntry = {
-      id: `new-author-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      id: `new-author-${crypto.randomUUID()}`,
       blog: initialData?.blog || "",
       github: initialData?.github || "",
       linkedin: initialData?.linkedin || "",

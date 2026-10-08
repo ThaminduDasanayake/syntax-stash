@@ -1,7 +1,10 @@
-import { loadEnvConfig } from "@next/env";
-import { count, eq, isNull, sql } from "drizzle-orm";
+try {
+  process.loadEnvFile?.();
+} catch {
+  // loaded via tsx --env-file
+}
 
-loadEnvConfig(process.cwd());
+import { count, eq, isNull, sql } from "drizzle-orm";
 
 async function verifyTables() {
   const { db } = await import("../lib/db");
