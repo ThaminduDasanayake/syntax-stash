@@ -131,50 +131,62 @@ export function ResourceCardView({
         cardClassName,
       )}
     >
-      {/* 1. Visual Stage: clean 16:10 OG image — no overlays */}
-      <div
-        className={cn(
-          "relative aspect-16/10 w-full overflow-hidden rounded-2xl border-[1.5px] border-white/10 transition-all duration-300 group-hover:border-white/18",
-          (() => {
-            const clean = (ogImageBg || "").toLowerCase().trim();
-            if (clean === "white" || clean === "light") return "bg-white";
-            if (clean === "dark" || clean === "black") return "bg-[#09090b]";
-            if (clean === "zinc") return "bg-zinc-900";
-            return "bg-[#18181b]";
-          })(),
-        )}
-        style={
-          ogImageBg && (ogImageBg.startsWith("#") || ogImageBg.startsWith("rgb"))
-            ? { backgroundColor: ogImageBg }
-            : undefined
-        }
-      >
-        {imageSrc ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            key={imageSrc}
-            src={imageSrc}
-            alt={title || "Resource preview"}
-            loading="lazy"
-            onError={handleOgError}
-            className="h-full w-full object-contain transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-          />
-        ) : (
-          /* Abstract ambient fallback when no OG image */
-          <div className="from-brand-purple/12 to-brand-orange/12 relative flex h-full w-full items-center justify-center overflow-hidden bg-linear-to-br via-[#18181b]">
-            <div
-              className="absolute inset-0 opacity-[0.18]"
-              style={{
-                backgroundImage:
-                  "radial-gradient(circle, rgba(255,255,255,0.2) 1px, transparent 1px)",
-                backgroundSize: "16px 16px",
-              }}
-            />
-            <div className="bg-brand-purple/20 group-hover:bg-brand-purple/35 absolute size-32 rounded-full blur-2xl transition-all duration-500 group-hover:scale-125" />
-            <ImageIcon weight="light" className="size-8 text-zinc-600" />
+      {/* 1. Visual Stage: clean 16:10 OG image with ambient blur backdrop */}
+      {(() => {
+        const cleanBg = (ogImageBg || "").toLowerCase().trim();
+        const hasCustomBg = Boolean(cleanBg && cleanBg !== "none" && cleanBg !== "default");
+
+        return (
+          <div
+            className={cn(
+              "relative aspect-[2/1] w-full overflow-hidden rounded-2xl border-[1.5px] border-white/10 transition-all duration-300 group-hover:border-white/18",
+              hasCustomBg
+                ? cleanBg === "white" || cleanBg === "light"
+                  ? "bg-white"
+                  : cleanBg === "dark" || cleanBg === "black"
+                    ? "bg-[#09090b]"
+                    : cleanBg === "zinc"
+                      ? "bg-zinc-900"
+                      : "bg-[#18181b]"
+                : "bg-[#18181b]",
+            )}
+            style={
+              hasCustomBg && (ogImageBg?.startsWith("#") || ogImageBg?.startsWith("rgb"))
+                ? { backgroundColor: ogImageBg }
+                : undefined
+            }
+          >
+            {imageSrc ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                key={imageSrc}
+                src={imageSrc}
+                alt={title || "Resource preview"}
+                loading="lazy"
+                onError={handleOgError}
+                className={cn(
+                  "h-full w-full transition-transform duration-500 ease-out group-hover:scale-[1.03]",
+                  hasCustomBg ? "object-contain p-3 sm:p-4" : "object-cover",
+                )}
+              />
+            ) : (
+              /* Abstract ambient fallback when no OG image */
+              <div className="from-brand-purple/12 to-brand-orange/12 relative flex h-full w-full items-center justify-center overflow-hidden bg-linear-to-br via-[#18181b]">
+                <div
+                  className="absolute inset-0 opacity-[0.18]"
+                  style={{
+                    backgroundImage:
+                      "radial-gradient(circle, rgba(255,255,255,0.2) 1px, transparent 1px)",
+                    backgroundSize: "16px 16px",
+                  }}
+                />
+                <div className="bg-brand-purple/20 group-hover:bg-brand-purple/35 absolute size-32 rounded-full blur-2xl transition-all duration-500 group-hover:scale-125" />
+                <ImageIcon weight="light" className="size-8 text-zinc-600" />
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        );
+      })()}
 
       {/* 2. Text Block */}
       <div className="flex flex-col gap-1.5 px-0.5 pt-3">

@@ -84,36 +84,54 @@ function OgImagePreviewBanner({
       ? `/api/proxy-image?url=${encodeURIComponent(cleanOg)}`
       : cleanOg;
 
+  const cleanBg = (ogImageBg || "").toLowerCase().trim();
+  const hasCustomBg = Boolean(cleanBg && cleanBg !== "none" && cleanBg !== "default");
+
   return (
     <div className="border-line bg-paper/60 mt-2.5 overflow-hidden rounded border-[1.5px] p-3">
       <div
         className={cn(
-          "border-line relative aspect-[1.91/1] w-full overflow-hidden rounded border-[1.5px]",
-          (() => {
-            const clean = (ogImageBg || "").toLowerCase().trim();
-            if (clean === "white" || clean === "light") return "bg-white";
-            if (clean === "dark" || clean === "black") return "bg-[#09090b]";
-            if (clean === "zinc") return "bg-zinc-900";
-            return "bg-black/5 dark:bg-black/30";
-          })(),
+          "border-line relative aspect-[2/1] w-full overflow-hidden rounded border-[1.5px]",
+          hasCustomBg
+            ? cleanBg === "white" || cleanBg === "light"
+              ? "bg-white"
+              : cleanBg === "dark" || cleanBg === "black"
+                ? "bg-[#09090b]"
+                : cleanBg === "zinc"
+                  ? "bg-zinc-900"
+                  : "bg-black/5 dark:bg-black/30"
+            : "bg-[#18181b]",
         )}
         style={
-          ogImageBg && (ogImageBg.startsWith("#") || ogImageBg.startsWith("rgb"))
+          hasCustomBg && (ogImageBg?.startsWith("#") || ogImageBg?.startsWith("rgb"))
             ? { backgroundColor: ogImageBg }
             : undefined
         }
       >
         {!state.error && isValidUrl && cleanOg ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            key={currentSrc}
-            src={currentSrc}
-            alt="OG Image Preview"
-            loading="lazy"
-            referrerPolicy="no-referrer"
-            className="h-full w-full object-contain"
-            onError={handleOgError}
-          />
+          <>
+            {!hasCustomBg && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={currentSrc}
+                alt=""
+                aria-hidden="true"
+                loading="lazy"
+                referrerPolicy="no-referrer"
+                className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover opacity-35 blur-xl brightness-90 saturate-150"
+              />
+            )}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              key={currentSrc}
+              src={currentSrc}
+              alt="OG Image Preview"
+              loading="lazy"
+              referrerPolicy="no-referrer"
+              className={cn("relative z-10 h-full w-full object-contain", hasCustomBg && "p-3")}
+              onError={handleOgError}
+            />
+          </>
         ) : (
           <div className="flex h-full w-full flex-col items-center justify-center gap-1.5 text-zinc-500">
             <WarningCircleIcon className="size-6 text-amber-500 opacity-80" />

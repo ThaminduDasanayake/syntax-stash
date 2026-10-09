@@ -7,8 +7,8 @@ export function ToolCardSkeleton() {
       className="group relative flex h-full flex-col select-none"
       aria-hidden="true"
     >
-      {/* 1. Visual Stage: clean 16:10 OG image box with single rounded-2xl border */}
-      <div className="relative aspect-16/10 w-full overflow-hidden rounded-2xl border-[1.5px] border-white/10 bg-[#18181b]">
+      {/* 1. Visual Stage: clean 2:1 OG image box with single rounded-2xl border */}
+      <div className="relative aspect-[2/1] w-full overflow-hidden rounded-2xl border-[1.5px] border-white/10 bg-[#18181b]">
         <Skeleton className="h-full w-full rounded-2xl bg-white/5" />
       </div>
 
