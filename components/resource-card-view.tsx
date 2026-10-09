@@ -26,6 +26,7 @@ export interface ResourceCardViewProps {
   iconClassName?: string;
   isBookmarked?: boolean;
   ogImage?: string | null;
+  ogImageBg?: string | null;
   onBookmarkClick?: (e: React.MouseEvent) => void;
   onCardClick?: () => void;
   showTags?: boolean;
@@ -49,6 +50,7 @@ export function ResourceCardView({
   iconClassName,
   isBookmarked = false,
   ogImage,
+  ogImageBg,
   onBookmarkClick,
   onCardClick,
   showTags = false,
@@ -130,7 +132,23 @@ export function ResourceCardView({
       )}
     >
       {/* 1. Visual Stage: clean 16:10 OG image — no overlays */}
-      <div className="relative aspect-16/10 w-full overflow-hidden rounded-2xl border-[1.5px] border-white/10 bg-[#18181b] transition-all duration-300 group-hover:border-white/18">
+      <div
+        className={cn(
+          "relative aspect-16/10 w-full overflow-hidden rounded-2xl border-[1.5px] border-white/10 transition-all duration-300 group-hover:border-white/18",
+          (() => {
+            const clean = (ogImageBg || "").toLowerCase().trim();
+            if (clean === "white" || clean === "light") return "bg-white";
+            if (clean === "dark" || clean === "black") return "bg-[#09090b]";
+            if (clean === "zinc") return "bg-zinc-900";
+            return "bg-[#18181b]";
+          })(),
+        )}
+        style={
+          ogImageBg && (ogImageBg.startsWith("#") || ogImageBg.startsWith("rgb"))
+            ? { backgroundColor: ogImageBg }
+            : undefined
+        }
+      >
         {imageSrc ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img

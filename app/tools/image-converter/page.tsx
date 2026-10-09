@@ -8,7 +8,7 @@ import {
   TrashIcon,
   XIcon,
 } from "@phosphor-icons/react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
 
 import {
   canvasToBlob,
@@ -48,7 +48,16 @@ export default function ImageConverterPage() {
   const [converting, setConverting] = useState(false);
   const [isReading, setIsReading] = useState(false);
   const [failedFiles, setFailedFiles] = useState<string[]>([]);
-  const [avifSupported, setAvifSupported] = useState<boolean | null>(null);
+  const avifSupported = useSyncExternalStore(
+    () => () => {},
+    () => {
+      if (typeof document === "undefined") return false;
+      const canvas = document.createElement("canvas");
+      canvas.width = canvas.height = 1;
+      return canvas.toDataURL("image/avif").startsWith("data:image/avif");
+    },
+    () => false,
+  );
 
   const [resize, setResize] = useState<ResizeOptions>({
     height: 0,
@@ -75,12 +84,6 @@ export default function ImageConverterPage() {
   useEffect(() => {
     return () => previewUrls.forEach((url) => URL.revokeObjectURL(url));
   }, [previewUrls]);
-
-  useEffect(() => {
-    const canvas = document.createElement("canvas");
-    canvas.width = canvas.height = 1;
-    setAvifSupported(canvas.toDataURL("image/avif").startsWith("data:image/avif"));
-  }, []);
 
   // HEIC Interception & File Processing
   const processFiles = async (files: File[]) => {

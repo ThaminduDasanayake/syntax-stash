@@ -129,7 +129,7 @@ export function HistoryView({ initialItems = [], initialTotal = 0 }: HistoryView
   const [total, setTotal] = useState(initialTotal);
   const [alertFilter, setAlertFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({});
   const [isScanning, setIsScanning] = useState(false);
   const [isClearing, setIsClearing] = useState(false);
@@ -141,29 +141,34 @@ export function HistoryView({ initialItems = [], initialTotal = 0 }: HistoryView
     }));
   };
 
-  const fetchAlerts = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      const params = new URLSearchParams();
-      if (alertFilter !== "all") params.set("action", alertFilter);
-      if (searchQuery.trim()) params.set("search", searchQuery.trim());
-      params.set("limit", "100");
+  const fetchAlerts = useCallback(
+    async (showLoading = false) => {
+      try {
+        if (showLoading) {
+          setIsLoading(true);
+        }
+        const params = new URLSearchParams();
+        if (alertFilter !== "all") params.set("action", alertFilter);
+        if (searchQuery.trim()) params.set("search", searchQuery.trim());
+        params.set("limit", "100");
 
-      const res = await fetch(`/api/admin/history?${params.toString()}`);
-      const data = await res.json();
+        const res = await fetch(`/api/admin/history?${params.toString()}`);
+        const data = await res.json();
 
-      if (res.ok) {
-        setItems(data.items || []);
-        setTotal(data.total || 0);
-      } else {
-        toast.error(data.error || "Failed to load change monitor alerts.");
+        if (res.ok) {
+          setItems(data.items || []);
+          setTotal(data.total || 0);
+        } else {
+          toast.error(data.error || "Failed to load change monitor alerts.");
+        }
+      } catch {
+        toast.error("Network error while fetching monitor alerts.");
+      } finally {
+        setIsLoading(false);
       }
-    } catch {
-      toast.error("Network error while fetching monitor alerts.");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [alertFilter, searchQuery]);
+    },
+    [alertFilter, searchQuery],
+  );
 
   const handleScanCatalog = async () => {
     try {

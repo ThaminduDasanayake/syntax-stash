@@ -73,6 +73,8 @@ const eslintConfig = defineConfig([
           type: "natural",
         },
       ],
+      "react-hooks/purity": "warn",
+      "react-hooks/set-state-in-effect": "off",
       "simple-import-sort/exports": "error",
       "simple-import-sort/imports": "error",
     },

@@ -46,6 +46,7 @@ function ResourceCardComponent({
         iconClassName={resource.className}
         isBookmarked={bookmarked}
         ogImage={resource.ogImage}
+        ogImageBg={resource.ogImageBg}
         onBookmarkClick={handleBookmarkClick}
         onCardClick={onCardClick ? () => onCardClick(resource) : undefined}
         stars={stars}

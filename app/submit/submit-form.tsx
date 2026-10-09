@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  CheckIcon,
-  CircleNotchIcon,
-  SparkleIcon,
-  UserIcon,
-  XIcon,
-} from "@phosphor-icons/react";
+import { CheckIcon, CircleNotchIcon, SparkleIcon, UserIcon, XIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -60,6 +54,7 @@ export function SubmitForm() {
   const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
   const [iconBg, setIconBg] = useState<IconBgOption>("dark");
   const [ogImage, setOgImage] = useState("");
+  const [ogImageBg, setOgImageBg] = useState<string>("none");
   const [ogImageOptions, setOgImageOptions] = useState<CandidateOption[]>([]);
   const [suggestedAuthor, setSuggestedAuthor] = useState<SuggestedAuthorData | null>(null);
   const [detectedUpdates, setDetectedUpdates] = useState<{
@@ -98,6 +93,7 @@ export function SubmitForm() {
     setFaviconOptions([]);
     setIconBg("dark");
     setOgImage("");
+    setOgImageBg("none");
     setOgImageOptions([]);
     setSuggestedAuthor(null);
     setDetectedUpdates({});
@@ -325,6 +321,7 @@ export function SubmitForm() {
           iconBg: iconBg || "dark",
           notes: notes.trim() || undefined,
           ogImage: ogImage.trim() || undefined,
+          ogImageBg: ogImageBg || "none",
           subtitle: subtitle.trim() || undefined,
           tags: tags.trim() || undefined,
           url: url.trim(),
@@ -402,7 +399,7 @@ export function SubmitForm() {
           {/* Authentication Requirement Banner */}
           {!session && !isSessionLoading && (
             <div className="border-line bg-paper/80 border-[1.5px] p-4 font-mono text-xs">
-              <div className="flex items-center gap-2 text-amber-500 font-bold uppercase tracking-wider text-[11px]">
+              <div className="flex items-center gap-2 text-[11px] font-bold tracking-wider text-amber-500 uppercase">
                 <UserIcon weight="bold" className="size-4 shrink-0" />
                 <span>Sign In Required to Submit</span>
               </div>
@@ -619,9 +616,11 @@ export function SubmitForm() {
             iconBg={iconBg}
             onIconBgChange={setIconBg}
             ogImage={ogImage}
+            ogImageBg={ogImageBg}
             ogImageOptions={ogImageOptions}
             onFaviconChange={setFavicon}
             onOgImageChange={setOgImage}
+            onOgImageBgChange={setOgImageBg}
           />
 
           {/* Section 5: Creator Attribution */}
@@ -766,6 +765,8 @@ export function SubmitForm() {
             description={description}
             favicon={favicon}
             iconBg={iconBg}
+            ogImage={ogImage}
+            ogImageBg={ogImageBg}
             subtitle={subtitle}
             tags={tags}
             title={title}

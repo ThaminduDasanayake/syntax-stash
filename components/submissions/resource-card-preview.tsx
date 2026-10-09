@@ -16,9 +16,10 @@ export interface ResourceCardPreviewProps {
   iconBg?: "dark" | "light" | "invert" | string | null;
   iconClassName?: string;
   ogImage?: string | null;
+  ogImageBg?: string | null;
+  title?: string | null;
   subtitle?: string | null;
   tags?: string | null;
-  title?: string | null;
   url?: string | null;
 }
 
@@ -33,6 +34,7 @@ export function ResourceCardPreview({
   iconBg,
   iconClassName,
   ogImage,
+  ogImageBg,
   subtitle,
   url,
 }: ResourceCardPreviewProps) {
@@ -55,8 +57,9 @@ export function ResourceCardPreview({
           favicon={debouncedFavicon}
           iconBg={iconBg}
           iconClassName={iconClassName}
-          ogImage={debouncedOgImage}
           isBookmarked={isBookmarked}
+          ogImage={debouncedOgImage}
+          ogImageBg={ogImageBg}
           onBookmarkClick={() => setIsBookmarked((prev) => !prev)}
           showTags={false}
           subtitle={subtitle}

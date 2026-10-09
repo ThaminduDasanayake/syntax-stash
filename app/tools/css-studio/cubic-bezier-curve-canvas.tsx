@@ -33,7 +33,7 @@ export function CurveCanvas({ onChangeAction, p1x, p1y, p2x, p2y }: Props) {
     return { x, y };
   }, []);
 
-  const onPointerDown = (handle: "p1" | "p2") => (e: React.PointerEvent<SVGCircleElement>) => {
+  const handlePointerDown = (handle: "p1" | "p2", e: React.PointerEvent<SVGCircleElement>) => {
     e.currentTarget.setPointerCapture(e.pointerId);
     dragging.current = handle;
   };
@@ -165,7 +165,7 @@ export function CurveCanvas({ onChangeAction, p1x, p1y, p2x, p2y }: Props) {
         stroke="#93c5fd"
         strokeWidth={1.5}
         className="cursor-grab active:cursor-grabbing"
-        onPointerDown={onPointerDown("p1")}
+        onPointerDown={(e) => handlePointerDown("p1", e)}
       />
       <circle
         cx={h2.cx}
@@ -175,7 +175,7 @@ export function CurveCanvas({ onChangeAction, p1x, p1y, p2x, p2y }: Props) {
         stroke="#f9a8d4"
         strokeWidth={1.5}
         className="cursor-grab active:cursor-grabbing"
-        onPointerDown={onPointerDown("p2")}
+        onPointerDown={(e) => handlePointerDown("p2", e)}
       />
 
       {/* Axis labels */}

@@ -30,13 +30,21 @@ export interface MediaAssetFieldsProps {
   faviconOptions?: CandidateOption[];
   iconBg?: string | null;
   ogImage?: string | null;
+  ogImageBg?: string | null;
   ogImageOptions?: CandidateOption[];
   onFaviconChange: (val: string) => void;
   onIconBgChange?: (val: IconBgOption) => void;
+  onOgImageBgChange?: (val: string) => void;
   onOgImageChange: (val: string) => void;
 }
 
-function OgImagePreviewBanner({ ogImage }: { ogImage: string }) {
+function OgImagePreviewBanner({
+  ogImage,
+  ogImageBg = "none",
+}: {
+  ogImage: string;
+  ogImageBg?: string | null;
+}) {
   const debouncedOg = useDebounce(ogImage, 400);
   const cleanOg = (debouncedOg || "").trim();
 
@@ -78,7 +86,23 @@ function OgImagePreviewBanner({ ogImage }: { ogImage: string }) {
 
   return (
     <div className="border-line bg-paper/60 mt-2.5 overflow-hidden rounded border-[1.5px] p-3">
-      <div className="border-line relative aspect-[1.91/1] w-full overflow-hidden rounded border-[1.5px] bg-black/5 dark:bg-black/30">
+      <div
+        className={cn(
+          "border-line relative aspect-[1.91/1] w-full overflow-hidden rounded border-[1.5px]",
+          (() => {
+            const clean = (ogImageBg || "").toLowerCase().trim();
+            if (clean === "white" || clean === "light") return "bg-white";
+            if (clean === "dark" || clean === "black") return "bg-[#09090b]";
+            if (clean === "zinc") return "bg-zinc-900";
+            return "bg-black/5 dark:bg-black/30";
+          })(),
+        )}
+        style={
+          ogImageBg && (ogImageBg.startsWith("#") || ogImageBg.startsWith("rgb"))
+            ? { backgroundColor: ogImageBg }
+            : undefined
+        }
+      >
         {!state.error && isValidUrl && cleanOg ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -87,7 +111,7 @@ function OgImagePreviewBanner({ ogImage }: { ogImage: string }) {
             alt="OG Image Preview"
             loading="lazy"
             referrerPolicy="no-referrer"
-            className="h-full w-full object-cover"
+            className="h-full w-full object-contain"
             onError={handleOgError}
           />
         ) : (
@@ -125,9 +149,11 @@ export function MediaAssetFields({
   faviconOptions = [],
   iconBg = "dark",
   ogImage,
+  ogImageBg = "none",
   ogImageOptions = [],
   onFaviconChange,
   onIconBgChange,
+  onOgImageBgChange,
   onOgImageChange,
 }: MediaAssetFieldsProps) {
   const debouncedFavicon = useDebounce(favicon, 400);
@@ -359,8 +385,76 @@ export function MediaAssetFields({
             />
           </div>
 
+          {/* OG Image Background Controls */}
+          {cleanOg && onOgImageBgChange && (
+            <div className="border-line/70 bg-surface/40 flex flex-wrap items-center justify-between gap-2 rounded-lg border-[1.5px] p-3">
+              <div className="flex flex-col">
+                <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
+                  Image Background / Canvas:
+                </span>
+                <span className="text-muted-foreground text-[9px]">
+                  Use white or neutral background for transparent SVGs & logos
+                </span>
+              </div>
+              <div className="border-line bg-surface/80 inline-flex flex-wrap rounded border-[1.5px] p-0.5 font-mono text-[11px]">
+                <button
+                  type="button"
+                  onClick={() => onOgImageBgChange("none")}
+                  disabled={disabled}
+                  className={cn(
+                    "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                    !ogImageBg || ogImageBg === "none" || ogImageBg === "default"
+                      ? "bg-primary text-primary-foreground shadow-xs"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  None (Dark Card)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onOgImageBgChange("white")}
+                  disabled={disabled}
+                  className={cn(
+                    "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                    ogImageBg === "white" || ogImageBg === "light"
+                      ? "bg-primary text-primary-foreground shadow-xs"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  White Canvas
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onOgImageBgChange("dark")}
+                  disabled={disabled}
+                  className={cn(
+                    "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                    ogImageBg === "dark" || ogImageBg === "black"
+                      ? "bg-primary text-primary-foreground shadow-xs"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  Dark Slate
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onOgImageBgChange("zinc")}
+                  disabled={disabled}
+                  className={cn(
+                    "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                    ogImageBg === "zinc"
+                      ? "bg-primary text-primary-foreground shadow-xs"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  Zinc
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* OG Image Preview Thumbnail */}
-          {cleanOg && <OgImagePreviewBanner ogImage={cleanOg} />}
+          {cleanOg && <OgImagePreviewBanner ogImage={cleanOg} ogImageBg={ogImageBg} />}
         </div>
       </div>
     </div>

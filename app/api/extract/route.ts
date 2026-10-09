@@ -1,5 +1,4 @@
 import * as cheerio from "cheerio";
-import type { AnyNode } from "domhandler";
 import { NextRequest, NextResponse } from "next/server";
 
 export interface MetaTag {
@@ -137,7 +136,8 @@ function texts($: cheerio.CheerioAPI, selector: string): string[] {
 }
 
 /** Read a <meta> tag's content, matching by name, property, or itemprop attribute case-insensitively using key fallbacks. */
-function getMeta($: cheerio.Cheerio<AnyNode>, keys: string[]): string {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getMeta($: cheerio.Cheerio<any>, keys: string[]): string {
   for (const key of keys) {
     const escapedKey = key.replace(/"/g, '\\"');
     const content =

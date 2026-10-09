@@ -43,6 +43,7 @@ export interface ResourceFormData {
   iconBg?: string | null;
   id?: string;
   ogImage?: string | null;
+  ogImageBg?: string | null;
   subtitle?: string | null;
   tags?: string | null;
   title: string;
@@ -353,11 +354,13 @@ export function ResourceFormFields({
           <MediaAssetFields
             favicon={values.favicon}
             ogImage={values.ogImage}
+            ogImageBg={values.ogImageBg}
             iconBg={values.iconBg}
             faviconOptions={scanner.faviconOptions}
             ogImageOptions={scanner.ogImageOptions}
             onFaviconChange={(val) => onChange("favicon", val)}
             onOgImageChange={(val) => onChange("ogImage", val)}
+            onOgImageBgChange={(val) => onChange("ogImageBg", val)}
             onIconBgChange={(val: IconBgOption) => onChange("iconBg", val)}
             allowUpload
             disabled={disabled}
@@ -446,6 +449,7 @@ export function ResourceFormFields({
               tags={values.tags}
               favicon={values.favicon}
               ogImage={values.ogImage}
+              ogImageBg={values.ogImageBg}
               iconBg={values.iconBg}
               author={values.authorName}
               cardMaxWidthClass={cardMaxWidthClass}

@@ -23,6 +23,7 @@ export interface Resource<TCategory extends string = string> extends BaseItem<TC
   iconBg?: "dark" | "light" | "invert" | string | null;
   id?: string;
   ogImage?: string;
+  ogImageBg?: string | null;
   subtitle?: string;
   tags?: string[];
   updatedAt?: Date | string;

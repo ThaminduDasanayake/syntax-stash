@@ -1,6 +1,8 @@
-import { loadEnvConfig } from "@next/env";
-
-loadEnvConfig(process.cwd());
+try {
+  process.loadEnvFile?.();
+} catch {
+  // loaded via tsx --env-file
+}
 
 import fs from "node:fs";
 import path from "node:path";

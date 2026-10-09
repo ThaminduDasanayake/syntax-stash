@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowsClockwiseIcon, CheckIcon, CopyIcon, TerminalIcon } from "@phosphor-icons/react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
@@ -237,7 +237,6 @@ export default function SecretGeneratorPage() {
   const [prefix, setPrefix] = useState("");
   const [envKey, setEnvKey] = useState("AUTH_SECRET");
   const [count, setCount] = useState(3);
-  const [secrets, setSecrets] = useState<string[]>([]);
   const [seed, setSeed] = useState(0);
   const { copiedKey, copy } = useCopyState();
 
@@ -255,13 +254,14 @@ export default function SecretGeneratorPage() {
   };
 
   // Regenerate secrets
-  const generate = useCallback(() => {
-    setSecrets(Array.from({ length: count }, () => prefix + generateSecret(bytes, encoding)));
-  }, [bytes, count, encoding, prefix]);
+  const generate = () => {
+    setSeed((s) => s + 1);
+  };
 
-  useEffect(() => {
-    generate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // Derived secrets computation
+  const secrets = useMemo(() => {
+    void seed;
+    return Array.from({ length: count }, () => prefix + generateSecret(bytes, encoding));
   }, [bytes, count, encoding, prefix, seed]);
 
   const bits = entropyBits(bytes);
@@ -393,12 +393,7 @@ export default function SecretGeneratorPage() {
           {/* Regenerate */}
           <div className="flex items-center justify-between">
             <p className="text-sm font-medium">Generated secrets</p>
-            <Button
-              variant="outline"
-              size="sm"
-              className="gap-2"
-              onClick={() => setSeed((s) => s + 1)}
-            >
+            <Button variant="outline" size="sm" className="gap-2" onClick={generate}>
               <ArrowsClockwiseIcon weight="bold" size={14} />
               Regenerate
             </Button>

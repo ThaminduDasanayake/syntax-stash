@@ -404,7 +404,7 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
       <div
         ref={scrollContainerRef}
         onScroll={handleScroll}
-        className="modal-body flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-none [scrollbar-color:var(--line-2)_transparent] md:grid md:grid-cols-[340px_1fr] md:overflow-hidden md:overscroll-contain [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent"
+        className="modal-body flex min-h-0 flex-1 [scrollbar-color:var(--line-2)_transparent] flex-col overflow-y-auto overscroll-none md:grid md:grid-cols-[340px_1fr] md:overflow-hidden md:overscroll-contain [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent"
       >
         {/* Left Side */}
         <div className="modal-left text-foreground relative flex shrink-0 flex-col border-b-[1.5px] border-white/8 bg-[#141416] px-5 pt-3 pb-6 md:overflow-y-auto md:border-r md:border-b-0 md:px-7 md:py-8">
@@ -500,7 +500,7 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
 
         {/* Right Side */}
         <div className="modal-right bg-background flex flex-col md:overflow-hidden">
-          <div className="modal-content px-5 pt-5 pb-6 [scrollbar-color:var(--line-2)_transparent] md:min-h-0 md:flex-1 md:overflow-y-auto md:overscroll-contain md:px-8 md:pt-20 md:pb-5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent">
+          <div className="modal-content [scrollbar-color:var(--line-2)_transparent] px-5 pt-5 pb-6 md:min-h-0 md:flex-1 md:overflow-y-auto md:overscroll-contain md:px-8 md:pt-20 md:pb-5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent">
             {(() => {
               if (!currentOg || ogState.error) return null;
 
