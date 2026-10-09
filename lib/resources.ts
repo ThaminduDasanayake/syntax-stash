@@ -45,6 +45,7 @@ export const getAllResources = cache(
             github: resource.github,
             iconBg: resource.iconBg,
             ogImage: resource.ogImage,
+            ogImageBg: resource.ogImageBg,
             subtitle: resource.subtitle,
             tagName: tag.name,
             updatedAt: resource.updatedAt,
@@ -74,6 +75,7 @@ export const getAllResources = cache(
             github?: string;
             iconBg?: "dark" | "light" | "invert" | string | null;
             ogImage?: string;
+            ogImageBg?: string | null;
             subtitle?: string;
             tags: string[];
             title: string;
@@ -97,6 +99,7 @@ export const getAllResources = cache(
               github: r.github || undefined,
               iconBg: r.iconBg || "dark",
               ogImage: r.ogImage || undefined,
+              ogImageBg: r.ogImageBg || "none",
               subtitle: r.subtitle || undefined,
               tags: r.tagName ? [r.tagName] : [],
               updatedAt: r.updatedAt ? new Date(r.updatedAt).toISOString() : undefined,
@@ -172,6 +175,7 @@ export const getAllAdminResources = cache(
           healthStatusCode: resourceHealth.statusCode,
           iconBg: resource.iconBg,
           ogImage: resource.ogImage,
+          ogImageBg: resource.ogImageBg,
           subtitle: resource.subtitle,
           tagName: tag.name,
           updatedAt: resource.updatedAt,
@@ -226,6 +230,7 @@ export const getAllAdminResources = cache(
             healthStatusCode: r.healthStatusCode,
             iconBg: r.iconBg || "dark",
             ogImage: r.ogImage,
+            ogImageBg: r.ogImageBg || "none",
             subtitle: r.subtitle,
             tags: r.tagName ? [r.tagName] : [],
             updatedAt: r.updatedAt.toISOString(),

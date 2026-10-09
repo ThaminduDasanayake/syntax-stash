@@ -63,6 +63,7 @@ const SUBMISSION_FIELD_LABELS: Record<string, string> = {
   github: "GitHub Repository",
   iconBg: "Icon Background / Style",
   ogImage: "OpenGraph Image",
+  ogImageBg: "OG Image Background",
   status: "Moderation Status",
   subtitle: "Subtitle / Tagline",
   tags: "Canonical Tags",
@@ -139,7 +140,9 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
   const { categoryOptions } = useCategories();
 
   // Inspect mode starts with empty destination fields so admin inspects and syncs intentionally
-  const [editForm, setEditForm] = useState<Partial<Submission & { iconBg?: string }>>({
+  const [editForm, setEditForm] = useState<
+    Partial<Submission & { iconBg?: string; ogImageBg?: string }>
+  >({
     title: "",
     adminNotes: sub.adminNotes || "",
     author: "",
@@ -153,9 +156,10 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
     description: "",
     favicon: "",
     github: "",
-    iconBg: sub.iconBg || "dark",
+    iconBg: (sub as unknown as { iconBg?: string }).iconBg || "dark",
     notes: sub.notes || "",
     ogImage: "",
+    ogImageBg: (sub as unknown as { ogImageBg?: string }).ogImageBg || "none",
     pricing: "Free",
     status: sub.status,
     subtitle: "",
@@ -209,6 +213,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
         iconBg: (sub as unknown as { iconBg?: string }).iconBg || "dark",
         notes: sub.notes || "",
         ogImage: sub.ogImage || "",
+        ogImageBg: (sub as unknown as { ogImageBg?: string }).ogImageBg || "none",
         pricing: sub.pricing || "Free",
         status: editForm.status || sub.status,
         subtitle: sub.subtitle || "",
@@ -225,6 +230,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
         favicon: sub.favicon || "",
         iconBg: (sub as unknown as { iconBg?: string }).iconBg || "dark",
         ogImage: sub.ogImage || "",
+        ogImageBg: (sub as unknown as { ogImageBg?: string }).ogImageBg || "none",
       }));
       toast.success("Synchronized media and icon styles.");
       return;
@@ -831,6 +837,13 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
                   </span>
                 </div>
 
+                <div className="flex items-center gap-1.5">
+                  <span className="text-muted-foreground text-[10px]">OG Bg:</span>
+                  <span className="bg-muted py-0.2 rounded px-1.5 text-[10px] font-bold uppercase">
+                    {(sub as unknown as { ogImageBg?: string }).ogImageBg || "none"}
+                  </span>
+                </div>
+
                 {sub.ogImage && (
                   <div className="flex items-center gap-1.5">
                     <span className="text-muted-foreground text-[10px]">OG Image:</span>
@@ -860,9 +873,11 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
               iconBg={editForm.iconBg || "dark"}
               onIconBgChange={(val) => setEditForm((prev) => ({ ...prev, iconBg: val }))}
               ogImage={editForm.ogImage}
+              ogImageBg={editForm.ogImageBg || "none"}
               ogImageOptions={ogImageOptions}
               onFaviconChange={(val) => setEditForm((prev) => ({ ...prev, favicon: val }))}
               onOgImageChange={(val) => setEditForm((prev) => ({ ...prev, ogImage: val }))}
+              onOgImageBgChange={(val) => setEditForm((prev) => ({ ...prev, ogImageBg: val }))}
             />
           </div>
 
@@ -1227,6 +1242,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
                   favicon={editForm.favicon}
                   iconBg={editForm.iconBg || "dark"}
                   ogImage={editForm.ogImage}
+                  ogImageBg={editForm.ogImageBg}
                   subtitle={editForm.subtitle}
                   tags={editForm.tags}
                   title={editForm.title || "Resource Title"}

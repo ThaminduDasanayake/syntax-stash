@@ -166,6 +166,7 @@ export interface ResourceItem {
   iconClassName?: string | null;
   id: string;
   ogImage?: string | null;
+  ogImageBg?: string | null;
   subtitle?: string | null;
   tags?: string | null;
   title: string;

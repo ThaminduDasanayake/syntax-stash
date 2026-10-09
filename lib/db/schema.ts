@@ -139,6 +139,7 @@ export const resource = pgTable(
     github: text("github"),
     iconBg: text("icon_bg").default("dark"),
     ogImage: text("og_image"),
+    ogImageBg: text("og_image_bg").default("none"),
     subtitle: text("subtitle"),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
     url: text("url").notNull().unique(),
@@ -355,6 +356,7 @@ export const submission = pgTable(
     iconBg: text("icon_bg").default("dark"),
     notes: text("notes"),
     ogImage: text("og_image"),
+    ogImageBg: text("og_image_bg").default("none"),
     pricing: text("pricing").default("Free"),
     reviewedAt: timestamp("reviewed_at"),
     // Status & Moderation

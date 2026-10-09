@@ -54,6 +54,7 @@ export function SubmitForm() {
   const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
   const [iconBg, setIconBg] = useState<IconBgOption>("dark");
   const [ogImage, setOgImage] = useState("");
+  const [ogImageBg, setOgImageBg] = useState<string>("none");
   const [ogImageOptions, setOgImageOptions] = useState<CandidateOption[]>([]);
   const [suggestedAuthor, setSuggestedAuthor] = useState<SuggestedAuthorData | null>(null);
   const [detectedUpdates, setDetectedUpdates] = useState<{
@@ -92,6 +93,7 @@ export function SubmitForm() {
     setFaviconOptions([]);
     setIconBg("dark");
     setOgImage("");
+    setOgImageBg("none");
     setOgImageOptions([]);
     setSuggestedAuthor(null);
     setDetectedUpdates({});
@@ -319,6 +321,7 @@ export function SubmitForm() {
           iconBg: iconBg || "dark",
           notes: notes.trim() || undefined,
           ogImage: ogImage.trim() || undefined,
+          ogImageBg: ogImageBg || "none",
           subtitle: subtitle.trim() || undefined,
           tags: tags.trim() || undefined,
           url: url.trim(),
@@ -613,9 +616,11 @@ export function SubmitForm() {
             iconBg={iconBg}
             onIconBgChange={setIconBg}
             ogImage={ogImage}
+            ogImageBg={ogImageBg}
             ogImageOptions={ogImageOptions}
             onFaviconChange={setFavicon}
             onOgImageChange={setOgImage}
+            onOgImageBgChange={setOgImageBg}
           />
 
           {/* Section 5: Creator Attribution */}
@@ -760,6 +765,8 @@ export function SubmitForm() {
             description={description}
             favicon={favicon}
             iconBg={iconBg}
+            ogImage={ogImage}
+            ogImageBg={ogImageBg}
             subtitle={subtitle}
             tags={tags}
             title={title}

@@ -56,6 +56,7 @@ interface ResourceRecord {
   iconBg: string | null;
   id: string;
   ogImage: string | null;
+  ogImageBg: string | null;
   subtitle: string | null;
   tags: string[];
   title: string;
@@ -100,6 +101,7 @@ export async function GET(request: NextRequest) {
         healthStatusCode: resourceHealth.statusCode,
         iconBg: resource.iconBg,
         ogImage: resource.ogImage,
+        ogImageBg: resource.ogImageBg,
         subtitle: resource.subtitle,
         tagName: tag.name,
         updatedAt: resource.updatedAt,
@@ -154,6 +156,7 @@ export async function GET(request: NextRequest) {
           healthStatusCode: r.healthStatusCode,
           iconBg: r.iconBg || "dark",
           ogImage: r.ogImage,
+          ogImageBg: r.ogImageBg || "none",
           subtitle: r.subtitle,
           tags: r.tagName ? [r.tagName] : [],
           updatedAt: r.updatedAt.toISOString(),
@@ -211,6 +214,7 @@ export async function POST(req: Request) {
       github,
       iconBg,
       ogImage,
+      ogImageBg,
       subtitle,
       tags,
       url,
@@ -307,6 +311,7 @@ export async function POST(req: Request) {
       github: github?.trim() || null,
       iconBg: iconBg || "dark",
       ogImage: ogImage?.trim() || null,
+      ogImageBg: ogImageBg || "none",
       subtitle: subtitle?.trim() || null,
       url: url.trim(),
     });
@@ -495,6 +500,7 @@ export async function PATCH(req: Request) {
     }
     if (updates.favicon !== undefined) updatedData.favicon = updates.favicon?.trim() || null;
     if (updates.ogImage !== undefined) updatedData.ogImage = updates.ogImage?.trim() || null;
+    if (updates.ogImageBg !== undefined) updatedData.ogImageBg = updates.ogImageBg || "none";
     if (updates.github !== undefined) updatedData.github = updates.github?.trim() || null;
     if (updates.iconBg !== undefined) updatedData.iconBg = updates.iconBg || "dark";
 
