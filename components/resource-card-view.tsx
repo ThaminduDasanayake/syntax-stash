@@ -139,7 +139,7 @@ export function ResourceCardView({
         return (
           <div
             className={cn(
-              "relative aspect-[2/1] w-full overflow-hidden rounded-2xl border-[1.5px] border-white/10 transition-all duration-300 group-hover:border-white/18",
+              "relative aspect-[2/1] w-full overflow-hidden rounded-xl border-[1.5px] border-white/10 transition-all duration-300 group-hover:border-white/18",
               hasCustomBg
                 ? cleanBg === "white" || cleanBg === "light"
                   ? "bg-white"

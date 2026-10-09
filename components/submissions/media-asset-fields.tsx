@@ -118,7 +118,7 @@ function OgImagePreviewBanner({
                 aria-hidden="true"
                 loading="lazy"
                 referrerPolicy="no-referrer"
-                className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover opacity-35 blur-xl brightness-90 saturate-150"
+                className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-35 blur-xl brightness-90 saturate-150 select-none"
               />
             )}
             {/* eslint-disable-next-line @next/next/no-img-element */}
