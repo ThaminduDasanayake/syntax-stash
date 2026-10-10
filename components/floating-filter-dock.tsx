@@ -13,14 +13,6 @@ import {
 import React, { useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import {
   Sheet,
@@ -90,63 +82,82 @@ function CategoryPickerContent({
   return (
     <div className="flex flex-col">
       {/* Header */}
-      <div className="border-border bg-popover flex items-center justify-between rounded-t-2xl border-b-[1.5px] px-4 py-3 sm:px-3 sm:py-2.5">
+      <div className="flex items-center justify-between border-b border-white/[0.08] px-3.5 py-2.5">
         <div className="flex items-center gap-2">
-          <SquaresFourIcon weight="bold" className="text-primary size-4" />
-          <span className="text-mono-xs font-bold tracking-wider uppercase">Filter by Category</span>
+          <SquaresFourIcon weight="bold" className="size-4 text-primary" />
+          <span className="font-mono text-xs font-bold uppercase tracking-wider text-zinc-200">
+            Categories
+          </span>
         </div>
         {activeCategory && (
           <button
             type="button"
             onClick={() => onSelectCategory(null)}
-            className="text-ink-mute hover:text-destructive flex cursor-pointer items-center gap-1 font-mono text-xs underline underline-offset-2 transition-colors sm:text-[11px]"
+            className="flex cursor-pointer items-center gap-1 font-mono text-[11px] text-zinc-400 underline underline-offset-2 transition-colors hover:text-destructive"
           >
-            <XIcon weight="bold" className="size-3.5" />
-            <span>Show All</span>
+            <XIcon weight="bold" className="size-3" />
+            <span>Reset</span>
           </button>
         )}
       </div>
 
-      <Command className="bg-popover rounded-t-none rounded-b-2xl border-none">
-        <CommandInput
+      {/* Minimalist Search Input */}
+      <div className="flex items-center gap-2 border-b border-white/[0.08] bg-white/[0.02] px-3 py-2">
+        <MagnifyingGlassIcon weight="bold" className="size-3.5 text-zinc-500 shrink-0" />
+        <input
+          type="text"
           placeholder="Search categories..."
           value={search}
-          onValueChange={setSearch}
-          className="text-mono-xs h-10 border-none py-2.5 sm:h-9 sm:py-2"
+          onChange={(e) => setSearch(e.target.value)}
+          className="h-6 w-full bg-transparent text-xs text-foreground placeholder:text-zinc-500 outline-none"
+          autoFocus
         />
+        {search && (
+          <button
+            type="button"
+            onClick={() => setSearch("")}
+            className="text-zinc-500 hover:text-foreground p-0.5 cursor-pointer"
+            aria-label="Clear category search"
+          >
+            <XIcon weight="bold" className="size-3" />
+          </button>
+        )}
+      </div>
 
-        <CommandList className="no-scrollbar max-h-72 overflow-y-auto p-1.5 sm:max-h-60">
-          <CommandEmpty className="text-muted-foreground py-6 text-center font-mono text-xs">
-            No category found.
-          </CommandEmpty>
-
-          <CommandGroup>
+      {/* Category Items List */}
+      <div className="no-scrollbar max-h-64 overflow-y-auto p-1.5 space-y-0.5 sm:max-h-72">
+        {filteredCategories.length === 0 ? (
+          <div className="py-6 text-center font-mono text-xs text-zinc-500">
+            No categories found
+          </div>
+        ) : (
+          <>
             {/* All Categories Option */}
-            <CommandItem
-              value="all_categories_option"
-              onSelect={() => onSelectCategory(null)}
-              className={cn(
-                "flex cursor-pointer items-center justify-between rounded-xl px-3 py-2 font-mono text-xs transition-colors sm:px-2.5 sm:py-1.5",
-                !activeCategory
-                  ? "bg-primary/10 text-foreground font-bold"
-                  : "hover:bg-muted/60 text-foreground/80",
-              )}
-            >
-              <div className="flex items-center gap-2.5">
-                <div
-                  className={cn(
-                    "flex size-4 items-center justify-center rounded-md border-[1.5px] transition-colors sm:size-3.5",
-                    !activeCategory ? "border-foreground bg-foreground text-paper" : "border-border bg-card",
-                  )}
-                >
-                  {!activeCategory && <CheckIcon weight="bold" className="size-3 sm:size-2.5" />}
-                </div>
+            {(!search || "all categories".includes(search.toLowerCase())) && (
+              <button
+                type="button"
+                onClick={() => onSelectCategory(null)}
+                className={cn(
+                  "flex w-full cursor-pointer items-center justify-between rounded-lg px-2.5 py-1.5 text-left text-xs transition-colors",
+                  !activeCategory
+                    ? "bg-primary/15 font-semibold text-primary"
+                    : "text-zinc-300 hover:bg-white/[0.06] hover:text-white",
+                )}
+              >
                 <span>All Categories</span>
-              </div>
-              <span className="text-muted-foreground ml-2 font-mono text-xs tabular-nums sm:text-[10px]">
-                ({totalCount})
-              </span>
-            </CommandItem>
+                <div className="flex items-center gap-1.5">
+                  <span
+                    className={cn(
+                      "font-mono text-[11px] tabular-nums",
+                      !activeCategory ? "text-primary/80" : "text-zinc-500",
+                    )}
+                  >
+                    {totalCount}
+                  </span>
+                  {!activeCategory && <CheckIcon weight="bold" className="size-3.5 text-primary" />}
+                </div>
+              </button>
+            )}
 
             {/* Individual Categories */}
             {filteredCategories.map((cat) => {
@@ -154,37 +165,185 @@ function CategoryPickerContent({
               const count = categoryTotals.get(cat) ?? 0;
 
               return (
-                <CommandItem
+                <button
                   key={cat}
-                  value={cat}
-                  onSelect={() => onSelectCategory(cat)}
+                  type="button"
+                  onClick={() => onSelectCategory(isSelected ? null : cat)}
                   className={cn(
-                    "flex cursor-pointer items-center justify-between rounded-xl px-3 py-2 font-mono text-xs transition-colors sm:px-2.5 sm:py-1.5",
+                    "flex w-full cursor-pointer items-center justify-between rounded-lg px-2.5 py-1.5 text-left text-xs transition-colors",
                     isSelected
-                      ? "bg-primary/10 text-foreground font-bold"
-                      : "hover:bg-muted/60 text-foreground/80",
+                      ? "bg-primary/15 font-semibold text-primary"
+                      : "text-zinc-300 hover:bg-white/[0.06] hover:text-white",
                   )}
                 >
-                  <div className="flex items-center gap-2.5">
-                    <div
+                  <span className="truncate">{cat}</span>
+                  <div className="flex items-center gap-1.5 shrink-0 ml-2">
+                    <span
                       className={cn(
-                        "flex size-4 items-center justify-center rounded-md border-[1.5px] transition-colors sm:size-3.5",
-                        isSelected ? "border-foreground bg-foreground text-paper" : "border-border bg-card",
+                        "font-mono text-[11px] tabular-nums",
+                        isSelected ? "text-primary/80" : "text-zinc-500",
                       )}
                     >
-                      {isSelected && <CheckIcon weight="bold" className="size-3 sm:size-2.5" />}
-                    </div>
-                    <span className="truncate">{cat}</span>
+                      {count}
+                    </span>
+                    {isSelected && <CheckIcon weight="bold" className="size-3.5 text-primary" />}
                   </div>
-                  <span className="text-muted-foreground ml-2 font-mono text-xs tabular-nums sm:text-[10px]">
-                    ({count})
-                  </span>
-                </CommandItem>
+                </button>
               );
             })}
-          </CommandGroup>
-        </CommandList>
-      </Command>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function TagPickerContent({
+  availableTags,
+  matchMode,
+  onClearTags,
+  onMatchModeChange,
+  onToggleTag,
+  selectedTags,
+}: {
+  availableTags: TagOption[];
+  matchMode: "any" | "all";
+  onClearTags: () => void;
+  onMatchModeChange: (mode: "any" | "all") => void;
+  onToggleTag: (tag: string) => void;
+  selectedTags: string[];
+}) {
+  const [search, setSearch] = useState("");
+
+  const filteredTags = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) return availableTags;
+    return availableTags.filter((t) => t.name.toLowerCase().includes(q));
+  }, [availableTags, search]);
+
+  const hasTags = selectedTags.length > 0;
+
+  return (
+    <div className="flex flex-col">
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-white/[0.08] px-3.5 py-2.5">
+        <div className="flex items-center gap-2">
+          <TagIcon weight="bold" className="size-4 text-brand-purple" />
+          <span className="font-mono text-xs font-bold uppercase tracking-wider text-zinc-200">
+            Tags
+          </span>
+          {hasTags && (
+            <span className="bg-brand-purple text-paper flex size-4.5 items-center justify-center rounded-full text-[10px] font-bold">
+              {selectedTags.length}
+            </span>
+          )}
+        </div>
+        {hasTags && (
+          <button
+            type="button"
+            onClick={onClearTags}
+            className="flex cursor-pointer items-center gap-1 font-mono text-[11px] text-zinc-400 underline underline-offset-2 transition-colors hover:text-destructive"
+          >
+            <XIcon weight="bold" className="size-3" />
+            <span>Clear</span>
+          </button>
+        )}
+      </div>
+
+      {/* Match Mode Toggle */}
+      <div className="flex items-center justify-between border-b border-white/[0.08] bg-white/[0.02] px-3.5 py-1.5">
+        <span className="font-mono text-[11px] text-zinc-400">Match mode:</span>
+        <div className="flex rounded-lg bg-white/[0.06] p-0.5">
+          <button
+            type="button"
+            onClick={() => onMatchModeChange("any")}
+            className={cn(
+              "cursor-pointer rounded-md px-2 py-0.5 font-mono text-[10px] uppercase font-semibold transition-all",
+              matchMode === "any"
+                ? "bg-brand-purple text-paper shadow-sm"
+                : "text-zinc-400 hover:text-white",
+            )}
+          >
+            Any (OR)
+          </button>
+          <button
+            type="button"
+            onClick={() => onMatchModeChange("all")}
+            className={cn(
+              "cursor-pointer rounded-md px-2 py-0.5 font-mono text-[10px] uppercase font-semibold transition-all",
+              matchMode === "all"
+                ? "bg-brand-purple text-paper shadow-sm"
+                : "text-zinc-400 hover:text-white",
+            )}
+          >
+            All (AND)
+          </button>
+        </div>
+      </div>
+
+      {/* Search Input */}
+      <div className="flex items-center gap-2 border-b border-white/[0.08] bg-white/[0.02] px-3 py-2">
+        <MagnifyingGlassIcon weight="bold" className="size-3.5 text-zinc-500 shrink-0" />
+        <input
+          type="text"
+          placeholder="Search tags..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="h-6 w-full bg-transparent text-xs text-foreground placeholder:text-zinc-500 outline-none"
+        />
+        {search && (
+          <button
+            type="button"
+            onClick={() => setSearch("")}
+            className="text-zinc-500 hover:text-foreground p-0.5 cursor-pointer"
+            aria-label="Clear tags search"
+          >
+            <XIcon weight="bold" className="size-3" />
+          </button>
+        )}
+      </div>
+
+      {/* Tags List */}
+      <div className="no-scrollbar max-h-60 overflow-y-auto p-1.5 space-y-0.5">
+        {filteredTags.length === 0 ? (
+          <div className="py-6 text-center font-mono text-xs text-zinc-500">
+            No tags found
+          </div>
+        ) : (
+          filteredTags.map((tag) => {
+            const isChecked = selectedTags.includes(tag.name);
+
+            return (
+              <button
+                key={tag.name}
+                type="button"
+                onClick={() => onToggleTag(tag.name)}
+                className={cn(
+                  "flex w-full cursor-pointer items-center justify-between rounded-lg px-2.5 py-1.5 text-left text-xs transition-colors",
+                  isChecked
+                    ? "bg-brand-purple/20 font-semibold text-brand-purple"
+                    : "text-zinc-300 hover:bg-white/[0.06] hover:text-white",
+                )}
+              >
+                <span className="truncate">#{tag.name}</span>
+                <div className="flex items-center gap-1.5 shrink-0 ml-2">
+                  <span
+                    className={cn(
+                      "font-mono text-[11px] tabular-nums",
+                      isChecked ? "text-brand-purple/80" : "text-zinc-500",
+                    )}
+                  >
+                    {tag.count}
+                  </span>
+                  {isChecked && (
+                    <CheckIcon weight="bold" className="size-3.5 text-brand-purple" />
+                  )}
+                </div>
+              </button>
+            );
+          })
+        )}
+      </div>
     </div>
   );
 }
@@ -241,7 +400,7 @@ export function FloatingFilterDock({
             <button
               type="button"
               onClick={onClearSearch}
-              className="text-muted-foreground hover:text-foreground ml-1 shrink-0 p-0.5"
+              className="text-muted-foreground hover:text-foreground ml-1 shrink-0 p-0.5 cursor-pointer"
               aria-label="Clear search"
             >
               <XIcon weight="bold" className="size-3.5" />
@@ -275,7 +434,7 @@ export function FloatingFilterDock({
                 <SheetContent
                   side="bottom"
                   showCloseButton={false}
-                  className="border-border bg-popover z-70 max-h-[85vh] rounded-t-3xl border-t p-0 font-mono text-xs"
+                  className="border-white/10 bg-[#141416] z-70 max-h-[85vh] rounded-t-3xl border-t p-0 font-mono text-xs overflow-hidden"
                 >
                   <SheetHeader className="sr-only">
                     <SheetTitle>Categories</SheetTitle>
@@ -317,7 +476,7 @@ export function FloatingFilterDock({
                   side="top"
                   align="center"
                   sideOffset={12}
-                  className="border-border bg-popover text-popover-foreground z-70 w-80 rounded-2xl border-[1.5px] p-0 font-mono text-xs shadow-2xl"
+                  className="border-white/10 bg-[#141416]/95 backdrop-blur-2xl text-popover-foreground z-70 w-72 sm:w-80 rounded-2xl border-[1.5px] p-0 shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden"
                 >
                   <CategoryPickerContent
                     activeCategory={activeCategory}
@@ -363,52 +522,20 @@ export function FloatingFilterDock({
                 <SheetContent
                   side="bottom"
                   showCloseButton={false}
-                  className="border-border bg-popover z-70 max-h-[85vh] rounded-t-3xl border-t p-0 font-mono text-xs"
+                  className="border-white/10 bg-[#141416] z-70 max-h-[85vh] rounded-t-3xl border-t p-0 font-mono text-xs overflow-hidden"
                 >
                   <SheetHeader className="sr-only">
                     <SheetTitle>Filter by Tags</SheetTitle>
                     <SheetDescription>Select tags to filter</SheetDescription>
                   </SheetHeader>
-                  <div className="p-2">
-                    <div className="flex items-center justify-between border-b pb-2">
-                      <span className="font-bold">Match Mode</span>
-                      <div className="flex gap-1">
-                        <Button
-                          size="xs"
-                          variant={matchMode === "any" ? "default" : "outline"}
-                          onClick={() => onMatchModeChange("any")}
-                        >
-                          Any
-                        </Button>
-                        <Button
-                          size="xs"
-                          variant={matchMode === "all" ? "default" : "outline"}
-                          onClick={() => onMatchModeChange("all")}
-                        >
-                          All
-                        </Button>
-                      </div>
-                    </div>
-                    <div className="no-scrollbar mt-2 max-h-60 overflow-y-auto space-y-1">
-                      {availableTags.map((tag) => {
-                        const isChecked = selectedTags.includes(tag.name);
-                        return (
-                          <button
-                            key={tag.name}
-                            type="button"
-                            onClick={() => onToggleTag(tag.name)}
-                            className={cn(
-                              "flex w-full items-center justify-between rounded-lg p-2 text-xs",
-                              isChecked ? "bg-primary/20 font-bold" : "hover:bg-muted",
-                            )}
-                          >
-                            <span>#{tag.name}</span>
-                            <span className="text-muted-foreground">({tag.count})</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
+                  <TagPickerContent
+                    availableTags={availableTags}
+                    matchMode={matchMode}
+                    onClearTags={onClearTags}
+                    onMatchModeChange={onMatchModeChange}
+                    onToggleTag={onToggleTag}
+                    selectedTags={selectedTags}
+                  />
                 </SheetContent>
               </Sheet>
             ) : (
@@ -437,105 +564,16 @@ export function FloatingFilterDock({
                   side="top"
                   align="center"
                   sideOffset={12}
-                  className="border-border bg-popover text-popover-foreground z-70 w-80 rounded-2xl border-[1.5px] p-0 font-mono text-xs shadow-2xl"
+                  className="border-white/10 bg-[#141416]/95 backdrop-blur-2xl text-popover-foreground z-70 w-72 sm:w-80 rounded-2xl border-[1.5px] p-0 shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden"
                 >
-                  <div className="flex flex-col">
-                    <div className="border-border bg-popover flex items-center justify-between rounded-t-2xl border-b-[1.5px] px-4 py-3 sm:px-3 sm:py-2.5">
-                      <div className="flex items-center gap-2">
-                        <TagIcon weight="bold" className="text-primary size-4" />
-                        <span className="text-mono-xs font-bold tracking-wider uppercase">
-                          Filter by Tags
-                        </span>
-                      </div>
-                      {hasTags && (
-                        <button
-                          type="button"
-                          onClick={onClearTags}
-                          className="text-ink-mute hover:text-destructive flex cursor-pointer items-center gap-1 font-mono text-xs underline underline-offset-2 transition-colors sm:text-[11px]"
-                        >
-                          <XIcon weight="bold" className="size-3.5" />
-                          <span>Clear ({selectedTags.length})</span>
-                        </button>
-                      )}
-                    </div>
-
-                    <div className="border-border/60 bg-muted/40 flex items-center justify-between border-b-[1.5px] px-4 py-2 sm:px-3 sm:py-1.5">
-                      <span className="text-muted-foreground font-mono text-[11px]">Match:</span>
-                      <div className="flex items-center gap-1">
-                        <button
-                          type="button"
-                          onClick={() => onMatchModeChange("any")}
-                          className={cn(
-                            "cursor-pointer rounded-full border-[1.5px] px-2.5 py-0.5 font-mono text-[10px] uppercase transition-all",
-                            matchMode === "any"
-                              ? "border-primary bg-primary text-primary-foreground font-bold"
-                              : "border-border/70 bg-card text-muted-foreground hover:bg-muted hover:text-foreground",
-                          )}
-                        >
-                          Any (OR)
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => onMatchModeChange("all")}
-                          className={cn(
-                            "cursor-pointer rounded-full border-[1.5px] px-2.5 py-0.5 font-mono text-[10px] uppercase transition-all",
-                            matchMode === "all"
-                              ? "border-primary bg-primary text-primary-foreground font-bold"
-                              : "border-border/70 bg-card text-muted-foreground hover:bg-muted hover:text-foreground",
-                          )}
-                        >
-                          All (AND)
-                        </button>
-                      </div>
-                    </div>
-
-                    <Command className="bg-popover rounded-t-none rounded-b-2xl border-none">
-                      <CommandInput
-                        placeholder="Search tags..."
-                        className="text-mono-xs h-9 border-none py-2"
-                      />
-                      <CommandList className="no-scrollbar max-h-60 overflow-y-auto p-1.5">
-                        <CommandEmpty className="text-muted-foreground py-6 text-center font-mono text-xs">
-                          No tags found.
-                        </CommandEmpty>
-                        <CommandGroup>
-                          {availableTags.map((tag) => {
-                            const isChecked = selectedTags.includes(tag.name);
-                            return (
-                              <CommandItem
-                                key={tag.name}
-                                value={tag.name}
-                                onSelect={() => onToggleTag(tag.name)}
-                                className={cn(
-                                  "flex cursor-pointer items-center justify-between rounded-xl px-2.5 py-1.5 font-mono text-xs transition-colors",
-                                  isChecked
-                                    ? "bg-primary/10 text-foreground font-bold"
-                                    : "hover:bg-muted/60 text-foreground/80",
-                                )}
-                              >
-                                <div className="flex items-center gap-2">
-                                  <div
-                                    className={cn(
-                                      "flex size-3.5 items-center justify-center rounded-md border-[1.5px] transition-colors",
-                                      isChecked
-                                        ? "border-foreground bg-foreground text-paper"
-                                        : "border-border bg-card",
-                                    )}
-                                  >
-                                    {isChecked && <CheckIcon weight="bold" className="size-2.5" />}
-                                  </div>
-                                  <span>#{tag.name}</span>
-                                </div>
-                                <span className="text-muted-foreground ml-2 font-mono text-[10px] tabular-nums">
-                                  ({tag.count})
-                                </span>
-                              </CommandItem>
-                            );
-                          })}
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </div>
+                  <TagPickerContent
+                    availableTags={availableTags}
+                    matchMode={matchMode}
+                    onClearTags={onClearTags}
+                    onMatchModeChange={onMatchModeChange}
+                    onToggleTag={onToggleTag}
+                    selectedTags={selectedTags}
+                  />
                 </PopoverContent>
               </Popover>
             )}
