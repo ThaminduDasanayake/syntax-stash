@@ -418,17 +418,19 @@ export function FloatingFilterDock({
                     variant="outline"
                     size="sm"
                     className={cn(
-                      "h-9 gap-1.5 rounded-xl border-[1.5px] px-2.5 font-mono text-xs font-semibold sm:h-9.5 sm:px-3",
+                      "h-9 w-32 sm:w-40 justify-between gap-1.5 rounded-xl border-[1.5px] px-2.5 font-mono text-xs font-semibold sm:h-9.5 sm:px-3",
                       hasCategory
                         ? "border-primary/50 bg-primary/10 text-primary font-bold"
                         : "border-white/10 bg-white/4 text-zinc-300 hover:border-white/20 hover:bg-white/8 hover:text-white",
                     )}
                   >
-                    <SquaresFourIcon weight="bold" className="size-4 shrink-0" />
-                    <span className="max-w-20 truncate sm:max-w-32">
-                      {activeCategory || "Categories"}
-                    </span>
-                    <CaretUpIcon weight="bold" className="size-3 opacity-60" />
+                    <div className="flex min-w-0 flex-1 items-center gap-1.5">
+                      <SquaresFourIcon weight="bold" className="size-4 shrink-0" />
+                      <span className="truncate">
+                        {activeCategory || "Categories"}
+                      </span>
+                    </div>
+                    <CaretUpIcon weight="bold" className="size-3 shrink-0 opacity-60" />
                   </Button>
                 </SheetTrigger>
                 <SheetContent
@@ -459,17 +461,19 @@ export function FloatingFilterDock({
                     variant="outline"
                     size="sm"
                     className={cn(
-                      "h-9.5 gap-1.5 rounded-xl border-[1.5px] px-3 font-mono text-xs font-semibold transition-all",
+                      "h-9.5 w-44 sm:w-48 justify-between gap-1.5 rounded-xl border-[1.5px] px-3 font-mono text-xs font-semibold transition-all",
                       hasCategory
                         ? "border-primary/50 bg-primary/10 text-primary font-bold"
                         : "border-white/10 bg-white/4 text-zinc-300 hover:border-white/20 hover:bg-white/8 hover:text-white",
                     )}
                   >
-                    <SquaresFourIcon weight="bold" className="size-4 shrink-0" />
-                    <span className="max-w-36 truncate">
-                      {activeCategory || "All Categories"}
-                    </span>
-                    <CaretUpIcon weight="bold" className="size-3 opacity-60" />
+                    <div className="flex min-w-0 flex-1 items-center gap-1.5">
+                      <SquaresFourIcon weight="bold" className="size-4 shrink-0" />
+                      <span className="truncate">
+                        {activeCategory || "All Categories"}
+                      </span>
+                    </div>
+                    <CaretUpIcon weight="bold" className="size-3 shrink-0 opacity-60" />
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent

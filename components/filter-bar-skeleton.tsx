@@ -16,7 +16,7 @@ export function FilterBarSkeleton(_props: FilterBarSkeletonProps) {
         <div className="bg-border/60 mx-0.5 h-5 w-[1px]" />
 
         {/* Category button skeleton */}
-        <Skeleton className="bg-foreground/10 h-9 w-24 rounded-xl sm:w-28" />
+        <Skeleton className="bg-foreground/10 h-9 w-32 rounded-xl sm:w-48" />
 
         {/* Tags button skeleton */}
         <Skeleton className="bg-foreground/10 h-9 w-20 rounded-xl sm:w-24" />
