@@ -367,14 +367,7 @@ function FilterSectionInner({
       totals.set(tool.category, (totals.get(tool.category) || 0) + 1);
     }
     return totals;
-  }, [
-    bookmarkedSet,
-    deferredSearchQuery,
-    items,
-    matchMode,
-    savedOnly,
-    selectedTags,
-  ]);
+  }, [bookmarkedSet, deferredSearchQuery, items, matchMode, savedOnly, selectedTags]);
 
   // Only slice items up to visibleLimit for DOM rendering
   const visibleItems = useMemo(() => {

@@ -1,30 +1,17 @@
-import { ArrowRightIcon, CompassIcon, SparkleIcon } from "@phosphor-icons/react/ssr";
+import { ArrowRightIcon, CompassIcon, SparkleIcon, WrenchIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 
 import { LatestResourcesGrid } from "@/components/latest-resources-grid";
 import { TechStack } from "@/components/tech-stack";
-import { ToolsCarousel } from "@/components/tools-carousel";
 import { Button } from "@/components/ui/button";
 import { getAllCategories } from "@/lib/categories";
 import { getAllResources } from "@/lib/resources";
-import {
-  dataTools,
-  developmentTools,
-  frontendTools,
-  internalTools,
-  mediaTools,
-} from "@/lib/tools-data";
+import { internalTools } from "@/lib/tools-data";
 import { cn, getCategoryTheme, slugify, THEME_CONFIG } from "@/lib/utils";
 
 export default async function Home() {
   const [categories, resourceLinks] = await Promise.all([getAllCategories(), getAllResources()]);
   const resourceCategories = categories.map((c) => c.name);
-  const topTools = [
-    ...dataTools.slice(0, 2),
-    ...developmentTools.slice(0, 2),
-    ...frontendTools.slice(0, 2),
-    ...mediaTools.slice(0, 2),
-  ];
 
   // Latest added resources sorted by createdAt descending
   const latestResources = [...resourceLinks]
@@ -49,9 +36,9 @@ export default async function Home() {
           </h1>
 
           <p className="hero-sub max-w-2xl text-balance">
-            A comprehensive reference manual of {resourceLinks.length}+ handpicked libraries,
-            design systems, animation engines, and AI toolchains across {resourceCategories.length} categories.
-            Tag-filterable, verified, and cloud-synced.
+            A comprehensive reference manual of {resourceLinks.length}+ handpicked libraries, design
+            systems, animation engines, and AI toolchains across {resourceCategories.length}{" "}
+            categories. Tag-filterable, verified, and cloud-synced.
           </p>
 
           <div className="hero-cta-row justify-center">
@@ -105,7 +92,7 @@ export default async function Home() {
       {/* Curated Resource Vault Spotlight */}
       <section
         id="categories"
-        className="bg-background border-b-[1.5px] border-white/8 px-6 py-24 sm:px-12 lg:px-24 scroll-mt-16"
+        className="bg-background scroll-mt-16 border-b-[1.5px] border-white/8 px-6 py-24 sm:px-12 lg:px-24"
       >
         <div className="mx-auto w-full max-w-7xl">
           <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">
@@ -223,8 +210,36 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Secondary Tools Section (Developer Utilities) */}
-      <ToolsCarousel tools={topTools} totalCount={internalTools.length} />
+      {/* Compact Developer Workbench Callout Banner */}
+      <section className="bg-background border-b-[1.5px] border-white/8 px-6 py-16 sm:px-12 lg:px-24">
+        <div className="bg-card mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 rounded-2xl border-[1.5px] border-white/10 p-8 shadow-[0_4px_24px_rgba(0,0,0,0.4)] sm:flex-row sm:items-center sm:p-10">
+          <div>
+            <div className="text-primary mb-2 flex items-center gap-2 font-mono text-xs font-bold tracking-wider uppercase">
+              <WrenchIcon weight="bold" className="size-4" />
+              <span>Developer Workbench</span>
+            </div>
+            <h3 className="font-display text-foreground text-2xl font-bold tracking-tight uppercase sm:text-3xl">
+              Looking for browser utilities?
+            </h3>
+            <p className="text-muted-foreground mt-1.5 max-w-xl font-mono text-xs leading-relaxed">
+              Explore {internalTools.length}+ zero-latency client-side utilities: regex tester, cURL
+              builder, color studio, JSON formatters, and code generators.
+            </p>
+          </div>
+
+          <Button
+            asChild
+            size="default"
+            variant="outline"
+            className="shrink-0 border-white/15 font-mono text-xs font-bold tracking-wider uppercase hover:bg-white/6"
+          >
+            <Link href="/tools">
+              Explore {internalTools.length} Tools
+              <ArrowRightIcon weight="bold" className="ml-2 size-3.5" />
+            </Link>
+          </Button>
+        </div>
+      </section>
 
       <TechStack />
     </>

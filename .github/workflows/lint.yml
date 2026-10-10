@@ -17,24 +17,30 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v4
         with:
-          cache: "npm"
-          node-version: "22.x"
+          node-version: 22
+          cache: "pnpm"
 
       - name: Install Dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Run ESLint
-        run: npm run lint
+        run: pnpm run lint
 
       - name: Run Prettier Check
-        run: npm run format:check
+        run: pnpm run format:check
 
       - name: Suggest Fixes on Failure
         if: failure()
         run: |
-          echo "::error::Checks failed! You can automatically fix many of these issues by running 'npm run lint:fix' and 'npm run format' in your local terminal, then pushing the changes."
+          echo "::error::Checks failed! You can automatically fix many of these issues by running 'pnpm run lint:fix' and 'pnpm run format' in your local terminal, then pushing the changes."

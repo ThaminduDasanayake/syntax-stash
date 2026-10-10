@@ -39,7 +39,7 @@ export function LatestResourcesGrid({
                 <span className="font-serif tracking-normal lowercase italic">additions.</span>
               </h2>
             </div>
-            <p className="max-w-md font-mono text-xs leading-relaxed text-muted-foreground md:text-right">
+            <p className="text-muted-foreground max-w-md font-mono text-xs leading-relaxed md:text-right">
               Freshly curated libraries, design kits, and engineering utilities added to the stash.
             </p>
           </div>
