@@ -384,7 +384,7 @@ export function FloatingFilterDock({
     <div className="pointer-events-none fixed inset-x-0 bottom-5 z-40 flex justify-center px-4 sm:bottom-6">
       <div className="pointer-events-auto border-white/12 bg-[#121214]/90 shadow-[0_20px_50px_rgba(0,0,0,0.7)] flex max-w-full items-center gap-1.5 rounded-2xl border-[1.5px] p-1.5 font-mono text-xs backdrop-blur-2xl transition-all sm:gap-2 sm:p-2">
         {/* 1. Interactive Search Box */}
-        <div className="border-white/10 bg-white/4 focus-within:border-primary/50 focus-within:bg-white/8 relative flex h-9 w-32 items-center rounded-xl border-[1.5px] px-2.5 transition-all duration-200 sm:h-9.5 sm:w-56 md:focus-within:w-64">
+        <div className="border-white/10 bg-white/4 focus-within:border-primary/50 focus-within:bg-white/8 relative flex h-9 w-32 items-center rounded-xl border-[1.5px] px-2.5 transition-all duration-200 sm:h-9.5 sm:w-64 md:focus-within:w-72">
           <MagnifyingGlassIcon
             weight="bold"
             className="text-muted-foreground mr-1.5 size-3.5 shrink-0"
@@ -418,7 +418,7 @@ export function FloatingFilterDock({
                     variant="outline"
                     size="sm"
                     className={cn(
-                      "h-9 w-32 sm:w-40 justify-between gap-1.5 rounded-xl border-[1.5px] px-2.5 font-mono text-xs font-semibold sm:h-9.5 sm:px-3",
+                      "h-9 w-32 sm:w-44 justify-between gap-1.5 rounded-xl border-[1.5px] px-2.5 font-mono text-xs font-semibold sm:h-9.5 sm:px-3",
                       hasCategory
                         ? "border-primary/50 bg-primary/10 text-primary font-bold"
                         : "border-white/10 bg-white/4 text-zinc-300 hover:border-white/20 hover:bg-white/8 hover:text-white",
@@ -461,7 +461,7 @@ export function FloatingFilterDock({
                     variant="outline"
                     size="sm"
                     className={cn(
-                      "h-9.5 w-44 sm:w-48 justify-between gap-1.5 rounded-xl border-[1.5px] px-3 font-mono text-xs font-semibold transition-all",
+                      "h-9.5 w-52 sm:w-56 md:w-60 justify-between gap-1.5 rounded-xl border-[1.5px] px-3 font-mono text-xs font-semibold transition-all",
                       hasCategory
                         ? "border-primary/50 bg-primary/10 text-primary font-bold"
                         : "border-white/10 bg-white/4 text-zinc-300 hover:border-white/20 hover:bg-white/8 hover:text-white",
