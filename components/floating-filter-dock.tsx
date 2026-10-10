@@ -84,8 +84,8 @@ function CategoryPickerContent({
       {/* Header */}
       <div className="flex items-center justify-between border-b border-white/[0.08] px-3.5 py-2.5">
         <div className="flex items-center gap-2">
-          <SquaresFourIcon weight="bold" className="size-4 text-primary" />
-          <span className="font-mono text-xs font-bold uppercase tracking-wider text-zinc-200">
+          <SquaresFourIcon weight="bold" className="text-primary size-4" />
+          <span className="font-mono text-xs font-bold tracking-wider text-zinc-200 uppercase">
             Categories
           </span>
         </div>
@@ -93,7 +93,7 @@ function CategoryPickerContent({
           <button
             type="button"
             onClick={() => onSelectCategory(null)}
-            className="flex cursor-pointer items-center gap-1 font-mono text-[11px] text-zinc-400 underline underline-offset-2 transition-colors hover:text-destructive"
+            className="hover:text-destructive flex cursor-pointer items-center gap-1 font-mono text-[11px] text-zinc-400 underline underline-offset-2 transition-colors"
           >
             <XIcon weight="bold" className="size-3" />
             <span>Reset</span>
@@ -103,20 +103,20 @@ function CategoryPickerContent({
 
       {/* Minimalist Search Input */}
       <div className="flex items-center gap-2 border-b border-white/[0.08] bg-white/[0.02] px-3 py-2">
-        <MagnifyingGlassIcon weight="bold" className="size-3.5 text-zinc-500 shrink-0" />
+        <MagnifyingGlassIcon weight="bold" className="size-3.5 shrink-0 text-zinc-500" />
         <input
           type="text"
           placeholder="Search categories..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="h-6 w-full bg-transparent text-xs text-foreground placeholder:text-zinc-500 outline-none"
+          className="text-foreground h-6 w-full bg-transparent text-xs outline-none placeholder:text-zinc-500"
           autoFocus
         />
         {search && (
           <button
             type="button"
             onClick={() => setSearch("")}
-            className="text-zinc-500 hover:text-foreground p-0.5 cursor-pointer"
+            className="hover:text-foreground cursor-pointer p-0.5 text-zinc-500"
             aria-label="Clear category search"
           >
             <XIcon weight="bold" className="size-3" />
@@ -125,7 +125,7 @@ function CategoryPickerContent({
       </div>
 
       {/* Category Items List */}
-      <div className="no-scrollbar max-h-64 overflow-y-auto p-1.5 space-y-0.5 sm:max-h-72">
+      <div className="no-scrollbar max-h-64 space-y-0.5 overflow-y-auto p-1.5 sm:max-h-72">
         {filteredCategories.length === 0 ? (
           <div className="py-6 text-center font-mono text-xs text-zinc-500">
             No categories found
@@ -140,7 +140,7 @@ function CategoryPickerContent({
                 className={cn(
                   "flex w-full cursor-pointer items-center justify-between rounded-lg px-2.5 py-1.5 text-left text-xs transition-colors",
                   !activeCategory
-                    ? "bg-primary/15 font-semibold text-primary"
+                    ? "bg-primary/15 text-primary font-semibold"
                     : "text-zinc-300 hover:bg-white/[0.06] hover:text-white",
                 )}
               >
@@ -154,7 +154,7 @@ function CategoryPickerContent({
                   >
                     {totalCount}
                   </span>
-                  {!activeCategory && <CheckIcon weight="bold" className="size-3.5 text-primary" />}
+                  {!activeCategory && <CheckIcon weight="bold" className="text-primary size-3.5" />}
                 </div>
               </button>
             )}
@@ -172,12 +172,12 @@ function CategoryPickerContent({
                   className={cn(
                     "flex w-full cursor-pointer items-center justify-between rounded-lg px-2.5 py-1.5 text-left text-xs transition-colors",
                     isSelected
-                      ? "bg-primary/15 font-semibold text-primary"
+                      ? "bg-primary/15 text-primary font-semibold"
                       : "text-zinc-300 hover:bg-white/[0.06] hover:text-white",
                   )}
                 >
                   <span className="truncate">{cat}</span>
-                  <div className="flex items-center gap-1.5 shrink-0 ml-2">
+                  <div className="ml-2 flex shrink-0 items-center gap-1.5">
                     <span
                       className={cn(
                         "font-mono text-[11px] tabular-nums",
@@ -186,7 +186,7 @@ function CategoryPickerContent({
                     >
                       {count}
                     </span>
-                    {isSelected && <CheckIcon weight="bold" className="size-3.5 text-primary" />}
+                    {isSelected && <CheckIcon weight="bold" className="text-primary size-3.5" />}
                   </div>
                 </button>
               );
@@ -228,8 +228,8 @@ function TagPickerContent({
       {/* Header */}
       <div className="flex items-center justify-between border-b border-white/[0.08] px-3.5 py-2.5">
         <div className="flex items-center gap-2">
-          <TagIcon weight="bold" className="size-4 text-brand-purple" />
-          <span className="font-mono text-xs font-bold uppercase tracking-wider text-zinc-200">
+          <TagIcon weight="bold" className="text-brand-purple size-4" />
+          <span className="font-mono text-xs font-bold tracking-wider text-zinc-200 uppercase">
             Tags
           </span>
           {hasTags && (
@@ -242,7 +242,7 @@ function TagPickerContent({
           <button
             type="button"
             onClick={onClearTags}
-            className="flex cursor-pointer items-center gap-1 font-mono text-[11px] text-zinc-400 underline underline-offset-2 transition-colors hover:text-destructive"
+            className="hover:text-destructive flex cursor-pointer items-center gap-1 font-mono text-[11px] text-zinc-400 underline underline-offset-2 transition-colors"
           >
             <XIcon weight="bold" className="size-3" />
             <span>Clear</span>
@@ -258,7 +258,7 @@ function TagPickerContent({
             type="button"
             onClick={() => onMatchModeChange("any")}
             className={cn(
-              "cursor-pointer rounded-md px-2 py-0.5 font-mono text-[10px] uppercase font-semibold transition-all",
+              "cursor-pointer rounded-md px-2 py-0.5 font-mono text-[10px] font-semibold uppercase transition-all",
               matchMode === "any"
                 ? "bg-brand-purple text-paper shadow-sm"
                 : "text-zinc-400 hover:text-white",
@@ -270,7 +270,7 @@ function TagPickerContent({
             type="button"
             onClick={() => onMatchModeChange("all")}
             className={cn(
-              "cursor-pointer rounded-md px-2 py-0.5 font-mono text-[10px] uppercase font-semibold transition-all",
+              "cursor-pointer rounded-md px-2 py-0.5 font-mono text-[10px] font-semibold uppercase transition-all",
               matchMode === "all"
                 ? "bg-brand-purple text-paper shadow-sm"
                 : "text-zinc-400 hover:text-white",
@@ -283,19 +283,19 @@ function TagPickerContent({
 
       {/* Search Input */}
       <div className="flex items-center gap-2 border-b border-white/[0.08] bg-white/[0.02] px-3 py-2">
-        <MagnifyingGlassIcon weight="bold" className="size-3.5 text-zinc-500 shrink-0" />
+        <MagnifyingGlassIcon weight="bold" className="size-3.5 shrink-0 text-zinc-500" />
         <input
           type="text"
           placeholder="Search tags..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="h-6 w-full bg-transparent text-xs text-foreground placeholder:text-zinc-500 outline-none"
+          className="text-foreground h-6 w-full bg-transparent text-xs outline-none placeholder:text-zinc-500"
         />
         {search && (
           <button
             type="button"
             onClick={() => setSearch("")}
-            className="text-zinc-500 hover:text-foreground p-0.5 cursor-pointer"
+            className="hover:text-foreground cursor-pointer p-0.5 text-zinc-500"
             aria-label="Clear tags search"
           >
             <XIcon weight="bold" className="size-3" />
@@ -304,11 +304,9 @@ function TagPickerContent({
       </div>
 
       {/* Tags List */}
-      <div className="no-scrollbar max-h-60 overflow-y-auto p-1.5 space-y-0.5">
+      <div className="no-scrollbar max-h-60 space-y-0.5 overflow-y-auto p-1.5">
         {filteredTags.length === 0 ? (
-          <div className="py-6 text-center font-mono text-xs text-zinc-500">
-            No tags found
-          </div>
+          <div className="py-6 text-center font-mono text-xs text-zinc-500">No tags found</div>
         ) : (
           filteredTags.map((tag) => {
             const isChecked = selectedTags.includes(tag.name);
@@ -321,12 +319,12 @@ function TagPickerContent({
                 className={cn(
                   "flex w-full cursor-pointer items-center justify-between rounded-lg px-2.5 py-1.5 text-left text-xs transition-colors",
                   isChecked
-                    ? "bg-brand-purple/20 font-semibold text-brand-purple"
+                    ? "bg-brand-purple/20 text-brand-purple font-semibold"
                     : "text-zinc-300 hover:bg-white/[0.06] hover:text-white",
                 )}
               >
                 <span className="truncate">#{tag.name}</span>
-                <div className="flex items-center gap-1.5 shrink-0 ml-2">
+                <div className="ml-2 flex shrink-0 items-center gap-1.5">
                   <span
                     className={cn(
                       "font-mono text-[11px] tabular-nums",
@@ -335,9 +333,7 @@ function TagPickerContent({
                   >
                     {tag.count}
                   </span>
-                  {isChecked && (
-                    <CheckIcon weight="bold" className="size-3.5 text-brand-purple" />
-                  )}
+                  {isChecked && <CheckIcon weight="bold" className="text-brand-purple size-3.5" />}
                 </div>
               </button>
             );
@@ -382,9 +378,9 @@ export function FloatingFilterDock({
 
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-5 z-40 flex justify-center px-4 sm:bottom-6">
-      <div className="pointer-events-auto border-white/12 bg-[#0e0e11]/95 shadow-[0_20px_50px_rgba(0,0,0,0.75),0_1px_0_0_rgba(255,255,255,0.1)_inset] flex max-w-full items-center gap-1.5 rounded-full border-[1.5px] p-1.5 font-mono text-xs backdrop-blur-2xl transition-all sm:gap-2 sm:p-2">
+      <div className="pointer-events-auto flex max-w-full items-center gap-1.5 rounded-full border-[1.5px] border-white/12 bg-[#0e0e11]/95 p-1.5 font-mono text-xs shadow-[0_20px_50px_rgba(0,0,0,0.75),0_1px_0_0_rgba(255,255,255,0.1)_inset] backdrop-blur-2xl transition-all sm:gap-2 sm:p-2">
         {/* 1. Interactive Search Box */}
-        <div className="border-white/10 bg-white/[0.04] focus-within:border-primary/50 focus-within:bg-white/[0.08] relative flex h-9 w-32 items-center rounded-full border-[1.5px] px-3.5 transition-all duration-200 sm:h-9.5 sm:w-64 md:focus-within:w-72">
+        <div className="focus-within:border-primary/50 relative flex h-9 w-32 items-center rounded-full border-[1.5px] border-white/10 bg-white/[0.04] px-3.5 transition-all duration-200 focus-within:bg-white/[0.08] sm:h-9.5 sm:w-64 md:focus-within:w-72">
           <MagnifyingGlassIcon
             weight="bold"
             className="text-muted-foreground mr-1.5 size-3.5 shrink-0"
@@ -400,7 +396,7 @@ export function FloatingFilterDock({
             <button
               type="button"
               onClick={onClearSearch}
-              className="text-muted-foreground hover:text-foreground ml-1 shrink-0 p-0.5 cursor-pointer"
+              className="text-muted-foreground hover:text-foreground ml-1 shrink-0 cursor-pointer p-0.5"
               aria-label="Clear search"
             >
               <XIcon weight="bold" className="size-3.5" />
@@ -418,7 +414,7 @@ export function FloatingFilterDock({
                     variant="outline"
                     size="sm"
                     className={cn(
-                      "h-9 w-32 sm:w-44 justify-between gap-1.5 rounded-full border-[1.5px] px-3 font-mono text-xs font-semibold sm:h-9.5 sm:px-3.5",
+                      "h-9 w-32 justify-between gap-1.5 rounded-full border-[1.5px] px-3 font-mono text-xs font-semibold sm:h-9.5 sm:w-44 sm:px-3.5",
                       hasCategory
                         ? "border-primary/50 bg-primary/10 text-primary font-bold"
                         : "border-white/10 bg-white/4 text-zinc-300 hover:border-white/20 hover:bg-white/8 hover:text-white",
@@ -426,9 +422,7 @@ export function FloatingFilterDock({
                   >
                     <div className="flex min-w-0 flex-1 items-center gap-1.5">
                       <SquaresFourIcon weight="bold" className="size-4 shrink-0" />
-                      <span className="truncate">
-                        {activeCategory || "Categories"}
-                      </span>
+                      <span className="truncate">{activeCategory || "Categories"}</span>
                     </div>
                     <CaretUpIcon weight="bold" className="size-3 shrink-0 opacity-60" />
                   </Button>
@@ -436,7 +430,7 @@ export function FloatingFilterDock({
                 <SheetContent
                   side="bottom"
                   showCloseButton={false}
-                  className="border-white/10 bg-[#141416] z-70 max-h-[85vh] rounded-t-3xl border-t p-0 font-mono text-xs overflow-hidden"
+                  className="z-70 max-h-[85vh] overflow-hidden rounded-t-3xl border-t border-white/10 bg-[#141416] p-0 font-mono text-xs"
                 >
                   <SheetHeader className="sr-only">
                     <SheetTitle>Categories</SheetTitle>
@@ -461,7 +455,7 @@ export function FloatingFilterDock({
                     variant="outline"
                     size="sm"
                     className={cn(
-                      "h-9.5 w-52 sm:w-56 md:w-60 justify-between gap-1.5 rounded-full border-[1.5px] px-3.5 font-mono text-xs font-semibold transition-all",
+                      "h-9.5 w-52 justify-between gap-1.5 rounded-full border-[1.5px] px-3.5 font-mono text-xs font-semibold transition-all sm:w-56 md:w-60",
                       hasCategory
                         ? "border-primary/50 bg-primary/10 text-primary font-bold"
                         : "border-white/10 bg-white/4 text-zinc-300 hover:border-white/20 hover:bg-white/8 hover:text-white",
@@ -469,9 +463,7 @@ export function FloatingFilterDock({
                   >
                     <div className="flex min-w-0 flex-1 items-center gap-1.5">
                       <SquaresFourIcon weight="bold" className="size-4 shrink-0" />
-                      <span className="truncate">
-                        {activeCategory || "All Categories"}
-                      </span>
+                      <span className="truncate">{activeCategory || "All Categories"}</span>
                     </div>
                     <CaretUpIcon weight="bold" className="size-3 shrink-0 opacity-60" />
                   </Button>
@@ -480,7 +472,7 @@ export function FloatingFilterDock({
                   side="top"
                   align="center"
                   sideOffset={12}
-                  className="border-white/10 bg-[#121214]/98 backdrop-blur-2xl text-popover-foreground z-70 w-72 sm:w-80 rounded-[20px] border-[1.5px] p-0 shadow-[0_24px_60px_rgba(0,0,0,0.85),0_1px_0_0_rgba(255,255,255,0.08)_inset] overflow-hidden"
+                  className="text-popover-foreground z-70 w-72 overflow-hidden rounded-[20px] border-[1.5px] border-white/10 bg-[#121214]/98 p-0 shadow-[0_24px_60px_rgba(0,0,0,0.85),0_1px_0_0_rgba(255,255,255,0.08)_inset] backdrop-blur-2xl sm:w-80"
                 >
                   <CategoryPickerContent
                     activeCategory={activeCategory}
@@ -526,7 +518,7 @@ export function FloatingFilterDock({
                 <SheetContent
                   side="bottom"
                   showCloseButton={false}
-                  className="border-white/10 bg-[#141416] z-70 max-h-[85vh] rounded-t-3xl border-t p-0 font-mono text-xs overflow-hidden"
+                  className="z-70 max-h-[85vh] overflow-hidden rounded-t-3xl border-t border-white/10 bg-[#141416] p-0 font-mono text-xs"
                 >
                   <SheetHeader className="sr-only">
                     <SheetTitle>Filter by Tags</SheetTitle>
@@ -568,7 +560,7 @@ export function FloatingFilterDock({
                   side="top"
                   align="center"
                   sideOffset={12}
-                  className="border-white/10 bg-[#121214]/98 backdrop-blur-2xl text-popover-foreground z-70 w-72 sm:w-80 rounded-[20px] border-[1.5px] p-0 shadow-[0_24px_60px_rgba(0,0,0,0.85),0_1px_0_0_rgba(255,255,255,0.08)_inset] overflow-hidden"
+                  className="text-popover-foreground z-70 w-72 overflow-hidden rounded-[20px] border-[1.5px] border-white/10 bg-[#121214]/98 p-0 shadow-[0_24px_60px_rgba(0,0,0,0.85),0_1px_0_0_rgba(255,255,255,0.08)_inset] backdrop-blur-2xl sm:w-80"
                 >
                   <TagPickerContent
                     availableTags={availableTags}
@@ -613,7 +605,7 @@ export function FloatingFilterDock({
         )}
 
         {/* 5. Item Count & Reset Action */}
-        <div className="border-white/10 hidden items-center gap-1.5 border-l pl-2 text-zinc-400 sm:flex">
+        <div className="hidden items-center gap-1.5 border-l border-white/10 pl-2 text-zinc-400 sm:flex">
           <span className="text-foreground font-bold tabular-nums">{filteredCount}</span>
           <span className="text-[11px] text-zinc-500">
             {hasActiveFilters ? `of ${totalCount}` : itemLabel.toLowerCase()}

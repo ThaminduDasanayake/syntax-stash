@@ -9,7 +9,7 @@ interface FilterBarSkeletonProps {
 export function FilterBarSkeleton(_props: FilterBarSkeletonProps) {
   return (
     <div className="fixed bottom-6 left-1/2 z-40 flex -translate-x-1/2 items-center">
-      <div className="border-white/12 bg-[#0e0e11]/95 shadow-[0_20px_50px_rgba(0,0,0,0.75),0_1px_0_0_rgba(255,255,255,0.1)_inset] flex items-center gap-1.5 rounded-full border-[1.5px] p-1.5 font-mono text-xs backdrop-blur-2xl sm:gap-2 sm:p-2">
+      <div className="flex items-center gap-1.5 rounded-full border-[1.5px] border-white/12 bg-[#0e0e11]/95 p-1.5 font-mono text-xs shadow-[0_20px_50px_rgba(0,0,0,0.75),0_1px_0_0_rgba(255,255,255,0.1)_inset] backdrop-blur-2xl sm:gap-2 sm:p-2">
         {/* Search button skeleton */}
         <Skeleton className="bg-foreground/10 h-9 w-9 rounded-full sm:w-64" />
 
@@ -34,4 +34,3 @@ export function FilterBarSkeleton(_props: FilterBarSkeletonProps) {
     </div>
   );
 }
-

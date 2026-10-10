@@ -36,9 +36,9 @@ export default async function Home() {
           </h1>
 
           <p className="hero-sub max-w-2xl text-balance">
-            A comprehensive reference manual of {resourceLinks.length}+ handpicked libraries,
-            design systems, animation engines, and AI toolchains across {resourceCategories.length} categories.
-            Tag-filterable, verified, and cloud-synced.
+            A comprehensive reference manual of {resourceLinks.length}+ handpicked libraries, design
+            systems, animation engines, and AI toolchains across {resourceCategories.length}{" "}
+            categories. Tag-filterable, verified, and cloud-synced.
           </p>
 
           <div className="hero-cta-row justify-center">
@@ -92,7 +92,7 @@ export default async function Home() {
       {/* Curated Resource Vault Spotlight */}
       <section
         id="categories"
-        className="bg-background border-b-[1.5px] border-white/8 px-6 py-24 sm:px-12 lg:px-24 scroll-mt-16"
+        className="bg-background scroll-mt-16 border-b-[1.5px] border-white/8 px-6 py-24 sm:px-12 lg:px-24"
       >
         <div className="mx-auto w-full max-w-7xl">
           <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">
@@ -211,23 +211,28 @@ export default async function Home() {
       </section>
 
       {/* Compact Developer Workbench Callout Banner */}
-      <section className="border-b-[1.5px] border-white/8 bg-background px-6 py-16 sm:px-12 lg:px-24">
-        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 rounded-2xl border-[1.5px] border-white/10 bg-card p-8 sm:flex-row sm:items-center sm:p-10 shadow-[0_4px_24px_rgba(0,0,0,0.4)]">
+      <section className="bg-background border-b-[1.5px] border-white/8 px-6 py-16 sm:px-12 lg:px-24">
+        <div className="bg-card mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 rounded-2xl border-[1.5px] border-white/10 p-8 shadow-[0_4px_24px_rgba(0,0,0,0.4)] sm:flex-row sm:items-center sm:p-10">
           <div>
-            <div className="mb-2 flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider text-primary">
+            <div className="text-primary mb-2 flex items-center gap-2 font-mono text-xs font-bold tracking-wider uppercase">
               <WrenchIcon weight="bold" className="size-4" />
               <span>Developer Workbench</span>
             </div>
-            <h3 className="font-display text-2xl font-bold uppercase tracking-tight text-foreground sm:text-3xl">
+            <h3 className="font-display text-foreground text-2xl font-bold tracking-tight uppercase sm:text-3xl">
               Looking for browser utilities?
             </h3>
-            <p className="mt-1.5 max-w-xl font-mono text-xs text-muted-foreground leading-relaxed">
-              Explore {internalTools.length}+ zero-latency client-side utilities: regex tester, cURL builder,
-              color studio, JSON formatters, and code generators.
+            <p className="text-muted-foreground mt-1.5 max-w-xl font-mono text-xs leading-relaxed">
+              Explore {internalTools.length}+ zero-latency client-side utilities: regex tester, cURL
+              builder, color studio, JSON formatters, and code generators.
             </p>
           </div>
 
-          <Button asChild size="default" variant="outline" className="shrink-0 font-mono text-xs font-bold uppercase tracking-wider border-white/15 hover:bg-white/6">
+          <Button
+            asChild
+            size="default"
+            variant="outline"
+            className="shrink-0 border-white/15 font-mono text-xs font-bold tracking-wider uppercase hover:bg-white/6"
+          >
             <Link href="/tools">
               Explore {internalTools.length} Tools
               <ArrowRightIcon weight="bold" className="ml-2 size-3.5" />
