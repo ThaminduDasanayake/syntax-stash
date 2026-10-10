@@ -43,6 +43,7 @@ export default async function EditResourcePage({ params }: EditPageProps) {
       github: resource.github,
       iconBg: resource.iconBg,
       ogImage: resource.ogImage,
+      ogImageBg: resource.ogImageBg,
       subtitle: resource.subtitle,
       tagName: tag.name,
       updatedAt: resource.updatedAt,
@@ -74,6 +75,7 @@ export default async function EditResourcePage({ params }: EditPageProps) {
     category: first.categoryName || "Generators",
     createdAt: first.createdAt.toISOString(),
     iconBg: first.iconBg || "dark",
+    ogImageBg: first.ogImageBg || "none",
     tags: tagsList.join(", "),
     updatedAt: first.updatedAt.toISOString(),
   };

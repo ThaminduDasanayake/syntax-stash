@@ -17,14 +17,13 @@ import {
   useState,
 } from "react";
 
-import { DotButton } from "@/components/dot-button";
+import { FloatingFilterDock } from "@/components/floating-filter-dock";
 import { ResourceDialog } from "@/components/resource-dialog";
 import StashCard from "@/components/stash-card";
-import { TagFilterPopover, TagOption } from "@/components/tag-filter-popover";
+import { TagOption } from "@/components/tag-filter-popover";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { EmptyState } from "@/components/ui/empty-state";
-import { Input } from "@/components/ui/input";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { getResourceId } from "@/lib/utils";
 import { isResource, Resource, StashItem } from "@/types";
@@ -172,8 +171,8 @@ function FilterSectionInner({
       .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
   }, [activeCategory, bookmarkedSet, items, savedOnly]);
 
-  const handleCategoryClick = (category: string) => {
-    const nextCategory = activeCategory === category ? null : category;
+  const handleCategoryClick = (category: string | null) => {
+    const nextCategory = category === null || activeCategory === category ? null : category;
     syncUrl(nextCategory, selectedTags, matchMode, searchQuery, savedOnly);
   };
 
@@ -320,14 +319,62 @@ function FilterSectionInner({
     return () => observer.disconnect();
   }, [handleLoadMore, hasMore]);
 
-  // Precompute category totals from full filteredItems
+  // Precompute category totals: respects search, tags, and saved filters, but NOT filtered by activeCategory
   const categoryTotals = useMemo(() => {
+    const query = deferredSearchQuery.toLowerCase().trim();
+
     const totals = new Map<string, number>();
-    for (const tool of filteredItems) {
+    for (const tool of items) {
+      // Saved filter
+      if (savedOnly) {
+        const id = getResourceId(tool);
+        if (!bookmarkedSet.has(id)) continue;
+      }
+
+      // Tag filter
+      if (selectedTags.length > 0) {
+        const itemTags = ("tags" in tool ? tool.tags : undefined) || [];
+        if (matchMode === "all") {
+          const matchesAll = selectedTags.every((t) => itemTags.includes(t));
+          if (!matchesAll) continue;
+        } else {
+          const matchesAny = selectedTags.some((t) => itemTags.includes(t));
+          if (!matchesAny) continue;
+        }
+      }
+
+      // Search filter
+      if (query) {
+        const author = "author" in tool ? tool.author : undefined;
+        const subtitle = "subtitle" in tool ? tool.subtitle : undefined;
+        const tags = "tags" in tool ? tool.tags : undefined;
+
+        const authorMatches = Array.isArray(author)
+          ? author.some((a) => a.toLowerCase().includes(query))
+          : author?.toLowerCase().includes(query);
+
+        const matches =
+          tool.title.toLowerCase().includes(query) ||
+          authorMatches ||
+          tool.description?.toLowerCase().includes(query) ||
+          subtitle?.toLowerCase().includes(query) ||
+          tags?.some((tag: string) => tag.toLowerCase().includes(query)) ||
+          tool.category.toLowerCase().includes(query);
+
+        if (!matches) continue;
+      }
+
       totals.set(tool.category, (totals.get(tool.category) || 0) + 1);
     }
     return totals;
-  }, [filteredItems]);
+  }, [
+    bookmarkedSet,
+    deferredSearchQuery,
+    items,
+    matchMode,
+    savedOnly,
+    selectedTags,
+  ]);
 
   // Only slice items up to visibleLimit for DOM rendering
   const visibleItems = useMemo(() => {
@@ -356,100 +403,63 @@ function FilterSectionInner({
     return result;
   }, [categories, visibleItems]);
 
+  const totalCategoryMatches = useMemo(() => {
+    let sum = 0;
+    for (const count of categoryTotals.values()) {
+      sum += count;
+    }
+    return sum;
+  }, [categoryTotals]);
+
   return (
     <>
-      <div className="filter-bar">
-        <div className="filter-bar-inner">
-          <div className="filter-search-wrap">
-            <MagnifyingGlassIcon weight="bold" className="filter-search-icon" />
-            <Input
-              className="filter-search"
-              placeholder={searchPlaceholder}
-              value={searchQuery}
-              onChange={(e) => handleSearchChange(e.target.value)}
-            />
-            {searchQuery && (
-              <button
-                type="button"
-                className="filter-search-clear"
-                onClick={handleClearSearch}
-                aria-label="Clear search"
-              >
-                <XIcon weight="bold" />
-              </button>
-            )}
-          </div>
+      <div className="card-body pb-32">
+        <div className="section-inner">
+          {/* Active Filter Chips Bar (Shown when tags or active search/filters are applied) */}
+          {selectedTags.length > 0 && (
+            <div className="border-border/60 bg-surface/30 mb-6 flex items-center justify-between rounded-xl border-[1.5px] p-2.5 sm:mb-8 sm:p-3">
+              <div className="no-scrollbar flex items-center gap-1.5 overflow-x-auto py-0.5 sm:flex-wrap sm:gap-2">
+                <span className="text-mono-2xs text-muted-foreground shrink-0 font-bold tracking-wider uppercase">
+                  Active Tags:
+                </span>
+                {selectedTags.map((tag) => (
+                  <Button
+                    key={tag}
+                    size="xs"
+                    variant="outline"
+                    className="group text-mono-2xs border-brand-purple/30 bg-brand-purple/10 text-foreground hover:border-brand-purple/60 hover:bg-brand-purple/20 shrink-0 rounded-lg px-2 py-0.5"
+                    onClick={() => handleToggleTag(tag)}
+                    aria-label={`Remove tag ${tag}`}
+                  >
+                    <span className="text-brand-purple font-semibold">#{tag}</span>
+                    <XIcon weight="bold" className="group-hover:text-destructive size-3" />
+                  </Button>
+                ))}
 
-          <div className="filter-pills">
-            {categories.map((item) => {
-              const isActive = activeCategory === item;
-              return (
-                <DotButton
-                  key={item}
-                  isActive={isActive}
-                  label={item}
-                  onClick={() => handleCategoryClick(item)}
-                />
-              );
-            })}
-          </div>
-
-          {/* Item Count */}
-          <div className="filter-count sm:ml-auto">
-            <span className="filter-count-num">{filteredItems.length}</span>
-            <span> of {items.length}</span>
-          </div>
-        </div>
-
-        {/* Active Tag Chips Bar */}
-        {selectedTags.length > 0 && (
-          <div className="border-border/60 mx-auto mt-2 max-w-7xl border-t px-4 pt-2 sm:px-6 md:px-8">
-            <div className="no-scrollbar flex items-center gap-1.5 overflow-x-auto py-0.5 sm:flex-wrap sm:gap-2">
-              <span className="text-mono-2xs text-muted-foreground shrink-0 font-bold tracking-wider uppercase">
-                Active:
-              </span>
-              {selectedTags.map((tag) => (
-                <Button
-                  key={tag}
-                  size="xs"
-                  variant="outline"
-                  className="group text-mono-2xs border-brand-purple/30 bg-brand-purple/10 text-foreground hover:border-brand-purple/60 hover:bg-brand-purple/20 shrink-0 rounded-lg px-2 py-0.5"
-                  onClick={() => handleToggleTag(tag)}
-                  aria-label={`Remove tag ${tag}`}
-                >
-                  <span className="text-brand-purple font-semibold">#{tag}</span>
-                  <XIcon weight="bold" className="group-hover:text-destructive size-3" />
-                </Button>
-              ))}
-
-              {selectedTags.length > 1 && (
-                <Button
-                  variant="outline"
-                  size="xs"
-                  onClick={() => handleMatchModeChange(matchMode === "any" ? "all" : "any")}
-                  className="text-mono-2xs border-border/70 bg-card shrink-0 rounded-lg px-2 py-0.5"
-                  title="Click to toggle match mode"
-                >
-                  <ArrowsCounterClockwiseIcon weight="bold" />
-                  Mode: <span className="text-primary font-bold">{matchMode.toUpperCase()}</span>
-                </Button>
-              )}
+                {selectedTags.length > 1 && (
+                  <Button
+                    variant="outline"
+                    size="xs"
+                    onClick={() => handleMatchModeChange(matchMode === "any" ? "all" : "any")}
+                    className="text-mono-2xs border-border/70 bg-card shrink-0 rounded-lg px-2 py-0.5"
+                    title="Click to toggle match mode"
+                  >
+                    <ArrowsCounterClockwiseIcon weight="bold" />
+                    Mode: <span className="text-primary font-bold">{matchMode.toUpperCase()}</span>
+                  </Button>
+                )}
+              </div>
 
               <Button
                 variant="clear"
                 size="xs"
                 onClick={handleClearTags}
-                className="text-mono-2xs text-destructive shrink-0 font-mono font-semibold hover:underline sm:ml-auto"
+                className="text-mono-2xs text-destructive shrink-0 font-mono font-semibold hover:underline"
               >
-                Clear all ({selectedTags.length})
+                Clear tags ({selectedTags.length})
               </Button>
             </div>
-          </div>
-        )}
-      </div>
-
-      <div className="card-body">
-        <div className="section-inner">
+          )}
           {Object.keys(groupedItems).length === 0 ? (
             savedOnly ? (
               <EmptyState
@@ -545,16 +555,31 @@ function FilterSectionInner({
         </div>
       </div>
 
-      {availableTags.length > 0 && (
-        <TagFilterPopover
-          availableTags={availableTags}
-          selectedTags={selectedTags}
-          onToggleTag={handleToggleTag}
-          onClearTags={handleClearTags}
-          matchMode={matchMode}
-          onMatchModeChange={handleMatchModeChange}
-        />
-      )}
+      <FloatingFilterDock
+        searchQuery={searchQuery}
+        onSearchChange={handleSearchChange}
+        onClearSearch={handleClearSearch}
+        activeCategory={activeCategory}
+        initialCategory={initialCategory}
+        categories={categories}
+        categoryTotals={categoryTotals}
+        onCategoryChange={handleCategoryClick}
+        availableTags={availableTags}
+        selectedTags={selectedTags}
+        onToggleTag={handleToggleTag}
+        onClearTags={handleClearTags}
+        matchMode={matchMode}
+        onMatchModeChange={handleMatchModeChange}
+        savedOnly={savedOnly}
+        onSavedToggle={() =>
+          syncUrl(activeCategory, selectedTags, matchMode, searchQuery, !savedOnly)
+        }
+        filteredCount={filteredItems.length}
+        totalCount={totalCategoryMatches || items.length}
+        onResetAll={handleResetAll}
+        searchPlaceholder={searchPlaceholder}
+        itemLabel={itemLabel}
+      />
 
       <Dialog
         open={!!activeDialogResource}

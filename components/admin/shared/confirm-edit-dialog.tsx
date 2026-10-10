@@ -111,18 +111,40 @@ function formatDiffValue(val: unknown): string {
   if (typeof val === "boolean") {
     return val ? "Yes (True)" : "No (False)";
   }
+  if (val === "none") {
+    return "None (Default)";
+  }
   return String(val).trim();
 }
 
 /**
  * Normalizes two values and returns whether they are meaningfully different.
  */
-function isDifferent(valA: unknown, valB: unknown): boolean {
+function isDifferent(field: string, valA: unknown, valB: unknown): boolean {
   const normA =
     valA === null || valA === undefined ? "" : typeof valA === "string" ? valA.trim() : valA;
   const normB =
     valB === null || valB === undefined ? "" : typeof valB === "string" ? valB.trim() : valB;
-  return normA !== normB;
+
+  if (normA === normB) return false;
+
+  const lowerField = field.toLowerCase().replace(/[-_]/g, "");
+
+  // Default-equivalence check for ogImageBg: "" / null / undefined / "none" / "default"
+  if (lowerField === "ogimagebg") {
+    const isNoneA = !normA || normA === "none" || normA === "default";
+    const isNoneB = !normB || normB === "none" || normB === "default";
+    if (isNoneA && isNoneB) return false;
+  }
+
+  // Default-equivalence check for iconBg: "" / null / undefined / "dark" / "default"
+  if (lowerField === "iconbg") {
+    const isDarkA = !normA || normA === "dark" || normA === "default";
+    const isDarkB = !normB || normB === "dark" || normB === "default";
+    if (isDarkA && isDarkB) return false;
+  }
+
+  return true;
 }
 
 const LINK_FIELD_NAMES = new Set([
@@ -153,6 +175,7 @@ const SELECT_OR_BOOLEAN_FIELDS = new Set([
   "isfeatured",
   "isfree",
   "isrejected",
+  "ogimagebg",
   "pricing",
   "role",
   "status",
@@ -202,7 +225,7 @@ export function computeFieldChanges<T extends object>(
     const oldVal = initialObj[key];
     const newVal = currentObj[key];
 
-    if (isDifferent(oldVal, newVal)) {
+    if (isDifferent(key, oldVal, newVal)) {
       diffs.push({
         field: key,
         label,
