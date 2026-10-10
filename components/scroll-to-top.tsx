@@ -12,7 +12,7 @@ export function ScrollToTop() {
   const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(false);
 
-  const isResourcesPage = pathname?.startsWith("/resources");
+  const isResourcesPage = pathname === "/" || pathname?.startsWith("/resources");
 
   useEffect(() => {
     if (!isResourcesPage) return;
