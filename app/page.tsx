@@ -1,30 +1,17 @@
-import { ArrowRightIcon, CompassIcon, SparkleIcon } from "@phosphor-icons/react/ssr";
+import { ArrowRightIcon, CompassIcon, SparkleIcon, WrenchIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 
 import { LatestResourcesGrid } from "@/components/latest-resources-grid";
 import { TechStack } from "@/components/tech-stack";
-import { ToolsCarousel } from "@/components/tools-carousel";
 import { Button } from "@/components/ui/button";
 import { getAllCategories } from "@/lib/categories";
 import { getAllResources } from "@/lib/resources";
-import {
-  dataTools,
-  developmentTools,
-  frontendTools,
-  internalTools,
-  mediaTools,
-} from "@/lib/tools-data";
+import { internalTools } from "@/lib/tools-data";
 import { cn, getCategoryTheme, slugify, THEME_CONFIG } from "@/lib/utils";
 
 export default async function Home() {
   const [categories, resourceLinks] = await Promise.all([getAllCategories(), getAllResources()]);
   const resourceCategories = categories.map((c) => c.name);
-  const topTools = [
-    ...dataTools.slice(0, 2),
-    ...developmentTools.slice(0, 2),
-    ...frontendTools.slice(0, 2),
-    ...mediaTools.slice(0, 2),
-  ];
 
   // Latest added resources sorted by createdAt descending
   const latestResources = [...resourceLinks]
@@ -223,8 +210,31 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Secondary Tools Section (Developer Utilities) */}
-      <ToolsCarousel tools={topTools} totalCount={internalTools.length} />
+      {/* Compact Developer Workbench Callout Banner */}
+      <section className="border-b-[1.5px] border-white/8 bg-background px-6 py-16 sm:px-12 lg:px-24">
+        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 rounded-2xl border-[1.5px] border-white/10 bg-card p-8 sm:flex-row sm:items-center sm:p-10 shadow-[0_4px_24px_rgba(0,0,0,0.4)]">
+          <div>
+            <div className="mb-2 flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider text-primary">
+              <WrenchIcon weight="bold" className="size-4" />
+              <span>Developer Workbench</span>
+            </div>
+            <h3 className="font-display text-2xl font-bold uppercase tracking-tight text-foreground sm:text-3xl">
+              Looking for browser utilities?
+            </h3>
+            <p className="mt-1.5 max-w-xl font-mono text-xs text-muted-foreground leading-relaxed">
+              Explore {internalTools.length}+ zero-latency client-side utilities: regex tester, cURL builder,
+              color studio, JSON formatters, and code generators.
+            </p>
+          </div>
+
+          <Button asChild size="default" variant="outline" className="shrink-0 font-mono text-xs font-bold uppercase tracking-wider border-white/15 hover:bg-white/6">
+            <Link href="/tools">
+              Explore {internalTools.length} Tools
+              <ArrowRightIcon weight="bold" className="ml-2 size-3.5" />
+            </Link>
+          </Button>
+        </div>
+      </section>
 
       <TechStack />
     </>
