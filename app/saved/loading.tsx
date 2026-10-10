@@ -15,9 +15,7 @@ export default function SavedLoading() {
         </div>
       </header>
 
-      <FilterBarSkeleton searchPlaceholder="Search saved stash..." />
-
-      <div className="card-body">
+      <div className="card-body pb-32">
         <div className="section-inner">
           <div className="card-grid w-full">
             {Array.from({ length: 8 }).map((_, i) => (
@@ -26,6 +24,8 @@ export default function SavedLoading() {
           </div>
         </div>
       </div>
+
+      <FilterBarSkeleton searchPlaceholder="Search saved stash..." />
     </div>
   );
 }

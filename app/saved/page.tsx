@@ -111,8 +111,7 @@ export default function SavedPage() {
         </div>
       ) : isLoading ? (
         <>
-          <FilterBarSkeleton searchPlaceholder="Search saved stash..." />
-          <div className="card-body">
+          <div className="card-body pb-32">
             <div className="section-inner">
               <div className="card-grid w-full">
                 {Array.from({ length: 8 }).map((_, i) => (
@@ -121,6 +120,7 @@ export default function SavedPage() {
               </div>
             </div>
           </div>
+          <FilterBarSkeleton searchPlaceholder="Search saved stash..." />
         </>
       ) : savedResources.length === 0 ? (
         <div className="mx-auto flex min-h-[45vh] flex-col items-center justify-center py-16 text-center">

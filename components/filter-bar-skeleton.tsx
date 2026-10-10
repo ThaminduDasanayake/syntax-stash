@@ -1,49 +1,37 @@
 "use client";
 
-import { MagnifyingGlassIcon } from "@phosphor-icons/react";
-
-import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface FilterBarSkeletonProps {
   searchPlaceholder?: string;
 }
 
-const PILL_WIDTHS = ["w-14", "w-16", "w-18", "w-20", "w-22", "w-24"];
-
-export function FilterBarSkeleton({
-  searchPlaceholder = "Search saved stash...",
-}: FilterBarSkeletonProps) {
+export function FilterBarSkeleton(_props: FilterBarSkeletonProps) {
   return (
-    <div className="filter-bar">
-      <div className="filter-bar-inner">
-        <div className="filter-search-wrap">
-          <MagnifyingGlassIcon
-            weight="bold"
-            className="filter-search-icon text-muted-foreground/50"
-          />
-          <Input
-            className="filter-search cursor-not-allowed opacity-70"
-            placeholder={searchPlaceholder}
-            disabled
-          />
-        </div>
+    <div className="fixed bottom-6 left-1/2 z-40 flex -translate-x-1/2 items-center">
+      <div className="border-border/80 bg-card/90 flex items-center gap-1.5 rounded-2xl border-[1.5px] p-1.5 shadow-2xl backdrop-blur-xl sm:gap-2 sm:p-2">
+        {/* Search button skeleton */}
+        <Skeleton className="bg-foreground/10 h-9 w-9 rounded-xl sm:w-44" />
 
-        <div className="filter-pills">
-          {PILL_WIDTHS.map((width, i) => (
-            <div
-              key={i}
-              className="filter-pill border-border/60 bg-card/60 flex items-center border-[1.5px] opacity-60"
-            >
-              <Skeleton className={`h-2.5 ${width} bg-foreground/10`} />
-            </div>
-          ))}
-        </div>
+        <div className="bg-border/60 mx-0.5 h-5 w-[1px]" />
 
-        <div className="filter-count">
-          <Skeleton className="bg-foreground/10 h-3.5 w-14" />
+        {/* Category button skeleton */}
+        <Skeleton className="bg-foreground/10 h-9 w-24 rounded-xl sm:w-28" />
+
+        {/* Tags button skeleton */}
+        <Skeleton className="bg-foreground/10 h-9 w-20 rounded-xl sm:w-24" />
+
+        {/* Saved button skeleton */}
+        <Skeleton className="bg-foreground/10 h-9 w-9 rounded-xl" />
+
+        <div className="bg-border/60 mx-0.5 hidden h-5 w-[1px] md:block" />
+
+        {/* Counter skeleton */}
+        <div className="hidden items-center px-2 md:flex">
+          <Skeleton className="bg-foreground/10 h-4 w-14 rounded" />
         </div>
       </div>
     </div>
   );
 }
+
