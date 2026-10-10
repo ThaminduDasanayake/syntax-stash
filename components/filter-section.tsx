@@ -319,14 +319,62 @@ function FilterSectionInner({
     return () => observer.disconnect();
   }, [handleLoadMore, hasMore]);
 
-  // Precompute category totals from full filteredItems
+  // Precompute category totals: respects search, tags, and saved filters, but NOT filtered by activeCategory
   const categoryTotals = useMemo(() => {
+    const query = deferredSearchQuery.toLowerCase().trim();
+
     const totals = new Map<string, number>();
-    for (const tool of filteredItems) {
+    for (const tool of items) {
+      // Saved filter
+      if (savedOnly) {
+        const id = getResourceId(tool);
+        if (!bookmarkedSet.has(id)) continue;
+      }
+
+      // Tag filter
+      if (selectedTags.length > 0) {
+        const itemTags = ("tags" in tool ? tool.tags : undefined) || [];
+        if (matchMode === "all") {
+          const matchesAll = selectedTags.every((t) => itemTags.includes(t));
+          if (!matchesAll) continue;
+        } else {
+          const matchesAny = selectedTags.some((t) => itemTags.includes(t));
+          if (!matchesAny) continue;
+        }
+      }
+
+      // Search filter
+      if (query) {
+        const author = "author" in tool ? tool.author : undefined;
+        const subtitle = "subtitle" in tool ? tool.subtitle : undefined;
+        const tags = "tags" in tool ? tool.tags : undefined;
+
+        const authorMatches = Array.isArray(author)
+          ? author.some((a) => a.toLowerCase().includes(query))
+          : author?.toLowerCase().includes(query);
+
+        const matches =
+          tool.title.toLowerCase().includes(query) ||
+          authorMatches ||
+          tool.description?.toLowerCase().includes(query) ||
+          subtitle?.toLowerCase().includes(query) ||
+          tags?.some((tag: string) => tag.toLowerCase().includes(query)) ||
+          tool.category.toLowerCase().includes(query);
+
+        if (!matches) continue;
+      }
+
       totals.set(tool.category, (totals.get(tool.category) || 0) + 1);
     }
     return totals;
-  }, [filteredItems]);
+  }, [
+    bookmarkedSet,
+    deferredSearchQuery,
+    items,
+    matchMode,
+    savedOnly,
+    selectedTags,
+  ]);
 
   // Only slice items up to visibleLimit for DOM rendering
   const visibleItems = useMemo(() => {
@@ -354,6 +402,14 @@ function FilterSectionInner({
     }
     return result;
   }, [categories, visibleItems]);
+
+  const totalCategoryMatches = useMemo(() => {
+    let sum = 0;
+    for (const count of categoryTotals.values()) {
+      sum += count;
+    }
+    return sum;
+  }, [categoryTotals]);
 
   return (
     <>
@@ -519,7 +575,7 @@ function FilterSectionInner({
           syncUrl(activeCategory, selectedTags, matchMode, searchQuery, !savedOnly)
         }
         filteredCount={filteredItems.length}
-        totalCount={items.length}
+        totalCount={totalCategoryMatches || items.length}
         onResetAll={handleResetAll}
         searchPlaceholder={searchPlaceholder}
         itemLabel={itemLabel}
