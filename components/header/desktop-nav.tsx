@@ -60,7 +60,7 @@ export function DesktopNav({ onSearchOpenAction }: DesktopNavProps) {
             Saved
           </span>
           {bookmarksCount > 0 && (
-            <span className="bg-primary text-primary-foreground inline-flex min-h-4 min-w-4 shrink-0 items-center justify-center rounded-full px-1.5 text-center text-[10px] leading-none font-extrabold no-underline shadow-xs">
+            <span className="text-primary border-primary inline-flex min-h-4 min-w-4 shrink-0 items-center justify-center rounded-full border px-1.5 text-center text-xs leading-none font-extrabold no-underline shadow-xs">
               {bookmarksCount}
             </span>
           )}
@@ -69,7 +69,9 @@ export function DesktopNav({ onSearchOpenAction }: DesktopNavProps) {
 
       <Button onClick={onSearchOpenAction} size="sm" aria-label="Search" className="nav-cta">
         <MagnifyingGlassIcon weight="bold" className="shrink-0" />
-        <span className="text-display-xs">EXPLORE LIBRARY</span>
+        <span className="font-mono text-xs font-bold tracking-wider uppercase">
+          EXPLORE LIBRARY
+        </span>
         <Kbd className="bg-bg-2 text-foreground group-hover:bg-background group-hover:text-foreground hidden border-none px-2 font-mono xl:flex">
           ⌘K
         </Kbd>

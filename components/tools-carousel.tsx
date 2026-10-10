@@ -90,7 +90,7 @@ export function ToolsCarousel({ tools, totalCount }: ToolsCarouselProps) {
         </div>
         <div className="featured-controls">
           <Button asChild size="sm" variant="default">
-            <Link href="/tools" className="text-display-xs">
+            <Link href="/tools" className="font-mono text-xs font-bold tracking-wider uppercase">
               BROWSE ALL {totalCount} TOOLS{" "}
               <ArrowRightIcon weight="bold" className="ml-2 size-3.5" />
             </Link>

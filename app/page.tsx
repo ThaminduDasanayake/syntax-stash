@@ -43,13 +43,13 @@ export default async function Home() {
 
           <div className="hero-cta-row justify-center">
             <Button asChild size="lg" variant="default">
-              <Link href="/resources" className="text-display-sm">
+              <Link href="/resources" className="font-mono text-xs font-bold tracking-wider uppercase sm:text-sm">
                 EXPLORE {resourceLinks.length}+ RESOURCES
                 <ArrowRightIcon weight="bold" className="ml-1.5" />
               </Link>
             </Button>
             <Button asChild size="lg" variant="secondary">
-              <Link href="#categories" className="text-display-sm">
+              <Link href="#categories" className="font-mono text-xs font-bold tracking-wider uppercase sm:text-sm">
                 BROWSE CATEGORIES
               </Link>
             </Button>
@@ -160,7 +160,7 @@ export default async function Home() {
 
           <div className="mt-10 flex items-center justify-between border-t border-white/8 pt-8">
             <Button asChild size="sm" variant="default">
-              <Link href="/resources" className="text-display-xs">
+              <Link href="/resources" className="font-mono text-xs font-bold tracking-wider uppercase">
                 EXPLORE ALL {resourceLinks.length} RESOURCES{" "}
                 <ArrowRightIcon weight="bold" className="ml-2 size-3.5" />
               </Link>

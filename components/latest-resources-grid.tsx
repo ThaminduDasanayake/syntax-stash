@@ -60,7 +60,7 @@ export function LatestResourcesGrid({
           {/* Footer Link */}
           <div className="mt-10 flex items-center justify-between border-t border-white/8 pt-8">
             <Button asChild size="sm" variant="default">
-              <Link href="/resources" className="text-display-xs">
+              <Link href="/resources" className="font-mono text-xs font-bold tracking-wider uppercase">
                 VIEW ALL {totalCount || 1481} RESOURCES{" "}
                 <ArrowRightIcon weight="bold" className="ml-2 size-3.5" />
               </Link>
