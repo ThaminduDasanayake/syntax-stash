@@ -382,9 +382,9 @@ export function FloatingFilterDock({
 
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-5 z-40 flex justify-center px-4 sm:bottom-6">
-      <div className="pointer-events-auto border-white/12 bg-[#121214]/90 shadow-[0_20px_50px_rgba(0,0,0,0.7)] flex max-w-full items-center gap-1.5 rounded-2xl border-[1.5px] p-1.5 font-mono text-xs backdrop-blur-2xl transition-all sm:gap-2 sm:p-2">
+      <div className="pointer-events-auto border-white/12 bg-[#0e0e11]/95 shadow-[0_20px_50px_rgba(0,0,0,0.75),0_1px_0_0_rgba(255,255,255,0.1)_inset] flex max-w-full items-center gap-1.5 rounded-full border-[1.5px] p-1.5 font-mono text-xs backdrop-blur-2xl transition-all sm:gap-2 sm:p-2">
         {/* 1. Interactive Search Box */}
-        <div className="border-white/10 bg-white/4 focus-within:border-primary/50 focus-within:bg-white/8 relative flex h-9 w-32 items-center rounded-xl border-[1.5px] px-2.5 transition-all duration-200 sm:h-9.5 sm:w-64 md:focus-within:w-72">
+        <div className="border-white/10 bg-white/[0.04] focus-within:border-primary/50 focus-within:bg-white/[0.08] relative flex h-9 w-32 items-center rounded-full border-[1.5px] px-3.5 transition-all duration-200 sm:h-9.5 sm:w-64 md:focus-within:w-72">
           <MagnifyingGlassIcon
             weight="bold"
             className="text-muted-foreground mr-1.5 size-3.5 shrink-0"
@@ -418,7 +418,7 @@ export function FloatingFilterDock({
                     variant="outline"
                     size="sm"
                     className={cn(
-                      "h-9 w-32 sm:w-44 justify-between gap-1.5 rounded-xl border-[1.5px] px-2.5 font-mono text-xs font-semibold sm:h-9.5 sm:px-3",
+                      "h-9 w-32 sm:w-44 justify-between gap-1.5 rounded-full border-[1.5px] px-3 font-mono text-xs font-semibold sm:h-9.5 sm:px-3.5",
                       hasCategory
                         ? "border-primary/50 bg-primary/10 text-primary font-bold"
                         : "border-white/10 bg-white/4 text-zinc-300 hover:border-white/20 hover:bg-white/8 hover:text-white",
@@ -461,7 +461,7 @@ export function FloatingFilterDock({
                     variant="outline"
                     size="sm"
                     className={cn(
-                      "h-9.5 w-52 sm:w-56 md:w-60 justify-between gap-1.5 rounded-xl border-[1.5px] px-3 font-mono text-xs font-semibold transition-all",
+                      "h-9.5 w-52 sm:w-56 md:w-60 justify-between gap-1.5 rounded-full border-[1.5px] px-3.5 font-mono text-xs font-semibold transition-all",
                       hasCategory
                         ? "border-primary/50 bg-primary/10 text-primary font-bold"
                         : "border-white/10 bg-white/4 text-zinc-300 hover:border-white/20 hover:bg-white/8 hover:text-white",
@@ -480,7 +480,7 @@ export function FloatingFilterDock({
                   side="top"
                   align="center"
                   sideOffset={12}
-                  className="border-white/10 bg-[#141416]/95 backdrop-blur-2xl text-popover-foreground z-70 w-72 sm:w-80 rounded-2xl border-[1.5px] p-0 shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden"
+                  className="border-white/10 bg-[#121214]/98 backdrop-blur-2xl text-popover-foreground z-70 w-72 sm:w-80 rounded-[20px] border-[1.5px] p-0 shadow-[0_24px_60px_rgba(0,0,0,0.85),0_1px_0_0_rgba(255,255,255,0.08)_inset] overflow-hidden"
                 >
                   <CategoryPickerContent
                     activeCategory={activeCategory}
@@ -508,7 +508,7 @@ export function FloatingFilterDock({
                     variant="outline"
                     size="sm"
                     className={cn(
-                      "h-9 gap-1.5 rounded-xl border-[1.5px] px-2.5 font-mono text-xs font-semibold sm:h-9.5 sm:px-3",
+                      "h-9 gap-1.5 rounded-full border-[1.5px] px-3 font-mono text-xs font-semibold sm:h-9.5 sm:px-3.5",
                       hasTags
                         ? "border-brand-purple/50 bg-brand-purple/15 text-brand-purple font-bold"
                         : "border-white/10 bg-white/4 text-zinc-300 hover:border-white/20 hover:bg-white/8 hover:text-white",
@@ -549,7 +549,7 @@ export function FloatingFilterDock({
                     variant="outline"
                     size="sm"
                     className={cn(
-                      "h-9.5 gap-1.5 rounded-xl border-[1.5px] px-3 font-mono text-xs font-semibold transition-all",
+                      "h-9.5 gap-1.5 rounded-full border-[1.5px] px-3.5 font-mono text-xs font-semibold transition-all",
                       hasTags
                         ? "border-brand-purple/50 bg-brand-purple/15 text-brand-purple font-bold"
                         : "border-white/10 bg-white/4 text-zinc-300 hover:border-white/20 hover:bg-white/8 hover:text-white",
@@ -568,7 +568,7 @@ export function FloatingFilterDock({
                   side="top"
                   align="center"
                   sideOffset={12}
-                  className="border-white/10 bg-[#141416]/95 backdrop-blur-2xl text-popover-foreground z-70 w-72 sm:w-80 rounded-2xl border-[1.5px] p-0 shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden"
+                  className="border-white/10 bg-[#121214]/98 backdrop-blur-2xl text-popover-foreground z-70 w-72 sm:w-80 rounded-[20px] border-[1.5px] p-0 shadow-[0_24px_60px_rgba(0,0,0,0.85),0_1px_0_0_rgba(255,255,255,0.08)_inset] overflow-hidden"
                 >
                   <TagPickerContent
                     availableTags={availableTags}
@@ -594,7 +594,7 @@ export function FloatingFilterDock({
                 size="sm"
                 onClick={onSavedToggle}
                 className={cn(
-                  "size-9 rounded-xl border-[1.5px] p-0 font-mono transition-all sm:size-9.5",
+                  "size-9 rounded-full border-[1.5px] p-0 font-mono transition-all sm:size-9.5",
                   savedOnly
                     ? "border-primary/50 bg-primary/15 text-primary"
                     : "border-white/10 bg-white/4 text-zinc-300 hover:border-white/20 hover:bg-white/8 hover:text-white",
@@ -625,7 +625,7 @@ export function FloatingFilterDock({
                 <button
                   type="button"
                   onClick={onResetAll}
-                  className="hover:border-destructive/40 hover:bg-destructive/10 hover:text-destructive text-muted-foreground ml-1 flex size-6 cursor-pointer items-center justify-center rounded-lg border border-transparent transition-all active:scale-95"
+                  className="hover:border-destructive/40 hover:bg-destructive/10 hover:text-destructive text-muted-foreground ml-1 flex size-6 cursor-pointer items-center justify-center rounded-full border border-transparent transition-all active:scale-95"
                   aria-label="Reset all filters"
                 >
                   <ArrowsCounterClockwiseIcon weight="bold" className="size-3.5" />
