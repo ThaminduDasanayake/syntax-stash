@@ -1,7 +1,7 @@
-import { ArrowRightIcon, CompassIcon } from "@phosphor-icons/react/ssr";
+import { ArrowRightIcon, CompassIcon, SparkleIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 
-import { HeroResourceShowcase } from "@/components/hero-resource-showcase";
+import { LatestResourcesGrid } from "@/components/latest-resources-grid";
 import { TechStack } from "@/components/tech-stack";
 import { ToolsCarousel } from "@/components/tools-carousel";
 import { Button } from "@/components/ui/button";
@@ -26,44 +26,46 @@ export default async function Home() {
     ...mediaTools.slice(0, 2),
   ];
 
-  // Pick top featured resources to pass into the hero preview
-  const featuredHeroResources = resourceLinks.slice(0, 16);
+  // Latest added resources sorted by createdAt descending
+  const latestResources = [...resourceLinks]
+    .sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime())
+    .slice(0, 8);
 
   return (
     <>
-      {/* Hero Section */}
+      {/* Hero Section - Centered & Focused */}
       <section className="hero">
-        <div className="hero-inner items-center">
-          <div className="hero-copy">
-            <h1 className="hero-headline">
-              THE CURATED STASH
-              <br />
-              <em>for the modern web stack</em>.
-            </h1>
-
-            <p className="hero-sub">
-              {resourceLinks.length}+ handpicked developer resources across {resourceCategories.length} categories.
-              Design systems, animation engines, AI toolchains, and APIs verified and cloud-synced for rapid discovery.
-            </p>
-
-            <div className="hero-cta-row">
-              <Button asChild size="lg" variant="default">
-                <Link href="/resources" className="text-display-sm">
-                  EXPLORE {resourceLinks.length}+ RESOURCES
-                  <ArrowRightIcon weight="bold" className="ml-1" />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="secondary">
-                <Link href="#categories" className="text-display-sm">
-                  BROWSE CATEGORIES
-                </Link>
-              </Button>
-            </div>
+        <div className="mx-auto flex max-w-4xl flex-col items-center px-5 text-center md:px-8">
+          {/* Top Pill Badge */}
+          <div className="border-primary/20 bg-primary/10 text-primary mb-6 inline-flex items-center gap-2 rounded-full border px-3.5 py-1 font-mono text-xs font-semibold">
+            <SparkleIcon weight="fill" className="size-3.5" />
+            <span>{resourceLinks.length}+ Handpicked Web Resources</span>
           </div>
 
-          {/* Interactive Hero Resource Showcase */}
-          <div className="flex w-full max-w-xl justify-center lg:max-w-none">
-            <HeroResourceShowcase featuredResources={featuredHeroResources} />
+          <h1 className="hero-headline text-balance">
+            THE CURATED STASH
+            <br />
+            <em>for the modern web stack</em>.
+          </h1>
+
+          <p className="hero-sub max-w-2xl text-balance">
+            A comprehensive reference manual of {resourceLinks.length}+ handpicked libraries,
+            design systems, animation engines, and AI toolchains across {resourceCategories.length} categories.
+            Tag-filterable, verified, and cloud-synced.
+          </p>
+
+          <div className="hero-cta-row justify-center">
+            <Button asChild size="lg" variant="default">
+              <Link href="/resources" className="text-display-sm">
+                EXPLORE {resourceLinks.length}+ RESOURCES
+                <ArrowRightIcon weight="bold" className="ml-1.5" />
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="secondary">
+              <Link href="#categories" className="text-display-sm">
+                BROWSE CATEGORIES
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
@@ -93,8 +95,18 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* Latest Resources Showcase - Real Stash Cards */}
+      <LatestResourcesGrid
+        resources={latestResources}
+        allResources={resourceLinks}
+        totalCount={resourceLinks.length}
+      />
+
       {/* Curated Resource Vault Spotlight */}
-      <section id="categories" className="bg-background border-b-[1.5px] border-white/8 px-6 py-24 sm:px-12 lg:px-24 scroll-mt-16">
+      <section
+        id="categories"
+        className="bg-background border-b-[1.5px] border-white/8 px-6 py-24 sm:px-12 lg:px-24 scroll-mt-16"
+      >
         <div className="mx-auto w-full max-w-7xl">
           <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div>
