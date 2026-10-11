@@ -587,9 +587,10 @@ function FilterSectionInner({
                 </div>
               </div>
               <div className="card-grid">
-                {visibleItems.map((item) => (
+                {visibleItems.map((item, idx) => (
                   <StashCard
                     key={"url" in item ? item.url : item.slug}
+                    index={idx}
                     item={item}
                     onTagClickAction={handleToggleTag}
                     onCardClick={(clickedItem) => {
@@ -623,9 +624,10 @@ function FilterSectionInner({
                     </div>
                   </div>
                   <div className="card-grid">
-                    {catItems.map((item) => (
+                    {catItems.map((item, idx) => (
                       <StashCard
                         key={"url" in item ? item.url : item.slug}
+                        index={idx}
                         item={item}
                         onTagClickAction={handleToggleTag}
                         onCardClick={(clickedItem) => {

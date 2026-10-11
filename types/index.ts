@@ -56,8 +56,9 @@ export type ResourceCardProps = {
 };
 
 export type StashCardProps = {
-  item: StashItem;
+  index?: number;
   isBookmarked?: boolean;
+  item: StashItem;
   onCardClick?: (item: StashItem) => void;
   onTagClickAction?: (tag: string) => void;
   onToggleBookmark?: (item: StashItem) => void;
