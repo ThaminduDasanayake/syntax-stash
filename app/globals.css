@@ -601,7 +601,7 @@
 }
 
 @utility card-motion-hidden {
-  @apply opacity-0 translate-y-5 scale-[0.98];
+  @apply opacity-0 translate-y-7 scale-[0.96];
 }
 
 @utility card-motion-revealed {

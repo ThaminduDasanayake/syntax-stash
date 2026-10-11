@@ -32,19 +32,18 @@ function StashCardComponent({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          // If above the fold on initial load, stagger the cards smoothly
-          if (window.scrollY < 200) {
-            setStaggerDelay(Math.min((index % 8) * 35, 240));
-          } else {
-            setStaggerDelay(0);
-          }
+          // Stagger cards within the emerging row (col 0..3: 0ms, 50ms, 100ms, 150ms)
+          const colIndex = index % 4;
+          setStaggerDelay(colIndex * 50);
+
           setIsRevealed(true);
           observer.unobserve(entry.target);
         }
       },
       {
-        rootMargin: "0px 0px 40px 0px",
-        threshold: 0.05,
+        // Negative bottom margin ensures cards animate as they emerge into visible view
+        rootMargin: "0px 0px -70px 0px",
+        threshold: 0.08,
       },
     );
 
