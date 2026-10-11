@@ -679,7 +679,7 @@ export function FloatingFilterDock({
                     variant="outline"
                     size="sm"
                     className={cn(
-                      "h-9.5 gap-1.5 rounded-full border-[1.5px] px-3.5 font-mono text-xs font-semibold transition-all",
+                      "h-9.5 w-24 shrink-0 justify-center gap-1.5 rounded-full border-[1.5px] px-2.5 font-mono text-xs font-semibold transition-all",
                       hasTags
                         ? "border-brand-purple/50 bg-brand-purple/15 text-brand-purple font-bold"
                         : "border-white/10 bg-white/4 text-zinc-300 hover:border-white/20 hover:bg-white/8 hover:text-white",
@@ -688,7 +688,7 @@ export function FloatingFilterDock({
                     <TagIcon weight={hasTags ? "fill" : "bold"} className="size-4 shrink-0" />
                     <span>Tags</span>
                     {hasTags && (
-                      <span className="bg-brand-purple text-paper flex size-4.5 items-center justify-center rounded-full text-[10px] font-bold">
+                      <span className="bg-brand-purple text-paper flex size-4 items-center justify-center rounded-full text-[10px] font-bold tabular-nums">
                         {selectedTags.length}
                       </span>
                     )}
@@ -765,7 +765,7 @@ export function FloatingFilterDock({
                     variant="outline"
                     size="sm"
                     className={cn(
-                      "h-9.5 gap-1.5 rounded-full border-[1.5px] px-3.5 font-mono text-xs font-semibold transition-all",
+                      "h-9.5 w-24 shrink-0 justify-center gap-1.5 rounded-full border-[1.5px] px-2.5 font-mono text-xs font-semibold transition-all",
                       hasSort
                         ? "border-primary/50 bg-primary/15 text-primary font-bold"
                         : "border-white/10 bg-white/4 text-zinc-300 hover:border-white/20 hover:bg-white/8 hover:text-white",
@@ -775,7 +775,7 @@ export function FloatingFilterDock({
                       weight={hasSort ? "bold" : "regular"}
                       className="size-4 shrink-0"
                     />
-                    <span>{hasSort ? activeSortOption.shortLabel : "Sort"}</span>
+                    <span className="truncate">{hasSort ? activeSortOption.shortLabel : "Sort"}</span>
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent
@@ -825,30 +825,34 @@ export function FloatingFilterDock({
           </Tooltip>
         )}
 
-        {/* 5. Item Count & Reset Action */}
-        <div className="hidden items-center gap-1.5 border-l border-white/10 pl-2 text-zinc-400 sm:flex">
-          <span className="text-foreground font-bold tabular-nums">{filteredCount}</span>
-          <span className="text-[11px] text-zinc-500">
-            {hasActiveFilters ? `of ${totalCount}` : itemLabel.toLowerCase()}
-          </span>
+        {/* 5. Item Count & Reset Action (Fixed width to prevent layout shift) */}
+        <div className="hidden w-[136px] shrink-0 items-center justify-between border-l border-white/10 pl-2.5 pr-1 text-zinc-400 sm:flex">
+          <div className="flex min-w-0 items-center gap-1 font-mono text-xs">
+            <span className="text-foreground font-bold tabular-nums">{filteredCount}</span>
+            <span className="text-[11px] text-zinc-500 tabular-nums truncate">
+              {hasActiveFilters ? `of ${totalCount}` : itemLabel.toLowerCase()}
+            </span>
+          </div>
 
-          {hasActiveFilters && (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  type="button"
-                  onClick={onResetAll}
-                  className="hover:border-destructive/40 hover:bg-destructive/10 hover:text-destructive text-muted-foreground ml-1 flex size-6 cursor-pointer items-center justify-center rounded-full border border-transparent transition-all active:scale-95"
-                  aria-label="Reset all filters"
-                >
-                  <ArrowsCounterClockwiseIcon weight="bold" className="size-3.5" />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent side="top" sideOffset={10}>
-                <p className="font-mono text-xs">Reset all filters</p>
-              </TooltipContent>
-            </Tooltip>
-          )}
+          <div className="flex size-6 shrink-0 items-center justify-center">
+            {hasActiveFilters && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    type="button"
+                    onClick={onResetAll}
+                    className="hover:border-destructive/40 hover:bg-destructive/10 hover:text-destructive text-muted-foreground flex size-6 cursor-pointer items-center justify-center rounded-full border border-transparent transition-all active:scale-95"
+                    aria-label="Reset all filters"
+                  >
+                    <ArrowsCounterClockwiseIcon weight="bold" className="size-3.5" />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent side="top" sideOffset={10}>
+                  <p className="font-mono text-xs">Reset all filters</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
+          </div>
         </div>
       </div>
     </div>
