@@ -1,3 +1,9 @@
+try {
+  process.loadEnvFile?.();
+} catch {
+  // loaded via env or tsx
+}
+
 import fs from "node:fs";
 import path from "node:path";
 
