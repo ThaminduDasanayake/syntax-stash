@@ -17,7 +17,11 @@ import {
   useState,
 } from "react";
 
-import { FloatingFilterDock } from "@/components/floating-filter-dock";
+import {
+  FloatingFilterDock,
+  SortOption,
+  USER_SORT_OPTIONS,
+} from "@/components/floating-filter-dock";
 import { ResourceDialog } from "@/components/resource-dialog";
 import StashCard from "@/components/stash-card";
 import { TagOption } from "@/components/tag-filter-popover";
@@ -25,6 +29,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { EmptyState } from "@/components/ui/empty-state";
 import { useBookmarks } from "@/hooks/use-bookmarks";
+import { getGitHubStars } from "@/lib/github";
 import { getResourceId } from "@/lib/utils";
 import { isResource, Resource, StashItem } from "@/types";
 
@@ -78,6 +83,9 @@ function FilterSectionInner({
     return tagParam ? tagParam.split(",").filter(Boolean) : [];
   }, [tagParam]);
   const matchMode = searchParams.get("mode") === "all" ? "all" : "any";
+  const sortParam = searchParams.get("sort") as SortOption | null;
+  const activeSort: SortOption =
+    sortParam && USER_SORT_OPTIONS.some((o) => o.value === sortParam) ? sortParam : "default";
 
   const qParam = searchParams.get("q") || "";
   const [prevQParam, setPrevQParam] = useState(qParam);
@@ -101,11 +109,13 @@ function FilterSectionInner({
       mode: "any" | "all",
       query: string,
       saved?: boolean,
+      sort?: SortOption,
       dispatchPopstate: boolean = true,
     ) => {
       if (typeof window === "undefined") return;
       const params = new URLSearchParams(window.location.search);
       const isSaved = saved !== undefined ? saved : savedOnly;
+      const currentSort = sort !== undefined ? sort : activeSort;
 
       if (isSaved) {
         params.set("saved", "true");
@@ -137,6 +147,12 @@ function FilterSectionInner({
         params.delete("q");
       }
 
+      if (currentSort && currentSort !== "default") {
+        params.set("sort", currentSort);
+      } else {
+        params.delete("sort");
+      }
+
       const queryString = params.toString();
       const newUrl = queryString ? `${pathname}?${queryString}` : pathname;
       window.history.replaceState(null, "", newUrl);
@@ -144,7 +160,7 @@ function FilterSectionInner({
         window.dispatchEvent(new Event("popstate"));
       }
     },
-    [initialCategory, pathname, savedOnly],
+    [activeSort, initialCategory, pathname, savedOnly],
   );
 
   // Calculate available tags and their counts scoped to current category
@@ -173,22 +189,26 @@ function FilterSectionInner({
 
   const handleCategoryClick = (category: string | null) => {
     const nextCategory = category === null || activeCategory === category ? null : category;
-    syncUrl(nextCategory, selectedTags, matchMode, searchQuery, savedOnly);
+    syncUrl(nextCategory, selectedTags, matchMode, searchQuery, savedOnly, activeSort);
   };
 
   const handleToggleTag = (tag: string) => {
     const next = selectedTags.includes(tag)
       ? selectedTags.filter((t) => t !== tag)
       : [...selectedTags, tag];
-    syncUrl(activeCategory, next, matchMode, searchQuery, savedOnly);
+    syncUrl(activeCategory, next, matchMode, searchQuery, savedOnly, activeSort);
   };
 
   const handleClearTags = () => {
-    syncUrl(activeCategory, [], matchMode, searchQuery, savedOnly);
+    syncUrl(activeCategory, [], matchMode, searchQuery, savedOnly, activeSort);
   };
 
   const handleMatchModeChange = (mode: "any" | "all") => {
-    syncUrl(activeCategory, selectedTags, mode, searchQuery, savedOnly);
+    syncUrl(activeCategory, selectedTags, mode, searchQuery, savedOnly, activeSort);
+  };
+
+  const handleSortChange = (sort: SortOption) => {
+    syncUrl(activeCategory, selectedTags, matchMode, searchQuery, savedOnly, sort);
   };
 
   const handleSearchChange = (value: string) => {
@@ -197,7 +217,7 @@ function FilterSectionInner({
       clearTimeout(searchDebounceRef.current);
     }
     searchDebounceRef.current = setTimeout(() => {
-      syncUrl(activeCategory, selectedTags, matchMode, value, savedOnly, false);
+      syncUrl(activeCategory, selectedTags, matchMode, value, savedOnly, activeSort, false);
     }, 300);
   };
 
@@ -206,7 +226,7 @@ function FilterSectionInner({
       clearTimeout(searchDebounceRef.current);
     }
     setSearchQuery("");
-    syncUrl(activeCategory, selectedTags, matchMode, "", savedOnly);
+    syncUrl(activeCategory, selectedTags, matchMode, "", savedOnly, activeSort);
   };
 
   const handleResetAll = () => {
@@ -215,7 +235,7 @@ function FilterSectionInner({
     }
     setSearchQuery("");
     setVisibleLimit(BATCH_SIZE);
-    syncUrl(initialCategory || null, [], "any", "", false);
+    syncUrl(initialCategory || null, [], "any", "", false, "default");
   };
 
   const filteredItems = useMemo(() => {
@@ -265,9 +285,36 @@ function FilterSectionInner({
       );
     });
 
-    // Sort items: category order (matching categories list), then title (A → Z)
+    const itemsCopy = [...filtered];
 
-    return [...filtered].sort((a, b) => {
+    if (activeSort === "newest") {
+      return itemsCopy.sort((a, b) => {
+        const dateA = new Date(a.createdAt || 0).getTime();
+        const dateB = new Date(b.createdAt || 0).getTime();
+        if (dateB !== dateA) return dateB - dateA;
+        return a.title.localeCompare(b.title);
+      });
+    }
+
+    if (activeSort === "stars") {
+      return itemsCopy.sort((a, b) => {
+        const starsA = "github" in a && a.github ? (getGitHubStars(a.github) ?? -1) : -1;
+        const starsB = "github" in b && b.github ? (getGitHubStars(b.github) ?? -1) : -1;
+        if (starsB !== starsA) return starsB - starsA;
+        return a.title.localeCompare(b.title);
+      });
+    }
+
+    if (activeSort === "alpha-asc") {
+      return itemsCopy.sort((a, b) => a.title.localeCompare(b.title));
+    }
+
+    if (activeSort === "alpha-desc") {
+      return itemsCopy.sort((a, b) => b.title.localeCompare(a.title));
+    }
+
+    // Default / Curated sort: category order (matching categories list), then title (A → Z)
+    return itemsCopy.sort((a, b) => {
       if (a.category !== b.category) {
         const indexA = categories.indexOf(a.category);
         const indexB = categories.indexOf(b.category);
@@ -278,6 +325,7 @@ function FilterSectionInner({
     });
   }, [
     activeCategory,
+    activeSort,
     bookmarkedSet,
     categories,
     deferredSearchQuery,
@@ -288,7 +336,7 @@ function FilterSectionInner({
   ]);
 
   // Reset pagination limit during render when search or filter parameters change
-  const currentFilterKey = `${deferredSearchQuery}|${activeCategory}|${tagParam}|${matchMode}|${savedOnly}|${items.length}`;
+  const currentFilterKey = `${deferredSearchQuery}|${activeCategory}|${tagParam}|${matchMode}|${savedOnly}|${activeSort}|${items.length}`;
   const [prevFilterKey, setPrevFilterKey] = useState(currentFilterKey);
 
   if (currentFilterKey !== prevFilterKey) {
@@ -408,13 +456,28 @@ function FilterSectionInner({
     <>
       <div className="card-body pb-32">
         <div className="section-inner">
-          {/* Active Filter Chips Bar (Shown when tags or active search/filters are applied) */}
-          {selectedTags.length > 0 && (
+          {/* Active Filter Chips Bar (Shown when tags or active sort are applied) */}
+          {(selectedTags.length > 0 || activeSort !== "default") && (
             <div className="border-border/60 bg-surface/30 mb-6 flex items-center justify-between rounded-xl border-[1.5px] p-2.5 sm:mb-8 sm:p-3">
               <div className="no-scrollbar flex items-center gap-1.5 overflow-x-auto py-0.5 sm:flex-wrap sm:gap-2">
                 <span className="text-mono-2xs text-muted-foreground shrink-0 font-bold tracking-wider uppercase">
-                  Active Tags:
+                  Active Filters:
                 </span>
+                {activeSort !== "default" && (
+                  <Button
+                    size="xs"
+                    variant="outline"
+                    className="group text-mono-2xs border-primary/30 bg-primary/10 text-foreground hover:border-primary/60 hover:bg-primary/20 shrink-0 rounded-lg px-2 py-0.5"
+                    onClick={() => handleSortChange("default")}
+                    aria-label="Reset sort"
+                  >
+                    <span className="text-primary font-semibold">
+                      Sort: {USER_SORT_OPTIONS.find((s) => s.value === activeSort)?.label}
+                    </span>
+                    <XIcon weight="bold" className="group-hover:text-destructive size-3" />
+                  </Button>
+                )}
+
                 {selectedTags.map((tag) => (
                   <Button
                     key={tag}
@@ -443,17 +506,19 @@ function FilterSectionInner({
                 )}
               </div>
 
-              <Button
-                variant="clear"
-                size="xs"
-                onClick={handleClearTags}
-                className="text-mono-2xs text-destructive shrink-0 font-mono font-semibold hover:underline"
-              >
-                Clear tags ({selectedTags.length})
-              </Button>
+              {selectedTags.length > 0 && (
+                <Button
+                  variant="clear"
+                  size="xs"
+                  onClick={handleClearTags}
+                  className="text-mono-2xs text-destructive shrink-0 font-mono font-semibold hover:underline"
+                >
+                  Clear tags ({selectedTags.length})
+                </Button>
+              )}
             </div>
           )}
-          {Object.keys(groupedItems).length === 0 ? (
+          {filteredItems.length === 0 ? (
             savedOnly ? (
               <EmptyState
                 variant="default"
@@ -465,7 +530,7 @@ function FilterSectionInner({
                     variant="outline"
                     size="sm"
                     onClick={() =>
-                      syncUrl(activeCategory, selectedTags, matchMode, searchQuery, false)
+                      syncUrl(activeCategory, selectedTags, matchMode, searchQuery, false, activeSort)
                     }
                     className="font-mono text-xs uppercase"
                   >
@@ -480,7 +545,7 @@ function FilterSectionInner({
                 title={`No ${itemLabel.toLowerCase()} found`}
                 description="No resources matched your active filters or search criteria."
                 action={
-                  selectedTags.length > 0 || searchQuery || activeCategory ? (
+                  selectedTags.length > 0 || searchQuery || activeCategory || activeSort !== "default" ? (
                     <Button
                       variant="outline"
                       size="sm"
@@ -493,6 +558,39 @@ function FilterSectionInner({
                 }
               />
             )
+          ) : activeSort !== "default" && !activeCategory ? (
+            /* When sorting across all categories: render a unified, ranked continuous feed */
+            <div className="cat-section w-full">
+              <div className="cat-divider flex flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:gap-4">
+                <div className="flex w-full flex-col gap-1 sm:w-auto sm:flex-1 sm:flex-row sm:items-center sm:gap-4">
+                  <h2 className="font-mono text-lg font-extrabold tracking-widest uppercase sm:text-xl">
+                    {USER_SORT_OPTIONS.find((s) => s.value === activeSort)?.label || "Ranked"}
+                  </h2>
+                  <span className="bg-border/80 hidden h-px flex-1 sm:block" />
+                </div>
+
+                <div className="flex w-full items-center gap-3 sm:w-auto">
+                  <span className="text-mono-xs sm:text-mono-sm text-muted-foreground shrink-0 font-mono">
+                    {filteredItems.length} {formatItemCountLabel(filteredItems.length, itemLabel)}
+                  </span>
+                  <span className="bg-border/80 h-px flex-1 sm:hidden" />
+                </div>
+              </div>
+              <div className="card-grid">
+                {visibleItems.map((item) => (
+                  <StashCard
+                    key={"url" in item ? item.url : item.slug}
+                    item={item}
+                    onTagClickAction={handleToggleTag}
+                    onCardClick={(clickedItem) => {
+                      if (isResource(clickedItem)) {
+                        setActiveDialogResource(clickedItem);
+                      }
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
           ) : (
             Object.entries(groupedItems).map(([category, catItems]) => {
               const count = categoryTotals.get(category) ?? catItems.length;
@@ -565,13 +663,15 @@ function FilterSectionInner({
         onMatchModeChange={handleMatchModeChange}
         savedOnly={savedOnly}
         onSavedToggle={() =>
-          syncUrl(activeCategory, selectedTags, matchMode, searchQuery, !savedOnly)
+          syncUrl(activeCategory, selectedTags, matchMode, searchQuery, !savedOnly, activeSort)
         }
         filteredCount={filteredItems.length}
         totalCount={totalCategoryMatches || items.length}
         onResetAll={handleResetAll}
         searchPlaceholder={searchPlaceholder}
         itemLabel={itemLabel}
+        activeSort={activeSort}
+        onSortChange={handleSortChange}
       />
 
       <Dialog
