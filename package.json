@@ -25,9 +25,9 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check:db": "tsx --env-file=.env scripts/verify-database.ts",
-    "check:resources": "tsx --env-file=.env scripts/check-resource-health.ts",
-    "sync:stars": "tsx --env-file=.env scripts/sync-github-stars.ts",
+    "check:db": "tsx scripts/verify-database.ts",
+    "check:resources": "tsx scripts/check-resource-health.ts",
+    "sync:stars": "tsx scripts/sync-github-stars.ts",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio"
   },
@@ -96,6 +96,7 @@
     "prettier-plugin-tailwindcss": "^0.7.2",
     "shadcn": "^4.7.0",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   }
 }

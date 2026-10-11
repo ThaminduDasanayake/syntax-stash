@@ -2,11 +2,17 @@
 
 import {
   ArrowsCounterClockwiseIcon,
+  ArrowsDownUpIcon,
   BookmarkSimpleIcon,
   CaretUpIcon,
   CheckIcon,
+  ClockIcon,
+  CompassIcon,
   MagnifyingGlassIcon,
+  SortAscendingIcon,
+  SortDescendingIcon,
   SquaresFourIcon,
+  StarIcon,
   TagIcon,
   XIcon,
 } from "@phosphor-icons/react";
@@ -28,6 +34,56 @@ import { cn } from "@/lib/utils";
 
 import { TagOption } from "./tag-filter-popover";
 
+export type SortOption = "default" | "newest" | "stars" | "alpha-asc" | "alpha-desc";
+
+export interface SortOptionItem {
+  description: string;
+  icon: React.ComponentType<{ className?: string; weight?: "bold" | "fill" | "regular" }>;
+  label: string;
+  shortLabel: string;
+  value: SortOption;
+}
+
+/* eslint-disable perfectionist/sort-arrays */
+export const USER_SORT_OPTIONS: SortOptionItem[] = [
+  {
+    description: "Curated category grouping",
+    icon: CompassIcon,
+    label: "Curated (Default)",
+    shortLabel: "Curated",
+    value: "default",
+  },
+  {
+    description: "Latest resources added",
+    icon: ClockIcon,
+    label: "Recently Added",
+    shortLabel: "Newest",
+    value: "newest",
+  },
+  {
+    description: "Highest GitHub stars",
+    icon: StarIcon,
+    label: "Most Starred",
+    shortLabel: "Stars",
+    value: "stars",
+  },
+  {
+    description: "Alphabetical ascending",
+    icon: SortAscendingIcon,
+    label: "Title (A → Z)",
+    shortLabel: "A → Z",
+    value: "alpha-asc",
+  },
+  {
+    description: "Alphabetical descending",
+    icon: SortDescendingIcon,
+    label: "Title (Z → A)",
+    shortLabel: "Z → A",
+    value: "alpha-desc",
+  },
+];
+/* eslint-enable perfectionist/sort-arrays */
+
 export interface CategoryOption {
   count?: number;
   name: string;
@@ -35,6 +91,7 @@ export interface CategoryOption {
 
 export interface FloatingFilterDockProps {
   activeCategory: string | null;
+  activeSort?: SortOption;
   availableTags: TagOption[];
   categories: string[];
   categoryTotals: Map<string, number>;
@@ -49,6 +106,7 @@ export interface FloatingFilterDockProps {
   onResetAll: () => void;
   onSavedToggle?: () => void;
   onSearchChange: (query: string) => void;
+  onSortChange?: (sort: SortOption) => void;
   onToggleTag: (tag: string) => void;
   savedCount?: number;
   savedOnly?: boolean;
@@ -344,8 +402,83 @@ function TagPickerContent({
   );
 }
 
+function SortPickerContent({
+  activeSort,
+  onSelectSort,
+}: {
+  activeSort: SortOption;
+  onSelectSort: (sort: SortOption) => void;
+}) {
+  return (
+    <div className="flex flex-col">
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-white/[0.08] px-3.5 py-2.5">
+        <div className="flex items-center gap-2">
+          <ArrowsDownUpIcon weight="bold" className="text-primary size-4" />
+          <span className="font-mono text-xs font-bold tracking-wider text-zinc-200 uppercase">
+            Sort Resources
+          </span>
+        </div>
+        {activeSort !== "default" && (
+          <button
+            type="button"
+            onClick={() => onSelectSort("default")}
+            className="hover:text-destructive flex cursor-pointer items-center gap-1 font-mono text-[11px] text-zinc-400 underline underline-offset-2 transition-colors"
+          >
+            <XIcon weight="bold" className="size-3" />
+            <span>Reset</span>
+          </button>
+        )}
+      </div>
+
+      {/* Options List */}
+      <div className="space-y-0.5 p-1.5 font-mono text-xs">
+        {USER_SORT_OPTIONS.map((opt) => {
+          const isSelected = activeSort === opt.value;
+          const Icon = opt.icon;
+
+          return (
+            <button
+              key={opt.value}
+              type="button"
+              onClick={() => onSelectSort(opt.value)}
+              className={cn(
+                "group flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left transition-colors",
+                isSelected
+                  ? "border-primary/30 bg-primary/10 text-primary border font-bold"
+                  : "border border-transparent text-zinc-300 hover:bg-white/[0.06] hover:text-white",
+              )}
+            >
+              <div className="flex min-w-0 items-center gap-2.5">
+                <Icon
+                  weight={isSelected ? "fill" : "bold"}
+                  className={cn(
+                    "size-4 shrink-0",
+                    isSelected ? "text-primary" : "text-zinc-500 group-hover:text-zinc-300",
+                  )}
+                />
+                <div className="flex min-w-0 flex-col">
+                  <span className="truncate">{opt.label}</span>
+                  <span className="text-[10px] leading-tight font-normal text-zinc-500">
+                    {opt.description}
+                  </span>
+                </div>
+              </div>
+
+              {isSelected && (
+                <CheckIcon weight="bold" className="text-primary ml-2 size-3.5 shrink-0" />
+              )}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export function FloatingFilterDock({
   activeCategory,
+  activeSort = "default",
   availableTags,
   categories,
   categoryTotals,
@@ -360,6 +493,7 @@ export function FloatingFilterDock({
   onResetAll,
   onSavedToggle,
   onSearchChange,
+  onSortChange,
   onToggleTag,
   savedOnly = false,
   searchPlaceholder = "Search resources...",
@@ -370,11 +504,15 @@ export function FloatingFilterDock({
   const isMobile = useIsMobile();
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [tagsOpen, setTagsOpen] = useState(false);
+  const [sortOpen, setSortOpen] = useState(false);
 
   const hasSearch = Boolean(searchQuery.trim());
   const hasCategory = Boolean(activeCategory && !initialCategory);
   const hasTags = selectedTags.length > 0;
-  const hasActiveFilters = hasSearch || hasCategory || hasTags || savedOnly;
+  const hasSort = Boolean(activeSort && activeSort !== "default");
+  const hasActiveFilters = hasSearch || hasCategory || hasTags || savedOnly || hasSort;
+  const activeSortOption =
+    USER_SORT_OPTIONS.find((s) => s.value === activeSort) || USER_SORT_OPTIONS[0];
 
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-5 z-40 flex justify-center px-4 sm:bottom-6">
@@ -541,7 +679,7 @@ export function FloatingFilterDock({
                     variant="outline"
                     size="sm"
                     className={cn(
-                      "h-9.5 gap-1.5 rounded-full border-[1.5px] px-3.5 font-mono text-xs font-semibold transition-all",
+                      "h-9.5 w-24 shrink-0 justify-center gap-1.5 rounded-full border-[1.5px] px-2.5 font-mono text-xs font-semibold transition-all",
                       hasTags
                         ? "border-brand-purple/50 bg-brand-purple/15 text-brand-purple font-bold"
                         : "border-white/10 bg-white/4 text-zinc-300 hover:border-white/20 hover:bg-white/8 hover:text-white",
@@ -550,7 +688,7 @@ export function FloatingFilterDock({
                     <TagIcon weight={hasTags ? "fill" : "bold"} className="size-4 shrink-0" />
                     <span>Tags</span>
                     {hasTags && (
-                      <span className="bg-brand-purple text-paper flex size-4.5 items-center justify-center rounded-full text-[10px] font-bold">
+                      <span className="bg-brand-purple text-paper flex size-4 items-center justify-center rounded-full text-[10px] font-bold tabular-nums">
                         {selectedTags.length}
                       </span>
                     )}
@@ -576,7 +714,90 @@ export function FloatingFilterDock({
           </>
         )}
 
-        {/* 4. Saved Bookmarks Toggle */}
+        {/* 4. Sort Selector (Popover / Sheet) */}
+        {onSortChange && (
+          <>
+            {isMobile ? (
+              <Sheet open={sortOpen} onOpenChange={setSortOpen}>
+                <SheetTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className={cn(
+                      "h-9 gap-1.5 rounded-full border-[1.5px] px-2.5 font-mono text-xs font-semibold sm:h-9.5 sm:px-3.5",
+                      hasSort
+                        ? "border-primary/50 bg-primary/15 text-primary font-bold"
+                        : "border-white/10 bg-white/4 text-zinc-300 hover:border-white/20 hover:bg-white/8 hover:text-white",
+                    )}
+                    aria-label="Sort resources"
+                  >
+                    <ArrowsDownUpIcon
+                      weight={hasSort ? "bold" : "regular"}
+                      className="size-3.5 shrink-0"
+                    />
+                    <span className="hidden sm:inline">
+                      {hasSort ? activeSortOption.shortLabel : "Sort"}
+                    </span>
+                  </Button>
+                </SheetTrigger>
+                <SheetContent
+                  side="bottom"
+                  showCloseButton={false}
+                  className="z-70 max-h-[85vh] overflow-hidden rounded-t-3xl border-t border-white/10 bg-[#141416] p-0 font-mono text-xs"
+                >
+                  <SheetHeader className="sr-only">
+                    <SheetTitle>Sort Resources</SheetTitle>
+                    <SheetDescription>Select sorting order</SheetDescription>
+                  </SheetHeader>
+                  <SortPickerContent
+                    activeSort={activeSort}
+                    onSelectSort={(sort) => {
+                      onSortChange(sort);
+                      setSortOpen(false);
+                    }}
+                  />
+                </SheetContent>
+              </Sheet>
+            ) : (
+              <Popover open={sortOpen} onOpenChange={setSortOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className={cn(
+                      "h-9.5 w-24 shrink-0 justify-center gap-1.5 rounded-full border-[1.5px] px-2.5 font-mono text-xs font-semibold transition-all",
+                      hasSort
+                        ? "border-primary/50 bg-primary/15 text-primary font-bold"
+                        : "border-white/10 bg-white/4 text-zinc-300 hover:border-white/20 hover:bg-white/8 hover:text-white",
+                    )}
+                  >
+                    <ArrowsDownUpIcon
+                      weight={hasSort ? "bold" : "regular"}
+                      className="size-4 shrink-0"
+                    />
+                    <span className="truncate">{hasSort ? activeSortOption.shortLabel : "Sort"}</span>
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent
+                  side="top"
+                  align="center"
+                  sideOffset={12}
+                  className="text-popover-foreground z-70 w-64 overflow-hidden rounded-[20px] border-[1.5px] border-white/10 bg-[#121214]/98 p-0 shadow-[0_24px_60px_rgba(0,0,0,0.85),0_1px_0_0_rgba(255,255,255,0.08)_inset] backdrop-blur-2xl"
+                >
+                  <SortPickerContent
+                    activeSort={activeSort}
+                    onSelectSort={(sort) => {
+                      onSortChange(sort);
+                      setSortOpen(false);
+                    }}
+                  />
+                </PopoverContent>
+              </Popover>
+            )}
+          </>
+        )}
+
+        {/* 5. Saved Bookmarks Toggle */}
         {onSavedToggle && (
           <Tooltip>
             <TooltipTrigger asChild>
@@ -604,30 +825,34 @@ export function FloatingFilterDock({
           </Tooltip>
         )}
 
-        {/* 5. Item Count & Reset Action */}
-        <div className="hidden items-center gap-1.5 border-l border-white/10 pl-2 text-zinc-400 sm:flex">
-          <span className="text-foreground font-bold tabular-nums">{filteredCount}</span>
-          <span className="text-[11px] text-zinc-500">
-            {hasActiveFilters ? `of ${totalCount}` : itemLabel.toLowerCase()}
-          </span>
+        {/* 5. Item Count & Reset Action (Fixed width to prevent layout shift) */}
+        <div className="hidden w-[136px] shrink-0 items-center justify-between border-l border-white/10 pl-2.5 pr-1 text-zinc-400 sm:flex">
+          <div className="flex min-w-0 items-center gap-1 font-mono text-xs">
+            <span className="text-foreground font-bold tabular-nums">{filteredCount}</span>
+            <span className="text-[11px] text-zinc-500 tabular-nums truncate">
+              {hasActiveFilters ? `of ${totalCount}` : itemLabel.toLowerCase()}
+            </span>
+          </div>
 
-          {hasActiveFilters && (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  type="button"
-                  onClick={onResetAll}
-                  className="hover:border-destructive/40 hover:bg-destructive/10 hover:text-destructive text-muted-foreground ml-1 flex size-6 cursor-pointer items-center justify-center rounded-full border border-transparent transition-all active:scale-95"
-                  aria-label="Reset all filters"
-                >
-                  <ArrowsCounterClockwiseIcon weight="bold" className="size-3.5" />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent side="top" sideOffset={10}>
-                <p className="font-mono text-xs">Reset all filters</p>
-              </TooltipContent>
-            </Tooltip>
-          )}
+          <div className="flex size-6 shrink-0 items-center justify-center">
+            {hasActiveFilters && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    type="button"
+                    onClick={onResetAll}
+                    className="hover:border-destructive/40 hover:bg-destructive/10 hover:text-destructive text-muted-foreground flex size-6 cursor-pointer items-center justify-center rounded-full border border-transparent transition-all active:scale-95"
+                    aria-label="Reset all filters"
+                  >
+                    <ArrowsCounterClockwiseIcon weight="bold" className="size-3.5" />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent side="top" sideOffset={10}>
+                  <p className="font-mono text-xs">Reset all filters</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
+          </div>
         </div>
       </div>
     </div>

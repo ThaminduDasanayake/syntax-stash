@@ -95,7 +95,7 @@ export default function AboutPage() {
               <Link
                 href="https://github.com/ThaminduDasanayake/syntax-stash"
                 target="_blank"
-                className="text-display-sm"
+                className="font-mono text-xs font-bold tracking-wider uppercase sm:text-sm"
               >
                 VIEW ON GITHUB
                 <Image
@@ -108,7 +108,10 @@ export default function AboutPage() {
               </Link>
             </Button>
             <Button asChild size="lg" variant="secondary">
-              <Link href="mailto:thamindudasanayake@gmail.com" className="text-display-sm">
+              <Link
+                href="mailto:thamindudasanayake@gmail.com"
+                className="font-mono text-xs font-bold tracking-wider uppercase sm:text-sm"
+              >
                 CONTACT ME <ArrowUpRightIcon weight="bold" className="ml-2" />
               </Link>
             </Button>

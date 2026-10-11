@@ -286,7 +286,7 @@
 }
 
 @utility nav-link {
-  @apply text-ink-mute text-display-sm hover:pointer-fine:text-ink w-full py-3 transition-colors duration-200 ease-out lg:w-auto lg:py-0 lg:text-sm;
+  @apply text-ink-mute text-mono-sm hover:pointer-fine:text-ink w-full py-3 transition-colors duration-200 ease-out lg:w-auto lg:py-0 lg:text-sm;
 }
 
 @utility nav-link--active {
