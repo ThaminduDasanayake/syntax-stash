@@ -445,7 +445,7 @@ function SortPickerContent({
               className={cn(
                 "group flex w-full cursor-pointer items-center justify-between rounded-xl px-3 py-2 text-left transition-colors",
                 isSelected
-                  ? "border border-primary/30 bg-primary/10 text-primary font-bold"
+                  ? "border-primary/30 bg-primary/10 text-primary border font-bold"
                   : "border border-transparent text-zinc-300 hover:bg-white/[0.06] hover:text-white",
               )}
             >
@@ -459,7 +459,7 @@ function SortPickerContent({
                 />
                 <div className="flex min-w-0 flex-col">
                   <span className="truncate">{opt.label}</span>
-                  <span className="text-[10px] font-normal leading-tight text-zinc-500">
+                  <span className="text-[10px] leading-tight font-normal text-zinc-500">
                     {opt.description}
                   </span>
                 </div>
@@ -511,7 +511,8 @@ export function FloatingFilterDock({
   const hasTags = selectedTags.length > 0;
   const hasSort = Boolean(activeSort && activeSort !== "default");
   const hasActiveFilters = hasSearch || hasCategory || hasTags || savedOnly || hasSort;
-  const activeSortOption = USER_SORT_OPTIONS.find((s) => s.value === activeSort) || USER_SORT_OPTIONS[0];
+  const activeSortOption =
+    USER_SORT_OPTIONS.find((s) => s.value === activeSort) || USER_SORT_OPTIONS[0];
 
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-5 z-40 flex justify-center px-4 sm:bottom-6">
@@ -730,7 +731,10 @@ export function FloatingFilterDock({
                     )}
                     aria-label="Sort resources"
                   >
-                    <ArrowsDownUpIcon weight={hasSort ? "bold" : "regular"} className="size-3.5 shrink-0" />
+                    <ArrowsDownUpIcon
+                      weight={hasSort ? "bold" : "regular"}
+                      className="size-3.5 shrink-0"
+                    />
                     <span className="hidden sm:inline">
                       {hasSort ? activeSortOption.shortLabel : "Sort"}
                     </span>
@@ -767,7 +771,10 @@ export function FloatingFilterDock({
                         : "border-white/10 bg-white/4 text-zinc-300 hover:border-white/20 hover:bg-white/8 hover:text-white",
                     )}
                   >
-                    <ArrowsDownUpIcon weight={hasSort ? "bold" : "regular"} className="size-4 shrink-0" />
+                    <ArrowsDownUpIcon
+                      weight={hasSort ? "bold" : "regular"}
+                      className="size-4 shrink-0"
+                    />
                     <span>{hasSort ? activeSortOption.shortLabel : "Sort"}</span>
                   </Button>
                 </PopoverTrigger>

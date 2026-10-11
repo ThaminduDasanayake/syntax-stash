@@ -530,7 +530,14 @@ function FilterSectionInner({
                     variant="outline"
                     size="sm"
                     onClick={() =>
-                      syncUrl(activeCategory, selectedTags, matchMode, searchQuery, false, activeSort)
+                      syncUrl(
+                        activeCategory,
+                        selectedTags,
+                        matchMode,
+                        searchQuery,
+                        false,
+                        activeSort,
+                      )
                     }
                     className="font-mono text-xs uppercase"
                   >
@@ -545,7 +552,10 @@ function FilterSectionInner({
                 title={`No ${itemLabel.toLowerCase()} found`}
                 description="No resources matched your active filters or search criteria."
                 action={
-                  selectedTags.length > 0 || searchQuery || activeCategory || activeSort !== "default" ? (
+                  selectedTags.length > 0 ||
+                  searchQuery ||
+                  activeCategory ||
+                  activeSort !== "default" ? (
                     <Button
                       variant="outline"
                       size="sm"
