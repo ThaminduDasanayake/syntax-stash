@@ -130,10 +130,10 @@ function isDifferent(field: string, valA: unknown, valB: unknown): boolean {
 
   const lowerField = field.toLowerCase().replace(/[-_]/g, "");
 
-  // Default-equivalence check for ogImageBg: "" / null / undefined / "none" / "default"
+  // Default-equivalence check for ogImageBg: "" / null / undefined / "none" / "default" / "cover"
   if (lowerField === "ogimagebg") {
-    const isNoneA = !normA || normA === "none" || normA === "default";
-    const isNoneB = !normB || normB === "none" || normB === "default";
+    const isNoneA = !normA || normA === "none" || normA === "default" || normA === "cover";
+    const isNoneB = !normB || normB === "none" || normB === "default" || normB === "cover";
     if (isNoneA && isNoneB) return false;
   }
 

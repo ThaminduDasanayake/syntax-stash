@@ -166,3 +166,42 @@ export function isValidHttpUrl(urlString: string | null | undefined): boolean {
     return false;
   }
 }
+
+export type OgImageBgColor = "none" | "white" | "dark" | "zinc" | string;
+export type OgImageFitOption = "cover" | "contain";
+
+export interface OgImageStyle {
+  bg: OgImageBgColor;
+  fit: OgImageFitOption;
+}
+
+export function parseOgImageStyle(ogImageBg?: string | null): OgImageStyle {
+  const normalized = (ogImageBg || "").toLowerCase().trim();
+  const isContain = normalized.includes("contain");
+  const fit: OgImageFitOption = isContain ? "contain" : "cover";
+
+  const bgPart = normalized.replace(/\bcontain\b/g, "").replace(/\bcover\b/g, "").trim();
+
+  let bg: OgImageBgColor = "none";
+  if (bgPart === "white" || bgPart === "light") {
+    bg = "white";
+  } else if (bgPart === "dark" || bgPart === "black") {
+    bg = "dark";
+  } else if (bgPart === "zinc") {
+    bg = "zinc";
+  } else if (bgPart.startsWith("#") || bgPart.startsWith("rgb")) {
+    bg = bgPart;
+  } else if (bgPart && bgPart !== "none" && bgPart !== "default") {
+    bg = bgPart;
+  }
+
+  return { bg, fit };
+}
+
+export function serializeOgImageStyle(bg: OgImageBgColor, fit: OgImageFitOption): string {
+  const cleanBg = bg === "default" ? "none" : bg;
+  if (fit === "contain") {
+    return cleanBg === "none" ? "contain" : `${cleanBg} contain`;
+  }
+  return cleanBg;
+}
