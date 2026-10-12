@@ -48,7 +48,7 @@ function ResourceCardComponent({
         ogImage={resource.ogImage}
         ogImageBg={resource.ogImageBg}
         onBookmarkClick={handleBookmarkClick}
-        onCardClick={onCardClick ? () => onCardClick(resource) : undefined}
+        onCardClick={onCardClick ? (rect?: DOMRect) => onCardClick(resource, rect) : undefined}
         stars={stars}
         subtitle={resource.subtitle}
         tags={resource.tags}

@@ -69,6 +69,7 @@ function FilterSectionInner({
 
   const [visibleLimit, setVisibleLimit] = useState(BATCH_SIZE);
   const [activeDialogResource, setActiveDialogResource] = useState<Resource | null>(null);
+  const [dialogOriginRect, setDialogOriginRect] = useState<DOMRect | null>(null);
 
   const allResourceItems = useMemo(() => items.filter(isResource), [items]);
 
@@ -593,8 +594,9 @@ function FilterSectionInner({
                     index={idx}
                     item={item}
                     onTagClickAction={handleToggleTag}
-                    onCardClick={(clickedItem) => {
+                    onCardClick={(clickedItem, rect) => {
                       if (isResource(clickedItem)) {
+                        setDialogOriginRect(rect ?? null);
                         setActiveDialogResource(clickedItem);
                       }
                     }}
@@ -630,8 +632,9 @@ function FilterSectionInner({
                         index={idx}
                         item={item}
                         onTagClickAction={handleToggleTag}
-                        onCardClick={(clickedItem) => {
+                        onCardClick={(clickedItem, rect) => {
                           if (isResource(clickedItem)) {
+                            setDialogOriginRect(rect ?? null);
                             setActiveDialogResource(clickedItem);
                           }
                         }}
@@ -689,16 +692,21 @@ function FilterSectionInner({
       <Dialog
         open={!!activeDialogResource}
         onOpenChange={(open) => {
-          if (!open) setActiveDialogResource(null);
+          if (!open) {
+            setActiveDialogResource(null);
+            setDialogOriginRect(null);
+          }
         }}
       >
         {activeDialogResource && (
           <ResourceDialog
             key={activeDialogResource.url || activeDialogResource.title}
             resource={activeDialogResource}
+            originRect={dialogOriginRect}
             allResources={allResourceItems}
             onTagClickAction={(tag) => {
               setActiveDialogResource(null);
+              setDialogOriginRect(null);
               handleToggleTag(tag);
             }}
           />
