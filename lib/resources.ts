@@ -133,7 +133,7 @@ export const getAllResources = cache(
     },
     ["all-resources-cache"],
     {
-      revalidate: 86400, // 24 hours fallback TTL
+      revalidate: 604800, // 7 days fallback TTL (on-demand revalidated via tags)
       tags: ["resources"],
     },
   ),
