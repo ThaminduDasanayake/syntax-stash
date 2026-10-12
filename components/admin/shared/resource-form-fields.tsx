@@ -327,12 +327,12 @@ export function ResourceFormFields({
                 <span
                   className={cn(
                     "font-mono text-[10px]",
-                    (values.description?.length || 0) > 380
+                    (values.description?.length || 0) > 780
                       ? "text-destructive font-bold"
                       : "text-muted-foreground",
                   )}
                 >
-                  {values.description?.length || 0}/400
+                  {values.description?.length || 0}/800
                 </span>
               </div>
             </div>
@@ -340,8 +340,8 @@ export function ResourceFormFields({
               value={values.description || ""}
               onChange={(e) => onChange("description", e.target.value)}
               placeholder="Detailed description of the tool, library, or design asset..."
-              rows={3}
-              maxLength={400}
+              rows={4}
+              maxLength={800}
               disabled={disabled}
               className="border-line font-mono text-xs!"
               required
