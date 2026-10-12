@@ -90,7 +90,7 @@ export const getAllTags = cache(
       }
     },
     ["all-tags"],
-    { revalidate: 3600, tags: ["tags"] },
+    { revalidate: 604800, tags: ["tags"] },
   ),
 );
 

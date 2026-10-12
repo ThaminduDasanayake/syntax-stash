@@ -28,7 +28,7 @@ export interface ResourceCardViewProps {
   ogImage?: string | null;
   ogImageBg?: string | null;
   onBookmarkClick?: (e: React.MouseEvent) => void;
-  onCardClick?: () => void;
+  onCardClick?: (rect?: DOMRect) => void;
   showTags?: boolean;
   stars?: number | null;
   subtitle?: string | null;
@@ -90,8 +90,11 @@ export function ResourceCardView({
   // Parse authors supporting comma-separated strings or arrays
   const authorList: string[] = useMemo(() => parseAuthors(author), [author]);
 
-  const handleCardClick = () => {
-    onCardClick?.();
+  const handleCardClick = (
+    e?: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>,
+  ) => {
+    const rect = e?.currentTarget?.getBoundingClientRect();
+    onCardClick?.(rect);
   };
 
   const isClickable = Boolean(onCardClick);
@@ -335,7 +338,7 @@ export function ResourceCardView({
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
-            handleCardClick();
+            handleCardClick(e);
           }
         }}
         className="block h-full w-full cursor-pointer text-left outline-none"

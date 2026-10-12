@@ -37,23 +37,47 @@ export async function GET(request: NextRequest) {
     return new NextResponse("Forbidden destination host", { status: 403 });
   }
 
-  // Multi-tier attempt: first with clean natural browser headers, then without Referer
+  // Multi-tier attempt in order of priority: direct navigation headers, social crawler headers, and clean asset headers
+  /* eslint-disable perfectionist/sort-arrays */
   const headerVariants: Record<string, string>[] = [
-    // 1. Natural browser asset request (no conflicting sec-fetch headers)
+    // 1. Direct browser navigation simulation (exactly matches pasting URL in address bar)
+    {
+      Accept:
+        "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+      "Accept-Language": "en-US,en;q=0.9",
+      "Sec-Ch-Ua": '"Chromium";v="132", "Google Chrome";v="132", "Not-A.Brand";v="99"',
+      "Sec-Ch-Ua-Mobile": "?0",
+      "Sec-Ch-Ua-Platform": '"macOS"',
+      "Sec-Fetch-Dest": "document",
+      "Sec-Fetch-Mode": "navigate",
+      "Sec-Fetch-Site": "none",
+      "Sec-Fetch-User": "?1",
+      "Upgrade-Insecure-Requests": "1",
+      "User-Agent":
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36",
+    },
+    // 2. Social embed crawler (Cloudflare and CDNs explicitly allowlist media previews)
+    {
+      Accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "User-Agent": "Mozilla/5.0 (compatible; Twitterbot/1.0; +https://dev.twitter.com/cards)",
+    },
+    // 3. Clean request without Referer (for hosts with strict anti-hotlink rules)
+    {
+      Accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "Accept-Language": "en-US,en;q=0.9",
+      "User-Agent":
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36",
+    },
+    // 4. Natural browser asset request with origin Referer
     {
       Accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
       "Accept-Language": "en-US,en;q=0.9",
       Referer: `${parsedUrl.origin}/`,
       "User-Agent":
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-    },
-    // 2. Clean request without Referer (for hosts with strict anti-hotlink rules)
-    {
-      Accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
-      "User-Agent":
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36",
     },
   ];
+  /* eslint-enable perfectionist/sort-arrays */
 
   for (let i = 0; i < headerVariants.length; i++) {
     try {
@@ -109,11 +133,8 @@ export async function GET(request: NextRequest) {
         });
       }
 
-      // If 403, 401, or 400 on the first attempt, try the next header variant
-      if (
-        i < headerVariants.length - 1 &&
-        (upstreamRes.status === 403 || upstreamRes.status === 401 || upstreamRes.status === 400)
-      ) {
+      // If not ok (e.g. 403, 401, 429, 503), try the next header variant
+      if (i < headerVariants.length - 1 && !upstreamRes.ok) {
         continue;
       }
     } catch {

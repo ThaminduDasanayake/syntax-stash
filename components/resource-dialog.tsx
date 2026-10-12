@@ -28,10 +28,16 @@ import { Resource } from "@/types";
 export interface ResourceDialogProps {
   allResources?: Resource[];
   onTagClickAction?: (tag: string) => void;
+  originRect?: DOMRect | null;
   resource: Resource;
 }
 
-export function ResourceDialog({ allResources, onTagClickAction, resource }: ResourceDialogProps) {
+export function ResourceDialog({
+  allResources,
+  onTagClickAction,
+  originRect,
+  resource,
+}: ResourceDialogProps) {
   const [activeTool, setActiveTool] = useState(resource);
   const [fetchedResources, setFetchedResources] = useState<Resource[]>([]);
 
@@ -124,6 +130,68 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
       gsap.set(mobileCategoryRef.current, { opacity: 1, y: 0 });
     }
   }, [measureCoords]);
+
+  const hasAnimatedRef = useRef(false);
+
+  useEffect(() => {
+    if (hasAnimatedRef.current) return;
+    const el = dialogContentRef.current;
+    if (!el || !originRect) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
+    hasAnimatedRef.current = true;
+
+    const dialogRect = el.getBoundingClientRect();
+    if (!dialogRect.width || !dialogRect.height) return;
+
+    const cardCenterX = originRect.left + originRect.width / 2;
+    const cardCenterY = originRect.top + originRect.height / 2;
+    const dialogCenterX = dialogRect.left + dialogRect.width / 2;
+    const dialogCenterY = dialogRect.top + dialogRect.height / 2;
+
+    const deltaX = cardCenterX - dialogCenterX;
+    const deltaY = cardCenterY - dialogCenterY;
+    const scaleX = Math.max(0.1, originRect.width / dialogRect.width);
+    const scaleY = Math.max(0.1, originRect.height / dialogRect.height);
+
+    const tween = gsap.fromTo(
+      el,
+      {
+        borderRadius: "16px",
+        opacity: 0.85,
+        scaleX,
+        scaleY,
+        transformOrigin: "center center",
+        x: deltaX,
+        xPercent: -50,
+        y: deltaY,
+        yPercent: -50,
+      },
+      {
+        borderRadius: "24px",
+        clearProps: "transform,borderRadius,opacity",
+        duration: 0.38,
+        ease: "power3.out",
+        onComplete: () => {
+          resetMobileHeader();
+        },
+        opacity: 1,
+        scaleX: 1,
+        scaleY: 1,
+        x: 0,
+        xPercent: -50,
+        y: 0,
+        yPercent: -50,
+      },
+    );
+
+    return () => {
+      tween.kill();
+    };
+  }, [originRect, resetMobileHeader]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -345,6 +413,7 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
   return (
     <DialogContent
       ref={dialogContentRef}
+      disableDefaultAnimation={Boolean(originRect)}
       showCloseButton={false}
       className="modal-panel bg-background fixed! top-1/2! left-1/2! flex! -translate-x-1/2! -translate-y-1/2! flex-col! gap-0! overflow-hidden! p-0!"
     >
@@ -427,11 +496,8 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
                 alt={activeTool.title}
                 className={activeTool.className}
                 favicon={activeTool.favicon}
-                iconBg={
-                  "iconBg" in activeTool
-                    ? (activeTool.iconBg as "dark" | "light" | "invert")
-                    : undefined
-                }
+                iconBg={activeTool.iconBg || undefined}
+                iconClassName={activeTool.className}
               />
             </div>
           </div>
@@ -443,11 +509,8 @@ export function ResourceDialog({ allResources, onTagClickAction, resource }: Res
               alt={activeTool.title}
               className={activeTool.className}
               favicon={activeTool.favicon}
-              iconBg={
-                "iconBg" in activeTool
-                  ? (activeTool.iconBg as "dark" | "light" | "invert")
-                  : undefined
-              }
+              iconBg={activeTool.iconBg || undefined}
+              iconClassName={activeTool.className}
             />
           </div>
 

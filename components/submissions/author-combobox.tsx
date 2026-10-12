@@ -75,16 +75,21 @@ export function invalidateAuthorCache() {
 }
 
 export function registerNewAuthorLocally(newAuthor: AuthorOption) {
-  if (cachedAuthors) {
-    if (
-      !cachedAuthors.some(
-        (a) => a.slug === newAuthor.slug || a.name.toLowerCase() === newAuthor.name.toLowerCase(),
-      )
-    ) {
-      cachedAuthors = [...cachedAuthors, newAuthor].sort((a, b) => a.name.localeCompare(b.name));
-    }
+  if (!cachedAuthors) {
+    cachedAuthors = [newAuthor];
+  } else if (
+    !cachedAuthors.some(
+      (a) => a.slug === newAuthor.slug || a.name.toLowerCase() === newAuthor.name.toLowerCase(),
+    )
+  ) {
+    cachedAuthors = [...cachedAuthors, newAuthor].sort((a, b) =>
+      a.name.localeCompare(b.name, undefined, { sensitivity: "base" }),
+    );
   }
-  invalidateAuthorCache();
+  fetchPromise = null;
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new CustomEvent("syntax-stash-authors-updated"));
+  }
 }
 
 export async function fetchAuthorList(forceRefresh = false): Promise<AuthorOption[]> {
@@ -149,7 +154,11 @@ export function AuthorCombobox({
 
     // 2. Window event listener when an author is created or edited
     const handleLocalUpdate = () => {
-      syncAuthors(true);
+      if (cachedAuthors && cachedAuthors.length > 0) {
+        setAuthors([...cachedAuthors]);
+      } else {
+        syncAuthors(true);
+      }
     };
     window.addEventListener("syntax-stash-authors-updated", handleLocalUpdate);
 

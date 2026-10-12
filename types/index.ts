@@ -50,15 +50,16 @@ export type ToolCardProps = {
 export type ResourceCardProps = {
   resource: Resource;
   isBookmarked?: boolean;
-  onCardClick?: (resource: Resource) => void;
+  onCardClick?: (resource: Resource, rect?: DOMRect) => void;
   onTagClickAction?: (tag: string) => void;
   onToggleBookmark?: (resource: Resource) => void;
 };
 
 export type StashCardProps = {
-  item: StashItem;
+  index?: number;
   isBookmarked?: boolean;
-  onCardClick?: (item: StashItem) => void;
+  item: StashItem;
+  onCardClick?: (item: StashItem, rect?: DOMRect) => void;
   onTagClickAction?: (tag: string) => void;
   onToggleBookmark?: (item: StashItem) => void;
 };

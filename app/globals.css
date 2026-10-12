@@ -595,6 +595,19 @@
   @apply mid-xl:grid-cols-4 grid w-full grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-7 lg:grid-cols-3;
 }
 
+/* Card Entry & Scroll Reveal Motion */
+@utility card-motion-wrapper {
+  @apply transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-[transform,opacity];
+}
+
+@utility card-motion-hidden {
+  @apply translate-y-7 scale-[0.96] opacity-0;
+}
+
+@utility card-motion-revealed {
+  @apply translate-y-0 scale-100 opacity-100;
+}
+
 @utility card {
   @apply relative block w-full cursor-pointer transition-all duration-300 ease-out outline-none hover:z-10 hover:-translate-y-1;
 }
@@ -801,5 +814,13 @@
 @media (prefers-reduced-motion: reduce) {
   .neon-hold-shake {
     animation: none;
+  }
+  .card-motion-wrapper,
+  .card-motion-hidden,
+  .card-motion-revealed {
+    opacity: 1 !important;
+    transform: none !important;
+    scale: 1 !important;
+    transition: none !important;
   }
 }

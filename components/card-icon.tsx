@@ -131,7 +131,7 @@ export function CardIcon({
         src={currentSrc}
         alt={alt}
         loading="lazy"
-        referrerPolicy="no-referrer"
+        referrerPolicy="no-referrer-when-downgrade"
         style={{
           colorScheme: isWhiteTile ? "light" : "dark",
         }}

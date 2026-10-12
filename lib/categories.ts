@@ -52,7 +52,7 @@ export const getAllCategories = cache(
       }
     },
     ["all-categories"],
-    { revalidate: 3600, tags: ["categories"] },
+    { revalidate: 604800, tags: ["categories"] },
   ),
 );
 

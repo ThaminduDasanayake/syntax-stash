@@ -64,13 +64,16 @@ export function generateTsCode(sub: Submission): string {
 
 export function itemToResource(item: ResourceItem): Resource {
   return {
+    id: item.id,
     title: item.title,
     author: item.authorName || undefined,
     category: item.category,
     description: item.description,
     favicon: item.favicon || undefined,
     github: item.github || undefined,
+    iconBg: item.iconBg || undefined,
     ogImage: item.ogImage || undefined,
+    ogImageBg: item.ogImageBg || undefined,
     subtitle: item.subtitle || undefined,
     tags: item.tags
       ? item.tags

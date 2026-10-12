@@ -7,6 +7,23 @@ import type { CategoryItem } from "@/lib/categories";
 let cachedCategories: CategoryItem[] | null = null;
 const listeners = new Set<(cats: CategoryItem[]) => void>();
 
+export function registerNewCategoryLocally(newCat: CategoryItem) {
+  if (!cachedCategories) {
+    cachedCategories = [newCat];
+  } else if (
+    !cachedCategories.some(
+      (c) => c.slug === newCat.slug || c.name.toLowerCase() === newCat.name.toLowerCase(),
+    )
+  ) {
+    cachedCategories = [...cachedCategories, newCat].sort((a, b) => a.name.localeCompare(b.name));
+  }
+  listeners.forEach((listener) => listener(cachedCategories!));
+}
+
+export function invalidateCategoriesCache() {
+  cachedCategories = null;
+}
+
 export function useCategories() {
   const [categories, setCategories] = useState<CategoryItem[]>(cachedCategories || []);
   const [isLoading, setIsLoading] = useState(!cachedCategories);

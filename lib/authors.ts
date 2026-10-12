@@ -147,7 +147,7 @@ export const getAllAuthors = cache(
       }
     },
     ["all-authors"],
-    { revalidate: 3600, tags: ["authors"] },
+    { revalidate: 604800, tags: ["authors"] },
   ),
 );
 
