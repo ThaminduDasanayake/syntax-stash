@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/dialog";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
+import { registerNewCategoryLocally } from "@/hooks/use-categories";
 import { cn, slugify } from "@/lib/utils";
 
 const CATEGORY_FIELD_LABELS: Record<string, string> = {
@@ -129,6 +130,7 @@ function CategoryDialogInner({
         };
 
         toast.success(`Category "${cleanName}" created successfully.`);
+        registerNewCategoryLocally(newCategory);
         onCreated?.(newCategory);
         onOpenChange(false);
         return;

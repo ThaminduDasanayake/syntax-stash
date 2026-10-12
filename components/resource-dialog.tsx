@@ -496,11 +496,8 @@ export function ResourceDialog({
                 alt={activeTool.title}
                 className={activeTool.className}
                 favicon={activeTool.favicon}
-                iconBg={
-                  "iconBg" in activeTool
-                    ? (activeTool.iconBg as "dark" | "light" | "invert")
-                    : undefined
-                }
+                iconBg={activeTool.iconBg || undefined}
+                iconClassName={activeTool.className}
               />
             </div>
           </div>
@@ -512,11 +509,8 @@ export function ResourceDialog({
               alt={activeTool.title}
               className={activeTool.className}
               favicon={activeTool.favicon}
-              iconBg={
-                "iconBg" in activeTool
-                  ? (activeTool.iconBg as "dark" | "light" | "invert")
-                  : undefined
-              }
+              iconBg={activeTool.iconBg || undefined}
+              iconClassName={activeTool.className}
             />
           </div>
 
