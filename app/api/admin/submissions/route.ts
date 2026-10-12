@@ -262,26 +262,22 @@ export async function PATCH(req: Request) {
           }
         }
 
-        // 5. Purge Next.js Edge Data Cache for instant live update
-        revalidateTag("resources", "max");
-        revalidateTag("categories", "max");
-        revalidateTag("tags", "max");
-        revalidateTag("authors", "max");
+        // 5. Purge Next.js Edge Data Cache specifically for the affected scope
+        revalidateTag("resources", { expire: 0 });
         revalidatePath("/");
         revalidatePath("/resources");
-        revalidatePath("/authors");
-        revalidatePath("/tags");
+        if (sub.category) {
+          revalidatePath(`/resources/${normalizeTag(sub.category)}`);
+        }
+        if (sub.author) {
+          revalidatePath(`/authors/${slugifyAuthor(sub.author)}`);
+        }
       } else {
         // If status was changed to rejected or pending, remove from live catalog if present
         await db.delete(resource).where(eq(resource.url, sub.url));
-        revalidateTag("resources", "max");
-        revalidateTag("categories", "max");
-        revalidateTag("tags", "max");
-        revalidateTag("authors", "max");
+        revalidateTag("resources", { expire: 0 });
         revalidatePath("/");
         revalidatePath("/resources");
-        revalidatePath("/authors");
-        revalidatePath("/tags");
       }
     }
 
@@ -311,14 +307,9 @@ export async function DELETE(request: NextRequest) {
     const [sub] = await db.select().from(submission).where(eq(submission.id, id));
     if (sub?.url) {
       await db.delete(resource).where(eq(resource.url, sub.url));
-      revalidateTag("resources", "max");
-      revalidateTag("categories", "max");
-      revalidateTag("tags", "max");
-      revalidateTag("authors", "max");
+      revalidateTag("resources", { expire: 0 });
       revalidatePath("/");
       revalidatePath("/resources");
-      revalidatePath("/authors");
-      revalidatePath("/tags");
     }
 
     await db.delete(submission).where(eq(submission.id, id));

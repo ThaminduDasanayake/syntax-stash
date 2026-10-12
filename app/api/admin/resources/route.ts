@@ -362,14 +362,19 @@ export async function POST(req: Request) {
       }
     }
 
-    // 6. Purge edge cache
-    revalidateTag("resources", "max");
-    revalidateTag("categories", "max");
-    revalidateTag("tags", "max");
-    revalidateTag("authors", "max");
+    // 6. Purge edge cache specifically for the affected scope
+    revalidateTag("resources", { expire: 0 });
     revalidatePath("/");
     revalidatePath("/resources");
-    revalidatePath("/authors");
+    if (categoryInput && typeof categoryInput === "string") {
+      revalidatePath(`/resources/${normalizeTag(categoryInput)}`);
+    }
+    if (authorName && typeof authorName === "string") {
+      const parsed = parseAuthors(authorName);
+      for (const singleName of parsed) {
+        revalidatePath(`/authors/${slugifyAuthor(singleName)}`);
+      }
+    }
 
     return NextResponse.json({
       id: resourceId,
@@ -559,14 +564,19 @@ export async function PATCH(req: Request) {
       }
     }
 
-    // 4. Purge edge cache
+    // 4. Purge edge cache specifically for affected scope
     revalidateTag("resources", { expire: 0 });
-    revalidateTag("categories", { expire: 0 });
-    revalidateTag("tags", { expire: 0 });
-    revalidateTag("authors", { expire: 0 });
     revalidatePath("/");
     revalidatePath("/resources");
-    revalidatePath("/authors");
+    if (updates.category) {
+      revalidatePath(`/resources/${normalizeTag(updates.category)}`);
+    }
+    if (updates.authorName) {
+      const parsed = parseAuthors(updates.authorName);
+      for (const singleName of parsed) {
+        revalidatePath(`/authors/${slugifyAuthor(singleName)}`);
+      }
+    }
 
     return NextResponse.json({ message: "Resource updated successfully.", success: true });
   } catch (error) {
@@ -590,12 +600,8 @@ export async function DELETE(request: NextRequest) {
     await db.delete(resource).where(eq(resource.id, id));
 
     revalidateTag("resources", { expire: 0 });
-    revalidateTag("categories", { expire: 0 });
-    revalidateTag("tags", { expire: 0 });
-    revalidateTag("authors", { expire: 0 });
     revalidatePath("/");
     revalidatePath("/resources");
-    revalidatePath("/authors");
 
     return NextResponse.json({ message: "Resource deleted.", success: true });
   } catch (error) {
