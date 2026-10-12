@@ -775,7 +775,9 @@ export function FloatingFilterDock({
                       weight={hasSort ? "bold" : "regular"}
                       className="size-4 shrink-0"
                     />
-                    <span className="truncate">{hasSort ? activeSortOption.shortLabel : "Sort"}</span>
+                    <span className="truncate">
+                      {hasSort ? activeSortOption.shortLabel : "Sort"}
+                    </span>
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent
@@ -826,10 +828,10 @@ export function FloatingFilterDock({
         )}
 
         {/* 5. Item Count & Reset Action (Fixed width to prevent layout shift) */}
-        <div className="hidden w-[136px] shrink-0 items-center justify-between border-l border-white/10 pl-2.5 pr-1 text-zinc-400 sm:flex">
+        <div className="hidden w-[136px] shrink-0 items-center justify-between border-l border-white/10 pr-1 pl-2.5 text-zinc-400 sm:flex">
           <div className="flex min-w-0 items-center gap-1 font-mono text-xs">
             <span className="text-foreground font-bold tabular-nums">{filteredCount}</span>
-            <span className="text-[11px] text-zinc-500 tabular-nums truncate">
+            <span className="truncate text-[11px] text-zinc-500 tabular-nums">
               {hasActiveFilters ? `of ${totalCount}` : itemLabel.toLowerCase()}
             </span>
           </div>

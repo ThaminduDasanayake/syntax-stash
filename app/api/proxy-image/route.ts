@@ -59,8 +59,7 @@ export async function GET(request: NextRequest) {
     // 2. Social embed crawler (Cloudflare and CDNs explicitly allowlist media previews)
     {
       Accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
-      "User-Agent":
-        "Mozilla/5.0 (compatible; Twitterbot/1.0; +https://dev.twitter.com/cards)",
+      "User-Agent": "Mozilla/5.0 (compatible; Twitterbot/1.0; +https://dev.twitter.com/cards)",
     },
     // 3. Clean request without Referer (for hosts with strict anti-hotlink rules)
     {

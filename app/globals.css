@@ -597,15 +597,15 @@
 
 /* Card Entry & Scroll Reveal Motion */
 @utility card-motion-wrapper {
-  @apply will-change-[transform,opacity] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)];
+  @apply transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-[transform,opacity];
 }
 
 @utility card-motion-hidden {
-  @apply opacity-0 translate-y-7 scale-[0.96];
+  @apply translate-y-7 scale-[0.96] opacity-0;
 }
 
 @utility card-motion-revealed {
-  @apply opacity-100 translate-y-0 scale-100;
+  @apply translate-y-0 scale-100 opacity-100;
 }
 
 @utility card {
