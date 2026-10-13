@@ -1,8 +1,4 @@
-try {
-  process.loadEnvFile?.();
-} catch {
-  // loaded via tsx --env-file
-}
+import "./load-env";
 
 import { count, eq, isNull, sql } from "drizzle-orm";
 
