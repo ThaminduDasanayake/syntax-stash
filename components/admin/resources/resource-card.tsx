@@ -83,6 +83,7 @@ export function ResourceCard({
           favicon={res.favicon}
           iconBg={res.iconBg}
           ogImage={res.ogImage}
+          ogImageBg={res.ogImageBg}
           author={res.authorName}
           authorHref={
             res.authorName ? (name: string) => `/authors/${slugifyAuthor(name)}` : undefined

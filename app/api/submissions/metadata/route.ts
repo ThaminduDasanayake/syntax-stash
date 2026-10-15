@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { CategoryItem, getAllCategories } from "@/lib/categories";
 import { db } from "@/lib/db";
 import { category, resource, submission } from "@/lib/db/schema";
+import { parseGitHubRepo } from "@/lib/github";
 import { normalizeUrl } from "@/lib/url-utils";
 
 const BROWSER_HEADERS = {
@@ -1178,7 +1179,10 @@ export async function GET(request: NextRequest) {
     }
 
     // 7. GitHub Repository Discovery (High-Confidence Heuristic Matching)
-    let github: string | undefined;
+    const directTargetRepo = parseGitHubRepo(finalUrl) || parseGitHubRepo(parsedUrl.href);
+    let github: string | undefined = directTargetRepo
+      ? `https://github.com/${directTargetRepo.owner}/${directTargetRepo.repo}`
+      : undefined;
     const repoCandidates: { repoUrl: string; score: number }[] = [];
     const domainClean = domainStem.toLowerCase().replace(/[^a-z0-9]/g, "");
     const titleClean = title.toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -1221,14 +1225,23 @@ export async function GET(request: NextRequest) {
         if (
           [
             "about",
+            "contact",
+            "customer-stories",
+            "enterprise",
+            "events",
             "explore",
             "features",
+            "git-guides",
             "login",
             "marketplace",
             "orgs",
             "pricing",
+            "security",
+            "settings",
             "signup",
             "site",
+            "site-policy",
+            "solutions",
             "sponsors",
             "topics",
             "trending",

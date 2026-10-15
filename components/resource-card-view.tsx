@@ -13,7 +13,7 @@ import { useMemo, useState } from "react";
 import { CardIcon } from "@/components/card-icon";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { formatStarCount } from "@/lib/github";
-import { cn, isValidHttpUrl, parseAuthors, Theme } from "@/lib/utils";
+import { cn, isValidHttpUrl, parseAuthors, parseOgImageStyle, Theme } from "@/lib/utils";
 
 export interface ResourceCardViewProps {
   author?: string | string[] | null;
@@ -136,42 +136,57 @@ export function ResourceCardView({
     >
       {/* 1. Visual Stage: clean 16:10 OG image with ambient blur backdrop */}
       {(() => {
-        const cleanBg = (ogImageBg || "").toLowerCase().trim();
-        const hasCustomBg = Boolean(cleanBg && cleanBg !== "none" && cleanBg !== "default");
+        const { bg, fit } = parseOgImageStyle(ogImageBg);
+        const hasCustomBg = bg !== "none";
+        const isContain = fit === "contain" || hasCustomBg;
 
         return (
           <div
             className={cn(
               "relative aspect-[2/1] w-full overflow-hidden rounded-xl border-[1.5px] border-white/10 transition-all duration-300 group-hover:border-white/18",
               hasCustomBg
-                ? cleanBg === "white" || cleanBg === "light"
+                ? bg === "white"
                   ? "bg-white"
-                  : cleanBg === "dark" || cleanBg === "black"
+                  : bg === "dark"
                     ? "bg-[#09090b]"
-                    : cleanBg === "zinc"
+                    : bg === "zinc"
                       ? "bg-zinc-900"
                       : "bg-[#18181b]"
                 : "bg-[#18181b]",
             )}
             style={
-              hasCustomBg && (ogImageBg?.startsWith("#") || ogImageBg?.startsWith("rgb"))
-                ? { backgroundColor: ogImageBg }
+              hasCustomBg && (bg.startsWith("#") || bg.startsWith("rgb"))
+                ? { backgroundColor: bg }
                 : undefined
             }
           >
             {imageSrc ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                key={imageSrc}
-                src={imageSrc}
-                alt={title || "Resource preview"}
-                loading="lazy"
-                onError={handleOgError}
-                className={cn(
-                  "h-full w-full transition-transform duration-500 ease-out group-hover:scale-[1.03]",
-                  hasCustomBg ? "object-contain p-3 sm:p-4" : "object-cover",
+              <>
+                {/* Ambient blur backdrop for contain mode on default card canvas */}
+                {isContain && !hasCustomBg && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={imageSrc}
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
+                    className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-35 blur-xl brightness-90 saturate-150 select-none"
+                  />
                 )}
-              />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  key={imageSrc}
+                  src={imageSrc}
+                  alt={title || "Resource preview"}
+                  loading="lazy"
+                  onError={handleOgError}
+                  className={cn(
+                    "h-full w-full transition-transform duration-500 ease-out group-hover:scale-[1.03]",
+                    isContain ? "relative z-10 object-contain" : "object-cover",
+                  )}
+                />
+              </>
             ) : (
               /* Abstract ambient fallback when no OG image */
               <div className="from-brand-purple/12 to-brand-orange/12 relative flex h-full w-full items-center justify-center overflow-hidden bg-linear-to-br via-[#18181b]">
