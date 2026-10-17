@@ -14,6 +14,136 @@ type Palette = {
 
 export const COLOR_PALETTES: Palette[] = [
   {
+    name: "Dual Palette 5",
+    colors: [
+      {
+        name: "Neon Coral",
+        hex: "#FF6044",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "white",
+      },
+      {
+        name: "Space Black",
+        hex: "#121313",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "white",
+      },
+    ],
+  },
+  {
+    name: "Dual Palette 4",
+    colors: [
+      {
+        name: "Ivory",
+        hex: "#FFF2E1",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "black",
+      },
+      {
+        name: "Donkey Brown",
+        hex: "#A79277",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "white",
+      },
+    ],
+  },
+  {
+    name: "Dual Palette 3",
+    colors: [
+      {
+        name: "Mist Gray",
+        hex: "#ECEFF1",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "black",
+      },
+      {
+        name: "Midnight Blue",
+        hex: "#191970",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "white",
+      },
+    ],
+  },
+  {
+    name: "Dual Palette 2",
+    colors: [
+      {
+        name: "Cherry Red",
+        hex: "#FF4747",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "white",
+      },
+      {
+        name: "Butter Yellow",
+        hex: "#F7E998",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "black",
+      },
+    ],
+  },
+  {
+    name: "Dual Palette 1",
+    colors: [
+      {
+        name: "Deep Forest",
+        hex: "#102C26",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "white",
+      },
+      {
+        name: "Champagne",
+        hex: "#F7E7CE",
+        colSpan: "col-span-3 row-span-3",
+        textColor: "black",
+      },
+    ],
+  },
+  {
+    name: "New Palette 5",
+    colors: [
+      { name: "Golden Sandlewood", hex: "#857861", colSpan: "col-span-3", textColor: "white" },
+      { name: "Almond Light", hex: "#E7D4BB", colSpan: "col-span-1", textColor: "black" },
+      { name: "Plum Wine", hex: "#48252F", colSpan: "col-span-2", textColor: "white" },
+      { name: "Carbon Powder", hex: "#101211", colSpan: "col-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "New Palette 4",
+    colors: [
+      { name: "Alabaster White", hex: "#F7F3E9", colSpan: "col-span-3", textColor: "black" },
+      { name: "Metallic Brass", hex: "#D4AF37", colSpan: "col-span-1", textColor: "black" },
+      { name: "Steel Navy", hex: "#415A77", colSpan: "col-span-2", textColor: "white" },
+      { name: "Deep Sapphire", hex: "#0D1B2A", colSpan: "col-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "New Palette 3",
+    colors: [
+      { name: "Pale", hex: "#E8D9C4", colSpan: "col-span-3", textColor: "black" },
+      { name: "Gold", hex: "#785D32", colSpan: "col-span-1", textColor: "white" },
+      { name: "Rough", hex: "#3E160C", colSpan: "col-span-2", textColor: "white" },
+      { name: "Off-Navy", hex: "#050A30", colSpan: "col-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "New Palette 2",
+    colors: [
+      { name: "Warm Alabaster", hex: "#E9E0CF", colSpan: "col-span-3", textColor: "black" },
+      { name: "Antique Gold", hex: "#BA9B5F", colSpan: "col-span-1", textColor: "black" },
+      { name: "Sage Green", hex: "#5E775E", colSpan: "col-span-2", textColor: "white" },
+      { name: "Dark Forest Green", hex: "#132B23", colSpan: "col-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "New Palette 1",
+    colors: [
+      { name: "Crimson Depth", hex: "#710014", colSpan: "col-span-3", textColor: "white" },
+      { name: "Warm Sand", hex: "#B38F6F", colSpan: "col-span-1", textColor: "white" },
+      { name: "Soft Pearl", hex: "#F2F1ED", colSpan: "col-span-2", textColor: "black" },
+      { name: "Obsidian Black", hex: "#161616", colSpan: "col-span-3", textColor: "white" },
+    ],
+  },
+  {
     name: "Crimson Elegance",
     colors: [
       { name: "Cotton", hex: "#EDEBDE", colSpan: "col-span-3", textColor: "black" },
