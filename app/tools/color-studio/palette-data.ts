@@ -5,7 +5,7 @@ export type Colors = {
   textColor?: "white" | "black";
 };
 
-type Palette = {
+export type Palette = {
   name: string;
   colors: Colors[];
 };
@@ -14,7 +14,7 @@ type Palette = {
 
 export const COLOR_PALETTES: Palette[] = [
   {
-    name: "Dual Palette 5",
+    name: "Neon Ember",
     colors: [
       {
         name: "Neon Coral",
@@ -31,7 +31,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Palette 4",
+    name: "Linen & Clay",
     colors: [
       {
         name: "Ivory",
@@ -48,7 +48,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Palette 3",
+    name: "Atlantic Fog",
     colors: [
       {
         name: "Mist Gray",
@@ -65,7 +65,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Palette 2",
+    name: "Cherry Custard",
     colors: [
       {
         name: "Cherry Red",
@@ -82,7 +82,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Palette 1",
+    name: "Spruce & Champagne",
     colors: [
       {
         name: "Deep Forest",
@@ -99,7 +99,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "New Palette 5",
+    name: "Plum & Sandalwood",
     colors: [
       { name: "Golden Sandlewood", hex: "#857861", colSpan: "col-span-3", textColor: "white" },
       { name: "Almond Light", hex: "#E7D4BB", colSpan: "col-span-1", textColor: "black" },
@@ -108,7 +108,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "New Palette 4",
+    name: "Gilded Navy",
     colors: [
       { name: "Alabaster White", hex: "#F7F3E9", colSpan: "col-span-3", textColor: "black" },
       { name: "Metallic Brass", hex: "#D4AF37", colSpan: "col-span-1", textColor: "black" },
@@ -117,7 +117,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "New Palette 3",
+    name: "Old Cartography",
     colors: [
       { name: "Pale", hex: "#E8D9C4", colSpan: "col-span-3", textColor: "black" },
       { name: "Gold", hex: "#785D32", colSpan: "col-span-1", textColor: "white" },
@@ -126,7 +126,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "New Palette 2",
+    name: "Winter Conservatory",
     colors: [
       { name: "Warm Alabaster", hex: "#E9E0CF", colSpan: "col-span-3", textColor: "black" },
       { name: "Antique Gold", hex: "#BA9B5F", colSpan: "col-span-1", textColor: "black" },
@@ -135,7 +135,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "New Palette 1",
+    name: "Rouge Atelier",
     colors: [
       { name: "Crimson Depth", hex: "#710014", colSpan: "col-span-3", textColor: "white" },
       { name: "Warm Sand", hex: "#B38F6F", colSpan: "col-span-1", textColor: "white" },
@@ -509,7 +509,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Fresh Color 1",
+    name: "Electric Flora",
     colors: [
       {
         name: "Praxeti White",
@@ -550,7 +550,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Fresh Color 2",
+    name: "Spice Bazaar",
     colors: [
       {
         name: "Yoghurt",
@@ -591,7 +591,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Fresh Color 3",
+    name: "Glacial Flare",
     colors: [
       {
         name: "Morning Snow",
@@ -632,7 +632,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Fresh Color 4",
+    name: "Kyoto Dusk",
     colors: [
       {
         name: "Cloud Dancer",
@@ -673,7 +673,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Fresh Color 5",
+    name: "Saffron Shore",
     colors: [
       {
         name: "Arctic Powder",
@@ -714,7 +714,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Colors 1",
+    name: "Volcanic Glow",
     colors: [
       {
         name: "Raisin Black",
@@ -726,7 +726,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Colors 2",
+    name: "Scarlet & Linen",
     colors: [
       { name: "Ferrari Red", hex: "#EA2E00", colSpan: "col-span-3 row-span-3", textColor: "white" },
       {
@@ -738,7 +738,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Colors 3",
+    name: "Royal Frost",
     colors: [
       {
         name: "Princess Blue",
@@ -755,7 +755,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Colors 4",
+    name: "Deep Sea Mint",
     colors: [
       {
         name: "Daintree Green",
@@ -772,7 +772,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Colors 5",
+    name: "Silk & Steel",
     colors: [
       { name: "Steel Gray", hex: "#282433", colSpan: "col-span-3 row-span-3", textColor: "white" },
       {
@@ -784,7 +784,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Colors 6",
+    name: "Blackberry & Guava",
     colors: [
       {
         name: "Chinese Black",
@@ -801,7 +801,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Colors 7",
+    name: "Cosmic Lilac",
     colors: [
       { name: "Beyond Navy", hex: "#0F0E49", colSpan: "col-span-3 row-span-3", textColor: "white" },
       {
@@ -813,14 +813,14 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Colors 8",
+    name: "Celadon & Indigo",
     colors: [
       { name: "Blue Zodiac", hex: "#14305F", colSpan: "col-span-3 row-span-3", textColor: "white" },
       { name: "Tea Green", hex: "#D6FEC3", colSpan: "col-span-3 row-span-3", textColor: "black" },
     ],
   },
   {
-    name: "Dual Colors 9",
+    name: "Sunbaked Clay",
     colors: [
       { name: "Ochre", hex: "#D08327", colSpan: "col-span-3 row-span-3", textColor: "white" },
       {
@@ -832,14 +832,14 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Colors 10",
+    name: "Rosewood & Cream",
     colors: [
       { name: "Cornsilk", hex: "#FFF8DC", colSpan: "col-span-3 row-span-3", textColor: "black" },
       { name: "Rose Ebony", hex: "#674846", colSpan: "col-span-3 row-span-3", textColor: "white" },
     ],
   },
   {
-    name: "Dual Colors 11",
+    name: "Eucalyptus Shade",
     colors: [
       {
         name: "Midnight Green",
@@ -851,7 +851,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Colors 12",
+    name: "Claret & Blush",
     colors: [
       {
         name: "Lavender Blush",
@@ -863,35 +863,35 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Colors 13",
+    name: "Twilight Horizon",
     colors: [
       { name: "Night Sky", hex: "#40415D", colSpan: "col-span-3 row-span-3", textColor: "white" },
       { name: "Blue Sky", hex: "#DDDFEE", colSpan: "col-span-3 row-span-3", textColor: "black" },
     ],
   },
   {
-    name: "Dual Colors 14",
+    name: "Lavender Quartz",
     colors: [
       { name: "Ghost White", hex: "#F8F9FE", colSpan: "col-span-3 row-span-3", textColor: "black" },
       { name: "Amethyst", hex: "#A371D0", colSpan: "col-span-3 row-span-3", textColor: "black" },
     ],
   },
   {
-    name: "Dual Colors 15",
+    name: "Miami Tropic",
     colors: [
       { name: "Mint", hex: "#66D0BC", colSpan: "col-span-3 row-span-3", textColor: "black" },
       { name: "Flamingo", hex: "#FF3E9B", colSpan: "col-span-3 row-span-3", textColor: "black" },
     ],
   },
   {
-    name: "Dual Colors 16",
+    name: "Azure & Scarlet",
     colors: [
       { name: "Côte d'Azur", hex: "#98D2EB", colSpan: "col-span-3 row-span-3", textColor: "black" },
       { name: "Matador", hex: "#E12826", colSpan: "col-span-3 row-span-3", textColor: "white" },
     ],
   },
   {
-    name: "Dual Colors 17",
+    name: "Golden Papaya",
     colors: [
       { name: "Warm Orange", hex: "#B95712", colSpan: "col-span-3 row-span-3", textColor: "white" },
       {
@@ -903,7 +903,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Colors 18",
+    name: "Midnight Periwinkle",
     colors: [
       {
         name: "Obsidian Black",
@@ -920,7 +920,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Colors 19",
+    name: "Roasted Terracotta",
     colors: [
       {
         name: "Espresso Noir",
@@ -937,7 +937,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Colors 20",
+    name: "Wilderness Ochre",
     colors: [
       { name: "Forest Moss", hex: "#1C2814", colSpan: "col-span-3 row-span-3", textColor: "white" },
       {
@@ -949,7 +949,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Colors 21",
+    name: "Polar Twilight",
     colors: [
       { name: "Deep Ocean", hex: "#011B4C", colSpan: "col-span-3 row-span-3", textColor: "white" },
       {
@@ -961,42 +961,42 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Colors 22",
+    name: "Sedona Sand",
     colors: [
       { name: "Rust Ember", hex: "#96351E", colSpan: "col-span-3 row-span-3", textColor: "white" },
       { name: "Desert Sand", hex: "#DBB98F", colSpan: "col-span-3 row-span-3", textColor: "black" },
     ],
   },
   {
-    name: "Dual Colors 23",
+    name: "Black Orchid",
     colors: [
       { name: "Jet Black", hex: "#1D1D1D", colSpan: "col-span-3 row-span-3", textColor: "white" },
       { name: "Orchid", hex: "#E5BDDF", colSpan: "col-span-3 row-span-3", textColor: "black" },
     ],
   },
   {
-    name: "Dual Colors 24",
+    name: "Sea Glass & Ash",
     colors: [
       { name: "Wine Ash", hex: "#32292F", colSpan: "col-span-3 row-span-3", textColor: "white" },
       { name: "Turquoise", hex: "#99E1D9", colSpan: "col-span-3 row-span-3", textColor: "black" },
     ],
   },
   {
-    name: "Dual Colors 25",
+    name: "Electric Mint & Noir",
     colors: [
       { name: "Tiffany", hex: "#21F1A8", colSpan: "col-span-3 row-span-3", textColor: "black" },
       { name: "Dark Gray", hex: "#171717", colSpan: "col-span-3 row-span-3", textColor: "white" },
     ],
   },
   {
-    name: "Dual Colors 26",
+    name: "Candy Glaze",
     colors: [
       { name: "True Pink", hex: "#FD1843", colSpan: "col-span-3 row-span-3", textColor: "black" },
       { name: "Chill White", hex: "#FFF9FA", colSpan: "col-span-3 row-span-3", textColor: "black" },
     ],
   },
   {
-    name: "Dual Colors 27",
+    name: "Cyberpunk Violet",
     colors: [
       {
         name: "Charcoal Violet",
@@ -1008,14 +1008,14 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Colors 28",
+    name: "Cyprus Coast",
     colors: [
       { name: "Cyprus", hex: "#004741", colSpan: "col-span-3 row-span-3", textColor: "white" },
       { name: "Sand", hex: "#F0EDE4", colSpan: "col-span-3 row-span-3", textColor: "black" },
     ],
   },
   {
-    name: "Dual Colors 29",
+    name: "Canopy Dew",
     colors: [
       { name: "Lime Sprout", hex: "#E4FD97", colSpan: "col-span-3 row-span-3", textColor: "black" },
       {
@@ -1027,21 +1027,21 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Colors 30",
+    name: "Matcha Milk",
     colors: [
       { name: "Milky", hex: "#FFFDF1", colSpan: "col-span-3 row-span-3", textColor: "black" },
       { name: "Mantis", hex: "#59C749", colSpan: "col-span-3 row-span-3", textColor: "black" },
     ],
   },
   {
-    name: "Dual Colors 31",
+    name: "Turmeric Latte",
     colors: [
       { name: "Turmeric", hex: "#FFBE0B", colSpan: "col-span-3 row-span-3", textColor: "black" },
       { name: "Malt", hex: "#2A2312", colSpan: "col-span-3 row-span-3", textColor: "white" },
     ],
   },
   {
-    name: "Dual Colors 32",
+    name: "Matrix Glow",
     colors: [
       { name: "Sport Black", hex: "#141414", colSpan: "col-span-3 row-span-3", textColor: "white" },
       {
@@ -1053,28 +1053,28 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Colors 33",
+    name: "Ember Depths",
     colors: [
       { name: "Vulcanico", hex: "#FF4103", colSpan: "col-span-3 row-span-3", textColor: "black" },
       { name: "Noturno", hex: "#001621", colSpan: "col-span-3 row-span-3", textColor: "white" },
     ],
   },
   {
-    name: "Dual Colors 34",
+    name: "Blush & Merlot",
     colors: [
       { name: "Skin Tone", hex: "#FFC6A8", colSpan: "col-span-3 row-span-3", textColor: "black" },
       { name: "Bridal", hex: "#741A2F", colSpan: "col-span-3 row-span-3", textColor: "white" },
     ],
   },
   {
-    name: "Dual Colors 35",
+    name: "Arctic Pearl",
     colors: [
       { name: "Arctic Teal", hex: "#0E7490", colSpan: "col-span-3 row-span-3", textColor: "white" },
       { name: "Cloud Pearl", hex: "#F2F5F7", colSpan: "col-span-3 row-span-3", textColor: "black" },
     ],
   },
   {
-    name: "Dual Colors 36",
+    name: "Sahara Bloom",
     colors: [
       {
         name: "Terracotta Bloom",
@@ -1086,7 +1086,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Colors 37",
+    name: "Woodland Cream",
     colors: [
       { name: "Forest Moss", hex: "#4E6B45", colSpan: "col-span-3 row-span-3", textColor: "white" },
       {
@@ -1098,7 +1098,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Colors 38",
+    name: "Wisteria Twilight",
     colors: [
       {
         name: "Indigo Night",
@@ -1115,21 +1115,21 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Dual Colors 39",
+    name: "Mulberry Clay",
     colors: [
       { name: "Berry Plum", hex: "#683557", colSpan: "col-span-3 row-span-3", textColor: "white" },
       { name: "Blush Clay", hex: "#E9C1B7", colSpan: "col-span-3 row-span-3", textColor: "black" },
     ],
   },
   {
-    name: "Dual Colors 40",
+    name: "Glacier Onyx",
     colors: [
       { name: "Onyx", hex: "#020202", colSpan: "col-span-3 row-span-3", textColor: "white" },
       { name: "Candy Blue", hex: "#B2D5E5", colSpan: "col-span-3 row-span-3", textColor: "black" },
     ],
   },
   {
-    name: "Tri Colors 1",
+    name: "Valencia Grove",
     colors: [
       { name: "Tangerine", hex: "#F58F20", colSpan: "col-span-3", textColor: "black" },
       { name: "Leaf Green", hex: "#467434", colSpan: "col-span-3", textColor: "white" },
@@ -1137,7 +1137,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Tri Colors 2",
+    name: "Alpine Monarch",
     colors: [
       { name: "Ice White", hex: "#F4FEFF", colSpan: "col-span-3", textColor: "black" },
       { name: "Powder Blue", hex: "#A9C0E0", colSpan: "col-span-3", textColor: "black" },
@@ -1145,7 +1145,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Tri Colors 3",
+    name: "Capri Marina",
     colors: [
       { name: "Aqua", hex: "#95D9C0", colSpan: "col-span-3", textColor: "black" },
       { name: "Blanc", hex: "#FFFFFF", colSpan: "col-span-3", textColor: "black" },
@@ -1153,7 +1153,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Tri Colors 4",
+    name: "Abyssal Twilight",
     colors: [
       { name: "Midnight Blue", hex: "#001A4B", colSpan: "col-span-3", textColor: "white" },
       { name: "Cobalt Blue", hex: "#04326D", colSpan: "col-span-3", textColor: "white" },
@@ -1161,7 +1161,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Tri Colors 5",
+    name: "Mojave Twilight",
     colors: [
       { name: "Charcoal Navy", hex: "#27262E", colSpan: "col-span-3", textColor: "white" },
       { name: "Sandy Tan", hex: "#E19C63", colSpan: "col-span-3", textColor: "black" },
@@ -1169,7 +1169,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Tri Colors 6",
+    name: "Wild Iris",
     colors: [
       { name: "Moss Green", hex: "#8F9D68", colSpan: "col-span-3", textColor: "white" },
       { name: "Old Lace", hex: "#FFF8EB", colSpan: "col-span-3", textColor: "black" },
@@ -1177,7 +1177,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Quad Colors 1",
+    name: "Amalfi Splash",
     colors: [
       { name: "Deep Teal", hex: "#0F506D", colSpan: "col-span-3", textColor: "white" },
       { name: "Ocean Blue", hex: "#1E7F98", colSpan: "row-span-2", textColor: "white" },
@@ -1186,7 +1186,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Quad Colors 2",
+    name: "Berry Patisserie",
     colors: [
       { name: "Soft Pink", hex: "#F6B7C8", colSpan: "col-span-3", textColor: "black" },
       { name: "Light Cream", hex: "#FFE6EE", colSpan: "row-span-2", textColor: "black" },
@@ -1195,7 +1195,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Quad Colors 3",
+    name: "Santorini Sun",
     colors: [
       { name: "Sunflower Yellow", hex: "#F2C400", colSpan: "col-span-3", textColor: "black" },
       { name: "Aegean Blue", hex: "#0077C8", colSpan: "row-span-2", textColor: "white" },
@@ -1204,7 +1204,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Quad Colors 4",
+    name: "Matcha Ceremony",
     colors: [
       { name: "Matcha Lime", hex: "#A9C632", colSpan: "col-span-3", textColor: "black" },
       { name: "Forest Brew", hex: "#1D2E1B", colSpan: "row-span-2", textColor: "white" },
@@ -1213,7 +1213,7 @@ export const COLOR_PALETTES: Palette[] = [
     ],
   },
   {
-    name: "Quad Colors 5",
+    name: "Cotton Candy Sky",
     colors: [
       { name: "Bubblegum Pink", hex: "#E7B9C8", colSpan: "col-span-3", textColor: "black" },
       { name: "Berry Jam", hex: "#B8365A", colSpan: "row-span-2", textColor: "white" },
