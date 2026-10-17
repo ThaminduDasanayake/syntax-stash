@@ -180,7 +180,10 @@ export function parseOgImageStyle(ogImageBg?: string | null): OgImageStyle {
   const isContain = normalized.includes("contain");
   const fit: OgImageFitOption = isContain ? "contain" : "cover";
 
-  const bgPart = normalized.replace(/\bcontain\b/g, "").replace(/\bcover\b/g, "").trim();
+  const bgPart = normalized
+    .replace(/\bcontain\b/g, "")
+    .replace(/\bcover\b/g, "")
+    .trim();
 
   let bg: OgImageBgColor = "none";
   if (bgPart === "white" || bgPart === "light") {

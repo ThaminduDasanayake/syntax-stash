@@ -415,129 +415,131 @@ export function MediaAssetFields({
           </div>
 
           {/* OG Image Styling Controls: Fit & Canvas */}
-          {cleanOg && onOgImageBgChange && (() => {
-            const { bg: currentBg, fit: currentFit } = parseOgImageStyle(ogImageBg);
+          {cleanOg &&
+            onOgImageBgChange &&
+            (() => {
+              const { bg: currentBg, fit: currentFit } = parseOgImageStyle(ogImageBg);
 
-            const handleFitChange = (newFit: OgImageFitOption) => {
-              onOgImageBgChange(serializeOgImageStyle(currentBg, newFit));
-            };
+              const handleFitChange = (newFit: OgImageFitOption) => {
+                onOgImageBgChange(serializeOgImageStyle(currentBg, newFit));
+              };
 
-            const handleBgChange = (newBg: OgImageBgColor) => {
-              onOgImageBgChange(serializeOgImageStyle(newBg, currentFit));
-            };
+              const handleBgChange = (newBg: OgImageBgColor) => {
+                onOgImageBgChange(serializeOgImageStyle(newBg, currentFit));
+              };
 
-            return (
-              <div className="border-line/70 bg-surface/40 space-y-2.5 rounded-lg border-[1.5px] p-3">
-                {/* Row 1: Fit & Framing */}
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <div className="flex flex-col">
-                    <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
-                      Image Fit & Framing:
-                    </span>
-                    <span className="text-muted-foreground text-[9px]">
-                      Choose how the image scales to the 2:1 card aspect ratio
-                    </span>
+              return (
+                <div className="border-line/70 bg-surface/40 space-y-2.5 rounded-lg border-[1.5px] p-3">
+                  {/* Row 1: Fit & Framing */}
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div className="flex flex-col">
+                      <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
+                        Image Fit & Framing:
+                      </span>
+                      <span className="text-muted-foreground text-[9px]">
+                        Choose how the image scales to the 2:1 card aspect ratio
+                      </span>
+                    </div>
+                    <div className="border-line bg-surface/80 inline-flex rounded border-[1.5px] p-0.5 font-mono text-[11px]">
+                      <button
+                        type="button"
+                        onClick={() => handleFitChange("cover")}
+                        disabled={disabled}
+                        className={cn(
+                          "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                          currentFit === "cover"
+                            ? "bg-primary text-primary-foreground shadow-xs"
+                            : "text-muted-foreground hover:text-foreground",
+                        )}
+                        title="Edge-to-edge fill (crops edges for non-2:1 images)"
+                      >
+                        Fill / Cover (Default)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleFitChange("contain")}
+                        disabled={disabled}
+                        className={cn(
+                          "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                          currentFit === "contain"
+                            ? "bg-primary text-primary-foreground shadow-xs"
+                            : "text-muted-foreground hover:text-foreground",
+                        )}
+                        title="Shows 100% of image without cropping, with ambient backdrop"
+                      >
+                        Contain (Full View)
+                      </button>
+                    </div>
                   </div>
-                  <div className="border-line bg-surface/80 inline-flex rounded border-[1.5px] p-0.5 font-mono text-[11px]">
-                    <button
-                      type="button"
-                      onClick={() => handleFitChange("cover")}
-                      disabled={disabled}
-                      className={cn(
-                        "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
-                        currentFit === "cover"
-                          ? "bg-primary text-primary-foreground shadow-xs"
-                          : "text-muted-foreground hover:text-foreground",
-                      )}
-                      title="Edge-to-edge fill (crops edges for non-2:1 images)"
-                    >
-                      Fill / Cover (Default)
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleFitChange("contain")}
-                      disabled={disabled}
-                      className={cn(
-                        "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
-                        currentFit === "contain"
-                          ? "bg-primary text-primary-foreground shadow-xs"
-                          : "text-muted-foreground hover:text-foreground",
-                      )}
-                      title="Shows 100% of image without cropping, with ambient backdrop"
-                    >
-                      Contain (Full View)
-                    </button>
+
+                  {/* Row 2: Background / Canvas */}
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div className="flex flex-col">
+                      <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
+                        Background / Canvas:
+                      </span>
+                      <span className="text-muted-foreground text-[9px]">
+                        Canvas color for contain mode or transparent SVGs
+                      </span>
+                    </div>
+                    <div className="border-line bg-surface/80 inline-flex flex-wrap rounded border-[1.5px] p-0.5 font-mono text-[11px]">
+                      <button
+                        type="button"
+                        onClick={() => handleBgChange("none")}
+                        disabled={disabled}
+                        className={cn(
+                          "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                          currentBg === "none"
+                            ? "bg-primary text-primary-foreground shadow-xs"
+                            : "text-muted-foreground hover:text-foreground",
+                        )}
+                      >
+                        None (Dark Card)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleBgChange("white")}
+                        disabled={disabled}
+                        className={cn(
+                          "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                          currentBg === "white"
+                            ? "bg-primary text-primary-foreground shadow-xs"
+                            : "text-muted-foreground hover:text-foreground",
+                        )}
+                      >
+                        White Canvas
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleBgChange("dark")}
+                        disabled={disabled}
+                        className={cn(
+                          "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                          currentBg === "dark"
+                            ? "bg-primary text-primary-foreground shadow-xs"
+                            : "text-muted-foreground hover:text-foreground",
+                        )}
+                      >
+                        Dark Slate
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleBgChange("zinc")}
+                        disabled={disabled}
+                        className={cn(
+                          "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                          currentBg === "zinc"
+                            ? "bg-primary text-primary-foreground shadow-xs"
+                            : "text-muted-foreground hover:text-foreground",
+                        )}
+                      >
+                        Zinc
+                      </button>
+                    </div>
                   </div>
                 </div>
-
-                {/* Row 2: Background / Canvas */}
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <div className="flex flex-col">
-                    <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
-                      Background / Canvas:
-                    </span>
-                    <span className="text-muted-foreground text-[9px]">
-                      Canvas color for contain mode or transparent SVGs
-                    </span>
-                  </div>
-                  <div className="border-line bg-surface/80 inline-flex flex-wrap rounded border-[1.5px] p-0.5 font-mono text-[11px]">
-                    <button
-                      type="button"
-                      onClick={() => handleBgChange("none")}
-                      disabled={disabled}
-                      className={cn(
-                        "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
-                        currentBg === "none"
-                          ? "bg-primary text-primary-foreground shadow-xs"
-                          : "text-muted-foreground hover:text-foreground",
-                      )}
-                    >
-                      None (Dark Card)
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleBgChange("white")}
-                      disabled={disabled}
-                      className={cn(
-                        "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
-                        currentBg === "white"
-                          ? "bg-primary text-primary-foreground shadow-xs"
-                          : "text-muted-foreground hover:text-foreground",
-                      )}
-                    >
-                      White Canvas
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleBgChange("dark")}
-                      disabled={disabled}
-                      className={cn(
-                        "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
-                        currentBg === "dark"
-                          ? "bg-primary text-primary-foreground shadow-xs"
-                          : "text-muted-foreground hover:text-foreground",
-                      )}
-                    >
-                      Dark Slate
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleBgChange("zinc")}
-                      disabled={disabled}
-                      className={cn(
-                        "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
-                        currentBg === "zinc"
-                          ? "bg-primary text-primary-foreground shadow-xs"
-                          : "text-muted-foreground hover:text-foreground",
-                      )}
-                    >
-                      Zinc
-                    </button>
-                  </div>
-                </div>
-              </div>
-            );
-          })()}
+              );
+            })()}
 
           {/* OG Image Preview Thumbnail */}
           {cleanOg && <OgImagePreviewBanner ogImage={cleanOg} ogImageBg={ogImageBg} />}
