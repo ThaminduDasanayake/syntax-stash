@@ -9,7 +9,6 @@ import {
   LockIcon,
   PaintBrushIcon,
   PaletteIcon,
-  PlusIcon,
   TrashIcon,
 } from "@phosphor-icons/react";
 import { useSearchParams } from "next/navigation";
@@ -30,6 +29,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { EmptyState } from "@/components/ui/empty-state";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -241,7 +241,8 @@ export function CollectionsView() {
               </div>
 
               <p className="text-muted-foreground line-clamp-2 font-sans text-xs leading-relaxed">
-                Your saved color palettes from Color Studio for quick design reference and CSS export.
+                Your saved color palettes from Color Studio for quick design reference and CSS
+                export.
               </p>
             </div>
 
