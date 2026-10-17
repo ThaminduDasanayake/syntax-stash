@@ -7,12 +7,16 @@ import {
   FolderSimpleIcon,
   GlobeIcon,
   LockIcon,
+  PaintBrushIcon,
+  PaletteIcon,
   PlusIcon,
   TrashIcon,
 } from "@phosphor-icons/react";
+import { useSearchParams } from "next/navigation";
 import React, { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
+import { ColorPalettesCollection } from "@/components/collections/color-palettes-collection";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { FilterSection } from "@/components/filter-section";
 import { ToolCardSkeleton } from "@/components/tool-card-skeleton";
@@ -26,16 +30,19 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { EmptyState } from "@/components/ui/empty-state";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useCollections, UserCollection } from "@/hooks/use-collections";
+import { usePaletteBookmarks } from "@/hooks/use-palette-bookmarks";
 import { Resource } from "@/types";
 
 export function CollectionsView() {
   const { collections, createCollection, deleteCollection, isLoading } = useCollections();
+  const { count: paletteBookmarksCount } = usePaletteBookmarks();
+  const searchParams = useSearchParams();
 
+  const [isColorPalettesOpen, setIsColorPalettesOpen] = useState(false);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [newColName, setNewColName] = useState("");
   const [newColDesc, setNewColDesc] = useState("");
@@ -47,6 +54,14 @@ export function CollectionsView() {
   const [isLoadingItems, setIsLoadingItems] = useState(false);
 
   const [deletingCol, setDeletingCol] = useState<UserCollection | null>(null);
+
+  // Check URL query param to open Color Palettes collection directly
+  useEffect(() => {
+    const colParam = searchParams.get("collection");
+    if (colParam === "color-palettes") {
+      setIsColorPalettesOpen(true);
+    }
+  }, [searchParams]);
 
   // Fetch items when activeCollection changes
   useEffect(() => {
@@ -104,6 +119,12 @@ export function CollectionsView() {
     return Array.from(new Set(collectionItems.map((r) => r.category)));
   }, [collectionItems]);
 
+  // Color Palettes dedicated collection view
+  if (isColorPalettesOpen) {
+    return <ColorPalettesCollection onBack={() => setIsColorPalettesOpen(false)} />;
+  }
+
+  // Active user custom collection view
   if (activeCollection) {
     return (
       <div className="space-y-6">
@@ -179,7 +200,7 @@ export function CollectionsView() {
             Custom Stash Folders
           </h2>
           <p className="text-muted-foreground text-xs">
-            Organize your tools into personalized, curated lists.
+            Organize your tools and palettes into personalized, curated collections.
           </p>
         </div>
 
@@ -202,25 +223,48 @@ export function CollectionsView() {
             />
           ))}
         </div>
-      ) : collections.length === 0 ? (
-        <EmptyState
-          variant="dashed"
-          icon={<FolderPlusIcon className="size-6" />}
-          title="No collections yet"
-          description='Create custom folders like "Next.js Stack" or "UI Primitives" to organize your favorite tools.'
-          action={
-            <Button
-              size="sm"
-              onClick={() => setIsCreateOpen(true)}
-              className="h-8 gap-1.5 text-xs font-bold uppercase"
-            >
-              <PlusIcon className="size-3.5" />
-              <span>Create Your First Collection</span>
-            </Button>
-          }
-        />
       ) : (
         <div className="grid grid-cols-1 gap-4 font-mono text-xs sm:grid-cols-2 lg:grid-cols-3">
+          {/* Built-in System Collection: Color Palettes */}
+          <div className="border-line bg-surface/40 hover:bg-surface/70 flex flex-col justify-between rounded-lg border-[1.5px] p-4 transition-colors">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <PaletteIcon className="text-primary size-5" />
+                  <h3 className="text-foreground font-bold tracking-tight">Color Palettes</h3>
+                </div>
+
+                <span className="border-line bg-surface text-muted-foreground flex items-center gap-1 rounded border-[1.5px] px-1.5 py-0.5 text-[9px] font-bold uppercase">
+                  <PaintBrushIcon className="size-2.5" />
+                  Studio Collection
+                </span>
+              </div>
+
+              <p className="text-muted-foreground line-clamp-2 font-sans text-xs leading-relaxed">
+                Your saved color palettes from Color Studio for quick design reference and CSS export.
+              </p>
+            </div>
+
+            <div className="border-line mt-4 flex items-center justify-between border-t pt-3">
+              <span className="text-muted-foreground text-[11px]">
+                <strong>{paletteBookmarksCount}</strong>{" "}
+                {paletteBookmarksCount === 1 ? "palette" : "palettes"}
+              </span>
+
+              <div className="flex items-center gap-1.5">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => setIsColorPalettesOpen(true)}
+                  className="border-line hover:bg-surface h-7 px-2.5 text-[11px] font-bold uppercase"
+                >
+                  Open
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          {/* User Custom Collections */}
           {collections.map((col) => (
             <div
               key={col.id}
@@ -278,6 +322,22 @@ export function CollectionsView() {
               </div>
             </div>
           ))}
+
+          {/* Create Custom Folder Prompt if no user collections exist yet */}
+          {collections.length === 0 && (
+            <div
+              onClick={() => setIsCreateOpen(true)}
+              className="border-line/60 hover:border-line bg-surface/20 hover:bg-surface/40 flex min-h-[140px] cursor-pointer flex-col items-center justify-center rounded-lg border-[1.5px] border-dashed p-4 text-center transition-colors"
+            >
+              <FolderPlusIcon className="text-muted-foreground/60 mb-1.5 size-5" />
+              <p className="text-foreground text-xs font-bold tracking-tight uppercase">
+                Create Custom Folder
+              </p>
+              <p className="text-muted-foreground mt-0.5 max-w-[200px] font-sans text-[11px]">
+                Organize other tools into personal collections.
+              </p>
+            </div>
+          )}
         </div>
       )}
 

@@ -5,7 +5,7 @@ export type Colors = {
   textColor?: "white" | "black";
 };
 
-type Palette = {
+export type Palette = {
   name: string;
   colors: Colors[];
 };
