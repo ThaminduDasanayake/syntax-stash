@@ -81,17 +81,7 @@ export function downloadStringAsFile(content: string, filename: string, mimeType
 
 export type Theme = "red" | "orange" | "yellow" | "green" | "cyan" | "blue" | "purple" | "pink";
 
-/* eslint-disable perfectionist/sort-arrays, perfectionist/sort-objects */
-export const THEMES: readonly Theme[] = [
-  "red",
-  "orange",
-  "yellow",
-  "green",
-  "cyan",
-  "blue",
-  "purple",
-  "pink",
-] as const;
+/* eslint-disable perfectionist/sort-objects */
 
 const UNIFIED_THEME = {
   bg: "bg-card text-foreground",
@@ -128,9 +118,7 @@ export const THEME_CONFIG: Record<
   red: UNIFIED_THEME,
   yellow: UNIFIED_THEME,
 };
-/* eslint-enable perfectionist/sort-arrays, perfectionist/sort-objects */
-
-export const CATEGORY_THEME_MAP: Record<string, Theme> = {};
+/* eslint-enable perfectionist/sort-objects */
 
 export function getCategoryTheme(
   _category?: string,
@@ -139,13 +127,6 @@ export function getCategoryTheme(
   _allCategories?: string[],
 ): Theme {
   return "red";
-}
-
-export function getCategoryColor(
-  category: string,
-  itemType: "resource" | "tool" = "resource",
-): string {
-  return THEME_CONFIG[getCategoryTheme(category, itemType)].bg;
 }
 
 /**
