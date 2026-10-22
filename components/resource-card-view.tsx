@@ -29,6 +29,7 @@ export interface ResourceCardViewProps {
   ogImageBg?: string | null;
   onBookmarkClick?: (e: React.MouseEvent) => void;
   onCardClick?: (rect?: DOMRect) => void;
+  priority?: boolean;
   showTags?: boolean;
   stars?: number | null;
   subtitle?: string | null;
@@ -53,6 +54,7 @@ export function ResourceCardView({
   ogImageBg,
   onBookmarkClick,
   onCardClick,
+  priority = false,
   showTags = false,
   stars = null,
   tags,
@@ -169,7 +171,8 @@ export function ResourceCardView({
                     src={imageSrc}
                     alt=""
                     aria-hidden="true"
-                    loading="lazy"
+                    loading={priority ? "eager" : "lazy"}
+                    fetchPriority={priority ? "high" : "auto"}
                     referrerPolicy="no-referrer"
                     className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-35 blur-xl brightness-90 saturate-150 select-none"
                   />
@@ -179,7 +182,8 @@ export function ResourceCardView({
                   key={imageSrc}
                   src={imageSrc}
                   alt={title || "Resource preview"}
-                  loading="lazy"
+                  loading={priority ? "eager" : "lazy"}
+                  fetchPriority={priority ? "high" : "auto"}
                   onError={handleOgError}
                   className={cn(
                     "h-full w-full transition-transform duration-500 ease-out group-hover:scale-[1.03]",

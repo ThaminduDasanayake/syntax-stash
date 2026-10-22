@@ -14,6 +14,7 @@ function ResourceCardComponent({
   isBookmarked: propIsBookmarked,
   onCardClick,
   onToggleBookmark: propOnToggleBookmark,
+  priority,
   resource,
 }: ResourceCardProps) {
   const stars = getGitHubStars(resource.github);
@@ -49,6 +50,7 @@ function ResourceCardComponent({
         ogImageBg={resource.ogImageBg}
         onBookmarkClick={handleBookmarkClick}
         onCardClick={onCardClick ? (rect?: DOMRect) => onCardClick(resource, rect) : undefined}
+        priority={priority}
         stars={stars}
         subtitle={resource.subtitle}
         tags={resource.tags}

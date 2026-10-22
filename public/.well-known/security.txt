@@ -1,0 +1,5 @@
+Contact: mailto:thamindudasanayake@gmail.com
+Expires: 2027-10-22T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://syntax-stash.vercel.app/.well-known/security.txt
+Policy: https://github.com/ThaminduDasanayake/syntax-stash/blob/main/CONTRIBUTING.md

@@ -16,6 +16,9 @@ const nextConfig: NextConfig = {
     return [
       {
         headers: [
+          { key: "Cross-Origin-Embedder-Policy", value: "credentialless" },
+          { key: "Cross-Origin-Opener-Policy", value: "same-origin-allow-popups" },
+          { key: "Cross-Origin-Resource-Policy", value: "same-site" },
           {
             key: "Permissions-Policy",
             value: "camera=(), microphone=(), geolocation=(), browsing-topics=()",
