@@ -57,11 +57,43 @@ export const THREE_PALETTES: Palette[] = [
       { name: "Cherry Tomato", hex: "#EA3C27", colSpan: "col-span-3", textColor: "white" },
     ],
   },
+  {
+    name: "Palette 2",
+    colors: [
+      { name: "Marshmallow", hex: "#F0EEE5", colSpan: "col-span-3", textColor: "white" },
+      { name: "Desert Pose", hex: "#CF6A78", colSpan: "col-span-3", textColor: "black" },
+      { name: "Love Bird", hex: "#C1DB3D", colSpan: "col-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "Palette 3",
+    colors: [
+      { name: "Sea Angel", hex: "#98BFCB", colSpan: "col-span-3", textColor: "white" },
+      { name: "Super Sonic", hex: "#3073B7", colSpan: "col-span-3", textColor: "black" },
+      { name: "Lemon Tonic", hex: "#FBF952", colSpan: "col-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "Palette 4",
+    colors: [
+      { name: "Green Banana", hex: "#B9BD73", colSpan: "col-span-3", textColor: "white" },
+      { name: "Ice Melt", hex: "#D4E5F1", colSpan: "col-span-3", textColor: "black" },
+      { name: "Cherry Tomato", hex: "#EA3C27", colSpan: "col-span-3", textColor: "white" },
+    ],
+  },
   // {
-  //   name: "Palette 2",
+  //   name: "Palette 5",
   //   colors: [
-  //     { name: "Moss Green", hex: "xxx", colSpan: "col-span-3", textColor: "white" },
-  //     { name: "Old Lace", hex: "xxx", colSpan: "col-span-3", textColor: "black" },
+  //     { name: "Marshmallow", hex: "xxx", colSpan: "col-span-3", textColor: "white" },
+  //     { name: "Lace", hex: "xxx", colSpan: "col-span-3", textColor: "black" },
+  //     { name: "Iris", hex: "xxx", colSpan: "col-span-3", textColor: "white" },
+  //   ],
+  // },
+  // {
+  //   name: "Palette 4",
+  //   colors: [
+  //     { name: "Marshmallow", hex: "xxx", colSpan: "col-span-3", textColor: "white" },
+  //     { name: "Lace", hex: "xxx", colSpan: "col-span-3", textColor: "black" },
   //     { name: "Iris", hex: "xxx", colSpan: "col-span-3", textColor: "white" },
   //   ],
   // },

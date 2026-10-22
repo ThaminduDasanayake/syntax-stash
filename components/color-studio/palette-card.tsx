@@ -139,7 +139,7 @@ function PaletteCardComponent({
                   onClick={() => onCopySwatch(color.hex, swatchKey)}
                   title={`Click to copy ${color.hex}`}
                   className={cn(
-                    "group/swatch relative flex h-full min-h-24 cursor-pointer flex-col justify-between p-3 font-mono transition-all duration-150 select-none hover:brightness-105 active:scale-[0.99]",
+                    "group/swatch relative flex h-full min-h-24 cursor-pointer flex-col justify-between p-3 font-mono transition-all duration-150 select-none active:scale-[0.99]",
                     color.textColor === "black" ? "text-black" : "text-white",
                     color.colSpan,
                   )}
@@ -148,14 +148,14 @@ function PaletteCardComponent({
                   }}
                 >
                   <div className="text-sm font-bold tracking-tight">{color.name}</div>
-                  <div className="mt-6 flex items-center justify-between font-mono text-xs font-bold opacity-80 group-hover/swatch:opacity-100">
-                    <span>{isCopied ? "Copied!" : color.hex}</span>
+                  <div className="mt-6 flex items-center justify-between font-mono text-xs font-bold">
+                    <span>{color.hex}</span>
                     {isCopied ? (
                       <CheckIcon weight="bold" className="size-3.5" />
                     ) : (
                       <CopyIcon
                         weight="bold"
-                        className="size-3 opacity-0 transition-opacity group-hover/swatch:opacity-80"
+                        className="size-3 opacity-0 transition-opacity group-hover/swatch:opacity-100"
                       />
                     )}
                   </div>
