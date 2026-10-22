@@ -44,7 +44,7 @@ function PaletteCardComponent({
   const combinedCode = `:root {\n${cssLines}\n}\n\n@theme inline {\n${tailwindLines}\n}`;
 
   return (
-    <Card className="group relative flex flex-col rounded-2xl border-[1.5px] border-white/8 bg-[#18181b] p-5 shadow-[0_2px_12px_rgba(0,0,0,0.3)] transition-all duration-300 hover:-translate-y-1 hover:border-white/18">
+    <Card className="group relative flex h-full flex-col rounded-2xl border-[1.5px] border-white/8 bg-[#18181b] p-5 shadow-[0_2px_12px_rgba(0,0,0,0.3)] transition-all duration-300 hover:-translate-y-1 hover:border-white/18">
       <CardHeader className="mb-3.5 flex items-center justify-between p-0">
         <div className="flex min-w-0 flex-col gap-0.5">
           <h3 className="truncate font-mono text-base font-bold tracking-tight text-white">
@@ -126,9 +126,9 @@ function PaletteCardComponent({
       </CardHeader>
 
       {/* Dynamic Bento Box Layout inside the Card with unified rounded-xl stage */}
-      <CardContent className="flex-1 p-0">
-        <div className="relative w-full overflow-hidden rounded-xl border-[1.5px] border-white/10 transition-all duration-300 group-hover:border-white/18">
-          <div className="grid min-h-48 flex-1 grid-cols-3 grid-rows-3 gap-px bg-white/10">
+      <CardContent className="flex flex-1 flex-col p-0">
+        <div className="relative flex w-full flex-1 overflow-hidden rounded-xl border-[1.5px] border-white/10 transition-all duration-300 group-hover:border-white/18">
+          <div className="grid h-full min-h-48 flex-1 grid-cols-3 grid-rows-3 gap-px bg-white/10">
             {palette.colors.map((color, i) => {
               const swatchKey = `${palette.name}-${color.hex}-${i}`;
               const isCopied = copiedItem === swatchKey;
@@ -139,7 +139,7 @@ function PaletteCardComponent({
                   onClick={() => onCopySwatch(color.hex, swatchKey)}
                   title={`Click to copy ${color.hex}`}
                   className={cn(
-                    "group/swatch relative flex min-h-24 cursor-pointer flex-col justify-between p-3 font-mono transition-all duration-150 select-none hover:brightness-105 active:scale-[0.99]",
+                    "group/swatch relative flex h-full min-h-24 cursor-pointer flex-col justify-between p-3 font-mono transition-all duration-150 select-none hover:brightness-105 active:scale-[0.99]",
                     color.textColor === "black" ? "text-black" : "text-white",
                     color.colSpan,
                   )}
