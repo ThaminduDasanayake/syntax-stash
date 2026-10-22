@@ -53,6 +53,7 @@ export type ResourceCardProps = {
   onCardClick?: (resource: Resource, rect?: DOMRect) => void;
   onTagClickAction?: (tag: string) => void;
   onToggleBookmark?: (resource: Resource) => void;
+  priority?: boolean;
 };
 
 export type StashCardProps = {
@@ -62,6 +63,7 @@ export type StashCardProps = {
   onCardClick?: (item: StashItem, rect?: DOMRect) => void;
   onTagClickAction?: (tag: string) => void;
   onToggleBookmark?: (item: StashItem) => void;
+  priority?: boolean;
 };
 
 export type HeaderProps = {

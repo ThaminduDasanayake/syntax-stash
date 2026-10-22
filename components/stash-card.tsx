@@ -14,12 +14,17 @@ function StashCardComponent({
   onCardClick,
   onTagClickAction,
   onToggleBookmark,
+  priority,
 }: StashCardProps) {
   const ref = useRef<HTMLDivElement | null>(null);
-  const [isRevealed, setIsRevealed] = useState(false);
+  // Above-the-fold cards (first 8) are revealed immediately to prevent LCP lag & layout shift
+  const isAboveTheFold = index < 8;
+  const [isRevealed, setIsRevealed] = useState(isAboveTheFold);
   const [staggerDelay, setStaggerDelay] = useState(0);
 
   useEffect(() => {
+    if (isAboveTheFold) return;
+
     const el = ref.current;
     if (!el) return;
 
@@ -49,7 +54,7 @@ function StashCardComponent({
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [index]);
+  }, [index, isAboveTheFold]);
 
   const content = isInternalTool(item) ? (
     <ToolCard tool={item} />
@@ -60,6 +65,7 @@ function StashCardComponent({
       onCardClick={onCardClick}
       onTagClickAction={onTagClickAction}
       onToggleBookmark={onToggleBookmark}
+      priority={priority ?? index === 0}
     />
   );
 

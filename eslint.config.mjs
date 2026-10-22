@@ -5,6 +5,7 @@ import eslintConfigPrettier from "eslint-config-prettier";
 import perfectionist from "eslint-plugin-perfectionist";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 
+/* eslint-disable perfectionist/sort-arrays */
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
@@ -77,6 +78,13 @@ const eslintConfig = defineConfig([
       "react-hooks/set-state-in-effect": "off",
       "simple-import-sort/exports": "error",
       "simple-import-sort/imports": "error",
+    },
+  },
+  {
+    files: ["app/tools/color-studio/**/*palette*.ts"],
+    rules: {
+      "perfectionist/sort-arrays": "off",
+      "perfectionist/sort-objects": "off",
     },
   },
 ]);

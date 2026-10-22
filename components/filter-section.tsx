@@ -55,14 +55,49 @@ function formatItemCountLabel(count: number, label: string): string {
   return label;
 }
 
-function FilterSectionInner({
+interface FilterParams {
+  category: string | null;
+  mode: "any" | "all";
+  q: string;
+  saved: boolean;
+  sort: SortOption;
+  tags: string[];
+}
+
+function FilterUrlSync({
+  initialCategory,
+  onParamsChange,
+}: {
+  initialCategory?: string;
+  onParamsChange: (params: FilterParams) => void;
+}) {
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const saved = searchParams.get("saved") === "true";
+    const catParam = searchParams.get("category");
+    const category = catParam || initialCategory || null;
+    const tagParam = searchParams.get("tag");
+    const tags = tagParam ? tagParam.split(",").filter(Boolean) : [];
+    const mode = searchParams.get("mode") === "all" ? "all" : "any";
+    const sortParam = searchParams.get("sort") as SortOption | null;
+    const sort: SortOption =
+      sortParam && USER_SORT_OPTIONS.some((o) => o.value === sortParam) ? sortParam : "default";
+    const q = searchParams.get("q") || "";
+
+    onParamsChange({ category, mode, q, saved, sort, tags });
+  }, [initialCategory, onParamsChange, searchParams]);
+
+  return null;
+}
+
+export function FilterSection({
   categories,
   initialCategory,
   itemLabel = "Items",
   items,
   searchPlaceholder = "Search...",
 }: FilterSectionProps) {
-  const searchParams = useSearchParams();
   const pathname = usePathname();
   const searchDebounceRef = useRef<NodeJS.Timeout | null>(null);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
@@ -75,29 +110,21 @@ function FilterSectionInner({
 
   const { bookmarkedSet } = useBookmarks();
 
-  // Derive filter state directly from searchParams for instant navigation sync
-  const savedOnly = searchParams.get("saved") === "true";
-  const catParam = searchParams.get("category");
-  const activeCategory = catParam || initialCategory || null;
-  const tagParam = searchParams.get("tag");
-  const selectedTags = useMemo(() => {
-    return tagParam ? tagParam.split(",").filter(Boolean) : [];
-  }, [tagParam]);
-  const matchMode = searchParams.get("mode") === "all" ? "all" : "any";
-  const sortParam = searchParams.get("sort") as SortOption | null;
-  const activeSort: SortOption =
-    sortParam && USER_SORT_OPTIONS.some((o) => o.value === sortParam) ? sortParam : "default";
+  const [savedOnly, setSavedOnly] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<string | null>(initialCategory || null);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [matchMode, setMatchMode] = useState<"any" | "all">("any");
+  const [activeSort, setActiveSort] = useState<SortOption>("default");
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const qParam = searchParams.get("q") || "";
-  const [prevQParam, setPrevQParam] = useState(qParam);
-  const [searchQuery, setSearchQuery] = useState(qParam);
-
-  if (qParam !== prevQParam) {
-    setPrevQParam(qParam);
-    if (qParam.trim() !== searchQuery.trim()) {
-      setSearchQuery(qParam);
-    }
-  }
+  const handleUrlSync = useCallback((params: FilterParams) => {
+    setSavedOnly(params.saved);
+    setActiveCategory(params.category);
+    setSelectedTags(params.tags);
+    setMatchMode(params.mode);
+    setActiveSort(params.sort);
+    setSearchQuery(params.q);
+  }, []);
 
   // Defer heavy list filtering so typing input response is instantaneous (0ms lag)
   const deferredSearchQuery = useDeferredValue(searchQuery);
@@ -113,10 +140,18 @@ function FilterSectionInner({
       sort?: SortOption,
       dispatchPopstate: boolean = true,
     ) => {
-      if (typeof window === "undefined") return;
-      const params = new URLSearchParams(window.location.search);
       const isSaved = saved !== undefined ? saved : savedOnly;
       const currentSort = sort !== undefined ? sort : activeSort;
+
+      setSavedOnly(isSaved);
+      setActiveCategory(cat);
+      setSelectedTags(tags);
+      setMatchMode(mode);
+      setActiveSort(currentSort);
+      setSearchQuery(query);
+
+      if (typeof window === "undefined") return;
+      const params = new URLSearchParams(window.location.search);
 
       if (isSaved) {
         params.set("saved", "true");
@@ -337,7 +372,7 @@ function FilterSectionInner({
   ]);
 
   // Reset pagination limit during render when search or filter parameters change
-  const currentFilterKey = `${deferredSearchQuery}|${activeCategory}|${tagParam}|${matchMode}|${savedOnly}|${activeSort}|${items.length}`;
+  const currentFilterKey = `${deferredSearchQuery}|${activeCategory}|${selectedTags.join(",")}|${matchMode}|${savedOnly}|${activeSort}|${items.length}`;
   const [prevFilterKey, setPrevFilterKey] = useState(currentFilterKey);
 
   if (currentFilterKey !== prevFilterKey) {
@@ -455,6 +490,9 @@ function FilterSectionInner({
 
   return (
     <>
+      <Suspense fallback={null}>
+        <FilterUrlSync initialCategory={initialCategory} onParamsChange={handleUrlSync} />
+      </Suspense>
       <div className="card-body pb-32">
         <div className="section-inner">
           {/* Active Filter Chips Bar (Shown when tags or active sort are applied) */}
@@ -713,13 +751,5 @@ function FilterSectionInner({
         )}
       </Dialog>
     </>
-  );
-}
-
-export function FilterSection(props: FilterSectionProps) {
-  return (
-    <Suspense>
-      <FilterSectionInner {...props} />
-    </Suspense>
   );
 }

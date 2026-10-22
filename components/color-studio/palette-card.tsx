@@ -1,10 +1,9 @@
 "use client";
 
 import { BookmarkSimpleIcon, BracketsCurlyIcon, CheckIcon, CopyIcon } from "@phosphor-icons/react";
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 
 import { Palette } from "@/app/tools/color-studio/palette-data";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
 import {
@@ -14,6 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 export interface PaletteCardProps {
@@ -31,6 +31,8 @@ function PaletteCardComponent({
   onToggleBookmark,
   palette,
 }: PaletteCardProps) {
+  const [isBookmarkHovered, setIsBookmarkHovered] = useState(false);
+
   const cssLines = palette.colors
     .map((c) => `  --${c.name.toLowerCase().replace(/\s+/g, "-")}: ${c.hex};`)
     .join("\n");
@@ -42,47 +44,65 @@ function PaletteCardComponent({
   const combinedCode = `:root {\n${cssLines}\n}\n\n@theme inline {\n${tailwindLines}\n}`;
 
   return (
-    <Card className="hover:ring-muted-foreground transform ring-2 duration-200 hover:-translate-y-1 hover:scale-100">
-      <CardHeader className="flex items-center justify-between">
-        <div className="flex flex-col gap-0.5">
-          <h3 className="text-lg font-bold tracking-tight">{palette.name}</h3>
+    <Card className="group relative flex h-full flex-col rounded-2xl border-[1.5px] border-white/8 bg-[#18181b] p-5 shadow-[0_2px_12px_rgba(0,0,0,0.3)] transition-all duration-300 hover:-translate-y-1 hover:border-white/18">
+      <CardHeader className="mb-3.5 flex items-center justify-between p-0">
+        <div className="flex min-w-0 flex-col gap-0.5">
+          <h3 className="truncate font-mono text-base font-bold tracking-tight text-white">
+            {palette.name}
+          </h3>
           <span className="text-muted-foreground font-mono text-xs font-semibold">
             {palette.colors.length} colors
           </span>
         </div>
 
-        <div className="flex items-center gap-1.5">
-          {/* Bookmark Button */}
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={onToggleBookmark}
-            title={isBookmarked ? "Remove from Color Palettes" : "Save to Color Palettes"}
-            aria-label={isBookmarked ? `Unbookmark ${palette.name}` : `Bookmark ${palette.name}`}
-            className={cn(
-              "h-8 cursor-pointer gap-1.5 px-2.5 font-mono text-xs font-bold transition-all",
-              isBookmarked
-                ? "border-primary/80 bg-primary/10 text-primary hover:bg-primary/20"
-                : "text-muted-foreground hover:text-foreground",
-            )}
-          >
-            <BookmarkSimpleIcon
-              weight={isBookmarked ? "fill" : "bold"}
-              className={cn("size-3.5", isBookmarked && "text-primary")}
-            />
-            <span className="sr-only sm:not-sr-only sm:inline-block">
-              {isBookmarked ? "Saved" : "Save"}
-            </span>
-          </Button>
+        <div className="flex shrink-0 items-center gap-1.5">
+          {/* Bookmark Button (Matching ResourceCard action button) */}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                type="button"
+                className={cn(
+                  "flex size-7 cursor-pointer items-center justify-center rounded-lg border-[1.5px] border-white/8 bg-white/4 text-zinc-500 transition-all duration-150 hover:border-white/18 hover:bg-white/8 hover:text-white active:scale-95",
+                  isBookmarked && "border-primary/40 bg-primary/15 text-primary",
+                )}
+                onMouseEnter={() => setIsBookmarkHovered(true)}
+                onMouseLeave={() => setIsBookmarkHovered(false)}
+                onClick={onToggleBookmark}
+                aria-label={
+                  isBookmarked
+                    ? `Remove ${palette.name} from saved`
+                    : `Save ${palette.name} to bookmarks`
+                }
+              >
+                <BookmarkSimpleIcon
+                  weight={isBookmarked ? "fill" : isBookmarkHovered ? "duotone" : "bold"}
+                  className="size-3.5"
+                />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent side="top">
+              <p>{isBookmarked ? "Remove bookmark" : "Save bookmark"}</p>
+            </TooltipContent>
+          </Tooltip>
 
-          {/* Export Dialog */}
+          {/* Export Code Dialog */}
           <Dialog>
-            <DialogTrigger asChild>
-              <Button variant="outline" size="sm" className="h-8 font-bold">
-                <BracketsCurlyIcon weight="bold" />
-                Code
-              </Button>
-            </DialogTrigger>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <DialogTrigger asChild>
+                  <button
+                    type="button"
+                    className="flex size-7 cursor-pointer items-center justify-center rounded-lg border-[1.5px] border-white/8 bg-white/4 text-zinc-500 transition-all duration-150 hover:border-white/18 hover:bg-white/8 hover:text-white active:scale-95"
+                    aria-label="Export CSS code"
+                  >
+                    <BracketsCurlyIcon weight="bold" className="size-3.5" />
+                  </button>
+                </DialogTrigger>
+              </TooltipTrigger>
+              <TooltipContent side="top">
+                <p>Export code</p>
+              </TooltipContent>
+            </Tooltip>
             <DialogContent className="sm:max-w-xl">
               <DialogHeader>
                 <DialogTitle className="text-mono-sm">
@@ -105,41 +125,45 @@ function PaletteCardComponent({
         </div>
       </CardHeader>
 
-      {/* Dynamic Bento Box Layout inside the Card */}
-      <CardContent className="grid flex-1 grid-cols-3 grid-rows-3 gap-1.5">
-        {palette.colors.map((color, i) => {
-          const swatchKey = `${palette.name}-${color.hex}-${i}`;
-          const isCopied = copiedItem === swatchKey;
+      {/* Dynamic Bento Box Layout inside the Card with unified rounded-xl stage */}
+      <CardContent className="flex flex-1 flex-col p-0">
+        <div className="relative flex w-full flex-1 overflow-hidden rounded-xl border-[1.5px] border-white/10 transition-all duration-300 group-hover:border-white/18">
+          <div className="grid h-full min-h-48 flex-1 grid-cols-3 grid-rows-3 gap-px bg-white/10">
+            {palette.colors.map((color, i) => {
+              const swatchKey = `${palette.name}-${color.hex}-${i}`;
+              const isCopied = copiedItem === swatchKey;
 
-          return (
-            <div
-              key={i}
-              onClick={() => onCopySwatch(color.hex, swatchKey)}
-              title={`Click to copy ${color.hex}`}
-              className={cn(
-                "border-border/30 group/swatch relative flex min-h-24 cursor-pointer flex-col justify-between rounded-none border-[1.5px] p-3 font-mono transition-all duration-100 select-none hover:brightness-105 active:scale-[0.99]",
-                color.textColor === "black" ? "text-black" : "text-white",
-                color.colSpan,
-              )}
-              style={{
-                backgroundColor: color.hex,
-              }}
-            >
-              <div className="text-sm font-bold tracking-tight">{color.name}</div>
-              <div className="mt-6 flex items-center justify-between font-mono text-xs font-bold opacity-80 group-hover/swatch:opacity-100">
-                <span>{isCopied ? "Copied!" : color.hex}</span>
-                {isCopied ? (
-                  <CheckIcon weight="bold" className="size-3.5" />
-                ) : (
-                  <CopyIcon
-                    weight="bold"
-                    className="size-3 opacity-0 transition-opacity group-hover/swatch:opacity-80"
-                  />
-                )}
-              </div>
-            </div>
-          );
-        })}
+              return (
+                <div
+                  key={i}
+                  onClick={() => onCopySwatch(color.hex, swatchKey)}
+                  title={`Click to copy ${color.hex}`}
+                  className={cn(
+                    "group/swatch relative flex h-full min-h-24 cursor-pointer flex-col justify-between p-3 font-mono transition-all duration-150 select-none active:scale-[0.99]",
+                    color.textColor === "black" ? "text-black" : "text-white",
+                    color.colSpan,
+                  )}
+                  style={{
+                    backgroundColor: color.hex,
+                  }}
+                >
+                  <div className="text-sm font-bold tracking-tight">{color.name}</div>
+                  <div className="mt-6 flex items-center justify-between font-mono text-xs font-bold">
+                    <span>{color.hex}</span>
+                    {isCopied ? (
+                      <CheckIcon weight="bold" className="size-3.5" />
+                    ) : (
+                      <CopyIcon
+                        weight="bold"
+                        className="size-3 opacity-0 transition-opacity group-hover/swatch:opacity-100"
+                      />
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </CardContent>
     </Card>
   );

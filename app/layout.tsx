@@ -13,16 +13,19 @@ import { siteConfig } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 
 const bricolage = Bricolage_Grotesque({
+  display: "swap",
   subsets: ["latin"],
   variable: "--font-display",
 });
 
 const inter = Inter({
+  display: "swap",
   subsets: ["latin"],
   variable: "--font-sans",
 });
 
 const instrumentSerif = Instrument_Serif({
+  display: "swap",
   style: ["italic", "normal"],
   subsets: ["latin"],
   variable: "--font-serif",
@@ -30,6 +33,7 @@ const instrumentSerif = Instrument_Serif({
 });
 
 const jetbrainsMono = JetBrains_Mono({
+  display: "swap",
   subsets: ["latin"],
   variable: "--font-mono",
 });
