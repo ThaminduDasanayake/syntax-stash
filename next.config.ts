@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_LAST_UPDATE: lastUpdateDate,
   },
   experimental: {
+    agentUpgrade: "security",
     optimizePackageImports: ["@phosphor-icons/react"],
   },
   async headers() {
