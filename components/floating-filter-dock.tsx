@@ -538,7 +538,7 @@ export function FloatingFilterDock({
                     className={cn(
                       "relative isolate flex shrink-0 cursor-pointer items-center justify-between gap-2 rounded-full border-0 outline-none select-none",
                       "h-11 px-3.5 sm:h-14 sm:px-5",
-                      "w-auto min-w-[140px] max-w-[260px] sm:min-w-[180px] sm:max-w-[340px]",
+                      "w-auto max-w-[260px] min-w-[140px] sm:max-w-[340px] sm:min-w-[180px]",
                       "bg-[#1a1a1a] shadow-[0_0_0_1px_rgba(255,255,255,0.12)]",
                       "transition-[transform,background-color,color,box-shadow,width,max-width] duration-220 ease-[cubic-bezier(0.22,1,0.36,1)]",
                       "active:scale-[0.96] [@media(hover:hover)]:hover:scale-[1.02]",
@@ -585,7 +585,7 @@ export function FloatingFilterDock({
                     className={cn(
                       "relative isolate flex shrink-0 cursor-pointer items-center justify-between gap-2.5 rounded-full border-0 outline-none select-none",
                       "h-11 px-3.5 sm:h-14 sm:px-5",
-                      "w-auto min-w-[180px] max-w-[340px]",
+                      "w-auto max-w-[340px] min-w-[180px]",
                       "bg-[#1a1a1a] shadow-[0_0_0_1px_rgba(255,255,255,0.12)]",
                       "transition-[transform,background-color,color,box-shadow,width,max-width] duration-220 ease-[cubic-bezier(0.22,1,0.36,1)]",
                       "active:scale-[0.96] [@media(hover:hover)]:hover:scale-[1.02]",
@@ -857,7 +857,7 @@ export function FloatingFilterDock({
                 <button
                   type="button"
                   onClick={onResetAll}
-                  className="group/reset relative flex size-7 cursor-pointer items-center justify-center rounded-full bg-white/[0.06] text-zinc-400 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition-all duration-200 hover:bg-destructive/15 hover:text-destructive hover:shadow-[0_0_0_1px_rgba(239,68,68,0.3)] active:scale-90 sm:size-8"
+                  className="group/reset hover:bg-destructive/15 hover:text-destructive relative flex size-7 cursor-pointer items-center justify-center rounded-full bg-white/[0.06] text-zinc-400 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition-all duration-200 hover:shadow-[0_0_0_1px_rgba(239,68,68,0.3)] active:scale-90 sm:size-8"
                   aria-label="Reset all filters"
                 >
                   <ArrowsCounterClockwiseIcon
