@@ -18,8 +18,8 @@ import {
 } from "@phosphor-icons/react";
 import React, { useMemo, useState } from "react";
 
-import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Seek } from "@/components/ui/seek";
 import {
   Sheet,
   SheetContent,
@@ -83,11 +83,6 @@ export const USER_SORT_OPTIONS: SortOptionItem[] = [
   },
 ];
 /* eslint-enable perfectionist/sort-arrays */
-
-export interface CategoryOption {
-  count?: number;
-  name: string;
-}
 
 export interface FloatingFilterDockProps {
   activeCategory: string | null;
@@ -517,30 +512,20 @@ export function FloatingFilterDock({
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-5 z-40 flex justify-center px-4 sm:bottom-6">
       <div className="pointer-events-auto flex max-w-full items-center gap-1.5 rounded-full border-[1.5px] border-white/12 bg-[#0e0e11]/95 p-1.5 font-mono text-xs shadow-[0_20px_50px_rgba(0,0,0,0.75),0_1px_0_0_rgba(255,255,255,0.1)_inset] backdrop-blur-2xl transition-all sm:gap-2 sm:p-2">
-        {/* 1. Interactive Search Box */}
-        <div className="focus-within:border-primary/50 relative flex h-9 w-32 items-center rounded-full border-[1.5px] border-white/10 bg-white/[0.04] px-3.5 transition-all duration-200 focus-within:bg-white/[0.08] sm:h-9.5 sm:w-64 md:focus-within:w-72">
-          <MagnifyingGlassIcon
-            weight="bold"
-            className="text-muted-foreground mr-1.5 size-3.5 shrink-0"
-          />
-          <input
-            type="text"
-            placeholder={isMobile ? "Search..." : searchPlaceholder}
-            value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
-            className="text-foreground placeholder:text-muted-foreground/70 h-full w-full bg-transparent text-xs outline-none"
-          />
-          {hasSearch && (
-            <button
-              type="button"
-              onClick={onClearSearch}
-              className="text-muted-foreground hover:text-foreground ml-1 shrink-0 cursor-pointer p-0.5"
-              aria-label="Clear search"
-            >
-              <XIcon weight="bold" className="size-3.5" />
-            </button>
-          )}
-        </div>
+        {/* 1. Animated Seek Search */}
+        <Seek
+          size={isMobile ? "sm" : "default"}
+          theme="dark"
+          placeholder={isMobile ? "Search..." : searchPlaceholder}
+          value={searchQuery}
+          onChange={(val) => {
+            onSearchChange(val);
+            if (!val) onClearSearch();
+          }}
+          width={isMobile ? 180 : 260}
+          give={50}
+          spring={55}
+        />
 
         {/* 2. Category Selector (Popover / Sheet) */}
         {!initialCategory && (
@@ -548,22 +533,28 @@ export function FloatingFilterDock({
             {isMobile ? (
               <Sheet open={categoryOpen} onOpenChange={setCategoryOpen}>
                 <SheetTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
+                  <button
+                    type="button"
                     className={cn(
-                      "h-9 w-32 justify-between gap-1.5 rounded-full border-[1.5px] px-3 font-mono text-xs font-semibold sm:h-9.5 sm:w-44 sm:px-3.5",
+                      "relative isolate flex shrink-0 cursor-pointer items-center justify-between gap-2 rounded-full border-0 outline-none select-none",
+                      "h-11 px-3.5 sm:h-14 sm:px-5",
+                      "w-auto max-w-[260px] min-w-[140px] sm:max-w-[340px] sm:min-w-[180px]",
+                      "bg-[#1a1a1a] shadow-[0_0_0_1px_rgba(255,255,255,0.12)]",
+                      "transition-[transform,background-color,color,box-shadow,width,max-width] duration-220 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                      "active:scale-[0.96] [@media(hover:hover)]:hover:scale-[1.02]",
                       hasCategory
-                        ? "border-primary/50 bg-primary/10 text-primary font-bold"
-                        : "border-white/10 bg-white/4 text-zinc-300 hover:border-white/20 hover:bg-white/8 hover:text-white",
+                        ? "text-primary font-bold shadow-[0_0_0_1.5px_rgba(var(--primary),0.8),0_4px_16px_rgba(var(--primary),0.25)]"
+                        : "font-semibold text-[#a1a1aa] hover:text-white hover:shadow-[0_0_0_1px_rgba(255,255,255,0.2)]",
                     )}
                   >
-                    <div className="flex min-w-0 flex-1 items-center gap-1.5">
-                      <SquaresFourIcon weight="bold" className="size-4 shrink-0" />
-                      <span className="truncate">{activeCategory || "Categories"}</span>
+                    <div className="flex min-w-0 flex-1 items-center gap-2">
+                      <SquaresFourIcon weight="bold" className="size-4.5 shrink-0 sm:size-5" />
+                      <span className="truncate font-sans text-xs font-semibold tracking-tight">
+                        {activeCategory || "Categories"}
+                      </span>
                     </div>
-                    <CaretUpIcon weight="bold" className="size-3 shrink-0 opacity-60" />
-                  </Button>
+                    <CaretUpIcon weight="bold" className="size-3.5 shrink-0 opacity-60" />
+                  </button>
                 </SheetTrigger>
                 <SheetContent
                   side="bottom"
@@ -589,22 +580,28 @@ export function FloatingFilterDock({
             ) : (
               <Popover open={categoryOpen} onOpenChange={setCategoryOpen}>
                 <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
+                  <button
+                    type="button"
                     className={cn(
-                      "h-9.5 w-52 justify-between gap-1.5 rounded-full border-[1.5px] px-3.5 font-mono text-xs font-semibold transition-all sm:w-56 md:w-60",
+                      "relative isolate flex shrink-0 cursor-pointer items-center justify-between gap-2.5 rounded-full border-0 outline-none select-none",
+                      "h-11 px-3.5 sm:h-14 sm:px-5",
+                      "w-auto max-w-[340px] min-w-[180px]",
+                      "bg-[#1a1a1a] shadow-[0_0_0_1px_rgba(255,255,255,0.12)]",
+                      "transition-[transform,background-color,color,box-shadow,width,max-width] duration-220 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                      "active:scale-[0.96] [@media(hover:hover)]:hover:scale-[1.02]",
                       hasCategory
-                        ? "border-primary/50 bg-primary/10 text-primary font-bold"
-                        : "border-white/10 bg-white/4 text-zinc-300 hover:border-white/20 hover:bg-white/8 hover:text-white",
+                        ? "text-primary font-bold shadow-[0_0_0_1.5px_rgba(var(--primary),0.8),0_4px_16px_rgba(var(--primary),0.25)]"
+                        : "font-semibold text-[#a1a1aa] hover:text-white hover:shadow-[0_0_0_1px_rgba(255,255,255,0.2)]",
                     )}
                   >
-                    <div className="flex min-w-0 flex-1 items-center gap-1.5">
-                      <SquaresFourIcon weight="bold" className="size-4 shrink-0" />
-                      <span className="truncate">{activeCategory || "All Categories"}</span>
+                    <div className="flex min-w-0 flex-1 items-center gap-2">
+                      <SquaresFourIcon weight="bold" className="size-4.5 shrink-0 sm:size-5" />
+                      <span className="truncate font-sans text-xs font-semibold tracking-tight">
+                        {activeCategory || "All Categories"}
+                      </span>
                     </div>
-                    <CaretUpIcon weight="bold" className="size-3 shrink-0 opacity-60" />
-                  </Button>
+                    <CaretUpIcon weight="bold" className="size-3.5 shrink-0 opacity-60" />
+                  </button>
                 </PopoverTrigger>
                 <PopoverContent
                   side="top"
@@ -634,24 +631,27 @@ export function FloatingFilterDock({
             {isMobile ? (
               <Sheet open={tagsOpen} onOpenChange={setTagsOpen}>
                 <SheetTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
+                  <button
+                    type="button"
                     className={cn(
-                      "h-9 gap-1.5 rounded-full border-[1.5px] px-3 font-mono text-xs font-semibold sm:h-9.5 sm:px-3.5",
+                      "relative isolate flex shrink-0 cursor-pointer items-center justify-center rounded-full border-0 outline-none select-none",
+                      "size-11 sm:size-14",
+                      "bg-[#1a1a1a] shadow-[0_0_0_1px_rgba(255,255,255,0.12)]",
+                      "ease-out-soft transition-[transform,background-color,color,box-shadow] duration-220",
+                      "active:scale-[0.93] [@media(hover:hover)]:hover:scale-[1.045]",
                       hasTags
-                        ? "border-brand-purple/50 bg-brand-purple/15 text-brand-purple font-bold"
-                        : "border-white/10 bg-white/4 text-zinc-300 hover:border-white/20 hover:bg-white/8 hover:text-white",
+                        ? "text-brand-purple shadow-[0_0_0_1.5px_rgba(192,132,252,0.8),0_4px_16px_rgba(192,132,252,0.25)]"
+                        : "text-[#a1a1aa] hover:text-white hover:shadow-[0_0_0_1px_rgba(255,255,255,0.2)]",
                     )}
+                    aria-label="Filter by tags"
                   >
-                    <TagIcon weight={hasTags ? "fill" : "bold"} className="size-3.5 shrink-0" />
-                    <span className="hidden sm:inline">Tags</span>
+                    <TagIcon weight={hasTags ? "fill" : "bold"} className="size-5 sm:size-6" />
                     {hasTags && (
-                      <span className="bg-brand-purple text-paper flex size-4.5 items-center justify-center rounded-full text-[10px] font-bold">
+                      <span className="bg-brand-purple text-paper absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full text-[10px] font-bold tabular-nums shadow-md ring-2 ring-[#0e0e11]">
                         {selectedTags.length}
                       </span>
                     )}
-                  </Button>
+                  </button>
                 </SheetTrigger>
                 <SheetContent
                   side="bottom"
@@ -675,24 +675,27 @@ export function FloatingFilterDock({
             ) : (
               <Popover open={tagsOpen} onOpenChange={setTagsOpen}>
                 <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
+                  <button
+                    type="button"
                     className={cn(
-                      "h-9.5 w-24 shrink-0 justify-center gap-1.5 rounded-full border-[1.5px] px-2.5 font-mono text-xs font-semibold transition-all",
+                      "relative isolate flex shrink-0 cursor-pointer items-center justify-center rounded-full border-0 outline-none select-none",
+                      "size-11 sm:size-14",
+                      "bg-[#1a1a1a] shadow-[0_0_0_1px_rgba(255,255,255,0.12)]",
+                      "ease-out-soft transition-[transform,background-color,color,box-shadow] duration-220",
+                      "active:scale-[0.93] [@media(hover:hover)]:hover:scale-[1.045]",
                       hasTags
-                        ? "border-brand-purple/50 bg-brand-purple/15 text-brand-purple font-bold"
-                        : "border-white/10 bg-white/4 text-zinc-300 hover:border-white/20 hover:bg-white/8 hover:text-white",
+                        ? "text-brand-purple shadow-[0_0_0_1.5px_rgba(192,132,252,0.8),0_4px_16px_rgba(192,132,252,0.25)]"
+                        : "text-[#a1a1aa] hover:text-white hover:shadow-[0_0_0_1px_rgba(255,255,255,0.2)]",
                     )}
+                    aria-label="Filter by tags"
                   >
-                    <TagIcon weight={hasTags ? "fill" : "bold"} className="size-4 shrink-0" />
-                    <span>Tags</span>
+                    <TagIcon weight={hasTags ? "fill" : "bold"} className="size-5 sm:size-6" />
                     {hasTags && (
-                      <span className="bg-brand-purple text-paper flex size-4 items-center justify-center rounded-full text-[10px] font-bold tabular-nums">
+                      <span className="bg-brand-purple text-paper absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full text-[10px] font-bold tabular-nums shadow-md ring-2 ring-[#0e0e11]">
                         {selectedTags.length}
                       </span>
                     )}
-                  </Button>
+                  </button>
                 </PopoverTrigger>
                 <PopoverContent
                   side="top"
@@ -720,25 +723,28 @@ export function FloatingFilterDock({
             {isMobile ? (
               <Sheet open={sortOpen} onOpenChange={setSortOpen}>
                 <SheetTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
+                  <button
+                    type="button"
                     className={cn(
-                      "h-9 gap-1.5 rounded-full border-[1.5px] px-2.5 font-mono text-xs font-semibold sm:h-9.5 sm:px-3.5",
+                      "relative isolate flex shrink-0 cursor-pointer items-center justify-center rounded-full border-0 outline-none select-none",
+                      "size-11 sm:size-14",
+                      "bg-[#1a1a1a] shadow-[0_0_0_1px_rgba(255,255,255,0.12)]",
+                      "ease-out-soft transition-[transform,background-color,color,box-shadow] duration-220",
+                      "active:scale-[0.93] [@media(hover:hover)]:hover:scale-[1.045]",
                       hasSort
-                        ? "border-primary/50 bg-primary/15 text-primary font-bold"
-                        : "border-white/10 bg-white/4 text-zinc-300 hover:border-white/20 hover:bg-white/8 hover:text-white",
+                        ? "text-primary shadow-[0_0_0_1.5px_rgba(var(--primary),0.8),0_4px_16px_rgba(var(--primary),0.25)]"
+                        : "text-[#a1a1aa] hover:text-white hover:shadow-[0_0_0_1px_rgba(255,255,255,0.2)]",
                     )}
-                    aria-label="Sort resources"
+                    aria-label={hasSort ? `Sorted by ${activeSortOption.label}` : "Sort resources"}
                   >
                     <ArrowsDownUpIcon
                       weight={hasSort ? "bold" : "regular"}
-                      className="size-3.5 shrink-0"
+                      className="size-5 sm:size-6"
                     />
-                    <span className="hidden sm:inline">
-                      {hasSort ? activeSortOption.shortLabel : "Sort"}
-                    </span>
-                  </Button>
+                    {hasSort && (
+                      <span className="bg-primary absolute -top-0.5 -right-0.5 size-2.5 rounded-full ring-2 ring-[#0e0e11]" />
+                    )}
+                  </button>
                 </SheetTrigger>
                 <SheetContent
                   side="bottom"
@@ -761,24 +767,28 @@ export function FloatingFilterDock({
             ) : (
               <Popover open={sortOpen} onOpenChange={setSortOpen}>
                 <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
+                  <button
+                    type="button"
                     className={cn(
-                      "h-9.5 w-24 shrink-0 justify-center gap-1.5 rounded-full border-[1.5px] px-2.5 font-mono text-xs font-semibold transition-all",
+                      "relative isolate flex shrink-0 cursor-pointer items-center justify-center rounded-full border-0 outline-none select-none",
+                      "size-11 sm:size-14",
+                      "bg-[#1a1a1a] shadow-[0_0_0_1px_rgba(255,255,255,0.12)]",
+                      "ease-out-soft transition-[transform,background-color,color,box-shadow] duration-220",
+                      "active:scale-[0.93] [@media(hover:hover)]:hover:scale-[1.045]",
                       hasSort
-                        ? "border-primary/50 bg-primary/15 text-primary font-bold"
-                        : "border-white/10 bg-white/4 text-zinc-300 hover:border-white/20 hover:bg-white/8 hover:text-white",
+                        ? "text-primary shadow-[0_0_0_1.5px_rgba(var(--primary),0.8),0_4px_16px_rgba(var(--primary),0.25)]"
+                        : "text-[#a1a1aa] hover:text-white hover:shadow-[0_0_0_1px_rgba(255,255,255,0.2)]",
                     )}
+                    aria-label={hasSort ? `Sorted by ${activeSortOption.label}` : "Sort resources"}
                   >
                     <ArrowsDownUpIcon
                       weight={hasSort ? "bold" : "regular"}
-                      className="size-4 shrink-0"
+                      className="size-5 sm:size-6"
                     />
-                    <span className="truncate">
-                      {hasSort ? activeSortOption.shortLabel : "Sort"}
-                    </span>
-                  </Button>
+                    {hasSort && (
+                      <span className="bg-primary absolute -top-0.5 -right-0.5 size-2.5 rounded-full ring-2 ring-[#0e0e11]" />
+                    )}
+                  </button>
                 </PopoverTrigger>
                 <PopoverContent
                   side="top"
@@ -803,21 +813,26 @@ export function FloatingFilterDock({
         {onSavedToggle && (
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button
+              <button
                 type="button"
-                variant="outline"
-                size="sm"
                 onClick={onSavedToggle}
                 className={cn(
-                  "size-9 rounded-full border-[1.5px] p-0 font-mono transition-all sm:size-9.5",
+                  "relative isolate flex shrink-0 cursor-pointer items-center justify-center rounded-full border-0 outline-none select-none",
+                  "size-11 sm:size-14",
+                  "bg-[#1a1a1a] shadow-[0_0_0_1px_rgba(255,255,255,0.12)]",
+                  "ease-out-soft transition-[transform,background-color,color,box-shadow] duration-220",
+                  "active:scale-[0.93] [@media(hover:hover)]:hover:scale-[1.045]",
                   savedOnly
-                    ? "border-primary/50 bg-primary/15 text-primary"
-                    : "border-white/10 bg-white/4 text-zinc-300 hover:border-white/20 hover:bg-white/8 hover:text-white",
+                    ? "text-primary shadow-[0_0_0_1.5px_rgba(var(--primary),0.8),0_4px_16px_rgba(var(--primary),0.25)]"
+                    : "text-[#a1a1aa] hover:text-white hover:shadow-[0_0_0_1px_rgba(255,255,255,0.2)]",
                 )}
                 aria-label={savedOnly ? "Show all items" : "Show saved items only"}
               >
-                <BookmarkSimpleIcon weight={savedOnly ? "fill" : "bold"} className="size-4" />
-              </Button>
+                <BookmarkSimpleIcon
+                  weight={savedOnly ? "fill" : "bold"}
+                  className="size-5 sm:size-6"
+                />
+              </button>
             </TooltipTrigger>
             <TooltipContent side="top" sideOffset={10}>
               <p className="font-mono text-xs">
@@ -827,36 +842,39 @@ export function FloatingFilterDock({
           </Tooltip>
         )}
 
-        {/* 5. Item Count & Reset Action (Fixed width to prevent layout shift) */}
-        <div className="hidden w-[136px] shrink-0 items-center justify-between border-l border-white/10 pr-1 pl-2.5 text-zinc-400 sm:flex">
-          <div className="flex min-w-0 items-center gap-1 font-mono text-xs">
-            <span className="text-foreground font-bold tabular-nums">{filteredCount}</span>
+        {/* 5. Item Count & Reset Action */}
+        <div className="hidden h-11 shrink-0 items-center gap-3 rounded-full bg-[#1a1a1a] px-4 font-mono text-xs shadow-[0_0_0_1px_rgba(255,255,255,0.12)] sm:flex sm:h-14 sm:px-4.5">
+          <div className="flex min-w-0 items-center gap-1.5">
+            <span className="font-bold text-white tabular-nums">{filteredCount}</span>
             <span className="truncate text-[11px] text-zinc-500 tabular-nums">
               {hasActiveFilters ? `of ${totalCount}` : itemLabel.toLowerCase()}
             </span>
           </div>
 
-          <div className="flex size-6 shrink-0 items-center justify-center">
-            {hasActiveFilters && (
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <button
-                    type="button"
-                    onClick={onResetAll}
-                    className="hover:border-destructive/40 hover:bg-destructive/10 hover:text-destructive text-muted-foreground flex size-6 cursor-pointer items-center justify-center rounded-full border border-transparent transition-all active:scale-95"
-                    aria-label="Reset all filters"
-                  >
-                    <ArrowsCounterClockwiseIcon weight="bold" className="size-3.5" />
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent side="top" sideOffset={10}>
-                  <p className="font-mono text-xs">Reset all filters</p>
-                </TooltipContent>
-              </Tooltip>
-            )}
-          </div>
+          {hasActiveFilters && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  type="button"
+                  onClick={onResetAll}
+                  className="group/reset hover:bg-destructive/15 hover:text-destructive relative flex size-7 cursor-pointer items-center justify-center rounded-full bg-white/[0.06] text-zinc-400 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition-all duration-200 hover:shadow-[0_0_0_1px_rgba(239,68,68,0.3)] active:scale-90 sm:size-8"
+                  aria-label="Reset all filters"
+                >
+                  <ArrowsCounterClockwiseIcon
+                    weight="bold"
+                    className="size-3.5 transition-transform duration-300 ease-out group-hover/reset:-rotate-180 sm:size-4"
+                  />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent side="top" sideOffset={10}>
+                <p className="font-mono text-xs">Reset all filters</p>
+              </TooltipContent>
+            </Tooltip>
+          )}
         </div>
       </div>
     </div>
   );
 }
+
+export default FloatingFilterDock;
