@@ -842,34 +842,35 @@ export function FloatingFilterDock({
           </Tooltip>
         )}
 
-        {/* 5. Item Count & Reset Action (Fixed width to prevent layout shift) */}
-        <div className="hidden w-[136px] shrink-0 items-center justify-between border-l border-white/10 pr-1 pl-2.5 text-zinc-400 sm:flex">
-          <div className="flex min-w-0 items-center gap-1 font-mono text-xs">
-            <span className="text-foreground font-bold tabular-nums">{filteredCount}</span>
+        {/* 5. Item Count & Reset Action */}
+        <div className="hidden h-11 shrink-0 items-center gap-3 rounded-full bg-[#1a1a1a] px-4 font-mono text-xs shadow-[0_0_0_1px_rgba(255,255,255,0.12)] sm:flex sm:h-14 sm:px-4.5">
+          <div className="flex min-w-0 items-center gap-1.5">
+            <span className="font-bold text-white tabular-nums">{filteredCount}</span>
             <span className="truncate text-[11px] text-zinc-500 tabular-nums">
               {hasActiveFilters ? `of ${totalCount}` : itemLabel.toLowerCase()}
             </span>
           </div>
 
-          <div className="flex size-6 shrink-0 items-center justify-center">
-            {hasActiveFilters && (
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <button
-                    type="button"
-                    onClick={onResetAll}
-                    className="hover:border-destructive/40 hover:bg-destructive/10 hover:text-destructive text-muted-foreground flex size-6 cursor-pointer items-center justify-center rounded-full border border-transparent transition-all active:scale-95"
-                    aria-label="Reset all filters"
-                  >
-                    <ArrowsCounterClockwiseIcon weight="bold" className="size-3.5" />
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent side="top" sideOffset={10}>
-                  <p className="font-mono text-xs">Reset all filters</p>
-                </TooltipContent>
-              </Tooltip>
-            )}
-          </div>
+          {hasActiveFilters && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  type="button"
+                  onClick={onResetAll}
+                  className="group/reset relative flex size-7 cursor-pointer items-center justify-center rounded-full bg-white/[0.06] text-zinc-400 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition-all duration-200 hover:bg-destructive/15 hover:text-destructive hover:shadow-[0_0_0_1px_rgba(239,68,68,0.3)] active:scale-90 sm:size-8"
+                  aria-label="Reset all filters"
+                >
+                  <ArrowsCounterClockwiseIcon
+                    weight="bold"
+                    className="size-3.5 transition-transform duration-300 ease-out group-hover/reset:-rotate-180 sm:size-4"
+                  />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent side="top" sideOffset={10}>
+                <p className="font-mono text-xs">Reset all filters</p>
+              </TooltipContent>
+            </Tooltip>
+          )}
         </div>
       </div>
     </div>
