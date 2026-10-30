@@ -20,6 +20,7 @@ import React, { useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Seek } from "@/components/ui/seek";
 import {
   Sheet,
   SheetContent,
@@ -517,30 +518,17 @@ export function FloatingFilterDock({
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-5 z-40 flex justify-center px-4 sm:bottom-6">
       <div className="pointer-events-auto flex max-w-full items-center gap-1.5 rounded-full border-[1.5px] border-white/12 bg-[#0e0e11]/95 p-1.5 font-mono text-xs shadow-[0_20px_50px_rgba(0,0,0,0.75),0_1px_0_0_rgba(255,255,255,0.1)_inset] backdrop-blur-2xl transition-all sm:gap-2 sm:p-2">
-        {/* 1. Interactive Search Box */}
-        <div className="focus-within:border-primary/50 relative flex h-9 w-32 items-center rounded-full border-[1.5px] border-white/10 bg-white/[0.04] px-3.5 transition-all duration-200 focus-within:bg-white/[0.08] sm:h-9.5 sm:w-64 md:focus-within:w-72">
-          <MagnifyingGlassIcon
-            weight="bold"
-            className="text-muted-foreground mr-1.5 size-3.5 shrink-0"
-          />
-          <input
-            type="text"
-            placeholder={isMobile ? "Search..." : searchPlaceholder}
-            value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
-            className="text-foreground placeholder:text-muted-foreground/70 h-full w-full bg-transparent text-xs outline-none"
-          />
-          {hasSearch && (
-            <button
-              type="button"
-              onClick={onClearSearch}
-              className="text-muted-foreground hover:text-foreground ml-1 shrink-0 cursor-pointer p-0.5"
-              aria-label="Clear search"
-            >
-              <XIcon weight="bold" className="size-3.5" />
-            </button>
-          )}
-        </div>
+        {/* 1. Animated Seek Search */}
+        <Seek
+          size={isMobile ? "sm" : "default"}
+          theme="dark"
+          placeholder={isMobile ? "Search..." : searchPlaceholder}
+          value={searchQuery}
+          onChange={onSearchChange}
+          width={isMobile ? 180 : 260}
+          give={50}
+          spring={55}
+        />
 
         {/* 2. Category Selector (Popover / Sheet) */}
         {!initialCategory && (
