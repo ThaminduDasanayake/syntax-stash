@@ -17,8 +17,7 @@ import {
   useState,
 } from "react";
 
-import {
-  FloatingFilterDock,
+import FloatingFilterDock, {
   SortOption,
   USER_SORT_OPTIONS,
 } from "@/components/floating-filter-dock";
