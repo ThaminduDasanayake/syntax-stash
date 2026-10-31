@@ -41,6 +41,7 @@ import { Label } from "@/components/ui/label";
 import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
+import { broadcastSubmissionsUpdated } from "@/hooks/use-pending-submissions";
 import { Submission } from "@/lib/db/schema";
 import { cn, isValidHttpUrl } from "@/lib/utils";
 
@@ -438,6 +439,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
               ? "marked as rejected"
               : "saved";
         toast.success(`Submission "${editForm.title || sub.title}" ${actionLabel}!`);
+        broadcastSubmissionsUpdated();
         startTransition(() => {
           router.push("/admin/submissions");
           router.refresh();
@@ -474,6 +476,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
       const data = await res.json();
       if (res.ok && data.success) {
         toast.success("Submission deleted.");
+        broadcastSubmissionsUpdated();
         router.push("/admin/submissions");
         router.refresh();
         return;

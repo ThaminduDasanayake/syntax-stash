@@ -20,7 +20,7 @@ import { cn } from "@/lib/utils";
 
 const COLOR_COUNTS = [2, 3, 4, 5, 6] as const;
 
-export function ColorPalettesCollection({ onBack }: { onBack: () => void }) {
+export function ColorPalettesCollection({ onBackAction }: { onBackAction: () => void }) {
   const { bookmarkedSet, isBookmarked, toggleBookmark } = usePaletteBookmarks();
   const { copiedItem, copy } = useCopyToClipboard();
 
@@ -83,7 +83,7 @@ export function ColorPalettesCollection({ onBack }: { onBack: () => void }) {
           <Button
             size="sm"
             variant="outline"
-            onClick={onBack}
+            onClick={onBackAction}
             className="border-line hover:bg-surface h-7 gap-1 px-2.5 text-xs font-bold uppercase"
           >
             <ArrowLeftIcon className="size-3.5" />

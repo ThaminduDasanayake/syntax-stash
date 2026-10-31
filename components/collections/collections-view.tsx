@@ -121,7 +121,7 @@ export function CollectionsView() {
 
   // Color Palettes dedicated collection view
   if (isColorPalettesOpen) {
-    return <ColorPalettesCollection onBack={() => setIsColorPalettesOpen(false)} />;
+    return <ColorPalettesCollection onBackAction={() => setIsColorPalettesOpen(false)} />;
   }
 
   // Active user custom collection view
