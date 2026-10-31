@@ -27,7 +27,7 @@ if (typeof window !== "undefined" && "BroadcastChannel" in window) {
         globalPendingCount = event.data.count;
         notifyListeners();
       } else if (event.data?.type === "REFETCH_REQUESTED") {
-        triggerSharedFetch(true);
+        void triggerSharedFetch(true);
       }
     };
   } catch {
@@ -47,7 +47,7 @@ export function broadcastSubmissionsUpdated(newCount?: number) {
       submissionsChannel?.postMessage({ count: newCount, type: "COUNT_UPDATED" });
     } else {
       submissionsChannel?.postMessage({ type: "REFETCH_REQUESTED" });
-      triggerSharedFetch(true);
+      void triggerSharedFetch(true);
     }
   } catch {
     // Ignore cross-tab message failure
@@ -135,7 +135,7 @@ function startGlobalPolling() {
   // Poll every 60 seconds when document is visible
   globalInterval = setInterval(() => {
     if (document.visibilityState === "visible") {
-      triggerSharedFetch();
+      void triggerSharedFetch();
     }
   }, 60000);
 }
@@ -182,7 +182,7 @@ export function usePendingSubmissions() {
 
     if (activeAdminHookCount === 1) {
       startGlobalPolling();
-      triggerSharedFetch();
+      void triggerSharedFetch();
     } else {
       // Return immediate cached state
       setCount(globalPendingCount);
@@ -191,7 +191,7 @@ export function usePendingSubmissions() {
     const handleWindowFocus = () => {
       if (document.visibilityState === "visible") {
         // Debounced shared fetch
-        triggerSharedFetch();
+        void triggerSharedFetch();
       }
     };
 
