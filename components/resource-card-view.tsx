@@ -8,7 +8,7 @@ import {
   TagIcon,
 } from "@phosphor-icons/react";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import { CardIcon } from "@/components/card-icon";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -145,7 +145,7 @@ export function ResourceCardView({
         return (
           <div
             className={cn(
-              "relative aspect-[2/1] w-full overflow-hidden rounded-xl border-[1.5px] border-white/10 transition-all duration-300 group-hover:border-white/18",
+              "relative aspect-2/1 w-full overflow-hidden rounded-xl border border-white/10 transition-all duration-300 group-hover:border-white/18",
               hasCustomBg
                 ? bg === "white"
                   ? "bg-white"
