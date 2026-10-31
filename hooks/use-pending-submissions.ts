@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -7,6 +8,7 @@ import { isAdmin } from "@/lib/admin";
 import { useSession } from "@/lib/auth-client";
 
 // Global module state shared across all components and instances on the page
+let globalRouter: ReturnType<typeof useRouter> | null = null;
 let globalPendingCount = 0;
 let globalIsLoading = false;
 let prevCount: number | null = null;
@@ -88,7 +90,9 @@ async function triggerSharedFetch(force = false): Promise<number> {
             action: {
               label: "Review",
               onClick: () => {
-                window.location.href = "/admin/submissions";
+                if (globalRouter) {
+                  globalRouter.push("/admin/submissions");
+                }
               },
             },
             duration: 8000,
@@ -144,9 +148,14 @@ function stopGlobalPolling() {
 }
 
 export function usePendingSubmissions() {
+  const router = useRouter();
   const { data: session } = useSession();
   const [count, setCount] = useState<number>(globalPendingCount);
   const [isLoading, setIsLoading] = useState<boolean>(globalIsLoading);
+
+  useEffect(() => {
+    globalRouter = router;
+  }, [router]);
 
   const isUserAdmin = Boolean(session?.user?.email && isAdmin(session.user.email));
 
