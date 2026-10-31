@@ -536,7 +536,7 @@ export function FloatingFilterDock({
                   <button
                     type="button"
                     className={cn(
-                      "relative isolate flex shrink-0 cursor-pointer items-center justify-between gap-2 rounded-full border-0 outline-none select-none",
+                      "relative isolate flex shrink-0 cursor-pointer items-center justify-between gap-2.5 rounded-full border-0 outline-none select-none",
                       "h-11 px-3.5 sm:h-14 sm:px-5",
                       "w-auto max-w-[260px] min-w-[140px] sm:max-w-[340px] sm:min-w-[180px]",
                       "bg-[#1a1a1a] shadow-[0_0_0_1px_rgba(255,255,255,0.12)]",
@@ -550,7 +550,7 @@ export function FloatingFilterDock({
                     <div className="flex min-w-0 flex-1 items-center gap-2">
                       <SquaresFourIcon weight="bold" className="size-4.5 shrink-0 sm:size-5" />
                       <span className="truncate font-sans text-xs font-semibold tracking-tight">
-                        {activeCategory || "Categories"}
+                        {activeCategory || "All Categories"}
                       </span>
                     </div>
                     <CaretUpIcon weight="bold" className="size-3.5 shrink-0 opacity-60" />
@@ -585,7 +585,7 @@ export function FloatingFilterDock({
                     className={cn(
                       "relative isolate flex shrink-0 cursor-pointer items-center justify-between gap-2.5 rounded-full border-0 outline-none select-none",
                       "h-11 px-3.5 sm:h-14 sm:px-5",
-                      "w-auto max-w-[340px] min-w-[180px]",
+                      "w-auto max-w-[260px] min-w-[140px] sm:max-w-[340px] sm:min-w-[180px]",
                       "bg-[#1a1a1a] shadow-[0_0_0_1px_rgba(255,255,255,0.12)]",
                       "transition-[transform,background-color,color,box-shadow,width,max-width] duration-220 ease-[cubic-bezier(0.22,1,0.36,1)]",
                       "active:scale-[0.96] [@media(hover:hover)]:hover:scale-[1.02]",
