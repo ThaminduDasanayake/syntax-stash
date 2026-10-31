@@ -11,6 +11,7 @@ import { SubmissionsCardsSkeleton } from "@/components/admin/submissions/submiss
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
+import { broadcastSubmissionsUpdated } from "@/hooks/use-pending-submissions";
 import { Submission } from "@/lib/db/schema";
 
 interface SubmissionsViewProps {
@@ -88,6 +89,8 @@ export function SubmissionsView({ initialSubmissions = [] }: SubmissionsViewProp
       if (!res.ok) {
         setAllSubmissions(previousSubmissions);
         toast.error(`Failed to update status for ${itemTitle}. Reverted changes.`);
+      } else {
+        broadcastSubmissionsUpdated();
       }
     } catch (err) {
       console.error("Failed to update status:", err);
@@ -119,6 +122,8 @@ export function SubmissionsView({ initialSubmissions = [] }: SubmissionsViewProp
       if (!res.ok) {
         setAllSubmissions(previousSubmissions);
         toast.error(`Failed to delete ${itemTitle}. Reverted changes.`);
+      } else {
+        broadcastSubmissionsUpdated();
       }
     } catch (err) {
       console.error("Failed to delete submission:", err);

@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -7,6 +8,7 @@ import { isAdmin } from "@/lib/admin";
 import { useSession } from "@/lib/auth-client";
 
 // Global module state shared across all components and instances on the page
+let globalRouter: ReturnType<typeof useRouter> | null = null;
 let globalPendingCount = 0;
 let globalIsLoading = false;
 let prevCount: number | null = null;
@@ -25,7 +27,7 @@ if (typeof window !== "undefined" && "BroadcastChannel" in window) {
         globalPendingCount = event.data.count;
         notifyListeners();
       } else if (event.data?.type === "REFETCH_REQUESTED") {
-        triggerSharedFetch(true);
+        void triggerSharedFetch(true);
       }
     };
   } catch {
@@ -45,7 +47,7 @@ export function broadcastSubmissionsUpdated(newCount?: number) {
       submissionsChannel?.postMessage({ count: newCount, type: "COUNT_UPDATED" });
     } else {
       submissionsChannel?.postMessage({ type: "REFETCH_REQUESTED" });
-      triggerSharedFetch(true);
+      void triggerSharedFetch(true);
     }
   } catch {
     // Ignore cross-tab message failure
@@ -88,7 +90,9 @@ async function triggerSharedFetch(force = false): Promise<number> {
             action: {
               label: "Review",
               onClick: () => {
-                window.location.href = "/admin/submissions";
+                if (globalRouter) {
+                  globalRouter.push("/admin/submissions");
+                }
               },
             },
             duration: 8000,
@@ -131,7 +135,7 @@ function startGlobalPolling() {
   // Poll every 60 seconds when document is visible
   globalInterval = setInterval(() => {
     if (document.visibilityState === "visible") {
-      triggerSharedFetch();
+      void triggerSharedFetch();
     }
   }, 60000);
 }
@@ -144,9 +148,14 @@ function stopGlobalPolling() {
 }
 
 export function usePendingSubmissions() {
+  const router = useRouter();
   const { data: session } = useSession();
   const [count, setCount] = useState<number>(globalPendingCount);
   const [isLoading, setIsLoading] = useState<boolean>(globalIsLoading);
+
+  useEffect(() => {
+    globalRouter = router;
+  }, [router]);
 
   const isUserAdmin = Boolean(session?.user?.email && isAdmin(session.user.email));
 
@@ -173,7 +182,7 @@ export function usePendingSubmissions() {
 
     if (activeAdminHookCount === 1) {
       startGlobalPolling();
-      triggerSharedFetch();
+      void triggerSharedFetch();
     } else {
       // Return immediate cached state
       setCount(globalPendingCount);
@@ -182,7 +191,7 @@ export function usePendingSubmissions() {
     const handleWindowFocus = () => {
       if (document.visibilityState === "visible") {
         // Debounced shared fetch
-        triggerSharedFetch();
+        void triggerSharedFetch();
       }
     };
 

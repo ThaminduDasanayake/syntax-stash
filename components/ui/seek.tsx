@@ -106,12 +106,8 @@ export function Seek({
   const maxCorner = shut / 2;
   const actualCorner = corner !== undefined ? clamp(corner, 0, maxCorner) : maxCorner;
 
-  const [snug, setSnug] = useState(
-    () => typeof window !== "undefined" && window.matchMedia("(max-width: 760px)").matches,
-  );
-  const [touch, setTouch] = useState(
-    () => typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches,
-  );
+  const [snug, setSnug] = useState(false);
+  const [touch, setTouch] = useState(false);
 
   useEffect(() => {
     const room = window.matchMedia("(max-width: 760px)");
@@ -120,6 +116,7 @@ export function Seek({
       setSnug(room.matches);
       setTouch(coarse.matches);
     };
+    read();
     room.addEventListener("change", read);
     coarse.addEventListener("change", read);
     return () => {
