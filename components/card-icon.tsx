@@ -15,18 +15,13 @@ export function parseIconStyle(iconBg?: string | null): {
   const normalized = (iconBg || "").toLowerCase().trim();
   const isLight = normalized.includes("light") || normalized.includes("white");
   const isInvert = normalized.includes("invert");
-  const isFill = normalized.includes("fill") || normalized.includes("full");
 
   const color: IconColorOption = isLight ? "light" : isInvert ? "invert" : "dark";
-  const spacing: IconSpacingOption = isFill ? "fill" : "padded";
 
-  return { color, spacing };
+  return { color, spacing: "fill" };
 }
 
-export function serializeIconStyle(color: IconColorOption, spacing: IconSpacingOption): string {
-  if (spacing === "fill") {
-    return color === "dark" ? "fill" : `${color} fill`;
-  }
+export function serializeIconStyle(color: IconColorOption, _spacing?: IconSpacingOption): string {
   return color;
 }
 
@@ -87,20 +82,16 @@ export function CardIcon({
     }
   };
 
-  const { color, spacing } = parseIconStyle(iconBg);
+  const { color } = parseIconStyle(iconBg);
   const isWhiteTile = color === "light" || iconClassName?.includes("bg-white");
   const isInverted = color === "invert" || iconClassName?.includes("invert");
-  const isFill =
-    spacing === "fill" ||
-    Boolean(iconClassName?.includes("fill") || iconClassName?.includes("object-cover"));
 
   if (!cleanFavicon || state.error) {
     return (
       <div
         className={cn(
           className,
-          "card-icon-box flex items-center justify-center overflow-hidden rounded-[22%]",
-          isFill ? "p-0" : "p-0.75",
+          "card-icon-box flex items-center justify-center overflow-hidden rounded-[22%] p-0",
           isWhiteTile && "bg-white! text-black!",
         )}
       />
@@ -120,8 +111,7 @@ export function CardIcon({
       }}
       className={cn(
         className,
-        "card-icon-box flex items-center justify-center overflow-hidden rounded-[22%] text-black dark:text-white",
-        isFill ? "p-0" : "p-0.5",
+        "card-icon-box flex items-center justify-center overflow-hidden rounded-[22%] p-0 text-black dark:text-white",
         isWhiteTile && "bg-white! text-black!",
       )}
     >
@@ -136,8 +126,7 @@ export function CardIcon({
           colorScheme: isWhiteTile ? "light" : "dark",
         }}
         className={cn(
-          "size-full text-inherit",
-          isFill ? "object-cover" : "object-contain",
+          "size-full text-inherit object-contain",
           isInverted && "brightness-125 invert",
           iconClassName,
         )}
