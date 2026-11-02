@@ -106,6 +106,7 @@ export function CardIcon({
 
   return (
     <div
+      suppressHydrationWarning
       style={{
         colorScheme: isWhiteTile ? "light" : "dark",
       }}
@@ -118,6 +119,7 @@ export function CardIcon({
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         key={currentSrc}
+        suppressHydrationWarning
         src={currentSrc}
         alt={alt}
         loading="lazy"

@@ -328,6 +328,8 @@ export function FilterSection({
 
       // Search filter
       if (!matchesSearchQuery(tool, query)) return false;
+
+      return true;
     });
 
     const itemsCopy = [...filtered];
