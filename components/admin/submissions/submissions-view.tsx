@@ -138,12 +138,17 @@ export function SubmissionsView({ initialSubmissions = [] }: SubmissionsViewProp
   const filteredSubmissions = allSubmissions.filter((sub) => {
     if (activeTab !== "all" && sub.status !== activeTab) return false;
     if (!searchQuery.trim()) return true;
-    const q = searchQuery.toLowerCase();
+    const q = searchQuery.toLowerCase().trim();
     return (
       sub.title.toLowerCase().includes(q) ||
+      sub.subtitle?.toLowerCase().includes(q) ||
       sub.description.toLowerCase().includes(q) ||
       sub.url.toLowerCase().includes(q) ||
-      (sub.author && sub.author.toLowerCase().includes(q))
+      sub.github?.toLowerCase().includes(q) ||
+      sub.category?.toLowerCase().includes(q) ||
+      sub.tags?.toLowerCase().includes(q) ||
+      (sub.author && sub.author.toLowerCase().includes(q)) ||
+      (sub.submitterName && sub.submitterName.toLowerCase().includes(q))
     );
   });
 
