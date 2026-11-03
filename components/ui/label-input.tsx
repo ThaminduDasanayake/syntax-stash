@@ -206,10 +206,7 @@ export function LabelInput({
         : "stroke-[#18181b]/20";
 
   return (
-    <div
-      ref={containerRef}
-      className={cn("relative w-full pt-2 select-none", className)}
-    >
+    <div ref={containerRef} className={cn("relative w-full pt-2 select-none", className)}>
       <div
         className="relative w-full cursor-text bg-transparent select-none"
         style={{ borderRadius: r, height: H, ...style }}
@@ -283,7 +280,7 @@ export function LabelInput({
           ref={labRef}
           htmlFor={id}
           className={cn(
-            "absolute top-1/2 origin-left cursor-text font-mono text-xs font-bold tracking-tight whitespace-pre transition-[transform,color] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160 uppercase",
+            "absolute top-1/2 origin-left cursor-text font-mono text-xs font-bold tracking-tight whitespace-pre uppercase transition-[transform,color] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
             focus
               ? "text-primary font-bold"
               : up
@@ -319,8 +316,10 @@ export function LabelInput({
           ref={inputRef}
           id={id}
           className={cn(
-            "absolute inset-0 h-full w-full rounded-[inherit] border-0 bg-transparent font-mono text-xs sm:text-sm tracking-tight transition-[filter,opacity] duration-260 outline-none",
-            isDark ? "text-white placeholder:text-white/20" : "text-zinc-900 placeholder:text-zinc-400",
+            "absolute inset-0 h-full w-full rounded-[inherit] border-0 bg-transparent font-mono text-xs tracking-tight transition-[filter,opacity] duration-260 outline-none sm:text-sm",
+            isDark
+              ? "text-white placeholder:text-white/20"
+              : "text-zinc-900 placeholder:text-zinc-400",
             flip > 0 ? "animate-[lbi-flip_260ms_ease-out]" : "",
           )}
           style={{
@@ -355,9 +354,7 @@ export function LabelInput({
             type="button"
             className={cn(
               "group absolute top-1/2 right-2.5 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-full bg-transparent p-0 transition-[color,transform] duration-160 active:scale-95",
-              isDark
-                ? "text-zinc-500 hover:text-white"
-                : "text-zinc-400 hover:text-zinc-900",
+              isDark ? "text-zinc-500 hover:text-white" : "text-zinc-400 hover:text-zinc-900",
             )}
             onPointerDown={(e) => e.preventDefault()}
             onClick={reveal}

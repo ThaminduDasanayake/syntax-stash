@@ -105,14 +105,14 @@ function matchesSearchQuery(tool: StashItem, query: string): boolean {
 
   return Boolean(
     tool.title.toLowerCase().includes(query) ||
-      authorMatches ||
-      tool.description?.toLowerCase().includes(query) ||
-      subtitle?.toLowerCase().includes(query) ||
-      url?.toLowerCase().includes(query) ||
-      github?.toLowerCase().includes(query) ||
-      slug?.toLowerCase().includes(query) ||
-      tags?.some((tag: string) => tag.toLowerCase().includes(query)) ||
-      tool.category.toLowerCase().includes(query),
+    authorMatches ||
+    tool.description?.toLowerCase().includes(query) ||
+    subtitle?.toLowerCase().includes(query) ||
+    url?.toLowerCase().includes(query) ||
+    github?.toLowerCase().includes(query) ||
+    slug?.toLowerCase().includes(query) ||
+    tags?.some((tag: string) => tag.toLowerCase().includes(query)) ||
+    tool.category.toLowerCase().includes(query),
   );
 }
 

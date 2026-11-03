@@ -145,7 +145,7 @@ export function CardIcon({
           colorScheme: isWhiteTile ? "light" : "dark",
         }}
         className={cn(
-          "size-full text-inherit object-contain",
+          "size-full object-contain text-inherit",
           isInverted && "brightness-125 invert",
           iconClassName,
         )}
