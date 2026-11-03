@@ -21,11 +21,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { LabelInput } from "@/components/ui/label-input";
+import { LabelTextarea } from "@/components/ui/label-textarea";
 import { SelectField } from "@/components/ui/select-field";
-import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
 import { DetectedFieldUpdates, DuplicateNoticeState } from "@/hooks/use-metadata-scanner";
-import { cn, isValidHttpUrl } from "@/lib/utils";
+import { isValidHttpUrl } from "@/lib/utils";
 
 export interface ResourceFormData {
   authorBlog?: string | null;
@@ -304,13 +304,14 @@ export function ResourceFormFields({
           </div>
 
           {/* Section 3: Description */}
-          <div className="space-y-2">
+          <div className="space-y-1">
             <div className="flex flex-wrap items-center justify-between gap-1.5">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                <span>Description</span>
-                <span className="text-destructive">*</span>
+              <div className="flex items-center gap-1.5">
+                <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
+                  Description
+                </span>
                 <FieldCheckmark checked={Boolean(values.description?.trim())} />
-              </Label>
+              </div>
               <div className="flex items-center gap-2">
                 {scanner.detectedUpdates.description && (
                   <DetectedFieldSuggestion
@@ -325,27 +326,17 @@ export function ResourceFormFields({
                     }}
                   />
                 )}
-                <span
-                  className={cn(
-                    "font-mono text-[10px]",
-                    (values.description?.length || 0) > 780
-                      ? "text-destructive font-bold"
-                      : "text-muted-foreground",
-                  )}
-                >
-                  {values.description?.length || 0}/800
-                </span>
               </div>
             </div>
-            <Textarea
+            <LabelTextarea
+              label="Description *"
               value={values.description || ""}
               onChange={(e) => onChange("description", e.target.value)}
               placeholder="Detailed description of the tool, library, or design asset..."
-              rows={4}
               maxLength={800}
               disabled={disabled}
-              className="border-line font-mono text-xs!"
               required
+              theme="dark"
             />
           </div>
 

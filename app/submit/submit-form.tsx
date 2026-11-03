@@ -24,8 +24,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { LabelInput } from "@/components/ui/label-input";
+import { LabelTextarea } from "@/components/ui/label-textarea";
 import { SelectField } from "@/components/ui/select-field";
-import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
 import { signIn, useSession } from "@/lib/auth-client";
 import { isValidHttpUrl } from "@/lib/utils";
@@ -580,13 +580,14 @@ export function SubmitForm() {
           </div>
 
           {/* Section 3: Description */}
-          <div className="space-y-2">
+          <div className="space-y-1">
             <div className="flex flex-wrap items-center justify-between gap-1.5">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                <span>Description</span>
-                <span className="text-destructive">*</span>
+              <div className="flex items-center gap-1.5">
+                <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
+                  Description
+                </span>
                 <FieldCheckmark checked={Boolean(description.trim())} />
-              </Label>
+              </div>
               <DetectedFieldSuggestion
                 currentValue={description}
                 detectedValue={detectedUpdates.description}
@@ -599,13 +600,13 @@ export function SubmitForm() {
                 }}
               />
             </div>
-            <Textarea
+            <LabelTextarea
+              label="Description *"
               placeholder="Briefly explain what this tool or resource does..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
-              rows={4}
-              className="bg-paper min-h-25 font-mono text-xs leading-relaxed"
+              theme="dark"
             />
           </div>
 
