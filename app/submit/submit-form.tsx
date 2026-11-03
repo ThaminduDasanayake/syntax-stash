@@ -22,7 +22,6 @@ import {
   TagPicker,
 } from "@/components/submissions";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { LabelInput } from "@/components/ui/label-input";
 import { LabelSelect } from "@/components/ui/label-select";
 import { LabelTextarea } from "@/components/ui/label-textarea";
@@ -658,16 +657,14 @@ export function SubmitForm() {
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                  <span>Tags / Keywords (Optional)</span>
-                  <FieldCheckmark checked={Boolean(tags.trim())} />
-                </Label>
+              <div className="space-y-1">
                 <TagPicker
+                  label="Tags / Keywords (Optional)"
                   value={tags}
                   onChange={setTags}
                   allowCustom={true}
                   placeholder="Select tags or type custom..."
+                  suffix={<FieldCheckmark checked={Boolean(tags.trim())} />}
                 />
               </div>
             </div>

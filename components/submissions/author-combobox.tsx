@@ -1,7 +1,7 @@
 "use client";
 
 import { UserIcon } from "@phosphor-icons/react";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 
 import {
   Combobox,
@@ -16,6 +16,8 @@ import {
   useComboboxAnchor,
 } from "@/components/ui/combobox";
 import { cn, parseAuthors, slugifyAuthor } from "@/lib/utils";
+
+const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
 
 export interface AuthorLinks {
   blog?: string;
@@ -38,12 +40,18 @@ export interface AuthorComboboxProps {
   allowCustom?: boolean;
   className?: string;
   containerClassName?: string;
+  corner?: number;
   disabled?: boolean;
+  height?: number;
+  label?: string;
   maxAuthors?: number;
   onChange: (value: string) => void;
   onRequestCreateAuthor?: (authorName: string) => void;
   onSelectAuthor?: (author: AuthorOption) => void;
   placeholder?: string;
+  required?: boolean;
+  suffix?: React.ReactNode;
+  theme?: "light" | "dark";
   value: string | string[] | null | undefined;
 }
 
@@ -119,13 +127,25 @@ export async function fetchAuthorList(forceRefresh = false): Promise<AuthorOptio
 export function AuthorCombobox({
   className,
   containerClassName,
+  corner = 20,
   disabled = false,
+  height: propH = 52,
+  label: customLabel = "Creator Attribution",
   maxAuthors = 10,
   onChange,
   onSelectAuthor,
   placeholder = "Search creators in catalog...",
+  required = false,
+  suffix,
+  theme = "dark",
   value,
 }: AuthorComboboxProps) {
+  const isDark = theme === "dark";
+  const rawLabel = customLabel || "Creator Attribution";
+  const displayLabel = required && !rawLabel.includes("*") ? `${rawLabel} *` : rawLabel;
+  const generatedId = useId().replace(/:/g, "");
+  const id = `acb-${generatedId}`;
+
   const [authors, setAuthors] = useState<AuthorOption[]>(() => {
     if (!cachedAuthors) return [];
     return [...cachedAuthors].sort((a, b) =>
@@ -133,8 +153,115 @@ export function AuthorCombobox({
     );
   });
 
-  const anchor = useComboboxAnchor();
+  const [isFocused, setIsFocused] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
 
+  const anchor = useComboboxAnchor();
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const chipsWrapperRef = useRef<HTMLDivElement | null>(null);
+  const trailingRef = useRef<HTMLDivElement | null>(null);
+
+  const [measuredWidth, setMeasuredWidth] = useState<number>(320);
+  const [measuredHeight, setMeasuredHeight] = useState<number>(propH);
+  const [trailingWidth, setTrailingWidth] = useState<number>(() => (suffix ? 40 : 0));
+
+  // Dynamic width & height measurement
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const update = () => {
+      const w = el.offsetWidth || el.getBoundingClientRect().width;
+      if (w > 0) setMeasuredWidth(w);
+    };
+
+    update();
+
+    if (typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          const w = entry.contentRect.width;
+          if (w > 0) setMeasuredWidth(w);
+        }
+      });
+      ro.observe(el);
+      return () => ro.disconnect();
+    }
+  }, []);
+
+  // Measure chips wrapper height for wrapping chips
+  useEffect(() => {
+    const el = chipsWrapperRef.current;
+    if (!el) return;
+
+    const updateHeight = () => {
+      const h = Math.max(propH, el.scrollHeight, el.offsetHeight);
+      setMeasuredHeight(h);
+    };
+
+    updateHeight();
+
+    if (typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          const h = Math.max(propH, entry.contentRect.height);
+          setMeasuredHeight(h);
+        }
+      });
+      ro.observe(el);
+      return () => ro.disconnect();
+    }
+  }, [propH, value]);
+
+  // Measure trailing width
+  useEffect(() => {
+    if (!suffix) {
+      setTrailingWidth(0);
+      return;
+    }
+    const el = trailingRef.current;
+    if (!el) return;
+
+    const updateTrailing = () => {
+      const w = el.offsetWidth || el.getBoundingClientRect().width;
+      if (w > 0) setTrailingWidth(w);
+    };
+
+    updateTrailing();
+
+    if (typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          const w = entry.contentRect.width;
+          if (w > 0) setTrailingWidth(w);
+        }
+      });
+      ro.observe(el);
+      return () => ro.disconnect();
+    }
+  }, [suffix]);
+
+  // Label width measurement for notch calculation
+  const [lw, setLw] = useState(() => Math.max(36, displayLabel.length * 9));
+  const labelNodeRef = useRef<HTMLLabelElement | null>(null);
+
+  const labRef = useCallback((node: HTMLLabelElement | null) => {
+    labelNodeRef.current = node;
+    if (node) {
+      const width = node.offsetWidth || node.scrollWidth;
+      if (width > 0) setLw(width);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (labelNodeRef.current) {
+      const width = labelNodeRef.current.offsetWidth || labelNodeRef.current.scrollWidth;
+      if (width > 0) setLw(width);
+    }
+  }, [displayLabel]);
+
+  // Sync author list
   useEffect(() => {
     let mounted = true;
 
@@ -212,8 +339,57 @@ export function AuthorCombobox({
     }
   };
 
+  const hasValue = selectedValues.length > 0 || searchInput.trim().length > 0;
+  const focus = isFocused || isOpen;
+  const up = focus || hasValue;
+
+  const W = Math.round(measuredWidth || 280);
+  const H = Math.round(measuredHeight || propH);
+  const r = clamp(corner, 0, Math.min(W / 2, propH / 2));
+  const S = 0.78; // Lifted label scale factor
+  const IN = 0.75; // Half-stroke inset to prevent SVG clipping
+
+  /* ── Notch Geometry ── */
+  const lx = Math.max(16, r + 4);
+  const x0 = Math.max(r, lx - 4);
+  const x1 = Math.min(W - r, lx + lw * S + 6);
+  const a = Math.max(0, r - IN);
+  const R = Math.max(0, W - IN);
+  const B = Math.max(0, H - IN);
+  const mid = W / 2;
+
+  // The gap: two short segments from middle outward
+  const nm = (x0 + x1) / 2;
+  const gapL = `M${nm},${IN} L${x0},${IN}`;
+  const gapR = `M${nm},${IN} L${x1},${IN}`;
+
+  // Right contour
+  const rightPath =
+    r > 0
+      ? `M${x1},${IN} L${W - r},${IN} A${a},${a} 0 0 1 ${R},${r} L${R},${H - r} A${a},${a} 0 0 1 ${W - r},${B} L${mid},${B}`
+      : `M${x1},${IN} L${R},${IN} L${R},${B} L${mid},${B}`;
+
+  // Left contour
+  const leftPath =
+    r > 0
+      ? `M${x0},${IN} ${x0 > r ? `L${r},${IN} ` : ""}A${a},${a} 0 0 0 ${IN},${r} L${IN},${H - r} A${a},${a} 0 0 0 ${r},${B} L${mid},${B}`
+      : `M${x0},${IN} L${IN},${IN} L${IN},${B} L${mid},${B}`;
+
+  const ringStroke = focus
+    ? "stroke-primary"
+    : hasValue
+      ? isDark
+        ? "stroke-white/40"
+        : "stroke-[#b5b5b6]"
+      : isDark
+        ? "stroke-white/20"
+        : "stroke-[#18181b]/20";
+
   return (
-    <div className={cn("relative w-full", containerClassName)}>
+    <div
+      ref={containerRef}
+      className={cn("relative w-full pt-2 select-none", containerClassName)}
+    >
       <Combobox
         multiple
         autoHighlight
@@ -221,41 +397,182 @@ export function AuthorCombobox({
         items={authorNames}
         value={selectedValues}
         onValueChange={handleValueChange}
+        open={isOpen}
+        onOpenChange={setIsOpen}
       >
-        <ComboboxChips
-          ref={anchor}
-          className={cn(
-            "bg-paper border-line focus-within:border-primary/60 min-h-9 w-full rounded-md border-[1.5px] font-mono text-xs transition-colors",
-            disabled && "cursor-not-allowed opacity-50",
-            className,
-          )}
+        <div
+          ref={chipsWrapperRef}
+          className="relative w-full cursor-text bg-transparent"
+          style={{ borderRadius: r, minHeight: propH }}
+          onClick={() => {
+            const input = containerRef.current?.querySelector("input");
+            input?.focus();
+          }}
         >
-          <ComboboxValue>
-            {(values: string[]) => (
-              <React.Fragment>
-                {values.map((authorName: string) => (
-                  <ComboboxChip
-                    key={authorName}
-                    className="bg-muted text-foreground border-line/60 rounded border text-xs"
-                  >
-                    <UserIcon className="size-3 text-zinc-400" />
-                    <span>{authorName}</span>
-                  </ComboboxChip>
-                ))}
-                <ComboboxChipsInput
-                  placeholder={values.length === 0 ? placeholder : ""}
-                  className="font-mono text-xs placeholder:text-zinc-500"
-                />
-              </React.Fragment>
-            )}
-          </ComboboxValue>
-        </ComboboxChips>
+          {/* SVG Outline with Dynamic Retractable Top Notch */}
+          <svg
+            className="pointer-events-none absolute inset-0 h-full w-full overflow-visible"
+            width={W}
+            height={H}
+            viewBox={`0 0 ${W} ${H}`}
+            aria-hidden="true"
+          >
+            {/* Right Perimeter Outline */}
+            <path
+              d={rightPath}
+              fill="none"
+              strokeLinecap="butt"
+              strokeWidth={focus ? 1.5 : 1}
+              className={cn(
+                "transition-[stroke,stroke-width] duration-220 ease-out motion-reduce:duration-160",
+                ringStroke,
+              )}
+            />
 
+            {/* Left Perimeter Outline */}
+            <path
+              d={leftPath}
+              fill="none"
+              strokeLinecap="butt"
+              strokeWidth={focus ? 1.5 : 1}
+              className={cn(
+                "transition-[stroke,stroke-width] duration-220 ease-out motion-reduce:duration-160",
+                ringStroke,
+              )}
+            />
+
+            {/* Left Gap Notch */}
+            <path
+              d={gapL}
+              fill="none"
+              pathLength={1}
+              strokeLinecap="butt"
+              strokeWidth={focus ? 1.5 : 1}
+              strokeDasharray="1 2"
+              strokeDashoffset={up ? -1 : 0}
+              className={cn(
+                "transition-[stroke-dashoffset,stroke,stroke-width] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:duration-160",
+                ringStroke,
+              )}
+            />
+
+            {/* Right Gap Notch */}
+            <path
+              d={gapR}
+              fill="none"
+              pathLength={1}
+              strokeLinecap="butt"
+              strokeWidth={focus ? 1.5 : 1}
+              strokeDasharray="1 2"
+              strokeDashoffset={up ? -1 : 0}
+              className={cn(
+                "transition-[stroke-dashoffset,stroke,stroke-width] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:duration-160",
+                ringStroke,
+              )}
+            />
+          </svg>
+
+          {/* Floating Label with Letter Hop Animation */}
+          <label
+            key={displayLabel}
+            ref={labRef}
+            htmlFor={id}
+            className={cn(
+              "pointer-events-none absolute top-1/2 origin-left font-mono text-xs font-bold tracking-tight whitespace-pre uppercase transition-[transform,color] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
+              focus
+                ? "text-primary font-bold"
+                : up
+                  ? isDark
+                    ? "text-white/70"
+                    : "text-zinc-600"
+                  : isDark
+                    ? "text-white/40"
+                    : "text-zinc-400",
+            )}
+            style={{
+              left: lx,
+              transform: up
+                ? `translateY(-50%) translateY(-${Math.round(propH / 2)}px) scale(0.78)`
+                : "translateY(-50%)",
+            }}
+          >
+            {[...displayLabel].map((ch, i) => {
+              const isAsterisk = ch === "*";
+              return (
+                <span
+                  key={i}
+                  className={cn(
+                    "inline-block motion-reduce:animate-none",
+                    isAsterisk ? "text-destructive font-bold ml-0.5" : "",
+                    focus ? "animate-[lbi-hop_460ms_cubic-bezier(0.3,0.7,0.3,1)_both]" : "",
+                  )}
+                  style={{ animationDelay: `${i * 24}ms` }}
+                >
+                  {ch}
+                </span>
+              );
+            })}
+          </label>
+
+          {/* Transparent Combobox Chips Container */}
+          <ComboboxChips
+            ref={anchor}
+            className={cn(
+              "w-full bg-transparent border-0 ring-0 shadow-none outline-none flex flex-wrap items-center gap-1.5 py-2 font-mono text-xs transition-colors focus-within:ring-0 focus-within:border-0",
+              disabled && "cursor-not-allowed opacity-50",
+              className,
+            )}
+            style={{
+              minHeight: propH,
+              paddingLeft: lx,
+              paddingRight: (trailingWidth || 0) + 14,
+            }}
+          >
+            <ComboboxValue>
+              {(values: string[]) => (
+                <React.Fragment>
+                  {values.map((authorName: string) => (
+                    <ComboboxChip
+                      key={authorName}
+                      className="bg-white/10 text-foreground border border-white/15 hover:bg-white/15 h-7 rounded-full px-2.5 py-1 text-xs font-mono font-medium gap-1.5 transition-colors"
+                    >
+                      <UserIcon className="size-3 text-zinc-400" />
+                      <span>{authorName}</span>
+                    </ComboboxChip>
+                  ))}
+                  <ComboboxChipsInput
+                    id={id}
+                    value={searchInput}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setSearchInput(e.target.value)
+                    }
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
+                    placeholder={up && values.length === 0 ? placeholder : ""}
+                    className="font-mono text-xs text-foreground placeholder:text-zinc-500 bg-transparent border-0 outline-none h-7 min-w-28 flex-1"
+                  />
+                </React.Fragment>
+              )}
+            </ComboboxValue>
+          </ComboboxChips>
+
+          {/* Suffix / Action Container */}
+          {suffix && (
+            <div
+              ref={trailingRef}
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 flex items-center gap-2 pointer-events-auto"
+            >
+              {suffix}
+            </div>
+          )}
+        </div>
+
+        {/* Dropdown Options Popup */}
         <ComboboxContent
           anchor={anchor}
           align="start"
-          sideOffset={4}
-          className="border-line bg-popover text-popover-foreground z-50 rounded-md border-[1.5px] font-mono text-xs shadow-md"
+          sideOffset={6}
+          className="border border-white/15 bg-[#121214]/95 text-popover-foreground z-50 rounded-[20px] p-1.5 font-mono text-xs shadow-2xl backdrop-blur-md"
         >
           <ComboboxEmpty className="text-muted-foreground py-3 text-center font-mono text-xs">
             No creators found.
@@ -267,7 +584,7 @@ export function AuthorCombobox({
                 <ComboboxItem
                   key={item}
                   value={item}
-                  className="cursor-pointer gap-2 py-1.5 pr-8 pl-2 font-mono text-xs"
+                  className="cursor-pointer gap-2 rounded-[14px] py-2 pr-8 pl-3 font-mono text-xs hover:bg-white/10 transition-colors"
                 >
                   <UserIcon className="text-muted-foreground size-3.5 shrink-0" />
                   <span className="flex-1 truncate">{item}</span>

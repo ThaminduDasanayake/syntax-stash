@@ -19,7 +19,6 @@ import {
   TagPicker,
 } from "@/components/submissions";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { LabelInput } from "@/components/ui/label-input";
 import { LabelSelect } from "@/components/ui/label-select";
 import { LabelTextarea } from "@/components/ui/label-textarea";
@@ -365,21 +364,18 @@ export function ResourceFormFields({
             disabled={disabled}
           />
 
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                <span>Canonical Tags</span>
-                <FieldCheckmark checked={Boolean(values.tags?.trim())} />
-              </Label>
-              <span className="text-muted-foreground text-[10px]">
-                Keywords for discoverability & filtering
-              </span>
-            </div>
+          {/* Section 8: Canonical Tags */}
+          <div className="space-y-1">
             <TagPicker
+              label="Canonical Tags"
               value={values.tags || ""}
               onChange={(val) => onChange("tags", val)}
               disabled={disabled}
+              suffix={<FieldCheckmark checked={Boolean(values.tags?.trim())} />}
             />
+            <p className="text-muted-foreground text-[10px] px-2 pt-0.5">
+              Keywords for discoverability & filtering
+            </p>
           </div>
 
           {/* Extra Custom Children Slots (e.g., Submissions notes, pricing, moderation status) */}

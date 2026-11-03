@@ -1099,12 +1099,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
               </div>
 
               {/* Canonical Tags */}
-              <div className="space-y-2">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                  <span>Canonical Tags</span>
-                  <FieldCheckmark checked={Boolean(editForm.tags?.trim())} />
-                </Label>
-
+              <div className="space-y-1">
                 {/* Submitted Tags Banner */}
                 <SubmittedDataBanner
                   label="Submitted"
@@ -1113,10 +1108,12 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
                 />
 
                 <TagPicker
+                  label="Canonical Tags"
                   value={editForm.tags || ""}
                   onChange={(val) => setEditForm((prev) => ({ ...prev, tags: val }))}
                   allowCustom={false}
                   placeholder="Search and select canonical tags..."
+                  suffix={<FieldCheckmark checked={Boolean(editForm.tags?.trim())} />}
                 />
               </div>
             </div>
