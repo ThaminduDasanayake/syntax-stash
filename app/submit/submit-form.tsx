@@ -22,8 +22,8 @@ import {
   TagPicker,
 } from "@/components/submissions";
 import { Button } from "@/components/ui/button";
-import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
+import { LabelInput } from "@/components/ui/label-input";
 import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
@@ -445,21 +445,23 @@ export function SubmitForm() {
           )}
 
           {/* Section 1: Resource URL with Auto-Fill */}
-          <div className="space-y-2">
+          <div className="space-y-1">
             <div className="flex items-center justify-between">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                <span>Resource URL</span>
-                <span className="text-destructive">*</span>
+              <div className="flex items-center gap-1.5">
+                <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
+                  Resource URL
+                </span>
                 <FieldCheckmark checked={Boolean(url.trim() && isValidHttpUrl(url.trim()))} />
-              </Label>
+              </div>
               <span className="text-muted-foreground text-[10px]">
                 Paste link to auto-detect details
               </span>
             </div>
-            <div className="flex gap-2">
-              <div className="h-9 flex-1">
-                <InputField
+            <div className="flex items-start gap-2">
+              <div className="flex-1">
+                <LabelInput
                   type="url"
+                  label="Resource URL *"
                   placeholder="https://example.com"
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
@@ -470,8 +472,7 @@ export function SubmitForm() {
                     }
                   }}
                   required
-                  containerClassName="h-9"
-                  className="font-mono text-xs"
+                  theme="dark"
                 />
               </div>
               <Button
@@ -479,7 +480,7 @@ export function SubmitForm() {
                 variant="outline"
                 onClick={handleAutoDetect}
                 disabled={isDetecting || !url.trim()}
-                className="h-8 shrink-0 gap-1.5 font-mono text-xs font-bold uppercase"
+                className="border-line hover:bg-surface mt-2 h-[52px] shrink-0 gap-1.5 rounded-[20px] px-4 font-mono text-xs font-bold uppercase"
               >
                 {isDetecting ? (
                   <CircleNotchIcon className="size-3.5 animate-spin" />
@@ -501,13 +502,14 @@ export function SubmitForm() {
 
           {/* Section 2: Title, Subtitle, & Category */}
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            <div className="space-y-2">
+            <div className="space-y-1">
               <div className="flex flex-wrap items-center justify-between gap-1.5">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                  <span>Title</span>
-                  <span className="text-destructive">*</span>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
+                    Title & Branding
+                  </span>
                   <FieldCheckmark checked={Boolean(title.trim())} />
-                </Label>
+                </div>
                 <DetectedFieldSuggestion
                   currentValue={title}
                   detectedValue={detectedUpdates.title}
@@ -520,16 +522,14 @@ export function SubmitForm() {
                   }}
                 />
               </div>
-              <div className="h-9">
-                <InputField
-                  placeholder="e.g. Color Studio"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  required
-                  containerClassName="h-9"
-                  className="font-mono text-xs"
-                />
-              </div>
+              <LabelInput
+                label="Title *"
+                placeholder="e.g. Color Studio"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+                theme="dark"
+              />
             </div>
 
             <div className="space-y-2">
@@ -550,12 +550,14 @@ export function SubmitForm() {
           </div>
 
           {/* Subtitle / Tagline */}
-          <div className="space-y-2">
+          <div className="space-y-1">
             <div className="flex flex-wrap items-center justify-between gap-1.5">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                <span>Subtitle / Tagline (Optional)</span>
+              <div className="flex items-center gap-1.5">
+                <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
+                  Subtitle / Tagline
+                </span>
                 <FieldCheckmark checked={Boolean(subtitle.trim())} />
-              </Label>
+              </div>
               <DetectedFieldSuggestion
                 currentValue={subtitle}
                 detectedValue={detectedUpdates.subtitle}
@@ -568,15 +570,13 @@ export function SubmitForm() {
                 }}
               />
             </div>
-            <div className="h-9">
-              <InputField
-                placeholder="e.g. The AI powered color palette generator"
-                value={subtitle}
-                onChange={(e) => setSubtitle(e.target.value)}
-                containerClassName="h-9"
-                className="font-mono text-xs"
-              />
-            </div>
+            <LabelInput
+              label="Subtitle / Tagline (Optional)"
+              placeholder="e.g. The AI powered color palette generator"
+              value={subtitle}
+              onChange={(e) => setSubtitle(e.target.value)}
+              theme="dark"
+            />
           </div>
 
           {/* Section 3: Description */}
@@ -653,12 +653,14 @@ export function SubmitForm() {
             </div>
 
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-              <div className="space-y-2">
+              <div className="space-y-1">
                 <div className="flex flex-wrap items-center justify-between gap-1.5">
-                  <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                    <span>GitHub Repository (Optional)</span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
+                      Source Code
+                    </span>
                     <FieldCheckmark checked={Boolean(github.trim())} />
-                  </Label>
+                  </div>
                   <DetectedFieldSuggestion
                     currentValue={github}
                     detectedValue={detectedUpdates.github}
@@ -671,16 +673,14 @@ export function SubmitForm() {
                     }}
                   />
                 </div>
-                <div className="h-9">
-                  <InputField
-                    type="url"
-                    placeholder="https://github.com/owner/repo"
-                    value={github}
-                    onChange={(e) => setGithub(e.target.value)}
-                    containerClassName="h-9"
-                    className="font-mono text-xs"
-                  />
-                </div>
+                <LabelInput
+                  type="url"
+                  label="GitHub Repository (Optional)"
+                  placeholder="https://github.com/owner/repo"
+                  value={github}
+                  onChange={(e) => setGithub(e.target.value)}
+                  theme="dark"
+                />
               </div>
 
               <div className="space-y-2">
@@ -697,20 +697,20 @@ export function SubmitForm() {
               </div>
             </div>
 
-            <div className="space-y-2 pt-1">
-              <Label className="text-muted-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                <span>Note for Moderator (Optional)</span>
+            <div className="space-y-1 pt-1">
+              <div className="flex items-center gap-1.5">
+                <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
+                  Note for Moderator (Optional)
+                </span>
                 <FieldCheckmark checked={Boolean(notes.trim())} />
-              </Label>
-              <div className="h-9">
-                <InputField
-                  placeholder="Why do you recommend this resource? Any special context?"
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                  containerClassName="h-9"
-                  className="font-mono text-xs"
-                />
               </div>
+              <LabelInput
+                label="Note for Moderator (Optional)"
+                placeholder="Why do you recommend this resource? Any special context?"
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                theme="dark"
+              />
             </div>
           </div>
 
