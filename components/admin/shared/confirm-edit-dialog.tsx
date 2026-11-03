@@ -137,11 +137,11 @@ function isDifferent(field: string, valA: unknown, valB: unknown): boolean {
     if (isNoneA && isNoneB) return false;
   }
 
-  // Default-equivalence check for iconBg: "" / null / undefined / "dark" / "default"
+  // Default-equivalence check for iconBg: "" / null / undefined / "none" / "default"
   if (lowerField === "iconbg") {
-    const isDarkA = !normA || normA === "dark" || normA === "default";
-    const isDarkB = !normB || normB === "dark" || normB === "default";
-    if (isDarkA && isDarkB) return false;
+    const isNoneA = !normA || normA === "none" || normA === "default";
+    const isNoneB = !normB || normB === "none" || normB === "default";
+    if (isNoneA && isNoneB) return false;
   }
 
   return true;

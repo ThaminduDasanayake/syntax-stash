@@ -157,7 +157,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
     description: "",
     favicon: "",
     github: "",
-    iconBg: (sub as unknown as { iconBg?: string }).iconBg || "dark",
+    iconBg: (sub as unknown as { iconBg?: string }).iconBg || "none",
     notes: sub.notes || "",
     ogImage: "",
     ogImageBg: (sub as unknown as { ogImageBg?: string }).ogImageBg || "none",
@@ -211,7 +211,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
         description: sub.description || "",
         favicon: sub.favicon || "",
         github: sub.github || "",
-        iconBg: (sub as unknown as { iconBg?: string }).iconBg || "dark",
+        iconBg: (sub as unknown as { iconBg?: string }).iconBg || "none",
         notes: sub.notes || "",
         ogImage: sub.ogImage || "",
         ogImageBg: (sub as unknown as { ogImageBg?: string }).ogImageBg || "none",
@@ -229,7 +229,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
       setEditForm((prev) => ({
         ...prev,
         favicon: sub.favicon || "",
-        iconBg: (sub as unknown as { iconBg?: string }).iconBg || "dark",
+        iconBg: (sub as unknown as { iconBg?: string }).iconBg || "none",
         ogImage: sub.ogImage || "",
         ogImageBg: (sub as unknown as { ogImageBg?: string }).ogImageBg || "none",
       }));
@@ -836,7 +836,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
                 <div className="flex items-center gap-1.5">
                   <span className="text-muted-foreground text-[10px]">Icon Bg:</span>
                   <span className="bg-muted py-0.2 rounded px-1.5 text-[10px] font-bold uppercase">
-                    {(sub as unknown as { iconBg?: string }).iconBg || "dark"}
+                    {(sub as unknown as { iconBg?: string }).iconBg || "none"}
                   </span>
                 </div>
 
@@ -873,7 +873,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
               allowUpload
               favicon={editForm.favicon}
               faviconOptions={faviconOptions}
-              iconBg={editForm.iconBg || "dark"}
+              iconBg={editForm.iconBg || "none"}
               onIconBgChange={(val) => setEditForm((prev) => ({ ...prev, iconBg: val }))}
               ogImage={editForm.ogImage}
               ogImageBg={editForm.ogImageBg || "none"}
@@ -1243,7 +1243,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
                   className="rounded-lg"
                   description={editForm.description || "Enter a description..."}
                   favicon={editForm.favicon}
-                  iconBg={editForm.iconBg || "dark"}
+                  iconBg={editForm.iconBg || "none"}
                   ogImage={editForm.ogImage}
                   ogImageBg={editForm.ogImageBg}
                   subtitle={editForm.subtitle}

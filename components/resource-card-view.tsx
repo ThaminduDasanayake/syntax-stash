@@ -22,7 +22,7 @@ export interface ResourceCardViewProps {
   category?: string | null;
   description?: string | null;
   favicon?: string | null;
-  iconBg?: "dark" | "light" | "invert" | string | null;
+  iconBg?: "none" | "dark" | "black" | "light" | "white" | "invert" | string | null;
   iconClassName?: string;
   isBookmarked?: boolean;
   ogImage?: string | null;

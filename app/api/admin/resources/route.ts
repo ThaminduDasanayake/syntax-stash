@@ -154,7 +154,7 @@ export async function GET(request: NextRequest) {
           healthStatus:
             (r.healthStatus as import("@/components/admin/shared/types").HealthStatus) || null,
           healthStatusCode: r.healthStatusCode,
-          iconBg: r.iconBg || "dark",
+          iconBg: r.iconBg || "none",
           ogImage: r.ogImage,
           ogImageBg: r.ogImageBg || "none",
           subtitle: r.subtitle,
@@ -309,7 +309,7 @@ export async function POST(req: Request) {
       description: description.trim(),
       favicon: favicon?.trim() || null,
       github: github?.trim() || null,
-      iconBg: iconBg || "dark",
+      iconBg: iconBg || "none",
       ogImage: ogImage?.trim() || null,
       ogImageBg: ogImageBg || "none",
       subtitle: subtitle?.trim() || null,
@@ -507,7 +507,7 @@ export async function PATCH(req: Request) {
     if (updates.ogImage !== undefined) updatedData.ogImage = updates.ogImage?.trim() || null;
     if (updates.ogImageBg !== undefined) updatedData.ogImageBg = updates.ogImageBg || "none";
     if (updates.github !== undefined) updatedData.github = updates.github?.trim() || null;
-    if (updates.iconBg !== undefined) updatedData.iconBg = updates.iconBg || "dark";
+    if (updates.iconBg !== undefined) updatedData.iconBg = updates.iconBg || "none";
 
     await db.update(resource).set(updatedData).where(eq(resource.id, id));
 

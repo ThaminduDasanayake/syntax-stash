@@ -415,7 +415,9 @@ function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
           r.subtitle?.toLowerCase().includes(q) ||
           r.description.toLowerCase().includes(q) ||
           r.url.toLowerCase().includes(q) ||
+          r.github?.toLowerCase().includes(q) ||
           r.authorName?.toLowerCase().includes(q) ||
+          r.category.toLowerCase().includes(q) ||
           r.tags?.toLowerCase().includes(q),
       );
     }

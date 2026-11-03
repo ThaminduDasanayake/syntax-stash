@@ -19,8 +19,8 @@ import {
   TagPicker,
 } from "@/components/submissions";
 import { Button } from "@/components/ui/button";
-import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
+import { LabelInput } from "@/components/ui/label-input";
 import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
@@ -160,39 +160,39 @@ export function ResourceFormFields({
         {/* Left Column: Form Controls (7 cols) */}
         <div className="space-y-6 lg:col-span-7">
           {/* Section 1: Resource URL with Auto-Detect */}
-          <div className="space-y-2">
+          <div className="space-y-1">
             <div className="flex items-center justify-between">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                <span>Resource URL</span>
-                <span className="text-destructive">*</span>
+              <div className="flex items-center gap-1.5">
+                <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
+                  Destination URL
+                </span>
                 <FieldCheckmark
                   checked={Boolean(values.url?.trim() && isValidHttpUrl(values.url.trim()))}
                 />
-              </Label>
+              </div>
               <span className="text-muted-foreground text-[10px]">
                 Auto-detect title, description, favicon & OG image
               </span>
             </div>
 
-            <div className="flex gap-2">
-              <div className="h-9 flex-1">
-                <InputField
+            <div className="flex items-start gap-2">
+              <div className="flex-1">
+                <LabelInput
                   type="url"
+                  label="Resource URL *"
                   value={values.url || ""}
                   onChange={(e) => onChange("url", e.target.value)}
                   placeholder="https://example.com"
-                  containerClassName="h-9"
-                  className="font-mono text-xs"
                   disabled={disabled}
                   required
                 />
               </div>
               <Button
                 variant="outline"
-                size="sm"
+                type="button"
                 onClick={onAutoDetect}
                 disabled={scanner.isDetecting || !values.url?.trim() || disabled}
-                className="border-line hover:bg-surface h-8 shrink-0 gap-1.5 px-3 text-xs font-bold uppercase"
+                className="border-line hover:bg-surface mt-2 h-[52px] shrink-0 gap-1.5 rounded-[20px] px-4 font-mono text-xs font-bold uppercase"
               >
                 {scanner.isDetecting ? (
                   <CircleNotchIcon className="size-4 animate-spin" />
@@ -215,13 +215,14 @@ export function ResourceFormFields({
 
           {/* Section 2: Title, Subtitle, & Category */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
+            <div className="space-y-1">
               <div className="flex flex-wrap items-center justify-between gap-1.5">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                  <span>Title</span>
-                  <span className="text-destructive">*</span>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
+                    Resource Title
+                  </span>
                   <FieldCheckmark checked={Boolean(values.title?.trim())} />
-                </Label>
+                </div>
                 {scanner.detectedUpdates.title && (
                   <DetectedFieldSuggestion
                     currentValue={values.title || ""}
@@ -236,14 +237,14 @@ export function ResourceFormFields({
                   />
                 )}
               </div>
-              <InputField
+              <LabelInput
+                label="Title *"
                 value={values.title || ""}
                 onChange={(e) => onChange("title", e.target.value)}
-                placeholder="Resource Name"
-                containerClassName="h-9"
-                className="font-mono text-xs"
+                placeholder="e.g. Next.js, Radix UI"
                 disabled={disabled}
                 required
+                theme="dark"
               />
             </div>
 
@@ -270,14 +271,14 @@ export function ResourceFormFields({
             </div>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1">
             <div className="flex flex-wrap items-center justify-between gap-1.5">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                <span>Subtitle</span>
-                <span className="text-muted-foreground text-[10px] font-normal lowercase">
-                  (optional)
+              <div className="flex items-center gap-1.5">
+                <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
+                  Subtitle / Tagline
                 </span>
-              </Label>
+                <FieldCheckmark checked={Boolean(values.subtitle?.trim())} />
+              </div>
               {scanner.detectedUpdates.subtitle !== undefined && (
                 <DetectedFieldSuggestion
                   currentValue={values.subtitle || ""}
@@ -292,13 +293,13 @@ export function ResourceFormFields({
                 />
               )}
             </div>
-            <InputField
+            <LabelInput
+              label="Subtitle / Tagline (Optional)"
               value={values.subtitle || ""}
               onChange={(e) => onChange("subtitle", e.target.value)}
               placeholder="Short tagline or purpose"
-              containerClassName="h-9"
-              className="font-mono text-xs"
               disabled={disabled}
+              theme="dark"
             />
           </div>
 
@@ -367,17 +368,16 @@ export function ResourceFormFields({
           />
 
           {/* Section 6: GitHub Repository */}
-          <div className="space-y-2">
+          <div className="space-y-1">
             <div className="flex flex-wrap items-center justify-between gap-1.5">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                <span>GitHub Repository</span>
-                <span className="text-muted-foreground text-[10px] font-normal lowercase">
-                  (optional)
+              <div className="flex items-center gap-1.5">
+                <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
+                  Source Code
                 </span>
                 <FieldCheckmark
                   checked={Boolean(values.github?.trim() && isValidHttpUrl(values.github.trim()))}
                 />
-              </Label>
+              </div>
               {scanner.detectedUpdates.github && (
                 <DetectedFieldSuggestion
                   currentValue={values.github || ""}
@@ -392,14 +392,14 @@ export function ResourceFormFields({
                 />
               )}
             </div>
-            <InputField
+            <LabelInput
               type="url"
+              label="GitHub Repository (Optional)"
               value={values.github || ""}
               onChange={(e) => onChange("github", e.target.value)}
               placeholder="https://github.com/username/repository"
-              containerClassName="h-9"
-              className="font-mono text-xs"
               disabled={disabled}
+              theme="dark"
             />
           </div>
 

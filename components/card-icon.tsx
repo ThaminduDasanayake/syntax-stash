@@ -4,29 +4,38 @@ import { useState } from "react";
 
 import { cn, isValidHttpUrl } from "@/lib/utils";
 
-export type IconColorOption = "dark" | "light" | "invert";
+export type IconColorOption = "none" | "dark" | "white" | "invert";
 export type IconSpacingOption = "padded" | "fill";
-export type IconBgOption = "dark" | "light" | "invert" | "fill" | string;
+export type IconBgOption = "none" | "dark" | "black" | "light" | "white" | "invert" | string;
 
 export function parseIconStyle(iconBg?: string | null): {
   color: IconColorOption;
   spacing: IconSpacingOption;
 } {
   const normalized = (iconBg || "").toLowerCase().trim();
-  const isLight = normalized.includes("light") || normalized.includes("white");
+  const isWhite = normalized.includes("white") || normalized.includes("light");
   const isInvert = normalized.includes("invert");
-  const isFill = normalized.includes("fill") || normalized.includes("full");
+  const isDark =
+    normalized === "dark" ||
+    normalized === "black" ||
+    normalized.includes("dark") ||
+    normalized.includes("black");
 
-  const color: IconColorOption = isLight ? "light" : isInvert ? "invert" : "dark";
-  const spacing: IconSpacingOption = isFill ? "fill" : "padded";
+  let color: IconColorOption = "none";
+  if (isWhite) {
+    color = "white";
+  } else if (isInvert) {
+    color = "invert";
+  } else if (isDark) {
+    color = "dark";
+  } else {
+    color = "none";
+  }
 
-  return { color, spacing };
+  return { color, spacing: "fill" };
 }
 
-export function serializeIconStyle(color: IconColorOption, spacing: IconSpacingOption): string {
-  if (spacing === "fill") {
-    return color === "dark" ? "fill" : `${color} fill`;
-  }
+export function serializeIconStyle(color: IconColorOption, _spacing?: IconSpacingOption): string {
   return color;
 }
 
@@ -35,7 +44,7 @@ const loadedFavicons = new Set<string>();
 
 export function CardIcon({
   alt,
-  className = "bg-background",
+  className = "",
   favicon,
   iconBg,
   iconClassName,
@@ -43,7 +52,7 @@ export function CardIcon({
   alt: string;
   className?: string;
   favicon?: string | null;
-  iconBg?: "dark" | "light" | "invert" | string | null;
+  iconBg?: "none" | "dark" | "black" | "light" | "white" | "invert" | string | null;
   iconClassName?: string;
 }) {
   const cleanFavicon = favicon?.trim() || "";
@@ -87,21 +96,19 @@ export function CardIcon({
     }
   };
 
-  const { color, spacing } = parseIconStyle(iconBg);
-  const isWhiteTile = color === "light" || iconClassName?.includes("bg-white");
+  const { color } = parseIconStyle(iconBg);
+  const isWhiteTile = color === "white" || iconClassName?.includes("bg-white");
+  const isDarkTile = color === "dark" || iconClassName?.includes("bg-black");
   const isInverted = color === "invert" || iconClassName?.includes("invert");
-  const isFill =
-    spacing === "fill" ||
-    Boolean(iconClassName?.includes("fill") || iconClassName?.includes("object-cover"));
 
   if (!cleanFavicon || state.error) {
     return (
       <div
         className={cn(
           className,
-          "card-icon-box flex items-center justify-center overflow-hidden rounded-[22%]",
-          isFill ? "p-0" : "p-0.75",
+          "card-icon-box flex items-center justify-center overflow-hidden rounded-[22%] p-0",
           isWhiteTile && "bg-white! text-black!",
+          isDarkTile && "bg-black! text-white!",
         )}
       />
     );
@@ -115,19 +122,21 @@ export function CardIcon({
 
   return (
     <div
+      suppressHydrationWarning
       style={{
         colorScheme: isWhiteTile ? "light" : "dark",
       }}
       className={cn(
         className,
-        "card-icon-box flex items-center justify-center overflow-hidden rounded-[22%] text-black dark:text-white",
-        isFill ? "p-0" : "p-0.5",
+        "card-icon-box flex items-center justify-center overflow-hidden rounded-[22%] p-0 text-black dark:text-white",
         isWhiteTile && "bg-white! text-black!",
+        isDarkTile && "bg-black! text-white!",
       )}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         key={currentSrc}
+        suppressHydrationWarning
         src={currentSrc}
         alt={alt}
         loading="lazy"
@@ -136,8 +145,7 @@ export function CardIcon({
           colorScheme: isWhiteTile ? "light" : "dark",
         }}
         className={cn(
-          "size-full text-inherit",
-          isFill ? "object-cover" : "object-contain",
+          "size-full object-contain text-inherit",
           isInverted && "brightness-125 invert",
           iconClassName,
         )}

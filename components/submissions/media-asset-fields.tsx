@@ -99,7 +99,7 @@ function OgImagePreviewBanner({
     <div className="border-line bg-paper/60 mt-2.5 overflow-hidden rounded border-[1.5px] p-3">
       <div
         className={cn(
-          "border-line relative aspect-[2/1] w-full overflow-hidden rounded border-[1.5px]",
+          "border-line relative aspect-2/1 w-full overflow-hidden rounded border-[1.5px]",
           hasCustomBg
             ? bg === "white"
               ? "bg-white"
@@ -176,7 +176,7 @@ export function MediaAssetFields({
   disabled = false,
   favicon,
   faviconOptions = [],
-  iconBg = "dark",
+  iconBg = "none",
   ogImage,
   ogImageBg = "none",
   ogImageOptions = [],
@@ -254,105 +254,74 @@ export function MediaAssetFields({
             />
           </div>
 
-          {/* Favicon Styling Controls: Separate Color & Spacing Options */}
+          {/* Favicon Styling Controls: Color / Tile Background Options */}
           {cleanFavicon &&
             onIconBgChange &&
             (() => {
-              const { color: currentColor, spacing: currentSpacing } = parseIconStyle(iconBg);
+              const { color: currentColor } = parseIconStyle(iconBg);
 
               const handleColorChange = (newColor: IconColorOption) => {
-                onIconBgChange(serializeIconStyle(newColor, currentSpacing));
-              };
-
-              const handleSpacingChange = (newSpacing: IconSpacingOption) => {
-                onIconBgChange(serializeIconStyle(currentColor, newSpacing));
+                onIconBgChange(newColor);
               };
 
               return (
-                <div className="border-line/70 bg-surface/40 space-y-2.5 rounded-lg border-[1.5px] p-3">
-                  {/* Row 1: Background / Contrast */}
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
-                      Background / Color:
-                    </span>
-                    <div className="border-line bg-surface/80 inline-flex rounded border-[1.5px] p-0.5 font-mono text-[11px]">
-                      <button
-                        type="button"
-                        onClick={() => handleColorChange("dark")}
-                        disabled={disabled}
-                        className={cn(
-                          "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
-                          currentColor === "dark"
-                            ? "bg-primary text-primary-foreground shadow-xs"
-                            : "text-muted-foreground hover:text-foreground",
-                        )}
-                      >
-                        Dark (Default)
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleColorChange("light")}
-                        disabled={disabled}
-                        className={cn(
-                          "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
-                          currentColor === "light"
-                            ? "bg-primary text-primary-foreground shadow-xs"
-                            : "text-muted-foreground hover:text-foreground",
-                        )}
-                      >
-                        White Tile
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleColorChange("invert")}
-                        disabled={disabled}
-                        className={cn(
-                          "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
-                          currentColor === "invert"
-                            ? "bg-primary text-primary-foreground shadow-xs"
-                            : "text-muted-foreground hover:text-foreground",
-                        )}
-                      >
-                        Invert
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Row 2: Spacing & Fit */}
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
-                      Icon Spacing & Fit:
-                    </span>
-                    <div className="border-line bg-surface/80 inline-flex rounded border-[1.5px] p-0.5 font-mono text-[11px]">
-                      <button
-                        type="button"
-                        onClick={() => handleSpacingChange("padded")}
-                        disabled={disabled}
-                        className={cn(
-                          "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
-                          currentSpacing === "padded"
-                            ? "bg-primary text-primary-foreground shadow-xs"
-                            : "text-muted-foreground hover:text-foreground",
-                        )}
-                        title="Inner padding (safe from corner cutting for transparent SVGs/logos)"
-                      >
-                        Padded (Default)
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleSpacingChange("fill")}
-                        disabled={disabled}
-                        className={cn(
-                          "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
-                          currentSpacing === "fill"
-                            ? "bg-primary text-primary-foreground shadow-xs"
-                            : "text-muted-foreground hover:text-foreground",
-                        )}
-                        title="Edge-to-edge fill with squircle corners (ideal for solid square icons)"
-                      >
-                        Fill (Edge-to-Edge)
-                      </button>
-                    </div>
+                <div className="border-line/70 bg-surface/40 flex flex-wrap items-center justify-between gap-2 rounded-lg border-[1.5px] p-2.5 sm:px-3">
+                  <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
+                    Background / Color:
+                  </span>
+                  <div className="border-line bg-surface/80 inline-flex flex-wrap rounded border-[1.5px] p-0.5 font-mono text-[11px]">
+                    <button
+                      type="button"
+                      onClick={() => handleColorChange("none")}
+                      disabled={disabled}
+                      className={cn(
+                        "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                        currentColor === "none"
+                          ? "bg-primary text-primary-foreground shadow-xs"
+                          : "text-muted-foreground hover:text-foreground",
+                      )}
+                    >
+                      No bg
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleColorChange("dark")}
+                      disabled={disabled}
+                      className={cn(
+                        "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                        currentColor === "dark"
+                          ? "bg-primary text-primary-foreground shadow-xs"
+                          : "text-muted-foreground hover:text-foreground",
+                      )}
+                    >
+                      Black
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleColorChange("white")}
+                      disabled={disabled}
+                      className={cn(
+                        "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                        currentColor === "white"
+                          ? "bg-primary text-primary-foreground shadow-xs"
+                          : "text-muted-foreground hover:text-foreground",
+                      )}
+                    >
+                      White
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleColorChange("invert")}
+                      disabled={disabled}
+                      className={cn(
+                        "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                        currentColor === "invert"
+                          ? "bg-primary text-primary-foreground shadow-xs"
+                          : "text-muted-foreground hover:text-foreground",
+                      )}
+                    >
+                      Invert
+                    </button>
                   </div>
                 </div>
               );

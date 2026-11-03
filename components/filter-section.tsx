@@ -90,6 +90,32 @@ function FilterUrlSync({
   return null;
 }
 
+function matchesSearchQuery(tool: StashItem, query: string): boolean {
+  if (!query) return true;
+  const author = "author" in tool ? tool.author : undefined;
+  const subtitle = "subtitle" in tool ? tool.subtitle : undefined;
+  const tags = "tags" in tool ? tool.tags : undefined;
+  const url = "url" in tool ? tool.url : undefined;
+  const github = "github" in tool ? tool.github : undefined;
+  const slug = "slug" in tool ? tool.slug : undefined;
+
+  const authorMatches = Array.isArray(author)
+    ? author.some((a) => a.toLowerCase().includes(query))
+    : author?.toLowerCase().includes(query);
+
+  return Boolean(
+    tool.title.toLowerCase().includes(query) ||
+    authorMatches ||
+    tool.description?.toLowerCase().includes(query) ||
+    subtitle?.toLowerCase().includes(query) ||
+    url?.toLowerCase().includes(query) ||
+    github?.toLowerCase().includes(query) ||
+    slug?.toLowerCase().includes(query) ||
+    tags?.some((tag: string) => tag.toLowerCase().includes(query)) ||
+    tool.category.toLowerCase().includes(query),
+  );
+}
+
 export function FilterSection({
   categories,
   initialCategory,
@@ -301,23 +327,9 @@ export function FilterSection({
       }
 
       // Search filter
-      if (!query) return true;
-      const author = "author" in tool ? tool.author : undefined;
-      const subtitle = "subtitle" in tool ? tool.subtitle : undefined;
-      const tags = "tags" in tool ? tool.tags : undefined;
+      if (!matchesSearchQuery(tool, query)) return false;
 
-      const authorMatches = Array.isArray(author)
-        ? author.some((a) => a.toLowerCase().includes(query))
-        : author?.toLowerCase().includes(query);
-
-      return (
-        tool.title.toLowerCase().includes(query) ||
-        authorMatches ||
-        tool.description?.toLowerCase().includes(query) ||
-        subtitle?.toLowerCase().includes(query) ||
-        tags?.some((tag: string) => tag.toLowerCase().includes(query)) ||
-        tool.category.toLowerCase().includes(query)
-      );
+      return true;
     });
 
     const itemsCopy = [...filtered];
@@ -427,25 +439,7 @@ export function FilterSection({
       }
 
       // Search filter
-      if (query) {
-        const author = "author" in tool ? tool.author : undefined;
-        const subtitle = "subtitle" in tool ? tool.subtitle : undefined;
-        const tags = "tags" in tool ? tool.tags : undefined;
-
-        const authorMatches = Array.isArray(author)
-          ? author.some((a) => a.toLowerCase().includes(query))
-          : author?.toLowerCase().includes(query);
-
-        const matches =
-          tool.title.toLowerCase().includes(query) ||
-          authorMatches ||
-          tool.description?.toLowerCase().includes(query) ||
-          subtitle?.toLowerCase().includes(query) ||
-          tags?.some((tag: string) => tag.toLowerCase().includes(query)) ||
-          tool.category.toLowerCase().includes(query);
-
-        if (!matches) continue;
-      }
+      if (query && !matchesSearchQuery(tool, query)) continue;
 
       totals.set(tool.category, (totals.get(tool.category) || 0) + 1);
     }
