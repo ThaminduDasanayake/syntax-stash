@@ -213,8 +213,8 @@ function ResourceFormContent({ initialData, mode = "create" }: ResourceFormProps
 
   return (
     <div className="mx-auto max-w-6xl space-y-8 font-mono text-xs">
-      {/* Header with Navigation & Actions */}
-      <div className="border-line flex flex-col gap-4 border-b-[1.5px] pb-6 sm:flex-row sm:items-center sm:justify-between">
+      {/* Header with Navigation */}
+      <div className="border-line border-b-[1.5px] pb-6">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <Button
@@ -248,6 +248,34 @@ function ResourceFormContent({ initialData, mode = "create" }: ResourceFormProps
               ? "Update resource details, category assignment, author attributions, and media assets."
               : "Create and publish a new verified resource directly into the live Syntax Stash catalog."}
           </p>
+        </div>
+      </div>
+
+      {/* Main Form + Live Preview */}
+      <form onSubmit={handleSubmit}>
+        <ResourceFormFields
+          values={formData}
+          onChange={handleFieldChange}
+          onAutoDetect={handleAutoDetect}
+          scanner={scanner}
+          onDismissSuggestedAuthor={() => scanner.setSuggestedAuthor(null)}
+          isEdit={isEdit}
+          disabled={isSubmitting}
+        />
+      </form>
+
+      {/* Sticky Bottom Action Bar */}
+      <div className="border-line bg-background/95 sticky bottom-0 z-10 flex items-center justify-between border-t-[1.5px] py-4 backdrop-blur-sm">
+        <div className="text-muted-foreground flex items-center gap-2 font-mono text-xs">
+          {isEdit ? (
+            hasChanges ? (
+              <span className="font-bold text-amber-500">• Unsaved changes pending</span>
+            ) : (
+              <span>No modifications made</span>
+            )
+          ) : (
+            <span>Fill in details to publish a new resource</span>
+          )}
         </div>
 
         <div className="flex items-center gap-2">
@@ -293,72 +321,6 @@ function ResourceFormContent({ initialData, mode = "create" }: ResourceFormProps
             ) : (
               <>
                 <PlusIcon weight="bold" className="size-4" />
-                <span>Publish Resource</span>
-              </>
-            )}
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Form + Live Preview */}
-      <form onSubmit={handleSubmit}>
-        <ResourceFormFields
-          values={formData}
-          onChange={handleFieldChange}
-          onAutoDetect={handleAutoDetect}
-          scanner={scanner}
-          onDismissSuggestedAuthor={() => scanner.setSuggestedAuthor(null)}
-          isEdit={isEdit}
-          disabled={isSubmitting}
-        />
-      </form>
-
-      {/* Sticky Bottom Action Bar */}
-      <div className="border-line bg-background/95 sticky bottom-0 z-10 flex items-center justify-between border-t-[1.5px] py-4 backdrop-blur-sm">
-        <div className="text-muted-foreground flex items-center gap-2 font-mono text-xs">
-          {isEdit ? (
-            hasChanges ? (
-              <span className="font-bold text-amber-500">• Unsaved changes pending</span>
-            ) : (
-              <span>No modifications made</span>
-            )
-          ) : (
-            <span>Fill in details to publish a new resource</span>
-          )}
-        </div>
-
-        <div className="flex items-center gap-2">
-          <Button
-            type="button"
-            size="sm"
-            variant="outline"
-            onClick={() => setIsClearConfirmOpen(true)}
-            disabled={isSubmitting}
-            className="border-line hover:bg-destructive/10 hover:text-destructive hover:border-destructive/40 h-8 gap-1.5 px-3 text-xs font-bold uppercase transition-colors"
-          >
-            <EraserIcon weight="duotone" className="size-3.5" />
-            <span>Clear All</span>
-          </Button>
-          <Button
-            type="button"
-            size="sm"
-            onClick={handleSubmit}
-            disabled={isSubmitting || (isEdit && !hasChanges)}
-            className="h-8 gap-1.5 px-4 text-xs font-bold uppercase"
-          >
-            {isSubmitting ? (
-              <>
-                <CircleNotchIcon weight="bold" className="size-3.5 animate-spin" />
-                <span>Saving...</span>
-              </>
-            ) : isEdit ? (
-              <>
-                <FloppyDiskIcon weight="duotone" className="size-3.5" />
-                <span>Save Changes</span>
-              </>
-            ) : (
-              <>
-                <PlusIcon weight="bold" className="size-3.5" />
                 <span>Publish Resource</span>
               </>
             )}
