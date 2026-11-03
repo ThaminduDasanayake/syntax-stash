@@ -74,7 +74,7 @@ export default async function EditResourcePage({ params }: EditPageProps) {
     authorName: authorsList.length > 0 ? authorsList.join(", ") : first.authorName || null,
     category: first.categoryName || "Generators",
     createdAt: first.createdAt.toISOString(),
-    iconBg: first.iconBg || "dark",
+    iconBg: first.iconBg || "none",
     ogImageBg: first.ogImageBg || "none",
     tags: tagsList.join(", "),
     updatedAt: first.updatedAt.toISOString(),

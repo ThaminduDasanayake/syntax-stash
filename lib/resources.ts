@@ -73,7 +73,7 @@ export const getAllResources = cache(
             description?: string;
             favicon?: string;
             github?: string;
-            iconBg?: "dark" | "light" | "invert" | string | null;
+            iconBg?: "none" | "dark" | "black" | "light" | "white" | "invert" | string | null;
             ogImage?: string;
             ogImageBg?: string | null;
             subtitle?: string;
@@ -97,7 +97,7 @@ export const getAllResources = cache(
               description: r.description || undefined,
               favicon: r.favicon || undefined,
               github: r.github || undefined,
-              iconBg: r.iconBg || "dark",
+              iconBg: r.iconBg || "none",
               ogImage: r.ogImage || undefined,
               ogImageBg: r.ogImageBg || "none",
               subtitle: r.subtitle || undefined,
@@ -228,7 +228,7 @@ export const getAllAdminResources = cache(
             healthStatus:
               (r.healthStatus as import("@/components/admin/shared/types").HealthStatus) || null,
             healthStatusCode: r.healthStatusCode,
-            iconBg: r.iconBg || "dark",
+            iconBg: r.iconBg || "none",
             ogImage: r.ogImage,
             ogImageBg: r.ogImageBg || "none",
             subtitle: r.subtitle,

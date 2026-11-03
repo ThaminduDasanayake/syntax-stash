@@ -176,7 +176,7 @@ export function MediaAssetFields({
   disabled = false,
   favicon,
   faviconOptions = [],
-  iconBg = "dark",
+  iconBg = "none",
   ogImage,
   ogImageBg = "none",
   ogImageOptions = [],
@@ -269,7 +269,20 @@ export function MediaAssetFields({
                   <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
                     Background / Color:
                   </span>
-                  <div className="border-line bg-surface/80 inline-flex rounded border-[1.5px] p-0.5 font-mono text-[11px]">
+                  <div className="border-line bg-surface/80 inline-flex flex-wrap rounded border-[1.5px] p-0.5 font-mono text-[11px]">
+                    <button
+                      type="button"
+                      onClick={() => handleColorChange("none")}
+                      disabled={disabled}
+                      className={cn(
+                        "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                        currentColor === "none"
+                          ? "bg-primary text-primary-foreground shadow-xs"
+                          : "text-muted-foreground hover:text-foreground",
+                      )}
+                    >
+                      No bg (default)
+                    </button>
                     <button
                       type="button"
                       onClick={() => handleColorChange("dark")}
@@ -281,20 +294,20 @@ export function MediaAssetFields({
                           : "text-muted-foreground hover:text-foreground",
                       )}
                     >
-                      Dark (Default)
+                      Dark (black)
                     </button>
                     <button
                       type="button"
-                      onClick={() => handleColorChange("light")}
+                      onClick={() => handleColorChange("white")}
                       disabled={disabled}
                       className={cn(
                         "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
-                        currentColor === "light"
+                        currentColor === "white"
                           ? "bg-primary text-primary-foreground shadow-xs"
                           : "text-muted-foreground hover:text-foreground",
                       )}
                     >
-                      White Tile
+                      White
                     </button>
                     <button
                       type="button"

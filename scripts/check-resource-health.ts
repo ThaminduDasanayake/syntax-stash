@@ -58,7 +58,7 @@ async function fetchDirectResources(): Promise<Resource[]> {
         description: r.description || undefined,
         favicon: r.favicon || undefined,
         github: r.github || undefined,
-        iconBg: (r.iconBg as "dark" | "invert" | "light") || "dark",
+        iconBg: (r.iconBg as "none" | "dark" | "black" | "light" | "white" | "invert") || "none",
         ogImage: r.ogImage || undefined,
         subtitle: r.subtitle || undefined,
         tags: r.tagName ? [r.tagName] : [],

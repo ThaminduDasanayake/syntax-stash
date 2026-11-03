@@ -52,7 +52,7 @@ export function SubmitForm() {
   const [github, setGithub] = useState("");
   const [favicon, setFavicon] = useState("");
   const [faviconOptions, setFaviconOptions] = useState<CandidateOption[]>([]);
-  const [iconBg, setIconBg] = useState<IconBgOption>("dark");
+  const [iconBg, setIconBg] = useState<IconBgOption>("none");
   const [ogImage, setOgImage] = useState("");
   const [ogImageBg, setOgImageBg] = useState<string>("none");
   const [ogImageOptions, setOgImageOptions] = useState<CandidateOption[]>([]);
@@ -318,7 +318,7 @@ export function SubmitForm() {
           description: description.trim(),
           favicon: favicon.trim() || undefined,
           github: github.trim() || undefined,
-          iconBg: iconBg || "dark",
+          iconBg: iconBg || "none",
           notes: notes.trim() || undefined,
           ogImage: ogImage.trim() || undefined,
           ogImageBg: ogImageBg || "none",

@@ -13,7 +13,7 @@ export interface ResourceCardPreviewProps {
   className?: string;
   description?: string | null;
   favicon?: string | null;
-  iconBg?: "dark" | "light" | "invert" | string | null;
+  iconBg?: "none" | "dark" | "black" | "light" | "white" | "invert" | string | null;
   iconClassName?: string;
   ogImage?: string | null;
   ogImageBg?: string | null;
