@@ -21,8 +21,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { LabelInput } from "@/components/ui/label-input";
+import { LabelSelect } from "@/components/ui/label-select";
 import { LabelTextarea } from "@/components/ui/label-textarea";
-import { SelectField } from "@/components/ui/select-field";
 import { useCategories } from "@/hooks/use-categories";
 import { DetectedFieldUpdates, DuplicateNoticeState } from "@/hooks/use-metadata-scanner";
 import { isValidHttpUrl } from "@/lib/utils";
@@ -235,23 +235,15 @@ export function ResourceFormFields({
 
             {/* Category Selection */}
             <div className="space-y-1">
-              <div className="flex items-center justify-between px-1 pb-1">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                  <span>Category</span>
-                  <span className="text-destructive font-bold">*</span>
-                  <FieldCheckmark checked={Boolean(values.category)} />
-                </Label>
-                <span className="text-muted-foreground text-[10px]">
-                  Classification
-                </span>
-              </div>
-              <SelectField
+              <LabelSelect
+                label="Category"
                 value={values.category || ""}
                 onValueChange={(val) => onChange("category", val)}
                 options={categoryOptions}
                 placeholder="Select category..."
                 disabled={disabled}
-                triggerClassName="h-[52px] rounded-[20px] font-mono text-xs px-4"
+                required
+                suffix={<FieldCheckmark checked={Boolean(values.category)} />}
               />
             </div>
           </div>
@@ -273,7 +265,7 @@ export function ResourceFormFields({
               </div>
             )}
             <LabelInput
-              label="Subtitle / Tagline (Optional)"
+              label="Subtitle"
               value={values.subtitle || ""}
               onChange={(e) => onChange("subtitle", e.target.value)}
               placeholder="Short tagline or purpose"
@@ -347,7 +339,7 @@ export function ResourceFormFields({
             )}
             <LabelInput
               type="url"
-              label="GitHub Repository (Optional)"
+              label="GitHub Repository"
               value={values.github || ""}
               onChange={(e) => onChange("github", e.target.value)}
               placeholder="https://github.com/username/repository"

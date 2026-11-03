@@ -24,8 +24,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { LabelInput } from "@/components/ui/label-input";
+import { LabelSelect } from "@/components/ui/label-select";
 import { LabelTextarea } from "@/components/ui/label-textarea";
-import { SelectField } from "@/components/ui/select-field";
 import { useCategories } from "@/hooks/use-categories";
 import { signIn, useSession } from "@/lib/auth-client";
 import { isValidHttpUrl } from "@/lib/utils";
@@ -520,21 +520,14 @@ export function SubmitForm() {
             </div>
 
             <div className="space-y-1">
-              <div className="flex items-center justify-between px-1 pb-1">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                  <span>Category</span>
-                  <span className="text-destructive font-bold">*</span>
-                  <FieldCheckmark checked={Boolean(category.trim())} />
-                </Label>
-                <span className="text-muted-foreground text-[10px]">
-                  Classification
-                </span>
-              </div>
-              <SelectField
+              <LabelSelect
+                label="Category"
                 value={category || (categoryOptions[0]?.value ?? "")}
                 onValueChange={setCategory}
                 options={categoryOptions}
-                triggerClassName="h-[52px] rounded-[20px] font-mono text-xs px-4"
+                placeholder="Select category..."
+                required
+                suffix={<FieldCheckmark checked={Boolean(category.trim())} />}
               />
             </div>
           </div>
