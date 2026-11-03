@@ -42,6 +42,7 @@ export function LabelTextarea({
   onChange,
   onFocus,
   placeholder,
+  required,
   showCount,
   style,
   theme = "dark",
@@ -50,7 +51,8 @@ export function LabelTextarea({
   ...restProps
 }: LabelTextareaProps) {
   const isDark = theme === "dark";
-  const displayLabel = label;
+  const rawLabel = label;
+  const displayLabel = required && !rawLabel.includes("*") ? `${rawLabel} *` : rawLabel;
   const generatedId = useId().replace(/:/g, "");
   const id = propId || `lta-${generatedId}`;
   const hasCount = showCount !== undefined ? showCount : maxLength !== undefined;
@@ -307,23 +309,29 @@ export function LabelTextarea({
               : "translateY(0) scale(1)",
           }}
         >
-          {[...displayLabel].map((ch, i) => (
-            <span
-              key={i}
-              className={`inline-block motion-reduce:animate-none ${
-                focus ? "animate-[lbi-hop_460ms_cubic-bezier(0.3,0.7,0.3,1)_both]" : ""
-              }`}
-              style={{ animationDelay: `${i * 24}ms` }}
-            >
-              {ch}
-            </span>
-          ))}
+          {[...displayLabel].map((ch, i) => {
+            const isAsterisk = ch === "*";
+            return (
+              <span
+                key={i}
+                className={cn(
+                  "inline-block motion-reduce:animate-none",
+                  isAsterisk ? "text-destructive font-bold ml-0.5" : "",
+                  focus ? "animate-[lbi-hop_460ms_cubic-bezier(0.3,0.7,0.3,1)_both]" : "",
+                )}
+                style={{ animationDelay: `${i * 24}ms` }}
+              >
+                {ch}
+              </span>
+            );
+          })}
         </label>
 
         {/* Auto-expanding Multiline Textarea */}
         <textarea
           ref={textareaRef}
           id={id}
+          required={required}
           className={cn(
             "absolute inset-0 w-full resize-none rounded-[inherit] border-0 bg-transparent font-mono text-xs sm:text-sm leading-relaxed tracking-tight transition-[color] duration-200 outline-none",
             isDark ? "text-white placeholder:text-white/20" : "text-zinc-900 placeholder:text-zinc-400",

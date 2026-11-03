@@ -27,6 +27,8 @@ export interface LabelInputProps extends Omit<
   showcase?: boolean;
   /** Visual color theme mode: "light" | "dark". Default: "dark" */
   theme?: LabelInputTheme;
+  /** Optional trailing element (e.g. checkmark icon or action) */
+  suffix?: React.ReactNode;
   className?: string;
 }
 
@@ -42,8 +44,10 @@ export function LabelInput({
   onChange,
   onFocus,
   placeholder,
+  required,
   showcase = false,
   style,
+  suffix,
   theme = "dark",
   type: propType = "text",
   value: controlledValue,
@@ -52,7 +56,8 @@ export function LabelInput({
 }: LabelInputProps) {
   const isDark = theme === "dark";
   const secret = field === "Password" || propType === "password";
-  const displayLabel = customLabel || field || placeholder || "Field";
+  const rawLabel = customLabel || field || placeholder || "Field";
+  const displayLabel = required && !rawLabel.includes("*") ? `${rawLabel} *` : rawLabel;
   const generatedId = useId().replace(/:/g, "");
   const id = propId || `lbi-${generatedId}`;
 
@@ -298,23 +303,29 @@ export function LabelInput({
               : "translateY(-50%)",
           }}
         >
-          {[...displayLabel].map((ch, i) => (
-            <span
-              key={i}
-              className={`inline-block motion-reduce:animate-none ${
-                focus ? "animate-[lbi-hop_460ms_cubic-bezier(0.3,0.7,0.3,1)_both]" : ""
-              }`}
-              style={{ animationDelay: `${i * 24}ms` }}
-            >
-              {ch}
-            </span>
-          ))}
+          {[...displayLabel].map((ch, i) => {
+            const isAsterisk = ch === "*";
+            return (
+              <span
+                key={i}
+                className={cn(
+                  "inline-block motion-reduce:animate-none",
+                  isAsterisk ? "text-destructive font-bold ml-0.5" : "",
+                  focus ? "animate-[lbi-hop_460ms_cubic-bezier(0.3,0.7,0.3,1)_both]" : "",
+                )}
+                style={{ animationDelay: `${i * 24}ms` }}
+              >
+                {ch}
+              </span>
+            );
+          })}
         </label>
 
         {/* Real Input Element */}
         <input
           ref={inputRef}
           id={id}
+          required={required}
           className={cn(
             "absolute inset-0 h-full w-full rounded-[inherit] border-0 bg-transparent font-mono text-xs tracking-tight transition-[filter,opacity] duration-260 outline-none sm:text-sm",
             isDark
@@ -324,7 +335,7 @@ export function LabelInput({
           )}
           style={{
             paddingLeft: lx,
-            paddingRight: secret ? 44 : lx,
+            paddingRight: secret ? 44 : suffix ? 44 : lx,
             ...(showcase && secret && !show ? { WebkitTextSecurity: "disc" } : {}),
           }}
           type={
@@ -347,6 +358,13 @@ export function LabelInput({
           inputMode={quiet ? "none" : restProps.inputMode}
           {...restProps}
         />
+
+        {/* Suffix Element (e.g. Checkmark) */}
+        {suffix && !secret && (
+          <div className="pointer-events-auto absolute top-1/2 right-3.5 -translate-y-1/2 flex items-center">
+            {suffix}
+          </div>
+        )}
 
         {/* Password Eye Toggle */}
         {secret && (
