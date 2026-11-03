@@ -21,6 +21,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
+import { LabelInput } from "@/components/ui/label-input";
 import { SelectField } from "@/components/ui/select-field";
 import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
@@ -215,13 +216,14 @@ export function ResourceFormFields({
 
           {/* Section 2: Title, Subtitle, & Category */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
+            <div className="space-y-1">
               <div className="flex flex-wrap items-center justify-between gap-1.5">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                  <span>Title</span>
-                  <span className="text-destructive">*</span>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
+                    Resource Title
+                  </span>
                   <FieldCheckmark checked={Boolean(values.title?.trim())} />
-                </Label>
+                </div>
                 {scanner.detectedUpdates.title && (
                   <DetectedFieldSuggestion
                     currentValue={values.title || ""}
@@ -236,14 +238,14 @@ export function ResourceFormFields({
                   />
                 )}
               </div>
-              <InputField
+              <LabelInput
+                label="Title *"
                 value={values.title || ""}
                 onChange={(e) => onChange("title", e.target.value)}
-                placeholder="Resource Name"
-                containerClassName="h-9"
-                className="font-mono text-xs"
+                placeholder="e.g. Next.js, Radix UI"
                 disabled={disabled}
                 required
+                theme="dark"
               />
             </div>
 

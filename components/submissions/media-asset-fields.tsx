@@ -99,7 +99,7 @@ function OgImagePreviewBanner({
     <div className="border-line bg-paper/60 mt-2.5 overflow-hidden rounded border-[1.5px] p-3">
       <div
         className={cn(
-          "border-line relative aspect-[2/1] w-full overflow-hidden rounded border-[1.5px]",
+          "border-line relative aspect-2/1 w-full overflow-hidden rounded border-[1.5px]",
           hasCustomBg
             ? bg === "white"
               ? "bg-white"
@@ -281,7 +281,7 @@ export function MediaAssetFields({
                           : "text-muted-foreground hover:text-foreground",
                       )}
                     >
-                      No bg (default)
+                      No bg
                     </button>
                     <button
                       type="button"
@@ -294,7 +294,7 @@ export function MediaAssetFields({
                           : "text-muted-foreground hover:text-foreground",
                       )}
                     >
-                      Dark (black)
+                      Black
                     </button>
                     <button
                       type="button"

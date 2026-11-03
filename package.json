@@ -48,6 +48,7 @@
     "cron-parser": "^5.5.0",
     "cronstrue": "^3.14.0",
     "drizzle-orm": "^0.45.2",
+    "framer-motion": "^14.9.0",
     "fuse.js": "^7.3.0",
     "gifenc": "^1.0.3",
     "gsap": "^3.15.0",

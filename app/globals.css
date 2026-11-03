@@ -811,6 +811,27 @@
   animation: neon-hold-shake 260ms linear infinite;
 }
 
+@keyframes lbi-hop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes lbi-flip {
+  0% {
+    transform: translateY(2px) scale(0.98);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .neon-hold-shake {
     animation: none;
