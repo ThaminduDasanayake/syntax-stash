@@ -1,14 +1,14 @@
 "use client";
 
 import { ArrowSquareOutIcon, CaretDownIcon, CheckIcon } from "@phosphor-icons/react";
-import * as React from "react";
-import { useState } from "react";
+import React, { useCallback, useEffect, useId, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
-import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn, isValidHttpUrl } from "@/lib/utils";
+
+const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
 
 export interface CandidateOption {
   label: string;
@@ -19,79 +19,369 @@ export interface CandidateOption {
 export interface EditableCandidateInputProps {
   className?: string;
   containerClassName?: string;
+  /** Corner radius in px: default 20 */
+  corner?: number;
   disabled?: boolean;
+  /** Component height in pixels. Default: 52 */
+  height?: number;
+  id?: string;
+  label?: string;
   onChange: (value: string) => void;
   options?: CandidateOption[];
   placeholder?: string;
   prefix?: React.ReactNode;
   renderPreview?: (option: CandidateOption) => React.ReactNode;
+  required?: boolean;
+  suffix?: React.ReactNode;
+  theme?: "light" | "dark";
   type?: string;
   value: string;
+  width?: number;
 }
 
 export function EditableCandidateInput({
+  id: propId,
   className,
   containerClassName,
+  corner = 20,
   disabled = false,
+  height: H = 52,
+  label: customLabel,
   onChange,
   options = [],
-  placeholder,
+  placeholder = "https://example.com",
   prefix,
   renderPreview,
+  required = false,
+  suffix,
+  theme = "dark",
   type = "url",
   value,
+  width: propWidth,
 }: EditableCandidateInputProps) {
   const [open, setOpen] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const isDark = theme === "dark";
 
-  const hasOptions = options.length > 0;
-  const cleanVal = value?.trim() || "";
+  const rawLabel = customLabel || placeholder || "Field";
+  const displayLabel = required && !rawLabel.includes("*") ? `${rawLabel} *` : rawLabel;
+  const generatedId = useId().replace(/:/g, "");
+  const id = propId || `eci-${generatedId}`;
+
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [measuredWidth, setMeasuredWidth] = useState<number>(() => propWidth || 0);
+
+  useEffect(() => {
+    if (propWidth) return;
+    const el = containerRef.current;
+    if (!el) return;
+
+    const update = () => {
+      const w = el.offsetWidth || el.getBoundingClientRect().width;
+      if (w > 0) {
+        setMeasuredWidth(w);
+      }
+    };
+
+    update();
+
+    if (typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          const w = entry.contentRect.width;
+          if (w > 0) {
+            setMeasuredWidth(w);
+          }
+        }
+      });
+      ro.observe(el);
+      return () => ro.disconnect();
+    }
+  }, [propWidth]);
+
+  const W = Math.round(propWidth || measuredWidth || 280);
+  const r = clamp(corner, 0, H / 2);
+  const S = 0.78; // Lifted label scale factor
+  const IN = 0.75; // Half-stroke inset to prevent SVG clipping
+
+  // Measure rendered label width to calculate top notch
+  const [lw, setLw] = useState(() => Math.max(32, displayLabel.length * 9));
+  const labelNodeRef = useRef<HTMLLabelElement | null>(null);
+
+  const labRef = useCallback((node: HTMLLabelElement | null) => {
+    labelNodeRef.current = node;
+    if (node) {
+      const width = node.offsetWidth || node.scrollWidth;
+      if (width > 0) {
+        setLw(width);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (labelNodeRef.current) {
+      const width = labelNodeRef.current.offsetWidth || labelNodeRef.current.scrollWidth;
+      if (width > 0) {
+        setLw(width);
+      }
+    }
+  }, [displayLabel]);
+
+  const cleanVal = (value || "").trim();
   const isValidUrl = Boolean(cleanVal) && (cleanVal.startsWith("/") || isValidHttpUrl(cleanVal));
+  const hasOptions = options.length > 0;
+
+  const focus = isFocused || open;
+  const up = focus || cleanVal.length > 0;
+
+  // Measure rendered width of trailing actions so input text padding never collides
+  const trailingRef = useRef<HTMLDivElement | null>(null);
+  const [trailingWidth, setTrailingWidth] = useState<number>(() =>
+    hasOptions ? (cleanVal && isValidUrl ? 175 : 110) : cleanVal && isValidUrl ? 95 : 44,
+  );
+
+  useEffect(() => {
+    const el = trailingRef.current;
+    if (!el) return;
+
+    const update = () => {
+      const w = el.offsetWidth || el.getBoundingClientRect().width;
+      if (w > 0) {
+        setTrailingWidth(Math.round(w));
+      }
+    };
+
+    update();
+
+    if (typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver(update);
+      ro.observe(el);
+      return () => ro.disconnect();
+    }
+  }, [cleanVal, hasOptions, isValidUrl, suffix]);
+
+  /* ── Notch Geometry ── */
+  const lx = Math.max(12, r + 4);
+  const x0 = Math.max(r, lx - 4);
+  const x1 = Math.min(W - r, lx + lw * S + 6);
+  const a = Math.max(0, r - IN);
+  const R = Math.max(0, W - IN);
+  const B = Math.max(0, H - IN);
+  const mid = W / 2;
+
+  // Gap segments
+  const nm = (x0 + x1) / 2;
+  const gapL = `M${nm},${IN} L${x0},${IN}`;
+  const gapR = `M${nm},${IN} L${x1},${IN}`;
+
+  // Right contour
+  const rightPath =
+    r > 0
+      ? `M${x1},${IN} L${W - r},${IN} A${a},${a} 0 0 1 ${R},${r} L${R},${H - r} A${a},${a} 0 0 1 ${W - r},${B} L${mid},${B}`
+      : `M${x1},${IN} L${R},${IN} L${R},${B} L${mid},${B}`;
+
+  // Left contour
+  const leftPath =
+    r > 0
+      ? `M${x0},${IN} ${x0 > r ? `L${r},${IN} ` : ""}A${a},${a} 0 0 0 ${IN},${r} L${IN},${H - r} A${a},${a} 0 0 0 ${r},${B} L${mid},${B}`
+      : `M${x0},${IN} L${IN},${IN} L${IN},${B} L${mid},${B}`;
+
+  const ringStroke = focus
+    ? "stroke-primary"
+    : cleanVal.length > 0
+      ? isDark
+        ? "stroke-white/40"
+        : "stroke-[#b5b5b6]"
+      : isDark
+        ? "stroke-white/20"
+        : "stroke-[#18181b]/20";
+
+  // Dynamic right padding calculation based on measured trailing actions
+  const rightPadding = Math.max(44, trailingWidth + 24);
+  const leftPadding = prefix ? lx + 32 : lx;
 
   return (
-    <div className={cn("relative flex items-center", containerClassName)}>
-      <InputGroup className="w-full">
+    <div
+      ref={containerRef}
+      className={cn("relative w-full pt-2 select-none", containerClassName)}
+    >
+      <div
+        className="relative w-full cursor-text bg-transparent select-none"
+        style={{ borderRadius: r, height: H }}
+      >
+        {/* SVG Outline with Dynamic Retractable Notch */}
+        <svg
+          className="pointer-events-none absolute inset-0 h-full w-full overflow-visible"
+          width={W}
+          height={H}
+          viewBox={`0 0 ${W} ${H}`}
+          aria-hidden="true"
+        >
+          {/* Right Perimeter Outline */}
+          <path
+            d={rightPath}
+            fill="none"
+            strokeLinecap="butt"
+            strokeWidth={focus ? 1.5 : 1}
+            className={cn(
+              "transition-[stroke,stroke-width] duration-220 ease-out motion-reduce:duration-160",
+              ringStroke,
+            )}
+          />
+
+          {/* Left Perimeter Outline */}
+          <path
+            d={leftPath}
+            fill="none"
+            strokeLinecap="butt"
+            strokeWidth={focus ? 1.5 : 1}
+            className={cn(
+              "transition-[stroke,stroke-width] duration-220 ease-out motion-reduce:duration-160",
+              ringStroke,
+            )}
+          />
+
+          {/* Left Gap Notch */}
+          <path
+            d={gapL}
+            fill="none"
+            pathLength={1}
+            strokeLinecap="butt"
+            strokeWidth={focus ? 1.5 : 1}
+            strokeDasharray="1 2"
+            strokeDashoffset={up ? -1 : 0}
+            className={cn(
+              "transition-[stroke-dashoffset,stroke,stroke-width] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:duration-160",
+              ringStroke,
+            )}
+          />
+
+          {/* Right Gap Notch */}
+          <path
+            d={gapR}
+            fill="none"
+            pathLength={1}
+            strokeLinecap="butt"
+            strokeWidth={focus ? 1.5 : 1}
+            strokeDasharray="1 2"
+            strokeDashoffset={up ? -1 : 0}
+            className={cn(
+              "transition-[stroke-dashoffset,stroke,stroke-width] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:duration-160",
+              ringStroke,
+            )}
+          />
+        </svg>
+
+        {/* Floating Label with Letter-by-Letter Hop Animation */}
+        <label
+          key={displayLabel}
+          ref={labRef}
+          htmlFor={id}
+          className={cn(
+            "pointer-events-none absolute top-1/2 origin-left font-mono text-xs font-bold tracking-tight whitespace-pre uppercase transition-[transform,color,left] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
+            focus
+              ? "text-primary font-bold"
+              : up
+                ? isDark
+                  ? "text-white/70"
+                  : "text-zinc-600"
+                : isDark
+                  ? "text-white/40"
+                  : "text-zinc-400",
+          )}
+          style={{
+            left: up ? lx : prefix ? lx + 32 : lx,
+            transform: up
+              ? `translateY(-50%) translateY(-${Math.round(H / 2)}px) scale(0.78)`
+              : "translateY(-50%)",
+          }}
+        >
+          {[...displayLabel].map((ch, i) => {
+            const isAsterisk = ch === "*";
+            return (
+              <span
+                key={i}
+                className={cn(
+                  "inline-block motion-reduce:animate-none",
+                  isAsterisk ? "text-destructive font-bold ml-0.5" : "",
+                  focus ? "animate-[lbi-hop_460ms_cubic-bezier(0.3,0.7,0.3,1)_both]" : "",
+                )}
+                style={{ animationDelay: `${i * 24}ms` }}
+              >
+                {ch}
+              </span>
+            );
+          })}
+        </label>
+
+        {/* Optional Prefix Thumbnail / Favicon Icon */}
         {prefix && (
-          <InputGroupAddon align="inline-start" className="pr-1 pl-2">
+          <div
+            className="pointer-events-none absolute top-1/2 -translate-y-1/2 flex items-center justify-center shrink-0 z-10"
+            style={{ left: lx }}
+          >
             {prefix}
-          </InputGroupAddon>
+          </div>
         )}
-        <InputGroupInput
+
+        {/* Real Input Element */}
+        <input
+          id={id}
           type={type}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          placeholder={placeholder}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          placeholder={focus ? placeholder : ""}
           disabled={disabled}
           title={value || placeholder || ""}
-          className={cn("font-mono text-xs", className)}
+          className={cn(
+            "absolute inset-0 h-full w-full rounded-[inherit] border-0 bg-transparent font-mono text-xs tracking-tight transition-[filter,opacity] duration-260 outline-none sm:text-sm",
+            isDark
+              ? "text-white placeholder:text-white/20"
+              : "text-zinc-900 placeholder:text-zinc-400",
+            className,
+          )}
+          style={{
+            paddingLeft: leftPadding,
+            paddingRight: rightPadding,
+          }}
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck="false"
         />
 
-        {/* Action buttons on active input value */}
-        {cleanVal && isValidUrl && (
-          <InputGroupAddon align="inline-end" className="gap-1 pr-1">
-            <CopyButton
-              textToCopy={cleanVal}
-              iconOnly
-              size="icon-xs"
-              className="text-muted-foreground hover:text-foreground size-6"
-              title="Copy current URL"
-            />
-            {cleanVal.startsWith("http") && (
-              <a
-                href={cleanVal}
-                target="_blank"
-                rel="noopener noreferrer"
-                tabIndex={-1}
-                className="text-muted-foreground hover:text-foreground hover:bg-muted/50 inline-flex size-6 items-center justify-center rounded transition-colors"
-                title="Open current asset in new tab"
-              >
-                <ArrowSquareOutIcon weight="bold" className="size-3" />
-              </a>
-            )}
-          </InputGroupAddon>
-        )}
+        {/* Trailing Actions Container */}
+        <div
+          ref={trailingRef}
+          className="absolute top-1/2 -translate-y-1/2 flex items-center gap-1.5 shrink-0 z-10"
+          style={{ right: Math.max(12, r - 6) }}
+        >
+          {cleanVal && isValidUrl && (
+            <div className="flex items-center gap-1">
+              <CopyButton
+                textToCopy={cleanVal}
+                iconOnly
+                size="icon-xs"
+                className="text-muted-foreground hover:text-foreground size-6 rounded-md hover:bg-white/5 transition-colors"
+                title="Copy current URL"
+              />
+              {cleanVal.startsWith("http") && (
+                <a
+                  href={cleanVal}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  tabIndex={-1}
+                  className="text-muted-foreground hover:text-foreground hover:bg-white/5 inline-flex size-6 items-center justify-center rounded-md transition-colors"
+                  title="Open asset in new tab"
+                >
+                  <ArrowSquareOutIcon weight="bold" className="size-3.5" />
+                </a>
+              )}
+            </div>
+          )}
 
-        {hasOptions && (
-          <InputGroupAddon align="inline-end">
+          {hasOptions && (
             <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger asChild>
                 <Button
@@ -99,10 +389,10 @@ export function EditableCandidateInput({
                   variant="ghost"
                   size="sm"
                   disabled={disabled}
-                  className="text-muted-foreground hover:text-foreground h-7 gap-1 px-1.5 font-mono text-[10px] font-bold uppercase"
+                  className="text-muted-foreground hover:text-foreground h-7 gap-1 rounded-[10px] px-2 font-mono text-[10px] font-bold uppercase hover:bg-white/10"
                   title="Choose or inspect detected options"
                 >
-                  <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5">
+                  <span className="bg-primary/10 text-primary rounded-md px-1.5 py-0.5">
                     {options.length} {options.length === 1 ? "option" : "options"}
                   </span>
                   <CaretDownIcon className="size-3" />
@@ -111,9 +401,9 @@ export function EditableCandidateInput({
 
               <PopoverContent
                 align="end"
-                className="bg-popover border-border w-[calc(100vw-2rem)] max-w-lg p-2 font-mono text-xs shadow-xl sm:w-[480px]"
+                className="bg-[#18181b]/95 border-border/80 w-[calc(100vw-2rem)] max-w-lg p-2.5 font-mono text-xs shadow-2xl shadow-black/70 rounded-[20px] backdrop-blur-xl sm:w-[480px]"
               >
-                <div className="border-border text-muted-foreground flex items-center justify-between border-b-[1.5px] px-2 py-1.5 text-[10px] font-bold tracking-wider uppercase">
+                <div className="border-border/60 text-muted-foreground flex items-center justify-between border-b-[1.5px] px-2 py-1.5 text-[10px] font-bold tracking-wider uppercase">
                   <span>Detected Options ({options.length})</span>
                   <span className="text-[9px] font-normal lowercase opacity-70">
                     click to select or inspect
@@ -129,7 +419,7 @@ export function EditableCandidateInput({
                       <div
                         key={`${option.url}-${idx}`}
                         className={cn(
-                          "group/option flex w-full items-start gap-2.5 rounded border-[1.5px] p-2 text-left transition-all",
+                          "group/option flex w-full items-start gap-2.5 rounded-[14px] border-[1.5px] p-2.5 text-left transition-all",
                           isSelected
                             ? "border-primary bg-primary/10 shadow-xs"
                             : "border-line bg-surface/40 hover:border-primary/50 hover:bg-surface/80",
@@ -148,7 +438,7 @@ export function EditableCandidateInput({
                           </div>
                         )}
 
-                        {/* Main clickable area to select this option */}
+                        {/* Main clickable area */}
                         <div
                           onClick={() => {
                             onChange(option.url);
@@ -163,7 +453,7 @@ export function EditableCandidateInput({
                             {option.type && (
                               <span
                                 className={cn(
-                                  "shrink-0 rounded px-1 text-[9px] font-semibold uppercase",
+                                  "shrink-0 rounded-md px-1.5 py-0.5 text-[9px] font-semibold uppercase",
                                   isSelected
                                     ? "bg-primary text-primary-foreground"
                                     : "bg-muted text-muted-foreground",
@@ -174,7 +464,6 @@ export function EditableCandidateInput({
                             )}
                           </div>
 
-                          {/* Full URL with break-all and hover tooltip */}
                           <span
                             title={option.url}
                             className="text-muted-foreground hover:text-foreground block text-[10px] leading-relaxed break-all"
@@ -189,7 +478,7 @@ export function EditableCandidateInput({
                             textToCopy={option.url}
                             iconOnly
                             size="icon-xs"
-                            className="text-muted-foreground hover:text-foreground hover:bg-muted/60 size-6 rounded"
+                            className="text-muted-foreground hover:text-foreground hover:bg-muted/60 size-6 rounded-md"
                             title="Copy candidate URL"
                           />
 
@@ -199,10 +488,10 @@ export function EditableCandidateInput({
                               target="_blank"
                               rel="noopener noreferrer"
                               onClick={(e) => e.stopPropagation()}
-                              className="text-muted-foreground hover:text-foreground hover:bg-muted/60 inline-flex size-6 items-center justify-center rounded transition-colors"
+                              className="text-muted-foreground hover:text-foreground hover:bg-muted/60 inline-flex size-6 items-center justify-center rounded-md transition-colors"
                               title="Open image in new tab"
                             >
-                              <ArrowSquareOutIcon weight="bold" className="size-3" />
+                              <ArrowSquareOutIcon weight="bold" className="size-3.5" />
                             </a>
                           )}
 
@@ -218,9 +507,11 @@ export function EditableCandidateInput({
                 </div>
               </PopoverContent>
             </Popover>
-          </InputGroupAddon>
-        )}
-      </InputGroup>
+          )}
+
+          {suffix}
+        </div>
+      </div>
     </div>
   );
 }

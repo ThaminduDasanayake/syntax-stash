@@ -12,7 +12,6 @@ import {
   parseIconStyle,
   serializeIconStyle,
 } from "@/components/card-icon";
-import { Label } from "@/components/ui/label";
 import { useDebounce } from "@/hooks/use-debounce";
 import {
   cn,
@@ -96,10 +95,10 @@ function OgImagePreviewBanner({
   const isContain = fit === "contain" || hasCustomBg;
 
   return (
-    <div className="border-line bg-paper/60 mt-2.5 overflow-hidden rounded border-[1.5px] p-3">
+    <div className="border-line bg-paper/60 mt-2.5 overflow-hidden rounded-[20px] border-[1.5px] p-3">
       <div
         className={cn(
-          "border-line relative aspect-2/1 w-full overflow-hidden rounded border-[1.5px]",
+          "border-line relative aspect-2/1 w-full overflow-hidden rounded-[14px] border-[1.5px]",
           hasCustomBg
             ? bg === "white"
               ? "bg-white"
@@ -203,9 +202,35 @@ export function MediaAssetFields({
       <div className="space-y-4">
         {/* Favicon URL Section */}
         <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-              <span>Favicon URL</span>
+          <EditableCandidateInput
+            label="Favicon URL"
+            type="url"
+            placeholder="https://example.com/favicon.ico"
+            value={favicon || ""}
+            onChange={onFaviconChange}
+            options={faviconOptions}
+            disabled={disabled}
+            prefix={
+              cleanFavicon ? (
+                <CardIcon
+                  alt="current favicon"
+                  favicon={cleanFavicon}
+                  iconBg={iconBg}
+                  className="size-5 shrink-0 rounded-[30%]"
+                />
+              ) : null
+            }
+            renderPreview={(option) => (
+              <div className="bg-paper/60 grid size-6 place-items-center overflow-hidden rounded-[30%]">
+                <CardIcon
+                  alt="favicon option"
+                  favicon={option.url}
+                  iconBg={iconBg}
+                  className="size-6 rounded-[30%]"
+                />
+              </div>
+            )}
+            suffix={
               <FieldCheckmark
                 checked={Boolean(
                   cleanFavicon &&
@@ -214,125 +239,130 @@ export function MediaAssetFields({
                     isValidHttpUrl(cleanFavicon)),
                 )}
               />
-            </Label>
-            {allowUpload && (
-              <CloudinaryUploadButton
-                label="Upload Icon / SVG"
-                onUploadSuccess={onFaviconChange}
-                disabled={disabled}
-              />
-            )}
-          </div>
-          <div className="h-9">
-            <EditableCandidateInput
-              type="url"
-              placeholder="https://example.com/favicon.ico"
-              value={favicon || ""}
-              onChange={onFaviconChange}
-              options={faviconOptions}
-              disabled={disabled}
-              prefix={
-                cleanFavicon ? (
-                  <CardIcon
-                    alt="current favicon"
-                    favicon={cleanFavicon}
-                    iconBg={iconBg}
-                    className="size-6 shrink-0 rounded-[30%]"
-                  />
-                ) : null
-              }
-              renderPreview={(option) => (
-                <div className="bg-paper/60 grid size-6 place-items-center overflow-hidden rounded-[30%]">
-                  <CardIcon
-                    alt="favicon option"
-                    favicon={option.url}
-                    iconBg={iconBg}
-                    className="size-6 rounded-[30%]"
-                  />
-                </div>
+            }
+          />
+
+          {/* Favicon Actions Row: Styling Controls & Upload Button in One Row */}
+          {((cleanFavicon && onIconBgChange) || allowUpload) && (
+            <div className="border-line/70 bg-surface/40 flex flex-wrap items-center justify-between gap-2.5 rounded-[16px] border-[1.5px] p-2.5 sm:px-3">
+              {cleanFavicon && onIconBgChange ? (
+                (() => {
+                  const { color: currentColor } = parseIconStyle(iconBg);
+
+                  return (
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
+                        Background / Color:
+                      </span>
+                      <div className="border-line bg-surface/80 inline-flex flex-wrap rounded-[12px] border-[1.5px] p-0.5 font-mono text-[11px]">
+                        <button
+                          type="button"
+                          onClick={() => onIconBgChange("none")}
+                          disabled={disabled}
+                          className={cn(
+                            "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
+                            currentColor === "none"
+                              ? "bg-primary text-primary-foreground shadow-xs"
+                              : "text-muted-foreground hover:text-foreground",
+                          )}
+                        >
+                          No bg
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => onIconBgChange("dark")}
+                          disabled={disabled}
+                          className={cn(
+                            "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
+                            currentColor === "dark"
+                              ? "bg-primary text-primary-foreground shadow-xs"
+                              : "text-muted-foreground hover:text-foreground",
+                          )}
+                        >
+                          Black
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => onIconBgChange("white")}
+                          disabled={disabled}
+                          className={cn(
+                            "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
+                            currentColor === "white"
+                              ? "bg-primary text-primary-foreground shadow-xs"
+                              : "text-muted-foreground hover:text-foreground",
+                          )}
+                        >
+                          White
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => onIconBgChange("invert")}
+                          disabled={disabled}
+                          className={cn(
+                            "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
+                            currentColor === "invert"
+                              ? "bg-primary text-primary-foreground shadow-xs"
+                              : "text-muted-foreground hover:text-foreground",
+                          )}
+                        >
+                          Invert
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })()
+              ) : (
+                <span className="text-muted-foreground font-mono text-[10px]">
+                  Favicon image or vector asset
+                </span>
               )}
-            />
-          </div>
 
-          {/* Favicon Styling Controls: Color / Tile Background Options */}
-          {cleanFavicon &&
-            onIconBgChange &&
-            (() => {
-              const { color: currentColor } = parseIconStyle(iconBg);
-
-              const handleColorChange = (newColor: IconColorOption) => {
-                onIconBgChange(newColor);
-              };
-
-              return (
-                <div className="border-line/70 bg-surface/40 flex flex-wrap items-center justify-between gap-2 rounded-lg border-[1.5px] p-2.5 sm:px-3">
-                  <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
-                    Background / Color:
-                  </span>
-                  <div className="border-line bg-surface/80 inline-flex flex-wrap rounded border-[1.5px] p-0.5 font-mono text-[11px]">
-                    <button
-                      type="button"
-                      onClick={() => handleColorChange("none")}
-                      disabled={disabled}
-                      className={cn(
-                        "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
-                        currentColor === "none"
-                          ? "bg-primary text-primary-foreground shadow-xs"
-                          : "text-muted-foreground hover:text-foreground",
-                      )}
-                    >
-                      No bg
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleColorChange("dark")}
-                      disabled={disabled}
-                      className={cn(
-                        "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
-                        currentColor === "dark"
-                          ? "bg-primary text-primary-foreground shadow-xs"
-                          : "text-muted-foreground hover:text-foreground",
-                      )}
-                    >
-                      Black
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleColorChange("white")}
-                      disabled={disabled}
-                      className={cn(
-                        "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
-                        currentColor === "white"
-                          ? "bg-primary text-primary-foreground shadow-xs"
-                          : "text-muted-foreground hover:text-foreground",
-                      )}
-                    >
-                      White
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleColorChange("invert")}
-                      disabled={disabled}
-                      className={cn(
-                        "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
-                        currentColor === "invert"
-                          ? "bg-primary text-primary-foreground shadow-xs"
-                          : "text-muted-foreground hover:text-foreground",
-                      )}
-                    >
-                      Invert
-                    </button>
-                  </div>
-                </div>
-              );
-            })()}
+              {allowUpload && (
+                <CloudinaryUploadButton
+                  label="Upload Icon / SVG"
+                  onUploadSuccess={onFaviconChange}
+                  disabled={disabled}
+                  className="border-line bg-surface/80 hover:bg-surface h-8 gap-1.5 rounded-[12px] px-3 font-mono text-[11px] font-bold uppercase shadow-xs ml-auto"
+                />
+              )}
+            </div>
+          )}
         </div>
 
         {/* OG Image URL Section */}
         <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-              <span>OG Image URL</span>
+          <EditableCandidateInput
+            label="OG Image URL"
+            type="url"
+            placeholder="https://example.com/og.png"
+            value={ogImage || ""}
+            onChange={onOgImageChange}
+            options={ogImageOptions}
+            disabled={disabled}
+            renderPreview={(option) => {
+              const isExt =
+                option.url.startsWith("http://") || option.url.startsWith("https://");
+              const optSrc = isExt
+                ? `/api/proxy-image?url=${encodeURIComponent(option.url)}`
+                : option.url;
+              return (
+                <div className="border-line relative h-6 w-10 shrink-0 overflow-hidden rounded-[8px] border-[1.5px] bg-black/10">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={optSrc}
+                    alt="OG option preview"
+                    loading="lazy"
+                    className="h-full w-full object-cover"
+                    onError={(e) => {
+                      if (isExt && e.currentTarget.src !== option.url) {
+                        e.currentTarget.src = option.url;
+                      }
+                    }}
+                  />
+                </div>
+              );
+            }}
+            suffix={
               <FieldCheckmark
                 checked={Boolean(
                   cleanOg &&
@@ -341,51 +371,11 @@ export function MediaAssetFields({
                     isValidHttpUrl(cleanOg)),
                 )}
               />
-            </Label>
-            {allowUpload && (
-              <CloudinaryUploadButton
-                label="Upload Screenshot"
-                onUploadSuccess={onOgImageChange}
-                disabled={disabled}
-              />
-            )}
-          </div>
-          <div className="h-9">
-            <EditableCandidateInput
-              type="url"
-              placeholder="https://example.com/og.png"
-              value={ogImage || ""}
-              onChange={onOgImageChange}
-              options={ogImageOptions}
-              disabled={disabled}
-              renderPreview={(option) => {
-                const isExt = option.url.startsWith("http://") || option.url.startsWith("https://");
-                const optSrc = isExt
-                  ? `/api/proxy-image?url=${encodeURIComponent(option.url)}`
-                  : option.url;
-                return (
-                  <div className="border-line relative h-6 w-10 shrink-0 overflow-hidden rounded border-[1.5px] bg-black/10">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={optSrc}
-                      alt="OG option preview"
-                      loading="lazy"
-                      className="h-full w-full object-cover"
-                      onError={(e) => {
-                        if (isExt && e.currentTarget.src !== option.url) {
-                          e.currentTarget.src = option.url;
-                        }
-                      }}
-                    />
-                  </div>
-                );
-              }}
-            />
-          </div>
+            }
+          />
 
-          {/* OG Image Styling Controls: Fit & Canvas */}
-          {cleanOg &&
-            onOgImageBgChange &&
+          {/* OG Image Controls: Fit, Canvas & Upload in One Group */}
+          {cleanOg && onOgImageBgChange ? (
             (() => {
               const { bg: currentBg, fit: currentFit } = parseOgImageStyle(ogImageBg);
 
@@ -398,7 +388,7 @@ export function MediaAssetFields({
               };
 
               return (
-                <div className="border-line/70 bg-surface/40 space-y-2.5 rounded-lg border-[1.5px] p-3">
+                <div className="border-line/70 bg-surface/40 space-y-2.5 rounded-[16px] border-[1.5px] p-3">
                   {/* Row 1: Fit & Framing */}
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="flex flex-col">
@@ -409,35 +399,46 @@ export function MediaAssetFields({
                         Choose how the image scales to the 2:1 card aspect ratio
                       </span>
                     </div>
-                    <div className="border-line bg-surface/80 inline-flex rounded border-[1.5px] p-0.5 font-mono text-[11px]">
-                      <button
-                        type="button"
-                        onClick={() => handleFitChange("cover")}
-                        disabled={disabled}
-                        className={cn(
-                          "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
-                          currentFit === "cover"
-                            ? "bg-primary text-primary-foreground shadow-xs"
-                            : "text-muted-foreground hover:text-foreground",
-                        )}
-                        title="Edge-to-edge fill (crops edges for non-2:1 images)"
-                      >
-                        Fill / Cover (Default)
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleFitChange("contain")}
-                        disabled={disabled}
-                        className={cn(
-                          "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
-                          currentFit === "contain"
-                            ? "bg-primary text-primary-foreground shadow-xs"
-                            : "text-muted-foreground hover:text-foreground",
-                        )}
-                        title="Shows 100% of image without cropping, with ambient backdrop"
-                      >
-                        Contain (Full View)
-                      </button>
+                    <div className="flex items-center gap-2 flex-wrap ml-auto">
+                      <div className="border-line bg-surface/80 inline-flex rounded-[12px] border-[1.5px] p-0.5 font-mono text-[11px]">
+                        <button
+                          type="button"
+                          onClick={() => handleFitChange("cover")}
+                          disabled={disabled}
+                          className={cn(
+                            "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
+                            currentFit === "cover"
+                              ? "bg-primary text-primary-foreground shadow-xs"
+                              : "text-muted-foreground hover:text-foreground",
+                          )}
+                          title="Edge-to-edge fill (crops edges for non-2:1 images)"
+                        >
+                          Fill / Cover (Default)
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleFitChange("contain")}
+                          disabled={disabled}
+                          className={cn(
+                            "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
+                            currentFit === "contain"
+                              ? "bg-primary text-primary-foreground shadow-xs"
+                              : "text-muted-foreground hover:text-foreground",
+                          )}
+                          title="Shows 100% of image without cropping, with ambient backdrop"
+                        >
+                          Contain (Full View)
+                        </button>
+                      </div>
+
+                      {allowUpload && (
+                        <CloudinaryUploadButton
+                          label="Upload Screenshot"
+                          onUploadSuccess={onOgImageChange}
+                          disabled={disabled}
+                          className="border-line bg-surface/80 hover:bg-surface h-8 gap-1.5 rounded-[12px] px-3 font-mono text-[11px] font-bold uppercase shadow-xs"
+                        />
+                      )}
                     </div>
                   </div>
 
@@ -451,13 +452,13 @@ export function MediaAssetFields({
                         Canvas color for contain mode or transparent SVGs
                       </span>
                     </div>
-                    <div className="border-line bg-surface/80 inline-flex flex-wrap rounded border-[1.5px] p-0.5 font-mono text-[11px]">
+                    <div className="border-line bg-surface/80 inline-flex flex-wrap rounded-[12px] border-[1.5px] p-0.5 font-mono text-[11px]">
                       <button
                         type="button"
                         onClick={() => handleBgChange("none")}
                         disabled={disabled}
                         className={cn(
-                          "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                          "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
                           currentBg === "none"
                             ? "bg-primary text-primary-foreground shadow-xs"
                             : "text-muted-foreground hover:text-foreground",
@@ -470,7 +471,7 @@ export function MediaAssetFields({
                         onClick={() => handleBgChange("white")}
                         disabled={disabled}
                         className={cn(
-                          "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                          "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
                           currentBg === "white"
                             ? "bg-primary text-primary-foreground shadow-xs"
                             : "text-muted-foreground hover:text-foreground",
@@ -483,32 +484,44 @@ export function MediaAssetFields({
                         onClick={() => handleBgChange("dark")}
                         disabled={disabled}
                         className={cn(
-                          "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
+                          "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
                           currentBg === "dark"
                             ? "bg-primary text-primary-foreground shadow-xs"
                             : "text-muted-foreground hover:text-foreground",
-                        )}
-                      >
-                        Dark Slate
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleBgChange("zinc")}
-                        disabled={disabled}
-                        className={cn(
-                          "cursor-pointer rounded px-2.5 py-0.5 font-bold transition-all",
-                          currentBg === "zinc"
-                            ? "bg-primary text-primary-foreground shadow-xs"
-                            : "text-muted-foreground hover:text-foreground",
-                        )}
-                      >
-                        Zinc
-                      </button>
-                    </div>
+                      )}
+                    >
+                      Dark Slate
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleBgChange("zinc")}
+                      disabled={disabled}
+                      className={cn(
+                        "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
+                        currentBg === "zinc"
+                          ? "bg-primary text-primary-foreground shadow-xs"
+                          : "text-muted-foreground hover:text-foreground",
+                      )}
+                    >
+                      Zinc
+                    </button>
                   </div>
                 </div>
-              );
-            })()}
+              </div>
+            );
+          })()) : allowUpload ? (
+            <div className="border-line/70 bg-surface/40 flex items-center justify-between gap-3 rounded-[16px] border-[1.5px] p-2.5 sm:px-3">
+              <span className="text-muted-foreground font-mono text-[10px]">
+                OpenGraph preview banner image
+              </span>
+              <CloudinaryUploadButton
+                label="Upload Screenshot"
+                onUploadSuccess={onOgImageChange}
+                disabled={disabled}
+                className="border-line bg-surface/80 hover:bg-surface h-8 gap-1.5 rounded-[12px] px-3 font-mono text-[11px] font-bold uppercase shadow-xs ml-auto"
+              />
+            </div>
+          ) : null}
 
           {/* OG Image Preview Thumbnail */}
           {cleanOg && <OgImagePreviewBanner ogImage={cleanOg} ogImageBg={ogImageBg} />}
