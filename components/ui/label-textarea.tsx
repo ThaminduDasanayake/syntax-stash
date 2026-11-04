@@ -31,6 +31,8 @@ export interface LabelTextareaProps extends Omit<
 
 export function LabelTextarea({
   id: propId,
+  autoCapitalize = "sentences",
+  autoCorrect = "on",
   className = "",
   corner = 20,
   defaultValue,
@@ -44,6 +46,7 @@ export function LabelTextarea({
   placeholder,
   required,
   showCount,
+  spellCheck = true,
   style,
   theme = "dark",
   value: controlledValue,
@@ -352,7 +355,9 @@ export function LabelTextarea({
           onFocus={handleFocus}
           onBlur={handleBlur}
           maxLength={maxLength}
-          spellCheck={false}
+          spellCheck={spellCheck}
+          autoCorrect={autoCorrect}
+          autoCapitalize={autoCapitalize}
           {...restProps}
         />
 

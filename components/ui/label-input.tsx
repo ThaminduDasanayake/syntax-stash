@@ -34,6 +34,9 @@ export interface LabelInputProps extends Omit<
 
 export function LabelInput({
   id: propId,
+  autoCapitalize,
+  autoComplete = "off",
+  autoCorrect,
   className = "",
   corner = 20,
   defaultValue,
@@ -46,6 +49,7 @@ export function LabelInput({
   placeholder,
   required,
   showcase = false,
+  spellCheck,
   style,
   suffix,
   theme = "dark",
@@ -339,7 +343,15 @@ export function LabelInput({
             ...(showcase && secret && !show ? { WebkitTextSecurity: "disc" } : {}),
           }}
           type={
-            showcase ? "text" : secret && !show ? "password" : secret ? "text" : propType || "text"
+            showcase
+              ? "text"
+              : secret && !show
+                ? "password"
+                : secret
+                  ? "text"
+                  : propType === "url"
+                    ? "text"
+                    : propType || "text"
           }
           placeholder={focus ? placeholder : ""}
           name={showcase ? "search-preview" : restProps.name}
@@ -347,15 +359,15 @@ export function LabelInput({
           data-lpignore={showcase ? "true" : undefined}
           data-bwignore={showcase || undefined}
           data-form-type={showcase ? "other" : undefined}
-          autoCorrect="off"
-          autoCapitalize="off"
+          autoCorrect={autoCorrect ?? (secret ? "off" : "on")}
+          autoCapitalize={autoCapitalize ?? (secret || propType === "url" ? "off" : "sentences")}
           value={currentValue}
           onChange={handleChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          autoComplete="off"
-          spellCheck={false}
-          inputMode={quiet ? "none" : restProps.inputMode}
+          autoComplete={autoComplete}
+          spellCheck={spellCheck ?? (secret ? false : true)}
+          inputMode={quiet ? "none" : restProps.inputMode || (propType === "url" ? "url" : undefined)}
           {...restProps}
         />
 

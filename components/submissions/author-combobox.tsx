@@ -549,6 +549,8 @@ export function AuthorCombobox({
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => setIsFocused(false)}
                     placeholder={up && values.length === 0 ? placeholder : ""}
+                    spellCheck={true}
+                    autoCorrect="on"
                     className="font-mono text-xs text-foreground placeholder:text-zinc-500 bg-transparent border-0 outline-none h-7 min-w-28 flex-1"
                   />
                 </React.Fragment>

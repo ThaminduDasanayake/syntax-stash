@@ -327,7 +327,8 @@ export function EditableCandidateInput({
         {/* Real Input Element */}
         <input
           id={id}
-          type={type}
+          type={type === "url" ? "text" : type}
+          inputMode={type === "url" ? "url" : undefined}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onFocus={() => setIsFocused(true)}
@@ -346,9 +347,9 @@ export function EditableCandidateInput({
             paddingLeft: leftPadding,
             paddingRight: rightPadding,
           }}
-          autoCorrect="off"
+          autoCorrect="on"
           autoCapitalize="off"
-          spellCheck="false"
+          spellCheck={true}
         />
 
         {/* Trailing Actions Container */}
