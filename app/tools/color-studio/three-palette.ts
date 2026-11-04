@@ -60,35 +60,44 @@ export const THREE_PALETTES: Palette[] = [
   {
     name: "Palette 2",
     colors: [
-      { name: "Marshmallow", hex: "#F0EEE5", colSpan: "col-span-3", textColor: "white" },
-      { name: "Desert Pose", hex: "#CF6A78", colSpan: "col-span-3", textColor: "black" },
-      { name: "Love Bird", hex: "#C1DB3D", colSpan: "col-span-3", textColor: "white" },
+      { name: "Marshmallow", hex: "#F0EEE5", colSpan: "col-span-3", textColor: "black" },
+      { name: "Desert Pose", hex: "#CF6A78", colSpan: "col-span-3", textColor: "white" },
+      { name: "Love Bird", hex: "#C1DB3D", colSpan: "col-span-3", textColor: "black" },
     ],
   },
   {
     name: "Palette 3",
     colors: [
-      { name: "Sea Angel", hex: "#98BFCB", colSpan: "col-span-3", textColor: "white" },
-      { name: "Super Sonic", hex: "#3073B7", colSpan: "col-span-3", textColor: "black" },
-      { name: "Lemon Tonic", hex: "#FBF952", colSpan: "col-span-3", textColor: "white" },
+      { name: "Sea Angel", hex: "#98BFCB", colSpan: "col-span-3", textColor: "black" },
+      { name: "Super Sonic", hex: "#3073B7", colSpan: "col-span-3", textColor: "white" },
+      { name: "Lemon Tonic", hex: "#FBF952", colSpan: "col-span-3", textColor: "black" },
     ],
   },
   {
     name: "Palette 4",
     colors: [
-      { name: "Green Banana", hex: "#B9BD73", colSpan: "col-span-3", textColor: "white" },
+      { name: "Green Banana", hex: "#B9BD73", colSpan: "col-span-3", textColor: "black" },
       { name: "Ice Melt", hex: "#D4E5F1", colSpan: "col-span-3", textColor: "black" },
       { name: "Cherry Tomato", hex: "#EA3C27", colSpan: "col-span-3", textColor: "white" },
     ],
   },
+
   // {
-  //   name: "Palette 5",
+  //   name: "Palette 6",
   //   colors: [
   //     { name: "Marshmallow", hex: "xxx", colSpan: "col-span-3", textColor: "white" },
   //     { name: "Lace", hex: "xxx", colSpan: "col-span-3", textColor: "black" },
   //     { name: "Iris", hex: "xxx", colSpan: "col-span-3", textColor: "white" },
   //   ],
   // },
+  {
+    name: "Palette 7",
+    colors: [
+      { name: "color1", hex: "#4C624A", colSpan: "col-span-3", textColor: "white" },
+      { name: "color2", hex: "#E74534", colSpan: "col-span-3", textColor: "white" },
+      { name: "color2", hex: "#F5F5F1", colSpan: "col-span-3", textColor: "black" },
+    ],
+  },
   // {
   //   name: "Palette 4",
   //   colors: [

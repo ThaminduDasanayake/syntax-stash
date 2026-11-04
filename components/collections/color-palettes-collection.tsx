@@ -7,18 +7,19 @@ import {
   PaletteIcon,
 } from "@phosphor-icons/react";
 import Link from "next/link";
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import { COLOR_PALETTES } from "@/app/tools/color-studio/palette-data";
 import { PaletteCard } from "@/components/color-studio/palette-card";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { SearchInput } from "@/components/ui/search-input";
+import { SelectBar, type SelectBarItem } from "@/components/ui/select-bar";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { usePaletteBookmarks } from "@/hooks/use-palette-bookmarks";
-import { cn } from "@/lib/utils";
 
 const COLOR_COUNTS = [2, 3, 4, 5, 6] as const;
+const STORAGE_KEY = "syntax_stash_saved_color_palette_size";
 
 export function ColorPalettesCollection({ onBackAction }: { onBackAction: () => void }) {
   const { bookmarkedSet, isBookmarked, toggleBookmark } = usePaletteBookmarks();
@@ -69,11 +70,87 @@ export function ColorPalettesCollection({ onBackAction }: { onBackAction: () => 
 
   const isFiltered = searchQuery.trim().length > 0 || selectedColorCount !== "all";
 
+  // Sync selectedColorCount with URL search param and localStorage across refreshes
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const sizeParam = params.get("size") || params.get("colors");
+      if (sizeParam) {
+        if (sizeParam === "all") {
+          setSelectedColorCount("all");
+          return;
+        }
+        const num = parseInt(sizeParam, 10);
+        if ((COLOR_COUNTS as readonly number[]).includes(num)) {
+          setSelectedColorCount(num);
+          return;
+        }
+      }
+
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        if (saved === "all") {
+          setSelectedColorCount("all");
+        } else {
+          const num = parseInt(saved, 10);
+          if ((COLOR_COUNTS as readonly number[]).includes(num)) {
+            setSelectedColorCount(num);
+          }
+        }
+      }
+    } catch {
+      // Ignore storage errors
+    }
+  }, []);
+
+  const handleColorCountChange = (val: string) => {
+    const nextVal: number | "all" = val === "all" ? "all" : parseInt(val, 10);
+    setSelectedColorCount(nextVal);
+    try {
+      localStorage.setItem(STORAGE_KEY, val);
+      const url = new URL(window.location.href);
+      if (val === "all") {
+        url.searchParams.delete("size");
+        url.searchParams.delete("colors");
+      } else {
+        url.searchParams.set("size", val);
+      }
+      window.history.replaceState(null, "", url.toString());
+    } catch {
+      // Ignore errors
+    }
+  };
+
   const handleResetFilters = () => {
     setSearchQuery("");
     setSelectedColorCount("all");
     searchInputRef.current?.focus();
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+      const url = new URL(window.location.href);
+      url.searchParams.delete("size");
+      url.searchParams.delete("colors");
+      window.history.replaceState(null, "", url.toString());
+    } catch {
+      // Ignore errors
+    }
   };
+
+  const selectBarItems: SelectBarItem<string>[] = useMemo(() => {
+    const items: SelectBarItem<string>[] = [
+      { key: "all", label: `All (${savedPalettes.length})` },
+    ];
+    for (const count of COLOR_COUNTS) {
+      const totalInCount = savedCountDistribution[count] || 0;
+      if (totalInCount > 0 || selectedColorCount === count) {
+        items.push({
+          key: String(count),
+          label: `${count} Colors (${totalInCount})`,
+        });
+      }
+    }
+    return items;
+  }, [savedCountDistribution, savedPalettes.length, selectedColorCount]);
 
   return (
     <div className="space-y-6">
@@ -169,46 +246,18 @@ export function ColorPalettesCollection({ onBackAction }: { onBackAction: () => 
             </div>
 
             {/* Color Count Filter Pills */}
-            <div className="border-border/60 flex flex-wrap items-center gap-2 border-t pt-3">
+            <div className="border-border/60 flex flex-wrap items-center gap-2.5 border-t pt-3">
               <span className="text-muted-foreground mr-1 font-mono text-xs font-bold tracking-wider uppercase">
                 Palette Size:
               </span>
 
-              <button
-                type="button"
-                onClick={() => setSelectedColorCount("all")}
-                className={cn(
-                  "cursor-pointer border-2 px-3 py-1 font-mono text-xs font-bold uppercase transition-all",
-                  selectedColorCount === "all"
-                    ? "border-foreground bg-foreground text-background"
-                    : "border-border bg-background text-muted-foreground hover:border-foreground/60 hover:text-foreground",
-                )}
-              >
-                All ({savedPalettes.length})
-              </button>
-
-              {COLOR_COUNTS.map((count) => {
-                const totalInCount = savedCountDistribution[count] || 0;
-                if (totalInCount === 0) return null;
-
-                const isSelected = selectedColorCount === count;
-
-                return (
-                  <button
-                    key={count}
-                    type="button"
-                    onClick={() => setSelectedColorCount(isSelected ? "all" : count)}
-                    className={cn(
-                      "cursor-pointer border-2 px-3 py-1 font-mono text-xs font-bold uppercase transition-all",
-                      isSelected
-                        ? "border-foreground bg-foreground text-background"
-                        : "border-border bg-background text-muted-foreground hover:border-foreground/60 hover:text-foreground",
-                    )}
-                  >
-                    {count} Colors ({totalInCount})
-                  </button>
-                );
-              })}
+              <SelectBar<string>
+                items={selectBarItems}
+                value={String(selectedColorCount)}
+                onChange={handleColorCountChange}
+                size="sm"
+                className="font-mono text-xs"
+              />
             </div>
           </div>
 
