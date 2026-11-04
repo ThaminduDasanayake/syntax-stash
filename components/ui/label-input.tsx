@@ -345,7 +345,7 @@ export function LabelInput({
                 key={i}
                 className={cn(
                   "inline-block motion-reduce:animate-none",
-                  isAsterisk ? "text-destructive font-bold ml-0.5" : "",
+                  isAsterisk ? "text-destructive ml-0.5 font-bold" : "",
                   focus ? "animate-[lbi-hop_460ms_cubic-bezier(0.3,0.7,0.3,1)_both]" : "",
                 )}
                 style={{ animationDelay: `${i * 24}ms` }}
@@ -360,7 +360,7 @@ export function LabelInput({
         {prefix && (
           <div
             ref={prefixRef}
-            className="pointer-events-none absolute top-1/2 -translate-y-1/2 flex items-center justify-center shrink-0 z-10"
+            className="pointer-events-none absolute top-1/2 z-10 flex shrink-0 -translate-y-1/2 items-center justify-center"
             style={{ left: lx }}
           >
             {prefix}
@@ -409,13 +409,15 @@ export function LabelInput({
           onBlur={handleBlur}
           autoComplete={autoComplete}
           spellCheck={spellCheck ?? (secret ? false : true)}
-          inputMode={quiet ? "none" : restProps.inputMode || (propType === "url" ? "url" : undefined)}
+          inputMode={
+            quiet ? "none" : restProps.inputMode || (propType === "url" ? "url" : undefined)
+          }
           {...restProps}
         />
 
         {/* Suffix Element (e.g. Checkmark) */}
         {suffix && !secret && (
-          <div className="pointer-events-auto absolute top-1/2 right-3.5 -translate-y-1/2 flex items-center">
+          <div className="pointer-events-auto absolute top-1/2 right-3.5 flex -translate-y-1/2 items-center">
             {suffix}
           </div>
         )}

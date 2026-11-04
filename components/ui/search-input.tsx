@@ -124,7 +124,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
             )}
           >
             {/* Prefix Icon */}
-            <span className="mr-2.5 flex shrink-0 items-center justify-center text-zinc-400 transition-colors duration-200 group-hover/pill-search:text-zinc-200 group-focus-within/pill-search:text-white">
+            <span className="mr-2.5 flex shrink-0 items-center justify-center text-zinc-400 transition-colors duration-200 group-focus-within/pill-search:text-white group-hover/pill-search:text-zinc-200">
               {isLoading ? (
                 <CircleNotchIcon weight="bold" className={cn("animate-spin", iconSize)} />
               ) : prefixIcon ? (
@@ -145,7 +145,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
               onChange={handleChange}
               onKeyDown={handleKeyDown}
               className={cn(
-                "h-full w-full border-0 bg-transparent font-medium tracking-tight text-white placeholder:text-zinc-500 outline-none",
+                "h-full w-full border-0 bg-transparent font-medium tracking-tight text-white outline-none placeholder:text-zinc-500",
                 fontSize,
                 className,
               )}

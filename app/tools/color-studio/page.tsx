@@ -246,7 +246,7 @@ export default function ColorStudioPage() {
                   "flex cursor-pointer items-center gap-1.5 rounded-full border px-3.5 py-1.5 font-mono text-xs font-bold uppercase transition-all",
                   showSavedOnly
                     ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                    : "border-white/10 bg-[#252525] text-muted-foreground hover:border-white/20 hover:text-foreground",
+                    : "text-muted-foreground hover:text-foreground border-white/10 bg-[#252525] hover:border-white/20",
                 )}
               >
                 <BookmarkSimpleIcon weight={showSavedOnly ? "fill" : "bold"} className="size-3.5" />

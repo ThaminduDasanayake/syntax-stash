@@ -201,10 +201,7 @@ export function EditableCandidateInput({
   const leftPadding = prefix ? lx + 32 : lx;
 
   return (
-    <div
-      ref={containerRef}
-      className={cn("relative w-full pt-2 select-none", containerClassName)}
-    >
+    <div ref={containerRef} className={cn("relative w-full pt-2 select-none", containerClassName)}>
       <div
         className="relative w-full cursor-text bg-transparent select-none"
         style={{ borderRadius: r, height: H }}
@@ -303,7 +300,7 @@ export function EditableCandidateInput({
                 key={i}
                 className={cn(
                   "inline-block motion-reduce:animate-none",
-                  isAsterisk ? "text-destructive font-bold ml-0.5" : "",
+                  isAsterisk ? "text-destructive ml-0.5 font-bold" : "",
                   focus ? "animate-[lbi-hop_460ms_cubic-bezier(0.3,0.7,0.3,1)_both]" : "",
                 )}
                 style={{ animationDelay: `${i * 24}ms` }}
@@ -317,7 +314,7 @@ export function EditableCandidateInput({
         {/* Optional Prefix Thumbnail / Favicon Icon */}
         {prefix && (
           <div
-            className="pointer-events-none absolute top-1/2 -translate-y-1/2 flex items-center justify-center shrink-0 z-10"
+            className="pointer-events-none absolute top-1/2 z-10 flex shrink-0 -translate-y-1/2 items-center justify-center"
             style={{ left: lx }}
           >
             {prefix}
@@ -355,7 +352,7 @@ export function EditableCandidateInput({
         {/* Trailing Actions Container */}
         <div
           ref={trailingRef}
-          className="absolute top-1/2 -translate-y-1/2 flex items-center gap-1.5 shrink-0 z-10"
+          className="absolute top-1/2 z-10 flex shrink-0 -translate-y-1/2 items-center gap-1.5"
           style={{ right: Math.max(12, r - 6) }}
         >
           {cleanVal && isValidUrl && (
@@ -364,7 +361,7 @@ export function EditableCandidateInput({
                 textToCopy={cleanVal}
                 iconOnly
                 size="icon-xs"
-                className="text-muted-foreground hover:text-foreground size-6 rounded-md hover:bg-white/5 transition-colors"
+                className="text-muted-foreground hover:text-foreground size-6 rounded-md transition-colors hover:bg-white/5"
                 title="Copy current URL"
               />
               {cleanVal.startsWith("http") && (
@@ -373,7 +370,7 @@ export function EditableCandidateInput({
                   target="_blank"
                   rel="noopener noreferrer"
                   tabIndex={-1}
-                  className="text-muted-foreground hover:text-foreground hover:bg-white/5 inline-flex size-6 items-center justify-center rounded-md transition-colors"
+                  className="text-muted-foreground hover:text-foreground inline-flex size-6 items-center justify-center rounded-md transition-colors hover:bg-white/5"
                   title="Open asset in new tab"
                 >
                   <ArrowSquareOutIcon weight="bold" className="size-3.5" />
@@ -402,7 +399,7 @@ export function EditableCandidateInput({
 
               <PopoverContent
                 align="end"
-                className="bg-[#18181b]/95 border-border/80 w-[calc(100vw-2rem)] max-w-lg p-2.5 font-mono text-xs shadow-2xl shadow-black/70 rounded-[20px] backdrop-blur-xl sm:w-[480px]"
+                className="border-border/80 w-[calc(100vw-2rem)] max-w-lg rounded-[20px] bg-[#18181b]/95 p-2.5 font-mono text-xs shadow-2xl shadow-black/70 backdrop-blur-xl sm:w-[480px]"
               >
                 <div className="border-border/60 text-muted-foreground flex items-center justify-between border-b-[1.5px] px-2 py-1.5 text-[10px] font-bold tracking-wider uppercase">
                   <span>Detected Options ({options.length})</span>

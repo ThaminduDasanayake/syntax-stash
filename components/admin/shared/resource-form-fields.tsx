@@ -373,7 +373,7 @@ export function ResourceFormFields({
               disabled={disabled}
               suffix={<FieldCheckmark checked={Boolean(values.tags?.trim())} />}
             />
-            <p className="text-muted-foreground text-[10px] px-2 pt-0.5">
+            <p className="text-muted-foreground px-2 pt-0.5 text-[10px]">
               Keywords for discoverability & filtering
             </p>
           </div>

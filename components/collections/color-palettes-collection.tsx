@@ -137,9 +137,7 @@ export function ColorPalettesCollection({ onBackAction }: { onBackAction: () => 
   };
 
   const selectBarItems: SelectBarItem<string>[] = useMemo(() => {
-    const items: SelectBarItem<string>[] = [
-      { key: "all", label: `All (${savedPalettes.length})` },
-    ];
+    const items: SelectBarItem<string>[] = [{ key: "all", label: `All (${savedPalettes.length})` }];
     for (const count of COLOR_COUNTS) {
       const totalInCount = savedCountDistribution[count] || 0;
       if (totalInCount > 0 || selectedColorCount === count) {

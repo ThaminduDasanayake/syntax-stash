@@ -66,7 +66,7 @@ export function LabelTextarea({
 
   const [focus, setFocus] = useState(false);
   const [internalValue, setInternalValue] = useState(
-    defaultValue !== undefined ? String(defaultValue) : ""
+    defaultValue !== undefined ? String(defaultValue) : "",
   );
   const isControlled = controlledValue !== undefined;
   const currentValue = isControlled ? String(controlledValue) : internalValue;
@@ -210,7 +210,7 @@ export function LabelTextarea({
       className={cn(
         "relative grid place-items-center pt-2 select-none",
         propWidth ? "" : "w-full",
-        className
+        className,
       )}
       style={propWidth ? { width: propWidth } : undefined}
     >
@@ -240,7 +240,7 @@ export function LabelTextarea({
             strokeWidth={focus ? 1.5 : 1}
             className={cn(
               "transition-[stroke,stroke-width] duration-220 ease-out motion-reduce:duration-160",
-              ringStroke
+              ringStroke,
             )}
           />
 
@@ -252,7 +252,7 @@ export function LabelTextarea({
             strokeWidth={focus ? 1.5 : 1}
             className={cn(
               "transition-[stroke,stroke-width] duration-220 ease-out motion-reduce:duration-160",
-              ringStroke
+              ringStroke,
             )}
           />
 
@@ -267,7 +267,7 @@ export function LabelTextarea({
             strokeDashoffset={up ? -1 : 0}
             className={cn(
               "transition-[stroke-dashoffset,stroke,stroke-width] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:duration-160",
-              ringStroke
+              ringStroke,
             )}
           />
 
@@ -282,7 +282,7 @@ export function LabelTextarea({
             strokeDashoffset={up ? -1 : 0}
             className={cn(
               "transition-[stroke-dashoffset,stroke,stroke-width] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:duration-160",
-              ringStroke
+              ringStroke,
             )}
           />
         </svg>
@@ -293,7 +293,7 @@ export function LabelTextarea({
           ref={labRef}
           htmlFor={id}
           className={cn(
-            "pointer-events-none absolute origin-left font-mono text-xs font-bold tracking-tight uppercase whitespace-pre transition-[transform,color] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
+            "pointer-events-none absolute origin-left font-mono text-xs font-bold tracking-tight whitespace-pre uppercase transition-[transform,color] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
             focus
               ? "text-primary font-bold"
               : up
@@ -302,7 +302,7 @@ export function LabelTextarea({
                   : "text-zinc-600"
                 : isDark
                   ? "text-white/40"
-                  : "text-zinc-400"
+                  : "text-zinc-400",
           )}
           style={{
             left: lx,
@@ -319,7 +319,7 @@ export function LabelTextarea({
                 key={i}
                 className={cn(
                   "inline-block motion-reduce:animate-none",
-                  isAsterisk ? "text-destructive font-bold ml-0.5" : "",
+                  isAsterisk ? "text-destructive ml-0.5 font-bold" : "",
                   focus ? "animate-[lbi-hop_460ms_cubic-bezier(0.3,0.7,0.3,1)_both]" : "",
                 )}
                 style={{ animationDelay: `${i * 24}ms` }}
@@ -336,11 +336,13 @@ export function LabelTextarea({
           id={id}
           required={required}
           className={cn(
-            "absolute inset-0 w-full resize-none rounded-[inherit] border-0 bg-transparent font-mono text-xs sm:text-sm leading-relaxed tracking-tight transition-[color] duration-200 outline-none",
-            isDark ? "text-white placeholder:text-white/20" : "text-zinc-900 placeholder:text-zinc-400",
+            "absolute inset-0 w-full resize-none rounded-[inherit] border-0 bg-transparent font-mono text-xs leading-relaxed tracking-tight transition-[color] duration-200 outline-none sm:text-sm",
+            isDark
+              ? "text-white placeholder:text-white/20"
+              : "text-zinc-900 placeholder:text-zinc-400",
             measuredHeight < maxHeight
               ? "overflow-hidden"
-              : "scrollbar-thin scrollbar-thumb-zinc-400 overflow-y-auto dark:scrollbar-thumb-zinc-600"
+              : "scrollbar-thin scrollbar-thumb-zinc-400 overflow-y-auto dark:scrollbar-thumb-zinc-600",
           )}
           style={{
             height: H,
@@ -349,7 +351,7 @@ export function LabelTextarea({
             paddingRight: lx,
             paddingTop: 18,
           }}
-          placeholder={focus ? (placeholder || "") : ""}
+          placeholder={focus ? placeholder || "" : ""}
           value={currentValue}
           onChange={handleChange}
           onFocus={handleFocus}
@@ -371,7 +373,7 @@ export function LabelTextarea({
                 : isDark
                   ? "text-zinc-500"
                   : "text-zinc-400",
-              up ? "opacity-100" : "opacity-0"
+              up ? "opacity-100" : "opacity-0",
             )}
           >
             {currentValue.length}

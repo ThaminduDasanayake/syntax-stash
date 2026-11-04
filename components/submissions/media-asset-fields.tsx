@@ -322,7 +322,7 @@ export function MediaAssetFields({
                   label="Upload Icon / SVG"
                   onUploadSuccess={onFaviconChange}
                   disabled={disabled}
-                  className="border-line bg-surface/80 hover:bg-surface h-8 gap-1.5 rounded-[12px] px-3 font-mono text-[11px] font-bold uppercase shadow-xs ml-auto"
+                  className="border-line bg-surface/80 hover:bg-surface ml-auto h-8 gap-1.5 rounded-[12px] px-3 font-mono text-[11px] font-bold uppercase shadow-xs"
                 />
               )}
             </div>
@@ -340,8 +340,7 @@ export function MediaAssetFields({
             options={ogImageOptions}
             disabled={disabled}
             renderPreview={(option) => {
-              const isExt =
-                option.url.startsWith("http://") || option.url.startsWith("https://");
+              const isExt = option.url.startsWith("http://") || option.url.startsWith("https://");
               const optSrc = isExt
                 ? `/api/proxy-image?url=${encodeURIComponent(option.url)}`
                 : option.url;
@@ -399,7 +398,7 @@ export function MediaAssetFields({
                         Choose how the image scales to the 2:1 card aspect ratio
                       </span>
                     </div>
-                    <div className="flex items-center gap-2 flex-wrap ml-auto">
+                    <div className="ml-auto flex flex-wrap items-center gap-2">
                       <div className="border-line bg-surface/80 inline-flex rounded-[12px] border-[1.5px] p-0.5 font-mono text-[11px]">
                         <button
                           type="button"
@@ -488,28 +487,29 @@ export function MediaAssetFields({
                           currentBg === "dark"
                             ? "bg-primary text-primary-foreground shadow-xs"
                             : "text-muted-foreground hover:text-foreground",
-                      )}
-                    >
-                      Dark Slate
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleBgChange("zinc")}
-                      disabled={disabled}
-                      className={cn(
-                        "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
-                        currentBg === "zinc"
-                          ? "bg-primary text-primary-foreground shadow-xs"
-                          : "text-muted-foreground hover:text-foreground",
-                      )}
-                    >
-                      Zinc
-                    </button>
+                        )}
+                      >
+                        Dark Slate
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleBgChange("zinc")}
+                        disabled={disabled}
+                        className={cn(
+                          "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
+                          currentBg === "zinc"
+                            ? "bg-primary text-primary-foreground shadow-xs"
+                            : "text-muted-foreground hover:text-foreground",
+                        )}
+                      >
+                        Zinc
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })()) : allowUpload ? (
+              );
+            })()
+          ) : allowUpload ? (
             <div className="border-line/70 bg-surface/40 flex items-center justify-between gap-3 rounded-[16px] border-[1.5px] p-2.5 sm:px-3">
               <span className="text-muted-foreground font-mono text-[10px]">
                 OpenGraph preview banner image
@@ -518,7 +518,7 @@ export function MediaAssetFields({
                 label="Upload Screenshot"
                 onUploadSuccess={onOgImageChange}
                 disabled={disabled}
-                className="border-line bg-surface/80 hover:bg-surface h-8 gap-1.5 rounded-[12px] px-3 font-mono text-[11px] font-bold uppercase shadow-xs ml-auto"
+                className="border-line bg-surface/80 hover:bg-surface ml-auto h-8 gap-1.5 rounded-[12px] px-3 font-mono text-[11px] font-bold uppercase shadow-xs"
               />
             </div>
           ) : null}

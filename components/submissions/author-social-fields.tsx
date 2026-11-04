@@ -382,7 +382,7 @@ export function AuthorSocialFields({
                     size="sm"
                     onClick={() => onRequestCreateAuthor?.("")}
                     disabled={disabled}
-                    className="border-primary/40 text-primary hover:bg-primary/10 h-7 rounded-full px-2.5 gap-1 font-mono text-[11px] font-bold uppercase transition-colors shrink-0"
+                    className="border-primary/40 text-primary hover:bg-primary/10 h-7 shrink-0 gap-1 rounded-full px-2.5 font-mono text-[11px] font-bold uppercase transition-colors"
                   >
                     <PlusIcon weight="bold" className="size-3" />
                     <span>New Author</span>
@@ -394,7 +394,7 @@ export function AuthorSocialFields({
                     size="sm"
                     onClick={() => handleAddNewAuthor()}
                     disabled={disabled}
-                    className="border-primary/40 text-primary hover:bg-primary/10 h-7 rounded-full px-2.5 gap-1 font-mono text-[11px] font-bold uppercase transition-colors shrink-0"
+                    className="border-primary/40 text-primary hover:bg-primary/10 h-7 shrink-0 gap-1 rounded-full px-2.5 font-mono text-[11px] font-bold uppercase transition-colors"
                   >
                     <PlusIcon weight="bold" className="size-3" />
                     <span>Add Author</span>
@@ -404,7 +404,7 @@ export function AuthorSocialFields({
               </div>
             }
           />
-          <p className="text-muted-foreground text-[10px] px-2 pt-0.5">
+          <p className="text-muted-foreground px-2 pt-0.5 text-[10px]">
             {isAdminMode
               ? 'Search existing creators in catalog or click "+ New Author" to create a new author record in the database.'
               : 'Search for an author\'s name in the catalog, or click "+ Add Author" to add them with their details if not found.'}
@@ -458,7 +458,7 @@ export function AuthorSocialFields({
 
               {/* Creator Profile Links Grid */}
               <div className="border-line/60 bg-background/50 space-y-3 rounded-2xl border p-3.5">
-                <span className="text-muted-foreground block text-[10px] font-bold tracking-wider uppercase px-1">
+                <span className="text-muted-foreground block px-1 text-[10px] font-bold tracking-wider uppercase">
                   Creator Profile & Social Links (Optional)
                 </span>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -503,9 +503,7 @@ export function AuthorSocialFields({
                     label="LinkedIn"
                     placeholder="username or https://linkedin.com/in/..."
                     value={entry.linkedin || ""}
-                    onChange={(e) =>
-                      handleUpdateNewAuthor(entry.id, { linkedin: e.target.value })
-                    }
+                    onChange={(e) => handleUpdateNewAuthor(entry.id, { linkedin: e.target.value })}
                     disabled={disabled}
                     suffix={<FieldCheckmark checked={Boolean(entry.linkedin?.trim())} />}
                   />

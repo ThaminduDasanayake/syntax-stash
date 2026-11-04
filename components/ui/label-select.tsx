@@ -291,7 +291,7 @@ export function LabelSelect({
                   key={i}
                   className={cn(
                     "inline-block motion-reduce:animate-none",
-                    isAsterisk ? "text-destructive font-bold ml-0.5" : "",
+                    isAsterisk ? "text-destructive ml-0.5 font-bold" : "",
                     focus ? "animate-[lbi-hop_460ms_cubic-bezier(0.3,0.7,0.3,1)_both]" : "",
                   )}
                   style={{ animationDelay: `${i * 24}ms` }}
@@ -309,7 +309,7 @@ export function LabelSelect({
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             className={cn(
-              "relative flex h-full w-full items-center justify-between rounded-[inherit] border-0 bg-transparent font-mono text-xs tracking-tight transition-[filter,opacity] duration-260 outline-none select-none sm:text-sm disabled:cursor-not-allowed disabled:opacity-50",
+              "relative flex h-full w-full items-center justify-between rounded-[inherit] border-0 bg-transparent font-mono text-xs tracking-tight transition-[filter,opacity] duration-260 outline-none select-none disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm",
               isDark
                 ? "text-white data-placeholder:text-white/30"
                 : "text-zinc-900 data-placeholder:text-zinc-400",
@@ -331,14 +331,14 @@ export function LabelSelect({
               </span>
             </div>
 
-            <div className="flex items-center gap-2 shrink-0 ml-2">
+            <div className="ml-2 flex shrink-0 items-center gap-2">
               {suffix}
               <SelectPrimitive.Icon asChild>
                 <CaretDownIcon
                   weight="bold"
                   className={cn(
-                    "size-4 shrink-0 transition-transform duration-200 pointer-events-none",
-                    isOpen ? "rotate-180 text-primary" : "text-muted-foreground",
+                    "pointer-events-none size-4 shrink-0 transition-transform duration-200",
+                    isOpen ? "text-primary rotate-180" : "text-muted-foreground",
                   )}
                 />
               </SelectPrimitive.Icon>

@@ -7,7 +7,7 @@
  * two-phase mercury stretch dilation and overshoot landing kinematics.
  */
 
-import React, { useCallback,useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
@@ -129,10 +129,10 @@ export function SelectBar<T extends string = string>({
           setPhase("settle");
           setInd(to);
         },
-        150 * rate(speed)
+        150 * rate(speed),
       );
     },
-    [dilate, measure, speed]
+    [dilate, measure, speed],
   );
 
   // Controlled sync from props.value
@@ -163,11 +163,11 @@ export function SelectBar<T extends string = string>({
   const transitionString =
     phase === "stretch"
       ? `transform ${Math.round(190 * rate(speed))}ms cubic-bezier(0.32, 0.72, 0.24, 1), width ${Math.round(
-          190 * rate(speed)
+          190 * rate(speed),
         )}ms cubic-bezier(0.32, 0.72, 0.24, 1)`
       : phase === "settle"
         ? `transform ${Math.round(420 * rate(speed))}ms ${curveStyles.move}, width ${Math.round(
-            420 * rate(speed)
+            420 * rate(speed),
           )}ms ${curveStyles.size}`
         : "none";
 
@@ -184,7 +184,7 @@ export function SelectBar<T extends string = string>({
   return (
     <nav
       ref={trackRef as React.RefObject<HTMLElement>}
-      className={`relative isolate inline-flex max-w-full items-center gap-0.5 overflow-x-auto rounded-full border border-white/10 bg-[#252525] text-white shadow-none select-none no-scrollbar ${className}`}
+      className={`no-scrollbar relative isolate inline-flex max-w-full items-center gap-0.5 overflow-x-auto rounded-full border border-white/10 bg-[#252525] text-white shadow-none select-none ${className}`}
       style={{ padding: `${actualHug}px` }}
       aria-label={ariaLabel}
     >

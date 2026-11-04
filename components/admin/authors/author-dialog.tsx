@@ -269,7 +269,7 @@ function AuthorDialogInner({
 
   return (
     <>
-      <DialogContent className="border-border/60 bg-paper/95 text-popover-foreground flex max-h-[85vh] max-w-2xl flex-col gap-0 overflow-hidden p-0 font-mono text-xs rounded-[28px] sm:max-w-2xl shadow-2xl backdrop-blur-xl">
+      <DialogContent className="border-border/60 bg-paper/95 text-popover-foreground flex max-h-[85vh] max-w-2xl flex-col gap-0 overflow-hidden rounded-[28px] p-0 font-mono text-xs shadow-2xl backdrop-blur-xl sm:max-w-2xl">
         <div className="border-line/60 shrink-0 border-b-[1.5px] p-6 pb-4">
           <DialogHeader>
             <DialogTitle className="text-foreground text-base font-bold uppercase">
@@ -346,7 +346,7 @@ function AuthorDialogInner({
 
             {/* Section 2: Social Profiles & Links (2-column responsive grid) */}
             <div className="border-line/60 border-t-[1.5px] pt-4">
-              <span className="text-muted-foreground mb-3 block text-[10px] font-bold tracking-wider uppercase px-1">
+              <span className="text-muted-foreground mb-3 block px-1 text-[10px] font-bold tracking-wider uppercase">
                 Social Profiles & Links (Optional)
               </span>
 

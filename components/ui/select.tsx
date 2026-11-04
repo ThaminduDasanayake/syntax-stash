@@ -81,7 +81,7 @@ function SelectContent({
         data-slot="select-content"
         data-align-trigger={position === "item-aligned"}
         className={cn(
-          "bg-[#18181b]/95 text-popover-foreground border-border/80 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 relative z-70 max-h-(--radix-select-content-available-height) min-w-36 origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-[20px] border-[1.5px] p-1.5 shadow-2xl shadow-black/60 backdrop-blur-xl duration-150 data-[align-trigger=true]:animate-none",
+          "text-popover-foreground border-border/80 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 relative z-70 max-h-(--radix-select-content-available-height) min-w-36 origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-[20px] border-[1.5px] bg-[#18181b]/95 p-1.5 shadow-2xl shadow-black/60 backdrop-blur-xl duration-150 data-[align-trigger=true]:animate-none",
           position === "popper" &&
             "data-[side=bottom]:translate-y-1.5 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1.5",
           className,
@@ -144,7 +144,7 @@ function SelectItem({
       data-slot="select-item"
       data-variant={variant}
       className={cn(
-        "relative flex w-full cursor-pointer items-center gap-2 rounded-[14px] py-2 pr-8 pl-3 text-sm outline-hidden select-none transition-colors duration-150 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
+        "relative flex w-full cursor-pointer items-center gap-2 rounded-[14px] py-2 pr-8 pl-3 text-sm outline-hidden transition-colors duration-150 select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
         variantStyles,
         className,
       )}
@@ -167,7 +167,7 @@ function SelectSeparator({
   return (
     <SelectPrimitive.Separator
       data-slot="select-separator"
-      className={cn("bg-border/60 pointer-events-none my-1.5 mx-1 h-px", className)}
+      className={cn("bg-border/60 pointer-events-none mx-1 my-1.5 h-px", className)}
       {...props}
     />
   );
@@ -181,7 +181,7 @@ function SelectScrollUpButton({
     <SelectPrimitive.ScrollUpButton
       data-slot="select-scroll-up-button"
       className={cn(
-        "bg-transparent z-10 flex cursor-pointer items-center justify-center rounded-[12px] py-1.5 hover:bg-white/5 transition-colors [&_svg:not([class*='size-'])]:size-4",
+        "z-10 flex cursor-pointer items-center justify-center rounded-[12px] bg-transparent py-1.5 transition-colors hover:bg-white/5 [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
@@ -199,7 +199,7 @@ function SelectScrollDownButton({
     <SelectPrimitive.ScrollDownButton
       data-slot="select-scroll-down-button"
       className={cn(
-        "bg-transparent z-10 flex cursor-pointer items-center justify-center rounded-[12px] py-1.5 hover:bg-white/5 transition-colors [&_svg:not([class*='size-'])]:size-4",
+        "z-10 flex cursor-pointer items-center justify-center rounded-[12px] bg-transparent py-1.5 transition-colors hover:bg-white/5 [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}

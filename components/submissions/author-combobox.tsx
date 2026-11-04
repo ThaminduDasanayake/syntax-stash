@@ -387,10 +387,7 @@ export function AuthorCombobox({
         : "stroke-[#18181b]/20";
 
   return (
-    <div
-      ref={containerRef}
-      className={cn("relative w-full pt-2 select-none", containerClassName)}
-    >
+    <div ref={containerRef} className={cn("relative w-full pt-2 select-none", containerClassName)}>
       <Combobox
         multiple
         autoHighlight
@@ -506,7 +503,7 @@ export function AuthorCombobox({
                   key={i}
                   className={cn(
                     "inline-block motion-reduce:animate-none",
-                    isAsterisk ? "text-destructive font-bold ml-0.5" : "",
+                    isAsterisk ? "text-destructive ml-0.5 font-bold" : "",
                     focus ? "animate-[lbi-hop_460ms_cubic-bezier(0.3,0.7,0.3,1)_both]" : "",
                   )}
                   style={{ animationDelay: `${i * 24}ms` }}
@@ -521,7 +518,7 @@ export function AuthorCombobox({
           <ComboboxChips
             ref={anchor}
             className={cn(
-              "w-full bg-transparent border-0 ring-0 shadow-none outline-none flex flex-wrap items-center gap-1.5 py-2 font-mono text-xs transition-colors focus-within:ring-0 focus-within:border-0",
+              "flex w-full flex-wrap items-center gap-1.5 border-0 bg-transparent py-2 font-mono text-xs shadow-none ring-0 transition-colors outline-none focus-within:border-0 focus-within:ring-0",
               disabled && "cursor-not-allowed opacity-50",
               className,
             )}
@@ -537,7 +534,7 @@ export function AuthorCombobox({
                   {values.map((authorName: string) => (
                     <ComboboxChip
                       key={authorName}
-                      className="bg-white/10 text-foreground border border-white/15 hover:bg-white/15 h-7 rounded-full px-2.5 py-1 text-xs font-mono font-medium gap-1.5 transition-colors"
+                      className="text-foreground h-7 gap-1.5 rounded-full border border-white/15 bg-white/10 px-2.5 py-1 font-mono text-xs font-medium transition-colors hover:bg-white/15"
                     >
                       <UserIcon className="size-3 text-zinc-400" />
                       <span>{authorName}</span>
@@ -550,7 +547,7 @@ export function AuthorCombobox({
                     placeholder={up && values.length === 0 ? placeholder : ""}
                     spellCheck={true}
                     autoCorrect="on"
-                    className="font-mono text-xs text-foreground placeholder:text-zinc-500 bg-transparent border-0 outline-none h-7 min-w-28 flex-1"
+                    className="text-foreground h-7 min-w-28 flex-1 border-0 bg-transparent font-mono text-xs outline-none placeholder:text-zinc-500"
                   />
                 </React.Fragment>
               )}
@@ -561,7 +558,7 @@ export function AuthorCombobox({
           {suffix && (
             <div
               ref={trailingRef}
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 flex items-center gap-2 pointer-events-auto"
+              className="pointer-events-auto absolute top-1/2 right-3.5 flex -translate-y-1/2 items-center gap-2"
             >
               {suffix}
             </div>
@@ -573,7 +570,7 @@ export function AuthorCombobox({
           anchor={anchor}
           align="start"
           sideOffset={6}
-          className="border border-white/15 bg-[#121214]/95 text-popover-foreground z-50 rounded-[20px] p-1.5 font-mono text-xs shadow-2xl backdrop-blur-md"
+          className="text-popover-foreground z-50 rounded-[20px] border border-white/15 bg-[#121214]/95 p-1.5 font-mono text-xs shadow-2xl backdrop-blur-md"
         >
           <ComboboxEmpty className="text-muted-foreground py-3 text-center font-mono text-xs">
             No creators found.
@@ -585,7 +582,7 @@ export function AuthorCombobox({
                 <ComboboxItem
                   key={item}
                   value={item}
-                  className="cursor-pointer gap-2 rounded-[14px] py-2 pr-8 pl-3 font-mono text-xs hover:bg-white/10 transition-colors"
+                  className="cursor-pointer gap-2 rounded-[14px] py-2 pr-8 pl-3 font-mono text-xs transition-colors hover:bg-white/10"
                 >
                   <UserIcon className="text-muted-foreground size-3.5 shrink-0" />
                   <span className="flex-1 truncate">{item}</span>
