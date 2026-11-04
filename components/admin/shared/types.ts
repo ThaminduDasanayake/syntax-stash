@@ -111,10 +111,10 @@ export const HEALTH_STATUS_CONFIG: Record<
   }
 > = {
   blocked: {
-    badge: "bg-orange-500/15 text-orange-800 border-[1.5px] border-orange-600/60",
-    description: "Cloudflare / Bot Protection (403/429)",
+    badge: "bg-orange-500/15 text-orange-800 border-[1.5px] border-orange-600/60 dark:text-orange-400 dark:border-orange-500/40",
+    description: "Online behind Cloudflare / Bot Protection (403/429)",
     dotColor: "bg-orange-500",
-    label: "Blocked",
+    label: "Protected",
   },
   broken: {
     badge: "bg-rose-500/15 text-rose-700 border-[1.5px] border-rose-600/60",

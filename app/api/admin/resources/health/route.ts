@@ -26,39 +26,66 @@ interface ProbeResult {
   statusCode: number | null;
 }
 
-async function probeUrl(targetUrl: string): Promise<ProbeResult> {
-  const userAgent =
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 (SyntaxStash/1.0 HealthBot)";
+const PROBE_HEADERS = {
+  Accept:
+    "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+  "Accept-Language": "en-US,en;q=0.9",
+  "Cache-Control": "no-cache",
+  Pragma: "no-cache",
+  "Sec-Ch-Ua": '"Chromium";v="132", "Google Chrome";v="132", "Not-A.Brand";v="99"',
+  "Sec-Ch-Ua-Mobile": "?0",
+  "Sec-Ch-Ua-Platform": '"macOS"',
+  "Sec-Fetch-Dest": "document",
+  "Sec-Fetch-Mode": "navigate",
+  "Sec-Fetch-Site": "none",
+  "Sec-Fetch-User": "?1",
+  "Upgrade-Insecure-Requests": "1",
+  "User-Agent":
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36",
+};
 
+async function probeUrl(targetUrl: string): Promise<ProbeResult> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 8500);
 
   try {
-    let res = await fetch(targetUrl, {
-      headers: {
-        Accept:
-          "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.9",
-        "User-Agent": userAgent,
-      },
-      method: "HEAD",
-      redirect: "manual",
-      signal: controller.signal,
-    });
+    let res: Response;
 
-    // If server disallows HEAD (405 Method Not Allowed), retry with GET
-    if (res.status === 405) {
+    // Step 1: Lightweight HEAD request first with modern browser headers
+    try {
       res = await fetch(targetUrl, {
-        headers: {
-          Accept:
-            "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-          "Accept-Language": "en-US,en;q=0.9",
-          "User-Agent": userAgent,
-        },
+        headers: PROBE_HEADERS,
+        method: "HEAD",
+        redirect: "manual",
+        signal: controller.signal,
+      });
+    } catch {
+      // Some firewalls or servers reject or terminate connection on HEAD method.
+      // Fallback directly to GET before giving up.
+      res = await fetch(targetUrl, {
+        headers: PROBE_HEADERS,
         method: "GET",
         redirect: "manual",
         signal: controller.signal,
       });
+      res.body?.cancel();
+    }
+
+    // Step 2: If HEAD receives 400, 403, or 405, retry with GET
+    // (Many CDNs drop or reject HEAD requests with 403/405, but serve 200 OK to GET)
+    if ([400, 403, 405].includes(res.status)) {
+      try {
+        const getRes = await fetch(targetUrl, {
+          headers: PROBE_HEADERS,
+          method: "GET",
+          redirect: "manual",
+          signal: controller.signal,
+        });
+        getRes.body?.cancel();
+        res = getRes;
+      } catch {
+        // Keep initial response if GET fails
+      }
     }
 
     clearTimeout(timeoutId);
