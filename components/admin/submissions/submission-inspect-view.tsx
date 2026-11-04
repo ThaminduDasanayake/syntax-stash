@@ -38,8 +38,8 @@ import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { InputField } from "@/components/ui/input-field";
 import { Label } from "@/components/ui/label";
+import { LabelTextarea } from "@/components/ui/label-textarea";
 import { SelectField } from "@/components/ui/select-field";
-import { Textarea } from "@/components/ui/textarea";
 import { useCategories } from "@/hooks/use-categories";
 import { broadcastSubmissionsUpdated } from "@/hooks/use-pending-submissions";
 import { Submission } from "@/lib/db/schema";
@@ -786,13 +786,13 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
               onSync={() => handleSyncField("description")}
             />
 
-            <Textarea
+            <LabelTextarea
+              label="Description *"
               value={editForm.description || ""}
               onChange={(e) => setEditForm((prev) => ({ ...prev, description: e.target.value }))}
               placeholder="Brief overview of the tool or resource..."
-              rows={4}
-              className="bg-paper min-h-24 font-mono text-xs leading-relaxed"
               required
+              theme="dark"
             />
           </div>
 
@@ -1099,12 +1099,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
               </div>
 
               {/* Canonical Tags */}
-              <div className="space-y-2">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                  <span>Canonical Tags</span>
-                  <FieldCheckmark checked={Boolean(editForm.tags?.trim())} />
-                </Label>
-
+              <div className="space-y-1">
                 {/* Submitted Tags Banner */}
                 <SubmittedDataBanner
                   label="Submitted"
@@ -1113,10 +1108,12 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
                 />
 
                 <TagPicker
+                  label="Canonical Tags"
                   value={editForm.tags || ""}
                   onChange={(val) => setEditForm((prev) => ({ ...prev, tags: val }))}
                   allowCustom={false}
                   placeholder="Search and select canonical tags..."
+                  suffix={<FieldCheckmark checked={Boolean(editForm.tags?.trim())} />}
                 />
               </div>
             </div>

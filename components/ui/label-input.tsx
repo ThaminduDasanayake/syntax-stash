@@ -11,7 +11,7 @@ export type LabelInputTheme = "light" | "dark";
 
 export interface LabelInputProps extends Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
-  "width" | "height"
+  "width" | "height" | "prefix"
 > {
   /** Field preset label: or any custom string */
   field?: string;
@@ -27,11 +27,18 @@ export interface LabelInputProps extends Omit<
   showcase?: boolean;
   /** Visual color theme mode: "light" | "dark". Default: "dark" */
   theme?: LabelInputTheme;
+  /** Optional leading element (e.g. icon or badge) */
+  prefix?: React.ReactNode;
+  /** Optional trailing element (e.g. checkmark icon or action) */
+  suffix?: React.ReactNode;
   className?: string;
 }
 
 export function LabelInput({
   id: propId,
+  autoCapitalize,
+  autoComplete = "off",
+  autoCorrect,
   className = "",
   corner = 20,
   defaultValue,
@@ -42,8 +49,12 @@ export function LabelInput({
   onChange,
   onFocus,
   placeholder,
+  prefix,
+  required,
   showcase = false,
+  spellCheck,
   style,
+  suffix,
   theme = "dark",
   type: propType = "text",
   value: controlledValue,
@@ -52,7 +63,8 @@ export function LabelInput({
 }: LabelInputProps) {
   const isDark = theme === "dark";
   const secret = field === "Password" || propType === "password";
-  const displayLabel = customLabel || field || placeholder || "Field";
+  const rawLabel = customLabel || field || placeholder || "Field";
+  const displayLabel = required && !rawLabel.includes("*") ? `${rawLabel} *` : rawLabel;
   const generatedId = useId().replace(/:/g, "");
   const id = propId || `lbi-${generatedId}`;
 
@@ -110,6 +122,34 @@ export function LabelInput({
   // Measure the rendered label width to calculate the exact top border notch
   const [lw, setLw] = useState(() => Math.max(32, displayLabel.length * 9));
   const labelNodeRef = useRef<HTMLLabelElement | null>(null);
+
+  // Measure optional prefix width
+  const prefixRef = useRef<HTMLDivElement | null>(null);
+  const [prefixWidth, setPrefixWidth] = useState<number>(() => (prefix ? 20 : 0));
+
+  useEffect(() => {
+    if (!prefix) {
+      setPrefixWidth(0);
+      return;
+    }
+    const el = prefixRef.current;
+    if (!el) return;
+    const update = () => {
+      const w = el.offsetWidth || el.getBoundingClientRect().width;
+      if (w > 0) setPrefixWidth(w);
+    };
+    update();
+    if (typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          const w = entry.contentRect.width;
+          if (w > 0) setPrefixWidth(w);
+        }
+      });
+      ro.observe(el);
+      return () => ro.disconnect();
+    }
+  }, [prefix]);
 
   const labRef = useCallback((node: HTMLLabelElement | null) => {
     labelNodeRef.current = node;
@@ -292,29 +332,46 @@ export function LabelInput({
                   : "text-zinc-400",
           )}
           style={{
-            left: lx,
+            left: up ? lx : prefix ? lx + prefixWidth + 8 : lx,
             transform: up
               ? `translateY(-50%) translateY(-${Math.round(H / 2)}px) scale(0.78)`
               : "translateY(-50%)",
           }}
         >
-          {[...displayLabel].map((ch, i) => (
-            <span
-              key={i}
-              className={`inline-block motion-reduce:animate-none ${
-                focus ? "animate-[lbi-hop_460ms_cubic-bezier(0.3,0.7,0.3,1)_both]" : ""
-              }`}
-              style={{ animationDelay: `${i * 24}ms` }}
-            >
-              {ch}
-            </span>
-          ))}
+          {[...displayLabel].map((ch, i) => {
+            const isAsterisk = ch === "*";
+            return (
+              <span
+                key={i}
+                className={cn(
+                  "inline-block motion-reduce:animate-none",
+                  isAsterisk ? "text-destructive ml-0.5 font-bold" : "",
+                  focus ? "animate-[lbi-hop_460ms_cubic-bezier(0.3,0.7,0.3,1)_both]" : "",
+                )}
+                style={{ animationDelay: `${i * 24}ms` }}
+              >
+                {ch}
+              </span>
+            );
+          })}
         </label>
+
+        {/* Optional Leading Prefix (e.g. icon or badge) */}
+        {prefix && (
+          <div
+            ref={prefixRef}
+            className="pointer-events-none absolute top-1/2 z-10 flex shrink-0 -translate-y-1/2 items-center justify-center"
+            style={{ left: lx }}
+          >
+            {prefix}
+          </div>
+        )}
 
         {/* Real Input Element */}
         <input
           ref={inputRef}
           id={id}
+          required={required}
           className={cn(
             "absolute inset-0 h-full w-full rounded-[inherit] border-0 bg-transparent font-mono text-xs tracking-tight transition-[filter,opacity] duration-260 outline-none sm:text-sm",
             isDark
@@ -323,12 +380,20 @@ export function LabelInput({
             flip > 0 ? "animate-[lbi-flip_260ms_ease-out]" : "",
           )}
           style={{
-            paddingLeft: lx,
-            paddingRight: secret ? 44 : lx,
+            paddingLeft: prefix ? lx + prefixWidth + 8 : lx,
+            paddingRight: secret ? 44 : suffix ? 44 : lx,
             ...(showcase && secret && !show ? { WebkitTextSecurity: "disc" } : {}),
           }}
           type={
-            showcase ? "text" : secret && !show ? "password" : secret ? "text" : propType || "text"
+            showcase
+              ? "text"
+              : secret && !show
+                ? "password"
+                : secret
+                  ? "text"
+                  : propType === "url"
+                    ? "text"
+                    : propType || "text"
           }
           placeholder={focus ? placeholder : ""}
           name={showcase ? "search-preview" : restProps.name}
@@ -336,17 +401,26 @@ export function LabelInput({
           data-lpignore={showcase ? "true" : undefined}
           data-bwignore={showcase || undefined}
           data-form-type={showcase ? "other" : undefined}
-          autoCorrect="off"
-          autoCapitalize="off"
+          autoCorrect={autoCorrect ?? (secret ? "off" : "on")}
+          autoCapitalize={autoCapitalize ?? (secret || propType === "url" ? "off" : "sentences")}
           value={currentValue}
           onChange={handleChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          autoComplete="off"
-          spellCheck={false}
-          inputMode={quiet ? "none" : restProps.inputMode}
+          autoComplete={autoComplete}
+          spellCheck={spellCheck ?? (secret ? false : true)}
+          inputMode={
+            quiet ? "none" : restProps.inputMode || (propType === "url" ? "url" : undefined)
+          }
           {...restProps}
         />
+
+        {/* Suffix Element (e.g. Checkmark) */}
+        {suffix && !secret && (
+          <div className="pointer-events-auto absolute top-1/2 right-3.5 flex -translate-y-1/2 items-center">
+            {suffix}
+          </div>
+        )}
 
         {/* Password Eye Toggle */}
         {secret && (

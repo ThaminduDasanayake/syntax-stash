@@ -13,8 +13,7 @@ import {
 import { FieldCheckmark } from "@/components/submissions/field-checkmark";
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
-import { InputField } from "@/components/ui/input-field";
-import { Label } from "@/components/ui/label";
+import { LabelInput } from "@/components/ui/label-input";
 import { cn, isValidHttpUrl, parseAuthors } from "@/lib/utils";
 
 export interface SuggestedAuthorData {
@@ -362,58 +361,55 @@ export function AuthorSocialFields({
           </div>
         ) : null}
 
-        <div className="flex flex-wrap items-center gap-2">
-          <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-            <UserIcon weight="duotone" className="text-primary size-4" />
-            <span>Creator Attribution</span>
-            <FieldCheckmark checked={hasAnyAuthor} />
-          </Label>
+        {/* Primary Catalog Search Combobox with Floating Label & Action Suffix */}
+        <div className="w-full space-y-1">
+          <AuthorCombobox
+            label="Creator Attribution"
+            placeholder="Search creators in catalog..."
+            value={catalogAuthorsString}
+            onChange={handleCatalogAuthorsChange}
+            onSelectAuthor={onSelectAuthorOption}
+            onRequestCreateAuthor={onRequestCreateAuthor}
+            allowCustom={allowCustom}
+            disabled={disabled}
+            className="font-mono text-xs"
+            suffix={
+              <div className="flex items-center gap-2">
+                {isAdminMode ? (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => onRequestCreateAuthor?.("")}
+                    disabled={disabled}
+                    className="border-primary/40 text-primary hover:bg-primary/10 h-7 shrink-0 gap-1 rounded-full px-2.5 font-mono text-[11px] font-bold uppercase transition-colors"
+                  >
+                    <PlusIcon weight="bold" className="size-3" />
+                    <span>New Author</span>
+                  </Button>
+                ) : (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleAddNewAuthor()}
+                    disabled={disabled}
+                    className="border-primary/40 text-primary hover:bg-primary/10 h-7 shrink-0 gap-1 rounded-full px-2.5 font-mono text-[11px] font-bold uppercase transition-colors"
+                  >
+                    <PlusIcon weight="bold" className="size-3" />
+                    <span>Add Author</span>
+                  </Button>
+                )}
+                <FieldCheckmark checked={hasAnyAuthor} />
+              </div>
+            }
+          />
+          <p className="text-muted-foreground px-2 pt-0.5 text-[10px]">
+            {isAdminMode
+              ? 'Search existing creators in catalog or click "+ New Author" to create a new author record in the database.'
+              : 'Search for an author\'s name in the catalog, or click "+ Add Author" to add them with their details if not found.'}
+          </p>
         </div>
-
-        {isAdminMode ? (
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => onRequestCreateAuthor?.("")}
-            disabled={disabled}
-            className="border-primary/40 text-primary hover:bg-primary/10 h-7 gap-1.5 font-mono text-[11px] font-bold uppercase"
-          >
-            <PlusIcon weight="bold" className="size-3" />
-            <span>New Author</span>
-          </Button>
-        ) : (
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => handleAddNewAuthor()}
-            disabled={disabled}
-            className="border-primary/40 text-primary hover:bg-primary/10 h-7 gap-1.5 font-mono text-[11px] font-bold uppercase"
-          >
-            <PlusIcon weight="bold" className="size-3" />
-            <span>Add Author</span>
-          </Button>
-        )}
-      </div>
-
-      {/* Primary Catalog Search Combobox */}
-      <div className="space-y-1.5">
-        <AuthorCombobox
-          placeholder="Search creators in catalog..."
-          value={catalogAuthorsString}
-          onChange={handleCatalogAuthorsChange}
-          onSelectAuthor={onSelectAuthorOption}
-          onRequestCreateAuthor={onRequestCreateAuthor}
-          allowCustom={allowCustom}
-          disabled={disabled}
-          className="font-mono text-xs"
-        />
-        <p className="text-muted-foreground text-[10px]">
-          {isAdminMode
-            ? 'Search existing creators in catalog or click "+ New Author to DB" to create a new author record in the database.'
-            : 'Search for an author\'s name in the catalog, or click "+ Add Author" to add them with their details if not found.'}
-        </p>
       </div>
 
       {/* New Non-Catalog Author Sections (Rendered only in Public Submit mode when added) */}
@@ -448,151 +444,93 @@ export function AuthorSocialFields({
               </div>
 
               {/* Creator Name Field */}
-              <div className="space-y-1.5">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-semibold">
-                  <span>Creator / Organization Name</span>
-                  <span className="text-destructive">*</span>
-                  <FieldCheckmark checked={Boolean(entry.name.trim())} />
-                </Label>
-                <div className="h-9">
-                  <InputField
-                    placeholder="Enter creator or organization name..."
-                    value={entry.name}
-                    onChange={(e) => handleUpdateNewAuthor(entry.id, { name: e.target.value })}
-                    disabled={disabled}
-                    className="font-mono text-xs"
-                    required
-                  />
-                </div>
+              <div className="space-y-1">
+                <LabelInput
+                  label="Creator / Organization Name"
+                  placeholder="Enter creator or organization name..."
+                  value={entry.name}
+                  onChange={(e) => handleUpdateNewAuthor(entry.id, { name: e.target.value })}
+                  disabled={disabled}
+                  required
+                  suffix={<FieldCheckmark checked={Boolean(entry.name.trim())} />}
+                />
               </div>
 
               {/* Creator Profile Links Grid */}
-              <div className="border-line/60 bg-background/50 space-y-3 rounded-lg border p-3.5">
-                <span className="text-muted-foreground block text-[10px] font-bold tracking-wider uppercase">
+              <div className="border-line/60 bg-background/50 space-y-3 rounded-2xl border p-3.5">
+                <span className="text-muted-foreground block px-1 text-[10px] font-bold tracking-wider uppercase">
                   Creator Profile & Social Links (Optional)
                 </span>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   {/* Website */}
-                  <div className="space-y-1.5">
-                    <Label className="text-foreground flex items-center gap-1.5 font-mono text-[11px] font-semibold">
-                      <GlobeIcon className="text-muted-foreground size-3.5" />
-                      <span>Website / Portfolio</span>
+                  <LabelInput
+                    label="Website / Portfolio"
+                    placeholder="https://example.com"
+                    value={entry.website || ""}
+                    onChange={(e) => handleUpdateNewAuthor(entry.id, { website: e.target.value })}
+                    disabled={disabled}
+                    suffix={
                       <FieldCheckmark
                         checked={Boolean(
                           entry.website?.trim() && isValidHttpUrl(entry.website.trim()),
                         )}
                       />
-                    </Label>
-                    <InputField
-                      placeholder="https://example.com"
-                      value={entry.website || ""}
-                      onChange={(e) => handleUpdateNewAuthor(entry.id, { website: e.target.value })}
-                      disabled={disabled}
-                      className="font-mono text-xs"
-                    />
-                  </div>
+                    }
+                  />
 
                   {/* GitHub */}
-                  <div className="space-y-1.5">
-                    <Label className="text-foreground flex items-center gap-1.5 font-mono text-[11px] font-semibold">
-                      <Image
-                        src="/github.svg"
-                        alt="GitHub"
-                        width={14}
-                        height={14}
-                        className="opacity-70 dark:invert"
-                      />
-                      <span>GitHub (Username or URL)</span>
-                      <FieldCheckmark checked={Boolean(entry.github?.trim())} />
-                    </Label>
-                    <InputField
-                      placeholder="https://github.com/username"
-                      value={entry.github || ""}
-                      onChange={(e) => handleUpdateNewAuthor(entry.id, { github: e.target.value })}
-                      disabled={disabled}
-                      className="font-mono text-xs"
-                    />
-                  </div>
+                  <LabelInput
+                    label="GitHub"
+                    placeholder="https://github.com/username"
+                    value={entry.github || ""}
+                    onChange={(e) => handleUpdateNewAuthor(entry.id, { github: e.target.value })}
+                    disabled={disabled}
+                    suffix={<FieldCheckmark checked={Boolean(entry.github?.trim())} />}
+                  />
 
                   {/* Twitter / X */}
-                  <div className="space-y-1.5">
-                    <Label className="text-foreground flex items-center gap-1.5 font-mono text-[11px] font-semibold">
-                      <XLogoIcon weight="bold" className="text-muted-foreground size-3.5" />
-                      <span>Twitter / X</span>
-                      <FieldCheckmark checked={Boolean(entry.twitter?.trim())} />
-                    </Label>
-                    <InputField
-                      placeholder="@username or https://x.com/..."
-                      value={entry.twitter || ""}
-                      onChange={(e) => handleUpdateNewAuthor(entry.id, { twitter: e.target.value })}
-                      disabled={disabled}
-                      className="font-mono text-xs"
-                    />
-                  </div>
+                  <LabelInput
+                    label="Twitter / X"
+                    placeholder="@username or https://x.com/..."
+                    value={entry.twitter || ""}
+                    onChange={(e) => handleUpdateNewAuthor(entry.id, { twitter: e.target.value })}
+                    disabled={disabled}
+                    suffix={<FieldCheckmark checked={Boolean(entry.twitter?.trim())} />}
+                  />
 
                   {/* LinkedIn */}
-                  <div className="space-y-1.5">
-                    <Label className="text-foreground flex items-center gap-1.5 font-mono text-[11px] font-semibold">
-                      <Image
-                        src="/linkedin.svg"
-                        alt="LinkedIn"
-                        width={14}
-                        height={14}
-                        className="opacity-70"
-                      />
-                      <span>LinkedIn</span>
-                      <FieldCheckmark checked={Boolean(entry.linkedin?.trim())} />
-                    </Label>
-                    <InputField
-                      placeholder="username or https://linkedin.com/in/..."
-                      value={entry.linkedin || ""}
-                      onChange={(e) =>
-                        handleUpdateNewAuthor(entry.id, { linkedin: e.target.value })
-                      }
-                      disabled={disabled}
-                      className="font-mono text-xs"
-                    />
-                  </div>
+                  <LabelInput
+                    label="LinkedIn"
+                    placeholder="username or https://linkedin.com/in/..."
+                    value={entry.linkedin || ""}
+                    onChange={(e) => handleUpdateNewAuthor(entry.id, { linkedin: e.target.value })}
+                    disabled={disabled}
+                    suffix={<FieldCheckmark checked={Boolean(entry.linkedin?.trim())} />}
+                  />
 
                   {/* YouTube */}
-                  <div className="space-y-1.5">
-                    <Label className="text-foreground flex items-center gap-1.5 font-mono text-[11px] font-semibold">
-                      <Image
-                        src="/youtube.svg"
-                        alt="YouTube"
-                        width={14}
-                        height={14}
-                        className="opacity-70"
-                      />
-                      <span>YouTube Channel</span>
-                      <FieldCheckmark checked={Boolean(entry.youtube?.trim())} />
-                    </Label>
-                    <InputField
-                      placeholder="https://youtube.com/@channel"
-                      value={entry.youtube || ""}
-                      onChange={(e) => handleUpdateNewAuthor(entry.id, { youtube: e.target.value })}
-                      disabled={disabled}
-                      className="font-mono text-xs"
-                    />
-                  </div>
+                  <LabelInput
+                    label="YouTube"
+                    placeholder="https://youtube.com/@channel"
+                    value={entry.youtube || ""}
+                    onChange={(e) => handleUpdateNewAuthor(entry.id, { youtube: e.target.value })}
+                    disabled={disabled}
+                    suffix={<FieldCheckmark checked={Boolean(entry.youtube?.trim())} />}
+                  />
 
                   {/* Blog */}
-                  <div className="space-y-1.5">
-                    <Label className="text-foreground flex items-center gap-1.5 font-mono text-[11px] font-semibold">
-                      <GlobeIcon className="text-muted-foreground size-3.5" />
-                      <span>Blog URL</span>
+                  <LabelInput
+                    label="Blog URL"
+                    placeholder="https://example.com/blog"
+                    value={entry.blog || ""}
+                    onChange={(e) => handleUpdateNewAuthor(entry.id, { blog: e.target.value })}
+                    disabled={disabled}
+                    suffix={
                       <FieldCheckmark
                         checked={Boolean(entry.blog?.trim() && isValidHttpUrl(entry.blog.trim()))}
                       />
-                    </Label>
-                    <InputField
-                      placeholder="https://example.com/blog"
-                      value={entry.blog || ""}
-                      onChange={(e) => handleUpdateNewAuthor(entry.id, { blog: e.target.value })}
-                      disabled={disabled}
-                      className="font-mono text-xs"
-                    />
-                  </div>
+                    }
+                  />
                 </div>
               </div>
             </div>

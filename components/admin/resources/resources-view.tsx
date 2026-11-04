@@ -236,7 +236,7 @@ function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
 
     if (urlHealthStats.blocked > 0 || healthFilter === "blocked") {
       options.push({
-        label: `⚠️ Blocked / Cloudflare (${urlHealthStats.blocked})`,
+        label: `🛡️ Protected / Cloudflare (${urlHealthStats.blocked})`,
         value: "blocked",
       });
     }

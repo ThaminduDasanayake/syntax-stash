@@ -19,13 +19,12 @@ import {
   TagPicker,
 } from "@/components/submissions";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { LabelInput } from "@/components/ui/label-input";
-import { SelectField } from "@/components/ui/select-field";
-import { Textarea } from "@/components/ui/textarea";
+import { LabelSelect } from "@/components/ui/label-select";
+import { LabelTextarea } from "@/components/ui/label-textarea";
 import { useCategories } from "@/hooks/use-categories";
 import { DetectedFieldUpdates, DuplicateNoticeState } from "@/hooks/use-metadata-scanner";
-import { cn, isValidHttpUrl } from "@/lib/utils";
+import { isValidHttpUrl } from "@/lib/utils";
 
 export interface ResourceFormData {
   authorBlog?: string | null;
@@ -161,30 +160,21 @@ export function ResourceFormFields({
         <div className="space-y-6 lg:col-span-7">
           {/* Section 1: Resource URL with Auto-Detect */}
           <div className="space-y-1">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-1.5">
-                <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
-                  Destination URL
-                </span>
-                <FieldCheckmark
-                  checked={Boolean(values.url?.trim() && isValidHttpUrl(values.url.trim()))}
-                />
-              </div>
-              <span className="text-muted-foreground text-[10px]">
-                Auto-detect title, description, favicon & OG image
-              </span>
-            </div>
-
             <div className="flex items-start gap-2">
               <div className="flex-1">
                 <LabelInput
                   type="url"
-                  label="Resource URL *"
+                  label="Resource URL"
                   value={values.url || ""}
                   onChange={(e) => onChange("url", e.target.value)}
                   placeholder="https://example.com"
                   disabled={disabled}
                   required
+                  suffix={
+                    <FieldCheckmark
+                      checked={Boolean(values.url?.trim() && isValidHttpUrl(values.url.trim()))}
+                    />
+                  }
                 />
               </div>
               <Button
@@ -214,16 +204,10 @@ export function ResourceFormFields({
           </div>
 
           {/* Section 2: Title, Subtitle, & Category */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 items-end gap-4 sm:grid-cols-2">
             <div className="space-y-1">
-              <div className="flex flex-wrap items-center justify-between gap-1.5">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
-                    Resource Title
-                  </span>
-                  <FieldCheckmark checked={Boolean(values.title?.trim())} />
-                </div>
-                {scanner.detectedUpdates.title && (
+              {scanner.detectedUpdates.title && (
+                <div className="flex justify-end pb-0.5">
                   <DetectedFieldSuggestion
                     currentValue={values.title || ""}
                     detectedValue={scanner.detectedUpdates.title}
@@ -235,51 +219,37 @@ export function ResourceFormFields({
                       scanner.setDetectedUpdates((prev) => ({ ...prev, title: undefined }));
                     }}
                   />
-                )}
-              </div>
+                </div>
+              )}
               <LabelInput
-                label="Title *"
+                label="Title"
                 value={values.title || ""}
                 onChange={(e) => onChange("title", e.target.value)}
                 placeholder="e.g. Next.js, Radix UI"
                 disabled={disabled}
                 required
-                theme="dark"
+                suffix={<FieldCheckmark checked={Boolean(values.title?.trim())} />}
               />
             </div>
 
             {/* Category Selection */}
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                  <span>Category</span>
-                  <span className="text-destructive">*</span>
-                  <FieldCheckmark checked={Boolean(values.category)} />
-                </Label>
-                <span className="text-muted-foreground text-[10px]">
-                  Primary catalog classification
-                </span>
-              </div>
-              <SelectField
+            <div className="space-y-1">
+              <LabelSelect
+                label="Category"
                 value={values.category || ""}
                 onValueChange={(val) => onChange("category", val)}
                 options={categoryOptions}
                 placeholder="Select category..."
                 disabled={disabled}
-                triggerClassName="font-mono text-xs"
+                required
+                suffix={<FieldCheckmark checked={Boolean(values.category)} />}
               />
             </div>
           </div>
 
           <div className="space-y-1">
-            <div className="flex flex-wrap items-center justify-between gap-1.5">
-              <div className="flex items-center gap-1.5">
-                <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
-                  Subtitle / Tagline
-                </span>
-                <FieldCheckmark checked={Boolean(values.subtitle?.trim())} />
-              </div>
-              {scanner.detectedUpdates.subtitle !== undefined && (
+            {scanner.detectedUpdates.subtitle !== undefined && (
+              <div className="flex justify-end pb-0.5">
                 <DetectedFieldSuggestion
                   currentValue={values.subtitle || ""}
                   detectedValue={scanner.detectedUpdates.subtitle}
@@ -291,60 +261,42 @@ export function ResourceFormFields({
                     scanner.setDetectedUpdates((prev) => ({ ...prev, subtitle: undefined }));
                   }}
                 />
-              )}
-            </div>
+              </div>
+            )}
             <LabelInput
-              label="Subtitle / Tagline (Optional)"
+              label="Subtitle"
               value={values.subtitle || ""}
               onChange={(e) => onChange("subtitle", e.target.value)}
               placeholder="Short tagline or purpose"
               disabled={disabled}
-              theme="dark"
+              suffix={<FieldCheckmark checked={Boolean(values.subtitle?.trim())} />}
             />
           </div>
 
           {/* Section 3: Description */}
-          <div className="space-y-2">
-            <div className="flex flex-wrap items-center justify-between gap-1.5">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                <span>Description</span>
-                <span className="text-destructive">*</span>
-                <FieldCheckmark checked={Boolean(values.description?.trim())} />
-              </Label>
-              <div className="flex items-center gap-2">
-                {scanner.detectedUpdates.description && (
-                  <DetectedFieldSuggestion
-                    currentValue={values.description || ""}
-                    detectedValue={scanner.detectedUpdates.description}
-                    onApply={(val: string) => {
-                      onChange("description", val);
-                      scanner.setDetectedUpdates((prev) => ({ ...prev, description: undefined }));
-                    }}
-                    onDismiss={() => {
-                      scanner.setDetectedUpdates((prev) => ({ ...prev, description: undefined }));
-                    }}
-                  />
-                )}
-                <span
-                  className={cn(
-                    "font-mono text-[10px]",
-                    (values.description?.length || 0) > 780
-                      ? "text-destructive font-bold"
-                      : "text-muted-foreground",
-                  )}
-                >
-                  {values.description?.length || 0}/800
-                </span>
+          <div className="space-y-1">
+            {scanner.detectedUpdates.description && (
+              <div className="flex justify-end pb-0.5">
+                <DetectedFieldSuggestion
+                  currentValue={values.description || ""}
+                  detectedValue={scanner.detectedUpdates.description}
+                  onApply={(val: string) => {
+                    onChange("description", val);
+                    scanner.setDetectedUpdates((prev) => ({ ...prev, description: undefined }));
+                  }}
+                  onDismiss={() => {
+                    scanner.setDetectedUpdates((prev) => ({ ...prev, description: undefined }));
+                  }}
+                />
               </div>
-            </div>
-            <Textarea
+            )}
+            <LabelTextarea
+              label="Description"
               value={values.description || ""}
               onChange={(e) => onChange("description", e.target.value)}
               placeholder="Detailed description of the tool, library, or design asset..."
-              rows={4}
               maxLength={800}
               disabled={disabled}
-              className="border-line font-mono text-xs!"
               required
             />
           </div>
@@ -369,16 +321,8 @@ export function ResourceFormFields({
 
           {/* Section 6: GitHub Repository */}
           <div className="space-y-1">
-            <div className="flex flex-wrap items-center justify-between gap-1.5">
-              <div className="flex items-center gap-1.5">
-                <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
-                  Source Code
-                </span>
-                <FieldCheckmark
-                  checked={Boolean(values.github?.trim() && isValidHttpUrl(values.github.trim()))}
-                />
-              </div>
-              {scanner.detectedUpdates.github && (
+            {scanner.detectedUpdates.github && (
+              <div className="flex justify-end pb-0.5">
                 <DetectedFieldSuggestion
                   currentValue={values.github || ""}
                   detectedValue={scanner.detectedUpdates.github}
@@ -390,16 +334,20 @@ export function ResourceFormFields({
                     scanner.setDetectedUpdates((prev) => ({ ...prev, github: undefined }));
                   }}
                 />
-              )}
-            </div>
+              </div>
+            )}
             <LabelInput
               type="url"
-              label="GitHub Repository (Optional)"
+              label="GitHub Repository"
               value={values.github || ""}
               onChange={(e) => onChange("github", e.target.value)}
               placeholder="https://github.com/username/repository"
               disabled={disabled}
-              theme="dark"
+              suffix={
+                <FieldCheckmark
+                  checked={Boolean(values.github?.trim() && isValidHttpUrl(values.github.trim()))}
+                />
+              }
             />
           </div>
 
@@ -416,21 +364,18 @@ export function ResourceFormFields({
             disabled={disabled}
           />
 
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
-                <span>Canonical Tags</span>
-                <FieldCheckmark checked={Boolean(values.tags?.trim())} />
-              </Label>
-              <span className="text-muted-foreground text-[10px]">
-                Keywords for discoverability & filtering
-              </span>
-            </div>
+          {/* Section 8: Canonical Tags */}
+          <div className="space-y-1">
             <TagPicker
+              label="Canonical Tags"
               value={values.tags || ""}
               onChange={(val) => onChange("tags", val)}
               disabled={disabled}
+              suffix={<FieldCheckmark checked={Boolean(values.tags?.trim())} />}
             />
+            <p className="text-muted-foreground px-2 pt-0.5 text-[10px]">
+              Keywords for discoverability & filtering
+            </p>
           </div>
 
           {/* Extra Custom Children Slots (e.g., Submissions notes, pricing, moderation status) */}

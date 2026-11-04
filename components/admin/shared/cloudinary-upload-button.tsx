@@ -85,7 +85,7 @@ export function CloudinaryUploadButton({
           )}
           title="Upload image or SVG to Cloudinary CDN"
         >
-          <CloudArrowUpIcon className="size-3.5 text-sky-500" />
+          <CloudArrowUpIcon className="size-4 shrink-0 text-sky-500" />
           <span>{label}</span>
         </Button>
       )}

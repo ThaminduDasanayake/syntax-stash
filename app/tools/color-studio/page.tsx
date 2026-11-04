@@ -15,12 +15,14 @@ import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { SearchInput } from "@/components/ui/search-input";
+import { SelectBar, type SelectBarItem } from "@/components/ui/select-bar";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { usePaletteBookmarks } from "@/hooks/use-palette-bookmarks";
 import { internalTools } from "@/lib/tools-data";
 import { cn } from "@/lib/utils";
 
 const COLOR_COUNTS = [2, 3, 4, 5, 6] as const;
+const STORAGE_KEY = "syntax_stash_color_palette_size";
 
 export default function ColorStudioPage() {
   const tool = internalTools.find((t) => t.slug === "color-studio");
@@ -47,6 +49,57 @@ export default function ColorStudioPage() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
+
+  // Sync selectedColorCount with URL search param and localStorage across refreshes
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const sizeParam = params.get("size") || params.get("colors");
+      if (sizeParam) {
+        if (sizeParam === "all") {
+          setSelectedColorCount("all");
+          return;
+        }
+        const num = parseInt(sizeParam, 10);
+        if ((COLOR_COUNTS as readonly number[]).includes(num)) {
+          setSelectedColorCount(num);
+          return;
+        }
+      }
+
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        if (saved === "all") {
+          setSelectedColorCount("all");
+        } else {
+          const num = parseInt(saved, 10);
+          if ((COLOR_COUNTS as readonly number[]).includes(num)) {
+            setSelectedColorCount(num);
+          }
+        }
+      }
+    } catch {
+      // Ignore storage errors
+    }
+  }, []);
+
+  const handleColorCountChange = (val: string) => {
+    const nextVal: number | "all" = val === "all" ? "all" : parseInt(val, 10);
+    setSelectedColorCount(nextVal);
+    try {
+      localStorage.setItem(STORAGE_KEY, val);
+      const url = new URL(window.location.href);
+      if (val === "all") {
+        url.searchParams.delete("size");
+        url.searchParams.delete("colors");
+      } else {
+        url.searchParams.set("size", val);
+      }
+      window.history.replaceState(null, "", url.toString());
+    } catch {
+      // Ignore errors
+    }
+  };
 
   // Compute distribution of color counts across all palettes
   const countDistribution = useMemo(() => {
@@ -106,13 +159,33 @@ export default function ColorStudioPage() {
     setSelectedColorCount("all");
     setShowSavedOnly(false);
     searchInputRef.current?.focus();
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+      const url = new URL(window.location.href);
+      url.searchParams.delete("size");
+      url.searchParams.delete("colors");
+      window.history.replaceState(null, "", url.toString());
+    } catch {
+      // Ignore errors
+    }
   };
+
+  const selectBarItems: SelectBarItem<string>[] = useMemo(
+    () => [
+      { key: "all", label: `All (${COLOR_PALETTES.length})` },
+      ...COLOR_COUNTS.map((count) => ({
+        key: String(count),
+        label: `${count} Colors (${countDistribution[count] || 0})`,
+      })),
+    ],
+    [countDistribution],
+  );
 
   return (
     <ToolLayout tool={tool}>
       <div className="space-y-8">
         {/* Search & Filter Controls */}
-        <div className="border-border bg-card/60 flex flex-col gap-4 border-2 p-4 sm:p-5">
+        <div className="border-border/80 bg-card/60 flex flex-col gap-4 rounded-2xl border p-4 shadow-sm sm:p-5">
           {/* Search Row */}
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="w-full max-w-lg">
@@ -123,7 +196,9 @@ export default function ColorStudioPage() {
                 onClear={() => setSearchQuery("")}
                 placeholder="Search by palette name, color name, or hex (e.g. #FF6044)..."
                 shortcut="/"
-                className="font-mono text-sm"
+                variant="pill"
+                size="sm"
+                className="font-mono text-xs"
               />
             </div>
 
@@ -137,7 +212,7 @@ export default function ColorStudioPage() {
                   variant="ghost"
                   size="sm"
                   onClick={handleResetFilters}
-                  className="text-muted-foreground hover:text-foreground h-8 cursor-pointer gap-1.5 px-2.5 text-xs font-bold"
+                  className="text-muted-foreground hover:text-foreground h-8 cursor-pointer gap-1.5 rounded-full px-3 text-xs font-bold"
                 >
                   <ArrowsCounterClockwiseIcon weight="bold" className="size-3.5" />
                   Reset
@@ -148,44 +223,18 @@ export default function ColorStudioPage() {
 
           {/* Color Count Filter Pills + Saved Toggle */}
           <div className="border-border/60 flex flex-wrap items-center justify-between gap-3 border-t pt-3">
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2.5">
               <span className="text-muted-foreground mr-1 font-mono text-xs font-bold tracking-wider uppercase">
                 Palette Size:
               </span>
 
-              <button
-                type="button"
-                onClick={() => setSelectedColorCount("all")}
-                className={cn(
-                  "cursor-pointer border-2 px-3 py-1 font-mono text-xs font-bold uppercase transition-all",
-                  selectedColorCount === "all"
-                    ? "border-foreground bg-foreground text-background"
-                    : "border-border bg-background text-muted-foreground hover:border-foreground/60 hover:text-foreground",
-                )}
-              >
-                All ({COLOR_PALETTES.length})
-              </button>
-
-              {COLOR_COUNTS.map((count) => {
-                const isSelected = selectedColorCount === count;
-                const countTotal = countDistribution[count] || 0;
-
-                return (
-                  <button
-                    key={count}
-                    type="button"
-                    onClick={() => setSelectedColorCount(isSelected ? "all" : count)}
-                    className={cn(
-                      "cursor-pointer border-2 px-3 py-1 font-mono text-xs font-bold uppercase transition-all",
-                      isSelected
-                        ? "border-foreground bg-foreground text-background"
-                        : "border-border bg-background text-muted-foreground hover:border-foreground/60 hover:text-foreground",
-                    )}
-                  >
-                    {count} Colors ({countTotal})
-                  </button>
-                );
-              })}
+              <SelectBar<string>
+                items={selectBarItems}
+                value={String(selectedColorCount)}
+                onChange={handleColorCountChange}
+                size="sm"
+                className="font-mono text-xs"
+              />
             </div>
 
             {/* Saved Palettes Toggle & Link to Saved Page */}
@@ -194,10 +243,10 @@ export default function ColorStudioPage() {
                 type="button"
                 onClick={() => setShowSavedOnly((prev) => !prev)}
                 className={cn(
-                  "flex cursor-pointer items-center gap-1.5 border-2 px-3 py-1 font-mono text-xs font-bold uppercase transition-all",
+                  "flex cursor-pointer items-center gap-1.5 rounded-full border px-3.5 py-1.5 font-mono text-xs font-bold uppercase transition-all",
                   showSavedOnly
                     ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                    : "border-border bg-background text-muted-foreground hover:border-foreground/60 hover:text-foreground",
+                    : "text-muted-foreground hover:text-foreground border-white/10 bg-[#252525] hover:border-white/20",
                 )}
               >
                 <BookmarkSimpleIcon weight={showSavedOnly ? "fill" : "bold"} className="size-3.5" />
