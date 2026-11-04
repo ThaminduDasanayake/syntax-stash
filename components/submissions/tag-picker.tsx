@@ -293,6 +293,7 @@ export function TagCombobox({
   }, [tags]);
 
   const handleValueChange = (newValues: string[]) => {
+    setSearchInput("");
     const next = newValues.slice(0, maxTags);
     onChange(next.join(", "));
 
@@ -365,6 +366,8 @@ export function TagCombobox({
         items={tagNames}
         value={selectedValues}
         onValueChange={handleValueChange}
+        inputValue={searchInput}
+        onInputValueChange={setSearchInput}
         open={isOpen}
         onOpenChange={setIsOpen}
       >
@@ -510,10 +513,6 @@ export function TagCombobox({
                   ))}
                   <ComboboxChipsInput
                     id={id}
-                    value={searchInput}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setSearchInput(e.target.value)
-                    }
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => setIsFocused(false)}
                     placeholder={up && values.length === 0 ? placeholder : ""}

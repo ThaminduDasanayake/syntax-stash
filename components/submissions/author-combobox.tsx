@@ -321,6 +321,7 @@ export function AuthorCombobox({
   }, [authors]);
 
   const handleValueChange = (newValues: string[]) => {
+    setSearchInput("");
     const next = newValues.slice(0, maxAuthors);
     onChange(next.join(", "));
 
@@ -397,6 +398,8 @@ export function AuthorCombobox({
         items={authorNames}
         value={selectedValues}
         onValueChange={handleValueChange}
+        inputValue={searchInput}
+        onInputValueChange={setSearchInput}
         open={isOpen}
         onOpenChange={setIsOpen}
       >
@@ -542,10 +545,6 @@ export function AuthorCombobox({
                   ))}
                   <ComboboxChipsInput
                     id={id}
-                    value={searchInput}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setSearchInput(e.target.value)
-                    }
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => setIsFocused(false)}
                     placeholder={up && values.length === 0 ? placeholder : ""}
