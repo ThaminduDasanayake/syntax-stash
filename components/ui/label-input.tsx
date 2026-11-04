@@ -11,7 +11,7 @@ export type LabelInputTheme = "light" | "dark";
 
 export interface LabelInputProps extends Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
-  "width" | "height"
+  "width" | "height" | "prefix"
 > {
   /** Field preset label: or any custom string */
   field?: string;
@@ -27,6 +27,8 @@ export interface LabelInputProps extends Omit<
   showcase?: boolean;
   /** Visual color theme mode: "light" | "dark". Default: "dark" */
   theme?: LabelInputTheme;
+  /** Optional leading element (e.g. icon or badge) */
+  prefix?: React.ReactNode;
   /** Optional trailing element (e.g. checkmark icon or action) */
   suffix?: React.ReactNode;
   className?: string;
@@ -47,6 +49,7 @@ export function LabelInput({
   onChange,
   onFocus,
   placeholder,
+  prefix,
   required,
   showcase = false,
   spellCheck,
@@ -119,6 +122,34 @@ export function LabelInput({
   // Measure the rendered label width to calculate the exact top border notch
   const [lw, setLw] = useState(() => Math.max(32, displayLabel.length * 9));
   const labelNodeRef = useRef<HTMLLabelElement | null>(null);
+
+  // Measure optional prefix width
+  const prefixRef = useRef<HTMLDivElement | null>(null);
+  const [prefixWidth, setPrefixWidth] = useState<number>(() => (prefix ? 20 : 0));
+
+  useEffect(() => {
+    if (!prefix) {
+      setPrefixWidth(0);
+      return;
+    }
+    const el = prefixRef.current;
+    if (!el) return;
+    const update = () => {
+      const w = el.offsetWidth || el.getBoundingClientRect().width;
+      if (w > 0) setPrefixWidth(w);
+    };
+    update();
+    if (typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          const w = entry.contentRect.width;
+          if (w > 0) setPrefixWidth(w);
+        }
+      });
+      ro.observe(el);
+      return () => ro.disconnect();
+    }
+  }, [prefix]);
 
   const labRef = useCallback((node: HTMLLabelElement | null) => {
     labelNodeRef.current = node;
@@ -301,7 +332,7 @@ export function LabelInput({
                   : "text-zinc-400",
           )}
           style={{
-            left: lx,
+            left: up ? lx : prefix ? lx + prefixWidth + 8 : lx,
             transform: up
               ? `translateY(-50%) translateY(-${Math.round(H / 2)}px) scale(0.78)`
               : "translateY(-50%)",
@@ -325,6 +356,17 @@ export function LabelInput({
           })}
         </label>
 
+        {/* Optional Leading Prefix (e.g. icon or badge) */}
+        {prefix && (
+          <div
+            ref={prefixRef}
+            className="pointer-events-none absolute top-1/2 -translate-y-1/2 flex items-center justify-center shrink-0 z-10"
+            style={{ left: lx }}
+          >
+            {prefix}
+          </div>
+        )}
+
         {/* Real Input Element */}
         <input
           ref={inputRef}
@@ -338,7 +380,7 @@ export function LabelInput({
             flip > 0 ? "animate-[lbi-flip_260ms_ease-out]" : "",
           )}
           style={{
-            paddingLeft: lx,
+            paddingLeft: prefix ? lx + prefixWidth + 8 : lx,
             paddingRight: secret ? 44 : suffix ? 44 : lx,
             ...(showcase && secret && !show ? { WebkitTextSecurity: "disc" } : {}),
           }}

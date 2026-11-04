@@ -28,9 +28,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { InputField } from "@/components/ui/input-field";
-import { Label } from "@/components/ui/label";
-import { cn, isValidHttpUrl, slugifyAuthor } from "@/lib/utils";
+import { LabelInput } from "@/components/ui/label-input";
+import { isValidHttpUrl, slugifyAuthor } from "@/lib/utils";
 
 const AUTHOR_FIELD_LABELS: Record<string, string> = {
   blog: "Blog URL",
@@ -270,8 +269,8 @@ function AuthorDialogInner({
 
   return (
     <>
-      <DialogContent className="border-line bg-paper flex max-h-[85vh] max-w-2xl flex-col gap-0 overflow-hidden p-0 font-mono text-xs sm:max-w-2xl">
-        <div className="border-line shrink-0 border-b-[1.5px] p-6 pb-4">
+      <DialogContent className="border-border/60 bg-paper/95 text-popover-foreground flex max-h-[85vh] max-w-2xl flex-col gap-0 overflow-hidden p-0 font-mono text-xs rounded-[28px] sm:max-w-2xl shadow-2xl backdrop-blur-xl">
+        <div className="border-line/60 shrink-0 border-b-[1.5px] p-6 pb-4">
           <DialogHeader>
             <DialogTitle className="text-foreground text-base font-bold uppercase">
               {isEdit ? `Edit Creator: ${author?.name || formData.name}` : "Create New Author"}
@@ -285,75 +284,50 @@ function AuthorDialogInner({
         </div>
 
         <form onSubmit={handleSubmit} className="flex min-h-0 flex-1 flex-col">
-          <div className="flex-1 space-y-2 overflow-y-auto p-6 text-xs">
-            {/* Row 1: Author Name and Slug in one row */}
+          <div className="flex-1 space-y-4 overflow-y-auto p-6 text-xs">
+            {/* Row 1: Author Name and Slug in 2-column grid */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {/* Author Name */}
-              <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -mx-2 space-y-1.5 rounded-md p-2 transition-all duration-150 focus-within:ring-1">
-                <Label
-                  className={cn(
-                    "flex items-center gap-1.5 font-mono text-xs font-bold uppercase transition-colors",
-                    isNameFilled
-                      ? "text-emerald-600"
-                      : "text-foreground group-focus-within:text-primary",
-                  )}
-                >
-                  <span>Creator / Author Name</span>
-                  <span className="text-destructive">*</span>
-                  <FieldCheckmark checked={isNameFilled} />
-                </Label>
-                <InputField
-                  placeholder="e.g. Lee Robinson or Vercel"
-                  value={formData.name}
-                  onChange={(e) => handleNameChange(e.target.value)}
-                  required
-                  className="font-mono text-xs"
-                />
-              </div>
+              <LabelInput
+                label="Author Name"
+                placeholder="e.g. Lee Robinson or Vercel"
+                value={formData.name}
+                onChange={(e) => handleNameChange(e.target.value)}
+                required
+                suffix={<FieldCheckmark checked={isNameFilled} />}
+              />
 
               {/* Author Slug Identifier */}
-              <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -mx-2 space-y-1.5 rounded-md p-2 transition-all duration-150 focus-within:ring-1">
-                <div className="flex items-center justify-between">
-                  <Label
-                    className={cn(
-                      "flex items-center gap-1.5 font-mono text-xs font-bold uppercase transition-colors",
-                      isSlugFilled
-                        ? "text-emerald-600"
-                        : "text-foreground group-focus-within:text-primary",
-                    )}
-                  >
-                    <span>Slug Identifier</span>
-                    <span className="text-destructive">*</span>
+              <LabelInput
+                label="Slug Identifier"
+                placeholder="e.g. lee-robinson"
+                value={formData.slug}
+                onChange={(e) => {
+                  setAutoSlug(false);
+                  setFormData((prev) => ({ ...prev, slug: e.target.value }));
+                }}
+                required
+                suffix={
+                  <div className="flex items-center gap-1.5">
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="xs"
+                      onClick={() => {
+                        const nextAuto = !autoSlug;
+                        setAutoSlug(nextAuto);
+                        if (nextAuto && formData.name) {
+                          setFormData((prev) => ({ ...prev, slug: slugifyAuthor(prev.name) }));
+                        }
+                      }}
+                      className="text-primary hover:bg-primary/10 h-6 rounded-full px-2 font-mono text-[10px] font-bold uppercase transition-colors"
+                    >
+                      {autoSlug ? "Manual" : "Auto"}
+                    </Button>
                     <FieldCheckmark checked={isSlugFilled} />
-                  </Label>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="xs"
-                    onClick={() => {
-                      const nextAuto = !autoSlug;
-                      setAutoSlug(nextAuto);
-                      if (nextAuto && formData.name) {
-                        setFormData((prev) => ({ ...prev, slug: slugifyAuthor(prev.name) }));
-                      }
-                    }}
-                    className="text-primary h-4 p-0 font-mono text-[10px] uppercase hover:underline"
-                  >
-                    {autoSlug ? "Manual Slug" : "Auto-Generate"}
-                  </Button>
-                </div>
-                <InputField
-                  placeholder="e.g. lee-robinson"
-                  value={formData.slug}
-                  prefix="/authors/"
-                  onChange={(e) => {
-                    setAutoSlug(false);
-                    setFormData((prev) => ({ ...prev, slug: e.target.value }));
-                  }}
-                  required
-                  className="font-mono text-xs"
-                />
-              </div>
+                  </div>
+                }
+              />
             </div>
 
             {duplicateAuthor && (
@@ -370,171 +344,95 @@ function AuthorDialogInner({
               />
             )}
 
-            {/* Section 2: Social Links (Each on their own separate full-width row) */}
-            <div className="border-line/60 border-t-[1.5px] pt-2">
-              <span className="text-muted-foreground mb-3 block text-[10px] font-bold tracking-wider uppercase">
+            {/* Section 2: Social Profiles & Links (2-column responsive grid) */}
+            <div className="border-line/60 border-t-[1.5px] pt-4">
+              <span className="text-muted-foreground mb-3 block text-[10px] font-bold tracking-wider uppercase px-1">
                 Social Profiles & Links (Optional)
               </span>
 
-              <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -mx-2 space-y-1.5 rounded-md p-2 transition-all duration-150 focus-within:ring-1">
-                <Label
-                  className={cn(
-                    "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
-                    isWebsiteFilled
-                      ? "font-bold text-emerald-600"
-                      : "text-foreground group-focus-within:text-primary",
-                  )}
-                >
-                  <GlobeIcon
-                    weight="bold"
-                    className={cn(
-                      "size-4 transition-colors",
-                      isWebsiteFilled ? "text-emerald-600" : "group-focus-within:text-primary",
-                    )}
-                  />
-                  <span>Website / Portfolio</span>
-                  <FieldCheckmark checked={isWebsiteFilled} />
-                </Label>
-                <InputField
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {/* Website / Portfolio */}
+                <LabelInput
+                  label="Website / Portfolio"
                   placeholder="https://example.com"
                   value={formData.website}
                   onChange={(e) => setFormData((prev) => ({ ...prev, website: e.target.value }))}
-                  className="font-mono text-xs"
+                  prefix={<GlobeIcon weight="bold" className="size-4 text-zinc-400" />}
+                  suffix={<FieldCheckmark checked={isWebsiteFilled} />}
                 />
-              </div>
 
-              <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -mx-2 space-y-1.5 rounded-md p-2 transition-all duration-150 focus-within:ring-1">
-                <Label
-                  className={cn(
-                    "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
-                    isGithubFilled
-                      ? "font-bold text-emerald-600"
-                      : "text-foreground group-focus-within:text-primary",
-                  )}
-                >
-                  <Image
-                    src="/github.svg"
-                    alt="GitHub"
-                    width={16}
-                    height={16}
-                    className="opacity-90"
-                  />
-                  <span>GitHub</span>
-                  <FieldCheckmark checked={isGithubFilled} />
-                </Label>
-                <InputField
+                {/* GitHub */}
+                <LabelInput
+                  label="GitHub"
                   placeholder="username or https://github.com/..."
                   value={formData.github}
                   onChange={(e) => setFormData((prev) => ({ ...prev, github: e.target.value }))}
-                  className="font-mono text-xs"
+                  prefix={
+                    <Image
+                      src="/github.svg"
+                      alt="GitHub"
+                      width={16}
+                      height={16}
+                      className="opacity-70 dark:invert"
+                    />
+                  }
+                  suffix={<FieldCheckmark checked={isGithubFilled} />}
                 />
-              </div>
 
-              <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -mx-2 space-y-1.5 rounded-md p-2 transition-all duration-150 focus-within:ring-1">
-                <Label
-                  className={cn(
-                    "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
-                    isTwitterFilled
-                      ? "font-bold text-emerald-600"
-                      : "text-foreground group-focus-within:text-primary",
-                  )}
-                >
-                  <XLogoIcon
-                    weight="bold"
-                    className={cn(
-                      "size-4 transition-colors",
-                      isTwitterFilled ? "text-emerald-600" : "group-focus-within:text-primary",
-                    )}
-                  />
-                  <span>Twitter / X</span>
-                  <FieldCheckmark checked={isTwitterFilled} />
-                </Label>
-                <InputField
+                {/* Twitter / X */}
+                <LabelInput
+                  label="Twitter / X"
                   placeholder="@handle or https://x.com/..."
                   value={formData.twitter}
                   onChange={(e) => setFormData((prev) => ({ ...prev, twitter: e.target.value }))}
-                  className="font-mono text-xs"
+                  prefix={<XLogoIcon weight="bold" className="size-4 text-zinc-400" />}
+                  suffix={<FieldCheckmark checked={isTwitterFilled} />}
                 />
-              </div>
 
-              <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -mx-2 space-y-1.5 rounded-md p-2 transition-all duration-150 focus-within:ring-1">
-                <Label
-                  className={cn(
-                    "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
-                    isLinkedinFilled
-                      ? "font-bold text-emerald-600"
-                      : "text-foreground group-focus-within:text-primary",
-                  )}
-                >
-                  <Image
-                    src="/linkedin.svg"
-                    alt="LinkedIn"
-                    width={16}
-                    height={16}
-                    className="opacity-90"
-                  />
-                  <span>LinkedIn</span>
-                  <FieldCheckmark checked={isLinkedinFilled} />
-                </Label>
-                <InputField
+                {/* LinkedIn */}
+                <LabelInput
+                  label="LinkedIn"
                   placeholder="username or https://linkedin.com/in/..."
                   value={formData.linkedin}
                   onChange={(e) => setFormData((prev) => ({ ...prev, linkedin: e.target.value }))}
-                  className="font-mono text-xs"
+                  prefix={
+                    <Image
+                      src="/linkedin.svg"
+                      alt="LinkedIn"
+                      width={16}
+                      height={16}
+                      className="opacity-70"
+                    />
+                  }
+                  suffix={<FieldCheckmark checked={isLinkedinFilled} />}
                 />
-              </div>
 
-              <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -mx-2 space-y-1.5 rounded-md p-2 transition-all duration-150 focus-within:ring-1">
-                <Label
-                  className={cn(
-                    "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
-                    isYoutubeFilled
-                      ? "font-bold text-emerald-600"
-                      : "text-foreground group-focus-within:text-primary",
-                  )}
-                >
-                  <Image
-                    src="/youtube.svg"
-                    alt="YouTube"
-                    width={16}
-                    height={16}
-                    className="opacity-90"
-                  />
-                  <span>YouTube Channel</span>
-                  <FieldCheckmark checked={isYoutubeFilled} />
-                </Label>
-                <InputField
+                {/* YouTube */}
+                <LabelInput
+                  label="YouTube Channel"
                   placeholder="https://youtube.com/@channel"
                   value={formData.youtube}
                   onChange={(e) => setFormData((prev) => ({ ...prev, youtube: e.target.value }))}
-                  className="font-mono text-xs"
+                  prefix={
+                    <Image
+                      src="/youtube.svg"
+                      alt="YouTube"
+                      width={16}
+                      height={16}
+                      className="opacity-70"
+                    />
+                  }
+                  suffix={<FieldCheckmark checked={isYoutubeFilled} />}
                 />
-              </div>
 
-              <div className="group focus-within:bg-primary/5 focus-within:ring-primary/30 -mx-2 space-y-1.5 rounded-md p-2 transition-all duration-150 focus-within:ring-1">
-                <Label
-                  className={cn(
-                    "flex items-center gap-1.5 font-mono text-xs font-semibold transition-colors",
-                    isBlogFilled
-                      ? "font-bold text-emerald-600"
-                      : "text-foreground group-focus-within:text-primary",
-                  )}
-                >
-                  <ArticleIcon
-                    weight="bold"
-                    className={cn(
-                      "size-4 transition-colors",
-                      isBlogFilled ? "text-emerald-600" : "group-focus-within:text-primary",
-                    )}
-                  />
-                  <span>Blog</span>
-                  <FieldCheckmark checked={isBlogFilled} />
-                </Label>
-                <InputField
+                {/* Blog */}
+                <LabelInput
+                  label="Blog URL"
                   placeholder="https://example.com/blog"
                   value={formData.blog}
                   onChange={(e) => setFormData((prev) => ({ ...prev, blog: e.target.value }))}
-                  className="font-mono text-xs"
+                  prefix={<ArticleIcon weight="bold" className="size-4 text-zinc-400" />}
+                  suffix={<FieldCheckmark checked={isBlogFilled} />}
                 />
               </div>
             </div>
