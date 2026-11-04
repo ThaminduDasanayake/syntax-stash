@@ -212,7 +212,7 @@ export function ColorPalettesCollection({ onBackAction }: { onBackAction: () => 
       ) : (
         <div className="space-y-6">
           {/* Search & Filter Bar */}
-          <div className="border-border bg-card/60 flex flex-col gap-4 border-2 p-4 sm:p-5">
+          <div className="border-border/80 bg-card/60 flex flex-col gap-4 rounded-2xl border p-4 shadow-sm sm:p-5">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div className="w-full max-w-lg">
                 <SearchInput
@@ -221,7 +221,9 @@ export function ColorPalettesCollection({ onBackAction }: { onBackAction: () => 
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onClear={() => setSearchQuery("")}
                   placeholder="Search saved palettes by name, color, or hex..."
-                  className="font-mono text-sm"
+                  variant="pill"
+                  size="sm"
+                  className="font-mono text-xs"
                 />
               </div>
 
@@ -236,7 +238,7 @@ export function ColorPalettesCollection({ onBackAction }: { onBackAction: () => 
                     variant="ghost"
                     size="sm"
                     onClick={handleResetFilters}
-                    className="text-muted-foreground hover:text-foreground h-8 cursor-pointer gap-1.5 px-2.5 text-xs font-bold"
+                    className="text-muted-foreground hover:text-foreground h-8 cursor-pointer gap-1.5 rounded-full px-3 text-xs font-bold"
                   >
                     <ArrowsCounterClockwiseIcon weight="bold" className="size-3.5" />
                     Reset

@@ -185,7 +185,7 @@ export default function ColorStudioPage() {
     <ToolLayout tool={tool}>
       <div className="space-y-8">
         {/* Search & Filter Controls */}
-        <div className="border-border bg-card/60 flex flex-col gap-4 border-2 p-4 sm:p-5">
+        <div className="border-border/80 bg-card/60 flex flex-col gap-4 rounded-2xl border p-4 shadow-sm sm:p-5">
           {/* Search Row */}
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="w-full max-w-lg">
@@ -196,7 +196,9 @@ export default function ColorStudioPage() {
                 onClear={() => setSearchQuery("")}
                 placeholder="Search by palette name, color name, or hex (e.g. #FF6044)..."
                 shortcut="/"
-                className="font-mono text-sm"
+                variant="pill"
+                size="sm"
+                className="font-mono text-xs"
               />
             </div>
 
@@ -210,7 +212,7 @@ export default function ColorStudioPage() {
                   variant="ghost"
                   size="sm"
                   onClick={handleResetFilters}
-                  className="text-muted-foreground hover:text-foreground h-8 cursor-pointer gap-1.5 px-2.5 text-xs font-bold"
+                  className="text-muted-foreground hover:text-foreground h-8 cursor-pointer gap-1.5 rounded-full px-3 text-xs font-bold"
                 >
                   <ArrowsCounterClockwiseIcon weight="bold" className="size-3.5" />
                   Reset
@@ -241,10 +243,10 @@ export default function ColorStudioPage() {
                 type="button"
                 onClick={() => setShowSavedOnly((prev) => !prev)}
                 className={cn(
-                  "flex cursor-pointer items-center gap-1.5 border-2 px-3 py-1 font-mono text-xs font-bold uppercase transition-all",
+                  "flex cursor-pointer items-center gap-1.5 rounded-full border px-3.5 py-1.5 font-mono text-xs font-bold uppercase transition-all",
                   showSavedOnly
                     ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                    : "border-border bg-background text-muted-foreground hover:border-foreground/60 hover:text-foreground",
+                    : "border-white/10 bg-[#252525] text-muted-foreground hover:border-white/20 hover:text-foreground",
                 )}
               >
                 <BookmarkSimpleIcon weight={showSavedOnly ? "fill" : "bold"} className="size-3.5" />

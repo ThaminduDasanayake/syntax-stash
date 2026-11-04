@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -78,26 +78,29 @@ function useSpring(target: number, tune = 50, instant = false) {
 const SIZE_CONFIGS = {
   default: { clearSize: 16, font: 15, lens: 24, shut: 56 },
   lg: { clearSize: 18, font: 16, lens: 28, shut: 64 },
-  sm: { clearSize: 14, font: 14, lens: 20, shut: 44 },
+  sm: { clearSize: 14, font: 13, lens: 18, shut: 38 },
 };
 
-export function Seek({
-  autoFocus = false,
-  className = "",
-  corner,
-  defaultValue = "",
-  disabled = false,
-  give = 50,
-  onChange,
-  onOpenChange,
-  onSearch,
-  placeholder = "Search",
-  size = "default",
-  spring = 50,
-  theme = "light",
-  value: controlledValue,
-  width,
-}: SeekProps) {
+export const Seek = React.forwardRef<HTMLInputElement, SeekProps>(function Seek(
+  {
+    autoFocus = false,
+    className = "",
+    corner,
+    defaultValue = "",
+    disabled = false,
+    give = 50,
+    onChange,
+    onOpenChange,
+    onSearch,
+    placeholder = "Search",
+    size = "default",
+    spring = 50,
+    theme = "dark",
+    value: controlledValue,
+    width,
+  }: SeekProps,
+  forwardedRef: React.Ref<HTMLInputElement>,
+) {
   const isDark = theme === "dark";
   const cfg = SIZE_CONFIGS[size] || SIZE_CONFIGS.default;
   const shut = cfg.shut;
@@ -125,14 +128,16 @@ export function Seek({
     };
   }, []);
 
-  const span = width ?? (snug ? 240 : size === "sm" ? 220 : 280);
+  const span = width ?? (snug ? 240 : size === "sm" ? 340 : 420);
 
   const frameRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const beatTimer = useRef(0);
   const busyTimer = useRef(0);
 
-  const [open, setOpenState] = useState(autoFocus);
+  React.useImperativeHandle(forwardedRef, () => inputRef.current as HTMLInputElement);
+
+  const [open, setOpenState] = useState(Boolean(autoFocus || defaultValue || controlledValue));
   const [press, setPress] = useState(false);
   const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
   const [busy, setBusy] = useState(false);
@@ -142,10 +147,19 @@ export function Seek({
   const isControlled = controlledValue !== undefined;
   const currentValue = isControlled ? controlledValue : uncontrolledValue;
 
-  const setOpen = (next: boolean) => {
-    setOpenState(next);
-    onOpenChange?.(next);
-  };
+  const setOpen = useCallback(
+    (next: boolean) => {
+      setOpenState(next);
+      onOpenChange?.(next);
+    },
+    [onOpenChange],
+  );
+
+  useEffect(() => {
+    if (controlledValue && !open) {
+      setOpen(true);
+    }
+  }, [controlledValue, open, setOpen]);
 
   useEffect(() => {
     return () => {
@@ -270,7 +284,7 @@ export function Seek({
         className={cn(
           "group/seek relative isolate overflow-hidden transition-colors duration-220",
           isDark
-            ? "bg-[#1a1a1a] shadow-[0_0_0_1px_rgba(255,255,255,0.12)]"
+            ? "border border-white/10 bg-[#252525] text-white shadow-[0_2px_8px_rgba(0,0,0,0.25)]"
             : "bg-[#ffffff] shadow-[0_0_0_1px_rgba(23,24,26,0.08)]",
           !open ? "[@media(hover:hover)]:hover:scale-[1.045]" : "",
         )}
@@ -324,12 +338,15 @@ export function Seek({
           tabIndex={open ? 0 : -1}
           disabled={disabled}
           onChange={handleChange}
+          onFocus={() => {
+            if (!open) setOpen(true);
+          }}
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}
           className={cn(
-            "absolute top-0 z-3 h-full border-0 bg-transparent font-sans font-medium tracking-tight transition-colors duration-220 outline-none",
+            "absolute top-0 z-3 h-full border-0 bg-transparent font-medium tracking-tight transition-colors duration-220 outline-none",
             isDark
-              ? "text-[#ffffff] placeholder:text-[#6b6b6b]"
+              ? "text-[#ffffff] placeholder:text-[#888888]"
               : "text-[#17181a] placeholder:text-[#5c5b56]",
           )}
           style={{
@@ -393,4 +410,4 @@ export function Seek({
       </div>
     </div>
   );
-}
+});
