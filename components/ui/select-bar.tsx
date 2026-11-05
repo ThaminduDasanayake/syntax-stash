@@ -7,6 +7,7 @@
  * two-phase mercury stretch dilation and overshoot landing kinematics.
  */
 
+import Link from "next/link";
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
@@ -29,7 +30,8 @@ type Ind = { p: number; s: number };
 
 export interface SelectBarItem<T extends string = string> {
   key: T;
-  label?: string;
+  href?: string;
+  label?: React.ReactNode;
   icon?: React.ReactNode;
   color?: string;
   darkOutline?: string;
@@ -72,7 +74,7 @@ export function SelectBar<T extends string = string>({
   const [active, setActive] = useState<T>(initialKey);
 
   const trackRef = useRef<HTMLElement | null>(null);
-  const refs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const refs = useRef<Record<string, HTMLElement | null>>({});
   const [ind, setInd] = useState<Ind | null>(null);
   const [phase, setPhase] = useState<"idle" | "stretch" | "settle">("idle");
   const indRef = useRef<Ind | null>(null);
@@ -199,7 +201,7 @@ export function SelectBar<T extends string = string>({
         const isSelected = active === item.key;
         const isSwatch = Boolean(item.color);
         const isIconOnly = Boolean(item.icon && (!item.label || item.showLabel === false));
-        const slotTitle = item.title || item.label || item.key;
+        const slotTitle = item.title || (typeof item.label === "string" ? item.label : item.key);
 
         const dim = size === "xs" ? 26 : size === "default" ? 36 : 30;
         const padH = size === "xs" ? 11 : size === "default" ? 16 : 13;
@@ -222,31 +224,22 @@ export function SelectBar<T extends string = string>({
                 width: "auto",
               };
 
-        return (
-          <button
-            key={item.key}
-            ref={(el) => {
-              refs.current[item.key] = el;
-            }}
-            type="button"
-            className={`relative z-2 flex cursor-pointer items-center justify-center rounded-full border-0 bg-transparent leading-none transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
-              isSelected || isSwatch
-                ? "font-medium text-white opacity-100"
-                : "text-[#9a9a9a] opacity-100 hover:text-white"
-            }`}
-            data-active={isSelected}
-            data-swatch={isSwatch}
-            aria-label={slotTitle}
-            title={slotTitle}
-            aria-current={isSelected ? "page" : undefined}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              select(item.key);
-              onChange?.(item.key);
-            }}
-            style={slotStyle}
-          >
+        const commonProps = {
+          title: slotTitle,
+          "aria-current": isSelected ? ("page" as const) : undefined,
+          "aria-label": slotTitle,
+          className: `relative z-2 flex cursor-pointer items-center justify-center rounded-full border-0 bg-transparent leading-none transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
+            isSelected || isSwatch
+              ? "font-medium text-white opacity-100"
+              : "text-[#9a9a9a] opacity-100 hover:text-white"
+          }`,
+          "data-active": isSelected,
+          "data-swatch": isSwatch,
+          style: slotStyle,
+        };
+
+        const innerContent = (
+          <>
             {item.color ? (
               <span
                 className={`block rounded-full border transition-transform duration-150 ${
@@ -280,15 +273,48 @@ export function SelectBar<T extends string = string>({
                 {item.label && <span className="shrink-0">{item.label}</span>}
               </span>
             )}
+          </>
+        );
+
+        if (item.href) {
+          return (
+            <Link
+              key={item.key}
+              ref={(el: HTMLAnchorElement | null) => {
+                refs.current[item.key] = el;
+              }}
+              href={item.href}
+              {...commonProps}
+              onClick={(e) => {
+                e.stopPropagation();
+                select(item.key);
+                onChange?.(item.key);
+              }}
+            >
+              {innerContent}
+            </Link>
+          );
+        }
+
+        return (
+          <button
+            key={item.key}
+            ref={(el: HTMLButtonElement | null) => {
+              refs.current[item.key] = el;
+            }}
+            type="button"
+            {...commonProps}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              select(item.key);
+              onChange?.(item.key);
+            }}
+          >
+            {innerContent}
           </button>
         );
       })}
     </nav>
   );
 }
-
-export {
-  SelectBar as GlassBar,
-  type SelectBarItem as GlassBarItem,
-  type SelectBarProps as GlassBarProps,
-};

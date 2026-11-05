@@ -161,12 +161,196 @@ export const THREE_PALETTES: Palette[] = [
       { name: "Baby Pink", hex: "#FE81D1", colSpan: "col-span-3", textColor: "black" },
     ],
   },
+  {
+    name: "Palette 17",
+    colors: [
+      { name: "color1", hex: "#9F483E", colSpan: "col-span-3", textColor: "white" },
+      { name: "color2", hex: "#F4E2C6", colSpan: "col-span-3", textColor: "black" },
+      { name: "color3", hex: "#EF9D45", colSpan: "col-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Palette 18",
+    colors: [
+      { name: "color1", hex: "#E8D2A9", colSpan: "col-span-3", textColor: "black" },
+      { name: "color2", hex: "#401D46", colSpan: "col-span-3", textColor: "white" },
+      { name: "color3", hex: "#DE6E2E", colSpan: "col-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "Palette 19",
+    colors: [
+      { name: "color1", hex: "#EDEBDC", colSpan: "col-span-3", textColor: "black" },
+      { name: "color2", hex: "#204E93", colSpan: "col-span-3", textColor: "white" },
+      { name: "color3", hex: "#D83D7F", colSpan: "col-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "Palette 20",
+    colors: [
+      { name: "color1", hex: "#294076", colSpan: "col-span-3", textColor: "white" },
+      { name: "color2", hex: "#D72D30", colSpan: "col-span-3", textColor: "white" },
+      { name: "color3", hex: "#FFF4B2", colSpan: "col-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Palette 21",
+    colors: [
+      { name: "Charcoal", hex: "#090907", colSpan: "col-span-3", textColor: "white" },
+      { name: "Earth Brown", hex: "#6C5636", colSpan: "col-span-3", textColor: "white" },
+      { name: "Burnt Amber", hex: "#B99D73", colSpan: "col-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Palette 22",
+    colors: [
+      { name: "Midnight Navy", hex: "#021861", colSpan: "col-span-3", textColor: "white" },
+      { name: "Cobalt Blue", hex: "#255DCE", colSpan: "col-span-3", textColor: "black" },
+      { name: "Bright Red", hex: "#DE1110", colSpan: "col-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "Palette 23",
+    colors: [
+      { name: "Ink Black", hex: "#031211", colSpan: "col-span-3", textColor: "white" },
+      { name: "Warm Ivory", hex: "#E8E4D3", colSpan: "col-span-3", textColor: "black" },
+      { name: "Electric Teal", hex: "#00AEBB", colSpan: "col-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "Palette 24",
+    colors: [
+      { name: "Midnight Navy", hex: "#1B1E4A", colSpan: "col-span-3", textColor: "white" },
+      { name: "Warm Stone Grey", hex: "#AFAEA2", colSpan: "col-span-3", textColor: "black" },
+      { name: "Crimson Red", hex: "#D21319", colSpan: "col-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "Palette 25",
+    colors: [
+      { name: "Periwinkle", hex: "#7E69E8", colSpan: "col-span-3", textColor: "white" },
+      { name: "Pure Black", hex: "#000000", colSpan: "col-span-3", textColor: "white" },
+      { name: "Coral Red", hex: "#FF5A5F", colSpan: "col-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "Palette 26",
+    colors: [
+      { name: "Ivory", hex: "#E8E0D2", colSpan: "col-span-3", textColor: "black" },
+      { name: "Gold", hex: "#B89A5A", colSpan: "col-span-3", textColor: "black" },
+      { name: "Deep Atlas Navy", hex: "#0E1D61", colSpan: "col-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "Palette 27",
+    colors: [
+      { name: "Deep Black", hex: "#08070B", colSpan: "col-span-3", textColor: "white" },
+      { name: "Neon Red", hex: "#F32E35", colSpan: "col-span-3", textColor: "black" },
+      { name: "Indigo", hex: "#4E50DE", colSpan: "col-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "Palette 28",
+    colors: [
+      { name: "Red Orange", hex: "#F42902", colSpan: "col-span-3", textColor: "white" },
+      { name: "Snowy White", hex: "#FDFDFF", colSpan: "col-span-3", textColor: "black" },
+      { name: "Yellow Punk", hex: "#CFFB00", colSpan: "col-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Palette 29",
+    colors: [
+      { name: "Sky Blue", hex: "#0099FF", colSpan: "col-span-3", textColor: "white" },
+      { name: "Cloudy White", hex: "#FDFDFE", colSpan: "col-span-3", textColor: "black" },
+      { name: "Amber Red", hex: "#F62A07", colSpan: "col-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "Palette 30",
+    colors: [
+      { name: "Sapphire Blue", hex: "#0042AC", colSpan: "col-span-3", textColor: "white" },
+      { name: "Ocean Blue", hex: "#00D3FB", colSpan: "col-span-3", textColor: "black" },
+      { name: "Neon Jade", hex: "#83FD80", colSpan: "col-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Palette 31",
+    colors: [
+      { name: "Deep Blue", hex: "#2717ED", colSpan: "col-span-3", textColor: "white" },
+      { name: "Bubblegum Pink", hex: "#FB039E", colSpan: "col-span-3", textColor: "white" },
+      { name: "Blush Peach", hex: "#FD91CC", colSpan: "col-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Palette 32",
+    colors: [
+      { name: "Deep Black", hex: "#000002", colSpan: "col-span-3", textColor: "white" },
+      { name: "Bright White", hex: "#FEFEFE", colSpan: "col-span-3", textColor: "black" },
+      { name: "Sakura Pink", hex: "#FA0980", colSpan: "col-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "Palette 33",
+    colors: [
+      { name: "Abyss Green", hex: "#00211E", colSpan: "col-span-3", textColor: "white" },
+      { name: "Pure White", hex: "#FFFFFF", colSpan: "col-span-3", textColor: "black" },
+      { name: "Electric Lime", hex: "#D5FB09", colSpan: "col-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Palette 34",
+    colors: [
+      { name: "Deep Maroon", hex: "#250104", colSpan: "col-span-3", textColor: "white" },
+      { name: "Tomato Red", hex: "#D71A06", colSpan: "col-span-3", textColor: "white" },
+      { name: "Neon Yellow", hex: "#CDF73D", colSpan: "col-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Palette 35",
+    colors: [
+      { name: "Raspberry Pink", hex: "#D31876", colSpan: "col-span-3", textColor: "white" },
+      { name: "Mellow White", hex: "#FEFDFE", colSpan: "col-span-3", textColor: "black" },
+      { name: "Pastel Turquoise", hex: "#6DFBCF", colSpan: "col-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Palette 36",
+    colors: [
+      { name: "Azure Navy", hex: "#3283BE", colSpan: "col-span-3", textColor: "white" },
+      { name: "Snowy White", hex: "#FEFDFE", colSpan: "col-span-3", textColor: "black" },
+      { name: "Coral Red", hex: "#FD614B", colSpan: "col-span-3", textColor: "white" },
+    ],
+  },
+  {
+    name: "Palette 37",
+    colors: [
+      { name: "Crimson Red", hex: "#E13A26", colSpan: "col-span-3", textColor: "white" },
+      { name: "Deep Red", hex: "#831613", colSpan: "col-span-3", textColor: "white" },
+      { name: "Baby Yellow", hex: "#FEED65", colSpan: "col-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Palette 38",
+    colors: [
+      { name: "Cobalt Black", hex: "#010102", colSpan: "col-span-3", textColor: "white" },
+      { name: "Lavender Violet", hex: "#AD96F1", colSpan: "col-span-3", textColor: "black" },
+      { name: "Tropical Lime", hex: "#58F6B1", colSpan: "col-span-3", textColor: "black" },
+    ],
+  },
+  {
+    name: "Palette 39",
+    colors: [
+      { name: "Sky Blue", hex: "#0593C6", colSpan: "col-span-3", textColor: "white" },
+      { name: "White", hex: "#FCFFFF", colSpan: "col-span-3", textColor: "black" },
+      { name: "Hot Pink", hex: "#D83995", colSpan: "col-span-3", textColor: "white" },
+    ],
+  },
   // {
-  //   name: "Palette 17",
+  //   name: "Palette 40",
   //   colors: [
-  //     { name: "Marshmallow", hex: "xxx", colSpan: "col-span-3", textColor: "white" },
-  //     { name: "Lace", hex: "xxx", colSpan: "col-span-3", textColor: "black" },
-  //     { name: "Iris", hex: "xxx", colSpan: "col-span-3", textColor: "white" },
+  //     { name: "color1", hex: "xxx", colSpan: "col-span-3", textColor: "white" },
+  //     { name: "color2", hex: "xxx", colSpan: "col-span-3", textColor: "black" },
+  //     { name: "color3", hex: "xxx", colSpan: "col-span-3", textColor: "white" },
   //   ],
   // },
 ];

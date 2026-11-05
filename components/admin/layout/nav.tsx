@@ -8,10 +8,10 @@ import {
   TrayIcon,
   UserCircleIcon,
 } from "@phosphor-icons/react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
+import React, { useMemo } from "react";
 
-import { cn } from "@/lib/utils";
+import { SelectBar, type SelectBarItem } from "@/components/ui/select-bar";
 
 interface NavProps {
   authorsCount?: number;
@@ -62,6 +62,121 @@ export function Nav({
       "Live alerts for remote website changes, author updates, redirects, and dead links. Review detected changes without altering your catalog.";
   }
 
+  const currentTab = isSubmissions
+    ? "submissions"
+    : isResources
+      ? "resources"
+      : isCategories
+        ? "categories"
+        : isTags
+          ? "tags"
+          : isAuthors
+            ? "authors"
+            : isHistory
+              ? "history"
+              : "submissions";
+
+  /* eslint-disable perfectionist/sort-arrays */
+  const navItems: SelectBarItem<string>[] = useMemo(
+    () => [
+      {
+        title: "Submissions Queue",
+        href: "/admin/submissions",
+        icon: <TrayIcon className="size-4" />,
+        key: "submissions",
+        label: (
+          <span className="flex items-center gap-1.5">
+            <span>Submissions Queue</span>
+            {pendingSubmissionsCount !== undefined && pendingSubmissionsCount > 0 && (
+              <span className="rounded-full border border-amber-600/40 bg-amber-500/20 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-amber-500">
+                {pendingSubmissionsCount}
+              </span>
+            )}
+          </span>
+        ),
+      },
+      {
+        title: "Live Catalog",
+        href: "/admin/resources",
+        icon: <StackIcon className="size-4" />,
+        key: "resources",
+        label: (
+          <span className="flex items-center gap-1.5">
+            <span>Live Catalog</span>
+            {totalResourcesCount !== undefined && totalResourcesCount > 0 && (
+              <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-zinc-300">
+                {totalResourcesCount}
+              </span>
+            )}
+          </span>
+        ),
+      },
+      {
+        title: "Categories",
+        href: "/admin/categories",
+        icon: <FoldersIcon className="size-4" />,
+        key: "categories",
+        label: (
+          <span className="flex items-center gap-1.5">
+            <span>Categories</span>
+            {categoriesCount !== undefined && categoriesCount > 0 && (
+              <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-zinc-300">
+                {categoriesCount}
+              </span>
+            )}
+          </span>
+        ),
+      },
+      {
+        title: "Tags",
+        href: "/admin/tags",
+        icon: <TagIcon className="size-4" />,
+        key: "tags",
+        label: (
+          <span className="flex items-center gap-1.5">
+            <span>Tags</span>
+            {tagsCount !== undefined && tagsCount > 0 && (
+              <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-zinc-300">
+                {tagsCount}
+              </span>
+            )}
+          </span>
+        ),
+      },
+      {
+        title: "Authors",
+        href: "/admin/authors",
+        icon: <UserCircleIcon className="size-4" />,
+        key: "authors",
+        label: (
+          <span className="flex items-center gap-1.5">
+            <span>Authors</span>
+            {authorsCount !== undefined && authorsCount > 0 && (
+              <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-zinc-300">
+                {authorsCount}
+              </span>
+            )}
+          </span>
+        ),
+      },
+      {
+        title: "Change Monitor",
+        href: "/admin/history",
+        icon: <BroadcastIcon className="size-4" />,
+        key: "history",
+        label: <span>Change Monitor</span>,
+      },
+    ],
+    [
+      authorsCount,
+      categoriesCount,
+      pendingSubmissionsCount,
+      tagsCount,
+      totalResourcesCount,
+    ],
+  );
+  /* eslint-enable perfectionist/sort-arrays */
+
   return (
     <div className="border-line/60 mb-8 border-b-[1.5px] pb-6 font-mono">
       <div className="flex flex-wrap items-center justify-between gap-4">
@@ -85,144 +200,14 @@ export function Nav({
       </div>
 
       {/* Module Switcher Tabs */}
-      <div className="border-border/40 mt-6 flex flex-wrap items-center gap-2 border-t pt-4">
-        <Link
-          href="/admin/submissions"
-          className={cn(
-            "flex items-center gap-2 rounded px-3.5 py-1.5 text-xs font-bold uppercase transition-all duration-150",
-            isSubmissions
-              ? "bg-primary text-primary-foreground shadow-sm"
-              : "border-line bg-surface/50 text-muted-foreground hover:bg-surface hover:text-foreground border-[1.5px]",
-          )}
-        >
-          <TrayIcon weight={isSubmissions ? "fill" : "bold"} className="size-4" />
-          <span>Submissions Queue</span>
-          {pendingSubmissionsCount !== undefined && pendingSubmissionsCount > 0 && (
-            <span
-              className={cn(
-                "rounded-full px-1.5 py-0.5 text-[10px] leading-none font-extrabold",
-                isSubmissions
-                  ? "bg-primary-foreground text-primary"
-                  : "border-[1.5px] border-amber-600/40 bg-amber-500/20 text-amber-700",
-              )}
-            >
-              {pendingSubmissionsCount}
-            </span>
-          )}
-        </Link>
-
-        <Link
-          href="/admin/resources"
-          className={cn(
-            "flex items-center gap-2 rounded px-3.5 py-1.5 text-xs font-bold uppercase transition-all duration-150",
-            isResources
-              ? "bg-primary text-primary-foreground shadow-sm"
-              : "border-line bg-surface/50 text-muted-foreground hover:bg-surface hover:text-foreground border-[1.5px]",
-          )}
-        >
-          <StackIcon weight={isResources ? "fill" : "bold"} className="size-4" />
-          <span>Live Catalog</span>
-          {totalResourcesCount !== undefined && totalResourcesCount > 0 && (
-            <span
-              className={cn(
-                "rounded-full px-1.5 py-0.5 text-[10px] leading-none font-extrabold",
-                isResources
-                  ? "bg-primary-foreground text-primary"
-                  : "bg-surface-elevated text-muted-foreground border-border border-[1.5px]",
-              )}
-            >
-              {totalResourcesCount}
-            </span>
-          )}
-        </Link>
-
-        <Link
-          href="/admin/categories"
-          className={cn(
-            "flex items-center gap-2 rounded px-3.5 py-1.5 text-xs font-bold uppercase transition-all duration-150",
-            isCategories
-              ? "bg-primary text-primary-foreground shadow-sm"
-              : "border-line bg-surface/50 text-muted-foreground hover:bg-surface hover:text-foreground border-[1.5px]",
-          )}
-        >
-          <FoldersIcon weight={isCategories ? "fill" : "bold"} className="size-4" />
-          <span>Categories</span>
-          {categoriesCount !== undefined && categoriesCount > 0 && (
-            <span
-              className={cn(
-                "rounded-full px-1.5 py-0.5 text-[10px] leading-none font-extrabold",
-                isCategories
-                  ? "bg-primary-foreground text-primary"
-                  : "bg-surface-elevated text-muted-foreground border-border border-[1.5px]",
-              )}
-            >
-              {categoriesCount}
-            </span>
-          )}
-        </Link>
-
-        <Link
-          href="/admin/tags"
-          className={cn(
-            "flex items-center gap-2 rounded px-3.5 py-1.5 text-xs font-bold uppercase transition-all duration-150",
-            isTags
-              ? "bg-primary text-primary-foreground shadow-sm"
-              : "border-line bg-surface/50 text-muted-foreground hover:bg-surface hover:text-foreground border-[1.5px]",
-          )}
-        >
-          <TagIcon weight={isTags ? "fill" : "bold"} className="size-4" />
-          <span>Tags</span>
-          {tagsCount !== undefined && tagsCount > 0 && (
-            <span
-              className={cn(
-                "rounded-full px-1.5 py-0.5 text-[10px] leading-none font-extrabold",
-                isTags
-                  ? "bg-primary-foreground text-primary"
-                  : "bg-surface-elevated text-muted-foreground border-border border-[1.5px]",
-              )}
-            >
-              {tagsCount}
-            </span>
-          )}
-        </Link>
-
-        <Link
-          href="/admin/authors"
-          className={cn(
-            "flex items-center gap-2 rounded px-3.5 py-1.5 text-xs font-bold uppercase transition-all duration-150",
-            isAuthors
-              ? "bg-primary text-primary-foreground shadow-sm"
-              : "border-line bg-surface/50 text-muted-foreground hover:bg-surface hover:text-foreground border-[1.5px]",
-          )}
-        >
-          <UserCircleIcon weight={isAuthors ? "fill" : "bold"} className="size-4" />
-          <span>Authors</span>
-          {authorsCount !== undefined && authorsCount > 0 && (
-            <span
-              className={cn(
-                "rounded-full px-1.5 py-0.5 text-[10px] leading-none font-extrabold",
-                isAuthors
-                  ? "bg-primary-foreground text-primary"
-                  : "bg-surface-elevated text-muted-foreground border-border border-[1.5px]",
-              )}
-            >
-              {authorsCount}
-            </span>
-          )}
-        </Link>
-
-        <Link
-          href="/admin/history"
-          className={cn(
-            "flex items-center gap-2 rounded px-3.5 py-1.5 text-xs font-bold uppercase transition-all duration-150",
-            isHistory
-              ? "bg-primary text-primary-foreground shadow-sm"
-              : "border-line bg-surface/50 text-muted-foreground hover:bg-surface hover:text-foreground border-[1.5px]",
-          )}
-        >
-          <BroadcastIcon weight={isHistory ? "fill" : "bold"} className="size-4" />
-          <span>Change Monitor</span>
-        </Link>
+      <div className="border-border/40 mt-6 flex items-center border-t pt-4">
+        <SelectBar
+          items={navItems}
+          value={currentTab}
+          size="sm"
+          className="font-mono text-xs uppercase"
+          ariaLabel="Admin navigation"
+        />
       </div>
     </div>
   );
