@@ -28,8 +28,8 @@ import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { EmptyState } from "@/components/ui/empty-state";
 import { SearchInput } from "@/components/ui/search-input";
+import { SelectBar, type SelectBarItem } from "@/components/ui/select-bar";
 import { SelectField } from "@/components/ui/select-field";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCategories } from "@/hooks/use-categories";
 import { cn } from "@/lib/utils";
 
@@ -575,6 +575,26 @@ function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
     })),
   ];
 
+  /* eslint-disable perfectionist/sort-arrays */
+  const viewModeItems: SelectBarItem<"cards" | "table">[] = useMemo(
+    () => [
+      {
+        title: "Visual Cards View (24 per page)",
+        icon: <SquaresFourIcon className="size-4" />,
+        key: "cards",
+        label: <span className="hidden sm:inline">Cards</span>,
+      },
+      {
+        title: "Text Data Table (50 per page)",
+        icon: <TableIcon className="size-4" />,
+        key: "table",
+        label: <span className="hidden sm:inline">List</span>,
+      },
+    ],
+    [],
+  );
+  /* eslint-enable perfectionist/sort-arrays */
+
   return (
     <div>
       {/* Control Bar: Search, View Switcher, Category Filter, Sort, Add Resource */}
@@ -591,29 +611,14 @@ function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
         actions={
           <>
             {/* View Mode Toggle Switcher */}
-            <Tabs
+            <SelectBar<"cards" | "table">
+              items={viewModeItems}
               value={viewMode}
-              onValueChange={(val) => handleViewModeChange(val as "cards" | "table")}
-            >
-              <TabsList className="border-line bg-surface/80 h-9 rounded-md border-[1.5px] p-0.5 font-mono">
-                <TabsTrigger
-                  value="cards"
-                  className="data-active:bg-primary data-active:text-primary-foreground hover:data-active:text-primary-foreground gap-1.5 rounded px-2.5 py-1 font-mono text-xs font-bold uppercase transition-colors"
-                  title="Visual Cards View (24 per page)"
-                >
-                  <SquaresFourIcon className="size-3.5" />
-                  <span className="hidden sm:inline">Cards (24)</span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="table"
-                  className="data-active:bg-primary data-active:text-primary-foreground hover:data-active:text-primary-foreground gap-1.5 rounded px-2.5 py-1 font-mono text-xs font-bold uppercase transition-colors"
-                  title="Text Data Table (50 per page)"
-                >
-                  <TableIcon className="size-3.5" />
-                  <span className="hidden sm:inline">Grid (50)</span>
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
+              onChange={handleViewModeChange}
+              size="sm"
+              className="font-mono text-xs uppercase"
+              ariaLabel="View mode"
+            />
 
             <Button
               size="sm"

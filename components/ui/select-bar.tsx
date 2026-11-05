@@ -29,7 +29,7 @@ type Ind = { p: number; s: number };
 
 export interface SelectBarItem<T extends string = string> {
   key: T;
-  label?: string;
+  label?: React.ReactNode;
   icon?: React.ReactNode;
   color?: string;
   darkOutline?: string;
@@ -199,7 +199,7 @@ export function SelectBar<T extends string = string>({
         const isSelected = active === item.key;
         const isSwatch = Boolean(item.color);
         const isIconOnly = Boolean(item.icon && (!item.label || item.showLabel === false));
-        const slotTitle = item.title || item.label || item.key;
+        const slotTitle = item.title || (typeof item.label === "string" ? item.label : item.key);
 
         const dim = size === "xs" ? 26 : size === "default" ? 36 : 30;
         const padH = size === "xs" ? 11 : size === "default" ? 16 : 13;
@@ -286,9 +286,3 @@ export function SelectBar<T extends string = string>({
     </nav>
   );
 }
-
-export {
-  SelectBar as GlassBar,
-  type SelectBarItem as GlassBarItem,
-  type SelectBarProps as GlassBarProps,
-};
