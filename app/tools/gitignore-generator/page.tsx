@@ -8,7 +8,7 @@ import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { ClearButton } from "@/components/ui/clear-button";
 import { CopyButton } from "@/components/ui/copy-button";
-import { SearchInput } from "@/components/ui/search-input";
+import { FluidSearch } from "@/components/ui/fluid-search";
 import { TextareaGroup } from "@/components/ui/textarea-group";
 import { internalTools } from "@/lib/tools-data";
 
@@ -56,11 +56,12 @@ export default function GitignoreGeneratorPage() {
           <div>
             <h3 className="mb-3 text-sm font-semibold">Select environments & frameworks</h3>
 
-            <SearchInput
+            <FluidSearch
               placeholder="Search stacks..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              containerClassName="mb-4"
+              onChange={setSearchQuery}
+              onClear={() => setSearchQuery("")}
+              className="mb-4 font-mono text-xs max-w-xl"
             />
           </div>
 

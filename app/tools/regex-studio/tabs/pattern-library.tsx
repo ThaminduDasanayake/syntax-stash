@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
-import { SearchInput } from "@/components/ui/search-input";
+import { FluidSearch } from "@/components/ui/fluid-search";
 
 interface PatternLibraryProps {
   onUsePatternAction: (pattern: string, flags: string, testString: string) => void;
@@ -43,10 +43,12 @@ export function PatternLibrary({ onUsePatternAction }: PatternLibraryProps) {
   return (
     <div className="mt-0 space-y-6">
       <div className="space-y-4">
-        <SearchInput
+        <FluidSearch
           placeholder="Search patterns (e.g. email, UUID, date)..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={setSearch}
+          onClear={() => setSearch("")}
+          className="font-mono text-xs max-w-xl"
         />
 
         <div className="flex flex-wrap gap-2">
