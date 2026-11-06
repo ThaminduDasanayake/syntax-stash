@@ -605,7 +605,7 @@ function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
             value={searchQuery}
             onChange={handleSearchChange}
             onClear={() => handleSearchChange("")}
-            className="font-mono text-xs max-w-xl"
+            className="max-w-xl font-mono text-xs"
           />
         }
         actions={

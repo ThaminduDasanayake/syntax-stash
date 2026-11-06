@@ -275,7 +275,7 @@ export function HistoryView({ initialItems = [], initialTotal = 0 }: HistoryView
                 void fetchAlerts();
               }}
               placeholder="Search alerts by resource title..."
-              className="font-mono text-xs max-w-md"
+              className="max-w-md font-mono text-xs"
             />
           </form>
 

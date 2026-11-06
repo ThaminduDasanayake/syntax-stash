@@ -61,7 +61,7 @@ export default function GitignoreGeneratorPage() {
               value={searchQuery}
               onChange={setSearchQuery}
               onClear={() => setSearchQuery("")}
-              className="mb-4 font-mono text-xs max-w-xl"
+              className="mb-4 max-w-xl font-mono text-xs"
             />
           </div>
 

@@ -49,7 +49,7 @@ export default function HttpStatusPage() {
             value={search}
             onChange={setSearch}
             onClear={() => setSearch("")}
-            className="font-mono text-xs max-w-xl"
+            className="max-w-xl font-mono text-xs"
           />
           <div className="flex flex-wrap gap-2">
             {STATUS_CATEGORIES.map((cat) => {

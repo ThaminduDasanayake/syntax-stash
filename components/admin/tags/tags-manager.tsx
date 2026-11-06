@@ -153,7 +153,7 @@ export function TagsManager({ initialTags = [] }: TagsManagerProps) {
             value={searchQuery}
             onChange={setSearchQuery}
             onClear={() => setSearchQuery("")}
-            className="font-mono text-xs max-w-xl"
+            className="max-w-xl font-mono text-xs"
           />
         }
         filters={

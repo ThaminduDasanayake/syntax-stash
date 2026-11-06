@@ -94,7 +94,7 @@ export function Nav({
           <span className="flex items-center gap-1.5">
             <span>Submissions Queue</span>
             {pendingSubmissionsCount !== undefined && pendingSubmissionsCount > 0 && (
-              <span className="rounded-full border border-amber-600/40 bg-amber-500/20 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-amber-500">
+              <span className="rounded-full border border-amber-600/40 bg-amber-500/20 px-1.5 py-0.5 text-[10px] leading-none font-extrabold text-amber-500">
                 {pendingSubmissionsCount}
               </span>
             )}
@@ -110,7 +110,7 @@ export function Nav({
           <span className="flex items-center gap-1.5">
             <span>Live Catalog</span>
             {totalResourcesCount !== undefined && totalResourcesCount > 0 && (
-              <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-zinc-300">
+              <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] leading-none font-extrabold text-zinc-300">
                 {totalResourcesCount}
               </span>
             )}
@@ -126,7 +126,7 @@ export function Nav({
           <span className="flex items-center gap-1.5">
             <span>Categories</span>
             {categoriesCount !== undefined && categoriesCount > 0 && (
-              <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-zinc-300">
+              <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] leading-none font-extrabold text-zinc-300">
                 {categoriesCount}
               </span>
             )}
@@ -142,7 +142,7 @@ export function Nav({
           <span className="flex items-center gap-1.5">
             <span>Tags</span>
             {tagsCount !== undefined && tagsCount > 0 && (
-              <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-zinc-300">
+              <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] leading-none font-extrabold text-zinc-300">
                 {tagsCount}
               </span>
             )}
@@ -158,7 +158,7 @@ export function Nav({
           <span className="flex items-center gap-1.5">
             <span>Authors</span>
             {authorsCount !== undefined && authorsCount > 0 && (
-              <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-zinc-300">
+              <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] leading-none font-extrabold text-zinc-300">
                 {authorsCount}
               </span>
             )}
@@ -173,13 +173,7 @@ export function Nav({
         label: <span>Change Monitor</span>,
       },
     ],
-    [
-      authorsCount,
-      categoriesCount,
-      pendingSubmissionsCount,
-      tagsCount,
-      totalResourcesCount,
-    ],
+    [authorsCount, categoriesCount, pendingSubmissionsCount, tagsCount, totalResourcesCount],
   );
   /* eslint-enable perfectionist/sort-arrays */
 

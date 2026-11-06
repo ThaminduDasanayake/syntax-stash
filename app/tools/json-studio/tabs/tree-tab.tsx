@@ -31,7 +31,7 @@ export function TreeTab({ input, onTestInQueryAction }: Props) {
           value={search}
           onChange={setSearch}
           onClear={() => setSearch("")}
-          className="font-mono text-xs max-w-sm"
+          className="max-w-sm font-mono text-xs"
         />
 
         <div className="ml-auto flex items-center gap-2">

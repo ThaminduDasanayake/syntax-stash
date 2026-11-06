@@ -321,7 +321,7 @@ export function DesignSystemShowcase() {
                 onChange={setSearchVal}
                 onClear={() => setSearchVal("")}
                 placeholder="Search tools, categories..."
-                className="font-mono text-xs max-w-md"
+                className="max-w-md font-mono text-xs"
               />
             </div>
 

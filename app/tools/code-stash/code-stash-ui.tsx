@@ -55,7 +55,7 @@ export default function CodeStashUi({ initialSnippets }: { initialSnippets: Snip
               value={searchQuery}
               onChange={setSearchQuery}
               onClear={() => setSearchQuery("")}
-              className="font-mono text-xs w-full"
+              className="w-full font-mono text-xs"
             />
 
             {/* Language filter pills */}
