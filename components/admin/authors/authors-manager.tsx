@@ -28,7 +28,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { EmptyState } from "@/components/ui/empty-state";
-import { SearchInput } from "@/components/ui/search-input";
+import { FluidSearch } from "@/components/ui/fluid-search";
 import {
   Table,
   TableBody,
@@ -192,12 +192,12 @@ function AuthorsManagerContent({ initialAuthors = [] }: AuthorsManagerProps) {
       {/* Control Bar */}
       <Toolbar
         search={
-          <SearchInput
+          <FluidSearch
             placeholder="Search authors by name, slug, website, github, twitter..."
             value={searchQuery}
-            onChange={(e) => handleSearchChange(e.target.value)}
+            onChange={handleSearchChange}
             onClear={() => handleSearchChange("")}
-            className="font-mono text-xs"
+            className="max-w-xl font-mono text-xs"
           />
         }
         actions={

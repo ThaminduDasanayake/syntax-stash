@@ -32,6 +32,12 @@ export function Nav({
 }: NavProps) {
   const pathname = usePathname();
 
+  // Hide the global admin suite header and tabs on dedicated editor and inspect workflow sub-pages
+  const isResourceDetail =
+    pathname !== "/admin/resources" && pathname.startsWith("/admin/resources/");
+  const isSubmissionDetail =
+    pathname !== "/admin/submissions" && pathname.startsWith("/admin/submissions/");
+
   const isSubmissions = pathname.startsWith("/admin/submissions");
   const isResources = pathname.startsWith("/admin/resources");
   const isCategories = pathname.startsWith("/admin/categories");
@@ -88,7 +94,7 @@ export function Nav({
           <span className="flex items-center gap-1.5">
             <span>Submissions Queue</span>
             {pendingSubmissionsCount !== undefined && pendingSubmissionsCount > 0 && (
-              <span className="rounded-full border border-amber-600/40 bg-amber-500/20 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-amber-500">
+              <span className="rounded-full border border-amber-600/40 bg-amber-500/20 px-1.5 py-0.5 text-[10px] leading-none font-extrabold text-amber-500">
                 {pendingSubmissionsCount}
               </span>
             )}
@@ -104,7 +110,7 @@ export function Nav({
           <span className="flex items-center gap-1.5">
             <span>Live Catalog</span>
             {totalResourcesCount !== undefined && totalResourcesCount > 0 && (
-              <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-zinc-300">
+              <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] leading-none font-extrabold text-zinc-300">
                 {totalResourcesCount}
               </span>
             )}
@@ -120,7 +126,7 @@ export function Nav({
           <span className="flex items-center gap-1.5">
             <span>Categories</span>
             {categoriesCount !== undefined && categoriesCount > 0 && (
-              <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-zinc-300">
+              <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] leading-none font-extrabold text-zinc-300">
                 {categoriesCount}
               </span>
             )}
@@ -136,7 +142,7 @@ export function Nav({
           <span className="flex items-center gap-1.5">
             <span>Tags</span>
             {tagsCount !== undefined && tagsCount > 0 && (
-              <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-zinc-300">
+              <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] leading-none font-extrabold text-zinc-300">
                 {tagsCount}
               </span>
             )}
@@ -152,7 +158,7 @@ export function Nav({
           <span className="flex items-center gap-1.5">
             <span>Authors</span>
             {authorsCount !== undefined && authorsCount > 0 && (
-              <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-zinc-300">
+              <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] leading-none font-extrabold text-zinc-300">
                 {authorsCount}
               </span>
             )}
@@ -167,15 +173,13 @@ export function Nav({
         label: <span>Change Monitor</span>,
       },
     ],
-    [
-      authorsCount,
-      categoriesCount,
-      pendingSubmissionsCount,
-      tagsCount,
-      totalResourcesCount,
-    ],
+    [authorsCount, categoriesCount, pendingSubmissionsCount, tagsCount, totalResourcesCount],
   );
   /* eslint-enable perfectionist/sort-arrays */
+
+  if (isResourceDetail || isSubmissionDetail) {
+    return null;
+  }
 
   return (
     <div className="border-line/60 mb-8 border-b-[1.5px] pb-6 font-mono">

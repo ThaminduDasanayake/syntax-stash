@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import { ToolLayout } from "@/components/tool-layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { SearchInput } from "@/components/ui/search-input";
+import { FluidSearch } from "@/components/ui/fluid-search";
 import {
   Table,
   TableBody,
@@ -60,10 +60,12 @@ export default function GitCheatsheetPage() {
     <ToolLayout tool={tool}>
       <div className="space-y-6">
         {/* Search */}
-        <SearchInput
+        <FluidSearch
           placeholder="Search commands or descriptions (e.g. stash, undo, rebase)..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={setSearch}
+          onClear={() => setSearch("")}
+          className="max-w-xl font-mono text-xs"
         />
 
         {/* Category filter */}

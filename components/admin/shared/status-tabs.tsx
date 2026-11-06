@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { FluidSearch } from "@/components/ui/fluid-search";
 import { cn } from "@/lib/utils";
 
 import { SubmissionCounts, TAB_CONFIG, TABS, TabStatus } from "./types";
@@ -59,11 +59,12 @@ export function StatusTabs({
         })}
       </div>
 
-      <div className="w-full font-mono sm:w-64">
-        <Input
+      <div className="w-full font-mono sm:w-72">
+        <FluidSearch
           placeholder="Search submissions..."
           value={searchQuery}
-          onChange={(e) => onSearchChange(e.target.value)}
+          onChange={onSearchChange}
+          onClear={() => onSearchChange("")}
           className="text-xs"
         />
       </div>

@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
-import { SearchInput } from "@/components/ui/search-input";
+import { FluidSearch } from "@/components/ui/fluid-search";
 import type { AuthorWithResources } from "@/lib/authors";
 
 interface AuthorsDirectoryProps {
@@ -30,13 +30,12 @@ export function AuthorsDirectory({ authors }: AuthorsDirectoryProps) {
     <div className="card-body">
       <div className="section-inner w-full">
         {/* Search Bar */}
-        <SearchInput
+        <FluidSearch
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={setSearch}
           onClear={() => setSearch("")}
           placeholder="Search authors by name, category, or tool..."
-          containerClassName="mb-10 max-w-md"
-          className="font-mono text-xs"
+          className="mb-10 max-w-md font-mono text-xs"
         />
 
         {/* Results Counter */}

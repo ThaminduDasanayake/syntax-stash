@@ -6,7 +6,7 @@ import { useMemo, useState } from "react";
 import { countChildren, parseJson } from "@/app/tools/json-studio/helpers";
 import { TreeNode } from "@/app/tools/json-studio/tree-node";
 import { Button } from "@/components/ui/button";
-import { SearchInput } from "@/components/ui/search-input";
+import { FluidSearch } from "@/components/ui/fluid-search";
 
 type Props = {
   input: string;
@@ -26,10 +26,12 @@ export function TreeTab({ input, onTestInQueryAction }: Props) {
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap items-center gap-2">
-        <SearchInput
+        <FluidSearch
           placeholder="Search keys and values..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={setSearch}
+          onClear={() => setSearch("")}
+          className="max-w-sm font-mono text-xs"
         />
 
         <div className="ml-auto flex items-center gap-2">

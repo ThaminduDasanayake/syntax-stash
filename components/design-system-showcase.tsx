@@ -21,9 +21,9 @@ import { Button } from "@/components/ui/button";
 import { CheckboxField } from "@/components/ui/checkbox-field";
 import { CopyButton } from "@/components/ui/copy-button";
 import { DownloadButton } from "@/components/ui/download-button";
+import { FluidSearch } from "@/components/ui/fluid-search";
 import { InputField } from "@/components/ui/input-field";
 import { Kbd } from "@/components/ui/kbd";
-import { SearchInput } from "@/components/ui/search-input";
 import { SelectField } from "@/components/ui/select-field";
 import { SliderField } from "@/components/ui/slider-field";
 import { SwitchField } from "@/components/ui/switch-field";
@@ -316,12 +316,12 @@ export function DesignSystemShowcase() {
             {/* Search Input */}
             <div className="space-y-2">
               <span className="text-xs font-bold uppercase">Search Field</span>
-              <SearchInput
+              <FluidSearch
                 value={searchVal}
-                onChange={(e) => setSearchVal(e.target.value)}
+                onChange={setSearchVal}
                 onClear={() => setSearchVal("")}
                 placeholder="Search tools, categories..."
-                className="font-mono text-xs"
+                className="max-w-md font-mono text-xs"
               />
             </div>
 

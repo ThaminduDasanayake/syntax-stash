@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
-import { SearchInput } from "@/components/ui/search-input";
+import { FluidSearch } from "@/components/ui/fluid-search";
 import { internalTools } from "@/lib/tools-data";
 import { cn } from "@/lib/utils";
 
@@ -44,10 +44,12 @@ export default function HttpStatusPage() {
       <div className="w-full min-w-0 space-y-8">
         {/* Search + filter */}
         <div className="space-y-4">
-          <SearchInput
+          <FluidSearch
             placeholder="Search by code, name, or description (e.g. 404, redirect, rate limit)..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={setSearch}
+            onClear={() => setSearch("")}
+            className="max-w-xl font-mono text-xs"
           />
           <div className="flex flex-wrap gap-2">
             {STATUS_CATEGORIES.map((cat) => {

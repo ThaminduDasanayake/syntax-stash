@@ -27,7 +27,7 @@ import { AddButton } from "@/components/ui/add-button";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
 import { EmptyState } from "@/components/ui/empty-state";
-import { SearchInput } from "@/components/ui/search-input";
+import { FluidSearch } from "@/components/ui/fluid-search";
 import { SelectBar, type SelectBarItem } from "@/components/ui/select-bar";
 import { SelectField } from "@/components/ui/select-field";
 import { useCategories } from "@/hooks/use-categories";
@@ -600,12 +600,12 @@ function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
       {/* Control Bar: Search, View Switcher, Category Filter, Sort, Add Resource */}
       <Toolbar
         search={
-          <SearchInput
+          <FluidSearch
             placeholder="Search live resources by name, description, tags, author, URL..."
             value={searchQuery}
-            onChange={(e) => handleSearchChange(e.target.value)}
+            onChange={handleSearchChange}
             onClear={() => handleSearchChange("")}
-            className="font-mono text-xs"
+            className="max-w-xl font-mono text-xs"
           />
         }
         actions={

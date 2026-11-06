@@ -10,7 +10,7 @@ import { Snippet } from "@/app/tools/code-stash/types";
 import { ToolLayout } from "@/components/tool-layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { SearchInput } from "@/components/ui/search-input";
+import { FluidSearch } from "@/components/ui/fluid-search";
 import { useFuzzySearch } from "@/hooks/use-fuzzy-search";
 import { internalTools } from "@/lib/tools-data";
 import { cn } from "@/lib/utils";
@@ -50,10 +50,12 @@ export default function CodeStashUi({ initialSnippets }: { initialSnippets: Snip
         <div className="flex flex-col lg:col-span-1 lg:max-h-[70vh]">
           <div className="space-y-3 pb-3">
             {/* Search bar */}
-            <SearchInput
+            <FluidSearch
               placeholder="Search snippets..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={setSearchQuery}
+              onClear={() => setSearchQuery("")}
+              className="w-full font-mono text-xs"
             />
 
             {/* Language filter pills */}
