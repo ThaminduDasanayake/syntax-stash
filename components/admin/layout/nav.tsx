@@ -32,6 +32,12 @@ export function Nav({
 }: NavProps) {
   const pathname = usePathname();
 
+  // Hide the global admin suite header and tabs on dedicated editor and inspect workflow sub-pages
+  const isResourceDetail =
+    pathname !== "/admin/resources" && pathname.startsWith("/admin/resources/");
+  const isSubmissionDetail =
+    pathname !== "/admin/submissions" && pathname.startsWith("/admin/submissions/");
+
   const isSubmissions = pathname.startsWith("/admin/submissions");
   const isResources = pathname.startsWith("/admin/resources");
   const isCategories = pathname.startsWith("/admin/categories");
@@ -176,6 +182,10 @@ export function Nav({
     ],
   );
   /* eslint-enable perfectionist/sort-arrays */
+
+  if (isResourceDetail || isSubmissionDetail) {
+    return null;
+  }
 
   return (
     <div className="border-line/60 mb-8 border-b-[1.5px] pb-6 font-mono">
