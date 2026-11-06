@@ -17,7 +17,7 @@ import { AddButton } from "@/components/ui/add-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
-import { SearchInput } from "@/components/ui/search-input";
+import { FluidSearch } from "@/components/ui/fluid-search";
 import {
   Table,
   TableBody,
@@ -148,12 +148,12 @@ export function TagsManager({ initialTags = [] }: TagsManagerProps) {
       {/* Control Bar */}
       <Toolbar
         search={
-          <SearchInput
+          <FluidSearch
             placeholder="Search tags by name or slug..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={setSearchQuery}
             onClear={() => setSearchQuery("")}
-            className="font-mono text-xs"
+            className="font-mono text-xs max-w-xl"
           />
         }
         filters={

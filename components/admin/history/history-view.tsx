@@ -20,7 +20,7 @@ import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
-import { SearchInput } from "@/components/ui/search-input";
+import { FluidSearch } from "@/components/ui/fluid-search";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
@@ -267,12 +267,15 @@ export function HistoryView({ initialItems = [], initialTotal = 0 }: HistoryView
         {/* Top Row: Search and Action Buttons */}
         <div className="flex flex-wrap items-center justify-between gap-3">
           <form onSubmit={handleSearchSubmit} className="flex-1 sm:max-w-md">
-            <SearchInput
+            <FluidSearch
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={setSearchQuery}
+              onClear={() => {
+                setSearchQuery("");
+                void fetchAlerts();
+              }}
               placeholder="Search alerts by resource title..."
-              containerClassName="h-9"
-              className="font-mono text-xs"
+              className="font-mono text-xs max-w-md"
             />
           </form>
 
