@@ -18,8 +18,8 @@ import {
 } from "@phosphor-icons/react";
 import React, { useMemo, useState } from "react";
 
-import { FluidSearch } from "@/components/ui/fluid-search";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Seek } from "@/components/ui/seek";
 import {
   Sheet,
   SheetContent,
@@ -512,16 +512,19 @@ export function FloatingFilterDock({
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-5 z-40 flex justify-center px-4 sm:bottom-6">
       <div className="pointer-events-auto flex max-w-full items-center gap-1.5 rounded-full border-[1.5px] border-white/12 bg-[#0e0e11]/95 p-1.5 font-mono text-xs shadow-[0_20px_50px_rgba(0,0,0,0.75),0_1px_0_0_rgba(255,255,255,0.1)_inset] backdrop-blur-2xl transition-all sm:gap-2 sm:p-2">
-        {/* 1. Animated Fluid Search */}
-        <FluidSearch
+        {/* 1. Animated Seek Search */}
+        <Seek
+          size={isMobile ? "sm" : "default"}
+          theme="dark"
           placeholder={isMobile ? "Search..." : searchPlaceholder}
           value={searchQuery}
           onChange={(val) => {
             onSearchChange(val);
             if (!val) onClearSearch();
           }}
-          onClear={onClearSearch}
-          className="w-[180px] sm:w-[260px] font-mono text-xs"
+          width={isMobile ? 180 : 260}
+          give={50}
+          spring={55}
         />
 
         {/* 2. Category Selector (Popover / Sheet) */}
