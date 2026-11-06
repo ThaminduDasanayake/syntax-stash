@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import { CATEGORIES, TAILWIND_CLASSES } from "@/app/tools/tailwind-studio/cheatsheet-data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { SearchInput } from "@/components/ui/search-input";
+import { FluidSearch } from "@/components/ui/fluid-search";
 import {
   Table,
   TableBody,
@@ -47,10 +47,12 @@ export function CheatsheetTab() {
   return (
     <div className="space-y-6">
       <div className="space-y-4">
-        <SearchInput
+        <FluidSearch
           placeholder="Search classes or CSS (e.g. flex, border-radius, gap)..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={setSearch}
+          onClear={() => setSearch("")}
+          className="font-mono text-xs max-w-xl"
         />
         <div className="flex flex-wrap gap-2">
           {CATEGORIES.map((cat) => (

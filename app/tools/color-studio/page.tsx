@@ -14,7 +14,7 @@ import { PaletteCard } from "@/components/color-studio/palette-card";
 import { ToolLayout } from "@/components/tool-layout";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
-import { SearchInput } from "@/components/ui/search-input";
+import { FluidSearch } from "@/components/ui/fluid-search";
 import { SelectBar, type SelectBarItem } from "@/components/ui/select-bar";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { usePaletteBookmarks } from "@/hooks/use-palette-bookmarks";
@@ -189,15 +189,13 @@ export default function ColorStudioPage() {
           {/* Search Row */}
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="w-full max-w-lg">
-              <SearchInput
+              <FluidSearch
                 ref={searchInputRef}
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={setSearchQuery}
                 onClear={() => setSearchQuery("")}
                 placeholder="Search by palette name, color name, or hex (e.g. #FF6044)..."
                 shortcut="/"
-                variant="pill"
-                size="sm"
                 className="font-mono text-xs"
               />
             </div>

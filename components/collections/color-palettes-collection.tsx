@@ -13,7 +13,7 @@ import { COLOR_PALETTES } from "@/app/tools/color-studio/palette-data";
 import { PaletteCard } from "@/components/color-studio/palette-card";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
-import { SearchInput } from "@/components/ui/search-input";
+import { FluidSearch } from "@/components/ui/fluid-search";
 import { SelectBar, type SelectBarItem } from "@/components/ui/select-bar";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { usePaletteBookmarks } from "@/hooks/use-palette-bookmarks";
@@ -213,14 +213,13 @@ export function ColorPalettesCollection({ onBackAction }: { onBackAction: () => 
           <div className="border-border/80 bg-card/60 flex flex-col gap-4 rounded-2xl border p-4 shadow-sm sm:p-5">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div className="w-full max-w-lg">
-                <SearchInput
+                <FluidSearch
                   ref={searchInputRef}
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={setSearchQuery}
                   onClear={() => setSearchQuery("")}
                   placeholder="Search saved palettes by name, color, or hex..."
-                  variant="pill"
-                  size="sm"
+                  shortcut="/"
                   className="font-mono text-xs"
                 />
               </div>
