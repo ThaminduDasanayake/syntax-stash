@@ -9,13 +9,7 @@ import { ResourceCardView } from "@/components/resource-card-view";
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import {
-  cn,
-  getCategoryTheme,
-  parseOgImageStyle,
-  slugifyAuthor,
-  THEME_CONFIG,
-} from "@/lib/utils";
+import { cn, getCategoryTheme, parseOgImageStyle, slugifyAuthor, THEME_CONFIG } from "@/lib/utils";
 
 import { PingButton } from "../shared/ping-button";
 import { HEALTH_STATUS_CONFIG, ResourceItem } from "../shared/types";
@@ -216,8 +210,7 @@ export function ResourceCard({
               rawBg === "dark" ||
               rawBg.includes("black") ||
               rawBg.includes("dark");
-            const isWhite =
-              color === "white" || rawBg.includes("white") || rawBg.includes("light");
+            const isWhite = color === "white" || rawBg.includes("white") || rawBg.includes("light");
             const isInvert = color === "invert" || rawBg.includes("invert");
             const isHex = Boolean(
               res.iconBg && (res.iconBg.startsWith("#") || res.iconBg.startsWith("rgb")),
@@ -293,9 +286,7 @@ export function ResourceCard({
                     style={{ backgroundColor: swatchColor }}
                   />
                   <span className="capitalize">{bg}</span>
-                  {fit === "contain" && (
-                    <span className="text-[9px] text-zinc-400">· contain</span>
-                  )}
+                  {fit === "contain" && <span className="text-[9px] text-zinc-400">· contain</span>}
                 </span>
               );
             }
@@ -303,9 +294,7 @@ export function ResourceCard({
               <span className="inline-flex items-center gap-1 rounded border border-white/10 bg-white/5 px-1.5 py-0.5 text-zinc-400">
                 <span className="font-bold text-zinc-500">⊘</span>
                 <span>No bg</span>
-                {fit === "contain" && (
-                  <span className="text-[9px] text-zinc-400">· contain</span>
-                )}
+                {fit === "contain" && <span className="text-[9px] text-zinc-400">· contain</span>}
               </span>
             );
           })()}
