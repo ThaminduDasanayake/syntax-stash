@@ -84,7 +84,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="container mx-auto max-w-7xl px-4 py-8 sm:py-12">
+    <div className="container mx-auto max-w-7xl px-4 pt-24 pb-8 sm:pt-28 sm:pb-12">
       <Nav
         authorsCount={authorsCount}
         categoriesCount={categoriesCount}

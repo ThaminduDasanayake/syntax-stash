@@ -4,11 +4,12 @@ import { PencilSimpleIcon, TrashIcon, WarningCircleIcon } from "@phosphor-icons/
 import Image from "next/image";
 import Link from "next/link";
 
+import { parseIconStyle } from "@/components/card-icon";
 import { ResourceCardView } from "@/components/resource-card-view";
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { cn, getCategoryTheme, slugifyAuthor, THEME_CONFIG } from "@/lib/utils";
+import { cn, getCategoryTheme, parseOgImageStyle, slugifyAuthor, THEME_CONFIG } from "@/lib/utils";
 
 import { PingButton } from "../shared/ping-button";
 import { HEALTH_STATUS_CONFIG, ResourceItem } from "../shared/types";
@@ -192,6 +193,113 @@ export function ResourceCard({
           </a>
         </div>
       )}
+
+      {/* Media Background Status Strip (Admin Only) */}
+      <div className="border-line bg-surface/50 flex flex-wrap items-center justify-between gap-1.5 border-t px-2.5 py-1.5 font-mono text-[10px]">
+        {/* Favicon / Icon BG Indicator */}
+        <div className="flex items-center gap-1.5">
+          <span className="text-muted-foreground text-[9px] font-bold tracking-wider uppercase">
+            Icon:
+          </span>
+          {(() => {
+            const rawBg = (res.iconBg || "").toLowerCase().trim();
+            const { color } = parseIconStyle(res.iconBg);
+            const isDark =
+              color === "dark" ||
+              rawBg === "black" ||
+              rawBg === "dark" ||
+              rawBg.includes("black") ||
+              rawBg.includes("dark");
+            const isWhite = color === "white" || rawBg.includes("white") || rawBg.includes("light");
+            const isInvert = color === "invert" || rawBg.includes("invert");
+            const isHex = Boolean(
+              res.iconBg && (res.iconBg.startsWith("#") || res.iconBg.startsWith("rgb")),
+            );
+
+            if (isDark) {
+              return (
+                <span className="inline-flex items-center gap-1 rounded border border-white/20 bg-black/80 px-1.5 py-0.5 text-zinc-200">
+                  <span className="size-2 shrink-0 rounded-xs border border-white/40 bg-black" />
+                  <span>Black</span>
+                </span>
+              );
+            }
+            if (isWhite) {
+              return (
+                <span className="inline-flex items-center gap-1 rounded border border-white/20 bg-white/10 px-1.5 py-0.5 text-zinc-200">
+                  <span className="size-2 shrink-0 rounded-xs border border-black/30 bg-white" />
+                  <span>White</span>
+                </span>
+              );
+            }
+            if (isInvert) {
+              return (
+                <span className="inline-flex items-center gap-1 rounded border border-amber-500/30 bg-amber-500/10 px-1.5 py-0.5 text-amber-400">
+                  <span>◐ Invert</span>
+                </span>
+              );
+            }
+            if (isHex) {
+              return (
+                <span className="inline-flex items-center gap-1 rounded border border-white/20 bg-black/80 px-1.5 py-0.5 text-zinc-200">
+                  <span
+                    className="size-2 shrink-0 rounded-xs border border-white/30"
+                    style={{ backgroundColor: res.iconBg || undefined }}
+                  />
+                  <span>{res.iconBg}</span>
+                </span>
+              );
+            }
+            return (
+              <span className="inline-flex items-center gap-1 rounded border border-white/10 bg-white/5 px-1.5 py-0.5 text-zinc-400">
+                <span className="font-bold text-zinc-500">⊘</span>
+                <span>No bg</span>
+              </span>
+            );
+          })()}
+        </div>
+
+        {/* OG Image BG Indicator */}
+        <div className="flex items-center gap-1.5">
+          <span className="text-muted-foreground text-[9px] font-bold tracking-wider uppercase">
+            OG BG:
+          </span>
+          {(() => {
+            const { bg, fit } = parseOgImageStyle(res.ogImageBg);
+            const hasCustomBg = bg !== "none";
+            const swatchColor =
+              bg === "white"
+                ? "#ffffff"
+                : bg === "dark"
+                  ? "#09090b"
+                  : bg === "zinc"
+                    ? "#18181b"
+                    : bg.startsWith("#") || bg.startsWith("rgb")
+                      ? bg
+                      : "#18181b";
+
+            if (hasCustomBg) {
+              return (
+                <span className="inline-flex items-center gap-1 rounded border border-white/20 bg-black/80 px-1.5 py-0.5 text-zinc-200">
+                  <span
+                    className="size-2 shrink-0 rounded-xs border border-white/30"
+                    style={{ backgroundColor: swatchColor }}
+                  />
+                  <span className="capitalize">{bg}</span>
+                  {fit === "contain" && <span className="text-[9px] text-zinc-400">· contain</span>}
+                </span>
+              );
+            }
+            return (
+              <span className="inline-flex items-center gap-1 rounded border border-white/10 bg-white/5 px-1.5 py-0.5 text-zinc-400">
+                <span className="font-bold text-zinc-500">⊘</span>
+                <span>No bg</span>
+                {fit === "contain" && <span className="text-[9px] text-zinc-400">· contain</span>}
+              </span>
+            );
+          })()}
+        </div>
+      </div>
 
       {/* Missing Data Warning Chips */}
       {hasMissingData && (

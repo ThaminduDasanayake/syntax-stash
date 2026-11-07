@@ -359,8 +359,6 @@ function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
     }
   }, []);
 
-  // 1-Click Apply Redirect Handler
-
   // Filter & Sort
   const filteredAndSortedResources = useMemo(() => {
     let result = resources;
@@ -651,7 +649,7 @@ function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
         }
         footer={
           <>
-            <div className="flex flex-wrap items-center gap-5">
+            <div className="flex flex-wrap items-center gap-4 sm:gap-5">
               {/* Category Select */}
               <FilterSelect
                 label="Category:"
