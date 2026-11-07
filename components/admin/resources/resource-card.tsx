@@ -204,17 +204,26 @@ export function ResourceCard({
       <div className="border-line bg-surface/50 flex flex-wrap items-center justify-between gap-1.5 border-t px-2.5 py-1.5 font-mono text-[10px]">
         {/* Favicon / Icon BG Indicator */}
         <div className="flex items-center gap-1.5">
-          <span className="text-muted-foreground text-[9px] font-bold uppercase tracking-wider">
+          <span className="text-muted-foreground text-[9px] font-bold tracking-wider uppercase">
             Icon:
           </span>
           {(() => {
             const rawBg = (res.iconBg || "").toLowerCase().trim();
             const { color } = parseIconStyle(res.iconBg);
+            const isDark =
+              color === "dark" ||
+              rawBg === "black" ||
+              rawBg === "dark" ||
+              rawBg.includes("black") ||
+              rawBg.includes("dark");
+            const isWhite =
+              color === "white" || rawBg.includes("white") || rawBg.includes("light");
+            const isInvert = color === "invert" || rawBg.includes("invert");
             const isHex = Boolean(
               res.iconBg && (res.iconBg.startsWith("#") || res.iconBg.startsWith("rgb")),
             );
 
-            if (color === "dark" || rawBg === "black" || rawBg === "dark") {
+            if (isDark) {
               return (
                 <span className="inline-flex items-center gap-1 rounded border border-white/20 bg-black/80 px-1.5 py-0.5 text-zinc-200">
                   <span className="size-2 shrink-0 rounded-xs border border-white/40 bg-black" />
@@ -222,7 +231,7 @@ export function ResourceCard({
                 </span>
               );
             }
-            if (color === "white" || rawBg === "white") {
+            if (isWhite) {
               return (
                 <span className="inline-flex items-center gap-1 rounded border border-white/20 bg-white/10 px-1.5 py-0.5 text-zinc-200">
                   <span className="size-2 shrink-0 rounded-xs border border-black/30 bg-white" />
@@ -230,7 +239,7 @@ export function ResourceCard({
                 </span>
               );
             }
-            if (color === "invert" || rawBg === "invert") {
+            if (isInvert) {
               return (
                 <span className="inline-flex items-center gap-1 rounded border border-amber-500/30 bg-amber-500/10 px-1.5 py-0.5 text-amber-400">
                   <span>◐ Invert</span>
@@ -250,7 +259,7 @@ export function ResourceCard({
             }
             return (
               <span className="inline-flex items-center gap-1 rounded border border-white/10 bg-white/5 px-1.5 py-0.5 text-zinc-400">
-                <span className="text-zinc-500 font-bold">⊘</span>
+                <span className="font-bold text-zinc-500">⊘</span>
                 <span>No bg</span>
               </span>
             );
@@ -259,7 +268,7 @@ export function ResourceCard({
 
         {/* OG Image BG Indicator */}
         <div className="flex items-center gap-1.5">
-          <span className="text-muted-foreground text-[9px] font-bold uppercase tracking-wider">
+          <span className="text-muted-foreground text-[9px] font-bold tracking-wider uppercase">
             OG BG:
           </span>
           {(() => {
@@ -292,7 +301,7 @@ export function ResourceCard({
             }
             return (
               <span className="inline-flex items-center gap-1 rounded border border-white/10 bg-white/5 px-1.5 py-0.5 text-zinc-400">
-                <span className="text-zinc-500 font-bold">⊘</span>
+                <span className="font-bold text-zinc-500">⊘</span>
                 <span>No bg</span>
                 {fit === "contain" && (
                   <span className="text-[9px] text-zinc-400">· contain</span>
