@@ -381,7 +381,7 @@ export function SubmitForm() {
       />
 
       {/* Left Column: Form (7 cols) */}
-      <div className="border-line bg-paper/40 border-[1.5px] p-6 font-mono text-xs sm:p-8 lg:col-span-7">
+      <div className="border-line bg-paper/40 border-[1.5px] p-6 font-sans text-xs sm:p-8 lg:col-span-7">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Invisible Honeypot Anti-Bot Field */}
           <input
@@ -397,7 +397,7 @@ export function SubmitForm() {
 
           {/* Authentication Requirement Banner */}
           {!session && !isSessionLoading && (
-            <div className="border-line bg-paper/80 border-[1.5px] p-4 font-mono text-xs">
+            <div className="border-line bg-paper/80 border-[1.5px] p-4 font-sans text-xs">
               <div className="flex items-center gap-2 text-[11px] font-bold tracking-wider text-amber-500 uppercase">
                 <UserIcon weight="bold" className="size-4 shrink-0" />
                 <span>Sign In Required to Submit</span>
@@ -412,7 +412,7 @@ export function SubmitForm() {
                   variant="outline"
                   size="sm"
                   onClick={() => handleOAuthSignIn("github")}
-                  className="group border-[1.5px] font-mono text-xs font-bold uppercase"
+                  className="group border-[1.5px] font-sans text-xs font-bold uppercase"
                 >
                   <Image
                     src="/github.svg"
@@ -428,7 +428,7 @@ export function SubmitForm() {
                   variant="outline"
                   size="sm"
                   onClick={() => handleOAuthSignIn("google")}
-                  className="border-[1.5px] font-mono text-xs font-bold uppercase"
+                  className="border-[1.5px] font-sans text-xs font-bold uppercase"
                 >
                   <Image
                     src="/google.svg"
@@ -470,7 +470,7 @@ export function SubmitForm() {
                 variant="outline"
                 onClick={handleAutoDetect}
                 disabled={isDetecting || !url.trim()}
-                className="border-line hover:bg-surface mt-2 h-[52px] shrink-0 gap-1.5 rounded-[20px] px-4 font-mono text-xs font-bold uppercase"
+                className="border-line hover:bg-surface mt-2 h-[52px] shrink-0 gap-1.5 rounded-[20px] px-4 font-sans text-xs font-bold uppercase"
               >
                 {isDetecting ? (
                   <CircleNotchIcon className="size-3.5 animate-spin" />
@@ -618,7 +618,7 @@ export function SubmitForm() {
           {/* Section 6: Additional Details & Tags */}
           <div className="border-line space-y-4 border-t pt-5">
             <div>
-              <h4 className="text-foreground font-mono text-xs font-bold tracking-tight uppercase">
+              <h4 className="text-foreground font-sans text-xs font-bold tracking-tight uppercase">
                 Additional Details & Tags
               </h4>
               <p className="text-muted-foreground text-[11px]">
@@ -687,7 +687,7 @@ export function SubmitForm() {
               variant="outline"
               size="sm"
               onClick={resetForm}
-              className="border-[1.5px] font-mono text-xs uppercase"
+              className="border-[1.5px] font-sans text-xs uppercase"
             >
               Reset
             </Button>
@@ -696,7 +696,7 @@ export function SubmitForm() {
                 type="submit"
                 size="sm"
                 disabled={isSubmitting}
-                className="border-[1.5px] font-mono text-xs font-bold uppercase"
+                className="border-[1.5px] font-sans text-xs font-bold uppercase"
               >
                 {isSubmitting ? (
                   <>
@@ -712,7 +712,7 @@ export function SubmitForm() {
                 type="button"
                 size="sm"
                 onClick={() => setAuthModalOpen(true)}
-                className="border-[1.5px] font-mono text-xs font-bold uppercase"
+                className="border-[1.5px] font-sans text-xs font-bold uppercase"
               >
                 <UserIcon weight="bold" className="mr-1.5 size-3.5" />
                 Sign In to Submit
@@ -740,7 +740,7 @@ export function SubmitForm() {
           />
 
           {/* Guidelines Box */}
-          <div className="border-line bg-paper/30 border-[1.5px] p-5 font-mono text-xs">
+          <div className="border-line bg-paper/30 border-[1.5px] p-5 font-sans text-xs">
             <h4 className="text-foreground font-bold tracking-tight uppercase">
               Submission Guidelines
             </h4>
