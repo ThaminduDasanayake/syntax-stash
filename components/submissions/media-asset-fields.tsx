@@ -189,9 +189,9 @@ export function MediaAssetFields({
   const cleanOg = ogImage?.trim() || "";
 
   return (
-    <div className={cn("border-line space-y-5 border-t pt-4 font-mono text-xs", className)}>
+    <div className={cn("border-line space-y-5 border-t pt-4 font-sans text-xs", className)}>
       <div>
-        <h4 className="text-foreground font-mono text-xs font-bold tracking-tight uppercase">
+        <h4 className="text-foreground font-sans text-xs font-bold tracking-tight uppercase">
           Visual Assets & Media
         </h4>
         <p className="text-muted-foreground text-[11px]">
@@ -251,10 +251,10 @@ export function MediaAssetFields({
 
                   return (
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
+                      <span className="text-muted-foreground font-sans text-[10px] font-bold tracking-wider uppercase">
                         Background / Color:
                       </span>
-                      <div className="border-line bg-surface/80 inline-flex flex-wrap rounded-[12px] border-[1.5px] p-0.5 font-mono text-[11px]">
+                      <div className="border-line bg-surface/80 inline-flex flex-wrap rounded-[12px] border-[1.5px] p-0.5 font-sans text-[11px]">
                         <button
                           type="button"
                           onClick={() => onIconBgChange("none")}
@@ -312,7 +312,7 @@ export function MediaAssetFields({
                   );
                 })()
               ) : (
-                <span className="text-muted-foreground font-mono text-[10px]">
+                <span className="text-muted-foreground font-sans text-[10px]">
                   Favicon image or vector asset
                 </span>
               )}
@@ -322,7 +322,7 @@ export function MediaAssetFields({
                   label="Upload Icon / SVG"
                   onUploadSuccess={onFaviconChange}
                   disabled={disabled}
-                  className="border-line bg-surface/80 hover:bg-surface ml-auto h-8 gap-1.5 rounded-[12px] px-3 font-mono text-[11px] font-bold uppercase shadow-xs"
+                  className="border-line bg-surface/80 hover:bg-surface ml-auto h-8 gap-1.5 rounded-[12px] px-3 font-sans text-[11px] font-bold uppercase shadow-xs"
                 />
               )}
             </div>

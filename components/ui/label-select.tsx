@@ -266,7 +266,7 @@ export function LabelSelect({
             key={displayLabel}
             ref={labRef}
             className={cn(
-              "pointer-events-none absolute top-1/2 origin-left font-mono text-xs font-bold tracking-tight whitespace-pre uppercase transition-[transform,color] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
+              "pointer-events-none absolute top-1/2 origin-left font-sans text-xs font-bold tracking-tight whitespace-pre uppercase transition-[transform,color] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
               focus
                 ? "text-primary font-bold"
                 : up
@@ -309,7 +309,7 @@ export function LabelSelect({
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             className={cn(
-              "relative flex h-full w-full items-center justify-between rounded-[inherit] border-0 bg-transparent font-mono text-xs tracking-tight transition-[filter,opacity] duration-260 outline-none select-none disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm",
+              "relative flex h-full w-full items-center justify-between rounded-[inherit] border-0 bg-transparent font-sans text-xs tracking-tight transition-[filter,opacity] duration-260 outline-none select-none disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm",
               isDark
                 ? "text-white data-placeholder:text-white/30"
                 : "text-zinc-900 data-placeholder:text-zinc-400",
@@ -352,7 +352,7 @@ export function LabelSelect({
                 <SelectItem
                   key={opt.value}
                   value={opt.value}
-                  className={cn("font-mono text-xs sm:text-sm", itemClassName)}
+                  className={cn("font-sans text-xs sm:text-sm", itemClassName)}
                 >
                   {opt.label}
                 </SelectItem>
