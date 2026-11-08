@@ -391,7 +391,7 @@ export function MediaAssetFields({
                   {/* Row 1: Fit & Framing */}
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="flex flex-col">
-                      <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
+                      <span className="text-muted-foreground font-sans text-[10px] font-bold tracking-wider uppercase">
                         Image Fit & Framing:
                       </span>
                       <span className="text-muted-foreground text-[9px]">
@@ -399,7 +399,7 @@ export function MediaAssetFields({
                       </span>
                     </div>
                     <div className="ml-auto flex flex-wrap items-center gap-2">
-                      <div className="border-line bg-surface/80 inline-flex rounded-[12px] border-[1.5px] p-0.5 font-mono text-[11px]">
+                      <div className="border-line bg-surface/80 inline-flex rounded-[12px] border-[1.5px] p-0.5 font-sans text-[11px]">
                         <button
                           type="button"
                           onClick={() => handleFitChange("cover")}
@@ -435,7 +435,7 @@ export function MediaAssetFields({
                           label="Upload Screenshot"
                           onUploadSuccess={onOgImageChange}
                           disabled={disabled}
-                          className="border-line bg-surface/80 hover:bg-surface h-8 gap-1.5 rounded-[12px] px-3 font-mono text-[11px] font-bold uppercase shadow-xs"
+                          className="border-line bg-surface/80 hover:bg-surface h-8 gap-1.5 rounded-[12px] px-3 font-sans text-[11px] font-bold uppercase shadow-xs"
                         />
                       )}
                     </div>
@@ -444,14 +444,14 @@ export function MediaAssetFields({
                   {/* Row 2: Background / Canvas */}
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="flex flex-col">
-                      <span className="text-muted-foreground font-mono text-[10px] font-bold tracking-wider uppercase">
+                      <span className="text-muted-foreground font-sans text-[10px] font-bold tracking-wider uppercase">
                         Background / Canvas:
                       </span>
                       <span className="text-muted-foreground text-[9px]">
                         Canvas color for contain mode or transparent SVGs
                       </span>
                     </div>
-                    <div className="border-line bg-surface/80 inline-flex flex-wrap rounded-[12px] border-[1.5px] p-0.5 font-mono text-[11px]">
+                    <div className="border-line bg-surface/80 inline-flex flex-wrap rounded-[12px] border-[1.5px] p-0.5 font-sans text-[11px]">
                       <button
                         type="button"
                         onClick={() => handleBgChange("none")}
@@ -511,14 +511,14 @@ export function MediaAssetFields({
             })()
           ) : allowUpload ? (
             <div className="border-line/70 bg-surface/40 flex items-center justify-between gap-3 rounded-[16px] border-[1.5px] p-2.5 sm:px-3">
-              <span className="text-muted-foreground font-mono text-[10px]">
+              <span className="text-muted-foreground font-sans text-[10px]">
                 OpenGraph preview banner image
               </span>
               <CloudinaryUploadButton
                 label="Upload Screenshot"
                 onUploadSuccess={onOgImageChange}
                 disabled={disabled}
-                className="border-line bg-surface/80 hover:bg-surface ml-auto h-8 gap-1.5 rounded-[12px] px-3 font-mono text-[11px] font-bold uppercase shadow-xs"
+                className="border-line bg-surface/80 hover:bg-surface ml-auto h-8 gap-1.5 rounded-[12px] px-3 font-sans text-[11px] font-bold uppercase shadow-xs"
               />
             </div>
           ) : null}
