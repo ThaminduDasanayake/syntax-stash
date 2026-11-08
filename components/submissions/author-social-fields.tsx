@@ -243,7 +243,7 @@ export function AuthorSocialFields({
     Boolean(catalogAuthorsString.trim()) || newAuthors.some((a) => Boolean(a.name.trim()));
 
   return (
-    <div className={cn("border-line space-y-4 font-mono text-xs", className)}>
+    <div className={cn("border-line space-y-4 font-sans text-xs", className)}>
       {/* Attribution Header */}
       <div className="flex flex-wrap items-center justify-between gap-2">
         {/* Detected Author Details Card */}
@@ -372,7 +372,7 @@ export function AuthorSocialFields({
             onRequestCreateAuthor={onRequestCreateAuthor}
             allowCustom={allowCustom}
             disabled={disabled}
-            className="font-mono text-xs"
+            className="font-sans text-xs"
             suffix={
               <div className="flex items-center gap-2">
                 {isAdminMode ? (
@@ -382,7 +382,7 @@ export function AuthorSocialFields({
                     size="sm"
                     onClick={() => onRequestCreateAuthor?.("")}
                     disabled={disabled}
-                    className="border-primary/40 text-primary hover:bg-primary/10 h-7 shrink-0 gap-1 rounded-full px-2.5 font-mono text-[11px] font-bold uppercase transition-colors"
+                    className="border-primary/40 text-primary hover:bg-primary/10 h-7 shrink-0 gap-1 rounded-full px-2.5 font-sans text-[11px] font-bold uppercase transition-colors"
                   >
                     <PlusIcon weight="bold" className="size-3" />
                     <span>New Author</span>
@@ -394,7 +394,7 @@ export function AuthorSocialFields({
                     size="sm"
                     onClick={() => handleAddNewAuthor()}
                     disabled={disabled}
-                    className="border-primary/40 text-primary hover:bg-primary/10 h-7 shrink-0 gap-1 rounded-full px-2.5 font-mono text-[11px] font-bold uppercase transition-colors"
+                    className="border-primary/40 text-primary hover:bg-primary/10 h-7 shrink-0 gap-1 rounded-full px-2.5 font-sans text-[11px] font-bold uppercase transition-colors"
                   >
                     <PlusIcon weight="bold" className="size-3" />
                     <span>Add Author</span>
@@ -423,10 +423,10 @@ export function AuthorSocialFields({
               {/* Section Header */}
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <span className="text-foreground font-mono text-xs font-bold uppercase">
+                  <span className="text-foreground font-sans text-xs font-bold uppercase">
                     Author {newAuthors.length > 1 ? `#${index + 1}` : ""}
                   </span>
-                  <span className="rounded border border-amber-500/40 bg-amber-500/10 px-1.5 py-0.5 font-mono text-[10px] font-bold text-amber-600 dark:text-amber-400">
+                  <span className="rounded border border-amber-500/40 bg-amber-500/10 px-1.5 py-0.5 font-sans text-[10px] font-bold text-amber-600 dark:text-amber-400">
                     Author (Not in DB)
                   </span>
                 </div>

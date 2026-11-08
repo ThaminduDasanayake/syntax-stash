@@ -446,7 +446,7 @@ export function TagCombobox({
             ref={labRef}
             htmlFor={id}
             className={cn(
-              "pointer-events-none absolute top-1/2 origin-left font-mono text-xs font-bold tracking-tight whitespace-pre uppercase transition-[transform,color] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
+              "pointer-events-none absolute top-1/2 origin-left font-sans text-xs font-bold tracking-tight whitespace-pre uppercase transition-[transform,color] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
               focus
                 ? "text-primary font-bold"
                 : up
@@ -486,7 +486,7 @@ export function TagCombobox({
           <ComboboxChips
             ref={anchor}
             className={cn(
-              "flex w-full flex-wrap items-center gap-1.5 border-0 bg-transparent py-2 font-mono text-xs shadow-none ring-0 transition-colors outline-none focus-within:border-0 focus-within:ring-0",
+              "flex w-full flex-wrap items-center gap-1.5 border-0 bg-transparent py-2 font-sans text-xs shadow-none ring-0 transition-colors outline-none focus-within:border-0 focus-within:ring-0",
               disabled && "cursor-not-allowed opacity-50",
               className,
             )}
@@ -502,7 +502,7 @@ export function TagCombobox({
                   {values.map((tagName: string) => (
                     <ComboboxChip
                       key={tagName}
-                      className="bg-primary/15 text-primary border-primary/25 hover:bg-primary/20 h-7 gap-1 rounded-full border px-2.5 py-1 font-mono text-xs font-medium transition-colors"
+                      className="bg-primary/15 text-primary border-primary/25 hover:bg-primary/20 h-7 gap-1 rounded-full border px-2.5 py-1 font-sans text-xs font-medium transition-colors"
                     >
                       <HashIcon className="text-primary/80 size-3" />
                       <span>{tagName}</span>
@@ -515,7 +515,7 @@ export function TagCombobox({
                     placeholder={up && values.length === 0 ? placeholder : ""}
                     spellCheck={true}
                     autoCorrect="on"
-                    className="text-foreground h-7 min-w-28 flex-1 border-0 bg-transparent font-mono text-xs outline-none placeholder:text-zinc-500"
+                    className="text-foreground h-7 min-w-28 flex-1 border-0 bg-transparent font-sans text-xs outline-none placeholder:text-zinc-500"
                   />
                 </React.Fragment>
               )}
@@ -538,19 +538,19 @@ export function TagCombobox({
           anchor={anchor}
           align="start"
           sideOffset={6}
-          className="text-popover-foreground z-50 rounded-[20px] border border-white/15 bg-[#121214]/95 p-1.5 font-mono text-xs shadow-2xl backdrop-blur-md"
+          className="text-popover-foreground z-50 rounded-[20px] border border-white/15 bg-[#121214]/95 p-1.5 font-sans text-xs shadow-2xl backdrop-blur-md"
         >
-          <ComboboxEmpty className="text-muted-foreground py-3 text-center font-mono text-xs">
+          <ComboboxEmpty className="text-muted-foreground py-3 text-center font-sans text-xs">
             No tags found.
           </ComboboxEmpty>
-          <ComboboxList className="no-scrollbar max-h-60 overflow-y-auto p-1 font-mono text-xs">
+          <ComboboxList className="no-scrollbar max-h-60 overflow-y-auto p-1 font-sans text-xs">
             {(item: string) => {
               const tagObj = tagMap.get(item);
               return (
                 <ComboboxItem
                   key={item}
                   value={item}
-                  className="cursor-pointer gap-2 rounded-[14px] py-2 pr-8 pl-3 font-mono text-xs transition-colors hover:bg-white/10"
+                  className="cursor-pointer gap-2 rounded-[14px] py-2 pr-8 pl-3 font-sans text-xs transition-colors hover:bg-white/10"
                 >
                   <TagIcon className="text-muted-foreground size-3.5 shrink-0" />
                   <span className="flex-1 truncate">#{item}</span>

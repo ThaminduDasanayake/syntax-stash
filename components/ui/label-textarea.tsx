@@ -293,7 +293,7 @@ export function LabelTextarea({
           ref={labRef}
           htmlFor={id}
           className={cn(
-            "pointer-events-none absolute origin-left font-mono text-xs font-bold tracking-tight whitespace-pre uppercase transition-[transform,color] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
+            "pointer-events-none absolute origin-left font-sans text-xs font-bold tracking-tight whitespace-pre uppercase transition-[transform,color] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
             focus
               ? "text-primary font-bold"
               : up
@@ -336,7 +336,7 @@ export function LabelTextarea({
           id={id}
           required={required}
           className={cn(
-            "absolute inset-0 w-full resize-none rounded-[inherit] border-0 bg-transparent font-mono text-xs leading-relaxed tracking-tight transition-[color] duration-200 outline-none sm:text-sm",
+            "absolute inset-0 w-full resize-none rounded-[inherit] border-0 bg-transparent font-sans text-xs leading-relaxed tracking-tight transition-[color] duration-200 outline-none sm:text-sm",
             isDark
               ? "text-white placeholder:text-white/20"
               : "text-zinc-900 placeholder:text-zinc-400",
@@ -367,7 +367,7 @@ export function LabelTextarea({
         {hasCount && (
           <div
             className={cn(
-              "pointer-events-none absolute right-4 bottom-2.5 font-mono text-[10px] tracking-wider transition-opacity duration-200",
+              "pointer-events-none absolute right-4 bottom-2.5 font-sans text-[10px] tracking-wider transition-opacity duration-200",
               maxLength && currentValue.length >= maxLength * 0.95
                 ? "text-destructive font-bold"
                 : isDark

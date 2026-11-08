@@ -265,7 +265,7 @@ export function ConfirmEditDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="border-line bg-paper flex max-h-[85vh] max-w-2xl flex-col gap-0 overflow-hidden p-0 font-mono text-xs sm:max-w-2xl">
+      <DialogContent className="border-line bg-paper flex max-h-[85vh] max-w-2xl flex-col gap-0 overflow-hidden p-0 font-sans text-xs sm:max-w-2xl">
         {/* Pinned Header */}
         <div className="border-line shrink-0 border-b-[1.5px] p-6 pb-4">
           <DialogHeader>
@@ -406,7 +406,7 @@ export function ConfirmEditDialog({
                         </div>
                       ) : (
                         /* Text / Prose / Descriptions: Inline Word-level Diff */
-                        <div className="border-line bg-surface/80 rounded border-[1.5px] p-2.5 font-mono text-xs leading-relaxed wrap-break-word">
+                        <div className="border-line bg-surface/80 rounded border-[1.5px] p-2.5 font-sans text-xs leading-relaxed wrap-break-word">
                           {wordTokens && wordTokens.length > 0 ? (
                             wordTokens.map((token, tIdx) => {
                               if (token.type === "added") {
@@ -477,7 +477,7 @@ export function ConfirmEditDialog({
                 type="button"
                 variant="outline"
                 onClick={() => onOpenChange(false)}
-                className="border-line hover:bg-surface font-mono text-xs uppercase"
+                className="border-line hover:bg-surface font-sans text-xs uppercase"
               >
                 <XIcon className="mr-1 size-3.5" />
                 <span>Close</span>

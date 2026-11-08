@@ -101,7 +101,7 @@ function SubmittedDataBanner({
   const hasContent = Boolean(value?.trim() || display);
 
   return (
-    <div className="border-line/60 bg-muted/30 flex items-center justify-between gap-2 rounded border px-3 py-1.5 font-mono text-xs">
+    <div className="border-line/60 bg-muted/30 flex items-center justify-between gap-2 rounded border px-3 py-1.5 font-sans text-xs">
       <div className="flex items-center gap-2 truncate">
         <span className="text-muted-foreground shrink-0 text-[10px] font-bold tracking-wider uppercase">
           {label || "Submitted"}:
@@ -498,7 +498,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
   };
 
   return (
-    <div className="mx-auto max-w-6xl space-y-8 font-mono text-xs">
+    <div className="mx-auto max-w-6xl space-y-8 font-sans text-xs">
       {/* Header with Navigation & Quick Actions */}
       <div className="border-line flex flex-col gap-4 border-b-[1.5px] pb-6 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1">
@@ -533,7 +533,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
               {statusConfig.label}
             </span>
           </div>
-          <p className="text-muted-foreground font-mono text-xs">
+          <p className="text-muted-foreground font-sans text-xs">
             Submitted by{" "}
             <span className="text-foreground font-semibold">
               {sub.submitterName || sub.submitterEmail || "Anonymous"}

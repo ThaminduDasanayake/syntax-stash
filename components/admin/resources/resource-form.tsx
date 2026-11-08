@@ -212,7 +212,7 @@ function ResourceFormContent({ initialData, mode = "create" }: ResourceFormProps
     : true;
 
   return (
-    <div className="mx-auto max-w-6xl space-y-8 font-mono text-xs">
+    <div className="mx-auto max-w-6xl space-y-8 font-sans text-xs">
       {/* Header with Navigation */}
       <div className="border-line border-b-[1.5px] pb-6">
         <div className="space-y-1">
@@ -243,7 +243,7 @@ function ResourceFormContent({ initialData, mode = "create" }: ResourceFormProps
               "Add New Resource to Catalog"
             )}
           </h1>
-          <p className="text-muted-foreground font-mono text-xs">
+          <p className="text-muted-foreground font-sans text-xs">
             {isEdit
               ? "Update resource details, category assignment, author attributions, and media assets."
               : "Create and publish a new verified resource directly into the live Syntax Stash catalog."}
@@ -266,7 +266,7 @@ function ResourceFormContent({ initialData, mode = "create" }: ResourceFormProps
 
       {/* Sticky Bottom Action Bar */}
       <div className="border-line bg-background/95 sticky bottom-0 z-10 flex items-center justify-between border-t-[1.5px] py-4 backdrop-blur-sm">
-        <div className="text-muted-foreground flex items-center gap-2 font-mono text-xs">
+        <div className="text-muted-foreground flex items-center gap-2 font-sans text-xs">
           {isEdit ? (
             hasChanges ? (
               <span className="font-bold text-amber-500">• Unsaved changes pending</span>
@@ -357,7 +357,7 @@ export function ResourceForm(props: ResourceFormProps) {
   return (
     <Suspense
       fallback={
-        <div className="border-line flex h-64 items-center justify-center border-[1.5px] p-8 font-mono text-xs">
+        <div className="border-line flex h-64 items-center justify-center border-[1.5px] p-8 font-sans text-xs">
           <div className="text-muted-foreground flex items-center gap-2">
             <CircleNotchIcon className="size-4 animate-spin" />
             <span>Loading editor...</span>
