@@ -243,7 +243,7 @@ export function AuthorCombobox({
   }, [suffix]);
 
   // Label width measurement for notch calculation
-  const [lw, setLw] = useState(() => Math.max(36, displayLabel.length * 9));
+  const [lw, setLw] = useState(() => Math.max(30, displayLabel.length * 8.5));
   const labelNodeRef = useRef<HTMLLabelElement | null>(null);
 
   const labRef = useCallback((node: HTMLLabelElement | null) => {
@@ -347,7 +347,7 @@ export function AuthorCombobox({
   const W = Math.round(measuredWidth || 280);
   const H = Math.round(measuredHeight || propH);
   const r = clamp(corner, 0, Math.min(W / 2, propH / 2));
-  const S = 0.78; // Lifted label scale factor
+  const S = 0.8; // Lifted label scale factor
   const IN = 0.75; // Half-stroke inset to prevent SVG clipping
 
   /* ── Notch Geometry ── */
@@ -478,7 +478,7 @@ export function AuthorCombobox({
             ref={labRef}
             htmlFor={id}
             className={cn(
-              "pointer-events-none absolute top-1/2 origin-left font-sans text-[16px] font-normal leading-none tracking-[-0.01em] whitespace-pre transition-[transform,color] duration-420 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
+              "pointer-events-none absolute top-1/2 origin-left font-sans text-sm font-normal leading-none tracking-tight whitespace-pre transition-[transform,color] duration-420 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
               focus
                 ? isDark
                   ? "text-white"
@@ -494,7 +494,7 @@ export function AuthorCombobox({
             style={{
               left: lx,
               transform: up
-                ? `translateY(-50%) translateY(-${Math.round(propH / 2)}px) scale(0.78)`
+                ? `translateY(-50%) translateY(-${Math.round(propH / 2)}px) scale(0.8)`
                 : "translateY(-50%)",
             }}
           >
@@ -505,7 +505,7 @@ export function AuthorCombobox({
                   key={i}
                   className={cn(
                     "inline-block motion-reduce:animate-none",
-                    isAsterisk ? "text-destructive ml-0.5 font-bold" : "",
+                    isAsterisk ? "text-destructive/80 ml-1 font-normal text-xs" : "",
                     focus ? "animate-[lbi-hop_460ms_cubic-bezier(0.3,0.7,0.3,1)_both]" : "",
                   )}
                   style={{ animationDelay: `${i * 24}ms` }}

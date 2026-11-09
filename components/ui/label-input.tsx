@@ -101,7 +101,7 @@ export function LabelInput({
 
   const W = Math.round(propWidth || measuredWidth || 280);
   const r = clamp(corner, 0, H / 2);
-  const S = 0.78; // Lifted label scale factor
+  const S = 0.8; // Lifted label scale factor
   const IN = 0.75; // Half-stroke inset to prevent SVG clipping
 
   const [focus, setFocus] = useState(false);
@@ -120,7 +120,7 @@ export function LabelInput({
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   // Measure the rendered label width to calculate the exact top border notch
-  const [lw, setLw] = useState(() => Math.max(36, displayLabel.length * 10));
+  const [lw, setLw] = useState(() => Math.max(30, displayLabel.length * 8.5));
   const labelNodeRef = useRef<HTMLLabelElement | null>(null);
 
   // Measure optional prefix width
@@ -320,7 +320,7 @@ export function LabelInput({
           ref={labRef}
           htmlFor={id}
           className={cn(
-            "absolute top-1/2 origin-left cursor-text font-sans text-[16px] font-normal leading-none tracking-[-0.01em] whitespace-pre transition-[transform,color] duration-420 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
+            "absolute top-1/2 origin-left cursor-text font-sans text-sm font-normal leading-none tracking-tight whitespace-pre transition-[transform,color] duration-420 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
             focus
               ? isDark
                 ? "text-white"
@@ -336,7 +336,7 @@ export function LabelInput({
           style={{
             left: up ? lx : prefix ? lx + prefixWidth + 8 : lx,
             transform: up
-              ? `translateY(-50%) translateY(-${Math.round(H / 2)}px) scale(0.78)`
+              ? `translateY(-50%) translateY(-${Math.round(H / 2)}px) scale(0.8)`
               : "translateY(-50%)",
           }}
         >
@@ -347,7 +347,7 @@ export function LabelInput({
                 key={i}
                 className={cn(
                   "inline-block motion-reduce:animate-none",
-                  isAsterisk ? "text-destructive ml-0.5 font-bold" : "",
+                  isAsterisk ? "text-destructive/80 ml-1 font-normal text-xs" : "",
                   focus ? "animate-[lbi-hop_460ms_cubic-bezier(0.3,0.7,0.3,1)_both]" : "",
                 )}
                 style={{ animationDelay: `${i * 24}ms` }}
