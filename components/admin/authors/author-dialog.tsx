@@ -269,13 +269,13 @@ function AuthorDialogInner({
 
   return (
     <>
-      <DialogContent className="border-border/60 bg-paper/95 text-popover-foreground flex max-h-[85vh] max-w-2xl flex-col gap-0 overflow-hidden rounded-[28px] p-0 font-sans text-xs shadow-2xl backdrop-blur-xl sm:max-w-2xl">
-        <div className="border-line/60 shrink-0 border-b-[1.5px] p-6 pb-4">
+      <DialogContent className="border-border/60 bg-paper/95 text-popover-foreground flex max-h-[96vh] max-w-2xl flex-col gap-0 overflow-hidden rounded-[28px] p-0 font-sans text-xs shadow-2xl backdrop-blur-xl sm:max-h-[94vh] sm:max-w-2xl">
+        <div className="border-line/60 shrink-0 border-b-[1.5px] px-6 py-3.5">
           <DialogHeader>
-            <DialogTitle className="text-foreground text-base font-bold uppercase">
+            <DialogTitle className="text-foreground text-sm font-bold uppercase sm:text-base">
               {isEdit ? `Edit Creator: ${author?.name || formData.name}` : "Create New Author"}
             </DialogTitle>
-            <DialogDescription className="text-muted-foreground text-xs">
+            <DialogDescription className="text-muted-foreground text-[11px]">
               {isEdit
                 ? "Update creator profile, social links, and author slug."
                 : "Add a verified creator profile with social handles and personal website."}
@@ -284,11 +284,12 @@ function AuthorDialogInner({
         </div>
 
         <form onSubmit={handleSubmit} className="flex min-h-0 flex-1 flex-col">
-          <div className="flex-1 space-y-4 overflow-y-auto p-6 text-xs">
+          <div className="scrollbar-hide flex-1 space-y-3 overflow-y-auto px-6 py-4 text-xs">
             {/* Row 1: Author Name and Slug in 2-column grid */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {/* Author Name */}
               <LabelInput
+                height={44}
                 label="Author Name"
                 placeholder="e.g. Lee Robinson or Vercel"
                 value={formData.name}
@@ -299,6 +300,8 @@ function AuthorDialogInner({
 
               {/* Author Slug Identifier */}
               <LabelInput
+                height={44}
+                mono
                 label="Slug Identifier"
                 placeholder="e.g. lee-robinson"
                 value={formData.slug}
@@ -345,14 +348,16 @@ function AuthorDialogInner({
             )}
 
             {/* Section 2: Social Profiles & Links (Single-column vertical stack) */}
-            <div className="border-line/60 border-t-[1.5px] pt-4">
-              <span className="text-muted-foreground mb-3 block px-1 text-[10px] font-bold tracking-wider uppercase">
+            <div className="border-line/60 border-t-[1.5px] pt-2.5">
+              <span className="text-muted-foreground mb-2 block px-1 text-[10px] font-bold tracking-wider uppercase">
                 Social Profiles & Links (Optional)
               </span>
 
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-2.5">
                 {/* Website / Portfolio */}
                 <LabelInput
+                  height={44}
+                  type="url"
                   label="Website / Portfolio"
                   placeholder="https://example.com"
                   value={formData.website}
@@ -363,6 +368,8 @@ function AuthorDialogInner({
 
                 {/* GitHub */}
                 <LabelInput
+                  height={44}
+                  type="url"
                   label="GitHub"
                   placeholder="username or https://github.com/..."
                   value={formData.github}
@@ -381,6 +388,8 @@ function AuthorDialogInner({
 
                 {/* Twitter / X */}
                 <LabelInput
+                  height={44}
+                  type="url"
                   label="Twitter / X"
                   placeholder="@handle or https://x.com/..."
                   value={formData.twitter}
@@ -391,6 +400,8 @@ function AuthorDialogInner({
 
                 {/* LinkedIn */}
                 <LabelInput
+                  height={44}
+                  type="url"
                   label="LinkedIn"
                   placeholder="username or https://linkedin.com/in/..."
                   value={formData.linkedin}
@@ -409,6 +420,8 @@ function AuthorDialogInner({
 
                 {/* YouTube */}
                 <LabelInput
+                  height={44}
+                  type="url"
                   label="YouTube Channel"
                   placeholder="https://youtube.com/@channel"
                   value={formData.youtube}
@@ -427,6 +440,8 @@ function AuthorDialogInner({
 
                 {/* Blog */}
                 <LabelInput
+                  height={44}
+                  type="url"
                   label="Blog URL"
                   placeholder="https://example.com/blog"
                   value={formData.blog}
@@ -438,7 +453,7 @@ function AuthorDialogInner({
             </div>
           </div>
 
-          <div className="border-line bg-surface/30 shrink-0 border-t-[1.5px] p-4 sm:px-6">
+          <div className="border-line bg-surface/30 shrink-0 border-t-[1.5px] px-6 py-3.5">
             <DialogFormActions
               onCancel={() => onOpenChange(false)}
               isWorking={isWorking}
