@@ -344,13 +344,13 @@ function AuthorDialogInner({
               />
             )}
 
-            {/* Section 2: Social Profiles & Links (2-column responsive grid) */}
+            {/* Section 2: Social Profiles & Links (Single-column vertical stack) */}
             <div className="border-line/60 border-t-[1.5px] pt-4">
               <span className="text-muted-foreground mb-3 block px-1 text-[10px] font-bold tracking-wider uppercase">
                 Social Profiles & Links (Optional)
               </span>
 
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="flex flex-col gap-4">
                 {/* Website / Portfolio */}
                 <LabelInput
                   label="Website / Portfolio"
