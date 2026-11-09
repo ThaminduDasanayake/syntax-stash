@@ -269,7 +269,7 @@ function AuthorDialogInner({
 
   return (
     <>
-      <DialogContent className="border-border/60 bg-paper/95 text-popover-foreground flex max-h-[85vh] max-w-2xl flex-col gap-0 overflow-hidden rounded-[28px] p-0 font-mono text-xs shadow-2xl backdrop-blur-xl sm:max-w-2xl">
+      <DialogContent className="border-border/60 bg-paper/95 text-popover-foreground flex max-h-[85vh] max-w-2xl flex-col gap-0 overflow-hidden rounded-[28px] p-0 font-sans text-xs shadow-2xl backdrop-blur-xl sm:max-w-2xl">
         <div className="border-line/60 shrink-0 border-b-[1.5px] p-6 pb-4">
           <DialogHeader>
             <DialogTitle className="text-foreground text-base font-bold uppercase">
@@ -320,7 +320,7 @@ function AuthorDialogInner({
                           setFormData((prev) => ({ ...prev, slug: slugifyAuthor(prev.name) }));
                         }
                       }}
-                      className="text-primary hover:bg-primary/10 h-6 rounded-full px-2 font-mono text-[10px] font-bold uppercase transition-colors"
+                      className="text-primary hover:bg-primary/10 h-6 rounded-full px-2 font-sans text-[10px] font-bold uppercase transition-colors"
                     >
                       {autoSlug ? "Manual" : "Auto"}
                     </Button>

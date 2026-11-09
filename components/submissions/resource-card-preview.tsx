@@ -43,7 +43,7 @@ export function ResourceCardPreview({
   const debouncedFavicon = useDebounce(favicon, 400);
 
   return (
-    <div className={cn("border-line bg-paper/50 border-[1.5px] p-5 font-mono text-xs", className)}>
+    <div className={cn("border-line bg-paper/50 border-[1.5px] p-5 font-sans text-xs", className)}>
       <div className="border-line mb-4 flex items-center justify-between border-b-[1.5px] pb-3">
         <span className="text-foreground font-bold tracking-wider uppercase">Card Preview</span>
       </div>

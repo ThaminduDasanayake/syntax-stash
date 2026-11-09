@@ -607,7 +607,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
           {/* Section 1: Resource URL */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+              <Label className="text-foreground flex items-center gap-1.5 font-sans text-xs font-bold uppercase">
                 <span>Resource URL</span>
                 <span className="text-destructive">*</span>
                 <FieldCheckmark
@@ -620,7 +620,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
                 size="sm"
                 onClick={handleAutoDetect}
                 disabled={isDetecting || (!editForm.url?.trim() && !sub.url?.trim())}
-                className="h-7 gap-1.5 font-mono text-[10px] font-bold uppercase"
+                className="h-7 gap-1.5 font-sans text-[10px] font-bold uppercase"
               >
                 {isDetecting ? (
                   <CircleNotchIcon weight="bold" className="size-3.5 animate-spin" />
@@ -646,7 +646,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
                 onChange={(e) => setEditForm((prev) => ({ ...prev, url: e.target.value }))}
                 placeholder="https://example.com"
                 containerClassName="h-9"
-                className="font-mono text-xs"
+                className="font-sans text-xs"
                 required
               />
             </div>
@@ -657,7 +657,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
             {/* Title */}
             <div className="space-y-2">
               <div className="flex flex-wrap items-center justify-between gap-1.5">
-                <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                <Label className="text-foreground flex items-center gap-1.5 font-sans text-xs font-bold uppercase">
                   <span>Title</span>
                   <span className="text-destructive">*</span>
                   <FieldCheckmark checked={Boolean(editForm.title?.trim())} />
@@ -688,7 +688,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
                   onChange={(e) => setEditForm((prev) => ({ ...prev, title: e.target.value }))}
                   placeholder="e.g. Radix UI"
                   containerClassName="h-9"
-                  className="font-mono text-xs"
+                  className="font-sans text-xs"
                   required
                 />
               </div>
@@ -696,7 +696,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
 
             {/* Category */}
             <div className="space-y-2">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+              <Label className="text-foreground flex items-center gap-1.5 font-sans text-xs font-bold uppercase">
                 <span>Category</span>
                 <span className="text-destructive">*</span>
                 <FieldCheckmark checked={Boolean(editForm.category?.trim())} />
@@ -714,7 +714,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
                   value={editForm.category || ""}
                   onValueChange={(val) => setEditForm((prev) => ({ ...prev, category: val }))}
                   options={categoryOptions}
-                  triggerClassName="h-9 font-mono text-xs"
+                  triggerClassName="h-9 font-sans text-xs"
                 />
               </div>
             </div>
@@ -723,7 +723,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
           {/* Subtitle / Tagline */}
           <div className="space-y-2">
             <div className="flex flex-wrap items-center justify-between gap-1.5">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+              <Label className="text-foreground flex items-center gap-1.5 font-sans text-xs font-bold uppercase">
                 <span>Subtitle / Tagline (Optional)</span>
                 <FieldCheckmark checked={Boolean(editForm.subtitle?.trim())} />
               </Label>
@@ -753,7 +753,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
                 onChange={(e) => setEditForm((prev) => ({ ...prev, subtitle: e.target.value }))}
                 placeholder="e.g. Unstyled, accessible React UI components"
                 containerClassName="h-9"
-                className="font-mono text-xs"
+                className="font-sans text-xs"
               />
             </div>
           </div>
@@ -761,7 +761,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
           {/* Section 3: Description */}
           <div className="space-y-2">
             <div className="flex flex-wrap items-center justify-between gap-1.5">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+              <Label className="text-foreground flex items-center gap-1.5 font-sans text-xs font-bold uppercase">
                 <span>Description</span>
                 <span className="text-destructive">*</span>
                 <FieldCheckmark checked={Boolean(editForm.description?.trim())} />
@@ -799,7 +799,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
           {/* Section 4: Visuals & Media Styling */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+              <Label className="text-foreground flex items-center gap-1.5 font-sans text-xs font-bold uppercase">
                 <span>Visuals & Media Styling</span>
                 <FieldCheckmark checked={Boolean(editForm.favicon || editForm.ogImage)} />
               </Label>
@@ -887,7 +887,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
           {/* Section 5: Creator Attribution (Submitted Cards + Copy + Manual Selector) */}
           <div className="space-y-4">
             <div>
-              <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+              <Label className="text-foreground flex items-center gap-1.5 font-sans text-xs font-bold uppercase">
                 <UserIcon className="text-primary size-4" />
                 <span>Submitted Author Details</span>
               </Label>
@@ -1023,7 +1023,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
 
             {/* Target Resource Author Selector */}
             <div className="border-line/60 border-t pt-3">
-              <Label className="text-foreground mb-1.5 block font-mono text-xs font-bold uppercase">
+              <Label className="text-foreground mb-1.5 block font-sans text-xs font-bold uppercase">
                 Assign Catalog Author(s) to Resource
               </Label>
               <AuthorSocialFields
@@ -1050,7 +1050,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
           {/* Section 6: Additional Details & Tags */}
           <div className="border-line space-y-4 border-t pt-5">
             <div>
-              <h4 className="text-foreground font-mono text-xs font-bold tracking-tight uppercase">
+              <h4 className="text-foreground font-sans text-xs font-bold tracking-tight uppercase">
                 Additional Details & Tags
               </h4>
               <p className="text-muted-foreground text-[11px]">
@@ -1062,7 +1062,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
               {/* GitHub Repo */}
               <div className="space-y-2">
                 <div className="flex flex-wrap items-center justify-between gap-1.5">
-                  <Label className="text-foreground flex items-center gap-1.5 font-mono text-xs font-bold uppercase">
+                  <Label className="text-foreground flex items-center gap-1.5 font-sans text-xs font-bold uppercase">
                     <span>GitHub Repository (Optional)</span>
                     <FieldCheckmark checked={Boolean(editForm.github?.trim())} />
                   </Label>
@@ -1093,7 +1093,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
                     onChange={(e) => setEditForm((prev) => ({ ...prev, github: e.target.value }))}
                     placeholder="https://github.com/owner/repo"
                     containerClassName="h-9"
-                    className="font-mono text-xs"
+                    className="font-sans text-xs"
                   />
                 </div>
               </div>
@@ -1121,7 +1121,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
             {/* Moderation Status & Admin Notes */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                <Label className="text-foreground font-sans text-xs font-bold uppercase">
                   Moderation Status
                 </Label>
                 <div className="h-9">
@@ -1134,13 +1134,13 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
                       }))
                     }
                     options={STATUS_OPTIONS}
-                    triggerClassName="h-9 font-mono text-xs"
+                    triggerClassName="h-9 font-sans text-xs"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label className="text-foreground font-mono text-xs font-bold uppercase">
+                <Label className="text-foreground font-sans text-xs font-bold uppercase">
                   Internal Admin Notes
                 </Label>
                 <div className="h-9">
@@ -1151,7 +1151,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
                     }
                     placeholder="Notes about this review..."
                     containerClassName="h-9"
-                    className="font-mono text-xs"
+                    className="font-sans text-xs"
                   />
                 </div>
               </div>
@@ -1225,7 +1225,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
         <div className="space-y-6 lg:col-span-5">
           <div className="sticky top-24 space-y-6">
             <div className="border-line bg-paper/40 border-[1.5px] p-5 shadow-xs">
-              <h3 className="text-foreground mb-3 font-mono text-xs font-bold tracking-wider uppercase">
+              <h3 className="text-foreground mb-3 font-sans text-xs font-bold tracking-wider uppercase">
                 Live Resource Card Preview
               </h3>
               <p className="text-muted-foreground mb-4 text-[11px]">
