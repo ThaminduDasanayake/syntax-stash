@@ -3,7 +3,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function SubmissionsLoading() {
   return (
-    <div className="container mx-auto max-w-5xl px-4 pt-28 pb-10 sm:pt-32 sm:pb-12" aria-busy="true">
+    <div
+      className="container mx-auto max-w-5xl px-4 pt-28 pb-10 sm:pt-32 sm:pb-12"
+      aria-busy="true"
+    >
       {/* Header Skeleton */}
       <div className="border-line/60 mb-8 border-b-[1.5px] pb-6 font-mono">
         <div className="flex flex-wrap items-center justify-between gap-3">

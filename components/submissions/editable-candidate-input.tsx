@@ -275,7 +275,7 @@ export function EditableCandidateInput({
           ref={labRef}
           htmlFor={id}
           className={cn(
-            "pointer-events-none absolute top-1/2 origin-left font-sans text-sm font-normal leading-none tracking-tight whitespace-pre transition-[transform,color,left] duration-420 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
+            "pointer-events-none absolute top-1/2 origin-left font-sans text-sm leading-none font-normal tracking-tight whitespace-pre transition-[transform,color,left] duration-420 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
             focus
               ? isDark
                 ? "text-white"
@@ -302,7 +302,7 @@ export function EditableCandidateInput({
                 key={i}
                 className={cn(
                   "inline-block motion-reduce:animate-none",
-                  isAsterisk ? "text-destructive/80 ml-1 font-normal text-xs" : "",
+                  isAsterisk ? "text-destructive/80 ml-1 text-xs font-normal" : "",
                   focus ? "animate-[lbi-hop_460ms_cubic-bezier(0.3,0.7,0.3,1)_both]" : "",
                 )}
                 style={{ animationDelay: `${i * 24}ms` }}
