@@ -112,7 +112,11 @@ function SubmittedDataBanner({
           <span
             className={cn(
               "truncate text-[11px]",
-              hasContent ? "text-foreground font-medium" : "text-muted-foreground italic",
+              hasContent
+                ? value?.startsWith("http")
+                  ? "text-foreground font-mono font-medium"
+                  : "text-foreground font-medium"
+                : "text-muted-foreground italic",
             )}
           >
             {value || "None provided"}
@@ -646,7 +650,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
                 onChange={(e) => setEditForm((prev) => ({ ...prev, url: e.target.value }))}
                 placeholder="https://example.com"
                 containerClassName="h-9"
-                className="font-sans text-xs"
+                className="font-mono text-xs"
                 required
               />
             </div>
@@ -1093,7 +1097,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
                     onChange={(e) => setEditForm((prev) => ({ ...prev, github: e.target.value }))}
                     placeholder="https://github.com/owner/repo"
                     containerClassName="h-9"
-                    className="font-sans text-xs"
+                    className="font-mono text-xs"
                   />
                 </div>
               </div>

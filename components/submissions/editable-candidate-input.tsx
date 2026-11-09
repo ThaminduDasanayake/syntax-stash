@@ -275,7 +275,7 @@ export function EditableCandidateInput({
           ref={labRef}
           htmlFor={id}
           className={cn(
-            "pointer-events-none absolute top-1/2 origin-left font-mono text-xs font-bold tracking-tight whitespace-pre uppercase transition-[transform,color,left] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
+            "pointer-events-none absolute top-1/2 origin-left font-sans text-xs font-bold tracking-tight whitespace-pre uppercase transition-[transform,color,left] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
             focus
               ? "text-primary font-bold"
               : up
@@ -399,7 +399,7 @@ export function EditableCandidateInput({
 
               <PopoverContent
                 align="end"
-                className="border-border/80 w-[calc(100vw-2rem)] max-w-lg rounded-[20px] bg-[#18181b]/95 p-2.5 font-mono text-xs shadow-2xl shadow-black/70 backdrop-blur-xl sm:w-[480px]"
+                className="border-border/80 w-[calc(100vw-2rem)] max-w-lg rounded-[20px] bg-[#18181b]/95 p-2.5 font-sans text-xs shadow-2xl shadow-black/70 backdrop-blur-xl sm:w-[480px]"
               >
                 <div className="border-border/60 text-muted-foreground flex items-center justify-between border-b-[1.5px] px-2 py-1.5 text-[10px] font-bold tracking-wider uppercase">
                   <span>Detected Options ({options.length})</span>
@@ -464,7 +464,7 @@ export function EditableCandidateInput({
 
                           <span
                             title={option.url}
-                            className="text-muted-foreground hover:text-foreground block text-[10px] leading-relaxed break-all"
+                            className="text-muted-foreground hover:text-foreground block font-mono text-[10px] leading-relaxed break-all"
                           >
                             {option.url}
                           </span>

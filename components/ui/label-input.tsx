@@ -373,7 +373,8 @@ export function LabelInput({
           id={id}
           required={required}
           className={cn(
-            "absolute inset-0 h-full w-full rounded-[inherit] border-0 bg-transparent font-sans text-xs tracking-tight transition-[filter,opacity] duration-260 outline-none sm:text-sm",
+            "absolute inset-0 h-full w-full rounded-[inherit] border-0 bg-transparent text-xs tracking-tight transition-[filter,opacity] duration-260 outline-none sm:text-sm",
+            propType === "url" ? "font-mono" : "font-sans",
             isDark
               ? "text-white placeholder:text-white/20"
               : "text-zinc-900 placeholder:text-zinc-400",
