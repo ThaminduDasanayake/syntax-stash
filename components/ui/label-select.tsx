@@ -240,7 +240,7 @@ export function LabelSelect({
               strokeDasharray="1 2"
               strokeDashoffset={up ? -1 : 0}
               className={cn(
-                "transition-[stroke-dashoffset,stroke,stroke-width] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:duration-160",
+                "transition-[stroke-dashoffset,stroke,stroke-width] duration-420 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:duration-160",
                 ringStroke,
               )}
             />
@@ -255,7 +255,7 @@ export function LabelSelect({
               strokeDasharray="1 2"
               strokeDashoffset={up ? -1 : 0}
               className={cn(
-                "transition-[stroke-dashoffset,stroke,stroke-width] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:duration-160",
+                "transition-[stroke-dashoffset,stroke,stroke-width] duration-420 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:duration-160",
                 ringStroke,
               )}
             />
@@ -266,15 +266,17 @@ export function LabelSelect({
             key={displayLabel}
             ref={labRef}
             className={cn(
-              "pointer-events-none absolute top-1/2 origin-left font-sans text-xs font-bold tracking-tight whitespace-pre uppercase transition-[transform,color] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
+              "pointer-events-none absolute top-1/2 origin-left font-sans text-[16px] font-normal leading-none tracking-[-0.01em] whitespace-pre transition-[transform,color] duration-420 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
               focus
-                ? "text-primary font-bold"
+                ? isDark
+                  ? "text-white"
+                  : "text-zinc-900"
                 : up
                   ? isDark
-                    ? "text-white/70"
+                    ? "text-zinc-400"
                     : "text-zinc-600"
                   : isDark
-                    ? "text-white/40"
+                    ? "text-zinc-500"
                     : "text-zinc-400",
             )}
             style={{
@@ -309,7 +311,7 @@ export function LabelSelect({
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             className={cn(
-              "relative flex h-full w-full items-center justify-between rounded-[inherit] border-0 bg-transparent font-sans text-xs tracking-tight transition-[filter,opacity] duration-260 outline-none select-none disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm",
+              "relative flex h-full w-full items-center justify-between rounded-[inherit] border-0 bg-transparent font-sans text-[16px] tracking-tight transition-[filter,opacity] duration-260 outline-none select-none disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm",
               isDark
                 ? "text-white data-placeholder:text-white/30"
                 : "text-zinc-900 data-placeholder:text-zinc-400",

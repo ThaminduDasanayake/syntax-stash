@@ -120,7 +120,7 @@ export function LabelInput({
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   // Measure the rendered label width to calculate the exact top border notch
-  const [lw, setLw] = useState(() => Math.max(32, displayLabel.length * 9));
+  const [lw, setLw] = useState(() => Math.max(36, displayLabel.length * 10));
   const labelNodeRef = useRef<HTMLLabelElement | null>(null);
 
   // Measure optional prefix width
@@ -293,7 +293,7 @@ export function LabelInput({
             strokeDasharray="1 2"
             strokeDashoffset={up ? -1 : 0}
             className={cn(
-              "transition-[stroke-dashoffset,stroke,stroke-width] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:duration-160",
+              "transition-[stroke-dashoffset,stroke,stroke-width] duration-420 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:duration-160",
               ringStroke,
             )}
           />
@@ -308,7 +308,7 @@ export function LabelInput({
             strokeDasharray="1 2"
             strokeDashoffset={up ? -1 : 0}
             className={cn(
-              "transition-[stroke-dashoffset,stroke,stroke-width] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:duration-160",
+              "transition-[stroke-dashoffset,stroke,stroke-width] duration-420 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:duration-160",
               ringStroke,
             )}
           />
@@ -320,15 +320,17 @@ export function LabelInput({
           ref={labRef}
           htmlFor={id}
           className={cn(
-            "absolute top-1/2 origin-left cursor-text font-sans text-xs font-bold tracking-tight whitespace-pre uppercase transition-[transform,color] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
+            "absolute top-1/2 origin-left cursor-text font-sans text-[16px] font-normal leading-none tracking-[-0.01em] whitespace-pre transition-[transform,color] duration-420 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
             focus
-              ? "text-primary font-bold"
+              ? isDark
+                ? "text-white"
+                : "text-zinc-900"
               : up
                 ? isDark
-                  ? "text-white/70"
+                  ? "text-zinc-400"
                   : "text-zinc-600"
                 : isDark
-                  ? "text-white/40"
+                  ? "text-zinc-500"
                   : "text-zinc-400",
           )}
           style={{
@@ -373,7 +375,7 @@ export function LabelInput({
           id={id}
           required={required}
           className={cn(
-            "absolute inset-0 h-full w-full rounded-[inherit] border-0 bg-transparent text-xs tracking-tight transition-[filter,opacity] duration-260 outline-none sm:text-sm",
+            "absolute inset-0 h-full w-full rounded-[inherit] border-0 bg-transparent text-[16px] tracking-tight transition-[filter,opacity] duration-260 outline-none sm:text-sm",
             propType === "url" ? "font-mono" : "font-sans",
             isDark
               ? "text-white placeholder:text-white/20"
