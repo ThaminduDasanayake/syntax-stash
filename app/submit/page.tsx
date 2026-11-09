@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function SubmitPage() {
   return (
-    <div className="container mx-auto max-w-6xl px-4 pt-24 pb-8 sm:pt-28 sm:pb-12">
+    <div className="container mx-auto max-w-6xl px-4 pt-28 pb-10 sm:pt-32 sm:pb-12">
       {/* Header */}
       <div className="border-line/60 mb-10 border-b-[1.5px] pb-8 font-sans">
         <div className="text-primary flex items-center gap-2 text-xs font-bold tracking-widest uppercase">

@@ -76,7 +76,7 @@ export function LabelTextarea({
   const [measuredHeight, setMeasuredHeight] = useState(minHeight);
 
   // Measure label width for exact top border notch opening
-  const [lw, setLw] = useState(() => Math.max(36, displayLabel.length * 9));
+  const [lw, setLw] = useState(() => Math.max(30, displayLabel.length * 8.5));
 
   const labRef = useCallback((node: HTMLLabelElement | null) => {
     labelNodeRef.current = node;
@@ -119,7 +119,7 @@ export function LabelTextarea({
   const measuredWidth = propWidth || fluidWidth;
   const W = measuredWidth;
   const r = clamp(corner, 0, Math.min(W / 2, 80));
-  const S = 0.78; // Lifted label scale factor
+  const S = 0.8; // Lifted label scale factor
   const IN = 0.75; // Half-stroke inset to prevent SVG clipping
 
   /* ── Horizontal Inset Padding ───────────────────────────────
@@ -266,7 +266,7 @@ export function LabelTextarea({
             strokeDasharray="1 2"
             strokeDashoffset={up ? -1 : 0}
             className={cn(
-              "transition-[stroke-dashoffset,stroke,stroke-width] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:duration-160",
+              "transition-[stroke-dashoffset,stroke,stroke-width] duration-420 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:duration-160",
               ringStroke,
             )}
           />
@@ -281,7 +281,7 @@ export function LabelTextarea({
             strokeDasharray="1 2"
             strokeDashoffset={up ? -1 : 0}
             className={cn(
-              "transition-[stroke-dashoffset,stroke,stroke-width] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:duration-160",
+              "transition-[stroke-dashoffset,stroke,stroke-width] duration-420 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:duration-160",
               ringStroke,
             )}
           />
@@ -293,22 +293,24 @@ export function LabelTextarea({
           ref={labRef}
           htmlFor={id}
           className={cn(
-            "pointer-events-none absolute origin-left font-sans text-xs font-bold tracking-tight whitespace-pre uppercase transition-[transform,color] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
+            "pointer-events-none absolute origin-left font-sans text-sm font-normal leading-none tracking-tight whitespace-pre transition-[transform,color] duration-420 ease-[cubic-bezier(0.22,1,0.36,1)] select-none motion-reduce:duration-160",
             focus
-              ? "text-primary font-bold"
+              ? isDark
+                ? "text-white"
+                : "text-zinc-900"
               : up
                 ? isDark
-                  ? "text-white/70"
+                  ? "text-zinc-400"
                   : "text-zinc-600"
                 : isDark
-                  ? "text-white/40"
+                  ? "text-zinc-500"
                   : "text-zinc-400",
           )}
           style={{
             left: lx,
             top: 18,
             transform: up
-              ? "translateY(-18px) translateY(-10px) scale(0.78)"
+              ? "translateY(-18px) translateY(-10px) scale(0.8)"
               : "translateY(0) scale(1)",
           }}
         >
@@ -319,7 +321,7 @@ export function LabelTextarea({
                 key={i}
                 className={cn(
                   "inline-block motion-reduce:animate-none",
-                  isAsterisk ? "text-destructive ml-0.5 font-bold" : "",
+                  isAsterisk ? "text-destructive/80 ml-1 font-normal text-xs" : "",
                   focus ? "animate-[lbi-hop_460ms_cubic-bezier(0.3,0.7,0.3,1)_both]" : "",
                 )}
                 style={{ animationDelay: `${i * 24}ms` }}
@@ -336,7 +338,7 @@ export function LabelTextarea({
           id={id}
           required={required}
           className={cn(
-            "absolute inset-0 w-full resize-none rounded-[inherit] border-0 bg-transparent font-sans text-xs leading-relaxed tracking-tight transition-[color] duration-200 outline-none sm:text-sm",
+            "absolute inset-0 w-full resize-none rounded-[inherit] border-0 bg-transparent font-sans text-[16px] leading-relaxed tracking-tight transition-[color] duration-200 outline-none sm:text-sm",
             isDark
               ? "text-white placeholder:text-white/20"
               : "text-zinc-900 placeholder:text-zinc-400",
