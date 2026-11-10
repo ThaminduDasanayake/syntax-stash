@@ -170,33 +170,113 @@ function OgImagePreviewBanner({
   );
 }
 
+interface ToggleOption<T extends string> {
+  icon: React.ReactNode;
+  id: T;
+  label: string;
+  tooltip: string;
+}
+
 /* eslint-disable perfectionist/sort-arrays */
-const FIT_SHAPES = [
+const OG_FIT_OPTIONS: readonly ToggleOption<OgImageFitOption>[] = [
   {
-    id: "cover" as const,
+    id: "cover",
+    icon: (
+      <svg width={18} height={18} viewBox="0 0 18 18" aria-hidden="true">
+        <rect
+          x={1.5}
+          y={3.38}
+          width={15}
+          height={11.25}
+          rx={2}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={1.5}
+        />
+      </svg>
+    ),
     label: "Landscape, Fill / Cover (Default)",
-    mark: { h: 11.25, w: 15, x: 1.5, y: 3.38 },
     tooltip: "Fill / Cover (Default)",
   },
   {
-    id: "contain" as const,
+    id: "contain",
+    icon: (
+      <svg width={18} height={18} viewBox="0 0 18 18" aria-hidden="true">
+        <rect
+          x={2.5}
+          y={2.5}
+          width={13}
+          height={13}
+          rx={2}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={1.5}
+        />
+      </svg>
+    ),
     label: "Square, Contain (Full View)",
-    mark: { h: 13, w: 13, x: 2.5, y: 2.5 },
     tooltip: "Contain (Full View)",
   },
-] as const;
+];
+
+const ICON_BG_OPTIONS: readonly ToggleOption<IconColorOption>[] = [
+  {
+    id: "none",
+    icon: (
+      <CircleIcon
+        weight="fill"
+        className="size-4 shrink-0 rounded-full text-zinc-500/45 ring-1 ring-white/15"
+      />
+    ),
+    label: "No background",
+    tooltip: "No bg",
+  },
+  {
+    id: "dark",
+    icon: (
+      <CircleIcon
+        weight="fill"
+        className="size-4 shrink-0 rounded-full text-black ring-1 ring-white/25"
+      />
+    ),
+    label: "Black background",
+    tooltip: "Black",
+  },
+  {
+    id: "white",
+    icon: (
+      <CircleIcon
+        weight="fill"
+        className="size-4 shrink-0 rounded-full text-white ring-1 ring-black/15"
+      />
+    ),
+    label: "White background",
+    tooltip: "White",
+  },
+  {
+    id: "invert",
+    icon: <CircleHalfIcon weight="fill" className="size-4 shrink-0" />,
+    label: "Invert icon",
+    tooltip: "Invert",
+  },
+];
 /* eslint-enable perfectionist/sort-arrays */
 
-function OgFitToggle({
+function SegmentedIconToggle<T extends string>({
+  ariaLabel,
   disabled = false,
   onChange,
+  options,
   value,
 }: {
+  ariaLabel: string;
   disabled?: boolean;
-  onChange: (fit: OgImageFitOption) => void;
-  value: OgImageFitOption;
+  onChange: (value: T) => void;
+  options: readonly ToggleOption<T>[];
+  value: T;
 }) {
-  const at = value === "contain" ? 1 : 0;
+  const foundIdx = options.findIndex((o) => o.id === value);
+  const at = foundIdx !== -1 ? foundIdx : 0;
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -209,32 +289,34 @@ function OgFitToggle({
           : 0;
     if (!d) return;
     e.preventDefault();
-    const nextIdx = (at + d + FIT_SHAPES.length) % FIT_SHAPES.length;
-    onChange(FIT_SHAPES[nextIdx].id);
+    const nextIdx = (at + d + options.length) % options.length;
+    onChange(options[nextIdx].id);
     tabs.current[nextIdx]?.focus();
   };
 
   return (
     <div
       className={cn(
-        "relative grid grid-cols-[repeat(2,40px)] rounded-full bg-white/8 p-0.5 transition-colors duration-300",
+        "relative grid rounded-full bg-white/8 p-0.5 transition-colors duration-300",
         disabled && "pointer-events-none opacity-50",
       )}
+      style={{ gridTemplateColumns: `repeat(${options.length}, 40px)` }}
       role="radiogroup"
-      aria-label="Image fit and framing"
+      aria-label={ariaLabel}
       onKeyDown={handleKeyDown}
     >
       {/* Sliding thumb indicator */}
       <span
-        className="pointer-events-none absolute top-0.5 left-0.5 h-[calc(100%-4px)] w-[calc((100%-4px)/2)] rounded-full bg-zinc-800 shadow-[0_1px_3px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.08)] transition-colors duration-300 motion-reduce:transition-none"
+        className="pointer-events-none absolute top-0.5 left-0.5 h-[calc(100%-4px)] rounded-full bg-zinc-800 shadow-[0_1px_3px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.08)] transition-colors duration-300 motion-reduce:transition-none"
         aria-hidden="true"
         style={{
           transform: `translateX(${at * 100}%)`,
           transition: "transform 286ms cubic-bezier(0.22, 1, 0.36, 1)",
+          width: `calc((100% - 4px) / ${options.length})`,
         }}
       />
-      {FIT_SHAPES.map((s, i) => (
-        <Tooltip key={s.id}>
+      {options.map((opt, i) => (
+        <Tooltip key={opt.id}>
           <TooltipTrigger asChild>
             <button
               ref={(el) => {
@@ -245,26 +327,15 @@ function OgFitToggle({
               className="relative grid h-8 cursor-pointer place-items-center rounded-full border-0 bg-transparent p-0 text-zinc-400 transition-[color,transform] duration-160 ease-out hover:text-zinc-100 focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900 focus-visible:outline-none active:scale-96 aria-checked:text-zinc-100 motion-reduce:transition-none"
               role="radio"
               aria-checked={i === at}
-              aria-label={s.label}
+              aria-label={opt.label}
               tabIndex={i === at ? 0 : -1}
-              onClick={() => onChange(s.id)}
+              onClick={() => onChange(opt.id)}
             >
-              <svg width={18} height={18} viewBox="0 0 18 18" aria-hidden="true">
-                <rect
-                  x={s.mark.x}
-                  y={s.mark.y}
-                  width={s.mark.w}
-                  height={s.mark.h}
-                  rx={2}
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                />
-              </svg>
+              {opt.icon}
             </button>
           </TooltipTrigger>
           <TooltipContent side="top">
-            <p>{s.tooltip}</p>
+            <p>{opt.tooltip}</p>
           </TooltipContent>
         </Tooltip>
       ))}
@@ -357,109 +428,13 @@ export function MediaAssetFields({
                       <span className="text-muted-foreground font-sans text-[10px] font-bold tracking-wider uppercase">
                         Background / Color:
                       </span>
-                      <div className="border-line bg-surface/80 inline-flex items-center gap-0.5 rounded-[12px] border-[1.5px] p-0.5">
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <button
-                              type="button"
-                              onClick={() => onIconBgChange("none")}
-                              disabled={disabled}
-                              aria-label="No bg"
-                              className={cn(
-                                "grid size-7 cursor-pointer place-items-center rounded-[10px] transition-all",
-                                currentColor === "none"
-                                  ? "bg-primary text-primary-foreground shadow-xs"
-                                  : "text-muted-foreground hover:text-foreground",
-                              )}
-                            >
-                              <CircleIcon
-                                weight="fill"
-                                className={cn(
-                                  "size-4 shrink-0 rounded-full ring-1",
-                                  currentColor === "none"
-                                    ? "text-black/30 ring-black/20"
-                                    : "text-zinc-500/40 ring-white/15",
-                                )}
-                              />
-                            </button>
-                          </TooltipTrigger>
-                          <TooltipContent side="top">
-                            <p>No bg</p>
-                          </TooltipContent>
-                        </Tooltip>
-
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <button
-                              type="button"
-                              onClick={() => onIconBgChange("dark")}
-                              disabled={disabled}
-                              aria-label="Black"
-                              className={cn(
-                                "grid size-7 cursor-pointer place-items-center rounded-[10px] transition-all",
-                                currentColor === "dark"
-                                  ? "bg-primary text-primary-foreground shadow-xs"
-                                  : "text-muted-foreground hover:text-foreground",
-                              )}
-                            >
-                              <CircleIcon
-                                weight="fill"
-                                className="size-4 shrink-0 rounded-full text-black ring-1 ring-white/25"
-                              />
-                            </button>
-                          </TooltipTrigger>
-                          <TooltipContent side="top">
-                            <p>Black</p>
-                          </TooltipContent>
-                        </Tooltip>
-
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <button
-                              type="button"
-                              onClick={() => onIconBgChange("white")}
-                              disabled={disabled}
-                              aria-label="White"
-                              className={cn(
-                                "grid size-7 cursor-pointer place-items-center rounded-[10px] transition-all",
-                                currentColor === "white"
-                                  ? "bg-primary text-primary-foreground shadow-xs"
-                                  : "text-muted-foreground hover:text-foreground",
-                              )}
-                            >
-                              <CircleIcon
-                                weight="fill"
-                                className="size-4 shrink-0 rounded-full text-white ring-1 ring-black/15"
-                              />
-                            </button>
-                          </TooltipTrigger>
-                          <TooltipContent side="top">
-                            <p>White</p>
-                          </TooltipContent>
-                        </Tooltip>
-
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <button
-                              type="button"
-                              onClick={() => onIconBgChange("invert")}
-                              disabled={disabled}
-                              aria-label="Invert"
-                              className={cn(
-                                "grid size-7 cursor-pointer place-items-center rounded-[10px] transition-all",
-                                currentColor === "invert"
-                                  ? "bg-primary text-primary-foreground shadow-xs"
-                                  : "text-muted-foreground hover:text-foreground",
-                              )}
-                            >
-                              <CircleHalfIcon weight="fill" className="size-4 shrink-0" />
-                            </button>
-                          </TooltipTrigger>
-                          <TooltipContent side="top">
-                            <p>Invert</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </div>
+                      <SegmentedIconToggle
+                        ariaLabel="Favicon background color"
+                        options={ICON_BG_OPTIONS}
+                        value={currentColor}
+                        onChange={onIconBgChange}
+                        disabled={disabled}
+                      />
                     </div>
                   );
                 })()
@@ -551,7 +526,9 @@ export function MediaAssetFields({
                       </span>
                     </div>
                     <div className="ml-auto flex flex-wrap items-center gap-2">
-                      <OgFitToggle
+                      <SegmentedIconToggle
+                        ariaLabel="Image fit and framing"
+                        options={OG_FIT_OPTIONS}
                         value={currentFit}
                         onChange={handleFitChange}
                         disabled={disabled}
