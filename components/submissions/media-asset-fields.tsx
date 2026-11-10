@@ -1,6 +1,6 @@
 "use client";
 
-import { WarningCircleIcon } from "@phosphor-icons/react";
+import { CircleHalfIcon, CircleIcon, WarningCircleIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
 import { CloudinaryUploadButton } from "@/components/admin/shared/cloudinary-upload-button";
@@ -12,6 +12,7 @@ import {
   parseIconStyle,
   serializeIconStyle,
 } from "@/components/card-icon";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useDebounce } from "@/hooks/use-debounce";
 import {
   cn,
@@ -254,59 +255,108 @@ export function MediaAssetFields({
                       <span className="text-muted-foreground font-sans text-[10px] font-bold tracking-wider uppercase">
                         Background / Color:
                       </span>
-                      <div className="border-line bg-surface/80 inline-flex flex-wrap rounded-[12px] border-[1.5px] p-0.5 font-sans text-[11px]">
-                        <button
-                          type="button"
-                          onClick={() => onIconBgChange("none")}
-                          disabled={disabled}
-                          className={cn(
-                            "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
-                            currentColor === "none"
-                              ? "bg-primary text-primary-foreground shadow-xs"
-                              : "text-muted-foreground hover:text-foreground",
-                          )}
-                        >
-                          No bg
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => onIconBgChange("dark")}
-                          disabled={disabled}
-                          className={cn(
-                            "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
-                            currentColor === "dark"
-                              ? "bg-primary text-primary-foreground shadow-xs"
-                              : "text-muted-foreground hover:text-foreground",
-                          )}
-                        >
-                          Black
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => onIconBgChange("white")}
-                          disabled={disabled}
-                          className={cn(
-                            "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
-                            currentColor === "white"
-                              ? "bg-primary text-primary-foreground shadow-xs"
-                              : "text-muted-foreground hover:text-foreground",
-                          )}
-                        >
-                          White
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => onIconBgChange("invert")}
-                          disabled={disabled}
-                          className={cn(
-                            "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
-                            currentColor === "invert"
-                              ? "bg-primary text-primary-foreground shadow-xs"
-                              : "text-muted-foreground hover:text-foreground",
-                          )}
-                        >
-                          Invert
-                        </button>
+                      <div className="border-line bg-surface/80 inline-flex items-center gap-0.5 rounded-[12px] border-[1.5px] p-0.5">
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button
+                              type="button"
+                              onClick={() => onIconBgChange("none")}
+                              disabled={disabled}
+                              aria-label="No bg"
+                              className={cn(
+                                "grid size-7 cursor-pointer place-items-center rounded-[10px] transition-all",
+                                currentColor === "none"
+                                  ? "bg-primary text-primary-foreground shadow-xs"
+                                  : "text-muted-foreground hover:text-foreground",
+                              )}
+                            >
+                              <CircleIcon
+                                weight="fill"
+                                className={cn(
+                                  "size-4 shrink-0 rounded-full ring-1",
+                                  currentColor === "none"
+                                    ? "text-black/30 ring-black/20"
+                                    : "text-zinc-500/40 ring-white/15",
+                                )}
+                              />
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent side="top">
+                            <p>No bg</p>
+                          </TooltipContent>
+                        </Tooltip>
+
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button
+                              type="button"
+                              onClick={() => onIconBgChange("dark")}
+                              disabled={disabled}
+                              aria-label="Black"
+                              className={cn(
+                                "grid size-7 cursor-pointer place-items-center rounded-[10px] transition-all",
+                                currentColor === "dark"
+                                  ? "bg-primary text-primary-foreground shadow-xs"
+                                  : "text-muted-foreground hover:text-foreground",
+                              )}
+                            >
+                              <CircleIcon
+                                weight="fill"
+                                className="size-4 shrink-0 rounded-full text-black ring-1 ring-white/25"
+                              />
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent side="top">
+                            <p>Black</p>
+                          </TooltipContent>
+                        </Tooltip>
+
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button
+                              type="button"
+                              onClick={() => onIconBgChange("white")}
+                              disabled={disabled}
+                              aria-label="White"
+                              className={cn(
+                                "grid size-7 cursor-pointer place-items-center rounded-[10px] transition-all",
+                                currentColor === "white"
+                                  ? "bg-primary text-primary-foreground shadow-xs"
+                                  : "text-muted-foreground hover:text-foreground",
+                              )}
+                            >
+                              <CircleIcon
+                                weight="fill"
+                                className="size-4 shrink-0 rounded-full text-white ring-1 ring-black/15"
+                              />
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent side="top">
+                            <p>White</p>
+                          </TooltipContent>
+                        </Tooltip>
+
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button
+                              type="button"
+                              onClick={() => onIconBgChange("invert")}
+                              disabled={disabled}
+                              aria-label="Invert"
+                              className={cn(
+                                "grid size-7 cursor-pointer place-items-center rounded-[10px] transition-all",
+                                currentColor === "invert"
+                                  ? "bg-primary text-primary-foreground shadow-xs"
+                                  : "text-muted-foreground hover:text-foreground",
+                              )}
+                            >
+                              <CircleHalfIcon weight="fill" className="size-4 shrink-0" />
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent side="top">
+                            <p>Invert</p>
+                          </TooltipContent>
+                        </Tooltip>
                       </div>
                     </div>
                   );
