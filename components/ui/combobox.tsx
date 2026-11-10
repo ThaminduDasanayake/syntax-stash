@@ -134,7 +134,7 @@ function ComboboxItem({ children, className, ...props }: ComboboxPrimitive.Item.
     <ComboboxPrimitive.Item
       data-slot="combobox-item"
       className={cn(
-        "data-highlighted:bg-accent data-highlighted:text-accent-foreground not-data-[variant=destructive]:data-highlighted:**:text-accent-foreground relative flex w-full cursor-pointer items-center gap-2 rounded-[14px] py-2 pr-8 pl-3 text-xs outline-hidden transition-colors select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "data-selected:bg-accent/15 data-selected:text-accent not-data-selected:data-highlighted:bg-accent/15 relative flex w-full cursor-pointer items-center gap-2 rounded-[14px] py-2 pr-8 pl-3 text-xs outline-hidden transition-colors select-none data-disabled:pointer-events-none data-disabled:opacity-50 not-data-selected:data-highlighted:text-white not-data-[variant=destructive]:not-data-selected:data-highlighted:**:text-white data-selected:font-medium [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
