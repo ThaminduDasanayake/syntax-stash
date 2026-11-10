@@ -1,7 +1,7 @@
 "use client";
 
 import { CircleHalfIcon, CircleIcon, WarningCircleIcon } from "@phosphor-icons/react";
-import { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import { CloudinaryUploadButton } from "@/components/admin/shared/cloudinary-upload-button";
 import {
@@ -166,6 +166,108 @@ function OgImagePreviewBanner({
           </span>
         )}
       </div>
+    </div>
+  );
+}
+
+/* eslint-disable perfectionist/sort-arrays */
+const FIT_SHAPES = [
+  {
+    id: "cover" as const,
+    label: "Landscape, Fill / Cover (Default)",
+    mark: { h: 11.25, w: 15, x: 1.5, y: 3.38 },
+    tooltip: "Fill / Cover (Default)",
+  },
+  {
+    id: "contain" as const,
+    label: "Square, Contain (Full View)",
+    mark: { h: 13, w: 13, x: 2.5, y: 2.5 },
+    tooltip: "Contain (Full View)",
+  },
+] as const;
+/* eslint-enable perfectionist/sort-arrays */
+
+function OgFitToggle({
+  disabled = false,
+  onChange,
+  value,
+}: {
+  disabled?: boolean;
+  onChange: (fit: OgImageFitOption) => void;
+  value: OgImageFitOption;
+}) {
+  const at = value === "contain" ? 1 : 0;
+  const tabs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (disabled) return;
+    const d =
+      e.key === "ArrowRight" || e.key === "ArrowDown"
+        ? 1
+        : e.key === "ArrowLeft" || e.key === "ArrowUp"
+          ? -1
+          : 0;
+    if (!d) return;
+    e.preventDefault();
+    const nextIdx = (at + d + FIT_SHAPES.length) % FIT_SHAPES.length;
+    onChange(FIT_SHAPES[nextIdx].id);
+    tabs.current[nextIdx]?.focus();
+  };
+
+  return (
+    <div
+      className={cn(
+        "relative grid grid-cols-[repeat(2,40px)] rounded-full bg-white/8 p-0.5 transition-colors duration-300",
+        disabled && "pointer-events-none opacity-50",
+      )}
+      role="radiogroup"
+      aria-label="Image fit and framing"
+      onKeyDown={handleKeyDown}
+    >
+      {/* Sliding thumb indicator */}
+      <span
+        className="pointer-events-none absolute top-0.5 left-0.5 h-[calc(100%-4px)] w-[calc((100%-4px)/2)] rounded-full bg-zinc-800 shadow-[0_1px_3px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.08)] transition-colors duration-300 motion-reduce:transition-none"
+        aria-hidden="true"
+        style={{
+          transform: `translateX(${at * 100}%)`,
+          transition: "transform 286ms cubic-bezier(0.22, 1, 0.36, 1)",
+        }}
+      />
+      {FIT_SHAPES.map((s, i) => (
+        <Tooltip key={s.id}>
+          <TooltipTrigger asChild>
+            <button
+              ref={(el) => {
+                tabs.current[i] = el;
+              }}
+              type="button"
+              disabled={disabled}
+              className="relative grid h-8 cursor-pointer place-items-center rounded-full border-0 bg-transparent p-0 text-zinc-400 transition-[color,transform] duration-160 ease-out hover:text-zinc-100 focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900 focus-visible:outline-none active:scale-96 aria-checked:text-zinc-100 motion-reduce:transition-none"
+              role="radio"
+              aria-checked={i === at}
+              aria-label={s.label}
+              tabIndex={i === at ? 0 : -1}
+              onClick={() => onChange(s.id)}
+            >
+              <svg width={18} height={18} viewBox="0 0 18 18" aria-hidden="true">
+                <rect
+                  x={s.mark.x}
+                  y={s.mark.y}
+                  width={s.mark.w}
+                  height={s.mark.h}
+                  rx={2}
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                />
+              </svg>
+            </button>
+          </TooltipTrigger>
+          <TooltipContent side="top">
+            <p>{s.tooltip}</p>
+          </TooltipContent>
+        </Tooltip>
+      ))}
     </div>
   );
 }
@@ -449,36 +551,11 @@ export function MediaAssetFields({
                       </span>
                     </div>
                     <div className="ml-auto flex flex-wrap items-center gap-2">
-                      <div className="border-line bg-surface/80 inline-flex rounded-[12px] border-[1.5px] p-0.5 font-sans text-[11px]">
-                        <button
-                          type="button"
-                          onClick={() => handleFitChange("cover")}
-                          disabled={disabled}
-                          className={cn(
-                            "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
-                            currentFit === "cover"
-                              ? "bg-primary text-primary-foreground shadow-xs"
-                              : "text-muted-foreground hover:text-foreground",
-                          )}
-                          title="Edge-to-edge fill (crops edges for non-2:1 images)"
-                        >
-                          Fill / Cover (Default)
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => handleFitChange("contain")}
-                          disabled={disabled}
-                          className={cn(
-                            "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
-                            currentFit === "contain"
-                              ? "bg-primary text-primary-foreground shadow-xs"
-                              : "text-muted-foreground hover:text-foreground",
-                          )}
-                          title="Shows 100% of image without cropping, with ambient backdrop"
-                        >
-                          Contain (Full View)
-                        </button>
-                      </div>
+                      <OgFitToggle
+                        value={currentFit}
+                        onChange={handleFitChange}
+                        disabled={disabled}
+                      />
 
                       {allowUpload && (
                         <CloudinaryUploadButton
