@@ -66,7 +66,7 @@ function PaletteCardComponent({
                   "group/bookmark flex size-7 cursor-pointer items-center justify-center rounded-lg border-[1.5px] transition-[transform,background-color,border-color,color,box-shadow] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-90 motion-reduce:transition-colors motion-reduce:hover:scale-100 motion-reduce:active:scale-100 [@media(hover:hover)]:hover:scale-105",
                   isBookmarked
                     ? "border-primary/40 bg-primary/15 text-primary hover:border-primary/70 hover:bg-primary/25 hover:text-primary"
-                    : "hover:border-primary/40 hover:bg-primary/10 hover:text-primary border-white/8 bg-white/4 text-zinc-500",
+                    : "border-white/8 bg-white/4 text-zinc-500 hover:border-primary/40 hover:bg-primary/10 hover:text-primary",
                 )}
                 onMouseEnter={() => setIsBookmarkHovered(true)}
                 onMouseLeave={() => setIsBookmarkHovered(false)}
