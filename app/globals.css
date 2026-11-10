@@ -832,6 +832,21 @@
   }
 }
 
+@keyframes bookmark-pop {
+  0% {
+    transform: scale(0.8);
+  }
+  45% {
+    transform: scale(1.22) translateY(-1px);
+  }
+  75% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .neon-hold-shake {
     animation: none;

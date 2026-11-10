@@ -62,6 +62,7 @@ export function ResourceCardView({
   url,
 }: ResourceCardViewProps) {
   const [isBookmarkHovered, setIsBookmarkHovered] = useState(false);
+  const [bookmarkPopTick, setBookmarkPopTick] = useState(0);
 
   const cleanOgImage = ogImage?.trim() || "";
 
@@ -289,18 +290,35 @@ export function ResourceCardView({
                   <button
                     type="button"
                     className={cn(
-                      "flex size-7 cursor-pointer items-center justify-center rounded-lg border-[1.5px] border-white/8 bg-white/4 text-zinc-500 transition-all duration-150 hover:border-white/18 hover:bg-white/8 hover:text-white active:scale-95",
-                      isBookmarked && "border-primary/40 bg-primary/15 text-primary",
+                      "group/bookmark flex size-7 cursor-pointer items-center justify-center rounded-lg border-[1.5px] transition-[transform,background-color,border-color,color,box-shadow] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-90 motion-reduce:transition-colors motion-reduce:hover:scale-100 motion-reduce:active:scale-100 [@media(hover:hover)]:hover:scale-105",
+                      isBookmarked
+                        ? "border-primary/40 bg-primary/15 text-primary hover:border-primary/70 hover:bg-primary/25 hover:text-primary"
+                        : "border-white/8 bg-white/4 text-zinc-500 hover:border-primary/40 hover:bg-primary/10 hover:text-primary",
                     )}
                     onMouseEnter={() => setIsBookmarkHovered(true)}
                     onMouseLeave={() => setIsBookmarkHovered(false)}
-                    onClick={onBookmarkClick}
+                    onClick={(e) => {
+                      if (!isBookmarked) {
+                        setBookmarkPopTick((t) => t + 1);
+                      }
+                      onBookmarkClick(e);
+                    }}
                     aria-label={isBookmarked ? "Remove bookmark" : "Save bookmark"}
                   >
-                    <BookmarkSimpleIcon
-                      weight={isBookmarked ? "fill" : isBookmarkHovered ? "duotone" : "bold"}
-                      className="size-3.5"
-                    />
+                    <span
+                      key={bookmarkPopTick}
+                      className={cn(
+                        "inline-flex items-center justify-center transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/bookmark:scale-110 motion-reduce:transition-none motion-reduce:group-hover/bookmark:scale-100",
+                        bookmarkPopTick > 0 &&
+                          isBookmarked &&
+                          "animate-[bookmark-pop_360ms_cubic-bezier(0.22,1,0.36,1)] motion-reduce:animate-none",
+                      )}
+                    >
+                      <BookmarkSimpleIcon
+                        weight={isBookmarked ? "fill" : isBookmarkHovered ? "duotone" : "bold"}
+                        className="size-3.5"
+                      />
+                    </span>
                   </button>
                 </TooltipTrigger>
                 <TooltipContent side="top">
@@ -316,7 +334,7 @@ export function ResourceCardView({
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex size-7 items-center justify-center rounded-lg border-[1.5px] border-white/8 bg-white/4 text-zinc-500 transition-all duration-150 hover:border-white/18 hover:bg-white/8 hover:text-white active:scale-95"
+                    className="flex size-7 items-center justify-center rounded-lg border-[1.5px] border-white/8 bg-white/4 text-zinc-500 transition-[transform,background-color,border-color,color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-white/18 hover:bg-white/8 hover:text-white active:scale-90 motion-reduce:hover:scale-100 motion-reduce:active:scale-100 [@media(hover:hover)]:hover:scale-105"
                     aria-label="Open in new tab"
                   >
                     <ArrowUpRightIcon weight="bold" className="size-3.5" />

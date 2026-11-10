@@ -89,6 +89,8 @@ export function ResourceDialog({
   const { data: session } = useSession();
   const { isBookmarked, toggleBookmark } = useBookmarks();
   const bookmarked = isBookmarked(activeTool);
+  const [isSaveHovered, setIsSaveHovered] = useState(false);
+  const [savePopTick, setSavePopTick] = useState(0);
 
   const measureCoords = useCallback(() => {
     if (titleAnchorRef.current && dialogContentRef.current) {
@@ -382,21 +384,40 @@ export function ResourceDialog({
         <Button
           variant="secondary"
           size="default"
+          onMouseEnter={() => setIsSaveHovered(true)}
+          onMouseLeave={() => setIsSaveHovered(false)}
           onClick={() => {
             if (!session) {
               setAuthModalOpen(true);
               return;
             }
+            if (!bookmarked) {
+              setSavePopTick((t) => t + 1);
+            }
             toggleBookmark(activeTool);
           }}
           aria-label={bookmarked ? "Saved" : "Save"}
           className={cn(
-            "text-mono-2xs sm:text-mono-xs shrink-0 px-3.5 sm:px-4",
-            bookmarked &&
-              "border-primary/40 bg-primary/15 text-primary hover:border-primary/60 hover:bg-primary/25",
+            "group/save text-mono-2xs sm:text-mono-xs shrink-0 px-3.5 transition-[transform,background-color,border-color,color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] sm:px-4",
+            bookmarked
+              ? "border-primary/40 bg-primary/15 text-primary hover:border-primary/70 hover:bg-primary/25 hover:text-primary"
+              : "hover:border-primary/40 hover:bg-primary/10 hover:text-primary",
           )}
         >
-          <BookmarkSimpleIcon weight={bookmarked ? "fill" : "bold"} className="size-4" />
+          <span
+            key={savePopTick}
+            className={cn(
+              "inline-flex items-center justify-center transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/save:scale-110 motion-reduce:transition-none motion-reduce:group-hover/save:scale-100",
+              savePopTick > 0 &&
+                bookmarked &&
+                "animate-[bookmark-pop_360ms_cubic-bezier(0.22,1,0.36,1)] motion-reduce:animate-none",
+            )}
+          >
+            <BookmarkSimpleIcon
+              weight={bookmarked ? "fill" : isSaveHovered ? "duotone" : "bold"}
+              className="size-4"
+            />
+          </span>
           <span className="hidden sm:inline">{bookmarked ? "Saved" : "Save"}</span>
         </Button>
       </div>
