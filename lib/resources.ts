@@ -12,7 +12,7 @@ import {
   resourceTag,
   tag,
 } from "@/lib/db/schema";
-import { Resource } from "@/types";
+import { AuthorLinks, Resource } from "@/types";
 
 /**
  * Fetches all live catalog resources from Neon Postgres, cached at the Next.js Edge.
@@ -67,6 +67,7 @@ export const getAllResources = cache(
           string,
           {
             id: string;
+            authorLinks?: AuthorLinks;
             authors: string[];
             category: string;
             createdAt?: string;
@@ -88,9 +89,20 @@ export const getAllResources = cache(
           const catName = r.categoryName || "Generators";
           let entry = resourceMap.get(r.id);
           if (!entry) {
+            const links: AuthorLinks = {
+              blog: r.authorBlog || undefined,
+              github: r.authorGithub || undefined,
+              linkedin: r.authorLinkedin || undefined,
+              twitter: r.authorTwitter || undefined,
+              website: r.authorWebsite || undefined,
+              youtube: r.authorYoutube || undefined,
+            };
+            const hasLinks = Object.values(links).some(Boolean);
+
             entry = {
               id: r.id,
               title: r.title,
+              authorLinks: hasLinks ? links : undefined,
               authors: r.authorName ? [r.authorName] : [],
               category: catName,
               createdAt: r.createdAt ? new Date(r.createdAt).toISOString() : undefined,
@@ -119,6 +131,7 @@ export const getAllResources = cache(
         const mapped: Resource[] = Array.from(resourceMap.values()).map((r) => ({
           ...r,
           author: r.authors.length > 0 ? r.authors.join(", ") : undefined,
+          authorLinks: r.authors.length === 1 ? r.authorLinks : undefined,
           tags: r.tags.length > 0 ? r.tags : undefined,
         }));
 

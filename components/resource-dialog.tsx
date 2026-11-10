@@ -14,6 +14,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { AuthModal } from "@/components/auth-modal";
+import { AuthorSocialLinks } from "@/components/author-social-links";
 import { CardIcon } from "@/components/card-icon";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
@@ -22,7 +23,14 @@ import { DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/co
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { useSession } from "@/lib/auth-client";
 import { formatStarCount, getGitHubStars } from "@/lib/github";
-import { cn, getCategoryTheme, parseAuthors, slugifyAuthor, THEME_CONFIG } from "@/lib/utils";
+import {
+  cn,
+  getCategoryTheme,
+  parseAuthors,
+  parseOgImageStyle,
+  slugifyAuthor,
+  THEME_CONFIG,
+} from "@/lib/utils";
 import { Resource } from "@/types";
 
 export interface ResourceDialogProps {
@@ -74,6 +82,7 @@ export function ResourceDialog({
   const gitHubStars = getGitHubStars(activeTool.github);
   const formattedStars = gitHubStars !== null ? formatStarCount(gitHubStars) : null;
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const rightContentRef = useRef<HTMLDivElement>(null);
   const dialogContentRef = useRef<HTMLDivElement>(null);
   const titleAnchorRef = useRef<HTMLDivElement>(null);
   const mobileTitleRef = useRef<HTMLHeadingElement>(null);
@@ -89,6 +98,8 @@ export function ResourceDialog({
   const { data: session } = useSession();
   const { isBookmarked, toggleBookmark } = useBookmarks();
   const bookmarked = isBookmarked(activeTool);
+  const [isSaveHovered, setIsSaveHovered] = useState(false);
+  const [savePopTick, setSavePopTick] = useState(0);
 
   const measureCoords = useCallback(() => {
     if (titleAnchorRef.current && dialogContentRef.current) {
@@ -200,16 +211,22 @@ export function ResourceDialog({
     return () => clearTimeout(timer);
   }, [activeTool, resetMobileHeader]);
 
-  const handleSelectTool = (res: Resource) => {
-    setActiveTool(res);
-    resetMobileHeader();
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollTop = 0;
-    }
-    setTimeout(() => {
+  const handleSelectTool = useCallback(
+    (res: Resource) => {
+      setActiveTool(res);
       resetMobileHeader();
-    }, 20);
-  };
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollTop = 0;
+      }
+      if (rightContentRef.current) {
+        rightContentRef.current.scrollTop = 0;
+      }
+      setTimeout(() => {
+        resetMobileHeader();
+      }, 20);
+    },
+    [resetMobileHeader],
+  );
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const scrollTop = e.currentTarget.scrollTop;
@@ -266,20 +283,50 @@ export function ResourceDialog({
   };
 
   const currentIndex = useMemo(() => {
-    return resourcePool.findIndex((r) => r.title === activeTool.title);
+    return resourcePool.findIndex(
+      (r) =>
+        (activeTool.id && r.id === activeTool.id) ||
+        (activeTool.url && r.url === activeTool.url) ||
+        r.title === activeTool.title,
+    );
   }, [activeTool, resourcePool]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (currentIndex === -1 || resourcePool.length === 0) return;
     const nextIndex = (currentIndex + 1) % resourcePool.length;
     handleSelectTool(resourcePool[nextIndex]);
-  };
+  }, [currentIndex, handleSelectTool, resourcePool]);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     if (currentIndex === -1 || resourcePool.length === 0) return;
     const prevIndex = (currentIndex - 1 + resourcePool.length) % resourcePool.length;
     handleSelectTool(resourcePool[prevIndex]);
-  };
+  }, [currentIndex, handleSelectTool, resourcePool]);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (authModalOpen) return;
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.tagName === "SELECT" ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        handlePrev();
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        handleNext();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [authModalOpen, handleNext, handlePrev]);
 
   const activeTheme = getCategoryTheme(activeTool.category);
   const activeThemeStyles = THEME_CONFIG[activeTheme];
@@ -289,16 +336,29 @@ export function ResourceDialog({
     const currentAuthors = parseAuthors(activeTool.author);
     if (currentAuthors.length === 0) return [];
 
-    return resourcePool.filter((r) => {
-      if (r.title === activeTool.title || !r.author) return false;
-      const rAuthors = parseAuthors(r.author);
-      return currentAuthors.some((ca) =>
-        rAuthors.some(
-          (ra) => ra.toLowerCase() === ca.toLowerCase() || slugifyAuthor(ra) === slugifyAuthor(ca),
-        ),
-      );
-    });
+    return resourcePool
+      .filter((r) => {
+        if (r.title === activeTool.title || !r.author) return false;
+        const rAuthors = parseAuthors(r.author);
+        return currentAuthors.some((ca) =>
+          rAuthors.some(
+            (ra) =>
+              ra.toLowerCase() === ca.toLowerCase() || slugifyAuthor(ra) === slugifyAuthor(ca),
+          ),
+        );
+      })
+      .sort((a, b) => {
+        const aSameCat = a.category === activeTool.category ? 0 : 1;
+        const bSameCat = b.category === activeTool.category ? 0 : 1;
+        return aSameCat - bSameCat;
+      });
   }, [activeTool, resourcePool]);
+
+  const parsedAuthors = useMemo(() => parseAuthors(activeTool.author), [activeTool.author]);
+  const visibleAuthorResources = useMemo(() => authorResources.slice(0, 6), [authorResources]);
+  const hiddenAuthorCount = authorResources.length - visibleAuthorResources.length;
+  const singleAuthorHref =
+    parsedAuthors.length === 1 ? `/authors/${slugifyAuthor(parsedAuthors[0])}` : null;
 
   const relatedResources = useMemo(() => {
     const activeTags = activeTool.tags || [];
@@ -380,29 +440,65 @@ export function ResourceDialog({
           </Button>
         )}
         <Button
-          variant={bookmarked ? "default" : "secondary"}
+          variant="secondary"
           size="default"
+          onMouseEnter={() => setIsSaveHovered(true)}
+          onMouseLeave={() => setIsSaveHovered(false)}
           onClick={() => {
             if (!session) {
               setAuthModalOpen(true);
               return;
             }
+            if (!bookmarked) {
+              setSavePopTick((t) => t + 1);
+            }
             toggleBookmark(activeTool);
           }}
           aria-label={bookmarked ? "Saved" : "Save"}
-          className="text-mono-2xs sm:text-mono-xs shrink-0 px-3.5 sm:px-4"
+          className={cn(
+            "group/save text-mono-2xs sm:text-mono-xs shrink-0 px-3.5 transition-[transform,background-color,border-color,color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] sm:px-4",
+            bookmarked
+              ? "border-primary/40 bg-primary/15 text-primary hover:border-primary/70 hover:bg-primary/25 hover:text-primary"
+              : "hover:border-primary/40 hover:bg-primary/10 hover:text-primary",
+          )}
         >
-          <BookmarkSimpleIcon weight={bookmarked ? "fill" : "bold"} className="size-4" />
+          <span
+            key={savePopTick}
+            className={cn(
+              "inline-flex items-center justify-center transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/save:scale-110 motion-reduce:transition-none motion-reduce:group-hover/save:scale-100",
+              savePopTick > 0 &&
+                bookmarked &&
+                "animate-[bookmark-pop_360ms_cubic-bezier(0.22,1,0.36,1)] motion-reduce:animate-none",
+            )}
+          >
+            <BookmarkSimpleIcon
+              weight={bookmarked ? "fill" : isSaveHovered ? "duotone" : "bold"}
+              className="size-4"
+            />
+          </span>
           <span className="hidden sm:inline">{bookmarked ? "Saved" : "Save"}</span>
         </Button>
       </div>
 
       <div className="modal-nav-row">
+        <div className="flex items-center gap-2 font-mono text-[11px] text-zinc-500 tabular-nums">
+          {currentIndex !== -1 && resourcePool.length > 0 && (
+            <span>
+              {currentIndex + 1} / {resourcePool.length}
+            </span>
+          )}
+          <span className="hidden text-zinc-600 sm:inline">← →</span>
+        </div>
         <ButtonGroup>
-          <Button variant="secondary" size="icon" onClick={handlePrev}>
+          <Button
+            variant="secondary"
+            size="icon"
+            onClick={handlePrev}
+            aria-label="Previous resource"
+          >
             <CaretLeftIcon />
           </Button>
-          <Button variant="secondary" size="icon" onClick={handleNext}>
+          <Button variant="secondary" size="icon" onClick={handleNext} aria-label="Next resource">
             <CaretRightIcon />
           </Button>
         </ButtonGroup>
@@ -429,7 +525,7 @@ export function ResourceDialog({
       {/* Mobile Fixed Top Bar */}
       <div className="text-foreground z-30 flex h-12 shrink-0 items-center justify-between border-b-[1.5px] border-white/8 bg-[#18181b] px-4 md:hidden">
         <div className="flex min-w-0 flex-1 items-center gap-2 pr-3">
-          <span className={cn("size-2 shrink-0 rounded-full", activeThemeStyles.dot)} />
+          <span className="bg-primary size-2 shrink-0 rounded-full" />
 
           <div className="relative h-5 min-w-0 flex-1">
             {/* Category label */}
@@ -480,7 +576,7 @@ export function ResourceDialog({
           {/* Desktop Category Header */}
           <div className="modal-cat-label hidden md:flex">
             <div className="flex min-w-0 items-center gap-2">
-              <span className={cn("size-2 shrink-0 rounded-full", activeThemeStyles.dot)} />
+              <span className="bg-primary size-2 shrink-0 rounded-full" />
               <Link
                 href={`/resources/${activeTool.category}`}
                 className="modal-cat-name text-muted-foreground hover:text-foreground truncate font-mono text-xs font-semibold"
@@ -544,26 +640,34 @@ export function ResourceDialog({
               if (authorList.length === 0) return null;
 
               return (
-                <p className="modal-author text-muted-foreground flex flex-wrap items-center gap-1">
-                  {authorList.map((authorName, index) => (
-                    <span key={authorName} className="inline-flex items-center">
-                      {index > 0 && <span className="mr-1 opacity-60">&</span>}
-                      <Link
-                        href={`/authors/${slugifyAuthor(authorName)}`}
-                        className="modal-author-link text-muted-foreground hover:text-foreground hover:underline"
-                      >
-                        {authorName}
-                      </Link>
-                    </span>
-                  ))}
-                </p>
+                <div className="mt-auto flex flex-col gap-2.5 pt-4 md:pt-6">
+                  <p className="modal-author text-muted-foreground mt-0! flex flex-wrap items-center gap-1 pt-0!">
+                    {authorList.map((authorName, index) => (
+                      <span key={authorName} className="inline-flex items-center">
+                        {index > 0 && <span className="mr-1 opacity-60">&</span>}
+                        <Link
+                          href={`/authors/${slugifyAuthor(authorName)}`}
+                          className="modal-author-link text-muted-foreground hover:text-foreground hover:underline"
+                        >
+                          {authorName}
+                        </Link>
+                      </span>
+                    ))}
+                  </p>
+                  {authorList.length === 1 && activeTool.authorLinks && (
+                    <AuthorSocialLinks links={activeTool.authorLinks} size="md" variant="outline" />
+                  )}
+                </div>
               );
             })()}
         </div>
 
         {/* Right Side */}
         <div className="modal-right bg-background flex flex-col md:overflow-hidden">
-          <div className="modal-content [scrollbar-color:var(--line-2)_transparent] px-5 pt-5 pb-6 md:min-h-0 md:flex-1 md:overflow-y-auto md:overscroll-contain md:px-8 md:pt-20 md:pb-5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent">
+          <div
+            ref={rightContentRef}
+            className="modal-content [scrollbar-color:var(--line-2)_transparent] px-5 pt-5 pb-6 md:min-h-0 md:flex-1 md:overflow-y-auto md:overscroll-contain md:px-8 md:pt-14 md:pb-5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent"
+          >
             {(() => {
               if (!currentOg || ogState.error) return null;
 
@@ -584,14 +688,39 @@ export function ResourceDialog({
                   ? `/api/proxy-image?url=${encodeURIComponent(currentOg)}`
                   : currentOg;
 
+              const { bg, fit } = parseOgImageStyle(activeTool.ogImageBg);
+              const hasCustomBg = bg !== "none";
+              const isContain = fit === "contain" || hasCustomBg;
+
               return (
-                <div className="mb-5.5">
+                <div
+                  className={cn(
+                    "mb-5.5 overflow-hidden rounded-xl border border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.35)]",
+                    hasCustomBg
+                      ? bg === "white"
+                        ? "bg-white"
+                        : bg === "dark"
+                          ? "bg-[#09090b]"
+                          : bg === "zinc"
+                            ? "bg-zinc-900"
+                            : "bg-[#18181b]"
+                      : "bg-[#18181b]",
+                  )}
+                  style={
+                    hasCustomBg && (bg.startsWith("#") || bg.startsWith("rgb"))
+                      ? { backgroundColor: bg }
+                      : undefined
+                  }
+                >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     key={currentOgSrc}
                     src={currentOgSrc}
                     alt={activeTool.title}
-                    className="h-auto w-full"
+                    className={cn(
+                      "w-full",
+                      isContain ? "max-h-72 object-contain" : "h-auto object-cover",
+                    )}
                     loading="lazy"
                     referrerPolicy="no-referrer"
                     onError={handleOgError}
@@ -626,11 +755,11 @@ export function ResourceDialog({
 
             {activeTool.github && (
               <div className="mb-5.5 flex flex-col items-start">
-                <div className="flex w-full items-center gap-5">
+                <div className="mb-2.5 flex w-full items-center gap-4">
                   <span className={cn("text-display-2xs", activeThemeStyles.label)}>GitHub</span>
                   {formattedStars && (
                     <span
-                      className="text-muted-foreground inline-flex items-center gap-1 font-mono text-xs leading-none"
+                      className="text-muted-foreground inline-flex items-center gap-1 font-mono text-xs leading-none uppercase tabular-nums"
                       title={`${gitHubStars?.toLocaleString()} GitHub stars`}
                     >
                       <StarIcon weight="fill" className="text-star size-3.5 shrink-0" />
@@ -667,7 +796,10 @@ export function ResourceDialog({
             )}
 
             {activeTool.tags && activeTool.tags.length > 0 && (
-              <div className="modal-sections">
+              <div className="mb-5.5">
+                <span className={cn("text-display-2xs mb-2.5 block", activeThemeStyles.label)}>
+                  Tags
+                </span>
                 <div className="flex flex-wrap gap-1.5">
                   {[...activeTool.tags]
                     .sort((a, b) => a.localeCompare(b))
@@ -691,36 +823,38 @@ export function ResourceDialog({
             {/* Author Resources Section */}
             {authorResources.length > 0 && activeTool.author && (
               <div className="mb-5.5">
-                <div className="mb-2 flex items-center justify-between">
-                  <span className={cn("text-display-2xs mb-2.5 block", activeThemeStyles.label)}>
-                    More by {parseAuthors(activeTool.author).join(" & ")}
+                <div className="mb-2.5 flex items-center justify-between gap-3">
+                  <span className={cn("text-display-2xs block", activeThemeStyles.label)}>
+                    More by {parsedAuthors.join(" & ")}
                   </span>
-                  {parseAuthors(activeTool.author).length === 1 ? (
+                  {singleAuthorHref ? (
                     <Link
-                      href={`/authors/${slugifyAuthor(parseAuthors(activeTool.author)[0])}`}
-                      className="text-muted-foreground hover:text-primary font-mono text-[11px] font-semibold hover:underline"
+                      href={singleAuthorHref}
+                      className="text-muted-foreground hover:text-primary shrink-0 font-mono text-[11px] font-semibold transition-colors hover:underline"
                     >
                       View all ({authorResources.length + 1}) →
                     </Link>
                   ) : null}
                 </div>
                 <div className="modal-related-chips">
-                  {authorResources.map((res) => {
-                    const styles = THEME_CONFIG[getCategoryTheme(res.category)];
-                    return (
-                      <button
-                        key={res.title}
-                        onClick={() => handleSelectTool(res)}
-                        className={cn(
-                          "modal-related-chip group hover:border-primary/40",
-                          styles.chip,
-                        )}
-                      >
-                        <span className={cn("modal-chip-dot", styles.dot)} />
-                        {res.title}
-                      </button>
-                    );
-                  })}
+                  {visibleAuthorResources.map((res) => (
+                    <button
+                      key={res.url || res.title}
+                      onClick={() => handleSelectTool(res)}
+                      className="modal-related-chip group"
+                    >
+                      <span className="modal-chip-dot" />
+                      <span className="truncate">{res.title}</span>
+                    </button>
+                  ))}
+                  {hiddenAuthorCount > 0 && singleAuthorHref && (
+                    <Link
+                      href={singleAuthorHref}
+                      className="modal-related-chip hover:text-primary text-zinc-400"
+                    >
+                      <span>+{hiddenAuthorCount} more →</span>
+                    </Link>
+                  )}
                 </div>
               </div>
             )}
@@ -732,22 +866,16 @@ export function ResourceDialog({
                   Related
                 </span>
                 <div className="modal-related-chips">
-                  {relatedResources.map((res) => {
-                    const styles = THEME_CONFIG[getCategoryTheme(res.category)];
-                    return (
-                      <button
-                        key={res.url || res.title}
-                        onClick={() => handleSelectTool(res)}
-                        className={cn(
-                          "modal-related-chip group hover:border-primary/40",
-                          styles.chip,
-                        )}
-                      >
-                        <span className={cn("modal-chip-dot", styles.dot)} />
-                        {res.title}
-                      </button>
-                    );
-                  })}
+                  {relatedResources.map((res) => (
+                    <button
+                      key={res.url || res.title}
+                      onClick={() => handleSelectTool(res)}
+                      className="modal-related-chip group"
+                    >
+                      <span className="modal-chip-dot" />
+                      <span className="truncate">{res.title}</span>
+                    </button>
+                  ))}
                 </div>
               </div>
             )}
@@ -759,7 +887,9 @@ export function ResourceDialog({
       </div>
 
       {/* Mobile Docked Footer at bottom of modal */}
-      <div className="bg-paper z-20 flex shrink-0 flex-col border-t md:hidden">{footerContent}</div>
+      <div className="z-20 flex shrink-0 flex-col border-t-[1.5px] border-white/8 bg-[#141416] md:hidden">
+        {footerContent}
+      </div>
 
       {authModalOpen && <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />}
     </DialogContent>

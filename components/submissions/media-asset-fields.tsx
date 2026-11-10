@@ -1,7 +1,7 @@
 "use client";
 
-import { WarningCircleIcon } from "@phosphor-icons/react";
-import { useState } from "react";
+import { CircleHalfIcon, CircleIcon, WarningCircleIcon } from "@phosphor-icons/react";
+import React, { useRef, useState } from "react";
 
 import { CloudinaryUploadButton } from "@/components/admin/shared/cloudinary-upload-button";
 import {
@@ -12,6 +12,7 @@ import {
   parseIconStyle,
   serializeIconStyle,
 } from "@/components/card-icon";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useDebounce } from "@/hooks/use-debounce";
 import {
   cn,
@@ -169,6 +170,226 @@ function OgImagePreviewBanner({
   );
 }
 
+interface ToggleOption<T extends string> {
+  icon: React.ReactNode;
+  id: T;
+  label: string;
+  tooltip: string;
+}
+
+/* eslint-disable perfectionist/sort-arrays */
+const OG_FIT_OPTIONS: readonly ToggleOption<OgImageFitOption>[] = [
+  {
+    id: "cover",
+    icon: (
+      <svg width={18} height={18} viewBox="0 0 18 18" aria-hidden="true">
+        <rect
+          x={1.5}
+          y={3.38}
+          width={15}
+          height={11.25}
+          rx={2}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={1.5}
+        />
+      </svg>
+    ),
+    label: "Landscape, Fill / Cover (Default)",
+    tooltip: "Fill / Cover (Default)",
+  },
+  {
+    id: "contain",
+    icon: (
+      <svg width={18} height={18} viewBox="0 0 18 18" aria-hidden="true">
+        <rect
+          x={2.5}
+          y={2.5}
+          width={13}
+          height={13}
+          rx={2}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={1.5}
+        />
+      </svg>
+    ),
+    label: "Square, Contain (Full View)",
+    tooltip: "Contain (Full View)",
+  },
+];
+
+const ICON_BG_OPTIONS: readonly ToggleOption<IconColorOption>[] = [
+  {
+    id: "none",
+    icon: (
+      <CircleIcon
+        weight="fill"
+        className="size-4 shrink-0 rounded-full text-zinc-500/45 ring-1 ring-white/15"
+      />
+    ),
+    label: "No background",
+    tooltip: "No bg",
+  },
+  {
+    id: "dark",
+    icon: (
+      <CircleIcon
+        weight="fill"
+        className="size-4 shrink-0 rounded-full text-black ring-1 ring-white/25"
+      />
+    ),
+    label: "Black background",
+    tooltip: "Black",
+  },
+  {
+    id: "white",
+    icon: (
+      <CircleIcon
+        weight="fill"
+        className="size-4 shrink-0 rounded-full text-white ring-1 ring-black/15"
+      />
+    ),
+    label: "White background",
+    tooltip: "White",
+  },
+  {
+    id: "invert",
+    icon: <CircleHalfIcon weight="fill" className="size-4 shrink-0" />,
+    label: "Invert icon",
+    tooltip: "Invert",
+  },
+];
+
+const OG_BG_OPTIONS: readonly ToggleOption<OgImageBgColor>[] = [
+  {
+    id: "none",
+    icon: (
+      <CircleIcon
+        weight="fill"
+        className="size-4 shrink-0 rounded-full text-zinc-500/45 ring-1 ring-white/15"
+      />
+    ),
+    label: "None (Dark Card)",
+    tooltip: "None (Dark Card)",
+  },
+  {
+    id: "white",
+    icon: (
+      <CircleIcon
+        weight="fill"
+        className="size-4 shrink-0 rounded-full text-white ring-1 ring-black/15"
+      />
+    ),
+    label: "White Canvas",
+    tooltip: "White Canvas",
+  },
+  {
+    id: "dark",
+    icon: (
+      <CircleIcon
+        weight="fill"
+        className="size-4 shrink-0 rounded-full text-[#09090b] ring-1 ring-white/25"
+      />
+    ),
+    label: "Dark Slate",
+    tooltip: "Dark Slate",
+  },
+  {
+    id: "zinc",
+    icon: (
+      <CircleIcon
+        weight="fill"
+        className="size-4 shrink-0 rounded-full text-zinc-600 ring-1 ring-white/25"
+      />
+    ),
+    label: "Zinc",
+    tooltip: "Zinc",
+  },
+];
+/* eslint-enable perfectionist/sort-arrays */
+
+function SegmentedIconToggle<T extends string>({
+  ariaLabel,
+  disabled = false,
+  onChange,
+  options,
+  value,
+}: {
+  ariaLabel: string;
+  disabled?: boolean;
+  onChange: (value: T) => void;
+  options: readonly ToggleOption<T>[];
+  value: T;
+}) {
+  const foundIdx = options.findIndex((o) => o.id === value);
+  const at = foundIdx !== -1 ? foundIdx : 0;
+  const tabs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (disabled) return;
+    const d =
+      e.key === "ArrowRight" || e.key === "ArrowDown"
+        ? 1
+        : e.key === "ArrowLeft" || e.key === "ArrowUp"
+          ? -1
+          : 0;
+    if (!d) return;
+    e.preventDefault();
+    const nextIdx = (at + d + options.length) % options.length;
+    onChange(options[nextIdx].id);
+    tabs.current[nextIdx]?.focus();
+  };
+
+  return (
+    <div
+      className={cn(
+        "relative grid rounded-full bg-white/8 p-0.5 transition-colors duration-300",
+        disabled && "pointer-events-none opacity-50",
+      )}
+      style={{ gridTemplateColumns: `repeat(${options.length}, 40px)` }}
+      role="radiogroup"
+      aria-label={ariaLabel}
+      onKeyDown={handleKeyDown}
+    >
+      {/* Sliding thumb indicator */}
+      <span
+        className="pointer-events-none absolute top-0.5 left-0.5 h-[calc(100%-4px)] rounded-full bg-zinc-800 shadow-[0_1px_3px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.08)] transition-colors duration-300 motion-reduce:transition-none"
+        aria-hidden="true"
+        style={{
+          transform: `translateX(${at * 100}%)`,
+          transition: "transform 286ms cubic-bezier(0.22, 1, 0.36, 1)",
+          width: `calc((100% - 4px) / ${options.length})`,
+        }}
+      />
+      {options.map((opt, i) => (
+        <Tooltip key={opt.id}>
+          <TooltipTrigger asChild>
+            <button
+              ref={(el) => {
+                tabs.current[i] = el;
+              }}
+              type="button"
+              disabled={disabled}
+              className="relative grid h-8 cursor-pointer place-items-center rounded-full border-0 bg-transparent p-0 text-zinc-400 transition-[color,transform] duration-160 ease-out hover:text-zinc-100 focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900 focus-visible:outline-none active:scale-96 aria-checked:text-zinc-100 motion-reduce:transition-none"
+              role="radio"
+              aria-checked={i === at}
+              aria-label={opt.label}
+              tabIndex={i === at ? 0 : -1}
+              onClick={() => onChange(opt.id)}
+            >
+              {opt.icon}
+            </button>
+          </TooltipTrigger>
+          <TooltipContent side="top">
+            <p>{opt.tooltip}</p>
+          </TooltipContent>
+        </Tooltip>
+      ))}
+    </div>
+  );
+}
+
 export function MediaAssetFields({
   allowUpload = false,
   className,
@@ -254,60 +475,13 @@ export function MediaAssetFields({
                       <span className="text-muted-foreground font-sans text-[10px] font-bold tracking-wider uppercase">
                         Background / Color:
                       </span>
-                      <div className="border-line bg-surface/80 inline-flex flex-wrap rounded-[12px] border-[1.5px] p-0.5 font-sans text-[11px]">
-                        <button
-                          type="button"
-                          onClick={() => onIconBgChange("none")}
-                          disabled={disabled}
-                          className={cn(
-                            "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
-                            currentColor === "none"
-                              ? "bg-primary text-primary-foreground shadow-xs"
-                              : "text-muted-foreground hover:text-foreground",
-                          )}
-                        >
-                          No bg
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => onIconBgChange("dark")}
-                          disabled={disabled}
-                          className={cn(
-                            "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
-                            currentColor === "dark"
-                              ? "bg-primary text-primary-foreground shadow-xs"
-                              : "text-muted-foreground hover:text-foreground",
-                          )}
-                        >
-                          Black
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => onIconBgChange("white")}
-                          disabled={disabled}
-                          className={cn(
-                            "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
-                            currentColor === "white"
-                              ? "bg-primary text-primary-foreground shadow-xs"
-                              : "text-muted-foreground hover:text-foreground",
-                          )}
-                        >
-                          White
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => onIconBgChange("invert")}
-                          disabled={disabled}
-                          className={cn(
-                            "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
-                            currentColor === "invert"
-                              ? "bg-primary text-primary-foreground shadow-xs"
-                              : "text-muted-foreground hover:text-foreground",
-                          )}
-                        >
-                          Invert
-                        </button>
-                      </div>
+                      <SegmentedIconToggle
+                        ariaLabel="Favicon background color"
+                        options={ICON_BG_OPTIONS}
+                        value={currentColor}
+                        onChange={onIconBgChange}
+                        disabled={disabled}
+                      />
                     </div>
                   );
                 })()
@@ -399,36 +573,13 @@ export function MediaAssetFields({
                       </span>
                     </div>
                     <div className="ml-auto flex flex-wrap items-center gap-2">
-                      <div className="border-line bg-surface/80 inline-flex rounded-[12px] border-[1.5px] p-0.5 font-sans text-[11px]">
-                        <button
-                          type="button"
-                          onClick={() => handleFitChange("cover")}
-                          disabled={disabled}
-                          className={cn(
-                            "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
-                            currentFit === "cover"
-                              ? "bg-primary text-primary-foreground shadow-xs"
-                              : "text-muted-foreground hover:text-foreground",
-                          )}
-                          title="Edge-to-edge fill (crops edges for non-2:1 images)"
-                        >
-                          Fill / Cover (Default)
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => handleFitChange("contain")}
-                          disabled={disabled}
-                          className={cn(
-                            "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
-                            currentFit === "contain"
-                              ? "bg-primary text-primary-foreground shadow-xs"
-                              : "text-muted-foreground hover:text-foreground",
-                          )}
-                          title="Shows 100% of image without cropping, with ambient backdrop"
-                        >
-                          Contain (Full View)
-                        </button>
-                      </div>
+                      <SegmentedIconToggle
+                        ariaLabel="Image fit and framing"
+                        options={OG_FIT_OPTIONS}
+                        value={currentFit}
+                        onChange={handleFitChange}
+                        disabled={disabled}
+                      />
 
                       {allowUpload && (
                         <CloudinaryUploadButton
@@ -451,60 +602,13 @@ export function MediaAssetFields({
                         Canvas color for contain mode or transparent SVGs
                       </span>
                     </div>
-                    <div className="border-line bg-surface/80 inline-flex flex-wrap rounded-[12px] border-[1.5px] p-0.5 font-sans text-[11px]">
-                      <button
-                        type="button"
-                        onClick={() => handleBgChange("none")}
-                        disabled={disabled}
-                        className={cn(
-                          "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
-                          currentBg === "none"
-                            ? "bg-primary text-primary-foreground shadow-xs"
-                            : "text-muted-foreground hover:text-foreground",
-                        )}
-                      >
-                        None (Dark Card)
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleBgChange("white")}
-                        disabled={disabled}
-                        className={cn(
-                          "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
-                          currentBg === "white"
-                            ? "bg-primary text-primary-foreground shadow-xs"
-                            : "text-muted-foreground hover:text-foreground",
-                        )}
-                      >
-                        White Canvas
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleBgChange("dark")}
-                        disabled={disabled}
-                        className={cn(
-                          "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
-                          currentBg === "dark"
-                            ? "bg-primary text-primary-foreground shadow-xs"
-                            : "text-muted-foreground hover:text-foreground",
-                        )}
-                      >
-                        Dark Slate
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleBgChange("zinc")}
-                        disabled={disabled}
-                        className={cn(
-                          "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
-                          currentBg === "zinc"
-                            ? "bg-primary text-primary-foreground shadow-xs"
-                            : "text-muted-foreground hover:text-foreground",
-                        )}
-                      >
-                        Zinc
-                      </button>
-                    </div>
+                    <SegmentedIconToggle
+                      ariaLabel="OG image background color"
+                      options={OG_BG_OPTIONS}
+                      value={currentBg}
+                      onChange={handleBgChange}
+                      disabled={disabled}
+                    />
                   </div>
                 </div>
               );

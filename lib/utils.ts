@@ -1,8 +1,25 @@
 import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { extendTailwindMerge } from "tailwind-merge";
+
+const customTwMerge = extendTailwindMerge({
+  extend: {
+    classGroups: {
+      "font-size": [
+        "text-display-2xs",
+        "text-display-sm",
+        "text-display-xs",
+        "text-mono-2xs",
+        "text-mono-3xl",
+        "text-mono-base",
+        "text-mono-sm",
+        "text-mono-xs",
+      ],
+    },
+  },
+});
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+  return customTwMerge(clsx(inputs));
 }
 
 export function slugify(str: string): string {

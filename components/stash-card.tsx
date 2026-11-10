@@ -19,20 +19,16 @@ function StashCardComponent({
   const ref = useRef<HTMLDivElement | null>(null);
   // Above-the-fold cards (first 8) are revealed immediately to prevent LCP lag & layout shift
   const isAboveTheFold = index < 8;
-  const [isRevealed, setIsRevealed] = useState(isAboveTheFold);
+  const [isObservedRevealed, setIsObservedRevealed] = useState(isAboveTheFold);
   const [staggerDelay, setStaggerDelay] = useState(0);
 
+  const isRevealed = isAboveTheFold || isObservedRevealed;
+
   useEffect(() => {
-    if (isAboveTheFold) return;
+    if (isRevealed) return;
 
     const el = ref.current;
     if (!el) return;
-
-    // Respect user motion preferences
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setIsRevealed(true);
-      return;
-    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -41,20 +37,19 @@ function StashCardComponent({
           const colIndex = index % 4;
           setStaggerDelay(colIndex * 50);
 
-          setIsRevealed(true);
+          setIsObservedRevealed(true);
           observer.unobserve(entry.target);
         }
       },
       {
-        // Negative bottom margin ensures cards animate as they emerge into visible view
-        rootMargin: "0px 0px -70px 0px",
-        threshold: 0.08,
+        rootMargin: "0px 0px 40px 0px",
+        threshold: 0.01,
       },
     );
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [index, isAboveTheFold]);
+  }, [index, isRevealed]);
 
   const content = isInternalTool(item) ? (
     <ToolCard tool={item} />

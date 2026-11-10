@@ -382,7 +382,7 @@ export function AuthorSocialFields({
                     size="sm"
                     onClick={() => onRequestCreateAuthor?.("")}
                     disabled={disabled}
-                    className="border-primary/40 text-primary hover:bg-primary/10 h-7 shrink-0 gap-1 rounded-full px-2.5 font-sans text-[11px] font-bold uppercase transition-colors"
+                    className="border-primary/40 text-primary hover:bg-primary/10 h-7 shrink-0 gap-1 rounded-full px-2.5 font-mono text-[11px] uppercase transition-colors"
                   >
                     <PlusIcon weight="bold" className="size-3" />
                     <span>New Author</span>
@@ -394,7 +394,7 @@ export function AuthorSocialFields({
                     size="sm"
                     onClick={() => handleAddNewAuthor()}
                     disabled={disabled}
-                    className="border-primary/40 text-primary hover:bg-primary/10 h-7 shrink-0 gap-1 rounded-full px-2.5 font-sans text-[11px] font-bold uppercase transition-colors"
+                    className="border-primary/40 text-primary hover:bg-primary/10 h-7 shrink-0 gap-1 rounded-full px-2.5 font-mono text-[11px] uppercase transition-colors"
                   >
                     <PlusIcon weight="bold" className="size-3" />
                     <span>Add Author</span>

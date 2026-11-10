@@ -14,8 +14,18 @@ export interface InternalTool<TCategory extends string = string> extends BaseIte
   slug: string;
 }
 
+export interface AuthorLinks {
+  blog?: string;
+  github?: string;
+  linkedin?: string;
+  twitter?: string;
+  website?: string;
+  youtube?: string;
+}
+
 export interface Resource<TCategory extends string = string> extends BaseItem<TCategory> {
   author?: string | string[];
+  authorLinks?: AuthorLinks;
   className?: string;
   createdAt?: Date | string;
   favicon?: string;

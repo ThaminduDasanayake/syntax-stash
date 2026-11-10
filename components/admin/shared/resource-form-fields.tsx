@@ -182,7 +182,7 @@ export function ResourceFormFields({
                 type="button"
                 onClick={onAutoDetect}
                 disabled={scanner.isDetecting || !values.url?.trim() || disabled}
-                className="border-line hover:bg-surface mt-2 h-[52px] shrink-0 gap-1.5 rounded-[20px] px-4 font-sans text-xs font-bold uppercase"
+                className="border-line hover:bg-surface mt-2 h-[52px] shrink-0 gap-1.5 rounded-[20px] px-4 font-mono text-xs uppercase"
               >
                 {scanner.isDetecting ? (
                   <CircleNotchIcon className="size-4 animate-spin" />

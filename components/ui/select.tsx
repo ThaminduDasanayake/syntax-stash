@@ -127,16 +127,16 @@ function SelectItem({
 }) {
   const variantStyles = {
     accent:
-      "focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground",
+      "data-[state=checked]:bg-accent/15 data-[state=checked]:font-medium data-[state=checked]:text-accent not-data-[state=checked]:focus:bg-accent/15 not-data-[state=checked]:focus:text-white not-data-[variant=destructive]:not-data-[state=checked]:focus:**:text-white",
     default:
-      "focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground",
+      "data-[state=checked]:bg-accent/15 data-[state=checked]:font-medium data-[state=checked]:text-accent not-data-[state=checked]:focus:bg-accent/15 not-data-[state=checked]:focus:text-white not-data-[variant=destructive]:not-data-[state=checked]:focus:**:text-white",
     destructive:
-      "focus:bg-destructive focus:text-destructive-foreground not-data-[variant=destructive]:focus:**:text-destructive-foreground",
+      "data-[state=checked]:bg-destructive/15 data-[state=checked]:font-medium data-[state=checked]:text-destructive not-data-[state=checked]:focus:bg-destructive/15 not-data-[state=checked]:focus:text-rose-200 not-data-[variant=destructive]:not-data-[state=checked]:focus:**:text-rose-200",
     primary:
-      "focus:bg-primary focus:text-primary-foreground not-data-[variant=destructive]:focus:**:text-primary-foreground",
-    rose: "focus:bg-rose-500 focus:text-white not-data-[variant=destructive]:focus:**:text-white",
+      "data-[state=checked]:bg-primary/15 data-[state=checked]:font-medium data-[state=checked]:text-primary not-data-[state=checked]:focus:bg-primary/15 not-data-[state=checked]:focus:text-white not-data-[variant=destructive]:not-data-[state=checked]:focus:**:text-white",
+    rose: "data-[state=checked]:bg-rose-500/15 data-[state=checked]:font-medium data-[state=checked]:text-rose-400 not-data-[state=checked]:focus:bg-rose-500/15 not-data-[state=checked]:focus:text-white not-data-[variant=destructive]:not-data-[state=checked]:focus:**:text-white",
     secondary:
-      "focus:bg-secondary focus:text-secondary-foreground not-data-[variant=destructive]:focus:**:text-secondary-foreground",
+      "data-[state=checked]:bg-secondary/15 data-[state=checked]:font-medium data-[state=checked]:text-secondary not-data-[state=checked]:focus:bg-secondary/15 not-data-[state=checked]:focus:text-white not-data-[variant=destructive]:not-data-[state=checked]:focus:**:text-white",
   }[variant];
 
   return (

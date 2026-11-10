@@ -470,7 +470,7 @@ export function SubmitForm() {
                 variant="outline"
                 onClick={handleAutoDetect}
                 disabled={isDetecting || !url.trim()}
-                className="border-line hover:bg-surface mt-2 h-[52px] shrink-0 gap-1.5 rounded-[20px] px-4 font-sans text-xs font-bold uppercase"
+                className="border-line hover:bg-surface mt-2 h-13 shrink-0 gap-1.5 rounded-xl px-4 font-mono text-xs uppercase"
               >
                 {isDetecting ? (
                   <CircleNotchIcon className="size-3.5 animate-spin" />
@@ -687,7 +687,7 @@ export function SubmitForm() {
               variant="outline"
               size="sm"
               onClick={resetForm}
-              className="border-[1.5px] font-sans text-xs uppercase"
+              className="border-[1.5px] font-mono text-xs uppercase"
             >
               Reset
             </Button>
@@ -696,7 +696,7 @@ export function SubmitForm() {
                 type="submit"
                 size="sm"
                 disabled={isSubmitting}
-                className="border-[1.5px] font-sans text-xs font-bold uppercase"
+                className="border-[1.5px] font-mono text-xs font-bold uppercase"
               >
                 {isSubmitting ? (
                   <>
@@ -712,7 +712,7 @@ export function SubmitForm() {
                 type="button"
                 size="sm"
                 onClick={() => setAuthModalOpen(true)}
-                className="border-[1.5px] font-sans text-xs font-bold uppercase"
+                className="border-[1.5px] font-mono text-xs font-bold uppercase"
               >
                 <UserIcon weight="bold" className="mr-1.5 size-3.5" />
                 Sign In to Submit
