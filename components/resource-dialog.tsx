@@ -655,7 +655,7 @@ export function ResourceDialog({
                     ))}
                   </p>
                   {authorList.length === 1 && activeTool.authorLinks && (
-                    <AuthorSocialLinks links={activeTool.authorLinks} size="sm" variant="subtle" />
+                    <AuthorSocialLinks links={activeTool.authorLinks} size="md" variant="outline" />
                   )}
                 </div>
               );
