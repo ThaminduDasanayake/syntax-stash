@@ -23,6 +23,7 @@ export interface AuthorSocialLinksProps {
   className?: string;
   detailedTooltip?: boolean;
   emptyFallback?: React.ReactNode;
+  interactive?: boolean;
   links?: AuthorLinks | AuthorLinkInput | null;
   size?: "xs" | "sm" | "md";
   variant?: "subtle" | "outline";
@@ -141,6 +142,7 @@ export function AuthorSocialLinks({
   className,
   detailedTooltip = false,
   emptyFallback = null,
+  interactive = true,
   links,
   size = "sm",
   variant = "subtle",
@@ -161,6 +163,23 @@ export function AuthorSocialLinks({
   }
 
   const sizeSpec = SIZE_CLASSES[size];
+
+  if (!interactive) {
+    return (
+      <div className={cn("flex flex-wrap items-center gap-2", className)}>
+        {activeItems.map((item) => (
+          <span
+            key={item.key}
+            title={item.label}
+            aria-label={item.label}
+            className="inline-flex items-center justify-center text-zinc-400 transition-colors group-hover:text-zinc-200"
+          >
+            {item.renderIcon(sizeSpec.icon, sizeSpec.img)}
+          </span>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className={cn("flex flex-wrap items-center gap-1.5", className)}>

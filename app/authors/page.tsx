@@ -23,6 +23,9 @@ export default async function AuthorsPage() {
     <div className="lib-page">
       <header className="lib-header">
         <div className="section-inner">
+          <div className="text-primary mb-3 font-mono text-xs font-bold tracking-widest uppercase">
+            {"// CREATORS & MAINTAINERS"}
+          </div>
           <h1 className="lib-headline">AUTHORS & CREATORS</h1>
           <p className="lib-sub">
             Browse the designers, developers, and open-source teams behind the curated tools in
