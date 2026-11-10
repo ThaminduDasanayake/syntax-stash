@@ -107,6 +107,8 @@ export async function POST(req: Request) {
     });
 
     revalidateTag("authors", { expire: 0 });
+    revalidateTag("resources", { expire: 0 });
+    revalidatePath("/");
     revalidatePath("/authors");
     revalidatePath("/admin/authors");
 
@@ -188,6 +190,8 @@ export async function PATCH(req: Request) {
     await db.update(author).set(updateData).where(eq(author.id, id));
 
     revalidateTag("authors", { expire: 0 });
+    revalidateTag("resources", { expire: 0 });
+    revalidatePath("/");
     revalidatePath("/authors");
     revalidatePath(`/authors/${existing.slug}`);
     if (updateData.slug) revalidatePath(`/authors/${updateData.slug}`);
@@ -238,6 +242,8 @@ export async function DELETE(req: NextRequest) {
     await db.delete(author).where(eq(author.id, id));
 
     revalidateTag("authors", { expire: 0 });
+    revalidateTag("resources", { expire: 0 });
+    revalidatePath("/");
     revalidatePath("/authors");
     revalidatePath("/admin/authors");
 

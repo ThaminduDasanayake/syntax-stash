@@ -6,16 +6,9 @@ import { db } from "@/lib/db";
 import { author, resourceAuthor } from "@/lib/db/schema";
 import { getAllResources } from "@/lib/resources";
 import { parseAuthors, slugifyAuthor } from "@/lib/utils";
-import { Resource } from "@/types";
+import { AuthorLinks, Resource } from "@/types";
 
-export interface AuthorLinks {
-  blog?: string;
-  github?: string;
-  linkedin?: string;
-  twitter?: string;
-  website?: string;
-  youtube?: string;
-}
+export type { AuthorLinks };
 
 export interface AuthorProfile {
   id?: string;

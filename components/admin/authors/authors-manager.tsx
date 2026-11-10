@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  ArrowsClockwiseIcon,
-  ArrowSquareOutIcon,
-  ArticleIcon,
-  GlobeIcon,
-  UserCircleIcon,
-  XLogoIcon,
-} from "@phosphor-icons/react";
-import Image from "next/image";
+import { ArrowsClockwiseIcon, ArrowSquareOutIcon, UserCircleIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useMemo, useState } from "react";
@@ -21,6 +13,7 @@ import { Pagination } from "@/components/admin/shared/pagination";
 import { SortSelect } from "@/components/admin/shared/sort-select";
 import { AuthorItem } from "@/components/admin/shared/types";
 import { sortEntities } from "@/components/admin/shared/utils";
+import { AuthorSocialLinks } from "@/components/author-social-links";
 import { ConfirmDialog } from "@/components/confirm-dialog/confirm-dialog";
 import { invalidateAuthorCache } from "@/components/submissions/author-combobox";
 import { AddButton } from "@/components/ui/add-button";
@@ -331,152 +324,15 @@ function AuthorsManagerContent({ initialAuthors = [] }: AuthorsManagerProps) {
 
                   {/* Social Links */}
                   <TableCell>
-                    <div className="flex items-center gap-1.5">
-                      {authorItem.website && (
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <a
-                              href={authorItem.website}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
-                            >
-                              <GlobeIcon className="size-3.5" />
-                            </a>
-                          </TooltipTrigger>
-                          <TooltipContent side="top">
-                            <p>Website: {authorItem.website}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      )}
-                      {authorItem.blog && (
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <a
-                              href={authorItem.blog}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
-                            >
-                              <ArticleIcon className="size-3.5" />
-                            </a>
-                          </TooltipTrigger>
-                          <TooltipContent side="top">
-                            <p>Blog: {authorItem.blog}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      )}
-                      {authorItem.github && (
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <a
-                              href={
-                                authorItem.github.startsWith("http")
-                                  ? authorItem.github
-                                  : `https://github.com/${authorItem.github}`
-                              }
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
-                            >
-                              <Image
-                                src="/github.svg"
-                                alt="GitHub"
-                                width={14}
-                                height={14}
-                                className="size-3.5 dark:invert"
-                              />
-                            </a>
-                          </TooltipTrigger>
-                          <TooltipContent side="top">
-                            <p>GitHub: {authorItem.github}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      )}
-                      {authorItem.twitter && (
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <a
-                              href={
-                                authorItem.twitter.startsWith("http")
-                                  ? authorItem.twitter
-                                  : `https://x.com/${authorItem.twitter.replace(/^@/, "")}`
-                              }
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
-                            >
-                              <XLogoIcon className="size-3" />
-                            </a>
-                          </TooltipTrigger>
-                          <TooltipContent side="top">
-                            <p>Twitter/X: {authorItem.twitter}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      )}
-                      {authorItem.linkedin && (
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <a
-                              href={
-                                authorItem.linkedin.startsWith("http")
-                                  ? authorItem.linkedin
-                                  : `https://linkedin.com/in/${authorItem.linkedin}`
-                              }
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="border-line bg-paper/60 text-muted-foreground hover:text-primary hover:border-primary/70 flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
-                            >
-                              <Image
-                                src="/linkedin.svg"
-                                alt="LinkedIn"
-                                width={14}
-                                height={14}
-                                className="size-3.5"
-                              />
-                            </a>
-                          </TooltipTrigger>
-                          <TooltipContent side="top">
-                            <p>LinkedIn: {authorItem.linkedin}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      )}
-                      {authorItem.youtube && (
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <a
-                              href={
-                                authorItem.youtube.startsWith("http")
-                                  ? authorItem.youtube
-                                  : `https://youtube.com/${authorItem.youtube}`
-                              }
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="border-line bg-paper/60 hover:border-primary/70 flex size-6 items-center justify-center rounded border-[1.5px] transition-colors"
-                            >
-                              <Image
-                                src="/youtube.svg"
-                                alt="YouTube"
-                                width={14}
-                                height={14}
-                                className="size-3.5"
-                              />
-                            </a>
-                          </TooltipTrigger>
-                          <TooltipContent side="top">
-                            <p>YouTube: {authorItem.youtube}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      )}
-                      {!authorItem.website &&
-                        !authorItem.blog &&
-                        !authorItem.github &&
-                        !authorItem.twitter &&
-                        !authorItem.linkedin &&
-                        !authorItem.youtube && (
-                          <span className="text-muted-foreground text-[11px]">No links</span>
-                        )}
-                    </div>
+                    <AuthorSocialLinks
+                      links={authorItem}
+                      size="xs"
+                      variant="outline"
+                      detailedTooltip
+                      emptyFallback={
+                        <span className="text-muted-foreground text-[11px]">No links</span>
+                      }
+                    />
                   </TableCell>
 
                   {/* Assigned Resources */}

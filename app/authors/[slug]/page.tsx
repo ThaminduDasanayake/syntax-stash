@@ -1,11 +1,10 @@
-import { ArrowLeftIcon, ArticleIcon, GlobeIcon, XLogoIcon } from "@phosphor-icons/react/ssr";
+import { ArrowLeftIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { AuthorSocialLinks } from "@/components/author-social-links";
 import { FilterSection } from "@/components/filter-section";
-import { Button } from "@/components/ui/button";
 import { getAllAuthors, getAuthorBySlug } from "@/lib/authors";
 
 type Params = { slug: string };
@@ -40,40 +39,6 @@ export default async function AuthorPage({ params }: { params: Promise<Params> }
 
   const { categories, count, links, name, resources } = authorData;
 
-  const SOCIAL_LINKS = [
-    { href: links?.blog, icon: <ArticleIcon className="size-3.5" />, key: "blog", label: "Blog" },
-    {
-      href: links?.github,
-      icon: <Image src="/github.svg" alt="GitHub" width={20} height={20} className="dark:invert" />,
-      key: "github",
-      label: "GitHub",
-    },
-    {
-      href: links?.linkedin,
-      icon: <Image src="/linkedin.svg" alt="LinkedIn" width={20} height={20} />,
-      key: "linkedin",
-      label: "LinkedIn",
-    },
-    {
-      href: links?.twitter,
-      icon: <XLogoIcon weight="bold" className="size-5" />,
-      key: "twitter",
-      label: "X / Twitter",
-    },
-    {
-      href: links?.website,
-      icon: <GlobeIcon className="size-5" />,
-      key: "website",
-      label: "Website",
-    },
-    {
-      href: links?.youtube,
-      icon: <Image src="/youtube.svg" alt="YouTube" width={20} height={20} />,
-      key: "youtube",
-      label: "YouTube",
-    },
-  ];
-
   return (
     <div className="lib-page">
       {/* Header */}
@@ -97,25 +62,7 @@ export default async function AuthorPage({ params }: { params: Promise<Params> }
             </div>
 
             {/* External Links */}
-            {links && Object.values(links).some(Boolean) && (
-              <div className="mb-6 flex flex-wrap items-center gap-1.5">
-                {SOCIAL_LINKS.filter((item) => Boolean(item.href)).map(
-                  ({ href, icon, key, label }) => (
-                    <Button
-                      key={key}
-                      size="icon"
-                      variant="ghost"
-                      asChild
-                      className="text-muted-foreground hover:text-foreground border-line-2 hover:border-foreground size-8 rounded-lg border-[1.5px] transition-all duration-150 hover:-translate-y-0.5 active:translate-y-0"
-                    >
-                      <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label}>
-                        {icon}
-                      </a>
-                    </Button>
-                  ),
-                )}
-              </div>
-            )}
+            <AuthorSocialLinks links={links} size="md" variant="outline" className="mb-6" />
           </div>
         </div>
       </header>

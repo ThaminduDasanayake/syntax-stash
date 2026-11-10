@@ -746,11 +746,11 @@
 }
 
 @utility modal-related-chip {
-  @apply xs:inline-flex font-mono text-[11px] font-semibold tracking-wider uppercase flex cursor-pointer items-center justify-start gap-2 rounded-full border-[1.5px] border-white/10 bg-white/3 px-3.5 py-2 text-zinc-300 shadow-[0_1px_2px_rgba(0,0,0,0.25)] transition-[transform,background-color,border-color,color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-primary/40 hover:bg-primary/10 hover:text-white active:scale-[0.98] sm:px-3 sm:py-1.5;
+  @apply xs:inline-flex hover:border-primary/40 hover:bg-primary/10 flex cursor-pointer items-center justify-start gap-2 rounded-full border-[1.5px] border-white/10 bg-white/3 px-3.5 py-2 font-mono text-[11px] font-semibold tracking-wider text-zinc-300 uppercase shadow-[0_1px_2px_rgba(0,0,0,0.25)] transition-[transform,background-color,border-color,color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:text-white active:scale-[0.98] sm:px-3 sm:py-1.5;
 }
 
 @utility modal-chip-dot {
-  @apply inline-block aspect-square size-1.5 shrink-0 rounded-full bg-zinc-500/80 transition-colors duration-200 group-hover:bg-primary;
+  @apply group-hover:bg-primary inline-block aspect-square size-1.5 shrink-0 rounded-full bg-zinc-500/80 transition-colors duration-200;
 }
 
 @utility modal-launch {

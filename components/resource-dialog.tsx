@@ -14,6 +14,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { AuthModal } from "@/components/auth-modal";
+import { AuthorSocialLinks } from "@/components/author-social-links";
 import { CardIcon } from "@/components/card-icon";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
@@ -341,7 +342,8 @@ export function ResourceDialog({
         const rAuthors = parseAuthors(r.author);
         return currentAuthors.some((ca) =>
           rAuthors.some(
-            (ra) => ra.toLowerCase() === ca.toLowerCase() || slugifyAuthor(ra) === slugifyAuthor(ca),
+            (ra) =>
+              ra.toLowerCase() === ca.toLowerCase() || slugifyAuthor(ra) === slugifyAuthor(ca),
           ),
         );
       })
@@ -638,19 +640,24 @@ export function ResourceDialog({
               if (authorList.length === 0) return null;
 
               return (
-                <p className="modal-author text-muted-foreground flex flex-wrap items-center gap-1">
-                  {authorList.map((authorName, index) => (
-                    <span key={authorName} className="inline-flex items-center">
-                      {index > 0 && <span className="mr-1 opacity-60">&</span>}
-                      <Link
-                        href={`/authors/${slugifyAuthor(authorName)}`}
-                        className="modal-author-link text-muted-foreground hover:text-foreground hover:underline"
-                      >
-                        {authorName}
-                      </Link>
-                    </span>
-                  ))}
-                </p>
+                <div className="mt-auto flex flex-col gap-2.5 pt-4 md:pt-6">
+                  <p className="modal-author text-muted-foreground mt-0! flex flex-wrap items-center gap-1 pt-0!">
+                    {authorList.map((authorName, index) => (
+                      <span key={authorName} className="inline-flex items-center">
+                        {index > 0 && <span className="mr-1 opacity-60">&</span>}
+                        <Link
+                          href={`/authors/${slugifyAuthor(authorName)}`}
+                          className="modal-author-link text-muted-foreground hover:text-foreground hover:underline"
+                        >
+                          {authorName}
+                        </Link>
+                      </span>
+                    ))}
+                  </p>
+                  {authorList.length === 1 && activeTool.authorLinks && (
+                    <AuthorSocialLinks links={activeTool.authorLinks} size="sm" variant="subtle" />
+                  )}
+                </div>
               );
             })()}
         </div>

@@ -2,17 +2,15 @@
 
 import {
   ArrowElbowDownRightIcon,
-  ArticleIcon,
   EyeIcon,
-  GlobeIcon,
   PencilSimpleIcon,
   TrashIcon,
-  XLogoIcon,
 } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
 
+import { AuthorSocialLinks } from "@/components/author-social-links";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/ui/copy-button";
@@ -28,83 +26,38 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useAuthors } from "@/hooks/use-authors";
 import { parseAuthors, slugifyAuthor } from "@/lib/utils";
+import { AuthorLinks } from "@/types";
 
 import { PingButton } from "../shared/ping-button";
 import { ResourceItem } from "../shared/types";
 
-function getAuthorSocialLinks(
+function resolveAuthorLinks(
   authorName: string,
   item: ResourceItem,
   canonicalAuthors: import("@/lib/authors").AuthorWithResources[],
-) {
+): AuthorLinks {
   const cleanName = authorName.trim();
   const slug = slugifyAuthor(cleanName);
   const found = canonicalAuthors.find(
     (a) => a.slug === slug || a.name.toLowerCase() === cleanName.toLowerCase(),
   );
 
-  const links: { href: string; icon: React.ReactNode; key: string; label: string }[] = [];
-
   const parsedItemAuthors = parseAuthors(item.authorName);
   const isSingleItemAuthor = parsedItemAuthors.length === 1;
 
-  const blog = found?.links?.blog || (isSingleItemAuthor ? item.authorBlog : undefined);
-  const github = found?.links?.github || (isSingleItemAuthor ? item.authorGithub : undefined);
-  const linkedin = found?.links?.linkedin || (isSingleItemAuthor ? item.authorLinkedin : undefined);
-  const twitter = found?.links?.twitter || (isSingleItemAuthor ? item.authorTwitter : undefined);
-  const website = found?.links?.website || (isSingleItemAuthor ? item.authorWebsite : undefined);
-  const youtube = found?.links?.youtube || (isSingleItemAuthor ? item.authorYoutube : undefined);
-
-  if (blog) {
-    links.push({
-      href: blog,
-      icon: <ArticleIcon className="size-3.5" />,
-      key: "blog",
-      label: "Blog",
-    });
-  }
-  if (github) {
-    links.push({
-      href: github,
-      icon: <Image src="/github.svg" alt="GitHub" width={20} height={20} />,
-      key: "github",
-      label: "GitHub",
-    });
-  }
-  if (linkedin) {
-    links.push({
-      href: linkedin,
-      icon: <Image src="/linkedin.svg" alt="LinkedIn" width={20} height={20} />,
-      key: "linkedin",
-      label: "LinkedIn",
-    });
-  }
-  if (twitter) {
-    links.push({
-      href: twitter,
-      icon: <XLogoIcon weight="bold" className="size-5" />,
-      key: "twitter",
-      label: "X / Twitter",
-    });
-  }
-  if (website) {
-    links.push({
-      href: website,
-      icon: <GlobeIcon className="size-5" />,
-      key: "website",
-      label: "Website",
-    });
-  }
-  if (youtube) {
-    links.push({
-      href: youtube,
-      icon: <Image src="/youtube.svg" alt="YouTube" width={20} height={20} />,
-      key: "youtube",
-      label: "YouTube",
-    });
-  }
-
-  return links;
+  return {
+    blog: found?.links?.blog || (isSingleItemAuthor ? item.authorBlog || undefined : undefined),
+    github:
+      found?.links?.github || (isSingleItemAuthor ? item.authorGithub || undefined : undefined),
+    linkedin:
+      found?.links?.linkedin || (isSingleItemAuthor ? item.authorLinkedin || undefined : undefined),
+    twitter:
+      found?.links?.twitter || (isSingleItemAuthor ? item.authorTwitter || undefined : undefined),
+    website:
+      found?.links?.website || (isSingleItemAuthor ? item.authorWebsite || undefined : undefined),
+    youtube:
+      found?.links?.youtube || (isSingleItemAuthor ? item.authorYoutube || undefined : undefined),
+  };
 }
 
 export interface ResourceTableProps {
@@ -299,7 +252,7 @@ export function ResourceTable({
                   {parsedAuthors.length > 0 ? (
                     <div className="flex flex-wrap items-center gap-1">
                       {parsedAuthors.map((authorName, index) => {
-                        const authorLinks = getAuthorSocialLinks(authorName, item, authors);
+                        const authorLinks = resolveAuthorLinks(authorName, item, authors);
                         return (
                           <span key={authorName} className="inline-flex items-center">
                             {index > 0 && (
@@ -322,38 +275,16 @@ export function ResourceTable({
                                 sideOffset={6}
                                 className="bg-popover/95 w-auto min-w-0 rounded-full border-[1.5px] px-2 py-1 backdrop-blur-md"
                               >
-                                {authorLinks.length > 0 ? (
-                                  <div className="flex items-center gap-1.5">
-                                    {authorLinks.map(({ href, icon, key, label }) => (
-                                      <Tooltip key={key}>
-                                        <TooltipTrigger asChild>
-                                          <Button
-                                            size="icon"
-                                            variant="ghost"
-                                            asChild
-                                            className="text-muted-foreground hover:text-foreground hover:border-foreground border-line-2 size-8 border-[1.5px] transition-all duration-150 hover:-translate-y-0.5 active:translate-y-0"
-                                          >
-                                            <a
-                                              href={href}
-                                              target="_blank"
-                                              rel="noopener noreferrer"
-                                              aria-label={label}
-                                            >
-                                              {icon}
-                                            </a>
-                                          </Button>
-                                        </TooltipTrigger>
-                                        <TooltipContent side="top">
-                                          <p>{label}</p>
-                                        </TooltipContent>
-                                      </Tooltip>
-                                    ))}
-                                  </div>
-                                ) : (
-                                  <span className="text-muted-foreground px-1.5 py-0.5 text-[10px]">
-                                    No links
-                                  </span>
-                                )}
+                                <AuthorSocialLinks
+                                  links={authorLinks}
+                                  size="md"
+                                  variant="outline"
+                                  emptyFallback={
+                                    <span className="text-muted-foreground px-1.5 py-0.5 text-[10px]">
+                                      No links
+                                    </span>
+                                  }
+                                />
                               </HoverCardContent>
                             </HoverCard>
                           </span>
