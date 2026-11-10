@@ -380,7 +380,7 @@ export function ResourceDialog({
           </Button>
         )}
         <Button
-          variant={bookmarked ? "default" : "secondary"}
+          variant="secondary"
           size="default"
           onClick={() => {
             if (!session) {
@@ -390,7 +390,11 @@ export function ResourceDialog({
             toggleBookmark(activeTool);
           }}
           aria-label={bookmarked ? "Saved" : "Save"}
-          className="text-mono-2xs sm:text-mono-xs shrink-0 px-3.5 sm:px-4"
+          className={cn(
+            "text-mono-2xs sm:text-mono-xs shrink-0 px-3.5 sm:px-4",
+            bookmarked &&
+              "border-primary/40 bg-primary/15 text-primary hover:border-primary/60 hover:bg-primary/25",
+          )}
         >
           <BookmarkSimpleIcon weight={bookmarked ? "fill" : "bold"} className="size-4" />
           <span className="hidden sm:inline">{bookmarked ? "Saved" : "Save"}</span>
