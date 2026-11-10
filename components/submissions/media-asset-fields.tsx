@@ -260,6 +260,53 @@ const ICON_BG_OPTIONS: readonly ToggleOption<IconColorOption>[] = [
     tooltip: "Invert",
   },
 ];
+
+const OG_BG_OPTIONS: readonly ToggleOption<OgImageBgColor>[] = [
+  {
+    id: "none",
+    icon: (
+      <CircleIcon
+        weight="fill"
+        className="size-4 shrink-0 rounded-full text-zinc-500/45 ring-1 ring-white/15"
+      />
+    ),
+    label: "None (Dark Card)",
+    tooltip: "None (Dark Card)",
+  },
+  {
+    id: "white",
+    icon: (
+      <CircleIcon
+        weight="fill"
+        className="size-4 shrink-0 rounded-full text-white ring-1 ring-black/15"
+      />
+    ),
+    label: "White Canvas",
+    tooltip: "White Canvas",
+  },
+  {
+    id: "dark",
+    icon: (
+      <CircleIcon
+        weight="fill"
+        className="size-4 shrink-0 rounded-full text-[#09090b] ring-1 ring-white/25"
+      />
+    ),
+    label: "Dark Slate",
+    tooltip: "Dark Slate",
+  },
+  {
+    id: "zinc",
+    icon: (
+      <CircleIcon
+        weight="fill"
+        className="size-4 shrink-0 rounded-full text-zinc-600 ring-1 ring-white/25"
+      />
+    ),
+    label: "Zinc",
+    tooltip: "Zinc",
+  },
+];
 /* eslint-enable perfectionist/sort-arrays */
 
 function SegmentedIconToggle<T extends string>({
@@ -555,60 +602,13 @@ export function MediaAssetFields({
                         Canvas color for contain mode or transparent SVGs
                       </span>
                     </div>
-                    <div className="border-line bg-surface/80 inline-flex flex-wrap rounded-[12px] border-[1.5px] p-0.5 font-sans text-[11px]">
-                      <button
-                        type="button"
-                        onClick={() => handleBgChange("none")}
-                        disabled={disabled}
-                        className={cn(
-                          "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
-                          currentBg === "none"
-                            ? "bg-primary text-primary-foreground shadow-xs"
-                            : "text-muted-foreground hover:text-foreground",
-                        )}
-                      >
-                        None (Dark Card)
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleBgChange("white")}
-                        disabled={disabled}
-                        className={cn(
-                          "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
-                          currentBg === "white"
-                            ? "bg-primary text-primary-foreground shadow-xs"
-                            : "text-muted-foreground hover:text-foreground",
-                        )}
-                      >
-                        White Canvas
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleBgChange("dark")}
-                        disabled={disabled}
-                        className={cn(
-                          "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
-                          currentBg === "dark"
-                            ? "bg-primary text-primary-foreground shadow-xs"
-                            : "text-muted-foreground hover:text-foreground",
-                        )}
-                      >
-                        Dark Slate
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleBgChange("zinc")}
-                        disabled={disabled}
-                        className={cn(
-                          "cursor-pointer rounded-[10px] px-2.5 py-1 font-bold transition-all",
-                          currentBg === "zinc"
-                            ? "bg-primary text-primary-foreground shadow-xs"
-                            : "text-muted-foreground hover:text-foreground",
-                        )}
-                      >
-                        Zinc
-                      </button>
-                    </div>
+                    <SegmentedIconToggle
+                      ariaLabel="OG image background color"
+                      options={OG_BG_OPTIONS}
+                      value={currentBg}
+                      onChange={handleBgChange}
+                      disabled={disabled}
+                    />
                   </div>
                 </div>
               );
