@@ -1233,28 +1233,29 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
           <div className="sticky top-24 space-y-6">
             <div className="border-line bg-paper/40 border-[1.5px] p-5 shadow-xs">
               <h3 className="text-foreground mb-3 font-sans text-xs font-bold tracking-wider uppercase">
-                Live Resource Preview
+                Live Resource Card Preview
               </h3>
               <p className="text-muted-foreground mb-4 text-[11px]">
-                Real-time preview of how this resource will render in the live catalog once
-                published.
+                Real-time preview of how this card will render in the live catalog once published.
               </p>
 
-              <ResourceCardPreview
-                author={editForm.author}
-                cardMaxWidthClass="max-w-xs"
-                category={editForm.category || "Unassigned"}
-                className="rounded-lg"
-                description={editForm.description || "Enter a description..."}
-                favicon={editForm.favicon}
-                iconBg={editForm.iconBg || "none"}
-                ogImage={editForm.ogImage}
-                ogImageBg={editForm.ogImageBg}
-                subtitle={editForm.subtitle}
-                tags={editForm.tags}
-                title={editForm.title || "Resource Title"}
-                url={editForm.url}
-              />
+              <div className="flex justify-center">
+                <ResourceCardPreview
+                  author={editForm.author}
+                  cardMaxWidthClass="max-w-xs"
+                  category={editForm.category || "Unassigned"}
+                  className="rounded-lg"
+                  description={editForm.description || "Enter a description..."}
+                  favicon={editForm.favicon}
+                  iconBg={editForm.iconBg || "none"}
+                  ogImage={editForm.ogImage}
+                  ogImageBg={editForm.ogImageBg}
+                  subtitle={editForm.subtitle}
+                  tags={editForm.tags}
+                  title={editForm.title || "Resource Title"}
+                  url={editForm.url}
+                />
+              </div>
             </div>
 
             {/* Quick Meta Card */}

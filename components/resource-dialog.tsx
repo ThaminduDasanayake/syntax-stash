@@ -456,7 +456,7 @@ export function ResourceDialog({
           }}
           aria-label={bookmarked ? "Saved" : "Save"}
           className={cn(
-            "group/save text-mono-2xs sm:text-mono-xs shrink-0 px-3.5 transition-[transform,background-color,border-color,color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] sm:px-4",
+            "group/save text-mono-2xs sm:text-mono-xs ease-out-soft shrink-0 px-3.5 transition-[transform,background-color,border-color,color] duration-200 sm:px-4",
             bookmarked
               ? "border-primary/40 bg-primary/15 text-primary hover:border-primary/70 hover:bg-primary/25 hover:text-primary"
               : "hover:border-primary/40 hover:bg-primary/10 hover:text-primary",
@@ -465,7 +465,7 @@ export function ResourceDialog({
           <span
             key={savePopTick}
             className={cn(
-              "inline-flex items-center justify-center transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/save:scale-110 motion-reduce:transition-none motion-reduce:group-hover/save:scale-100",
+              "ease-out-soft inline-flex items-center justify-center transition-transform duration-200 group-hover/save:scale-110 motion-reduce:transition-none motion-reduce:group-hover/save:scale-100",
               savePopTick > 0 &&
                 bookmarked &&
                 "animate-[bookmark-pop_360ms_cubic-bezier(0.22,1,0.36,1)] motion-reduce:animate-none",
