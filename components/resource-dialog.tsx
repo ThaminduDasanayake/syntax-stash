@@ -432,7 +432,12 @@ export function ResourceDialog({
             />
             <span className="hidden sm:inline">GitHub</span>
             {formattedStars && (
-              <span className="text-muted-foreground group-hover:text-foreground inline-flex items-center gap-1 transition-colors">
+              <span
+                className="text-muted-foreground group-hover:text-foreground inline-flex items-center gap-1 transition-colors"
+                title={
+                  gitHubStars !== null ? `${gitHubStars.toLocaleString()} GitHub stars` : undefined
+                }
+              >
                 <StarIcon weight="fill" className="text-star size-3.5 shrink-0" />
                 <span>{formattedStars}</span>
               </span>
@@ -758,18 +763,9 @@ export function ResourceDialog({
 
             {activeTool.github && (
               <div className="mb-5.5 flex flex-col items-start">
-                <div className="mb-2.5 flex w-full items-center gap-4">
-                  <span className={cn("text-display-2xs", activeThemeStyles.label)}>GitHub</span>
-                  {formattedStars && (
-                    <span
-                      className="text-muted-foreground inline-flex items-center gap-1 font-mono text-xs leading-none uppercase tabular-nums"
-                      title={`${gitHubStars?.toLocaleString()} GitHub stars`}
-                    >
-                      <StarIcon weight="fill" className="text-star size-3.5 shrink-0" />
-                      <span className="leading-none">{formattedStars}</span>
-                    </span>
-                  )}
-                </div>
+                <span className={cn("text-display-2xs mb-2.5 block", activeThemeStyles.label)}>
+                  GitHub
+                </span>
                 <div className="flex items-center justify-between gap-2">
                   <a
                     href={activeTool.github}
