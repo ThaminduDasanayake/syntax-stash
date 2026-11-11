@@ -1,5 +1,6 @@
 "use client";
 
+import { GlobeIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
 import { cn, isValidHttpUrl } from "@/lib/utils";
@@ -101,16 +102,20 @@ export function CardIcon({
   const isDarkTile = color === "dark" || iconClassName?.includes("bg-black");
   const isInverted = color === "invert" || iconClassName?.includes("invert");
 
-  if (!cleanFavicon || state.error) {
+  if (!cleanFavicon || !isValidUrl || state.error) {
     return (
       <div
+        aria-hidden="true"
         className={cn(
           className,
-          "card-icon-box flex items-center justify-center overflow-hidden rounded-[22%] p-0",
+          "card-icon-box flex items-center justify-center overflow-hidden rounded-[22%] p-0 select-none",
           isWhiteTile && "bg-white! text-black!",
           isDarkTile && "bg-black! text-white!",
+          className,
         )}
-      />
+      >
+        <GlobeIcon weight="light" className="size-full" />
+      </div>
     );
   }
 
