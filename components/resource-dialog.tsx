@@ -514,7 +514,7 @@ export function ResourceDialog({
       ref={dialogContentRef}
       disableDefaultAnimation={Boolean(originRect)}
       showCloseButton={false}
-      className="modal-panel bg-background fixed! top-1/2! left-1/2! flex! -translate-x-1/2! -translate-y-1/2! flex-col! gap-0! overflow-hidden! p-0!"
+      className="modal-panel"
     >
       {/* Desktop Close Button */}
       <div className="modal-top-actions hidden md:flex">
@@ -572,10 +572,10 @@ export function ResourceDialog({
       <div
         ref={scrollContainerRef}
         onScroll={handleScroll}
-        className="modal-body flex min-h-0 flex-1 [scrollbar-color:var(--line-2)_transparent] flex-col overflow-y-auto overscroll-none md:grid md:grid-cols-[340px_1fr] md:overflow-hidden md:overscroll-contain [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent"
+        className="modal-body [scrollbar-color:var(--line-2)_transparent] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent"
       >
         {/* Left Side */}
-        <div className="modal-left text-foreground relative flex shrink-0 flex-col border-b-[1.5px] border-white/8 bg-[#141416] px-5 pt-3 pb-6 md:overflow-y-auto md:border-r md:border-b-0 md:px-7 md:py-8">
+        <div className="modal-left">
           {/* Desktop Category Header */}
           <div className="modal-cat-label hidden md:flex">
             <div className="flex min-w-0 items-center gap-2">
@@ -666,10 +666,10 @@ export function ResourceDialog({
         </div>
 
         {/* Right Side */}
-        <div className="modal-right bg-background flex flex-col md:overflow-hidden">
+        <div className="modal-right">
           <div
             ref={rightContentRef}
-            className="modal-content [scrollbar-color:var(--line-2)_transparent] px-5 pt-5 pb-6 md:min-h-0 md:flex-1 md:overflow-y-auto md:overscroll-contain md:px-8 md:pt-14 md:pb-5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent"
+            className="modal-content [scrollbar-color:var(--line-2)_transparent] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent"
           >
             {(() => {
               if (!currentOg || ogState.error) return null;
