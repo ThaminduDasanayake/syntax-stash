@@ -78,7 +78,6 @@ export function ResourceCard({
       <div className="flex-1 p-2 sm:p-2.5">
         <ResourceCardView
           title={res.title}
-          subtitle={res.subtitle}
           description={res.description}
           category={res.category}
           favicon={res.favicon}

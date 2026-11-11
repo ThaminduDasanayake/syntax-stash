@@ -555,6 +555,9 @@ export function SubmitForm() {
               onChange={(e) => setSubtitle(e.target.value)}
               suffix={<FieldCheckmark checked={Boolean(subtitle.trim())} />}
             />
+            <p className="text-muted-foreground px-2 pt-0.5 text-[10px]">
+              Short tagline or motto displayed in the detail dialog
+            </p>
           </div>
 
           {/* Section 3: Description */}

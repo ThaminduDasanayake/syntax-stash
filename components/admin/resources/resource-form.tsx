@@ -216,7 +216,7 @@ function ResourceFormContent({ initialData, mode = "create" }: ResourceFormProps
       {/* Header with Navigation */}
       <div className="border-line border-b-[1.5px] pb-6">
         <div className="space-y-1">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 font-mono">
             <Button
               asChild
               size="sm"

@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { CopyButton } from "@/components/ui/copy-button";
 import { DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useBookmarks } from "@/hooks/use-bookmarks";
 import { useSession } from "@/lib/auth-client";
 import { formatStarCount, getGitHubStars } from "@/lib/github";
@@ -396,114 +397,121 @@ export function ResourceDialog({
   }, [activeTool, authorResources, resourcePool]);
 
   const footerContent = (
-    <>
-      <div className="modal-launch flex items-center gap-1.5 sm:gap-2">
-        <Button asChild size="default" className="flex-1 px-4">
-          <a
-            href={activeTool.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-mono-2xs sm:text-mono-xs w-full"
-          >
-            Open resource <ArrowSquareOutIcon weight="bold" />
-          </a>
-        </Button>
-        {activeTool.github && (
-          <Button
-            asChild
-            variant="secondary"
-            size="default"
-            className="group shrink-0 px-3.5 sm:px-4"
-          >
-            <a
-              href={activeTool.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-mono-2xs sm:text-mono-xs inline-flex items-center gap-1.5"
-              aria-label="GitHub repository"
-            >
-              <Image
-                src="/github.svg"
-                alt="GitHub"
-                width={16}
-                height={16}
-                className="size-4 shrink-0 transition-transform group-hover:scale-105"
-              />
-              <span className="hidden sm:inline">GitHub</span>
-              {formattedStars && (
-                <span className="text-muted-foreground group-hover:text-foreground inline-flex items-center gap-1 transition-colors">
-                  <StarIcon weight="fill" className="text-star size-3.5 shrink-0" />
-                  <span>{formattedStars}</span>
-                </span>
-              )}
-            </a>
-          </Button>
-        )}
+    <div className="modal-launch">
+      <Button asChild size="default" className="min-w-0 flex-1 px-3 sm:px-4">
+        <a
+          href={activeTool.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-mono-2xs sm:text-mono-xs w-full whitespace-nowrap"
+        >
+          Open <span className="xs:inline hidden">resource</span>
+          <ArrowSquareOutIcon weight="bold" />
+        </a>
+      </Button>
+      {activeTool.github && (
         <Button
+          asChild
           variant="secondary"
           size="default"
-          onMouseEnter={() => setIsSaveHovered(true)}
-          onMouseLeave={() => setIsSaveHovered(false)}
-          onClick={() => {
-            if (!session) {
-              setAuthModalOpen(true);
-              return;
-            }
-            if (!bookmarked) {
-              setSavePopTick((t) => t + 1);
-            }
-            toggleBookmark(activeTool);
-          }}
-          aria-label={bookmarked ? "Saved" : "Save"}
+          className="group shrink-0 px-2.5 sm:px-4"
+        >
+          <a
+            href={activeTool.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-mono-2xs sm:text-mono-xs inline-flex items-center gap-1.5"
+            aria-label="GitHub repository"
+          >
+            <Image
+              src="/github.svg"
+              alt="GitHub"
+              width={16}
+              height={16}
+              className="size-4 shrink-0 transition-transform group-hover:scale-105"
+            />
+            <span className="hidden sm:inline">GitHub</span>
+            {formattedStars && (
+              <span
+                className="text-muted-foreground group-hover:text-foreground inline-flex items-center gap-1 transition-colors"
+                title={
+                  gitHubStars !== null ? `${gitHubStars.toLocaleString()} GitHub stars` : undefined
+                }
+              >
+                <StarIcon weight="fill" className="text-star size-3.5 shrink-0" />
+                <span>{formattedStars}</span>
+              </span>
+            )}
+          </a>
+        </Button>
+      )}
+      <Button
+        variant="secondary"
+        size="default"
+        onMouseEnter={() => setIsSaveHovered(true)}
+        onMouseLeave={() => setIsSaveHovered(false)}
+        onClick={() => {
+          if (!session) {
+            setAuthModalOpen(true);
+            return;
+          }
+          if (!bookmarked) {
+            setSavePopTick((t) => t + 1);
+          }
+          toggleBookmark(activeTool);
+        }}
+        aria-label={bookmarked ? "Saved" : "Save"}
+        className={cn(
+          "group/save text-mono-2xs sm:text-mono-xs ease-out-soft shrink-0 px-2.5 transition-[transform,background-color,border-color,color] duration-200 sm:px-4",
+          bookmarked
+            ? "border-primary/40 bg-primary/15 text-primary hover:border-primary/70 hover:bg-primary/25 hover:text-primary"
+            : "hover:border-primary/40 hover:bg-primary/10 hover:text-primary",
+        )}
+      >
+        <span
+          key={savePopTick}
           className={cn(
-            "group/save text-mono-2xs sm:text-mono-xs shrink-0 px-3.5 transition-[transform,background-color,border-color,color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] sm:px-4",
-            bookmarked
-              ? "border-primary/40 bg-primary/15 text-primary hover:border-primary/70 hover:bg-primary/25 hover:text-primary"
-              : "hover:border-primary/40 hover:bg-primary/10 hover:text-primary",
+            "ease-out-soft inline-flex items-center justify-center transition-transform duration-200 group-hover/save:scale-110 motion-reduce:transition-none motion-reduce:group-hover/save:scale-100",
+            savePopTick > 0 &&
+              bookmarked &&
+              "animate-[bookmark-pop_360ms_cubic-bezier(0.22,1,0.36,1)] motion-reduce:animate-none",
           )}
         >
-          <span
-            key={savePopTick}
-            className={cn(
-              "inline-flex items-center justify-center transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/save:scale-110 motion-reduce:transition-none motion-reduce:group-hover/save:scale-100",
-              savePopTick > 0 &&
-                bookmarked &&
-                "animate-[bookmark-pop_360ms_cubic-bezier(0.22,1,0.36,1)] motion-reduce:animate-none",
-            )}
-          >
-            <BookmarkSimpleIcon
-              weight={bookmarked ? "fill" : isSaveHovered ? "duotone" : "bold"}
-              className="size-4"
-            />
-          </span>
-          <span className="hidden sm:inline">{bookmarked ? "Saved" : "Save"}</span>
-        </Button>
-      </div>
-
-      <div className="modal-nav-row">
-        <div className="flex items-center gap-2 font-mono text-[11px] text-zinc-500 tabular-nums">
-          {currentIndex !== -1 && resourcePool.length > 0 && (
-            <span>
-              {currentIndex + 1} / {resourcePool.length}
-            </span>
-          )}
-          <span className="hidden text-zinc-600 sm:inline">← →</span>
-        </div>
-        <ButtonGroup>
-          <Button
-            variant="secondary"
-            size="icon"
-            onClick={handlePrev}
-            aria-label="Previous resource"
-          >
-            <CaretLeftIcon />
-          </Button>
-          <Button variant="secondary" size="icon" onClick={handleNext} aria-label="Next resource">
-            <CaretRightIcon />
-          </Button>
-        </ButtonGroup>
-      </div>
-    </>
+          <BookmarkSimpleIcon
+            weight={bookmarked ? "fill" : isSaveHovered ? "duotone" : "bold"}
+            className="size-4"
+          />
+        </span>
+        <span className="hidden sm:inline">{bookmarked ? "Saved" : "Save"}</span>
+      </Button>
+      <ButtonGroup className="shrink-0">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="secondary"
+              size="icon"
+              onClick={handlePrev}
+              aria-label="Previous resource"
+            >
+              <CaretLeftIcon />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="top">
+            <p>Previous (←)</p>
+          </TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="secondary" size="icon" onClick={handleNext} aria-label="Next resource">
+              <CaretRightIcon />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="top">
+            <p>Next (→)</p>
+          </TooltipContent>
+        </Tooltip>
+      </ButtonGroup>
+    </div>
   );
 
   return (
@@ -511,7 +519,7 @@ export function ResourceDialog({
       ref={dialogContentRef}
       disableDefaultAnimation={Boolean(originRect)}
       showCloseButton={false}
-      className="modal-panel bg-background fixed! top-1/2! left-1/2! flex! -translate-x-1/2! -translate-y-1/2! flex-col! gap-0! overflow-hidden! p-0!"
+      className="modal-panel"
     >
       {/* Desktop Close Button */}
       <div className="modal-top-actions hidden md:flex">
@@ -569,10 +577,10 @@ export function ResourceDialog({
       <div
         ref={scrollContainerRef}
         onScroll={handleScroll}
-        className="modal-body flex min-h-0 flex-1 [scrollbar-color:var(--line-2)_transparent] flex-col overflow-y-auto overscroll-none md:grid md:grid-cols-[340px_1fr] md:overflow-hidden md:overscroll-contain [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent"
+        className="modal-body [scrollbar-color:var(--line-2)_transparent] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent"
       >
         {/* Left Side */}
-        <div className="modal-left text-foreground relative flex shrink-0 flex-col border-b-[1.5px] border-white/8 bg-[#141416] px-5 pt-3 pb-6 md:overflow-y-auto md:border-r md:border-b-0 md:px-7 md:py-8">
+        <div className="modal-left">
           {/* Desktop Category Header */}
           <div className="modal-cat-label hidden md:flex">
             <div className="flex min-w-0 items-center gap-2">
@@ -663,10 +671,10 @@ export function ResourceDialog({
         </div>
 
         {/* Right Side */}
-        <div className="modal-right bg-background flex flex-col md:overflow-hidden">
+        <div className="modal-right">
           <div
             ref={rightContentRef}
-            className="modal-content [scrollbar-color:var(--line-2)_transparent] px-5 pt-5 pb-6 md:min-h-0 md:flex-1 md:overflow-y-auto md:overscroll-contain md:px-8 md:pt-14 md:pb-5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent"
+            className="modal-content [scrollbar-color:var(--line-2)_transparent] [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track:hover]:bg-transparent"
           >
             {(() => {
               if (!currentOg || ogState.error) return null;
@@ -755,18 +763,9 @@ export function ResourceDialog({
 
             {activeTool.github && (
               <div className="mb-5.5 flex flex-col items-start">
-                <div className="mb-2.5 flex w-full items-center gap-4">
-                  <span className={cn("text-display-2xs", activeThemeStyles.label)}>GitHub</span>
-                  {formattedStars && (
-                    <span
-                      className="text-muted-foreground inline-flex items-center gap-1 font-mono text-xs leading-none uppercase tabular-nums"
-                      title={`${gitHubStars?.toLocaleString()} GitHub stars`}
-                    >
-                      <StarIcon weight="fill" className="text-star size-3.5 shrink-0" />
-                      <span className="leading-none">{formattedStars}</span>
-                    </span>
-                  )}
-                </div>
+                <span className={cn("text-display-2xs mb-2.5 block", activeThemeStyles.label)}>
+                  GitHub
+                </span>
                 <div className="flex items-center justify-between gap-2">
                   <a
                     href={activeTool.github}
@@ -887,9 +886,7 @@ export function ResourceDialog({
       </div>
 
       {/* Mobile Docked Footer at bottom of modal */}
-      <div className="z-20 flex shrink-0 flex-col border-t-[1.5px] border-white/8 bg-[#141416] md:hidden">
-        {footerContent}
-      </div>
+      <div className="z-20 flex shrink-0 flex-col bg-[#141416] md:hidden">{footerContent}</div>
 
       {authModalOpen && <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />}
     </DialogContent>

@@ -35,7 +35,6 @@ export function ResourceCardPreview({
   iconClassName,
   ogImage,
   ogImageBg,
-  subtitle,
   url,
 }: ResourceCardPreviewProps) {
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -62,7 +61,6 @@ export function ResourceCardPreview({
           ogImageBg={ogImageBg}
           onBookmarkClick={() => setIsBookmarked((prev) => !prev)}
           showTags={false}
-          subtitle={subtitle}
           title={title}
           url={url}
         />

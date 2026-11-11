@@ -506,7 +506,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
       {/* Header with Navigation & Quick Actions */}
       <div className="border-line flex flex-col gap-4 border-b-[1.5px] pb-6 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 font-mono">
             <Button
               asChild
               size="sm"
@@ -760,6 +760,9 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
                 className="font-sans text-xs"
               />
             </div>
+            <p className="text-muted-foreground text-[10px]">
+              Short tagline or motto displayed in the detail dialog
+            </p>
           </div>
 
           {/* Section 3: Description */}
