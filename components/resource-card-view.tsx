@@ -32,7 +32,6 @@ export interface ResourceCardViewProps {
   priority?: boolean;
   showTags?: boolean;
   stars?: number | null;
-  subtitle?: string | null;
   tags?: string | string[] | null;
   theme?: Theme;
   themeClasses?: string;

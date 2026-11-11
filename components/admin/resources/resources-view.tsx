@@ -146,7 +146,6 @@ function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
     let missingGithub = 0;
     let missingFavicon = 0;
     let missingTags = 0;
-    let missingSubtitle = 0;
     let missingDescription = 0;
     let anyMissing = 0;
 
@@ -161,7 +160,6 @@ function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
       const hasNoGithub = !r.github || !r.github.trim();
       const hasNoFavicon = !r.favicon || !r.favicon.trim();
       const hasNoTags = !r.tags || !r.tags.trim();
-      const hasNoSubtitle = !r.subtitle || !r.subtitle.trim();
       const hasNoDesc = !r.description || !r.description.trim();
 
       if (hasNoOg) missingOg++;
@@ -169,7 +167,6 @@ function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
       if (hasNoGithub) missingGithub++;
       if (hasNoFavicon) missingFavicon++;
       if (hasNoTags) missingTags++;
-      if (hasNoSubtitle) missingSubtitle++;
       if (hasNoDesc) missingDescription++;
 
       if (hasNoOg || hasNoAuthor || hasNoFavicon || hasNoTags || hasNoDesc) {
@@ -184,7 +181,6 @@ function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
       missingFavicon,
       missingGithub,
       missingOg,
-      missingSubtitle,
       missingTags,
     };
   }, [resources, selectedCategory]);
@@ -297,13 +293,6 @@ function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
       });
     }
 
-    if (missingStats.missingSubtitle > 0 || healthFilter === "missing-subtitle") {
-      options.push({
-        label: `Missing Subtitle (${missingStats.missingSubtitle})`,
-        value: "missing-subtitle",
-      });
-    }
-
     if (missingStats.missingDescription > 0 || healthFilter === "missing-description") {
       options.push({
         label: `Missing Description (${missingStats.missingDescription})`,
@@ -389,8 +378,6 @@ function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
       result = result.filter((r) => !r.favicon || !r.favicon.trim());
     } else if (healthFilter === "missing-github") {
       result = result.filter((r) => !r.github || !r.github.trim());
-    } else if (healthFilter === "missing-subtitle") {
-      result = result.filter((r) => !r.subtitle || !r.subtitle.trim());
     } else if (healthFilter === "missing-description") {
       result = result.filter((r) => !r.description || !r.description.trim());
     } else if (healthFilter === "any-missing") {

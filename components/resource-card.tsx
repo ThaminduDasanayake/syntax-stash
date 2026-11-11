@@ -52,7 +52,6 @@ function ResourceCardComponent({
         onCardClick={onCardClick ? (rect?: DOMRect) => onCardClick(resource, rect) : undefined}
         priority={priority}
         stars={stars}
-        subtitle={resource.subtitle}
         tags={resource.tags}
         title={resource.title}
         url={resource.url}
