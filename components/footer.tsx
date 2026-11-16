@@ -14,7 +14,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-ink text-paper border-ink selection:bg-primary selection:text-primary-foreground relative border-t-2 pt-16 pb-6">
+    <footer className="bg-ink text-paper border-ink selection:bg-primary selection:text-primary-foreground relative border-t-2 pt-16 pb-28 sm:pb-8">
       <div className="mx-auto flex w-full max-w-7xl flex-col px-6 sm:px-12 lg:px-16">
         <div className="pb-12">
           <div className="flex max-w-2xl flex-col gap-3">

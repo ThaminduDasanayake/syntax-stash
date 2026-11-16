@@ -41,6 +41,7 @@ interface FilterSectionProps {
 }
 
 const BATCH_SIZE = 36;
+const MAX_VISIBLE_TAGS = 3;
 
 function formatItemCountLabel(count: number, label: string): string {
   if (count === 1) {
@@ -138,6 +139,7 @@ export function FilterSection({
   const [savedOnly, setSavedOnly] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string | null>(initialCategory || null);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [showAllTags, setShowAllTags] = useState(false);
   const [matchMode, setMatchMode] = useState<"any" | "all">("any");
   const [activeSort, setActiveSort] = useState<SortOption>("default");
   const [searchQuery, setSearchQuery] = useState("");
@@ -261,6 +263,7 @@ export function FilterSection({
   };
 
   const handleClearTags = () => {
+    setShowAllTags(false);
     syncUrl(activeCategory, [], matchMode, searchQuery, savedOnly, activeSort);
   };
 
@@ -490,8 +493,8 @@ export function FilterSection({
         <div className="section-inner">
           {/* Active Filter Chips Bar (Shown when tags or active sort are applied) */}
           {(selectedTags.length > 0 || activeSort !== "default") && (
-            <div className="border-border/60 bg-surface/30 mb-6 flex items-center justify-between rounded-xl border-[1.5px] p-2.5 sm:mb-8 sm:p-3">
-              <div className="no-scrollbar flex items-center gap-1.5 overflow-x-auto py-0.5 sm:flex-wrap sm:gap-2">
+            <div className="border-border/60 bg-surface/30 mb-6 flex w-full max-w-full items-start justify-between gap-2.5 rounded-xl border-[1.5px] p-2.5 sm:mb-8 sm:items-center sm:gap-4 sm:p-3">
+              <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1.5 py-0.5 sm:gap-2">
                 <span className="text-mono-2xs text-muted-foreground shrink-0 font-bold tracking-wider uppercase">
                   Active Filters:
                 </span>
@@ -510,7 +513,10 @@ export function FilterSection({
                   </Button>
                 )}
 
-                {selectedTags.map((tag) => (
+                {(showAllTags || selectedTags.length <= MAX_VISIBLE_TAGS
+                  ? selectedTags
+                  : selectedTags.slice(0, MAX_VISIBLE_TAGS)
+                ).map((tag) => (
                   <Button
                     key={tag}
                     size="xs"
@@ -523,6 +529,23 @@ export function FilterSection({
                     <XIcon weight="bold" className="group-hover:text-destructive size-3" />
                   </Button>
                 ))}
+
+                {selectedTags.length > MAX_VISIBLE_TAGS && (
+                  <Button
+                    size="xs"
+                    variant="outline"
+                    onClick={() => setShowAllTags((prev) => !prev)}
+                    className="text-mono-2xs border-border/70 bg-card hover:bg-accent/10 hover:border-border text-muted-foreground hover:text-foreground shrink-0 rounded-lg px-2 py-0.5 font-mono transition-colors"
+                    aria-expanded={showAllTags}
+                    aria-label={
+                      showAllTags
+                        ? "Show fewer tags"
+                        : `Show ${selectedTags.length - MAX_VISIBLE_TAGS} more tags`
+                    }
+                  >
+                    {showAllTags ? "Show less" : `+${selectedTags.length - MAX_VISIBLE_TAGS} more`}
+                  </Button>
+                )}
 
                 {selectedTags.length > 1 && (
                   <Button
@@ -543,7 +566,7 @@ export function FilterSection({
                   variant="clear"
                   size="xs"
                   onClick={handleClearTags}
-                  className="text-mono-2xs text-destructive shrink-0 font-mono font-semibold hover:underline"
+                  className="text-mono-2xs text-destructive shrink-0 pt-0.5 font-mono font-semibold hover:underline sm:pt-0"
                 >
                   Clear tags ({selectedTags.length})
                 </Button>
@@ -707,10 +730,6 @@ export function FilterSection({
         onClearTags={handleClearTags}
         matchMode={matchMode}
         onMatchModeChange={handleMatchModeChange}
-        savedOnly={savedOnly}
-        onSavedToggle={() =>
-          syncUrl(activeCategory, selectedTags, matchMode, searchQuery, !savedOnly, activeSort)
-        }
         filteredCount={filteredItems.length}
         totalCount={totalCategoryMatches || items.length}
         onResetAll={handleResetAll}

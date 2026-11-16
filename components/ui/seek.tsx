@@ -11,6 +11,7 @@ export interface SeekProps {
   defaultValue?: string;
   onChange?: (value: string) => void;
   onSearch?: (value: string) => void;
+  open?: boolean;
   onOpenChange?: (open: boolean) => void;
   placeholder?: string;
   width?: number;
@@ -92,6 +93,7 @@ export const Seek = React.forwardRef<HTMLInputElement, SeekProps>(function Seek(
     onChange,
     onOpenChange,
     onSearch,
+    open: openProp,
     placeholder = "Search",
     size = "default",
     spring = 50,
@@ -110,21 +112,16 @@ export const Seek = React.forwardRef<HTMLInputElement, SeekProps>(function Seek(
   const actualCorner = corner !== undefined ? clamp(corner, 0, maxCorner) : maxCorner;
 
   const [snug, setSnug] = useState(false);
-  const [touch, setTouch] = useState(false);
 
   useEffect(() => {
     const room = window.matchMedia("(max-width: 760px)");
-    const coarse = window.matchMedia("(pointer: coarse)");
     const read = () => {
       setSnug(room.matches);
-      setTouch(coarse.matches);
     };
     read();
     room.addEventListener("change", read);
-    coarse.addEventListener("change", read);
     return () => {
       room.removeEventListener("change", read);
-      coarse.removeEventListener("change", read);
     };
   }, []);
 
@@ -137,7 +134,12 @@ export const Seek = React.forwardRef<HTMLInputElement, SeekProps>(function Seek(
 
   React.useImperativeHandle(forwardedRef, () => inputRef.current as HTMLInputElement);
 
-  const [open, setOpenState] = useState(Boolean(autoFocus || defaultValue || controlledValue));
+  const isControlledOpen = openProp !== undefined;
+  const [internalOpen, setInternalOpen] = useState(
+    Boolean(autoFocus || defaultValue || controlledValue),
+  );
+  const open = isControlledOpen ? openProp : internalOpen;
+
   const [press, setPress] = useState(false);
   const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
   const [busy, setBusy] = useState(false);
@@ -149,10 +151,12 @@ export const Seek = React.forwardRef<HTMLInputElement, SeekProps>(function Seek(
 
   const setOpen = useCallback(
     (next: boolean) => {
-      setOpenState(next);
+      if (!isControlledOpen) {
+        setInternalOpen(next);
+      }
       onOpenChange?.(next);
     },
-    [onOpenChange],
+    [isControlledOpen, onOpenChange],
   );
 
   useEffect(() => {
@@ -160,6 +164,20 @@ export const Seek = React.forwardRef<HTMLInputElement, SeekProps>(function Seek(
       setOpen(true);
     }
   }, [controlledValue, open, setOpen]);
+
+  const isFirstMount = useRef(true);
+  useEffect(() => {
+    if (isFirstMount.current) {
+      isFirstMount.current = false;
+      if (autoFocus && open) {
+        inputRef.current?.focus();
+      }
+      return;
+    }
+    if (!open && inputRef.current === document.activeElement) {
+      inputRef.current?.blur();
+    }
+  }, [autoFocus, open]);
 
   useEffect(() => {
     return () => {
@@ -224,7 +242,9 @@ export const Seek = React.forwardRef<HTMLInputElement, SeekProps>(function Seek(
       () => {
         setPress(false);
         setOpen(true);
-        inputRef.current?.focus();
+        window.setTimeout(() => {
+          inputRef.current?.focus();
+        }, 0);
       },
       still ? 0 : 90,
     );
@@ -240,9 +260,14 @@ export const Seek = React.forwardRef<HTMLInputElement, SeekProps>(function Seek(
   const handleClear = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!isControlled) setUncontrolledValue("");
-    onChange?.("");
-    inputRef.current?.focus();
+    if (currentValue) {
+      if (!isControlled) setUncontrolledValue("");
+      onChange?.("");
+      inputRef.current?.focus();
+    } else {
+      setOpen(false);
+      inputRef.current?.blur();
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -334,7 +359,7 @@ export const Seek = React.forwardRef<HTMLInputElement, SeekProps>(function Seek(
           value={currentValue}
           placeholder={placeholder}
           aria-label={placeholder}
-          inputMode={touch ? "none" : undefined}
+          inputMode="search"
           tabIndex={open ? 0 : -1}
           disabled={disabled}
           onChange={handleChange}
@@ -354,13 +379,13 @@ export const Seek = React.forwardRef<HTMLInputElement, SeekProps>(function Seek(
             left: `${inset + lens + (size === "sm" ? 8 : 11)}px`,
             opacity: Number(sayProgress.toFixed(3)),
             pointerEvents: open ? "auto" : "none",
-            right: `${open && currentValue ? (size === "sm" ? 34 : 40) : 16}px`,
+            right: `${open ? (size === "sm" ? 34 : 40) : 16}px`,
             transform: `translateX(${(1 - sayProgress) * -6}px)`,
           }}
         />
 
-        {/* Clear button when field has content */}
-        {open && currentValue && (
+        {/* Clear/close button when open */}
+        {open && (
           <button
             type="button"
             className={cn(
@@ -369,7 +394,7 @@ export const Seek = React.forwardRef<HTMLInputElement, SeekProps>(function Seek(
                 ? "bg-[#ffffff]/10 text-[#a1a1aa] hover:bg-[#ffffff]/20 hover:text-[#ffffff]"
                 : "bg-[#17181a]/6 text-[#5c5b56] hover:bg-[#17181a]/12 hover:text-[#17181a]",
             )}
-            aria-label="Clear search"
+            aria-label={currentValue ? "Clear search" : "Close search"}
             onClick={handleClear}
             style={{
               height: `${size === "sm" ? 20 : 24}px`,

@@ -3,7 +3,6 @@
 import {
   ArrowsCounterClockwiseIcon,
   ArrowsDownUpIcon,
-  BookmarkSimpleIcon,
   CaretUpIcon,
   CheckIcon,
   ClockIcon,
@@ -16,7 +15,7 @@ import {
   TagIcon,
   XIcon,
 } from "@phosphor-icons/react";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Seek } from "@/components/ui/seek";
@@ -99,7 +98,6 @@ export interface FloatingFilterDockProps {
   onClearTags: () => void;
   onMatchModeChange: (mode: "any" | "all") => void;
   onResetAll: () => void;
-  onSavedToggle?: () => void;
   onSearchChange: (query: string) => void;
   onSortChange?: (sort: SortOption) => void;
   onToggleTag: (tag: string) => void;
@@ -178,7 +176,7 @@ function CategoryPickerContent({
       </div>
 
       {/* Category Items List */}
-      <div className="no-scrollbar max-h-64 space-y-0.5 overflow-y-auto p-1.5 sm:max-h-72">
+      <div className="no-scrollbar max-h-[50vh] space-y-0.5 overflow-y-auto p-1.5 sm:max-h-72">
         {filteredCategories.length === 0 ? (
           <div className="py-6 text-center font-mono text-xs text-zinc-500">
             No categories found
@@ -357,7 +355,7 @@ function TagPickerContent({
       </div>
 
       {/* Tags List */}
-      <div className="no-scrollbar max-h-60 space-y-0.5 overflow-y-auto p-1.5">
+      <div className="no-scrollbar max-h-[50vh] space-y-0.5 overflow-y-auto p-1.5 sm:max-h-64">
         {filteredTags.length === 0 ? (
           <div className="py-6 text-center font-mono text-xs text-zinc-500">No tags found</div>
         ) : (
@@ -486,7 +484,6 @@ export function FloatingFilterDock({
   onClearTags,
   onMatchModeChange,
   onResetAll,
-  onSavedToggle,
   onSearchChange,
   onSortChange,
   onToggleTag,
@@ -500,6 +497,7 @@ export function FloatingFilterDock({
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [tagsOpen, setTagsOpen] = useState(false);
   const [sortOpen, setSortOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(Boolean(searchQuery.trim()));
 
   const hasSearch = Boolean(searchQuery.trim());
   const hasCategory = Boolean(activeCategory && !initialCategory);
@@ -509,11 +507,26 @@ export function FloatingFilterDock({
   const activeSortOption =
     USER_SORT_OPTIONS.find((s) => s.value === activeSort) || USER_SORT_OPTIONS[0];
 
+  const isMobileCompactCategory = isMobile && (searchOpen || hasSearch);
+
+  useEffect(() => {
+    if (searchQuery.trim()) {
+      setSearchOpen(true);
+    }
+  }, [searchQuery]);
+
+  const handleResetAll = () => {
+    setSearchOpen(false);
+    onResetAll();
+  };
+
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-5 z-40 flex justify-center px-4 sm:bottom-6">
-      <div className="pointer-events-auto flex max-w-full items-center gap-1.5 rounded-full border-[1.5px] border-white/12 bg-[#0e0e11]/95 p-1.5 font-mono text-xs shadow-[0_20px_50px_rgba(0,0,0,0.75),0_1px_0_0_rgba(255,255,255,0.1)_inset] backdrop-blur-2xl transition-all sm:gap-2 sm:p-2">
+    <div className="pointer-events-none fixed inset-x-0 bottom-[max(1.25rem,calc(env(safe-area-inset-bottom)+0.5rem))] z-40 flex justify-center px-2 sm:bottom-6 sm:px-4">
+      <div className="pointer-events-auto flex max-w-full items-center gap-1 rounded-full border-[1.5px] border-white/12 bg-[#0e0e11]/95 p-1 font-mono text-xs shadow-[0_20px_50px_rgba(0,0,0,0.75),0_1px_0_0_rgba(255,255,255,0.1)_inset] backdrop-blur-2xl transition-all sm:gap-2 sm:p-2">
         {/* 1. Animated Seek Search */}
         <Seek
+          open={searchOpen}
+          onOpenChange={setSearchOpen}
           size={isMobile ? "sm" : "default"}
           theme="dark"
           placeholder={isMobile ? "Search..." : searchPlaceholder}
@@ -522,7 +535,7 @@ export function FloatingFilterDock({
             onSearchChange(val);
             if (!val) onClearSearch();
           }}
-          width={isMobile ? 180 : 260}
+          width={isMobile ? 140 : 260}
           give={50}
           spring={55}
         />
@@ -536,24 +549,44 @@ export function FloatingFilterDock({
                   <button
                     type="button"
                     className={cn(
-                      "relative isolate flex shrink-0 cursor-pointer items-center justify-between gap-2.5 rounded-full border-0 outline-none select-none",
-                      "h-11 px-3.5 sm:h-14 sm:px-5",
-                      "w-auto max-w-[260px] min-w-[140px] sm:max-w-[340px] sm:min-w-[180px]",
+                      "relative isolate flex shrink-0 cursor-pointer items-center border-0 outline-none select-none",
+                      "h-[38px] sm:h-14",
+                      isMobileCompactCategory
+                        ? "size-[38px] justify-center rounded-full p-0 sm:size-14"
+                        : "w-auto max-w-[150px] min-w-[100px] justify-between gap-1.5 rounded-full px-2.5 sm:max-w-[340px] sm:min-w-[180px] sm:px-5",
                       "bg-[#1a1a1a] shadow-[0_0_0_1px_rgba(255,255,255,0.12)]",
-                      "transition-[transform,background-color,color,box-shadow,width,max-width] duration-220 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                      "transition-[transform,background-color,color,box-shadow,width,max-width,padding] duration-220 ease-[cubic-bezier(0.22,1,0.36,1)]",
                       "active:scale-[0.96] [@media(hover:hover)]:hover:scale-[1.02]",
                       hasCategory
                         ? "text-primary font-bold shadow-[0_0_0_1.5px_rgba(var(--primary),0.8),0_4px_16px_rgba(var(--primary),0.25)]"
                         : "font-semibold text-[#a1a1aa] hover:text-white hover:shadow-[0_0_0_1px_rgba(255,255,255,0.2)]",
                     )}
+                    aria-label={hasCategory ? `Category: ${activeCategory}` : "Filter by category"}
                   >
-                    <div className="flex min-w-0 flex-1 items-center gap-2">
-                      <SquaresFourIcon weight="bold" className="size-4.5 shrink-0 sm:size-5" />
-                      <span className="truncate font-sans text-xs font-semibold tracking-tight">
-                        {activeCategory || "All Categories"}
-                      </span>
-                    </div>
-                    <CaretUpIcon weight="bold" className="size-3.5 shrink-0 opacity-60" />
+                    {isMobileCompactCategory ? (
+                      <>
+                        <SquaresFourIcon
+                          weight={hasCategory ? "fill" : "bold"}
+                          className="size-4.5 sm:size-6"
+                        />
+                        {hasCategory && (
+                          <span className="bg-primary absolute -top-0.5 -right-0.5 size-2 rounded-full ring-2 ring-[#0e0e11] sm:size-2.5" />
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <div className="flex min-w-0 flex-1 items-center gap-1.5 sm:gap-2">
+                          <SquaresFourIcon weight="bold" className="size-4 shrink-0 sm:size-5" />
+                          <span className="truncate font-sans text-xs font-semibold tracking-tight">
+                            {activeCategory || "All Categories"}
+                          </span>
+                        </div>
+                        <CaretUpIcon
+                          weight="bold"
+                          className="size-3 shrink-0 opacity-60 sm:size-3.5"
+                        />
+                      </>
+                    )}
                   </button>
                 </SheetTrigger>
                 <SheetContent
@@ -635,7 +668,7 @@ export function FloatingFilterDock({
                     type="button"
                     className={cn(
                       "relative isolate flex shrink-0 cursor-pointer items-center justify-center rounded-full border-0 outline-none select-none",
-                      "size-11 sm:size-14",
+                      "size-[38px] sm:size-14",
                       "bg-[#1a1a1a] shadow-[0_0_0_1px_rgba(255,255,255,0.12)]",
                       "ease-out-soft transition-[transform,background-color,color,box-shadow] duration-220",
                       "active:scale-[0.93] [@media(hover:hover)]:hover:scale-[1.045]",
@@ -645,9 +678,9 @@ export function FloatingFilterDock({
                     )}
                     aria-label="Filter by tags"
                   >
-                    <TagIcon weight={hasTags ? "fill" : "bold"} className="size-5 sm:size-6" />
+                    <TagIcon weight={hasTags ? "fill" : "bold"} className="size-4.5 sm:size-6" />
                     {hasTags && (
-                      <span className="bg-brand-purple text-paper absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full text-[10px] font-bold tabular-nums shadow-md ring-2 ring-[#0e0e11]">
+                      <span className="bg-brand-purple text-paper absolute -top-1 -right-1 flex size-4 items-center justify-center rounded-full text-[9px] font-bold tabular-nums shadow-md ring-2 ring-[#0e0e11] sm:size-5 sm:text-[10px]">
                         {selectedTags.length}
                       </span>
                     )}
@@ -727,7 +760,7 @@ export function FloatingFilterDock({
                     type="button"
                     className={cn(
                       "relative isolate flex shrink-0 cursor-pointer items-center justify-center rounded-full border-0 outline-none select-none",
-                      "size-11 sm:size-14",
+                      "size-[38px] sm:size-14",
                       "bg-[#1a1a1a] shadow-[0_0_0_1px_rgba(255,255,255,0.12)]",
                       "ease-out-soft transition-[transform,background-color,color,box-shadow] duration-220",
                       "active:scale-[0.93] [@media(hover:hover)]:hover:scale-[1.045]",
@@ -739,10 +772,10 @@ export function FloatingFilterDock({
                   >
                     <ArrowsDownUpIcon
                       weight={hasSort ? "bold" : "regular"}
-                      className="size-5 sm:size-6"
+                      className="size-4.5 sm:size-6"
                     />
                     {hasSort && (
-                      <span className="bg-primary absolute -top-0.5 -right-0.5 size-2.5 rounded-full ring-2 ring-[#0e0e11]" />
+                      <span className="bg-primary absolute -top-0.5 -right-0.5 size-2 rounded-full ring-2 ring-[#0e0e11] sm:size-2.5" />
                     )}
                   </button>
                 </SheetTrigger>
@@ -809,39 +842,6 @@ export function FloatingFilterDock({
           </>
         )}
 
-        {/* 5. Saved Bookmarks Toggle */}
-        {onSavedToggle && (
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                type="button"
-                onClick={onSavedToggle}
-                className={cn(
-                  "relative isolate flex shrink-0 cursor-pointer items-center justify-center rounded-full border-0 outline-none select-none",
-                  "size-11 sm:size-14",
-                  "bg-[#1a1a1a] shadow-[0_0_0_1px_rgba(255,255,255,0.12)]",
-                  "ease-out-soft transition-[transform,background-color,color,box-shadow] duration-220",
-                  "active:scale-[0.93] [@media(hover:hover)]:hover:scale-[1.045]",
-                  savedOnly
-                    ? "text-primary shadow-[0_0_0_1.5px_rgba(var(--primary),0.8),0_4px_16px_rgba(var(--primary),0.25)]"
-                    : "text-[#a1a1aa] hover:text-white hover:shadow-[0_0_0_1px_rgba(255,255,255,0.2)]",
-                )}
-                aria-label={savedOnly ? "Show all items" : "Show saved items only"}
-              >
-                <BookmarkSimpleIcon
-                  weight={savedOnly ? "fill" : "bold"}
-                  className="size-5 sm:size-6"
-                />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent side="top" sideOffset={10}>
-              <p className="font-mono text-xs">
-                {savedOnly ? "Viewing saved bookmarks" : "Filter by saved bookmarks"}
-              </p>
-            </TooltipContent>
-          </Tooltip>
-        )}
-
         {/* 5. Item Count & Reset Action */}
         <div className="hidden h-11 shrink-0 items-center gap-3 rounded-full bg-[#1a1a1a] px-4 font-mono text-xs shadow-[0_0_0_1px_rgba(255,255,255,0.12)] sm:flex sm:h-14 sm:px-4.5">
           <div className="flex min-w-0 items-center gap-1.5">
@@ -856,7 +856,7 @@ export function FloatingFilterDock({
               <TooltipTrigger asChild>
                 <button
                   type="button"
-                  onClick={onResetAll}
+                  onClick={handleResetAll}
                   className="group/reset hover:bg-destructive/15 hover:text-destructive relative flex size-7 cursor-pointer items-center justify-center rounded-full bg-white/[0.06] text-zinc-400 shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition-all duration-200 hover:shadow-[0_0_0_1px_rgba(239,68,68,0.3)] active:scale-90 sm:size-8"
                   aria-label="Reset all filters"
                 >

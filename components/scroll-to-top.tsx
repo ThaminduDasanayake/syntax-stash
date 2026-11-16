@@ -47,7 +47,7 @@ export function ScrollToTop() {
   return (
     <div
       className={cn(
-        "fixed right-5 bottom-5 z-40 transition-all duration-300 ease-out sm:right-8 sm:bottom-8",
+        "fixed z-40 hidden transition-all duration-300 ease-out sm:right-8 sm:bottom-8 sm:block",
         isVisible
           ? "pointer-events-auto translate-y-0 opacity-100"
           : "pointer-events-none translate-y-4 opacity-0",
