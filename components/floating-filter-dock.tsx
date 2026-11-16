@@ -3,7 +3,6 @@
 import {
   ArrowsCounterClockwiseIcon,
   ArrowsDownUpIcon,
-  BookmarkSimpleIcon,
   CaretUpIcon,
   CheckIcon,
   ClockIcon,
@@ -99,7 +98,6 @@ export interface FloatingFilterDockProps {
   onClearTags: () => void;
   onMatchModeChange: (mode: "any" | "all") => void;
   onResetAll: () => void;
-  onSavedToggle?: () => void;
   onSearchChange: (query: string) => void;
   onSortChange?: (sort: SortOption) => void;
   onToggleTag: (tag: string) => void;
@@ -486,7 +484,6 @@ export function FloatingFilterDock({
   onClearTags,
   onMatchModeChange,
   onResetAll,
-  onSavedToggle,
   onSearchChange,
   onSortChange,
   onToggleTag,
@@ -538,7 +535,7 @@ export function FloatingFilterDock({
             onSearchChange(val);
             if (!val) onClearSearch();
           }}
-          width={isMobile ? 120 : 260}
+          width={isMobile ? 140 : 260}
           give={50}
           spring={55}
         />
@@ -556,7 +553,7 @@ export function FloatingFilterDock({
                       "h-[38px] sm:h-14",
                       isMobileCompactCategory
                         ? "size-[38px] justify-center rounded-full p-0 sm:size-14"
-                        : "w-auto max-w-[130px] min-w-[96px] justify-between gap-1.5 rounded-full px-2.5 sm:max-w-[340px] sm:min-w-[180px] sm:px-5",
+                        : "w-auto max-w-[150px] min-w-[100px] justify-between gap-1.5 rounded-full px-2.5 sm:max-w-[340px] sm:min-w-[180px] sm:px-5",
                       "bg-[#1a1a1a] shadow-[0_0_0_1px_rgba(255,255,255,0.12)]",
                       "transition-[transform,background-color,color,box-shadow,width,max-width,padding] duration-220 ease-[cubic-bezier(0.22,1,0.36,1)]",
                       "active:scale-[0.96] [@media(hover:hover)]:hover:scale-[1.02]",
@@ -843,39 +840,6 @@ export function FloatingFilterDock({
               </Popover>
             )}
           </>
-        )}
-
-        {/* 5. Saved Bookmarks Toggle */}
-        {onSavedToggle && (
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                type="button"
-                onClick={onSavedToggle}
-                className={cn(
-                  "relative isolate flex shrink-0 cursor-pointer items-center justify-center rounded-full border-0 outline-none select-none",
-                  "size-[38px] sm:size-14",
-                  "bg-[#1a1a1a] shadow-[0_0_0_1px_rgba(255,255,255,0.12)]",
-                  "ease-out-soft transition-[transform,background-color,color,box-shadow] duration-220",
-                  "active:scale-[0.93] [@media(hover:hover)]:hover:scale-[1.045]",
-                  savedOnly
-                    ? "text-primary shadow-[0_0_0_1.5px_rgba(var(--primary),0.8),0_4px_16px_rgba(var(--primary),0.25)]"
-                    : "text-[#a1a1aa] hover:text-white hover:shadow-[0_0_0_1px_rgba(255,255,255,0.2)]",
-                )}
-                aria-label={savedOnly ? "Show all items" : "Show saved items only"}
-              >
-                <BookmarkSimpleIcon
-                  weight={savedOnly ? "fill" : "bold"}
-                  className="size-4.5 sm:size-6"
-                />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent side="top" sideOffset={10}>
-              <p className="font-mono text-xs">
-                {savedOnly ? "Viewing saved bookmarks" : "Filter by saved bookmarks"}
-              </p>
-            </TooltipContent>
-          </Tooltip>
         )}
 
         {/* 5. Item Count & Reset Action */}

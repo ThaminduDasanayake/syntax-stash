@@ -707,10 +707,6 @@ export function FilterSection({
         onClearTags={handleClearTags}
         matchMode={matchMode}
         onMatchModeChange={handleMatchModeChange}
-        savedOnly={savedOnly}
-        onSavedToggle={() =>
-          syncUrl(activeCategory, selectedTags, matchMode, searchQuery, !savedOnly, activeSort)
-        }
         filteredCount={filteredItems.length}
         totalCount={totalCategoryMatches || items.length}
         onResetAll={handleResetAll}
