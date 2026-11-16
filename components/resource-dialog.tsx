@@ -434,7 +434,7 @@ export function ResourceDialog({
             <span className="hidden sm:inline">GitHub</span>
             {formattedStars && (
               <span
-                className="text-muted-foreground group-hover:text-foreground inline-flex items-center gap-1 transition-colors"
+                className="text-muted-foreground group-hover:text-foreground hidden items-center gap-1 transition-colors sm:inline-flex"
                 title={
                   gitHubStars !== null ? `${gitHubStars.toLocaleString()} GitHub stars` : undefined
                 }
@@ -485,7 +485,7 @@ export function ResourceDialog({
         </span>
         <span className="hidden sm:inline">{bookmarked ? "Saved" : "Save"}</span>
       </Button>
-      <ButtonGroup className="hidden shrink-0 sm:flex">
+      <ButtonGroup className="shrink-0">
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
@@ -547,32 +547,12 @@ export function ResourceDialog({
           </div>
         </div>
 
-        {/* Mobile Navigation and Close Button */}
-        <div className="flex items-center gap-1">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handlePrev}
-            className="text-muted-foreground hover:text-foreground size-8 shrink-0"
-            aria-label="Previous resource"
-          >
-            <CaretLeftIcon className="size-4" />
+        {/* Mobile Close Button */}
+        <DialogClose asChild>
+          <Button variant="secondary" size="icon" className="size-8 shrink-0">
+            <XIcon weight="bold" />
           </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleNext}
-            className="text-muted-foreground hover:text-foreground size-8 shrink-0"
-            aria-label="Next resource"
-          >
-            <CaretRightIcon className="size-4" />
-          </Button>
-          <DialogClose asChild>
-            <Button variant="secondary" size="icon" className="size-8 shrink-0">
-              <XIcon weight="bold" />
-            </Button>
-          </DialogClose>
-        </div>
+        </DialogClose>
       </div>
 
       {/* The Single Mobile Morphing Title Element */}
