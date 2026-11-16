@@ -398,15 +398,16 @@ export function ResourceDialog({
 
   const footerContent = (
     <div className="modal-launch">
-      <Button asChild size="default" className="min-w-0 flex-1 px-3 sm:px-4">
+      <Button asChild size="default" className="min-w-[110px] flex-1 px-3 sm:px-4">
         <a
           href={activeTool.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-mono-2xs sm:text-mono-xs w-full whitespace-nowrap"
+          className="text-mono-2xs sm:text-mono-xs inline-flex w-full items-center justify-center gap-1.5 whitespace-nowrap"
         >
-          Open <span className="xs:inline hidden">resource</span>
-          <ArrowSquareOutIcon weight="bold" />
+          <span>Open</span>
+          <span className="xs:inline hidden">resource</span>
+          <ArrowSquareOutIcon weight="bold" className="size-3.5 shrink-0" />
         </a>
       </Button>
       {activeTool.github && (
@@ -484,7 +485,7 @@ export function ResourceDialog({
         </span>
         <span className="hidden sm:inline">{bookmarked ? "Saved" : "Save"}</span>
       </Button>
-      <ButtonGroup className="shrink-0">
+      <ButtonGroup className="hidden shrink-0 sm:flex">
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
@@ -546,12 +547,32 @@ export function ResourceDialog({
           </div>
         </div>
 
-        {/* Mobile Close Button */}
-        <DialogClose asChild>
-          <Button variant="secondary" size="icon" className="size-8 shrink-0">
-            <XIcon weight="bold" />
+        {/* Mobile Navigation and Close Button */}
+        <div className="flex items-center gap-1">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handlePrev}
+            className="text-muted-foreground hover:text-foreground size-8 shrink-0"
+            aria-label="Previous resource"
+          >
+            <CaretLeftIcon className="size-4" />
           </Button>
-        </DialogClose>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleNext}
+            className="text-muted-foreground hover:text-foreground size-8 shrink-0"
+            aria-label="Next resource"
+          >
+            <CaretRightIcon className="size-4" />
+          </Button>
+          <DialogClose asChild>
+            <Button variant="secondary" size="icon" className="size-8 shrink-0">
+              <XIcon weight="bold" />
+            </Button>
+          </DialogClose>
+        </div>
       </div>
 
       {/* The Single Mobile Morphing Title Element */}
