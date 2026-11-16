@@ -5,6 +5,7 @@ import {
   BookmarkSimpleIcon,
   CaretLeftIcon,
   CaretRightIcon,
+  GlobeIcon,
   StarIcon,
   XIcon,
 } from "@phosphor-icons/react";
@@ -398,7 +399,7 @@ export function ResourceDialog({
 
   const footerContent = (
     <div className="modal-launch">
-      <Button asChild size="default" className="min-w-[110px] flex-1 px-3 sm:px-4">
+      <Button asChild size="default" className="min-w-0 flex-1 px-2.5 sm:px-4">
         <a
           href={activeTool.url}
           target="_blank"
@@ -406,7 +407,7 @@ export function ResourceDialog({
           className="text-mono-2xs sm:text-mono-xs inline-flex w-full items-center justify-center gap-1.5 whitespace-nowrap"
         >
           <span>Open</span>
-          <span className="xs:inline hidden">resource</span>
+          <span className="hidden md:inline">resource</span>
           <ArrowSquareOutIcon weight="bold" className="size-3.5 shrink-0" />
         </a>
       </Button>
@@ -434,7 +435,7 @@ export function ResourceDialog({
             <span className="hidden sm:inline">GitHub</span>
             {formattedStars && (
               <span
-                className="text-muted-foreground group-hover:text-foreground hidden items-center gap-1 transition-colors sm:inline-flex"
+                className="text-muted-foreground group-hover:text-foreground inline-flex items-center gap-1 transition-colors"
                 title={
                   gitHubStars !== null ? `${gitHubStars.toLocaleString()} GitHub stars` : undefined
                 }
@@ -739,7 +740,13 @@ export function ResourceDialog({
             })()}
 
             <div className="mb-5.5 flex flex-col items-start">
-              <span className={cn("text-display-2xs mb-2.5 block", activeThemeStyles.label)}>
+              <span
+                className={cn(
+                  "text-display-2xs mb-2.5 inline-flex items-center gap-1.5",
+                  activeThemeStyles.label,
+                )}
+              >
+                <GlobeIcon weight="bold" className="size-3.5 shrink-0" />
                 Resource URL
               </span>
               <div className="flex items-center justify-between gap-2">
@@ -764,7 +771,19 @@ export function ResourceDialog({
 
             {activeTool.github && (
               <div className="mb-5.5 flex flex-col items-start">
-                <span className={cn("text-display-2xs mb-2.5 block", activeThemeStyles.label)}>
+                <span
+                  className={cn(
+                    "text-display-2xs mb-2.5 inline-flex items-center gap-1.5",
+                    activeThemeStyles.label,
+                  )}
+                >
+                  <Image
+                    src="/github.svg"
+                    alt="GitHub"
+                    width={14}
+                    height={14}
+                    className="size-3.5 shrink-0"
+                  />
                   GitHub
                 </span>
                 <div className="flex items-center justify-between gap-2">
@@ -772,15 +791,8 @@ export function ResourceDialog({
                     href={activeTool.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 font-mono text-xs break-all underline decoration-current/40 underline-offset-2 transition-all duration-150 ease-out hover:decoration-current"
+                    className="font-mono text-xs break-all underline decoration-current/40 underline-offset-2 transition-all duration-150 ease-out hover:decoration-current"
                   >
-                    <Image
-                      src="/github.svg"
-                      alt="GitHub"
-                      width={16}
-                      height={16}
-                      className="size-4"
-                    />
                     {activeTool.github}
                   </a>
                   <CopyButton
