@@ -491,7 +491,7 @@ export function FilterSection({
           {/* Active Filter Chips Bar (Shown when tags or active sort are applied) */}
           {(selectedTags.length > 0 || activeSort !== "default") && (
             <div className="border-border/60 bg-surface/30 mb-6 flex items-center justify-between rounded-xl border-[1.5px] p-2.5 sm:mb-8 sm:p-3">
-              <div className="no-scrollbar flex items-center gap-1.5 overflow-x-auto py-0.5 sm:flex-wrap sm:gap-2">
+              <div className="no-scrollbar flex min-w-0 flex-1 items-center gap-1.5 overflow-x-auto py-0.5 sm:flex-wrap sm:gap-2">
                 <span className="text-mono-2xs text-muted-foreground shrink-0 font-bold tracking-wider uppercase">
                   Active Filters:
                 </span>

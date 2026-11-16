@@ -176,7 +176,7 @@ function CategoryPickerContent({
       </div>
 
       {/* Category Items List */}
-      <div className="no-scrollbar max-h-64 space-y-0.5 overflow-y-auto p-1.5 sm:max-h-72">
+      <div className="no-scrollbar max-h-[50vh] space-y-0.5 overflow-y-auto p-1.5 sm:max-h-72">
         {filteredCategories.length === 0 ? (
           <div className="py-6 text-center font-mono text-xs text-zinc-500">
             No categories found
@@ -355,7 +355,7 @@ function TagPickerContent({
       </div>
 
       {/* Tags List */}
-      <div className="no-scrollbar max-h-60 space-y-0.5 overflow-y-auto p-1.5">
+      <div className="no-scrollbar max-h-[50vh] space-y-0.5 overflow-y-auto p-1.5 sm:max-h-64">
         {filteredTags.length === 0 ? (
           <div className="py-6 text-center font-mono text-xs text-zinc-500">No tags found</div>
         ) : (
@@ -521,7 +521,7 @@ export function FloatingFilterDock({
   };
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-5 z-40 flex justify-center px-2 sm:bottom-6 sm:px-4">
+    <div className="pointer-events-none fixed inset-x-0 bottom-[max(1.25rem,calc(env(safe-area-inset-bottom)+0.5rem))] z-40 flex justify-center px-2 sm:bottom-6 sm:px-4">
       <div className="pointer-events-auto flex max-w-full items-center gap-1 rounded-full border-[1.5px] border-white/12 bg-[#0e0e11]/95 p-1 font-mono text-xs shadow-[0_20px_50px_rgba(0,0,0,0.75),0_1px_0_0_rgba(255,255,255,0.1)_inset] backdrop-blur-2xl transition-all sm:gap-2 sm:p-2">
         {/* 1. Animated Seek Search */}
         <Seek
