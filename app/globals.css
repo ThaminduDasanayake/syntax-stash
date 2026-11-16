@@ -726,7 +726,7 @@
 }
 
 @utility modal-launch {
-  @apply flex items-center gap-1.5 border-t-[1.5px] border-t-white/8 px-4 pt-3 pb-[max(0.75rem,calc(env(safe-area-inset-bottom)+0.5rem))] sm:gap-2 sm:px-6 sm:py-3 md:px-8 md:py-5;
+  @apply flex items-center gap-1 border-t-[1.5px] border-t-white/8 px-2.5 pt-2.5 pb-[max(0.75rem,calc(env(safe-area-inset-bottom)+0.5rem))] sm:gap-1.5 sm:px-4 sm:py-3 md:gap-2 lg:px-8 lg:py-5;
 }
 
 /* Tabs */
