@@ -8,7 +8,7 @@ export default function SubmissionsLoading() {
       aria-busy="true"
     >
       {/* Header Skeleton */}
-      <div className="border-line/60 mb-8 border-b-[1.5px] pb-6 font-mono">
+      <div className="pb-6 font-mono">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">

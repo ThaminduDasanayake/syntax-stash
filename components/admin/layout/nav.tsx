@@ -182,7 +182,7 @@ export function Nav({
   }
 
   return (
-    <div className="border-line/60 mb-8 border-b-[1.5px] pb-6 font-mono">
+    <div className="pb-6 font-mono">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <div className="text-primary flex items-center gap-2 text-xs font-bold tracking-widest uppercase">
