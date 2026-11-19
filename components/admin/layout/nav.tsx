@@ -16,6 +16,7 @@ import { SelectBar, type SelectBarItem } from "@/components/ui/select-bar";
 interface NavProps {
   authorsCount?: number;
   categoriesCount?: number;
+  changeMonitorCount?: number;
   pendingSubmissionsCount?: number;
   tagsCount?: number;
   totalResourcesCount?: number;
@@ -25,6 +26,7 @@ interface NavProps {
 export function Nav({
   authorsCount,
   categoriesCount,
+  changeMonitorCount,
   pendingSubmissionsCount,
   tagsCount,
   totalResourcesCount,
@@ -170,10 +172,26 @@ export function Nav({
         href: "/admin/history",
         icon: <BroadcastIcon className="size-4" />,
         key: "history",
-        label: <span>Change Monitor</span>,
+        label: (
+          <span className="flex items-center gap-1.5">
+            <span>Change Monitor</span>
+            {changeMonitorCount !== undefined && changeMonitorCount > 0 && (
+              <span className="rounded-full border border-amber-600/40 bg-amber-500/20 px-1.5 py-0.5 text-[10px] leading-none font-extrabold text-amber-500">
+                {changeMonitorCount}
+              </span>
+            )}
+          </span>
+        ),
       },
     ],
-    [authorsCount, categoriesCount, pendingSubmissionsCount, tagsCount, totalResourcesCount],
+    [
+      authorsCount,
+      categoriesCount,
+      changeMonitorCount,
+      pendingSubmissionsCount,
+      tagsCount,
+      totalResourcesCount,
+    ],
   );
   /* eslint-enable perfectionist/sort-arrays */
 
