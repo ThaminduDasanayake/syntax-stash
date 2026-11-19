@@ -89,75 +89,75 @@ export function Nav({
     () => [
       {
         title: "Submissions Queue",
-        href: "/admin/submissions",
-        icon: <TrayIcon className="size-4" />,
-        key: "submissions",
-        label:
+        badge:
           pendingSubmissionsCount !== undefined && pendingSubmissionsCount > 0 ? (
-            <span className="-translate-y-1 rounded-full border border-amber-600/40 bg-amber-500/20 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-amber-500">
+            <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-amber-500 px-1 text-[10px] font-extrabold tabular-nums text-black shadow-md ring-2 ring-[#252525]">
               {pendingSubmissionsCount}
             </span>
           ) : null,
+        href: "/admin/submissions",
+        icon: <TrayIcon className="size-5.5 sm:size-6" weight="regular" />,
+        key: "submissions",
       },
       {
         title: "Live Catalog",
-        href: "/admin/resources",
-        icon: <StackIcon className="size-4" />,
-        key: "resources",
-        label:
+        badge:
           totalResourcesCount !== undefined && totalResourcesCount > 0 ? (
-            <span className="-translate-y-1 rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-zinc-300">
+            <span className="bg-brand-purple text-paper flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[10px] font-bold tabular-nums shadow-md ring-2 ring-[#252525]">
               {totalResourcesCount}
             </span>
           ) : null,
+        href: "/admin/resources",
+        icon: <StackIcon className="size-5.5 sm:size-6" weight="regular" />,
+        key: "resources",
       },
       {
         title: "Categories",
-        href: "/admin/categories",
-        icon: <FoldersIcon className="size-4" />,
-        key: "categories",
-        label:
+        badge:
           categoriesCount !== undefined && categoriesCount > 0 ? (
-            <span className="-translate-y-1 rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-zinc-300">
+            <span className="bg-brand-purple text-paper flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-bold tabular-nums shadow-md ring-2 ring-[#252525]">
               {categoriesCount}
             </span>
           ) : null,
+        href: "/admin/categories",
+        icon: <FoldersIcon className="size-5.5 sm:size-6" weight="regular" />,
+        key: "categories",
       },
       {
         title: "Tags",
-        href: "/admin/tags",
-        icon: <TagIcon className="size-4" />,
-        key: "tags",
-        label:
+        badge:
           tagsCount !== undefined && tagsCount > 0 ? (
-            <span className="-translate-y-1 rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-zinc-300">
+            <span className="bg-brand-purple text-paper flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-bold tabular-nums shadow-md ring-2 ring-[#252525]">
               {tagsCount}
             </span>
           ) : null,
+        href: "/admin/tags",
+        icon: <TagIcon className="size-5.5 sm:size-6" weight="regular" />,
+        key: "tags",
       },
       {
         title: "Authors",
-        href: "/admin/authors",
-        icon: <UserCircleIcon className="size-4" />,
-        key: "authors",
-        label:
+        badge:
           authorsCount !== undefined && authorsCount > 0 ? (
-            <span className="-translate-y-1 rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-zinc-300">
+            <span className="bg-brand-purple text-paper flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-bold tabular-nums shadow-md ring-2 ring-[#252525]">
               {authorsCount}
             </span>
           ) : null,
+        href: "/admin/authors",
+        icon: <UserCircleIcon className="size-5.5 sm:size-6" weight="regular" />,
+        key: "authors",
       },
       {
         title: "Change Monitor",
-        href: "/admin/history",
-        icon: <BroadcastIcon className="size-4" />,
-        key: "history",
-        label:
+        badge:
           changeMonitorCount !== undefined && changeMonitorCount > 0 ? (
-            <span className="-translate-y-1 rounded-full border border-amber-600/40 bg-amber-500/20 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-amber-500">
+            <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-amber-500 px-1 text-[10px] font-extrabold tabular-nums text-black shadow-md ring-2 ring-[#252525]">
               {changeMonitorCount}
             </span>
           ) : null,
+        href: "/admin/history",
+        icon: <BroadcastIcon className="size-5.5 sm:size-6" weight="regular" />,
+        key: "history",
       },
     ],
     [
@@ -202,9 +202,9 @@ export function Nav({
         <SelectBar
           items={navItems}
           value={currentTab}
-          size="default"
+          size="lg"
+          gap="gap-6 sm:gap-8"
           showTooltip
-          className="font-mono text-xs uppercase"
           ariaLabel="Admin navigation"
         />
       </div>

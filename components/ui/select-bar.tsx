@@ -35,6 +35,7 @@ export interface SelectBarItem<T extends string = string> {
   href?: string;
   label?: React.ReactNode;
   icon?: React.ReactNode;
+  badge?: React.ReactNode;
   color?: string;
   darkOutline?: string;
   title?: string;
@@ -47,11 +48,12 @@ export interface SelectBarProps<T extends string = string> {
   value?: T;
   defaultValue?: T;
   onChange?: (value: T) => void;
-  size?: "xs" | "sm" | "default";
+  size?: "xs" | "sm" | "default" | "lg";
   dilate?: number;
   bounce?: number;
   speed?: number;
   hug?: number;
+  gap?: string;
   className?: string;
   ariaLabel?: string;
   showTooltip?: boolean;
@@ -67,6 +69,7 @@ export function SelectBar<T extends string = string>({
   className = "",
   defaultValue,
   dilate = 100,
+  gap,
   hug,
   items,
   onChange,
@@ -86,8 +89,9 @@ export function SelectBar<T extends string = string>({
   const timer = useRef<number | undefined>(undefined);
 
   const hasSwatches = items.some((item) => Boolean(item.color));
-  const defaultHug = hasSwatches ? 3 : size === "xs" ? 3 : size === "sm" ? 4 : 6;
+  const defaultHug = hasSwatches ? 3 : size === "xs" ? 3 : size === "sm" ? 4 : size === "lg" ? 5 : 5;
   const actualHug = hug !== undefined ? hug : defaultHug;
+  const gapClass = gap !== undefined ? gap : size === "lg" ? "gap-6 sm:gap-8" : "gap-0.5";
 
   const measure = useCallback((k: string): Ind | null => {
     const el = refs.current[k];
@@ -191,8 +195,13 @@ export function SelectBar<T extends string = string>({
   const navElement = (
     <nav
       ref={trackRef as React.RefObject<HTMLElement>}
-      className={`no-scrollbar relative isolate inline-flex max-w-full items-center gap-0.5 overflow-x-auto rounded-full border border-white/10 bg-[#252525] text-white shadow-none select-none ${className}`}
-      style={{ padding: `${actualHug}px` }}
+      className={`no-scrollbar relative isolate inline-flex max-w-full items-center ${gapClass} overflow-x-auto rounded-full border border-white/10 bg-[#252525] text-white shadow-none select-none ${className}`}
+      style={{
+        padding:
+          size === "lg"
+            ? `${actualHug}px ${actualHug + 16}px`
+            : `${actualHug}px`,
+      }}
       aria-label={ariaLabel}
     >
       {/* Two-phase mercury indicator wash */}
@@ -208,8 +217,8 @@ export function SelectBar<T extends string = string>({
         const isIconOnly = Boolean(item.icon && (!item.label || item.showLabel === false));
         const slotTitle = item.title || (typeof item.label === "string" ? item.label : item.key);
 
-        const dim = size === "xs" ? 26 : size === "default" ? 36 : 30;
-        const padH = size === "xs" ? 11 : size === "default" ? 16 : 13;
+        const dim = size === "xs" ? 26 : size === "sm" ? 30 : size === "lg" ? 46 : 36;
+        const padH = size === "xs" ? 11 : size === "sm" ? 13 : size === "lg" ? 18 : 16;
 
         const slotStyle: React.CSSProperties =
           isSwatch || isIconOnly
@@ -258,7 +267,14 @@ export function SelectBar<T extends string = string>({
                 }}
               />
             ) : isIconOnly ? (
-              <span className="flex items-center justify-center text-current">{item.icon}</span>
+              <span className="relative flex size-full items-center justify-center text-current">
+                <span className="flex items-center justify-center">{item.icon}</span>
+                {item.badge && (
+                  <span className="pointer-events-none absolute -top-1 -right-1 z-10 flex items-center justify-center">
+                    {item.badge}
+                  </span>
+                )}
+              </span>
             ) : (
               <span
                 className={`inline-flex items-center justify-center gap-1.5 ${
@@ -324,11 +340,14 @@ export function SelectBar<T extends string = string>({
               <TooltipTrigger asChild>{elementNode}</TooltipTrigger>
               <TooltipContent
                 side="top"
-                sideOffset={8}
-                arrowClassName="hidden"
-                className="pointer-events-none z-50 whitespace-nowrap rounded-full border-0 !bg-white px-3.5 py-1 font-sans text-xs font-semibold !text-zinc-950 shadow-xl"
+                sideOffset={10}
+                hideArrow
+                className="pointer-events-none z-50 whitespace-nowrap rounded-full border-0 !bg-white px-3.5 py-1 font-sans text-xs !font-normal tracking-normal normal-case !text-zinc-900 shadow-xl antialiased"
+                style={{ fontWeight: 400 }}
               >
-                {item.tooltip || slotTitle}
+                <span className="font-sans text-xs !font-normal tracking-normal normal-case text-zinc-900" style={{ fontWeight: 400 }}>
+                  {item.tooltip || slotTitle}
+                </span>
               </TooltipContent>
             </Tooltip>
           );
