@@ -2,16 +2,18 @@
 
 import {
   BroadcastIcon,
-  FoldersIcon,
-  StackIcon,
+  CardsIcon,
+  SquaresFourIcon,
   TagIcon,
   TrayIcon,
   UserCircleIcon,
 } from "@phosphor-icons/react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useMemo } from "react";
 
-import { SelectBar, type SelectBarItem } from "@/components/ui/select-bar";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 
 interface NavProps {
   authorsCount?: number;
@@ -47,27 +49,18 @@ export function Nav({
   const isAuthors = pathname.startsWith("/admin/authors");
   const isHistory = pathname.startsWith("/admin/history");
 
-  let pageTitle = "Resource Submissions Queue";
-  let pageSubtitle = "Review, edit, approve, and manage community resource submissions.";
+  let pageTitle = "Submissions";
 
   if (isResources) {
-    pageTitle = "Live Resource Manager";
-    pageSubtitle =
-      "Browse, search, edit, create, and manage live published resources in the catalog.";
+    pageTitle = "Resources";
   } else if (isCategories) {
-    pageTitle = "Category Manager";
-    pageSubtitle = "Create, organize, style, and manage first-class resource categories.";
+    pageTitle = "Categories";
   } else if (isTags) {
-    pageTitle = "Tags Manager";
-    pageSubtitle =
-      "Manage canonical resource tags, slug identifiers, and usage across the catalog.";
+    pageTitle = "Tags";
   } else if (isAuthors) {
-    pageTitle = "Authors Manager";
-    pageSubtitle = "Manage verified creator profiles, social links, and resource attributions.";
+    pageTitle = "Authors";
   } else if (isHistory) {
-    pageTitle = "Resource Change Monitor";
-    pageSubtitle =
-      "Live alerts for remote website changes, author updates, redirects, and dead links. Review detected changes without altering your catalog.";
+    pageTitle = "Change Monitor";
   }
 
   const currentTab = isSubmissions
@@ -85,78 +78,78 @@ export function Nav({
               : "submissions";
 
   /* eslint-disable perfectionist/sort-arrays */
-  const navItems: SelectBarItem<string>[] = useMemo(
+  const navItems = useMemo(
     () => [
       {
-        title: "Submissions Queue",
+        title: "Submissions",
         badge:
           pendingSubmissionsCount !== undefined && pendingSubmissionsCount > 0 ? (
-            <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-amber-500 px-1 text-[10px] font-extrabold tabular-nums text-black shadow-md ring-2 ring-[#252525]">
+            <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-amber-500 px-1 text-[10px] font-extrabold text-black tabular-nums shadow-md ring-2 ring-[#0e0e11]">
               {pendingSubmissionsCount}
             </span>
           ) : null,
         href: "/admin/submissions",
-        icon: <TrayIcon className="size-5.5 sm:size-6" weight="regular" />,
+        Icon: TrayIcon,
         key: "submissions",
       },
       {
-        title: "Live Catalog",
+        title: "Resources",
         badge:
           totalResourcesCount !== undefined && totalResourcesCount > 0 ? (
-            <span className="bg-brand-purple text-paper flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[10px] font-bold tabular-nums shadow-md ring-2 ring-[#252525]">
+            <span className="bg-brand-purple text-paper flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[10px] font-bold tabular-nums shadow-md ring-2 ring-[#0e0e11]">
               {totalResourcesCount}
             </span>
           ) : null,
         href: "/admin/resources",
-        icon: <StackIcon className="size-5.5 sm:size-6" weight="regular" />,
+        Icon: CardsIcon,
         key: "resources",
       },
       {
         title: "Categories",
         badge:
           categoriesCount !== undefined && categoriesCount > 0 ? (
-            <span className="bg-brand-purple text-paper flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-bold tabular-nums shadow-md ring-2 ring-[#252525]">
+            <span className="bg-brand-purple text-paper flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-bold tabular-nums shadow-md ring-2 ring-[#0e0e11]">
               {categoriesCount}
             </span>
           ) : null,
         href: "/admin/categories",
-        icon: <FoldersIcon className="size-5.5 sm:size-6" weight="regular" />,
+        Icon: SquaresFourIcon,
         key: "categories",
       },
       {
         title: "Tags",
         badge:
           tagsCount !== undefined && tagsCount > 0 ? (
-            <span className="bg-brand-purple text-paper flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-bold tabular-nums shadow-md ring-2 ring-[#252525]">
+            <span className="bg-brand-purple text-paper flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-bold tabular-nums shadow-md ring-2 ring-[#0e0e11]">
               {tagsCount}
             </span>
           ) : null,
         href: "/admin/tags",
-        icon: <TagIcon className="size-5.5 sm:size-6" weight="regular" />,
+        Icon: TagIcon,
         key: "tags",
       },
       {
         title: "Authors",
         badge:
           authorsCount !== undefined && authorsCount > 0 ? (
-            <span className="bg-brand-purple text-paper flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-bold tabular-nums shadow-md ring-2 ring-[#252525]">
+            <span className="bg-brand-purple text-paper flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[10px] font-bold tabular-nums shadow-md ring-2 ring-[#0e0e11]">
               {authorsCount}
             </span>
           ) : null,
         href: "/admin/authors",
-        icon: <UserCircleIcon className="size-5.5 sm:size-6" weight="regular" />,
+        Icon: UserCircleIcon,
         key: "authors",
       },
       {
         title: "Change Monitor",
         badge:
           changeMonitorCount !== undefined && changeMonitorCount > 0 ? (
-            <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-amber-500 px-1 text-[10px] font-extrabold tabular-nums text-black shadow-md ring-2 ring-[#252525]">
+            <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-amber-500 px-1 text-[10px] font-extrabold text-black tabular-nums shadow-md ring-2 ring-[#0e0e11]">
               {changeMonitorCount}
             </span>
           ) : null,
         href: "/admin/history",
-        icon: <BroadcastIcon className="size-5.5 sm:size-6" weight="regular" />,
+        Icon: BroadcastIcon,
         key: "history",
       },
     ],
@@ -179,14 +172,9 @@ export function Nav({
     <div className="pb-6 font-mono">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <div className="text-primary flex items-center gap-2 text-xs font-bold tracking-widest uppercase">
-            <span className="bg-primary size-2 rounded-full" />
-            <span>Admin Suite</span>
-          </div>
-          <h1 className="text-foreground mt-1 text-2xl font-bold tracking-tight uppercase sm:text-3xl">
+          <h1 className="text-foreground text-2xl font-bold tracking-tight uppercase sm:text-3xl">
             {pageTitle}
           </h1>
-          <p className="text-muted-foreground mt-1 text-xs">{pageSubtitle}</p>
         </div>
 
         {userEmail && (
@@ -197,16 +185,62 @@ export function Nav({
         )}
       </div>
 
-      {/* Module Switcher Dock using SelectBar */}
+      {/* Floating-style Admin Dock */}
       <div className="border-border/40 mt-6 flex items-center justify-center border-t pt-4 sm:justify-start">
-        <SelectBar
-          items={navItems}
-          value={currentTab}
-          size="lg"
-          gap="gap-6 sm:gap-8"
-          showTooltip
-          ariaLabel="Admin navigation"
-        />
+        <TooltipProvider delayDuration={0}>
+          <nav
+            aria-label="Admin navigation"
+            className="no-scrollbar relative isolate inline-flex max-w-full items-center gap-3.5 overflow-x-auto rounded-full border-[1.5px] border-white/12 bg-[#0e0e11]/95 px-3 py-2 shadow-[0_20px_50px_rgba(0,0,0,0.75),0_1px_0_0_rgba(255,255,255,0.1)_inset] backdrop-blur-2xl sm:gap-5 sm:px-4 sm:py-2.5"
+          >
+            {navItems.map((item) => {
+              const isSelected = currentTab === item.key;
+              const Icon = item.Icon;
+
+              return (
+                <Tooltip key={item.key}>
+                  <TooltipTrigger asChild>
+                    <Link
+                      href={item.href}
+                      aria-label={item.title}
+                      aria-current={isSelected ? "page" : undefined}
+                      className={cn(
+                        "relative isolate flex shrink-0 cursor-pointer items-center justify-center rounded-full border-0 outline-none select-none",
+                        "size-11 sm:size-12",
+                        "bg-[#1a1a1a] shadow-[0_0_0_1px_rgba(255,255,255,0.12)]",
+                        "transition-all duration-220 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                        "active:scale-[0.93] [@media(hover:hover)]:hover:scale-[1.045]",
+                        isSelected
+                          ? "text-brand-purple shadow-[0_0_0_1.5px_rgba(192,132,252,0.8),0_4px_16px_rgba(192,132,252,0.25)]"
+                          : "text-[#a1a1aa] hover:text-white hover:shadow-[0_0_0_1px_rgba(255,255,255,0.2)]",
+                      )}
+                    >
+                      <Icon weight={isSelected ? "fill" : "bold"} className="size-5 sm:size-5.5" />
+                      {item.badge && (
+                        <span className="pointer-events-none absolute -top-1 -right-1 z-10 flex items-center justify-center">
+                          {item.badge}
+                        </span>
+                      )}
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent
+                    side="top"
+                    sideOffset={10}
+                    hideArrow
+                    className="pointer-events-none z-50 rounded-full border-0 !bg-white px-3.5 py-1 font-sans text-xs !font-normal tracking-normal whitespace-nowrap !text-zinc-900 normal-case antialiased shadow-xl"
+                    style={{ fontWeight: 400 }}
+                  >
+                    <span
+                      className="font-sans text-xs !font-normal tracking-normal text-zinc-900 normal-case"
+                      style={{ fontWeight: 400 }}
+                    >
+                      {item.title}
+                    </span>
+                  </TooltipContent>
+                </Tooltip>
+              );
+            })}
+          </nav>
+        </TooltipProvider>
       </div>
     </div>
   );
