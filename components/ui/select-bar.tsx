@@ -10,6 +10,8 @@
 import Link from "next/link";
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 /* ── Elastic motion tuning (two-phase mercury dilation with overshoot landing) ── */
@@ -37,6 +39,7 @@ export interface SelectBarItem<T extends string = string> {
   darkOutline?: string;
   title?: string;
   showLabel?: boolean;
+  tooltip?: React.ReactNode;
 }
 
 export interface SelectBarProps<T extends string = string> {
@@ -51,6 +54,7 @@ export interface SelectBarProps<T extends string = string> {
   hug?: number;
   className?: string;
   ariaLabel?: string;
+  showTooltip?: boolean;
   // Backward compatibility props
   variant?: "glass" | "swatches" | "pill";
   axis?: "row" | "column";
@@ -66,6 +70,7 @@ export function SelectBar<T extends string = string>({
   hug,
   items,
   onChange,
+  showTooltip = false,
   size = "sm",
   speed = 50,
   value,
@@ -183,7 +188,7 @@ export function SelectBar<T extends string = string>({
       }
     : { opacity: 0 };
 
-  return (
+  const navElement = (
     <nav
       ref={trackRef as React.RefObject<HTMLElement>}
       className={`no-scrollbar relative isolate inline-flex max-w-full items-center gap-0.5 overflow-x-auto rounded-full border border-white/10 bg-[#252525] text-white shadow-none select-none ${className}`}
@@ -276,27 +281,24 @@ export function SelectBar<T extends string = string>({
           </>
         );
 
-        if (item.href) {
-          return (
-            <Link
-              key={item.key}
-              ref={(el: HTMLAnchorElement | null) => {
-                refs.current[item.key] = el;
-              }}
-              href={item.href}
-              {...commonProps}
-              onClick={(e) => {
-                e.stopPropagation();
-                select(item.key);
-                onChange?.(item.key);
-              }}
-            >
-              {innerContent}
-            </Link>
-          );
-        }
-
-        return (
+        const elementNode = item.href ? (
+          <Link
+            key={item.key}
+            ref={(el: HTMLAnchorElement | null) => {
+              refs.current[item.key] = el;
+            }}
+            href={item.href}
+            {...commonProps}
+            title={showTooltip ? undefined : commonProps.title}
+            onClick={(e) => {
+              e.stopPropagation();
+              select(item.key);
+              onChange?.(item.key);
+            }}
+          >
+            {innerContent}
+          </Link>
+        ) : (
           <button
             key={item.key}
             ref={(el: HTMLButtonElement | null) => {
@@ -304,6 +306,7 @@ export function SelectBar<T extends string = string>({
             }}
             type="button"
             {...commonProps}
+            title={showTooltip ? undefined : commonProps.title}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -314,7 +317,31 @@ export function SelectBar<T extends string = string>({
             {innerContent}
           </button>
         );
+
+        if (showTooltip && (slotTitle || item.tooltip)) {
+          return (
+            <Tooltip key={item.key}>
+              <TooltipTrigger asChild>{elementNode}</TooltipTrigger>
+              <TooltipContent
+                side="top"
+                sideOffset={8}
+                arrowClassName="hidden"
+                className="pointer-events-none z-50 whitespace-nowrap rounded-full border-0 !bg-white px-3.5 py-1 font-sans text-xs font-semibold !text-zinc-950 shadow-xl"
+              >
+                {item.tooltip || slotTitle}
+              </TooltipContent>
+            </Tooltip>
+          );
+        }
+
+        return elementNode;
       })}
     </nav>
   );
+
+  if (showTooltip) {
+    return <TooltipProvider delayDuration={0}>{navElement}</TooltipProvider>;
+  }
+
+  return navElement;
 }

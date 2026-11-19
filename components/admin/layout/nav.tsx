@@ -8,12 +8,10 @@ import {
   TrayIcon,
   UserCircleIcon,
 } from "@phosphor-icons/react";
-import { AnimatePresence, motion } from "framer-motion";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 
-import { cn } from "@/lib/utils";
+import { SelectBar, type SelectBarItem } from "@/components/ui/select-bar";
 
 interface NavProps {
   authorsCount?: number;
@@ -22,15 +20,7 @@ interface NavProps {
   pendingSubmissionsCount?: number;
   tagsCount?: number;
   totalResourcesCount?: number;
-}
-
-interface AdminDockItem {
-  count?: number;
-  href: string;
-  icon: React.ReactNode;
-  isAlert?: boolean;
-  key: string;
-  title: string;
+  userEmail?: string;
 }
 
 export function Nav({
@@ -40,9 +30,9 @@ export function Nav({
   pendingSubmissionsCount,
   tagsCount,
   totalResourcesCount,
+  userEmail,
 }: NavProps) {
   const pathname = usePathname();
-  const [hoveredKey, setHoveredKey] = useState<string | null>(null);
 
   // Hide the global admin suite header and tabs on dedicated editor and inspect workflow sub-pages
   const isResourceDetail =
@@ -58,17 +48,26 @@ export function Nav({
   const isHistory = pathname.startsWith("/admin/history");
 
   let pageTitle = "Resource Submissions Queue";
+  let pageSubtitle = "Review, edit, approve, and manage community resource submissions.";
 
   if (isResources) {
     pageTitle = "Live Resource Manager";
+    pageSubtitle =
+      "Browse, search, edit, create, and manage live published resources in the catalog.";
   } else if (isCategories) {
     pageTitle = "Category Manager";
+    pageSubtitle = "Create, organize, style, and manage first-class resource categories.";
   } else if (isTags) {
     pageTitle = "Tags Manager";
+    pageSubtitle =
+      "Manage canonical resource tags, slug identifiers, and usage across the catalog.";
   } else if (isAuthors) {
     pageTitle = "Authors Manager";
+    pageSubtitle = "Manage verified creator profiles, social links, and resource attributions.";
   } else if (isHistory) {
     pageTitle = "Resource Change Monitor";
+    pageSubtitle =
+      "Live alerts for remote website changes, author updates, redirects, and dead links. Review detected changes without altering your catalog.";
   }
 
   const currentTab = isSubmissions
@@ -86,51 +85,79 @@ export function Nav({
               : "submissions";
 
   /* eslint-disable perfectionist/sort-arrays */
-  const navItems: AdminDockItem[] = useMemo(
+  const navItems: SelectBarItem<string>[] = useMemo(
     () => [
       {
         title: "Submissions Queue",
-        count: pendingSubmissionsCount,
         href: "/admin/submissions",
-        icon: <TrayIcon className="size-5" weight="regular" />,
-        isAlert: true,
+        icon: <TrayIcon className="size-4" />,
         key: "submissions",
+        label:
+          pendingSubmissionsCount !== undefined && pendingSubmissionsCount > 0 ? (
+            <span className="-translate-y-1 rounded-full border border-amber-600/40 bg-amber-500/20 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-amber-500">
+              {pendingSubmissionsCount}
+            </span>
+          ) : null,
       },
       {
         title: "Live Catalog",
-        count: totalResourcesCount,
         href: "/admin/resources",
-        icon: <StackIcon className="size-5" weight="regular" />,
+        icon: <StackIcon className="size-4" />,
         key: "resources",
+        label:
+          totalResourcesCount !== undefined && totalResourcesCount > 0 ? (
+            <span className="-translate-y-1 rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-zinc-300">
+              {totalResourcesCount}
+            </span>
+          ) : null,
       },
       {
         title: "Categories",
-        count: categoriesCount,
         href: "/admin/categories",
-        icon: <FoldersIcon className="size-5" weight="regular" />,
+        icon: <FoldersIcon className="size-4" />,
         key: "categories",
+        label:
+          categoriesCount !== undefined && categoriesCount > 0 ? (
+            <span className="-translate-y-1 rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-zinc-300">
+              {categoriesCount}
+            </span>
+          ) : null,
       },
       {
         title: "Tags",
-        count: tagsCount,
         href: "/admin/tags",
-        icon: <TagIcon className="size-5" weight="regular" />,
+        icon: <TagIcon className="size-4" />,
         key: "tags",
+        label:
+          tagsCount !== undefined && tagsCount > 0 ? (
+            <span className="-translate-y-1 rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-zinc-300">
+              {tagsCount}
+            </span>
+          ) : null,
       },
       {
         title: "Authors",
-        count: authorsCount,
         href: "/admin/authors",
-        icon: <UserCircleIcon className="size-5" weight="regular" />,
+        icon: <UserCircleIcon className="size-4" />,
         key: "authors",
+        label:
+          authorsCount !== undefined && authorsCount > 0 ? (
+            <span className="-translate-y-1 rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-zinc-300">
+              {authorsCount}
+            </span>
+          ) : null,
       },
       {
         title: "Change Monitor",
-        count: changeMonitorCount,
         href: "/admin/history",
-        icon: <BroadcastIcon className="size-5" weight="regular" />,
-        isAlert: true,
+        icon: <BroadcastIcon className="size-4" />,
         key: "history",
+        label:
+          changeMonitorCount !== undefined && changeMonitorCount > 0 ? (
+            <span className="-translate-y-1 rounded-full border border-amber-600/40 bg-amber-500/20 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-amber-500">
+              {changeMonitorCount}
+            </span>
+          ) : null,
       },
     ],
     [
@@ -152,81 +179,34 @@ export function Nav({
     <div className="pb-6 font-mono">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
+          <div className="text-primary flex items-center gap-2 text-xs font-bold tracking-widest uppercase">
+            <span className="bg-primary size-2 rounded-full" />
+            <span>Admin Suite</span>
+          </div>
           <h1 className="text-foreground mt-1 text-2xl font-bold tracking-tight uppercase sm:text-3xl">
             {pageTitle}
           </h1>
+          <p className="text-muted-foreground mt-1 text-xs">{pageSubtitle}</p>
         </div>
+
+        {userEmail && (
+          <div className="text-muted-foreground text-right text-xs">
+            <span>Admin: </span>
+            <strong className="text-foreground">{userEmail}</strong>
+          </div>
+        )}
       </div>
 
-      {/* Admin Navigation Dock (Pill dock with hover tooltips and active dot) */}
-      <div className="mt-8 flex justify-center">
-        <nav
-          aria-label="Admin Navigation Dock"
-          className="relative inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-[#18181b]/95 px-3.5 py-2 shadow-2xl shadow-black/50 backdrop-blur-xl sm:gap-2.5"
-        >
-          {navItems.map((item) => {
-            const isActive = currentTab === item.key;
-            const isHovered = hoveredKey === item.key;
-
-            return (
-              <div key={item.key} className="relative flex items-center justify-center">
-                <Link
-                  href={item.href}
-                  onMouseEnter={() => setHoveredKey(item.key)}
-                  onMouseLeave={() => setHoveredKey(null)}
-                  onFocus={() => setHoveredKey(item.key)}
-                  onBlur={() => setHoveredKey(null)}
-                  className={cn(
-                    "group relative flex size-11 items-center justify-center rounded-full transition-colors duration-200",
-                    isActive ? "text-white" : "text-zinc-400 hover:text-zinc-100",
-                  )}
-                  aria-label={item.title}
-                >
-                  <span className="transition-transform duration-200 group-hover:scale-110">
-                    {item.icon}
-                  </span>
-
-                  {/* Active Indicator Dot (centered underneath icon, matching reference image) */}
-                  {isActive && (
-                    <span className="absolute bottom-1 size-1 rounded-full bg-white shadow-[0_0_6px_rgba(255,255,255,0.9)]" />
-                  )}
-
-                  {/* Alert Dot for Pending Submissions or Change Alerts */}
-                  {item.isAlert && item.count !== undefined && item.count > 0 && (
-                    <span className="absolute top-2 right-2 size-2 rounded-full bg-amber-500 ring-2 ring-[#18181b]" />
-                  )}
-                </Link>
-
-                {/* Floating Tooltip Pill (white pill above, matching reference image) */}
-                <AnimatePresence>
-                  {isHovered && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.95, y: 4 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.95, y: 2 }}
-                      transition={{ duration: 0.15, ease: "easeOut" }}
-                      className="pointer-events-none absolute -top-10 left-1/2 z-50 flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-white px-3.5 py-1 font-sans text-xs font-semibold whitespace-nowrap text-zinc-950 shadow-xl"
-                    >
-                      <span>{item.title}</span>
-                      {item.count !== undefined && item.count > 0 && (
-                        <span
-                          className={cn(
-                            "py-0.2 rounded-full px-1.5 text-[10px] leading-tight font-bold",
-                            item.isAlert
-                              ? "bg-amber-100 text-amber-700"
-                              : "bg-zinc-100 text-zinc-600",
-                          )}
-                        >
-                          {item.count}
-                        </span>
-                      )}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            );
-          })}
-        </nav>
+      {/* Module Switcher Dock using SelectBar */}
+      <div className="border-border/40 mt-6 flex items-center justify-center border-t pt-4 sm:justify-start">
+        <SelectBar
+          items={navItems}
+          value={currentTab}
+          size="default"
+          showTooltip
+          className="font-mono text-xs uppercase"
+          ariaLabel="Admin navigation"
+        />
       </div>
     </div>
   );
