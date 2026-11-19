@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { isAdmin } from "@/lib/admin";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { author, category, resource, submission, tag } from "@/lib/db/schema";
+import { activityLog, author, category, resource, submission, tag } from "@/lib/db/schema";
 
 export const metadata: Metadata = {
   title: "Admin Suite — Syntax Stash",
@@ -62,23 +62,27 @@ export default async function Layout({ children }: { children: ReactNode }) {
   let categoriesCount = 0;
   let tagsCount = 0;
   let authorsCount = 0;
+  let changeMonitorCount = 0;
 
   try {
-    const pendingRows = await db
-      .select({ val: count() })
-      .from(submission)
-      .where(eq(submission.status, "pending"));
-
-    const resourceRows = await db.select({ val: count() }).from(resource);
-    const categoryRows = await db.select({ val: count() }).from(category);
-    const tagRows = await db.select({ val: count() }).from(tag);
-    const authorRows = await db.select({ val: count() }).from(author);
+    /* eslint-disable perfectionist/sort-arrays */
+    const [pendingRows, resourceRows, categoryRows, tagRows, authorRows, changeMonitorRows] =
+      await Promise.all([
+        db.select({ val: count() }).from(submission).where(eq(submission.status, "pending")),
+        db.select({ val: count() }).from(resource),
+        db.select({ val: count() }).from(category),
+        db.select({ val: count() }).from(tag),
+        db.select({ val: count() }).from(author),
+        db.select({ val: count() }).from(activityLog),
+      ]);
+    /* eslint-enable perfectionist/sort-arrays */
 
     pendingSubmissionsCount = pendingRows[0]?.val || 0;
     totalResourcesCount = resourceRows[0]?.val || 0;
     categoriesCount = categoryRows[0]?.val || 0;
     tagsCount = tagRows[0]?.val || 0;
     authorsCount = authorRows[0]?.val || 0;
+    changeMonitorCount = changeMonitorRows[0]?.val || 0;
   } catch (err) {
     console.error("Failed to load admin layout counts:", err);
   }
@@ -88,10 +92,10 @@ export default async function Layout({ children }: { children: ReactNode }) {
       <Nav
         authorsCount={authorsCount}
         categoriesCount={categoriesCount}
+        changeMonitorCount={changeMonitorCount}
         pendingSubmissionsCount={pendingSubmissionsCount}
         tagsCount={tagsCount}
         totalResourcesCount={totalResourcesCount}
-        userEmail={userEmail}
       />
       {children}
     </div>

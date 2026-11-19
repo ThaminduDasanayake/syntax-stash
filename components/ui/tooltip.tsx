@@ -30,10 +30,12 @@ function TooltipContent({
   arrowClassName,
   children,
   className,
+  hideArrow = false,
   sideOffset = 6,
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Content> & {
   arrowClassName?: string;
+  hideArrow?: boolean;
 }) {
   const isPaper = typeof className === "string" && className.includes("bg-paper");
 
@@ -49,13 +51,15 @@ function TooltipContent({
         {...props}
       >
         {children}
-        <TooltipPrimitive.Arrow
-          className={cn(
-            isPaper ? "bg-paper fill-paper" : "bg-[#27272a] fill-[#27272a]",
-            "z-50 size-2.5 translate-y-[calc(-50%_-_2px)] rotate-45 rounded-[2px]",
-            arrowClassName,
-          )}
-        />
+        {!hideArrow && (
+          <TooltipPrimitive.Arrow
+            className={cn(
+              isPaper ? "bg-paper fill-paper" : "bg-[#27272a] fill-[#27272a]",
+              "z-50 size-2.5 translate-y-[calc(-50%_-_2px)] rotate-45 rounded-[2px]",
+              arrowClassName,
+            )}
+          />
+        )}
       </TooltipPrimitive.Content>
     </TooltipPrimitive.Portal>
   );

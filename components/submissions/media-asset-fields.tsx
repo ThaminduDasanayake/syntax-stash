@@ -493,7 +493,7 @@ export function MediaAssetFields({
 
               {allowUpload && (
                 <CloudinaryUploadButton
-                  label="Upload Icon / SVG"
+                  label="Upload"
                   onUploadSuccess={onFaviconChange}
                   disabled={disabled}
                   className="border-line bg-surface/80 hover:bg-surface ml-auto h-8 gap-1.5 rounded-[12px] px-3 font-sans text-[11px] font-bold uppercase shadow-xs"
@@ -583,7 +583,7 @@ export function MediaAssetFields({
 
                       {allowUpload && (
                         <CloudinaryUploadButton
-                          label="Upload Screenshot"
+                          label="Upload"
                           onUploadSuccess={onOgImageChange}
                           disabled={disabled}
                           className="border-line bg-surface/80 hover:bg-surface h-8 gap-1.5 rounded-[12px] px-3 font-sans text-[11px] font-bold uppercase shadow-xs"
@@ -619,7 +619,7 @@ export function MediaAssetFields({
                 OpenGraph preview banner image
               </span>
               <CloudinaryUploadButton
-                label="Upload Screenshot"
+                label="Upload"
                 onUploadSuccess={onOgImageChange}
                 disabled={disabled}
                 className="border-line bg-surface/80 hover:bg-surface ml-auto h-8 gap-1.5 rounded-[12px] px-3 font-sans text-[11px] font-bold uppercase shadow-xs"

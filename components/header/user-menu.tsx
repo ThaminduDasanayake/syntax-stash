@@ -4,7 +4,6 @@ import {
   ArrowUpRightIcon,
   BookmarksSimpleIcon,
   ClockCounterClockwiseIcon,
-  HandshakeIcon,
   InfoIcon,
   MagnifyingGlassIcon,
   ShieldCheckIcon,
@@ -186,23 +185,9 @@ export function UserMenu({ onSearchOpenAction }: UserMenuProps) {
                   alt="GitHub"
                   width={16}
                   height={16}
-                  className="size-4 opacity-70 group-hover:opacity-100 dark:invert"
+                  className="size-4 opacity-70 group-hover:opacity-100"
                 />
                 GitHub
-              </span>
-              <ArrowUpRightIcon weight="bold" className="text-muted-foreground size-3" />
-            </a>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <a
-              href={`${siteConfig.links.github}/blob/main/CONTRIBUTING.md`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex w-full cursor-pointer items-center justify-between py-1.5 font-medium"
-            >
-              <span className="flex items-center gap-2">
-                <HandshakeIcon weight="bold" className="text-muted-foreground size-4" />
-                Contribute
               </span>
               <ArrowUpRightIcon weight="bold" className="text-muted-foreground size-3" />
             </a>
@@ -221,7 +206,7 @@ export function UserMenu({ onSearchOpenAction }: UserMenuProps) {
                 >
                   <span className="flex items-center gap-2">
                     <ShieldCheckIcon weight="bold" className="size-4" />
-                    Admin Queue
+                    Admin
                   </span>
                   {pendingCount > 0 && (
                     <span className="bg-primary text-primary-foreground rounded-full px-1 text-center font-mono text-[10px] font-bold">
