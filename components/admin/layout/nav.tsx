@@ -22,7 +22,6 @@ interface NavProps {
   pendingSubmissionsCount?: number;
   tagsCount?: number;
   totalResourcesCount?: number;
-  userEmail?: string;
 }
 
 interface AdminDockItem {
@@ -41,7 +40,6 @@ export function Nav({
   pendingSubmissionsCount,
   tagsCount,
   totalResourcesCount,
-  userEmail,
 }: NavProps) {
   const pathname = usePathname();
   const [hoveredKey, setHoveredKey] = useState<string | null>(null);
@@ -60,26 +58,17 @@ export function Nav({
   const isHistory = pathname.startsWith("/admin/history");
 
   let pageTitle = "Resource Submissions Queue";
-  let pageSubtitle = "Review, edit, approve, and manage community resource submissions.";
 
   if (isResources) {
     pageTitle = "Live Resource Manager";
-    pageSubtitle =
-      "Browse, search, edit, create, and manage live published resources in the catalog.";
   } else if (isCategories) {
     pageTitle = "Category Manager";
-    pageSubtitle = "Create, organize, style, and manage first-class resource categories.";
   } else if (isTags) {
     pageTitle = "Tags Manager";
-    pageSubtitle =
-      "Manage canonical resource tags, slug identifiers, and usage across the catalog.";
   } else if (isAuthors) {
     pageTitle = "Authors Manager";
-    pageSubtitle = "Manage verified creator profiles, social links, and resource attributions.";
   } else if (isHistory) {
     pageTitle = "Resource Change Monitor";
-    pageSubtitle =
-      "Live alerts for remote website changes, author updates, redirects, and dead links. Review detected changes without altering your catalog.";
   }
 
   const currentTab = isSubmissions
@@ -163,29 +152,17 @@ export function Nav({
     <div className="pb-6 font-mono">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <div className="text-primary flex items-center gap-2 text-xs font-bold tracking-widest uppercase">
-            <span className="bg-primary size-2 rounded-full" />
-            <span>Admin Suite</span>
-          </div>
           <h1 className="text-foreground mt-1 text-2xl font-bold tracking-tight uppercase sm:text-3xl">
             {pageTitle}
           </h1>
-          <p className="text-muted-foreground mt-1 text-xs">{pageSubtitle}</p>
         </div>
-
-        {userEmail && (
-          <div className="text-muted-foreground text-right text-xs">
-            <span>Admin: </span>
-            <strong className="text-foreground">{userEmail}</strong>
-          </div>
-        )}
       </div>
 
       {/* Admin Navigation Dock (Pill dock with hover tooltips and active dot) */}
       <div className="mt-8 flex justify-center">
         <nav
           aria-label="Admin Navigation Dock"
-          className="relative inline-flex items-center gap-1.5 sm:gap-2.5 rounded-full border border-white/10 bg-[#18181b]/95 px-3.5 py-2 shadow-2xl shadow-black/50 backdrop-blur-xl"
+          className="relative inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-[#18181b]/95 px-3.5 py-2 shadow-2xl shadow-black/50 backdrop-blur-xl sm:gap-2.5"
         >
           {navItems.map((item) => {
             const isActive = currentTab === item.key;
@@ -201,9 +178,7 @@ export function Nav({
                   onBlur={() => setHoveredKey(null)}
                   className={cn(
                     "group relative flex size-11 items-center justify-center rounded-full transition-colors duration-200",
-                    isActive
-                      ? "text-white"
-                      : "text-zinc-400 hover:text-zinc-100",
+                    isActive ? "text-white" : "text-zinc-400 hover:text-zinc-100",
                   )}
                   aria-label={item.title}
                 >
@@ -230,13 +205,13 @@ export function Nav({
                       animate={{ opacity: 1, scale: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.95, y: 2 }}
                       transition={{ duration: 0.15, ease: "easeOut" }}
-                      className="pointer-events-none absolute -top-10 left-1/2 z-50 flex -translate-x-1/2 items-center gap-1.5 whitespace-nowrap rounded-full bg-white px-3.5 py-1 font-sans text-xs font-semibold text-zinc-950 shadow-xl"
+                      className="pointer-events-none absolute -top-10 left-1/2 z-50 flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-white px-3.5 py-1 font-sans text-xs font-semibold whitespace-nowrap text-zinc-950 shadow-xl"
                     >
                       <span>{item.title}</span>
                       {item.count !== undefined && item.count > 0 && (
                         <span
                           className={cn(
-                            "rounded-full px-1.5 py-0.2 text-[10px] leading-tight font-bold",
+                            "py-0.2 rounded-full px-1.5 text-[10px] leading-tight font-bold",
                             item.isAlert
                               ? "bg-amber-100 text-amber-700"
                               : "bg-zinc-100 text-zinc-600",

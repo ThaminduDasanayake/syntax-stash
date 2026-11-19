@@ -66,24 +66,15 @@ export default async function Layout({ children }: { children: ReactNode }) {
 
   try {
     /* eslint-disable perfectionist/sort-arrays */
-    const [
-      pendingRows,
-      resourceRows,
-      categoryRows,
-      tagRows,
-      authorRows,
-      changeMonitorRows,
-    ] = await Promise.all([
-      db
-        .select({ val: count() })
-        .from(submission)
-        .where(eq(submission.status, "pending")),
-      db.select({ val: count() }).from(resource),
-      db.select({ val: count() }).from(category),
-      db.select({ val: count() }).from(tag),
-      db.select({ val: count() }).from(author),
-      db.select({ val: count() }).from(activityLog),
-    ]);
+    const [pendingRows, resourceRows, categoryRows, tagRows, authorRows, changeMonitorRows] =
+      await Promise.all([
+        db.select({ val: count() }).from(submission).where(eq(submission.status, "pending")),
+        db.select({ val: count() }).from(resource),
+        db.select({ val: count() }).from(category),
+        db.select({ val: count() }).from(tag),
+        db.select({ val: count() }).from(author),
+        db.select({ val: count() }).from(activityLog),
+      ]);
     /* eslint-enable perfectionist/sort-arrays */
 
     pendingSubmissionsCount = pendingRows[0]?.val || 0;
@@ -105,7 +96,6 @@ export default async function Layout({ children }: { children: ReactNode }) {
         pendingSubmissionsCount={pendingSubmissionsCount}
         tagsCount={tagsCount}
         totalResourcesCount={totalResourcesCount}
-        userEmail={userEmail}
       />
       {children}
     </div>
