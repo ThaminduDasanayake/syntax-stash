@@ -8,10 +8,12 @@ import {
   TrayIcon,
   UserCircleIcon,
 } from "@phosphor-icons/react";
+import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 
-import { SelectBar, type SelectBarItem } from "@/components/ui/select-bar";
+import { cn } from "@/lib/utils";
 
 interface NavProps {
   authorsCount?: number;
@@ -21,6 +23,15 @@ interface NavProps {
   tagsCount?: number;
   totalResourcesCount?: number;
   userEmail?: string;
+}
+
+interface AdminDockItem {
+  count?: number;
+  href: string;
+  icon: React.ReactNode;
+  isAlert?: boolean;
+  key: string;
+  title: string;
 }
 
 export function Nav({
@@ -33,6 +44,7 @@ export function Nav({
   userEmail,
 }: NavProps) {
   const pathname = usePathname();
+  const [hoveredKey, setHoveredKey] = useState<string | null>(null);
 
   // Hide the global admin suite header and tabs on dedicated editor and inspect workflow sub-pages
   const isResourceDetail =
@@ -85,103 +97,51 @@ export function Nav({
               : "submissions";
 
   /* eslint-disable perfectionist/sort-arrays */
-  const navItems: SelectBarItem<string>[] = useMemo(
+  const navItems: AdminDockItem[] = useMemo(
     () => [
       {
         title: "Submissions Queue",
+        count: pendingSubmissionsCount,
         href: "/admin/submissions",
-        icon: <TrayIcon className="size-4" />,
+        icon: <TrayIcon className="size-5" weight="regular" />,
+        isAlert: true,
         key: "submissions",
-        label: (
-          <span className="flex items-center gap-1.5">
-            <span>Submissions Queue</span>
-            {pendingSubmissionsCount !== undefined && pendingSubmissionsCount > 0 && (
-              <span className="rounded-full border border-amber-600/40 bg-amber-500/20 px-1.5 py-0.5 text-[10px] leading-none font-extrabold text-amber-500">
-                {pendingSubmissionsCount}
-              </span>
-            )}
-          </span>
-        ),
       },
       {
         title: "Live Catalog",
+        count: totalResourcesCount,
         href: "/admin/resources",
-        icon: <StackIcon className="size-4" />,
+        icon: <StackIcon className="size-5" weight="regular" />,
         key: "resources",
-        label: (
-          <span className="flex items-center gap-1.5">
-            <span>Live Catalog</span>
-            {totalResourcesCount !== undefined && totalResourcesCount > 0 && (
-              <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] leading-none font-extrabold text-zinc-300">
-                {totalResourcesCount}
-              </span>
-            )}
-          </span>
-        ),
       },
       {
         title: "Categories",
+        count: categoriesCount,
         href: "/admin/categories",
-        icon: <FoldersIcon className="size-4" />,
+        icon: <FoldersIcon className="size-5" weight="regular" />,
         key: "categories",
-        label: (
-          <span className="flex items-center gap-1.5">
-            <span>Categories</span>
-            {categoriesCount !== undefined && categoriesCount > 0 && (
-              <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] leading-none font-extrabold text-zinc-300">
-                {categoriesCount}
-              </span>
-            )}
-          </span>
-        ),
       },
       {
         title: "Tags",
+        count: tagsCount,
         href: "/admin/tags",
-        icon: <TagIcon className="size-4" />,
+        icon: <TagIcon className="size-5" weight="regular" />,
         key: "tags",
-        label: (
-          <span className="flex items-center gap-1.5">
-            <span>Tags</span>
-            {tagsCount !== undefined && tagsCount > 0 && (
-              <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] leading-none font-extrabold text-zinc-300">
-                {tagsCount}
-              </span>
-            )}
-          </span>
-        ),
       },
       {
         title: "Authors",
+        count: authorsCount,
         href: "/admin/authors",
-        icon: <UserCircleIcon className="size-4" />,
+        icon: <UserCircleIcon className="size-5" weight="regular" />,
         key: "authors",
-        label: (
-          <span className="flex items-center gap-1.5">
-            <span>Authors</span>
-            {authorsCount !== undefined && authorsCount > 0 && (
-              <span className="rounded-full border border-white/10 bg-white/10 px-1.5 py-0.5 text-[10px] leading-none font-extrabold text-zinc-300">
-                {authorsCount}
-              </span>
-            )}
-          </span>
-        ),
       },
       {
         title: "Change Monitor",
+        count: changeMonitorCount,
         href: "/admin/history",
-        icon: <BroadcastIcon className="size-4" />,
+        icon: <BroadcastIcon className="size-5" weight="regular" />,
+        isAlert: true,
         key: "history",
-        label: (
-          <span className="flex items-center gap-1.5">
-            <span>Change Monitor</span>
-            {changeMonitorCount !== undefined && changeMonitorCount > 0 && (
-              <span className="rounded-full border border-amber-600/40 bg-amber-500/20 px-1.5 py-0.5 text-[10px] leading-none font-extrabold text-amber-500">
-                {changeMonitorCount}
-              </span>
-            )}
-          </span>
-        ),
       },
     ],
     [
@@ -221,15 +181,77 @@ export function Nav({
         )}
       </div>
 
-      {/* Module Switcher Tabs */}
-      <div className="border-border/40 mt-6 flex items-center border-t pt-4">
-        <SelectBar
-          items={navItems}
-          value={currentTab}
-          size="sm"
-          className="font-mono text-xs uppercase"
-          ariaLabel="Admin navigation"
-        />
+      {/* Admin Navigation Dock (Pill dock with hover tooltips and active dot) */}
+      <div className="mt-8 flex justify-center">
+        <nav
+          aria-label="Admin Navigation Dock"
+          className="relative inline-flex items-center gap-1.5 sm:gap-2.5 rounded-full border border-white/10 bg-[#18181b]/95 px-3.5 py-2 shadow-2xl shadow-black/50 backdrop-blur-xl"
+        >
+          {navItems.map((item) => {
+            const isActive = currentTab === item.key;
+            const isHovered = hoveredKey === item.key;
+
+            return (
+              <div key={item.key} className="relative flex items-center justify-center">
+                <Link
+                  href={item.href}
+                  onMouseEnter={() => setHoveredKey(item.key)}
+                  onMouseLeave={() => setHoveredKey(null)}
+                  onFocus={() => setHoveredKey(item.key)}
+                  onBlur={() => setHoveredKey(null)}
+                  className={cn(
+                    "group relative flex size-11 items-center justify-center rounded-full transition-colors duration-200",
+                    isActive
+                      ? "text-white"
+                      : "text-zinc-400 hover:text-zinc-100",
+                  )}
+                  aria-label={item.title}
+                >
+                  <span className="transition-transform duration-200 group-hover:scale-110">
+                    {item.icon}
+                  </span>
+
+                  {/* Active Indicator Dot (centered underneath icon, matching reference image) */}
+                  {isActive && (
+                    <span className="absolute bottom-1 size-1 rounded-full bg-white shadow-[0_0_6px_rgba(255,255,255,0.9)]" />
+                  )}
+
+                  {/* Alert Dot for Pending Submissions or Change Alerts */}
+                  {item.isAlert && item.count !== undefined && item.count > 0 && (
+                    <span className="absolute top-2 right-2 size-2 rounded-full bg-amber-500 ring-2 ring-[#18181b]" />
+                  )}
+                </Link>
+
+                {/* Floating Tooltip Pill (white pill above, matching reference image) */}
+                <AnimatePresence>
+                  {isHovered && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95, y: 4 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95, y: 2 }}
+                      transition={{ duration: 0.15, ease: "easeOut" }}
+                      className="pointer-events-none absolute -top-10 left-1/2 z-50 flex -translate-x-1/2 items-center gap-1.5 whitespace-nowrap rounded-full bg-white px-3.5 py-1 font-sans text-xs font-semibold text-zinc-950 shadow-xl"
+                    >
+                      <span>{item.title}</span>
+                      {item.count !== undefined && item.count > 0 && (
+                        <span
+                          className={cn(
+                            "rounded-full px-1.5 py-0.2 text-[10px] leading-tight font-bold",
+                            item.isAlert
+                              ? "bg-amber-100 text-amber-700"
+                              : "bg-zinc-100 text-zinc-600",
+                          )}
+                        >
+                          {item.count}
+                        </span>
+                      )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
+        </nav>
       </div>
     </div>
   );
