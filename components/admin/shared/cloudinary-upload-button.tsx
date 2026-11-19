@@ -61,7 +61,7 @@ export function CloudinaryUploadButton({
         showCompletedButton: true,
         showPoweredBy: false,
         singleUploadAutoClose: false,
-        sources: ["camera", "local", "url"],
+        sources: ["local", "url"],
       }}
       onSuccess={handleSuccess}
       onError={handleError}
