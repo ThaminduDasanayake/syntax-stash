@@ -2,7 +2,6 @@
 
 import {
   ArrowsClockwiseIcon,
-  HeartbeatIcon,
   MagnifyingGlassIcon,
   PlusIcon,
   SquaresFourIcon,
@@ -17,6 +16,7 @@ import { Toolbar } from "@/components/admin/layout/toolbar";
 import { ResourceCard } from "@/components/admin/resources/resource-card";
 import { ResourceTable } from "@/components/admin/resources/resource-table";
 import { CategoryMegaFilter } from "@/components/admin/shared/category-mega-filter";
+import { HealthMegaFilter, type HealthOption } from "@/components/admin/shared/health-mega-filter";
 import { Pagination } from "@/components/admin/shared/pagination";
 import { SortSelect } from "@/components/admin/shared/sort-select";
 import { ResourceItem } from "@/components/admin/shared/types";
@@ -29,7 +29,6 @@ import { Dialog } from "@/components/ui/dialog";
 import { EmptyState } from "@/components/ui/empty-state";
 import { FluidSearch } from "@/components/ui/fluid-search";
 import { SelectBar, type SelectBarItem } from "@/components/ui/select-bar";
-import { SelectField } from "@/components/ui/select-field";
 import { useCategories } from "@/hooks/use-categories";
 import { cn } from "@/lib/utils";
 
@@ -211,91 +210,113 @@ function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
   }, [resources, selectedCategory]);
 
   // Dynamically generate health & missing data filter options
-  const healthFilterOptions = useMemo(() => {
-    const options: { label: string; value: string }[] = [
-      { label: "Health / Data: All", value: "all" },
-    ];
+  const healthFilterOptions: HealthOption[] = useMemo(() => {
+    const options: HealthOption[] = [];
 
     if (urlHealthStats.broken > 0 || healthFilter === "broken") {
       options.push({
-        label: `🚨 Broken URLs (${urlHealthStats.broken})`,
+        count: urlHealthStats.broken,
+        icon: "🚨",
+        label: "Broken URLs",
         value: "broken",
       });
     }
 
     if (urlHealthStats.redirect > 0 || healthFilter === "redirect") {
       options.push({
-        label: `🔄 Redirects (${urlHealthStats.redirect})`,
+        count: urlHealthStats.redirect,
+        icon: "🔄",
+        label: "Redirects",
         value: "redirect",
       });
     }
 
     if (urlHealthStats.blocked > 0 || healthFilter === "blocked") {
       options.push({
-        label: `🛡️ Protected / Cloudflare (${urlHealthStats.blocked})`,
+        count: urlHealthStats.blocked,
+        icon: "🛡️",
+        label: "Protected / Cloudflare",
         value: "blocked",
       });
     }
 
     if (urlHealthStats.healthy > 0 || healthFilter === "healthy") {
       options.push({
-        label: `🟢 Healthy URLs (${urlHealthStats.healthy})`,
+        count: urlHealthStats.healthy,
+        icon: "🟢",
+        label: "Healthy URLs",
         value: "healthy",
       });
     }
 
     if (urlHealthStats.unchecked > 0 || healthFilter === "unchecked") {
       options.push({
-        label: `⚪️ Unchecked URLs (${urlHealthStats.unchecked})`,
+        count: urlHealthStats.unchecked,
+        icon: "⚪️",
+        label: "Unchecked URLs",
         value: "unchecked",
       });
     }
 
     if (missingStats.anyMissing > 0 || healthFilter === "any-missing") {
       options.push({
-        label: `⚠️ Any Missing Data (${missingStats.anyMissing})`,
+        count: missingStats.anyMissing,
+        icon: "⚠️",
+        label: "Any Missing Data",
         value: "any-missing",
       });
     }
 
     if (missingStats.missingOg > 0 || healthFilter === "missing-og") {
       options.push({
-        label: `Missing OG Image (${missingStats.missingOg})`,
+        count: missingStats.missingOg,
+        icon: "🖼️",
+        label: "Missing OG Image",
         value: "missing-og",
       });
     }
 
     if (missingStats.missingAuthor > 0 || healthFilter === "missing-author") {
       options.push({
-        label: `Missing Author (${missingStats.missingAuthor})`,
+        count: missingStats.missingAuthor,
+        icon: "👤",
+        label: "Missing Author",
         value: "missing-author",
       });
     }
 
     if (missingStats.missingTags > 0 || healthFilter === "missing-tags") {
       options.push({
-        label: `Missing Tags (${missingStats.missingTags})`,
+        count: missingStats.missingTags,
+        icon: "🏷️",
+        label: "Missing Tags",
         value: "missing-tags",
       });
     }
 
     if (missingStats.missingFavicon > 0 || healthFilter === "missing-favicon") {
       options.push({
-        label: `Missing Favicon (${missingStats.missingFavicon})`,
+        count: missingStats.missingFavicon,
+        icon: "🌐",
+        label: "Missing Favicon",
         value: "missing-favicon",
       });
     }
 
     if (missingStats.missingGithub > 0 || healthFilter === "missing-github") {
       options.push({
-        label: `Missing GitHub (${missingStats.missingGithub})`,
+        count: missingStats.missingGithub,
+        icon: "🐙",
+        label: "Missing GitHub",
         value: "missing-github",
       });
     }
 
     if (missingStats.missingDescription > 0 || healthFilter === "missing-description") {
       options.push({
-        label: `Missing Description (${missingStats.missingDescription})`,
+        count: missingStats.missingDescription,
+        icon: "📝",
+        label: "Missing Description",
         value: "missing-description",
       });
     }
@@ -649,20 +670,15 @@ function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
               />
 
               {/* Dynamic Health & Missing Data Filter */}
-              {healthFilterOptions.length > 1 && (
-                <div className="flex items-center gap-1.5">
-                  <HeartbeatIcon weight="duotone" className="size-8 text-rose-500" />
-                  <span className="text-muted-foreground text-[11px] font-bold whitespace-nowrap uppercase">
-                    Health & Data:
-                  </span>
-                  <SelectField
-                    value={healthFilter}
-                    onValueChange={handleHealthFilterChange}
-                    options={healthFilterOptions}
-                    triggerClassName="h-8 font-mono text-xs min-w-[200px]"
-                    variant="rose"
-                  />
-                </div>
+              {healthFilterOptions.length > 0 && (
+                <HealthMegaFilter
+                  label="Health & Data:"
+                  value={healthFilter}
+                  onValueChange={handleHealthFilterChange}
+                  options={healthFilterOptions}
+                  totalResourcesCount={resources.length}
+                  triggerClassName="min-w-[190px]"
+                />
               )}
 
               {/* Sort Select */}
