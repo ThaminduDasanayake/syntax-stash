@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  CaretDownIcon,
-  CheckIcon,
-  HeartbeatIcon,
-} from "@phosphor-icons/react";
+import { CaretDownIcon, CheckIcon, HeartbeatIcon } from "@phosphor-icons/react";
 import React, { useMemo, useState } from "react";
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -64,9 +60,9 @@ export function HealthMegaFilter({
           <button
             type="button"
             className={cn(
-              "group flex h-8 min-w-[200px] max-w-[320px] cursor-pointer items-center justify-between gap-2 rounded-md border border-input bg-background/50 px-2.5 font-mono text-xs shadow-xs transition-all outline-none",
+              "group border-input bg-background/50 flex h-8 max-w-[320px] min-w-[200px] cursor-pointer items-center justify-between gap-2 rounded-md border px-2.5 font-mono text-xs shadow-xs transition-all outline-none",
               "hover:bg-surface focus-visible:border-rose-500/60 focus-visible:ring-1 focus-visible:ring-rose-500/60",
-              open && "border-rose-500/60 ring-1 ring-rose-500/60 bg-surface",
+              open && "bg-surface border-rose-500/60 ring-1 ring-rose-500/60",
               disabled && "cursor-not-allowed opacity-50",
               triggerClassName,
             )}
@@ -76,8 +72,8 @@ export function HealthMegaFilter({
             <div className="flex min-w-0 items-center gap-1.5 truncate">
               {isAllSelected ? (
                 <>
-                  <span className="truncate text-foreground font-medium">Health / Data: All</span>
-                  <span className="text-muted-foreground text-[10px] tabular-nums font-semibold">
+                  <span className="text-foreground truncate font-medium">Health / Data: All</span>
+                  <span className="text-muted-foreground text-[10px] font-semibold tabular-nums">
                     ({totalResourcesCount})
                   </span>
                 </>
@@ -87,7 +83,7 @@ export function HealthMegaFilter({
                     {currentOption?.label || value}
                   </span>
                   {currentOption && (
-                    <span className="text-[10px] font-semibold tabular-nums text-rose-400/80">
+                    <span className="text-[10px] font-semibold text-rose-400/80 tabular-nums">
                       ({currentOption.count})
                     </span>
                   )}
@@ -98,8 +94,8 @@ export function HealthMegaFilter({
             <CaretDownIcon
               weight="bold"
               className={cn(
-                "size-3 text-muted-foreground shrink-0 transition-transform duration-200",
-                open && "rotate-180 text-foreground",
+                "text-muted-foreground size-3 shrink-0 transition-transform duration-200",
+                open && "text-foreground rotate-180",
               )}
             />
           </button>
@@ -108,7 +104,7 @@ export function HealthMegaFilter({
         <PopoverContent
           align="start"
           sideOffset={8}
-          className="z-70 w-[calc(100vw-2rem)] max-w-3xl lg:max-w-4xl rounded-2xl border-[1.5px] border-white/12 bg-[#0e0e11]/98 p-0 font-mono text-xs shadow-[0_24px_60px_rgba(0,0,0,0.85),0_1px_0_0_rgba(255,255,255,0.1)_inset] backdrop-blur-2xl"
+          className="z-70 w-[calc(100vw-2rem)] max-w-3xl rounded-2xl border-[1.5px] border-white/12 bg-[#0e0e11]/98 p-0 font-mono text-xs shadow-[0_24px_60px_rgba(0,0,0,0.85),0_1px_0_0_rgba(255,255,255,0.1)_inset] backdrop-blur-2xl lg:max-w-4xl"
         >
           {/* Header Bar */}
           <div className="flex items-center justify-between border-b border-white/10 bg-white/[0.02] p-4">
@@ -129,7 +125,7 @@ export function HealthMegaFilter({
                 className={cn(
                   "flex h-8 cursor-pointer items-center gap-2 rounded-lg border px-3 text-xs transition-all",
                   isAllSelected
-                    ? "border-rose-500/60 bg-rose-500/15 text-white shadow-[0_0_15px_rgba(244,63,94,0.18)] ring-1 ring-rose-500/60 font-medium"
+                    ? "border-rose-500/60 bg-rose-500/15 font-medium text-white shadow-[0_0_15px_rgba(244,63,94,0.18)] ring-1 ring-rose-500/60"
                     : "border-white/10 bg-[#161619] text-zinc-300 hover:border-white/20 hover:bg-[#1f1f25] hover:text-white",
                 )}
               >
@@ -141,19 +137,21 @@ export function HealthMegaFilter({
                 <span
                   className={cn(
                     "rounded-md px-1.5 py-0.5 font-mono text-[10px] font-semibold tabular-nums transition-colors",
-                    isAllSelected ? "bg-rose-500 text-white font-bold" : "bg-white/5 text-zinc-400",
+                    isAllSelected ? "bg-rose-500 font-bold text-white" : "bg-white/5 text-zinc-400",
                   )}
                 >
                   {totalResourcesCount}
                 </span>
-                {isAllSelected && <CheckIcon weight="bold" className="size-3 text-rose-500 shrink-0" />}
+                {isAllSelected && (
+                  <CheckIcon weight="bold" className="size-3 shrink-0 text-rose-500" />
+                )}
               </button>
 
               {!isAllSelected && (
                 <button
                   type="button"
                   onClick={() => handleSelect("all")}
-                  className="cursor-pointer text-[11px] text-zinc-400 hover:text-rose-400 underline-offset-4 hover:underline"
+                  className="cursor-pointer text-[11px] text-zinc-400 underline-offset-4 hover:text-rose-400 hover:underline"
                 >
                   Reset
                 </button>
@@ -176,12 +174,12 @@ export function HealthMegaFilter({
                       "group relative flex cursor-pointer items-center justify-between gap-2 rounded-xl border p-2.5 text-left transition-all duration-150",
                       isSelected
                         ? "border-rose-500/60 bg-rose-500/15 text-white shadow-[0_0_15px_rgba(244,63,94,0.18)] ring-1 ring-rose-500/60"
-                        : "border-white/6 bg-[#141417] text-zinc-300 hover:border-rose-500/30 hover:bg-[#1b1b22] hover:text-white hover:scale-[1.015]",
+                        : "border-white/6 bg-[#141417] text-zinc-300 hover:scale-[1.015] hover:border-rose-500/30 hover:bg-[#1b1b22] hover:text-white",
                     )}
                   >
                     <div className="flex min-w-0 items-center gap-2">
                       {opt.icon ? (
-                        <span className="text-sm shrink-0 leading-none">{opt.icon}</span>
+                        <span className="shrink-0 text-sm leading-none">{opt.icon}</span>
                       ) : (
                         <span
                           className={cn(
@@ -190,9 +188,7 @@ export function HealthMegaFilter({
                           )}
                         />
                       )}
-                      <span className="truncate font-sans text-xs font-medium">
-                        {opt.label}
-                      </span>
+                      <span className="truncate font-sans text-xs font-medium">{opt.label}</span>
                     </div>
 
                     <div className="flex shrink-0 items-center gap-1.5">
@@ -200,14 +196,14 @@ export function HealthMegaFilter({
                         className={cn(
                           "rounded-md px-1.5 py-0.5 font-mono text-[10px] font-semibold tabular-nums transition-colors",
                           isSelected
-                            ? "bg-rose-500 text-white font-bold"
+                            ? "bg-rose-500 font-bold text-white"
                             : "bg-white/5 text-zinc-400 group-hover:bg-white/10 group-hover:text-zinc-200",
                         )}
                       >
                         {opt.count}
                       </span>
                       {isSelected && (
-                        <CheckIcon weight="bold" className="size-3 text-rose-500 shrink-0" />
+                        <CheckIcon weight="bold" className="size-3 shrink-0 text-rose-500" />
                       )}
                     </div>
                   </button>
@@ -221,7 +217,7 @@ export function HealthMegaFilter({
             <span>
               Showing {options.length} diagnostic checks • {totalResourcesCount} resources
             </span>
-            <span className="hidden sm:inline text-zinc-600">
+            <span className="hidden text-zinc-600 sm:inline">
               Click any check to filter issues immediately
             </span>
           </div>

@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  CaretDownIcon,
-  CheckIcon,
-  FunnelIcon,
-  SquaresFourIcon,
-} from "@phosphor-icons/react";
+import { CaretDownIcon, CheckIcon, FunnelIcon, SquaresFourIcon } from "@phosphor-icons/react";
 import React, { useMemo, useState } from "react";
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -61,9 +56,9 @@ export function CategoryMegaFilter({
           <button
             type="button"
             className={cn(
-              "group flex h-8 min-w-[200px] max-w-[300px] cursor-pointer items-center justify-between gap-2 rounded-md border border-input bg-background/50 px-2.5 font-mono text-xs shadow-xs transition-all outline-none",
-              "hover:bg-surface focus-visible:border-accent/60 focus-visible:ring-1 focus-visible:ring-accent/60",
-              open && "border-accent/60 ring-1 ring-accent/60 bg-surface",
+              "group border-input bg-background/50 flex h-8 max-w-[300px] min-w-[200px] cursor-pointer items-center justify-between gap-2 rounded-md border px-2.5 font-mono text-xs shadow-xs transition-all outline-none",
+              "hover:bg-surface focus-visible:border-accent/60 focus-visible:ring-accent/60 focus-visible:ring-1",
+              open && "border-accent/60 ring-accent/60 bg-surface ring-1",
               disabled && "cursor-not-allowed opacity-50",
               triggerClassName,
             )}
@@ -73,18 +68,18 @@ export function CategoryMegaFilter({
             <div className="flex min-w-0 items-center gap-1.5 truncate">
               {isAllSelected ? (
                 <>
-                  <span className="truncate text-foreground font-medium">All Categories</span>
-                  <span className="text-muted-foreground text-[10px] tabular-nums font-semibold">
+                  <span className="text-foreground truncate font-medium">All Categories</span>
+                  <span className="text-muted-foreground text-[10px] font-semibold tabular-nums">
                     ({totalResourcesCount})
                   </span>
                 </>
               ) : (
                 <>
-                  <span className="truncate text-accent font-semibold">
+                  <span className="text-accent truncate font-semibold">
                     {currentCategory?.name || value}
                   </span>
                   {currentCategory && (
-                    <span className="text-accent/80 text-[10px] tabular-nums font-semibold">
+                    <span className="text-accent/80 text-[10px] font-semibold tabular-nums">
                       ({currentCategory.count})
                     </span>
                   )}
@@ -95,8 +90,8 @@ export function CategoryMegaFilter({
             <CaretDownIcon
               weight="bold"
               className={cn(
-                "size-3 text-muted-foreground shrink-0 transition-transform duration-200",
-                open && "rotate-180 text-foreground",
+                "text-muted-foreground size-3 shrink-0 transition-transform duration-200",
+                open && "text-foreground rotate-180",
               )}
             />
           </button>
@@ -105,12 +100,12 @@ export function CategoryMegaFilter({
         <PopoverContent
           align="start"
           sideOffset={8}
-          className="z-70 w-[calc(100vw-2rem)] max-w-4xl lg:max-w-5xl rounded-2xl border-[1.5px] border-white/12 bg-[#0e0e11]/98 p-0 font-mono text-xs shadow-[0_24px_60px_rgba(0,0,0,0.85),0_1px_0_0_rgba(255,255,255,0.1)_inset] backdrop-blur-2xl"
+          className="z-70 w-[calc(100vw-2rem)] max-w-4xl rounded-2xl border-[1.5px] border-white/12 bg-[#0e0e11]/98 p-0 font-mono text-xs shadow-[0_24px_60px_rgba(0,0,0,0.85),0_1px_0_0_rgba(255,255,255,0.1)_inset] backdrop-blur-2xl lg:max-w-5xl"
         >
           {/* Header Bar */}
           <div className="flex items-center justify-between border-b border-white/10 bg-white/[0.02] p-4">
             <div className="flex items-center gap-2">
-              <SquaresFourIcon weight="bold" className="size-4 text-accent" />
+              <SquaresFourIcon weight="bold" className="text-accent size-4" />
               <span className="font-sans text-xs font-semibold text-white">Categories</span>
               <span className="rounded-full bg-white/5 px-2 py-0.5 text-[10px] font-medium text-zinc-400">
                 {categories.length} Total
@@ -124,7 +119,7 @@ export function CategoryMegaFilter({
                 className={cn(
                   "flex h-8 cursor-pointer items-center gap-2 rounded-lg border px-3 text-xs transition-all",
                   isAllSelected
-                    ? "border-accent/60 bg-accent/15 text-white shadow-[0_0_15px_rgba(74,222,128,0.18)] ring-1 ring-accent/60 font-medium"
+                    ? "border-accent/60 bg-accent/15 ring-accent/60 font-medium text-white shadow-[0_0_15px_rgba(74,222,128,0.18)] ring-1"
                     : "border-white/10 bg-[#161619] text-zinc-300 hover:border-white/20 hover:bg-[#1f1f25] hover:text-white",
                 )}
               >
@@ -136,19 +131,23 @@ export function CategoryMegaFilter({
                 <span
                   className={cn(
                     "rounded-md px-1.5 py-0.5 font-mono text-[10px] font-semibold tabular-nums transition-colors",
-                    isAllSelected ? "bg-accent text-accent-foreground font-bold" : "bg-white/5 text-zinc-400",
+                    isAllSelected
+                      ? "bg-accent text-accent-foreground font-bold"
+                      : "bg-white/5 text-zinc-400",
                   )}
                 >
                   {totalResourcesCount}
                 </span>
-                {isAllSelected && <CheckIcon weight="bold" className="size-3 text-accent shrink-0" />}
+                {isAllSelected && (
+                  <CheckIcon weight="bold" className="text-accent size-3 shrink-0" />
+                )}
               </button>
 
               {!isAllSelected && (
                 <button
                   type="button"
                   onClick={() => handleSelect("all")}
-                  className="cursor-pointer text-[11px] text-zinc-400 hover:text-accent underline-offset-4 hover:underline"
+                  className="hover:text-accent cursor-pointer text-[11px] text-zinc-400 underline-offset-4 hover:underline"
                 >
                   Reset
                 </button>
@@ -170,22 +169,18 @@ export function CategoryMegaFilter({
                     className={cn(
                       "group relative flex cursor-pointer items-center justify-between gap-2 rounded-xl border p-2.5 text-left transition-all duration-150",
                       isSelected
-                        ? "border-accent/60 bg-accent/15 text-white shadow-[0_0_15px_rgba(74,222,128,0.18)] ring-1 ring-accent/60"
-                        : "border-white/6 bg-[#141417] text-zinc-300 hover:border-accent/30 hover:bg-[#1b1b22] hover:text-white hover:scale-[1.015]",
+                        ? "border-accent/60 bg-accent/15 ring-accent/60 text-white shadow-[0_0_15px_rgba(74,222,128,0.18)] ring-1"
+                        : "hover:border-accent/30 border-white/6 bg-[#141417] text-zinc-300 hover:scale-[1.015] hover:bg-[#1b1b22] hover:text-white",
                     )}
                   >
                     <div className="flex min-w-0 items-center gap-2">
                       <span
                         className={cn(
                           "size-1.5 shrink-0 rounded-full transition-colors",
-                          isSelected
-                            ? "bg-accent"
-                            : "bg-zinc-600 group-hover:bg-zinc-400",
+                          isSelected ? "bg-accent" : "bg-zinc-600 group-hover:bg-zinc-400",
                         )}
                       />
-                      <span className="truncate font-sans text-xs font-medium">
-                        {cat.name}
-                      </span>
+                      <span className="truncate font-sans text-xs font-medium">{cat.name}</span>
                     </div>
 
                     <div className="flex shrink-0 items-center gap-1.5">
@@ -200,7 +195,7 @@ export function CategoryMegaFilter({
                         {cat.count}
                       </span>
                       {isSelected && (
-                        <CheckIcon weight="bold" className="size-3 text-accent shrink-0" />
+                        <CheckIcon weight="bold" className="text-accent size-3 shrink-0" />
                       )}
                     </div>
                   </button>
@@ -214,7 +209,7 @@ export function CategoryMegaFilter({
             <span>
               Showing {categories.length} categories • {totalResourcesCount} resources
             </span>
-            <span className="hidden sm:inline text-zinc-600">
+            <span className="hidden text-zinc-600 sm:inline">
               Click any category to filter catalog instantly
             </span>
           </div>
