@@ -89,7 +89,15 @@ export function SelectBar<T extends string = string>({
   const timer = useRef<number | undefined>(undefined);
 
   const hasSwatches = items.some((item) => Boolean(item.color));
-  const defaultHug = hasSwatches ? 3 : size === "xs" ? 3 : size === "sm" ? 4 : size === "lg" ? 5 : 5;
+  const defaultHug = hasSwatches
+    ? 3
+    : size === "xs"
+      ? 3
+      : size === "sm"
+        ? 4
+        : size === "lg"
+          ? 5
+          : 5;
   const actualHug = hug !== undefined ? hug : defaultHug;
   const gapClass = gap !== undefined ? gap : size === "lg" ? "gap-6 sm:gap-8" : "gap-0.5";
 
@@ -197,10 +205,7 @@ export function SelectBar<T extends string = string>({
       ref={trackRef as React.RefObject<HTMLElement>}
       className={`no-scrollbar relative isolate inline-flex max-w-full items-center ${gapClass} overflow-x-auto rounded-full border border-white/10 bg-[#252525] text-white shadow-none select-none ${className}`}
       style={{
-        padding:
-          size === "lg"
-            ? `${actualHug}px ${actualHug + 16}px`
-            : `${actualHug}px`,
+        padding: size === "lg" ? `${actualHug}px ${actualHug + 16}px` : `${actualHug}px`,
       }}
       aria-label={ariaLabel}
     >
@@ -342,10 +347,13 @@ export function SelectBar<T extends string = string>({
                 side="top"
                 sideOffset={10}
                 hideArrow
-                className="pointer-events-none z-50 whitespace-nowrap rounded-full border-0 !bg-white px-3.5 py-1 font-sans text-xs !font-normal tracking-normal normal-case !text-zinc-900 shadow-xl antialiased"
+                className="pointer-events-none z-50 rounded-full border-0 !bg-white px-3.5 py-1 font-sans text-xs !font-normal tracking-normal whitespace-nowrap !text-zinc-900 normal-case antialiased shadow-xl"
                 style={{ fontWeight: 400 }}
               >
-                <span className="font-sans text-xs !font-normal tracking-normal normal-case text-zinc-900" style={{ fontWeight: 400 }}>
+                <span
+                  className="font-sans text-xs !font-normal tracking-normal text-zinc-900 normal-case"
+                  style={{ fontWeight: 400 }}
+                >
                   {item.tooltip || slotTitle}
                 </span>
               </TooltipContent>
