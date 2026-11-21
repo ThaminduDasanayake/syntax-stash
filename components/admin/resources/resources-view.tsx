@@ -16,7 +16,7 @@ import { toast } from "sonner";
 import { Toolbar } from "@/components/admin/layout/toolbar";
 import { ResourceCard } from "@/components/admin/resources/resource-card";
 import { ResourceTable } from "@/components/admin/resources/resource-table";
-import { FilterSelect } from "@/components/admin/shared/filter-select";
+import { CategoryMegaFilter } from "@/components/admin/shared/category-mega-filter";
 import { Pagination } from "@/components/admin/shared/pagination";
 import { SortSelect } from "@/components/admin/shared/sort-select";
 import { ResourceItem } from "@/components/admin/shared/types";
@@ -552,13 +552,14 @@ function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
     return combined.sort((a, b) => a.localeCompare(b));
   }, [categories, resources]);
 
-  const categoryFilterOptions = [
-    { label: `All Categories (${resources.length})`, value: "all" },
-    ...allCategoryNames.map((cat) => ({
-      label: `${cat} (${resources.filter((r) => r.category === cat).length})`,
-      value: cat,
-    })),
-  ];
+  const categoryOptions = useMemo(
+    () =>
+      allCategoryNames.map((cat) => ({
+        count: resources.filter((r) => r.category === cat).length,
+        name: cat,
+      })),
+    [allCategoryNames, resources],
+  );
 
   /* eslint-disable perfectionist/sort-arrays */
   const viewModeItems: SelectBarItem<"cards" | "table">[] = useMemo(
@@ -637,13 +638,14 @@ function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
         footer={
           <>
             <div className="flex flex-wrap items-center gap-4 sm:gap-5">
-              {/* Category Select */}
-              <FilterSelect
+              {/* Cloudflare-style Category Mega Filter */}
+              <CategoryMegaFilter
                 label="Category:"
                 value={selectedCategory}
                 onValueChange={handleCategoryChange}
-                options={categoryFilterOptions}
-                triggerClassName="min-w-[180px]"
+                categories={categoryOptions}
+                totalResourcesCount={resources.length}
+                triggerClassName="min-w-[190px]"
               />
 
               {/* Dynamic Health & Missing Data Filter */}
