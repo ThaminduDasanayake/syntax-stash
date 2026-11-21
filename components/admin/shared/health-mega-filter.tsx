@@ -129,21 +129,24 @@ export function HealthMegaFilter({
                 className={cn(
                   "flex h-8 cursor-pointer items-center gap-2 rounded-lg border px-3 text-xs transition-all",
                   isAllSelected
-                    ? "border-rose-500/60 bg-rose-500 text-white font-bold shadow-[0_0_12px_rgba(244,63,94,0.25)]"
+                    ? "border-rose-500/60 bg-rose-500/15 text-white shadow-[0_0_15px_rgba(244,63,94,0.18)] ring-1 ring-rose-500/60 font-medium"
                     : "border-white/10 bg-[#161619] text-zinc-300 hover:border-white/20 hover:bg-[#1f1f25] hover:text-white",
                 )}
               >
-                <HeartbeatIcon weight={isAllSelected ? "fill" : "bold"} className="size-3.5" />
+                <HeartbeatIcon
+                  weight={isAllSelected ? "fill" : "bold"}
+                  className={cn("size-3.5", isAllSelected ? "text-rose-500" : "text-zinc-400")}
+                />
                 <span>All Resources</span>
                 <span
                   className={cn(
-                    "rounded-sm px-1 text-[10px] tabular-nums font-semibold",
-                    isAllSelected ? "bg-black/25 text-white" : "bg-white/5 text-zinc-400",
+                    "rounded-md px-1.5 py-0.5 font-mono text-[10px] font-semibold tabular-nums transition-colors",
+                    isAllSelected ? "bg-rose-500 text-white font-bold" : "bg-white/5 text-zinc-400",
                   )}
                 >
                   {totalResourcesCount}
                 </span>
-                {isAllSelected && <CheckIcon weight="bold" className="size-3" />}
+                {isAllSelected && <CheckIcon weight="bold" className="size-3 text-rose-500 shrink-0" />}
               </button>
 
               {!isAllSelected && (

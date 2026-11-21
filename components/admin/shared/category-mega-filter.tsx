@@ -124,21 +124,24 @@ export function CategoryMegaFilter({
                 className={cn(
                   "flex h-8 cursor-pointer items-center gap-2 rounded-lg border px-3 text-xs transition-all",
                   isAllSelected
-                    ? "border-accent/60 bg-accent text-accent-foreground font-bold shadow-[0_0_12px_rgba(74,222,128,0.25)]"
+                    ? "border-accent/60 bg-accent/15 text-white shadow-[0_0_15px_rgba(74,222,128,0.18)] ring-1 ring-accent/60 font-medium"
                     : "border-white/10 bg-[#161619] text-zinc-300 hover:border-white/20 hover:bg-[#1f1f25] hover:text-white",
                 )}
               >
-                <SquaresFourIcon weight={isAllSelected ? "fill" : "bold"} className="size-3.5" />
+                <SquaresFourIcon
+                  weight={isAllSelected ? "fill" : "bold"}
+                  className={cn("size-3.5", isAllSelected ? "text-accent" : "text-zinc-400")}
+                />
                 <span>All Categories</span>
                 <span
                   className={cn(
-                    "rounded-sm px-1 text-[10px] tabular-nums font-semibold",
-                    isAllSelected ? "bg-black/25 text-accent-foreground" : "bg-white/5 text-zinc-400",
+                    "rounded-md px-1.5 py-0.5 font-mono text-[10px] font-semibold tabular-nums transition-colors",
+                    isAllSelected ? "bg-accent text-accent-foreground font-bold" : "bg-white/5 text-zinc-400",
                   )}
                 >
                   {totalResourcesCount}
                 </span>
-                {isAllSelected && <CheckIcon weight="bold" className="size-3" />}
+                {isAllSelected && <CheckIcon weight="bold" className="size-3 text-accent shrink-0" />}
               </button>
 
               {!isAllSelected && (
