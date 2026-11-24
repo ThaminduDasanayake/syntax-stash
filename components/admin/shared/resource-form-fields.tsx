@@ -242,6 +242,8 @@ export function ResourceFormFields({
                 placeholder="Select category..."
                 disabled={disabled}
                 required
+                columns={3}
+                showIcons
                 suffix={<FieldCheckmark checked={Boolean(values.category)} />}
               />
             </div>

@@ -5,6 +5,7 @@ import { Select as SelectPrimitive } from "radix-ui";
 import React, { useCallback, useEffect, useId, useRef, useState } from "react";
 
 import { SelectContent, SelectItem } from "@/components/ui/select";
+import { getCategoryIcon } from "@/lib/category-icons";
 import { cn } from "@/lib/utils";
 
 const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
@@ -18,8 +19,10 @@ export interface LabelSelectOption {
 }
 
 export interface LabelSelectProps {
+  align?: "center" | "start" | "end";
   children?: React.ReactNode;
   className?: string;
+  columns?: 1 | 2 | 3 | 4;
   contentClassName?: string;
   /** Corner radius in px: at half the height (26px) it is a pill. Default: 20 */
   corner?: number;
@@ -37,19 +40,23 @@ export interface LabelSelectProps {
   options?: LabelSelectOption[];
   placeholder?: string;
   required?: boolean;
+  showIcons?: boolean;
   suffix?: React.ReactNode;
   /** Visual color theme mode: "light" | "dark". Default: "dark" */
   theme?: LabelSelectTheme;
   triggerClassName?: string;
   value?: string;
+  viewportClassName?: string;
   /** Component width in pixels. If omitted, automatically scales to 100% of container */
   width?: number;
 }
 
 export function LabelSelect({
   id: propId,
+  align,
   children,
   className = "",
+  columns = 1,
   contentClassName,
   corner = 20,
   defaultValue,
@@ -64,10 +71,12 @@ export function LabelSelect({
   options,
   placeholder = "Select...",
   required = false,
+  showIcons = false,
   suffix,
   theme = "dark",
   triggerClassName,
   value,
+  viewportClassName,
   width: propWidth,
 }: LabelSelectProps) {
   const isDark = theme === "dark";
@@ -177,6 +186,27 @@ export function LabelSelect({
       : isDark
         ? "stroke-white/20"
         : "stroke-[#18181b]/20";
+
+  const isMultiColumn = columns > 1;
+  const resolvedAlign = align || (isMultiColumn ? "start" : "center");
+  const resolvedContentClassName = isMultiColumn
+    ? cn(
+        "z-70 w-[calc(100vw-2rem)] max-w-3xl rounded-2xl border-[1.5px] border-white/12 bg-[#0e0e11]/98 p-2 font-mono text-xs shadow-[0_24px_60px_rgba(0,0,0,0.85),0_1px_0_0_rgba(255,255,255,0.1)_inset] backdrop-blur-2xl lg:max-w-4xl",
+        contentClassName,
+      )
+    : contentClassName;
+
+  const resolvedViewportClassName = isMultiColumn
+    ? cn(
+        "grid gap-1.5 p-1",
+        columns === 2
+          ? "grid-cols-1 sm:grid-cols-2"
+          : columns === 4
+            ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-4"
+            : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3",
+        viewportClassName,
+      )
+    : viewportClassName;
 
   return (
     <div ref={containerRef} className={cn("relative w-full pt-2 select-none", className)}>
@@ -322,7 +352,14 @@ export function LabelSelect({
               paddingRight: Math.max(14, r - 4),
             }}
           >
-            <div className="flex flex-1 items-center overflow-hidden">
+            <div className="flex flex-1 items-center gap-2 overflow-hidden">
+              {showIcons &&
+                up &&
+                value &&
+                (() => {
+                  const SelectedIcon = getCategoryIcon(value);
+                  return <SelectedIcon weight="fill" className="text-accent size-4 shrink-0" />;
+                })()}
               <span
                 className={cn(
                   "truncate transition-opacity duration-200",
@@ -348,17 +385,32 @@ export function LabelSelect({
           </SelectPrimitive.Trigger>
         </div>
 
-        <SelectContent className={contentClassName}>
+        <SelectContent
+          align={resolvedAlign}
+          className={resolvedContentClassName}
+          viewportClassName={resolvedViewportClassName}
+        >
           {options
-            ? options.map((opt) => (
-                <SelectItem
-                  key={opt.value}
-                  value={opt.value}
-                  className={cn("font-sans text-xs sm:text-sm", itemClassName)}
-                >
-                  {opt.label}
-                </SelectItem>
-              ))
+            ? options.map((opt) => {
+                const ItemIcon = showIcons ? getCategoryIcon(opt.value) : null;
+                return (
+                  <SelectItem
+                    key={opt.value}
+                    value={opt.value}
+                    className={cn(
+                      "font-sans text-xs sm:text-sm",
+                      isMultiColumn &&
+                        "hover:border-accent/30 rounded-xl border border-white/5 bg-[#141417] p-2.5 hover:bg-[#1b1b22]",
+                      itemClassName,
+                    )}
+                  >
+                    {ItemIcon && (
+                      <ItemIcon weight="regular" className="text-accent mr-1.5 size-4 shrink-0" />
+                    )}
+                    <span>{opt.label}</span>
+                  </SelectItem>
+                );
+              })
             : children}
         </SelectContent>
       </SelectPrimitive.Root>
