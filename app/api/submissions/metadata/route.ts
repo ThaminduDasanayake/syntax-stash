@@ -1317,7 +1317,7 @@ export async function GET(request: NextRequest) {
     const categories = await getAllCategories();
     const suggestedCategory = suggestCategory(`${title} ${description}`, categories);
 
-    // Check if this URL is already in the live catalog or pending submissions
+    // Check if this URL is already in the catalog or pending submissions
     const normalizedInputUrl = normalizeUrl(finalUrl || urlParam);
     let existingResource: { category?: string; id: string; title: string; url: string } | null =
       null;

@@ -160,7 +160,7 @@ function ResourceFormContent({ initialData, mode = "create" }: ResourceFormProps
         toast.success(
           isEdit
             ? `"${formData.title}" updated successfully.`
-            : `"${formData.title}" published to live catalog!`,
+            : `"${formData.title}" published to catalog!`,
         );
         startTransition(() => {
           router.push(returnUrl);

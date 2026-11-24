@@ -608,7 +608,7 @@ function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
       <Toolbar
         search={
           <FluidSearch
-            placeholder="Search live resources by name, description, tags, author, URL..."
+            placeholder="Search resources..."
             value={searchQuery}
             onChange={handleSearchChange}
             onClear={() => handleSearchChange("")}
@@ -763,7 +763,7 @@ function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
           description={
             searchQuery || selectedCategory !== "all" || healthFilter !== "all"
               ? "No resources matched your active filters or search criteria."
-              : "The live catalog is currently empty. Click 'Add New Resource' to publish one."
+              : "The catalog is currently empty. Click 'Add New Resource' to publish one."
           }
           action={
             searchQuery || selectedCategory !== "all" || healthFilter !== "all" ? (

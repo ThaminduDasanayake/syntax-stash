@@ -4,6 +4,7 @@ import { CaretDownIcon, CheckIcon, FunnelIcon, SquaresFourIcon } from "@phosphor
 import React, { useMemo, useState } from "react";
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { getCategoryIcon } from "@/lib/category-icons";
 import { cn } from "@/lib/utils";
 
 export interface CategoryOption {
@@ -68,6 +69,7 @@ export function CategoryMegaFilter({
             <div className="flex min-w-0 items-center gap-1.5 truncate">
               {isAllSelected ? (
                 <>
+                  <SquaresFourIcon weight="bold" className="text-accent size-3.5 shrink-0" />
                   <span className="text-foreground truncate font-medium">All Categories</span>
                   <span className="text-muted-foreground text-[10px] font-semibold tabular-nums">
                     ({totalResourcesCount})
@@ -75,6 +77,10 @@ export function CategoryMegaFilter({
                 </>
               ) : (
                 <>
+                  {React.createElement(getCategoryIcon(currentCategory?.name || value), {
+                    className: "text-accent size-3.5 shrink-0",
+                    weight: "fill",
+                  })}
                   <span className="text-accent truncate font-semibold">
                     {currentCategory?.name || value}
                   </span>
@@ -160,6 +166,7 @@ export function CategoryMegaFilter({
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {categories.map((cat) => {
                 const isSelected = value === cat.name;
+                const CatIcon = getCategoryIcon(cat.name);
 
                 return (
                   <button
@@ -174,10 +181,11 @@ export function CategoryMegaFilter({
                     )}
                   >
                     <div className="flex min-w-0 items-center gap-2">
-                      <span
+                      <CatIcon
+                        weight={isSelected ? "fill" : "regular"}
                         className={cn(
-                          "size-1.5 shrink-0 rounded-full transition-colors",
-                          isSelected ? "bg-accent" : "bg-zinc-600 group-hover:bg-zinc-400",
+                          "size-4 shrink-0 transition-colors",
+                          isSelected ? "text-accent" : "text-zinc-400 group-hover:text-white",
                         )}
                       />
                       <span className="truncate font-sans text-xs font-medium">{cat.name}</span>

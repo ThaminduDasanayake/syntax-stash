@@ -15,7 +15,7 @@ import {
 import { AuthorLinks, Resource } from "@/types";
 
 /**
- * Fetches all live catalog resources from Neon Postgres, cached at the Next.js Edge.
+ * Fetches all resources from Neon Postgres, cached at the Next.js Edge.
  * Cache Tag: "resources"
  * Revalidated on-demand when an admin approves/edits/deletes a tool.
  */
@@ -153,7 +153,7 @@ export const getAllResources = cache(
 );
 
 /**
- * Fetches all live catalog resources for Admin management directly from Neon Postgres.
+ * Fetches all resources for Admin management directly from Neon Postgres.
  */
 export const getAllAdminResources = cache(
   async (): Promise<{
