@@ -356,7 +356,10 @@ export function LabelSelect({
 
         <SelectContent
           align={resolvedAlign}
-          className={cn("w-(--radix-select-trigger-width) min-w-(--radix-select-trigger-width)", contentClassName)}
+          className={cn(
+            "w-(--radix-select-trigger-width) min-w-(--radix-select-trigger-width)",
+            contentClassName,
+          )}
           viewportClassName={viewportClassName}
         >
           {options
