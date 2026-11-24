@@ -87,7 +87,7 @@ export function DuplicateNotice({
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 hover:underline"
               >
-                <span>View live URL</span>
+                <span>View URL</span>
                 <ArrowSquareOutIcon className="size-3" />
               </a>
             </div>

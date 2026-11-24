@@ -85,7 +85,7 @@ export async function POST(req: Request) {
 
     const normalizedInputUrl = normalizeUrl(url);
 
-    // 3. Duplicate Check A: Live Catalog resources
+    // 3. Duplicate Check A: Catalog resources
     const allLiveResources = await db
       .select({ title: resource.title, url: resource.url })
       .from(resource);

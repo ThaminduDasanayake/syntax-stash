@@ -18,6 +18,7 @@ export interface LabelSelectOption {
 }
 
 export interface LabelSelectProps {
+  align?: "center" | "start" | "end";
   children?: React.ReactNode;
   className?: string;
   contentClassName?: string;
@@ -42,12 +43,14 @@ export interface LabelSelectProps {
   theme?: LabelSelectTheme;
   triggerClassName?: string;
   value?: string;
+  viewportClassName?: string;
   /** Component width in pixels. If omitted, automatically scales to 100% of container */
   width?: number;
 }
 
 export function LabelSelect({
   id: propId,
+  align,
   children,
   className = "",
   contentClassName,
@@ -68,6 +71,7 @@ export function LabelSelect({
   theme = "dark",
   triggerClassName,
   value,
+  viewportClassName,
   width: propWidth,
 }: LabelSelectProps) {
   const isDark = theme === "dark";
@@ -177,6 +181,8 @@ export function LabelSelect({
       : isDark
         ? "stroke-white/20"
         : "stroke-[#18181b]/20";
+
+  const resolvedAlign = align || "start";
 
   return (
     <div ref={containerRef} className={cn("relative w-full pt-2 select-none", className)}>
@@ -348,7 +354,14 @@ export function LabelSelect({
           </SelectPrimitive.Trigger>
         </div>
 
-        <SelectContent className={contentClassName}>
+        <SelectContent
+          align={resolvedAlign}
+          className={cn(
+            "w-(--radix-select-trigger-width) min-w-(--radix-select-trigger-width)",
+            contentClassName,
+          )}
+          viewportClassName={viewportClassName}
+        >
           {options
             ? options.map((opt) => (
                 <SelectItem
@@ -356,7 +369,7 @@ export function LabelSelect({
                   value={opt.value}
                   className={cn("font-sans text-xs sm:text-sm", itemClassName)}
                 >
-                  {opt.label}
+                  <span>{opt.label}</span>
                 </SelectItem>
               ))
             : children}

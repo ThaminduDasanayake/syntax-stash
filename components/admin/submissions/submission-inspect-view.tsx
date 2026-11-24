@@ -1236,7 +1236,7 @@ export function SubmissionInspectView({ submission: sub }: SubmissionInspectView
                 Live Resource Card Preview
               </h3>
               <p className="text-muted-foreground mb-4 text-[11px]">
-                Real-time preview of how this card will render in the live catalog once published.
+                Real-time preview of how this card will render in the catalog once published.
               </p>
 
               <div className="flex justify-center">

@@ -273,7 +273,7 @@ export async function PATCH(req: Request) {
           revalidatePath(`/authors/${slugifyAuthor(sub.author)}`);
         }
       } else {
-        // If status was changed to rejected or pending, remove from live catalog if present
+        // If status was changed to rejected or pending, remove from catalog if present
         await db.delete(resource).where(eq(resource.url, sub.url));
         revalidateTag("resources", { expire: 0 });
         revalidatePath("/");
