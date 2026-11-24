@@ -5,7 +5,6 @@ import { Select as SelectPrimitive } from "radix-ui";
 import React, { useCallback, useEffect, useId, useRef, useState } from "react";
 
 import { SelectContent, SelectItem } from "@/components/ui/select";
-import { getCategoryIcon } from "@/lib/category-icons";
 import { cn } from "@/lib/utils";
 
 const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
@@ -40,7 +39,6 @@ export interface LabelSelectProps {
   options?: LabelSelectOption[];
   placeholder?: string;
   required?: boolean;
-  showIcons?: boolean;
   suffix?: React.ReactNode;
   /** Visual color theme mode: "light" | "dark". Default: "dark" */
   theme?: LabelSelectTheme;
@@ -71,7 +69,6 @@ export function LabelSelect({
   options,
   placeholder = "Select...",
   required = false,
-  showIcons = false,
   suffix,
   theme = "dark",
   triggerClassName,
@@ -352,14 +349,7 @@ export function LabelSelect({
               paddingRight: Math.max(14, r - 4),
             }}
           >
-            <div className="flex flex-1 items-center gap-2 overflow-hidden">
-              {showIcons &&
-                up &&
-                value &&
-                (() => {
-                  const SelectedIcon = getCategoryIcon(value);
-                  return <SelectedIcon weight="fill" className="text-accent size-4 shrink-0" />;
-                })()}
+            <div className="flex flex-1 items-center overflow-hidden">
               <span
                 className={cn(
                   "truncate transition-opacity duration-200",
@@ -391,26 +381,20 @@ export function LabelSelect({
           viewportClassName={resolvedViewportClassName}
         >
           {options
-            ? options.map((opt) => {
-                const ItemIcon = showIcons ? getCategoryIcon(opt.value) : null;
-                return (
-                  <SelectItem
-                    key={opt.value}
-                    value={opt.value}
-                    className={cn(
-                      "font-sans text-xs sm:text-sm",
-                      isMultiColumn &&
-                        "hover:border-accent/30 rounded-xl border border-white/5 bg-[#141417] p-2.5 hover:bg-[#1b1b22]",
-                      itemClassName,
-                    )}
-                  >
-                    {ItemIcon && (
-                      <ItemIcon weight="regular" className="text-accent mr-1.5 size-4 shrink-0" />
-                    )}
-                    <span>{opt.label}</span>
-                  </SelectItem>
-                );
-              })
+            ? options.map((opt) => (
+                <SelectItem
+                  key={opt.value}
+                  value={opt.value}
+                  className={cn(
+                    "font-sans text-xs sm:text-sm",
+                    isMultiColumn &&
+                      "hover:border-accent/30 rounded-xl border border-white/5 bg-[#141417] p-2.5 hover:bg-[#1b1b22]",
+                    itemClassName,
+                  )}
+                >
+                  <span>{opt.label}</span>
+                </SelectItem>
+              ))
             : children}
         </SelectContent>
       </SelectPrimitive.Root>
