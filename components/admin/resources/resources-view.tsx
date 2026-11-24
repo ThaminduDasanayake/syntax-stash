@@ -2,6 +2,7 @@
 
 import {
   ArrowsClockwiseIcon,
+  HeartbeatIcon,
   MagnifyingGlassIcon,
   PlusIcon,
   SquaresFourIcon,
@@ -15,8 +16,7 @@ import { toast } from "sonner";
 import { Toolbar } from "@/components/admin/layout/toolbar";
 import { ResourceCard } from "@/components/admin/resources/resource-card";
 import { ResourceTable } from "@/components/admin/resources/resource-table";
-import { CategoryMegaFilter } from "@/components/admin/shared/category-mega-filter";
-import { HealthMegaFilter, type HealthOption } from "@/components/admin/shared/health-mega-filter";
+import { FilterSelect } from "@/components/admin/shared/filter-select";
 import { Pagination } from "@/components/admin/shared/pagination";
 import { SortSelect } from "@/components/admin/shared/sort-select";
 import { ResourceItem } from "@/components/admin/shared/types";
@@ -29,6 +29,7 @@ import { Dialog } from "@/components/ui/dialog";
 import { EmptyState } from "@/components/ui/empty-state";
 import { FluidSearch } from "@/components/ui/fluid-search";
 import { SelectBar, type SelectBarItem } from "@/components/ui/select-bar";
+import { SelectField } from "@/components/ui/select-field";
 import { useCategories } from "@/hooks/use-categories";
 import { cn } from "@/lib/utils";
 
@@ -210,113 +211,91 @@ function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
   }, [resources, selectedCategory]);
 
   // Dynamically generate health & missing data filter options
-  const healthFilterOptions: HealthOption[] = useMemo(() => {
-    const options: HealthOption[] = [];
+  const healthFilterOptions = useMemo(() => {
+    const options: { label: string; value: string }[] = [
+      { label: "Health / Data: All", value: "all" },
+    ];
 
     if (urlHealthStats.broken > 0 || healthFilter === "broken") {
       options.push({
-        count: urlHealthStats.broken,
-        icon: "🚨",
-        label: "Broken URLs",
+        label: `🚨 Broken URLs (${urlHealthStats.broken})`,
         value: "broken",
       });
     }
 
     if (urlHealthStats.redirect > 0 || healthFilter === "redirect") {
       options.push({
-        count: urlHealthStats.redirect,
-        icon: "🔄",
-        label: "Redirects",
+        label: `🔄 Redirects (${urlHealthStats.redirect})`,
         value: "redirect",
       });
     }
 
     if (urlHealthStats.blocked > 0 || healthFilter === "blocked") {
       options.push({
-        count: urlHealthStats.blocked,
-        icon: "🛡️",
-        label: "Protected / Cloudflare",
+        label: `🛡️ Protected / Cloudflare (${urlHealthStats.blocked})`,
         value: "blocked",
       });
     }
 
     if (urlHealthStats.healthy > 0 || healthFilter === "healthy") {
       options.push({
-        count: urlHealthStats.healthy,
-        icon: "🟢",
-        label: "Healthy URLs",
+        label: `🟢 Healthy URLs (${urlHealthStats.healthy})`,
         value: "healthy",
       });
     }
 
     if (urlHealthStats.unchecked > 0 || healthFilter === "unchecked") {
       options.push({
-        count: urlHealthStats.unchecked,
-        icon: "⚪️",
-        label: "Unchecked URLs",
+        label: `⚪️ Unchecked URLs (${urlHealthStats.unchecked})`,
         value: "unchecked",
       });
     }
 
     if (missingStats.anyMissing > 0 || healthFilter === "any-missing") {
       options.push({
-        count: missingStats.anyMissing,
-        icon: "⚠️",
-        label: "Any Missing Data",
+        label: `⚠️ Any Missing Data (${missingStats.anyMissing})`,
         value: "any-missing",
       });
     }
 
     if (missingStats.missingOg > 0 || healthFilter === "missing-og") {
       options.push({
-        count: missingStats.missingOg,
-        icon: "🖼️",
-        label: "Missing OG Image",
+        label: `Missing OG Image (${missingStats.missingOg})`,
         value: "missing-og",
       });
     }
 
     if (missingStats.missingAuthor > 0 || healthFilter === "missing-author") {
       options.push({
-        count: missingStats.missingAuthor,
-        icon: "👤",
-        label: "Missing Author",
+        label: `Missing Author (${missingStats.missingAuthor})`,
         value: "missing-author",
       });
     }
 
     if (missingStats.missingTags > 0 || healthFilter === "missing-tags") {
       options.push({
-        count: missingStats.missingTags,
-        icon: "🏷️",
-        label: "Missing Tags",
+        label: `Missing Tags (${missingStats.missingTags})`,
         value: "missing-tags",
       });
     }
 
     if (missingStats.missingFavicon > 0 || healthFilter === "missing-favicon") {
       options.push({
-        count: missingStats.missingFavicon,
-        icon: "🌐",
-        label: "Missing Favicon",
+        label: `Missing Favicon (${missingStats.missingFavicon})`,
         value: "missing-favicon",
       });
     }
 
     if (missingStats.missingGithub > 0 || healthFilter === "missing-github") {
       options.push({
-        count: missingStats.missingGithub,
-        icon: "🐙",
-        label: "Missing GitHub",
+        label: `Missing GitHub (${missingStats.missingGithub})`,
         value: "missing-github",
       });
     }
 
     if (missingStats.missingDescription > 0 || healthFilter === "missing-description") {
       options.push({
-        count: missingStats.missingDescription,
-        icon: "📝",
-        label: "Missing Description",
+        label: `Missing Description (${missingStats.missingDescription})`,
         value: "missing-description",
       });
     }
@@ -573,14 +552,13 @@ function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
     return combined.sort((a, b) => a.localeCompare(b));
   }, [categories, resources]);
 
-  const categoryOptions = useMemo(
-    () =>
-      allCategoryNames.map((cat) => ({
-        count: resources.filter((r) => r.category === cat).length,
-        name: cat,
-      })),
-    [allCategoryNames, resources],
-  );
+  const categoryFilterOptions = [
+    { label: `All Categories (${resources.length})`, value: "all" },
+    ...allCategoryNames.map((cat) => ({
+      label: `${cat} (${resources.filter((r) => r.category === cat).length})`,
+      value: cat,
+    })),
+  ];
 
   /* eslint-disable perfectionist/sort-arrays */
   const viewModeItems: SelectBarItem<"cards" | "table">[] = useMemo(
@@ -659,26 +637,30 @@ function ResourcesViewContent({ initialResources = [] }: ResourcesViewProps) {
         footer={
           <>
             <div className="flex flex-wrap items-center gap-4 sm:gap-5">
-              {/* Cloudflare-style Category Mega Filter */}
-              <CategoryMegaFilter
+              {/* Category Select */}
+              <FilterSelect
                 label="Category:"
                 value={selectedCategory}
                 onValueChange={handleCategoryChange}
-                categories={categoryOptions}
-                totalResourcesCount={resources.length}
-                triggerClassName="min-w-[190px]"
+                options={categoryFilterOptions}
+                triggerClassName="min-w-[180px]"
               />
 
               {/* Dynamic Health & Missing Data Filter */}
-              {healthFilterOptions.length > 0 && (
-                <HealthMegaFilter
-                  label="Health & Data:"
-                  value={healthFilter}
-                  onValueChange={handleHealthFilterChange}
-                  options={healthFilterOptions}
-                  totalResourcesCount={resources.length}
-                  triggerClassName="min-w-[190px]"
-                />
+              {healthFilterOptions.length > 1 && (
+                <div className="flex items-center gap-1.5">
+                  <HeartbeatIcon weight="duotone" className="size-8 text-rose-500" />
+                  <span className="text-muted-foreground text-[11px] font-bold whitespace-nowrap uppercase">
+                    Health & Data:
+                  </span>
+                  <SelectField
+                    value={healthFilter}
+                    onValueChange={handleHealthFilterChange}
+                    options={healthFilterOptions}
+                    triggerClassName="h-8 font-mono text-xs min-w-[200px]"
+                    variant="rose"
+                  />
+                </div>
               )}
 
               {/* Sort Select */}

@@ -21,7 +21,6 @@ export interface LabelSelectProps {
   align?: "center" | "start" | "end";
   children?: React.ReactNode;
   className?: string;
-  columns?: 1 | 2 | 3 | 4;
   contentClassName?: string;
   /** Corner radius in px: at half the height (26px) it is a pill. Default: 20 */
   corner?: number;
@@ -54,7 +53,6 @@ export function LabelSelect({
   align,
   children,
   className = "",
-  columns = 1,
   contentClassName,
   corner = 20,
   defaultValue,
@@ -184,26 +182,7 @@ export function LabelSelect({
         ? "stroke-white/20"
         : "stroke-[#18181b]/20";
 
-  const isMultiColumn = columns > 1;
-  const resolvedAlign = align || (isMultiColumn ? "start" : "center");
-  const resolvedContentClassName = isMultiColumn
-    ? cn(
-        "z-70 w-[calc(100vw-2rem)] max-w-3xl rounded-2xl border-[1.5px] border-white/12 bg-[#0e0e11]/98 p-2 font-mono text-xs shadow-[0_24px_60px_rgba(0,0,0,0.85),0_1px_0_0_rgba(255,255,255,0.1)_inset] backdrop-blur-2xl lg:max-w-4xl",
-        contentClassName,
-      )
-    : contentClassName;
-
-  const resolvedViewportClassName = isMultiColumn
-    ? cn(
-        "grid gap-1.5 p-1",
-        columns === 2
-          ? "grid-cols-1 sm:grid-cols-2"
-          : columns === 4
-            ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-4"
-            : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3",
-        viewportClassName,
-      )
-    : viewportClassName;
+  const resolvedAlign = align || "start";
 
   return (
     <div ref={containerRef} className={cn("relative w-full pt-2 select-none", className)}>
@@ -377,20 +356,15 @@ export function LabelSelect({
 
         <SelectContent
           align={resolvedAlign}
-          className={resolvedContentClassName}
-          viewportClassName={resolvedViewportClassName}
+          className={cn("w-(--radix-select-trigger-width) min-w-(--radix-select-trigger-width)", contentClassName)}
+          viewportClassName={viewportClassName}
         >
           {options
             ? options.map((opt) => (
                 <SelectItem
                   key={opt.value}
                   value={opt.value}
-                  className={cn(
-                    "font-sans text-xs sm:text-sm",
-                    isMultiColumn &&
-                      "hover:border-accent/30 rounded-xl border border-white/5 bg-[#141417] p-2.5 hover:bg-[#1b1b22]",
-                    itemClassName,
-                  )}
+                  className={cn("font-sans text-xs sm:text-sm", itemClassName)}
                 >
                   <span>{opt.label}</span>
                 </SelectItem>
