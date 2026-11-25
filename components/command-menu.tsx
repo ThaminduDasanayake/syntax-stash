@@ -68,7 +68,9 @@ export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
   const [resources, setResources] = useState<Resource[]>([]);
 
   useEffect(() => {
-    fetch("/api/resources")
+    if (!open || resources.length > 0) return;
+
+    fetch("/api/resources?minimal=true")
       .then((res) => res.json())
       .then((data) => {
         if (data.resources && Array.isArray(data.resources)) {
@@ -76,7 +78,7 @@ export default function CommandMenu({ open, setOpenAction }: CommandMenuProps) {
         }
       })
       .catch((err) => console.error("Failed to load resources in command menu:", err));
-  }, []);
+  }, [open, resources.length]);
 
   // Register ⌘K / Ctrl+K
   useEffect(() => {

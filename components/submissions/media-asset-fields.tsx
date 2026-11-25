@@ -72,24 +72,11 @@ function OgImagePreviewBanner({
   const isValidUrl =
     cleanOg.startsWith("/") || cleanOg.startsWith("data:") || isValidHttpUrl(cleanOg);
 
-  const isExternal =
-    Boolean(cleanOg) &&
-    isValidUrl &&
-    (cleanOg.startsWith("http://") || cleanOg.startsWith("https://")) &&
-    !cleanOg.startsWith("/api/proxy-image");
-
   const handleOgError = () => {
-    if (isExternal && !state.directFallback) {
-      setState((prev) => ({ ...prev, directFallback: true }));
-    } else {
-      setState((prev) => ({ ...prev, error: true }));
-    }
+    setState((prev) => ({ ...prev, error: true }));
   };
 
-  const currentSrc =
-    isExternal && !state.directFallback
-      ? `/api/proxy-image?url=${encodeURIComponent(cleanOg)}`
-      : cleanOg;
+  const currentSrc = cleanOg;
 
   const { bg, fit } = parseOgImageStyle(ogImageBg);
   const hasCustomBg = bg !== "none";
@@ -514,10 +501,7 @@ export function MediaAssetFields({
             options={ogImageOptions}
             disabled={disabled}
             renderPreview={(option) => {
-              const isExt = option.url.startsWith("http://") || option.url.startsWith("https://");
-              const optSrc = isExt
-                ? `/api/proxy-image?url=${encodeURIComponent(option.url)}`
-                : option.url;
+              const optSrc = option.url;
               return (
                 <div className="border-line relative h-6 w-10 shrink-0 overflow-hidden rounded-[8px] border-[1.5px] bg-black/10">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -525,11 +509,10 @@ export function MediaAssetFields({
                     src={optSrc}
                     alt="OG option preview"
                     loading="lazy"
+                    referrerPolicy="no-referrer"
                     className="h-full w-full object-cover"
                     onError={(e) => {
-                      if (isExt && e.currentTarget.src !== option.url) {
-                        e.currentTarget.src = option.url;
-                      }
+                      e.currentTarget.style.display = "none";
                     }}
                   />
                 </div>

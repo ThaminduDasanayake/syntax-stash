@@ -62,33 +62,20 @@ export function CardIcon({
     cleanFavicon.startsWith("data:") ||
     isValidHttpUrl(cleanFavicon);
 
-  const isExternal =
-    Boolean(cleanFavicon) &&
-    isValidUrl &&
-    (cleanFavicon.startsWith("http://") || cleanFavicon.startsWith("https://")) &&
-    !cleanFavicon.startsWith("/api/proxy-image");
-
-  const [state, setState] = useState<{ directFallback: boolean; error: boolean; url: string }>({
-    directFallback: false,
+  const [state, setState] = useState<{ error: boolean; url: string }>({
     error: false,
     url: cleanFavicon,
   });
 
   if (state.url !== cleanFavicon) {
     setState({
-      directFallback: false,
       error: false,
       url: cleanFavicon,
     });
   }
 
   const handleError = () => {
-    // If the proxy fails (e.g. timeout or blocked host), fall back to direct URL
-    if (isExternal && !state.directFallback) {
-      setState((prev) => ({ ...prev, directFallback: true }));
-    } else {
-      setState((prev) => ({ ...prev, error: true }));
-    }
+    setState((prev) => ({ ...prev, error: true }));
   };
 
   const handleLoad = () => {
@@ -119,11 +106,7 @@ export function CardIcon({
     );
   }
 
-  // Route external favicons through our caching proxy for fast SWR caching and CORS stability
-  const currentSrc =
-    isExternal && !state.directFallback
-      ? `/api/proxy-image?url=${encodeURIComponent(cleanFavicon)}`
-      : cleanFavicon;
+  const currentSrc = cleanFavicon;
 
   return (
     <div
@@ -145,7 +128,7 @@ export function CardIcon({
         src={currentSrc}
         alt={alt}
         loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
+        referrerPolicy="no-referrer"
         style={{
           colorScheme: isWhiteTile ? "light" : "dark",
         }}

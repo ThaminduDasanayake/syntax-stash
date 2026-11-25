@@ -65,15 +65,13 @@ export function ResourceCardView({
 
   const cleanOgImage = ogImage?.trim() || "";
 
-  const [ogState, setOgState] = useState<{ directFallback: boolean; error: boolean; url: string }>({
-    directFallback: false,
+  const [ogState, setOgState] = useState<{ error: boolean; url: string }>({
     error: false,
     url: cleanOgImage,
   });
 
   if (ogState.url !== cleanOgImage) {
     setOgState({
-      directFallback: false,
       error: false,
       url: cleanOgImage,
     });
@@ -106,25 +104,10 @@ export function ResourceCardView({
     cleanOgImage.startsWith("data:") ||
     isValidHttpUrl(cleanOgImage);
 
-  const isExternalOg =
-    Boolean(cleanOgImage) &&
-    isValidOg &&
-    (cleanOgImage.startsWith("http://") || cleanOgImage.startsWith("https://")) &&
-    !cleanOgImage.startsWith("/api/proxy-image");
-
-  const imageSrc =
-    !cleanOgImage || ogState.error || !isValidOg
-      ? null
-      : isExternalOg && !ogState.directFallback
-        ? `/api/proxy-image?url=${encodeURIComponent(cleanOgImage)}`
-        : cleanOgImage;
+  const imageSrc = !cleanOgImage || ogState.error || !isValidOg ? null : cleanOgImage;
 
   const handleOgError = () => {
-    if (isExternalOg && !ogState.directFallback) {
-      setOgState((prev) => ({ ...prev, directFallback: true }));
-    } else {
-      setOgState((prev) => ({ ...prev, error: true }));
-    }
+    setOgState((prev) => ({ ...prev, error: true }));
   };
 
   const cardContent = (

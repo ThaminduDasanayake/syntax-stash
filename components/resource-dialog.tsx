@@ -696,22 +696,11 @@ export function ResourceDialog({
             {(() => {
               if (!currentOg || ogState.error) return null;
 
-              const isExternalOg =
-                (currentOg.startsWith("http://") || currentOg.startsWith("https://")) &&
-                !currentOg.startsWith("/api/proxy-image");
-
               const handleOgError = () => {
-                if (isExternalOg && !ogState.directFallback) {
-                  setOgState((prev) => ({ ...prev, directFallback: true }));
-                } else {
-                  setOgState((prev) => ({ ...prev, error: true }));
-                }
+                setOgState((prev) => ({ ...prev, error: true }));
               };
 
-              const currentOgSrc =
-                isExternalOg && !ogState.directFallback
-                  ? `/api/proxy-image?url=${encodeURIComponent(currentOg)}`
-                  : currentOg;
+              const currentOgSrc = currentOg;
 
               const { bg, fit } = parseOgImageStyle(activeTool.ogImageBg);
               const hasCustomBg = bg !== "none";
