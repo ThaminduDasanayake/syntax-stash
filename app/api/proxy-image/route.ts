@@ -15,6 +15,11 @@ function isPrivateIp(hostname: string): boolean {
   return false;
 }
 
+/**
+ * Image redirect endpoint.
+ * Redirects directly to the target image URL with aggressive edge caching headers.
+ * Avoids streaming heavy binary images through Vercel Serverless Compute (Fast Origin Transfer).
+ */
 export async function GET(request: NextRequest) {
   const urlParam = request.nextUrl.searchParams.get("url");
 
@@ -37,119 +42,10 @@ export async function GET(request: NextRequest) {
     return new NextResponse("Forbidden destination host", { status: 403 });
   }
 
-  // Multi-tier attempt in order of priority: direct navigation headers, social crawler headers, and clean asset headers
-  /* eslint-disable perfectionist/sort-arrays */
-  const headerVariants: Record<string, string>[] = [
-    // 1. Direct browser navigation simulation (exactly matches pasting URL in address bar)
-    {
-      Accept:
-        "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
-      "Accept-Language": "en-US,en;q=0.9",
-      "Sec-Ch-Ua": '"Chromium";v="132", "Google Chrome";v="132", "Not-A.Brand";v="99"',
-      "Sec-Ch-Ua-Mobile": "?0",
-      "Sec-Ch-Ua-Platform": '"macOS"',
-      "Sec-Fetch-Dest": "document",
-      "Sec-Fetch-Mode": "navigate",
-      "Sec-Fetch-Site": "none",
-      "Sec-Fetch-User": "?1",
-      "Upgrade-Insecure-Requests": "1",
-      "User-Agent":
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36",
-    },
-    // 2. Social embed crawler (Cloudflare and CDNs explicitly allowlist media previews)
-    {
-      Accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
-      "User-Agent": "Mozilla/5.0 (compatible; Twitterbot/1.0; +https://dev.twitter.com/cards)",
-    },
-    // 3. Clean request without Referer (for hosts with strict anti-hotlink rules)
-    {
-      Accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
-      "Accept-Language": "en-US,en;q=0.9",
-      "User-Agent":
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36",
-    },
-    // 4. Natural browser asset request with origin Referer
-    {
-      Accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
-      "Accept-Language": "en-US,en;q=0.9",
-      Referer: `${parsedUrl.origin}/`,
-      "User-Agent":
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36",
-    },
-  ];
-  /* eslint-enable perfectionist/sort-arrays */
-
-  for (let i = 0; i < headerVariants.length; i++) {
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 6000);
-
-      const headers = { ...headerVariants[i] };
-      const ifNoneMatch = request.headers.get("if-none-match");
-      if (ifNoneMatch) headers["If-None-Match"] = ifNoneMatch;
-      const ifModifiedSince = request.headers.get("if-modified-since");
-      if (ifModifiedSince) headers["If-Modified-Since"] = ifModifiedSince;
-
-      const upstreamRes = await fetch(parsedUrl.href, {
-        headers,
-        redirect: "follow",
-        signal: controller.signal,
-      });
-
-      clearTimeout(timeoutId);
-
-      const responseHeaders: Record<string, string> = {
-        "Access-Control-Allow-Origin": "*",
-        "Cache-Control": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400",
-        "Cross-Origin-Resource-Policy": "cross-origin",
-      };
-
-      const etag = upstreamRes.headers.get("etag");
-      if (etag) responseHeaders["ETag"] = etag;
-
-      const lastModified = upstreamRes.headers.get("last-modified");
-      if (lastModified) responseHeaders["Last-Modified"] = lastModified;
-
-      // Upstream confirmed image is unchanged
-      if (upstreamRes.status === 304) {
-        return new NextResponse(null, {
-          headers: responseHeaders,
-          status: 304,
-        });
-      }
-
-      if (upstreamRes.ok) {
-        let contentType = upstreamRes.headers.get("content-type") || "image/png";
-        if (parsedUrl.pathname.endsWith(".svg") && !contentType.includes("svg")) {
-          contentType = "image/svg+xml";
-        }
-        responseHeaders["Content-Type"] = contentType;
-
-        const imageBuffer = await upstreamRes.arrayBuffer();
-
-        return new NextResponse(imageBuffer, {
-          headers: responseHeaders,
-          status: 200,
-        });
-      }
-
-      // If not ok (e.g. 403, 401, 429, 503), try the next header variant
-      if (i < headerVariants.length - 1 && !upstreamRes.ok) {
-        continue;
-      }
-    } catch {
-      if (i < headerVariants.length - 1) {
-        continue;
-      }
-    }
-  }
-
-  // If upstream server protects against server-side proxies (e.g. Cloudflare Turnstile/WAF 403),
-  // redirect directly to the original asset URL with 307 so the user's browser fetches it natively!
   return NextResponse.redirect(parsedUrl.href, {
     headers: {
       "Access-Control-Allow-Origin": "*",
-      "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
+      "Cache-Control": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400",
     },
     status: 307,
   });

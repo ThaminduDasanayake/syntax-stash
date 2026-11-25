@@ -5,10 +5,17 @@ import { getAllCategories } from "@/lib/categories";
 export async function GET() {
   try {
     const categories = await getAllCategories();
-    return NextResponse.json({
-      categories,
-      total: categories.length,
-    });
+    return NextResponse.json(
+      {
+        categories,
+        total: categories.length,
+      },
+      {
+        headers: {
+          "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800",
+        },
+      },
+    );
   } catch (error) {
     console.error("GET /api/categories error:", error);
     return NextResponse.json({ error: "Failed to fetch categories." }, { status: 500 });
